@@ -84,16 +84,162 @@ int dsy_qspi_init(uint8_t mode, uint8_t device)
 
 int dsy_qspi_writepage(uint32_t adr, uint32_t sz, uint8_t *buf)
 {
+	QSPI_CommandTypeDef s_command;
+	s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
+	s_command.Instruction       = PAGE_PROG_CMD;
+	s_command.AddressMode       = QSPI_ADDRESS_1_LINE;
+	s_command.AddressSize		= QSPI_ADDRESS_24_BITS;
+	s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
+	s_command.DataMode          = QSPI_DATA_1_LINE;
+	s_command.DummyCycles       = 0;
+	s_command.NbData            = sz <= 256 ? sz : 256;
+	s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
+	s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
+	s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
+	s_command.Address = adr;
+	if (write_enable(&dsy_qspi_handle) != MEMORY_OK)
+	{
+		return MEMORY_ERROR;
+	}
+	if (HAL_QSPI_Command(&dsy_qspi_handle, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != MEMORY_OK)
+	{
+		return MEMORY_ERROR;
+	}
+	if (HAL_QSPI_Transmit(&dsy_qspi_handle, (uint8_t*)buf, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != MEMORY_OK)
+	{
+		return MEMORY_ERROR;
+	}
+	if (autopolling_mem_ready(&dsy_qspi_handle, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != MEMORY_OK)
+	{
+		return MEMORY_ERROR;
+	}
 	return MEMORY_OK;
 }
 
 int dsy_qspi_write(uint32_t address, uint32_t size, uint8_t* buffer)
 {
+	uint32_t NumOfPage = 0, NumOfSingle = 0, Addr = 0, count = 0, temp = 0;
+	uint32_t   QSPI_DataNum = 0;
+	uint32_t flash_page_size = IS25LP080D_PAGE_SIZE; 
+	Addr = address % flash_page_size;
+	count = flash_page_size - Addr;
+	NumOfPage =  size / flash_page_size;
+	NumOfSingle = size % flash_page_size;
+  
+	if (Addr == 0) /*!< Address is QSPI_PAGESIZE aligned  */
+	{
+		if (NumOfPage == 0) /*!< NumByteToWrite < QSPI_PAGESIZE */
+		{
+			QSPI_DataNum = size;      
+			dsy_qspi_writepage(address, QSPI_DataNum, buffer);
+		}
+		else /*!< Size > QSPI_PAGESIZE */
+		{
+			while (NumOfPage--)
+			{
+				QSPI_DataNum = flash_page_size;
+				dsy_qspi_writepage(address, QSPI_DataNum, buffer);
+				address +=  flash_page_size;
+				buffer += flash_page_size;
+			}
+      
+			QSPI_DataNum = NumOfSingle;
+			if (QSPI_DataNum > 0)
+				dsy_qspi_writepage(address, QSPI_DataNum, buffer);
+		}
+	}
+	else /*!< Address is not QSPI_PAGESIZE aligned  */
+	{
+		if (NumOfPage == 0) /*!< Size < QSPI_PAGESIZE */
+		{
+			if (NumOfSingle > count) /*!< (Size + Address) > QSPI_PAGESIZE */
+			{
+				temp = NumOfSingle - count;
+				QSPI_DataNum = count;
+				dsy_qspi_writepage(address, QSPI_DataNum, buffer);
+				address +=  count;
+				buffer += count;
+				QSPI_DataNum = temp;
+				dsy_qspi_writepage(address, QSPI_DataNum, buffer);
+			}
+			else
+			{
+				QSPI_DataNum = size; 
+				dsy_qspi_writepage(address, QSPI_DataNum, buffer);
+			}
+		}
+		else /*!< Size > QSPI_PAGESIZE */
+		{
+			size -= count;
+			NumOfPage =  size / flash_page_size;
+			NumOfSingle = size % flash_page_size;
+			QSPI_DataNum = count;
+			dsy_qspi_writepage(address, QSPI_DataNum, buffer);
+			address +=  count;
+			buffer += count;
+      
+			while (NumOfPage--)
+			{
+				QSPI_DataNum = flash_page_size;
+				dsy_qspi_writepage(address, QSPI_DataNum, buffer);
+				address +=  flash_page_size;
+				buffer += flash_page_size;
+			}
+      
+			if (NumOfSingle != 0)
+			{
+				QSPI_DataNum = NumOfSingle;
+				dsy_qspi_writepage(address, QSPI_DataNum, buffer);
+			}
+		}
+	}
 	return MEMORY_OK;	
 }
 int dsy_qspi_erase(uint32_t start_adr, uint32_t end_adr)
 {
+	uint32_t block_addr;
+	uint32_t block_size = 0x10000; // 64kB blocks for now.
+	// 64kB chunks for now.
+	start_adr = start_adr - (start_adr % block_size);
+	while (end_adr >= start_adr)
+	{
+		block_addr = start_adr & 0x0FFFFFFF;	
+		if (dsy_qspi_erasesector(block_addr) != MEMORY_OK)
+		{
+			return MEMORY_ERROR;
+		}
+		start_adr += block_size;
+	}
 	return MEMORY_OK;
+}
+
+int dsy_qspi_erasesector(uint32_t addr)
+{
+	QSPI_CommandTypeDef s_command;
+	s_command.InstructionMode = QSPI_INSTRUCTION_1_LINE;
+	s_command.Instruction = SUBSECTOR_ERASE_CMD;
+	s_command.AddressMode       = QSPI_ADDRESS_1_LINE;
+	s_command.AddressSize       = QSPI_ADDRESS_24_BITS;
+	s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
+	s_command.DataMode          = QSPI_DATA_NONE;
+	s_command.DummyCycles       = 0;
+	s_command.NbData            = 0;
+	s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
+	s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
+	s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
+	if (write_enable(&dsy_qspi_handle) != MEMORY_OK)
+	{
+		return MEMORY_ERROR;
+	}
+	if (HAL_QSPI_Command(&dsy_qspi_handle, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != MEMORY_OK)
+	{
+		return MEMORY_ERROR;
+	}
+	if (autopolling_mem_ready(&dsy_qspi_handle, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != MEMORY_OK)
+	{
+		return MEMORY_ERROR;
+	}
+	return MEMORY_OK;	
 }
 
 /* Static Function Implementation */
