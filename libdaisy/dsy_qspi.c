@@ -46,7 +46,8 @@ int dsy_qspi_init(uint8_t mode, uint8_t device)
 	}
 	dsy_qspi_handle.Instance = QUADSPI;
 	//dsy_qspi_handle.Init.ClockPrescaler = 7;
-	dsy_qspi_handle.Init.ClockPrescaler = 7;
+	//dsy_qspi_handle.Init.ClockPrescaler = 7;
+	dsy_qspi_handle.Init.ClockPrescaler = 2; // Conservative setting for now. Signal gets very weak faster than this.
 	dsy_qspi_handle.Init.FifoThreshold = 1;
 	dsy_qspi_handle.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_NONE;
 	dsy_qspi_handle.Init.FlashSize = POSITION_VAL(IS25LP080D_FLASH_SIZE) - 1;
@@ -212,7 +213,7 @@ int dsy_qspi_write(uint32_t address, uint32_t size, uint8_t* buffer)
 int dsy_qspi_erase(uint32_t start_adr, uint32_t end_adr)
 {
 	uint32_t block_addr;
-	uint32_t block_size = IS25LP080D_SUBSECTOR_SIZE;// 64kB blocks for now.
+	uint32_t block_size = IS25LP080D_SUBSECTOR_SIZE;// 4kB blocks for now.
 	// 64kB chunks for now.
 	start_adr = start_adr - (start_adr % block_size);
 	while (end_adr >= start_adr)
@@ -229,12 +230,20 @@ int dsy_qspi_erase(uint32_t start_adr, uint32_t end_adr)
 
 int dsy_qspi_erasesector(uint32_t addr)
 {
+	uint8_t use_qpi = 0;
 	QSPI_CommandTypeDef s_command;
-	s_command.InstructionMode	= QSPI_INSTRUCTION_1_LINE;
-	s_command.Instruction = SUBSECTOR_ERASE_CMD;
-	//s_command.Instruction		= SECTOR_ERASE_CMD;
-	//s_command.Instruction = BLOCK_ERASE_32K_CMD;
-	s_command.AddressMode       = QSPI_ADDRESS_1_LINE;
+	if (use_qpi)
+	{
+		s_command.InstructionMode	= QSPI_INSTRUCTION_4_LINES;
+		s_command.Instruction		= SUBSECTOR_ERASE_QPI_CMD;
+		s_command.AddressMode       = QSPI_ADDRESS_4_LINES;
+	}
+	else
+	{
+		s_command.InstructionMode	= QSPI_INSTRUCTION_1_LINE;
+		s_command.Instruction		= SUBSECTOR_ERASE_CMD;
+		s_command.AddressMode       = QSPI_ADDRESS_1_LINE;
+	}
 	s_command.AddressSize       = QSPI_ADDRESS_24_BITS;
 	s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
 	s_command.DataMode          = QSPI_DATA_NONE;
@@ -632,28 +641,28 @@ void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
     GPIO_InitStruct.Pin = GPIO_PIN_6;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF10_QUADSPI;
     HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
     GPIO_InitStruct.Pin = GPIO_PIN_7|GPIO_PIN_6;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF9_QUADSPI;
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
     GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_8;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF10_QUADSPI;
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
     GPIO_InitStruct.Pin = GPIO_PIN_2;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF9_QUADSPI;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
