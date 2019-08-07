@@ -102,6 +102,8 @@ extern "C" {
 #define SECTOR_ERASE_CMD                     0xD8
 #define SECTOR_ERASE_4_BYTE_ADDR_CMD         0xDC
 
+#define BLOCK_ERASE_32K_CMD					 0x52
+
 #define DIE_ERASE_CMD                        0xC4
 
 #define PROG_ERASE_RESUME_CMD                0x7A

@@ -22,6 +22,7 @@
 #endif
 
 #include <stdint.h>
+#include "IS25LP080D.h"
 
 
  //extern QSPI_HandleTypeDef hqspi;
@@ -51,6 +52,7 @@ enum
  * Device specifies which Flash memory chip to use.
  */
  int dsy_qspi_init(uint8_t mode, uint8_t device);
+ int dsy_qspi_deinit();
 
  /*
   *@brief 
