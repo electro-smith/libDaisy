@@ -2,8 +2,8 @@
 <EmbeddedProfile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <ToolchainID>com.sysprogs.gnuarm.arm-eabi</ToolchainID>
   <ToolchainVersion>
-    <GCC>8.3.1</GCC>
-    <GDB>8.0</GDB>
+    <GCC>4.9.3</GCC>
+    <GDB>7.8</GDB>
     <Revision>1</Revision>
   </ToolchainVersion>
   <BspID>com.sysprogs.arm.stm32</BspID>
