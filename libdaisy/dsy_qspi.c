@@ -45,7 +45,8 @@ int dsy_qspi_init(uint8_t mode, uint8_t device)
 		break;
 	}
 	dsy_qspi_handle.Instance = QUADSPI;
-	dsy_qspi_handle.Init.ClockPrescaler = 10;
+	//dsy_qspi_handle.Init.ClockPrescaler = 7;
+	dsy_qspi_handle.Init.ClockPrescaler = 7;
 	dsy_qspi_handle.Init.FifoThreshold = 1;
 	dsy_qspi_handle.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_NONE;
 	dsy_qspi_handle.Init.FlashSize = POSITION_VAL(IS25LP080D_FLASH_SIZE) - 1;
@@ -68,19 +69,30 @@ int dsy_qspi_init(uint8_t mode, uint8_t device)
 	{
 		return MEMORY_ERROR;
 	}
+	// Once writing test with 1 Line is confirmed lets move this out, and update writing to use 4-line.
+	if (quad_enable(&dsy_qspi_handle) != MEMORY_OK)
+	{
+		return MEMORY_ERROR;
+	}
 	if (mode == DSY_QSPI_MODE_MEMORY_MAPPED)
 	{
-		// Once writing test with 1 Line is confirmed lets move this out, and update writing to use 4-line.
-		if (quad_enable(&dsy_qspi_handle) != MEMORY_OK)
-		{
-			return MEMORY_ERROR;
-		}
 		if (enable_memory_mapped_mode(&dsy_qspi_handle) != MEMORY_OK)
 		{
 			return MEMORY_ERROR;
 		}
 	}
 	return MEMORY_OK;
+}
+
+int dsy_qspi_deinit()
+{
+	dsy_qspi_handle.Instance = QUADSPI;
+	if (HAL_QSPI_DeInit(&dsy_qspi_handle) != HAL_OK)
+	{
+		return MEMORY_ERROR;
+	}
+	HAL_QSPI_MspDeInit(&dsy_qspi_handle);
+	return MEMORY_OK;	
 }
 
 int dsy_qspi_writepage(uint32_t adr, uint32_t sz, uint8_t *buf)
@@ -200,7 +212,7 @@ int dsy_qspi_write(uint32_t address, uint32_t size, uint8_t* buffer)
 int dsy_qspi_erase(uint32_t start_adr, uint32_t end_adr)
 {
 	uint32_t block_addr;
-	uint32_t block_size = 0x10000; // 64kB blocks for now.
+	uint32_t block_size = IS25LP080D_SUBSECTOR_SIZE;// 64kB blocks for now.
 	// 64kB chunks for now.
 	start_adr = start_adr - (start_adr % block_size);
 	while (end_adr >= start_adr)
@@ -218,8 +230,10 @@ int dsy_qspi_erase(uint32_t start_adr, uint32_t end_adr)
 int dsy_qspi_erasesector(uint32_t addr)
 {
 	QSPI_CommandTypeDef s_command;
-	s_command.InstructionMode = QSPI_INSTRUCTION_1_LINE;
+	s_command.InstructionMode	= QSPI_INSTRUCTION_1_LINE;
 	s_command.Instruction = SUBSECTOR_ERASE_CMD;
+	//s_command.Instruction		= SECTOR_ERASE_CMD;
+	//s_command.Instruction = BLOCK_ERASE_32K_CMD;
 	s_command.AddressMode       = QSPI_ADDRESS_1_LINE;
 	s_command.AddressSize       = QSPI_ADDRESS_24_BITS;
 	s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
@@ -229,6 +243,7 @@ int dsy_qspi_erasesector(uint32_t addr)
 	s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
 	s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
 	s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
+	s_command.Address = addr;
 	if (write_enable(&dsy_qspi_handle) != MEMORY_OK)
 	{
 		return MEMORY_ERROR;
