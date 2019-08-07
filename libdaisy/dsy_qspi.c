@@ -68,12 +68,13 @@ int dsy_qspi_init(uint8_t mode, uint8_t device)
 	{
 		return MEMORY_ERROR;
 	}
-	if (quad_enable(&dsy_qspi_handle) != MEMORY_OK)
-	{
-		return MEMORY_ERROR;
-	}
 	if (mode == DSY_QSPI_MODE_MEMORY_MAPPED)
 	{
+		// Once writing test with 1 Line is confirmed lets move this out, and update writing to use 4-line.
+		if (quad_enable(&dsy_qspi_handle) != MEMORY_OK)
+		{
+			return MEMORY_ERROR;
+		}
 		if (enable_memory_mapped_mode(&dsy_qspi_handle) != MEMORY_OK)
 		{
 			return MEMORY_ERROR;
@@ -121,6 +122,7 @@ int dsy_qspi_write(uint32_t address, uint32_t size, uint8_t* buffer)
 	uint32_t NumOfPage = 0, NumOfSingle = 0, Addr = 0, count = 0, temp = 0;
 	uint32_t   QSPI_DataNum = 0;
 	uint32_t flash_page_size = IS25LP080D_PAGE_SIZE; 
+	address = address & 0x0FFFFFFF;
 	Addr = address % flash_page_size;
 	count = flash_page_size - Addr;
 	NumOfPage =  size / flash_page_size;
