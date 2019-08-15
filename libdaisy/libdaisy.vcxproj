@@ -159,6 +159,7 @@
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usb.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_utils.c" />
     <ClInclude Include="dsy_qspi.h" />
+    <ClInclude Include="IS25LP064A.h" />
     <ClInclude Include="IS25LP080D.h" />
     <ClInclude Include="libdaisy.h" />
     <ClInclude Include="stm32h7xx_hal_conf.h" />

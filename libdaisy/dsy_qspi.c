@@ -1,6 +1,7 @@
 #include "dsy_qspi.h"
 #include "stm32h7xx_hal.h"
 #include "IS25LP080D.h"
+#include "IS25LP064A.h"
 
 // TODO: Add handling for alternate device types,
 //		This will be a thing much sooner than anticipated 
@@ -40,6 +41,8 @@ int dsy_qspi_init(uint8_t mode, uint8_t device)
 	case DSY_QSPI_DEVICE_IS25LP080D:
 		flash_size = IS25LP080D_FLASH_SIZE;
 		break;
+	case DSY_QSPI_DEVICE_IS25LP064A:
+		flash_size = IS25LP064A_FLASH_SIZE;
 	default:
 		flash_size = IS25LP080D_FLASH_SIZE;
 		break;
@@ -50,7 +53,7 @@ int dsy_qspi_init(uint8_t mode, uint8_t device)
 	dsy_qspi_handle.Init.ClockPrescaler = 2; // Conservative setting for now. Signal gets very weak faster than this.
 	dsy_qspi_handle.Init.FifoThreshold = 1;
 	dsy_qspi_handle.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_NONE;
-	dsy_qspi_handle.Init.FlashSize = POSITION_VAL(IS25LP080D_FLASH_SIZE) - 1;
+	dsy_qspi_handle.Init.FlashSize = POSITION_VAL(flash_size) - 1;
 	dsy_qspi_handle.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_1_CYCLE;
 	dsy_qspi_handle.Init.FlashID = QSPI_FLASH_ID_1;
 	dsy_qspi_handle.Init.DualFlash = QSPI_DUALFLASH_DISABLE;
