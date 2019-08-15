@@ -7,6 +7,4 @@
 #include "dsy_qspi.h"
 #endif
 
-//int foo();
-
 #endif

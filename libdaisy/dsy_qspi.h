@@ -22,8 +22,6 @@
 #endif
 
 #include <stdint.h>
-#include "IS25LP080D.h"
-
 
  //extern QSPI_HandleTypeDef hqspi;
  /* Error codes */
@@ -39,6 +37,7 @@
 enum
 {
 	DSY_QSPI_DEVICE_IS25LP080D,
+	DSY_QSPI_DEVICE_IS25LP064A,
 	DSY_QSPI_DEVICE_LAST,
 };
 
