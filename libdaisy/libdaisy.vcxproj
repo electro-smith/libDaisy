@@ -48,6 +48,7 @@
   </ImportGroup>
   <ItemGroup>
     <ClCompile Include="dsy_qspi.c" />
+    <ClCompile Include="dsy_system.c" />
     <ClCompile Include="system_stm32h7xx.c" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c" />
@@ -159,6 +160,7 @@
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usb.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_utils.c" />
     <ClInclude Include="dsy_qspi.h" />
+    <ClInclude Include="dsy_system.h" />
     <ClInclude Include="IS25LP064A.h" />
     <ClInclude Include="IS25LP080D.h" />
     <ClInclude Include="libdaisy.h" />
