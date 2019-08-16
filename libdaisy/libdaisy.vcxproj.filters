@@ -806,5 +806,13 @@
     <ClInclude Include="IS25LP064A.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="dsy_system.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dsy_system.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
