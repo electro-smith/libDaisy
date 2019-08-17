@@ -48,20 +48,20 @@ void dsy_system_init(uint8_t board)
 
 void dsy_system_jumpto(uint32_t addr)
 {
-	NVIC_TypeDef *rNVIC = (NVIC_TypeDef *)NVIC_BASE;
-		rNVIC->ICER[0] = 0xFFFFFFFF;
-		rNVIC->ICER[1] = 0xFFFFFFFF;
-		rNVIC->ICPR[0] = 0xFFFFFFFF;
-		rNVIC->ICPR[1] = 0xFFFFFFFF;
-		SET_REG(STK_CTRL, 0x04);
-	
-		// System reset.
-		SET_REG(RCC_CR, GET_REG(RCC_CR)     | 0x00000001);
-		SET_REG(RCC_CFGR, GET_REG(RCC_CFGR) & 0xF8FF0000);
-		SET_REG(RCC_CR, GET_REG(RCC_CR)     & 0xFEF6FFFF);
-		SET_REG(RCC_CR, GET_REG(RCC_CR)     & 0xFFFBFFFF);
-		SET_REG(RCC_CFGR, GET_REG(RCC_CFGR) & 0xFF80FFFF);
-		SET_REG(RCC_CIR, 0x00000000);
+//	NVIC_TypeDef *rNVIC = (NVIC_TypeDef *)NVIC_BASE;
+//	rNVIC->ICER[0] = 0xFFFFFFFF;
+//	rNVIC->ICER[1] = 0xFFFFFFFF;
+//	rNVIC->ICPR[0] = 0xFFFFFFFF;
+//	rNVIC->ICPR[1] = 0xFFFFFFFF;
+//	SET_REG(STK_CTRL, 0x04);
+//
+//	// System reset.
+//	SET_REG(RCC_CR, GET_REG(RCC_CR)     | 0x00000001);
+//	SET_REG(RCC_CFGR, GET_REG(RCC_CFGR) & 0xF8FF0000);
+//	SET_REG(RCC_CR, GET_REG(RCC_CR)     & 0xFEF6FFFF);
+//	SET_REG(RCC_CR, GET_REG(RCC_CR)     & 0xFFFBFFFF);
+//	SET_REG(RCC_CFGR, GET_REG(RCC_CFGR) & 0xFF80FFFF);
+//	SET_REG(RCC_CIR, 0x00000000);
 	//
 	uint32_t application_address = addr + 4;
 	EntryPoint application = (EntryPoint)(application_address);
