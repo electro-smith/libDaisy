@@ -50,7 +50,7 @@ enum
  * @param device
  * Device specifies which Flash memory chip to use.
  */
- int dsy_qspi_init(uint8_t mode, uint8_t device);
+ int dsy_qspi_init(uint8_t mode, uint8_t device, uint8_t board);
  int dsy_qspi_deinit();
 
  /*

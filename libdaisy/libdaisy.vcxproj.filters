@@ -809,9 +809,15 @@
     <ClInclude Include="dsy_system.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="dsy_sdram.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dsy_system.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsy_sdram.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
