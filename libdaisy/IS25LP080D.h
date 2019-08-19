@@ -75,7 +75,7 @@ extern "C" {
 #define WRITE_NONVOL_CFG_REG_CMD             0xB1
 
 #define READ_READ_PARAM_REG_CMD                 0x61
-#define WRITE_READ_PARAM_REG_CMD                0x65
+#define WRITE_READ_PARAM_REG_CMD                0xC0
 
 #define READ_ENHANCED_VOL_CFG_REG_CMD        0x81
 #define WRITE_ENHANCED_VOL_CFG_REG_CMD       0x85

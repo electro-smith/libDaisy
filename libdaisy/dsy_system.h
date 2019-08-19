@@ -4,13 +4,6 @@
 extern "C" {
 #endif
 #include <stdint.h>
-enum
-{
-	DSY_SYS_BOARD_DAISY,
-	DSY_SYS_BOARD_DAISY_SEED,
-	DSY_SYS_BOARD_AUDIO_BB,
-	DSY_SYS_BOARD_LAST,
-};
 
 // Sets clock speeds, etc.
 void dsy_system_init(uint8_t board);
