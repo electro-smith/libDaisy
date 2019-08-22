@@ -2,6 +2,7 @@
 #include <stm32h7xx_hal.h>
 
 // Jump related stuff
+
 #define u32 uint32_t 
 #define vu32 volatile uint32_t
 #define SET_REG(addr,val) do { *(vu32*)(addr)=val; } while(0)
@@ -33,6 +34,16 @@ typedef struct {
 	vu32 IPR[15];
 } NVIC_TypeDef;
 
+__attribute__((always_inline)) static inline void __JUMPTOQSPI()
+{
+	__asm("LDR R1, =0xE000ED00;"); // SCB
+	__asm("LDR R0, =0x90000000;"); // APP BASE
+	__asm("STR R0, [R1, #8]"); // VTOR
+	__asm("LDR SP, [R0, #0]"); // SP @ +0
+	__asm("LDR R0, [R0, #4]"); // PC @ +4
+	__asm("BX R0");
+}
+
 typedef void(*EntryPoint)(void);
 
 // Static Function Declaration
@@ -48,28 +59,42 @@ void dsy_system_init(uint8_t board)
 
 void dsy_system_jumpto(uint32_t addr)
 {
-	//	NVIC_TypeDef *rNVIC = (NVIC_TypeDef *)NVIC_BASE;
-	//	rNVIC->ICER[0] = 0xFFFFFFFF;
-	//	rNVIC->ICER[1] = 0xFFFFFFFF;
-	//	rNVIC->ICPR[0] = 0xFFFFFFFF;
-	//	rNVIC->ICPR[1] = 0xFFFFFFFF;
-	//	SET_REG(STK_CTRL, 0x04);
-	//
-	//	// System reset.
-	//	SET_REG(RCC_CR, GET_REG(RCC_CR)     | 0x00000001);
-	//	SET_REG(RCC_CFGR, GET_REG(RCC_CFGR) & 0xF8FF0000);
-	//	SET_REG(RCC_CR, GET_REG(RCC_CR)     & 0xFEF6FFFF);
-	//	SET_REG(RCC_CR, GET_REG(RCC_CR)     & 0xFFFBFFFF);
-	//	SET_REG(RCC_CFGR, GET_REG(RCC_CFGR) & 0xFF80FFFF);
-	//	SET_REG(RCC_CIR, 0x00000000);
-		//
-	SysTick->CTRL &= ~(SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
-	__disable_irq();
-	uint32_t application_address = addr + 4;
-	EntryPoint application = (EntryPoint)(application_address);
-	__set_MSP(*(__IO uint32_t*)addr);
-	SCB->VTOR = addr;
-	application();
+	//		NVIC_TypeDef *rNVIC = (NVIC_TypeDef *)NVIC_BASE;
+	//		rNVIC->ICER[0] = 0xFFFFFFFF;
+	//		rNVIC->ICER[1] = 0xFFFFFFFF;
+	//		rNVIC->ICPR[0] = 0xFFFFFFFF;
+	//		rNVIC->ICPR[1] = 0xFFFFFFFF;
+	//		SET_REG(STK_CTRL, 0x04);
+	//	
+	//		// System reset.
+	//		SET_REG(RCC_CR, GET_REG(RCC_CR)     | 0x00000001);
+	//		SET_REG(RCC_CFGR, GET_REG(RCC_CFGR) & 0xF8FF0000);
+	//		SET_REG(RCC_CR, GET_REG(RCC_CR)     & 0xFEF6FFFF);
+	//		SET_REG(RCC_CR, GET_REG(RCC_CR)     & 0xFFFBFFFF);
+	//		SET_REG(RCC_CFGR, GET_REG(RCC_CFGR) & 0xFF80FFFF);
+	//		SET_REG(RCC_CIR, 0x00000000);
+		
+	//	SysTick->CTRL &= ~(SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
+	//	__disable_irq();
+	//	uint32_t application_address = addr + 4;
+	//	EntryPoint application = (EntryPoint)(application_address);
+	//	HAL_RCC_DeInit();
+	//	SysTick->CTRL = 0;
+	//	SysTick->LOAD = 0;
+	//	SysTick->VAL = 0;
+	//	__set_MSP(*(__IO uint32_t*)addr);
+	//	SCB->VTOR = addr;
+	//	HAL_DeInit();
+	//	application();
+	// Broken for now. . . 
+	while (1)
+	{
+		 
+	}
+}
+void dsy_system_jumptoqspi()
+{
+	__JUMPTOQSPI();
 	while (1)
 	{
 		 
