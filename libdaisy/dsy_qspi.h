@@ -22,6 +22,8 @@
 #endif
 
 #include <stdint.h>
+#include "IS25LP080D.h"
+#include "IS25LP064A.h"
 
  //extern QSPI_HandleTypeDef hqspi;
  /* Error codes */
