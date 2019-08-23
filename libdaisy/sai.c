@@ -106,6 +106,17 @@ static uint32_t SAI2_client =0;
 void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 {
 
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOG_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOI_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
+  __HAL_RCC_GPIOF_CLK_ENABLE();
+
   GPIO_InitTypeDef GPIO_InitStruct;
 /* SAI1 */
     if(hsai->Instance==SAI1_Block_A)
