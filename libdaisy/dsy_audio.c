@@ -31,6 +31,34 @@ typedef struct
 }et_audio_t;
 static et_audio_t audio_handle;
 
+extern DMA_HandleTypeDef hdma_sai1_a;
+extern DMA_HandleTypeDef hdma_sai1_b;
+
+void DMA1_Stream0_IRQHandler(void)
+{
+	/* USER CODE BEGIN DMA1_Stream0_IRQn 0 */
+
+	/* USER CODE END DMA1_Stream0_IRQn 0 */
+	HAL_DMA_IRQHandler(&hdma_sai1_a);
+	/* USER CODE BEGIN DMA1_Stream0_IRQn 1 */
+
+	/* USER CODE END DMA1_Stream0_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA1 stream1 global interrupt.
+  */
+void DMA1_Stream1_IRQHandler(void)
+{
+	/* USER CODE BEGIN DMA1_Stream1_IRQn 0 */
+
+	/* USER CODE END DMA1_Stream1_IRQn 0 */
+	HAL_DMA_IRQHandler(&hdma_sai1_b);
+	/* USER CODE BEGIN DMA1_Stream1_IRQn 1 */
+
+	/* USER CODE END DMA1_Stream1_IRQn 1 */
+}
+
 static void empty(float *in, float *out, size_t size)
 {
     size *= 2;
