@@ -13,6 +13,7 @@ enum
 // TODO: Maybe move these into separate libdaisy_conf.h file that can be added to user projects.
 #define DSY_USE_QSPI_DRV
 #define DSY_USE_SDRAM_DRV
+#define DSY_USE_AUDIO_DRV
 
 
 #ifdef DSY_USE_QSPI_DRV
@@ -21,4 +22,8 @@ enum
 #ifdef DSY_USE_SDRAM_DRV
 #include "dsy_sdram.h"
 #endif
+#ifdef DSY_USE_AUDIO_DRV
+#include "dsy_audio.h"
+#endif
+
 #endif

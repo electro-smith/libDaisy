@@ -47,9 +47,14 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="codec_pcm3060.c" />
+    <ClCompile Include="dma.c" />
+    <ClCompile Include="dsy_audio.c" />
     <ClCompile Include="dsy_qspi.c" />
     <ClCompile Include="dsy_sdram.c" />
     <ClCompile Include="dsy_system.c" />
+    <ClCompile Include="i2c.c" />
+    <ClCompile Include="sai.c" />
     <ClCompile Include="system_stm32h7xx.c" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c" />
@@ -160,12 +165,17 @@
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usart.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usb.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_utils.c" />
+    <ClInclude Include="codec_pcm3060.h" />
+    <ClInclude Include="dma.h" />
+    <ClInclude Include="dsy_audio.h" />
     <ClInclude Include="dsy_qspi.h" />
     <ClInclude Include="dsy_sdram.h" />
     <ClInclude Include="dsy_system.h" />
+    <ClInclude Include="i2c.h" />
     <ClInclude Include="IS25LP064A.h" />
     <ClInclude Include="IS25LP080D.h" />
     <ClInclude Include="libdaisy.h" />
+    <ClInclude Include="sai.h" />
     <ClInclude Include="stm32h7xx_hal_conf.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_adc.h" />
