@@ -5,7 +5,10 @@
 
 // TODO Fix hard coding of these parameters
 #ifndef SAMPLE_RATE
-#define SAMPLE_RATE 47916.0f
+//#define SAMPLE_RATE 47916.0f
+#define SAMPLE_RATE 31941.0f
+//#define SAMPLE_RATE 48014.0f
+//#define SAMPLE_RATE 95820.0f
 #endif
 
 #ifdef AUDIO_TOTAL_BUF_SIZE
