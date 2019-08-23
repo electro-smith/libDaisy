@@ -812,12 +812,42 @@
     <ClInclude Include="dsy_sdram.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="dsy_audio.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="codec_pcm3060.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="dma.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="sai.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="i2c.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dsy_system.c">
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="dsy_sdram.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsy_audio.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="codec_pcm3060.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dma.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="sai.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="i2c.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
