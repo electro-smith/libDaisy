@@ -133,9 +133,9 @@ static void SystemClock_Config(void)
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
 	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
 	RCC_OscInitStruct.PLL.PLLM = 4;
-	RCC_OscInitStruct.PLL.PLLN = 200;
+	RCC_OscInitStruct.PLL.PLLN = 200; //400MHZ Sys Clk
 	RCC_OscInitStruct.PLL.PLLP = 2;
-	RCC_OscInitStruct.PLL.PLLQ = 16;
+	RCC_OscInitStruct.PLL.PLLQ = 3; // was 16
 	RCC_OscInitStruct.PLL.PLLR = 2;
 	RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_2;
 	RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
@@ -171,7 +171,7 @@ static void SystemClock_Config(void)
 	PeriphClkInitStruct.PLL2.PLL2N = 368;
 	PeriphClkInitStruct.PLL2.PLL2P = 16;
 	PeriphClkInitStruct.PLL2.PLL2Q = 2;
-	PeriphClkInitStruct.PLL2.PLL2R = 4;
+	PeriphClkInitStruct.PLL2.PLL2R = 3; // was 4
 	PeriphClkInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_0;
 	PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
 	PeriphClkInitStruct.PLL2.PLL2FRACN = 0;
@@ -185,6 +185,8 @@ static void SystemClock_Config(void)
 	PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
 	PeriphClkInitStruct.FmcClockSelection = RCC_FMCCLKSOURCE_D1HCLK;
 	PeriphClkInitStruct.QspiClockSelection = RCC_QSPICLKSOURCE_D1HCLK;
+	//PeriphClkInitStruct.QspiClockSelection = RCC_QSPICLKSOURCE_PLL; // Updated to use PLL1 @ 266.667 MHz
+//	PeriphClkInitStruct.QspiClockSelection = RCC_QSPICLKSOURCE_PLL2; // Updated to use PLL2 @ 130.84 MHz
 	PeriphClkInitStruct.SdmmcClockSelection = RCC_SDMMCCLKSOURCE_PLL;
 	PeriphClkInitStruct.Sai1ClockSelection = RCC_SAI1CLKSOURCE_PLL2;
 	PeriphClkInitStruct.Sai23ClockSelection = RCC_SAI23CLKSOURCE_PLL2;

@@ -63,7 +63,7 @@ int dsy_qspi_init(uint8_t mode, uint8_t device, uint8_t board)
 	//dsy_qspi_handle.Init.ClockPrescaler = 7;
 	//dsy_qspi_handle.Init.ClockPrescaler = 7;
 	//dsy_qspi_handle.Init.ClockPrescaler = 2; // Conservative setting for now. Signal gets very weak faster than this.
-	dsy_qspi_handle.hqspi.Init.ClockPrescaler = 2;
+	dsy_qspi_handle.hqspi.Init.ClockPrescaler = 1;
 	dsy_qspi_handle.hqspi.Init.FifoThreshold = 1;
 	dsy_qspi_handle.hqspi.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_NONE;
 	dsy_qspi_handle.hqspi.Init.FlashSize = POSITION_VAL(flash_size) - 1;
@@ -509,15 +509,18 @@ static uint32_t enable_memory_mapped_mode(QSPI_HandleTypeDef *hqspi)
 
 	/* Configure the command for the read instruction */
 	s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
-	s_command.Instruction       = QUAD_OUT_FAST_READ_CMD;
-	s_command.AddressMode       = QSPI_ADDRESS_1_LINE;
+	//s_command.Instruction       = QUAD_OUT_FAST_READ_CMD;
+	s_command.Instruction		= QUAD_INOUT_FAST_READ_CMD;
+//	s_command.AddressMode       = QSPI_ADDRESS_1_LINE;
+	s_command.AddressMode       = QSPI_ADDRESS_4_LINES;
 	s_command.AddressSize       = QSPI_ADDRESS_24_BITS;
 	s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
 	s_command.DataMode          = QSPI_DATA_4_LINES;
 	s_command.DummyCycles       = IS25LP080D_DUMMY_CYCLES_READ_QUAD;
 	s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
 	s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
-	s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
+	//s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
+	s_command.SIOOMode = QSPI_SIOO_INST_ONLY_FIRST_CMD;
 
 	/* Configure the memory mapped mode */
 	s_mem_mapped_cfg.TimeOutActivation = QSPI_TIMEOUT_COUNTER_DISABLE;
