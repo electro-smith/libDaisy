@@ -292,12 +292,12 @@ static void HAL_FMC_MspInit(void)
 		break;
 	case DSY_SYS_BOARD_DAISY_SEED:
 		/* GPIO_InitStruct */
-		GPIO_InitStruct.Pin = GPIO_PIN_0;
+		GPIO_InitStruct.Pin = GPIO_PIN_5;
 		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 		GPIO_InitStruct.Pull = GPIO_NOPULL;
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 		GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-		HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+		HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
 		break;
 	case DSY_SYS_BOARD_AUDIO_BB:
 		/* GPIO_InitStruct */

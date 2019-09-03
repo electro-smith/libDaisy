@@ -8,7 +8,8 @@
 //#define SAMPLE_RATE 47916.0f
 //#define SAMPLE_RATE 31941.0f
 //#define SAMPLE_RATE 48014.0f
-#define SAMPLE_RATE 95820.0f
+#define SAMPLE_RATE 48014.0f
+//#define SAMPLE_RATE 95820.0f
 #endif
 
 #ifdef AUDIO_TOTAL_BUF_SIZE
@@ -16,7 +17,7 @@
 #else
 
 #ifndef DMA_BUFFER_SIZE
-#define DMA_BUFFER_SIZE 192
+#define DMA_BUFFER_SIZE 48
 #endif // DMA_BUFFER_SIZE
 
 #endif // AUDIO_TOTAL_BUF_SIZE
@@ -28,7 +29,7 @@
 // size_t number of samples
 typedef void (*audio_callback)(float*, float*, size_t);
 
-void dsy_audio_init();
+void dsy_audio_init(uint8_t board);
 void dsy_audio_set_callback(audio_callback cb);
 void dsy_audio_start();
 void dsy_audio_stop();
