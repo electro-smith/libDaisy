@@ -1,5 +1,7 @@
+#include <libdaisy.h>
 #include "dsy_audio.h"
 #include "codec_pcm3060.h"
+#include "codec_wm8731.h"
 #include "stm32h7xx_hal.h"
 #include "dma.h"
 #include "sai.h"
@@ -9,15 +11,18 @@
 //#define TEST_BYPASS 1
 
 // signed 24-bit maximum (2^23)
-#ifndef MAX_AMP 
-#define MAX_AMP 8388607.0f
-#endif
-#ifndef MAX_OUT_AMP 
-#define MAX_OUT_AMP 8388607.0f
-#endif
-#ifndef MAX_IN_AMP
-#define MAX_IN_AMP 2147483648.0f
-#endif
+//#ifndef MAX_AMP 
+//#define MAX_AMP 8388607.0f
+//#endif
+//#ifndef MAX_OUT_AMP 
+//#define MAX_OUT_AMP 8388607.0f
+//#endif
+//#ifndef MAX_IN_AMP
+//#define MAX_IN_AMP 2147483648.0f
+//#endif
+#define MAX_AMP 65535.0f
+#define MAX_OUT_AMP 65535.0f
+#define MAX_IN_AMP 65535.0f
 // Define/Declare global audio structure. 
 typedef struct
 {
@@ -71,14 +76,21 @@ static void empty(float *in, float *out, size_t size)
     }
 }
 
-void dsy_audio_init()
+void dsy_audio_init(uint8_t board)
 {
 	// For now expecting external MX_SAI_Init() is being run in main.c
 	MX_DMA_Init();
 	MX_SAI1_Init();
 	MX_SAI2_Init();
 	MX_I2C2_Init();
-	codec_pcm3060_init(&hi2c2);
+	if (board == DSY_SYS_BOARD_DAISY_SEED)
+	{
+		sa_codec_init(1, 48000.0f);
+	}
+	else
+	{
+		codec_pcm3060_init(&hi2c2);
+	}
     audio_handle.callback = empty;
     audio_handle.block_size = BLOCK_SIZE;
     for (size_t i = 0; i < DMA_BUFFER_SIZE; i++) 

@@ -69,16 +69,25 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
   /* USER CODE END I2C2_MspInit 0 */
   
     __HAL_RCC_GPIOH_CLK_ENABLE();
+    __HAL_RCC_GPIOB_CLK_ENABLE();
     /**I2C2 GPIO Configuration    
     PH4     ------> I2C2_SCL
     PH5     ------> I2C2_SDA 
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
+	  // GPIO PIN 5 is for All boards except Daisy Seed
+	  //GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
+    GPIO_InitStruct.Pin = GPIO_PIN_4;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
     GPIO_InitStruct.Alternate = GPIO_AF4_I2C2;
     HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
+	
+	// Only for Daisy Seed do we need this.
+    GPIO_InitStruct.Pin = GPIO_PIN_11;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+
 
     /* I2C2 clock enable */
     __HAL_RCC_I2C2_CLK_ENABLE();

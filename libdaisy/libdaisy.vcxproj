@@ -58,6 +58,7 @@
   </ImportGroup>
   <ItemGroup>
     <ClCompile Include="codec_pcm3060.c" />
+    <ClCompile Include="codec_wm8731.c" />
     <ClCompile Include="dma.c" />
     <ClCompile Include="dsy_audio.c" />
     <ClCompile Include="dsy_qspi.c" />
@@ -176,6 +177,8 @@
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usb.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_utils.c" />
     <ClInclude Include="codec_pcm3060.h" />
+    <ClInclude Include="codec_wm8731.h" />
+    <ClInclude Include="codec_wm8731_frame.h" />
     <ClInclude Include="dma.h" />
     <ClInclude Include="dsy_audio.h" />
     <ClInclude Include="dsy_qspi.h" />
