@@ -237,14 +237,8 @@ static int setup_the_codec(sa_codec *c, size_t block_size)
   c->stride = stride;
 	//c->stride = 3;
 
-  //c->dma_init_tx.DMA_BufferSize = 2 * stride * block_size * 2;
-  //c->dma_init_rx.DMA_BufferSize = 2 * stride * block_size * 2;
   size_t buffer_size = 2 * stride * block_size * 2;
   
-  //DMA_Init(AUDIO_I2S_DMA_STREAM, &c->dma_init_tx);
-  //DMA_Init(AUDIO_I2S_EXT_DMA_STREAM, &c->dma_init_rx);
-  //DMA_Cmd(AUDIO_I2S_DMA_STREAM, ENABLE);
-  //DMA_Cmd(AUDIO_I2S_EXT_DMA_STREAM, ENABLE);
   HAL_SAI_Receive_DMA(&hsai_BlockB1, (uint8_t *)c->rx_dma_buffer, buffer_size);
   HAL_SAI_Transmit_DMA(&hsai_BlockA1, (uint8_t *)c->tx_dma_buffer, buffer_size);
   
@@ -271,27 +265,6 @@ void sa_codec_stop(sa_codec* c)
   //DMA_Cmd(AUDIO_I2S_DMA_STREAM, DISABLE);
   //DMA_Cmd(AUDIO_I2S_EXT_DMA_STREAM, DISABLE);
 }
-//void sa_codec_fill(sa_codec* c, size_t offset)
-//{
-//  if (c->callback) {
-//    offset *= c->block_size * c->stride * 1;
-//    short* in = &c->rx_dma_buffer[offset];
-//    short* out = &c->tx_dma_buffer[offset];
-//    if (c->stride) {
-//      // Undo the padding from the WM8731.
-//      for (size_t i = 1; i < c->block_size * 2; ++i) {
-//        in[i] = in[i * c->stride];
-//      }
-//    }
-//    (*c->callback)((codec_frame_t*)(in), (codec_frame_t*)(out), c->block_size);
-//    if (c->stride) {
-//      // Pad for the WM8731.
-//      for (size_t i = c->block_size * 2 - 1; i > 0; --i) {
-//        out[i * c->stride] = out[i];
-//      }
-//    }
-//  }
-//}
 
 void sa_audio_fill(sa_codec* c, size_t offset)
 {
@@ -336,120 +309,11 @@ uint8_t sa_codec_set_stereo_line_input_gain(sa_codec* c, int32_t gain)
   return sa_codec_write_control_register(0, gain) && sa_codec_write_control_register(1, gain);
 }
 
-// these were private functions in the codec class.
-/*
-uint8_t sa_codec_initialize_gpio()
-{
-  GPIO_InitTypeDef gpio_init;
-
-  // Start GPIO peripheral clocks.
-  RCC_AHB1PeriphClockCmd(CODEC_I2C_GPIO_CLOCK | CODEC_I2S_GPIO_CLOCK, ENABLE);
-
-  // Initialize I2C pins
-  gpio_init.GPIO_Pin = CODEC_I2C_SCL_PIN | CODEC_I2C_SDA_PIN; 
-  gpio_init.GPIO_Mode = GPIO_Mode_AF;
-  gpio_init.GPIO_Speed = GPIO_Speed_50MHz;
-  gpio_init.GPIO_OType = GPIO_OType_OD;
-  gpio_init.GPIO_PuPd  = GPIO_PuPd_NOPULL;
-  GPIO_Init(CODEC_I2C_GPIO, &gpio_init);
-
-  // Connect pins to I2C peripheral
-  GPIO_PinAFConfig(CODEC_I2C_GPIO, CODEC_I2C_SCL_PINSRC, CODEC_I2C_GPIO_AF);
-  GPIO_PinAFConfig(CODEC_I2C_GPIO, CODEC_I2C_SDA_PINSRC, CODEC_I2C_GPIO_AF);
-  
-  // Initialize I2S pins
-  gpio_init.GPIO_Pin = CODEC_I2S_SCK_PIN | CODEC_I2S_SDO_PIN | \
-      CODEC_I2S_SDI_PIN | CODEC_I2S_WS_PIN; 
-  gpio_init.GPIO_Mode = GPIO_Mode_AF;
-  gpio_init.GPIO_Speed = GPIO_Speed_50MHz;
-  gpio_init.GPIO_OType = GPIO_OType_PP;
-  gpio_init.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  GPIO_Init(CODEC_I2S_GPIO, &gpio_init);
-  
-  gpio_init.GPIO_Pin = CODEC_I2S_MCK_PIN; 
-  GPIO_Init(CODEC_I2S_MCK_GPIO, &gpio_init);
-  
-  // Connect pins to I2S peripheral.
-  GPIO_PinAFConfig(CODEC_I2S_GPIO, CODEC_I2S_WS_PINSRC, CODEC_I2S_GPIO_AF);  
-  GPIO_PinAFConfig(CODEC_I2S_GPIO, CODEC_I2S_SCK_PINSRC, CODEC_I2S_GPIO_AF);
-  GPIO_PinAFConfig(CODEC_I2S_GPIO, CODEC_I2S_SDO_PINSRC, CODEC_I2S_GPIO_AF);
-  GPIO_PinAFConfig(CODEC_I2S_GPIO, CODEC_I2S_SDI_PINSRC, CODEC_I2S_GPIO_AF);
-  GPIO_PinAFConfig(CODEC_I2S_MCK_GPIO, CODEC_I2S_MCK_PINSRC, CODEC_I2S_GPIO_AF); 
-  return 1;
-}
-
-uint8_t sa_codec_initialize_control_interface()
-{
-  I2C_InitTypeDef i2c_init;
-
-  // Initialize I2C
-  RCC_APB1PeriphClockCmd(CODEC_I2C_CLK, ENABLE);
-
-  I2C_DeInit(CODEC_I2C);
-  i2c_init.I2C_Mode = I2C_Mode_I2C;
-  i2c_init.I2C_DutyCycle = I2C_DutyCycle_2;
-  i2c_init.I2C_OwnAddress1 = 0x33;
-  i2c_init.I2C_Ack = I2C_Ack_Enable;
-  i2c_init.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
-  i2c_init.I2C_ClockSpeed = CODEC_I2C_SPEED;
-  
-  I2C_Init(CODEC_I2C, &i2c_init);
-  I2C_Cmd(CODEC_I2C, ENABLE);  
-  
-  return 1;
-}
-*/
 
 uint8_t sa_codec_initialize_audio_interface(uint8_t mcu_is_master, int32_t sample_rate)
 {
-  /*
-  // Configure PLL and I2S master clock.
-  RCC_I2SCLKConfig(RCC_I2S2CLKSource_PLLI2S);
   
-  // The following values have been computed for a 8Mhz external crystal!
-  RCC_PLLI2SCmd(DISABLE);
-  if (sample_rate == 48000) {
-    // 47.992kHz
-    RCC_PLLI2SConfig(258, 3);
-  } else if (sample_rate == 44100) {
-    // 44.11kHz
-    RCC_PLLI2SConfig(271, 6);
-  } else if (sample_rate == 32000) {
-    // 32.003kHz
-    RCC_PLLI2SConfig(426, 4);
-  } else if (sample_rate == 96000) {
-    // 95.95 kHz
-    RCC_PLLI2SConfig(393, 4);
-  } else {
-    // Unsupported sample rate!
-    return 0;
-  }
-  RCC_PLLI2SCmd(ENABLE);
-  WAIT(RCC_GetFlagStatus(RCC_FLAG_PLLI2SRDY) == RESET);
-
-  RCC_APB1PeriphClockCmd(CODEC_I2S_CLK, ENABLE);
-
-  // Initialize I2S
-  I2S_InitTypeDef i2s_init;
-  
-  SPI_I2S_DeInit(CODEC_I2S);
-  i2s_init.I2S_AudioFreq = sample_rate;
-  i2s_init.I2S_Standard = I2S_Standard_Phillips;
-  i2s_init.I2S_DataFormat = I2S_DataFormat_16b;
-  i2s_init.I2S_CPOL = I2S_CPOL_Low;
-  i2s_init.I2S_Mode = mcu_is_master ? I2S_Mode_MasterTx : I2S_Mode_SlaveTx;
-  i2s_init.I2S_MCLKOutput = mcu_is_master
-      ? I2S_MCLKOutput_Enable
-      : I2S_MCLKOutput_Disable;
-
-  // Initialize the I2S main channel for TX
-  I2S_Init(CODEC_I2S, &i2s_init);
-  
-  // Initialize the I2S extended channel for RX
-  I2S_FullDuplexConfig(CODEC_I2S_EXT, &i2s_init);
-  */
-  
-  MX_SAI1_Init();
+  //MX_SAI1_Init();
   
   return 1;
 }
@@ -527,66 +391,6 @@ uint8_t sa_codec_initialize_codec(uint8_t mcu_is_master, int32_t sample_rate)
 
 }
 
-/*
-uint8_t sa_codec_initialize_dma(sa_codec* c)
-{
-  RCC_AHB1PeriphClockCmd(AUDIO_I2S_DMA_CLOCK, ENABLE);
-
-  // DMA setup for TX.
-  DMA_Cmd(AUDIO_I2S_DMA_STREAM, DISABLE);
-  DMA_DeInit(AUDIO_I2S_DMA_STREAM);
-
-  c->dma_init_tx.DMA_Channel = AUDIO_I2S_DMA_CHANNEL;
-  c->dma_init_tx.DMA_PeripheralBaseAddr = AUDIO_I2S_DMA_DREG;
-  c->dma_init_tx.DMA_Memory0BaseAddr = (uint32_t)0;
-  c->dma_init_tx.DMA_DIR = DMA_DIR_MemoryToPeripheral;
-  c->dma_init_tx.DMA_BufferSize = (uint32_t)0xFFFE;
-  c->dma_init_tx.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-  c->dma_init_tx.DMA_MemoryInc = DMA_MemoryInc_Enable;
-  c->dma_init_tx.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
-  c->dma_init_tx.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
-  c->dma_init_tx.DMA_Mode = DMA_Mode_Circular;
-  c->dma_init_tx.DMA_Priority = DMA_Priority_High;
-  c->dma_init_tx.DMA_FIFOMode = DMA_FIFOMode_Disable;
-  c->dma_init_tx.DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull;
-  c->dma_init_tx.DMA_MemoryBurst = DMA_MemoryBurst_Single;
-  c->dma_init_tx.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
-  DMA_Init(AUDIO_I2S_DMA_STREAM, &c->dma_init_tx);
-
-  // DMA setup for RX.
-  DMA_Cmd(AUDIO_I2S_EXT_DMA_STREAM, DISABLE);
-  DMA_DeInit(AUDIO_I2S_EXT_DMA_STREAM);
-
-  c->dma_init_rx.DMA_Channel = AUDIO_I2S_EXT_DMA_CHANNEL;  
-  c->dma_init_rx.DMA_PeripheralBaseAddr = AUDIO_I2S_EXT_DMA_DREG;
-  c->dma_init_rx.DMA_Memory0BaseAddr = (uint32_t)0;
-  c->dma_init_rx.DMA_DIR = DMA_DIR_PeripheralToMemory;
-  c->dma_init_rx.DMA_BufferSize = (uint32_t)0xFFFE;
-  c->dma_init_rx.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
-  c->dma_init_rx.DMA_MemoryInc = DMA_MemoryInc_Enable;
-  c->dma_init_rx.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
-  c->dma_init_rx.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord; 
-  c->dma_init_rx.DMA_Mode = DMA_Mode_Circular;
-  c->dma_init_rx.DMA_Priority = DMA_Priority_High;
-  c->dma_init_rx.DMA_FIFOMode = DMA_FIFOMode_Disable;         
-  c->dma_init_rx.DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull;
-  c->dma_init_rx.DMA_MemoryBurst = DMA_MemoryBurst_Single;
-  c->dma_init_rx.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;  
-  DMA_Init(AUDIO_I2S_EXT_DMA_STREAM, &c->dma_init_rx);  
-
-  // Enable the interrupts.
-  DMA_ITConfig(AUDIO_I2S_EXT_DMA_STREAM, DMA_IT_TC | DMA_IT_HT, ENABLE);
-    
-  // Enable the IRQ.
-  NVIC_EnableIRQ(AUDIO_I2S_EXT_DMA_IRQ);
-
-  // Start DMA from/to codec.
-  SPI_I2S_DMACmd(CODEC_I2S, SPI_I2S_DMAReq_Tx, ENABLE);
-  SPI_I2S_DMACmd(CODEC_I2S_EXT, SPI_I2S_DMAReq_Rx, ENABLE);
-  
-  return 1;
-}
-*/
 
 uint8_t sa_codec_write_control_register(uint8_t address, uint16_t data)
 {
@@ -596,41 +400,7 @@ uint8_t sa_codec_write_control_register(uint8_t address, uint16_t data)
   
   HAL_I2C_Master_Transmit(&hi2c2, CODEC_ADDRESS, buff, 2, 1);
   HAL_Delay(10);
-/*
-  WAIT_LONG(I2C_GetFlagStatus(CODEC_I2C, I2C_FLAG_BUSY));
-  
-  I2C_GenerateSTART(CODEC_I2C, ENABLE);
-  WAIT(!I2C_CheckEvent(CODEC_I2C, I2C_EVENT_MASTER_MODE_SELECT));
-
-  I2C_Send7bitAddress(CODEC_I2C, CODEC_ADDRESS, I2C_Direction_Transmitter);
-  WAIT(!I2C_CheckEvent(CODEC_I2C, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED));
-
-  I2C_SendData(CODEC_I2C, byte_1);
-  WAIT(!I2C_CheckEvent(CODEC_I2C, I2C_EVENT_MASTER_BYTE_TRANSMITTING));
-
-  I2C_SendData(CODEC_I2C, byte_2);
-  WAIT(!I2C_CheckEvent(CODEC_I2C, I2C_EVENT_MASTER_BYTE_TRANSMITTING));
-
-  WAIT_LONG(!I2C_GetFlagStatus(CODEC_I2C, I2C_FLAG_BTF));
-
-  I2C_GenerateSTOP(CODEC_I2C, ENABLE);  
-*/
 
   return 1;  
 }
-
-/*
-void DMA1_Stream3_IRQHandler(void) {
-  if (AUDIO_I2S_EXT_DMA_REG->AUDIO_I2S_EXT_DMA_ISR & AUDIO_I2S_EXT_DMA_FLAG_TC) {
-    AUDIO_I2S_EXT_DMA_REG->AUDIO_I2S_EXT_DMA_IFCR = AUDIO_I2S_EXT_DMA_FLAG_TC;
-    //sa::Codec::GetInstance()->Fill(1);
-		sa_codec_fill(&codec, 1);
-  }
-  if (AUDIO_I2S_EXT_DMA_REG->AUDIO_I2S_EXT_DMA_ISR & AUDIO_I2S_EXT_DMA_FLAG_HT) {
-    AUDIO_I2S_EXT_DMA_REG->AUDIO_I2S_EXT_DMA_IFCR = AUDIO_I2S_EXT_DMA_FLAG_HT;
-    //sa::Codec::GetInstance()->Fill(0);
-		sa_codec_fill(&codec, 0);
-  }
-}
-*/
 

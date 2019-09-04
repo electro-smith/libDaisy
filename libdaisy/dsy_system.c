@@ -159,7 +159,7 @@ void SystemClock_Config(void)
                               |RCC_PERIPHCLK_SAI1|RCC_PERIPHCLK_SDMMC
                               |RCC_PERIPHCLK_I2C2|RCC_PERIPHCLK_ADC
                               |RCC_PERIPHCLK_USB|RCC_PERIPHCLK_QSPI
-                              |RCC_PERIPHCLK_FMC | RCC_PERIPHCLK_I2C4;
+                              |RCC_PERIPHCLK_FMC | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_I2C1;
   PeriphClkInitStruct.PLL2.PLL2M = 4;
   PeriphClkInitStruct.PLL2.PLL2N = 100;
   PeriphClkInitStruct.PLL2.PLL2P = 2;
@@ -185,7 +185,8 @@ void SystemClock_Config(void)
   PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL2;
   PeriphClkInitStruct.Usart234578ClockSelection = RCC_USART234578CLKSOURCE_D2PCLK1;
   PeriphClkInitStruct.Usart16ClockSelection = RCC_USART16CLKSOURCE_D2PCLK2;
-  PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C123CLKSOURCE_PLL3;
+	//PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C123CLKSOURCE_PLL3;
+	PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C123CLKSOURCE_D2PCLK1;
 	PeriphClkInitStruct.I2c4ClockSelection = RCC_I2C4CLKSOURCE_PLL3;
 	//PeriphClkInitStruct.I2c4ClockSelection = RCC_I2C4CLKSOURCE_D3PCLK1;
   PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
