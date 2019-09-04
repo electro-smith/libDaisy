@@ -652,25 +652,63 @@ static uint8_t get_status_register(QSPI_HandleTypeDef *hqspi)
 
 /* HAL Overwrite Implementation */
 
-void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
-{
-
     /**QUADSPI GPIO Configuration    
 	On Daisy Rev3:
     PG6     ------> QUADSPI_BK1_NCS
+    PF8     ------> QUADSPI_BK1_IO0
+    PF9     ------> QUADSPI_BK1_IO1
     PF7     ------> QUADSPI_BK1_IO2
     PF6     ------> QUADSPI_BK1_IO3
-    PF9     ------> QUADSPI_BK1_IO1
-    PF8     ------> QUADSPI_BK1_IO0
     PB2     ------> QUADSPI_CLK 
+	On Daisy Seed:
+    PG6     ------> QUADSPI_BK1_NCS
+    PF8     ------> QUADSPI_BK1_IO0
+    PF9     ------> QUADSPI_BK1_IO1
+    PF7     ------> QUADSPI_BK1_IO2
+    PF6     ------> QUADSPI_BK1_IO3
+    PF10     ------> QUADSPI_CLK 
 	On Audio BB:
     PG6     ------> QUADSPI_BK1_NCS
+    PF8     ------> QUADSPI_BK1_IO0
+    PF9     ------> QUADSPI_BK1_IO1
     PE2     ------> QUADSPI_BK1_IO2
     PF6     ------> QUADSPI_BK1_IO3
-    PF9     ------> QUADSPI_BK1_IO1
-    PF8     ------> QUADSPI_BK1_IO0
     PF10     ------> QUADSPI_CLK 
     */
+enum 
+{
+	DSY_QSPI_AF_PINS_NCS,
+	DSY_QSPI_AF_PINS_IO0,
+	DSY_QSPI_AF_PINS_IO1,
+	DSY_QSPI_AF_PINS_IO2,
+	DSY_QSPI_AF_PINS_IO3,
+	DSY_QSPI_AF_PINS_CLK,
+	DSY_QSPI_AF_PINS_LAST         
+};
+static GPIO_TypeDef *gpio_config_ports[DSY_SYS_BOARD_LAST][DSY_QSPI_AF_PINS_LAST] = {
+	// NCS, IO0,   IO1,   IO2,   IO3,   CLK
+	{GPIOG, GPIOF, GPIOF, GPIOF, GPIOF, GPIOB}, // DAISY
+	{GPIOG, GPIOF, GPIOF, GPIOF, GPIOF, GPIOF}, // DAISY SEED
+	{GPIOG, GPIOF, GPIOF, GPIOE, GPIOF, GPIOF}, // AUDIO BB
+};
+static uint16_t gpio_config_pins[DSY_SYS_BOARD_LAST][DSY_QSPI_AF_PINS_LAST] = {
+	// NCS,		 IO0,		 IO1,		 IO2,		 IO3,		 CLK
+	{GPIO_PIN_6, GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_7, GPIO_PIN_6, GPIO_PIN_2}, // DAISY
+	{GPIO_PIN_6, GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_7, GPIO_PIN_6, GPIO_PIN_10}, // DAISY SEED
+	{GPIO_PIN_6, GPIO_PIN_8, GPIO_PIN_9, GPIO_PIN_2, GPIO_PIN_6, GPIO_PIN_10}, // AUDIO BB
+};
+
+static uint8_t gpio_config_af[DSY_SYS_BOARD_LAST][DSY_QSPI_AF_PINS_LAST] = { 
+	// NCS,				IO0,				IO1,				IO2,				IO3,		   CLK
+	{GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI}, // DAISY
+	{GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI}, // DAISY SEED
+	{GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI}, // AUDIO BB
+};
+
+
+void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
+{
+
   GPIO_InitTypeDef GPIO_InitStruct = {0};
   if(qspiHandle->Instance==QUADSPI)
   {
@@ -687,58 +725,18 @@ void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
 	{
 		__HAL_RCC_GPIOB_CLK_ENABLE();
 	}
-    GPIO_InitStruct.Pin = GPIO_PIN_6;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF10_QUADSPI;
-    HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_6;
-	if (dsy_qspi_handle.board != DSY_SYS_BOARD_AUDIO_BB)
+	uint8_t board = dsy_qspi_handle.board;
+	for (uint8_t i = 0; i < DSY_QSPI_AF_PINS_LAST; i++)
 	{
-		GPIO_InitStruct.Pin |= GPIO_PIN_7;
-	}
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF9_QUADSPI;
-    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_9|GPIO_PIN_8;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF10_QUADSPI;
-    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
-
-    if (dsy_qspi_handle.board == DSY_SYS_BOARD_AUDIO_BB)
-    {
-		GPIO_InitStruct.Pin = GPIO_PIN_10;
-		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+		GPIO_InitStruct.Pin =  gpio_config_pins[board][i];
+		GPIO_InitStruct.Mode =  GPIO_MODE_AF_PP;
 		GPIO_InitStruct.Pull = GPIO_NOPULL;
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		GPIO_InitStruct.Alternate = GPIO_AF9_QUADSPI;
-		HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
-
-		GPIO_InitStruct.Pin = GPIO_PIN_2;
-		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		GPIO_InitStruct.Alternate = GPIO_AF9_QUADSPI;
-		HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+		GPIO_InitStruct.Alternate = gpio_config_af[board][i];
+		HAL_GPIO_Init(gpio_config_ports[board][i], &GPIO_InitStruct);
 	}
-	else
-	{
-		GPIO_InitStruct.Pin = GPIO_PIN_2;
-		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		GPIO_InitStruct.Alternate = GPIO_AF9_QUADSPI;
-		HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-		  
-	}
-
+	  
     /* QUADSPI interrupt Init */
     HAL_NVIC_SetPriority(QUADSPI_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(QUADSPI_IRQn);
@@ -750,45 +748,13 @@ void HAL_QSPI_MspDeInit(QSPI_HandleTypeDef* qspiHandle)
 
   if(qspiHandle->Instance==QUADSPI)
   {
-  /* USER CODE BEGIN QUADSPI_MspDeInit 0 */
-
-  /* USER CODE END QUADSPI_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_QSPI_CLK_DISABLE();
-  
-    /**QUADSPI GPIO Configuration    
-	On Daisy Rev3:
-    PG6     ------> QUADSPI_BK1_NCS
-    PF7     ------> QUADSPI_BK1_IO2
-    PF6     ------> QUADSPI_BK1_IO3
-    PF9     ------> QUADSPI_BK1_IO1
-    PF8     ------> QUADSPI_BK1_IO0
-    PB2     ------> QUADSPI_CLK 
-	On Audio BB:
-    PG6     ------> QUADSPI_BK1_NCS
-    PE2     ------> QUADSPI_BK1_IO2
-    PF6     ------> QUADSPI_BK1_IO3
-    PF9     ------> QUADSPI_BK1_IO1
-    PF8     ------> QUADSPI_BK1_IO0
-    PF10     ------> QUADSPI_CLK 
-    */
-	if (dsy_qspi_handle.board != DSY_SYS_BOARD_AUDIO_BB)
+    uint8_t board = dsy_qspi_handle.board;
+	for (uint8_t i = 0; i < DSY_QSPI_AF_PINS_LAST; i++)
 	{
-		  HAL_GPIO_DeInit(GPIOG, GPIO_PIN_6);
-
-		  HAL_GPIO_DeInit(GPIOF, GPIO_PIN_7 | GPIO_PIN_6 | GPIO_PIN_9 | GPIO_PIN_8);
-
-		  HAL_GPIO_DeInit(GPIOB, GPIO_PIN_2);
+		HAL_GPIO_DeInit(gpio_config_ports[board][i], gpio_config_pins[board][i]);
 	}
-	else
-	{
-		  HAL_GPIO_DeInit(GPIOG, GPIO_PIN_6);
-
-		  HAL_GPIO_DeInit(GPIOF, GPIO_PIN_6 | GPIO_PIN_9 | GPIO_PIN_8 | GPIO_PIN_10);
-
-		  HAL_GPIO_DeInit(GPIOE, GPIO_PIN_2);
-	}
-
     /* QUADSPI interrupt Deinit */
     HAL_NVIC_DisableIRQ(QUADSPI_IRQn);
   /* USER CODE BEGIN QUADSPI_MspDeInit 1 */
@@ -799,11 +765,5 @@ void HAL_QSPI_MspDeInit(QSPI_HandleTypeDef* qspiHandle)
 
 void QUADSPI_IRQHandler(void)
 {
-  /* USER CODE BEGIN QUADSPI_IRQn 0 */
-
-  /* USER CODE END QUADSPI_IRQn 0 */
   HAL_QSPI_IRQHandler(&dsy_qspi_handle.hqspi);
-  /* USER CODE BEGIN QUADSPI_IRQn 1 */
-
-  /* USER CODE END QUADSPI_IRQn 1 */
 }
