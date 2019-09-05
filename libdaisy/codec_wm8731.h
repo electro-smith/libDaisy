@@ -34,6 +34,7 @@ typedef struct {
   size_t stride;
   //sa_codec_fill_buffer_callback callback;
   sa_audio_callback process;
+	I2C_HandleTypeDef *i2c;
   //DMA_InitTypeDef dma_init_tx;
   //DMA_InitTypeDef dma_init_rx;
   short tx_dma_buffer[SA_CODEC_BLOCK_SIZE_MAX * 8 * 2];
@@ -41,6 +42,7 @@ typedef struct {
 }sa_codec;
 
 uint8_t sa_codec_init( \
+	I2C_HandleTypeDef *hi2c, \
 	uint8_t mcu_is_master, \
 	int32_t sample_rate);
 

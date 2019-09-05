@@ -141,12 +141,14 @@ enum CodecSettings {
 // BEGIN SHENSLEY PORT
 sa_codec codec_handle;
 uint8_t sa_codec_init( \
+	I2C_HandleTypeDef *hi2c, \
 	uint8_t mcu_is_master, \
 	int32_t sample_rate) 
 {
   //c->callback = NULL;
   codec_handle.sample_rate = sample_rate;
   codec_handle.mcu_is_master = mcu_is_master;
+	codec_handle.i2c = hi2c;
 
 /*
   return sa_codec_initialize_gpio() && \
@@ -398,7 +400,8 @@ uint8_t sa_codec_write_control_register(uint8_t address, uint16_t data)
   uint8_t byte_2 = data & 0xff;
   uint8_t buff[2] = { byte_1, byte_2 };
   
-  HAL_I2C_Master_Transmit(&hi2c2, CODEC_ADDRESS, buff, 2, 1);
+  //HAL_I2C_Master_Transmit(&hi2c2, CODEC_ADDRESS, buff, 2, 1);
+  HAL_I2C_Master_Transmit(codec_handle.i2c, CODEC_ADDRESS, buff, 2, 1);
   HAL_Delay(10);
 
   return 1;  
