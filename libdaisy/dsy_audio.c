@@ -35,33 +35,39 @@ typedef struct
 	size_t offset;
 }et_audio_t;
 static et_audio_t audio_handle;
+static et_audio_t audio_handle_ext;
 
 extern DMA_HandleTypeDef hdma_sai1_a;
 extern DMA_HandleTypeDef hdma_sai1_b;
+extern DMA_HandleTypeDef hdma_sai2_a;
+extern DMA_HandleTypeDef hdma_sai2_b;
 
 void DMA1_Stream0_IRQHandler(void)
 {
-	/* USER CODE BEGIN DMA1_Stream0_IRQn 0 */
-
-	/* USER CODE END DMA1_Stream0_IRQn 0 */
 	HAL_DMA_IRQHandler(&hdma_sai1_a);
-	/* USER CODE BEGIN DMA1_Stream0_IRQn 1 */
-
-	/* USER CODE END DMA1_Stream0_IRQn 1 */
 }
 
-/**
-  * @brief This function handles DMA1 stream1 global interrupt.
-  */
 void DMA1_Stream1_IRQHandler(void)
 {
-	/* USER CODE BEGIN DMA1_Stream1_IRQn 0 */
-
-	/* USER CODE END DMA1_Stream1_IRQn 0 */
 	HAL_DMA_IRQHandler(&hdma_sai1_b);
-	/* USER CODE BEGIN DMA1_Stream1_IRQn 1 */
+}
+//void DMA1_Stream1_IRQHandler(void)
+//{
+//	HAL_DMA_IRQHandler(&hdma_sai1_a);
+//}
+//
+//void DMA1_Stream2_IRQHandler(void)
+//{
+//	HAL_DMA_IRQHandler(&hdma_sai1_b);
+//}
 
-	/* USER CODE END DMA1_Stream1_IRQn 1 */
+void DMA1_Stream3_IRQHandler(void)
+{
+	HAL_DMA_IRQHandler(&hdma_sai2_a);
+}
+void DMA1_Stream4_IRQHandler(void)
+{
+	HAL_DMA_IRQHandler(&hdma_sai2_b);
 }
 
 static void empty(float *in, float *out, size_t size)
@@ -76,21 +82,40 @@ static void empty(float *in, float *out, size_t size)
     }
 }
 
-void dsy_audio_init(uint8_t board)
+void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 {
 	// For now expecting external MX_SAI_Init() is being run in main.c
 	MX_DMA_Init();
 	MX_SAI1_Init();
 	MX_SAI2_Init();
 	MX_I2C2_Init();
-	if (board == DSY_SYS_BOARD_DAISY_SEED)
+	if (intext == DSY_AUDIO_INTERNAL)
 	{
-		sa_codec_init(1, 48000.0f);
+		if (board == DSY_SYS_BOARD_DAISY_SEED)
+		{
+			sa_codec_init(&hi2c2 , 1, 48000.0f);
+		}
+		else
+		{
+			codec_pcm3060_init(&hi2c2);
+		}
+		
 	}
 	else
 	{
-		codec_pcm3060_init(&hi2c2);
+		switch (device)
+		{
+		case DSY_AUDIO_DEVICE_PCM3060:
+			codec_pcm3060_init(&hi2c1);
+			break;
+		case DSY_AUDIO_DEVICE_WM8731:
+			sa_codec_init(&hi2c1, 0, 48000.0f);
+			break;
+		default:
+			break;
+		}
 	}
+	// Initialize Internal Audio Handle
     audio_handle.callback = empty;
     audio_handle.block_size = BLOCK_SIZE;
     for (size_t i = 0; i < DMA_BUFFER_SIZE; i++) 
@@ -104,22 +129,51 @@ void dsy_audio_init(uint8_t board)
         audio_handle.out[i] = 0.0f;
     }
 	audio_handle.offset = 0;
+	// Initialize External Audio Handle
+    audio_handle_ext.callback = empty;
+    audio_handle_ext.block_size = BLOCK_SIZE;
+    for (size_t i = 0; i < DMA_BUFFER_SIZE; i++) 
+    {
+        audio_handle_ext.dma_buffer_rx[i] = 0;
+        audio_handle_ext.dma_buffer_tx[i] = 0;
+    }
+    for (size_t i = 0; i < BLOCK_SIZE; i++)
+    {
+        audio_handle_ext.in[i] = 0.0f;
+        audio_handle_ext.out[i] = 0.0f;
+    }
+	audio_handle_ext.offset = 0;
 	#ifdef __USBD_AUDIO_IF_H__
 	audio_start(); // start audio callbacks, and then we'll see if it works or not...
 	#endif
 }
 
-void dsy_audio_set_callback(audio_callback cb)
+void dsy_audio_set_callback(uint8_t intext, audio_callback cb)
 {
-    audio_handle.callback = cb;
+	if (intext == DSY_AUDIO_INTERNAL)
+	{
+		audio_handle.callback = cb;
+	}
+	else
+	{
+		audio_handle_ext.callback = cb;
+	}
 }
 
-void dsy_audio_start()
+void dsy_audio_start(uint8_t intext)
 {
-//    HAL_SAI_Receive_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE);
-//    HAL_SAI_Transmit_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE);
-    HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE);
-    HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE);
+	//    HAL_SAI_Receive_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE);
+	//    HAL_SAI_Transmit_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE);
+	if(intext == DSY_AUDIO_INTERNAL)
+	{
+		HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE);
+		HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE);
+	}
+	else
+	{
+		HAL_SAI_Receive_DMA(&hsai_BlockA2, (uint8_t *)audio_handle_ext.dma_buffer_rx, DMA_BUFFER_SIZE);
+		HAL_SAI_Transmit_DMA(&hsai_BlockB2, (uint8_t *)audio_handle_ext.dma_buffer_tx, DMA_BUFFER_SIZE);
+	}
 }
 void dsy_audio_start_streaming_output(uint8_t *buff, size_t size)
 {
@@ -144,16 +198,50 @@ void dsy_audio_start_streaming_output(uint8_t *buff, size_t size)
 	SCB_InvalidateDCache();
 }
 
-void audio_stop()
+void audio_stop(uint8_t intext)
 {
-    HAL_SAI_DMAStop(&hsai_BlockA1);
-    HAL_SAI_DMAStop(&hsai_BlockB1);
+	if (intext == DSY_AUDIO_INTERNAL)
+	{
+		HAL_SAI_DMAStop(&hsai_BlockA1);
+		HAL_SAI_DMAStop(&hsai_BlockB1);
+	}
+	else
+	{
+		HAL_SAI_DMAStop(&hsai_BlockA2);
+		HAL_SAI_DMAStop(&hsai_BlockB2);
+	}
 }
 
 
 #ifdef TEST_BYPASS
 static void test_bypass(int32_t offset);
 #endif
+static void internal_callback(SAI_HandleTypeDef* hsai, uint8_t intext, size_t offset)
+{
+	et_audio_t *ah;
+	if (intext == DSY_AUDIO_INTERNAL)
+	{
+		ah = &audio_handle;	
+	}
+	else
+	{
+		ah = &audio_handle_ext;
+	}
+	for (size_t i = 0; i < audio_handle.block_size; i += 2)
+	{
+		ah->in[i] = (float)((ah->dma_buffer_rx[offset + i]))  / MAX_AMP;
+		ah->in[i + 1] = (float)((ah->dma_buffer_rx[offset + i + 1])) / MAX_AMP;
+	}
+	if (ah->callback)
+	{
+		(ah->callback)((float*)ah->in,(float*)ah->out,(size_t)ah->block_size);
+	}
+	for (size_t i = 0; i < audio_handle.block_size; i+=2)
+	{
+		ah->dma_buffer_tx[offset + i] = (int32_t)(ah->out[i] * MAX_OUT_AMP);
+		ah->dma_buffer_tx[offset + i + 1] = (int32_t)(ah->out[i+1] * MAX_OUT_AMP);
+	}
+}
 // DMA Callbacks
 void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef* hsai)
 {
@@ -162,20 +250,28 @@ void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef* hsai)
 		//HalfTransfer_CallBack_FS();
 	test_bypass(offset);
 #else
-	for (size_t i = 0; i < audio_handle.block_size; i += 2)
+	if (hsai->Instance == SAI1_Block_A)
 	{
-		audio_handle.in[i] = (float)((audio_handle.dma_buffer_rx[offset + i]))  / MAX_AMP;
-		audio_handle.in[i + 1] = (float)((audio_handle.dma_buffer_rx[offset + i + 1])) / MAX_AMP;
+		internal_callback(hsai, DSY_AUDIO_INTERNAL, offset);	
 	}
-	if (audio_handle.callback)
+	else
 	{
-		(audio_handle.callback)((float*)audio_handle.in,(float*)audio_handle.out,(size_t)audio_handle.block_size);
+		internal_callback(hsai, DSY_AUDIO_EXTERNAL, offset);
 	}
-	for (size_t i = 0; i < audio_handle.block_size; i+=2)
-	{
-		audio_handle.dma_buffer_tx[offset + i] = (int32_t)(audio_handle.out[i] * MAX_OUT_AMP);
-		audio_handle.dma_buffer_tx[offset + i + 1] = (int32_t)(audio_handle.out[i+1] * MAX_OUT_AMP);
-	}
+//	for (size_t i = 0; i < audio_handle.block_size; i += 2)
+//	{
+//		audio_handle.in[i] = (float)((audio_handle.dma_buffer_rx[offset + i]))  / MAX_AMP;
+//		audio_handle.in[i + 1] = (float)((audio_handle.dma_buffer_rx[offset + i + 1])) / MAX_AMP;
+//	}
+//	if (audio_handle.callback)
+//	{
+//		(audio_handle.callback)((float*)audio_handle.in,(float*)audio_handle.out,(size_t)audio_handle.block_size);
+//	}
+//	for (size_t i = 0; i < audio_handle.block_size; i+=2)
+//	{
+//		audio_handle.dma_buffer_tx[offset + i] = (int32_t)(audio_handle.out[i] * MAX_OUT_AMP);
+//		audio_handle.dma_buffer_tx[offset + i + 1] = (int32_t)(audio_handle.out[i+1] * MAX_OUT_AMP);
+//	}
 #endif
 }
 void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai)
@@ -185,22 +281,30 @@ void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai)
 	//TransferComplete_CallBack_FS();
 	test_bypass(offset);	
 #else
-	for (size_t i = 0; i < audio_handle.block_size; i += 2)
+	if (hsai->Instance == SAI1_Block_A)
 	{
-		audio_handle.in[i] = (float)((audio_handle.dma_buffer_rx[offset + i]) / MAX_AMP);
-		audio_handle.in[i + 1] = (float)((audio_handle.dma_buffer_rx[offset + i + 1]) / MAX_AMP);
+		internal_callback(hsai, DSY_AUDIO_INTERNAL, offset);	
 	}
-	if (audio_handle.callback)
+	else
 	{
-		(audio_handle.callback)((float*)audio_handle.in,(float*)audio_handle.out,(size_t)audio_handle.block_size);
+		internal_callback(hsai, DSY_AUDIO_EXTERNAL, offset);
 	}
-	for (size_t i = 0; i < audio_handle.block_size; i+=2)
-	{
-		audio_handle.in[i] = (float)(audio_handle.dma_buffer_rx[offset + i]) / MAX_OUT_AMP;
-		audio_handle.in[i + 1] = (float)(audio_handle.dma_buffer_rx[offset + i + 1]) / MAX_OUT_AMP;
-		audio_handle.dma_buffer_tx[offset + i] = (int32_t)(audio_handle.out[i] * MAX_OUT_AMP);
-		audio_handle.dma_buffer_tx[offset + i + 1] = (int32_t)(audio_handle.out[i+1] * MAX_OUT_AMP);
-	}
+	//	for (size_t i = 0; i < audio_handle.block_size; i += 2)
+	//	{
+	//		audio_handle.in[i] = (float)((audio_handle.dma_buffer_rx[offset + i]) / MAX_AMP);
+	//		audio_handle.in[i + 1] = (float)((audio_handle.dma_buffer_rx[offset + i + 1]) / MAX_AMP);
+	//	}
+	//	if (audio_handle.callback)
+	//	{
+	//		(audio_handle.callback)((float*)audio_handle.in,(float*)audio_handle.out,(size_t)audio_handle.block_size);
+	//	}
+	//	for (size_t i = 0; i < audio_handle.block_size; i+=2)
+	//	{
+	//		audio_handle.in[i] = (float)(audio_handle.dma_buffer_rx[offset + i]) / MAX_OUT_AMP;
+	//		audio_handle.in[i + 1] = (float)(audio_handle.dma_buffer_rx[offset + i + 1]) / MAX_OUT_AMP;
+	//		audio_handle.dma_buffer_tx[offset + i] = (int32_t)(audio_handle.out[i] * MAX_OUT_AMP);
+	//		audio_handle.dma_buffer_tx[offset + i + 1] = (int32_t)(audio_handle.out[i+1] * MAX_OUT_AMP);
+	//	}
 #endif
 }
 

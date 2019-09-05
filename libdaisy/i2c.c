@@ -24,7 +24,9 @@
 
 /* USER CODE END 0 */
 
+I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;
+
 
 /* I2C2 init function */
 void MX_I2C2_Init(void)
@@ -62,7 +64,26 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if(i2cHandle->Instance==I2C2)
+	if (i2cHandle->Instance == I2C1)
+	{
+		// GPIO Init
+		__HAL_RCC_GPIOB_CLK_ENABLE();
+		/**I2C1 GPIO Configuration    
+		PB8     ------> I2C1_SCL
+		PB9     ------> I2C1_SDA 
+		*/
+		GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
+		GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+		GPIO_InitStruct.Pull = GPIO_NOPULL;
+		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+		GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
+		HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+		/* I2C1 clock enable */
+		__HAL_RCC_I2C1_CLK_ENABLE();
+		
+	}
+  else if(i2cHandle->Instance==I2C2)
   {
   /* USER CODE BEGIN I2C2_MspInit 0 */
 

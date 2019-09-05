@@ -36,25 +36,25 @@ typedef struct {
 
 __attribute__((always_inline)) static inline void __JUMPTOQSPI()
 {
-	__asm("LDR R1, =0xE000ED00;"); // SCB
-	__asm("LDR R0, =0x90000000;"); // APP BASE
-	__asm("STR R0, [R1, #8]"); // VTOR
-	__asm("LDR SP, [R0, #0]"); // SP @ +0
-	__asm("LDR R0, [R0, #4]"); // PC @ +4
+	__asm("LDR R1, =0xE000ED00;");  // SCB
+	__asm("LDR R0, =0x90000000;");  // APP BASE
+	__asm("STR R0, [R1, #8]");  // VTOR
+	__asm("LDR SP, [R0, #0]");  // SP @ +0
+	__asm("LDR R0, [R0, #4]");  // PC @ +4
 	__asm("BX R0");
 }
 
 typedef void(*EntryPoint)(void);
 
 // Static Function Declaration
-static void SystemClock_Config(void);
+static void SystemClock_Config(uint8_t board);
 static void Error_Handler(void);
 
 void dsy_system_init(uint8_t board)
 {
 	// For now we won't use the board parameter since all three supported boards use the same 16MHz HSE.
 	// That said, 2hp Audio BB had a bit different setup, and actually a more accurate sample rate for audio iirc.
-	SystemClock_Config();
+	SystemClock_Config(board);
 }
 
 void dsy_system_jumpto(uint32_t addr)
@@ -101,8 +101,9 @@ void dsy_system_jumptoqspi()
 	}
 }
 
-void SystemClock_Config(void)
+void SystemClock_Config(uint8_t board)
 {
+	// HOLD THISSSS
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
@@ -150,16 +151,31 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
+  //if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
-  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART3|RCC_PERIPHCLK_USART6
-                              |RCC_PERIPHCLK_SPI1|RCC_PERIPHCLK_SAI2
-                              |RCC_PERIPHCLK_SAI1|RCC_PERIPHCLK_SDMMC
-                              |RCC_PERIPHCLK_I2C2|RCC_PERIPHCLK_ADC
-                              |RCC_PERIPHCLK_USB|RCC_PERIPHCLK_QSPI
-                              |RCC_PERIPHCLK_FMC | RCC_PERIPHCLK_I2C4 | RCC_PERIPHCLK_I2C1;
+	if (board == DSY_SYS_BOARD_DAISY || board == DSY_SYS_BOARD_AUDIO_BB)
+	{
+		
+		PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_USART6
+									| RCC_PERIPHCLK_SPI1 | RCC_PERIPHCLK_SAI2
+									| RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SDMMC
+									| RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_ADC
+									| RCC_PERIPHCLK_USB | RCC_PERIPHCLK_QSPI
+									| RCC_PERIPHCLK_FMC | RCC_PERIPHCLK_I2C1;
+	}
+	else
+	{
+		// Daisy Seed // Eurorack Tester
+	  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART1|RCC_PERIPHCLK_RNG 
+								  |RCC_PERIPHCLK_SPI1|RCC_PERIPHCLK_SAI2
+								  |RCC_PERIPHCLK_SAI1|RCC_PERIPHCLK_SDMMC
+								  |RCC_PERIPHCLK_I2C2|RCC_PERIPHCLK_ADC
+								  |RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_USB
+								  |RCC_PERIPHCLK_QSPI|RCC_PERIPHCLK_FMC;
+	}
   PeriphClkInitStruct.PLL2.PLL2M = 4;
   PeriphClkInitStruct.PLL2.PLL2N = 100;
   PeriphClkInitStruct.PLL2.PLL2P = 2;
