@@ -20,15 +20,19 @@
 //#ifndef MAX_IN_AMP
 //#define MAX_IN_AMP 2147483648.0f
 //#endif
-#define MAX_AMP 65535.0f
-#define MAX_OUT_AMP 65535.0f
-#define MAX_IN_AMP 65535.0f
+//#define MAX_AMP 65535.0f
+//#define MAX_OUT_AMP 65535.0f
+//#define MAX_IN_AMP 65535.0f
+#define MAX_AMP 32767.0f
+#define MAX_OUT_AMP 32767.0f
+#define MAX_IN_AMP 32767.0f
+
 // Define/Declare global audio structure. 
 typedef struct
 {
     audio_callback callback;
-    int32_t dma_buffer_rx[DMA_BUFFER_SIZE];
-    int32_t dma_buffer_tx[DMA_BUFFER_SIZE];
+    int16_t dma_buffer_rx[DMA_BUFFER_SIZE];
+    int16_t dma_buffer_tx[DMA_BUFFER_SIZE];
     float in[BLOCK_SIZE];
     float out[BLOCK_SIZE];
     size_t block_size;
@@ -166,8 +170,8 @@ void dsy_audio_start(uint8_t intext)
 	//    HAL_SAI_Transmit_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE);
 	if(intext == DSY_AUDIO_INTERNAL)
 	{
-		HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE);
-		HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE);
+		HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE / 2);
+		HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE / 2);
 	}
 	else
 	{
@@ -229,8 +233,8 @@ static void internal_callback(SAI_HandleTypeDef* hsai, uint8_t intext, size_t of
 	}
 	for (size_t i = 0; i < audio_handle.block_size; i += 2)
 	{
-		ah->in[i] = (float)((ah->dma_buffer_rx[offset + i]))  / MAX_AMP;
-		ah->in[i + 1] = (float)((ah->dma_buffer_rx[offset + i + 1])) / MAX_AMP;
+		ah->in[i] = (float)((((int16_t)ah->dma_buffer_rx[offset + i]))  / MAX_AMP);
+		ah->in[i + 1] = (float)((((int16_t)ah->dma_buffer_rx[offset + i + 1])) / MAX_AMP);
 	}
 	if (ah->callback)
 	{
@@ -238,8 +242,8 @@ static void internal_callback(SAI_HandleTypeDef* hsai, uint8_t intext, size_t of
 	}
 	for (size_t i = 0; i < audio_handle.block_size; i+=2)
 	{
-		ah->dma_buffer_tx[offset + i] = (int32_t)(ah->out[i] * MAX_OUT_AMP);
-		ah->dma_buffer_tx[offset + i + 1] = (int32_t)(ah->out[i+1] * MAX_OUT_AMP);
+		ah->dma_buffer_tx[offset + i] = (int16_t)(ah->out[i] * MAX_OUT_AMP);
+		ah->dma_buffer_tx[offset + i + 1] = (int16_t)(ah->out[i+1] * MAX_OUT_AMP);
 	}
 }
 // DMA Callbacks
