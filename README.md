@@ -25,6 +25,7 @@ Drivers coming soon:
 
 - ADC for Internal 8-11x 16-bit oversample-able ADCs.
 - DAC for 2-channel 12-bit DAC
+- SDMMC for FATFS filesystem on SD cards. (1-bit and 4-bit)
 - USB CDC (VCOM) driver for both USB Peripherals (Built-in and Pinout access)
 - MIDI via UART driver
 - PCA9685 LED Driver via I2C (16-channel PWM)
