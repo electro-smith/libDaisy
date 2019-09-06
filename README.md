@@ -14,6 +14,7 @@ Supported Boards:
 
 Functional Drivers
 
+- System Driver for initializing Kernal/Periph Clocks, PLLs, etc.
 - SDRAM for 64MB Alliance SDRAM chip
 - QSPI for 4MB IS25LP064D
 - QSPI for 1MB IS25LP080D
