@@ -16,10 +16,21 @@ Functional Drivers
 
 - System Driver for initializing Kernal/Periph Clocks, PLLs, etc.
 - SDRAM for 64MB Alliance SDRAM chip
-- QSPI for 4MB IS25LP064D
-- QSPI for 1MB IS25LP080D
+- QSPI for 4MB NOR FLASH IS25LP064D
+- QSPI for 1MB NOR FLASH IS25LP080D
 - Stereo Audio for Wolfson WM8731
 - Stereo Audio for TI PCM3060
+
+Drivers coming soon:
+
+- ADC for Internal 8-11x 16-bit oversample-able ADCs.
+- DAC for 2-channel 12-bit DAC
+- USB CDC (VCOM) driver for both USB Peripherals (Built-in and Pinout access)
+- MIDI via UART driver
+- PCA9685 LED Driver via I2C (16-channel PWM)
+- GPIO Driver for 32x on board GPIO.
+- PWM output driver for several of the onboard pins
+
 
 ## libdsysp
 
