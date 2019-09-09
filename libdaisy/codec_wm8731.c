@@ -1,20 +1,12 @@
 // WM8371 Codec support.
 #include "codec_wm8731.h"
 
-//typedef void (*sa_codec_fill_buffer_callback)( \
-//	codec_frame_t* rx, \
-//	codec_frame_t* tx, \
-//	size_t size);
-
 typedef struct {
   uint8_t mcu_is_master;
   int32_t sample_rate;
   size_t block_size;
   size_t stride;
-//  sa_audio_callback process;
-	I2C_HandleTypeDef *i2c;
-//  short tx_dma_buffer[SA_CODEC_BLOCK_SIZE_MAX * 8 * 2];
-//  short rx_dma_buffer[SA_CODEC_BLOCK_SIZE_MAX * 8 * 2];
+  I2C_HandleTypeDef *i2c;
 }dsy_wm8731_handle_t;
 
 #define W8731_ADDR_0 0x1A
