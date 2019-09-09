@@ -86,21 +86,27 @@ static void empty(float *in, float *out, size_t size)
     }
 }
 
+// TODO Init only the channel being used to save memory
 void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 {
-	// For now expecting external MX_SAI_Init() is being run in main.c
 	MX_DMA_Init();
 	MX_SAI1_Init();
 	MX_SAI2_Init();
-	MX_I2C2_Init();
 	if (intext == DSY_AUDIO_INTERNAL)
 	{
 		if (board == DSY_SYS_BOARD_DAISY_SEED)
 		{
-			sa_codec_init(&hi2c2 , 1, 48000.0f);
+			MX_I2C2_Init();
+			codec_wm8731_init(&hi2c2, 1, 48000.0f);
+		}
+		else if (board == DSY_SYS_BOARD_AUDIO_BB)
+		{
+			MX_I2C1_Init();
+			codec_wm8731_init(&hi2c1, 1, 48000.0f);	
 		}
 		else
 		{
+			MX_I2C2_Init();
 			codec_pcm3060_init(&hi2c2);
 		}
 		
@@ -110,10 +116,12 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 		switch (device)
 		{
 		case DSY_AUDIO_DEVICE_PCM3060:
+			MX_I2C1_Init();
 			codec_pcm3060_init(&hi2c1);
 			break;
 		case DSY_AUDIO_DEVICE_WM8731:
-			sa_codec_init(&hi2c1, 0, 48000.0f);
+			MX_I2C1_Init();
+			codec_wm8731_init(&hi2c1, 0, 48000.0f);
 			break;
 		default:
 			break;
