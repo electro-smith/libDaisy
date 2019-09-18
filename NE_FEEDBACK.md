@@ -11,6 +11,6 @@ Stephen's feedback upon useage of libdaisy for the benefit of the users.
  - having return codes for initialization functions seems kind of silly.. If something fails intentionally crashing is usually a cleaner way to communicate the failure as you can't ignore that accidently which is pretty much the default behavior if you dont crash (no one ever checks the return values of init stuff)
  - SysTick_Handler should be in dsy_system.c
  - it would be nice to have the function "empty" in the dsy_audio header for testing purposes. As well a simple sin wave generator (output only) and silence generator. Probably rename empty to dsy_audio_passthru etc.
- 
+ - I would prefer for the audio callbacks to be in integer format as there are often a lot of initial things that can be done much faster with ints than floats. This could be configurable or you could just provide a simple i2f utility.
  
  
