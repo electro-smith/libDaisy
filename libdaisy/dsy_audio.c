@@ -76,11 +76,8 @@ void DMA1_Stream4_IRQHandler(void)
 
 static void empty(float *in, float *out, size_t size)
 {
-    size *= 2;
     for (size_t i = 0; i < size; i+=2)
     {
-//        in[i] = 0.0f;
-//        in[i+1] = 0.0f;
         out[i] = in[i];
         out[i+1] = in[i+1];
     }
@@ -176,15 +173,11 @@ void dsy_audio_start(uint8_t intext)
 {
 	if(intext == DSY_AUDIO_INTERNAL)
 	{
-//		HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE / 2);
-//		HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE / 2);
 		HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE);
 		HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE );
 	}
 	else
 	{
-//		HAL_SAI_Receive_DMA(&hsai_BlockA2, (uint8_t *)audio_handle_ext.dma_buffer_rx, DMA_BUFFER_SIZE / 2);
-//		HAL_SAI_Transmit_DMA(&hsai_BlockB2, (uint8_t *)audio_handle_ext.dma_buffer_tx, DMA_BUFFER_SIZE / 2);
 		HAL_SAI_Receive_DMA(&hsai_BlockA2, (uint8_t *)audio_handle_ext.dma_buffer_rx, DMA_BUFFER_SIZE);
 		HAL_SAI_Transmit_DMA(&hsai_BlockB2, (uint8_t *)audio_handle_ext.dma_buffer_tx, DMA_BUFFER_SIZE);
 	}
