@@ -16,4 +16,4 @@ Stephen's feedback upon useage of libdaisy for the benefit of the users.
  - you should provide a FORCE_INLINE #define to force the inlining of functions
  - the if(ah->callback) is somewhat redundant as that variable is initialized to something. Do you really want users to set the callback to 0? 
  - get rid of all the TEST_BYPASS as just setting the callback to passthru does this without a bunch of confusing #ifdefs 
- 
+ - use C++ not C :) gcc8 is a badass C++ compiler there is little reason not to use what it offers at this point.
