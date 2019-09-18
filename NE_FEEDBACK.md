@@ -12,5 +12,7 @@ Stephen's feedback upon useage of libdaisy for the benefit of the users.
  - SysTick_Handler should be in dsy_system.c
  - it would be nice to have the function "empty" in the dsy_audio header for testing purposes. As well a simple sin wave generator (output only) and silence generator. Probably rename empty to dsy_audio_passthru etc.
  - I would prefer for the audio callbacks to be in integer format as there are often a lot of initial things that can be done much faster with ints than floats. This could be configurable or you could just provide a simple i2f utility.
+ - you should provide your own implmementations of dsy_assert 
+ - you should provide a FORCE_INLINE #define to force the inlining of functions
  
  
