@@ -22,7 +22,7 @@
 
 #endif // AUDIO_TOTAL_BUF_SIZE
 
-#define BLOCK_SIZE (DMA_BUFFER_SIZE/2)
+#define BLOCK_SIZE (DMA_BUFFER_SIZE / 2)
 
 enum
 {
@@ -39,7 +39,7 @@ enum
 };
 
 // Stereo input/output buffer
-// float *input *output 
+// float *input *output
 // size_t number of samples
 typedef void (*audio_callback)(float*, float*, size_t);
 
@@ -47,5 +47,8 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device);
 void dsy_audio_set_callback(uint8_t intext, audio_callback cb);
 void dsy_audio_start(uint8_t intext);
 void dsy_audio_stop(uint8_t intext);
+
+void dsy_audio_passthru(float* in, float* out, size_t size);
+void dsy_audio_silence(float* in, float* out, size_t size);
 
 #endif
