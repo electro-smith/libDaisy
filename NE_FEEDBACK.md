@@ -9,5 +9,11 @@ Stephen's feedback upon useage of libdaisy for the benefit of the users.
  - defining DMA1_Stream0_IRQHandler conflicts with a default cube generated project as HAL has its own internal definition of this (gonna be tricky to fix this cleanly you probaly need to overwrite the IRQ vector  with your differently named function since this function is technically dynamicly linked: g_pfnVectors[vector] = my_dma_callback;) -- just commenting these out in dsy_audio.c solves the problem. Not sure why there are different versions of this function about.
  - dsy_sdram_init should return the ram size and a pointer to the base address. Or this should be queryiable through another interface to support applications that don't use link time management of this memory block.
  - having return codes for initialization functions seems kind of silly.. If something fails intentionally crashing is usually a cleaner way to communicate the failure as you can't ignore that accidently which is pretty much the default behavior if you dont crash (no one ever checks the return values of init stuff)
- 
+ - SysTick_Handler should be in dsy_system.c
+ - it would be nice to have the function "empty" in the dsy_audio header for testing purposes. As well a simple sin wave generator (output only) and silence generator. Probably rename empty to dsy_audio_passthru etc.
+ - I would prefer for the audio callbacks to be in integer format as there are often a lot of initial things that can be done much faster with ints than floats. This could be configurable or you could just provide a simple i2f utility.
+ - you should provide your own implmementations of dsy_assert 
+ - you should provide a FORCE_INLINE #define to force the inlining of functions
+ - the if(ah->callback) is somewhat redundant as that variable is initialized to something. Do you really want users to set the callback to 0? 
+ - get rid of all the TEST_BYPASS as just setting the callback to passthru does this without a bunch of confusing #ifdefs 
  
