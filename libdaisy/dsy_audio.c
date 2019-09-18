@@ -174,15 +174,17 @@ void dsy_audio_set_callback(uint8_t intext, audio_callback cb)
 
 void dsy_audio_start(uint8_t intext)
 {
-	//    HAL_SAI_Receive_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE);
-	//    HAL_SAI_Transmit_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE);
 	if(intext == DSY_AUDIO_INTERNAL)
 	{
-		HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE / 2);
-		HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE / 2);
+//		HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE / 2);
+//		HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE / 2);
+		HAL_SAI_Receive_DMA(&hsai_BlockA1, (uint8_t *)audio_handle.dma_buffer_rx, DMA_BUFFER_SIZE);
+		HAL_SAI_Transmit_DMA(&hsai_BlockB1, (uint8_t *)audio_handle.dma_buffer_tx, DMA_BUFFER_SIZE );
 	}
 	else
 	{
+//		HAL_SAI_Receive_DMA(&hsai_BlockA2, (uint8_t *)audio_handle_ext.dma_buffer_rx, DMA_BUFFER_SIZE / 2);
+//		HAL_SAI_Transmit_DMA(&hsai_BlockB2, (uint8_t *)audio_handle_ext.dma_buffer_tx, DMA_BUFFER_SIZE / 2);
 		HAL_SAI_Receive_DMA(&hsai_BlockA2, (uint8_t *)audio_handle_ext.dma_buffer_rx, DMA_BUFFER_SIZE);
 		HAL_SAI_Transmit_DMA(&hsai_BlockB2, (uint8_t *)audio_handle_ext.dma_buffer_tx, DMA_BUFFER_SIZE);
 	}
