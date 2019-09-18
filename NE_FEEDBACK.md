@@ -14,5 +14,6 @@ Stephen's feedback upon useage of libdaisy for the benefit of the users.
  - I would prefer for the audio callbacks to be in integer format as there are often a lot of initial things that can be done much faster with ints than floats. This could be configurable or you could just provide a simple i2f utility.
  - you should provide your own implmementations of dsy_assert 
  - you should provide a FORCE_INLINE #define to force the inlining of functions
+ - the if(ah->callback) is somewhat redundant as that variable is initialized to something. Do you really want users to set the callback to 0? 
  
  
