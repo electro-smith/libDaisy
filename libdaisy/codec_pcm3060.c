@@ -58,7 +58,7 @@ void codec_pcm3060_init(I2C_HandleTypeDef *hi2c)
 	// Set ADC to 16-bit
 //	buff[0] = REGISTER_ADC_CTL;
 //	buff[1] = 0;
-//	buff[1] |= (FMT_MSB);
+//	buff[1] |= (FMT_16);
 //	ret = HAL_I2C_Master_Transmit(hi2c, addr, buff, 2, 1);
 //	if (ret != HAL_OK)
 //	{

@@ -18,6 +18,7 @@
   */
 /* Includes ------------------------------------------------------------------*/
 #include "sai.h"
+#include "libdaisy.h"
 
 //#include "gpio.h"
 #include "dma.h"
@@ -36,10 +37,24 @@ DMA_HandleTypeDef hdma_sai1_b;
 DMA_HandleTypeDef hdma_sai2_a;
 DMA_HandleTypeDef hdma_sai2_b;
 
-/* SAI1 init function */
-void MX_SAI1_Init(void)
-{
+static uint32_t alignment;
 
+/* SAI1 init function */
+void dsy_sai1_init(uint8_t bitdepth)
+{
+	uint8_t bd;
+	switch(bitdepth)
+	{
+		case DSY_AUDIO_BITDEPTH_16: 
+			bd = SAI_PROTOCOL_DATASIZE_16BIT;
+			break;
+		case DSY_AUDIO_BITDEPTH_24: 
+			bd = SAI_PROTOCOL_DATASIZE_24BIT;
+			break;
+		default: 
+			bd = SAI_PROTOCOL_DATASIZE_16BIT; 
+			break;
+	}
   hsai_BlockA1.Instance = SAI1_Block_A;
   hsai_BlockA1.Init.AudioMode = SAI_MODEMASTER_RX;
   hsai_BlockA1.Init.Synchro = SAI_ASYNCHRONOUS;
@@ -50,7 +65,7 @@ void MX_SAI1_Init(void)
   hsai_BlockA1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
   hsai_BlockA1.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockA1.Init.CompandingMode = SAI_NOCOMPANDING;
-  if (HAL_SAI_InitProtocol(&hsai_BlockA1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
+  if (HAL_SAI_InitProtocol(&hsai_BlockA1, SAI_I2S_STANDARD, bd, 2) != HAL_OK)
   {
     //Error_Handler();
   }
@@ -64,15 +79,28 @@ void MX_SAI1_Init(void)
   hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
   hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
   hsai_BlockB1.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
+  if (HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_STANDARD, bd, 2) != HAL_OK)
   {
     //Error_Handler();
   }
 
 }
 /* SAI2 init function */
-void MX_SAI2_Init(void)
+void dsy_sai2_init(uint8_t bitdepth)
 {
+	uint8_t bd;
+	switch(bitdepth)
+	{
+		case DSY_AUDIO_BITDEPTH_16: 
+			bd = SAI_PROTOCOL_DATASIZE_16BIT;
+			break;
+		case DSY_AUDIO_BITDEPTH_24: 
+			bd = SAI_PROTOCOL_DATASIZE_24BIT;
+			break;
+		default: 
+			bd = SAI_PROTOCOL_DATASIZE_16BIT; 
+			break;
+	}
 
   hsai_BlockA2.Instance = SAI2_Block_A;
   hsai_BlockA2.Init.AudioMode = SAI_MODESLAVE_RX;
@@ -151,8 +179,8 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     hdma_sai1_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
     hdma_sai1_a.Init.PeriphInc = DMA_PINC_DISABLE;
     hdma_sai1_a.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_sai1_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_sai1_a.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_sai1_a.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    hdma_sai1_a.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
     hdma_sai1_a.Init.Mode = DMA_CIRCULAR;
     hdma_sai1_a.Init.Priority = DMA_PRIORITY_HIGH;
     hdma_sai1_a.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
@@ -192,8 +220,8 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     hdma_sai1_b.Init.Direction = DMA_MEMORY_TO_PERIPH;
     hdma_sai1_b.Init.PeriphInc = DMA_PINC_DISABLE;
     hdma_sai1_b.Init.MemInc = DMA_MINC_ENABLE;
-    hdma_sai1_b.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-    hdma_sai1_b.Init.MemDataAlignment = DMA_MDATAALIGN_HALFWORD;
+    hdma_sai1_b.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    hdma_sai1_b.Init.MemDataAlignment = DMA_MDATAALIGN_WORD;
     hdma_sai1_b.Init.Mode = DMA_CIRCULAR;
     hdma_sai1_b.Init.Priority = DMA_PRIORITY_HIGH;
     hdma_sai1_b.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
