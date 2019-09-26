@@ -13,12 +13,13 @@
 typedef struct
 {
 	audio_callback callback;
-	int16_t		   dma_buffer_rx[DMA_BUFFER_SIZE];
-	int16_t		   dma_buffer_tx[DMA_BUFFER_SIZE];
+	int32_t		   dma_buffer_rx[DMA_BUFFER_SIZE];
+	int32_t		   dma_buffer_tx[DMA_BUFFER_SIZE];
 	float		   in[BLOCK_SIZE];
 	float		   out[BLOCK_SIZE];
 	size_t		   block_size;
 	size_t		   offset;
+	uint8_t		   bitdepth;
 } et_audio_t;
 static et_audio_t audio_handle;
 static et_audio_t audio_handle_ext;
@@ -76,9 +77,6 @@ void dsy_audio_silence(float* in, float* out, size_t size)
 // TODO Init only the channel being used to save memory
 void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 {
-	MX_DMA_Init();
-	MX_SAI1_Init();
-	MX_SAI2_Init();
 
 	if(intext == DSY_AUDIO_INTERNAL)
 	{
@@ -86,16 +84,19 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 		{
 			MX_I2C2_Init();
 			codec_wm8731_init(&hi2c2, 1, 48000.0f);
+			audio_handle.bitdepth = DSY_AUDIO_BITDEPTH_16;
 		}
 		else if(board == DSY_SYS_BOARD_AUDIO_BB)
 		{
 			MX_I2C1_Init();
 			codec_wm8731_init(&hi2c1, 1, 48000.0f);
+			audio_handle.bitdepth = DSY_AUDIO_BITDEPTH_16;
 		}
 		else
 		{
 			MX_I2C2_Init();
 			codec_pcm3060_init(&hi2c2);
+			audio_handle.bitdepth = DSY_AUDIO_BITDEPTH_24;
 		}
 	}
 	else
@@ -105,14 +106,19 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 			case DSY_AUDIO_DEVICE_PCM3060:
 				MX_I2C1_Init();
 				codec_pcm3060_init(&hi2c1);
+				audio_handle_ext.bitdepth = DSY_AUDIO_BITDEPTH_24;
 				break;
 			case DSY_AUDIO_DEVICE_WM8731:
 				MX_I2C1_Init();
 				codec_wm8731_init(&hi2c1, 0, 48000.0f);
+				audio_handle_ext.bitdepth = DSY_AUDIO_BITDEPTH_16;
 				break;
 			default: break;
 		}
 	}
+	MX_DMA_Init();
+	dsy_sai1_init(audio_handle.bitdepth);
+	dsy_sai2_init(audio_handle_ext.bitdepth);
 	// Initialize Internal Audio Handle
 	audio_handle.callback   = dsy_audio_passthru;
 	audio_handle.block_size = BLOCK_SIZE;
@@ -222,26 +228,35 @@ static void internal_callback(SAI_HandleTypeDef* hsai, size_t offset)
 {
 	et_audio_t* ah = get_audio_from_sai(hsai);
 
-	const int16_t* ini  = ah->dma_buffer_rx + offset;
+	const int32_t* ini  = ah->dma_buffer_rx + offset;
 	float*		   inf  = ah->in;
 	const float*   endi = ah->in + ah->block_size;
 
 	while(inf != endi)
 	{
-		*inf++ = s162f(*ini++);
+		if (ah->bitdepth == DSY_AUDIO_BITDEPTH_24)
+			*inf++ = s242f(*ini++);
+		else
+			*inf++ = s162f(*ini++);
 	}
 
 	ah->callback(ah->in, ah->out, ah->block_size);
 
-	int16_t*	 outi = ah->dma_buffer_tx + offset;
+	int32_t*	 outi = ah->dma_buffer_tx + offset;
 	const float* outf = ah->out;
 	const float* endo = ah->out + ah->block_size;
 
 	while(outf != endo)
 	{
-		*outi++ = f2s16(*outf++);
+		if (ah->bitdepth == DSY_AUDIO_BITDEPTH_24)
+			*outi++ = f2s24(*outf++);
+		else
+			*outi++ = f2s16(*outf++);
 	}
 }
+
+// Tests
+
 
 // DMA Callbacks
 void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef* hsai)
