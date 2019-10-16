@@ -28,7 +28,7 @@ void dsy_adc_init(uint8_t board)
 	/** Common config 
   */
 	hadc1.Instance						= ADC1;
-	hadc1.Init.ClockPrescaler			= ADC_CLOCK_ASYNC_DIV32;
+	hadc1.Init.ClockPrescaler			= ADC_CLOCK_ASYNC_DIV128;
 	hadc1.Init.Resolution				= ADC_RESOLUTION_16B;
 	hadc1.Init.ScanConvMode				= ADC_SCAN_ENABLE;
 	hadc1.Init.EOCSelection				= ADC_EOC_SEQ_CONV;
@@ -57,7 +57,7 @@ void dsy_adc_init(uint8_t board)
   */
 	sConfig.Channel		 = ADC_CHANNEL_3;
 	sConfig.Rank		 = ADC_REGULAR_RANK_1;
-	sConfig.SamplingTime = ADC_SAMPLETIME_32CYCLES_5;
+	sConfig.SamplingTime = ADC_SAMPLETIME_64CYCLES_5;
 	sConfig.SingleDiff   = ADC_SINGLE_ENDED;
 	sConfig.OffsetNumber = ADC_OFFSET_NONE;
 	sConfig.Offset		 = 0;

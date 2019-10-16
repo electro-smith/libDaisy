@@ -14,8 +14,11 @@ extern "C"
 // - Setup a similar start function for an external mux, but that seems outside the scope of this file.
 
 // Limitations:
-// - For now speed is fixed at ASYNC_DIV32 for ADC Clock, and SAMPLETIME_32CYCLES_5 for each conversion.
+// - For now speed is fixed at ASYNC_DIV128 for ADC Clock, and SAMPLETIME_64CYCLES_5 for each conversion.
 // - Only Daisy Seed GPIO init is set up.
+// - All 8 ADC channels are on whether you like it or not
+// - No OPAMP config for the weird channel
+// - No oversampling built in
 
 void	 dsy_adc_init(uint8_t board);
 void	 dsy_adc_start();
