@@ -88,6 +88,18 @@ enum CodecSettings {
   CODEC_RATE_32K_32K = 0x06 << 2,
   CODEC_RATE_44K_44K = 0x08 << 2,
 };
+
+enum CodecAnalogSettings
+{
+	CODEC_ANALOG_MICBOOST	= 0x01,
+	CODEC_ANALOG_MUTEMIC	= 0x02,
+	CODEC_ANALOG_INSEL		= 0x04,
+	CODEC_ANALOG_BYPASS		= 0x08,
+	CODEC_ANALOG_DACSEL		= 0x10,
+	CODEC_ANALOG_SIDETONE	= 0x20,
+	CODEC_ANALOG_SIDEATT_0	= 0x40,
+	CODEC_ANALOG_SIDEATT_1	= 0x80,
+};
 // BEGIN SHENSLEY PORT
 dsy_wm8731_handle_t codec_handle;
 uint8_t codec_wm8731_init( \
@@ -108,6 +120,28 @@ uint8_t codec_wm8731_init( \
 	return s;
 }
 
+uint8_t codec_wm8731_enter_bypass(I2C_HandleTypeDef *hi2c) 
+{
+	uint8_t s;
+	uint8_t bypass_mode_byte = 0;
+	codec_handle.i2c		 = hi2c;
+	bypass_mode_byte |= CODEC_ANALOG_BYPASS | CODEC_ANALOG_MUTEMIC;
+	s = codec_write_control_register(CODEC_REG_ANALOGUE_ROUTING,
+										  bypass_mode_byte);
+	s = s && codec_write_control_register(CODEC_REG_ACTIVE, 0x00);
+	return s;
+}
+uint8_t codec_wm8731_exit_bypass(I2C_HandleTypeDef *hi2c) 
+{
+	uint8_t s;
+	uint8_t byte = 0;
+	codec_handle.i2c		 = hi2c;
+	byte |= CODEC_ANALOG_MUTEMIC | CODEC_ANALOG_DACSEL;
+	s = codec_write_control_register(CODEC_REG_ANALOGUE_ROUTING, byte);
+	s = s && codec_write_control_register(CODEC_REG_ACTIVE, 0x00);
+	return s;
+}
+
 static uint8_t init_codec(uint8_t mcu_is_master, int32_t sample_rate)
 {
   uint8_t s = 1;  // success;
@@ -117,11 +151,11 @@ static uint8_t init_codec(uint8_t mcu_is_master, int32_t sample_rate)
   s = s && codec_write_control_register(CODEC_REG_RIGHT_LINE_IN, CODEC_INPUT_0_DB);
   
   // Configure L&R headphone outputs
-  //s = s && sa_codec_write_control_register(CODEC_REG_LEFT_HEADPHONES_OUT, CODEC_HEADPHONES_MUTE);
-  //s = s && sa_codec_write_control_register(CODEC_REG_RIGHT_HEADPHONES_OUT, CODEC_HEADPHONES_MUTE);
-  uint8_t hp_config = 0b01110101;
-  s = s && codec_write_control_register(CODEC_REG_LEFT_HEADPHONES_OUT, hp_config);
-  s = s && codec_write_control_register(CODEC_REG_RIGHT_HEADPHONES_OUT, hp_config);
+  s = s && codec_write_control_register(CODEC_REG_LEFT_HEADPHONES_OUT, CODEC_HEADPHONES_MUTE);
+  s = s && codec_write_control_register(CODEC_REG_RIGHT_HEADPHONES_OUT, CODEC_HEADPHONES_MUTE);
+//  uint8_t hp_config = 0b01110101;
+//  s = s && codec_write_control_register(CODEC_REG_LEFT_HEADPHONES_OUT, hp_config);
+//  s = s && codec_write_control_register(CODEC_REG_RIGHT_HEADPHONES_OUT, hp_config);
 
   // Configure analog routing
   s = s && codec_write_control_register(
@@ -173,7 +207,6 @@ static uint8_t init_codec(uint8_t mcu_is_master, int32_t sample_rate)
     }
   }
   s = s && codec_write_control_register(CODEC_REG_SAMPLE_RATE, rate_byte);
-
   // For now codec is not active.
   s = s && codec_write_control_register(CODEC_REG_ACTIVE, 0x00);
   

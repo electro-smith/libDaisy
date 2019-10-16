@@ -25,6 +25,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32h7xx_hal.h"
+#include "libdaisy.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -37,8 +38,8 @@ extern I2C_HandleTypeDef hi2c2;
 
 /* USER CODE END Private defines */
 
-void MX_I2C1_Init(void);
-void MX_I2C2_Init(void);
+void dsy_i2c1_init(uint8_t board);
+void dsy_i2c2_init(uint8_t board);
 
 /* USER CODE BEGIN Prototypes */
 
