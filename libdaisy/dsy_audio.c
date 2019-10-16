@@ -13,10 +13,10 @@
 typedef struct
 {
 	audio_callback callback;
-	int32_t		   dma_buffer_rx[DMA_BUFFER_SIZE];
-	int32_t		   dma_buffer_tx[DMA_BUFFER_SIZE];
-	float		   in[BLOCK_SIZE];
-	float		   out[BLOCK_SIZE];
+	int32_t		   dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE];
+	int32_t		   dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE];
+	float		   in[DSY_AUDIO_BLOCK_SIZE];
+	float		   out[DSY_AUDIO_BLOCK_SIZE];
 	size_t		   block_size, offset;
 	uint8_t		   bitdepth, device;
 	I2C_HandleTypeDef* device_control_hi2c;
@@ -97,14 +97,14 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 		}
 		// Initialize Internal Audio Handle
 		audio_handle.callback   = dsy_audio_passthru;
-		audio_handle.block_size = BLOCK_SIZE;
+		audio_handle.block_size = DSY_AUDIO_BLOCK_SIZE;
 
-		for(size_t i = 0; i < DMA_BUFFER_SIZE; i++)
+		for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE; i++)
 		{
 			audio_handle.dma_buffer_rx[i] = 0;
 			audio_handle.dma_buffer_tx[i] = 0;
 		}
-		for(size_t i = 0; i < BLOCK_SIZE; i++)
+		for(size_t i = 0; i < DSY_AUDIO_BLOCK_SIZE; i++)
 		{
 			audio_handle.in[i]  = 0.0f;
 			audio_handle.out[i] = 0.0f;
@@ -133,13 +133,13 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 		}
 		// Initialize External Audio Handle
 		audio_handle_ext.callback   = dsy_audio_passthru;
-		audio_handle_ext.block_size = BLOCK_SIZE;
-		for(size_t i = 0; i < DMA_BUFFER_SIZE; i++)
+		audio_handle_ext.block_size = DSY_AUDIO_BLOCK_SIZE;
+		for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE; i++)
 		{
 			audio_handle_ext.dma_buffer_rx[i] = 0;
 			audio_handle_ext.dma_buffer_tx[i] = 0;
 		}
-		for(size_t i = 0; i < BLOCK_SIZE; i++)
+		for(size_t i = 0; i < DSY_AUDIO_BLOCK_SIZE; i++)
 		{
 			audio_handle_ext.in[i]  = 0.0f;
 			audio_handle_ext.out[i] = 0.0f;
@@ -169,19 +169,19 @@ void dsy_audio_start(uint8_t intext)
 	{
 		HAL_SAI_Receive_DMA(&hsai_BlockA1,
 							(uint8_t*)audio_handle.dma_buffer_rx,
-							DMA_BUFFER_SIZE);
+							DSY_AUDIO_DMA_BUFFER_SIZE);
 		HAL_SAI_Transmit_DMA(&hsai_BlockB1,
 							 (uint8_t*)audio_handle.dma_buffer_tx,
-							 DMA_BUFFER_SIZE);
+							 DSY_AUDIO_DMA_BUFFER_SIZE);
 	}
 	else
 	{
 		HAL_SAI_Receive_DMA(&hsai_BlockA2,
 							(uint8_t*)audio_handle_ext.dma_buffer_rx,
-							DMA_BUFFER_SIZE);
+							DSY_AUDIO_DMA_BUFFER_SIZE);
 		HAL_SAI_Transmit_DMA(&hsai_BlockB2,
 							 (uint8_t*)audio_handle_ext.dma_buffer_tx,
-							 DMA_BUFFER_SIZE);
+							 DSY_AUDIO_DMA_BUFFER_SIZE);
 	}
 }
 
@@ -191,10 +191,10 @@ void dsy_audio_start_streaming_output(uint8_t* buff, size_t size)
 	//	HAL_SAI_Transmit_DMA(&hsai_BlockA1, buff, DMA_BUFFER_SIZE);
 	uint32_t* vals;
 	vals			= (uint32_t*)buff;
-	uint32_t offset = (audio_handle.offset + 1) * BLOCK_SIZE;
+	uint32_t offset = (audio_handle.offset + 1) * DSY_AUDIO_BLOCK_SIZE;
 	for(size_t i = 0; i < size; i++)
 	{
-		if(i + offset < DMA_BUFFER_SIZE)
+		if(i + offset < DSY_AUDIO_DMA_BUFFER_SIZE)
 		{
 			audio_handle.dma_buffer_tx[i + offset] = vals[i] << 8;
 		}

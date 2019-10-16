@@ -4,11 +4,11 @@
 #include <stdint.h>
 
 // TODO Fix hard coding of these parameters
-#ifndef SAMPLE_RATE
+#ifndef DSY_AUDIO_SAMPLE_RATE
 //#define SAMPLE_RATE 47916.0f
 //#define SAMPLE_RATE 31941.0f
 //#define SAMPLE_RATE 48014.0f
-#define SAMPLE_RATE 48014.0f
+#define DSY_AUDIO_SAMPLE_RATE 48014.0f
 //#define SAMPLE_RATE 95820.0f
 #endif
 
@@ -16,15 +16,15 @@
 #define DMA_BUFFER_SIZE AUDIO_TOTAL_BUF_SIZE / 2
 #else
 
-#ifndef DMA_BUFFER_SIZE
-#define DMA_BUFFER_SIZE 48
+#ifndef DSY_AUDIO_DMA_BUFFER_SIZE
+#define DSY_AUDIO_DMA_BUFFER_SIZE 48
 //#define DMA_BUFFER_SIZE 96
 //#define DMA_BUFFER_SIZE 128
 #endif // DMA_BUFFER_SIZE
 
 #endif // AUDIO_TOTAL_BUF_SIZE
 
-#define BLOCK_SIZE (DMA_BUFFER_SIZE / 2)
+#define DSY_AUDIO_BLOCK_SIZE (DSY_AUDIO_DMA_BUFFER_SIZE / 2)
 
 enum
 {
