@@ -19,6 +19,9 @@
 #define FBIPMIN (-FBIPMAX)
 #define S162F_SCALE 3.0517578125e-05f
 #define F2S16_SCALE 32767.0f
+#define F2S24_SCALE 8388608.0f
+#define S242F_SCALE 1.192092896e-07f
+#define S24SIGN 0x800000
 
 FORCE_INLINE float s162f(int16_t x)
 {
@@ -31,6 +34,26 @@ FORCE_INLINE int16_t f2s16(float x)
 	x = x >= FBIPMAX ? FBIPMAX : x;
 	return (int32_t)(x * F2S16_SCALE);
 }
+
+FORCE_INLINE float s242f(int32_t x)
+{
+	x = (x ^ S24SIGN) - S24SIGN; //sign extend aka ((x<<8)>>8)
+	return (float)x * S242F_SCALE;
+}
+FORCE_INLINE int32_t f2s24(float x) 
+{
+	x = x <= FBIPMIN ? FBIPMIN : x;
+	x = x >= FBIPMAX ? FBIPMAX : x;
+	return (int32_t)(x * F2S24_SCALE);
+}
+
+enum
+{
+	DSY_AUDIO_BITDEPTH_16,
+	DSY_AUDIO_BITDEPTH_24,
+	DSY_AUDIO_BITDEPTH_LAST
+};
+
 
 #include "dsy_system.h" // Always include
 
