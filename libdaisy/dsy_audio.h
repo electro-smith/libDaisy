@@ -18,6 +18,8 @@
 
 #ifndef DMA_BUFFER_SIZE
 #define DMA_BUFFER_SIZE 48
+//#define DMA_BUFFER_SIZE 96
+//#define DMA_BUFFER_SIZE 128
 #endif // DMA_BUFFER_SIZE
 
 #endif // AUDIO_TOTAL_BUF_SIZE
@@ -47,6 +49,12 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device);
 void dsy_audio_set_callback(uint8_t intext, audio_callback cb);
 void dsy_audio_start(uint8_t intext);
 void dsy_audio_stop(uint8_t intext);
+
+// If the device supports hardware bypass, enter that mode.
+void dsy_audio_enter_bypass(uint8_t intext);
+
+// If the device supports hardware bypass, exit that mode.
+void dsy_audio_exit_bypass(uint8_t intext);
 
 void dsy_audio_passthru(float* in, float* out, size_t size);
 void dsy_audio_silence(float* in, float* out, size_t size);

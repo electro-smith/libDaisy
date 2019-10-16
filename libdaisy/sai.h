@@ -40,8 +40,8 @@ extern SAI_HandleTypeDef hsai_BlockB2;
 
 /* USER CODE END Private defines */
 
-void dsy_sai1_init(uint8_t bitdepth);
-void dsy_sai2_init(uint8_t bitdepth);
+void dsy_sai1_init(uint8_t board, uint8_t bitdepth);
+void dsy_sai2_init(uint8_t board, uint8_t bitdepth);
 
 /* USER CODE BEGIN Prototypes */
 

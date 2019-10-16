@@ -43,7 +43,7 @@
     <Entries>
       <KeyValue>
         <Key>com.sysprogs.bspoptions.stm32.ll_driver</Key>
-        <Value />
+        <Value>USE_FULL_LL_DRIVER</Value>
       </KeyValue>
     </Entries>
   </FrameworkProperties>
