@@ -27,19 +27,30 @@
 I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;
 
+typedef struct
+{
+	uint8_t board;
+} dsy_i2c_handle_t;
 
-void MX_I2C1_Init(void)
+// TODO: This is global, and the board gets set for each init. 
+// Its a bit redundant, but I'm just trying to validate some hardware
+//   without breaking all the other boards.
+static dsy_i2c_handle_t i2c_handler;
+
+
+void dsy_i2c1_init(uint8_t board)
 {
 
-  hi2c2.Instance = I2C1;
-  hi2c2.Init.Timing = 0x00C0EAFF;
-  hi2c2.Init.OwnAddress1 = 0;
-  hi2c2.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c2.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
-  hi2c2.Init.OwnAddress2 = 0;
-  hi2c2.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
-  hi2c2.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
-  hi2c2.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
+  i2c_handler.board = board;
+  hi2c1.Instance = I2C1;
+  hi2c1.Init.Timing = 0x00C0EAFF;
+  hi2c1.Init.OwnAddress1 = 0;
+  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
+  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;
+  hi2c1.Init.OwnAddress2 = 0;
+  hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
+  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLE;
+  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLE;
   if (HAL_I2C_Init(&hi2c1) != HAL_OK)
   {
     //Error_Handler();
@@ -56,12 +67,12 @@ void MX_I2C1_Init(void)
   {
     //Error_Handler();
   }
-
 }
 /* I2C2 init function */
-void MX_I2C2_Init(void)
+void dsy_i2c2_init(uint8_t board)
 {
 
+  i2c_handler.board = board;
   hi2c2.Instance = I2C2;
   hi2c2.Init.Timing = 0x00C0EAFF;
   hi2c2.Init.OwnAddress1 = 0;
@@ -102,8 +113,18 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
 		PB8     ------> I2C1_SCL
 		PB9     ------> I2C1_SDA 
 		*/
-		GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
-		GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+		// TODO: Flesh this out (I like how I handled it with qspi... makes it easy to add more boards).
+		// Also for some reason the debugger says this will never get hit... weird... -- but the codec works.
+		if(i2c_handler.board == DSY_SYS_BOARD_AUDIO_BB)
+		{
+			GPIO_InitStruct.Pin = GPIO_PIN_6 | GPIO_PIN_9;
+		}
+		else
+		{
+			GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
+		}
+
+		GPIO_InitStruct.Mode	  = GPIO_MODE_AF_OD;
 		GPIO_InitStruct.Pull = GPIO_NOPULL;
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 		GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;

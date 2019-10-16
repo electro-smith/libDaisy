@@ -24,6 +24,17 @@
 #include "dma.h"
 
 /* USER CODE BEGIN 0 */
+enum
+{
+	DSY_SAI_1,
+	DSY_SAI_2,
+	DSY_SAI_LAST,
+};
+typedef struct
+{
+	uint8_t board;
+	uint8_t bitdepth[DSY_SAI_LAST];
+} dsy_sai_handle_t;
 
 /* USER CODE END 0 */
 
@@ -37,10 +48,10 @@ DMA_HandleTypeDef hdma_sai1_b;
 DMA_HandleTypeDef hdma_sai2_a;
 DMA_HandleTypeDef hdma_sai2_b;
 
-static uint32_t alignment;
+static dsy_sai_handle_t dsy_sai_handle;
 
 /* SAI1 init function */
-void dsy_sai1_init(uint8_t bitdepth)
+void dsy_sai1_init(uint8_t board, uint8_t bitdepth)
 {
 	uint8_t bd;
 	switch(bitdepth)
@@ -55,19 +66,21 @@ void dsy_sai1_init(uint8_t bitdepth)
 			bd = SAI_PROTOCOL_DATASIZE_16BIT; 
 			break;
 	}
-  hsai_BlockA1.Instance = SAI1_Block_A;
-  hsai_BlockA1.Init.AudioMode = SAI_MODEMASTER_RX;
-  hsai_BlockA1.Init.Synchro = SAI_ASYNCHRONOUS;
-  hsai_BlockA1.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockA1.Init.NoDivider = SAI_MASTERDIVIDER_ENABLE;
-  hsai_BlockA1.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockA1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
-  hsai_BlockA1.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-  hsai_BlockA1.Init.MonoStereoMode = SAI_STEREOMODE;
-  hsai_BlockA1.Init.CompandingMode = SAI_NOCOMPANDING;
-  if (HAL_SAI_InitProtocol(&hsai_BlockA1, SAI_I2S_STANDARD, bd, 2) != HAL_OK)
-  {
-    //Error_Handler();
+	dsy_sai_handle.bitdepth[DSY_SAI_1] = bitdepth;
+	dsy_sai_handle.board				 = board;
+	hsai_BlockA1.Instance				 = SAI1_Block_A;
+	hsai_BlockA1.Init.AudioMode			 = SAI_MODEMASTER_RX;
+	hsai_BlockA1.Init.Synchro			 = SAI_ASYNCHRONOUS;
+	hsai_BlockA1.Init.OutputDrive		 = SAI_OUTPUTDRIVE_DISABLE;
+	hsai_BlockA1.Init.NoDivider			 = SAI_MASTERDIVIDER_ENABLE;
+	hsai_BlockA1.Init.FIFOThreshold		 = SAI_FIFOTHRESHOLD_EMPTY;
+	hsai_BlockA1.Init.AudioFrequency	 = SAI_AUDIO_FREQUENCY_48K;
+	hsai_BlockA1.Init.SynchroExt		 = SAI_SYNCEXT_DISABLE;
+	hsai_BlockA1.Init.MonoStereoMode	 = SAI_STEREOMODE;
+	hsai_BlockA1.Init.CompandingMode	 = SAI_NOCOMPANDING;
+	if(HAL_SAI_InitProtocol(&hsai_BlockA1, SAI_I2S_STANDARD, bd, 2) != HAL_OK)
+	{
+		//Error_Handler();
   }
 
   hsai_BlockB1.Instance = SAI1_Block_B;
@@ -86,7 +99,7 @@ void dsy_sai1_init(uint8_t bitdepth)
 
 }
 /* SAI2 init function */
-void dsy_sai2_init(uint8_t bitdepth)
+void dsy_sai2_init(uint8_t board, uint8_t bitdepth)
 {
 	uint8_t bd;
 	switch(bitdepth)
@@ -102,33 +115,39 @@ void dsy_sai2_init(uint8_t bitdepth)
 			break;
 	}
 
-  hsai_BlockA2.Instance = SAI2_Block_A;
-  hsai_BlockA2.Init.AudioMode = SAI_MODESLAVE_RX;
-  hsai_BlockA2.Init.Synchro = SAI_ASYNCHRONOUS;
-  hsai_BlockA2.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockA2.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockA2.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-  hsai_BlockA2.Init.MonoStereoMode = SAI_STEREOMODE;
-  hsai_BlockA2.Init.CompandingMode = SAI_NOCOMPANDING;
-  hsai_BlockA2.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-  if (HAL_SAI_InitProtocol(&hsai_BlockA2, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
-  {
-    //Error_Handler();
-  }
+	dsy_sai_handle.bitdepth[DSY_SAI_2] = bitdepth;
+	dsy_sai_handle.board				 = board;
+	hsai_BlockA2.Instance				 = SAI2_Block_A;
+	hsai_BlockA2.Init.AudioMode			 = SAI_MODESLAVE_RX;
+	hsai_BlockA2.Init.Synchro			 = SAI_ASYNCHRONOUS;
+	hsai_BlockA2.Init.OutputDrive		 = SAI_OUTPUTDRIVE_DISABLE;
+	hsai_BlockA2.Init.FIFOThreshold		 = SAI_FIFOTHRESHOLD_EMPTY;
+	hsai_BlockA2.Init.SynchroExt		 = SAI_SYNCEXT_DISABLE;
+	hsai_BlockA2.Init.MonoStereoMode	 = SAI_STEREOMODE;
+	hsai_BlockA2.Init.CompandingMode	 = SAI_NOCOMPANDING;
+	hsai_BlockA2.Init.TriState			 = SAI_OUTPUT_NOTRELEASED;
+	if(HAL_SAI_InitProtocol(
+		   &hsai_BlockA2, SAI_I2S_STANDARD, bd, 2)
+	   != HAL_OK)
+	{
+		//Error_Handler();
+	}
 
-  hsai_BlockB2.Instance = SAI2_Block_B;
-  hsai_BlockB2.Init.AudioMode = SAI_MODESLAVE_TX;
-  hsai_BlockB2.Init.Synchro = SAI_SYNCHRONOUS;
-  hsai_BlockB2.Init.OutputDrive = SAI_OUTPUTDRIVE_DISABLE;
-  hsai_BlockB2.Init.FIFOThreshold = SAI_FIFOTHRESHOLD_EMPTY;
-  hsai_BlockB2.Init.SynchroExt = SAI_SYNCEXT_DISABLE;
-  hsai_BlockB2.Init.MonoStereoMode = SAI_STEREOMODE;
-  hsai_BlockB2.Init.CompandingMode = SAI_NOCOMPANDING;
-  hsai_BlockB2.Init.TriState = SAI_OUTPUT_NOTRELEASED;
-  if (HAL_SAI_InitProtocol(&hsai_BlockB2, SAI_I2S_STANDARD, SAI_PROTOCOL_DATASIZE_16BIT, 2) != HAL_OK)
-  {
-    //Error_Handler();
-  }
+	hsai_BlockB2.Instance			 = SAI2_Block_B;
+	hsai_BlockB2.Init.AudioMode		 = SAI_MODESLAVE_TX;
+	hsai_BlockB2.Init.Synchro		 = SAI_SYNCHRONOUS;
+	hsai_BlockB2.Init.OutputDrive	= SAI_OUTPUTDRIVE_DISABLE;
+	hsai_BlockB2.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_EMPTY;
+	hsai_BlockB2.Init.SynchroExt	 = SAI_SYNCEXT_DISABLE;
+	hsai_BlockB2.Init.MonoStereoMode = SAI_STEREOMODE;
+	hsai_BlockB2.Init.CompandingMode = SAI_NOCOMPANDING;
+	hsai_BlockB2.Init.TriState		 = SAI_OUTPUT_NOTRELEASED;
+	if(HAL_SAI_InitProtocol(
+		   &hsai_BlockB2, SAI_I2S_STANDARD, bd, 2)
+	   != HAL_OK)
+	{
+		//Error_Handler();
+	}
 
 }
 static uint32_t SAI1_client =0;
@@ -165,16 +184,37 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     PE5     ------> SAI1_SCK_A
     PE6     ------> SAI1_SD_A 
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_2|GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
-    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+	if(dsy_sai_handle.board != DSY_SYS_BOARD_AUDIO_BB)
+	{
+		GPIO_InitStruct.Pin = GPIO_PIN_2 | GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6;
+		GPIO_InitStruct.Mode	  = GPIO_MODE_AF_PP;
+		GPIO_InitStruct.Pull	  = GPIO_NOPULL;
+		GPIO_InitStruct.Speed	 = GPIO_SPEED_FREQ_LOW;
+		GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
+		HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+	}
+	else
+	{
+		GPIO_InitStruct.Pin = GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_6;
+		GPIO_InitStruct.Mode	  = GPIO_MODE_AF_PP;
+		GPIO_InitStruct.Pull	  = GPIO_NOPULL;
+		GPIO_InitStruct.Speed	 = GPIO_SPEED_FREQ_LOW;
+		GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
+		HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-    /* Peripheral DMA init*/
-    
-    hdma_sai1_a.Instance = DMA1_Stream0;
+		GPIO_InitStruct.Pin = GPIO_PIN_7;
+		GPIO_InitStruct.Mode	  = GPIO_MODE_AF_PP;
+		GPIO_InitStruct.Pull	  = GPIO_NOPULL;
+		GPIO_InitStruct.Speed	 = GPIO_SPEED_FREQ_LOW;
+		GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
+		HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+	}
+	/*
+	*/
+
+	/* Peripheral DMA init*/
+
+	hdma_sai1_a.Instance				 = DMA1_Stream0;
     hdma_sai1_a.Init.Request = DMA_REQUEST_SAI1_A;
     hdma_sai1_a.Init.Direction = DMA_PERIPH_TO_MEMORY;
     hdma_sai1_a.Init.PeriphInc = DMA_PINC_DISABLE;
