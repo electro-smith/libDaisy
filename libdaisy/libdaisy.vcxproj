@@ -61,6 +61,7 @@
     <ClCompile Include="codec_pcm3060.c" />
     <ClCompile Include="codec_wm8731.c" />
     <ClCompile Include="dma.c" />
+    <ClCompile Include="dsy_adc.c" />
     <ClCompile Include="dsy_audio.c" />
     <ClCompile Include="dsy_qspi.c" />
     <ClCompile Include="dsy_sdram.c" />
@@ -181,6 +182,7 @@
     <ClInclude Include="codec_wm8731.h" />
     <ClInclude Include="codec_wm8731_frame.h" />
     <ClInclude Include="dma.h" />
+    <ClInclude Include="dsy_adc.h" />
     <ClInclude Include="dsy_audio.h" />
     <ClInclude Include="dsy_qspi.h" />
     <ClInclude Include="dsy_sdram.h" />

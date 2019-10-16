@@ -833,6 +833,9 @@
     <ClInclude Include="codec_wm8731_frame.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="dsy_adc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dsy_system.c">
@@ -857,6 +860,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="codec_wm8731.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsy_adc.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>

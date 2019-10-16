@@ -70,6 +70,7 @@ enum
 #define DSY_USE_QSPI_DRV
 #define DSY_USE_SDRAM_DRV
 #define DSY_USE_AUDIO_DRV
+#define DSY_USE_ADC_DRV
 
 
 #ifdef DSY_USE_QSPI_DRV
@@ -80,6 +81,9 @@ enum
 #endif
 #ifdef DSY_USE_AUDIO_DRV
 #include "dsy_audio.h"
+#endif
+#ifdef DSY_USE_ADC_DRV
+#include "dsy_adc.h"
 #endif
 
 #endif
