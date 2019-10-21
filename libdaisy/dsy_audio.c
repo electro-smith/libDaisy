@@ -1,3 +1,7 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "libdaisy.h"
 #include "dsy_audio.h"
 #include "codec_pcm3060.h"
@@ -6,8 +10,8 @@
 #include "dma.h"
 #include "sai.h"
 #include "i2c.h"
-
 #include <string.h>
+
 
 // Define/Declare global audio structure.
 typedef struct
@@ -309,3 +313,7 @@ void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai)
 {
 	internal_callback(hsai, audio_handle.block_size);
 }
+
+#ifdef __cplusplus
+}
+#endif

@@ -1,5 +1,11 @@
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "libdaisy.h"
 #include <stm32h7xx_hal.h>
+
+
 #define DSY_ADC_MAX_CHANNELS 8
 #define DSY_ADC_MAX_RESOLUTION 65536.0f
 typedef struct
@@ -225,12 +231,11 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 	}
 }
 
-/* USER CODE BEGIN 1 */
 void DMA1_Stream2_IRQHandler(void)
 {
-		HAL_DMA_IRQHandler(&hdma_adc1);
+	HAL_DMA_IRQHandler(&hdma_adc1);
 }
 
-/* USER CODE END 1 */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+#ifdef __cplusplus
+}
+#endif
