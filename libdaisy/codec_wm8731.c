@@ -2,7 +2,7 @@
 #include "codec_wm8731.h"
 
 typedef struct {
-  uint8_t mcu_is_master;
+  uint8_t mcu_is_master, bitdepth;
   int32_t sample_rate;
   size_t block_size;
   size_t stride;
@@ -25,7 +25,7 @@ typedef struct {
 }
 
 static uint8_t codec_write_control_register(uint8_t address, uint16_t data);
-static uint8_t init_codec(uint8_t mcu_is_master, int32_t sample_rate);
+static uint8_t init_codec(uint8_t mcu_is_master, int32_t sample_rate, uint8_t bitdepth);
 
 enum CodecRegister {
   CODEC_REG_LEFT_LINE_IN = 0x00,
@@ -105,15 +105,16 @@ dsy_wm8731_handle_t codec_handle;
 uint8_t codec_wm8731_init( \
 	I2C_HandleTypeDef *hi2c, \
 	uint8_t mcu_is_master, \
-	int32_t sample_rate) 
+	int32_t sample_rate, 
+	uint8_t bitdepth) 
 {
-  //c->callback = NULL;
-  codec_handle.sample_rate = sample_rate;
-  codec_handle.mcu_is_master = mcu_is_master;
+	codec_handle.sample_rate = sample_rate;
+	codec_handle.mcu_is_master = mcu_is_master;
 	codec_handle.i2c = hi2c;
+	codec_handle.bitdepth	= bitdepth;
 
 	uint8_t s;
-	s = init_codec(mcu_is_master, sample_rate);
+	s = init_codec(mcu_is_master, sample_rate, bitdepth);
 	if (!codec_write_control_register(CODEC_REG_ACTIVE, 0x01)) {
 		return 0;
 	}
@@ -142,7 +143,7 @@ uint8_t codec_wm8731_exit_bypass(I2C_HandleTypeDef *hi2c)
 	return s;
 }
 
-static uint8_t init_codec(uint8_t mcu_is_master, int32_t sample_rate)
+static uint8_t init_codec(uint8_t mcu_is_master, int32_t sample_rate, uint8_t bitdepth)
 {
   uint8_t s = 1;  // success;
   s = s && codec_write_control_register(CODEC_REG_RESET, 0);
@@ -172,8 +173,18 @@ static uint8_t init_codec(uint8_t mcu_is_master, int32_t sample_rate)
   }
     
   s = s && codec_write_control_register(CODEC_REG_POWER_MANAGEMENT, power_down_reg);
-  
-  uint8_t format_byte = CODEC_PROTOCOL_MASK_PHILIPS | CODEC_FORMAT_MASK_16_BIT;
+
+  uint8_t format_byte;
+  format_byte = CODEC_PROTOCOL_MASK_PHILIPS;
+  if(bitdepth == 24)
+  {
+	  format_byte |= CODEC_FORMAT_MASK_24_BIT;
+  }
+  else
+  {
+	  // TODO ADD SUPPORT FOR UP TO 32 bit as well
+	  format_byte |= CODEC_FORMAT_MASK_16_BIT;
+  }
   format_byte |= mcu_is_master ? CODEC_FORMAT_SLAVE : CODEC_FORMAT_MASTER;
 
   s = s && codec_write_control_register(CODEC_REG_DIGITAL_FORMAT, format_byte);

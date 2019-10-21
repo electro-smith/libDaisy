@@ -12,6 +12,21 @@ extern "C" {
 #include "i2c.h"
 #include <string.h>
 
+#define DSY_PROFILE_AUDIO_CALLBACK 1
+
+#ifdef DSY_PROFILE_AUDIO_CALLBACK
+// Initialize Gate Output GPIO (only for timing in this case)
+#define PROFILE_GPIO_PIN GPIO_PIN_10
+#define PROFILE_GPIO_PORT GPIOG
+static void init_gpio()
+{
+	GPIO_InitTypeDef ginit;
+	ginit.Pin = PROFILE_GPIO_PIN;
+	ginit.Mode = GPIO_MODE_OUTPUT_PP;
+	ginit.Speed = GPIO_SPEED_LOW;
+	HAL_GPIO_Init(PROFILE_GPIO_PORT, &ginit);
+}
+#endif
 
 // Define/Declare global audio structure.
 typedef struct
@@ -71,24 +86,24 @@ void dsy_audio_silence(float* in, float* out, size_t size)
 // TODO Init only the channel being used to save memory
 void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 {
-
 	dsy_dma_init(); //
+	audio_handle.block_size = DSY_AUDIO_BLOCK_SIZE; // default value; todo: add configuration of this
+	audio_handle_ext.block_size = DSY_AUDIO_BLOCK_SIZE; // default value
 	if(intext == DSY_AUDIO_INTERNAL)
 	{
 		audio_handle.device = device;
-
-		dsy_sai1_init(board, audio_handle.bitdepth);
 		if(board == DSY_SYS_BOARD_DAISY_SEED)
 		{
 			dsy_i2c2_init(board);
-			codec_wm8731_init(&hi2c2, 1, 48000.0f);
 			audio_handle.device_control_hi2c = &hi2c2;
 			audio_handle.bitdepth = DSY_AUDIO_BITDEPTH_16;
+			//audio_handle.bitdepth = DSY_AUDIO_BITDEPTH_24;
+			codec_wm8731_init(&hi2c2, 1, 48000.0f, 16);
 		}
 		else if(board == DSY_SYS_BOARD_AUDIO_BB)
 		{
 			dsy_i2c1_init(board);
-			codec_wm8731_init(&hi2c1, 1, 48000.0f);
+			codec_wm8731_init(&hi2c1, 1, 48000.0f, 16);
 			audio_handle.device_control_hi2c = &hi2c1;
 			audio_handle.bitdepth = DSY_AUDIO_BITDEPTH_16;
 		}
@@ -99,6 +114,7 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 			audio_handle.device_control_hi2c = &hi2c2;
 			audio_handle.bitdepth = DSY_AUDIO_BITDEPTH_24;
 		}
+		dsy_sai1_init(board, audio_handle.bitdepth);
 		// Initialize Internal Audio Handle
 		audio_handle.callback   = dsy_audio_passthru;
 		audio_handle.block_size = DSY_AUDIO_BLOCK_SIZE;
@@ -118,7 +134,6 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 	else
 	{
 		audio_handle_ext.device = device;
-		dsy_sai2_init(board, audio_handle_ext.bitdepth);
 		switch(device)
 		{
 			case DSY_AUDIO_DEVICE_PCM3060:
@@ -129,12 +144,13 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 				break;
 			case DSY_AUDIO_DEVICE_WM8731:
 				dsy_i2c1_init(board);
-				codec_wm8731_init(&hi2c1, 0, 48000.0f);
+				codec_wm8731_init(&hi2c1, 0, 48000.0f, 16);
 				audio_handle.device_control_hi2c = &hi2c1;
 				audio_handle_ext.bitdepth = DSY_AUDIO_BITDEPTH_16;
 				break;
 			default: break;
 		}
+		dsy_sai2_init(board, audio_handle_ext.bitdepth);
 		// Initialize External Audio Handle
 		audio_handle_ext.callback   = dsy_audio_passthru;
 		audio_handle_ext.block_size = DSY_AUDIO_BLOCK_SIZE;
@@ -150,6 +166,9 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 		}
 		audio_handle_ext.offset = 0;
 	}
+	#ifdef DSY_PROFILE_AUDIO_CALLBACK
+	init_gpio();
+	#endif
 #ifdef __USBD_AUDIO_IF_H__
 	audio_start(); // start audio callbacks, and then we'll see if it works or not...
 #endif
@@ -259,11 +278,15 @@ void dsy_audio_exit_bypass(uint8_t intext)
 
 static void internal_callback(SAI_HandleTypeDef* hsai, size_t offset)
 {
+	#ifdef DSY_PROFILE_AUDIO_CALLBACK
+	HAL_GPIO_WritePin(PROFILE_GPIO_PORT, PROFILE_GPIO_PIN, 0);
+	#endif
 	et_audio_t* ah = get_audio_from_sai(hsai);
 
 	const int32_t* ini  = ah->dma_buffer_rx + offset;
 	float*		   inf  = ah->in;
 	const float*   endi = ah->in + ah->block_size;
+//	SCB_InvalidateDCache_by_Addr((uint32_t *)((uint32_t)(ini) & ~(uint32_t) 0x1F), ah->block_size * 4);
 	if(ah->bitdepth == DSY_AUDIO_BITDEPTH_24)
 	{
 		while(inf != endi)
@@ -280,7 +303,6 @@ static void internal_callback(SAI_HandleTypeDef* hsai, size_t offset)
 	}
 
 	ah->callback(ah->in, ah->out, ah->block_size);
-
 	int32_t*	 outi = ah->dma_buffer_tx + offset;
 	const float* outf = ah->out;
 	const float* endo = ah->out + ah->block_size;
@@ -298,6 +320,9 @@ static void internal_callback(SAI_HandleTypeDef* hsai, size_t offset)
 			*outi++ = f2s16(*outf++);
 		}
 	}
+	#ifdef DSY_PROFILE_AUDIO_CALLBACK
+	HAL_GPIO_WritePin(PROFILE_GPIO_PORT, PROFILE_GPIO_PIN, 1);
+	#endif
 }
 
 // Tests
