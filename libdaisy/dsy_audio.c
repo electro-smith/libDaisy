@@ -12,7 +12,7 @@ extern "C" {
 #include "i2c.h"
 #include <string.h>
 
-#define DSY_PROFILE_AUDIO_CALLBACK 1
+//#define DSY_PROFILE_AUDIO_CALLBACK 1
 
 #ifdef DSY_PROFILE_AUDIO_CALLBACK
 // Initialize Gate Output GPIO (only for timing in this case)

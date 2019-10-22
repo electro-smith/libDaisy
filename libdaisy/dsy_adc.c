@@ -5,6 +5,8 @@ extern "C" {
 #include "libdaisy.h"
 #include <stm32h7xx_hal.h>
 
+// TODO: Fix DeInit to deinit the correct GPIO for Rev2
+
 
 #define DSY_ADC_MAX_CHANNELS 8
 #define DSY_ADC_MAX_RESOLUTION 65536.0f
@@ -105,7 +107,8 @@ void dsy_adc_init(uint8_t board)
 	}
 	/** Configure Regular Channel 
   */
-	sConfig.Channel = ADC_CHANNEL_14;
+	//sConfig.Channel = ADC_CHANNEL_14; // rev1 pin 26 -- moved to pin 36 on rev2
+	sConfig.Channel = ADC_CHANNEL_5; // rev2 pin 26 
 	sConfig.Rank	= ADC_REGULAR_RANK_6;
 	if(HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
 	{
@@ -174,10 +177,14 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 		HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
 		GPIO_InitStruct.Pin
-			= GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_6 | GPIO_PIN_3 | GPIO_PIN_7;
+			= GPIO_PIN_1 | GPIO_PIN_6 | GPIO_PIN_3 | GPIO_PIN_7;
+			//= GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_6 | GPIO_PIN_3 | GPIO_PIN_7; // Rev 1
 		GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 		GPIO_InitStruct.Pull = GPIO_NOPULL;
 		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+		// Rev2 change:
+		GPIO_InitStruct.Pin = GPIO_PIN_1;
+		HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
 		/* ADC1 DMA Init */
 		/* ADC1 Init */
@@ -187,7 +194,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 		hdma_adc1.Init.PeriphInc		   = DMA_PINC_DISABLE;
 		hdma_adc1.Init.MemInc			   = DMA_MINC_ENABLE;
 		hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-		hdma_adc1.Init.MemDataAlignment	= DMA_MDATAALIGN_HALFWORD;
+		hdma_adc1.Init.MemDataAlignment	   = DMA_MDATAALIGN_HALFWORD;
 		hdma_adc1.Init.Mode				   = DMA_CIRCULAR;
 		hdma_adc1.Init.Priority			   = DMA_PRIORITY_LOW;
 		hdma_adc1.Init.FIFOMode			   = DMA_FIFOMODE_DISABLE;
