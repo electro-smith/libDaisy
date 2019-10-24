@@ -47,6 +47,11 @@ FORCE_INLINE int32_t f2s24(float x)
 	return (int32_t)(x * F2S24_SCALE);
 }
 
+FORCE_INLINE float cube(float x) 
+{
+	return (x * x) * x;
+}
+
 enum
 {
 	DSY_AUDIO_BITDEPTH_16,
@@ -71,6 +76,7 @@ enum
 #define DSY_USE_SDRAM_DRV
 #define DSY_USE_AUDIO_DRV
 #define DSY_USE_ADC_DRV
+#define DSY_USE_LEDDRIVER_DRV
 
 
 #ifdef DSY_USE_QSPI_DRV
@@ -84,6 +90,9 @@ enum
 #endif
 #ifdef DSY_USE_ADC_DRV
 #include "dsy_adc.h"
+#endif
+#ifdef DSY_USE_LEDDRIVER_DRV
+#include "dsy_leddriver.h"
 #endif
 
 #endif

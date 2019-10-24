@@ -1,5 +1,6 @@
 #include "libdaisy.h"
 #include <stm32h7xx_hal.h>
+#include "dma.h"
 
 // Jump related stuff
 
@@ -61,6 +62,7 @@ void dsy_system_init(uint8_t board)
 	// For now we won't use the board parameter since all three supported boards use the same 16MHz HSE.
 	// That said, 2hp Audio BB had a bit different setup, and actually a more accurate sample rate for audio iirc.
 	SystemClock_Config(board);
+	dsy_dma_init(); //
 }
 
 void dsy_system_jumpto(uint32_t addr)

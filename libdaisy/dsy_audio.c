@@ -86,7 +86,6 @@ void dsy_audio_silence(float* in, float* out, size_t size)
 // TODO Init only the channel being used to save memory
 void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 {
-	dsy_dma_init(); //
 	audio_handle.block_size = DSY_AUDIO_BLOCK_SIZE; // default value; todo: add configuration of this
 	audio_handle_ext.block_size = DSY_AUDIO_BLOCK_SIZE; // default value
 	if(intext == DSY_AUDIO_INTERNAL)
