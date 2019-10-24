@@ -8,6 +8,8 @@
 #define PCA9685_LED0 0x06   // location for start of LED0 registers
 #define PRE_SCALE_MODE 0xFE //location for setting prescale (clock speed)
 
+#define CHANNELS_PER_DRIVER 16
+
 typedef struct
 {
 	color_t color;
@@ -33,11 +35,11 @@ typedef enum {
 // channels * bytes_to_send + start_tx_byte
 #define LED_BUFF_SIZE ((16 * 4) + 1)
 typedef struct {
-	//rgb_led_t leds[LED_LAST];
-	led_t leds[LED_LAST];
+	//rgb_led_t leds[CHANNELS_PER_DRIVER];
+	led_t leds[CHANNELS_PER_DRIVER];
 	uint16_t *sorted_bright[DRIVER_LAST][16];
 	uint16_t dummy_bright; // not sure if NULL will break things later.
-	//color_t leds[LED_LAST];
+	//color_t leds[CHANNELS_PER_DRIVER];
 	float master_dim;
 	//uint8_t i2c_buff[3][LED_BUFF_SIZE];
 	uint8_t temp_buff[LED_BUFF_SIZE];
@@ -84,7 +86,7 @@ void dsy_led_driver_init(uint8_t board)
 	}
 	init_rgb_leds();
 	gen_sorted_table();
-	for(uint8_t i = 0; i < LED_LAST; i++)
+	for(uint8_t i = 0; i < CHANNELS_PER_DRIVER; i++)
 	{
 		//		leddriver.leds[i].color.red = 4095;
 		//		leddriver.leds[i].color.green = 0;
@@ -256,7 +258,7 @@ static void init_rgb_leds()
 	//	init_single_led(LED_CLOCK, 6, 7, 8, 3, 3, 3);
 	//	init_single_led(LED_OUT_1, 9, 10, 11, 3, 3, 3);
 	//	init_single_led(LED_OUT_2, 12, 13, 14, 3, 3, 3);
-	for(uint8_t i = 0; i < LED_LAST; i++)
+	for(uint8_t i = 0; i < CHANNELS_PER_DRIVER; i++)
 	{
 		init_single_led(i, i, 0);
 	}
@@ -267,7 +269,7 @@ static void gen_sorted_table()
 	uint8_t dummy_addr
 		= 16; // This works because all of the pin 16s are floating
 	uint8_t tdrv, taddr;
-	for(uint8_t i = 0; i < LED_LAST; i++)
+	for(uint8_t i = 0; i < CHANNELS_PER_DRIVER; i++)
 	{
 		//		tdrv = leddriver.leds[i].drv_r;
 		//		taddr = leddriver.leds[i].addr_r;

@@ -47,6 +47,11 @@ FORCE_INLINE int32_t f2s24(float x)
 	return (int32_t)(x * F2S24_SCALE);
 }
 
+FORCE_INLINE float cube(float x) 
+{
+	return (x * x) * x;
+}
+
 enum
 {
 	DSY_AUDIO_BITDEPTH_16,

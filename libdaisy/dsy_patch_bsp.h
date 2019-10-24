@@ -44,4 +44,26 @@ enum
 	DSY_PATCH_CV_LAST
 };
 
+// Mapping of LEDs via dsy_leddriver.h
+enum
+{
+	LED_A4,
+	LED_A3,
+	LED_A2,
+	LED_A1,
+	LED_B4,
+	LED_B3,
+	LED_B2,
+	LED_B1,
+	LED_C4,
+	LED_C3,
+	LED_C2,
+	LED_C1,
+	LED_D4,
+	LED_D3,
+	LED_D2,
+	LED_D1,
+	LED_LAST
+};
+
 #endif
