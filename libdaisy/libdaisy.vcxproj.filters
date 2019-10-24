@@ -836,6 +836,12 @@
     <ClInclude Include="dsy_adc.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="dsy_leddriver.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsy_patch_bsp.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dsy_system.c">
@@ -863,6 +869,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="dsy_adc.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsy_leddriver.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
