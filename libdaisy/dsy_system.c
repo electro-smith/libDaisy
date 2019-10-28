@@ -63,6 +63,9 @@ void dsy_system_init(uint8_t board)
 	// That said, 2hp Audio BB had a bit different setup, and actually a more accurate sample rate for audio iirc.
 	SystemClock_Config(board);
 	dsy_dma_init(); //
+	SCB_EnableICache();
+	//SCB_EnableDCache(); // This will require relocation of DMA buffers, or Cache Maintence. Performance is almost doubled, though.
+	HAL_Init();
 }
 
 void dsy_system_jumpto(uint32_t addr)

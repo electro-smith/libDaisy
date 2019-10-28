@@ -1,7 +1,3 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 #include "libdaisy.h"
 #include <stm32h7xx_hal.h>
 
@@ -242,7 +238,3 @@ void DMA1_Stream2_IRQHandler(void)
 {
 	HAL_DMA_IRQHandler(&hdma_adc1);
 }
-
-#ifdef __cplusplus
-}
-#endif
