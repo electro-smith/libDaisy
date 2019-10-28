@@ -112,6 +112,16 @@ void dsy_system_jumptoqspi()
 	}
 }
 
+uint32_t dsy_system_getnow()
+{
+    return HAL_GetTick();
+}
+
+void dsy_system_delay(uint32_t delay_ms)
+{
+    HAL_Delay(delay_ms);
+}
+
 void SystemClock_Config(uint8_t board)
 {
 	// HOLD THISSSS
