@@ -1,5 +1,11 @@
 # ES_libdaisy
 
+- [libdaisy](#libdaisy)
+- [daisysp](#daisysp)
+- [examples](#examples)
+- [cube](#cube)
+- [resources](#resources)
+
 ## libdaisy
 
 Hardware abstraction layer, including drivers for peripherals included on the extended Daisy family of boards.
@@ -105,3 +111,15 @@ This can be helpful for generating initialization code, checking the clock confi
 Generated code uses ST's HAL and/or LL drivers. These are currently the basis for libdaisy as well, though that may also change.
 
 An entire copy of the ST HAL, as well as Middleware for CDC USB Device Class, and FatFS are included in the libdaisy/ folder.
+
+## resources
+
+The following resources are necessary for either compiling, or programming the Daisy Seed in one way or another.
+
+- [arm-none-eabi toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) - GNU Embedded compiler tools -- currently using Version 8-2019-q3-update.
+- [openocd](http://openocd.org/) - "Open On-Chip Debugger" for connecting to, programming, and debugging embedded hardware via JTAG, and other protocols. You can install via your favorite package manager, or follow links from the site for Windows.
+- [dfu-util](http://dfu-util.sourceforge.net/index.html) - Device Firmware Upgrade Utilities. Install via a pacakge manager, or follow links to binaries for windows, etc.
+
+
+
+
