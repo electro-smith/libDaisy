@@ -137,7 +137,7 @@ LDSCRIPT = $(SYSTEM_FILES_DIR)/STM32H750IB_FLASH.lds
 
 # libraries
 LIBS = -ldaisy -ldaisysp -lc -lm -lnosys 
-LIBDIR = -Llib/
+LIBDIR = -L$(LIBDAISY_DIR)/build -L$(DAISYSP_DIR)/build
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # default action: build all
