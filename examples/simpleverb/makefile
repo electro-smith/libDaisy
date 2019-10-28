@@ -1,6 +1,11 @@
 TARGET = simple_verb
 CHIPSET = stm32h7x
 
+TARGET_BIN=$(TARGET).bin
+TARGET_ELF=$(TARGET).elf
+FLASH_ADDRESS = 0x08000000
+
+
 # If you have the arm-none-eabi- toolchain located in a particular place, but not installed for the entire system, add the path here:
 # GCC_PATH=
 
@@ -25,6 +30,7 @@ GDB_FLAGS=
 #OPT = -Og
 OPT = -O2
 
+
 ######################################
 # paths
 ######################################
@@ -33,10 +39,13 @@ OPT = -O2
 BUILD_DIR = build
 
 LIBDAISY_DIR = \
-../../libdaisy/
+../../libdaisy
 
 DAISYSP_DIR = \
-../../daisysp/
+../../daisysp
+
+SYSTEM_FILES_DIR = \
+core
 
 ######################################
 # source
@@ -44,10 +53,10 @@ DAISYSP_DIR = \
 
 C_SOURCES = \
 simple_verb.c \
-core/system_stm32h7xx.c
+$(SYSTEM_FILES_DIR)/system_stm32h7xx.c
 
 ASM_SOURCES = \
-core/startup_stm32h750xx.s
+$(SYSTEM_FILES_DIR)/startup_stm32h750xx.s
 
 #######################################
 # binaries
@@ -100,7 +109,7 @@ C_DEFS =  \
 AS_INCLUDES = 
 
 C_INCLUDES = \
--Icore/ \
+-I$(SYSTEM_FILES_DIR)/ \
 -I$(LIBDAISY_DIR) \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/Include/ \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/Device/ST/STM32H7xx/Include \
@@ -124,7 +133,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = STM32H750IB_FLASH.lds
+LDSCRIPT = $(SYSTEM_FILES_DIR)/STM32H750IB_FLASH.lds
 
 # libraries
 LIBS = -ldaisy -ldaisysp -lc -lm -lnosys 
@@ -194,6 +203,14 @@ debug_client:
 program:
 	$(OCD) -s $(OCD_DIR) $(OCDFLAGS) \
 		-c "program ./build/$(TARGET).elf verify reset exit"
+
+#######################################
+# dfu-util 
+#######################################
+
+program-dfu:
+	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN)
+
 #######################################
 # dependencies
 #######################################
