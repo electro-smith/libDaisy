@@ -117,7 +117,7 @@ An entire copy of the ST HAL, as well as Middleware for CDC USB Device Class, an
 
 The following resources are necessary for either compiling, or programming the Daisy Seed in one way or another.
 
-- make
+- make - Follow [these instructions](http://gnuwin32.sourceforge.net/packages/make.htm) for installing on windows. Otherwise you'll either already have it, or can get it through a package manager.
 - [arm-none-eabi toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) - GNU Embedded compiler tools -- currently using Version 8-2019-q3-update.
 - [openocd](http://openocd.org/) - "Open On-Chip Debugger" for connecting to, programming, and debugging embedded hardware via JTAG, and other protocols. You can install via your favorite package manager, or follow links from the site for Windows.
 - [dfu-util](http://dfu-util.sourceforge.net/index.html) - Device Firmware Upgrade Utilities. Install via a pacakge manager, or follow links to binaries for windows, etc.
