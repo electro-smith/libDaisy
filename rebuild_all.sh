@@ -1,6 +1,11 @@
 #!/bin/bash
 start_dir=$PWD
 
+echo "rebuilding everything. . . "
+echo "only errors, and warnings will output. . . "
+echo "-------------------"
+sleep 1
+
 echo "rebuilding libdaisy"
 cd libdaisy
 make clean | grep "warningr\|error"
