@@ -90,8 +90,9 @@ make
 make program
 ```
 
-a debug client/server is setup in the makefile, though it hasn't been tested on this platform yet (for this ddd is used, but that can easily be replaced with a gdb debug client of your choice).
+A debug client/server is setup for use in the makefile (when connected via JTAG), though it hasn't been tested on this platform yet (for this ddd is used, but that can easily be replaced with a gdb debug client of your choice).
 
+Very shortly, a `make program-dfu` will be available to use to program the Daisy via USB.
 
 ## cube
 
