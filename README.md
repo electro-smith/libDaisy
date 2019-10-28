@@ -5,6 +5,7 @@
 - [examples](#examples)
 - [cube](#cube)
 - [resources](#resources)
+- [how to flash](#how-to-flash)
 
 ## libdaisy
 
@@ -120,6 +121,32 @@ The following resources are necessary for either compiling, or programming the D
 - [openocd](http://openocd.org/) - "Open On-Chip Debugger" for connecting to, programming, and debugging embedded hardware via JTAG, and other protocols. You can install via your favorite package manager, or follow links from the site for Windows.
 - [dfu-util](http://dfu-util.sourceforge.net/index.html) - Device Firmware Upgrade Utilities. Install via a pacakge manager, or follow links to binaries for windows, etc.
 
+
+## how to flash
+
+### JTAG // ST-Link
+
+If you have an ST-Link, and a 2x20->2x10mini adapter (Links will be added soon). You can connect it with the redstripe facing up toward the white strip on the 2x10 male connector on the top of the daisy seed.
+
+this is the "default" method of programming the daisy seed.
+
+running `make program` from any of the examples will attempt to program the chip's flash via JTAG through openocd.
+
+### USB
+
+If you don't have the JTAG programmer, fear not! A USB Micro cable connected to the daisy seed is all you need.
+
+To enter DFU mode, hold both the RESET, and BOOT buttons on the daisy seed while its powered.
+
+Then let go of just the RESET button. This will cause the chip to reset into the system bootloader. The BOOT button can now be released as well.
+
+Now you can run `make program-dfu` from any example folder. You will see a short Download Progress bar appear in your terminal.
+
+Once it says "File downloaded successfully" the reset button will need to be pressed again to reboot the device, and start the newly flashed program.
+
+For the time being there are a few oddities with this method:
+- an error, "Error sending dfu abort request" will always output. This is benign.
+- The second press of reset should not be necessary, and I'll try to add some sort of code that generates a proper reset over USB since dfu-util seems to do it improperly (I believe this has been fixed in the stm32-duino project).
 
 
 
