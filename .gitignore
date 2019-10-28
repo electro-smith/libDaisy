@@ -116,3 +116,5 @@ LLVM/
 *.user
 .ipynb_checkpoints/
 Transcode Report.txt
+/examples/simpleverb/build
+/examples/simplebypass/build
