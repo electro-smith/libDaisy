@@ -137,6 +137,8 @@ running `make program` from any of the examples will attempt to program the chip
 
 If you don't have the JTAG programmer, fear not! A USB Micro cable connected to the daisy seed is all you need.
 
+Before doing this the first time, you may also want to have the program [Zadig](https://zadig.akeo.ie/) installed. This will allow you to easily edit the driver used for the Daisy Seed without having to dive through your Operating System's device manager. 
+
 To enter DFU mode, hold both the RESET, and BOOT buttons on the daisy seed while its powered.
 
 Then let go of just the RESET button. This will cause the chip to reset into the system bootloader. The BOOT button can now be released as well.
