@@ -7,9 +7,9 @@ extern "C" {
 #include "codec_pcm3060.h"
 #include "codec_wm8731.h"
 #include "stm32h7xx_hal.h"
-#include "dma.h"
-#include "sai.h"
-#include "i2c.h"
+#include "dsy_dma.h"
+#include "dsy_sai.h"
+#include "dsy_i2c.h"
 #include <string.h>
 
 //#define DSY_PROFILE_AUDIO_CALLBACK 1
@@ -83,41 +83,31 @@ void dsy_audio_silence(float* in, float* out, size_t size)
 	memset(out, 0, sizeof(float) * size);
 }
 
-// TODO Init only the channel being used to save memory
-void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
+// TODO: fix I2C to be compliant with the new model.
+void dsy_audio_init(dsy_sai_handle_t* init_handle, uint8_t dev0, uint8_t dev1)
 {
+	uint8_t board
+		= DSY_SYS_BOARD_DAISY_SEED; // just putting this here while breaking stuff.
+	uint8_t intext = init_handle->init;
+	//intext = 0;
 	audio_handle.block_size = DSY_AUDIO_BLOCK_SIZE; // default value; todo: add configuration of this
 	audio_handle_ext.block_size = DSY_AUDIO_BLOCK_SIZE; // default value
-	if(intext == DSY_AUDIO_INTERNAL)
+	audio_handle.callback   = dsy_audio_passthru;
+	audio_handle_ext.callback   = dsy_audio_passthru;
+	//if(intext == DSY_AUDIO_INTERNAL)
+	if(intext == DSY_AUDIO_INIT_SAI1 || intext == DSY_AUDIO_INIT_BOTH)
 	{
-		audio_handle.device = device;
-		if(board == DSY_SYS_BOARD_DAISY_SEED)
+		audio_handle.device = dev0;
+		uint8_t mcu_is_master = init_handle->sync_config[DSY_SAI_1] == DSY_AUDIO_SYNC_MASTER ? 1 : 0;
+		if(dev0 == DSY_AUDIO_DEVICE_WM8731) 
 		{
-			dsy_i2c2_init(board);
-			audio_handle.device_control_hi2c = &hi2c2;
-			audio_handle.bitdepth = DSY_AUDIO_BITDEPTH_16;
-			//audio_handle.bitdepth = DSY_AUDIO_BITDEPTH_24;
-			codec_wm8731_init(&hi2c2, 1, 48000.0f, 16);
+			//dsy_i2c2_init(board);
+			codec_wm8731_init(&hi2c2, mcu_is_master, 48000.0f, 16);
 		}
-		else if(board == DSY_SYS_BOARD_AUDIO_BB)
+		else if(dev0 == DSY_AUDIO_DEVICE_PCM3060)
 		{
-			dsy_i2c1_init(board);
-			codec_wm8731_init(&hi2c1, 1, 48000.0f, 16);
-			audio_handle.device_control_hi2c = &hi2c1;
-			audio_handle.bitdepth = DSY_AUDIO_BITDEPTH_16;
+			
 		}
-		else
-		{
-			dsy_i2c2_init(board);
-			codec_pcm3060_init(&hi2c2);
-			audio_handle.device_control_hi2c = &hi2c2;
-			audio_handle.bitdepth = DSY_AUDIO_BITDEPTH_24;
-		}
-		dsy_sai1_init(board, audio_handle.bitdepth);
-		// Initialize Internal Audio Handle
-		audio_handle.callback   = dsy_audio_passthru;
-		audio_handle.block_size = DSY_AUDIO_BLOCK_SIZE;
-
 		for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE; i++)
 		{
 			audio_handle.dma_buffer_rx[i] = 0;
@@ -130,29 +120,18 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 		}
 		audio_handle.offset = 0;
 	}
-	else
+	if(intext == DSY_AUDIO_INIT_SAI2 || intext == DSY_AUDIO_INIT_BOTH) 
 	{
-		audio_handle_ext.device = device;
-		switch(device)
+		audio_handle_ext.device = dev1;
+		uint8_t mcu_is_master = init_handle->sync_config[DSY_SAI_2] == DSY_AUDIO_SYNC_MASTER ? 1 : 0;
+		if(dev1 == DSY_AUDIO_DEVICE_WM8731)
 		{
-			case DSY_AUDIO_DEVICE_PCM3060:
-				dsy_i2c1_init(board);
-				codec_pcm3060_init(&hi2c1);
-				audio_handle.device_control_hi2c = &hi2c1;
-				audio_handle_ext.bitdepth = DSY_AUDIO_BITDEPTH_24;
-				break;
-			case DSY_AUDIO_DEVICE_WM8731:
-				dsy_i2c1_init(board);
-				codec_wm8731_init(&hi2c1, 0, 48000.0f, 16);
-				audio_handle.device_control_hi2c = &hi2c1;
-				audio_handle_ext.bitdepth = DSY_AUDIO_BITDEPTH_16;
-				break;
-			default: break;
+			//dsy_i2c1_init(board);
+			codec_wm8731_init(&hi2c1, mcu_is_master, 48000.0f, 16);
 		}
-		dsy_sai2_init(board, audio_handle_ext.bitdepth);
-		// Initialize External Audio Handle
-		audio_handle_ext.callback   = dsy_audio_passthru;
-		audio_handle_ext.block_size = DSY_AUDIO_BLOCK_SIZE;
+		else if(dev1 == DSY_AUDIO_DEVICE_PCM3060)
+		{
+		}
 		for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE; i++)
 		{
 			audio_handle_ext.dma_buffer_rx[i] = 0;
@@ -163,8 +142,11 @@ void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device)
 			audio_handle_ext.in[i]  = 0.0f;
 			audio_handle_ext.out[i] = 0.0f;
 		}
-		audio_handle_ext.offset = 0;
+		audio_handle.offset = 0;
 	}
+
+	dsy_sai_init_from_handle(init_handle);
+
 	#ifdef DSY_PROFILE_AUDIO_CALLBACK
 	init_gpio();
 	#endif

@@ -2,6 +2,7 @@
 #define DSY_AUDIO_H
 #include <stddef.h>
 #include <stdint.h>
+#include "dsy_sai.h"
 #ifdef __cplusplus
 extern "C"
 {
@@ -32,16 +33,15 @@ extern "C"
 
 	enum
 	{
-		DSY_AUDIO_INTERNAL,
-		DSY_AUDIO_EXTERNAL,
-		DSY_AUDIO_LAST,
-	};
-
-	enum
-	{
 		DSY_AUDIO_DEVICE_PCM3060,
 		DSY_AUDIO_DEVICE_WM8731,
 		DSY_AUDIO_DEVICE_LAST,
+	};
+	enum
+	{
+		DSY_AUDIO_INTERNAL,
+		DSY_AUDIO_EXTERNAL,
+		DSY_AUDIO_LAST,
 	};
 
 	// Stereo input/output buffer
@@ -49,7 +49,9 @@ extern "C"
 	// size_t number of samples
 	typedef void (*audio_callback)(float*, float*, size_t);
 
-	void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device);
+	//void dsy_audio_init(dsy_audio_init intext, uint8_t device[2]);
+//	void dsy_audio_init(dsy_sai_handle_t* init_handle);
+	void dsy_audio_init(dsy_sai_handle_t* init_handle, uint8_t dev0, uint8_t dev1);
 	void dsy_audio_set_callback(uint8_t intext, audio_callback cb);
 	void dsy_audio_start(uint8_t intext);
 	void dsy_audio_stop(uint8_t intext);

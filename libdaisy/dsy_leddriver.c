@@ -1,6 +1,6 @@
 #include "libdaisy.h"
 #include "dsy_leddriver.h"
-#include "i2c.h"
+#include "dsy_i2c.h"
 
 #define PCA9685_I2C_BASE_ADDRESS 0b10000000
 #define PCA9685_MODE1 0x00  // location for Mode1 register address
@@ -72,15 +72,15 @@ void dsy_led_driver_init(uint8_t board)
 	switch(board)
 	{
 		case DSY_SYS_BOARD_DAISY_SEED:
-			dsy_i2c1_init(board);
+//			dsy_i2c1_init(board);
 			leddriver.i2c = &hi2c1;
 			break;
 		case DSY_SYS_BOARD_EURORACK_TESTER:
-			dsy_i2c2_init(board);
+//			dsy_i2c2_init(board);
 			leddriver.i2c = &hi2c2;
 			break;
 		default:
-			dsy_i2c1_init(board);
+//			dsy_i2c1_init(board);
 			leddriver.i2c = &hi2c1;
 			break;
 	}
