@@ -52,15 +52,10 @@ FORCE_INLINE float cube(float x)
 	return (x * x) * x;
 }
 
-enum
-{
-	DSY_AUDIO_BITDEPTH_16,
-	DSY_AUDIO_BITDEPTH_24,
-	DSY_AUDIO_BITDEPTH_LAST
-};
 
-
-#include "dsy_system.h" // Always include
+// Always include
+#include "dsy_system.h" 
+#include "dsy_core_hw.h"
 
 enum
 {
@@ -70,6 +65,11 @@ enum
 	DSY_SYS_BOARD_EURORACK_TESTER,
 	DSY_SYS_BOARD_LAST,
 };
+
+
+typedef struct
+{
+} dsy_board;
 
 // TODO: Maybe move these into separate libdaisy_conf.h file that can be added to user projects.
 #define DSY_USE_QSPI_DRV
@@ -94,5 +94,9 @@ enum
 #ifdef DSY_USE_LEDDRIVER_DRV
 #include "dsy_leddriver.h"
 #endif
+
+#include "dsy_sai.h"
+#include "dsy_i2c.h"
+
 
 #endif

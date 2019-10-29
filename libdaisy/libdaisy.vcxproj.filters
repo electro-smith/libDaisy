@@ -818,15 +818,6 @@
     <ClInclude Include="codec_pcm3060.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="dma.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="sai.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="i2c.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="codec_wm8731.h">
       <Filter>Header files</Filter>
     </ClInclude>
@@ -840,6 +831,21 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="dsy_patch_bsp.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsy_seed.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsy_i2c.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsy_sai.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsy_dma.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsy_core_hw.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -856,15 +862,6 @@
     <ClCompile Include="codec_pcm3060.c">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="dma.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="sai.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="i2c.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="codec_wm8731.c">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -872,6 +869,15 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="dsy_leddriver.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsy_sai.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsy_i2c.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsy_dma.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
