@@ -848,6 +848,9 @@
     <ClInclude Include="dsy_core_hw.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="dsy_gpio.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dsy_system.c">
@@ -878,6 +881,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="dsy_dma.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsy_gpio.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -116,8 +116,8 @@ LLVM/
 *.user
 .ipynb_checkpoints/
 Transcode Report.txt
-/examples/simpleverb/build
-/examples/simplebypass/build
+/examples/verb/build
+/examples/bypass/build
 /examples/template/build
 /examples/ledplay/build
 /libdaisy/build

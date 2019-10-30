@@ -15,37 +15,40 @@ typedef struct
 	color_t color;
 	//uint16_t *r, *g, *b;
 	uint16_t addr_r, addr_g, addr_b; // 0-15
-	uint16_t drv_r, drv_g, drv_b; // 0-3
-}rgb_led_t;
+	uint16_t drv_r, drv_g, drv_b;	// 0-3
+} rgb_led_t;
 
 typedef struct
 {
 	uint16_t bright;
 	uint16_t addr, drv;
-}led_t;
+} led_t;
 
-typedef enum {
+typedef enum
+{
 	DRIVER_1,
-//	DRIVER_2,
-//	DRIVER_3,
-//	DRIVER_4,
+	//	DRIVER_2,
+	//	DRIVER_3,
+	//	DRIVER_4,
 	DRIVER_LAST
 } leddriver_names;
 
 // channels * bytes_to_send + start_tx_byte
 #define LED_BUFF_SIZE ((16 * 4) + 1)
-typedef struct {
+typedef struct
+{
 	//rgb_led_t leds[CHANNELS_PER_DRIVER];
-	led_t leds[CHANNELS_PER_DRIVER];
+	led_t	 leds[CHANNELS_PER_DRIVER];
 	uint16_t *sorted_bright[DRIVER_LAST][16];
-	uint16_t dummy_bright; // not sure if NULL will break things later.
+	uint16_t  dummy_bright; // not sure if NULL will break things later.
 	//color_t leds[CHANNELS_PER_DRIVER];
 	float master_dim;
 	//uint8_t i2c_buff[3][LED_BUFF_SIZE];
-	uint8_t temp_buff[LED_BUFF_SIZE];
-	uint8_t current_drv;
-	color_t standard_colors[LED_COLOR_LAST];
+	uint8_t			   temp_buff[LED_BUFF_SIZE];
+	uint8_t			   current_drv;
+	color_t			   standard_colors[LED_COLOR_LAST];
 	I2C_HandleTypeDef *i2c;
+	dsy_i2c_handle_t * dsy_i2c;
 } dsy_led_driver_t;
 
 dsy_led_driver_t leddriver;
@@ -63,27 +66,15 @@ static void init_single_led(uint8_t name, uint8_t addr, uint8_t drv);
 static void gen_sorted_table();
 
 
-void dsy_led_driver_init(uint8_t board)
+void dsy_led_driver_init(dsy_i2c_handle_t *dsy_i2c)
 {
 	uint8_t address = PCA9685_I2C_BASE_ADDRESS;
 	uint8_t init_buff[2];
 	leddriver.dummy_bright = 0;
 	leddriver.master_dim   = 1.0f;
-	switch(board)
-	{
-		case DSY_SYS_BOARD_DAISY_SEED:
-//			dsy_i2c1_init(board);
-			leddriver.i2c = &hi2c1;
-			break;
-		case DSY_SYS_BOARD_EURORACK_TESTER:
-//			dsy_i2c2_init(board);
-			leddriver.i2c = &hi2c2;
-			break;
-		default:
-//			dsy_i2c1_init(board);
-			leddriver.i2c = &hi2c1;
-			break;
-	}
+	leddriver.dsy_i2c	  = dsy_i2c;
+	leddriver.i2c		   = dsy_i2c_hal_handle(dsy_i2c);
+	dsy_i2c_init(dsy_i2c);
 	init_rgb_leds();
 	gen_sorted_table();
 	for(uint8_t i = 0; i < CHANNELS_PER_DRIVER; i++)
