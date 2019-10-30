@@ -57,19 +57,15 @@ FORCE_INLINE float cube(float x)
 #include "dsy_system.h" 
 #include "dsy_core_hw.h"
 
-enum
-{
-	DSY_SYS_BOARD_DAISY,
-	DSY_SYS_BOARD_DAISY_SEED,
-	DSY_SYS_BOARD_AUDIO_BB,
-	DSY_SYS_BOARD_EURORACK_TESTER,
-	DSY_SYS_BOARD_LAST,
-};
+//enum
+//{
+//	DSY_SYS_BOARD_DAISY,
+//	DSY_SYS_BOARD_DAISY_SEED,
+//	DSY_SYS_BOARD_AUDIO_BB,
+//	DSY_SYS_BOARD_EURORACK_TESTER,
+//	DSY_SYS_BOARD_LAST,
+//};
 
-
-typedef struct
-{
-} dsy_board;
 
 // TODO: Maybe move these into separate libdaisy_conf.h file that can be added to user projects.
 #define DSY_USE_QSPI_DRV
@@ -97,6 +93,6 @@ typedef struct
 
 #include "dsy_sai.h"
 #include "dsy_i2c.h"
-
+#include "dsy_gpio.h"
 
 #endif

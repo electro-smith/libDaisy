@@ -13,6 +13,7 @@ dsy_sdram \
 dsy_system \
 dsy_i2c \
 dsy_sai \
+dsy_gpio \
 system_stm32h7xx \
 
 ######################################

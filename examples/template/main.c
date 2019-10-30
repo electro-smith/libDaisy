@@ -1,10 +1,9 @@
-#include "libdaisy.h"
-#include "daisysp.h"
-#include "dsy_patch_bsp.h"
+#include "dsy_seed.h"
+
+static daisy_handle seed;
 
 int main(void)
 {
-    uint8_t board = DSY_SYS_BOARD_DAISY_SEED;
-    dsy_system_init(board);
+    daisy_seed_init(&seed);
     while(1) {}
 }

@@ -67,7 +67,7 @@ void dsy_sai_init_from_handle(dsy_sai_handle_t* hsai)
 /* SAI1 init function */
 static void dsy_sai1_init()
 {
-	uint8_t bd, mcu_is_master;
+	uint8_t bd;
 	switch(dsy_sai_handle.bitdepth[DSY_SAI_1])
 	{
 		case DSY_AUDIO_BITDEPTH_16: bd = SAI_PROTOCOL_DATASIZE_16BIT; break;
