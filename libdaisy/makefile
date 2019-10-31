@@ -14,15 +14,14 @@ dsy_system \
 dsy_i2c \
 dsy_sai \
 dsy_gpio \
+dsy_dac \
+dsy_switch \
 system_stm32h7xx \
 
 ######################################
 # building variables
 ######################################
-# debug build?
 #DEBUG = 0
-# optimization
-#OPT = -Og
 OPT = -O3
 
 #######################################
