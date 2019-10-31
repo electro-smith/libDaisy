@@ -68,6 +68,7 @@
     <ClCompile Include="dsy_leddriver.c" />
     <ClCompile Include="dsy_qspi.c" />
     <ClCompile Include="dsy_sdram.c" />
+    <ClCompile Include="dsy_switch.c" />
     <ClCompile Include="dsy_system.c" />
     <ClCompile Include="dsy_i2c.c" />
     <ClCompile Include="dsy_sai.c" />
@@ -195,6 +196,7 @@
     <ClInclude Include="dsy_qspi.h" />
     <ClInclude Include="dsy_sdram.h" />
     <ClInclude Include="dsy_seed.h" />
+    <ClInclude Include="dsy_switch.h" />
     <ClInclude Include="dsy_system.h" />
     <ClInclude Include="dsy_i2c.h" />
     <ClInclude Include="IS25LP064A.h" />
