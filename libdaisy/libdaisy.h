@@ -72,6 +72,7 @@ FORCE_INLINE float cube(float x)
 #define DSY_USE_SDRAM_DRV
 #define DSY_USE_AUDIO_DRV
 #define DSY_USE_ADC_DRV
+#define DSY_USE_DAC_DRV
 #define DSY_USE_LEDDRIVER_DRV
 
 
@@ -86,6 +87,9 @@ FORCE_INLINE float cube(float x)
 #endif
 #ifdef DSY_USE_ADC_DRV
 #include "dsy_adc.h"
+#endif
+#ifdef DSY_USE_DAC_DRV
+#include "dsy_dac.h"
 #endif
 #ifdef DSY_USE_LEDDRIVER_DRV
 #include "dsy_leddriver.h"

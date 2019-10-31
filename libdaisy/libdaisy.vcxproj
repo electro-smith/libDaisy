@@ -60,6 +60,7 @@
   <ItemGroup>
     <ClCompile Include="codec_pcm3060.c" />
     <ClCompile Include="codec_wm8731.c" />
+    <ClCompile Include="dsy_dac.c" />
     <ClCompile Include="dsy_dma.c" />
     <ClCompile Include="dsy_adc.c" />
     <ClCompile Include="dsy_audio.c" />
@@ -184,6 +185,7 @@
     <ClInclude Include="codec_wm8731.h" />
     <ClInclude Include="codec_wm8731_frame.h" />
     <ClInclude Include="dsy_core_hw.h" />
+    <ClInclude Include="dsy_dac.h" />
     <ClInclude Include="dsy_dma.h" />
     <ClInclude Include="dsy_adc.h" />
     <ClInclude Include="dsy_audio.h" />
