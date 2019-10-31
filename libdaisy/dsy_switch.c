@@ -14,6 +14,7 @@ void dsy_switch_init(dsy_switch_t *sw)
 	}
 	sw->gpio.mode = DSY_GPIO_MODE_INPUT;
 	dsy_gpio_init(&sw->gpio);
+	sw->state = sw->polarity == DSY_SWITCH_POLARITY_NORMAL ? 0x00 : 0xFF;
 }
 
 void dsy_switch_debounce(dsy_switch_t *sw)
