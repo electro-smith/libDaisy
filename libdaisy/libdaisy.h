@@ -98,5 +98,6 @@ FORCE_INLINE float cube(float x)
 #include "dsy_sai.h"
 #include "dsy_i2c.h"
 #include "dsy_gpio.h"
+#include "dsy_switch.h"
 
 #endif

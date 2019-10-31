@@ -854,6 +854,9 @@
     <ClInclude Include="dsy_dac.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="dsy_switch.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dsy_system.c">
@@ -890,6 +893,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="dsy_dac.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsy_switch.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
