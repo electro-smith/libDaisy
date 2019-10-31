@@ -1,4 +1,4 @@
-TARGET = simple_bypass
+TARGET = bypass
 CHIPSET = stm32h7x
 
 TARGET_BIN=$(TARGET).bin
@@ -52,7 +52,7 @@ core
 ######################################
 
 C_SOURCES = \
-simple_bypass.c \
+bypass.c \
 $(SYSTEM_FILES_DIR)/system_stm32h7xx.c
 
 ASM_SOURCES = \

@@ -51,10 +51,14 @@ float adenv_process(dsy_adenv_t *p)
 	{
 		p->trigger = 0;
 		p->current_segment = DSY_ADENV_SEG_RISE;
-		calculate_multiplier(p, p->output, 1.0f, time_samps);
 		p->phase = 0;
+        time_samps = (uint32_t)(p->segment_time[p->current_segment] * p->sr);
+        calculate_multiplier(p, p->output, 1.0f, time_samps);
 	}
-	time_samps = (uint32_t)(p->segment_time[p->current_segment] * p->sr);
+    else
+    {
+        time_samps = (uint32_t)(p->segment_time[p->current_segment] * p->sr);
+    }
 	if (p->phase >= time_samps)
 	{
 		switch (p->current_segment)	

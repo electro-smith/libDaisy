@@ -72,6 +72,7 @@ int dsy_reverbsc_init(dsy_reverbsc_t *p, float sr)
 		init_delay_line(p, &p->delayLines[i], i);
 		nBytes += delay_line_bytes_alloc(sr, 1, i);
 	}
+    return 0;
 }
 
 static int delay_line_max_samples(float sr, float iPitchMod, int n)

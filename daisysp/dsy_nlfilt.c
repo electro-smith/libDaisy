@@ -83,7 +83,6 @@ static int32_t nlfilt2(nlfilt *p)
 	//uint32_t offset = p->h.insdshead->ksmps_offset;
 	//uint32_t early  = p->h.insdshead->ksmps_no_end;
 	uint32_t offset = 0;
-	uint32_t early = 0;
 	uint32_t n, nsmps = p->size;
 	int32_t     point = p->point;
 	int32_t     nm1 = point;

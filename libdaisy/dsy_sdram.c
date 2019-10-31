@@ -19,7 +19,8 @@
 typedef struct 
 {
 	uint8_t board;
-	SDRAM_HandleTypeDef hsdram;	
+	SDRAM_HandleTypeDef hsdram;
+	dsy_sdram_handle_t *dsy_hsdram;
 }dsy_sdram_t;
 
 static dsy_sdram_t dsy_sdram;
@@ -27,19 +28,21 @@ static dsy_sdram_t dsy_sdram;
 static uint8_t sdram_periph_init();
 static uint8_t sdram_device_init();
 
-uint8_t dsy_sdram_init(uint8_t board)
+uint8_t dsy_sdram_init(dsy_sdram_handle_t *dsy_hsdram)
 {
-	dsy_sdram.board = board;
-
-	if (sdram_periph_init() != DSY_SDRAM_OK)
+	//dsy_sdram.board = board;
+	dsy_sdram.dsy_hsdram = dsy_hsdram;
+	if(dsy_sdram.dsy_hsdram->state == DSY_SDRAM_STATE_ENABLE) 
 	{
-		return DSY_SDRAM_ERR;
+		if (sdram_periph_init() != DSY_SDRAM_OK)
+		{
+			return DSY_SDRAM_ERR;
+		}
+		if (sdram_device_init() != DSY_SDRAM_OK)
+		{
+			return DSY_SDRAM_ERR;
+		}
 	}
-	if (sdram_device_init() != DSY_SDRAM_OK)
-	{
-		return DSY_SDRAM_ERR;
-	}
-
 	return DSY_SDRAM_OK;
 }
 
@@ -148,11 +151,8 @@ static void HAL_FMC_MspInit(void)
 	__HAL_RCC_GPIOI_CLK_ENABLE();
 	__HAL_RCC_GPIOH_CLK_ENABLE();
 	__HAL_RCC_GPIOF_CLK_ENABLE();
-	if (dsy_sdram.board == DSY_SYS_BOARD_AUDIO_BB)
-	{
-		// for SDNWE
-		__HAL_RCC_GPIOC_CLK_ENABLE();
-	}
+	// for SDNWE on some boards:
+	__HAL_RCC_GPIOC_CLK_ENABLE();
 
   
 	/** FMC GPIO Configuration  
@@ -278,39 +278,53 @@ static void HAL_FMC_MspInit(void)
 
 	HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
-	// This pin can change between boards (SDNWE)
-	switch(dsy_sdram.board)
+	// Init for any pins that can be configured
+	GPIO_TypeDef *port;
+	for(uint8_t i = 0; i < DSY_SDRAM_PIN_LAST; i++) 
 	{
-	case DSY_SYS_BOARD_DAISY:
-		/* GPIO_InitStruct */
-		GPIO_InitStruct.Pin = GPIO_PIN_0;
+		port = (GPIO_TypeDef*)gpio_hal_port_map[dsy_sdram.dsy_hsdram->pin_config[i].port];
+		GPIO_InitStruct.Pin
+			= gpio_hal_pin_map[dsy_sdram.dsy_hsdram->pin_config[i].pin];
 		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 		GPIO_InitStruct.Pull = GPIO_NOPULL;
 		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-		HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-		break;
-	case DSY_SYS_BOARD_DAISY_SEED:
-		/* GPIO_InitStruct */
-		GPIO_InitStruct.Pin = GPIO_PIN_5;
-		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-		HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
-		break;
-	case DSY_SYS_BOARD_AUDIO_BB:
-		/* GPIO_InitStruct */
-		GPIO_InitStruct.Pin = GPIO_PIN_5;
-		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-		GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-		HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
-		break;
-	default:
-		break;
+		GPIO_InitStruct.Alternate = GPIO_AF12_FMC; // They all seem to use this
+		HAL_GPIO_Init(port, &GPIO_InitStruct);
 	}
+
+	// This pin can change between boards (SDNWE)
+//	switch(dsy_sdram.board)
+//	{
+//	case DSY_SYS_BOARD_DAISY:
+//		/* GPIO_InitStruct */
+//		GPIO_InitStruct.Pin = GPIO_PIN_0;
+//		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+//		GPIO_InitStruct.Pull = GPIO_NOPULL;
+//		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//		GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
+//		HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+//		break;
+//	case DSY_SYS_BOARD_DAISY_SEED:
+//		/* GPIO_InitStruct */
+//		GPIO_InitStruct.Pin = GPIO_PIN_5;
+//		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+//		GPIO_InitStruct.Pull = GPIO_NOPULL;
+//		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//		GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
+//		HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
+//		break;
+//	case DSY_SYS_BOARD_AUDIO_BB:
+//		/* GPIO_InitStruct */
+//		GPIO_InitStruct.Pin = GPIO_PIN_5;
+//		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+//		GPIO_InitStruct.Pull = GPIO_NOPULL;
+//		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+//		GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
+//		HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
+//		break;
+//	default:
+//		break;
+//	}
 
 	/* USER CODE BEGIN FMC_MspInit 1 */
 
@@ -447,8 +461,8 @@ void HAL_SDRAM_MspDeInit(SDRAM_HandleTypeDef* sdramHandle) {
 
 void __attribute__((constructor)) SDRAM_Init()
 {
-	extern void *_sisdram_data, *_ssdram_data, *_esdram_data;
-	extern void *_ssdram_bss, *_esdram_bss;
+//	extern void *_sisdram_data, *_ssdram_data, *_esdram_data;
+//	extern void *_ssdram_bss, *_esdram_bss;
 
 //	void **pSource, **pDest;
 //	for (pSource = &_sisdram_data, pDest = &_ssdram_data; pDest != &_esdram_data; pSource++, pDest++)

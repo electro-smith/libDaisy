@@ -1,7 +1,9 @@
 #include "libdaisy.h"
 #include "daisysp.h"
 #include "dsy_patch_bsp.h"
+#include "dsy_seed.h"
 
+static daisy_handle seed;
 static dsy_reverbsc_t verb;
 static float drylevel, send;
 
@@ -26,12 +28,9 @@ static void VerbCallback(float *in, float *out, size_t size)
 
 int main(void)
 {
-    uint8_t board = DSY_SYS_BOARD_DAISY_SEED;
-    dsy_system_init(board);
-    dsy_audio_init(board, DSY_AUDIO_INTERNAL, DSY_AUDIO_DEVICE_WM8731);
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, VerbCallback);
+    daisy_seed_init(&seed);
     dsy_reverbsc_init(&verb, DSY_AUDIO_SAMPLE_RATE);
-    dsy_adc_init(board);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, VerbCallback);
     dsy_adc_start();
     dsy_audio_start(DSY_AUDIO_INTERNAL);
     while(1) {}

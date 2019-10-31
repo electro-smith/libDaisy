@@ -1,16 +1,15 @@
 // Short Example showing how to write to the LEDs on Daisy Patch
-#include "libdaisy.h"
-#include "daisysp.h"
-#include "dsy_patch_bsp.h"
+#include "dsy_seed.h"
+
+daisy_handle seed;
 
 static void clear_leds();
 
 int main(void)
 {
     uint8_t selected_led = 0;
-    uint8_t board = DSY_SYS_BOARD_DAISY_SEED;
-    dsy_system_init(board);
-    dsy_led_driver_init(board);
+    daisy_seed_init(&seed);
+    dsy_led_driver_init(&seed.i2c1_handle);
     while(1) 
     {
         dsy_system_delay(100);
