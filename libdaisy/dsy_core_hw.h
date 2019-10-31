@@ -33,6 +33,11 @@ typedef struct
 // Maps Daisy interface to STM32 HAL --
 // I'd like to get all of this stuff tucked away somewhere inbetween the HAL, and User level
 // So that I can start to slowly replace HAL stuff over time.
+// Also I don't like that this throws a warning for every library file that doesn't use it...
+
+// Possible solution: Move this to dsy_hal_interface.h -- and the explicitly include it in the lower-level files that need it.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
 const static GPIO_TypeDef* gpio_hal_port_map[DSY_GPIO_LAST] = {
 	GPIOA,
 	GPIOB,
@@ -66,5 +71,6 @@ const static uint16_t gpio_hal_pin_map[16] = {
 	GPIO_PIN_14,
 	GPIO_PIN_15,
 };
+#pragma GCC diagnostic pop
 
 #endif

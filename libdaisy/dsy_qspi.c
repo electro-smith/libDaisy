@@ -601,7 +601,6 @@ static uint32_t autopolling_mem_ready(QSPI_HandleTypeDef *hqspi,
 static uint32_t enter_quad_mode(QSPI_HandleTypeDef *hqspi)
 {
 	QSPI_CommandTypeDef s_command;
-	uint8_t				reg = 0;
 
 	/* Initialize the read volatile configuration register command */
 	s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
@@ -631,7 +630,6 @@ static uint32_t enter_quad_mode(QSPI_HandleTypeDef *hqspi)
 static uint32_t exit_quad_mode(QSPI_HandleTypeDef *hqspi)
 {
 	QSPI_CommandTypeDef s_command;
-	uint8_t				reg = 0;
 
 	/* Initialize the read volatile configuration register command */
 	s_command.InstructionMode   = QSPI_INSTRUCTION_4_LINES;

@@ -71,7 +71,8 @@ float dsy_oscillator_process(dsy_oscillator_t *p)
 		}
 		break;
 	default:
-	break;
+        out = 0.0f;
+        break;
 	}
 	p->last_out = out;
 	p->phase += p->phase_inc;

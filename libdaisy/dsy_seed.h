@@ -8,15 +8,17 @@
 #define DSY_SEED_H
 
 #include "libdaisy.h"
-#include "dsy_patch_bsp.h"
 
-#define SEED_NUM_GPIO 32
+// Specifies whether generic initialization will be done within the daisy_seed_init, or not.
+// Allows for more selective init
+//#define DSY_SEED_NO_INIT 1
 
 #define SEED_LED_PORT DSY_GPIOC
 #define SEED_LED_PIN 7
 
 #define SEED_TEST_POINT_PORT DSY_GPIOG
 #define SEED_TEST_POINT_PIN 14
+
 
 // Probably should move this to a dsy_handle.h
 // So that it can be used in the other peripheral
@@ -31,8 +33,6 @@ typedef struct
 	dsy_adc_handle_t   adc_handle;
 	dsy_dac_handle_t   dac_handle;
 	dsy_gpio_t		   led, testpoint;
-	dsy_gpio_t		   generic_pins[SEED_NUM_GPIO];
-
 } daisy_handle;
 
 
@@ -145,14 +145,15 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 	pin_group[DSY_ADC_PIN_CHN18].pin  = 4;
 	pin_group[DSY_ADC_PIN_CHN19].port = DSY_GPIOA;
 	pin_group[DSY_ADC_PIN_CHN19].pin  = 5;
-	uint8_t channel_order[8]		  = {DSY_ADC_PIN_CHN3,
-								 DSY_ADC_PIN_CHN4,
-								 DSY_ADC_PIN_CHN7,
-								 DSY_ADC_PIN_CHN10,
-								 DSY_ADC_PIN_CHN11,
-								 DSY_ADC_PIN_CHN5,
-								 DSY_ADC_PIN_CHN15,
-								 DSY_ADC_PIN_CHN17};
+	uint8_t channel_order[8]		  = {
+		 DSY_ADC_PIN_CHN3,
+		 DSY_ADC_PIN_CHN10,
+		 DSY_ADC_PIN_CHN7,
+		 DSY_ADC_PIN_CHN11,
+		 DSY_ADC_PIN_CHN4,
+		 DSY_ADC_PIN_CHN5,
+		 DSY_ADC_PIN_CHN15,
+		 DSY_ADC_PIN_CHN17};
 	daisy_seed->adc_handle.channels
 		= 8; // only initializing 8 primary channels.
 	for(uint8_t i = 0; i < 8; i++)
@@ -169,7 +170,6 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 	pin_group[DSY_DAC_CHN2].port	  = DSY_GPIOA;
 	pin_group[DSY_DAC_CHN2].pin = 5;
 
-
 	// GPIO
 	daisy_seed->led.pin.port = SEED_LED_PORT;
 	daisy_seed->led.pin.pin = SEED_LED_PIN;
@@ -178,7 +178,8 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 	daisy_seed->testpoint.pin.pin = SEED_TEST_POINT_PIN;
 	daisy_seed->testpoint.mode		   = DSY_GPIO_MODE_OUTPUT_PP;
 
-	// System Initialization
+	// System Initialization (optional)
+#ifndef DSY_SEED_NO_INIT
 	dsy_system_init();
 	dsy_sdram_init(&daisy_seed->sdram_handle);
 	dsy_qspi_init(&daisy_seed->qspi_handle);
@@ -189,6 +190,7 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 	dsy_audio_init(&daisy_seed->sai_handle,
 				   &daisy_seed->i2c2_handle,
 				   &daisy_seed->i2c1_handle);
+#endif // DSY_SEED_NO_INIT
 }
 
 #endif

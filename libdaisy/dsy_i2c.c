@@ -43,7 +43,9 @@ void dsy_i2c_init(dsy_i2c_handle_t *dsy_hi2c)
 			hal_hi2c->Instance = I2C4;
 			break;
 		default: 
-
+			i2c1_handler = *dsy_hi2c;
+			hal_hi2c	 = &hi2c1;
+			hal_hi2c->Instance = I2C1;
 			break;
 	}
 	// Set Generic Parameters
@@ -85,7 +87,6 @@ I2C_HandleTypeDef* dsy_i2c_hal_handle(dsy_i2c_handle_t* dsy_hi2c)
 void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
 {
 
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
 	if(i2cHandle->Instance == I2C1)
 	{
 	  __HAL_RCC_GPIOB_CLK_ENABLE();
