@@ -19,19 +19,19 @@ Keeping that in mind, in the included simple examples there will either be an "i
 
 - System Driver for initializing Kernal/Periph Clocks, PLLs, etc.
 - SDRAM for 64MB Alliance SDRAM chip
-- QSPI for 4MB NOR FLASH IS25LP064D
+- QSPI for 8MB NOR FLASH IS25LP064D
 - QSPI for 1MB NOR FLASH IS25LP080D
 - Stereo Audio for Wolfson WM8731
 - Stereo Audio for TI PCM3060
-
-### Partial/Incomplete Drivers
-
+- DAC for 2-channel 12-bit DAC
 - ADC for Internal 8-11x 16-bit oversample-able ADCs.
 - PCA9685 LED Driver via I2C (16-channel PWM)
+- Switch interface with debouncing, and edge checking. 
+- generic GPIO handling.
 
 ### Drivers coming soon:
 
-- DAC for 2-channel 12-bit DAC
+
 - SDMMC for FATFS filesystem on SD cards. (1-bit and 4-bit)
 - USB CDC (VCOM) driver for both USB Peripherals (Built-in and Pinout access)
 - MIDI via UART driver
