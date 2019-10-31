@@ -2,6 +2,8 @@
 #define DSY_AUDIO_H
 #include <stddef.h>
 #include <stdint.h>
+#include "dsy_sai.h"
+#include "dsy_i2c.h"
 #ifdef __cplusplus
 extern "C"
 {
@@ -30,6 +32,10 @@ extern "C"
 
 #define DSY_AUDIO_BLOCK_SIZE (DSY_AUDIO_DMA_BUFFER_SIZE / 2)
 
+	// Thinking about getting rid of this...
+
+	// If initialized to a single channel, its just that.
+	// If both initialized, then you get a quad callback.
 	enum
 	{
 		DSY_AUDIO_INTERNAL,
@@ -37,21 +43,15 @@ extern "C"
 		DSY_AUDIO_LAST,
 	};
 
-	enum
-	{
-		DSY_AUDIO_DEVICE_PCM3060,
-		DSY_AUDIO_DEVICE_WM8731,
-		DSY_AUDIO_DEVICE_LAST,
-	};
-
-	// Stereo input/output buffer
-	// float *input *output
-	// size_t number of samples
 	typedef void (*audio_callback)(float*, float*, size_t);
-
-	void dsy_audio_init(uint8_t board, uint8_t intext, uint8_t device);
+	void dsy_audio_init(dsy_sai_handle_t* sai_handle,
+						dsy_i2c_handle_t* dev0_i2c,
+						dsy_i2c_handle_t* dev1_i2c);
 	void dsy_audio_set_callback(uint8_t intext, audio_callback cb);
+
 	void dsy_audio_start(uint8_t intext);
+
+	// Stops transmitting/receiving audio.
 	void dsy_audio_stop(uint8_t intext);
 
 	// If the device supports hardware bypass, enter that mode.
@@ -60,6 +60,7 @@ extern "C"
 	// If the device supports hardware bypass, exit that mode.
 	void dsy_audio_exit_bypass(uint8_t intext);
 
+	// Default Callbacks
 	void dsy_audio_passthru(float* in, float* out, size_t size);
 	void dsy_audio_silence(float* in, float* out, size_t size);
 

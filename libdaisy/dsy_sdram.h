@@ -5,7 +5,7 @@
 // He has references to timing, etc.
 // for now we're configuring the RAM to run at 108MHz
 
-// To use these the .sdram_data/_bss sections must be 
+// To use these the .sdram_data/_bss sections must be
 //    configured correctly in the LINKER SCRIPT.
 //    using BSS is advised for most things, since the DATA section must also fit in flash in order to be initialized.
 
@@ -60,13 +60,40 @@ SECTIONS
 //E.g. int SDRAM_BSS g_Uninitialized;
 #define DSY_SDRAM_BSS __attribute__((section(".sdram_bss")))
 
-enum 
+enum
 {
 	DSY_SDRAM_OK,
 	DSY_SDRAM_ERR,
 };
 
+// Determines whether chip is initialized, and activated.
+typedef enum
+{
+	DSY_SDRAM_STATE_ENABLE,
+	DSY_SDRAM_STATE_DISABLE,
+	DSY_SDRAM_STATE_LAST,
+} dsy_sdram_state;
+
+// This is only the pins that can change on a board-to-board basis.
+// Pins that have functions that cannot be moved to another pin will
+// be hardcoded into the driver.
+//
+// - SDNWE is the only pin that i've seen move,
+//		though I feel like there are probably a few more.
+typedef enum
+{
+	DSY_SDRAM_PIN_SDNWE,
+	DSY_SDRAM_PIN_LAST,
+} dsy_sdram_pin;
+
+
+typedef struct
+{
+	dsy_sdram_state state;
+	dsy_gpio_pin	pin_config[DSY_SDRAM_PIN_LAST];
+} dsy_sdram_handle_t;
+
 //#include "main.h"
-uint8_t dsy_sdram_init(uint8_t board);
+uint8_t dsy_sdram_init(dsy_sdram_handle_t *dsy_hsdram);
 
 #endif

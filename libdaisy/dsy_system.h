@@ -6,7 +6,7 @@ extern "C" {
 #include <stdint.h>
 
 // Sets clock speeds, etc.
-void dsy_system_init(uint8_t board);
+void dsy_system_init();
 void dsy_system_jumpto(uint32_t addr);
 void dsy_system_jumptoqspi();
 uint32_t dsy_system_getnow(); // returns HAL_GetTick()

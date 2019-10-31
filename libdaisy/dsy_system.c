@@ -1,6 +1,6 @@
 #include "libdaisy.h"
 #include <stm32h7xx_hal.h>
-#include "dma.h"
+#include "dsy_dma.h"
 
 // Jump related stuff
 
@@ -48,7 +48,7 @@ __attribute__((always_inline)) static inline void __JUMPTOQSPI()
 typedef void(*EntryPoint)(void);
 
 // Static Function Declaration
-static void SystemClock_Config(uint8_t board);
+static void SystemClock_Config();
 static void Error_Handler(void);
 
 void SysTick_Handler(void)
@@ -57,52 +57,22 @@ void SysTick_Handler(void)
 	HAL_SYSTICK_IRQHandler();
 }
 
-void dsy_system_init(uint8_t board)
+void HardFault_Handler() 
+{
+	asm("bkpt 255");
+}
+
+void dsy_system_init()
 {
 	// For now we won't use the board parameter since all three supported boards use the same 16MHz HSE.
 	// That said, 2hp Audio BB had a bit different setup, and actually a more accurate sample rate for audio iirc.
-	SystemClock_Config(board);
+	SystemClock_Config();
 	dsy_dma_init(); //
 	SCB_EnableICache();
 	//SCB_EnableDCache(); // This will require relocation of DMA buffers, or Cache Maintence. Performance is almost doubled, though.
 	HAL_Init();
 }
 
-void dsy_system_jumpto(uint32_t addr)
-{
-	//		NVIC_TypeDef *rNVIC = (NVIC_TypeDef *)NVIC_BASE;
-	//		rNVIC->ICER[0] = 0xFFFFFFFF;
-	//		rNVIC->ICER[1] = 0xFFFFFFFF;
-	//		rNVIC->ICPR[0] = 0xFFFFFFFF;
-	//		rNVIC->ICPR[1] = 0xFFFFFFFF;
-	//		SET_REG(STK_CTRL, 0x04);
-	//	
-	//		// System reset.
-	//		SET_REG(RCC_CR, GET_REG(RCC_CR)     | 0x00000001);
-	//		SET_REG(RCC_CFGR, GET_REG(RCC_CFGR) & 0xF8FF0000);
-	//		SET_REG(RCC_CR, GET_REG(RCC_CR)     & 0xFEF6FFFF);
-	//		SET_REG(RCC_CR, GET_REG(RCC_CR)     & 0xFFFBFFFF);
-	//		SET_REG(RCC_CFGR, GET_REG(RCC_CFGR) & 0xFF80FFFF);
-	//		SET_REG(RCC_CIR, 0x00000000);
-		
-	//	SysTick->CTRL &= ~(SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
-	//	__disable_irq();
-	//	uint32_t application_address = addr + 4;
-	//	EntryPoint application = (EntryPoint)(application_address);
-	//	HAL_RCC_DeInit();
-	//	SysTick->CTRL = 0;
-	//	SysTick->LOAD = 0;
-	//	SysTick->VAL = 0;
-	//	__set_MSP(*(__IO uint32_t*)addr);
-	//	SCB->VTOR = addr;
-	//	HAL_DeInit();
-	//	application();
-	// Broken for now. . . 
-	while (1)
-	{
-		 
-	}
-}
 void dsy_system_jumptoqspi()
 {
 	__JUMPTOQSPI();
@@ -122,7 +92,7 @@ void dsy_system_delay(uint32_t delay_ms)
     HAL_Delay(delay_ms);
 }
 
-void SystemClock_Config(uint8_t board)
+void SystemClock_Config()
 {
 	// HOLD THISSSS
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
@@ -172,31 +142,16 @@ void SystemClock_Config(uint8_t board)
   RCC_ClkInitStruct.APB2CLKDivider = RCC_APB2_DIV2;
   RCC_ClkInitStruct.APB4CLKDivider = RCC_APB4_DIV2;
 
-  //if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_7) != HAL_OK)
   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
   {
     Error_Handler();
   }
-	if (board == DSY_SYS_BOARD_DAISY || board == DSY_SYS_BOARD_AUDIO_BB)
-	{
-		
-		PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART3 | RCC_PERIPHCLK_USART6
-									| RCC_PERIPHCLK_SPI1 | RCC_PERIPHCLK_SAI2
-									| RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SDMMC
-									| RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_ADC
-									| RCC_PERIPHCLK_USB | RCC_PERIPHCLK_QSPI
-									| RCC_PERIPHCLK_FMC | RCC_PERIPHCLK_I2C1;
-	}
-	else
-	{
-		// Daisy Seed // Eurorack Tester
-	  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART1|RCC_PERIPHCLK_RNG 
-								  |RCC_PERIPHCLK_SPI1|RCC_PERIPHCLK_SAI2
-								  |RCC_PERIPHCLK_SAI1|RCC_PERIPHCLK_SDMMC
-								  |RCC_PERIPHCLK_I2C2|RCC_PERIPHCLK_ADC
-								  |RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_USB
-								  |RCC_PERIPHCLK_QSPI|RCC_PERIPHCLK_FMC;
-	}
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_USART1|RCC_PERIPHCLK_RNG 
+							  |RCC_PERIPHCLK_SPI1|RCC_PERIPHCLK_SAI2
+							  |RCC_PERIPHCLK_SAI1|RCC_PERIPHCLK_SDMMC
+							  |RCC_PERIPHCLK_I2C2|RCC_PERIPHCLK_ADC
+							  |RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_USB
+							  |RCC_PERIPHCLK_QSPI|RCC_PERIPHCLK_FMC;
   PeriphClkInitStruct.PLL2.PLL2M = 4;
   PeriphClkInitStruct.PLL2.PLL2N = 100;
   PeriphClkInitStruct.PLL2.PLL2P = 2;

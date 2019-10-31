@@ -4,15 +4,16 @@ CHIPSET = stm32f7x
 MODULES = \
 codec_pcm3060 \
 codec_wm8731 \
-dma \
+dsy_dma \
 dsy_adc \
 dsy_audio \
 dsy_leddriver \
 dsy_qspi \
 dsy_sdram \
 dsy_system \
-i2c \
-sai \
+dsy_i2c \
+dsy_sai \
+dsy_gpio \
 system_stm32h7xx \
 
 ######################################
