@@ -37,13 +37,10 @@ typedef enum
 #define LED_BUFF_SIZE ((16 * 4) + 1)
 typedef struct
 {
-	//rgb_led_t leds[CHANNELS_PER_DRIVER];
 	led_t	 leds[CHANNELS_PER_DRIVER];
 	uint16_t *sorted_bright[DRIVER_LAST][16];
 	uint16_t  dummy_bright; // not sure if NULL will break things later.
-	//color_t leds[CHANNELS_PER_DRIVER];
 	float master_dim;
-	//uint8_t i2c_buff[3][LED_BUFF_SIZE];
 	uint8_t			   temp_buff[LED_BUFF_SIZE];
 	uint8_t			   current_drv;
 	color_t			   standard_colors[LED_COLOR_LAST];
@@ -54,14 +51,6 @@ typedef struct
 dsy_led_driver_t leddriver;
 
 static void init_rgb_leds();
-static void init_single_rgb_led(uint8_t name,
-								uint8_t addr_r,
-								uint8_t addr_g,
-								uint8_t addr_b,
-								uint8_t drv_r,
-								uint8_t drv_g,
-								uint8_t drv_b);
-
 static void init_single_led(uint8_t name, uint8_t addr, uint8_t drv);
 static void gen_sorted_table();
 
@@ -152,7 +141,6 @@ void dsy_led_driver_update()
 	on					 = 0;
 	output_buff[0]		 = PCA9685_LED0;
 	idx					 = 1;
-	uint16_t *temp;
 	for(uint8_t i = 0; i < 16; i++)
 	{
 		if(drvr < DRIVER_LAST)
@@ -187,12 +175,6 @@ void dsy_led_driver_set_led(uint8_t idx, float bright)
 		temp = 0.0f;
 	}
 	leddriver.leds[idx].bright = (uint16_t)temp;
-	//	temp = (float)c->red * bright;
-	//	leddriver.leds[idx].color.red  = (uint16_t)temp;
-	//	temp = (float)c->green * bright;
-	//	leddriver.leds[idx].color.green  = (uint16_t)temp;
-	//	temp = (float)c->blue * bright;
-	//	leddriver.leds[idx].color.blue = (uint16_t)temp;
 }
 
 //#define TIME_LEDS 1
@@ -224,31 +206,6 @@ color_t *dsy_led_driver_color_by_name(uint8_t name)
 
 static void init_rgb_leds()
 {
-	// Set up addresses, etc. for each LED.
-	// LEDDriver 1
-	//	init_single_led(LED_TRUNK_1, 0, 1, 2, 0, 0, 0);
-	//	init_single_led(LED_TRUNK_2, 3, 4, 5, 0, 0, 0);
-	//	init_single_led(LED_TRUNK_3, 6, 7, 8, 0, 0, 0);
-	//	init_single_led(LED_CHANNEL, 9, 10, 11, 0, 0, 0);
-	//	init_single_rgb_led(LED_RESET, 12, 13, 14, 0, 0, 0);
-	// LEDDriver 2
-	//	init_single_led(LED_CENTER_2, 0, 1, 2, 1, 1, 1);
-	//	init_single_led(LED_TRUNK_5, 3, 4, 5, 1, 1, 1);
-	//	init_single_led(LED_TRUNK_6, 6, 7, 8, 1, 1, 1);
-	//	init_single_led(LED_TRUNK_4, 9, 10, 11, 1, 1, 1);
-	//	init_single_led(LED_CENTER_1, 12, 13, 14, 1, 1, 1);
-	// LEDDriver 3
-	//	init_single_led(LED_SHIFT, 0, 1, 2, 2, 2, 2);
-	//	init_single_led(LED_TRUNK_8, 3, 4, 5, 2, 2, 2);
-	//	init_single_led(LED_TRUNK_7, 6, 7, 8, 2, 2, 2);
-	//	init_single_led(LED_CENTER_4, 9, 10, 11, 2, 2, 2);
-	//	init_single_led(LED_CENTER_3, 12, 13, 14, 2, 2, 2);
-	// LEDDriver 4
-	//	init_single_led(LED_GATE_1, 0, 1, 2, 3, 3, 3);
-	//	init_single_led(LED_GATE_2, 3, 4, 5, 3, 3, 3);
-	//	init_single_led(LED_CLOCK, 6, 7, 8, 3, 3, 3);
-	//	init_single_led(LED_OUT_1, 9, 10, 11, 3, 3, 3);
-	//	init_single_led(LED_OUT_2, 12, 13, 14, 3, 3, 3);
 	for(uint8_t i = 0; i < CHANNELS_PER_DRIVER; i++)
 	{
 		init_single_led(i, i, 0);
@@ -256,46 +213,13 @@ static void init_rgb_leds()
 }
 static void gen_sorted_table()
 {
-	uint8_t temp[DRIVER_LAST][16];
-	uint8_t dummy_addr
-		= 16; // This works because all of the pin 16s are floating
 	uint8_t tdrv, taddr;
 	for(uint8_t i = 0; i < CHANNELS_PER_DRIVER; i++)
 	{
-		//		tdrv = leddriver.leds[i].drv_r;
-		//		taddr = leddriver.leds[i].addr_r;
-		//		leddriver.sorted_bright[tdrv][taddr] = &leddriver.leds[i].color.red;
-		//		tdrv = leddriver.leds[i].drv_g;
-		//		taddr = leddriver.leds[i].addr_g;
-		//		leddriver.sorted_bright[tdrv][taddr] = &leddriver.leds[i].color.green;
-		//		tdrv = leddriver.leds[i].drv_b;
-		//		taddr = leddriver.leds[i].addr_b;
-		//		leddriver.sorted_bright[tdrv][taddr] = &leddriver.leds[i].color.blue;
 		tdrv								 = leddriver.leds[i].drv;
 		taddr								 = leddriver.leds[i].addr;
 		leddriver.sorted_bright[tdrv][taddr] = &leddriver.leds[i].bright;
 	}
-	// Handle floating pins
-	//	for (uint8_t i = 0; i < DRIVER_LAST; i++)
-	//	{
-	//		leddriver.sorted_bright[i][15] = &leddriver.dummy_bright;
-	//	}
-}
-
-static void init_single_rgb_led(uint8_t name,
-								uint8_t addr_r,
-								uint8_t addr_g,
-								uint8_t addr_b,
-								uint8_t drv_r,
-								uint8_t drv_g,
-								uint8_t drv_b)
-{
-	//	leddriver.leds[name].addr_r = addr_r;
-	//	leddriver.leds[name].addr_g = addr_g;
-	//	leddriver.leds[name].addr_b = addr_b;
-	//	leddriver.leds[name].drv_r = drv_r;
-	//	leddriver.leds[name].drv_g = drv_g;
-	//	leddriver.leds[name].drv_b = drv_b;
 }
 
 static void init_single_led(uint8_t name, uint8_t addr, uint8_t drv)

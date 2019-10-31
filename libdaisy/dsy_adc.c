@@ -99,8 +99,8 @@ void dsy_adc_init(dsy_adc_handle_t *dsy_hadc)
 	{
 		sConfig.Channel
 			= dsy_adc_channel_map[dsy_adc.dsy_hadc->active_channels[i]];
-		sConfig.Rank
-			= dsy_adc_rank_map[dsy_adc.dsy_hadc->active_channels[i]];
+		sConfig.Rank = dsy_adc_rank_map[i];
+		//= dsy_adc_rank_map[dsy_adc.dsy_hadc->active_channels[i]];
 		if(HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) 
 		{
 			// Error_Handler();
