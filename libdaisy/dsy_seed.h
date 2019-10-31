@@ -29,6 +29,7 @@ typedef struct
 	dsy_sai_handle_t   sai_handle;
 	dsy_i2c_handle_t   i2c1_handle, i2c2_handle;
 	dsy_adc_handle_t   adc_handle;
+	dsy_dac_handle_t   dac_handle;
 	dsy_gpio_t		   led, testpoint;
 	dsy_gpio_t		   generic_pins[SEED_NUM_GPIO];
 
@@ -159,6 +160,16 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 		daisy_seed->adc_handle.active_channels[i] = channel_order[i];
 	}
 
+	// DAC
+	daisy_seed->dac_handle.mode		  = DSY_DAC_MODE_POLLING;
+	daisy_seed->dac_handle.bitdepth   = DSY_DAC_BITS_12;
+	pin_group						  = daisy_seed->dac_handle.pin_config;
+	pin_group[DSY_DAC_CHN1].port	  = DSY_GPIOA;
+	pin_group[DSY_DAC_CHN1].pin = 4;
+	pin_group[DSY_DAC_CHN2].port	  = DSY_GPIOA;
+	pin_group[DSY_DAC_CHN2].pin = 5;
+
+
 	// GPIO
 	daisy_seed->led.pin.port = SEED_LED_PORT;
 	daisy_seed->led.pin.pin = SEED_LED_PIN;
@@ -174,6 +185,7 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 	dsy_gpio_init(&daisy_seed->led);
 	dsy_gpio_init(&daisy_seed->testpoint);
 	dsy_adc_init(&daisy_seed->adc_handle);
+	dsy_dac_init(&daisy_seed->dac_handle, DSY_DAC_CHN_BOTH);
 	dsy_audio_init(&daisy_seed->sai_handle,
 				   &daisy_seed->i2c2_handle,
 				   &daisy_seed->i2c1_handle);
