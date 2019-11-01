@@ -2,6 +2,10 @@
 #ifndef DSY_DAC_H
 #define DSY_DAC_H
 #include "dsy_core_hw.h"
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 typedef enum
 {
@@ -34,4 +38,8 @@ typedef struct
 void dsy_dac_init(dsy_dac_handle_t *dsy_hdac, dsy_dac_channel channel);
 void dsy_dac_start(dsy_dac_channel channel);
 void dsy_dac_write(dsy_dac_channel channel, uint16_t val);
+
+#ifdef __cplusplus
+}
+#endif
 #endif

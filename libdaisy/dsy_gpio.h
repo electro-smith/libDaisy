@@ -2,6 +2,10 @@
 #ifndef DSY_GPIO_H
 #define DSY_GPIO_H
 #include "dsy_core_hw.h"
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 typedef enum
 {
@@ -29,5 +33,9 @@ void dsy_gpio_init(dsy_gpio_t *p);
 uint8_t dsy_gpio_read(dsy_gpio_t *p);
 void dsy_gpio_write(dsy_gpio_t *p, uint8_t state);
 void dsy_gpio_toggle(dsy_gpio_t *p);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
