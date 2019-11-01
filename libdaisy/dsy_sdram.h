@@ -52,6 +52,10 @@ SECTIONS
 
 #ifndef RAM_AS4C16M16SA_H
 #define RAM_AS4C16M16SA_H
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 #include <stdint.h>
 
 //E.g. int SDRAM_DATA g_Initialized = 1;
@@ -95,5 +99,8 @@ typedef struct
 
 //#include "main.h"
 uint8_t dsy_sdram_init(dsy_sdram_handle_t *dsy_hsdram);
+#ifdef __cplusplus
+}
+#endif
 
 #endif
