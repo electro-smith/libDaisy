@@ -13,5 +13,7 @@ int main(void)
     daisy_seed_init(&seed);    
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, Callback);
     dsy_audio_start(DSY_AUDIO_INTERNAL);
-    while(1) {}
+    while(1) 
+    {
+    }
 }
