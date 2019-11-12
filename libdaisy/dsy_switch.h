@@ -1,6 +1,10 @@
 #pragma once
 #ifndef DSY_SWITCH_H
 #define DSY_SWITCH_H
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 #include "dsy_core_hw.h"
 #include "dsy_gpio.h"
 
@@ -50,4 +54,7 @@ uint8_t dsy_switch_falling_edge(dsy_switch_t *sw);
 uint8_t dsy_switch_rising_edge(dsy_switch_t *sw);
 uint8_t dsy_switch_state(dsy_switch_t *sw);
 
+#ifdef __cplusplus
+}
+#endif
 #endif
