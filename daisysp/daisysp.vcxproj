@@ -60,9 +60,11 @@
     <ClInclude Include="daisysp.h" />
     <ClInclude Include="dsy_adenv.h" />
     <ClInclude Include="dsy_decimator.h" />
+    <ClInclude Include="dsy_metro.h" />
     <ClInclude Include="dsy_nlfilt.h" />
     <ClInclude Include="dsy_noise.h" />
     <ClInclude Include="dsy_oscillator.h" />
+    <ClInclude Include="dsy_phasor.h" />
     <ClInclude Include="dsy_pstream.h" />
     <ClInclude Include="dsy_reverbsc.h" />
     <ClInclude Include="dsy_svf.h" />
@@ -78,8 +80,10 @@
   <ItemGroup>
     <ClCompile Include="dsy_adenv.c" />
     <ClCompile Include="dsy_decimator.c" />
+    <ClCompile Include="dsy_metro.c" />
     <ClCompile Include="dsy_nlfilt.c" />
     <ClCompile Include="dsy_noise.c" />
+    <ClCompile Include="dsy_phasor.c" />
     <ClCompile Include="dsy_reverbsc.c" />
     <ClCompile Include="dsy_svf.c" />
     <ClCompile Include="dsy_oscillator.c" />

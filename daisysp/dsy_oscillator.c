@@ -34,7 +34,10 @@ float dsy_oscillator_process(dsy_oscillator_t *p)
 		}
 		break;
 	case DSY_OSC_WAVE_SAW:
-		out = (1.0f - (p->phase / (2.0f * M_PI)));
+		out = -1.0f * (((p->phase / (2.0f * M_PI) * 2.0f)) - 1.0f);
+		break;
+	case DSY_OSC_WAVE_RAMP:
+		out = ((p->phase / (2.0f * M_PI) * 2.0f)) - 1.0f;
 		break;
 	case DSY_OSC_WAVE_SQUARE:
 		out = p->phase < M_PI ? (1.0f) :  -1.0f;
