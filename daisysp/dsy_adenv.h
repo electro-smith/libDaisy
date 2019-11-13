@@ -31,12 +31,12 @@ typedef struct {
 	uint8_t trigger;
 } dsy_adenv_t;
 
-void adenv_init(dsy_adenv_t *p, float sr);
-void adenv_trigger(dsy_adenv_t *p);
-void adenv_set_segment_time(dsy_adenv_t *p, adenv_segment_t seg, float time);
-void adenv_set_curve_scalar(dsy_adenv_t *p, float scalar);
-void adenv_set_min_max(dsy_adenv_t *p, float min, float max);
-float adenv_process(dsy_adenv_t *p);
+void dsy_adenv_init(dsy_adenv_t *p, float sr);
+void dsy_adenv_trigger(dsy_adenv_t *p);
+void dsy_adenv_set_segment_time(dsy_adenv_t *p, adenv_segment_t seg, float time);
+void dsy_adenv_set_curve_scalar(dsy_adenv_t *p, float scalar);
+void dsy_adenv_set_min_max(dsy_adenv_t *p, float min, float max);
+float dsy_adenv_process(dsy_adenv_t *p);
 
 
 #ifdef __cplusplus
