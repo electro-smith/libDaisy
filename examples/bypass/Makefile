@@ -10,7 +10,7 @@ FLASH_ADDRESS = 0x08000000
 # GCC_PATH=
 
 ######################################
-# OpenOCD stuff 
+# OpenOCD stuff
 # TODO: add config.mk file for settings like programmer, etc.
 ######################################
 OCD=openocd
@@ -95,7 +95,7 @@ MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
 
 # macros for gcc
 # AS defines
-AS_DEFS = 
+AS_DEFS =
 
 # C defines
 C_DEFS =  \
@@ -106,7 +106,7 @@ C_DEFS =  \
 
 
 # AS includes
-AS_INCLUDES = 
+AS_INCLUDES =
 
 C_INCLUDES = \
 -I$(SYSTEM_FILES_DIR)/ \
@@ -133,10 +133,10 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = $(SYSTEM_FILES_DIR)/STM32H750IB_FLASH.lds
+LDSCRIPT = $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
 
 # libraries
-LIBS = -ldaisy -ldaisysp -lc -lm -lnosys 
+LIBS = -ldaisy -ldaisysp -lc -lm -lnosys
 LIBDIR = -L$(LIBDAISY_DIR)/build -L$(DAISYSP_DIR)/build
 LDFLAGS = $(MCU) -specs=nano.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
@@ -153,7 +153,7 @@ vpath %.c $(sort $(dir $(C_SOURCES)))
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
-$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
+$(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
 	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
@@ -165,19 +165,19 @@ $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
 
 $(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	$(HEX) $< $@
-	
+
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
-	$(BIN) $< $@	
-	
+	$(BIN) $< $@
+
 $(BUILD_DIR):
-	mkdir $@		
+	mkdir $@
 
 #######################################
 # clean up
 #######################################
 clean:
 	-rm -fR $(BUILD_DIR)
-  
+
 #######################################
 # openocd recipes
 #######################################
@@ -205,7 +205,7 @@ program:
 		-c "program ./build/$(TARGET).elf verify reset exit"
 
 #######################################
-# dfu-util 
+# dfu-util
 #######################################
 
 program-dfu:
