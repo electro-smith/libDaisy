@@ -9,10 +9,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#ifdef __cplusplus
-extern 'C'
-{
-#endif
+
 #define REVSC_OK 0
 #define REVSC_NOT_OK 1
 
@@ -261,6 +258,3 @@ int dsy_reverbsc_process(dsy_reverbsc_t *p, float *in1, float *in2, float *out1,
 	*out2 = aoutR * outputGain;
 	return REVSC_OK;
 }
-#ifdef __cplusplus
-}
-#endif
