@@ -60,6 +60,7 @@
     <ClInclude Include="daisysp.h" />
     <ClInclude Include="dsy_adenv.h" />
     <ClInclude Include="dsy_decimator.h" />
+    <ClInclude Include="dsy_line.h" />
     <ClInclude Include="dsy_metro.h" />
     <ClInclude Include="dsy_nlfilt.h" />
     <ClInclude Include="dsy_noise.h" />
@@ -80,6 +81,7 @@
   <ItemGroup>
     <ClCompile Include="dsy_adenv.c" />
     <ClCompile Include="dsy_decimator.c" />
+    <ClCompile Include="dsy_line.c" />
     <ClCompile Include="dsy_metro.c" />
     <ClCompile Include="dsy_nlfilt.c" />
     <ClCompile Include="dsy_noise.c" />
