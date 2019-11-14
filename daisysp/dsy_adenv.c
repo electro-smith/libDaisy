@@ -1,7 +1,3 @@
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 #include "dsy_adenv.h"
 #include <math.h>
 
@@ -90,8 +86,3 @@ static void calculate_multiplier(dsy_adenv_t *p, float start, float end, uint32_
 	p->multiplier = 1.0f + ((end - start) / (float)length_in_samples);
 	//= 1.0f + ((logf(end) - logf(start)) / (float)length_in_samples);
 }
-
-
-#ifdef __cplusplus
-}
-#endif
