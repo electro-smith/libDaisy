@@ -8,6 +8,7 @@ noise \
 oscillator \
 reverbsc \
 svf \
+dcblock \
 
 LIBDAISY_NAMESPACE = dsy_
 
