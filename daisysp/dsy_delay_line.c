@@ -3,7 +3,7 @@
 
 void dsy_delay_init(dsy_delay_t *p, float* buff, size_t buff_size, float samplerate)
 {
-	p->interp = 0;
+	p->interp = 1;
 	p->size = buff_size;
 	p->delay = 1;
 	p->line = buff;
@@ -42,5 +42,15 @@ void dsy_delay_line_write(dsy_delay_t *p, float val)
 }
 float dsy_delay_line_read(dsy_delay_t *p)
 {
-	return p->line[(p->write_ptr + p->delay) % p->size];
+	if(p->interp) 
+	{
+		float now, next;
+		now = p->line[(p->write_ptr + p->delay) % p->size];
+		next = p->line[(p->write_ptr + p->delay + 1) % p->size];
+		return now + (next - now) * p->delay_frac;
+	}
+	else
+	{
+		return p->line[(p->write_ptr + p->delay) % p->size];
+	}
 }
