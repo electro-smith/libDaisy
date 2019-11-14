@@ -53,6 +53,7 @@ FORCE_INLINE float dsysp_clip(float in, float min, float max)
 // Each of the below has/should have an example project.
 #include "dsy_adenv.h"
 #include "dsy_decimator.h"
+#include "dsy_delay_line.h"
 #include "dsy_line.h"
 #include "dsy_nlfilt.h"
 #include "dsy_metro.h"

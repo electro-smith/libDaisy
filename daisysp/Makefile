@@ -3,9 +3,13 @@ TARGET = libdaisysp
 MODULES = \
 adenv \
 decimator \
+delay_line \
+line \
 nlfilt \
+metro \
 noise \
 oscillator \
+phasor \
 reverbsc \
 svf \
 
