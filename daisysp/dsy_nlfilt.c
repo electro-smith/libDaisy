@@ -32,9 +32,9 @@
 *       See paper by Dobson and ffitch, ICMC'96                 *
 \***************************************************************/
 
-#include "dsy_nlfilt.h"
 #include <string.h>
 #include <math.h>
+#include "dsy_nlfilt.h"
 #define OK 0
 #define NOT_OK 1
 #define FL (float)

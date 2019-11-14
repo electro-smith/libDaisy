@@ -1,5 +1,6 @@
-#include "dsy_oscillator.h"
 #include <math.h>
+#include "dsy_oscillator.h"
+
 static float polyblep(float phase_inc, float t);
 void dsy_oscillator_init(dsy_oscillator_t *p, float sr)
 {
