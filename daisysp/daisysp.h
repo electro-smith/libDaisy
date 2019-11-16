@@ -1,18 +1,18 @@
 //	DaisySP is a DSP Library targeted at the Electrosmith Daisy Product Line.
 //  Author: Stephen Hensley, 2019
 //
-//	However, this is decoupled from the hardware in such a way that it 
+//	However, this is decoupled from the hardware in such a way that it
 //		should be useful outside of the ARM context with different build configurations.
-//	
+//
 //	A few general notes about the contents of the library:
 // 		- all types will end with '_t'
-//		- all memory usage is static. 
+//		- all memory usage is static.
 //		- in cases of potentially large memory usage, the user will supply a buffer and a size.
 // 		- all blocks will have an _init() function, and a _process() function.
 //		- all blocks, unless otherwise noted, will process a single sample at a time.
-//		- all processing will be done with 'float' type unless otherwise noted.	
+//		- all processing will be done with 'float' type unless otherwise noted.
 //		- a common dsysp_data_t type will be used for many init() functions to reduce user code complexity
-// 
+//
 #pragma once
 #ifndef DSYSP_H
 #define DSYSP_H
@@ -62,9 +62,10 @@ FORCE_INLINE float dsysp_clip(float in, float min, float max)
 #include "dsy_phasor.h"
 #include "dsy_reverbsc.h"
 #include "dsy_svf.h"
+#include "dsy_dcblock.h"
 
 
 #ifdef __cplusplus
 }
-#endif 
+#endif
 #endif // DSYSP_H
