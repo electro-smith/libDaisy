@@ -1,0 +1,184 @@
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 28, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"simple_verb.c"
+  13              		.text
+  14              		.section	.text.VerbCallback,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 2,,3
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv5-d16
+  23              	VerbCallback:
+  24              		@ args = 0, pretend = 0, frame = 16
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26 0000 002A     		cmp	r2, #0
+  27 0002 5FD0     		beq	.L9
+  28 0004 013A     		subs	r2, r2, #1
+  29 0006 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  30 000a 2F4F     		ldr	r7, .L13
+  31 000c 0546     		mov	r5, r0
+  32 000e 0C46     		mov	r4, r1
+  33 0010 22F00109 		bic	r9, r2, #1
+  34 0014 BB46     		mov	fp, r7
+  35 0016 0026     		movs	r6, #0
+  36 0018 DFF8C080 		ldr	r8, .L13+20
+  37 001c 2DED068B 		vpush.64	{d8, d9, d10}
+  38 0020 87B0     		sub	sp, sp, #28
+  39 0022 DFED2AAA 		vldr.32	s21, .L13+4
+  40 0026 9FED2AAA 		vldr.32	s20, .L13+8
+  41 002a 0DF10C0A 		add	r10, sp, #12
+  42 002e DFED299A 		vldr.32	s19, .L13+12
+  43 0032 9FED299A 		vldr.32	s18, .L13+16
+  44              	.L3:
+  45 0036 0020     		movs	r0, #0
+  46 0038 0835     		adds	r5, r5, #8
+  47 003a FFF7FEFF 		bl	dsy_adc_get_float
+  48 003e F0EE4A7A 		vmov.f32	s15, s20
+  49 0042 0220     		movs	r0, #2
+  50 0044 0834     		adds	r4, r4, #8
+  51 0046 E0EE2A7A 		vfma.f32	s15, s0, s21
+  52 004a C7ED007A 		vstr.32	s15, [r7]
+  53 004e FFF7FEFF 		bl	dsy_adc_get_float
+  54 0052 F0EE497A 		vmov.f32	s15, s18
+  55 0056 0320     		movs	r0, #3
+  56 0058 E0EE297A 		vfma.f32	s15, s0, s19
+  57 005c C7ED017A 		vstr.32	s15, [r7, #4]
+  58 0060 FFF7FEFF 		bl	dsy_adc_get_float
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s 			page 2
+
+
+  59 0064 0420     		movs	r0, #4
+  60 0066 88ED000A 		vstr.32	s0, [r8]
+  61 006a FFF7FEFF 		bl	dsy_adc_get_float
+  62 006e 55ED028A 		vldr.32	s17, [r5, #-8]
+  63 0072 15ED018A 		vldr.32	s16, [r5, #-4]
+  64 0076 02AB     		add	r3, sp, #8
+  65 0078 60EE287A 		vmul.f32	s15, s0, s17
+  66 007c 05AA     		add	r2, sp, #20
+  67 007e 20EE080A 		vmul.f32	s0, s0, s16
+  68 0082 CDF800A0 		str	r10, [sp]
+  69 0086 04A9     		add	r1, sp, #16
+  70 0088 5846     		mov	r0, fp
+  71 008a CDED047A 		vstr.32	s15, [sp, #16]
+  72 008e 8DED050A 		vstr.32	s0, [sp, #20]
+  73 0092 FFF7FEFF 		bl	dsy_reverbsc_process
+  74 0096 D8ED006A 		vldr.32	s13, [r8]
+  75 009a B31C     		adds	r3, r6, #2
+  76 009c 9DED027A 		vldr.32	s14, [sp, #8]
+  77 00a0 4E45     		cmp	r6, r9
+  78 00a2 DDED037A 		vldr.32	s15, [sp, #12]
+  79 00a6 1E46     		mov	r6, r3
+  80 00a8 A6EEA87A 		vfma.f32	s14, s13, s17
+  81 00ac E6EE887A 		vfma.f32	s15, s13, s16
+  82 00b0 04ED027A 		vstr.32	s14, [r4, #-8]
+  83 00b4 44ED017A 		vstr.32	s15, [r4, #-4]
+  84 00b8 BDD1     		bne	.L3
+  85 00ba 07B0     		add	sp, sp, #28
+  86              		@ sp needed
+  87 00bc BDEC068B 		vldm	sp!, {d8-d10}
+  88 00c0 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+  89              	.L9:
+  90 00c4 7047     		bx	lr
+  91              	.L14:
+  92 00c6 00BF     		.align	2
+  93              	.L13:
+  94 00c8 00000000 		.word	verb
+  95 00cc 9A99593F 		.word	1062836634
+  96 00d0 9A99193E 		.word	1041865114
+  97 00d4 00A08C46 		.word	1183621120
+  98 00d8 00004843 		.word	1128792064
+  99 00dc 00000000 		.word	.LANCHOR0
+ 101              		.section	.text.startup.main,"ax",%progbits
+ 102              		.align	1
+ 103              		.p2align 2,,3
+ 104              		.global	main
+ 105              		.syntax unified
+ 106              		.thumb
+ 107              		.thumb_func
+ 108              		.fpu fpv5-d16
+ 110              	main:
+ 111              		@ args = 0, pretend = 0, frame = 0
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 113 0000 08B5     		push	{r3, lr}
+ 114 0002 0120     		movs	r0, #1
+ 115 0004 FFF7FEFF 		bl	dsy_system_init
+ 116 0008 0122     		movs	r2, #1
+ 117 000a 0021     		movs	r1, #0
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s 			page 3
+
+
+ 118 000c 1046     		mov	r0, r2
+ 119 000e FFF7FEFF 		bl	dsy_audio_init
+ 120 0012 0949     		ldr	r1, .L18
+ 121 0014 0020     		movs	r0, #0
+ 122 0016 FFF7FEFF 		bl	dsy_audio_set_callback
+ 123 001a 9FED080A 		vldr.32	s0, .L18+4
+ 124 001e 0848     		ldr	r0, .L18+8
+ 125 0020 FFF7FEFF 		bl	dsy_reverbsc_init
+ 126 0024 0120     		movs	r0, #1
+ 127 0026 FFF7FEFF 		bl	dsy_adc_init
+ 128 002a FFF7FEFF 		bl	dsy_adc_start
+ 129 002e 0020     		movs	r0, #0
+ 130 0030 FFF7FEFF 		bl	dsy_audio_start
+ 131              	.L16:
+ 132 0034 FEE7     		b	.L16
+ 133              	.L19:
+ 134 0036 00BF     		.align	2
+ 135              	.L18:
+ 136 0038 00000000 		.word	VerbCallback
+ 137 003c 008E3B47 		.word	1195085312
+ 138 0040 00000000 		.word	verb
+ 140              		.section	.bss.drylevel,"aw",%nobits
+ 141              		.align	2
+ 142              		.set	.LANCHOR0,. + 0
+ 145              	drylevel:
+ 146 0000 00000000 		.space	4
+ 147              		.section	.bss.verb,"aw",%nobits
+ 148              		.align	2
+ 151              	verb:
+ 152 0000 00000000 		.space	131424
+ 152      00000000 
+ 152      00000000 
+ 152      00000000 
+ 152      00000000 
+ 153              		.ident	"GCC: (GNU Tools for Arm Embedded Processors 8-2019-q3-update) 8.3.1 20190703 (release) [gc
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 simple_verb.c
+C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s:15     .text.VerbCallback:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s:23     .text.VerbCallback:00000000 VerbCallback
+C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s:94     .text.VerbCallback:000000c8 $d
+C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s:151    .bss.verb:00000000 verb
+C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s:102    .text.startup.main:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s:110    .text.startup.main:00000000 main
+C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s:136    .text.startup.main:00000038 $d
+C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s:141    .bss.drylevel:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s:145    .bss.drylevel:00000000 drylevel
+C:\Users\Andrew\AppData\Local\Temp\ccX6gjuy.s:148    .bss.verb:00000000 $d
+
+UNDEFINED SYMBOLS
+dsy_adc_get_float
+dsy_reverbsc_process
+dsy_system_init
+dsy_audio_init
+dsy_audio_set_callback
+dsy_reverbsc_init
+dsy_adc_init
+dsy_adc_start
+dsy_audio_start
