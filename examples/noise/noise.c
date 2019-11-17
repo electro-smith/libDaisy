@@ -8,17 +8,21 @@ static daisy_handle seed;
 
 // create struct of type dsy_noise_t with variable name "noise_gen"
 static dsy_noise_t noise_gen;
-
-// audio callback 
+ 
 static void audioCallback(float *in, float *out, size_t size)
 {
     for (size_t i = 0; i < size; i += 2)
     {
-        // call noise process function, pass in pointer to noise module called noise_gen and return value to audio buffer, L channel
-        out[i] = dsy_noise_process(&noise_gen);
+        float noise_out;
 
-        // call noise process function, pass in pointer to noise module called noise_gen and return value to audio buffer, R channel
-        out[i + 1] = dsy_noise_process(&noise_gen);
+        // call noise process function, pass in pointer to noise module called noise_gen and return value to noise_out
+        noise_out = dsy_noise_process(&noise_gen);
+
+        // send noise signal to audio output buffer, L channel
+        out[i] = noise_out;
+
+        // send noise signal to audio output buffer, R channel
+        out[i + 1] = noise_out;
     }
 }
 
