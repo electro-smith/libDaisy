@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s 			page 1
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s 			page 1
   56 0040 1868     		ldr	r0, [r3]
   57 0042 20F48020 		bic	r0, r0, #262144
   58 0046 1860     		str	r0, [r3]
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s 			page 2
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s 			page 2
 
 
   59 0048 1A66     		str	r2, [r3, #96]
@@ -96,29 +96,29 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s 			page 1
   93              		@ args = 0, pretend = 0, frame = 0
   94              		@ frame_needed = 0, uses_anonymous_args = 0
   95              		@ link register save eliminated.
-  96 0000 424A     		ldr	r2, .L24
+  96 0000 494A     		ldr	r2, .L23
   97 0002 1369     		ldr	r3, [r2, #16]
   98 0004 03F03803 		and	r3, r3, #56
   99 0008 102B     		cmp	r3, #16
  100 000a 30B4     		push	{r4, r5}
- 101 000c 17D0     		beq	.L15
+ 101 000c 17D0     		beq	.L14
  102 000e 182B     		cmp	r3, #24
  103 0010 1ED0     		beq	.L9
- 104 0012 B3B1     		cbz	r3, .L23
- 105 0014 3E4B     		ldr	r3, .L24+4
+ 104 0012 B3B1     		cbz	r3, .L21
+ 105 0014 454B     		ldr	r3, .L23+4
  106              	.L8:
- 107 0016 3D48     		ldr	r0, .L24
- 108 0018 3E49     		ldr	r1, .L24+8
+ 107 0016 4448     		ldr	r0, .L23
+ 108 0018 4549     		ldr	r1, .L23+8
  109 001a 8269     		ldr	r2, [r0, #24]
- 110 001c 3E4D     		ldr	r5, .L24+12
+ 110 001c 454D     		ldr	r5, .L23+12
  111 001e C2F30322 		ubfx	r2, r2, #8, #4
- 112 0022 3E4C     		ldr	r4, .L24+16
+ 112 0022 454C     		ldr	r4, .L23+16
  113 0024 8A5C     		ldrb	r2, [r1, r2]	@ zero_extendqisi2
  114 0026 D340     		lsrs	r3, r3, r2
  115 0028 2B60     		str	r3, [r5]
  116 002a 8269     		ldr	r2, [r0, #24]
  117 002c 02F00F02 		and	r2, r2, #15
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s 			page 3
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s 			page 3
 
 
  118 0030 8A5C     		ldrb	r2, [r1, r2]	@ zero_extendqisi2
@@ -127,146 +127,143 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s 			page 1
  121 0038 2360     		str	r3, [r4]
  122 003a 30BC     		pop	{r4, r5}
  123 003c 7047     		bx	lr
- 124              	.L15:
- 125 003e 384B     		ldr	r3, .L24+20
+ 124              	.L14:
+ 125 003e 3F4B     		ldr	r3, .L23+20
  126 0040 E9E7     		b	.L8
- 127              	.L23:
+ 127              	.L21:
  128 0042 1368     		ldr	r3, [r2]
- 129 0044 374A     		ldr	r2, .L24+24
+ 129 0044 3E4A     		ldr	r2, .L23+24
  130 0046 C3F3C103 		ubfx	r3, r3, #3, #2
  131 004a 22FA03F3 		lsr	r3, r2, r3
  132 004e E2E7     		b	.L8
  133              	.L9:
  134 0050 906A     		ldr	r0, [r2, #40]
- 135 0052 936A     		ldr	r3, [r2, #40]
+ 135 0052 946A     		ldr	r4, [r2, #40]
  136 0054 D16A     		ldr	r1, [r2, #44]
- 137 0056 C3F30513 		ubfx	r3, r3, #4, #6
- 138 005a 546B     		ldr	r4, [r2, #52]
- 139 005c 002B     		cmp	r3, #0
- 140 005e DAD0     		beq	.L8
- 141 0060 C4F3CC04 		ubfx	r4, r4, #3, #13
- 142 0064 01F00101 		and	r1, r1, #1
- 143 0068 07EE903A 		vmov	s15, r3	@ int
- 144 006c 00F00300 		and	r0, r0, #3
- 145 0070 01FB04F3 		mul	r3, r1, r4
- 146 0074 B8EEE76A 		vcvt.f32.s32	s12, s15
- 147 0078 0128     		cmp	r0, #1
- 148 007a 07EE903A 		vmov	s15, r3	@ int
- 149 007e FAEEE97A 		vcvt.f32.s32	s15, s15, #13
- 150 0082 25D0     		beq	.L20
- 151 0084 38B3     		cbz	r0, .L11
- 152 0086 0228     		cmp	r0, #2
- 153 0088 22D1     		bne	.L20
- 154 008a 9FED277A 		vldr.32	s14, .L24+28
- 155              	.L22:
- 156 008e C7EE066A 		vdiv.f32	s13, s14, s12
- 157 0092 136B     		ldr	r3, [r2, #48]
- 158 0094 C3F30803 		ubfx	r3, r3, #0, #9
- 159 0098 07EE103A 		vmov	s14, r3	@ int
- 160 009c F7EE005A 		vmov.f32	s11, #1.0e+0
- 161 00a0 B8EEC77A 		vcvt.f32.s32	s14, s14
- 162 00a4 77EE277A 		vadd.f32	s15, s14, s15
- 163 00a8 77EEA57A 		vadd.f32	s15, s15, s11
- 164 00ac 67EEA67A 		vmul.f32	s15, s15, s13
- 165              	.L14:
- 166 00b0 164B     		ldr	r3, .L24
- 167 00b2 1B6B     		ldr	r3, [r3, #48]
- 168 00b4 C3F34623 		ubfx	r3, r3, #9, #7
- 169 00b8 0133     		adds	r3, r3, #1
- 170 00ba 07EE103A 		vmov	s14, r3	@ int
- 171 00be B8EEC77A 		vcvt.f32.s32	s14, s14
- 172 00c2 C7EE876A 		vdiv.f32	s13, s15, s14
- 173 00c6 FCEEE67A 		vcvt.u32.f32	s15, s13
- 174 00ca 17EE903A 		vmov	r3, s15	@ int
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s 			page 4
+ 137 0056 14F47C7F 		tst	r4, #1008
+ 138 005a C4F30513 		ubfx	r3, r4, #4, #6
+ 139 005e 556B     		ldr	r5, [r2, #52]
+ 140 0060 D9D0     		beq	.L8
+ 141 0062 C5F3CC05 		ubfx	r5, r5, #3, #13
+ 142 0066 01F00101 		and	r1, r1, #1
+ 143 006a 00F00300 		and	r0, r0, #3
+ 144 006e 01FB05F1 		mul	r1, r1, r5
+ 145 0072 0128     		cmp	r0, #1
+ 146 0074 07EE901A 		vmov	s15, r1	@ int
+ 147 0078 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 148 007c 02D0     		beq	.L12
+ 149 007e 0228     		cmp	r0, #2
+ 150 0080 29D0     		beq	.L11
+ 151 0082 78B3     		cbz	r0, .L22
+ 152              	.L12:
+ 153 0084 07EE103A 		vmov	s14, r3	@ int
+ 154 0088 9FED2E5A 		vldr.32	s10, .L23+28
+ 155 008c F8EEC76A 		vcvt.f32.s32	s13, s14
+ 156              	.L20:
+ 157 0090 136B     		ldr	r3, [r2, #48]
+ 158 0092 85EE267A 		vdiv.f32	s14, s10, s13
+ 159 0096 DFED2C5A 		vldr.32	s11, .L23+32
+ 160 009a C3F30803 		ubfx	r3, r3, #0, #9
+ 161 009e 06EE903A 		vmov	s13, r3	@ int
+ 162 00a2 B7EE006A 		vmov.f32	s12, #1.0e+0
+ 163 00a6 F8EEE66A 		vcvt.f32.s32	s13, s13
+ 164 00aa E7EEA56A 		vfma.f32	s13, s15, s11
+ 165 00ae 76EE867A 		vadd.f32	s15, s13, s12
+ 166 00b2 27EE277A 		vmul.f32	s14, s14, s15
+ 167              	.L13:
+ 168 00b6 1C4B     		ldr	r3, .L23
+ 169 00b8 1B6B     		ldr	r3, [r3, #48]
+ 170 00ba C3F34623 		ubfx	r3, r3, #9, #7
+ 171 00be 0133     		adds	r3, r3, #1
+ 172 00c0 07EE903A 		vmov	s15, r3	@ int
+ 173 00c4 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 174 00c8 C7EE276A 		vdiv.f32	s13, s14, s15
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s 			page 4
 
 
- 175 00ce A2E7     		b	.L8
- 176              	.L20:
- 177 00d0 9FED167A 		vldr.32	s14, .L24+32
- 178 00d4 DBE7     		b	.L22
- 179              	.L11:
- 180 00d6 1068     		ldr	r0, [r2]
- 181 00d8 B7EE005A 		vmov.f32	s10, #1.0e+0
- 182 00dc 1149     		ldr	r1, .L24+24
- 183 00de C0F3C100 		ubfx	r0, r0, #3, #2
- 184 00e2 136B     		ldr	r3, [r2, #48]
- 185 00e4 C140     		lsrs	r1, r1, r0
- 186 00e6 C3F30803 		ubfx	r3, r3, #0, #9
- 187 00ea 07EE101A 		vmov	s14, r1	@ int
- 188 00ee F8EEC75A 		vcvt.f32.s32	s11, s14
- 189 00f2 07EE103A 		vmov	s14, r3	@ int
- 190 00f6 F8EEC76A 		vcvt.f32.s32	s13, s14
- 191 00fa 85EE867A 		vdiv.f32	s14, s11, s12
- 192 00fe 76EEA77A 		vadd.f32	s15, s13, s15
- 193 0102 77EE857A 		vadd.f32	s15, s15, s10
- 194 0106 67EE277A 		vmul.f32	s15, s14, s15
- 195 010a D1E7     		b	.L14
- 196              	.L25:
- 197              		.align	2
- 198              	.L24:
- 199 010c 00440258 		.word	1476543488
- 200 0110 00093D00 		.word	4000000
- 201 0114 00000000 		.word	.LANCHOR0
- 202 0118 00000000 		.word	.LANCHOR1
- 203 011c 00000000 		.word	.LANCHOR2
- 204 0120 40787D01 		.word	25000000
- 205 0124 0090D003 		.word	64000000
- 206 0128 20BCBE4B 		.word	1270791200
- 207 012c 0024744A 		.word	1249125376
- 209              		.global	D1CorePrescTable
- 210              		.global	SystemD2Clock
- 211              		.global	SystemCoreClock
- 212              		.section	.data.SystemCoreClock,"aw"
- 213              		.align	2
- 214              		.set	.LANCHOR1,. + 0
- 217              	SystemCoreClock:
- 218 0000 0090D003 		.word	64000000
- 219              		.section	.data.SystemD2Clock,"aw"
- 220              		.align	2
- 221              		.set	.LANCHOR2,. + 0
- 224              	SystemD2Clock:
- 225 0000 0090D003 		.word	64000000
- 226              		.section	.rodata.D1CorePrescTable,"a"
- 227              		.align	2
- 228              		.set	.LANCHOR0,. + 0
- 231              	D1CorePrescTable:
- 232 0000 00       		.byte	0
- 233 0001 00       		.byte	0
- 234 0002 00       		.byte	0
- 235 0003 00       		.byte	0
- 236 0004 01       		.byte	1
- 237 0005 02       		.byte	2
- 238 0006 03       		.byte	3
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s 			page 5
+ 175 00cc FCEEE67A 		vcvt.u32.f32	s15, s13
+ 176 00d0 17EE903A 		vmov	r3, s15	@ int
+ 177 00d4 9FE7     		b	.L8
+ 178              	.L11:
+ 179 00d6 07EE103A 		vmov	s14, r3	@ int
+ 180 00da 9FED1C5A 		vldr.32	s10, .L23+36
+ 181 00de F8EEC76A 		vcvt.f32.s32	s13, s14
+ 182 00e2 D5E7     		b	.L20
+ 183              	.L22:
+ 184 00e4 1068     		ldr	r0, [r2]
+ 185 00e6 07EE103A 		vmov	s14, r3	@ int
+ 186 00ea 1549     		ldr	r1, .L23+24
+ 187 00ec F7EE005A 		vmov.f32	s11, #1.0e+0
+ 188 00f0 C0F3C100 		ubfx	r0, r0, #3, #2
+ 189 00f4 F8EEC74A 		vcvt.f32.s32	s9, s14
+ 190 00f8 136B     		ldr	r3, [r2, #48]
+ 191 00fa C140     		lsrs	r1, r1, r0
+ 192 00fc 9FED125A 		vldr.32	s10, .L23+32
+ 193 0100 C3F30803 		ubfx	r3, r3, #0, #9
+ 194 0104 06EE901A 		vmov	s13, r1	@ int
+ 195 0108 07EE103A 		vmov	s14, r3	@ int
+ 196 010c F8EEE66A 		vcvt.f32.s32	s13, s13
+ 197 0110 B8EEC77A 		vcvt.f32.s32	s14, s14
+ 198 0114 86EEA46A 		vdiv.f32	s12, s13, s9
+ 199 0118 A7EE857A 		vfma.f32	s14, s15, s10
+ 200 011c 37EE257A 		vadd.f32	s14, s14, s11
+ 201 0120 27EE067A 		vmul.f32	s14, s14, s12
+ 202 0124 C7E7     		b	.L13
+ 203              	.L24:
+ 204 0126 00BF     		.align	2
+ 205              	.L23:
+ 206 0128 00440258 		.word	1476543488
+ 207 012c 00093D00 		.word	4000000
+ 208 0130 00000000 		.word	.LANCHOR0
+ 209 0134 00000000 		.word	.LANCHOR1
+ 210 0138 00000000 		.word	.LANCHOR2
+ 211 013c 40787D01 		.word	25000000
+ 212 0140 0090D003 		.word	64000000
+ 213 0144 0024744A 		.word	1249125376
+ 214 0148 00000039 		.word	956301312
+ 215 014c 20BCBE4B 		.word	1270791200
+ 217              		.global	D1CorePrescTable
+ 218              		.global	SystemD2Clock
+ 219              		.global	SystemCoreClock
+ 220              		.section	.data.SystemCoreClock,"aw"
+ 221              		.align	2
+ 222              		.set	.LANCHOR1,. + 0
+ 225              	SystemCoreClock:
+ 226 0000 0090D003 		.word	64000000
+ 227              		.section	.data.SystemD2Clock,"aw"
+ 228              		.align	2
+ 229              		.set	.LANCHOR2,. + 0
+ 232              	SystemD2Clock:
+ 233 0000 0090D003 		.word	64000000
+ 234              		.section	.rodata.D1CorePrescTable,"a"
+ 235              		.align	2
+ 236              		.set	.LANCHOR0,. + 0
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s 			page 5
 
 
- 239 0007 04       		.byte	4
- 240 0008 01       		.byte	1
- 241 0009 02       		.byte	2
- 242 000a 03       		.byte	3
- 243 000b 04       		.byte	4
- 244 000c 06       		.byte	6
- 245 000d 07       		.byte	7
- 246 000e 08       		.byte	8
- 247 000f 09       		.byte	9
- 248              		.ident	"GCC: (GNU Tools for Arm Embedded Processors 8-2019-q3-update) 8.3.1 20190703 (release) [gc
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s 			page 6
+ 239              	D1CorePrescTable:
+ 240 0000 00000000 		.ascii	"\000\000\000\000\001\002\003\004\001\002\003\004\006"
+ 240      01020304 
+ 240      01020304 
+ 240      06
+ 241 000d 070809   		.ascii	"\007\010\011"
+ 242              		.ident	"GCC: (GNU Tools for Arm Embedded Processors 9-2019-q4-major) 9.2.1 20191025 (release) [ARM
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 system_stm32h7xx.c
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:15     .text.SystemInit:00000000 $t
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:24     .text.SystemInit:00000000 SystemInit
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:76     .text.SystemInit:00000068 $d
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:84     .text.SystemCoreClockUpdate:00000000 $t
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:92     .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:199    .text.SystemCoreClockUpdate:0000010c $d
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:231    .rodata.D1CorePrescTable:00000000 D1CorePrescTable
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:224    .data.SystemD2Clock:00000000 SystemD2Clock
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:217    .data.SystemCoreClock:00000000 SystemCoreClock
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:213    .data.SystemCoreClock:00000000 $d
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:220    .data.SystemD2Clock:00000000 $d
-C:\Users\Andrew\AppData\Local\Temp\ccucgZZe.s:227    .rodata.D1CorePrescTable:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:15     .text.SystemInit:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:24     .text.SystemInit:00000000 SystemInit
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:76     .text.SystemInit:00000068 $d
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:84     .text.SystemCoreClockUpdate:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:92     .text.SystemCoreClockUpdate:00000000 SystemCoreClockUpdate
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:206    .text.SystemCoreClockUpdate:00000128 $d
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:239    .rodata.D1CorePrescTable:00000000 D1CorePrescTable
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:232    .data.SystemD2Clock:00000000 SystemD2Clock
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:225    .data.SystemCoreClock:00000000 SystemCoreClock
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:221    .data.SystemCoreClock:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:228    .data.SystemD2Clock:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccYBgodD.s:235    .rodata.D1CorePrescTable:00000000 $d
 
 NO UNDEFINED SYMBOLS
