@@ -126,12 +126,21 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 	// 2x PCA9685 addresses 0x00, and 0x01
 	// TODO: add multidriver support
 	dsy_led_driver_init(&p->seed.LED_DRIVER_I2C);
-	
+
 	// Init Keyboard Switches
 	// TODO: add cd4021 with parallel data support
 
 	// Init ADC (currently in daisy_seed).
-	
+	uint8_t channel_order[5]	= {DSY_ADC_PIN_CHN10,
+								   DSY_ADC_PIN_CHN17,
+								   DSY_ADC_PIN_CHN15,
+								   DSY_ADC_PIN_CHN4,
+								   DSY_ADC_PIN_CHN11};
+	p->seed.adc_handle.channels = 5;
+	for(uint8_t i = 0; i < 5; i++)
+	{
+		p->seed.adc_handle.active_channels[i] = channel_order[i];
+	}
 }
 
 #endif
