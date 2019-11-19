@@ -857,6 +857,9 @@
     <ClInclude Include="dsy_switch.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="dsy_field_bsp.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dsy_system.c">

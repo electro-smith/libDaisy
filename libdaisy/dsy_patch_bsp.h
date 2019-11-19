@@ -1,6 +1,7 @@
 #pragma once
 #ifndef DSY_PATCH_BSP_H
 #define DSY_PATCH_BSP_H
+#include "dsy_seed.h"
 
 // These are defines/macros, etc. mapped to:
 // Daisy Patch Rev2 w/ Daisy Seed rev2
@@ -80,5 +81,71 @@ enum
 	LED_D1,
 	LED_LAST
 };
+
+
+typedef struct
+{
+	dsy_switch_t button1, button2, toggle;
+	dsy_gpio_t   gate_in1, gate_in2, gate_out;
+	daisy_handle seed;
+} daisy_patch;
+
+FORCE_INLINE void daisy_patch_init(daisy_patch *p) 
+{
+
+	p->button1.pin_config.port = BUTTON_1_PORT;
+	p->button1.pin_config.pin = BUTTON_1_PIN;
+	p->button1.pull = DSY_SWITCH_PULLUP;
+	p->button1.polarity		   = DSY_SWITCH_POLARITY_INVERTED;
+	p->button1.type			   = DSY_SWITCH_TYPE_MOMENTARY;
+
+	p->button2.pin_config.port = BUTTON_2_PORT;
+	p->button2.pin_config.pin = BUTTON_2_PIN;
+	p->button2.pull = DSY_SWITCH_PULLUP;
+	p->button2.polarity		   = DSY_SWITCH_POLARITY_INVERTED;
+	p->button2.type			   = DSY_SWITCH_TYPE_MOMENTARY;
+
+	p->toggle.pin_config.port = TOGGLE_PORT;
+	p->toggle.pin_config.pin = TOGGLE_PIN;
+	p->toggle.pull = DSY_SWITCH_PULLUP;
+	p->toggle.type			   = DSY_SWITCH_TYPE_TOGGLE;
+
+	p->gate_in1.pin.port = GATE_1_PORT;
+	p->gate_in1.pin.pin = GATE_1_PIN;
+	p->gate_in1.mode	 = DSY_GPIO_MODE_INPUT;
+
+	p->gate_in2.pin.port = GATE_2_PORT;
+	p->gate_in2.pin.pin = GATE_2_PIN;
+	p->gate_in2.mode	 = DSY_GPIO_MODE_INPUT;
+
+	p->gate_out.pin.port = GATE_OUT_PORT;
+	p->gate_out.pin.pin = GATE_OUT_PIN;
+	p->gate_out.pull	 = DSY_GPIO_NOPULL;
+	p->gate_out.mode	 = DSY_GPIO_MODE_OUTPUT_PP;
+
+	dsy_switch_init(&p->button1);
+	dsy_switch_init(&p->button2);
+	dsy_switch_init(&p->toggle);
+	dsy_gpio_init(&p->gate_in1);
+	dsy_gpio_init(&p->gate_in2);
+	dsy_gpio_init(&p->gate_out);
+	// ADC related
+	uint8_t channel_order[8]		  = {DSY_ADC_PIN_CHN3,
+								 DSY_ADC_PIN_CHN10,
+								 DSY_ADC_PIN_CHN7,
+								 DSY_ADC_PIN_CHN11,
+								 DSY_ADC_PIN_CHN4,
+								 DSY_ADC_PIN_CHN5,
+								 DSY_ADC_PIN_CHN15,
+								 DSY_ADC_PIN_CHN17};
+	p->seed.adc_handle.channels
+		= 8; // only initializing 8 primary channels.
+	for(uint8_t i = 0; i < 8; i++)
+	{
+		p->seed.adc_handle.active_channels[i] = channel_order[i];
+	}
+	dsy_adc_init(&p->seed.adc_handle);
+	dsy_dac_init(&p->seed.dac_handle, DSY_DAC_CHN_BOTH);
+}
 
 #endif
