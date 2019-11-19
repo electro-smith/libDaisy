@@ -19,6 +19,30 @@
 #define SEED_TEST_POINT_PORT DSY_GPIOG
 #define SEED_TEST_POINT_PIN 14
 
+const dsy_gpio_port seed_ports[32] =
+{
+	DSY_GPIOA, DSY_GPIOB, DSY_GPIOC, DSY_GPIOC,
+	DSY_GPIOC, DSY_GPIOC, DSY_GPIOD, DSY_GPIOC,
+	DSY_GPIOG, DSY_GPIOG, DSY_GPIOB, DSY_GPIOB,
+	DSY_GPIOB, DSY_GPIOB, DSY_GPIOB, DSY_GPIOB,
+	DSY_GPIOC, DSY_GPIOA, DSY_GPIOA, DSY_GPIOB,
+	DSY_GPIOA, DSY_GPIOA, DSY_GPIOC, DSY_GPIOC,
+	DSY_GPIOA, DSY_GPIOA, DSY_GPIOA, DSY_GPIOD,
+	DSY_GPIOG, DSY_GPIOA, DSY_GPIOB, DSY_GPIOB,
+};
+
+const uint8_t seed_pins[32] = 
+{
+	8, 12, 11, 10,
+	9, 8, 7, 12,
+	10, 11, 4, 5, 
+	8, 	9, 6, 7,
+	0, 1, 3, 1, 
+	7, 6, 1, 5,
+	5, 4, 0, 11,
+	9, 2, 14, 15,
+};
+
 
 // Probably should move this to a dsy_handle.h
 // So that it can be used in the other peripheral
@@ -145,15 +169,14 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 	pin_group[DSY_ADC_PIN_CHN18].pin  = 4;
 	pin_group[DSY_ADC_PIN_CHN19].port = DSY_GPIOA;
 	pin_group[DSY_ADC_PIN_CHN19].pin  = 5;
-	uint8_t channel_order[8]		  = {
-		 DSY_ADC_PIN_CHN3,
-		 DSY_ADC_PIN_CHN10,
-		 DSY_ADC_PIN_CHN7,
-		 DSY_ADC_PIN_CHN11,
-		 DSY_ADC_PIN_CHN4,
-		 DSY_ADC_PIN_CHN5,
-		 DSY_ADC_PIN_CHN15,
-		 DSY_ADC_PIN_CHN17};
+	uint8_t channel_order[8]		  = {DSY_ADC_PIN_CHN3,
+								 DSY_ADC_PIN_CHN10,
+								 DSY_ADC_PIN_CHN7,
+								 DSY_ADC_PIN_CHN11,
+								 DSY_ADC_PIN_CHN4,
+								 DSY_ADC_PIN_CHN5,
+								 DSY_ADC_PIN_CHN15,
+								 DSY_ADC_PIN_CHN17};
 	daisy_seed->adc_handle.channels
 		= 8; // only initializing 8 primary channels.
 	for(uint8_t i = 0; i < 8; i++)
@@ -162,21 +185,21 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 	}
 
 	// DAC
-	daisy_seed->dac_handle.mode		  = DSY_DAC_MODE_POLLING;
-	daisy_seed->dac_handle.bitdepth   = DSY_DAC_BITS_12;
-	pin_group						  = daisy_seed->dac_handle.pin_config;
-	pin_group[DSY_DAC_CHN1].port	  = DSY_GPIOA;
-	pin_group[DSY_DAC_CHN1].pin = 4;
-	pin_group[DSY_DAC_CHN2].port	  = DSY_GPIOA;
-	pin_group[DSY_DAC_CHN2].pin = 5;
+	daisy_seed->dac_handle.mode		= DSY_DAC_MODE_POLLING;
+	daisy_seed->dac_handle.bitdepth = DSY_DAC_BITS_12;
+	pin_group						= daisy_seed->dac_handle.pin_config;
+	pin_group[DSY_DAC_CHN1].port	= DSY_GPIOA;
+	pin_group[DSY_DAC_CHN1].pin		= 4;
+	pin_group[DSY_DAC_CHN2].port	= DSY_GPIOA;
+	pin_group[DSY_DAC_CHN2].pin		= 5;
 
 	// GPIO
-	daisy_seed->led.pin.port = SEED_LED_PORT;
-	daisy_seed->led.pin.pin = SEED_LED_PIN;
+	daisy_seed->led.pin.port	   = SEED_LED_PORT;
+	daisy_seed->led.pin.pin		   = SEED_LED_PIN;
 	daisy_seed->led.mode		   = DSY_GPIO_MODE_OUTPUT_PP;
 	daisy_seed->testpoint.pin.port = SEED_TEST_POINT_PORT;
-	daisy_seed->testpoint.pin.pin = SEED_TEST_POINT_PIN;
-	daisy_seed->testpoint.mode		   = DSY_GPIO_MODE_OUTPUT_PP;
+	daisy_seed->testpoint.pin.pin  = SEED_TEST_POINT_PIN;
+	daisy_seed->testpoint.mode	 = DSY_GPIO_MODE_OUTPUT_PP;
 
 	// System Initialization (optional)
 #ifndef DSY_SEED_NO_INIT
