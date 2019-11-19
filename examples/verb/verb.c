@@ -1,9 +1,8 @@
 #include "libdaisy.h"
 #include "daisysp.h"
 #include "dsy_patch_bsp.h"
-#include "dsy_seed.h"
 
-static daisy_handle seed;
+static daisy_patch patch;
 static dsy_reverbsc_t verb;
 static dsy_dcblock_t dcblock[2];
 static float drylevel, send;
@@ -31,7 +30,8 @@ static void VerbCallback(float *in, float *out, size_t size)
 
 int main(void)
 {
-    daisy_seed_init(&seed);
+    daisy_seed_init(&patch.seed);
+    daisy_patch_init(&patch);
     dsy_reverbsc_init(&verb, DSY_AUDIO_SAMPLE_RATE);
     dsy_dcblock_init(&dcblock[0], DSY_AUDIO_SAMPLE_RATE);
     dsy_dcblock_init(&dcblock[1], DSY_AUDIO_SAMPLE_RATE);
