@@ -51,18 +51,18 @@ FORCE_INLINE float dsysp_clip(float in, float min, float max)
 
 // Listed in Alphabetical Order
 // Each of the below has/should have an example project.
-#include "dsy_adenv.h"
-#include "dsy_decimator.h"
-#include "dsy_delay_line.h"
-#include "dsy_line.h"
-#include "dsy_nlfilt.h"
-#include "dsy_metro.h"
-#include "dsy_noise.h"
-#include "dsy_oscillator.h"
-#include "dsy_phasor.h"
-#include "dsy_reverbsc.h"
-#include "dsy_svf.h"
-#include "dsy_dcblock.h"
+#include "adenv.h"
+#include "decimator.h"
+#include "delay_line.h"
+#include "line.h"
+#include "nlfilt.h"
+#include "metro.h"
+#include "noise.h"
+#include "oscillator.h"
+#include "phasor.h"
+#include "reverbsc.h"
+#include "svf.h"
+#include "dcblock.h"
 
 
 #ifdef __cplusplus
