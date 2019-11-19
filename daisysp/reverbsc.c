@@ -8,8 +8,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-#include "daisysp.h"
-#include "dsy_reverbsc.h"
+#include "reverbsc.h"
 
 #define REVSC_OK 0
 #define REVSC_NOT_OK 1
