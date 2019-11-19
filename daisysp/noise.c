@@ -1,4 +1,4 @@
-#include "dsy_noise.h"
+#include "noise.h"
 
 static const float noise_coeff = 4.6566129e-010f;
 

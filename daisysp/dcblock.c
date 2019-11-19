@@ -1,5 +1,5 @@
 #include <math.h>
-#include "dsy_dcblock.h"
+#include "dcblock.h"
 
 void dsy_dcblock_init(dsy_dcblock_t *p, int sr)
 {
