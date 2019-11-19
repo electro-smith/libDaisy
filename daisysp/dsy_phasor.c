@@ -1,5 +1,6 @@
-#include "dsy_phasor.h"
 #include <math.h>
+#include "dsy_phasor.h"
+
 void dsy_phasor_init(dsy_phasor_t *p, float sr, float freq, float initial_phase) 
 {
 	p->sr = sr;

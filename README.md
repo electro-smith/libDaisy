@@ -121,6 +121,7 @@ The following resources are necessary for either compiling, or programming the D
 - [arm-none-eabi toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) - GNU Embedded compiler tools -- currently using Version 8-2019-q3-update.
 - [openocd](http://openocd.org/) - "Open On-Chip Debugger" for connecting to, programming, and debugging embedded hardware via JTAG, and other protocols. You can install via your favorite package manager, or follow links from the site for Windows.
 - [dfu-util](http://dfu-util.sourceforge.net/index.html) - Device Firmware Upgrade Utilities. Install via a pacakge manager, or follow links to binaries for windows, etc.
+- [7-zip -- Archiver](https://www.7-zip.org/) you may need this to extract files from archives for the above tools.
 
 
 ## how to flash
