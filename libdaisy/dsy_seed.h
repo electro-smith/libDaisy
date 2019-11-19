@@ -169,20 +169,6 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 	pin_group[DSY_ADC_PIN_CHN18].pin  = 4;
 	pin_group[DSY_ADC_PIN_CHN19].port = DSY_GPIOA;
 	pin_group[DSY_ADC_PIN_CHN19].pin  = 5;
-	uint8_t channel_order[8]		  = {DSY_ADC_PIN_CHN3,
-								 DSY_ADC_PIN_CHN10,
-								 DSY_ADC_PIN_CHN7,
-								 DSY_ADC_PIN_CHN11,
-								 DSY_ADC_PIN_CHN4,
-								 DSY_ADC_PIN_CHN5,
-								 DSY_ADC_PIN_CHN15,
-								 DSY_ADC_PIN_CHN17};
-	daisy_seed->adc_handle.channels
-		= 8; // only initializing 8 primary channels.
-	for(uint8_t i = 0; i < 8; i++)
-	{
-		daisy_seed->adc_handle.active_channels[i] = channel_order[i];
-	}
 
 	// DAC
 	daisy_seed->dac_handle.mode		= DSY_DAC_MODE_POLLING;
@@ -208,8 +194,6 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 	dsy_qspi_init(&daisy_seed->qspi_handle);
 	dsy_gpio_init(&daisy_seed->led);
 	dsy_gpio_init(&daisy_seed->testpoint);
-	dsy_adc_init(&daisy_seed->adc_handle);
-	dsy_dac_init(&daisy_seed->dac_handle, DSY_DAC_CHN_BOTH);
 	dsy_audio_init(&daisy_seed->sai_handle,
 				   &daisy_seed->i2c2_handle,
 				   &daisy_seed->i2c1_handle);

@@ -128,6 +128,23 @@ void dsy_patch_init(daisy_patch *p)
 	dsy_gpio_init(&p->gate_in1);
 	dsy_gpio_init(&p->gate_in2);
 	dsy_gpio_init(&p->gate_out);
+	// ADC related
+	uint8_t channel_order[8]		  = {DSY_ADC_PIN_CHN3,
+								 DSY_ADC_PIN_CHN10,
+								 DSY_ADC_PIN_CHN7,
+								 DSY_ADC_PIN_CHN11,
+								 DSY_ADC_PIN_CHN4,
+								 DSY_ADC_PIN_CHN5,
+								 DSY_ADC_PIN_CHN15,
+								 DSY_ADC_PIN_CHN17};
+	p->seed.adc_handle.channels
+		= 8; // only initializing 8 primary channels.
+	for(uint8_t i = 0; i < 8; i++)
+	{
+		p->seed.adc_handle.active_channels[i] = channel_order[i];
+	}
+	dsy_adc_init(&p->seed.adc_handle);
+	dsy_dac_init(&p->seed.dac_handle, DSY_DAC_CHN_BOTH);
 }
 
 #endif
