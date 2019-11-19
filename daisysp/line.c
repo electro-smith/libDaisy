@@ -1,4 +1,4 @@
-#include "dsy_line.h"
+#include "line.h"
 void dsy_line_init(dsy_line_t *p, float sr) 
 {
 	p->sr	= sr;

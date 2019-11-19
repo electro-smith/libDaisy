@@ -1,5 +1,5 @@
 #include <math.h>
-#include "dsy_adenv.h"
+#include "adenv.h"
 
 // Private Functions
 static void calculate_multiplier(dsy_adenv_t *e, float start, float end, uint32_t length_in_samples);
