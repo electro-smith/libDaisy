@@ -14,8 +14,6 @@ reverbsc \
 svf \
 dcblock \
 
-LIBDAISY_NAMESPACE = dsy_
-
 # TODO: Consider making this work for PCs as well?
 
 CHIPSET = stm32f7x
@@ -43,7 +41,7 @@ BUILD_DIR = build
 ######################################
 
 # C sources
-C_SOURCES += $(addprefix $(LIBDAISY_NAMESPACE), $(addsuffix .c, $(MODULES)))
+C_SOURCES += $(addsuffix .c, $(MODULES))
 
 #######################################
 # binaries
