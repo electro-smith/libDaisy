@@ -123,3 +123,4 @@ Transcode Report.txt
 /examples/*/build
 /libdaisy/build
 /daisysp/build
+/examples/Field/BasicField/VisualGDB/VisualGDBCache/BasicField-Debug
