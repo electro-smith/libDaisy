@@ -3,12 +3,13 @@
 // Year:				1999, 2005	
 // Ported by:			Stephen Hensley
 // 
-#include "daisysp.h"
-#include "dsy_reverbsc.h"
+
 #include <math.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include "daisysp.h"
+#include "dsy_reverbsc.h"
 
 #define REVSC_OK 0
 #define REVSC_NOT_OK 1
