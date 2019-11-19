@@ -1,5 +1,5 @@
 #include <math.h>
-#include "dsy_metro.h"
+#include "metro.h"
 
 void dsy_metro_init(dsy_metro_t *p, float freq, float sr) 
 {
