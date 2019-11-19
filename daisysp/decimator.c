@@ -1,4 +1,4 @@
-#include "dsy_decimator.h"
+#include "decimator.h"
 
 #define MAX_BITS_TO_CRUSH 16
 
