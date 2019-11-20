@@ -1,5 +1,6 @@
-#include <stm32h7xx_hal.h>
-#include "libdaisy.h"
+#include "stm32h7xx_hal.h"
+#include "dsy_core_hw.h"
+#include "dsy_sdram.h"
 
 // TODO:
 // - Consider alternative to libdaisy.h inclusion for board specific details.

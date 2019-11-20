@@ -1,4 +1,8 @@
 // WM8371 Codec support.
+#include <stdint.h>
+/* #include "dsy_sai.h" */
+/* #include "dsy_i2c.h" */
+#include "stm32h7xx_hal.h"
 #include "codec_wm8731.h"
 
 typedef struct {

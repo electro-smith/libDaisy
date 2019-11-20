@@ -1,6 +1,9 @@
-#include "libdaisy.h"
-#include "dsy_leddriver.h"
+#include "stm32h7xx_hal.h"
+#include "dsy_core_hw.h"
+/* #include "libdaisy.h" */
 #include "dsy_i2c.h"
+#include "dsy_sai.h"
+#include "dsy_leddriver.h"
 
 #define PCA9685_I2C_BASE_ADDRESS 0b10000000
 #define PCA9685_MODE1 0x00  // location for Mode1 register address

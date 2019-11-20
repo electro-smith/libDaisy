@@ -3,8 +3,6 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include <stdint.h>
-
 // Sets clock speeds, etc.
 void dsy_system_init();
 void dsy_system_jumpto(uint32_t addr);

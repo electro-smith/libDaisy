@@ -1,5 +1,6 @@
-#include "dsy_dac.h"
 #include "stm32h7xx_hal.h"
+#include "dsy_core_hw.h"
+#include "dsy_dac.h"
 
 typedef struct
 {

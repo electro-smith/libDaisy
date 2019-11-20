@@ -1,3 +1,5 @@
+#include "stm32h7xx_hal.h"
+#include "dsy_core_hw.h"
 #include "dsy_i2c.h"
 
 I2C_HandleTypeDef hi2c1;

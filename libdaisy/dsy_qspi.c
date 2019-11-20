@@ -1,8 +1,9 @@
-//#include "dsy_qspi.h"
-#include "libdaisy.h"
+#include "stm32h7xx_hal.h"
 #include "stm32h7xx_hal.h"
 #include "IS25LP080D.h"
 #include "IS25LP064A.h"
+#include "dsy_core_hw.h"
+#include "dsy_qspi.h"
 
 // TODO: Add handling for alternate device types,
 //		This will be a thing much sooner than anticipated

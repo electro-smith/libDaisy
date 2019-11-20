@@ -1,5 +1,6 @@
-#include <stm32h7xx_hal.h>
-#include "libdaisy.h"
+#include "stm32h7xx_hal.h"
+#include "dsy_core_hw.h"
+#include "dsy_adc.h"
 
 static const uint32_t dsy_adc_channel_map[DSY_ADC_PIN_LAST] = 
 {

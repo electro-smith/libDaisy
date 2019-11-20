@@ -1,9 +1,14 @@
 #include <string.h>
-#include "libdaisy.h"
+#include "stm32h7xx_hal.h"
+/* #include "libdaisy.h" */
+
+#include "dsy_util.h"
+#include "dsy_core_hw.h"
+#include "dsy_sai.h"
+#include "dsy_i2c.h"
 #include "dsy_audio.h"
 #include "codec_pcm3060.h"
 #include "codec_wm8731.h"
-#include "stm32h7xx_hal.h"
 #include "dsy_dma.h"
 
 //#define DSY_PROFILE_AUDIO_CALLBACK 1

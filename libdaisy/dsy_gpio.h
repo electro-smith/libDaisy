@@ -1,10 +1,8 @@
 #pragma once
 #ifndef DSY_GPIO_H
 #define DSY_GPIO_H
-#include "dsy_core_hw.h"
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 typedef enum
