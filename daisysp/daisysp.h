@@ -31,6 +31,7 @@ typedef struct {
 // Listed in Alphabetical Order
 // Each of the below has/should have an example project.
 #include "adenv.h"
+#include "dcblock.h"
 #include "decimator.h"
 #include "delay_line.h"
 #include "line.h"
@@ -39,9 +40,10 @@ typedef struct {
 #include "noise.h"
 #include "oscillator.h"
 #include "phasor.h"
+#include "port.h"
 #include "reverbsc.h"
 #include "svf.h"
-#include "dcblock.h"
+  
 #ifdef __cplusplus
 }
 #endif
