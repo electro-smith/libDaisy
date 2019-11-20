@@ -126,7 +126,9 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 	// Init LED Driver
 	// 2x PCA9685 addresses 0x00, and 0x01
 	// TODO: add multidriver support
-	dsy_led_driver_init(&p->seed.LED_DRIVER_I2C);
+	uint8_t addr = 0x00;
+
+	dsy_led_driver_init(&p->seed.LED_DRIVER_I2C, &addr, 1);
 
 	// Init Keyboard Switches
 	// TODO: add cd4021 with parallel data support

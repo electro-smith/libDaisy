@@ -196,6 +196,7 @@
     <ClInclude Include="dsy_gpio.h" />
     <ClInclude Include="dsy_leddriver.h" />
     <ClInclude Include="dsy_patch_bsp.h" />
+    <ClInclude Include="dsy_petal_bsp.h" />
     <ClInclude Include="dsy_qspi.h" />
     <ClInclude Include="dsy_sdram.h" />
     <ClInclude Include="dsy_seed.h" />

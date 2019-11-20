@@ -24,26 +24,28 @@ typedef struct
 	uint16_t addr, drv;
 } led_t;
 
-typedef enum
-{
-	DRIVER_1,
-	//	DRIVER_2,
-	//	DRIVER_3,
-	//	DRIVER_4,
-	DRIVER_LAST
-} leddriver_names;
+//typedef enum
+//{
+//	DRIVER_1,
+//	//	DRIVER_2,
+//	//	DRIVER_3,
+//	//	DRIVER_4,
+//	DRIVER_LAST
+//} leddriver_names;
 
 // channels * bytes_to_send + start_tx_byte
 #define LED_BUFF_SIZE ((16 * 4) + 1)
 typedef struct
 {
-	led_t	 leds[CHANNELS_PER_DRIVER];
-	uint16_t *sorted_bright[DRIVER_LAST][16];
+	led_t	 leds[CHANNELS_PER_DRIVER * DSY_LED_DRIVER_MAX_DRIVERS];
+	uint16_t *sorted_bright[DSY_LED_DRIVER_MAX_DRIVERS][16];
 	uint16_t  dummy_bright; // not sure if NULL will break things later.
 	float master_dim;
 	uint8_t			   temp_buff[LED_BUFF_SIZE];
 	uint8_t			   current_drv;
 	color_t			   standard_colors[LED_COLOR_LAST];
+	uint8_t			   num_drivers;
+	uint8_t			   driver_addr[DSY_LED_DRIVER_MAX_DRIVERS];
 	I2C_HandleTypeDef *i2c;
 	dsy_i2c_handle_t * dsy_i2c;
 } dsy_led_driver_t;
@@ -55,7 +57,7 @@ static void init_single_led(uint8_t name, uint8_t addr, uint8_t drv);
 static void gen_sorted_table();
 
 
-void dsy_led_driver_init(dsy_i2c_handle_t *dsy_i2c)
+void dsy_led_driver_init(dsy_i2c_handle_t *dsy_i2c, uint8_t *addr, uint8_t addr_cnt)
 {
 	uint8_t address = PCA9685_I2C_BASE_ADDRESS;
 	uint8_t init_buff[2];
@@ -63,6 +65,11 @@ void dsy_led_driver_init(dsy_i2c_handle_t *dsy_i2c)
 	leddriver.master_dim   = 1.0f;
 	leddriver.dsy_i2c	  = dsy_i2c;
 	leddriver.i2c		   = dsy_i2c_hal_handle(dsy_i2c);
+	leddriver.num_drivers  = addr_cnt;
+	for(uint8_t i = 0; i < addr_cnt; i++) 
+	{
+		leddriver.driver_addr[i] = addr[i];
+	}
 	dsy_i2c_init(dsy_i2c);
 	init_rgb_leds();
 	gen_sorted_table();
@@ -74,8 +81,9 @@ void dsy_led_driver_init(dsy_i2c_handle_t *dsy_i2c)
 		leddriver.leds[i].bright = 4095;
 	}
 	//HAL_GPIO_WritePin(LED_OE_GPIO_Port, LED_OE_Pin, 0);
-	for(uint8_t i = 0; i < DRIVER_LAST; i++)
+	for(uint8_t i = 0; i < leddriver.num_drivers; i++)
 	{
+		address = PCA9685_I2C_BASE_ADDRESS;
 		for(uint8_t j = 0; j < LED_BUFF_SIZE; j++)
 		{
 			leddriver.temp_buff[i] = 0;
@@ -136,6 +144,7 @@ void dsy_led_driver_update()
 	uint8_t  on;
 	uint16_t off;
 	uint8_t  drvr		 = leddriver.current_drv;
+	uint8_t  addr		 = leddriver.driver_addr[drvr];
 	uint8_t *output_buff = leddriver.temp_buff;
 	uint8_t  idx		 = 0;
 	on					 = 0;
@@ -143,7 +152,7 @@ void dsy_led_driver_update()
 	idx					 = 1;
 	for(uint8_t i = 0; i < 16; i++)
 	{
-		if(drvr < DRIVER_LAST)
+		if(drvr < leddriver.num_drivers)
 		{
 			off = *(leddriver.sorted_bright[drvr][i]);
 		}
@@ -157,11 +166,11 @@ void dsy_led_driver_update()
 		output_buff[idx + 3] = (uint8_t)((off >> 8) & 0xff);
 		idx += 4;
 	}
-	uint8_t driveraddr = PCA9685_I2C_BASE_ADDRESS | (drvr << 1);
+	uint8_t driveraddr = PCA9685_I2C_BASE_ADDRESS | (addr << 1);
 	HAL_I2C_Master_Transmit(
 		leddriver.i2c, driveraddr, output_buff, LED_BUFF_SIZE, 5);
 	leddriver.current_drv += 1;
-	if(leddriver.current_drv > DRIVER_LAST - 1)
+	if(leddriver.current_drv > leddriver.num_drivers - 1)
 	{
 		leddriver.current_drv = 0;
 	}
@@ -206,15 +215,19 @@ color_t *dsy_led_driver_color_by_name(uint8_t name)
 
 static void init_rgb_leds()
 {
-	for(uint8_t i = 0; i < CHANNELS_PER_DRIVER; i++)
+	
+	for(uint8_t i = 0; i < leddriver.num_drivers; i++) 
 	{
-		init_single_led(i, i, 0);
+		for(uint8_t j = 0; j < CHANNELS_PER_DRIVER; j++)
+		{
+			init_single_led(j + (i * CHANNELS_PER_DRIVER), j, i);
+		}
 	}
 }
 static void gen_sorted_table()
 {
 	uint8_t tdrv, taddr;
-	for(uint8_t i = 0; i < CHANNELS_PER_DRIVER; i++)
+	for(uint8_t i = 0; i < leddriver.num_drivers * CHANNELS_PER_DRIVER; i++)
 	{
 		tdrv								 = leddriver.leds[i].drv;
 		taddr								 = leddriver.leds[i].addr;
