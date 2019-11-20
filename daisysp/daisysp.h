@@ -13,41 +13,20 @@
 //		- all processing will be done with 'float' type unless otherwise noted.
 //		- a common dsysp_data_t type will be used for many init() functions to reduce user code complexity
 //
-#pragma once
 #ifndef DSYSP_H
 #define DSYSP_H
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#ifndef FORCE_INLINE
-#if defined(_MSC_VER)
-#define FORCE_INLINE __forceinline
-#elif defined(__clang__)
-#define FORCE_INLINE inline __attribute__((always_inline))
-#pragma clang diagnostic ignored "-Wduplicate-decl-specifier"
-#elif defined(__GNUC__)
-#define FORCE_INLINE inline __attribute__((always_inline))
-#else
-#error unknown compiler
-#endif
-#endif
-
-typedef struct
-{
+typedef struct {
 	float samplerate;
 	float channels;
 }dsysp_data_t;
 
-FORCE_INLINE float dsysp_clip(float in, float min, float max)
-{
-	if (in < min)
-		return min;
-	else if (in > max)
-		return max;
-	else
-		return in;
-}
+#define DSY_MIN(in, mn) (in < mn ? in : mn)
+#define DSY_MAX(in, mx) (in > mx ? in : mx)
+#define DSY_CLAMP(in, mn, mx) (DSY_MIN(DSY_MAX(in, mn), mx))
 
 // Listed in Alphabetical Order
 // Each of the below has/should have an example project.
@@ -64,9 +43,8 @@ FORCE_INLINE float dsysp_clip(float in, float min, float max)
 #include "port.h"
 #include "reverbsc.h"
 #include "svf.h"
-
-
+  
 #ifdef __cplusplus
 }
 #endif
-#endif // DSYSP_H
+#endif
