@@ -11,7 +11,7 @@ extern "C"
 // Fixed maximums for parallel/daisychained use
 // These could be expanded
 #define SR_4021_MAX_PARALLEL 2
-#define SR_4021_MAX_DAISYCHAIN 2
+#define SR_4021_MAX_DAISYCHAIN 1
 
 enum
 {
