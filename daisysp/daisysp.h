@@ -52,6 +52,7 @@ FORCE_INLINE float dsysp_clip(float in, float min, float max)
 // Listed in Alphabetical Order
 // Each of the below has/should have an example project.
 #include "adenv.h"
+#include "dcblock.h"
 #include "decimator.h"
 #include "delay_line.h"
 #include "line.h"
@@ -60,9 +61,9 @@ FORCE_INLINE float dsysp_clip(float in, float min, float max)
 #include "noise.h"
 #include "oscillator.h"
 #include "phasor.h"
+#include "port.h"
 #include "reverbsc.h"
 #include "svf.h"
-#include "dcblock.h"
 
 
 #ifdef __cplusplus
