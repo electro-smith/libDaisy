@@ -860,6 +860,9 @@
     <ClInclude Include="dsy_field_bsp.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="dev_sr_4021.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dsy_system.c">
@@ -899,6 +902,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="dsy_switch.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dev_sr_4021.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
