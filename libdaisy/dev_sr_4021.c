@@ -1,4 +1,5 @@
 #include "dev_sr_4021.h"
+#include "dsy_system.h"
 
 void dsy_sr_4021_init(dsy_sr_4021_handle_t *sr)
 {
@@ -41,9 +42,10 @@ void	dsy_sr_4021_update(dsy_sr_4021_handle_t *sr)
 	for(uint8_t i = 0; i < 8 * sr->num_daisychained; i++) 
 	{
 		dsy_gpio_write(&sr->clk, 0);
+		// Grab data from each parallel data pin.
 		for(uint8_t j = 0; j < sr->num_parallel; j++) 
 		{
-			idx = (8 * sr->num_daisychained) - 1;
+			idx = (8*sr->num_daisychained - 1) - i;
 			idx += (8 * sr->num_daisychained * j);
 			sr->states[idx] = dsy_gpio_read(&sr->data[j]);
 		}
@@ -53,5 +55,5 @@ void	dsy_sr_4021_update(dsy_sr_4021_handle_t *sr)
 
 uint8_t dsy_sr_4021_state(dsy_sr_4021_handle_t *sr, uint8_t idx)
 {
-	return sr->states[idx < 8 * sr->num_daisychained ? sr->data[idx] : sr->data[0]];
+	return sr->states[idx < 8 * sr->num_daisychained  * sr->num_parallel ? idx : 0];
 }

@@ -83,6 +83,7 @@ typedef struct
 	daisy_handle seed;
 	dsy_switch_t switches[SW_LAST];
 	dsy_gpio_t gate_in, gate_out;
+	dsy_sr_4021_handle_t keyboard_sr;
 	float knobs[KNOB_LAST];
 	float cvs[CV_LAST];
 } daisy_field;
@@ -129,6 +130,17 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 
 	// Init Keyboard Switches
 	// TODO: add cd4021 with parallel data support
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_CS].port = KB_SW_SR_CS_PORT;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_CS].pin = KB_SW_SR_CS_PIN;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_CLK].port = KB_SW_SR_CLK_PORT;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_CLK].pin = KB_SW_SR_CLK_PIN;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_DATA].port = KB_SW_SR_D1_PORT;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_DATA].pin = KB_SW_SR_D1_PIN;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_DATA2].port = KB_SW_SR_D2_PORT;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_DATA2].pin = KB_SW_SR_D2_PIN;
+	p->keyboard_sr.num_daisychained						  = 1;
+	p->keyboard_sr.num_parallel							  = 2;
+	dsy_sr_4021_init(&p->keyboard_sr);
 
 	// Init ADC (currently in daisy_seed).
 	uint8_t channel_order[5]	= {DSY_ADC_PIN_CHN10,
@@ -141,6 +153,7 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 	{
 		p->seed.adc_handle.active_channels[i] = channel_order[i];
 	}
+	dsy_adc_init(&p->seed.adc_handle);
 }
 
 #endif
