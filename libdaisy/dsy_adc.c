@@ -1,64 +1,68 @@
 #include <stm32h7xx_hal.h>
 #include "libdaisy.h"
 
-static const uint32_t dsy_adc_channel_map[DSY_ADC_PIN_LAST] = 
-{
-		ADC_CHANNEL_3,
-		ADC_CHANNEL_4,
-		ADC_CHANNEL_5,
-		ADC_CHANNEL_7,
-		ADC_CHANNEL_10,
-		ADC_CHANNEL_11,
-		ADC_CHANNEL_15,
-		ADC_CHANNEL_16,
-		ADC_CHANNEL_17,
-		ADC_CHANNEL_18,
-		ADC_CHANNEL_19,
+static const uint32_t dsy_adc_channel_map[DSY_ADC_PIN_LAST] = {
+	ADC_CHANNEL_3,
+	ADC_CHANNEL_4,
+	ADC_CHANNEL_5,
+	ADC_CHANNEL_7,
+	ADC_CHANNEL_10,
+	ADC_CHANNEL_11,
+	ADC_CHANNEL_15,
+	ADC_CHANNEL_16,
+	ADC_CHANNEL_17,
+	ADC_CHANNEL_18,
+	ADC_CHANNEL_19,
 };
-static const uint32_t dsy_adc_rank_map[] = 
-{
-		ADC_REGULAR_RANK_1,
-		ADC_REGULAR_RANK_2,
-		ADC_REGULAR_RANK_3,
-		ADC_REGULAR_RANK_4,
-		ADC_REGULAR_RANK_5,
-		ADC_REGULAR_RANK_6,
-		ADC_REGULAR_RANK_7,
-		ADC_REGULAR_RANK_8,
-		ADC_REGULAR_RANK_9,
-		ADC_REGULAR_RANK_10,
-		ADC_REGULAR_RANK_11,
-		ADC_REGULAR_RANK_12,
-		ADC_REGULAR_RANK_13,
-		ADC_REGULAR_RANK_14,
-		ADC_REGULAR_RANK_15,
-		ADC_REGULAR_RANK_16,
+static const uint32_t dsy_adc_rank_map[] = {
+	ADC_REGULAR_RANK_1,
+	ADC_REGULAR_RANK_2,
+	ADC_REGULAR_RANK_3,
+	ADC_REGULAR_RANK_4,
+	ADC_REGULAR_RANK_5,
+	ADC_REGULAR_RANK_6,
+	ADC_REGULAR_RANK_7,
+	ADC_REGULAR_RANK_8,
+	ADC_REGULAR_RANK_9,
+	ADC_REGULAR_RANK_10,
+	ADC_REGULAR_RANK_11,
+	ADC_REGULAR_RANK_12,
+	ADC_REGULAR_RANK_13,
+	ADC_REGULAR_RANK_14,
+	ADC_REGULAR_RANK_15,
+	ADC_REGULAR_RANK_16,
 };
-
 #define DSY_ADC_MAX_CHANNELS DSY_ADC_PIN_LAST
+#define DSY_ADC_MAX_MUX_CHANNELS 8
 #define DSY_ADC_MAX_RESOLUTION 65536.0f
 typedef struct
 {
-	uint8_t  channels;
-	uint16_t dma_buffer[DSY_ADC_MAX_CHANNELS];
+	uint8_t			  channels, mux_channels[DSY_ADC_MAX_CHANNELS];
+	uint16_t		  dma_buffer[DSY_ADC_MAX_CHANNELS];
+	uint16_t		  mux_cache[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
+	uint16_t		  mux_index[DSY_ADC_MAX_CHANNELS]; // 0->mux_channels per ADC channel
 	dsy_adc_handle_t* dsy_hadc;
 } dsy_adc_t;
 
 ADC_HandleTypeDef hadc1;
 DMA_HandleTypeDef hdma_adc1;
-
 static dsy_adc_t dsy_adc;
+
+static void write_mux_value(uint8_t chn, uint8_t idx);
+
 /* ADC1 init function */
-void dsy_adc_init(dsy_adc_handle_t *dsy_hadc)
+void dsy_adc_init(dsy_adc_handle_t* dsy_hadc)
 {
 	ADC_MultiModeTypeDef   multimode = {0};
 	ADC_ChannelConfTypeDef sConfig   = {0};
 	//dsy_adc_handle.board	= board;
 	dsy_adc.dsy_hadc = dsy_hadc;
-	dsy_adc.channels = dsy_hadc->channels; 
+	dsy_adc.channels = dsy_hadc->channels;
+//	dsy_adc.mux_channels = dsy_hadc->mux_channels;
 	for(uint8_t i = 0; i < DSY_ADC_MAX_CHANNELS; i++)
 	{
 		dsy_adc.dma_buffer[i] = 0;
+		dsy_adc.mux_channels[i] = dsy_hadc->mux_channels[i];
 	}
 	/** Common config 
   */
@@ -90,18 +94,18 @@ void dsy_adc_init(dsy_adc_handle_t *dsy_hadc)
 	}
 	/** Configure Regular Channel 
   */
-  // Configure Shared settings for all channels.
+	// Configure Shared settings for all channels.
 	sConfig.SamplingTime = ADC_SAMPLETIME_64CYCLES_5;
 	sConfig.SingleDiff   = ADC_SINGLE_ENDED;
 	sConfig.OffsetNumber = ADC_OFFSET_NONE;
 	sConfig.Offset		 = 0;
-	for(uint8_t i = 0; i < dsy_adc.channels; i++) 
+	for(uint8_t i = 0; i < dsy_adc.channels; i++)
 	{
 		sConfig.Channel
 			= dsy_adc_channel_map[dsy_adc.dsy_hadc->active_channels[i]];
 		sConfig.Rank = dsy_adc_rank_map[i];
 		//= dsy_adc_rank_map[dsy_adc.dsy_hadc->active_channels[i]];
-		if(HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK) 
+		if(HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
 		{
 			// Error_Handler();
 		}
@@ -109,20 +113,32 @@ void dsy_adc_init(dsy_adc_handle_t *dsy_hadc)
 }
 void dsy_adc_start(uint32_t* buff)
 {
-	HAL_ADC_Start_DMA(
-		&hadc1, (uint32_t*)&dsy_adc.dma_buffer, dsy_adc.channels);
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&dsy_adc.dma_buffer, dsy_adc.channels);
 }
 void dsy_adc_stop()
 {
 	HAL_ADC_Stop_DMA(&hadc1);
 }
-uint16_t dsy_adc_get(uint8_t chn) 
+uint16_t dsy_adc_get(uint8_t chn)
 {
 	return dsy_adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0];
 }
-float	dsy_adc_get_float(uint8_t chn) 
+
+float dsy_adc_get_float(uint8_t chn)
 {
-	return (float)dsy_adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0] / DSY_ADC_MAX_RESOLUTION;
+	return (float)dsy_adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0]
+		   / DSY_ADC_MAX_RESOLUTION;
+}
+
+uint16_t dsy_adc_get_mux(uint8_t chn, uint8_t idx) 
+{
+	return dsy_adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx];
+}
+
+float dsy_adc_get_mux_float(uint8_t chn, uint8_t idx) 
+{
+	return (float)dsy_adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx]
+		   / DSY_ADC_MAX_RESOLUTION;
 }
 
 void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
@@ -134,6 +150,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 		__HAL_RCC_ADC12_CLK_ENABLE();
 
 		__HAL_RCC_GPIOC_CLK_ENABLE();
+		__HAL_RCC_GPIOB_CLK_ENABLE();
 		__HAL_RCC_GPIOA_CLK_ENABLE();
 
 		// Only initialize the pins being used.
@@ -142,13 +159,28 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 		uint8_t*	  chn_list;
 		pin_config = dsy_adc.dsy_hadc->pin_config;
 		chn_list   = dsy_adc.dsy_hadc->active_channels;
-		for(uint8_t i = 0; i < dsy_adc.channels; i++) 
+		for(uint8_t i = 0; i < dsy_adc.channels; i++)
 		{
-			port = (GPIO_TypeDef*)gpio_hal_port_map[pin_config[chn_list[i]].port];
+			port = (GPIO_TypeDef*)
+				gpio_hal_port_map[pin_config[chn_list[i]].port];
 			GPIO_InitStruct.Pin = gpio_hal_pin_map[pin_config[chn_list[i]].pin];
 			GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
 			GPIO_InitStruct.Pull = GPIO_NOPULL;
 			HAL_GPIO_Init(port, &GPIO_InitStruct);
+			// Initialize Mux Pins if necessary
+			if(dsy_adc.mux_channels[i] > 0) 
+			{
+				pin_config = dsy_adc.dsy_hadc->mux_pin_config[i];
+				for(uint16_t j = 0; j < MUX_SEL_LAST; j++)
+				{
+					port = (GPIO_TypeDef*)gpio_hal_port_map[pin_config[j].port];
+					GPIO_InitStruct.Pin = gpio_hal_pin_map[pin_config[j].pin];
+					GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+					GPIO_InitStruct.Pull = GPIO_NOPULL;
+					GPIO_InitStruct.Speed = GPIO_SPEED_FAST;
+					HAL_GPIO_Init(port, &GPIO_InitStruct);
+				}
+			}
 		}
 
 		/* ADC1 DMA Init */
@@ -159,7 +191,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 		hdma_adc1.Init.PeriphInc		   = DMA_PINC_DISABLE;
 		hdma_adc1.Init.MemInc			   = DMA_MINC_ENABLE;
 		hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-		hdma_adc1.Init.MemDataAlignment	   = DMA_MDATAALIGN_HALFWORD;
+		hdma_adc1.Init.MemDataAlignment	= DMA_MDATAALIGN_HALFWORD;
 		hdma_adc1.Init.Mode				   = DMA_CIRCULAR;
 		hdma_adc1.Init.Priority			   = DMA_PRIORITY_LOW;
 		hdma_adc1.Init.FIFOMode			   = DMA_FIFOMODE_DISABLE;
@@ -184,11 +216,13 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 		uint16_t	  pin;
 		pin_config = dsy_adc.dsy_hadc->pin_config;
 		chn_list   = dsy_adc.dsy_hadc->active_channels;
-		for(uint8_t i = 0; i < dsy_adc.channels; i++) 
+		for(uint8_t i = 0; i < dsy_adc.channels; i++)
 		{
-			port = (GPIO_TypeDef*)gpio_hal_port_map[pin_config[chn_list[i]].port];
+			port = (GPIO_TypeDef*)
+				gpio_hal_port_map[pin_config[chn_list[i]].port];
 			pin = gpio_hal_pin_map[pin_config[chn_list[i]].pin];
 			HAL_GPIO_DeInit(port, pin);
+			// TODO: Add Mux DeInit
 		}
 		HAL_DMA_DeInit(adcHandle->DMA_Handle);
 	}
@@ -197,4 +231,40 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
 void DMA1_Stream2_IRQHandler(void)
 {
 	HAL_DMA_IRQHandler(&hdma_adc1);
+}
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) 
+{
+	if(hadc->Instance == ADC1) 
+	{
+		// Handle Externally Multiplexed Pins
+		for(uint16_t i = 0; i < dsy_adc.channels; i++)
+		{
+			dsy_adc_pin t = dsy_adc.dsy_hadc->active_channels[i];
+			uint8_t current_position = dsy_adc.mux_index[i];
+			if(dsy_adc.mux_channels[t] > 0)
+			{
+				// Capture current value to mux_cache
+				dsy_adc.mux_cache[i][current_position] = dsy_adc.dma_buffer[i];
+				// Update Mux Position, and write GPIO
+				dsy_adc.mux_index[i] += 1;
+				if(dsy_adc.mux_index[i] > dsy_adc.mux_channels[t])
+				{
+					dsy_adc.mux_index[i] = 0;
+				}
+				write_mux_value(t, dsy_adc.mux_index[i]);
+			}
+		}
+	}
+}
+
+static void write_mux_value(uint8_t chn, uint8_t idx) 
+{
+	uint8_t		  b0, b1, b2;
+	dsy_gpio_pin *pincfg = dsy_adc.dsy_hadc->mux_pin_config[chn];
+	b0					 = (idx & 0x01) > 0 ? 1 : 0;
+	b1					 = (idx & 0x02) > 0 ? 1 : 0;
+	b2					 = (idx & 0x04) > 0 ? 1 : 0;
+	HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[0].port], gpio_hal_pin_map[pincfg[0].pin], b0);
+	HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[1].port], gpio_hal_pin_map[pincfg[1].pin], b1);
+	HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[2].port], gpio_hal_pin_map[pincfg[2].pin], b2);
 }
