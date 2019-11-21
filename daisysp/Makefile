@@ -2,6 +2,7 @@ TARGET = libdaisysp
 
 MODULES = \
 adenv \
+crossfade \
 decimator \
 delay_line \
 line \
