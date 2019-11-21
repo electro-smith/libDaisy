@@ -75,15 +75,12 @@ void dsy_led_driver_init(dsy_i2c_handle_t *dsy_i2c, uint8_t *addr, uint8_t addr_
 	gen_sorted_table();
 	for(uint8_t i = 0; i < CHANNELS_PER_DRIVER; i++)
 	{
-		//		leddriver.leds[i].color.red = 4095;
-		//		leddriver.leds[i].color.green = 0;
-		//		leddriver.leds[i].color.blue = 0;
 		leddriver.leds[i].bright = 4095;
 	}
 	//HAL_GPIO_WritePin(LED_OE_GPIO_Port, LED_OE_Pin, 0);
 	for(uint8_t i = 0; i < leddriver.num_drivers; i++)
 	{
-		address = PCA9685_I2C_BASE_ADDRESS;
+		address = PCA9685_I2C_BASE_ADDRESS | (leddriver.driver_addr[i] << 1);
 		for(uint8_t j = 0; j < LED_BUFF_SIZE; j++)
 		{
 			leddriver.temp_buff[i] = 0;
@@ -91,26 +88,22 @@ void dsy_led_driver_init(dsy_i2c_handle_t *dsy_i2c, uint8_t *addr, uint8_t addr_
 		init_buff[0] = PCA9685_MODE1;
 		init_buff[1] = 0x00;
 		HAL_I2C_Master_Transmit(
-			leddriver.i2c, address | (i << 1), init_buff, 2, 1);
+			leddriver.i2c, address, init_buff, 2, 1);
 		HAL_Delay(20);
 		init_buff[0] = PCA9685_MODE1;
 		init_buff[1] = 0x00;
 		HAL_I2C_Master_Transmit(
-			leddriver.i2c, address | (i << 1), init_buff, 2, 1);
+			leddriver.i2c, address, init_buff, 2, 1);
 		HAL_Delay(20);
 		init_buff[0] = PCA9685_MODE1;
 		init_buff[1] = 0b00100000;
 		HAL_I2C_Master_Transmit(
-			leddriver.i2c, address | (i << 1), init_buff, 2, 1);
+			leddriver.i2c, address, init_buff, 2, 1);
 		init_buff[0] = PCA9685_MODE2;
-		//init_buff[1] = 0b00011101;
-		//init_buff[1] = 0b00010001;
 		init_buff[1] = 0b00010000;
-		HAL_I2C_Master_Transmit(
-			leddriver.i2c, address | (i << 1), init_buff, 2, 1);
+		HAL_I2C_Master_Transmit(leddriver.i2c, address, init_buff, 2, 5);
 	}
 	leddriver.current_drv = 0;
-	//uint8_t *buff = leddriver.temp_buff[0];
 
 	// Init standard colors
 	leddriver.standard_colors[LED_COLOR_RED].red	  = 4095;
