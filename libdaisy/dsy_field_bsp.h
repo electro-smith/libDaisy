@@ -49,8 +49,8 @@
 // enums for controls, etc.
 enum
 {
-	SW_1, // tactile switch
 	SW_2, // tactile switch
+	SW_1, // tactile switch
 	SW_3, // toggle
 	SW_LAST,
 };
@@ -59,10 +59,10 @@ enum
 enum
 {
 	KNOB_1,
-	KNOB_2,
 	KNOB_3,
-	KNOB_4,
 	KNOB_5,
+	KNOB_2,
+	KNOB_4,
 	KNOB_6,
 	KNOB_7,
 	KNOB_8,
@@ -182,6 +182,20 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 								   DSY_ADC_PIN_CHN4,
 								   DSY_ADC_PIN_CHN11};
 	p->seed.adc_handle.channels = 5;
+	p->seed.adc_handle.mux_channels[DSY_ADC_PIN_CHN10]
+		= 8; // Use Mux on Channel 0
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_0].port
+		= MUX_SEL_0_PORT;
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_0].pin
+		= MUX_SEL_0_PIN;
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_1].port
+		= MUX_SEL_1_PORT;
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_1].pin
+		= MUX_SEL_1_PIN;
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_2].port
+		= MUX_SEL_2_PORT;
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_2].pin
+		= MUX_SEL_2_PIN;
 	for(uint8_t i = 0; i < 5; i++)
 	{
 		p->seed.adc_handle.active_channels[i] = channel_order[i];
