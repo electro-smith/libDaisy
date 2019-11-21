@@ -863,6 +863,9 @@
     <ClInclude Include="dev_sr_4021.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="dsy_petal_bsp.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dsy_system.c">
