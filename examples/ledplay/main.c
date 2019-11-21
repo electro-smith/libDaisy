@@ -2,15 +2,17 @@
 #include "dsy_seed.h"
 #include "dsy_patch_bsp.h"
 
-daisy_handle seed;
+daisy_patch patch;
 
 static void clear_leds();
 
 int main(void)
 {
     uint8_t selected_led = 0;
-    daisy_seed_init(&seed);
-    dsy_led_driver_init(&seed.i2c1_handle);
+    uint8_t addr = 0x00; // led driver address
+    daisy_seed_init(&patch.seed);
+    daisy_patch_init(&patch);
+    dsy_led_driver_init(&patch.seed.i2c1_handle, &addr, 1);
     while(1) 
     {
         dsy_system_delay(100);
