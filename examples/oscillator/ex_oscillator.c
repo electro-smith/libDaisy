@@ -7,13 +7,16 @@ static dsy_oscillator_t osc;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
+	float sig;
     for (size_t i = 0; i < size; i += 2)
     {
+    	sig = dsy_oscillator_process(&osc);
+
     	// left out
-        out[i] = dsy_oscillator_process(&osc);
+        out[i] = sig;
 
         // right out
-        out[i+1] = dsy_oscillator_process(&osc);
+        out[i+1] = sig;
     }
 }
 
