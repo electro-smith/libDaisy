@@ -157,7 +157,7 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 	// Init LED Driver
 	// 2x PCA9685 addresses 0x00, and 0x01
 	// TODO: add multidriver support
-	uint8_t addr[2] = {0x00, 0x01};
+	uint8_t addr[2] = {0x00, 0x02};
 
 	dsy_led_driver_init(&p->seed.LED_DRIVER_I2C, addr, 2);
 
