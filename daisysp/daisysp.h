@@ -31,6 +31,7 @@ typedef struct {
 // Listed in Alphabetical Order
 // Each of the below has/should have an example project.
 #include "adenv.h"
+#include "crossfade.h"
 #include "dcblock.h"
 #include "decimator.h"
 #include "delay_line.h"
