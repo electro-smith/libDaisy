@@ -9,17 +9,10 @@ extern "C"
 #include <stdlib.h>
 #include "dsy_core_hw.h"
 
-	// For now this Initializes all 8 of the specific ADC pins for Daisy Seed.
-	// I'd like to make the following things easily configurable:
-	// - Selecting which channels should be initialized/included in the sequence conversion.
-	// - Setup a similar start function for an external mux, but that seems outside the scope of this file.
-
 	// Limitations:
 	// - For now speed is fixed at ASYNC_DIV128 for ADC Clock, and SAMPLETIME_64CYCLES_5 for each conversion.
-	// - Only Daisy Seed GPIO init is set up.
-	// - All 8 ADC channels are on whether you like it or not
 	// - No OPAMP config for the weird channel
-	// - No oversampling built in
+	// - No oversampling built in yet
 
 	typedef enum
 	{
@@ -37,11 +30,20 @@ extern "C"
 		DSY_ADC_PIN_LAST,
 	} dsy_adc_pin;
 
+	typedef enum
+	{
+		MUX_SEL_0,
+		MUX_SEL_1,
+		MUX_SEL_2,
+		MUX_SEL_LAST,
+	} dsy_adc_mux_pin;
+
 	typedef struct
 	{
 		dsy_gpio_pin pin_config[DSY_ADC_PIN_LAST];
-		uint8_t		 active_channels[DSY_ADC_PIN_LAST]; 
-		uint8_t		 channels;
+		dsy_gpio_pin mux_pin_config[DSY_ADC_PIN_LAST][MUX_SEL_LAST];
+		uint8_t		 active_channels[DSY_ADC_PIN_LAST];
+		uint8_t		 channels, mux_channels[DSY_ADC_PIN_LAST];
 	} dsy_adc_handle_t;
 
 	void	 dsy_adc_init(dsy_adc_handle_t *dsy_hadc);
@@ -49,6 +51,10 @@ extern "C"
 	void	 dsy_adc_stop();
 	uint16_t dsy_adc_get(uint8_t chn);
 	float	dsy_adc_get_float(uint8_t chn);
+
+	// These are getters for multiplexed inputs on a single channel (up to 8 per ADC input).
+	uint16_t dsy_adc_get_mux(uint8_t chn, uint8_t idx);
+	float	dsy_adc_get_mux_float(uint8_t chn, uint8_t idx);
 
 #ifdef __cplusplus
 }
