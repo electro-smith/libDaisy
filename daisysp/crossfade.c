@@ -1,15 +1,20 @@
-#include <math.h>
 #include "crossfade.h"
 
-void dsy_crossfade_init(dsy_crossfade *c)
+void dsy_crossfade_init(dsy_crossfade *p, uint8_t curve)
 {
-    c.pos = 0.5;
+    p->pos = 0.5;
+    p->curve = curve;
 }
 
-float dsy_crossfade_process(dsy_crossfade *c, float *in1, float *in2);
+float dsy_crossfade_process(dsy_crossfade *p, float *in1, float *in2)
 {
-	float out;
+	switch (p->curve)
+	{
+		case DSY_CROSSFADE_LINEAR: 
+    		return ((*in2 * p->pos) + *in1) * (1 - p->pos);
 
-    out = *in2 * c->pos + *in1 * (1 - c->pos);
-    return out;
+    	default :
+    		return 0;
+
+	}
 }
