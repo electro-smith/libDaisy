@@ -78,6 +78,37 @@ enum
 	CV_LAST,
 };
 
+enum
+{
+	LED_KEY_A8,
+	LED_KEY_A7,
+	LED_KEY_A6,
+	LED_KEY_A5,
+	LED_KEY_A4,
+	LED_KEY_A3,
+	LED_KEY_A2,
+	LED_KEY_A1,
+	LED_KEY_B1,
+	LED_KEY_B2,
+	LED_KEY_B3,
+	LED_KEY_B4,
+	LED_KEY_B5,
+	LED_KEY_B6,
+	LED_KEY_B7,
+	LED_KEY_B8,
+	LED_KNOB_1,	
+	LED_KNOB_2,	
+	LED_KNOB_3,	
+	LED_KNOB_4,	
+	LED_KNOB_5,	
+	LED_KNOB_6,	
+	LED_KNOB_7,	
+	LED_KNOB_8,	
+	LED_SW_1,
+	LED_SW_2,
+	LED_LAST
+};
+
 typedef struct
 {
 	daisy_handle seed;
@@ -126,7 +157,9 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 	// Init LED Driver
 	// 2x PCA9685 addresses 0x00, and 0x01
 	// TODO: add multidriver support
-	dsy_led_driver_init(&p->seed.LED_DRIVER_I2C);
+	uint8_t addr[2] = {0x00, 0x02};
+
+	dsy_led_driver_init(&p->seed.LED_DRIVER_I2C, addr, 2);
 
 	// Init Keyboard Switches
 	// TODO: add cd4021 with parallel data support
