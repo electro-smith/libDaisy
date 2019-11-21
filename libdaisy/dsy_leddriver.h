@@ -9,7 +9,7 @@ extern "C"
 #include "dsy_i2c.h"
 
 	// TODO: Abstract the colors of this driver.
-	#define DSY_LED_DRIVER_MAX_DRIVERS 64
+	#define DSY_LED_DRIVER_MAX_DRIVERS 8
 
 	enum
 	{
