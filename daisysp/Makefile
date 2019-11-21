@@ -3,6 +3,7 @@ TARGET = libdaisysp
 MODULES = \
 adenv \
 crossfade \
+dcblock \
 decimator \
 delay_line \
 line \
@@ -11,9 +12,9 @@ metro \
 noise \
 oscillator \
 phasor \
+port \
 reverbsc \
 svf \
-dcblock \
 
 # TODO: Consider making this work for PCs as well?
 

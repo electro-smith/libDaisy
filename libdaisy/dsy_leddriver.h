@@ -9,6 +9,7 @@ extern "C"
 #include "dsy_i2c.h"
 
 	// TODO: Abstract the colors of this driver.
+	#define DSY_LED_DRIVER_MAX_DRIVERS 8
 
 	enum
 	{
@@ -28,7 +29,8 @@ extern "C"
 		uint16_t red, green, blue;
 	} color_t;
 
-	void	 dsy_led_driver_init(dsy_i2c_handle_t *dsy_i2c);
+
+	void	 dsy_led_driver_init(dsy_i2c_handle_t *dsy_i2c, uint8_t *addr, uint8_t addr_cnt);
 	void	 dsy_led_driver_update();
 	void	 dsy_led_driver_set_led(uint8_t idx, float bright);
 	color_t* dsy_led_driver_color_by_name(uint8_t name);

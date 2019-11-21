@@ -49,8 +49,8 @@
 // enums for controls, etc.
 enum
 {
-	SW_1, // tactile switch
 	SW_2, // tactile switch
+	SW_1, // tactile switch
 	SW_3, // toggle
 	SW_LAST,
 };
@@ -59,10 +59,10 @@ enum
 enum
 {
 	KNOB_1,
-	KNOB_2,
 	KNOB_3,
-	KNOB_4,
 	KNOB_5,
+	KNOB_2,
+	KNOB_4,
 	KNOB_6,
 	KNOB_7,
 	KNOB_8,
@@ -78,11 +78,43 @@ enum
 	CV_LAST,
 };
 
+enum
+{
+	LED_KEY_A8,
+	LED_KEY_A7,
+	LED_KEY_A6,
+	LED_KEY_A5,
+	LED_KEY_A4,
+	LED_KEY_A3,
+	LED_KEY_A2,
+	LED_KEY_A1,
+	LED_KEY_B1,
+	LED_KEY_B2,
+	LED_KEY_B3,
+	LED_KEY_B4,
+	LED_KEY_B5,
+	LED_KEY_B6,
+	LED_KEY_B7,
+	LED_KEY_B8,
+	LED_KNOB_1,	
+	LED_KNOB_2,	
+	LED_KNOB_3,	
+	LED_KNOB_4,	
+	LED_KNOB_5,	
+	LED_KNOB_6,	
+	LED_KNOB_7,	
+	LED_KNOB_8,	
+	LED_SW_1,
+	LED_SW_2,
+	LED_LAST
+};
+
 typedef struct
 {
 	daisy_handle seed;
 	dsy_switch_t switches[SW_LAST];
 	dsy_gpio_t gate_in, gate_out;
+	dsy_sr_4021_handle_t keyboard_sr;
 	float knobs[KNOB_LAST];
 	float cvs[CV_LAST];
 } daisy_field;
@@ -125,10 +157,23 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 	// Init LED Driver
 	// 2x PCA9685 addresses 0x00, and 0x01
 	// TODO: add multidriver support
-	dsy_led_driver_init(&p->seed.LED_DRIVER_I2C);
+	uint8_t addr[2] = {0x00, 0x02};
+
+	dsy_led_driver_init(&p->seed.LED_DRIVER_I2C, addr, 2);
 
 	// Init Keyboard Switches
 	// TODO: add cd4021 with parallel data support
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_CS].port = KB_SW_SR_CS_PORT;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_CS].pin = KB_SW_SR_CS_PIN;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_CLK].port = KB_SW_SR_CLK_PORT;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_CLK].pin = KB_SW_SR_CLK_PIN;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_DATA].port = KB_SW_SR_D1_PORT;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_DATA].pin = KB_SW_SR_D1_PIN;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_DATA2].port = KB_SW_SR_D2_PORT;
+	p->keyboard_sr.pin_config[DSY_SR_4021_PIN_DATA2].pin = KB_SW_SR_D2_PIN;
+	p->keyboard_sr.num_daisychained						  = 1;
+	p->keyboard_sr.num_parallel							  = 2;
+	dsy_sr_4021_init(&p->keyboard_sr);
 
 	// Init ADC (currently in daisy_seed).
 	uint8_t channel_order[5]	= {DSY_ADC_PIN_CHN10,
@@ -137,10 +182,25 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 								   DSY_ADC_PIN_CHN4,
 								   DSY_ADC_PIN_CHN11};
 	p->seed.adc_handle.channels = 5;
+	p->seed.adc_handle.mux_channels[DSY_ADC_PIN_CHN10]
+		= 8; // Use Mux on Channel 0
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_0].port
+		= MUX_SEL_0_PORT;
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_0].pin
+		= MUX_SEL_0_PIN;
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_1].port
+		= MUX_SEL_1_PORT;
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_1].pin
+		= MUX_SEL_1_PIN;
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_2].port
+		= MUX_SEL_2_PORT;
+	p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_2].pin
+		= MUX_SEL_2_PIN;
 	for(uint8_t i = 0; i < 5; i++)
 	{
 		p->seed.adc_handle.active_channels[i] = channel_order[i];
 	}
+	dsy_adc_init(&p->seed.adc_handle);
 }
 
 #endif
