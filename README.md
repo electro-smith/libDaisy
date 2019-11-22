@@ -1,13 +1,13 @@
 
 
 # ES_libdaisy
-- [overview](#overview)
+- [Overview](#overview)
 - [libDaisy](#libdaisy)
 - [DaisySP](#daisysp)
-- [how to build](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Build)
-- [how to flash](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Flash)
-- [examples](https://github.com/andrewikenberry/ES_libdaisy/tree/master/examples)
-- [cube](#cube)
+- [How to Build](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Build)
+- [How to Flash](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Flash)
+- [Examples](https://github.com/andrewikenberry/ES_libdaisy/tree/master/examples)
+- [Cube](#cube)
 
 ## Overview
 
