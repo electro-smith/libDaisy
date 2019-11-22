@@ -113,7 +113,7 @@ FORCE_INLINE void daisy_pod_init(daisy_pod *p)
 	p->encoder.pin_config[DSY_ENCODER_PIN_A].port = ENC_A_PORT;
 	p->encoder.pin_config[DSY_ENCODER_PIN_A].pin = ENC_A_PIN;
 	p->encoder.pin_config[DSY_ENCODER_PIN_B].port = ENC_B_PORT;
-	p->encoder.pin_config[DSY_ENCODER_PIN_B].pin = ENC_A_PIN;
+	p->encoder.pin_config[DSY_ENCODER_PIN_B].pin = ENC_B_PIN;
 	p->encoder.pin_config[DSY_ENCODER_PIN_CLICK].port = ENC_CLICK_PORT;
 	p->encoder.pin_config[DSY_ENCODER_PIN_CLICK].pin = ENC_CLICK_PIN;
 	dsy_encoder_init(&p->encoder);
