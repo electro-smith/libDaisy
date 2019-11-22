@@ -12,15 +12,15 @@ static void audioCallback(float *in, float *out, size_t size)
 
 	freq = dsy_adc_get_float(DSY_PATCH_KNOB_1);
 	// scale signal to appropriate range / filter / etc.
-	osc->freq = freq;
+	osc.freq = freq;
 
 	wave = dsy_adc_get(DSY_PATCH_KNOB_2);
 	// scale signal to appropriate range / filter / etc.
-	osc->wave = wave;
+	osc.wave = wave;
 
 	amp = dsy_adc_get_float(DSY_PATCH_KNOB_3);
 	// scale signal to appropriate range / filter / etc.
-	osc->amp = amp;
+	osc.amp = amp;
 
     for (size_t i = 0; i < size; i += 2)
     {

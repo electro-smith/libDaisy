@@ -1,0 +1,420 @@
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 28, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"ex_oscillator.c"
+  13              		.text
+  14              		.section	.text.audioCallback,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 2,,3
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv5-d16
+  23              	audioCallback:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+  27 0002 0020     		movs	r0, #0
+  28 0004 114F     		ldr	r7, .L10
+  29 0006 0C46     		mov	r4, r1
+  30 0008 1646     		mov	r6, r2
+  31 000a FFF7FEFF 		bl	dsy_adc_get_float
+  32 000e 0120     		movs	r0, #1
+  33 0010 87ED000A 		vstr.32	s0, [r7]
+  34 0014 FFF7FEFF 		bl	dsy_adc_get
+  35 0018 0346     		mov	r3, r0
+  36 001a 0220     		movs	r0, #2
+  37 001c 3B72     		strb	r3, [r7, #8]
+  38 001e FFF7FEFF 		bl	dsy_adc_get_float
+  39 0022 87ED010A 		vstr.32	s0, [r7, #4]
+  40 0026 7EB1     		cbz	r6, .L1
+  41 0028 013E     		subs	r6, r6, #1
+  42 002a 0025     		movs	r5, #0
+  43 002c 26F00106 		bic	r6, r6, #1
+  44              	.L3:
+  45 0030 3846     		mov	r0, r7
+  46 0032 0834     		adds	r4, r4, #8
+  47 0034 FFF7FEFF 		bl	dsy_oscillator_process
+  48 0038 B542     		cmp	r5, r6
+  49 003a 04ED020A 		vstr.32	s0, [r4, #-8]
+  50 003e 05F10205 		add	r5, r5, #2
+  51 0042 04ED010A 		vstr.32	s0, [r4, #-4]
+  52 0046 F3D1     		bne	.L3
+  53              	.L1:
+  54 0048 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+  55              	.L11:
+  56 004a 00BF     		.align	2
+  57              	.L10:
+  58 004c 00000000 		.word	.LANCHOR0
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s 			page 2
+
+
+  60              		.section	.text.daisy_seed_init,"ax",%progbits
+  61              		.align	1
+  62              		.p2align 2,,3
+  63              		.global	daisy_seed_init
+  64              		.syntax unified
+  65              		.thumb
+  66              		.thumb_func
+  67              		.fpu fpv5-d16
+  69              	daisy_seed_init:
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  73 0004 0446     		mov	r4, r0
+  74 0006 4FF00A08 		mov	r8, #10
+  75 000a 0023     		movs	r3, #0
+  76 000c 0122     		movs	r2, #1
+  77 000e 0521     		movs	r1, #5
+  78 0010 0220     		movs	r0, #2
+  79 0012 0425     		movs	r5, #4
+  80 0014 4FF0090E 		mov	lr, #9
+  81 0018 0626     		movs	r6, #6
+  82 001a 4FF0030C 		mov	ip, #3
+  83 001e 0727     		movs	r7, #7
+  84 0020 4FF00809 		mov	r9, #8
+  85 0024 84F80E80 		strb	r8, [r4, #14]
+  86 0028 4FF00E0A 		mov	r10, #14
+  87 002c 4FF00B08 		mov	r8, #11
+  88 0030 2271     		strb	r2, [r4, #4]
+  89 0032 A274     		strb	r2, [r4, #18]
+  90 0034 6171     		strb	r1, [r4, #5]
+  91 0036 E171     		strb	r1, [r4, #7]
+  92 0038 6172     		strb	r1, [r4, #9]
+  93 003a E172     		strb	r1, [r4, #11]
+  94 003c 6173     		strb	r1, [r4, #13]
+  95 003e A170     		strb	r1, [r4, #2]
+  96 0040 E177     		strb	r1, [r4, #31]
+  97 0042 E370     		strb	r3, [r4, #3]
+  98 0044 2370     		strb	r3, [r4]
+  99 0046 2375     		strb	r3, [r4, #20]
+ 100 0048 A375     		strb	r3, [r4, #22]
+ 101 004a 84F808E0 		strb	lr, [r4, #8]
+ 102 004e 6074     		strb	r0, [r4, #17]
+ 103 0050 2076     		strb	r0, [r4, #24]
+ 104 0052 E076     		strb	r0, [r4, #27]
+ 105 0054 84F80690 		strb	r9, [r4, #6]
+ 106 0058 A772     		strb	r7, [r4, #10]
+ 107 005a 6770     		strb	r7, [r4, #1]
+ 108 005c 2673     		strb	r6, [r4, #12]
+ 109 005e E673     		strb	r6, [r4, #15]
+ 110 0060 2674     		strb	r6, [r4, #16]
+ 111 0062 84F82160 		strb	r6, [r4, #33]
+ 112 0066 A576     		strb	r5, [r4, #26]
+ 113 0068 2577     		strb	r5, [r4, #28]
+ 114 006a 6577     		strb	r5, [r4, #29]
+ 115 006c A577     		strb	r5, [r4, #30]
+ 116 006e 84F82050 		strb	r5, [r4, #32]
+ 117 0072 84F82250 		strb	r5, [r4, #34]
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s 			page 3
+
+
+ 118 0076 84F823C0 		strb	ip, [r4, #35]
+ 119 007a E274     		strb	r2, [r4, #19]
+ 120 007c E275     		strb	r2, [r4, #23]
+ 121 007e 84F82520 		strb	r2, [r4, #37]
+ 122 0082 84F83320 		strb	r2, [r4, #51]
+ 123 0086 84F82F20 		strb	r2, [r4, #47]
+ 124 008a 84F83120 		strb	r2, [r4, #49]
+ 125 008e 84F83420 		strb	r2, [r4, #52]
+ 126 0092 84F83920 		strb	r2, [r4, #57]
+ 127 0096 84F83720 		strb	r2, [r4, #55]
+ 128 009a 84F83D10 		strb	r1, [r4, #61]
+ 129 009e 84F83E20 		strb	r2, [r4, #62]
+ 130 00a2 84F83F20 		strb	r2, [r4, #63]
+ 131 00a6 6375     		strb	r3, [r4, #21]
+ 132 00a8 84F82430 		strb	r3, [r4, #36]
+ 133 00ac 84F827E0 		strb	lr, [r4, #39]
+ 134 00b0 84F82830 		strb	r3, [r4, #40]
+ 135 00b4 84F82AC0 		strb	ip, [r4, #42]
+ 136 00b8 84F82C30 		strb	r3, [r4, #44]
+ 137 00bc 84F82D30 		strb	r3, [r4, #45]
+ 138 00c0 84F82E30 		strb	r3, [r4, #46]
+ 139 00c4 84F832E0 		strb	lr, [r4, #50]
+ 140 00c8 84F83A30 		strb	r3, [r4, #58]
+ 141 00cc 84F84030 		strb	r3, [r4, #64]
+ 142 00d0 6076     		strb	r0, [r4, #25]
+ 143 00d2 84F82900 		strb	r0, [r4, #41]
+ 144 00d6 84F83C00 		strb	r0, [r4, #60]
+ 145 00da 84F82660 		strb	r6, [r4, #38]
+ 146 00de 84F83090 		strb	r9, [r4, #48]
+ 147 00e2 84F83570 		strb	r7, [r4, #53]
+ 148 00e6 84F83650 		strb	r5, [r4, #54]
+ 149 00ea 84F83B60 		strb	r6, [r4, #59]
+ 150 00ee 84F82B80 		strb	r8, [r4, #43]
+ 151 00f2 84F83880 		strb	r8, [r4, #56]
+ 152 00f6 84F84520 		strb	r2, [r4, #69]
+ 153 00fa 84F84B20 		strb	r2, [r4, #75]
+ 154 00fe 84F84F10 		strb	r1, [r4, #79]
+ 155 0102 84F8AA20 		strb	r2, [r4, #170]
+ 156 0106 84F8AE10 		strb	r1, [r4, #174]
+ 157 010a 84F8B120 		strb	r2, [r4, #177]
+ 158 010e 84F8B520 		strb	r2, [r4, #181]
+ 159 0112 84F84330 		strb	r3, [r4, #67]
+ 160 0116 84F84630 		strb	r3, [r4, #70]
+ 161 011a 84F847C0 		strb	ip, [r4, #71]
+ 162 011e 84F84830 		strb	r3, [r4, #72]
+ 163 0122 84F84930 		strb	r3, [r4, #73]
+ 164 0126 84F84A30 		strb	r3, [r4, #74]
+ 165 012a 84F84C30 		strb	r3, [r4, #76]
+ 166 012e 84F84E30 		strb	r3, [r4, #78]
+ 167 0132 84F8A930 		strb	r3, [r4, #169]
+ 168 0136 84F8AB30 		strb	r3, [r4, #171]
+ 169 013a 84F8AD30 		strb	r3, [r4, #173]
+ 170 013e 84F84200 		strb	r0, [r4, #66]
+ 171 0142 84F84400 		strb	r0, [r4, #68]
+ 172 0146 84F8AF00 		strb	r0, [r4, #175]
+ 173 014a 84F84170 		strb	r7, [r4, #65]
+ 174 014e 84F84D50 		strb	r5, [r4, #77]
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s 			page 4
+
+
+ 175 0152 84F8AC50 		strb	r5, [r4, #172]
+ 176 0156 84F8B070 		strb	r7, [r4, #176]
+ 177 015a 84F8B360 		strb	r6, [r4, #179]
+ 178 015e 84F8B4A0 		strb	r10, [r4, #180]
+ 179 0162 FFF7FEFF 		bl	dsy_system_init
+ 180 0166 2046     		mov	r0, r4
+ 181 0168 FFF7FEFF 		bl	dsy_sdram_init
+ 182 016c E01C     		adds	r0, r4, #3
+ 183 016e FFF7FEFF 		bl	dsy_qspi_init
+ 184 0172 04F1AF00 		add	r0, r4, #175
+ 185 0176 FFF7FEFF 		bl	dsy_gpio_init
+ 186 017a 04F1B300 		add	r0, r4, #179
+ 187 017e FFF7FEFF 		bl	dsy_gpio_init
+ 188 0182 04F12E02 		add	r2, r4, #46
+ 189 0186 04F13401 		add	r1, r4, #52
+ 190 018a 04F11100 		add	r0, r4, #17
+ 191 018e BDE8F047 		pop	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 192 0192 FFF7FEBF 		b	dsy_audio_init
+ 194 0196 00BF     		.section	.text.startup.main,"ax",%progbits
+ 195              		.align	1
+ 196              		.p2align 2,,3
+ 197              		.global	main
+ 198              		.syntax unified
+ 199              		.thumb
+ 200              		.thumb_func
+ 201              		.fpu fpv5-d16
+ 203              	main:
+ 204              		@ Volatile: function does not return.
+ 205              		@ args = 0, pretend = 0, frame = 8
+ 206              		@ frame_needed = 0, uses_anonymous_args = 0
+ 207 0000 344C     		ldr	r4, .L21
+ 208 0002 0025     		movs	r5, #0
+ 209 0004 0826     		movs	r6, #8
+ 210 0006 04F12A00 		add	r0, r4, #42
+ 211 000a 80B5     		push	{r7, lr}
+ 212 000c 82B0     		sub	sp, sp, #8
+ 213 000e 04F1C407 		add	r7, r4, #196
+ 214 0012 FFF7FEFF 		bl	daisy_seed_init
+ 215 0016 0C22     		movs	r2, #12
+ 216 0018 0623     		movs	r3, #6
+ 217 001a 0B21     		movs	r1, #11
+ 218 001c A274     		strb	r2, [r4, #18]
+ 219 001e 40F20152 		movw	r2, #1281
+ 220 0022 E376     		strb	r3, [r4, #27]
+ 221 0024 40F20143 		movw	r3, #1025
+ 222 0028 2177     		strb	r1, [r4, #28]
+ 223 002a 40F60621 		movw	r1, #2566
+ 224 002e E283     		strh	r2, [r4, #30]	@ movhi
+ 225 0030 40F20112 		movw	r2, #257
+ 226 0034 6384     		strh	r3, [r4, #34]	@ movhi
+ 227 0036 0123     		movs	r3, #1
+ 228 0038 E184     		strh	r1, [r4, #38]	@ movhi
+ 229 003a 2046     		mov	r0, r4
+ 230 003c 2280     		strh	r2, [r4]	@ movhi
+ 231 003e 6281     		strh	r2, [r4, #10]	@ movhi
+ 232 0040 2385     		strh	r3, [r4, #40]	@ movhi
+ 233 0042 A370     		strb	r3, [r4, #2]
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s 			page 5
+
+
+ 234 0044 6374     		strb	r3, [r4, #17]
+ 235 0046 2373     		strb	r3, [r4, #12]
+ 236 0048 A375     		strb	r3, [r4, #22]
+ 237 004a E571     		strb	r5, [r4, #7]
+ 238 004c 2575     		strb	r5, [r4, #20]
+ 239 004e 84F82050 		strb	r5, [r4, #32]
+ 240 0052 84F82450 		strb	r5, [r4, #36]
+ 241 0056 2672     		strb	r6, [r4, #8]
+ 242 0058 FFF7FEFF 		bl	dsy_switch_init
+ 243 005c 04F10A00 		add	r0, r4, #10
+ 244 0060 FFF7FEFF 		bl	dsy_switch_init
+ 245 0064 04F11400 		add	r0, r4, #20
+ 246 0068 FFF7FEFF 		bl	dsy_switch_init
+ 247 006c 04F11E00 		add	r0, r4, #30
+ 248 0070 FFF7FEFF 		bl	dsy_gpio_init
+ 249 0074 04F12200 		add	r0, r4, #34
+ 250 0078 FFF7FEFF 		bl	dsy_gpio_init
+ 251 007c 04F12600 		add	r0, r4, #38
+ 252 0080 FFF7FEFF 		bl	dsy_gpio_init
+ 253 0084 144A     		ldr	r2, .L21+4
+ 254 0086 04F1BC03 		add	r3, r4, #188
+ 255 008a 84F8C760 		strb	r6, [r4, #199]
+ 256 008e 0DF10104 		add	r4, sp, #1
+ 257 0092 92E80300 		ldm	r2, {r0, r1}
+ 258 0096 0DEB0602 		add	r2, sp, r6
+ 259 009a 02E90300 		stmdb	r2, {r0, r1}
+ 260 009e 01E0     		b	.L16
+ 261              	.L20:
+ 262 00a0 14F8015B 		ldrb	r5, [r4], #1	@ zero_extendqisi2
+ 263              	.L16:
+ 264 00a4 03F8015B 		strb	r5, [r3], #1
+ 265 00a8 BB42     		cmp	r3, r7
+ 266 00aa F9D1     		bne	.L20
+ 267 00ac 0B48     		ldr	r0, .L21+8
+ 268 00ae FFF7FEFF 		bl	dsy_adc_init
+ 269 00b2 0321     		movs	r1, #3
+ 270 00b4 0A48     		ldr	r0, .L21+12
+ 271 00b6 FFF7FEFF 		bl	dsy_dac_init
+ 272 00ba 9FED0A0A 		vldr.32	s0, .L21+16
+ 273 00be 0A48     		ldr	r0, .L21+20
+ 274 00c0 FFF7FEFF 		bl	dsy_oscillator_init
+ 275 00c4 0020     		movs	r0, #0
+ 276 00c6 0949     		ldr	r1, .L21+24
+ 277 00c8 FFF7FEFF 		bl	dsy_audio_set_callback
+ 278 00cc 0020     		movs	r0, #0
+ 279 00ce FFF7FEFF 		bl	dsy_audio_start
+ 280              	.L17:
+ 281 00d2 FEE7     		b	.L17
+ 282              	.L22:
+ 283              		.align	2
+ 284              	.L21:
+ 285 00d4 00000000 		.word	.LANCHOR1
+ 286 00d8 00000000 		.word	.LANCHOR2
+ 287 00dc 64000000 		.word	.LANCHOR1+100
+ 288 00e0 D3000000 		.word	.LANCHOR1+211
+ 289 00e4 008E3B47 		.word	1195085312
+ 290 00e8 00000000 		.word	.LANCHOR0
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s 			page 6
+
+
+ 291 00ec 00000000 		.word	audioCallback
+ 293              		.global	seed_pins
+ 294              		.global	seed_ports
+ 295              		.section	.rodata
+ 296              		.align	2
+ 297              		.set	.LANCHOR2,. + 0
+ 298              	.LC0:
+ 299 0000 00040305 		.ascii	"\000\004\003\005\001\002\006\010"
+ 299      01020608 
+ 300              		.section	.bss.osc,"aw",%nobits
+ 301              		.align	2
+ 302              		.set	.LANCHOR0,. + 0
+ 305              	osc:
+ 306 0000 00000000 		.space	32
+ 306      00000000 
+ 306      00000000 
+ 306      00000000 
+ 306      00000000 
+ 307              		.section	.bss.patch,"aw",%nobits
+ 308              		.align	2
+ 309              		.set	.LANCHOR1,. + 0
+ 312              	patch:
+ 313 0000 00000000 		.space	225
+ 313      00000000 
+ 313      00000000 
+ 313      00000000 
+ 313      00000000 
+ 314              		.section	.rodata.seed_pins,"a"
+ 315              		.align	2
+ 318              	seed_pins:
+ 319 0000 080C0B0A 		.ascii	"\010\014\013\012\011\010\007\014\012\013\004\005\010"
+ 319      0908070C 
+ 319      0A0B0405 
+ 319      08
+ 320 000d 09060700 		.ascii	"\011\006\007\000\001\003\001\007\006\001\005\005\004"
+ 320      01030107 
+ 320      06010505 
+ 320      04
+ 321 001a 000B0902 		.ascii	"\000\013\011\002\016\017"
+ 321      0E0F
+ 322              		.section	.rodata.seed_ports,"a"
+ 323              		.align	2
+ 326              	seed_ports:
+ 327 0000 00       		.byte	0
+ 328 0001 01       		.byte	1
+ 329 0002 02       		.byte	2
+ 330 0003 02       		.byte	2
+ 331 0004 02       		.byte	2
+ 332 0005 02       		.byte	2
+ 333 0006 03       		.byte	3
+ 334 0007 02       		.byte	2
+ 335 0008 06       		.byte	6
+ 336 0009 06       		.byte	6
+ 337 000a 01       		.byte	1
+ 338 000b 01       		.byte	1
+ 339 000c 01       		.byte	1
+ 340 000d 01       		.byte	1
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s 			page 7
+
+
+ 341 000e 01       		.byte	1
+ 342 000f 01       		.byte	1
+ 343 0010 02       		.byte	2
+ 344 0011 00       		.byte	0
+ 345 0012 00       		.byte	0
+ 346 0013 01       		.byte	1
+ 347 0014 00       		.byte	0
+ 348 0015 00       		.byte	0
+ 349 0016 02       		.byte	2
+ 350 0017 02       		.byte	2
+ 351 0018 00       		.byte	0
+ 352 0019 00       		.byte	0
+ 353 001a 00       		.byte	0
+ 354 001b 03       		.byte	3
+ 355 001c 06       		.byte	6
+ 356 001d 00       		.byte	0
+ 357 001e 01       		.byte	1
+ 358 001f 01       		.byte	1
+ 359              		.ident	"GCC: (GNU Tools for Arm Embedded Processors 9-2019-q4-major) 9.2.1 20191025 (release) [ARM
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 ex_oscillator.c
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:15     .text.audioCallback:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:23     .text.audioCallback:00000000 audioCallback
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:58     .text.audioCallback:0000004c $d
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:61     .text.daisy_seed_init:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:69     .text.daisy_seed_init:00000000 daisy_seed_init
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:195    .text.startup.main:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:203    .text.startup.main:00000000 main
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:285    .text.startup.main:000000d4 $d
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:318    .rodata.seed_pins:00000000 seed_pins
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:326    .rodata.seed_ports:00000000 seed_ports
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:296    .rodata:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:301    .bss.osc:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:305    .bss.osc:00000000 osc
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:308    .bss.patch:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:312    .bss.patch:00000000 patch
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:315    .rodata.seed_pins:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccDCe6GK.s:323    .rodata.seed_ports:00000000 $d
+
+UNDEFINED SYMBOLS
+dsy_adc_get_float
+dsy_adc_get
+dsy_oscillator_process
+dsy_system_init
+dsy_sdram_init
+dsy_qspi_init
+dsy_gpio_init
+dsy_audio_init
+dsy_switch_init
+dsy_adc_init
+dsy_dac_init
+dsy_oscillator_init
+dsy_audio_set_callback
+dsy_audio_start

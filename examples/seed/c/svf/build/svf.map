@@ -1,19 +1,25 @@
 Archive member included to satisfy reference by file (symbol)
 
+../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+                              build/svf.o (dsy_adc_start)
 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                              build/bypass.o (dsy_audio_init)
+                              build/svf.o (dsy_audio_init)
 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
-                              build/bypass.o (dsy_qspi_init)
+                              build/svf.o (dsy_qspi_init)
 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
-                              build/bypass.o (dsy_sdram_init)
+                              build/svf.o (dsy_sdram_init)
 ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
-                              build/bypass.o (dsy_system_init)
+                              build/svf.o (dsy_system_init)
 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
                               ../../../../libdaisy/build\libdaisy.a(dsy_audio.o) (dsy_i2c_init)
 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
                               ../../../../libdaisy/build\libdaisy.a(dsy_audio.o) (hsai_BlockA1)
 ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
-                              build/bypass.o (dsy_gpio_init)
+                              build/svf.o (dsy_gpio_init)
+../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                              ../../../../libdaisy/build\libdaisy.a(dsy_adc.o) (HAL_ADC_ConfigChannel)
+../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+                              ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o) (HAL_ADCEx_InjectedConvCpltCallback)
 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
                               ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o) (HAL_NVIC_SetPriority)
 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o)
@@ -31,9 +37,9 @@ Archive member included to satisfy reference by file (symbol)
 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
                               ../../../../libdaisy/build\libdaisy.a(dsy_system.o) (HAL_RCCEx_PeriphCLKConfig)
 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
-                              ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o) (HAL_GPIO_Init)
+                              ../../../../libdaisy/build\libdaisy.a(dsy_adc.o) (HAL_GPIO_Init)
 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
-                              ../../../../libdaisy/build\libdaisy.a(dsy_sai.o) (HAL_DMA_Init)
+                              ../../../../libdaisy/build\libdaisy.a(dsy_adc.o) (HAL_DMA_Init)
 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_mdma.o)
                               ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o) (HAL_MDMA_Start_IT)
 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr_ex.o)
@@ -48,6 +54,8 @@ Archive member included to satisfy reference by file (symbol)
                               ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o) (FMC_SDRAM_Init)
 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr.o)
                               ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr_ex.o) (HAL_PWR_PVDCallback)
+../../../../daisysp/build\libdaisysp.a(svf.o)
+                              build/svf.o (dsy_svf_init)
 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-exit.o)
                               c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o (exit)
 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
@@ -55,11 +63,27 @@ c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm
 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
                               c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o (__libc_init_array)
 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memcpy-stub.o)
-                              build/bypass.o (memcpy)
+                              ../../../../libdaisy/build\libdaisy.a(dsy_audio.o) (memcpy)
 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memset.o)
                               c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o (memset)
+c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+                              ../../../../daisysp/build\libdaisysp.a(svf.o) (powf)
+c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow_log2_data.o)
+                              c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o) (__powf_log2_data)
+c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
+                              ../../../../daisysp/build\libdaisysp.a(svf.o) (sinf)
+c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+                              c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o) (__math_uflowf)
+c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_exp2_data.o)
+                              c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o) (__exp2f_data)
+c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sincosf_data.o)
+                              c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o) (__inv_pio4)
 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libnosys.a(_exit.o)
                               c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-exit.o) (_exit)
+c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+                              c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o) (__aeabi_l2d)
+c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-errno.o)
+                              c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o) (__errno)
 
 Allocating common symbols
 Common symbol       size              file
@@ -74,7 +98,8 @@ hi2c2               0x4c              ../../../../libdaisy/build\libdaisy.a(dsy_
 codec_handle        0x14              ../../../../libdaisy/build\libdaisy.a(codec_wm8731.o)
 hsai_BlockB1        0x98              ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
 hdma_sai1_a         0x78              ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
-seed                0xb7              build/bypass.o
+hadc1               0x64              ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+hdma_adc1           0x78              ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
 hdma_sai1_b         0x78              ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
 hdma_sai2_a         0x78              ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
 hsai_BlockA1        0x98              ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
@@ -92,13 +117,13 @@ Discarded input sections
  .ARM.exidx     0x00000000        0x8 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
  .ARM.attributes
                 0x00000000       0x1c c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
- .text          0x00000000        0x0 build/bypass.o
- .data          0x00000000        0x0 build/bypass.o
- .bss           0x00000000        0x0 build/bypass.o
+ .text          0x00000000        0x0 build/svf.o
+ .data          0x00000000        0x0 build/svf.o
+ .bss           0x00000000        0x0 build/svf.o
  .rodata.seed_pins
-                0x00000000       0x20 build/bypass.o
+                0x00000000       0x20 build/svf.o
  .rodata.seed_ports
-                0x00000000       0x20 build/bypass.o
+                0x00000000       0x20 build/svf.o
  .text          0x00000000        0x0 build/system_stm32h7xx.o
  .data          0x00000000        0x0 build/system_stm32h7xx.o
  .bss           0x00000000        0x0 build/system_stm32h7xx.o
@@ -107,6 +132,29 @@ Discarded input sections
  .text          0x00000000       0x14 build/startup_stm32h750xx.o
  .data          0x00000000        0x0 build/startup_stm32h750xx.o
  .bss           0x00000000        0x0 build/startup_stm32h750xx.o
+ .text          0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .data          0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .bss           0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .text.dsy_adc_init
+                0x00000000      0x150 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .text.dsy_adc_stop
+                0x00000000        0xc ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .text.dsy_adc_get
+                0x00000000       0x14 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .text.dsy_adc_get_float
+                0x00000000       0x1c ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .text.dsy_adc_get_mux
+                0x00000000       0x18 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .text.dsy_adc_get_mux_float
+                0x00000000       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .text.HAL_ADC_MspInit
+                0x00000000      0x194 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .text.HAL_ADC_MspDeInit
+                0x00000000       0x78 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .rodata.dsy_adc_channel_map
+                0x00000000       0x2c ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .rodata.dsy_adc_rank_map
+                0x00000000       0x40 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
  .text          0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
  .data          0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
  .bss           0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
@@ -170,6 +218,117 @@ Discarded input sections
                 0x00000000       0x28 ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
  .text.dsy_gpio_toggle
                 0x00000000       0x24 ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
+ .text          0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .data          0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .bss           0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_MspInit
+                0x00000000        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_MspDeInit
+                0x00000000        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_PollForConversion
+                0x00000000      0x110 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_PollForEvent
+                0x00000000       0xcc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_GetValue
+                0x00000000        0x8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_ConvCpltCallback
+                0x00000000        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_LevelOutOfWindowCallback
+                0x00000000        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_IRQHandler
+                0x00000000      0x274 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_ConfigChannel
+                0x00000000      0x3fc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_AnalogWDGConfig
+                0x00000000      0x390 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_GetState
+                0x00000000        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_GetError
+                0x00000000        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.ADC_ConversionStop
+                0x00000000       0xf4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_Start
+                0x00000000      0x100 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_Start_IT
+                0x00000000      0x16c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.ADC_Disable
+                0x00000000       0x68 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_DeInit
+                0x00000000      0x1a8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_Stop
+                0x00000000       0x48 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_Stop_IT
+                0x00000000       0x54 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_Stop_DMA
+                0x00000000       0x90 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.ADC_ConfigureBoostMode
+                0x00000000      0x190 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text.HAL_ADC_Init
+                0x00000000      0x214 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ .text          0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .data          0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .bss           0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_Calibration_Start
+                0x00000000       0xa4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_Calibration_GetValue
+                0x00000000       0x18 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_LinearCalibration_GetValue
+                0x00000000       0x50 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_Calibration_SetValue
+                0x00000000       0x78 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_LinearCalibration_SetValue
+                0x00000000       0xc0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_InjectedStart
+                0x00000000       0xfc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_InjectedStop
+                0x00000000       0x58 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_InjectedPollForConversion
+                0x00000000      0x10c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_InjectedStart_IT
+                0x00000000      0x124 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_InjectedStop_IT
+                0x00000000       0x60 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_MultiModeStart_DMA
+                0x00000000       0xf8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_MultiModeStop_DMA
+                0x00000000       0xf4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_MultiModeGetValue
+                0x00000000       0x28 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_InjectedGetValue
+                0x00000000       0x38 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_InjectedConvCpltCallback
+                0x00000000        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_InjectedQueueOverflowCallback
+                0x00000000        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_LevelOutOfWindow2Callback
+                0x00000000        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_LevelOutOfWindow3Callback
+                0x00000000        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_EndOfSamplingCallback
+                0x00000000        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_RegularStop
+                0x00000000       0x5c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_RegularStop_IT
+                0x00000000       0x64 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_RegularStop_DMA
+                0x00000000       0xa0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_RegularMultiModeStop_DMA
+                0x00000000      0x100 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_InjectedConfigChannel
+                0x00000000      0x5e4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_MultiModeConfigChannel
+                0x00000000       0xc4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_EnableInjectedQueue
+                0x00000000       0x2c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_DisableInjectedQueue
+                0x00000000       0x28 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_DisableVoltageRegulator
+                0x00000000       0x1c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .text.HAL_ADCEx_EnterADCDeepPowerDownMode
+                0x00000000       0x20 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .comment       0x00000000       0x7a ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ .ARM.attributes
+                0x00000000       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
  .text          0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
  .data          0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
  .bss           0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
@@ -561,8 +720,6 @@ Discarded input sections
  .bss           0x00000000        0x0 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
  .text.HAL_GPIO_ReadPin
                 0x00000000        0xc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
- .text.HAL_GPIO_WritePin
-                0x00000000        0x8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
  .text.HAL_GPIO_TogglePin
                 0x00000000       0x10 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
  .text.HAL_GPIO_LockPin
@@ -884,6 +1041,15 @@ Discarded input sections
  .comment       0x00000000       0x7a ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr.o)
  .ARM.attributes
                 0x00000000       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr.o)
+ .text          0x00000000        0x0 ../../../../daisysp/build\libdaisysp.a(svf.o)
+ .data          0x00000000        0x0 ../../../../daisysp/build\libdaisysp.a(svf.o)
+ .bss           0x00000000        0x0 ../../../../daisysp/build\libdaisysp.a(svf.o)
+ .text.dsy_svf_notch
+                0x00000000        0x8 ../../../../daisysp/build\libdaisysp.a(svf.o)
+ .text.dsy_svf_band
+                0x00000000        0x8 ../../../../daisysp/build\libdaisysp.a(svf.o)
+ .text.dsy_svf_peak
+                0x00000000        0x8 ../../../../daisysp/build\libdaisysp.a(svf.o)
  .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-exit.o)
  .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-exit.o)
@@ -894,14 +1060,8 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
  .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
  .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
- .data._impure_ptr
-                0x00000000        0x4 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
- .data.impure_data
-                0x00000000       0x60 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
  .rodata._global_impure_ptr
                 0x00000000        0x4 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
- .ARM.attributes
-                0x00000000       0x30 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
  .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
  .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
  .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
@@ -911,6 +1071,24 @@ Discarded input sections
  .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memset.o)
  .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memset.o)
  .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memset.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow_log2_data.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow_log2_data.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow_log2_data.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_exp2_data.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_exp2_data.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_exp2_data.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sincosf_data.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sincosf_data.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sincosf_data.o)
  .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libnosys.a(_exit.o)
  .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libnosys.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libnosys.a(_exit.o)
@@ -918,6 +1096,11 @@ Discarded input sections
  .debug_frame   0x00000000       0x20 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libnosys.a(_exit.o)
  .ARM.attributes
                 0x00000000       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libnosys.a(_exit.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+ .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-errno.o)
+ .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-errno.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-errno.o)
  .text          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtend.o
  .data          0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtend.o
  .bss           0x00000000        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtend.o
@@ -945,7 +1128,7 @@ Linker script and memory map
 LOAD c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crti.o
 LOAD c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
 LOAD c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
-LOAD build/bypass.o
+LOAD build/svf.o
 LOAD build/system_stm32h7xx.o
 LOAD build/startup_stm32h750xx.o
 LOAD ../../../../libdaisy/build\libdaisy.a
@@ -975,649 +1158,782 @@ LOAD c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gc
 .eh_frame       0x08000298        0x0
  .eh_frame      0x08000298        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
 
-.text           0x08000298     0x6628
+.text           0x08000298     0x7a98
                 0x08000298                . = ALIGN (0x4)
                 0x08000298                _stext = .
  *(.text)
  .text          0x08000298       0x40 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
+ .text          0x080002d8      0x378 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+                0x080002d8                __aeabi_drsub
+                0x080002e0                __aeabi_dsub
+                0x080002e0                __subdf3
+                0x080002e4                __aeabi_dadd
+                0x080002e4                __adddf3
+                0x0800055c                __floatunsidf
+                0x0800055c                __aeabi_ui2d
+                0x0800057c                __floatsidf
+                0x0800057c                __aeabi_i2d
+                0x080005a0                __aeabi_f2d
+                0x080005a0                __extendsfdf2
+                0x080005e4                __floatundidf
+                0x080005e4                __aeabi_ul2d
+                0x080005f4                __floatdidf
+                0x080005f4                __aeabi_l2d
  *(.text*)
- .text.Callback
-                0x080002d8        0xc build/bypass.o
+ .text.audioCallback
+                0x08000650       0x4c build/svf.o
  .text.daisy_seed_init
-                0x080002e4      0x198 build/bypass.o
-                0x080002e4                daisy_seed_init
+                0x0800069c      0x198 build/svf.o
+                0x0800069c                daisy_seed_init
  .text.startup.main
-                0x0800047c       0x20 build/bypass.o
-                0x0800047c                main
+                0x08000834       0x60 build/svf.o
+                0x08000834                main
  .text.SystemInit
-                0x0800049c       0x80 build/system_stm32h7xx.o
-                0x0800049c                SystemInit
+                0x08000894       0x80 build/system_stm32h7xx.o
+                0x08000894                SystemInit
  .text.Reset_Handler
-                0x0800051c       0x50 build/startup_stm32h750xx.o
-                0x0800051c                Reset_Handler
+                0x08000914       0x50 build/startup_stm32h750xx.o
+                0x08000914                Reset_Handler
  .text.Default_Handler
-                0x0800056c        0x2 build/startup_stm32h750xx.o
-                0x0800056c                RTC_Alarm_IRQHandler
-                0x0800056c                HASH_RNG_IRQHandler
-                0x0800056c                EXTI2_IRQHandler
-                0x0800056c                TIM8_CC_IRQHandler
-                0x0800056c                HRTIM1_Master_IRQHandler
-                0x0800056c                DebugMon_Handler
-                0x0800056c                UART8_IRQHandler
-                0x0800056c                SPI4_IRQHandler
-                0x0800056c                TIM1_CC_IRQHandler
-                0x0800056c                BDMA_Channel6_IRQHandler
-                0x0800056c                DMA2_Stream5_IRQHandler
-                0x0800056c                HRTIM1_FLT_IRQHandler
-                0x0800056c                JPEG_IRQHandler
-                0x0800056c                DMA1_Stream5_IRQHandler
-                0x0800056c                BDMA_Channel1_IRQHandler
-                0x0800056c                HRTIM1_TIMD_IRQHandler
-                0x0800056c                TAMP_STAMP_IRQHandler
-                0x0800056c                PendSV_Handler
-                0x0800056c                NMI_Handler
-                0x0800056c                EXTI3_IRQHandler
-                0x0800056c                LPTIM4_IRQHandler
-                0x0800056c                TIM8_TRG_COM_TIM14_IRQHandler
-                0x0800056c                LPTIM2_IRQHandler
-                0x0800056c                DFSDM1_FLT1_IRQHandler
-                0x0800056c                DMAMUX2_OVR_IRQHandler
-                0x0800056c                TIM8_UP_TIM13_IRQHandler
-                0x0800056c                I2C3_ER_IRQHandler
-                0x0800056c                DFSDM1_FLT2_IRQHandler
-                0x0800056c                MDMA_IRQHandler
-                0x0800056c                LPTIM3_IRQHandler
-                0x0800056c                HSEM1_IRQHandler
-                0x0800056c                EXTI0_IRQHandler
-                0x0800056c                I2C2_EV_IRQHandler
-                0x0800056c                DMA1_Stream2_IRQHandler
-                0x0800056c                FPU_IRQHandler
-                0x0800056c                OTG_HS_WKUP_IRQHandler
-                0x0800056c                FDCAN1_IT1_IRQHandler
-                0x0800056c                UsageFault_Handler
-                0x0800056c                LTDC_ER_IRQHandler
-                0x0800056c                DMA2_Stream2_IRQHandler
-                0x0800056c                HRTIM1_TIME_IRQHandler
-                0x0800056c                SPI1_IRQHandler
-                0x0800056c                TIM6_DAC_IRQHandler
-                0x0800056c                DCMI_IRQHandler
-                0x0800056c                HRTIM1_TIMC_IRQHandler
-                0x0800056c                DMA2_Stream3_IRQHandler
-                0x0800056c                SAI2_IRQHandler
-                0x0800056c                DFSDM1_FLT3_IRQHandler
-                0x0800056c                USART6_IRQHandler
-                0x0800056c                TIM17_IRQHandler
-                0x0800056c                USART3_IRQHandler
-                0x0800056c                BDMA_Channel7_IRQHandler
-                0x0800056c                CRYP_IRQHandler
-                0x0800056c                LPTIM5_IRQHandler
-                0x0800056c                UART5_IRQHandler
-                0x0800056c                ADC3_IRQHandler
-                0x0800056c                DMA2_Stream0_IRQHandler
-                0x0800056c                TIM4_IRQHandler
-                0x0800056c                BDMA_Channel2_IRQHandler
-                0x0800056c                I2C1_EV_IRQHandler
-                0x0800056c                DMA1_Stream6_IRQHandler
-                0x0800056c                DMAMUX1_OVR_IRQHandler
-                0x0800056c                TIM16_IRQHandler
-                0x0800056c                UART4_IRQHandler
-                0x0800056c                BDMA_Channel5_IRQHandler
-                0x0800056c                TIM3_IRQHandler
-                0x0800056c                RCC_IRQHandler
-                0x0800056c                TIM8_BRK_TIM12_IRQHandler
-                0x0800056c                TIM1_TRG_COM_IRQHandler
-                0x0800056c                Default_Handler
-                0x0800056c                ECC_IRQHandler
-                0x0800056c                CEC_IRQHandler
-                0x0800056c                EXTI15_10_IRQHandler
-                0x0800056c                BDMA_Channel0_IRQHandler
-                0x0800056c                ADC_IRQHandler
-                0x0800056c                DMA1_Stream7_IRQHandler
-                0x0800056c                HRTIM1_TIMA_IRQHandler
-                0x0800056c                SPI5_IRQHandler
-                0x0800056c                TIM7_IRQHandler
-                0x0800056c                SDMMC1_IRQHandler
-                0x0800056c                TIM5_IRQHandler
-                0x0800056c                DMA2_Stream7_IRQHandler
-                0x0800056c                TIM15_IRQHandler
-                0x0800056c                PVD_AVD_IRQHandler
-                0x0800056c                I2C3_EV_IRQHandler
-                0x0800056c                EXTI9_5_IRQHandler
-                0x0800056c                RTC_WKUP_IRQHandler
-                0x0800056c                LTDC_IRQHandler
-                0x0800056c                SAI3_IRQHandler
-                0x0800056c                ETH_WKUP_IRQHandler
-                0x0800056c                SPDIF_RX_IRQHandler
-                0x0800056c                SPI2_IRQHandler
-                0x0800056c                OTG_HS_EP1_IN_IRQHandler
-                0x0800056c                MemManage_Handler
-                0x0800056c                SVC_Handler
-                0x0800056c                CRS_IRQHandler
-                0x0800056c                EXTI4_IRQHandler
-                0x0800056c                HRTIM1_TIMB_IRQHandler
-                0x0800056c                FDCAN2_IT1_IRQHandler
-                0x0800056c                ETH_IRQHandler
-                0x0800056c                TIM1_UP_IRQHandler
-                0x0800056c                BDMA_Channel4_IRQHandler
-                0x0800056c                OTG_HS_EP1_OUT_IRQHandler
-                0x0800056c                WWDG_IRQHandler
-                0x0800056c                SPI6_IRQHandler
-                0x0800056c                MDIOS_IRQHandler
-                0x0800056c                I2C4_EV_IRQHandler
-                0x0800056c                FDCAN2_IT0_IRQHandler
-                0x0800056c                LPUART1_IRQHandler
-                0x0800056c                FDCAN1_IT0_IRQHandler
-                0x0800056c                TIM2_IRQHandler
-                0x0800056c                OTG_FS_WKUP_IRQHandler
-                0x0800056c                OTG_HS_IRQHandler
-                0x0800056c                DMA2D_IRQHandler
-                0x0800056c                TIM1_BRK_IRQHandler
-                0x0800056c                EXTI1_IRQHandler
-                0x0800056c                SDMMC2_IRQHandler
-                0x0800056c                OTG_FS_EP1_OUT_IRQHandler
-                0x0800056c                BDMA_Channel3_IRQHandler
-                0x0800056c                UART7_IRQHandler
-                0x0800056c                MDIOS_WKUP_IRQHandler
-                0x0800056c                USART2_IRQHandler
-                0x0800056c                DFSDM1_FLT0_IRQHandler
-                0x0800056c                SAI4_IRQHandler
-                0x0800056c                I2C2_ER_IRQHandler
-                0x0800056c                DMA2_Stream1_IRQHandler
-                0x0800056c                FLASH_IRQHandler
-                0x0800056c                DMA2_Stream4_IRQHandler
-                0x0800056c                BusFault_Handler
-                0x0800056c                USART1_IRQHandler
-                0x0800056c                OTG_FS_IRQHandler
-                0x0800056c                SPI3_IRQHandler
-                0x0800056c                WAKEUP_PIN_IRQHandler
-                0x0800056c                OTG_FS_EP1_IN_IRQHandler
-                0x0800056c                I2C1_ER_IRQHandler
-                0x0800056c                FMC_IRQHandler
-                0x0800056c                FDCAN_CAL_IRQHandler
-                0x0800056c                SWPMI1_IRQHandler
-                0x0800056c                COMP1_IRQHandler
-                0x0800056c                LPTIM1_IRQHandler
-                0x0800056c                I2C4_ER_IRQHandler
-                0x0800056c                DMA2_Stream6_IRQHandler
-                0x0800056c                SAI1_IRQHandler
- *fill*         0x0800056e        0x2 
+                0x08000964        0x2 build/startup_stm32h750xx.o
+                0x08000964                RTC_Alarm_IRQHandler
+                0x08000964                HASH_RNG_IRQHandler
+                0x08000964                EXTI2_IRQHandler
+                0x08000964                TIM8_CC_IRQHandler
+                0x08000964                HRTIM1_Master_IRQHandler
+                0x08000964                DebugMon_Handler
+                0x08000964                UART8_IRQHandler
+                0x08000964                SPI4_IRQHandler
+                0x08000964                TIM1_CC_IRQHandler
+                0x08000964                BDMA_Channel6_IRQHandler
+                0x08000964                DMA2_Stream5_IRQHandler
+                0x08000964                HRTIM1_FLT_IRQHandler
+                0x08000964                JPEG_IRQHandler
+                0x08000964                DMA1_Stream5_IRQHandler
+                0x08000964                BDMA_Channel1_IRQHandler
+                0x08000964                HRTIM1_TIMD_IRQHandler
+                0x08000964                TAMP_STAMP_IRQHandler
+                0x08000964                PendSV_Handler
+                0x08000964                NMI_Handler
+                0x08000964                EXTI3_IRQHandler
+                0x08000964                LPTIM4_IRQHandler
+                0x08000964                TIM8_TRG_COM_TIM14_IRQHandler
+                0x08000964                LPTIM2_IRQHandler
+                0x08000964                DFSDM1_FLT1_IRQHandler
+                0x08000964                DMAMUX2_OVR_IRQHandler
+                0x08000964                TIM8_UP_TIM13_IRQHandler
+                0x08000964                I2C3_ER_IRQHandler
+                0x08000964                DFSDM1_FLT2_IRQHandler
+                0x08000964                MDMA_IRQHandler
+                0x08000964                LPTIM3_IRQHandler
+                0x08000964                HSEM1_IRQHandler
+                0x08000964                EXTI0_IRQHandler
+                0x08000964                I2C2_EV_IRQHandler
+                0x08000964                FPU_IRQHandler
+                0x08000964                OTG_HS_WKUP_IRQHandler
+                0x08000964                FDCAN1_IT1_IRQHandler
+                0x08000964                UsageFault_Handler
+                0x08000964                LTDC_ER_IRQHandler
+                0x08000964                DMA2_Stream2_IRQHandler
+                0x08000964                HRTIM1_TIME_IRQHandler
+                0x08000964                SPI1_IRQHandler
+                0x08000964                TIM6_DAC_IRQHandler
+                0x08000964                DCMI_IRQHandler
+                0x08000964                HRTIM1_TIMC_IRQHandler
+                0x08000964                DMA2_Stream3_IRQHandler
+                0x08000964                SAI2_IRQHandler
+                0x08000964                DFSDM1_FLT3_IRQHandler
+                0x08000964                USART6_IRQHandler
+                0x08000964                TIM17_IRQHandler
+                0x08000964                USART3_IRQHandler
+                0x08000964                BDMA_Channel7_IRQHandler
+                0x08000964                CRYP_IRQHandler
+                0x08000964                LPTIM5_IRQHandler
+                0x08000964                UART5_IRQHandler
+                0x08000964                ADC3_IRQHandler
+                0x08000964                DMA2_Stream0_IRQHandler
+                0x08000964                TIM4_IRQHandler
+                0x08000964                BDMA_Channel2_IRQHandler
+                0x08000964                I2C1_EV_IRQHandler
+                0x08000964                DMA1_Stream6_IRQHandler
+                0x08000964                DMAMUX1_OVR_IRQHandler
+                0x08000964                TIM16_IRQHandler
+                0x08000964                UART4_IRQHandler
+                0x08000964                BDMA_Channel5_IRQHandler
+                0x08000964                TIM3_IRQHandler
+                0x08000964                RCC_IRQHandler
+                0x08000964                TIM8_BRK_TIM12_IRQHandler
+                0x08000964                TIM1_TRG_COM_IRQHandler
+                0x08000964                Default_Handler
+                0x08000964                ECC_IRQHandler
+                0x08000964                CEC_IRQHandler
+                0x08000964                EXTI15_10_IRQHandler
+                0x08000964                BDMA_Channel0_IRQHandler
+                0x08000964                ADC_IRQHandler
+                0x08000964                DMA1_Stream7_IRQHandler
+                0x08000964                HRTIM1_TIMA_IRQHandler
+                0x08000964                SPI5_IRQHandler
+                0x08000964                TIM7_IRQHandler
+                0x08000964                SDMMC1_IRQHandler
+                0x08000964                TIM5_IRQHandler
+                0x08000964                DMA2_Stream7_IRQHandler
+                0x08000964                TIM15_IRQHandler
+                0x08000964                PVD_AVD_IRQHandler
+                0x08000964                I2C3_EV_IRQHandler
+                0x08000964                EXTI9_5_IRQHandler
+                0x08000964                RTC_WKUP_IRQHandler
+                0x08000964                LTDC_IRQHandler
+                0x08000964                SAI3_IRQHandler
+                0x08000964                ETH_WKUP_IRQHandler
+                0x08000964                SPDIF_RX_IRQHandler
+                0x08000964                SPI2_IRQHandler
+                0x08000964                OTG_HS_EP1_IN_IRQHandler
+                0x08000964                MemManage_Handler
+                0x08000964                SVC_Handler
+                0x08000964                CRS_IRQHandler
+                0x08000964                EXTI4_IRQHandler
+                0x08000964                HRTIM1_TIMB_IRQHandler
+                0x08000964                FDCAN2_IT1_IRQHandler
+                0x08000964                ETH_IRQHandler
+                0x08000964                TIM1_UP_IRQHandler
+                0x08000964                BDMA_Channel4_IRQHandler
+                0x08000964                OTG_HS_EP1_OUT_IRQHandler
+                0x08000964                WWDG_IRQHandler
+                0x08000964                SPI6_IRQHandler
+                0x08000964                MDIOS_IRQHandler
+                0x08000964                I2C4_EV_IRQHandler
+                0x08000964                FDCAN2_IT0_IRQHandler
+                0x08000964                LPUART1_IRQHandler
+                0x08000964                FDCAN1_IT0_IRQHandler
+                0x08000964                TIM2_IRQHandler
+                0x08000964                OTG_FS_WKUP_IRQHandler
+                0x08000964                OTG_HS_IRQHandler
+                0x08000964                DMA2D_IRQHandler
+                0x08000964                TIM1_BRK_IRQHandler
+                0x08000964                EXTI1_IRQHandler
+                0x08000964                SDMMC2_IRQHandler
+                0x08000964                OTG_FS_EP1_OUT_IRQHandler
+                0x08000964                BDMA_Channel3_IRQHandler
+                0x08000964                UART7_IRQHandler
+                0x08000964                MDIOS_WKUP_IRQHandler
+                0x08000964                USART2_IRQHandler
+                0x08000964                DFSDM1_FLT0_IRQHandler
+                0x08000964                SAI4_IRQHandler
+                0x08000964                I2C2_ER_IRQHandler
+                0x08000964                DMA2_Stream1_IRQHandler
+                0x08000964                FLASH_IRQHandler
+                0x08000964                DMA2_Stream4_IRQHandler
+                0x08000964                BusFault_Handler
+                0x08000964                USART1_IRQHandler
+                0x08000964                OTG_FS_IRQHandler
+                0x08000964                SPI3_IRQHandler
+                0x08000964                WAKEUP_PIN_IRQHandler
+                0x08000964                OTG_FS_EP1_IN_IRQHandler
+                0x08000964                I2C1_ER_IRQHandler
+                0x08000964                FMC_IRQHandler
+                0x08000964                FDCAN_CAL_IRQHandler
+                0x08000964                SWPMI1_IRQHandler
+                0x08000964                COMP1_IRQHandler
+                0x08000964                LPTIM1_IRQHandler
+                0x08000964                I2C4_ER_IRQHandler
+                0x08000964                DMA2_Stream6_IRQHandler
+                0x08000964                SAI1_IRQHandler
+ *fill*         0x08000966        0x2 
+ .text.dsy_adc_start
+                0x08000968       0x14 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+                0x08000968                dsy_adc_start
+ .text.DMA1_Stream2_IRQHandler
+                0x0800097c        0xc ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+                0x0800097c                DMA1_Stream2_IRQHandler
+ .text.HAL_ADC_ConvCpltCallback
+                0x08000988       0xd4 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+                0x08000988                HAL_ADC_ConvCpltCallback
  .text.internal_callback
-                0x08000570      0x164 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08000a5c      0x164 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
  .text.dsy_audio_passthru
-                0x080006d4        0xc ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                0x080006d4                dsy_audio_passthru
+                0x08000bc0        0xc ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08000bc0                dsy_audio_passthru
  .text.DMA1_Stream0_IRQHandler
-                0x080006e0        0xc ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                0x080006e0                DMA1_Stream0_IRQHandler
+                0x08000bcc        0xc ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08000bcc                DMA1_Stream0_IRQHandler
  .text.DMA1_Stream1_IRQHandler
-                0x080006ec        0xc ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                0x080006ec                DMA1_Stream1_IRQHandler
+                0x08000bd8        0xc ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08000bd8                DMA1_Stream1_IRQHandler
  .text.DMA1_Stream3_IRQHandler
-                0x080006f8        0xc ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                0x080006f8                DMA1_Stream3_IRQHandler
+                0x08000be4        0xc ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08000be4                DMA1_Stream3_IRQHandler
  .text.DMA1_Stream4_IRQHandler
-                0x08000704        0xc ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                0x08000704                DMA1_Stream4_IRQHandler
+                0x08000bf0        0xc ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08000bf0                DMA1_Stream4_IRQHandler
  .text.dsy_audio_init
-                0x08000710      0x104 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                0x08000710                dsy_audio_init
+                0x08000bfc      0x104 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08000bfc                dsy_audio_init
  .text.dsy_audio_set_callback
-                0x08000814       0x18 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                0x08000814                dsy_audio_set_callback
+                0x08000d00       0x18 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08000d00                dsy_audio_set_callback
  .text.dsy_audio_start
-                0x0800082c       0x54 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                0x0800082c                dsy_audio_start
+                0x08000d18       0x54 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08000d18                dsy_audio_start
  .text.HAL_SAI_RxHalfCpltCallback
-                0x08000880        0x8 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                0x08000880                HAL_SAI_RxHalfCpltCallback
+                0x08000d6c        0x8 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08000d6c                HAL_SAI_RxHalfCpltCallback
  .text.HAL_SAI_RxCpltCallback
-                0x08000888       0x10 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                0x08000888                HAL_SAI_RxCpltCallback
+                0x08000d74       0x10 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08000d74                HAL_SAI_RxCpltCallback
  .text.dsy_qspi_init
-                0x08000898      0x390 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
-                0x08000898                dsy_qspi_init
+                0x08000d84      0x390 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
+                0x08000d84                dsy_qspi_init
  .text.HAL_QSPI_MspInit
-                0x08000c28      0x118 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
-                0x08000c28                HAL_QSPI_MspInit
+                0x08001114      0x118 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
+                0x08001114                HAL_QSPI_MspInit
  .text.HAL_QSPI_MspDeInit
-                0x08000d40       0x5c ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
-                0x08000d40                HAL_QSPI_MspDeInit
+                0x0800122c       0x5c ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
+                0x0800122c                HAL_QSPI_MspDeInit
  .text.QUADSPI_IRQHandler
-                0x08000d9c        0xc ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
-                0x08000d9c                QUADSPI_IRQHandler
+                0x08001288        0xc ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
+                0x08001288                QUADSPI_IRQHandler
  .text.dsy_sdram_init
-                0x08000da8      0x124 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
-                0x08000da8                dsy_sdram_init
+                0x08001294      0x124 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
+                0x08001294                dsy_sdram_init
  .text.HAL_SDRAM_MspInit
-                0x08000ecc      0x1d0 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
-                0x08000ecc                HAL_SDRAM_MspInit
- *fill*         0x0800109c        0x4 
+                0x080013b8      0x1d0 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
+                0x080013b8                HAL_SDRAM_MspInit
  .text.SystemClock_Config
-                0x080010a0      0x17c ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
+                0x08001588      0x17c ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
  .text.SysTick_Handler
-                0x0800121c       0x10 ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
-                0x0800121c                SysTick_Handler
+                0x08001704       0x10 ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
+                0x08001704                SysTick_Handler
  .text.HardFault_Handler
-                0x0800122c        0x4 ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
-                0x0800122c                HardFault_Handler
+                0x08001714        0x4 ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
+                0x08001714                HardFault_Handler
  .text.dsy_system_init
-                0x08001230       0x40 ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
-                0x08001230                dsy_system_init
+                0x08001718       0x40 ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
+                0x08001718                dsy_system_init
  .text.dsy_i2c_init
-                0x08001270       0xc4 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
-                0x08001270                dsy_i2c_init
+                0x08001758       0xc4 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+                0x08001758                dsy_i2c_init
  .text.dsy_i2c_hal_handle
-                0x08001334       0x18 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
-                0x08001334                dsy_i2c_hal_handle
+                0x0800181c       0x18 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+                0x0800181c                dsy_i2c_hal_handle
  .text.HAL_I2C_MspInit
-                0x0800134c      0x284 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
-                0x0800134c                HAL_I2C_MspInit
+                0x08001834      0x284 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+                0x08001834                HAL_I2C_MspInit
  .text.dsy_sai1_init
-                0x080015d0       0x7c ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                0x08001ab8       0x7c ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
  .text.dsy_sai2_init
-                0x0800164c       0x80 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                0x08001b34       0x80 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
  .text.dsy_sai_init_from_handle
-                0x080016cc       0x44 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
-                0x080016cc                dsy_sai_init_from_handle
+                0x08001bb4       0x44 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                0x08001bb4                dsy_sai_init_from_handle
  .text.HAL_SAI_MspInit
-                0x08001710      0x3f4 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
-                0x08001710                HAL_SAI_MspInit
+                0x08001bf8      0x3f4 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                0x08001bf8                HAL_SAI_MspInit
  .text.dsy_gpio_init
-                0x08001b04       0x58 ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
-                0x08001b04                dsy_gpio_init
+                0x08001fec       0x58 ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
+                0x08001fec                dsy_gpio_init
+ .text.HAL_ADC_ConvHalfCpltCallback
+                0x08002044        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                0x08002044                HAL_ADC_ConvHalfCpltCallback
+ .text.ADC_DMAHalfConvCplt
+                0x08002048        0xc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                0x08002048                ADC_DMAHalfConvCplt
+ .text.HAL_ADC_ErrorCallback
+                0x08002054        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                0x08002054                HAL_ADC_ErrorCallback
+ .text.ADC_DMAConvCplt
+                0x08002058       0x6c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                0x08002058                ADC_DMAConvCplt
+ .text.ADC_DMAError
+                0x080020c4       0x1c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                0x080020c4                ADC_DMAError
+ .text.ADC_Enable
+                0x080020e0       0xac ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                0x080020e0                ADC_Enable
+ .text.HAL_ADC_Start_DMA
+                0x0800218c      0x118 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                0x0800218c                HAL_ADC_Start_DMA
  .text.HAL_NVIC_SetPriorityGrouping
-                0x08001b5c       0x28 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
-                0x08001b5c                HAL_NVIC_SetPriorityGrouping
+                0x080022a4       0x28 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
+                0x080022a4                HAL_NVIC_SetPriorityGrouping
  .text.HAL_NVIC_SetPriority
-                0x08001b84       0x74 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
-                0x08001b84                HAL_NVIC_SetPriority
+                0x080022cc       0x74 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
+                0x080022cc                HAL_NVIC_SetPriority
  .text.HAL_NVIC_EnableIRQ
-                0x08001bf8       0x1c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
-                0x08001bf8                HAL_NVIC_EnableIRQ
+                0x08002340       0x1c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
+                0x08002340                HAL_NVIC_EnableIRQ
  .text.HAL_NVIC_DisableIRQ
-                0x08001c14       0x28 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
-                0x08001c14                HAL_NVIC_DisableIRQ
+                0x0800235c       0x28 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
+                0x0800235c                HAL_NVIC_DisableIRQ
  .text.HAL_SYSTICK_Config
-                0x08001c3c       0x30 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
-                0x08001c3c                HAL_SYSTICK_Config
+                0x08002384       0x30 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
+                0x08002384                HAL_SYSTICK_Config
  .text.HAL_SYSTICK_Callback
-                0x08001c6c        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
-                0x08001c6c                HAL_SYSTICK_Callback
+                0x080023b4        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
+                0x080023b4                HAL_SYSTICK_Callback
  .text.HAL_SYSTICK_IRQHandler
-                0x08001c70        0x8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
-                0x08001c70                HAL_SYSTICK_IRQHandler
+                0x080023b8        0x8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
+                0x080023b8                HAL_SYSTICK_IRQHandler
  .text.HAL_SDRAM_Init
-                0x08001c78       0x54 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o)
-                0x08001c78                HAL_SDRAM_Init
+                0x080023c0       0x54 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o)
+                0x080023c0                HAL_SDRAM_Init
  .text.HAL_SDRAM_SendCommand
-                0x08001ccc       0x40 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o)
-                0x08001ccc                HAL_SDRAM_SendCommand
+                0x08002414       0x40 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o)
+                0x08002414                HAL_SDRAM_SendCommand
  .text.HAL_SDRAM_ProgramRefreshRate
-                0x08001d0c       0x30 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o)
-                0x08001d0c                HAL_SDRAM_ProgramRefreshRate
+                0x08002454       0x30 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o)
+                0x08002454                HAL_SDRAM_ProgramRefreshRate
  .text.I2C_WaitOnTXISFlagUntilTimeout
-                0x08001d3c       0xb8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
+                0x08002484       0xb8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
  .text.I2C_WaitOnSTOPFlagUntilTimeout
-                0x08001df4       0xac ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
+                0x0800253c       0xac ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
  .text.HAL_I2C_Init
-                0x08001ea0       0xa8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
-                0x08001ea0                HAL_I2C_Init
+                0x080025e8       0xa8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
+                0x080025e8                HAL_I2C_Init
  .text.HAL_I2C_Master_Transmit
-                0x08001f48      0x1b4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
-                0x08001f48                HAL_I2C_Master_Transmit
+                0x08002690      0x1b4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
+                0x08002690                HAL_I2C_Master_Transmit
  .text.HAL_I2CEx_ConfigAnalogFilter
-                0x080020fc       0x58 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c_ex.o)
-                0x080020fc                HAL_I2CEx_ConfigAnalogFilter
+                0x08002844       0x58 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c_ex.o)
+                0x08002844                HAL_I2CEx_ConfigAnalogFilter
  .text.HAL_I2CEx_ConfigDigitalFilter
-                0x08002154       0x54 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c_ex.o)
-                0x08002154                HAL_I2CEx_ConfigDigitalFilter
+                0x0800289c       0x54 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c_ex.o)
+                0x0800289c                HAL_I2CEx_ConfigDigitalFilter
  .text.QSPI_Config
-                0x080021a8      0x1d4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x080028f0      0x1d4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
  .text.HAL_QSPI_Init
-                0x0800237c       0xd8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x0800237c                HAL_QSPI_Init
+                0x08002ac4       0xd8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08002ac4                HAL_QSPI_Init
  .text.HAL_QSPI_DeInit
-                0x08002454       0x3c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002454                HAL_QSPI_DeInit
+                0x08002b9c       0x3c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08002b9c                HAL_QSPI_DeInit
  .text.HAL_QSPI_Command
-                0x08002490       0xd4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002490                HAL_QSPI_Command
+                0x08002bd8       0xd4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08002bd8                HAL_QSPI_Command
  .text.HAL_QSPI_Transmit
-                0x08002564       0xfc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002564                HAL_QSPI_Transmit
+                0x08002cac       0xfc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08002cac                HAL_QSPI_Transmit
  .text.HAL_QSPI_Receive
-                0x08002660      0x108 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002660                HAL_QSPI_Receive
+                0x08002da8      0x108 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08002da8                HAL_QSPI_Receive
  .text.HAL_QSPI_AutoPolling
-                0x08002768       0xe8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002768                HAL_QSPI_AutoPolling
+                0x08002eb0       0xe8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08002eb0                HAL_QSPI_AutoPolling
  .text.HAL_QSPI_MemoryMapped
-                0x08002850       0xb8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002850                HAL_QSPI_MemoryMapped
+                0x08002f98       0xb8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08002f98                HAL_QSPI_MemoryMapped
  .text.HAL_QSPI_ErrorCallback
-                0x08002908        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002908                HAL_QSPI_ErrorCallback
+                0x08003050        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08003050                HAL_QSPI_ErrorCallback
  .text.QSPI_DMAAbortCplt
-                0x0800290c       0x38 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08003054       0x38 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
  .text.HAL_QSPI_AbortCpltCallback
-                0x08002944        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002944                HAL_QSPI_AbortCpltCallback
+                0x0800308c        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x0800308c                HAL_QSPI_AbortCpltCallback
  .text.HAL_QSPI_CmdCpltCallback
-                0x08002948        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002948                HAL_QSPI_CmdCpltCallback
+                0x08003090        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08003090                HAL_QSPI_CmdCpltCallback
  .text.HAL_QSPI_RxCpltCallback
-                0x0800294c        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x0800294c                HAL_QSPI_RxCpltCallback
+                0x08003094        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08003094                HAL_QSPI_RxCpltCallback
  .text.HAL_QSPI_TxCpltCallback
-                0x08002950        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002950                HAL_QSPI_TxCpltCallback
+                0x08003098        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x08003098                HAL_QSPI_TxCpltCallback
  .text.HAL_QSPI_FifoThresholdCallback
-                0x08002954        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002954                HAL_QSPI_FifoThresholdCallback
+                0x0800309c        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x0800309c                HAL_QSPI_FifoThresholdCallback
  .text.HAL_QSPI_StatusMatchCallback
-                0x08002958        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002958                HAL_QSPI_StatusMatchCallback
+                0x080030a0        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x080030a0                HAL_QSPI_StatusMatchCallback
  .text.HAL_QSPI_TimeOutCallback
-                0x0800295c        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x0800295c                HAL_QSPI_TimeOutCallback
+                0x080030a4        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x080030a4                HAL_QSPI_TimeOutCallback
  .text.HAL_QSPI_IRQHandler
-                0x08002960      0x210 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
-                0x08002960                HAL_QSPI_IRQHandler
+                0x080030a8      0x210 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x080030a8                HAL_QSPI_IRQHandler
  .text.HAL_SAI_Init.part.0
-                0x08002b70      0x364 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x080032b8      0x364 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
  .text.HAL_SAI_InitProtocol
-                0x08002ed4      0x184 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
-                0x08002ed4                HAL_SAI_InitProtocol
+                0x0800361c      0x184 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x0800361c                HAL_SAI_InitProtocol
  .text.HAL_SAI_Transmit_DMA
-                0x08003058      0x124 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
-                0x08003058                HAL_SAI_Transmit_DMA
+                0x080037a0      0x124 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x080037a0                HAL_SAI_Transmit_DMA
  .text.HAL_SAI_Receive_DMA
-                0x0800317c       0xcc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
-                0x0800317c                HAL_SAI_Receive_DMA
+                0x080038c4       0xcc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x080038c4                HAL_SAI_Receive_DMA
  .text.HAL_SAI_TxCpltCallback
-                0x08003248        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
-                0x08003248                HAL_SAI_TxCpltCallback
+                0x08003990        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x08003990                HAL_SAI_TxCpltCallback
  .text.SAI_DMATxCplt
-                0x0800324c       0x60 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x08003994       0x60 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
  .text.HAL_SAI_TxHalfCpltCallback
-                0x080032ac        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
-                0x080032ac                HAL_SAI_TxHalfCpltCallback
+                0x080039f4        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x080039f4                HAL_SAI_TxHalfCpltCallback
  .text.SAI_DMATxHalfCplt
-                0x080032b0        0xc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x080039f8        0xc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
  .text.SAI_DMARxCplt
-                0x080032bc       0x60 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x08003a04       0x60 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
  .text.SAI_DMARxHalfCplt
-                0x0800331c        0xc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x08003a64        0xc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
  .text.HAL_SAI_ErrorCallback
-                0x08003328        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
-                0x08003328                HAL_SAI_ErrorCallback
+                0x08003a70        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x08003a70                HAL_SAI_ErrorCallback
  .text.SAI_DMAError
-                0x0800332c       0x6c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x08003a74       0x6c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
  .text.HAL_RCC_OscConfig
-                0x08003398      0x540 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
-                0x08003398                HAL_RCC_OscConfig
+                0x08003ae0      0x540 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
+                0x08003ae0                HAL_RCC_OscConfig
  .text.HAL_RCC_GetSysClockFreq
-                0x080038d8      0x140 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
-                0x080038d8                HAL_RCC_GetSysClockFreq
+                0x08004020      0x140 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
+                0x08004020                HAL_RCC_GetSysClockFreq
  .text.HAL_RCC_ClockConfig
-                0x08003a18      0x234 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
-                0x08003a18                HAL_RCC_ClockConfig
+                0x08004160      0x234 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
+                0x08004160                HAL_RCC_ClockConfig
  .text.RCCEx_PLL2_Config
-                0x08003c4c       0xf8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
+                0x08004394       0xf8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
  .text.RCCEx_PLL3_Config
-                0x08003d44       0xf8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
+                0x0800448c       0xf8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
  .text.HAL_RCCEx_PeriphCLKConfig
-                0x08003e3c      0xa7c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
-                0x08003e3c                HAL_RCCEx_PeriphCLKConfig
+                0x08004584      0xa7c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
+                0x08004584                HAL_RCCEx_PeriphCLKConfig
  .text.HAL_RCCEx_GetPLL2ClockFreq
-                0x080048b8      0x17c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
-                0x080048b8                HAL_RCCEx_GetPLL2ClockFreq
+                0x08005000      0x17c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
+                0x08005000                HAL_RCCEx_GetPLL2ClockFreq
  .text.HAL_RCCEx_GetPLL3ClockFreq
-                0x08004a34      0x17c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
-                0x08004a34                HAL_RCCEx_GetPLL3ClockFreq
+                0x0800517c      0x17c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
+                0x0800517c                HAL_RCCEx_GetPLL3ClockFreq
  .text.HAL_RCCEx_GetPLL1ClockFreq
-                0x08004bb0      0x17c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
-                0x08004bb0                HAL_RCCEx_GetPLL1ClockFreq
+                0x080052f8      0x17c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
+                0x080052f8                HAL_RCCEx_GetPLL1ClockFreq
  .text.HAL_RCCEx_GetPeriphCLKFreq
-                0x08004d2c      0x198 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
-                0x08004d2c                HAL_RCCEx_GetPeriphCLKFreq
+                0x08005474      0x198 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
+                0x08005474                HAL_RCCEx_GetPeriphCLKFreq
  .text.HAL_GPIO_Init
-                0x08004ec4      0x248 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
-                0x08004ec4                HAL_GPIO_Init
+                0x0800560c      0x248 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
+                0x0800560c                HAL_GPIO_Init
  .text.HAL_GPIO_DeInit
-                0x0800510c      0x19c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
-                0x0800510c                HAL_GPIO_DeInit
+                0x08005854      0x19c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
+                0x08005854                HAL_GPIO_DeInit
+ .text.HAL_GPIO_WritePin
+                0x080059f0        0x8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
+                0x080059f0                HAL_GPIO_WritePin
  .text.DMA_CalcBaseAndBitshift
-                0x080052a8       0xf8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
+                0x080059f8       0xf8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
  .text.DMA_CalcDMAMUXChannelBaseAndMask
-                0x080053a0       0xd8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
+                0x08005af0       0xd8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
  .text.HAL_DMA_Init
-                0x08005478      0x394 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
-                0x08005478                HAL_DMA_Init
+                0x08005bc8      0x394 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
+                0x08005bc8                HAL_DMA_Init
  .text.HAL_DMA_Start_IT
-                0x0800580c      0x250 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
-                0x0800580c                HAL_DMA_Start_IT
+                0x08005f5c      0x250 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
+                0x08005f5c                HAL_DMA_Start_IT
  .text.HAL_DMA_IRQHandler
-                0x08005a5c      0x6bc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
-                0x08005a5c                HAL_DMA_IRQHandler
+                0x080061ac      0x6bc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
+                0x080061ac                HAL_DMA_IRQHandler
  .text.HAL_DMA_GetError
-                0x08006118        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
-                0x08006118                HAL_DMA_GetError
+                0x08006868        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
+                0x08006868                HAL_DMA_GetError
  .text.HAL_MDMA_Abort_IT
-                0x0800611c       0x2c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_mdma.o)
-                0x0800611c                HAL_MDMA_Abort_IT
+                0x0800686c       0x2c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_mdma.o)
+                0x0800686c                HAL_MDMA_Abort_IT
  .text.HAL_PWREx_ConfigSupply
-                0x08006148       0x4c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr_ex.o)
-                0x08006148                HAL_PWREx_ConfigSupply
+                0x08006898       0x4c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr_ex.o)
+                0x08006898                HAL_PWREx_ConfigSupply
  .text.HAL_PWREx_EnableUSBVoltageDetector
-                0x08006194       0x10 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr_ex.o)
-                0x08006194                HAL_PWREx_EnableUSBVoltageDetector
+                0x080068e4       0x10 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr_ex.o)
+                0x080068e4                HAL_PWREx_EnableUSBVoltageDetector
  .text.HAL_MspInit
-                0x080061a4        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
-                0x080061a4                HAL_MspInit
+                0x080068f4        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
+                0x080068f4                HAL_MspInit
  .text.HAL_InitTick
-                0x080061a8       0x4c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
-                0x080061a8                HAL_InitTick
+                0x080068f8       0x4c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
+                0x080068f8                HAL_InitTick
  .text.HAL_Init
-                0x080061f4       0x5c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
-                0x080061f4                HAL_Init
+                0x08006944       0x5c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
+                0x08006944                HAL_Init
  .text.HAL_IncTick
-                0x08006250       0x18 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
-                0x08006250                HAL_IncTick
+                0x080069a0       0x18 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
+                0x080069a0                HAL_IncTick
  .text.HAL_GetTick
-                0x08006268        0xc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
-                0x08006268                HAL_GetTick
+                0x080069b8        0xc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
+                0x080069b8                HAL_GetTick
  .text.HAL_Delay
-                0x08006274       0x24 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
-                0x08006274                HAL_Delay
+                0x080069c4       0x24 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
+                0x080069c4                HAL_Delay
  .text.HAL_GetREVID
-                0x08006298        0xc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
-                0x08006298                HAL_GetREVID
+                0x080069e8        0xc ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
+                0x080069e8                HAL_GetREVID
  .text.codec_wm8731_init
-                0x080062a4      0x208 ../../../../libdaisy/build\libdaisy.a(codec_wm8731.o)
-                0x080062a4                codec_wm8731_init
+                0x080069f4      0x208 ../../../../libdaisy/build\libdaisy.a(codec_wm8731.o)
+                0x080069f4                codec_wm8731_init
  .text.dsy_dma_init
-                0x080064ac       0x78 ../../../../libdaisy/build\libdaisy.a(dsy_dma.o)
-                0x080064ac                dsy_dma_init
+                0x08006bfc       0x78 ../../../../libdaisy/build\libdaisy.a(dsy_dma.o)
+                0x08006bfc                dsy_dma_init
  .text.FMC_SDRAM_Init
-                0x08006524       0x78 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
-                0x08006524                FMC_SDRAM_Init
+                0x08006c74       0x78 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
+                0x08006c74                FMC_SDRAM_Init
  .text.FMC_SDRAM_Timing_Init
-                0x0800659c       0x98 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
-                0x0800659c                FMC_SDRAM_Timing_Init
+                0x08006cec       0x98 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
+                0x08006cec                FMC_SDRAM_Timing_Init
  .text.FMC_SDRAM_SendCommand
-                0x08006634       0x24 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
-                0x08006634                FMC_SDRAM_SendCommand
+                0x08006d84       0x24 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
+                0x08006d84                FMC_SDRAM_SendCommand
  .text.FMC_SDRAM_ProgramRefreshRate
-                0x08006658       0x1c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
-                0x08006658                FMC_SDRAM_ProgramRefreshRate
+                0x08006da8       0x1c ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
+                0x08006da8                FMC_SDRAM_ProgramRefreshRate
+ .text.dsy_svf_init
+                0x08006dc4       0x3c ../../../../daisysp/build\libdaisysp.a(svf.o)
+                0x08006dc4                dsy_svf_init
+ .text.dsy_svf_process
+                0x08006e00       0xc4 ../../../../daisysp/build\libdaisysp.a(svf.o)
+                0x08006e00                dsy_svf_process
+ .text.dsy_svf_set_fc
+                0x08006ec4       0xec ../../../../daisysp/build\libdaisysp.a(svf.o)
+                0x08006ec4                dsy_svf_set_fc
+ .text.dsy_svf_set_res
+                0x08006fb0       0xe8 ../../../../daisysp/build\libdaisysp.a(svf.o)
+                0x08006fb0                dsy_svf_set_res
+ .text.dsy_svf_set_drive
+                0x08007098       0x30 ../../../../daisysp/build\libdaisysp.a(svf.o)
+                0x08007098                dsy_svf_set_drive
+ .text.dsy_svf_low
+                0x080070c8        0x8 ../../../../daisysp/build\libdaisysp.a(svf.o)
+                0x080070c8                dsy_svf_low
+ .text.dsy_svf_high
+                0x080070d0        0x8 ../../../../daisysp/build\libdaisysp.a(svf.o)
+                0x080070d0                dsy_svf_high
  .text.__libc_init_array
-                0x08006674       0x48 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
-                0x08006674                __libc_init_array
- .text.memcpy   0x080066bc       0x1c c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memcpy-stub.o)
-                0x080066bc                memcpy
- .text.memset   0x080066d8       0x10 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memset.o)
-                0x080066d8                memset
+                0x080070d8       0x48 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
+                0x080070d8                __libc_init_array
+ .text.memcpy   0x08007120       0x1c c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memcpy-stub.o)
+                0x08007120                memcpy
+ .text.memset   0x0800713c       0x10 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memset.o)
+                0x0800713c                memset
+ *fill*         0x0800714c        0x4 
+ .text.powf     0x08007150      0x348 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+                0x08007150                powf
+ .text.sinf     0x08007498      0x214 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
+                0x08007498                sinf
+ .text.with_errnof
+                0x080076ac       0x18 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+ .text.xflowf   0x080076c4       0x20 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+ .text.__math_uflowf
+                0x080076e4        0xc c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+                0x080076e4                __math_uflowf
+ .text.__math_may_uflowf
+                0x080076f0        0xc c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+                0x080076f0                __math_may_uflowf
+ .text.__math_oflowf
+                0x080076fc        0xc c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+                0x080076fc                __math_oflowf
+ .text.__math_divzerof
+                0x08007708       0x24 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+                0x08007708                __math_divzerof
+ .text.__math_invalidf
+                0x0800772c       0x20 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+                0x0800772c                __math_invalidf
+ .text.__errno  0x0800774c        0xc c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-errno.o)
+                0x0800774c                __errno
  *(.rodata)
  *(.rodata*)
  .rodata.D1CorePrescTable
-                0x080066e8       0x10 build/system_stm32h7xx.o
-                0x080066e8                D1CorePrescTable
+                0x08007758       0x10 build/system_stm32h7xx.o
+                0x08007758                D1CorePrescTable
+ .rodata.gpio_hal_pin_map
+                0x08007768       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+ .rodata.gpio_hal_port_map
+                0x08007788       0x30 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
  .rodata.HAL_QSPI_MspInit.str1.4
-                0x080066f8        0x7 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
- *fill*         0x080066ff        0x1 
+                0x080077b8        0x7 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
+ *fill*         0x080077bf        0x1 
  .rodata.gpio_hal_pin_map
-                0x08006700       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
+                0x080077c0       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
  .rodata.gpio_hal_port_map
-                0x08006720       0x30 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
+                0x080077e0       0x30 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
  .rodata.gpio_hal_pin_map
-                0x08006750       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
+                0x08007810       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
  .rodata.gpio_hal_port_map
-                0x08006770       0x30 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
+                0x08007830       0x30 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
  .rodata.CSWTCH.14
-                0x080067a0       0x10 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+                0x08007860       0x10 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
  .rodata.gpio_hal_pin_map
-                0x080067b0       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+                0x08007870       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
  .rodata.gpio_hal_port_map
-                0x080067d0       0x30 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+                0x08007890       0x30 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
  .rodata.gpio_hal_pin_map
-                0x08006800       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                0x080078c0       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
  .rodata.gpio_hal_port_map
-                0x08006820       0x30 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                0x080078e0       0x30 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
  .rodata.gpio_hal_pin_map
-                0x08006850       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
+                0x08007910       0x20 ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
  .rodata.gpio_hal_port_map
-                0x08006870       0x30 ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
+                0x08007930       0x30 ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
  .rodata.flagBitshiftOffset.17850
-                0x080068a0        0x8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
+                0x08007960        0x8 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
+ .rodata.__powf_log2_data
+                0x08007968      0x128 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow_log2_data.o)
+                0x08007968                __powf_log2_data
+ .rodata.__exp2f_data
+                0x08007a90      0x148 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_exp2_data.o)
+                0x08007a90                __exp2f_data
+ .rodata.__inv_pio4
+                0x08007bd8       0x60 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sincosf_data.o)
+                0x08007bd8                __inv_pio4
+ .rodata.__sincosf_table
+                0x08007c38       0xe0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sincosf_data.o)
+                0x08007c38                __sincosf_table
  *(.glue_7)
- .glue_7        0x080068a8        0x0 linker stubs
+ .glue_7        0x08007d18        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x080068a8        0x0 linker stubs
+ .glue_7t       0x08007d18        0x0 linker stubs
  *(.init)
- .init          0x080068a8        0x4 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crti.o
-                0x080068a8                _init
- .init          0x080068ac        0x8 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtn.o
+ .init          0x08007d18        0x4 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crti.o
+                0x08007d18                _init
+ .init          0x08007d1c        0x8 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtn.o
  *(.fini)
- .fini          0x080068b4        0x4 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crti.o
-                0x080068b4                _fini
- .fini          0x080068b8        0x8 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtn.o
-                0x080068c0                . = ALIGN (0x4)
-                0x080068c0                _etext = .
+ .fini          0x08007d24        0x4 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crti.o
+                0x08007d24                _fini
+ .fini          0x08007d28        0x8 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtn.o
+                0x08007d30                . = ALIGN (0x4)
+                0x08007d30                _etext = .
 
-.vfp11_veneer   0x080068c0        0x0
- .vfp11_veneer  0x080068c0        0x0 linker stubs
+.vfp11_veneer   0x08007d30        0x0
+ .vfp11_veneer  0x08007d30        0x0 linker stubs
 
-.v4_bx          0x080068c0        0x0
- .v4_bx         0x080068c0        0x0 linker stubs
+.v4_bx          0x08007d30        0x0
+ .v4_bx         0x08007d30        0x0 linker stubs
 
-.iplt           0x080068c0        0x0
- .iplt          0x080068c0        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
+.iplt           0x08007d30        0x0
+ .iplt          0x08007d30        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
 
-.rel.dyn        0x080068c0        0x0
- .rel.iplt      0x080068c0        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
+.rel.dyn        0x08007d30        0x0
+ .rel.iplt      0x08007d30        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
 
-.ARM.extab      0x080068c0        0x0
-                0x080068c0                . = ALIGN (0x4)
+.ARM.extab      0x08007d30        0x0
+                0x08007d30                . = ALIGN (0x4)
  *(.ARM.extab)
  *(.gnu.linkonce.armextab.*)
-                0x080068c0                . = ALIGN (0x4)
+                0x08007d30                . = ALIGN (0x4)
 
-.exidx          0x080068c0        0x0
-                0x080068c0                . = ALIGN (0x4)
+.exidx          0x08007d30        0x0
+                0x08007d30                . = ALIGN (0x4)
                 [!provide]                PROVIDE (__exidx_start = .)
  *(.ARM.exidx*)
-                0x080068c0                . = ALIGN (0x4)
+                0x08007d30                . = ALIGN (0x4)
                 [!provide]                PROVIDE (__exidx_end = .)
 
 .ARM.attributes
-                0x080068c0       0x2e
+                0x08007d30       0x2e
  *(.ARM.attributes)
  .ARM.attributes
-                0x080068c0       0x1e c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crti.o
+                0x08007d30       0x1e c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crti.o
  .ARM.attributes
-                0x080068de       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
+                0x08007d4e       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
  .ARM.attributes
-                0x08006910       0x32 build/bypass.o
+                0x08007d80       0x32 build/svf.o
  .ARM.attributes
-                0x08006942       0x32 build/system_stm32h7xx.o
+                0x08007db2       0x32 build/system_stm32h7xx.o
  .ARM.attributes
-                0x08006974       0x21 build/startup_stm32h750xx.o
+                0x08007de4       0x21 build/startup_stm32h750xx.o
  .ARM.attributes
-                0x08006995       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x08007e05       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
  .ARM.attributes
-                0x080069c7       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
+                0x08007e37       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
  .ARM.attributes
-                0x080069f9       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
+                0x08007e69       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
  .ARM.attributes
-                0x08006a2b       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
+                0x08007e9b       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
  .ARM.attributes
-                0x08006a5d       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+                0x08007ecd       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
  .ARM.attributes
-                0x08006a8f       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                0x08007eff       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
  .ARM.attributes
-                0x08006ac1       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
+                0x08007f31       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
  .ARM.attributes
-                0x08006af3       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
+                0x08007f63       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
  .ARM.attributes
-                0x08006b25       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o)
+                0x08007f95       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
  .ARM.attributes
-                0x08006b57       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
+                0x08007fc7       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
  .ARM.attributes
-                0x08006b89       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c_ex.o)
+                0x08007ff9       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o)
  .ARM.attributes
-                0x08006bbb       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
+                0x0800802b       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
  .ARM.attributes
-                0x08006bed       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                0x0800805d       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c_ex.o)
  .ARM.attributes
-                0x08006c1f       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
+                0x0800808f       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
  .ARM.attributes
-                0x08006c51       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
+                0x080080c1       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
  .ARM.attributes
-                0x08006c83       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
+                0x080080f3       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
  .ARM.attributes
-                0x08006cb5       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
+                0x08008125       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
  .ARM.attributes
-                0x08006ce7       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_mdma.o)
+                0x08008157       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
  .ARM.attributes
-                0x08006d19       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr_ex.o)
+                0x08008189       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
  .ARM.attributes
-                0x08006d4b       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
+                0x080081bb       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_mdma.o)
  .ARM.attributes
-                0x08006d7d       0x32 ../../../../libdaisy/build\libdaisy.a(codec_wm8731.o)
+                0x080081ed       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr_ex.o)
  .ARM.attributes
-                0x08006daf       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_dma.o)
+                0x0800821f       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
  .ARM.attributes
-                0x08006de1       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
+                0x08008251       0x32 ../../../../libdaisy/build\libdaisy.a(codec_wm8731.o)
  .ARM.attributes
-                0x08006e13       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
+                0x08008283       0x32 ../../../../libdaisy/build\libdaisy.a(dsy_dma.o)
  .ARM.attributes
-                0x08006e45       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memcpy-stub.o)
+                0x080082b5       0x32 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
  .ARM.attributes
-                0x08006e77       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memset.o)
+                0x080082e7       0x32 ../../../../daisysp/build\libdaisysp.a(svf.o)
  .ARM.attributes
-                0x08006ea9       0x1e c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtn.o
+                0x08008319       0x30 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
+ .ARM.attributes
+                0x08008349       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
+ .ARM.attributes
+                0x0800837b       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memcpy-stub.o)
+ .ARM.attributes
+                0x080083ad       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memset.o)
+ .ARM.attributes
+                0x080083df       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+ .ARM.attributes
+                0x08008411       0x30 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow_log2_data.o)
+ .ARM.attributes
+                0x08008441       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
+ .ARM.attributes
+                0x08008473       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+ .ARM.attributes
+                0x080084a5       0x30 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_exp2_data.o)
+ .ARM.attributes
+                0x080084d5       0x30 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sincosf_data.o)
+ .ARM.attributes
+                0x08008505       0x1e c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+ .ARM.attributes
+                0x08008523       0x32 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-errno.o)
+ .ARM.attributes
+                0x08008555       0x1e c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtn.o
 
-.preinit_array  0x080068c0        0x0
-                0x080068c0                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x08007d30        0x0
+                0x08007d30                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x080068c0                PROVIDE (__preinit_array_end = .)
+                0x08007d30                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x080068c0        0x4
-                0x080068c0                PROVIDE (__init_array_start = .)
+.init_array     0x08007d30        0x4
+                0x08007d30                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x080068c0        0x4 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
-                0x080068c4                PROVIDE (__init_array_end = .)
+ .init_array    0x08007d30        0x4 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
+                0x08007d34                PROVIDE (__init_array_end = .)
 
-.fini_array     0x080068c4        0x4
+.fini_array     0x08007d34        0x4
                 [!provide]                PROVIDE (__fini_array_start = .)
  *(.fini_array*)
- .fini_array    0x080068c4        0x4 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
+ .fini_array    0x08007d34        0x4 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
  *(SORT_BY_NAME(.fini_array.*))
                 [!provide]                PROVIDE (__fini_array_end = .)
 
-.data           0x24000000       0x10 load address 0x080068c8
+.data           0x24000000       0x74 load address 0x08007d38
                 0x24000000                . = ALIGN (0x4)
                 0x24000000                _sdata = .
                 [!provide]                PROVIDE (__data_start__ = _sdata)
@@ -1634,77 +1950,86 @@ LOAD c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gc
  *fill*         0x24000009        0x3 
  .data.uwTickPrio
                 0x2400000c        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
-                0x24000010                . = ALIGN (0x4)
-                0x24000010                _edata = .
+ .data._impure_ptr
+                0x24000010        0x4 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
+                0x24000010                _impure_ptr
+ .data.impure_data
+                0x24000014       0x60 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
+                0x24000074                . = ALIGN (0x4)
+                0x24000074                _edata = .
                 [!provide]                PROVIDE (__data_end__ = _edata)
-                0x080068c8                _sidata = LOADADDR (.data)
+                0x08007d38                _sidata = LOADADDR (.data)
 
-.igot.plt       0x24000010        0x0 load address 0x080068d8
- .igot.plt      0x24000010        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
+.igot.plt       0x24000074        0x0 load address 0x08007dac
+ .igot.plt      0x24000074        0x0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
 
-.bss            0x24000010      0xd64 load address 0x080068d8
-                0x24000010                . = ALIGN (0x4)
-                0x24000010                _sbss = .
-                0x24000010                PROVIDE (__bss_start__ = _sbss)
+.bss            0x24000078      0xf70 load address 0x08007dac
+                0x24000078                . = ALIGN (0x4)
+                0x24000078                _sbss = .
+                0x24000078                PROVIDE (__bss_start__ = _sbss)
  *(.bss)
- .bss           0x24000010       0x1c c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
+ .bss           0x24000078       0x1c c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
  *(.bss*)
+ .bss.filter    0x24000094       0x44 build/svf.o
+ .bss.seed      0x240000d8       0xb7 build/svf.o
+ *fill*         0x2400018f        0x1 
+ .bss.dsy_adc   0x24000190       0xec ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
  .bss.audio_handle
-                0x2400002c      0x314 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x2400027c      0x314 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
  .bss.audio_handle_ext
-                0x24000340      0x314 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                0x24000590      0x314 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
  .bss.dsy_qspi_handle
-                0x24000654       0x54 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
+                0x240008a4       0x54 ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
  .bss.FMC_Initialized
-                0x240006a8        0x4 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
- *fill*         0x240006ac        0x4 
+                0x240008f8        0x4 ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
+ *fill*         0x240008fc        0x4 
  .bss.dsy_sdram
-                0x240006b0       0x3c ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
+                0x24000900       0x3c ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
  .bss.i2c1_handler
-                0x240006ec        0x6 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
- *fill*         0x240006f2        0x2 
+                0x2400093c        0x6 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+ *fill*         0x24000942        0x2 
  .bss.i2c2_handler
-                0x240006f4        0x6 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
- *fill*         0x240006fa        0x2 
+                0x24000944        0x6 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+ *fill*         0x2400094a        0x2 
  .bss.i2c3_handler
-                0x240006fc        0x6 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
- *fill*         0x24000702        0x2 
+                0x2400094c        0x6 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+ *fill*         0x24000952        0x2 
  .bss.i2c4_handler
-                0x24000704        0x6 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
- *fill*         0x2400070a        0x2 
+                0x24000954        0x6 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+ *fill*         0x2400095a        0x2 
  .bss.SAI1_client
-                0x2400070c        0x4 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                0x2400095c        0x4 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
  .bss.SAI2_client
-                0x24000710        0x4 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                0x24000960        0x4 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
  .bss.dsy_sai_handle
-                0x24000714       0x1d ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
- *fill*         0x24000731        0x3 
- .bss.uwTick    0x24000734        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
+                0x24000964       0x1d ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+ *fill*         0x24000981        0x3 
+ .bss.uwTick    0x24000984        0x4 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
  *(COMMON)
- COMMON         0x24000738       0xb7 build/bypass.o
-                0x24000738                seed
- *fill*         0x240007ef        0x1 
- COMMON         0x240007f0      0x130 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
-                0x240007f0                hi2c3
-                0x2400083c                hi2c4
-                0x24000888                hi2c1
-                0x240008d4                hi2c2
- COMMON         0x24000920      0x440 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
-                0x24000920                hsai_BlockB2
-                0x240009b8                hdma_sai2_b
-                0x24000a30                hsai_BlockA2
-                0x24000ac8                hsai_BlockB1
-                0x24000b60                hdma_sai1_a
-                0x24000bd8                hdma_sai1_b
-                0x24000c50                hdma_sai2_a
-                0x24000cc8                hsai_BlockA1
- COMMON         0x24000d60       0x14 ../../../../libdaisy/build\libdaisy.a(codec_wm8731.o)
-                0x24000d60                codec_handle
-                0x24000d74                . = ALIGN (0x4)
-                0x24000d74                _ebss = .
-                0x24000d74                PROVIDE (__bss_end__ = _ebss)
+ COMMON         0x24000988       0xdc ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+                0x24000988                hadc1
+                0x240009ec                hdma_adc1
+ COMMON         0x24000a64      0x130 ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
+                0x24000a64                hi2c3
+                0x24000ab0                hi2c4
+                0x24000afc                hi2c1
+                0x24000b48                hi2c2
+ COMMON         0x24000b94      0x440 ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                0x24000b94                hsai_BlockB2
+                0x24000c2c                hdma_sai2_b
+                0x24000ca4                hsai_BlockA2
+                0x24000d3c                hsai_BlockB1
+                0x24000dd4                hdma_sai1_a
+                0x24000e4c                hdma_sai1_b
+                0x24000ec4                hdma_sai2_a
+                0x24000f3c                hsai_BlockA1
+ COMMON         0x24000fd4       0x14 ../../../../libdaisy/build\libdaisy.a(codec_wm8731.o)
+                0x24000fd4                codec_handle
+                0x24000fe8                . = ALIGN (0x4)
+                0x24000fe8                _ebss = .
+                0x24000fe8                PROVIDE (__bss_end__ = _ebss)
 
-.sdram_text     0xc0000000        0x0 load address 0x080068d8
+.sdram_text     0xc0000000        0x0 load address 0x08007dac
                 0xc0000000                . = ALIGN (0x4)
                 0xc0000000                _ssdram_text = .
                 [!provide]                PROVIDE (__sdram_text_start = _ssdram_text)
@@ -1713,9 +2038,9 @@ LOAD c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gc
                 0xc0000000                . = ALIGN (0x4)
                 0xc0000000                _esdram_text = .
                 [!provide]                PROVIDE (__sdram_text_end = _esdram_text)
-                0x080068d8                _sisdram_text = LOADADDR (.sdram_text)
+                0x08007dac                _sisdram_text = LOADADDR (.sdram_text)
 
-.sdram_bss      0xc0000000        0x0 load address 0x080068d8
+.sdram_bss      0xc0000000        0x0 load address 0x08007dac
                 0xc0000000                . = ALIGN (0x4)
                 0xc0000000                _ssdram_bss = .
                 [!provide]                PROVIDE (__sdram_bss_start = _ssdram_bss)
@@ -1726,26 +2051,27 @@ LOAD c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gc
                 [!provide]                PROVIDE (__sdram_bss_end = _esdram_bss)
                 [!provide]                PROVIDE (end = .)
 
-.heap           0x24000d74        0x0
-                0x24000d74                . = ALIGN (0x4)
+.heap           0x24000fe8        0x0
+                0x24000fe8                . = ALIGN (0x4)
                 [!provide]                PROVIDE (__heap_start__ = .)
  *(.heap)
-                0x24000d74                . = ALIGN (0x4)
+                0x24000fe8                . = ALIGN (0x4)
                 [!provide]                PROVIDE (__heap_end__ = .)
 
 .reserved_for_stack
-                0x24000d74        0x0
-                0x24000d74                . = ALIGN (0x4)
+                0x24000fe8        0x0
+                0x24000fe8                . = ALIGN (0x4)
                 [!provide]                PROVIDE (__reserved_for_stack_start__ = .)
  *(.reserved_for_stack)
-                0x24000d74                . = ALIGN (0x4)
+                0x24000fe8                . = ALIGN (0x4)
                 [!provide]                PROVIDE (__reserved_for_stack_end__ = .)
-OUTPUT(build/bypass.elf elf32-littlearm)
+OUTPUT(build/svf.elf elf32-littlearm)
 
 .comment        0x00000000       0x79
- .comment       0x00000000       0x79 build/bypass.o
+ .comment       0x00000000       0x79 build/svf.o
                                  0x7a (size before relaxing)
  .comment       0x00000079       0x7a build/system_stm32h7xx.o
+ .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
@@ -1753,6 +2079,7 @@ OUTPUT(build/bypass.elf elf32-littlearm)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
+ .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
@@ -1769,16 +2096,35 @@ OUTPUT(build/bypass.elf elf32-littlearm)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(codec_wm8731.o)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(dsy_dma.o)
  .comment       0x00000079       0x7a ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
+ .comment       0x00000079       0x7a ../../../../daisysp/build\libdaisysp.a(svf.o)
 
-.debug_frame    0x00000000       0x74
+.debug_frame    0x00000000      0x304
  .debug_frame   0x00000000       0x2c c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
  .debug_frame   0x0000002c       0x28 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memcpy-stub.o)
  .debug_frame   0x00000054       0x20 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x00000074       0xe0 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+ .debug_frame   0x00000154       0x54 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
+ .debug_frame   0x000001a8       0x90 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+ .debug_frame   0x00000238       0xac c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+ .debug_frame   0x000002e4       0x20 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-errno.o)
 
 Cross Reference Table
 
 Symbol                                            File
 ADC3_IRQHandler                                   build/startup_stm32h750xx.o
+ADC_ConfigureBoostMode                            ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+ADC_ConversionStop                                ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ADC_DMAConvCplt                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ADC_DMAError                                      ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ADC_DMAHalfConvCplt                               ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ADC_Disable                                       ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+ADC_Enable                                        ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
 ADC_IRQHandler                                    build/startup_stm32h750xx.o
 BDMA_Channel0_IRQHandler                          build/startup_stm32h750xx.o
 BDMA_Channel1_IRQHandler                          build/startup_stm32h750xx.o
@@ -1806,7 +2152,8 @@ DMA1_Stream0_IRQHandler                           ../../../../libdaisy/build\lib
                                                   build/startup_stm32h750xx.o
 DMA1_Stream1_IRQHandler                           ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
                                                   build/startup_stm32h750xx.o
-DMA1_Stream2_IRQHandler                           build/startup_stm32h750xx.o
+DMA1_Stream2_IRQHandler                           ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+                                                  build/startup_stm32h750xx.o
 DMA1_Stream3_IRQHandler                           ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
                                                   build/startup_stm32h750xx.o
 DMA1_Stream4_IRQHandler                           ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
@@ -1876,6 +2223,67 @@ FMC_SDRAM_WriteProtection_Disable                 ../../../../libdaisy/build\lib
 FMC_SDRAM_WriteProtection_Enable                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sdram.o)
 FPU_IRQHandler                                    build/startup_stm32h750xx.o
+HAL_ADCEx_Calibration_GetValue                    ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_Calibration_SetValue                    ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_Calibration_Start                       ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_DisableInjectedQueue                    ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_DisableVoltageRegulator                 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_EnableInjectedQueue                     ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_EndOfSamplingCallback                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADCEx_EnterADCDeepPowerDownMode               ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_InjectedConfigChannel                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_InjectedConvCpltCallback                ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADCEx_InjectedGetValue                        ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_InjectedPollForConversion               ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_InjectedQueueOverflowCallback           ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADCEx_InjectedStart                           ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_InjectedStart_IT                        ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_InjectedStop                            ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_InjectedStop_IT                         ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_LevelOutOfWindow2Callback               ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADCEx_LevelOutOfWindow3Callback               ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADCEx_LinearCalibration_GetValue              ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_LinearCalibration_SetValue              ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_MultiModeConfigChannel                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+HAL_ADCEx_MultiModeGetValue                       ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_MultiModeStart_DMA                      ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_MultiModeStop_DMA                       ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_RegularMultiModeStop_DMA                ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_RegularStop                             ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_RegularStop_DMA                         ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADCEx_RegularStop_IT                          ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+HAL_ADC_AnalogWDGConfig                           ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_ConfigChannel                             ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+HAL_ADC_ConvCpltCallback                          ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+HAL_ADC_ConvHalfCpltCallback                      ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_DeInit                                    ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_ErrorCallback                             ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_GetError                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_GetState                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_GetValue                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_IRQHandler                                ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_Init                                      ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+HAL_ADC_LevelOutOfWindowCallback                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_MspDeInit                                 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+HAL_ADC_MspInit                                   ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+HAL_ADC_PollForConversion                         ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_PollForEvent                              ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_Start                                     ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_Start_DMA                                 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+HAL_ADC_Start_IT                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_Stop                                      ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+HAL_ADC_Stop_DMA                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+HAL_ADC_Stop_IT                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
 HAL_DBGMCU_DisableDBGSleepMode                    ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
 HAL_DBGMCU_DisableDBGStandbyMode                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
 HAL_DBGMCU_DisableDBGStopMode                     ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
@@ -1884,25 +2292,32 @@ HAL_DBGMCU_EnableDBGStandbyMode                   ../../../../libdaisy/build\lib
 HAL_DBGMCU_EnableDBGStopMode                      ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
 HAL_DMA_Abort                                     ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
 HAL_DMA_Abort_IT                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
 HAL_DMA_DeInit                                    ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
 HAL_DMA_GetError                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
 HAL_DMA_GetState                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
 HAL_DMA_IRQHandler                                ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
 HAL_DMA_Init                                      ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
 HAL_DMA_PollForTransfer                           ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
 HAL_DMA_RegisterCallback                          ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
 HAL_DMA_Start                                     ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
 HAL_DMA_Start_IT                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
 HAL_DMA_UnRegisterCallback                        ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_dma.o)
 HAL_DeInit                                        ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
 HAL_Delay                                         ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
@@ -1925,6 +2340,7 @@ HAL_GPIO_DeInit                                   ../../../../libdaisy/build\lib
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
 HAL_GPIO_EXTI_Callback                            ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
 HAL_GPIO_EXTI_IRQHandler                          ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
 HAL_GPIO_Init                                     ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
@@ -1934,6 +2350,7 @@ HAL_GPIO_Init                                     ../../../../libdaisy/build\lib
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_i2c.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
 HAL_GPIO_LockPin                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
 HAL_GPIO_ReadPin                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
@@ -1941,6 +2358,7 @@ HAL_GPIO_TogglePin                                ../../../../libdaisy/build\lib
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
 HAL_GPIO_WritePin                                 ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_gpio.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
 HAL_GetCurrentCPUID                               ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_cortex.o)
 HAL_GetDEVID                                      ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
 HAL_GetFMCMemorySwappingConfig                    ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
@@ -1949,6 +2367,7 @@ HAL_GetREVID                                      ../../../../libdaisy/build\lib
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
 HAL_GetTick                                       ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_ll_fmc.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_pwr_ex.o)
@@ -1959,6 +2378,8 @@ HAL_GetTick                                       ../../../../libdaisy/build\lib
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_qspi.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_i2c.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
 HAL_GetTickFreq                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
 HAL_GetTickPrio                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
@@ -2194,6 +2615,7 @@ HAL_RCCEx_GetPLL3ClockFreq                        ../../../../libdaisy/build\lib
 HAL_RCCEx_GetPeriphCLKConfig                      ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
 HAL_RCCEx_GetPeriphCLKFreq                        ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
 HAL_RCCEx_KerWakeUpStopCLKConfig                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
 HAL_RCCEx_PeriphCLKConfig                         ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
@@ -2208,6 +2630,7 @@ HAL_RCC_EnableCSS                                 ../../../../libdaisy/build\lib
 HAL_RCC_GetClockConfig                            ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
 HAL_RCC_GetHCLKFreq                               ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
 HAL_RCC_GetOscConfig                              ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
 HAL_RCC_GetPCLK1Freq                              ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
 HAL_RCC_GetPCLK2Freq                              ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
@@ -2373,6 +2796,8 @@ SystemCoreClock                                   build/system_stm32h7xx.o
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc_ex.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_rcc.o)
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_sai.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc_ex.o)
+                                                  ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal_adc.o)
 SystemCoreClockUpdate                             build/system_stm32h7xx.o
 SystemD2Clock                                     build/system_stm32h7xx.o
                                                   ../../../../libdaisy/build\libdaisy.a(stm32h7xx_hal.o)
@@ -2408,24 +2833,61 @@ USART6_IRQHandler                                 build/startup_stm32h750xx.o
 UsageFault_Handler                                build/startup_stm32h750xx.o
 WAKEUP_PIN_IRQHandler                             build/startup_stm32h750xx.o
 WWDG_IRQHandler                                   build/startup_stm32h750xx.o
+__adddf3                                          c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+__aeabi_dadd                                      c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+__aeabi_drsub                                     c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+__aeabi_dsub                                      c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+__aeabi_f2d                                       c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+__aeabi_i2d                                       c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+__aeabi_l2d                                       c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
+__aeabi_ui2d                                      c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+__aeabi_ul2d                                      c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
 __bss_end__                                       c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
 __bss_start__                                     c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
 __call_exitprocs                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-exit.o)
 __deregister_frame_info                           c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
 __dso_handle                                      c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
+__errno                                           c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-errno.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+__exp2f_data                                      c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_exp2_data.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+__extendsfdf2                                     c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+__floatdidf                                       c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+__floatsidf                                       c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+__floatundidf                                     c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
+__floatunsidf                                     c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
 __init_array_end                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
 __init_array_start                                c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
+__inv_pio4                                        c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sincosf_data.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
 __libc_fini_array                                 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
 __libc_init_array                                 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
                                                   build/startup_stm32h750xx.o
                                                   c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
+__math_divzerof                                   c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+__math_invalidf                                   c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+__math_may_uflowf                                 c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+__math_oflowf                                     c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+__math_uflowf                                     c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-math_errf.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+__powf_log2_data                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow_log2_data.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
 __preinit_array_end                               c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
 __preinit_array_start                             c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
 __register_frame_info                             c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crtbegin.o
 __sf_fake_stderr                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
 __sf_fake_stdin                                   c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
 __sf_fake_stdout                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
+__sincosf_table                                   c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sincosf_data.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
 __stack                                           c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
+__subdf3                                          c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard\libgcc.a(_arm_addsubdf3.o)
 _ebss                                             build/startup_stm32h750xx.o
 _edata                                            build/startup_stm32h750xx.o
 _estack                                           build/startup_stm32h750xx.o
@@ -2435,6 +2897,7 @@ _fini                                             c:/program files (x86)/gnu too
 _global_impure_ptr                                c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
                                                   c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-exit.o)
 _impure_ptr                                       c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-impure.o)
+                                                  c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-errno.o)
 _init                                             c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/thumb/v7e-m+dp/hard/crti.o
                                                   c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-init.o)
 _mainCRTStartup                                   c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
@@ -2451,21 +2914,29 @@ codec_wm8731_exit_bypass                          ../../../../libdaisy/build\lib
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
 codec_wm8731_init                                 ../../../../libdaisy/build\libdaisy.a(codec_wm8731.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-daisy_seed_init                                   build/bypass.o
+daisy_seed_init                                   build/svf.o
+dsy_adc_get                                       ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+dsy_adc_get_float                                 ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+dsy_adc_get_mux                                   ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+dsy_adc_get_mux_float                             ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+dsy_adc_init                                      ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+dsy_adc_start                                     ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
+                                                  build/svf.o
+dsy_adc_stop                                      ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
 dsy_audio_enter_bypass                            ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
 dsy_audio_exit_bypass                             ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
 dsy_audio_init                                    ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                                                  build/bypass.o
+                                                  build/svf.o
 dsy_audio_passthru                                ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
 dsy_audio_set_callback                            ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                                                  build/bypass.o
+                                                  build/svf.o
 dsy_audio_silence                                 ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
 dsy_audio_start                                   ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                                                  build/bypass.o
+                                                  build/svf.o
 dsy_dma_init                                      ../../../../libdaisy/build\libdaisy.a(dsy_dma.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
 dsy_gpio_init                                     ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
-                                                  build/bypass.o
+                                                  build/svf.o
 dsy_gpio_read                                     ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
 dsy_gpio_toggle                                   ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
 dsy_gpio_write                                    ../../../../libdaisy/build\libdaisy.a(dsy_gpio.o)
@@ -2477,23 +2948,42 @@ dsy_qspi_deinit                                   ../../../../libdaisy/build\lib
 dsy_qspi_erase                                    ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
 dsy_qspi_erasesector                              ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
 dsy_qspi_init                                     ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
-                                                  build/bypass.o
+                                                  build/svf.o
 dsy_qspi_write                                    ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
 dsy_qspi_writepage                                ../../../../libdaisy/build\libdaisy.a(dsy_qspi.o)
 dsy_sai_init                                      ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
 dsy_sai_init_from_handle                          ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
 dsy_sdram_init                                    ../../../../libdaisy/build\libdaisy.a(dsy_sdram.o)
-                                                  build/bypass.o
+                                                  build/svf.o
+dsy_svf_band                                      ../../../../daisysp/build\libdaisysp.a(svf.o)
+dsy_svf_high                                      ../../../../daisysp/build\libdaisysp.a(svf.o)
+                                                  build/svf.o
+dsy_svf_init                                      ../../../../daisysp/build\libdaisysp.a(svf.o)
+                                                  build/svf.o
+dsy_svf_low                                       ../../../../daisysp/build\libdaisysp.a(svf.o)
+                                                  build/svf.o
+dsy_svf_notch                                     ../../../../daisysp/build\libdaisysp.a(svf.o)
+dsy_svf_peak                                      ../../../../daisysp/build\libdaisysp.a(svf.o)
+dsy_svf_process                                   ../../../../daisysp/build\libdaisysp.a(svf.o)
+                                                  build/svf.o
+dsy_svf_set_drive                                 ../../../../daisysp/build\libdaisysp.a(svf.o)
+                                                  build/svf.o
+dsy_svf_set_fc                                    ../../../../daisysp/build\libdaisysp.a(svf.o)
+                                                  build/svf.o
+dsy_svf_set_res                                   ../../../../daisysp/build\libdaisysp.a(svf.o)
+                                                  build/svf.o
 dsy_system_delay                                  ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
 dsy_system_getnow                                 ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
 dsy_system_init                                   ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
-                                                  build/bypass.o
+                                                  build/svf.o
 dsy_system_jumptoqspi                             ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
 exit                                              c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-exit.o)
                                                   c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
 g_pfnVectors                                      build/startup_stm32h750xx.o
+hadc1                                             ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
 hardware_init_hook                                c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
+hdma_adc1                                         ../../../../libdaisy/build\libdaisy.a(dsy_adc.o)
 hdma_sai1_a                                       ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
 hdma_sai1_b                                       ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
@@ -2514,17 +3004,19 @@ hsai_BlockB1                                      ../../../../libdaisy/build\lib
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
 hsai_BlockB2                                      ../../../../libdaisy/build\libdaisy.a(dsy_sai.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-main                                              build/bypass.o
+main                                              build/svf.o
                                                   build/startup_stm32h750xx.o
                                                   c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
 memcpy                                            c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memcpy-stub.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
-                                                  build/bypass.o
 memset                                            c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libc_nano.a(lib_a-memset.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_system.o)
                                                   ../../../../libdaisy/build\libdaisy.a(dsy_audio.o)
                                                   c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o
-seed                                              build/bypass.o
-seed_pins                                         build/bypass.o
-seed_ports                                        build/bypass.o
+powf                                              c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sf_pow.o)
+                                                  ../../../../daisysp/build\libdaisysp.a(svf.o)
+seed_pins                                         build/svf.o
+seed_ports                                        build/svf.o
+sinf                                              c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard\libm.a(lib_a-sinf.o)
+                                                  ../../../../daisysp/build\libdaisysp.a(svf.o)
 software_init_hook                                c:/program files (x86)/gnu tools arm embedded/9 2019-q4-major/bin/../lib/gcc/arm-none-eabi/9.2.1/../../../../arm-none-eabi/lib/thumb/v7e-m+dp/hard/crt0.o

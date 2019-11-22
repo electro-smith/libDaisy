@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s 			page 1
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -24,252 +24,348 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s 			page 1
   21              		.thumb_func
   22              		.fpu fpv5-d16
   24              	daisy_seed_init:
-  25              		@ args = 0, pretend = 0, frame = 8
+  25              		@ args = 0, pretend = 0, frame = 0
   26              		@ frame_needed = 0, uses_anonymous_args = 0
   27 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
   28 0004 0446     		mov	r4, r0
-  29 0006 4FF00A0E 		mov	lr, #10
-  30 000a 0022     		movs	r2, #0
-  31 000c 0121     		movs	r1, #1
-  32 000e 0520     		movs	r0, #5
-  33 0010 4FF0020C 		mov	ip, #2
-  34 0014 0427     		movs	r7, #4
-  35 0016 0623     		movs	r3, #6
-  36 0018 0726     		movs	r6, #7
-  37 001a 4FF00808 		mov	r8, #8
-  38 001e 0925     		movs	r5, #9
-  39 0020 4FF00309 		mov	r9, #3
-  40 0024 82B0     		sub	sp, sp, #8
-  41 0026 84F80EE0 		strb	lr, [r4, #14]
-  42 002a DFF8C4A1 		ldr	r10, .L8
-  43 002e 4FF00B0E 		mov	lr, #11
-  44 0032 2171     		strb	r1, [r4, #4]
-  45 0034 A174     		strb	r1, [r4, #18]
-  46 0036 E270     		strb	r2, [r4, #3]
-  47 0038 2270     		strb	r2, [r4]
-  48 003a 2275     		strb	r2, [r4, #20]
-  49 003c A275     		strb	r2, [r4, #22]
-  50 003e 6071     		strb	r0, [r4, #5]
-  51 0040 E071     		strb	r0, [r4, #7]
-  52 0042 6072     		strb	r0, [r4, #9]
-  53 0044 E072     		strb	r0, [r4, #11]
-  54 0046 6073     		strb	r0, [r4, #13]
-  55 0048 A070     		strb	r0, [r4, #2]
-  56 004a E077     		strb	r0, [r4, #31]
-  57 004c 2572     		strb	r5, [r4, #8]
-  58 004e A672     		strb	r6, [r4, #10]
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s 			page 2
+  29 0006 4FF00A08 		mov	r8, #10
+  30 000a 0023     		movs	r3, #0
+  31 000c 0122     		movs	r2, #1
+  32 000e 0521     		movs	r1, #5
+  33 0010 0220     		movs	r0, #2
+  34 0012 0425     		movs	r5, #4
+  35 0014 4FF0090E 		mov	lr, #9
+  36 0018 0626     		movs	r6, #6
+  37 001a 4FF0030C 		mov	ip, #3
+  38 001e 0727     		movs	r7, #7
+  39 0020 4FF00809 		mov	r9, #8
+  40 0024 84F80E80 		strb	r8, [r4, #14]
+  41 0028 4FF00E0A 		mov	r10, #14
+  42 002c 4FF00B08 		mov	r8, #11
+  43 0030 2271     		strb	r2, [r4, #4]
+  44 0032 A274     		strb	r2, [r4, #18]
+  45 0034 6171     		strb	r1, [r4, #5]
+  46 0036 E171     		strb	r1, [r4, #7]
+  47 0038 6172     		strb	r1, [r4, #9]
+  48 003a E172     		strb	r1, [r4, #11]
+  49 003c 6173     		strb	r1, [r4, #13]
+  50 003e A170     		strb	r1, [r4, #2]
+  51 0040 E177     		strb	r1, [r4, #31]
+  52 0042 E370     		strb	r3, [r4, #3]
+  53 0044 2370     		strb	r3, [r4]
+  54 0046 2375     		strb	r3, [r4, #20]
+  55 0048 A375     		strb	r3, [r4, #22]
+  56 004a 84F808E0 		strb	lr, [r4, #8]
+  57 004e 6074     		strb	r0, [r4, #17]
+  58 0050 2076     		strb	r0, [r4, #24]
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 2
 
 
-  59 0050 6670     		strb	r6, [r4, #1]
-  60 0052 2373     		strb	r3, [r4, #12]
-  61 0054 E373     		strb	r3, [r4, #15]
-  62 0056 2374     		strb	r3, [r4, #16]
-  63 0058 84F82130 		strb	r3, [r4, #33]
-  64 005c 84F80680 		strb	r8, [r4, #6]
-  65 0060 84F811C0 		strb	ip, [r4, #17]
-  66 0064 84F818C0 		strb	ip, [r4, #24]
-  67 0068 84F81BC0 		strb	ip, [r4, #27]
-  68 006c A776     		strb	r7, [r4, #26]
-  69 006e 2777     		strb	r7, [r4, #28]
-  70 0070 6777     		strb	r7, [r4, #29]
-  71 0072 A777     		strb	r7, [r4, #30]
-  72 0074 84F82070 		strb	r7, [r4, #32]
-  73 0078 84F82270 		strb	r7, [r4, #34]
-  74 007c 84F82390 		strb	r9, [r4, #35]
-  75 0080 E174     		strb	r1, [r4, #19]
-  76 0082 6275     		strb	r2, [r4, #21]
-  77 0084 E175     		strb	r1, [r4, #23]
-  78 0086 84F82420 		strb	r2, [r4, #36]
-  79 008a 84F82510 		strb	r1, [r4, #37]
-  80 008e 84F82630 		strb	r3, [r4, #38]
-  81 0092 84F82750 		strb	r5, [r4, #39]
-  82 0096 84F82820 		strb	r2, [r4, #40]
-  83 009a 84F82C20 		strb	r2, [r4, #44]
-  84 009e 84F82D20 		strb	r2, [r4, #45]
-  85 00a2 84F82E20 		strb	r2, [r4, #46]
-  86 00a6 84F83310 		strb	r1, [r4, #51]
-  87 00aa 84F82F10 		strb	r1, [r4, #47]
-  88 00ae 84F83110 		strb	r1, [r4, #49]
-  89 00b2 84F83250 		strb	r5, [r4, #50]
-  90 00b6 1546     		mov	r5, r2
-  91 00b8 84F83410 		strb	r1, [r4, #52]
-  92 00bc 84F83910 		strb	r1, [r4, #57]
-  93 00c0 84F83560 		strb	r6, [r4, #53]
-  94 00c4 84F83710 		strb	r1, [r4, #55]
-  95 00c8 84F83A20 		strb	r2, [r4, #58]
-  96 00cc 84F83B30 		strb	r3, [r4, #59]
-  97 00d0 04F15003 		add	r3, r4, #80
-  98 00d4 84F83D00 		strb	r0, [r4, #61]
-  99 00d8 84F83E10 		strb	r1, [r4, #62]
- 100 00dc 84F83F10 		strb	r1, [r4, #63]
- 101 00e0 84F84020 		strb	r2, [r4, #64]
- 102 00e4 84F82BE0 		strb	lr, [r4, #43]
- 103 00e8 84F819C0 		strb	ip, [r4, #25]
- 104 00ec 84F829C0 		strb	ip, [r4, #41]
- 105 00f0 84F82A90 		strb	r9, [r4, #42]
- 106 00f4 84F83080 		strb	r8, [r4, #48]
- 107 00f8 84F83670 		strb	r7, [r4, #54]
- 108 00fc 84F83CC0 		strb	ip, [r4, #60]
- 109 0100 84F838E0 		strb	lr, [r4, #56]
- 110 0104 04F1580E 		add	lr, r4, #88
- 111 0108 84F84160 		strb	r6, [r4, #65]
- 112 010c 0DEB0106 		add	r6, sp, r1
- 113 0110 84F84320 		strb	r2, [r4, #67]
- 114 0114 84F84510 		strb	r1, [r4, #69]
- 115 0118 84F84620 		strb	r2, [r4, #70]
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s 			page 3
+  59 0052 E076     		strb	r0, [r4, #27]
+  60 0054 84F80690 		strb	r9, [r4, #6]
+  61 0058 A772     		strb	r7, [r4, #10]
+  62 005a 6770     		strb	r7, [r4, #1]
+  63 005c 2673     		strb	r6, [r4, #12]
+  64 005e E673     		strb	r6, [r4, #15]
+  65 0060 2674     		strb	r6, [r4, #16]
+  66 0062 84F82160 		strb	r6, [r4, #33]
+  67 0066 A576     		strb	r5, [r4, #26]
+  68 0068 2577     		strb	r5, [r4, #28]
+  69 006a 6577     		strb	r5, [r4, #29]
+  70 006c A577     		strb	r5, [r4, #30]
+  71 006e 84F82050 		strb	r5, [r4, #32]
+  72 0072 84F82250 		strb	r5, [r4, #34]
+  73 0076 84F823C0 		strb	ip, [r4, #35]
+  74 007a E274     		strb	r2, [r4, #19]
+  75 007c E275     		strb	r2, [r4, #23]
+  76 007e 84F82520 		strb	r2, [r4, #37]
+  77 0082 84F83320 		strb	r2, [r4, #51]
+  78 0086 84F82F20 		strb	r2, [r4, #47]
+  79 008a 84F83120 		strb	r2, [r4, #49]
+  80 008e 84F83420 		strb	r2, [r4, #52]
+  81 0092 84F83920 		strb	r2, [r4, #57]
+  82 0096 84F83720 		strb	r2, [r4, #55]
+  83 009a 84F83D10 		strb	r1, [r4, #61]
+  84 009e 84F83E20 		strb	r2, [r4, #62]
+  85 00a2 84F83F20 		strb	r2, [r4, #63]
+  86 00a6 6375     		strb	r3, [r4, #21]
+  87 00a8 84F82430 		strb	r3, [r4, #36]
+  88 00ac 84F827E0 		strb	lr, [r4, #39]
+  89 00b0 84F82830 		strb	r3, [r4, #40]
+  90 00b4 84F82AC0 		strb	ip, [r4, #42]
+  91 00b8 84F82C30 		strb	r3, [r4, #44]
+  92 00bc 84F82D30 		strb	r3, [r4, #45]
+  93 00c0 84F82E30 		strb	r3, [r4, #46]
+  94 00c4 84F832E0 		strb	lr, [r4, #50]
+  95 00c8 84F83A30 		strb	r3, [r4, #58]
+  96 00cc 84F84030 		strb	r3, [r4, #64]
+  97 00d0 6076     		strb	r0, [r4, #25]
+  98 00d2 84F82900 		strb	r0, [r4, #41]
+  99 00d6 84F83C00 		strb	r0, [r4, #60]
+ 100 00da 84F82660 		strb	r6, [r4, #38]
+ 101 00de 84F83090 		strb	r9, [r4, #48]
+ 102 00e2 84F83570 		strb	r7, [r4, #53]
+ 103 00e6 84F83650 		strb	r5, [r4, #54]
+ 104 00ea 84F83B60 		strb	r6, [r4, #59]
+ 105 00ee 84F82B80 		strb	r8, [r4, #43]
+ 106 00f2 84F83880 		strb	r8, [r4, #56]
+ 107 00f6 84F84520 		strb	r2, [r4, #69]
+ 108 00fa 84F84B20 		strb	r2, [r4, #75]
+ 109 00fe 84F84F10 		strb	r1, [r4, #79]
+ 110 0102 84F8AA20 		strb	r2, [r4, #170]
+ 111 0106 84F8AE10 		strb	r1, [r4, #174]
+ 112 010a 84F8B120 		strb	r2, [r4, #177]
+ 113 010e 84F8B520 		strb	r2, [r4, #181]
+ 114 0112 84F84330 		strb	r3, [r4, #67]
+ 115 0116 84F84630 		strb	r3, [r4, #70]
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 3
 
 
- 116 011c 84F84820 		strb	r2, [r4, #72]
- 117 0120 84F84920 		strb	r2, [r4, #73]
- 118 0124 84F84A20 		strb	r2, [r4, #74]
- 119 0128 84F84B10 		strb	r1, [r4, #75]
- 120 012c 84F84C20 		strb	r2, [r4, #76]
- 121 0130 84F84E20 		strb	r2, [r4, #78]
- 122 0134 0DEB0802 		add	r2, sp, r8
- 123 0138 84F84F00 		strb	r0, [r4, #79]
- 124 013c 84F842C0 		strb	ip, [r4, #66]
- 125 0140 84F844C0 		strb	ip, [r4, #68]
- 126 0144 84F84790 		strb	r9, [r4, #71]
- 127 0148 84F84D70 		strb	r7, [r4, #77]
- 128 014c 84F85B80 		strb	r8, [r4, #91]
- 129 0150 9AE80300 		ldm	r10, {r0, r1}
- 130 0154 02E90300 		stmdb	r2, {r0, r1}
- 131 0158 01E0     		b	.L3
- 132              	.L7:
- 133 015a 16F8015B 		ldrb	r5, [r6], #1	@ zero_extendqisi2
- 134              	.L3:
- 135 015e 03F8015B 		strb	r5, [r3], #1
- 136 0162 7345     		cmp	r3, lr
- 137 0164 F9D1     		bne	.L7
- 138 0166 0022     		movs	r2, #0
- 139 0168 0123     		movs	r3, #1
- 140 016a 0621     		movs	r1, #6
- 141 016c 0720     		movs	r0, #7
- 142 016e 84F85C20 		strb	r2, [r4, #92]
- 143 0172 0427     		movs	r7, #4
- 144 0174 84F85E20 		strb	r2, [r4, #94]
- 145 0178 0526     		movs	r6, #5
- 146 017a 84F86020 		strb	r2, [r4, #96]
- 147 017e 0225     		movs	r5, #2
- 148 0180 0E22     		movs	r2, #14
- 149 0182 84F85D30 		strb	r3, [r4, #93]
- 150 0186 84F86430 		strb	r3, [r4, #100]
- 151 018a 84F86720 		strb	r2, [r4, #103]
- 152 018e 84F86830 		strb	r3, [r4, #104]
- 153 0192 84F86610 		strb	r1, [r4, #102]
- 154 0196 84F86300 		strb	r0, [r4, #99]
- 155 019a 84F85F70 		strb	r7, [r4, #95]
- 156 019e 84F86160 		strb	r6, [r4, #97]
- 157 01a2 84F86250 		strb	r5, [r4, #98]
- 158 01a6 FFF7FEFF 		bl	dsy_system_init
- 159 01aa 2046     		mov	r0, r4
- 160 01ac FFF7FEFF 		bl	dsy_sdram_init
- 161 01b0 E01C     		adds	r0, r4, #3
- 162 01b2 FFF7FEFF 		bl	dsy_qspi_init
- 163 01b6 04F16200 		add	r0, r4, #98
- 164 01ba FFF7FEFF 		bl	dsy_gpio_init
- 165 01be 04F16600 		add	r0, r4, #102
- 166 01c2 FFF7FEFF 		bl	dsy_gpio_init
- 167 01c6 04F13A00 		add	r0, r4, #58
- 168 01ca FFF7FEFF 		bl	dsy_adc_init
- 169 01ce 04F15C00 		add	r0, r4, #92
- 170 01d2 0321     		movs	r1, #3
- 171 01d4 FFF7FEFF 		bl	dsy_dac_init
- 172 01d8 04F12E02 		add	r2, r4, #46
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s 			page 4
+ 116 011a 84F847C0 		strb	ip, [r4, #71]
+ 117 011e 84F84830 		strb	r3, [r4, #72]
+ 118 0122 84F84930 		strb	r3, [r4, #73]
+ 119 0126 84F84A30 		strb	r3, [r4, #74]
+ 120 012a 84F84C30 		strb	r3, [r4, #76]
+ 121 012e 84F84E30 		strb	r3, [r4, #78]
+ 122 0132 84F8A930 		strb	r3, [r4, #169]
+ 123 0136 84F8AB30 		strb	r3, [r4, #171]
+ 124 013a 84F8AD30 		strb	r3, [r4, #173]
+ 125 013e 84F84200 		strb	r0, [r4, #66]
+ 126 0142 84F84400 		strb	r0, [r4, #68]
+ 127 0146 84F8AF00 		strb	r0, [r4, #175]
+ 128 014a 84F84170 		strb	r7, [r4, #65]
+ 129 014e 84F84D50 		strb	r5, [r4, #77]
+ 130 0152 84F8AC50 		strb	r5, [r4, #172]
+ 131 0156 84F8B070 		strb	r7, [r4, #176]
+ 132 015a 84F8B360 		strb	r6, [r4, #179]
+ 133 015e 84F8B4A0 		strb	r10, [r4, #180]
+ 134 0162 FFF7FEFF 		bl	dsy_system_init
+ 135 0166 2046     		mov	r0, r4
+ 136 0168 FFF7FEFF 		bl	dsy_sdram_init
+ 137 016c E01C     		adds	r0, r4, #3
+ 138 016e FFF7FEFF 		bl	dsy_qspi_init
+ 139 0172 04F1AF00 		add	r0, r4, #175
+ 140 0176 FFF7FEFF 		bl	dsy_gpio_init
+ 141 017a 04F1B300 		add	r0, r4, #179
+ 142 017e FFF7FEFF 		bl	dsy_gpio_init
+ 143 0182 04F12E02 		add	r2, r4, #46
+ 144 0186 04F13401 		add	r1, r4, #52
+ 145 018a 04F11100 		add	r0, r4, #17
+ 146 018e BDE8F047 		pop	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 147 0192 FFF7FEBF 		b	dsy_audio_init
+ 149 0196 00BF     		.section	.text.startup.main,"ax",%progbits
+ 150              		.align	1
+ 151              		.p2align 2,,3
+ 152              		.global	main
+ 153              		.syntax unified
+ 154              		.thumb
+ 155              		.thumb_func
+ 156              		.fpu fpv5-d16
+ 158              	main:
+ 159              		@ args = 0, pretend = 0, frame = 16
+ 160              		@ frame_needed = 0, uses_anonymous_args = 0
+ 161 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+ 162 0002 454E     		ldr	r6, .L14
+ 163 0004 0025     		movs	r5, #0
+ 164 0006 0827     		movs	r7, #8
+ 165 0008 3046     		mov	r0, r6
+ 166 000a A6F12A04 		sub	r4, r6, #42
+ 167 000e 2DED028B 		vpush.64	{d8}
+ 168 0012 85B0     		sub	sp, sp, #20
+ 169 0014 8DF80750 		strb	r5, [sp, #7]
+ 170 0018 FFF7FEFF 		bl	daisy_seed_init
+ 171 001c 0C21     		movs	r1, #12
+ 172 001e 0B23     		movs	r3, #11
+ 173 0020 0522     		movs	r2, #5
+ 174 0022 0420     		movs	r0, #4
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 4
 
 
- 173 01dc 04F13401 		add	r1, r4, #52
- 174 01e0 04F11100 		add	r0, r4, #17
- 175 01e4 02B0     		add	sp, sp, #8
- 176              		@ sp needed
- 177 01e6 BDE8F047 		pop	{r4, r5, r6, r7, r8, r9, r10, lr}
- 178 01ea FFF7FEBF 		b	dsy_audio_init
- 179              	.L9:
- 180 01ee 00BF     		.align	2
- 181              	.L8:
- 182 01f0 00000000 		.word	.LANCHOR0
- 184              		.section	.text.startup.main,"ax",%progbits
- 185              		.align	1
- 186              		.p2align 2,,3
- 187              		.global	main
- 188              		.syntax unified
- 189              		.thumb
- 190              		.thumb_func
- 191              		.fpu fpv5-d16
- 193              	main:
- 194              		@ args = 0, pretend = 0, frame = 0
- 195              		@ frame_needed = 0, uses_anonymous_args = 0
- 196 0000 38B5     		push	{r3, r4, r5, lr}
- 197 0002 1248     		ldr	r0, .L16
- 198 0004 0025     		movs	r5, #0
- 199 0006 2DED028B 		vpush.64	{d8}
- 200 000a FFF7FEFF 		bl	daisy_seed_init
- 201 000e 1048     		ldr	r0, .L16+4
- 202 0010 9FED108A 		vldr.32	s16, .L16+8
- 203 0014 FFF7FEFF 		bl	dsy_led_driver_init
- 204              	.L13:
- 205 0018 0135     		adds	r5, r5, #1
- 206 001a 6420     		movs	r0, #100
- 207 001c 0024     		movs	r4, #0
- 208 001e FFF7FEFF 		bl	dsy_system_delay
- 209 0022 EDB2     		uxtb	r5, r5
- 210 0024 102D     		cmp	r5, #16
- 211 0026 28BF     		it	cs
- 212 0028 2546     		movcs	r5, r4
- 213              	.L12:
- 214 002a E0B2     		uxtb	r0, r4
- 215 002c 0134     		adds	r4, r4, #1
- 216 002e B0EE480A 		vmov.f32	s0, s16
- 217 0032 FFF7FEFF 		bl	dsy_led_driver_set_led
- 218 0036 102C     		cmp	r4, #16
- 219 0038 F7D1     		bne	.L12
- 220 003a B7EE000A 		vmov.f32	s0, #1.0e+0
- 221 003e 2846     		mov	r0, r5
- 222 0040 FFF7FEFF 		bl	dsy_led_driver_set_led
- 223 0044 FFF7FEFF 		bl	dsy_led_driver_update
- 224 0048 E6E7     		b	.L13
- 225              	.L17:
- 226 004a 00BF     		.align	2
- 227              	.L16:
- 228 004c 00000000 		.word	seed
- 229 0050 2E000000 		.word	seed+46
- 230 0054 00000000 		.word	0
- 232              		.comm	seed,106,4
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s 			page 5
+ 175 0024 A174     		strb	r1, [r4, #18]
+ 176 0026 0A21     		movs	r1, #10
+ 177 0028 2377     		strb	r3, [r4, #28]
+ 178 002a 0123     		movs	r3, #1
+ 179 002c E277     		strb	r2, [r4, #31]
+ 180 002e 0622     		movs	r2, #6
+ 181 0030 84F82300 		strb	r0, [r4, #35]
+ 182 0034 2046     		mov	r0, r4
+ 183 0036 84F82710 		strb	r1, [r4, #39]
+ 184 003a 06F82A3C 		strb	r3, [r6, #-42]
+ 185 003e 04F1C406 		add	r6, r4, #196
+ 186 0042 A370     		strb	r3, [r4, #2]
+ 187 0044 6370     		strb	r3, [r4, #1]
+ 188 0046 6374     		strb	r3, [r4, #17]
+ 189 0048 2373     		strb	r3, [r4, #12]
+ 190 004a E372     		strb	r3, [r4, #11]
+ 191 004c A372     		strb	r3, [r4, #10]
+ 192 004e A375     		strb	r3, [r4, #22]
+ 193 0050 A377     		strb	r3, [r4, #30]
+ 194 0052 84F82230 		strb	r3, [r4, #34]
+ 195 0056 84F82830 		strb	r3, [r4, #40]
+ 196 005a E276     		strb	r2, [r4, #27]
+ 197 005c 84F82620 		strb	r2, [r4, #38]
+ 198 0060 E571     		strb	r5, [r4, #7]
+ 199 0062 2575     		strb	r5, [r4, #20]
+ 200 0064 84F82050 		strb	r5, [r4, #32]
+ 201 0068 84F82450 		strb	r5, [r4, #36]
+ 202 006c 84F82950 		strb	r5, [r4, #41]
+ 203 0070 2772     		strb	r7, [r4, #8]
+ 204 0072 FFF7FEFF 		bl	dsy_switch_init
+ 205 0076 04F10A00 		add	r0, r4, #10
+ 206 007a FFF7FEFF 		bl	dsy_switch_init
+ 207 007e 04F11400 		add	r0, r4, #20
+ 208 0082 FFF7FEFF 		bl	dsy_switch_init
+ 209 0086 04F11E00 		add	r0, r4, #30
+ 210 008a FFF7FEFF 		bl	dsy_gpio_init
+ 211 008e 04F12200 		add	r0, r4, #34
+ 212 0092 FFF7FEFF 		bl	dsy_gpio_init
+ 213 0096 04F12600 		add	r0, r4, #38
+ 214 009a FFF7FEFF 		bl	dsy_gpio_init
+ 215 009e 1F4A     		ldr	r2, .L14+4
+ 216 00a0 04F1BC03 		add	r3, r4, #188
+ 217 00a4 84F8C770 		strb	r7, [r4, #199]
+ 218 00a8 0DF10904 		add	r4, sp, #9
+ 219 00ac 92E80300 		ldm	r2, {r0, r1}
+ 220 00b0 04AA     		add	r2, sp, #16
+ 221 00b2 02E90300 		stmdb	r2, {r0, r1}
+ 222 00b6 01E0     		b	.L6
+ 223              	.L13:
+ 224 00b8 14F8015B 		ldrb	r5, [r4], #1	@ zero_extendqisi2
+ 225              	.L6:
+ 226 00bc 03F8015B 		strb	r5, [r3], #1
+ 227 00c0 B342     		cmp	r3, r6
+ 228 00c2 F9D1     		bne	.L13
+ 229 00c4 1648     		ldr	r0, .L14+8
+ 230 00c6 0025     		movs	r5, #0
+ 231 00c8 FFF7FEFF 		bl	dsy_adc_init
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 5
 
 
- 233              		.section	.rodata
- 234              		.align	2
- 235              		.set	.LANCHOR0,. + 0
- 236              	.LC0:
- 237 0000 00040305 		.ascii	"\000\004\003\005\001\002\006\010"
- 237      01020608 
- 238              		.ident	"GCC: (GNU Tools for Arm Embedded Processors 9-2019-q4-major) 9.2.1 20191025 (release) [ARM
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s 			page 6
+ 232 00cc 0321     		movs	r1, #3
+ 233 00ce 1548     		ldr	r0, .L14+12
+ 234 00d0 FFF7FEFF 		bl	dsy_dac_init
+ 235 00d4 0122     		movs	r2, #1
+ 236 00d6 0DF10701 		add	r1, sp, #7
+ 237 00da 1348     		ldr	r0, .L14+16
+ 238 00dc 9FED138A 		vldr.32	s16, .L14+20
+ 239 00e0 FFF7FEFF 		bl	dsy_led_driver_init
+ 240              	.L9:
+ 241 00e4 0135     		adds	r5, r5, #1
+ 242 00e6 6420     		movs	r0, #100
+ 243 00e8 0024     		movs	r4, #0
+ 244 00ea FFF7FEFF 		bl	dsy_system_delay
+ 245 00ee EDB2     		uxtb	r5, r5
+ 246 00f0 102D     		cmp	r5, #16
+ 247 00f2 28BF     		it	cs
+ 248 00f4 2546     		movcs	r5, r4
+ 249              	.L8:
+ 250 00f6 E0B2     		uxtb	r0, r4
+ 251 00f8 0134     		adds	r4, r4, #1
+ 252 00fa B0EE480A 		vmov.f32	s0, s16
+ 253 00fe FFF7FEFF 		bl	dsy_led_driver_set_led
+ 254 0102 102C     		cmp	r4, #16
+ 255 0104 F7D1     		bne	.L8
+ 256 0106 B7EE000A 		vmov.f32	s0, #1.0e+0
+ 257 010a 2846     		mov	r0, r5
+ 258 010c FFF7FEFF 		bl	dsy_led_driver_set_led
+ 259 0110 FFF7FEFF 		bl	dsy_led_driver_update
+ 260 0114 E6E7     		b	.L9
+ 261              	.L15:
+ 262 0116 00BF     		.align	2
+ 263              	.L14:
+ 264 0118 2A000000 		.word	patch+42
+ 265 011c 00000000 		.word	.LANCHOR0
+ 266 0120 64000000 		.word	patch+100
+ 267 0124 D3000000 		.word	patch+211
+ 268 0128 58000000 		.word	patch+88
+ 269 012c 00000000 		.word	0
+ 271              		.comm	patch,225,4
+ 272              		.global	seed_pins
+ 273              		.global	seed_ports
+ 274              		.section	.rodata
+ 275              		.align	2
+ 276              		.set	.LANCHOR0,. + 0
+ 277              	.LC0:
+ 278 0000 00040305 		.ascii	"\000\004\003\005\001\002\006\010"
+ 278      01020608 
+ 279              		.section	.rodata.seed_pins,"a"
+ 280              		.align	2
+ 283              	seed_pins:
+ 284 0000 080C0B0A 		.ascii	"\010\014\013\012\011\010\007\014\012\013\004\005\010"
+ 284      0908070C 
+ 284      0A0B0405 
+ 284      08
+ 285 000d 09060700 		.ascii	"\011\006\007\000\001\003\001\007\006\001\005\005\004"
+ 285      01030107 
+ 285      06010505 
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 6
+
+
+ 285      04
+ 286 001a 000B0902 		.ascii	"\000\013\011\002\016\017"
+ 286      0E0F
+ 287              		.section	.rodata.seed_ports,"a"
+ 288              		.align	2
+ 291              	seed_ports:
+ 292 0000 00       		.byte	0
+ 293 0001 01       		.byte	1
+ 294 0002 02       		.byte	2
+ 295 0003 02       		.byte	2
+ 296 0004 02       		.byte	2
+ 297 0005 02       		.byte	2
+ 298 0006 03       		.byte	3
+ 299 0007 02       		.byte	2
+ 300 0008 06       		.byte	6
+ 301 0009 06       		.byte	6
+ 302 000a 01       		.byte	1
+ 303 000b 01       		.byte	1
+ 304 000c 01       		.byte	1
+ 305 000d 01       		.byte	1
+ 306 000e 01       		.byte	1
+ 307 000f 01       		.byte	1
+ 308 0010 02       		.byte	2
+ 309 0011 00       		.byte	0
+ 310 0012 00       		.byte	0
+ 311 0013 01       		.byte	1
+ 312 0014 00       		.byte	0
+ 313 0015 00       		.byte	0
+ 314 0016 02       		.byte	2
+ 315 0017 02       		.byte	2
+ 316 0018 00       		.byte	0
+ 317 0019 00       		.byte	0
+ 318 001a 00       		.byte	0
+ 319 001b 03       		.byte	3
+ 320 001c 06       		.byte	6
+ 321 001d 00       		.byte	0
+ 322 001e 01       		.byte	1
+ 323 001f 01       		.byte	1
+ 324              		.ident	"GCC: (GNU Tools for Arm Embedded Processors 9-2019-q4-major) 9.2.1 20191025 (release) [ARM
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s:15     .text.daisy_seed_init:00000000 $t
-C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s:24     .text.daisy_seed_init:00000000 daisy_seed_init
-C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s:182    .text.daisy_seed_init:000001f0 $d
-C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s:185    .text.startup.main:00000000 $t
-C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s:193    .text.startup.main:00000000 main
-C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s:228    .text.startup.main:0000004c $d
-                            *COM*:0000006a seed
-C:\Users\Andrew\AppData\Local\Temp\ccSDPjur.s:234    .rodata:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:15     .text.daisy_seed_init:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:24     .text.daisy_seed_init:00000000 daisy_seed_init
+C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:150    .text.startup.main:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:158    .text.startup.main:00000000 main
+C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:264    .text.startup.main:00000118 $d
+                            *COM*:000000e1 patch
+C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:283    .rodata.seed_pins:00000000 seed_pins
+C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:291    .rodata.seed_ports:00000000 seed_ports
+C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:275    .rodata:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:280    .rodata.seed_pins:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:288    .rodata.seed_ports:00000000 $d
 
 UNDEFINED SYMBOLS
 dsy_system_init
 dsy_sdram_init
 dsy_qspi_init
 dsy_gpio_init
+dsy_audio_init
+dsy_switch_init
 dsy_adc_init
 dsy_dac_init
-dsy_audio_init
 dsy_led_driver_init
 dsy_system_delay
 dsy_led_driver_set_led
