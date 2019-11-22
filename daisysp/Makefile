@@ -9,12 +9,12 @@ delay_line \
 line \
 nlfilt \
 metro \
-noise \
 oscillator \
 phasor \
 port \
 reverbsc \
 svf \
+whitenoise \
 
 # TODO: Consider making this work for PCs as well?
 
