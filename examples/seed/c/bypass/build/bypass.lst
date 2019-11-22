@@ -1,0 +1,274 @@
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s 			page 1
+
+
+   1              		.cpu cortex-m7
+   2              		.eabi_attribute 28, 1
+   3              		.eabi_attribute 20, 1
+   4              		.eabi_attribute 21, 1
+   5              		.eabi_attribute 23, 3
+   6              		.eabi_attribute 24, 1
+   7              		.eabi_attribute 25, 1
+   8              		.eabi_attribute 26, 1
+   9              		.eabi_attribute 30, 2
+  10              		.eabi_attribute 34, 1
+  11              		.eabi_attribute 18, 4
+  12              		.file	"bypass.c"
+  13              		.text
+  14              		.section	.text.Callback,"ax",%progbits
+  15              		.align	1
+  16              		.p2align 2,,3
+  17              		.arch armv7e-m
+  18              		.syntax unified
+  19              		.thumb
+  20              		.thumb_func
+  21              		.fpu fpv5-d16
+  23              	Callback:
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27 0000 0B46     		mov	r3, r1
+  28 0002 9200     		lsls	r2, r2, #2
+  29 0004 0146     		mov	r1, r0
+  30 0006 1846     		mov	r0, r3
+  31 0008 FFF7FEBF 		b	memcpy
+  33              		.section	.text.daisy_seed_init,"ax",%progbits
+  34              		.align	1
+  35              		.p2align 2,,3
+  36              		.global	daisy_seed_init
+  37              		.syntax unified
+  38              		.thumb
+  39              		.thumb_func
+  40              		.fpu fpv5-d16
+  42              	daisy_seed_init:
+  43              		@ args = 0, pretend = 0, frame = 8
+  44              		@ frame_needed = 0, uses_anonymous_args = 0
+  45 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+  46 0004 0446     		mov	r4, r0
+  47 0006 4FF00A0E 		mov	lr, #10
+  48 000a 0022     		movs	r2, #0
+  49 000c 0121     		movs	r1, #1
+  50 000e 0520     		movs	r0, #5
+  51 0010 4FF0020C 		mov	ip, #2
+  52 0014 0427     		movs	r7, #4
+  53 0016 0623     		movs	r3, #6
+  54 0018 0726     		movs	r6, #7
+  55 001a 4FF00808 		mov	r8, #8
+  56 001e 0925     		movs	r5, #9
+  57 0020 4FF00309 		mov	r9, #3
+  58 0024 82B0     		sub	sp, sp, #8
+  59 0026 84F80EE0 		strb	lr, [r4, #14]
+  60 002a DFF8C4A1 		ldr	r10, .L9
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s 			page 2
+
+
+  61 002e 4FF00B0E 		mov	lr, #11
+  62 0032 2171     		strb	r1, [r4, #4]
+  63 0034 A174     		strb	r1, [r4, #18]
+  64 0036 E270     		strb	r2, [r4, #3]
+  65 0038 2270     		strb	r2, [r4]
+  66 003a 2275     		strb	r2, [r4, #20]
+  67 003c A275     		strb	r2, [r4, #22]
+  68 003e 6071     		strb	r0, [r4, #5]
+  69 0040 E071     		strb	r0, [r4, #7]
+  70 0042 6072     		strb	r0, [r4, #9]
+  71 0044 E072     		strb	r0, [r4, #11]
+  72 0046 6073     		strb	r0, [r4, #13]
+  73 0048 A070     		strb	r0, [r4, #2]
+  74 004a E077     		strb	r0, [r4, #31]
+  75 004c 2572     		strb	r5, [r4, #8]
+  76 004e A672     		strb	r6, [r4, #10]
+  77 0050 6670     		strb	r6, [r4, #1]
+  78 0052 2373     		strb	r3, [r4, #12]
+  79 0054 E373     		strb	r3, [r4, #15]
+  80 0056 2374     		strb	r3, [r4, #16]
+  81 0058 84F82130 		strb	r3, [r4, #33]
+  82 005c 84F80680 		strb	r8, [r4, #6]
+  83 0060 84F811C0 		strb	ip, [r4, #17]
+  84 0064 84F818C0 		strb	ip, [r4, #24]
+  85 0068 84F81BC0 		strb	ip, [r4, #27]
+  86 006c A776     		strb	r7, [r4, #26]
+  87 006e 2777     		strb	r7, [r4, #28]
+  88 0070 6777     		strb	r7, [r4, #29]
+  89 0072 A777     		strb	r7, [r4, #30]
+  90 0074 84F82070 		strb	r7, [r4, #32]
+  91 0078 84F82270 		strb	r7, [r4, #34]
+  92 007c 84F82390 		strb	r9, [r4, #35]
+  93 0080 E174     		strb	r1, [r4, #19]
+  94 0082 6275     		strb	r2, [r4, #21]
+  95 0084 E175     		strb	r1, [r4, #23]
+  96 0086 84F82420 		strb	r2, [r4, #36]
+  97 008a 84F82510 		strb	r1, [r4, #37]
+  98 008e 84F82630 		strb	r3, [r4, #38]
+  99 0092 84F82750 		strb	r5, [r4, #39]
+ 100 0096 84F82820 		strb	r2, [r4, #40]
+ 101 009a 84F82C20 		strb	r2, [r4, #44]
+ 102 009e 84F82D20 		strb	r2, [r4, #45]
+ 103 00a2 84F82E20 		strb	r2, [r4, #46]
+ 104 00a6 84F83310 		strb	r1, [r4, #51]
+ 105 00aa 84F82F10 		strb	r1, [r4, #47]
+ 106 00ae 84F83110 		strb	r1, [r4, #49]
+ 107 00b2 84F83250 		strb	r5, [r4, #50]
+ 108 00b6 1546     		mov	r5, r2
+ 109 00b8 84F83410 		strb	r1, [r4, #52]
+ 110 00bc 84F83910 		strb	r1, [r4, #57]
+ 111 00c0 84F83560 		strb	r6, [r4, #53]
+ 112 00c4 84F83710 		strb	r1, [r4, #55]
+ 113 00c8 84F83A20 		strb	r2, [r4, #58]
+ 114 00cc 84F83B30 		strb	r3, [r4, #59]
+ 115 00d0 04F15003 		add	r3, r4, #80
+ 116 00d4 84F83D00 		strb	r0, [r4, #61]
+ 117 00d8 84F83E10 		strb	r1, [r4, #62]
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s 			page 3
+
+
+ 118 00dc 84F83F10 		strb	r1, [r4, #63]
+ 119 00e0 84F84020 		strb	r2, [r4, #64]
+ 120 00e4 84F82BE0 		strb	lr, [r4, #43]
+ 121 00e8 84F819C0 		strb	ip, [r4, #25]
+ 122 00ec 84F829C0 		strb	ip, [r4, #41]
+ 123 00f0 84F82A90 		strb	r9, [r4, #42]
+ 124 00f4 84F83080 		strb	r8, [r4, #48]
+ 125 00f8 84F83670 		strb	r7, [r4, #54]
+ 126 00fc 84F83CC0 		strb	ip, [r4, #60]
+ 127 0100 84F838E0 		strb	lr, [r4, #56]
+ 128 0104 04F1580E 		add	lr, r4, #88
+ 129 0108 84F84160 		strb	r6, [r4, #65]
+ 130 010c 0DEB0106 		add	r6, sp, r1
+ 131 0110 84F84320 		strb	r2, [r4, #67]
+ 132 0114 84F84510 		strb	r1, [r4, #69]
+ 133 0118 84F84620 		strb	r2, [r4, #70]
+ 134 011c 84F84820 		strb	r2, [r4, #72]
+ 135 0120 84F84920 		strb	r2, [r4, #73]
+ 136 0124 84F84A20 		strb	r2, [r4, #74]
+ 137 0128 84F84B10 		strb	r1, [r4, #75]
+ 138 012c 84F84C20 		strb	r2, [r4, #76]
+ 139 0130 84F84E20 		strb	r2, [r4, #78]
+ 140 0134 0DEB0802 		add	r2, sp, r8
+ 141 0138 84F84F00 		strb	r0, [r4, #79]
+ 142 013c 84F842C0 		strb	ip, [r4, #66]
+ 143 0140 84F844C0 		strb	ip, [r4, #68]
+ 144 0144 84F84790 		strb	r9, [r4, #71]
+ 145 0148 84F84D70 		strb	r7, [r4, #77]
+ 146 014c 84F85B80 		strb	r8, [r4, #91]
+ 147 0150 9AE80300 		ldm	r10, {r0, r1}
+ 148 0154 02E90300 		stmdb	r2, {r0, r1}
+ 149 0158 01E0     		b	.L5
+ 150              	.L8:
+ 151 015a 16F8015B 		ldrb	r5, [r6], #1	@ zero_extendqisi2
+ 152              	.L5:
+ 153 015e 03F8015B 		strb	r5, [r3], #1
+ 154 0162 7345     		cmp	r3, lr
+ 155 0164 F9D1     		bne	.L8
+ 156 0166 0022     		movs	r2, #0
+ 157 0168 0123     		movs	r3, #1
+ 158 016a 0621     		movs	r1, #6
+ 159 016c 0720     		movs	r0, #7
+ 160 016e 84F85C20 		strb	r2, [r4, #92]
+ 161 0172 0427     		movs	r7, #4
+ 162 0174 84F85E20 		strb	r2, [r4, #94]
+ 163 0178 0526     		movs	r6, #5
+ 164 017a 84F86020 		strb	r2, [r4, #96]
+ 165 017e 0225     		movs	r5, #2
+ 166 0180 0E22     		movs	r2, #14
+ 167 0182 84F85D30 		strb	r3, [r4, #93]
+ 168 0186 84F86430 		strb	r3, [r4, #100]
+ 169 018a 84F86720 		strb	r2, [r4, #103]
+ 170 018e 84F86830 		strb	r3, [r4, #104]
+ 171 0192 84F86610 		strb	r1, [r4, #102]
+ 172 0196 84F86300 		strb	r0, [r4, #99]
+ 173 019a 84F85F70 		strb	r7, [r4, #95]
+ 174 019e 84F86160 		strb	r6, [r4, #97]
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s 			page 4
+
+
+ 175 01a2 84F86250 		strb	r5, [r4, #98]
+ 176 01a6 FFF7FEFF 		bl	dsy_system_init
+ 177 01aa 2046     		mov	r0, r4
+ 178 01ac FFF7FEFF 		bl	dsy_sdram_init
+ 179 01b0 E01C     		adds	r0, r4, #3
+ 180 01b2 FFF7FEFF 		bl	dsy_qspi_init
+ 181 01b6 04F16200 		add	r0, r4, #98
+ 182 01ba FFF7FEFF 		bl	dsy_gpio_init
+ 183 01be 04F16600 		add	r0, r4, #102
+ 184 01c2 FFF7FEFF 		bl	dsy_gpio_init
+ 185 01c6 04F13A00 		add	r0, r4, #58
+ 186 01ca FFF7FEFF 		bl	dsy_adc_init
+ 187 01ce 04F15C00 		add	r0, r4, #92
+ 188 01d2 0321     		movs	r1, #3
+ 189 01d4 FFF7FEFF 		bl	dsy_dac_init
+ 190 01d8 04F12E02 		add	r2, r4, #46
+ 191 01dc 04F13401 		add	r1, r4, #52
+ 192 01e0 04F11100 		add	r0, r4, #17
+ 193 01e4 02B0     		add	sp, sp, #8
+ 194              		@ sp needed
+ 195 01e6 BDE8F047 		pop	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 196 01ea FFF7FEBF 		b	dsy_audio_init
+ 197              	.L10:
+ 198 01ee 00BF     		.align	2
+ 199              	.L9:
+ 200 01f0 00000000 		.word	.LANCHOR0
+ 202              		.section	.text.startup.main,"ax",%progbits
+ 203              		.align	1
+ 204              		.p2align 2,,3
+ 205              		.global	main
+ 206              		.syntax unified
+ 207              		.thumb
+ 208              		.thumb_func
+ 209              		.fpu fpv5-d16
+ 211              	main:
+ 212              		@ Volatile: function does not return.
+ 213              		@ args = 0, pretend = 0, frame = 0
+ 214              		@ frame_needed = 0, uses_anonymous_args = 0
+ 215 0000 0548     		ldr	r0, .L14
+ 216 0002 08B5     		push	{r3, lr}
+ 217 0004 FFF7FEFF 		bl	daisy_seed_init
+ 218 0008 0020     		movs	r0, #0
+ 219 000a 0449     		ldr	r1, .L14+4
+ 220 000c FFF7FEFF 		bl	dsy_audio_set_callback
+ 221 0010 0020     		movs	r0, #0
+ 222 0012 FFF7FEFF 		bl	dsy_audio_start
+ 223              	.L12:
+ 224 0016 FEE7     		b	.L12
+ 225              	.L15:
+ 226              		.align	2
+ 227              	.L14:
+ 228 0018 00000000 		.word	seed
+ 229 001c 00000000 		.word	Callback
+ 231              		.comm	seed,106,4
+ 232              		.section	.rodata
+ 233              		.align	2
+ 234              		.set	.LANCHOR0,. + 0
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s 			page 5
+
+
+ 235              	.LC0:
+ 236 0000 00040305 		.ascii	"\000\004\003\005\001\002\006\010"
+ 236      01020608 
+ 237              		.ident	"GCC: (GNU Tools for Arm Embedded Processors 9-2019-q4-major) 9.2.1 20191025 (release) [ARM
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 bypass.c
+C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s:15     .text.Callback:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s:23     .text.Callback:00000000 Callback
+C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s:34     .text.daisy_seed_init:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s:42     .text.daisy_seed_init:00000000 daisy_seed_init
+C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s:200    .text.daisy_seed_init:000001f0 $d
+C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s:203    .text.startup.main:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s:211    .text.startup.main:00000000 main
+C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s:228    .text.startup.main:00000018 $d
+                            *COM*:0000006a seed
+C:\Users\Andrew\AppData\Local\Temp\ccVT591x.s:233    .rodata:00000000 $d
+
+UNDEFINED SYMBOLS
+memcpy
+dsy_system_init
+dsy_sdram_init
+dsy_qspi_init
+dsy_gpio_init
+dsy_adc_init
+dsy_dac_init
+dsy_audio_init
+dsy_audio_set_callback
+dsy_audio_start
