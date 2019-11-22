@@ -1,4 +1,4 @@
-TARGET = template
+TARGET = ex_oscillator
 CHIPSET = stm32h7x
 
 TARGET_BIN=$(TARGET).bin
