@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 1
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 1
   57              		.fpu fpv5-d16
   59              	daisy_seed_init:
   60              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 2
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s 			page 2
 
 
   61              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 1
  115 008e 84F83420 		strb	r2, [r4, #52]
  116 0092 84F83920 		strb	r2, [r4, #57]
  117 0096 84F83720 		strb	r2, [r4, #55]
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 3
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s 			page 3
 
 
  118 009a 84F83D10 		strb	r1, [r4, #61]
@@ -148,10 +148,10 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 1
  142 00f6 84F84520 		strb	r2, [r4, #69]
  143 00fa 84F84B20 		strb	r2, [r4, #75]
  144 00fe 84F84F10 		strb	r1, [r4, #79]
- 145 0102 84F85D20 		strb	r2, [r4, #93]
- 146 0106 84F86110 		strb	r1, [r4, #97]
- 147 010a 84F86420 		strb	r2, [r4, #100]
- 148 010e 84F86820 		strb	r2, [r4, #104]
+ 145 0102 84F8AA20 		strb	r2, [r4, #170]
+ 146 0106 84F8AE10 		strb	r1, [r4, #174]
+ 147 010a 84F8B120 		strb	r2, [r4, #177]
+ 148 010e 84F8B520 		strb	r2, [r4, #181]
  149 0112 84F84330 		strb	r3, [r4, #67]
  150 0116 84F84630 		strb	r3, [r4, #70]
  151 011a 84F847C0 		strb	ip, [r4, #71]
@@ -160,29 +160,29 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 1
  154 0126 84F84A30 		strb	r3, [r4, #74]
  155 012a 84F84C30 		strb	r3, [r4, #76]
  156 012e 84F84E30 		strb	r3, [r4, #78]
- 157 0132 84F85C30 		strb	r3, [r4, #92]
- 158 0136 84F85E30 		strb	r3, [r4, #94]
- 159 013a 84F86030 		strb	r3, [r4, #96]
+ 157 0132 84F8A930 		strb	r3, [r4, #169]
+ 158 0136 84F8AB30 		strb	r3, [r4, #171]
+ 159 013a 84F8AD30 		strb	r3, [r4, #173]
  160 013e 84F84200 		strb	r0, [r4, #66]
  161 0142 84F84400 		strb	r0, [r4, #68]
- 162 0146 84F86200 		strb	r0, [r4, #98]
+ 162 0146 84F8AF00 		strb	r0, [r4, #175]
  163 014a 84F84170 		strb	r7, [r4, #65]
  164 014e 84F84D50 		strb	r5, [r4, #77]
- 165 0152 84F85F50 		strb	r5, [r4, #95]
- 166 0156 84F86370 		strb	r7, [r4, #99]
- 167 015a 84F86660 		strb	r6, [r4, #102]
- 168 015e 84F867A0 		strb	r10, [r4, #103]
+ 165 0152 84F8AC50 		strb	r5, [r4, #172]
+ 166 0156 84F8B070 		strb	r7, [r4, #176]
+ 167 015a 84F8B360 		strb	r6, [r4, #179]
+ 168 015e 84F8B4A0 		strb	r10, [r4, #180]
  169 0162 FFF7FEFF 		bl	dsy_system_init
  170 0166 2046     		mov	r0, r4
  171 0168 FFF7FEFF 		bl	dsy_sdram_init
  172 016c E01C     		adds	r0, r4, #3
  173 016e FFF7FEFF 		bl	dsy_qspi_init
- 174 0172 04F16200 		add	r0, r4, #98
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 4
+ 174 0172 04F1AF00 		add	r0, r4, #175
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s 			page 4
 
 
  175 0176 FFF7FEFF 		bl	dsy_gpio_init
- 176 017a 04F16600 		add	r0, r4, #102
+ 176 017a 04F1B300 		add	r0, r4, #179
  177 017e FFF7FEFF 		bl	dsy_gpio_init
  178 0182 04F12E02 		add	r2, r4, #46
  179 0186 04F13401 		add	r1, r4, #52
@@ -231,14 +231,14 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 1
  226              		.align	2
  227              		.set	.LANCHOR1,. + 0
  230              	seed:
- 231 0000 00000000 		.space	106
+ 231 0000 00000000 		.space	183
  231      00000000 
  231      00000000 
  231      00000000 
  231      00000000 
  232              		.section	.rodata.seed_pins,"a"
  233              		.align	2
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 5
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s 			page 5
 
 
  236              	seed_pins:
@@ -288,27 +288,27 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 1
  275 001e 01       		.byte	1
  276 001f 01       		.byte	1
  277              		.ident	"GCC: (GNU Tools for Arm Embedded Processors 9-2019-q4-major) 9.2.1 20191025 (release) [ARM
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s 			page 6
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 noise.c
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:15     .text.audioCallback:00000000 $t
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:23     .text.audioCallback:00000000 audioCallback
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:48     .text.audioCallback:0000002c $d
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:51     .text.daisy_seed_init:00000000 $t
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:59     .text.daisy_seed_init:00000000 daisy_seed_init
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:185    .text.startup.main:00000000 $t
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:193    .text.startup.main:00000000 main
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:212    .text.startup.main:00000020 $d
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:236    .rodata.seed_pins:00000000 seed_pins
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:244    .rodata.seed_ports:00000000 seed_ports
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:219    .bss.noise_gen:00000000 $d
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:223    .bss.noise_gen:00000000 noise_gen
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:226    .bss.seed:00000000 $d
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:230    .bss.seed:00000000 seed
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:233    .rodata.seed_pins:00000000 $d
-C:\Users\Andrew\AppData\Local\Temp\ccVnYmsV.s:241    .rodata.seed_ports:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:15     .text.audioCallback:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:23     .text.audioCallback:00000000 audioCallback
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:48     .text.audioCallback:0000002c $d
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:51     .text.daisy_seed_init:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:59     .text.daisy_seed_init:00000000 daisy_seed_init
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:185    .text.startup.main:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:193    .text.startup.main:00000000 main
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:212    .text.startup.main:00000020 $d
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:236    .rodata.seed_pins:00000000 seed_pins
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:244    .rodata.seed_ports:00000000 seed_ports
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:219    .bss.noise_gen:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:223    .bss.noise_gen:00000000 noise_gen
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:226    .bss.seed:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:230    .bss.seed:00000000 seed
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:233    .rodata.seed_pins:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\cc7kOF7a.s:241    .rodata.seed_ports:00000000 $d
 
 UNDEFINED SYMBOLS
 dsy_noise_process
