@@ -15,7 +15,7 @@ Daisy is an open source sound computer. It provides an embedded platform for hig
 
 ## libDaisy
 
-Library for hardware abstraction and peripheral drivers including MIDI, USB, Codec, etc. 
+Library for hardware abstraction and peripheral drivers including MIDI, USB, ADC, etc. 
 
 License: MIT
 
