@@ -11,7 +11,7 @@
 
 ## Overview
 
-Daisy is a open source sound computer platform...
+Daisy is an open source sound computer. It provides an embedded platform for high fidelity/low latency audio processing without the complexity of designing a system from scratch. 
 
 ## libDaisy
 
