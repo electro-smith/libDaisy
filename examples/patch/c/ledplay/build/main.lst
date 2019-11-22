@@ -1,4 +1,4 @@
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 1
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s 			page 1
 
 
    1              		.cpu cortex-m7
@@ -58,7 +58,7 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 1
   56 004a 84F808E0 		strb	lr, [r4, #8]
   57 004e 6074     		strb	r0, [r4, #17]
   58 0050 2076     		strb	r0, [r4, #24]
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 2
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s 			page 2
 
 
   59 0052 E076     		strb	r0, [r4, #27]
@@ -118,7 +118,7 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 1
  113 010e 84F8B520 		strb	r2, [r4, #181]
  114 0112 84F84330 		strb	r3, [r4, #67]
  115 0116 84F84630 		strb	r3, [r4, #70]
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 3
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s 			page 3
 
 
  116 011a 84F847C0 		strb	ip, [r4, #71]
@@ -178,7 +178,7 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 1
  172 001e 0B23     		movs	r3, #11
  173 0020 0522     		movs	r2, #5
  174 0022 0420     		movs	r0, #4
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 4
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s 			page 4
 
 
  175 0024 A174     		strb	r1, [r4, #18]
@@ -238,7 +238,7 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 1
  229 00c4 1648     		ldr	r0, .L14+8
  230 00c6 0025     		movs	r5, #0
  231 00c8 FFF7FEFF 		bl	dsy_adc_init
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 5
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s 			page 5
 
 
  232 00cc 0321     		movs	r1, #3
@@ -298,7 +298,7 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 1
  285 000d 09060700 		.ascii	"\011\006\007\000\001\003\001\007\006\001\005\005\004"
  285      01030107 
  285      06010505 
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 6
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s 			page 6
 
 
  285      04
@@ -340,22 +340,22 @@ ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 1
  322 001e 01       		.byte	1
  323 001f 01       		.byte	1
  324              		.ident	"GCC: (GNU Tools for Arm Embedded Processors 9-2019-q4-major) 9.2.1 20191025 (release) [ARM
-ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s 			page 7
+ARM GAS  C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 main.c
-C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:15     .text.daisy_seed_init:00000000 $t
-C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:24     .text.daisy_seed_init:00000000 daisy_seed_init
-C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:150    .text.startup.main:00000000 $t
-C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:158    .text.startup.main:00000000 main
-C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:264    .text.startup.main:00000118 $d
+C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s:15     .text.daisy_seed_init:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s:24     .text.daisy_seed_init:00000000 daisy_seed_init
+C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s:150    .text.startup.main:00000000 $t
+C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s:158    .text.startup.main:00000000 main
+C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s:264    .text.startup.main:00000118 $d
                             *COM*:000000e1 patch
-C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:283    .rodata.seed_pins:00000000 seed_pins
-C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:291    .rodata.seed_ports:00000000 seed_ports
-C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:275    .rodata:00000000 $d
-C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:280    .rodata.seed_pins:00000000 $d
-C:\Users\Andrew\AppData\Local\Temp\ccVP1cLa.s:288    .rodata.seed_ports:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s:283    .rodata.seed_pins:00000000 seed_pins
+C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s:291    .rodata.seed_ports:00000000 seed_ports
+C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s:275    .rodata:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s:280    .rodata.seed_pins:00000000 $d
+C:\Users\Andrew\AppData\Local\Temp\ccoOVEHf.s:288    .rodata.seed_ports:00000000 $d
 
 UNDEFINED SYMBOLS
 dsy_system_init
