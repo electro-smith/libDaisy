@@ -100,5 +100,6 @@ FORCE_INLINE float cube(float x)
 #include "dsy_gpio.h"
 #include "dsy_switch.h"
 #include "dev_sr_4021.h"
+#include "dsy_encoder.h"
 
 #endif

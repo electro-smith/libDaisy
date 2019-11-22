@@ -866,6 +866,12 @@
     <ClInclude Include="dsy_petal_bsp.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="dsy_pod_bsp.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="dsy_encoder.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dsy_system.c">
@@ -908,6 +914,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="dev_sr_4021.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="dsy_encoder.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
