@@ -1,7 +1,7 @@
 
 
 # ES_libdaisy
-- [overview](
+- [overview](#overview)
 - [libdaisy](#libdaisy)
 - [daisysp](#daisysp)
 - [how to build](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Build)
@@ -9,6 +9,10 @@
 - [examples](#examples)
 - [cube](#cube)
 - [resources](#resources)
+
+## Overview
+
+Daisy is a open source sound computer platform...
 
 ## libdaisy
 
