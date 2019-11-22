@@ -13,13 +13,13 @@
 
 Daisy is a open source sound computer platform...
 
-## libdaisy
+## libDaisy
 
 Hardware abstraction layer, including drivers for peripherals included on the extended Daisy family of boards.
 
 Keeping that in mind, in the included simple examples there will either be an "init" function, or no real use of the main loop to keep it easy to maintain them during this period of change.
 
-## daisysp
+## DaisySP
 
 Digital Signal Processing library for the Daisy family of boards.
 
@@ -27,7 +27,7 @@ This library is intentionally kept separate so that it can be compiled outside o
 
 This will allow for development and prototyping on a computer before running it on hardware.
 
-## cube
+## Cube
 
 STM32CubeMX is a configurator, and code generator for STM32.
 
