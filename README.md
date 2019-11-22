@@ -2,8 +2,8 @@
 
 # ES_libdaisy
 - [overview](#overview)
-- [libdaisy](#libdaisy)
-- [daisysp](#daisysp)
+- [libDaisy](#libdaisy)
+- [DaisySP](#daisysp)
 - [how to build](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Build)
 - [how to flash](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Flash)
 - [examples](https://github.com/andrewikenberry/ES_libdaisy/tree/master/examples)
