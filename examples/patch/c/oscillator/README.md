@@ -1,3 +1,10 @@
 # Oscillator Module Example
 
-Outputs a Sine wave at 440Hz, full scale.
+VCO with sine, triangle, sawtooth, and square waveforms. 
+Both standard and bandlimited waveforms are accessible. 
+
+**Knob 1** = Coarse Frequency
+
+**Knob 2** = Waveform
+
+**Knob 3** = Amplitude
