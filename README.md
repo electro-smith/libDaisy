@@ -15,13 +15,16 @@ Daisy is an open source sound computer. It provides an embedded platform for hig
 
 ## libDaisy
 
-Hardware abstraction layer, including drivers for peripherals included on the extended Daisy family of boards.
+Library for peripheral drivers including MIDI, USB, Codec communication, etc. 
 
-Keeping that in mind, in the included simple examples there will either be an "init" function, or no real use of the main loop to keep it easy to maintain them during this period of change.
+License: MIT
+
 
 ## DaisySP
 
-Digital Signal Processing library for the Daisy family of boards.
+DSP library for the Daisy family of boards.
+
+License: MIT
 
 This library is intentionally kept separate so that it can be compiled outside of an ARM context. 
 
