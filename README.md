@@ -6,9 +6,8 @@
 - [daisysp](#daisysp)
 - [how to build](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Build)
 - [how to flash](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Flash)
-- [examples](#examples)
+- [examples](https://github.com/andrewikenberry/ES_libdaisy/tree/master/examples)
 - [cube](#cube)
-- [resources](#resources)
 
 ## Overview
 
