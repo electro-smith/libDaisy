@@ -38,6 +38,6 @@ Included are the cube files for the boards to generate code.
 
 This can be helpful for generating initialization code, checking the clock configuration, etc. 
 
-Generated code uses ST's HAL and/or LL drivers. These are currently the basis for libdaisy as well, though that may also change.
+Generated code uses ST's HAL and/or LL drivers. These are currently the basis for libDaisy as well, though that may also change.
 
 An entire copy of the ST HAL, as well as Middleware for CDC USB Device Class, and FatFS are included in the libdaisy/ folder.
