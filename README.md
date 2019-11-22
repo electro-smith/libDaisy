@@ -2,6 +2,7 @@
 
 # Daisy - Open Source Sound Computer
 - [Overview](#overview)
+- [Programming the Daisy](#Programming the Daisy)
 - [libDaisy](#libdaisy)
 - [DaisySP](#daisysp)
 - [How to Build](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Build)
@@ -12,6 +13,21 @@
 ## Overview
 
 Daisy is an open source sound computer. It provides an embedded platform for high fidelity/low latency audio processing without the complexity of designing a system from scratch. 
+
+## Programming the Daisy
+Daisy can be programmed in a number of languages / environments. Here are the ones that are currently operational with examples and documentation(quantity of examples/docs may vary):
+
+- Arduino IDE
+
+- C
+
+Coming soon:
+
+- Max/MSP Gen~
+
+- FAUST
+
+- Pure Data export
 
 ## libDaisy
 
