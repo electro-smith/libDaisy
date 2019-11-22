@@ -16,6 +16,7 @@ dsy_sai \
 dsy_gpio \
 dsy_dac \
 dsy_switch \
+dsy_encoder \
 dev_sr_4021 \
 system_stm32h7xx \
 
