@@ -2,7 +2,7 @@
 
 static daisy_pod hw;
 static uint8_t led_sel;
-static int8_t inc;
+static int32_t inc;
 
 static void callback(float *in, float *out, size_t size)
 {
@@ -32,6 +32,10 @@ static void callback(float *in, float *out, size_t size)
         {
             led_sel -= 1;
         }
+    }
+    if (dsy_encoder_rising_edge(&hw.encoder))
+    {
+        led_sel = 0;
     }
 }
 
