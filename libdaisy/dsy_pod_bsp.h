@@ -28,10 +28,10 @@
 
 #define LED_2_R_PORT seed_ports[0]
 #define LED_2_R_PIN seed_pins[0]
-#define LED_2_G_PORT seed_ports[20]
-#define LED_2_G_PIN seed_pins[20]
-#define LED_2_B_PORT seed_ports[19]
-#define LED_2_B_PIN seed_pins[19]
+#define LED_2_G_PORT seed_ports[25]
+#define LED_2_G_PIN seed_pins[25]
+#define LED_2_B_PORT seed_ports[24]
+#define LED_2_B_PIN seed_pins[24]
 
 enum
 {
