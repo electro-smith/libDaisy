@@ -121,5 +121,8 @@ Transcode Report.txt
 /examples/template/build
 /examples/ledplay/build
 /examples/*/build
+/example_projects/*/build
 /libdaisy/build
 /daisysp/build
+/libdaisy/examples/*/build
+/daisysp/examples/*/build
