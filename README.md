@@ -2,7 +2,7 @@
 
 # Daisy - Open Source Sound Computer
 - [Overview](#overview)
-- [Programming the Daisy](#programming the daisy)
+- [Programming the Daisy](#programming-the-daisy)
 - [libDaisy](#libdaisy)
 - [DaisySP](#daisysp)
 - [How to Build](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Build)
