@@ -1,6 +1,6 @@
 
 
-# ES_libdaisy
+# Daisy - Open Source Sound Computer
 - [Overview](#overview)
 - [libDaisy](#libdaisy)
 - [DaisySP](#daisysp)
