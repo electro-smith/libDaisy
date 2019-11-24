@@ -30,20 +30,20 @@ typedef struct {
 
 // Listed in Alphabetical Order
 // Each of the below has/should have an example project.
-#include "adenv.h"
-#include "crossfade.h"
-#include "dcblock.h"
-#include "decimator.h"
-#include "delay_line.h"
-#include "line.h"
-#include "nlfilt.h"
-#include "metro.h"
-#include "oscillator.h"
-#include "phasor.h"
-#include "port.h"
-#include "reverbsc.h"
-#include "svf.h"
-#include "whitenoise.h"
+#include "modules/adenv.h"
+#include "modules/crossfade.h"
+#include "modules/dcblock.h"
+#include "modules/decimator.h"
+#include "modules/delay_line.h"
+#include "modules/line.h"
+#include "modules/nlfilt.h"
+#include "modules/metro.h"
+#include "modules/oscillator.h"
+#include "modules/phasor.h"
+#include "modules/port.h"
+#include "modules/reverbsc.h"
+#include "modules/svf.h"
+#include "modules/whitenoise.h"
   
 #ifdef __cplusplus
 }

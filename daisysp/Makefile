@@ -1,5 +1,6 @@
 TARGET = libdaisysp
 
+MODULE_DIR = modules
 MODULES = \
 adenv \
 crossfade \
@@ -43,7 +44,7 @@ BUILD_DIR = build
 ######################################
 
 # C sources
-C_SOURCES += $(addsuffix .c, $(MODULES))
+C_SOURCES += $(addsuffix .c, $(MODULE_DIR)/$(MODULES))
 
 #######################################
 # binaries
