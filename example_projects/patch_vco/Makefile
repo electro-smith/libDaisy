@@ -1,4 +1,4 @@
-TARGET = ex_oscillator
+TARGET = ex_vco
 CHIPSET = stm32h7x
 
 TARGET_BIN=$(TARGET).bin
@@ -38,10 +38,10 @@ OPT = -O2
 BUILD_DIR = build
 
 LIBDAISY_DIR = \
-../../../../libdaisy
+../../libdaisy
 
 DAISYSP_DIR = \
-../../../../daisysp
+../../daisysp
 
 SYSTEM_FILES_DIR = \
 core
@@ -51,7 +51,7 @@ core
 ######################################
 
 C_SOURCES = \
-ex_oscillator.c \
+ex_vco.c \
 $(SYSTEM_FILES_DIR)/system_stm32h7xx.c
 
 ASM_SOURCES = \
