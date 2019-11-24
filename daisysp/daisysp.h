@@ -38,12 +38,12 @@ typedef struct {
 #include "line.h"
 #include "nlfilt.h"
 #include "metro.h"
-#include "noise.h"
 #include "oscillator.h"
 #include "phasor.h"
 #include "port.h"
 #include "reverbsc.h"
 #include "svf.h"
+#include "whitenoise.h"
   
 #ifdef __cplusplus
 }
