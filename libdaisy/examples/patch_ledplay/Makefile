@@ -38,10 +38,10 @@ OPT = -O2
 BUILD_DIR = build
 
 LIBDAISY_DIR = \
-../../../../libdaisy
+../..
 
 DAISYSP_DIR = \
-../../../../daisysp
+../../../daisysp
 
 SYSTEM_FILES_DIR = \
 core
