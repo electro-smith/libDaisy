@@ -33,9 +33,9 @@ typedef struct
 	dsy_dac_mode mode;
 	dsy_dac_bitdepth bitdepth;
 	dsy_gpio_pin pin_config[DSY_DAC_CHN_LAST];
-}dsy_dac_handle_t;
+}dsy_dac_handle;
 
-void dsy_dac_init(dsy_dac_handle_t *dsy_hdac, dsy_dac_channel channel);
+void dsy_dac_init(dsy_dac_handle *dsy_hdac, dsy_dac_channel channel);
 void dsy_dac_start(dsy_dac_channel channel);
 void dsy_dac_write(dsy_dac_channel channel, uint16_t val);
 

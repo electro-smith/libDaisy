@@ -41,18 +41,18 @@ typedef struct
 	dsy_switch_type type;
 	dsy_switch_polarity polarity;
 	dsy_switch_pull		pull;
-	dsy_gpio_t gpio;
+	dsy_gpio gpio;
 	dsy_gpio_pin		pin_config;
 	uint8_t			state; // used for debouncing
-} dsy_switch_t;
+} dsy_switch;
 
-void dsy_switch_init(dsy_switch_t *sw);
+void dsy_switch_init(dsy_switch *sw);
 
-void dsy_switch_debounce(dsy_switch_t *sw);
+void dsy_switch_debounce(dsy_switch *sw);
 
-uint8_t dsy_switch_falling_edge(dsy_switch_t *sw);
-uint8_t dsy_switch_rising_edge(dsy_switch_t *sw);
-uint8_t dsy_switch_state(dsy_switch_t *sw);
+uint8_t dsy_switch_falling_edge(dsy_switch *sw);
+uint8_t dsy_switch_rising_edge(dsy_switch *sw);
+uint8_t dsy_switch_state(dsy_switch *sw);
 
 #ifdef __cplusplus
 }

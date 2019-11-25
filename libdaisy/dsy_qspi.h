@@ -22,6 +22,7 @@
 #endif
 
 #include <stdint.h>
+#include "dsy_core_hw.h" // Added for dsy_gpio_pin typedef
 
  //extern QSPI_HandleTypeDef hqspi;
  /* Error codes */
@@ -57,7 +58,7 @@
 	 dsy_qspi_mode mode;
 	 dsy_qspi_device device;
 	 dsy_gpio_pin pin_config[DSY_QSPI_PIN_LAST];
- } dsy_qspi_handle_t;
+ } dsy_qspi_handle;
 
 	 /*
  * @brief
@@ -68,7 +69,7 @@
  * @param device
  * Device specifies which Flash memory chip to use.
  */
- int dsy_qspi_init(dsy_qspi_handle_t* hqspi);
+ int dsy_qspi_init(dsy_qspi_handle* hqspi);
  //int dsy_qspi_init(uint8_t mode, uint8_t device, uint8_t board);
  int dsy_qspi_deinit();
 

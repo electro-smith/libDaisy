@@ -27,12 +27,12 @@ typedef struct
 	dsy_gpio_pin pin;
 	dsy_gpio_mode mode;
 	dsy_gpio_pull pull;
-} dsy_gpio_t;
+} dsy_gpio;
 
-void dsy_gpio_init(dsy_gpio_t *p);
-uint8_t dsy_gpio_read(dsy_gpio_t *p);
-void dsy_gpio_write(dsy_gpio_t *p, uint8_t state);
-void dsy_gpio_toggle(dsy_gpio_t *p);
+void dsy_gpio_init(dsy_gpio *p);
+uint8_t dsy_gpio_read(dsy_gpio *p);
+void dsy_gpio_write(dsy_gpio *p, uint8_t state);
+void dsy_gpio_toggle(dsy_gpio *p);
 
 #ifdef __cplusplus
 }

@@ -95,10 +95,10 @@ typedef struct
 {
 	dsy_sdram_state state;
 	dsy_gpio_pin	pin_config[DSY_SDRAM_PIN_LAST];
-} dsy_sdram_handle_t;
+} dsy_sdram_handle;
 
 //#include "main.h"
-uint8_t dsy_sdram_init(dsy_sdram_handle_t *dsy_hsdram);
+uint8_t dsy_sdram_init(dsy_sdram_handle *dsy_hsdram);
 #ifdef __cplusplus
 }
 #endif

@@ -22,20 +22,20 @@ typedef struct
 	float notch, low, high, band, peak;
 	float input;
 	float out_low, out_high, out_band, out_peak, out_notch;
-}dsy_svf_t;
+}dsy_svf;
 // general
-void dsy_svf_init(dsy_svf_t *f, float sample_rate);
-void dsy_svf_process(dsy_svf_t *f, float *in);
+void dsy_svf_init(dsy_svf *f, float sample_rate);
+void dsy_svf_process(dsy_svf *f, float *in);
 // setters
-void dsy_svf_set_fc(dsy_svf_t *f, float frequency);
-void dsy_svf_set_res(dsy_svf_t *f, float res);
-void dsy_svf_set_drive(dsy_svf_t *f, float drive);
+void dsy_svf_set_fc(dsy_svf *f, float frequency);
+void dsy_svf_set_res(dsy_svf *f, float res);
+void dsy_svf_set_drive(dsy_svf *f, float drive);
 // outs
-float dsy_svf_notch(dsy_svf_t *f);
-float dsy_svf_low(dsy_svf_t *f);
-float dsy_svf_high(dsy_svf_t *f);
-float dsy_svf_band(dsy_svf_t *f);
-float dsy_svf_peak(dsy_svf_t *f);
+float dsy_svf_notch(dsy_svf *f);
+float dsy_svf_low(dsy_svf *f);
+float dsy_svf_high(dsy_svf *f);
+float dsy_svf_band(dsy_svf *f);
+float dsy_svf_peak(dsy_svf *f);
 
 #ifdef __cplusplus
 }

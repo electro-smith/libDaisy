@@ -2,8 +2,8 @@
 #include "adenv.h"
 
 // Private Functions
-static void calculate_multiplier(dsy_adenv_t *e, float start, float end, uint32_t length_in_samples);
-void dsy_adenv_init(dsy_adenv_t *p, float sr)
+static void calculate_multiplier(dsy_adenv *e, float start, float end, uint32_t length_in_samples);
+void dsy_adenv_init(dsy_adenv *p, float sr)
 {
 	p->sr = sr;
 	p->current_segment = DSY_ADENV_SEG_IDLE;
@@ -19,25 +19,25 @@ void dsy_adenv_init(dsy_adenv_t *p, float sr)
 		p->segment_time[i] = 0.05f;
 	}	
 }
-void dsy_adenv_trigger(dsy_adenv_t *p)
+void dsy_adenvrigger(dsy_adenv *p)
 {
 	p->trigger = 1;		
 }
-void dsy_adenv_set_segment_time(dsy_adenv_t *p, adenv_segment_t seg, float time)
+void dsy_adenv_set_segment_time(dsy_adenv *p, dsy_adenv_segment seg, float time)
 {
 	p->segment_time[seg] = time;
 }
-void dsy_adenv_set_curve_scalar(dsy_adenv_t *p, float scalar)
+void dsy_adenv_set_curve_scalar(dsy_adenv *p, float scalar)
 {
 	p->curve_scalar = scalar;	
 }
-void dsy_adenv_set_min_max(dsy_adenv_t *p, float min, float max)
+void dsy_adenv_set_min_max(dsy_adenv *p, float min, float max)
 {
 	p->min = min;
 	p->max = max;
 }
 
-float dsy_adenv_process(dsy_adenv_t *p)
+float dsy_adenv_process(dsy_adenv *p)
 {
 	uint32_t time_samps;
 	if (p->trigger)
@@ -81,7 +81,7 @@ float dsy_adenv_process(dsy_adenv_t *p)
 	return p->output * (p->max - p->min) + p->min;
 }
 
-static void calculate_multiplier(dsy_adenv_t *p, float start, float end, uint32_t length_in_samples) 
+static void calculate_multiplier(dsy_adenv *p, float start, float end, uint32_t length_in_samples) 
 {
 	p->multiplier = 1.0f + ((end - start) / (float)length_in_samples);
 	//= 1.0f + ((logf(end) - logf(start)) / (float)length_in_samples);
