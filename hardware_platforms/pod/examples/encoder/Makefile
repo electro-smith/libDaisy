@@ -1,4 +1,4 @@
-TARGET = template
+TARGET = encoder
 CHIPSET = stm32h7x
 
 PGM_DEVICE ?= interface/stlink-v2.cfg
@@ -40,10 +40,10 @@ OPT = -O2
 BUILD_DIR = build
 
 LIBDAISY_DIR = \
-../../
+../../../../libdaisy
 
 DAISYSP_DIR = \
-../../../daisysp
+../../../../daisysp
 
 SYSTEM_FILES_DIR = \
 core
