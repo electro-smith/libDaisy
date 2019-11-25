@@ -33,12 +33,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
     <GNUConfigurationType>Debug</GNUConfigurationType>
     <ToolchainID>com.sysprogs.gnuarm.arm-eabi</ToolchainID>
-    <ToolchainVersion>4.9.3/7.8/r1</ToolchainVersion>
+    <ToolchainVersion>8.3.1/8.0/r1</ToolchainVersion>
     <GNUTargetType>StaticLibrary</GNUTargetType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <ToolchainID>com.sysprogs.gnuarm.arm-eabi</ToolchainID>
-    <ToolchainVersion>4.9.3/7.8/r1</ToolchainVersion>
+    <ToolchainVersion>8.3.1/8.0/r1</ToolchainVersion>
     <GNUTargetType>StaticLibrary</GNUTargetType>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
@@ -70,7 +70,7 @@
     <ClInclude Include="modules\crossfade.h" />
     <ClInclude Include="modules\dcblock.h" />
     <ClInclude Include="modules\decimator.h" />
-    <ClInclude Include="modules\delay_line.h" />
+    <ClInclude Include="modules\delayline.h" />
     <ClInclude Include="modules\dsy_pstream.h" />
     <ClInclude Include="modules\line.h" />
     <ClInclude Include="modules\metro.h" />
@@ -95,7 +95,7 @@
     <ClCompile Include="modules\crossfade.c" />
     <ClCompile Include="modules\dcblock.c" />
     <ClCompile Include="modules\decimator.c" />
-    <ClCompile Include="modules\delay_line.c" />
+    <ClCompile Include="modules\delayline.c" />
     <ClCompile Include="modules\line.c" />
     <ClCompile Include="modules\metro.c" />
     <ClCompile Include="modules\nlfilt.c" />

@@ -34,7 +34,7 @@
 
 #include <string.h>
 #include <math.h>
-#include "dsy_nlfilt.h"
+#include "nlfilt.h"
 #define OK 0
 #define NOT_OK 1
 #define FL (float)
