@@ -1,5 +1,5 @@
 #include "daisysp.h"
-#include "brd_patch.h"
+#include "daisy_patch.h"
 
 static daisy_patch patch;
 static dsy_oscillator osc;

@@ -1,4 +1,4 @@
-#include "codec_pcm3060.h"
+#include "dev_codec_pcm3060.h"
 //#define CODEC_DEVICE_ADDR (0b10001100)
 #define CODEC_DEVICE_ADDR	0x8c
 #define REGISTER_MODE1		0x40

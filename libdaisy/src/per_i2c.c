@@ -1,4 +1,4 @@
-#include "i2c.h"
+#include "per_i2c.h"
 
 I2C_HandleTypeDef hi2c1;
 I2C_HandleTypeDef hi2c2;

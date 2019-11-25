@@ -3,7 +3,6 @@
 
 #include<stdint.h>
 
-
 #if defined(_MSC_VER)
 #define FORCE_INLINE __forceinline
 #elif defined(__clang__)
@@ -52,54 +51,19 @@ FORCE_INLINE float cube(float x)
 	return (x * x) * x;
 }
 
-
-// Always include
-#include "system.h" 
-#include "core.h"
-
-//enum
-//{
-//	DSY_SYS_BOARD_DAISY,
-//	DSY_SYS_BOARD_DAISY_SEED,
-//	DSY_SYS_BOARD_AUDIO_BB,
-//	DSY_SYS_BOARD_EURORACK_TESTER,
-//	DSY_SYS_BOARD_LAST,
-//};
-
-
-// TODO: Maybe move these into separate libdaisy_conf.h file that can be added to user projects.
-#define DSY_USE_QSPI_DRV
-#define DSY_USE_SDRAM_DRV
-#define DSY_USE_AUDIO_DRV
-#define DSY_USE_ADC_DRV
-#define DSY_USE_DAC_DRV
-#define DSY_USE_LEDDRIVER_DRV
-
-
-#ifdef DSY_USE_QSPI_DRV
-#include "qspi.h"
-#endif
-#ifdef DSY_USE_SDRAM_DRV
-#include "sdram.h"
-#endif
-#ifdef DSY_USE_AUDIO_DRV
-#include "audio.h"
-#endif
-#ifdef DSY_USE_ADC_DRV
-#include "adc.h"
-#endif
-#ifdef DSY_USE_DAC_DRV
-#include "dac.h"
-#endif
-#ifdef DSY_USE_LEDDRIVER_DRV
-#include "leddriver.h"
-#endif
-
-#include "sai.h"
-#include "i2c.h"
-#include "gpio.h"
-#include "switch.h"
+#include "daisy_core.h"
+#include "sys_system.h" 
+#include "per_qspi.h"
+#include "per_adc.h"
+#include "per_dac.h"
+#include "per_gpio.h"
+#include "per_i2c.h"
+#include "per_sai.h"
+#include "dev_leddriver.h"
+#include "dev_sdram.h"
 #include "dev_sr_4021.h"
-#include "encoder.h"
+#include "hid_audio.h"
+#include "hid_encoder.h"
+#include "hid_switch.h"
 
 #endif

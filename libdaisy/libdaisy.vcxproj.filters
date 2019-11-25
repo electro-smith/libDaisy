@@ -785,139 +785,139 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\adc.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\audio.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\codec_pcm3060.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\codec_wm8731.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dac.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev_sr_4021.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dma.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\encoder.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gpio.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\i2c.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\leddriver.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\qspi.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sai.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sdram.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\switch.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\system.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\system_stm32h7xx.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\adc.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\audio.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\brd_field.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\brd_patch.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\brd_petal.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\brd_pod.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\brd_seed.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\codec_pcm3060.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\codec_wm8731.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\codec_wm8731_frame.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\core.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dac.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="src\daisy.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\dev_IS25LP064A.h">
+    <ClInclude Include="src\daisy_core.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\dev_IS25LP080D.h">
+    <ClInclude Include="src\daisy_field.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_patch.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_petal.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_pod.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_seed.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev_codec_pcm3060.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev_codec_wm8731.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev_codec_wm8731_frame.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev_flash_IS25LP064A.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev_flash_IS25LP080D.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev_leddriver.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev_sdram.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="src\dev_sr_4021.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\dma.h">
+    <ClInclude Include="src\hid_audio.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\encoder.h">
+    <ClInclude Include="src\hid_encoder.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gpio.h">
+    <ClInclude Include="src\hid_switch.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\i2c.h">
+    <ClInclude Include="src\per_adc.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\leddriver.h">
+    <ClInclude Include="src\per_dac.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\qspi.h">
+    <ClInclude Include="src\per_gpio.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\sai.h">
+    <ClInclude Include="src\per_i2c.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\sdram.h">
+    <ClInclude Include="src\per_qspi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per_sai.h">
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="src\stm32h7xx_hal_conf.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\switch.h">
+    <ClInclude Include="src\sys_dma.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\system.h">
+    <ClInclude Include="src\sys_system.h">
       <Filter>Header files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\dev_codec_pcm3060.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev_codec_wm8731.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev_leddriver.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev_sdram.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev_sr_4021.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid_audio.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid_encoder.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid_switch.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_adc.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_dac.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_gpio.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_i2c.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_qspi.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_sai.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sys_dma.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sys_system.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\system_stm32h7xx.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

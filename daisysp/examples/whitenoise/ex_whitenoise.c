@@ -1,5 +1,5 @@
 #include "daisysp.h"
-#include "brd_seed.h"
+#include "daisy_seed.h"
 
 static daisy_handle seed;
 static dsy_whitenoise whitenoise_gen;

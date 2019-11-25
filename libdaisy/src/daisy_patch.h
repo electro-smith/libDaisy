@@ -1,7 +1,7 @@
 #pragma once
 #ifndef DSY_PATCH_BSP_H
 #define DSY_PATCH_BSP_H
-#include "brd_seed.h"
+#include "daisy_seed.h"
 
 // These are defines/macros, etc. mapped to:
 // Daisy Patch Rev2 w/ Daisy Seed rev2

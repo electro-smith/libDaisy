@@ -6,7 +6,7 @@ extern "C"
 {
 #endif
 #include <stdint.h>
-#include "i2c.h"
+#include "per_i2c.h"
 
 	// TODO: Abstract the colors of this driver.
 	#define DSY_LED_DRIVER_MAX_DRIVERS 8

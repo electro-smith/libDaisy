@@ -1,4 +1,4 @@
-#include "brd_petal.h"
+#include "daisy_petal.h"
 //#include "daisysp.h" // Uncomment this if you want to use the DSP library.
 
 // Declare a local daisy_petal for hardware access

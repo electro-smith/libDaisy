@@ -1,5 +1,5 @@
 #include <stm32h7xx_hal.h>
-#include "adc.h"
+#include "per_adc.h"
 
 static const uint32_t dsy_adc_channel_map[DSY_ADC_PIN_LAST] = {
 	ADC_CHANNEL_3,

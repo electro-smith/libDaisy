@@ -1,6 +1,6 @@
 #include <stm32h7xx_hal.h>
-#include "system.h"
-#include "dma.h"
+#include "sys_system.h"
+#include "sys_dma.h"
 
 // Jump related stuff
 
