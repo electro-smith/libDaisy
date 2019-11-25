@@ -1,4 +1,4 @@
-#include "delay_line.h"
+#include "delayline.h"
 // Todo: implement interpolation between integer delays
 
 void dsy_delay_init(dsy_delayline *p, float* buff, size_t buff_size, float samplerate)

@@ -42,12 +42,12 @@ static const float reverbParams[8][4] = {
 };
 
 static int delay_line_max_samples(float sr, float iPitchMod, int n);
-static int init_delay_line(dsy_reverbsc_t *p, dsy_reverbsc_dl_t *lp, int n);
+static int init_delay_line(dsy_reverbsc *p, dsy_reverbsc_dl *lp, int n);
 static int delay_line_bytes_alloc(float sr, float iPitchMod, int n);
 static const float outputGain  = 0.35;
 static const float jpScale     = 0.25;
 
-int dsy_reverbsc_init(dsy_reverbsc_t *p, float sr)
+int dsy_reverbsc_init(dsy_reverbsc *p, float sr)
 {
 	p->iSampleRate = sr;
 	p->sampleRate = sr;
@@ -89,7 +89,7 @@ static int delay_line_bytes_alloc(float sr, float iPitchMod, int n)
 	return nBytes;
 }
 
-static void next_random_lineseg(dsy_reverbsc_t *p, dsy_reverbsc_dl_t *lp, int n)
+static void next_random_lineseg(dsy_reverbsc *p, dsy_reverbsc_dl *lp, int n)
 {
 	float prvDel, nxtDel, phs_incVal;
 
@@ -116,7 +116,7 @@ static void next_random_lineseg(dsy_reverbsc_t *p, dsy_reverbsc_dl_t *lp, int n)
 	lp->readPosFrac_inc = (int)(phs_incVal * DELAYPOS_SCALE + 0.5);
 }
 
-static int init_delay_line(dsy_reverbsc_t *p, dsy_reverbsc_dl_t *lp, int n)
+static int init_delay_line(dsy_reverbsc *p, dsy_reverbsc_dl *lp, int n)
 {
 	float readPos;
 	/* int     i; */
@@ -143,11 +143,11 @@ static int init_delay_line(dsy_reverbsc_t *p, dsy_reverbsc_dl_t *lp, int n)
 }
 
 
-int dsy_reverbsc_process(dsy_reverbsc_t *p, float *in1, float *in2, float *out1, float *out2)
+int dsy_reverbsc_process(dsy_reverbsc *p, float *in1, float *in2, float *out1, float *out2)
 {
 	float ainL, ainR, aoutL, aoutR;
 	float vm1, v0, v1, v2, am1, a0, a1, a2, frac;
-	dsy_reverbsc_dl_t *lp;
+	dsy_reverbsc_dl *lp;
 	int readPos;
 	uint32_t n;
 	int bufferSize; /* Local copy */
