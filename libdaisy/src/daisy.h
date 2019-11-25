@@ -54,8 +54,8 @@ FORCE_INLINE float cube(float x)
 
 
 // Always include
-#include "dsy_system.h" 
-#include "dsy_core_hw.h"
+#include "system.h" 
+#include "core.h"
 
 //enum
 //{
@@ -77,29 +77,29 @@ FORCE_INLINE float cube(float x)
 
 
 #ifdef DSY_USE_QSPI_DRV
-#include "dsy_qspi.h"
+#include "qspi.h"
 #endif
 #ifdef DSY_USE_SDRAM_DRV
-#include "dsy_sdram.h"
+#include "sdram.h"
 #endif
 #ifdef DSY_USE_AUDIO_DRV
-#include "dsy_audio.h"
+#include "audio.h"
 #endif
 #ifdef DSY_USE_ADC_DRV
-#include "dsy_adc.h"
+#include "adc.h"
 #endif
 #ifdef DSY_USE_DAC_DRV
-#include "dsy_dac.h"
+#include "dac.h"
 #endif
 #ifdef DSY_USE_LEDDRIVER_DRV
-#include "dsy_leddriver.h"
+#include "leddriver.h"
 #endif
 
-#include "dsy_sai.h"
-#include "dsy_i2c.h"
-#include "dsy_gpio.h"
-#include "dsy_switch.h"
+#include "sai.h"
+#include "i2c.h"
+#include "gpio.h"
+#include "switch.h"
 #include "dev_sr_4021.h"
-#include "dsy_encoder.h"
+#include "encoder.h"
 
 #endif

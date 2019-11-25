@@ -57,7 +57,7 @@ extern "C"
 {
 #endif
 #include <stdint.h>
-#include "dsy_core_hw.h"
+#include "core.h"
 
 //E.g. int SDRAM_DATA g_Initialized = 1;
 #define DSY_SDRAM_DATA __attribute__((section(".sdram_data")))

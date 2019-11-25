@@ -1,5 +1,5 @@
 #include <stm32h7xx_hal.h>
-#include "dsy_sdram.h"
+#include "sdram.h"
 //#include "libdaisy.h"
 
 // TODO:

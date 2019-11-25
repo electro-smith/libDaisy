@@ -7,7 +7,7 @@ extern "C"
 {
 #endif
 
-#include "dsy_seed.h"
+#include "brd_seed.h"
 
 #ifndef SAMPLE_RATE
 #define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE

@@ -7,7 +7,7 @@ extern "C"
 #endif
 #include <stdint.h>
 #include <stdlib.h>
-#include "dsy_core_hw.h"
+#include "core.h"
 
 	// Limitations:
 	// - For now speed is fixed at ASYNC_DIV128 for ADC Clock, and SAMPLETIME_64CYCLES_5 for each conversion.

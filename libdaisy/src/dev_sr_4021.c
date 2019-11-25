@@ -1,5 +1,4 @@
 #include "dev_sr_4021.h"
-#include "dsy_system.h"
 
 void dsy_sr_4021_init(dsy_sr_4021_handle *sr)
 {

@@ -5,8 +5,8 @@
 extern "C"
 {
 #endif
-#include "dsy_core_hw.h"
-#include "dsy_gpio.h"
+#include "core.h"
+#include "gpio.h"
 
 // Usage:
 // Using the dsy_switch_state(), will work with no setup other than init.

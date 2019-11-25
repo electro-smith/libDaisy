@@ -1,7 +1,6 @@
 #include <stm32h7xx_hal.h>
-//#include "libdaisy.h"
-#include "dsy_system.h"
-#include "dsy_dma.h"
+#include "system.h"
+#include "dma.h"
 
 // Jump related stuff
 

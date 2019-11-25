@@ -5,19 +5,19 @@ MODULE_DIR=src
 MODULES = \
 codec_pcm3060 \
 codec_wm8731 \
-dsy_dma \
-dsy_adc \
-dsy_audio \
-dsy_leddriver \
-dsy_qspi \
-dsy_sdram \
-dsy_system \
-dsy_i2c \
-dsy_sai \
-dsy_gpio \
-dsy_dac \
-dsy_switch \
-dsy_encoder \
+dma \
+adc \
+audio \
+leddriver \
+qspi \
+sdram \
+system \
+i2c \
+sai \
+gpio \
+dac \
+switch \
+encoder \
 dev_sr_4021 \
 system_stm32h7xx \
 

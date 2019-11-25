@@ -1,5 +1,5 @@
 #include <stm32h7xx_hal.h>
-#include "dsy_switch.h"
+#include "switch.h"
 
 void dsy_switch_init(dsy_switch *sw)
 {
