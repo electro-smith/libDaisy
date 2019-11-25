@@ -7,27 +7,30 @@ static dsy_svf_t filt;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
-    float cutoff, resonance, drive, in_amp;
+    float cutoff, resonance, in_amp, inL;
+
+    // read controls at k rate
+    cutoff = dsy_adc_get_float(DSY_PATCH_KNOB_1)*10000;
+    resonance = dsy_adc_get_float(DSY_PATCH_KNOB_2);
+    in_amp = dsy_adc_get_float(DSY_PATCH_KNOB_3);
+
+    // set filter module params with control values
+    dsy_svf_set_fc(&filt, cutoff);
+    dsy_svf_set_res(&filt, resonance);
+
     for (size_t i = 0; i < size; i += 2)
-    {
-        // read controls
-        cutoff = dsy_adc_get_float(DSY_PATCH_KNOB_1);
-        dsy_svf_set_fc(&filt, cutoff);
+    {	
+    	// scale input signal by amp knob
+    	inL = in[i] * in_amp;
 
-        resonance = dsy_adc_get_float(DSY_PATCH_KNOB_2);
-        dsy_svf_set_res(&filt, resonance);
+    	// send input to svf module
+    	dsy_svf_process(&filt, &inL);
 
-        in_amp = dsy_adc_get_float(DSY_PATCH_KNOB_3);
+    	// send LPF to left output
+        out[i] = dsy_svf_low(&filt);
 
-        drive = dsy_adc_get_float(DSY_PATCH_KNOB_4);
-        dsy_svf_set_drive(&filt, drive);
-
-        out[i] = 
-
-        //out[i] = 
-        
-        //out[i] = (dryL * drylevel) + wetL;
-        //out[i + 1] = (dryR * drylevel) + wetR;
+        // send HPF to right output
+        out[i+1] = dsy_svf_high(&filt);
     }
 }
 
