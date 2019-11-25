@@ -1,6 +1,7 @@
 TARGET = libdaisy
-CHIPSET = stm32f7x
+CHIPSET = stm3_SOU
 
+MODULE_DIR=src
 MODULES = \
 codec_pcm3060 \
 codec_wm8731 \
@@ -43,7 +44,7 @@ BUILD_DIR = build
 ######################################
 
 # C sources
-C_SOURCES += $(addsuffix .c, $(MODULES))
+C_SOURCES += $(addsuffix .c, $(MODULE_DIR)/$(MODULES))
 
 # manually adding necessary HAL files
 C_SOURCES += \
@@ -145,6 +146,7 @@ C_DEFS =  \
 -DSTM32H750xx
 
 C_INCLUDES = \
+-I$(MODULE_DIR) \
 -IDrivers/CMSIS/Include \
 -IDrivers/CMSIS/Device/ST/STM32H7xx/Include \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
