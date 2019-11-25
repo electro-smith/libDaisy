@@ -25,7 +25,7 @@ static void init_gpio()
 // Define/Declare global audio structure.
 typedef struct
 {
-	audio_callback callback;
+	dsy_audio_callback callback;
 	int32_t		   dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE];
 	int32_t		   dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE];
 	float		   in[DSY_AUDIO_BLOCK_SIZE];
@@ -78,7 +78,7 @@ void dsy_audio_silence(float* in, float* out, size_t size)
 }
 
 // TODO: fix I2C to be compliant with the new model.
-void dsy_audio_init(dsy_sai_handle_t* sai_handle, dsy_i2c_handle_t* dev0_i2c, dsy_i2c_handle_t* dev1_i2c)
+void dsy_audio_init(dsy_sai_handle* sai_handle, dsy_i2c_handle* dev0_i2c, dsy_i2c_handle* dev1_i2c)
 {
 	uint8_t dev0, dev1, intext;
 	I2C_HandleTypeDef *hi2c_int, *hi2c_ext;
@@ -151,7 +151,7 @@ void dsy_audio_init(dsy_sai_handle_t* sai_handle, dsy_i2c_handle_t* dev0_i2c, ds
 #endif
 }
 
-void dsy_audio_set_callback(uint8_t intext, audio_callback cb)
+void dsy_audio_set_callback(uint8_t intext, dsy_audio_callback cb)
 {
 	if(intext == DSY_AUDIO_INTERNAL)
 	{

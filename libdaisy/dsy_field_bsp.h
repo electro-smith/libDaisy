@@ -112,9 +112,9 @@ enum
 typedef struct
 {
 	daisy_handle seed;
-	dsy_switch_t switches[SW_LAST];
-	dsy_gpio_t gate_in, gate_out;
-	dsy_sr_4021_handle_t keyboard_sr;
+	dsy_switch switches[SW_LAST];
+	dsy_gpio gate_in, gate_out;
+	dsy_sr_4021_handle keyboard_sr;
 	float knobs[KNOB_LAST];
 	float cvs[CV_LAST];
 } daisy_field;

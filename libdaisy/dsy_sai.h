@@ -73,7 +73,7 @@ typedef struct
 	dsy_audio_device	 device[DSY_SAI_LAST];
 	dsy_gpio_pin		 sai1_pin_config[DSY_SAI_PIN_LAST];
 	dsy_gpio_pin		 sai2_pin_config[DSY_SAI_PIN_LAST];
-} dsy_sai_handle_t;
+} dsy_sai_handle;
 
 extern SAI_HandleTypeDef hsai_BlockA1;
 extern SAI_HandleTypeDef hsai_BlockB1;
@@ -87,7 +87,7 @@ void dsy_sai_init(dsy_audio_sai	   init,
 				  dsy_gpio_pin *	   sai1_pin_list,
 				  dsy_gpio_pin *	   sai2_pin_list);
 
-void dsy_sai_init_from_handle(dsy_sai_handle_t *hsai);
+void dsy_sai_init_from_handle(dsy_sai_handle *hsai);
 
 #ifdef __cplusplus
 }

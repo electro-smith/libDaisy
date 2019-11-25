@@ -5,7 +5,7 @@
  * I've left the original license in place directly below.
  */
 /*
-    nlfilt.h:
+    dsy_nlfilt.h:
     Copyright (C) 1996 John ffitch, Richard Dobson
     This file is part of Csound.
     The Csound Library is free software; you can redistribute it
@@ -40,10 +40,10 @@ extern "C"
 		size_t size;
 		float delay[DSY_NLFILT_MAX_DELAY];
 		int32_t point;
-	} nlfilt;
+	} dsy_nlfilt;
 
-	void nlfilt_init(nlfilt *p, size_t size);
-	void nlfilt_process(nlfilt *p);
+	void dsy_nlfilt_init(dsy_nlfilt *p, size_t size);
+	void dsy_nlfilt_process(dsy_nlfilt *p);
 
 #ifdef __cplusplus
 }
