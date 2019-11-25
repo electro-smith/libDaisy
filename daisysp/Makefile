@@ -6,7 +6,7 @@ adenv \
 crossfade \
 dcblock \
 decimator \
-delay_line \
+delayline \
 line \
 nlfilt \
 metro \
