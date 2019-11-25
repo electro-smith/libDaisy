@@ -794,9 +794,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="libdaisy.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
     <ClInclude Include="dsy_qspi.h">
       <Filter>Header files</Filter>
     </ClInclude>
@@ -870,6 +867,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="dsy_encoder.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="daisy.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>

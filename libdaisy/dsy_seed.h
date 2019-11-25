@@ -7,7 +7,7 @@
 #ifndef DSY_SEED_H
 #define DSY_SEED_H
 
-#include "libdaisy.h"
+#include "daisy.h"
 
 // Specifies whether generic initialization will be done within the daisy_seed_init, or not.
 // Allows for more selective init

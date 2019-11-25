@@ -187,6 +187,7 @@
     <ClInclude Include="codec_pcm3060.h" />
     <ClInclude Include="codec_wm8731.h" />
     <ClInclude Include="codec_wm8731_frame.h" />
+    <ClInclude Include="daisy.h" />
     <ClInclude Include="dev_sr_4021.h" />
     <ClInclude Include="dsy_core_hw.h" />
     <ClInclude Include="dsy_dac.h" />
@@ -208,7 +209,6 @@
     <ClInclude Include="dsy_i2c.h" />
     <ClInclude Include="IS25LP064A.h" />
     <ClInclude Include="IS25LP080D.h" />
-    <ClInclude Include="libdaisy.h" />
     <ClInclude Include="dsy_sai.h" />
     <ClInclude Include="stm32h7xx_hal_conf.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h" />

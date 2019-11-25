@@ -1,4 +1,3 @@
-#include "libdaisy.h"
 #include "dsy_leddriver.h"
 #include "dsy_i2c.h"
 
