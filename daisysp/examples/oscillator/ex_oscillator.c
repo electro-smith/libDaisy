@@ -3,7 +3,7 @@
 #include "dsy_seed.h"
 
 static daisy_handle seed;
-static dsy_oscillator_t osc;
+static dsy_oscillator osc;
 
 static void audioCallback(float *in, float *out, size_t size)
 {

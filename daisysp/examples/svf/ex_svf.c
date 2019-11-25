@@ -3,7 +3,7 @@
 #include "dsy_seed.h"
 
 static daisy_handle seed;
-static dsy_svf_t filter;
+static dsy_svf filter;
 
 static void audioCallback(float *in, float *out, size_t size)
 {

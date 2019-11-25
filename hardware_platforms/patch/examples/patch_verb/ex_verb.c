@@ -3,8 +3,8 @@
 #include "dsy_patch_bsp.h"
 
 static daisy_patch patch;
-static dsy_reverbsc_t verb;
-static dsy_dcblock_t dcblock[2];
+static dsy_reverbsc verb;
+static dsy_dcblock dcblock[2];
 static float drylevel, send;
 
 static void VerbCallback(float *in, float *out, size_t size)
