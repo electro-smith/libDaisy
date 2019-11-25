@@ -1,4 +1,4 @@
-#include "dsy_dma.h"
+#include "dma.h"
 
 #ifdef __cplusplus
 extern "C"

@@ -1,4 +1,4 @@
-#include "dsy_encoder.h"
+#include "encoder.h"
 
 void	 dsy_encoder_init(dsy_encoder *p) 
 {

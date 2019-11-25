@@ -1,7 +1,7 @@
 #pragma once
 #ifndef DSY_GPIO_H
 #define DSY_GPIO_H
-#include "dsy_core_hw.h"
+#include "core.h"
 #ifdef __cplusplus
 extern "C"
 {

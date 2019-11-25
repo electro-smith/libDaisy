@@ -4,7 +4,7 @@
  extern "C" {
 #endif
 #include "stm32h7xx_hal.h"
-#include "dsy_core_hw.h"
+#include "core.h"
 
 typedef enum
 {
