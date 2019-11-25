@@ -1,7 +1,7 @@
 #include "dev_sr_4021.h"
 #include "dsy_system.h"
 
-void dsy_sr_4021_init(dsy_sr_4021_handle_t *sr)
+void dsy_sr_4021_init(dsy_sr_4021_handle *sr)
 {
 	sr->cs.mode = DSY_GPIO_MODE_OUTPUT_PP;
 	sr->cs.pull = DSY_GPIO_NOPULL;
@@ -32,7 +32,7 @@ void dsy_sr_4021_init(dsy_sr_4021_handle_t *sr)
 
 // Data read in so that daisy chain device states are sequential, 
 // parallel data is offset by 8*num_daisychain
-void	dsy_sr_4021_update(dsy_sr_4021_handle_t *sr) 
+void	dsy_sr_4021_update(dsy_sr_4021_handle *sr) 
 {
 	uint8_t idx;
 	// Strobe CS Pin
@@ -53,7 +53,7 @@ void	dsy_sr_4021_update(dsy_sr_4021_handle_t *sr)
 	}
 }
 
-uint8_t dsy_sr_4021_state(dsy_sr_4021_handle_t *sr, uint8_t idx)
+uint8_t dsy_sr_4021_state(dsy_sr_4021_handle *sr, uint8_t idx)
 {
 	return sr->states[idx < 8 * sr->num_daisychained  * sr->num_parallel ? idx : 0];
 }

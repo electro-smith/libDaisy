@@ -17,7 +17,7 @@ enum
 typedef struct
 {
 	dsy_gpio_pin pin_config[DSY_ENCODER_PIN_LAST];
-	dsy_gpio_t   pins[DSY_ENCODER_PIN_LAST];
+	dsy_gpio   pins[DSY_ENCODER_PIN_LAST];
 	uint32_t	 time;
 	uint8_t		 states[DSY_ENCODER_PIN_LAST];
 	int32_t		 inc;

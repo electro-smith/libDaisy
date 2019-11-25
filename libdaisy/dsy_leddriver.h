@@ -27,13 +27,13 @@ extern "C"
 	typedef struct
 	{
 		uint16_t red, green, blue;
-	} color_t;
+	} color;
 
 
-	void	 dsy_led_driver_init(dsy_i2c_handle_t *dsy_i2c, uint8_t *addr, uint8_t addr_cnt);
+	void	 dsy_led_driver_init(dsy_i2c_handle *dsy_i2c, uint8_t *addr, uint8_t addr_cnt);
 	void	 dsy_led_driver_update();
 	void	 dsy_led_driver_set_led(uint8_t idx, float bright);
-	color_t* dsy_led_driver_color_by_name(uint8_t name);
+	color* dsy_led_driver_color_by_name(uint8_t name);
 
 #ifdef __cplusplus
 }

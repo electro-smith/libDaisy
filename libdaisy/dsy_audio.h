@@ -43,11 +43,11 @@ extern "C"
 		DSY_AUDIO_LAST,
 	};
 
-	typedef void (*audio_callback)(float*, float*, size_t);
-	void dsy_audio_init(dsy_sai_handle_t* sai_handle,
-						dsy_i2c_handle_t* dev0_i2c,
-						dsy_i2c_handle_t* dev1_i2c);
-	void dsy_audio_set_callback(uint8_t intext, audio_callback cb);
+	typedef void (*dsy_audio_callback)(float*, float*, size_t);
+	void dsy_audio_init(dsy_sai_handle* sai_handle,
+						dsy_i2c_handle* dev0_i2c,
+						dsy_i2c_handle* dev1_i2c);
+	void dsy_audio_set_callback(uint8_t intext, dsy_audio_callback cb);
 
 	void dsy_audio_start(uint8_t intext);
 

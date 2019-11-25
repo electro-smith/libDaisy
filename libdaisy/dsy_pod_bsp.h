@@ -62,8 +62,8 @@ enum
 typedef struct
 {
 	daisy_handle seed;
-	dsy_switch_t switches[SW_LAST];
-	dsy_gpio_t   leds[LED_LAST];
+	dsy_switch switches[SW_LAST];
+	dsy_gpio   leds[LED_LAST];
 	dsy_encoder encoder;
 	float knobs[KNOB_LAST];
 } daisy_pod;

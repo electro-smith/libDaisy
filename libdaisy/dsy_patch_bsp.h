@@ -85,8 +85,8 @@ enum
 
 typedef struct
 {
-	dsy_switch_t button1, button2, toggle;
-	dsy_gpio_t   gate_in1, gate_in2, gate_out;
+	dsy_switch button1, button2, toggle;
+	dsy_gpio   gate_in1, gate_in2, gate_out;
 	daisy_handle seed;
 } daisy_patch;
 
