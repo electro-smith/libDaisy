@@ -1,5 +1,5 @@
 #include <string.h>
-#include "libdaisy.h"
+#include "daisy.h" // todo figure out what to do about this.
 #include "dsy_audio.h"
 #include "codec_pcm3060.h"
 #include "codec_wm8731.h"
@@ -33,11 +33,11 @@ typedef struct
 	size_t		   block_size, offset;
 	uint8_t		   bitdepth, device;
 	I2C_HandleTypeDef* device_control_hi2c;
-} et_audio_t;
-static et_audio_t audio_handle;
-static et_audio_t audio_handle_ext;
+} dsy_audio;
+static dsy_audio audio_handle;
+static dsy_audio audio_handle_ext;
 
-static FORCE_INLINE et_audio_t* get_audio_from_sai(SAI_HandleTypeDef* hsai)
+static dsy_audio* get_audio_from_sai(SAI_HandleTypeDef* hsai)
 {
 	return (hsai->Instance == SAI1_Block_A) ? &audio_handle : &audio_handle_ext;
 }
@@ -236,7 +236,7 @@ static void internal_callback(SAI_HandleTypeDef* hsai, size_t offset)
 	#ifdef DSY_PROFILE_AUDIO_CALLBACK
 	HAL_GPIO_WritePin(PROFILE_GPIO_PORT, PROFILE_GPIO_PIN, 0);
 	#endif
-	et_audio_t* ah = get_audio_from_sai(hsai);
+	dsy_audio* ah = get_audio_from_sai(hsai);
 
 	const int32_t* ini  = ah->dma_buffer_rx + offset;
 	float*		   inf  = ah->in;

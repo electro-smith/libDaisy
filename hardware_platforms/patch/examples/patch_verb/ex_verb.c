@@ -1,4 +1,3 @@
-#include "libdaisy.h"
 #include "daisysp.h"
 #include "dsy_patch_bsp.h"
 
