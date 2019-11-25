@@ -20,7 +20,7 @@ typedef struct
 {
 	uint8_t board;
 	SDRAM_HandleTypeDef hsdram;
-	dsy_sdram_handle_t *dsy_hsdram;
+	dsy_sdram_handle *dsy_hsdram;
 }dsy_sdram_t;
 
 static dsy_sdram_t dsy_sdram;
@@ -28,7 +28,7 @@ static dsy_sdram_t dsy_sdram;
 static uint8_t sdram_periph_init();
 static uint8_t sdram_device_init();
 
-uint8_t dsy_sdram_init(dsy_sdram_handle_t *dsy_hsdram)
+uint8_t dsy_sdram_init(dsy_sdram_handle *dsy_hsdram)
 {
 	//dsy_sdram.board = board;
 	dsy_sdram.dsy_hsdram = dsy_hsdram;

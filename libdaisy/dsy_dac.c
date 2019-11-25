@@ -4,14 +4,14 @@
 typedef struct
 {
 	DAC_HandleTypeDef hdac1; // ST HAL DAC handle
-	dsy_dac_handle_t *dsy_hdac;
+	dsy_dac_handle *dsy_hdac;
 	uint8_t			  initialized;
 	dsy_dac_channel   active_channels;
 } dsy_dac_t;
 
 static dsy_dac_t dac;
 
-void dsy_dac_init(dsy_dac_handle_t *dsy_hdac, dsy_dac_channel channel) 
+void dsy_dac_init(dsy_dac_handle *dsy_hdac, dsy_dac_channel channel) 
 {
 	DAC_ChannelConfTypeDef dac_config;
 	dac.dsy_hdac = dsy_hdac;

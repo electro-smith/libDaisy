@@ -12,17 +12,17 @@
 
 typedef struct
 {
-	color_t color;
+	color c;
 	//uint16_t *r, *g, *b;
 	uint16_t addr_r, addr_g, addr_b; // 0-15
 	uint16_t drv_r, drv_g, drv_b;	// 0-3
-} rgb_led_t;
+} rgb_led;
 
 typedef struct
 {
 	uint16_t bright;
 	uint16_t addr, drv;
-} led_t;
+} led;
 
 //typedef enum
 //{
@@ -37,17 +37,17 @@ typedef struct
 #define LED_BUFF_SIZE ((16 * 4) + 1)
 typedef struct
 {
-	led_t	 leds[CHANNELS_PER_DRIVER * DSY_LED_DRIVER_MAX_DRIVERS];
+	led	 leds[CHANNELS_PER_DRIVER * DSY_LED_DRIVER_MAX_DRIVERS];
 	uint16_t *sorted_bright[DSY_LED_DRIVER_MAX_DRIVERS][16];
 	uint16_t  dummy_bright; // not sure if NULL will break things later.
 	float master_dim;
 	uint8_t			   temp_buff[LED_BUFF_SIZE];
 	uint8_t			   current_drv;
-	color_t			   standard_colors[LED_COLOR_LAST];
+	color			   standard_colors[LED_COLOR_LAST];
 	uint8_t			   num_drivers;
 	uint8_t			   driver_addr[DSY_LED_DRIVER_MAX_DRIVERS];
 	I2C_HandleTypeDef *i2c;
-	dsy_i2c_handle_t * dsy_i2c;
+	dsy_i2c_handle * dsy_i2c;
 } dsy_led_driver_t;
 
 dsy_led_driver_t leddriver;
@@ -57,7 +57,7 @@ static void init_single_led(uint8_t name, uint8_t addr, uint8_t drv);
 static void gen_sorted_table();
 
 
-void dsy_led_driver_init(dsy_i2c_handle_t *dsy_i2c, uint8_t *addr, uint8_t addr_cnt)
+void dsy_led_driver_init(dsy_i2c_handle *dsy_i2c, uint8_t *addr, uint8_t addr_cnt)
 {
 	uint8_t address = PCA9685_I2C_BASE_ADDRESS;
 	uint8_t init_buff[2];
@@ -192,9 +192,9 @@ void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c)
 #endif
 }
 
-color_t *dsy_led_driver_color_by_name(uint8_t name)
+color *dsy_led_driver_color_by_name(uint8_t name)
 {
-	color_t *c;
+	color *c;
 	if(name < LED_COLOR_LAST)
 	{
 		c = &leddriver.standard_colors[name];

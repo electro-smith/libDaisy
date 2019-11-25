@@ -8,16 +8,16 @@ I2C_HandleTypeDef hi2c4;
 // TODO: This is global, and the board gets set for each init. 
 // Its a bit redundant, but I'm just trying to validate some hardware
 //   without breaking all the other boards.
-static dsy_i2c_handle_t i2c1_handler;
-static dsy_i2c_handle_t i2c2_handler;
-static dsy_i2c_handle_t i2c3_handler;
-static dsy_i2c_handle_t i2c4_handler;
+static dsy_i2c_handle i2c1_handler;
+static dsy_i2c_handle i2c2_handler;
+static dsy_i2c_handle i2c3_handler;
+static dsy_i2c_handle i2c4_handler;
 
 
-static void init_i2c_pins(dsy_i2c_handle_t* hi2c);
-static void deinit_i2c_pins(dsy_i2c_handle_t* hi2c);
+static void init_i2c_pins(dsy_i2c_handle* hi2c);
+static void deinit_i2c_pins(dsy_i2c_handle* hi2c);
 
-void dsy_i2c_init(dsy_i2c_handle_t *dsy_hi2c) 
+void dsy_i2c_init(dsy_i2c_handle *dsy_hi2c) 
 {
 	I2C_HandleTypeDef *hal_hi2c;
 	switch(dsy_hi2c->periph)
@@ -71,7 +71,7 @@ void dsy_i2c_init(dsy_i2c_handle_t *dsy_hi2c)
 	}
 }
 
-I2C_HandleTypeDef* dsy_i2c_hal_handle(dsy_i2c_handle_t* dsy_hi2c) 
+I2C_HandleTypeDef* dsy_i2c_hal_handle(dsy_i2c_handle* dsy_hi2c) 
 {
 	switch(dsy_hi2c->periph)
 	{
@@ -139,7 +139,7 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 	}
 } 
 
-static void init_i2c_pins(dsy_i2c_handle_t* hi2c) 
+static void init_i2c_pins(dsy_i2c_handle* hi2c) 
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
 	GPIO_TypeDef* port;
@@ -166,7 +166,7 @@ static void init_i2c_pins(dsy_i2c_handle_t* hi2c)
 	}
 }
 
-static void deinit_i2c_pins(dsy_i2c_handle_t* hi2c) 
+static void deinit_i2c_pins(dsy_i2c_handle* hi2c) 
 {
 	GPIO_TypeDef* port;
 	uint16_t	  pin;

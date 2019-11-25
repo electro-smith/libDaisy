@@ -50,13 +50,13 @@ const uint8_t seed_pins[32] =
 // (E.g. Audio needs both SAI, and I2C for most devices.)
 typedef struct
 {
-	dsy_sdram_handle_t sdram_handle;
-	dsy_qspi_handle_t  qspi_handle;
-	dsy_sai_handle_t   sai_handle;
-	dsy_i2c_handle_t   i2c1_handle, i2c2_handle;
-	dsy_adc_handle_t   adc_handle;
-	dsy_dac_handle_t   dac_handle;
-	dsy_gpio_t		   led, testpoint;
+	dsy_sdram_handle sdram_handle;
+	dsy_qspi_handle  qspi_handle;
+	dsy_sai_handle   sai_handle;
+	dsy_i2c_handle  i2c1_handle, i2c2_handle;
+	dsy_adc_handle   adc_handle;
+	dsy_dac_handle   dac_handle;
+	dsy_gpio		   led, testpoint;
 } daisy_handle;
 
 

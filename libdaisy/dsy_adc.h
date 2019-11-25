@@ -44,9 +44,9 @@ extern "C"
 		dsy_gpio_pin mux_pin_config[DSY_ADC_PIN_LAST][MUX_SEL_LAST];
 		uint8_t		 active_channels[DSY_ADC_PIN_LAST];
 		uint8_t		 channels, mux_channels[DSY_ADC_PIN_LAST];
-	} dsy_adc_handle_t;
+	} dsy_adc_handle;
 
-	void	 dsy_adc_init(dsy_adc_handle_t *dsy_hadc);
+	void	 dsy_adc_init(dsy_adc_handle *dsy_hadc);
 	void	 dsy_adc_start();
 	void	 dsy_adc_stop();
 	uint16_t dsy_adc_get(uint8_t chn);

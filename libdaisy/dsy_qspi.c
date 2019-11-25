@@ -29,24 +29,24 @@ typedef struct
 {
 	QSPI_HandleTypeDef hqspi;
 	uint8_t			   board;
-	dsy_qspi_handle_t *dsy_hqspi;
-} dsy_qspi_t;
+	dsy_qspi_handle *dsy_hqspi;
+} dsy_qspi;
 
-static dsy_qspi_t dsy_qspi_handle;
+static dsy_qspi qspi_handle;
 //static QSPI_HandleTypeDef dsy_qspi_handle;
 
 
 //int dsy_qspi_init(uint8_t mode, uint8_t device, uint8_t board)
-int dsy_qspi_init(dsy_qspi_handle_t *hqspi)
+int dsy_qspi_init(dsy_qspi_handle *hqspi)
 {
 	// Set Handle Settings 	o
 
 	//dsy_qspi_handle.board = board;
-	dsy_qspi_handle.dsy_hqspi = hqspi;
+	qspi_handle.dsy_hqspi = hqspi;
 	uint8_t device, mode;
 	device = hqspi->device;
 	mode   = hqspi->mode;
-	if(HAL_QSPI_DeInit(&dsy_qspi_handle.hqspi) != HAL_OK)
+	if(HAL_QSPI_DeInit(&qspi_handle.hqspi) != HAL_OK)
 	{
 		return DSY_MEMORY_ERROR;
 	}
@@ -63,41 +63,41 @@ int dsy_qspi_init(dsy_qspi_handle_t *hqspi)
 			break;
 		default: flash_size = IS25LP080D_FLASH_SIZE; break;
 	}
-	dsy_qspi_handle.hqspi.Instance = QUADSPI;
+	qspi_handle.hqspi.Instance = QUADSPI;
 	//dsy_qspi_handle.Init.ClockPrescaler = 7;
 	//dsy_qspi_handle.Init.ClockPrescaler = 7;
 	//dsy_qspi_handle.Init.ClockPrescaler = 2; // Conservative setting for now. Signal gets very weak faster than this.
-	dsy_qspi_handle.hqspi.Init.ClockPrescaler = 1;
-	dsy_qspi_handle.hqspi.Init.FifoThreshold  = 1;
-	dsy_qspi_handle.hqspi.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_NONE;
-	dsy_qspi_handle.hqspi.Init.FlashSize	  = POSITION_VAL(flash_size) - 1;
-	dsy_qspi_handle.hqspi.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_2_CYCLE;
-	dsy_qspi_handle.hqspi.Init.FlashID			  = QSPI_FLASH_ID_1;
-	dsy_qspi_handle.hqspi.Init.DualFlash		  = QSPI_DUALFLASH_DISABLE;
+	qspi_handle.hqspi.Init.ClockPrescaler = 1;
+	qspi_handle.hqspi.Init.FifoThreshold  = 1;
+	qspi_handle.hqspi.Init.SampleShifting = QSPI_SAMPLE_SHIFTING_NONE;
+	qspi_handle.hqspi.Init.FlashSize	  = POSITION_VAL(flash_size) - 1;
+	qspi_handle.hqspi.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_2_CYCLE;
+	qspi_handle.hqspi.Init.FlashID			  = QSPI_FLASH_ID_1;
+	qspi_handle.hqspi.Init.DualFlash		  = QSPI_DUALFLASH_DISABLE;
 
-	if(HAL_QSPI_Init(&dsy_qspi_handle.hqspi) != HAL_OK)
+	if(HAL_QSPI_Init(&qspi_handle.hqspi) != HAL_OK)
 	{
 		return DSY_MEMORY_ERROR;
 	}
-	if(reset_memory(&dsy_qspi_handle.hqspi) != DSY_MEMORY_OK)
+	if(reset_memory(&qspi_handle.hqspi) != DSY_MEMORY_OK)
 	{
 		return DSY_MEMORY_ERROR;
 	}
 //	uint8_t fifothresh = HAL_QSPI_GetFifoThreshold(&dsy_qspi_handle.hqspi);
 	//	uint8_t reg = 0;
 	//	reg = get_status_register(&dsy_qspi_handle);
-	if(dummy_cycles_cfg(&dsy_qspi_handle.hqspi, device) != DSY_MEMORY_OK)
+	if(dummy_cycles_cfg(&qspi_handle.hqspi, device) != DSY_MEMORY_OK)
 	{
 		return DSY_MEMORY_ERROR;
 	}
 	// Once writing test with 1 Line is confirmed lets move this out, and update writing to use 4-line.
-	if(quad_enable(&dsy_qspi_handle.hqspi) != DSY_MEMORY_OK)
+	if(quad_enable(&qspi_handle.hqspi) != DSY_MEMORY_OK)
 	{
 		return DSY_MEMORY_ERROR;
 	}
 	if(mode == DSY_QSPI_MODE_DSY_MEMORY_MAPPED)
 	{
-		if(enable_memory_mapped_mode(&dsy_qspi_handle.hqspi) != DSY_MEMORY_OK)
+		if(enable_memory_mapped_mode(&qspi_handle.hqspi) != DSY_MEMORY_OK)
 		{
 			return DSY_MEMORY_ERROR;
 		}
@@ -107,12 +107,12 @@ int dsy_qspi_init(dsy_qspi_handle_t *hqspi)
 
 int dsy_qspi_deinit()
 {
-	dsy_qspi_handle.hqspi.Instance = QUADSPI;
-	if(HAL_QSPI_DeInit(&dsy_qspi_handle.hqspi) != HAL_OK)
+	qspi_handle.hqspi.Instance = QUADSPI;
+	if(HAL_QSPI_DeInit(&qspi_handle.hqspi) != HAL_OK)
 	{
 		return DSY_MEMORY_ERROR;
 	}
-	HAL_QSPI_MspDeInit(&dsy_qspi_handle.hqspi);
+	HAL_QSPI_MspDeInit(&qspi_handle.hqspi);
 	return DSY_MEMORY_OK;
 }
 
@@ -131,24 +131,24 @@ int dsy_qspi_writepage(uint32_t adr, uint32_t sz, uint8_t *buf)
 	s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
 	s_command.SIOOMode			= QSPI_SIOO_INST_EVERY_CMD;
 	s_command.Address			= adr;
-	if(write_enable(&dsy_qspi_handle.hqspi) != DSY_MEMORY_OK)
+	if(write_enable(&qspi_handle.hqspi) != DSY_MEMORY_OK)
 	{
 		return DSY_MEMORY_ERROR;
 	}
 	if(HAL_QSPI_Command(
-		   &dsy_qspi_handle.hqspi, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
+		   &qspi_handle.hqspi, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
 	   != DSY_MEMORY_OK)
 	{
 		return DSY_MEMORY_ERROR;
 	}
-	if(HAL_QSPI_Transmit(&dsy_qspi_handle.hqspi,
+	if(HAL_QSPI_Transmit(&qspi_handle.hqspi,
 						 (uint8_t *)buf,
 						 HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
 	   != DSY_MEMORY_OK)
 	{
 		return DSY_MEMORY_ERROR;
 	}
-	if(autopolling_mem_ready(&dsy_qspi_handle.hqspi,
+	if(autopolling_mem_ready(&qspi_handle.hqspi,
 							 HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
 	   != DSY_MEMORY_OK)
 	{
@@ -280,17 +280,17 @@ int dsy_qspi_erasesector(uint32_t addr)
 	s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
 	s_command.SIOOMode			= QSPI_SIOO_INST_EVERY_CMD;
 	s_command.Address			= addr;
-	if(write_enable(&dsy_qspi_handle.hqspi) != DSY_MEMORY_OK)
+	if(write_enable(&qspi_handle.hqspi) != DSY_MEMORY_OK)
 	{
 		return DSY_MEMORY_ERROR;
 	}
 	if(HAL_QSPI_Command(
-		   &dsy_qspi_handle.hqspi, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
+		   &qspi_handle.hqspi, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
 	   != DSY_MEMORY_OK)
 	{
 		return DSY_MEMORY_ERROR;
 	}
-	if(autopolling_mem_ready(&dsy_qspi_handle.hqspi,
+	if(autopolling_mem_ready(&qspi_handle.hqspi,
 							 HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
 	   != DSY_MEMORY_OK)
 	{
@@ -768,8 +768,8 @@ void HAL_QSPI_MspInit(QSPI_HandleTypeDef *qspiHandle)
 		GPIO_TypeDef *port;
 		for(uint8_t i = 0; i < DSY_QSPI_PIN_LAST; i++)
 		{
-			port				= (GPIO_TypeDef*)gpio_hal_port_map[dsy_qspi_handle.dsy_hqspi->pin_config[i].port];
-			GPIO_InitStruct.Pin = gpio_hal_pin_map[dsy_qspi_handle.dsy_hqspi->pin_config[i].pin];
+			port				= (GPIO_TypeDef*)gpio_hal_port_map[qspi_handle.dsy_hqspi->pin_config[i].port];
+			GPIO_InitStruct.Pin = gpio_hal_pin_map[qspi_handle.dsy_hqspi->pin_config[i].pin];
 			GPIO_InitStruct.Mode	  = GPIO_MODE_AF_PP;
 			GPIO_InitStruct.Pull	  = GPIO_NOPULL;
 			GPIO_InitStruct.Speed	 = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -792,8 +792,8 @@ void HAL_QSPI_MspDeInit(QSPI_HandleTypeDef *qspiHandle)
 		uint16_t	  pin;
 		for(uint8_t i = 0; i < DSY_QSPI_PIN_LAST; i++)
 		{
-			port				= (GPIO_TypeDef*)gpio_hal_port_map[dsy_qspi_handle.dsy_hqspi->pin_config[i].port];
-			pin = gpio_hal_pin_map[dsy_qspi_handle.dsy_hqspi->pin_config[i].pin];
+			port				= (GPIO_TypeDef*)gpio_hal_port_map[qspi_handle.dsy_hqspi->pin_config[i].port];
+			pin = gpio_hal_pin_map[qspi_handle.dsy_hqspi->pin_config[i].pin];
 			HAL_GPIO_DeInit(port, pin);
 		}
 		/* QUADSPI interrupt Deinit */
@@ -806,5 +806,5 @@ void HAL_QSPI_MspDeInit(QSPI_HandleTypeDef *qspiHandle)
 
 void QUADSPI_IRQHandler(void)
 {
-	HAL_QSPI_IRQHandler(&dsy_qspi_handle.hqspi);
+	HAL_QSPI_IRQHandler(&qspi_handle.hqspi);
 }

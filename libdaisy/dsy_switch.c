@@ -1,7 +1,7 @@
 #include <stm32h7xx_hal.h>
 #include "dsy_switch.h"
 
-void dsy_switch_init(dsy_switch_t *sw)
+void dsy_switch_init(dsy_switch *sw)
 {
 	sw->gpio.pin.port = sw->pin_config.port;
 	sw->gpio.pin.pin  = sw->pin_config.pin;
@@ -17,23 +17,23 @@ void dsy_switch_init(dsy_switch_t *sw)
 	sw->state = sw->polarity == DSY_SWITCH_POLARITY_NORMAL ? 0x00 : 0xFF;
 }
 
-void dsy_switch_debounce(dsy_switch_t *sw)
+void dsy_switch_debounce(dsy_switch *sw)
 {
 	sw->state = (sw->state << 1)
 				| (sw->polarity == DSY_SWITCH_POLARITY_NORMAL
 					   ? dsy_gpio_read(&sw->gpio)
 					   : !dsy_gpio_read(&sw->gpio));
 }
-uint8_t dsy_switch_falling_edge(dsy_switch_t *sw)
+uint8_t dsy_switch_falling_edge(dsy_switch *sw)
 {
 	return sw->state == 0x80 ? 1 : 0;
 }
 
-uint8_t dsy_switch_rising_edge(dsy_switch_t *sw)
+uint8_t dsy_switch_rising_edge(dsy_switch *sw)
 {
 	return sw->state == 0x7F ? 1 : 0;
 }
-uint8_t dsy_switch_state(dsy_switch_t *sw)
+uint8_t dsy_switch_state(dsy_switch *sw)
 {
 	return (sw->polarity == DSY_SWITCH_POLARITY_NORMAL
 				? dsy_gpio_read(&sw->gpio)
