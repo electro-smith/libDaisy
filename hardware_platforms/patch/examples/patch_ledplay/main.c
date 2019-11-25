@@ -1,5 +1,5 @@
 // Short Example showing how to write to the LEDs on Daisy Patch
-#include "brd_patch.h"
+#include "daisy_patch.h"
 
 daisy_patch patch;
 

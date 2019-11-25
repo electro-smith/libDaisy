@@ -1,7 +1,7 @@
 #pragma once
 #ifndef DSY_DAC_H
 #define DSY_DAC_H
-#include "core.h"
+#include "daisy_core.h"
 #ifdef __cplusplus
 extern "C"
 {

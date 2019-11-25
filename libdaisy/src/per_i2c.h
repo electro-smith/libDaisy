@@ -6,7 +6,7 @@ extern "C"
 #endif
 
 #include "stm32h7xx_hal.h"
-#include "core.h"
+#include "daisy_core.h"
 
 typedef enum
 {

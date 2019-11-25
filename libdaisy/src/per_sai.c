@@ -1,6 +1,6 @@
-#include "sai.h"
-#include "core.h"
-#include "dma.h"
+#include "per_sai.h"
+#include "daisy_core.h"
+#include "sys_dma.h"
 
 SAI_HandleTypeDef hsai_BlockA1;
 SAI_HandleTypeDef hsai_BlockB1;

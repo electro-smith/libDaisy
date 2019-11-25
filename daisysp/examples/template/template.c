@@ -1,4 +1,4 @@
-#include "brd_seed.h"
+#include "daisy_seed.h"
 
 static daisy_handle seed;
 

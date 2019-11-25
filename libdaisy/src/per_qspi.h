@@ -22,7 +22,7 @@
 #endif
 
 #include <stdint.h>
-#include "core.h" // Added for dsy_gpio_pin typedef
+#include "daisy_core.h" // Added for dsy_gpio_pin typedef
 
  //extern QSPI_HandleTypeDef hqspi;
  /* Error codes */

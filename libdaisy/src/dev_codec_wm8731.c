@@ -1,5 +1,5 @@
 // WM8371 Codec support.
-#include "codec_wm8731.h"
+#include "dev_codec_wm8731.h"
 
 typedef struct {
   uint8_t mcu_is_master, bitdepth;

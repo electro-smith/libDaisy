@@ -5,8 +5,8 @@
 extern "C"
 {
 #endif
-#include "core.h"
-#include "gpio.h"
+#include "daisy_core.h"
+#include "per_gpio.h"
 enum
 {
 	DSY_ENCODER_PIN_A,

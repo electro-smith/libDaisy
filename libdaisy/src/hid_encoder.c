@@ -1,4 +1,4 @@
-#include "encoder.h"
+#include "hid_encoder.h"
 
 void	 dsy_encoder_init(dsy_encoder *p) 
 {

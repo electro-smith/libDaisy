@@ -1,7 +1,7 @@
 #pragma once
 #ifndef DSY_FIELD_BSP_H
 #define DSY_FIELD_BSP_H
-#include "brd_seed.h"
+#include "daisy_seed.h"
 
 #ifndef SAMPLE_RATE
 #define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE

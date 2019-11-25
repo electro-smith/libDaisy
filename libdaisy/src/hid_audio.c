@@ -1,10 +1,10 @@
 #include <string.h>
 #include "daisy.h" // todo figure out what to do about this.
-#include "audio.h"
-#include "codec_pcm3060.h"
-#include "codec_wm8731.h"
+#include "hid_audio.h"
+#include "dev_codec_pcm3060.h"
+#include "dev_codec_wm8731.h"
 #include "stm32h7xx_hal.h"
-#include "dma.h"
+#include "sys_dma.h"
 
 //#define DSY_PROFILE_AUDIO_CALLBACK 1
 

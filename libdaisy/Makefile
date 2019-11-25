@@ -1,23 +1,22 @@
 TARGET = libdaisy
-CHIPSET = stm3_SOU
 
 MODULE_DIR=src
 MODULES = \
-codec_pcm3060 \
-codec_wm8731 \
-dma \
-adc \
-audio \
-leddriver \
-qspi \
-sdram \
-system \
-i2c \
-sai \
-gpio \
-dac \
-switch \
-encoder \
+dev_codec_pcm3060 \
+dev_codec_wm8731 \
+sys_dma \
+per_adc \
+hid_audio \
+dev_leddriver \
+per_qspi \
+dev_sdram \
+sys_system \
+per_i2c \
+per_sai \
+per_gpio \
+per_dac \
+hid_switch \
+hid_encoder \
 dev_sr_4021 \
 system_stm32h7xx \
 
@@ -26,6 +25,7 @@ system_stm32h7xx \
 ######################################
 #DEBUG = 0
 OPT = -O3
+CHIPSET = stm32f7x
 
 #######################################
 # paths
