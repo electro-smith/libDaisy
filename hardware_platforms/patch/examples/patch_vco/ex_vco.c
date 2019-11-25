@@ -3,7 +3,7 @@
 #include "dsy_patch_bsp.h"
 
 static daisy_patch patch;
-static dsy_oscillator_t osc;
+static dsy_oscillator osc;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
