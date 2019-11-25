@@ -34,7 +34,7 @@ typedef struct {
 #include "modules/crossfade.h"
 #include "modules/dcblock.h"
 #include "modules/decimator.h"
-#include "modules/delay_line.h"
+#include "modules/delayline.h"
 #include "modules/line.h"
 #include "modules/nlfilt.h"
 #include "modules/metro.h"

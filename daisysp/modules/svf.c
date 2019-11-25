@@ -3,7 +3,7 @@
 
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 
-void dsy_svf_init(dsy_svf_t *f, float sample_rate)
+void dsy_svf_init(dsy_svf *f, float sample_rate)
 {
 	f->sr = sample_rate;
 	f->fc = 200.0f;
@@ -23,7 +23,7 @@ void dsy_svf_init(dsy_svf_t *f, float sample_rate)
 	f->out_peak = 0.0f;
 	f->out_band = 0.0f;
 }
-void dsy_svf_process(dsy_svf_t *f, float *in)
+void dsy_svf_process(dsy_svf *f, float *in)
 {
 	f->input = *in;
 	// first pass
@@ -48,7 +48,7 @@ void dsy_svf_process(dsy_svf_t *f, float *in)
 	f->out_notch += 0.5f * f->notch;
 }
 // setters
-void dsy_svf_set_fc(dsy_svf_t *f, float frequency)
+void dsy_svf_set_fc(dsy_svf *f, float frequency)
 {
 	if (frequency < 0.000001f)
 	{
@@ -68,7 +68,7 @@ void dsy_svf_set_fc(dsy_svf_t *f, float frequency)
 	//f->damp = (MIN(2.0f * powf(f->res, 0.25f), MIN(2.0f, 2.0f / f->freq - f->freq * 0.5f)));
 	f->damp = MIN(2.0f*(1.0f - powf(f->res, 0.25f)), MIN(2.0f, 2.0f / f->freq - f->freq * 0.5f));
 }
-void dsy_svf_set_res(dsy_svf_t *f, float res)
+void dsy_svf_set_res(dsy_svf *f, float res)
 {
 	if (res < 0.0f)
 	{
@@ -83,7 +83,7 @@ void dsy_svf_set_res(dsy_svf_t *f, float res)
 	//f->damp = (MIN(2.0f * powf(res, 0.25f), MIN(2.0f, 2.0f / f->freq - f->freq * 0.5f)));
 	f->damp = MIN(2.0f*(1.0f - powf(f->res, 0.25f)), MIN(2.0f, 2.0f / f->freq - f->freq * 0.5f));
 }
-void dsy_svf_set_drive(dsy_svf_t *f, float drive)
+void dsy_svf_set_drive(dsy_svf *f, float drive)
 {
 	if (drive < 0.0f)
 	{
@@ -96,23 +96,23 @@ void dsy_svf_set_drive(dsy_svf_t *f, float drive)
 	f->drive = drive;
 }
 // outs
-float dsy_svf_notch(dsy_svf_t *f)
+float dsy_svf_notch(dsy_svf *f)
 {
 	return f->out_notch;
 }
-float dsy_svf_low(dsy_svf_t *f)
+float dsy_svf_low(dsy_svf *f)
 {
 	return f->out_low;
 }
-float dsy_svf_high(dsy_svf_t *f)
+float dsy_svf_high(dsy_svf *f)
 {
 	return f->out_high;
 }
-float dsy_svf_band(dsy_svf_t *f)
+float dsy_svf_band(dsy_svf *f)
 {
 	return f->out_band;
 }
-float dsy_svf_peak(dsy_svf_t *f)
+float dsy_svf_peak(dsy_svf *f)
 {
 	return f->out_peak;
 }

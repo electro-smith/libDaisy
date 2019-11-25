@@ -2,7 +2,7 @@
 #include "oscillator.h"
 
 static float polyblep(float phase_inc, float t);
-void dsy_oscillator_init(dsy_oscillator_t *p, float sr)
+void dsy_oscillator_init(dsy_oscillator *p, float sr)
 {
 	p->sr = sr;
 	p->freq = 100.0f;	
@@ -13,7 +13,7 @@ void dsy_oscillator_init(dsy_oscillator_t *p, float sr)
 	p->last_out = 0.0f;
 	p->last_freq = p->freq;
 }
-float dsy_oscillator_process(dsy_oscillator_t *p)
+float dsy_oscillator_process(dsy_oscillator *p)
 {
 	float out;
 	if (p->last_freq != p->freq)
@@ -86,7 +86,7 @@ float dsy_oscillator_process(dsy_oscillator_t *p)
 	}
 	return out * p->amp;
 }
-void dsy_oscillator_reset_phase(dsy_oscillator_t *p)
+void dsy_oscillator_reset_phase(dsy_oscillator *p)
 {
 	p->phase = 0.0f;
 }

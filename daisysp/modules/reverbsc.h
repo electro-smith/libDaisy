@@ -19,7 +19,7 @@ typedef struct
 	int     randLine_cnt;
 	float filterState;
 	float *buf;
-}dsy_reverbsc_dl_t;
+}dsy_reverbsc_dl;
 typedef struct
 {
 	float feedback, lpfreq;
@@ -28,12 +28,12 @@ typedef struct
 	float dampFact;
 	float prv_LPFreq;
 	int initDone;
-	dsy_reverbsc_dl_t delayLines[8];
+	dsy_reverbsc_dl delayLines[8];
 	float aux[DSY_REVERBSC_MAX_SIZE];
-}dsy_reverbsc_t;
+}dsy_reverbsc;
 
-int dsy_reverbsc_init(dsy_reverbsc_t *p, float sr);
-int dsy_reverbsc_process(dsy_reverbsc_t *p, float *in1, float *in2, float *out1, float *out2);
+int dsy_reverbsc_init(dsy_reverbsc *p, float sr);
+int dsy_reverbsc_process(dsy_reverbsc *p, float *in1, float *in2, float *out1, float *out2);
 #ifdef __cplusplus
 }
 #endif

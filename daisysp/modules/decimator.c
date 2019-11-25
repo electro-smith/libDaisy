@@ -2,7 +2,7 @@
 
 #define MAX_BITS_TO_CRUSH 16
 
-void dsy_decimator_init(dsy_decimator_t *d)
+void dsy_decimator_init(dsy_decimator *d)
 {
 	d->downsample_factor = 1.0f;
 	d->bitcrush_factor = 0.0f;
@@ -12,7 +12,7 @@ void dsy_decimator_init(dsy_decimator_t *d)
 	d->threshold = 0;
 }
 
-float dsy_decimator_process(dsy_decimator_t *d, float input)
+float dsy_decimator_process(dsy_decimator *d, float input)
 {
 	uint8_t bits_to_crush;
 	int32_t temp;

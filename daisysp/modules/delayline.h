@@ -21,14 +21,14 @@ typedef struct
 	size_t write_ptr, delay, size;
 	float delay_frac, delay_sec, sr;
 	float *line;
-}dsy_delay_t;
+}dsy_delayline;
 
-void dsy_delay_init(dsy_delay_t *p, float* buff, size_t buff_size, float samplerate);
-void dsy_delay_reset(dsy_delay_t *p);
-void dsy_delay_set_delay_samps(dsy_delay_t *p, size_t size);
-void dsy_delay_set_delay_sec(dsy_delay_t *p, float sec);
-void dsy_delay_line_write(dsy_delay_t *p, float val);
-float dsy_delay_line_read(dsy_delay_t *p);
+void dsy_delay_init(dsy_delayline *p, float* buff, size_t buff_size, float samplerate);
+void dsy_delay_reset(dsy_delayline *p);
+void dsy_delay_set_delay_samps(dsy_delayline *p, size_t size);
+void dsy_delay_set_delay_sec(dsy_delayline *p, float sec);
+void dsy_delay_line_write(dsy_delayline *p, float val);
+float dsy_delay_line_read(dsy_delayline *p);
 
 #ifdef __cplusplus
 }

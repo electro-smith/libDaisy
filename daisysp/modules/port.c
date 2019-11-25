@@ -22,7 +22,7 @@
 
 #include "port.h"
 
-void dsy_port_init(dsy_port_t *p, int sr, float htime)
+void dsy_port_init(dsy_port *p, int sr, float htime)
 {
     p->yt1 = 0;
     p->prvhtim = -100.0;
@@ -32,7 +32,7 @@ void dsy_port_init(dsy_port_t *p, int sr, float htime)
     p->onedsr = 1.0/p->sr;
 }
 
-float dsy_port_compute(dsy_port_t *p, float in)
+float dsy_port_compute(dsy_port *p, float in)
 {
     if(p->prvhtim != p->htime) {
         p->c2 = pow(0.5, p->onedsr / p->htime);
