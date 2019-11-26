@@ -43,38 +43,69 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>DEBUG=1;__FPU_PRESENT=1;;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DEBUG=1;__FPU_PRESENT=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Og</Optimization>
+      <AdditionalOptions />
+      <CLanguageStandard />
+      <CPPLanguageStandard />
     </ClCompile>
     <Link>
-      <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
-      <LibrarySearchDirectories>;%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
-      <AdditionalLibraryNames>;%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
+      <AdditionalLinkerInputs>%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
+      <LibrarySearchDirectories>%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
+      <AdditionalLibraryNames>%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
       <LinkerScript>STM32H750IB_flash.lds</LinkerScript>
+      <AdditionalOptions />
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="codec_pcm3060.c" />
-    <ClCompile Include="codec_wm8731.c" />
-    <ClCompile Include="dev_sr_4021.c" />
-    <ClCompile Include="dsy_dac.c" />
-    <ClCompile Include="dsy_dma.c" />
-    <ClCompile Include="dsy_adc.c" />
-    <ClCompile Include="dsy_audio.c" />
-    <ClCompile Include="dsy_encoder.c" />
-    <ClCompile Include="dsy_gpio.c" />
-    <ClCompile Include="dsy_leddriver.c" />
-    <ClCompile Include="dsy_qspi.c" />
-    <ClCompile Include="dsy_sdram.c" />
-    <ClCompile Include="dsy_switch.c" />
-    <ClCompile Include="dsy_system.c" />
-    <ClCompile Include="dsy_i2c.c" />
-    <ClCompile Include="dsy_sai.c" />
-    <ClCompile Include="system_stm32h7xx.c" />
+    <ClCompile Include="src\dev_codec_pcm3060.c" />
+    <ClCompile Include="src\dev_codec_wm8731.c" />
+    <ClCompile Include="src\dev_leddriver.c" />
+    <ClCompile Include="src\dev_sdram.c" />
+    <ClCompile Include="src\dev_sr_4021.c" />
+    <ClCompile Include="src\hid_audio.c" />
+    <ClCompile Include="src\hid_encoder.c" />
+    <ClCompile Include="src\hid_switch.c" />
+    <ClCompile Include="src\per_adc.c" />
+    <ClCompile Include="src\per_dac.c" />
+    <ClCompile Include="src\per_gpio.c" />
+    <ClCompile Include="src\per_i2c.c" />
+    <ClCompile Include="src\per_qspi.c" />
+    <ClCompile Include="src\per_sai.c" />
+    <ClCompile Include="src\system_stm32h7xx.c" />
+    <ClCompile Include="src\sys_dma.c" />
+    <ClCompile Include="src\sys_system.c" />
+    <ClInclude Include="src\daisy.h" />
+    <ClInclude Include="src\daisy_core.h" />
+    <ClInclude Include="src\daisy_field.h" />
+    <ClInclude Include="src\daisy_patch.h" />
+    <ClInclude Include="src\daisy_petal.h" />
+    <ClInclude Include="src\daisy_pod.h" />
+    <ClInclude Include="src\daisy_seed.h" />
+    <ClInclude Include="src\dev_codec_pcm3060.h" />
+    <ClInclude Include="src\dev_codec_wm8731.h" />
+    <ClInclude Include="src\dev_codec_wm8731_frame.h" />
+    <ClInclude Include="src\dev_flash_IS25LP064A.h" />
+    <ClInclude Include="src\dev_flash_IS25LP080D.h" />
+    <ClInclude Include="src\dev_leddriver.h" />
+    <ClInclude Include="src\dev_sdram.h" />
+    <ClInclude Include="src\dev_sr_4021.h" />
+    <ClInclude Include="src\hid_audio.h" />
+    <ClInclude Include="src\hid_encoder.h" />
+    <ClInclude Include="src\hid_switch.h" />
+    <ClInclude Include="src\per_adc.h" />
+    <ClInclude Include="src\per_dac.h" />
+    <ClInclude Include="src\per_gpio.h" />
+    <ClInclude Include="src\per_i2c.h" />
+    <ClInclude Include="src\per_qspi.h" />
+    <ClInclude Include="src\per_sai.h" />
+    <ClInclude Include="src\stm32h7xx_hal_conf.h" />
+    <ClInclude Include="src\sys_dma.h" />
+    <ClInclude Include="src\sys_system.h" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal.c" />
@@ -184,33 +215,6 @@
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usart.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usb.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_utils.c" />
-    <ClInclude Include="codec_pcm3060.h" />
-    <ClInclude Include="codec_wm8731.h" />
-    <ClInclude Include="codec_wm8731_frame.h" />
-    <ClInclude Include="dev_sr_4021.h" />
-    <ClInclude Include="dsy_core_hw.h" />
-    <ClInclude Include="dsy_dac.h" />
-    <ClInclude Include="dsy_dma.h" />
-    <ClInclude Include="dsy_adc.h" />
-    <ClInclude Include="dsy_audio.h" />
-    <ClInclude Include="dsy_encoder.h" />
-    <ClInclude Include="dsy_field_bsp.h" />
-    <ClInclude Include="dsy_gpio.h" />
-    <ClInclude Include="dsy_leddriver.h" />
-    <ClInclude Include="dsy_patch_bsp.h" />
-    <ClInclude Include="dsy_petal_bsp.h" />
-    <ClInclude Include="dsy_pod_bsp.h" />
-    <ClInclude Include="dsy_qspi.h" />
-    <ClInclude Include="dsy_sdram.h" />
-    <ClInclude Include="dsy_seed.h" />
-    <ClInclude Include="dsy_switch.h" />
-    <ClInclude Include="dsy_system.h" />
-    <ClInclude Include="dsy_i2c.h" />
-    <ClInclude Include="IS25LP064A.h" />
-    <ClInclude Include="IS25LP080D.h" />
-    <ClInclude Include="libdaisy.h" />
-    <ClInclude Include="dsy_sai.h" />
-    <ClInclude Include="stm32h7xx_hal_conf.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_adc.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_adc_ex.h" />
