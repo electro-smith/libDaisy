@@ -14,10 +14,10 @@ typedef struct
 	// internal data
 	float downsampled, bitcrushed;
 	uint32_t inc, threshold;
-}dsy_decimator_t;
+}dsy_decimator;
 
-void dsy_decimator_init(dsy_decimator_t *d);
-float dsy_decimator_process(dsy_decimator_t *d, float input);
+void dsy_decimator_init(dsy_decimator *d);
+float dsy_decimator_process(dsy_decimator *d, float input);
 
 #ifdef __cplusplus
 }

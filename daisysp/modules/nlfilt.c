@@ -6,7 +6,7 @@
  */
 
 /*
-    nlfilt.c:
+    dsy_nlfilt.c:
     Copyright (C) 1996 John ffitch, Richard Dobson
     This file is part of Csound.
     The Csound Library is free software; you can redistribute it
@@ -26,7 +26,7 @@
 /* Y{n} =a Y{n-1} + b Y{n-2} + d Y^2{n-L} + X{n} - C */
 
 /***************************************************************\
-*       nlfilt.c                                                *
+*       dsy_nlfilt.c                                                *
 *       Non-linear filter (Excitable region)                    *
 *       5 June 1996 John ffitch                                 *
 *       See paper by Dobson and ffitch, ICMC'96                 *
@@ -44,23 +44,23 @@
 
 
 // Private Functions
-static int32_t nlfilt_set(nlfilt *p);
-static int32_t nlfilt2(nlfilt *p);
+static int32_t dsy_nlfilt_set(dsy_nlfilt *p);
+static int32_t dsy_nlfilt2(dsy_nlfilt *p);
 
-void nlfilt_init(nlfilt *p, size_t size)
+void dsy_nlfilt_init(dsy_nlfilt *p, size_t size)
 {
 	p->size = size;
 	p->point = 0;  // Set delay pointer
-	nlfilt_set(p);  // Setup Delay
+	dsy_nlfilt_set(p);  // Setup Delay
 	// For Now control pointers and i/o will be setup externally
 }
 
-void nlfilt_process(nlfilt *p)
+void dsy_nlfilt_process(dsy_nlfilt *p)
 {
-	nlfilt2(p);
+	dsy_nlfilt2(p);
 }
 
-static int32_t nlfilt_set(nlfilt *p)
+static int32_t dsy_nlfilt_set(dsy_nlfilt *p)
 {
 	// Initializes delay buffer.
 	memset(p->delay, 0, MAX_DELAY * sizeof(float));  // Memset 
@@ -77,7 +77,7 @@ static int32_t nlfilt_set(nlfilt *p)
 /* Revised version due to Risto Holopainen 12 Mar 2004 */
 /* Y{n} =tanh(a Y{n-1} + b Y{n-2} + d Y^2{n-L} + X{n} - C) */
 
-static int32_t nlfilt2(nlfilt *p)
+static int32_t dsy_nlfilt2(dsy_nlfilt *p)
 {
 	float   *ar;
 	//uint32_t offset = p->h.insdshead->ksmps_offset;
@@ -150,4 +150,4 @@ static int32_t nlfilt2(nlfilt *p)
 	}
 	p->point = point;
 	return OK;
-} /* end nlfilt2(p) */
+} /* end dsy_nlfilt2(p) */

@@ -1,5 +1,5 @@
 #include "line.h"
-void dsy_line_init(dsy_line_t *p, float sr) 
+void dsy_line_init(dsy_line *p, float sr) 
 {
 	p->sr	= sr;
 	p->dur = 0.5f;
@@ -7,7 +7,7 @@ void dsy_line_init(dsy_line_t *p, float sr)
 	p->start = 1.0f;
 	p->val   = 1.0f;
 }
-void dsy_line_start(dsy_line_t *p, float start, float end, float dur)
+void dsy_line_start(dsy_line *p, float start, float end, float dur)
 {
 	p->start = start;
 	p->end   = end;
@@ -17,7 +17,7 @@ void dsy_line_start(dsy_line_t *p, float start, float end, float dur)
 	p->finished = 0;
 }
 
-float dsy_line_process(dsy_line_t *p, uint8_t *finished)
+float dsy_line_process(dsy_line *p, uint8_t *finished)
 {
 	float out;
 	out = p->val;

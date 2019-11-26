@@ -8,10 +8,10 @@ typedef struct {
     float outputs;
     float inputs;
     float gain;
-} dsy_dcblock_t;
+} dsy_dcblock;
 
-void dsy_dcblock_init(dsy_dcblock_t *p, int sr);
-float dsy_dcblock_process(dsy_dcblock_t *p, float in);
+void dsy_dcblock_init(dsy_dcblock *p, int sr);
+float dsy_dcblock_process(dsy_dcblock *p, float in);
 
 #ifdef __cplusplus
 }

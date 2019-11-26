@@ -1,5 +1,5 @@
 #include <string.h>
-#include "dsy_seed.h"
+#include "daisy_seed.h"
 
 // Global Init Structure for Daisy 
 daisy_handle seed;

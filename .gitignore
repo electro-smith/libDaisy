@@ -126,3 +126,4 @@ Transcode Report.txt
 /daisysp/build
 /libdaisy/examples/*/build
 /daisysp/examples/*/build
+hardware_platforms/*/examples/*/build
