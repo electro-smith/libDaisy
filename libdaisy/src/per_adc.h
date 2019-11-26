@@ -50,10 +50,12 @@ extern "C"
 	void	 dsy_adc_start();
 	void	 dsy_adc_stop();
 	uint16_t dsy_adc_get(uint8_t chn);
+	uint16_t *dsy_adc_get_rawptr(uint8_t chn);
 	float	dsy_adc_get_float(uint8_t chn);
 
 	// These are getters for multiplexed inputs on a single channel (up to 8 per ADC input).
 	uint16_t dsy_adc_get_mux(uint8_t chn, uint8_t idx);
+	uint16_t *dsy_adc_get_mux_rawptr(uint8_t chn, uint8_t idx);
 	float	dsy_adc_get_mux_float(uint8_t chn, uint8_t idx);
 
 #ifdef __cplusplus

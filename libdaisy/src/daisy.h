@@ -65,5 +65,6 @@ FORCE_INLINE float cube(float x)
 #include "hid_audio.h"
 #include "hid_encoder.h"
 #include "hid_switch.h"
+#include "hid_knob.h"
 
 #endif
