@@ -1,22 +1,22 @@
 TARGET = libdaisy
-CHIPSET = stm32f7x
 
+MODULE_DIR=src
 MODULES = \
-codec_pcm3060 \
-codec_wm8731 \
-dsy_dma \
-dsy_adc \
-dsy_audio \
-dsy_leddriver \
-dsy_qspi \
-dsy_sdram \
-dsy_system \
-dsy_i2c \
-dsy_sai \
-dsy_gpio \
-dsy_dac \
-dsy_switch \
-dsy_encoder \
+dev_codec_pcm3060 \
+dev_codec_wm8731 \
+sys_dma \
+per_adc \
+hid_audio \
+dev_leddriver \
+per_qspi \
+dev_sdram \
+sys_system \
+per_i2c \
+per_sai \
+per_gpio \
+per_dac \
+hid_switch \
+hid_encoder \
 dev_sr_4021 \
 system_stm32h7xx \
 
@@ -25,6 +25,7 @@ system_stm32h7xx \
 ######################################
 #DEBUG = 0
 OPT = -O3
+CHIPSET = stm32f7x
 
 #######################################
 # paths
@@ -43,7 +44,7 @@ BUILD_DIR = build
 ######################################
 
 # C sources
-C_SOURCES += $(addsuffix .c, $(MODULES))
+C_SOURCES += $(addsuffix .c, $(MODULE_DIR)/$(MODULES))
 
 # manually adding necessary HAL files
 C_SOURCES += \
@@ -145,6 +146,7 @@ C_DEFS =  \
 -DSTM32H750xx
 
 C_INCLUDES = \
+-I$(MODULE_DIR) \
 -IDrivers/CMSIS/Include \
 -IDrivers/CMSIS/Device/ST/STM32H7xx/Include \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
