@@ -127,4 +127,4 @@ transcode report.txt
 /libdaisy/examples/*/build
 /daisysp/examples/*/build
 hardware_platforms/*/examples/*/build
-*/VisualGDB/
+hardware_platforms/*/examples/*/VisualGDB/
