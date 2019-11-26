@@ -1,4 +1,4 @@
-TARGET = ex_noise
+TARGET = ex_whitenoise
 CHIPSET = stm32h7x
 
 TARGET_BIN=$(TARGET).bin
@@ -51,7 +51,7 @@ core
 ######################################
 
 C_SOURCES = \
-ex_noise.c \
+ex_whitenoise.c \
 $(SYSTEM_FILES_DIR)/system_stm32h7xx.c
 
 ASM_SOURCES = \

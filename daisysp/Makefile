@@ -1,5 +1,6 @@
 TARGET = libdaisysp
 
+MODULE_DIR = modules
 MODULES = \
 adenv \
 crossfade \
@@ -9,12 +10,12 @@ delay_line \
 line \
 nlfilt \
 metro \
-noise \
 oscillator \
 phasor \
 port \
 reverbsc \
 svf \
+whitenoise \
 
 # TODO: Consider making this work for PCs as well?
 
@@ -43,7 +44,7 @@ BUILD_DIR = build
 ######################################
 
 # C sources
-C_SOURCES += $(addsuffix .c, $(MODULES))
+C_SOURCES += $(addsuffix .c, $(MODULE_DIR)/$(MODULES))
 
 #######################################
 # binaries
