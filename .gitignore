@@ -115,7 +115,7 @@ LLVM/
 *.suo
 *.user
 .ipynb_checkpoints/
-Transcode Report.txt
+transcode report.txt
 /examples/verb/build
 /examples/bypass/build
 /examples/template/build
@@ -127,3 +127,4 @@ Transcode Report.txt
 /libdaisy/examples/*/build
 /daisysp/examples/*/build
 hardware_platforms/*/examples/*/build
+*/VisualGDB/
