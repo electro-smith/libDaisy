@@ -1,6 +1,8 @@
 TARGET = ex_whitenoise
 CHIPSET = stm32h7x
 
+PGM_DEVICE ?= interface/stlink-v2.cfg
+
 TARGET_BIN=$(TARGET).bin
 TARGET_ELF=$(TARGET).elf
 FLASH_ADDRESS = 0x08000000
@@ -41,7 +43,7 @@ LIBDAISY_DIR = \
 ../../../libdaisy
 
 DAISYSP_DIR = \
-../../../daisysp
+../..
 
 SYSTEM_FILES_DIR = \
 core
@@ -51,8 +53,10 @@ core
 ######################################
 
 C_SOURCES = \
-ex_whitenoise.c \
 $(SYSTEM_FILES_DIR)/system_stm32h7xx.c
+
+CPP_SOURCES = \
+ex_whitenoise.cpp
 
 ASM_SOURCES = \
 $(SYSTEM_FILES_DIR)/startup_stm32h750xx.s
@@ -66,10 +70,12 @@ PREFIX = arm-none-eabi-
 ifdef GCC_PATH
 CC = $(GCC_PATH)/$(PREFIX)gcc
 AS = $(GCC_PATH)/$(PREFIX)gcc -x assembler-with-cpp
+CXX = $(GCC_PATH)/$(PREFIX)g++ 
 CP = $(GCC_PATH)/$(PREFIX)objcopy
 SZ = $(GCC_PATH)/$(PREFIX)size
 else
 CC = $(PREFIX)gcc
+CXX = $(PREFIX)g++ 
 AS = $(PREFIX)gcc -x assembler-with-cpp
 CP = $(PREFIX)objcopy
 SZ = $(PREFIX)size
@@ -129,6 +135,10 @@ endif
 # Generate dependency information
 CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 
+CPPFLAGS = $(CFLAGS)
+CPPFLAGS += \
+-fno-exceptions
+
 #######################################
 # LDFLAGS
 #######################################
@@ -149,12 +159,17 @@ all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET
 # list of objects
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
 vpath %.c $(sort $(dir $(C_SOURCES)))
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(CPP_SOURCES:.cpp=.o)))
+vpath %.cpp $(sort $(dir $(CPP_SOURCES)))
 # list of ASM program objects
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
 	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+
+$(BUILD_DIR)/%.o: %.cpp Makefile | $(BUILD_DIR)
+	$(CXX) -c $(CPPFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.cpp=.lst)) $< -o $@
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
 	$(AS) -c $(CFLAGS) $< -o $@
