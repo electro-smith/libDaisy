@@ -17,6 +17,7 @@ per_gpio \
 per_dac \
 hid_switch \
 hid_encoder \
+hid_ctrl \
 dev_sr_4021 \
 system_stm32h7xx \
 
