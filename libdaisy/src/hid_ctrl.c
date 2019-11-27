@@ -1,4 +1,4 @@
-#include "hid_knob.h"
+#include "hid_ctrl.h"
 #include <math.h>
 void dsy_ctrl_init(dsy_ctrl *p,
 				   uint16_t *rawptr,
