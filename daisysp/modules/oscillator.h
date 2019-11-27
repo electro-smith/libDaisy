@@ -2,7 +2,6 @@
 #ifndef DSY_OSCILLATOR_H
 #define DSY_OSCILLATOR_H
 #include <stdint.h>
-#ifdef __cplusplus
 namespace daisysp
 {
 	class oscillator
@@ -47,16 +46,11 @@ namespace daisysp
 		float process();
 
 	  private:
-
-		inline float calc_phase_inc(float f) {
-			return ((2.0f * (float)M_PI * f) / sr);
-		}
-
+		float   calc_phase_inc(float f);
 		uint8_t waveform;
 		float   amp, freq;
 		float   sr, phase, phase_inc;
 		float   last_out, last_freq;
 	};
 } // namespace daisysp
-#endif
 #endif
