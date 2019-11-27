@@ -1,19 +1,35 @@
 #pragma once
 #ifndef DSY_WHITENOISE_H
 #define DSY_WHITENOISE_H
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 #include <stdint.h>
-typedef struct
-{
-	float amp;
-	int32_t randseed;
-}dsy_whitenoise;
-void dsy_whitenoise_init(dsy_whitenoise *p);
-float dsy_whitenoise_process(dsy_whitenoise *p);
 #ifdef __cplusplus
-}
+namespace daisysp
+{
+	class whitenoise
+	{
+	  public:
+		whitenoise() {}
+		~whitenoise() {}
+
+		void init()
+		{
+			amp		 = 1.0f;
+			randseed = 1;
+		}
+
+		inline void set_amp(float a) { amp = a; }
+
+		inline float process() 
+		{ 
+			randseed *= 16807;
+			return (randseed * coeff) * amp;
+		}
+
+	  private:
+		static constexpr float coeff = 4.6566129e-010f;
+		float   amp;
+		int32_t randseed;
+	};
+} // namespace daisysp
 #endif
 #endif

@@ -99,11 +99,10 @@
     <ClCompile Include="modules\line.c" />
     <ClCompile Include="modules\metro.c" />
     <ClCompile Include="modules\nlfilt.c" />
-    <ClCompile Include="modules\oscillator.c" />
+    <ClCompile Include="modules\oscillator.cpp" />
     <ClCompile Include="modules\phasor.c" />
     <ClCompile Include="modules\port.c" />
     <ClCompile Include="modules\reverbsc.c" />
     <ClCompile Include="modules\svf.c" />
-    <ClCompile Include="modules\whitenoise.c" />
   </ItemGroup>
 </Project>

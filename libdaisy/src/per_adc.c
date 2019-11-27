@@ -248,7 +248,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 		// Handle Externally Multiplexed Pins
 		for(uint16_t i = 0; i < adc.channels; i++)
 		{
-			dsy_adc_pin t = adc.dsy_hadc->active_channels[i];
+			dsy_adc_pin t = (dsy_adc_pin)adc.dsy_hadc->active_channels[i];
 			uint8_t current_position = adc.mux_index[i];
 			if(adc.mux_channels[t] > 0)
 			{
@@ -268,11 +268,11 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 
 static void write_mux_value(uint8_t chn, uint8_t idx) 
 {
-	uint8_t		  b0, b1, b2;
+	GPIO_PinState b0, b1, b2;
 	dsy_gpio_pin *pincfg = adc.dsy_hadc->mux_pin_config[chn];
-	b0					 = (idx & 0x01) > 0 ? 1 : 0;
-	b1					 = (idx & 0x02) > 0 ? 1 : 0;
-	b2					 = (idx & 0x04) > 0 ? 1 : 0;
+	b0					 = (GPIO_PinState)((idx & 0x01) > 0 ? 1 : 0);
+	b1					 = (GPIO_PinState)((idx & 0x02) > 0 ? 1 : 0);
+	b2					 = (GPIO_PinState)((idx & 0x04) > 0 ? 1 : 0);
 	HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[0].port], gpio_hal_pin_map[pincfg[0].pin], b0);
 	HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[1].port], gpio_hal_pin_map[pincfg[1].pin], b1);
 	HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[2].port], gpio_hal_pin_map[pincfg[2].pin], b2);
