@@ -54,6 +54,9 @@ float oscillator::process()
 	}
 	return out * amp;
 }
+float oscillator::calc_phase_inc(float f) {
+	return ((2.0f * (float)M_PI * f) / sr);
+}
 
 static float polyblep(float phase_inc, float t)
 {
