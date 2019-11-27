@@ -14,6 +14,9 @@ oscillator osc;
 whitenoise	 nse;
 static uint8_t wf;
 
+parameter<typeof(knob1)> p1;
+parameter<hid_ctrl>		 p2;
+
 static void audio(float *in, float *out, size_t size)
 {
 	float param, sig;
@@ -27,9 +30,11 @@ static void audio(float *in, float *out, size_t size)
 	// Audio Loop
 	for(size_t i = 0; i < size; i += 2)
 	{
-		param = knob1.process() * 72.0f;
-		osc.set_freq(mtof(12.0f + param));
-		nse.set_amp(knob2.process());
+		//param = knob1.process() * 72.0f;
+		osc.set_freq(mtof(p1.process()));
+		
+		//osc.set_freq(mtof(12.0f + param));
+		nse.set_amp(p2.process());
 		sig	= osc.process();
 		sig += nse.process();
 		out[i] = out[i+1] = sig;
@@ -41,6 +46,8 @@ int main(void)
 	hw.init();
 	knob1.init(hw.adc_ptr(KNOB_1), SAMPLE_RATE);
 	knob2.init(hw.adc_ptr(KNOB_2), SAMPLE_RATE);
+	p1.init(knob1, 12.0f, 72.0f, p1.CURVE_LINEAR);
+	p2.init(knob2, 0.0f, 1.0f, p2.CURVE_EXP);
 	// Init Osc
 	osc.init(SAMPLE_RATE);
 	osc.set_waveform(osc.WAVE_SIN);
