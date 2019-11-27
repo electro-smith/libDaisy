@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libdaisy", "..\..\..\..\libdaisy\libdaisy.vcxproj", "{1B07A9D3-1E1B-488A-9817-4B13EECA191C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "daisysp", "..\..\..\..\daisysp\daisysp.vcxproj", "{44F4AEA3-A6B2-4F03-9C28-34B2336BDF57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|VisualGDB = Debug|VisualGDB
@@ -23,6 +25,10 @@ Global
 		{1B07A9D3-1E1B-488A-9817-4B13EECA191C}.Debug|VisualGDB.Build.0 = Debug|VisualGDB
 		{1B07A9D3-1E1B-488A-9817-4B13EECA191C}.Release|VisualGDB.ActiveCfg = Release|VisualGDB
 		{1B07A9D3-1E1B-488A-9817-4B13EECA191C}.Release|VisualGDB.Build.0 = Release|VisualGDB
+		{44F4AEA3-A6B2-4F03-9C28-34B2336BDF57}.Debug|VisualGDB.ActiveCfg = Debug|VisualGDB
+		{44F4AEA3-A6B2-4F03-9C28-34B2336BDF57}.Debug|VisualGDB.Build.0 = Debug|VisualGDB
+		{44F4AEA3-A6B2-4F03-9C28-34B2336BDF57}.Release|VisualGDB.ActiveCfg = Release|VisualGDB
+		{44F4AEA3-A6B2-4F03-9C28-34B2336BDF57}.Release|VisualGDB.Build.0 = Release|VisualGDB
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,7 +9,6 @@ int main(void)
 {
     uint8_t selected_led = 0;
     uint8_t addr = 0x00; // led driver address
-    daisy_seed_init(&patch.seed);
     daisy_patch_init(&patch);
     dsy_led_driver_init(&patch.seed.i2c1_handle, &addr, 1);
     while(1) 

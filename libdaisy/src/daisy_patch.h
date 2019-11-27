@@ -44,20 +44,22 @@
 #define GATE_OUT_PORT DSY_GPIOG
 #define GATE_OUT_PIN 10
 
-
+#ifndef SAMPLE_RATE
+#define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
+#endif
 
 // Order of ADC Channels for accessing dsy_adc.h
 enum
 {
-	DSY_PATCH_KNOB_1,
-	DSY_PATCH_KNOB_2,
-	DSY_PATCH_KNOB_3,
-	DSY_PATCH_KNOB_4,
-	DSY_PATCH_CV_1,
-	DSY_PATCH_CV_2,
-	DSY_PATCH_CV_3,
-	DSY_PATCH_CV_4,
-	DSY_PATCH_CV_LAST
+	KNOB_1,
+	KNOB_2,
+	KNOB_3,
+	KNOB_4,
+	CV_1,
+	CV_2,
+	CV_3,
+	CV_4,
+	CV_LAST
 };
 
 // Mapping of LEDs via dsy_leddriver.h
@@ -92,7 +94,7 @@ typedef struct
 
 FORCE_INLINE void daisy_patch_init(daisy_patch *p) 
 {
-
+	daisy_seed_init(&p->seed);
 	p->button1.pin_config.port = BUTTON_1_PORT;
 	p->button1.pin_config.pin = BUTTON_1_PIN;
 	p->button1.pull = DSY_SWITCH_PULLUP;

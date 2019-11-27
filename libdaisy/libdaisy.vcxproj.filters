@@ -866,6 +866,9 @@
     <ClInclude Include="src\sys_system.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="src\hid_knob.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dev_codec_pcm3060.c">
@@ -917,6 +920,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="src\system_stm32h7xx.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid_knob.c">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
