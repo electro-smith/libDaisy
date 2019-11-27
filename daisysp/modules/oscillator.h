@@ -2,6 +2,7 @@
 #ifndef DSY_OSCILLATOR_H
 #define DSY_OSCILLATOR_H
 #include <stdint.h>
+#ifdef __cplusplus
 namespace daisysp
 {
 	class oscillator
@@ -53,4 +54,5 @@ namespace daisysp
 		float   last_out, last_freq;
 	};
 } // namespace daisysp
+#endif
 #endif

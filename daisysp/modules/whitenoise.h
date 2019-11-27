@@ -2,6 +2,7 @@
 #ifndef DSY_WHITENOISE_H
 #define DSY_WHITENOISE_H
 #include <stdint.h>
+#ifdef __cplusplus
 namespace daisysp
 {
 	class whitenoise
@@ -30,4 +31,5 @@ namespace daisysp
 		int32_t randseed;
 	};
 } // namespace daisysp
+#endif
 #endif
