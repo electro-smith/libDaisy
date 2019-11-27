@@ -9,8 +9,9 @@ using namespace daisysp;
 static float mtof(float m);
 
 daisy_patch hw;
-hid_ctrl   knob1;
+hid_ctrl   knob1, knob2;
 oscillator osc;
+whitenoise	 nse;
 static uint8_t wf;
 
 static void audio(float *in, float *out, size_t size)
@@ -28,7 +29,9 @@ static void audio(float *in, float *out, size_t size)
 	{
 		param = knob1.process() * 72.0f;
 		osc.set_freq(mtof(12.0f + param));
+		nse.set_amp(knob2.process());
 		sig	= osc.process();
+		sig += nse.process();
 		out[i] = out[i+1] = sig;
 	}
 }
@@ -42,10 +45,11 @@ int main(void)
 	// Init Knob
 	// If we build this into patch, it would be patch.knob1
 	knob1.init(dsy_adc_get_rawptr(KNOB_1), SAMPLE_RATE);
+	knob2.init(dsy_adc_get_rawptr(KNOB_2), SAMPLE_RATE);
 	// Init Osc
 	osc.init(SAMPLE_RATE);
 	osc.set_waveform(osc.WAVE_SIN);
-
+	nse.init();
 	// Old style still 
 	dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audio);
 	dsy_audio_start(DSY_AUDIO_INTERNAL);
