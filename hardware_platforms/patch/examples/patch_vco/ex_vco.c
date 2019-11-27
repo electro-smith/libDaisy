@@ -9,15 +9,15 @@ static void audioCallback(float *in, float *out, size_t size)
 	float sig, freq, amp;
 	size_t wave;
 
-	freq = dsy_adc_get_float(DSY_PATCH_KNOB_1);
+	freq = dsy_adc_get_float(KNOB_1);
 	// scale signal to appropriate range / filter / etc.
 	osc.freq = freq;
 
-	wave = dsy_adc_get(DSY_PATCH_KNOB_2);
+	wave = dsy_adc_get(KNOB_2);
 	// scale signal to appropriate range / filter / etc.
 	osc.wave = wave;
 
-	amp = dsy_adc_get_float(DSY_PATCH_KNOB_3);
+	amp = dsy_adc_get_float(KNOB_3);
 	// scale signal to appropriate range / filter / etc.
 	osc.amp = amp;
 
@@ -36,9 +36,8 @@ static void audioCallback(float *in, float *out, size_t size)
 int main(void)
 {
 	// initialize patch hardware and oscillator daisysp module
-    daisy_seed_init(&patch.seed);
     daisy_patch_init(&patch);
-    dsy_oscillator_init(&osc, DSY_AUDIO_SAMPLE_RATE);
+    dsy_oscillator_init(&osc, SAMPLE_RATE);
 
     // define callback
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);

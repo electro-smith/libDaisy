@@ -123,6 +123,10 @@ uint16_t dsy_adc_get(uint8_t chn)
 {
 	return adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0];
 }
+uint16_t *dsy_adc_get_rawptr(uint8_t chn)
+{
+	return &adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0];
+}
 
 float dsy_adc_get_float(uint8_t chn)
 {
@@ -133,6 +137,11 @@ float dsy_adc_get_float(uint8_t chn)
 uint16_t dsy_adc_get_mux(uint8_t chn, uint8_t idx) 
 {
 	return adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx];
+}
+
+uint16_t *dsy_adc_get_mux_rawptr(uint8_t chn, uint8_t idx)
+{
+	return &adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx];
 }
 
 float dsy_adc_get_mux_float(uint8_t chn, uint8_t idx) 
