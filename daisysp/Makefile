@@ -15,7 +15,9 @@ phasor \
 port \
 reverbsc \
 svf \
-whitenoise \
+
+# certain modules are only header files:
+# whitenoise
 
 # TODO: Consider making this work for PCs as well?
 
