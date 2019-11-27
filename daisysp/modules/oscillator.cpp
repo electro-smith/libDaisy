@@ -1,5 +1,6 @@
 #include <math.h>
 #include "oscillator.h"
+// TODO: Fix polyblep triangle... something bad happened to it.
 using namespace daisysp;
 static inline float polyblep(float phase_inc, float t);
 float oscillator::process() 

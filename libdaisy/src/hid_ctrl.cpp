@@ -10,6 +10,8 @@ float hid_ctrl::process() {
 	lockstatus = fabsf(delta) < thresh ? true : false;
 	if(lockstatus)
 		t = val;
+	if(t < 0.02f)
+		t = 0.0f;
 	val += coeff * (t - val);
 	return val;
 }
