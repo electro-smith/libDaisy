@@ -38,14 +38,9 @@ static void audio(float *in, float *out, size_t size)
 
 int main(void)
 {
-	// Init Hardware (old style still)
-	daisy_patch_init(&hw);
-
-	// New C++ Inits:
-	// Init Knob
-	// If we build this into patch, it would be patch.knob1
-	knob1.init(dsy_adc_get_rawptr(KNOB_1), SAMPLE_RATE);
-	knob2.init(dsy_adc_get_rawptr(KNOB_2), SAMPLE_RATE);
+	hw.init();
+	knob1.init(hw.adc_ptr(KNOB_1), SAMPLE_RATE);
+	knob2.init(hw.adc_ptr(KNOB_2), SAMPLE_RATE);
 	// Init Osc
 	osc.init(SAMPLE_RATE);
 	osc.set_waveform(osc.WAVE_SIN);
