@@ -1,36 +1,62 @@
 #pragma once
 #ifndef DSY_OSCILLATOR_H
 #define DSY_OSCILLATOR_H
+#include <stdint.h>
 #ifdef __cplusplus
-extern "C"
+namespace daisysp
 {
-#endif
+	class oscillator
+	{
+	  public:
+		oscillator() {}
+		~oscillator() {}
 
-typedef enum
-{
-	DSY_OSC_WAVE_SIN,
-	DSY_OSC_WAVE_TRI,
-	DSY_OSC_WAVE_SAW,
-	DSY_OSC_WAVE_RAMP,
-	DSY_OSC_WAVE_SQUARE,
-	DSY_OSC_WAVE_POLYBLEP_TRI,
-	DSY_OSC_WAVE_POLYBLEP_SAW,
-	DSY_OSC_WAVE_POLYBLEP_SQUARE,
-	DSY_OSC_WAVE_LAST,
-}dsy_oscillator_waveform;
+		enum
+		{
+			WAVE_SIN,	
+			WAVE_TRI,
+			WAVE_SAW,
+			WAVE_RAMP,
+			WAVE_SQUARE,
+			WAVE_POLYBLEP_TRI,
+			WAVE_POLYBLEP_SAW,
+			WAVE_POLYBLEP_SQUARE,
+			WAVE_LAST,
+		};
 
-typedef struct
-{
-	float freq, amp;
-	dsy_oscillator_waveform wave;
-	float sr, phase, phase_inc, last_out, last_freq;	
-}dsy_oscillator;
+		void init(float samplerate)
+		{
+			sr		  = samplerate;
+			freq	  = 100.0f;
+			amp		  = 0.5f;
+			phase	 = 0.0f;
+			phase_inc = calc_phase_inc(freq);
+			waveform  = WAVE_SIN;
+		}
 
-void dsy_oscillator_init(dsy_oscillator *p, float sr);
-float dsy_oscillator_process(dsy_oscillator *p);
-void dsy_oscillator_reset_phase(dsy_oscillator *p);
+		inline void set_freq(const float f) 
+		{
+			freq	  = f;
+			phase_inc = calc_phase_inc(f);
+		}
 
-#ifdef __cplusplus
-}
+		inline void set_amp(const float a) { amp = a; }
+
+		inline void set_waveform(const uint8_t wf) { waveform = wf < WAVE_LAST ? wf : WAVE_SIN; }
+
+		float process();
+
+	  private:
+
+		inline float calc_phase_inc(float f) {
+			return ((2.0f * (float)M_PI * f) / sr);
+		}
+
+		uint8_t waveform;
+		float   amp, freq;
+		float   sr, phase, phase_inc;
+		float   last_out, last_freq;
+	};
+} // namespace daisysp
 #endif
 #endif
