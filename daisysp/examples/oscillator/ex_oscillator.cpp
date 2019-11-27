@@ -1,15 +1,17 @@
 #include "daisysp.h"
 #include "daisy_seed.h"
 
+using namespace daisysp;
+
 static daisy_handle seed;
-static dsy_oscillator osc;
+static oscillator osc;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
 	float sig;
     for (size_t i = 0; i < size; i += 2)
     {
-    	sig = dsy_oscillator_process(&osc);
+    	sig = osc.process();
 
     	// left out
         out[i] = sig;
@@ -23,12 +25,12 @@ int main(void)
 {
 	// initialize seed hardware and oscillator daisysp module
     daisy_seed_init(&seed);
-    dsy_oscillator_init(&osc, DSY_AUDIO_SAMPLE_RATE);
+    osc.init(DSY_AUDIO_SAMPLE_RATE);
 
-    //  create full scale sine wave at 440hz 
-	osc.wave = DSY_OSC_WAVE_SIN;
-    osc.freq = 440;
-    osc.amp = 1;
+    // Set parameters for oscillator
+    osc.set_waveform(osc.WAVE_SIN);
+    osc.set_freq(440);
+    osc.set_amp(0.5);
 
     // define callback
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);

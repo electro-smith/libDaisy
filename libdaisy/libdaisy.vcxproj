@@ -68,8 +68,8 @@
     <ClCompile Include="src\dev_sdram.c" />
     <ClCompile Include="src\dev_sr_4021.c" />
     <ClCompile Include="src\hid_audio.c" />
+    <ClCompile Include="src\hid_ctrl.cpp" />
     <ClCompile Include="src\hid_encoder.c" />
-    <ClCompile Include="src\hid_knob.c" />
     <ClCompile Include="src\hid_switch.c" />
     <ClCompile Include="src\per_adc.c" />
     <ClCompile Include="src\per_dac.c" />
@@ -96,8 +96,8 @@
     <ClInclude Include="src\dev_sdram.h" />
     <ClInclude Include="src\dev_sr_4021.h" />
     <ClInclude Include="src\hid_audio.h" />
+    <ClInclude Include="src\hid_ctrl.h" />
     <ClInclude Include="src\hid_encoder.h" />
-    <ClInclude Include="src\hid_knob.h" />
     <ClInclude Include="src\hid_switch.h" />
     <ClInclude Include="src\per_adc.h" />
     <ClInclude Include="src\per_dac.h" />

@@ -866,7 +866,7 @@
     <ClInclude Include="src\sys_system.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="src\hid_knob.h">
+    <ClInclude Include="src\hid_ctrl.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -922,7 +922,7 @@
     <ClCompile Include="src\system_stm32h7xx.c">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="src\hid_knob.c">
+    <ClCompile Include="src\hid_ctrl.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
