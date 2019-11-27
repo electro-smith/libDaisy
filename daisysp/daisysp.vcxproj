@@ -104,6 +104,5 @@
     <ClCompile Include="modules\port.c" />
     <ClCompile Include="modules\reverbsc.c" />
     <ClCompile Include="modules\svf.c" />
-    <ClCompile Include="modules\whitenoise.c" />
   </ItemGroup>
 </Project>
