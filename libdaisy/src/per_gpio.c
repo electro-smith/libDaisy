@@ -33,7 +33,7 @@ void dsy_gpio_write(dsy_gpio *p, uint8_t state)
 {
 	HAL_GPIO_WritePin((GPIO_TypeDef *)gpio_hal_port_map[p->pin.port],
 					  gpio_hal_pin_map[p->pin.pin],
-					  state > 0 ? 1 : 0);
+					  (GPIO_PinState)(state > 0 ? 1 : 0));
 }
 void dsy_gpio_toggle(dsy_gpio *p)
 {
