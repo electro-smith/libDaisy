@@ -38,7 +38,6 @@ typedef struct {
 #include "modules/line.h"
 #include "modules/nlfilt.h"
 #include "modules/metro.h"
-#include "modules/oscillator.h"
 #include "modules/phasor.h"
 #include "modules/port.h"
 #include "modules/reverbsc.h"
@@ -47,5 +46,7 @@ typedef struct {
   
 #ifdef __cplusplus
 }
+
+#include "modules/oscillator.h"
 #endif
 #endif
