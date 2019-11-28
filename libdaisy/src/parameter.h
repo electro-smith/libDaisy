@@ -53,7 +53,7 @@ namespace daisy
 					break;
 				default: break;
 			}
-			return va
+			return val;
 		}
 
 		inline float value() { return val; }
