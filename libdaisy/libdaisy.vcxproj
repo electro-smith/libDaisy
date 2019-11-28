@@ -99,6 +99,7 @@
     <ClInclude Include="src\hid_ctrl.h" />
     <ClInclude Include="src\hid_encoder.h" />
     <ClInclude Include="src\hid_switch.h" />
+    <ClInclude Include="src\parameter.h" />
     <ClInclude Include="src\per_adc.h" />
     <ClInclude Include="src\per_dac.h" />
     <ClInclude Include="src\per_gpio.h" />

@@ -1,12 +1,13 @@
 #pragma once
 #include <stdint.h>
 #include <math.h>
+#include "hid_ctrl.h"
 // TODO: Move init and process to .cpp file
 // - i was cool with them being in the h file until math.h got involved for the log stuff.
 // TODO: add some sort of check to see if class T has a process() function
-namespace daisysp
+namespace daisy
 {
-	template<class T>
+	//template<class T>
 	class parameter
 	{
 	  public:
@@ -21,7 +22,7 @@ namespace daisysp
 		parameter() {}
 		~parameter() {}
 
-		inline void init(T input, float min, float max, float curve) 
+		inline void init(hid_ctrl input, float min, float max, float curve) 
 		{ 
 			pmin = min;
 			pmax = max;
@@ -34,32 +35,34 @@ namespace daisysp
 
 		inline float process()
 		{ 
-			float t;
 			switch(pcurve)
 			{
 				case CURVE_LINEAR: 
-					t = (in.process() * (pmax - pmin)) + pmin; 
+					val = (in.process() * (pmax - pmin)) + pmin; 
 					break;
 				case CURVE_EXP:
-					t = in.process();
-					t = ((t * t) * (pmax - pmin)) + pmin;
+					val = in.process();
+					val = ((val * val) * (pmax - pmin)) + pmin;
 					break;
 				case CURVE_LOG: 
-					t = expf((in.process() * (lmax - lmin)) + lmin);
+					val = expf((in.process() * (lmax - lmin)) + lmin);
 					break;
 				case CURVE_CUBE:
-					t = in.process();
-					t = ((t *(t * t)) * (pmax - pmin)) + pmin;
+					val = in.process();
+					val = ((val *(val * val)) * (pmax - pmin)) + pmin;
 					break;
 				default: break;
 			}
-			return t;
+			return va
 		}
 
+		inline float value() { return val; }
+
 	  private:
-		T in;
+		hid_ctrl in;
 		float   pmin, pmax;
-		float   lmin, lmax; // for log range
+		float	lmin, lmax; // for log range
+		float	val;
 		uint8_t pcurve;
 	};
 } // namespace daisy
