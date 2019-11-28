@@ -121,7 +121,11 @@ namespace daisy
 			// Higher level hid_ctrls
 			for(uint8_t i = 0; i < KNOB_LAST; i++) 
 			{
-				knob[i].init(adc_ptr(i), SAMPLE_RATE);
+				pctrl[i].init(adc_ptr(i), SAMPLE_RATE);
+			}
+			for(uint8_t i = CV_1; i < CV_LAST; i++) 
+			{
+				pctrl[i].init_bipolar_cv(adc_ptr(i), SAMPLE_RATE);
 			}
 			knob1.init(adc_ptr(KNOB_1), SAMPLE_RATE);
 			knob2.init(adc_ptr(KNOB_2), SAMPLE_RATE);
@@ -133,7 +137,7 @@ namespace daisy
 			dsy_led_driver_init(&seed.LED_DRIVER_I2C, &addr, 1);
 		}
 
-		inline hid_ctrl ctrl(uint8_t idx) { return knob[idx < KNOB_LAST ? idx : 0]; }
+		inline hid_ctrl ctrl(uint8_t idx) { return pctrl[idx < CV_LAST ? idx : 0]; }
 
 		daisy_handle seed;
 		dsy_switch   button1, button2, toggle;
@@ -141,13 +145,14 @@ namespace daisy
 
 		// alternate hid_form with public access
 		hid_ctrl knob1, knob2, knob3, knob4;
+		hid_ctrl cv1, cv2, cv3, cv4;
 
 	  private:
 		inline uint16_t* adc_ptr(const uint8_t chn)
 		{
 			return dsy_adc_get_rawptr(chn);
 		}
-		hid_ctrl knob[KNOB_LAST]; 
+		hid_ctrl pctrl[CV_LAST]; 
 	};
 } // namespace daisy
 
