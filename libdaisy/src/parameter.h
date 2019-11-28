@@ -7,18 +7,18 @@
 // TODO: add some sort of check to see if class T has a process() function
 namespace daisy
 {
+	enum
+	{
+		PARAM_CURVE_LINEAR,
+		PARAM_CURVE_EXP,
+		PARAM_CURVE_LOG,
+		PARAM_CURVE_CUBE,
+		PARAM_CURVE_LAST,
+	};
 	//template<class T>
 	class parameter
 	{
 	  public:
-		enum
-		{
-			CURVE_LINEAR,
-			CURVE_EXP,
-			CURVE_LOG,
-			CURVE_CUBE,
-			CURVE_LAST,
-		};
 		parameter() {}
 		~parameter() {}
 
@@ -37,17 +37,17 @@ namespace daisy
 		{ 
 			switch(pcurve)
 			{
-				case CURVE_LINEAR: 
+				case PARAM_CURVE_LINEAR: 
 					val = (in.process() * (pmax - pmin)) + pmin; 
 					break;
-				case CURVE_EXP:
+				case PARAM_CURVE_EXP:
 					val = in.process();
 					val = ((val * val) * (pmax - pmin)) + pmin;
 					break;
-				case CURVE_LOG: 
+				case PARAM_CURVE_LOG: 
 					val = expf((in.process() * (lmax - lmin)) + lmin);
 					break;
-				case CURVE_CUBE:
+				case PARAM_CURVE_CUBE:
 					val = in.process();
 					val = ((val *(val * val)) * (pmax - pmin)) + pmin;
 					break;
