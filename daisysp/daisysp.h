@@ -48,6 +48,5 @@ typedef struct {
 }
 
 #include "modules/oscillator.h"
-#include "modules/parameter.h"
 #endif
 #endif

@@ -869,6 +869,9 @@
     <ClInclude Include="src\hid_ctrl.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="src\parameter.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dev_codec_pcm3060.c">
