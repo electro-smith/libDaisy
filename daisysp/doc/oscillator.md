@@ -53,19 +53,34 @@ Defaults:
 - amp = 0.5 
 - waveform = sine wave.
 
+```c
+		void init(float samplerate)
+```
 
 ### set_freq
 
 Changes the frequency of the oscillator, and recalculates phase increment.
+```c
+		inline void set_freq(const float f) 
+```
 
 ### set_amp
 
 Sets the amplitude of the waveform.
+```c
+		inline void set_amp(const float a) { amp = a; }
+```
 
 ### set_waveform
 
 Sets the waveform to be synthesized by the process() function.
+```c
+		inline void set_waveform(const uint8_t wf) { waveform = wf < WAVE_LAST ? wf : WAVE_SIN; }
+```
 
 ### process
 
 Processes the waveform to be generated, returning one sample. This should be called once per sample period.
+```c
+		float process();
+```

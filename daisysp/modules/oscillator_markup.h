@@ -64,9 +64,9 @@ namespace daisysp
 // - amp = 0.5 
 // - waveform = sine wave.
 //
-//~~~~
+// ~~~~
 		void init(float samplerate)
-//~~~~
+// ~~~~
 		{
 			sr		  = samplerate;
 			freq	  = 100.0f;
@@ -79,9 +79,9 @@ namespace daisysp
 // ### set_freq
 //
 // Changes the frequency of the oscillator, and recalculates phase increment.
-//~~~~
+// ~~~~
 		inline void set_freq(const float f) 
-//~~~~
+// ~~~~
 		{
 			freq	  = f;
 			phase_inc = calc_phase_inc(f);
@@ -90,23 +90,23 @@ namespace daisysp
 // ### set_amp
 //
 // Sets the amplitude of the waveform.
-//~~~~
+// ~~~~
 		inline void set_amp(const float a) { amp = a; }
-//~~~~
+// ~~~~
 
 // ### set_waveform
 //
 // Sets the waveform to be synthesized by the process() function.
-//~~~~
+// ~~~~
 		inline void set_waveform(const uint8_t wf) { waveform = wf < WAVE_LAST ? wf : WAVE_SIN; }
-//~~~~
+// ~~~~
 
 // ### process
 //
 // Processes the waveform to be generated, returning one sample. This should be called once per sample period.
-//~~~~
+// ~~~~
 		float process();
-//~~~~
+// ~~~~
 
 	  private:
 		float   calc_phase_inc(float f);
