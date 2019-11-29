@@ -40,9 +40,9 @@ namespace daisy
 // max - top of range (when input is 1.0)
 //
 // curve - the scaling curve for the input->output transformation.
-// ~~~
+// ~~~~
 		inline void init(hid_ctrl input, float min, float max, uint8_t curve) 
-// ~~~
+// ~~~~
 		{ 
 			pmin = min;
 			pmax = max;
