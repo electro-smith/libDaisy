@@ -6,40 +6,63 @@
 // TODO:
 // - Add Cycling
 // - Implement Curve (its only linear for now).
-// - Maybe make this an ADSR that has AD/AR/ASR modes.
+// - Maybe make this an AD_sr that has AD/AR/A_sr modes.
 //
 #pragma once
-#ifndef DSY_ADENV_H
-#define DSY_ADENV_H
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+#ifndef ADENV_H
+#define ADENV_H
 #include <stdint.h>
-typedef enum {
-	DSY_ADENV_SEG_IDLE,
-	DSY_ADENV_SEG_RISE,
-	DSY_ADENV_SEG_FALL,
-	DSY_ADENV_SEG_LAST,
-} dsy_adenv_segment;
-
-typedef struct {
-	dsy_adenv_segment current_segment;
-	float segment_time[DSY_ADENV_SEG_LAST];
-	float sr, phase_inc, min, max, multiplier, output, curve_scalar;
-	uint32_t phase;
-	uint8_t trigger;
-} dsy_adenv;
-
-void dsy_adenv_init(dsy_adenv *p, float sr);
-void dsy_adenvrigger(dsy_adenv *p);
-void dsy_adenv_set_segment_time(dsy_adenv *p, dsy_adenv_segment seg, float time);
-void dsy_adenv_set_curve_scalar(dsy_adenv *p, float scalar);
-void dsy_adenv_set_min_max(dsy_adenv *p, float min, float max);
-float dsy_adenv_process(dsy_adenv *p);
-
-
 #ifdef __cplusplus
-}
+namespace daisysp
+{
+	typedef enum {
+			ADENV_SEG_IDLE,
+			ADENV_SEG_RISE,
+			ADENV_SEG_FALL,
+			ADENV_SEG_LAST,
+	} adenv_segment;
+
+	class adenv
+	{
+		public:
+		adenv() {}
+		~adenv() {} 
+
+		void init(float sample_rate);
+		float process();
+
+		inline void trigger()
+		{
+			_trigger = 1;		
+		}
+
+		inline void set__segment_time(adenv_segment seg, float time)
+		{
+			_segment_time[seg] = time;
+		}
+
+		inline void set_curve_scalar(float scalar)
+		{
+			_curve_scalar = scalar;	
+		}
+
+		inline void set_min_max(float min, float max)
+		{
+			_min = min;
+			_max = max;
+		}
+		
+		inline void current_segment();
+
+		private:
+		void calculate_multiplier(float start, float end, uint32_t length_in_samples);
+		adenv_segment _current_segment;
+		float _segment_time[ADENV_SEG_LAST];
+		float _sr, _phase_inc, _min, _max, _multiplier, _output, _curve_scalar;
+		uint32_t _phase;
+		uint8_t _trigger;
+	};
+
+} // namespace daisysp
 #endif
 #endif
