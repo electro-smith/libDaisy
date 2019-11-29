@@ -11,33 +11,36 @@
 #pragma once
 #ifndef DSY_SVF_H
 #define DSY_SVF_H
-#ifdef __cplusplus
-extern "C"
-{
-#endif 
 
-typedef struct
+namespace daisysp
 {
-	float sr, fc, res, drive, freq, damp;
-	float notch, low, high, band, peak;
-	float input;
-	float out_low, out_high, out_band, out_peak, out_notch;
-}dsy_svf;
-// general
-void dsy_svf_init(dsy_svf *f, float sample_rate);
-void dsy_svf_process(dsy_svf *f, float *in);
-// setters
-void dsy_svf_set_fc(dsy_svf *f, float frequency);
-void dsy_svf_set_res(dsy_svf *f, float res);
-void dsy_svf_set_drive(dsy_svf *f, float drive);
-// outs
-float dsy_svf_notch(dsy_svf *f);
-float dsy_svf_low(dsy_svf *f);
-float dsy_svf_high(dsy_svf *f);
-float dsy_svf_band(dsy_svf *f);
-float dsy_svf_peak(dsy_svf *f);
+    class svf
+    {
+        public:
+            svf() {}
+            ~svf() {}
 
-#ifdef __cplusplus
-}
-#endif
+            void init(float samplerate);
+            void process(float in);
+
+            void set_freq(float f);
+            void set_res(float r);
+            inline void set_drive(float d) { _drive = d; }
+
+            // Getters for all of the outputs.
+            inline float low() { return _out_low; }
+            inline float high() { return _out_high; }
+            inline float band() { return _out_band; }
+            inline float notch() { return _out_notch; }
+            inline float peak() { return _out_peak; }
+
+        private:
+            float _sr, _fc, _res, _drive, _freq, _damp;
+            float _notch, _low, _high, _band, _peak;
+            float _input;
+            float _out_low, _out_high, _out_band, _out_peak, _out_notch;
+        
+    };
+} // namespace daisysp
+
 #endif
