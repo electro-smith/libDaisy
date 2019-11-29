@@ -8,7 +8,6 @@
 //
 // TODO: Move init and process to .cpp file
 // - i was cool with them being in the h file until math.h got involved for the log stuff.
-// TODO: add some sort of check to see if class T has a process() function
 namespace daisy
 {
 // ### curve settings
