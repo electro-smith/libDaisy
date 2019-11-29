@@ -31,26 +31,17 @@ namespace daisysp
 		void init(float sample_rate);
 		float process();
 
-		inline void trigger()
-		{
-			_trigger = 1;		
-		}
+		inline void trigger() {_trigger = 1; }
 
 		inline void set__segment_time(adenv_segment seg, float time)
 		{
-			_segment_time[seg] = time;
+			_segment_time[seg] = time; 
 		}
 
-		inline void set_curve_scalar(float scalar)
-		{
-			_curve_scalar = scalar;	
-		}
-
-		inline void set_min_max(float min, float max)
-		{
-			_min = min;
-			_max = max;
-		}
+		// setters
+		inline void set_curve_scalar(float scalar) { _curve_scalar = scalar; }
+		inline void set_min(float min) {_min = min; }
+		inline void set_max(float max) {_max = max; }
 		
 		inline void current_segment();
 
