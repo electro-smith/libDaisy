@@ -6,7 +6,7 @@ using namespace daisysp;
 
 daisy_patch patch;
 oscillator osc;
-hid_ctrl knob1, knob2, knob3;
+parameter knob1, knob2, knob3;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
@@ -35,9 +35,9 @@ int main(void)
 {
     patch.init(); // initialize hardware (daisy seed, and patch)
     osc.init(SAMPLE_RATE); // init oscillator
-    knob1.init(patch.adc_ptr(KNOB_1), SAMPLE_RATE);
-    knob2.init(patch.adc_ptr(KNOB_2), SAMPLE_RATE);
-    knob3.init(patch.adc_ptr(KNOB_3), SAMPLE_RATE);
+    knob1.init(patch.ctrl(KNOB_1), 0.0, 1.0, PARAM_CURVE_LINEAR);
+    knob2.init(patch.ctrl(KNOB_2), 0.0, 1.0, PARAM_CURVE_LINEAR);
+    knob3.init(patch.ctrl(KNOB_3), 0.0, 1.0, PARAM_CURVE_LINEAR);
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback); // assign callback
     dsy_adc_start(); // start the ADCs to read values in the background.
     dsy_audio_start(DSY_AUDIO_INTERNAL); // start audio peripheral
