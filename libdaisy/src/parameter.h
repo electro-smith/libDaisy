@@ -48,7 +48,6 @@ namespace daisy
 			pmax = max;
 			pcurve = curve;
 			in	 = input;
-			// prevent NaN/-Infinity
 			lmin   = logf(min < 0.0000001f ? 0.0000001f : min);
 			lmax   = logf(max);
 		}
