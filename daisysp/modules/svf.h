@@ -25,20 +25,20 @@ namespace daisysp
 
             void set_freq(float f);
             void set_res(float r);
-            inline void set_drive(float d) { drive = d; }
+            inline void set_drive(float d) { _drive = d; }
 
             // Getters for all of the outputs.
-            inline float low() { return out_low; }
-            inline float high() { return out_high; }
-            inline float band() { return out_band; }
-            inline float notch() { return out_notch; }
-            inline float peak() { return out_peak; }
+            inline float low() { return _out_low; }
+            inline float high() { return _out_high; }
+            inline float band() { return _out_band; }
+            inline float notch() { return _out_notch; }
+            inline float peak() { return _out_peak; }
 
         private:
-            float sr, fc, res, drive, freq, damp;
-            float pnotch, plow, phigh, pband, ppeak;
-            float input;
-            float out_low, out_high, out_band, out_peak, out_notch;
+            float _sr, _fc, _res, _drive, _freq, _damp;
+            float _notch, _low, _high, _band, _peak;
+            float _input;
+            float _out_low, _out_high, _out_band, _out_peak, _out_notch;
         
     };
 } // namespace daisysp
