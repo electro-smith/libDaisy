@@ -41,12 +41,12 @@ typedef struct {
 #include "modules/phasor.h"
 #include "modules/port.h"
 #include "modules/reverbsc.h"
-#include "modules/svf.h"
-#include "modules/whitenoise.h"
   
 #ifdef __cplusplus
 }
 
+#include "modules/whitenoise.h"
+#include "modules/svf.h"
 #include "modules/oscillator.h"
 #endif
 #endif

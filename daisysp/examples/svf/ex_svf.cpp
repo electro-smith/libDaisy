@@ -1,8 +1,12 @@
 #include "daisysp.h"
 #include "daisy_seed.h"
 
+using namespace daisy;
+using namespace daisysp;
+
 static daisy_handle seed;
-static dsy_svf filter;
+
+svf filt;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
@@ -12,13 +16,13 @@ static void audioCallback(float *in, float *out, size_t size)
     {
         inL = in[i];
 
-        dsy_svf_process(&filter, &inL);
+        filt.process(inL);
 
         // left out
-        out[i] = dsy_svf_low(&filter);
+        out[i] = filt.low();
 
         // right out
-        out[i + 1] = dsy_svf_high(&filter);
+        out[i + 1] = filt.high();
     }
 }
 
@@ -26,11 +30,11 @@ int main(void)
 {
     // initialize seed hardware and svf daisysp module
     daisy_seed_init(&seed);
-    dsy_svf_init(&filter, DSY_AUDIO_SAMPLE_RATE);
 
-    dsy_svf_set_fc(&filter, 5000); // cutoff frequency
-    dsy_svf_set_res(&filter, 0.3); // resonance
-    dsy_svf_set_drive(&filter, 0); // drive
+    filt.init(DSY_AUDIO_SAMPLE_RATE);
+    filt.set_freq(500.0);
+    filt.set_res(0.85);
+    filt.set_drive(0.8);
 
     // define callback
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
