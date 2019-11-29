@@ -2,11 +2,18 @@
 #include <stdint.h>
 #include <math.h>
 #include "hid_ctrl.h"
+// # Parameter
+// 
+//      Simple parameter mapping tool that takes a 0-1 input from an hid_ctrl.
+//
 // TODO: Move init and process to .cpp file
 // - i was cool with them being in the h file until math.h got involved for the log stuff.
 // TODO: add some sort of check to see if class T has a process() function
 namespace daisy
 {
+// ### curve settings
+// Curves are applied to the output signal
+// ~~~~
 	enum
 	{
 		PARAM_CURVE_LINEAR,
@@ -15,14 +22,28 @@ namespace daisy
 		PARAM_CURVE_CUBE,
 		PARAM_CURVE_LAST,
 	};
-	//template<class T>
+// ~~~~
+
+// ## parameter class
 	class parameter
 	{
 	  public:
 		parameter() {}
 		~parameter() {}
 
-		inline void init(hid_ctrl input, float min, float max, float curve) 
+// ### init
+// initialize a parameter using an hid_ctrl object.
+//
+// hid_ctrl input - object containing the direct link to a hardware control source.
+//
+// min - bottom of range. (when input is 0.0)
+//
+// max - top of range (when input is 1.0)
+//
+// curve - the scaling curve for the input->output transformation.
+// ~~~
+		inline void init(hid_ctrl input, float min, float max, uint8_t curve) 
+// ~~~
 		{ 
 			pmin = min;
 			pmax = max;
@@ -33,7 +54,13 @@ namespace daisy
 			lmax   = logf(max);
 		}
 
+// ### process
+// processes the input signal, this should be called at the samplerate of the hid_ctrl passed in.
+//
+// returns a float with the specified transformation applied.
+// ~~~~
 		inline float process()
+// ~~~~
 		{ 
 			switch(pcurve)
 			{
@@ -56,7 +83,13 @@ namespace daisy
 			return val;
 		}
 
+// ### value
+// returns the current value from the parameter without processing another sample.
+// this is useful if you need to use the value multiple times, and don't store 
+// the output of process in a local variable.
+// ~~~~
 		inline float value() { return val; }
+// ~~~~
 
 	  private:
 		hid_ctrl in;
