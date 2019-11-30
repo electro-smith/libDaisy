@@ -11,7 +11,7 @@ void adenv::init(float sample_rate)
 	_curve_scalar = 0.0f;  // full linear
 	_phase = 0;
 	_multiplier = 1.0f;
-	//__phase_inc = ((2.0f * PI * (1.0f / _segment_time[ADENV_SEG_RISE]) / SAMPLE_RATE));// / 2.0f);
+	//__phase_inc = ((2.0f * PI * (1.0f / _segment_time[ADENV_SEG_ATTACK]) / SAMPLE_RATE));// / 2.0f);
 	_phase_inc = 1.0f;
 	_min = 0.0f;
 	_max = 1.0f;
@@ -27,7 +27,7 @@ float adenv::process()
 	if (_trigger)
 	{
 		_trigger = 0;
-		_current_segment = ADENV_SEG_RISE;
+		_current_segment = ADENV_SEG_ATTACK;
 		_phase = 0;
         time_samps = (uint32_t)(_segment_time[_current_segment] * _sr);
         calculate_multiplier(_output, 1.0f, time_samps);
@@ -40,14 +40,14 @@ float adenv::process()
 	{
 		switch (_current_segment)	
 		{
-		case ADENV_SEG_RISE:
-			_current_segment = ADENV_SEG_FALL;
+		case ADENV_SEG_ATTACK:
+			_current_segment = ADENV_SEG_DECAY;
 			time_samps = (uint32_t)(_segment_time[_current_segment] * _sr);
 			_phase = 0;
 			_output = 1.0f;
 			calculate_multiplier(1.0f, 0.0001f, time_samps);
 			break;
-		case ADENV_SEG_FALL:
+		case ADENV_SEG_DECAY:
 			_current_segment = ADENV_SEG_IDLE;
 			_phase = 0;
 			_multiplier = 1.0f;
