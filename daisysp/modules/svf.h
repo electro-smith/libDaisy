@@ -1,11 +1,10 @@
-#pragma once
-#ifndef DSY_SVF_H
-#define DSY_SVF_H
 // # svf
 //      Double Sampled, Stable State Variable Filter
 // 
 // Credit to Andrew Simper from musicdsp.org
+//
 // This is his "State Variable Filter (Double Sampled, Stable)"
+//
 // Additional thanks to Laurent de Soras for stability limit, and 
 // Stefan Diedrichsen for the correct notch output
 //
@@ -13,6 +12,9 @@
 //
 // example:
 // daisysp/examples/svf/
+#pragma once
+#ifndef DSY_SVF_H
+#define DSY_SVF_H
 
 namespace daisysp
 {
