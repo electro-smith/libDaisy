@@ -41,7 +41,7 @@ namespace daisysp
 		adenv() {}
 		~adenv() {} 
 
-// ###init
+// ### init
 //
 // Initializes the ad envelope
 //
@@ -59,14 +59,12 @@ namespace daisysp
 // ~~~~
 
 // ### process
-//
 // processes the current sample of the envelope. Returns the current envelope value. This should be called once per sample period. 
 // ~~~~
 		float process();
 // ~~~~
 
 // ### trigger
-// 
 // Starts or retriggers the envelope. 
 // ~~~~
 		inline void trigger() {_trigger = 1; }
@@ -75,7 +73,6 @@ namespace daisysp
 // ## Setters
 
 // ### set_segment_time
-// 
 // Sets the length of time(secondsVERIFYTHIS) for a specific segment.
 // ~~~~
 		inline void set_time(uint8_t seg, float time)
@@ -85,7 +82,6 @@ namespace daisysp
 // ~~~~
 
 // ### set_curve_scalar
-//
 // Sets the amount of curve applied. 
 // Input range: -1 to 1. 
 // - At -1, curve = full logarithmic
