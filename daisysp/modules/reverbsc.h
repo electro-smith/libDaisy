@@ -1,12 +1,13 @@
 #pragma once
 #ifndef DSYSP_REVERBSC_H
 #define DSYSP_REVERBSC_H
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 
 #define DSY_REVERBSC_MAX_SIZE 32767
+
+namespace daisysp
+{
+
+
 typedef struct
 {
 	int     writePos;
@@ -19,23 +20,30 @@ typedef struct
 	int     randLine_cnt;
 	float filterState;
 	float *buf;
-}dsy_reverbsc_dl;
-typedef struct
-{
-	float feedback, lpfreq;
-	float iSampleRate, iPitchMod, iSkipInit;
-	float sampleRate;
-	float dampFact;
-	float prv_LPFreq;
-	int initDone;
-	dsy_reverbsc_dl delayLines[8];
-	float aux[DSY_REVERBSC_MAX_SIZE];
-}dsy_reverbsc;
+}reverbsc_dl;
 
-int dsy_reverbsc_init(dsy_reverbsc *p, float sr);
-int dsy_reverbsc_process(dsy_reverbsc *p, float *in1, float *in2, float *out1, float *out2);
-#ifdef __cplusplus
-}
-#endif
+class reverbsc
+{
+    void init(float samplerate);
+    void process(float in1, float in2, float *out1, float *out2);
+
+    inline void set_feedback(float fb) { _feedback = fb; }
+    inline void set_lpfreq(float freq) { _lpfreq = freq; }
+
+    private:
+        void next_random_lineseg(reverbsc_dl *lp, int n);
+        int init_delay_line(reverbsc_dl *lp, int n);
+        float _feedback, _lpfreq;
+        float _iSampleRate, _iPitchMod, _iSkipInit;
+        float _sampleRate;
+        float _dampFact;
+        float _prv_LPFreq;
+        int _initDone;
+        reverbsc_dl _delayLines[8];
+        float _aux[DSY_REVERBSC_MAX_SIZE];
+};
+
+
+} // namespace daisysp
 #endif
 
