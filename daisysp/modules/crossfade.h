@@ -1,12 +1,16 @@
 
-// Crossfade
+// # crossfade
 // Performs a crossfade between two signals
 // 
 // Original author: Paul Batchelor
 //
 // Ported from Soundpipe by Andrew Ikenberry
 // added curve option for constant power, etc.
-// ToDO: implement all non linear curve options in process()
+
+// TODO:
+// - implement constant power curve process
+// - implement exponential curve process
+// - implement logarithmic curve process
 
 #pragma once
 #ifndef CROSSFADE_H
@@ -16,6 +20,15 @@
 
 namespace daisysp
 {
+
+	// ## Curve Options
+	// Curve that the crossfade will follow when processing
+	// - LIN = linear
+	// - CPOW = constant power
+	// - LOG = logarithmic
+	// - EXP  exponential
+	// - LAST = end of enum (used for array indexing)
+	// ~~~~
 	enum 
 	{
 		CROSSFADE_LIN,
@@ -24,6 +37,7 @@ namespace daisysp
 		CROSSFADE_EXP,
 		CROSSFADE_LAST,
 	};
+	// ~~~~
 
 	class crossfade
 	{
@@ -31,49 +45,61 @@ namespace daisysp
 		crossfade() {}
 		~crossfade() {}
 
-		// init and process functions
-		inline void crossfade_init() 
+		// ### init
+		// 
+		// Initializes crossfade module
+		// Defaults
+		// - current position = .5
+		// - curve = linear
+		// 
+		// ~~~~
+		inline void init() 
+		// ~~~~
 		{
 			_pos = 0.5;
     		_curve = CROSSFADE_LIN;
 		}
+		// ### process
+		// processes crossfade and returns single sample 
+		// 
+		// ~~~~
 		float process(float *in1, float *in2);
+		// ~~~~
 
-		// setters
+		// ## Setters
+
+		// ### set_pos
+		// Sets position of crossfade between two input signals
+		// Input range: 0 to 1
+		// ~~~~
 		inline void set_pos(float pos) { _pos = pos; }
-		inline void set_curve(uint8_t curve) { _curve = curve; }
+		// ~~~~
 
-		// getters
+		// ### set_curve
+		// Sets current curve applied to crossfade 
+		// Expected input: See 'Curve Options' at top of page
+		// ~~~~
+		inline void set_curve(uint8_t curve) { _curve = curve; }
+		// ~~~~
+
+		// ## Getters
+
+		// ### get_pos
+		// Returns current position
+		// ~~~~
 		inline float get_pos(float pos) { return _pos; }
+		// ~~~~
+
+		// ### get_curve
+		// Returns current curve
+		// ~~~~
 		inline uint8_t get_curve(uint8_t curve) { return _curve; }
+		// ~~~~
 
 	// private variables
 	private:
 		float _pos;
 		uint8_t _curve;
-
-
-		/*
-
-		typedef struct
-		{
-			float pos;
-			uint8_t curve;
-		} crossfade;
-
-		// initialization
-		void crossfade_init(crossfade *p, uint8_t curve);
-
-		// processing
-		float crossfade_process(crossfade *p, float *in1, float *in2);
-
-		// set position between two signals. range: 0-1
-		void crossfade_set_pos(crossfade *p, float pos);
-
-		// set curve of crossfade.
-		void crossfade_set_curve(crossfade *p, uint8_t curve);
-
-		*/
 	};
 } // namespace daisysp
 #endif
