@@ -1,19 +1,37 @@
-#ifndef DSY_DCBLOCK_H
-#define DSY_DCBLOCK_H
+// # dcblock
+// Removes dc component of a signal
+
+#pragma once
+#ifndef DCBLOCK_H
+#define DCBLOCK_H
+#include <stdint.h>
 #ifdef __cplusplus
-extern "C" {
-#endif
 
-typedef struct {
-    float outputs;
-    float inputs;
-    float gain;
-} dsy_dcblock;
+namespace daisysp
+{
+	class dcblock
+	{
+	public: 
+		dcblock() {};
+		~dcblock() {};
 
-void dsy_dcblock_init(dsy_dcblock *p, int sr);
-float dsy_dcblock_process(dsy_dcblock *p, float in);
+// ### init
+// Initializes dcblock module
+// 
+// ~~~~
+		void init(int sample_rate);
+// ~~~~
 
-#ifdef __cplusplus
+// ### process
+// performs dcblock process 
+// 
+// ~~~~
+		float process(float in);
+// ~~~~
+
+		private:
+			float _inputs, _outputs, _gain;
+	};
 }
 #endif
 #endif
