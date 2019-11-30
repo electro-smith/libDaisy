@@ -21,14 +21,14 @@
 namespace daisysp
 {
 
-	// ## Curve Options
-	// Curve that the crossfade will follow when processing
-	// - LIN = linear
-	// - CPOW = constant power
-	// - LOG = logarithmic
-	// - EXP  exponential
-	// - LAST = end of enum (used for array indexing)
-	// ~~~~
+// ## Curve Options
+// Curve that the crossfade will follow when processing
+// - LIN = linear
+// - CPOW = constant power
+// - LOG = logarithmic
+// - EXP  exponential
+// - LAST = end of enum (used for array indexing)
+// ~~~~
 	enum 
 	{
 		CROSSFADE_LIN,
@@ -37,7 +37,7 @@ namespace daisysp
 		CROSSFADE_EXP,
 		CROSSFADE_LAST,
 	};
-	// ~~~~
+// ~~~~
 
 	class crossfade
 	{
@@ -45,58 +45,57 @@ namespace daisysp
 		crossfade() {}
 		~crossfade() {}
 
-		// ### init
-		// 
-		// Initializes crossfade module
-		// Defaults
-		// - current position = .5
-		// - curve = linear
-		// 
-		// ~~~~
+// ### init
+// 
+// Initializes crossfade module
+// Defaults
+// - current position = .5
+// - curve = linear
+// 
+// ~~~~
 		inline void init() 
-		// ~~~~
+// ~~~~
 		{
 			_pos = 0.5;
     		_curve = CROSSFADE_LIN;
 		}
-		// ### process
-		// processes crossfade and returns single sample 
-		// 
-		// ~~~~
+// ### process
+// processes crossfade and returns single sample 
+// 
+// ~~~~
 		float process(float *in1, float *in2);
-		// ~~~~
+// ~~~~
 
-		// ## Setters
+// ## Setters
 
-		// ### set_pos
-		// Sets position of crossfade between two input signals
-		// Input range: 0 to 1
-		// ~~~~
+// ### set_pos
+// Sets position of crossfade between two input signals
+// Input range: 0 to 1
+// ~~~~
 		inline void set_pos(float pos) { _pos = pos; }
-		// ~~~~
+// ~~~~
 
-		// ### set_curve
-		// Sets current curve applied to crossfade 
-		// Expected input: See 'Curve Options' at top of page
-		// ~~~~
+// ### set_curve
+// Sets current curve applied to crossfade 
+// Expected input: See 'Curve Options' at top of page
+// ~~~~
 		inline void set_curve(uint8_t curve) { _curve = curve; }
-		// ~~~~
+// ~~~~
 
-		// ## Getters
+// ## Getters
 
-		// ### get_pos
-		// Returns current position
-		// ~~~~
+// ### get_pos
+// Returns current position
+// ~~~~
 		inline float get_pos(float pos) { return _pos; }
-		// ~~~~
+// ~~~~
 
-		// ### get_curve
-		// Returns current curve
-		// ~~~~
+// ### get_curve
+// Returns current curve
+// ~~~~
 		inline uint8_t get_curve(uint8_t curve) { return _curve; }
-		// ~~~~
+// ~~~~
 
-	// private variables
 	private:
 		float _pos;
 		uint8_t _curve;
