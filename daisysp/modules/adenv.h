@@ -76,10 +76,10 @@ namespace daisysp
 // Sets the length of time(secondsVERIFYTHIS) for a specific segment.
 // ~~~~
 		inline void set_time(uint8_t seg, float time)
+// ~~~~
 		{
 			_segment_time[seg] = time; 
 		}
-// ~~~~
 
 // ### set_curve_scalar
 // Sets the amount of curve applied. 
