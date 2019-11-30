@@ -1,29 +1,71 @@
-// For now this Initializes all 8 of the specific ADC pins for Daisy Seed.
+// # phasor
+// Generates a normalized signal moving from 0-1 at the specified frequency.
+//
+// TODO:
 // I'd like to make the following things easily configurable:
 // - Selecting which channels should be initialized/included in the sequence conversion.
 // - Setup a similar start function for an external mux, but that seems outside the scope of this file.
+
 #pragma once
-#ifndef DSY_PHASOR_H
-#define DSY_PHASOR_H
+#ifndef PHASOR_H
+#define PHASOR_H
+#include <stdint.h>
 #ifdef __cplusplus
-extern "C"
-{
-#endif
 
-// Generates a normalized signal moving from 0-1 at the specified frequency.
-typedef struct
+namespace daisysp
 {
-	float freq;
-	float sr, inc, phs;
-}dsy_phasor;
+	class phasor
+	{
+	public:
+		phasor() {}
+		~phasor() {}
 
+// ### init
+// Initializes the phasor module
 // sr, and freq are in Hz
 // initial phase is in radians
-void dsy_phasor_init(dsy_phasor *p, float sr, float freq, float initial_phase);
-void dsy_phasor_set_freq(dsy_phasor *p, float freq);
-float dsy_phasor_process(dsy_phasor *p);
 
-#ifdef __cplusplus
-}
+// ~~~~
+		inline void init(float sr, float freq, float initial_phase) 
+// ~~~~
+		{
+			_sr = sr;
+			_phs = initial_phase;
+			set_freq(freq);
+		}
+
+// ### process
+// processes phasor and returns current value
+//
+// ~~~~
+		float process();
+// ~~~~
+
+// ## Setters
+
+// ### set_freq
+// Sets frequency of the phasor in Hz
+// ~~~~
+		inline void set_freq(float freq) 
+// ~~~~
+		{
+			_freq = freq;
+			_inc  = (2.0f * M_PI * _freq) / _sr;
+		}
+
+// ## Getters
+
+// ### get_freq
+// Returns current frequency value in Hz
+// ~~~~
+		inline float get_freq() { return _freq; }
+// ~~~~
+
+	private:
+		float _freq;
+		float _sr, _inc, _phs;
+
+	};
+} // namespace daisysp
 #endif
 #endif
