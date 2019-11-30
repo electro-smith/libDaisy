@@ -6,7 +6,7 @@
 //
 // Ported from Soundpipe by Andrew Ikenberry
 // added curve option for constant power, etc.
-
+// 
 // TODO:
 // - implement constant power curve process
 // - implement exponential curve process
@@ -22,7 +22,7 @@ namespace daisysp
 {
 
 // ## Curve Options
-// Curve that the crossfade will follow when processing
+// Curve applied to the crossfade
 // - LIN = linear
 // - CPOW = constant power
 // - LOG = logarithmic
@@ -46,8 +46,8 @@ namespace daisysp
 		~crossfade() {}
 
 // ### init
-// 
 // Initializes crossfade module
+// 
 // Defaults
 // - current position = .5
 // - curve = linear
@@ -77,7 +77,7 @@ namespace daisysp
 
 // ### set_curve
 // Sets current curve applied to crossfade 
-// Expected input: See 'Curve Options' at top of page
+// Expected input: See [Curve Options](##curve-options)
 // ~~~~
 		inline void set_curve(uint8_t curve) { _curve = curve; }
 // ~~~~
