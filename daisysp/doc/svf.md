@@ -3,10 +3,14 @@
      Double Sampled, Stable State Variable Filter
 
 Credit to Andrew Simper from musicdsp.org
+
 This is his "State Variable Filter (Double Sampled, Stable)"
+
 Additional thanks to Laurent de Soras for stability limit, and 
 Stefan Diedrichsen for the correct notch output
+
 Ported by: Stephen Hensley
+
 example:
 daisysp/examples/svf/
 
@@ -28,7 +32,9 @@ Process the input signal, updating all of the outputs.
 
 ## Setters
 
+
 ### set_freq
+
 sets the frequency of the cutoff frequency. 
 
 f must be between 0.0 and samplerate / 2
@@ -39,6 +45,7 @@ f must be between 0.0 and samplerate / 2
 ### set_res
 
 sets the resonance of the filter.
+
 Must be between 0.0 and 1.0 to ensure stability.
 ```c
             void set_res(float r);

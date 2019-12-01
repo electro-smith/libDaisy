@@ -25,6 +25,8 @@
 #define M_PI		3.14159265358979323846	/* pi */
 #endif
 
+using namespace daisysp;
+
 /* reverbParams[n][0] = delay time (in seconds)                     */
 /* reverbParams[n][1] = random variation in delay time (in seconds) */
 /* reverbParams[n][2] = random variation frequency (in 1/sec)       */
@@ -42,34 +44,33 @@ static const float reverbParams[8][4] = {
 };
 
 static int delay_line_max_samples(float sr, float iPitchMod, int n);
-static int init_delay_line(dsy_reverbsc *p, dsy_reverbsc_dl *lp, int n);
+//static int init_delay_line(dsy_reverbsc_dl *lp, int n);
 static int delay_line_bytes_alloc(float sr, float iPitchMod, int n);
 static const float outputGain  = 0.35;
 static const float jpScale     = 0.25;
 
-int dsy_reverbsc_init(dsy_reverbsc *p, float sr)
+void reverbsc::init(float sr)
 {
-	p->iSampleRate = sr;
-	p->sampleRate = sr;
-	p->feedback = 0.97;
-	p->lpfreq = 10000;
-	p->iPitchMod = 1;
-	p->iSkipInit = 0;
-	p->dampFact = 1.0;
-	p->prv_LPFreq = 0.0;
-	p->initDone = 1;
+	_iSampleRate = sr;
+	_sampleRate = sr;
+	_feedback = 0.97;
+	_lpfreq = 10000;
+	_iPitchMod = 1;
+	_iSkipInit = 0;
+	_dampFact = 1.0;
+	_prv_LPFreq = 0.0;
+	_initDone = 1;
 	int i, nBytes = 0;
 	for (i = 0; i < 8; i++) {
 		nBytes += delay_line_bytes_alloc(sr, 1, i);
 	}
-	//sp_auxdata_alloc(&p->aux, nBytes);
+	//sp_auxdata_alloc(&_aux, nBytes);
 	nBytes = 0;
 	for (i = 0; i < 8; i++) {
-		p->delayLines[i].buf = (p->aux) + nBytes;
-		init_delay_line(p, &p->delayLines[i], i);
+		_delayLines[i].buf = (_aux) + nBytes;
+		init_delay_line(&_delayLines[i], i);
 		nBytes += delay_line_bytes_alloc(sr, 1, i);
 	}
-    return 0;
 }
 
 static int delay_line_max_samples(float sr, float iPitchMod, int n)
@@ -89,7 +90,7 @@ static int delay_line_bytes_alloc(float sr, float iPitchMod, int n)
 	return nBytes;
 }
 
-static void next_random_lineseg(dsy_reverbsc *p, dsy_reverbsc_dl *lp, int n)
+void reverbsc::next_random_lineseg(reverbsc_dl *lp, int n)
 {
 	float prvDel, nxtDel, phs_incVal;
 
@@ -100,83 +101,82 @@ static void next_random_lineseg(dsy_reverbsc *p, dsy_reverbsc_dl *lp, int n)
 	if (lp->seedVal >= 0x8000)
 		lp->seedVal -= 0x10000;
 	/* length of next segment in samples */
-	lp->randLine_cnt = (int)((p->sampleRate / reverbParams[n][2]) + 0.5);
+	lp->randLine_cnt = (int)((_sampleRate / reverbParams[n][2]) + 0.5);
 	prvDel = (float) lp->writePos;
 	prvDel -= ((float) lp->readPos
 	           + ((float) lp->readPosFrac / (float) DELAYPOS_SCALE));
 	while (prvDel < 0.0)
 		prvDel += lp->bufferSize;
-	prvDel = prvDel / p->sampleRate; /* previous delay time in seconds */
+	prvDel = prvDel / _sampleRate; /* previous delay time in seconds */
 	nxtDel = (float) lp->seedVal * reverbParams[n][1] / 32768.0;
 	/* next delay time in seconds */
-	nxtDel = reverbParams[n][0] + (nxtDel * (float) p->iPitchMod);
+	nxtDel = reverbParams[n][0] + (nxtDel * (float) _iPitchMod);
 	/* calculate phase increment per sample */
 	phs_incVal = (prvDel - nxtDel) / (float) lp->randLine_cnt;
-	phs_incVal = phs_incVal * p->sampleRate + 1.0;
+	phs_incVal = phs_incVal * _sampleRate + 1.0;
 	lp->readPosFrac_inc = (int)(phs_incVal * DELAYPOS_SCALE + 0.5);
 }
 
-static int init_delay_line(dsy_reverbsc *p, dsy_reverbsc_dl *lp, int n)
+int reverbsc::init_delay_line(reverbsc_dl *lp, int n)
 {
 	float readPos;
 	/* int     i; */
 
 	/* calculate length of delay line */
-	lp->bufferSize = delay_line_max_samples(p->sampleRate, 1, n);
+	lp->bufferSize = delay_line_max_samples(_sampleRate, 1, n);
 	lp->dummy = 0;
 	lp->writePos = 0;
 	/* set random seed */
 	lp->seedVal = (int)(reverbParams[n][3] + 0.5);
 	/* set initial delay time */
 	readPos = (float) lp->seedVal * reverbParams[n][1] / 32768;
-	readPos = reverbParams[n][0] + (readPos * (float) p->iPitchMod);
-	readPos = (float) lp->bufferSize - (readPos * p->sampleRate);
+	readPos = reverbParams[n][0] + (readPos * (float) _iPitchMod);
+	readPos = (float) lp->bufferSize - (readPos * _sampleRate);
 	lp->readPos = (int) readPos;
 	readPos = (readPos - (float) lp->readPos) * (float) DELAYPOS_SCALE;
 	lp->readPosFrac = (int)(readPos + 0.5);
 	/* initialise first random line segment */
-	next_random_lineseg(p, lp, n);
+	next_random_lineseg(lp, n);
 	/* clear delay line to zero */
 	lp->filterState = 0.0;
 	memset(lp->buf, 0, sizeof(float) * lp->bufferSize);
 	return REVSC_OK;
 }
 
-
-int dsy_reverbsc_process(dsy_reverbsc *p, float *in1, float *in2, float *out1, float *out2)
+void reverbsc::process(float in1, float in2, float *out1, float *out2)
 {
 	float ainL, ainR, aoutL, aoutR;
 	float vm1, v0, v1, v2, am1, a0, a1, a2, frac;
-	dsy_reverbsc_dl *lp;
+	reverbsc_dl *lp;
 	int readPos;
 	uint32_t n;
 	int bufferSize; /* Local copy */
-	float dampFact = p->dampFact;
+	float dampFact = _dampFact;
 
-	if (p->initDone <= 0) return REVSC_NOT_OK;
+	//if (_initDone <= 0) return REVSC_NOT_OK;
 
 	/* calculate tone filter coefficient if frequency changed */
 
-	if (p->lpfreq != p->prv_LPFreq) {
-		p->prv_LPFreq = p->lpfreq;
-		dampFact = 2.0 - cos(p->prv_LPFreq * (2 * M_PI) / p->sampleRate);
-		dampFact = p->dampFact = dampFact - sqrt(dampFact * dampFact - 1.0);
+	if (_lpfreq != _prv_LPFreq) {
+		_prv_LPFreq = _lpfreq;
+		dampFact = 2.0 - cos(_prv_LPFreq * (2 * M_PI) / _sampleRate);
+		dampFact = _dampFact = dampFact - sqrt(dampFact * dampFact - 1.0);
 	}
 
 	/* calculate "resultant junction pressure" and mix to input signals */
 
 	ainL = aoutL = aoutR = 0.0;
 	for (n = 0; n < 8; n++) {
-		ainL += p->delayLines[n].filterState;
+		ainL += _delayLines[n].filterState;
 	}
 	ainL *= jpScale;
-	ainR = ainL + *in2;
-	ainL = ainL + *in1;
+	ainR = ainL + in2;
+	ainL = ainL + in1;
 
 	/* loop through all delay lines */
 
 	for (n = 0; n < 8; n++) {
-		lp = &p->delayLines[n];
+		lp = &_delayLines[n];
 		bufferSize = lp->bufferSize;
 
 		/* send input signal and feedback to delay line */
@@ -233,7 +233,7 @@ int dsy_reverbsc_process(dsy_reverbsc *p, float *in1, float *in2, float *out1, f
 
 		/* apply feedback gain and lowpass filter */
 
-		v0 *= (float) p->feedback;
+		v0 *= (float) _feedback;
 		v0 = (lp->filterState - v0) * dampFact + v0;
 		lp->filterState = v0;
 
@@ -249,12 +249,11 @@ int dsy_reverbsc_process(dsy_reverbsc *p, float *in1, float *in2, float *out1, f
 		/* start next random line segment if current one has reached endpoint */
 
 		if (--(lp->randLine_cnt) <= 0) {
-			next_random_lineseg(p, lp, n);
+			next_random_lineseg(lp, n);
 		}
 	}
 	/* someday, use aoutR for multimono out */
 
 	*out1  = aoutL * outputGain;
 	*out2 = aoutR * outputGain;
-	return REVSC_OK;
 }

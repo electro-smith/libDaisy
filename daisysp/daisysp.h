@@ -40,11 +40,11 @@ typedef struct {
 #include "modules/metro.h"
 #include "modules/phasor.h"
 #include "modules/port.h"
-#include "modules/reverbsc.h"
   
 #ifdef __cplusplus
 }
 
+#include "modules/reverbsc.h"
 #include "modules/whitenoise.h"
 #include "modules/svf.h"
 #include "modules/oscillator.h"
