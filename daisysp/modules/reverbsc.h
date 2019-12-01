@@ -33,6 +33,9 @@ typedef struct
 
 class reverbsc
 {
+    public:
+        reverbsc() {}
+        ~reverbsc() {}
 // ### init
 // Initializes the reverb module, and sets the samplerate at which the process function will be called.
 // ~~~~
