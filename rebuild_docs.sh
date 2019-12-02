@@ -29,9 +29,9 @@ done
 echo "done."
 
 # Generate PDFs
-
+mkdir -p doc
 ## daisysp
-pdf_name=daisysp
+pdf_name=doc/daisysp.pdf
 cat resources/preamble.md > temp.md
 echo "\pagebreak" >> temp.md
 for file in $daisysp_dir/doc/*.md; do
@@ -39,12 +39,12 @@ for file in $daisysp_dir/doc/*.md; do
     echo "\pagebreak" >> temp.md
 done
 echo "Generating documenation for " $pdf_name
-pandoc temp.md -s --template=./resources/template.tex --pdf-engine=xelatex --toc -o $pdf_name.pdf
-echo "Created $pdf_name.pdf"
+pandoc temp.md -s --template=./resources/template.tex --pdf-engine=xelatex --toc -o $pdf_name
+echo "Created $pdf_name"
 # remove temp file.
 rm temp.md
 echo "done."
-pdf_name=libdaisy
+pdf_name=doc/libdaisy.pdf
 cat resources/preamble.md > temp.md
 echo "\pagebreak" >> temp.md
 for file in $libdaisy_dir/doc/*.md; do
@@ -52,8 +52,8 @@ for file in $libdaisy_dir/doc/*.md; do
     echo "\pagebreak" >> temp.md
 done
 echo "Generating documenation for " $pdf_name
-pandoc temp.md -s --template=./resources/template.tex --pdf-engine=xelatex --toc -o $pdf_name.pdf
-echo "Created $pdf_name.pdf"
+pandoc temp.md -s --template=./resources/template.tex --pdf-engine=xelatex --toc -o $pdf_name
+echo "Created $pdf_name"
 # remove temp file.
 rm temp.md
 echo "done."
