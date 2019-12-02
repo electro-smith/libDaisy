@@ -12,7 +12,7 @@ namespace daisysp
 	class metro
 	{
 	public:
-		metro(){}
+		metro() {}
 		~metro() {}
 
 // ### init
@@ -35,28 +35,24 @@ namespace daisysp
 // ~~~~
 
 // ## Setters
-// ### set_freq
+// ### setfreq_
 // Sets frequency at which metro module will run at.
 
 // ~~~~
-		inline void set_freq(float freq) 
+		void set_freq(float freq);
 // ~~~~
-		{
-			_freq = freq;
-			_phs_inc = (2.0f * M_PI * _freq) / _sample_rate;
-		}
 
 // ## Getters
-// ### get_freq
+// ### getfreq_
 // Returns current value for frequency.
 
 // ~~~~
-		inline float get_freq() { return _freq; }
+		inline float get_freq() { return freq_; }
 // ~~~~
 
 	private:
-		float _freq;
-		float _phs, _sample_rate, _phs_inc;
+		float freq_;
+		float phs_, sample_rate_, phs_inc_;
 
 	};
 } // namespace daisysp
