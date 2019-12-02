@@ -4,10 +4,10 @@ using namespace daisysp;
 
 float crossfade::process(float *in1, float *in2)
 {
-	switch (_curve)
+	switch (curve_)
 	{
 		case CROSSFADE_LIN: 
-    		return ((*in2 * _pos) + *in1) * (1 - _pos);
+    		return ((*in2 * pos_) + *in1) * (1 - pos_);
 
     	case CROSSFADE_CPOW:
     		return 0;

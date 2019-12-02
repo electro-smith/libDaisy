@@ -56,8 +56,8 @@ namespace daisysp
 		inline void init() 
 // ~~~~
 		{
-			_pos = 0.5;
-    		_curve = CROSSFADE_LIN;
+			pos_ = 0.5;
+    		curve_ = CROSSFADE_LIN;
 		}
 // ### process
 // processes crossfade and returns single sample 
@@ -68,37 +68,37 @@ namespace daisysp
 
 // ## Setters
 
-// ### set_pos
+// ### setpos_
 // Sets position of crossfade between two input signals
 // Input range: 0 to 1
 // ~~~~
-		inline void set_pos(float pos) { _pos = pos; }
+		inline void set_pos(float pos) { pos_ = pos; }
 // ~~~~
 
-// ### set_curve
+// ### setcurve_
 // Sets current curve applied to crossfade 
 // Expected input: See [Curve Options](##curve-options)
 // ~~~~
-		inline void set_curve(uint8_t curve) { _curve = curve; }
+		inline void set_curve(uint8_t curve) { curve_ = curve; }
 // ~~~~
 
 // ## Getters
 
-// ### get_pos
+// ### getpos_
 // Returns current position
 // ~~~~
-		inline float get_pos(float pos) { return _pos; }
+		inline float get_pos(float pos) { return pos_; }
 // ~~~~
 
-// ### get_curve
+// ### getcurve_
 // Returns current curve
 // ~~~~
-		inline uint8_t get_curve(uint8_t curve) { return _curve; }
+		inline uint8_t get_curve(uint8_t curve) { return curve_; }
 // ~~~~
 
 	private:
-		float _pos;
-		uint8_t _curve;
+		float pos_;
+		uint8_t curve_;
 	};
 } // namespace daisysp
 #endif
