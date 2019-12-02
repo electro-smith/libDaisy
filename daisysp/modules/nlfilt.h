@@ -7,18 +7,20 @@
 //
 // The four 5-coefficients: a, b, d, C, and L are used to configure different filter types.
 //
+// Structure for Dobson/Fitch nonlinear filter 
+//
+// Revised Formula from Risto Holopainen 12 Mar 2004
+//
+// `Y{n} =tanh(a Y{n-1} + b Y{n-2} + d Y^2{n-L} + X{n} - C)`
+//
 // Though traditional filter types can be made, 
 // the effect will always respond differently to different input.
-// 
-// Structure for Dobson/Fitch nonlinear filter 
 //
 // This Source is a heavily modified version of the original
 // source from Csound.
 //
 // TODO: 
-// - Fix `process()` to process input, and return output;
-// - consider un-pointering all the controls, as it currently works different from all other modules.
-// - add setters for necessary parameters.
+// - make this work on a single sample instead of just on blocks at a time.
 //
 
 #pragma once
@@ -35,27 +37,61 @@ namespace daisysp
         public:
 
 // ### init
-// Initializes the nlfilt object, setting the size of the delay line to be used within.
+// Initializes the nlfilt object, setting the size of the audio block to be processed.
 //
-// `size_t size`: size of the internal delay line
-//      - range: 1-1024
 // ~~~~
-        void init(size_t size);
+        void init();
 // ~~~~
 
 // ### process
-// Process the variable pointed to by *_in and updates the output to *_ar;
+// Process the array pointed to by *in and updates the output to *out;
+//
+// This works on a block of audio at once, the size of which is set with the size. 
 // ~~~~
-        void process();
+        void process_block(float *in, float *out, size_t size);
 // ~~~~
+//
+// ## setters
+//
+// ### set_coefficients
+//
+// inputs these are the five coefficients for the filter.
+//
+// ~~~~
+        inline void set_coefficients(float a, float b, float d, float C, float L)
+// ~~~~
+        {
+            _a = a;
+            _b = b;
+            _d = d;
+            _C = C;
+            _L = L;
+        }
+
+// ### individual setters for each coefficients.
+//
+// ~~~~
+        inline void set_a(float a) { _a = a; }
+// ~~~~
+// ~~~~
+        inline void set_b(float b) { _b = b; }
+// ~~~~
+// ~~~~
+        inline void set_d(float d) { _d = d; }
+// ~~~~
+// ~~~~
+        inline void set_C(float C) { _C = C; }
+// ~~~~
+// ~~~~
+        inline void set_L(float L) { _L = L; }
+// ~~~~
+
 
         private:
 
         int32_t set();
-        int32_t nlfilt2();
 
-		float *_ar, *_in, *_a, *_b, *_d, *_C, *_L;
-		size_t _size;
+		float _ar, _in, _a, _b, _d, _C, _L;
 		float _delay[DSY_NLFILT_MAX_DELAY];
 		int32_t _point;
     };

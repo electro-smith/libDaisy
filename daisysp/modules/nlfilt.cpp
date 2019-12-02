@@ -10,50 +10,37 @@
 
 using namespace daisysp;
 
-void nlfilt::init(size_t size)
+void nlfilt::init()
 {
-	_size = size;
 	_point = 0;  // Set delay pointer
-	dsy_nlfilt_set(p);  // Setup Delay
+    set();
+	//dsy_nlfilt_set(p);  // Setup Delay
 	// For Now control pointers and i/o will be setup externally
 }
 
-void nlfilt::process()
-{
-    nlfilt2();
-}
-
-int32_t nlfilt::set()
-{
-	// Initializes delay buffer.
-	memset(_delay, 0, MAX_DELAY * sizeof(float));  // Memset 
-    return OK;
-}
 
 /* Revised version due to Risto Holopainen 12 Mar 2004 */
 /* Y{n} =tanh(a Y{n-1} + b Y{n-2} + d Y^2{n-L} + X{n} - C) */
 
-int32_t nlfilt::nlfilt2()
+void nlfilt::process_block(float *in, float *out, size_t size)
 {
-	float   *ar;
 	//uint32_t offset = _h.insdshead->ksmps_offset;
 	//uint32_t early  = _h.insdshead->ksmps_no_end;
 	uint32_t offset = 0;
-	uint32_t n, nsmps = _size;
+	uint32_t n, nsmps = size;
 	int32_t     point = _point;
 	int32_t     nm1 = point;
 	int32_t     nm2 = point - 1;
 	int32_t     nmL;
 	float   ynm1, ynm2, ynmL;
-	float   a = *_a, b = *_b, d = *_d, C = *_C;
-	float   *in = _in;
+	float   a = _a, b = _b, d = _d, C = _C;
 	float   *fp = (float*) _delay;
-	float   L = *_L;
+	float   L = _L;
 	float   maxamp, dvmaxamp, maxampd2;
 
 	//if (UNLIKELY(fp == NULL)) goto err1;                   // RWD fix 
-	if(fp == NULL) { return NOT_OK; }
-	ar   = _ar;
+	//if(fp == NULL) { return NOT_OK; }
+	//ar   = _ar;
 	/* L is k-rate so need to check */
 	if (L < FL(1.0f))
 		L = FL(1.0f);
@@ -67,7 +54,7 @@ int32_t nlfilt::nlfilt2()
 	ynm1 = fp[nm1]; /* Pick up running values */
 	ynm2 = fp[nm2];
 	ynmL = fp[nmL];
-	nsmps = _size;
+	nsmps = size;
 	//maxamp = csound->e0dbfs * FL(1.953125);     // 64000 with default 0dBFS 
 	//maxamp = 64000.0f; // Taken from comments above. Not sure how, though.
 	maxamp = 1.935125f;
@@ -83,15 +70,15 @@ int32_t nlfilt::nlfilt2()
 	*/
 	for(n = offset ; n < nsmps ; n++) {
 		float yn;
-		float out;
+		float outv;
 		yn = a * ynm1 + b * ynm2 + d * ynmL * ynmL - C;
 		yn += in[n] * dvmaxamp; /* Must work in small amplitudes  */
-		out = yn * maxampd2; /* Write output */
-		if (out > maxamp)
-			out = maxampd2;
-		else if (out < -maxamp)
-			out = -maxampd2;
-		ar[n] = out;
+		outv = yn * maxampd2; /* Write output */
+		if (outv > maxamp)
+			outv = maxampd2;
+		else if (outv < -maxamp)
+			outv = -maxampd2;
+		out[n] = outv;
 		if ((++point == MAX_DELAY)) {
 			point = 0;
 		}
@@ -105,5 +92,11 @@ int32_t nlfilt::nlfilt2()
 		ynmL = fp[nmL];
 	}
 	_point = point;
-	return OK;
-} /* end dsy_nlfilt2(p) */
+} 
+
+int32_t nlfilt::set()
+{
+	// Initializes delay buffer.
+	memset(_delay, 0, MAX_DELAY * sizeof(float));  // Memset 
+    return OK;
+}
