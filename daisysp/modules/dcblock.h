@@ -1,10 +1,9 @@
 // # dcblock
-// Removes dc component of a signal
+// Removes DC component of a signal
 
 #pragma once
 #ifndef DCBLOCK_H
 #define DCBLOCK_H
-#include <stdint.h>
 #ifdef __cplusplus
 
 namespace daisysp
@@ -19,7 +18,7 @@ namespace daisysp
 // Initializes dcblock module
 // 
 // ~~~~
-		void init(int sample_rate);
+		void init(float sample_rate);
 // ~~~~
 
 // ### process
@@ -30,7 +29,7 @@ namespace daisysp
 // ~~~~
 
 		private:
-			float _inputs, _outputs, _gain;
+			float input_, output_, gain_;
 	};
 }
 #endif
