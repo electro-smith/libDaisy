@@ -20,6 +20,7 @@
 // source from Csound.
 //
 // TODO: 
+//
 // - make this work on a single sample instead of just on blocks at a time.
 //
 
@@ -37,14 +38,14 @@ namespace daisysp
         public:
 
 // ### init
-// Initializes the nlfilt object, setting the size of the audio block to be processed.
+// Initializes the nlfilt object.
 //
 // ~~~~
         void init();
 // ~~~~
 
 // ### process
-// Process the array pointed to by *in and updates the output to *out;
+// Process the array pointed to by \*in and updates the output to \*out;
 //
 // This works on a block of audio at once, the size of which is set with the size. 
 // ~~~~
@@ -61,29 +62,29 @@ namespace daisysp
         inline void set_coefficients(float a, float b, float d, float C, float L)
 // ~~~~
         {
-            _a = a;
-            _b = b;
-            _d = d;
-            _C = C;
-            _L = L;
+            a_ = a;
+            b_ = b;
+            d_ = d;
+            C_ = C;
+            L_ = L;
         }
 
 // ### individual setters for each coefficients.
 //
 // ~~~~
-        inline void set_a(float a) { _a = a; }
+        inline void set_a(float a) { a_ = a; }
 // ~~~~
 // ~~~~
-        inline void set_b(float b) { _b = b; }
+        inline void set_b(float b) { b_ = b; }
 // ~~~~
 // ~~~~
-        inline void set_d(float d) { _d = d; }
+        inline void set_d(float d) { d_ = d; }
 // ~~~~
 // ~~~~
-        inline void set_C(float C) { _C = C; }
+        inline void set_C(float C) { C_ = C; }
 // ~~~~
 // ~~~~
-        inline void set_L(float L) { _L = L; }
+        inline void set_L(float L) { L_ = L; }
 // ~~~~
 
 
@@ -91,9 +92,9 @@ namespace daisysp
 
         int32_t set();
 
-		float _ar, _in, _a, _b, _d, _C, _L;
-		float _delay[DSY_NLFILT_MAX_DELAY];
-		int32_t _point;
+		float in_, a_, b_, d_, C_, L_;
+		float delay_[DSY_NLFILT_MAX_DELAY];
+		int32_t point_;
     };
 } // namespace daisysp
 

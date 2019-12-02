@@ -12,7 +12,7 @@ using namespace daisysp;
 
 void nlfilt::init()
 {
-	_point = 0;  // Set delay pointer
+	point_ = 0;  // Set delay pointer
     set();
 	//dsy_nlfilt_set(p);  // Setup Delay
 	// For Now control pointers and i/o will be setup externally
@@ -28,19 +28,19 @@ void nlfilt::process_block(float *in, float *out, size_t size)
 	//uint32_t early  = _h.insdshead->ksmps_no_end;
 	uint32_t offset = 0;
 	uint32_t n, nsmps = size;
-	int32_t     point = _point;
+	int32_t     point = point_;
 	int32_t     nm1 = point;
 	int32_t     nm2 = point - 1;
 	int32_t     nmL;
 	float   ynm1, ynm2, ynmL;
-	float   a = _a, b = _b, d = _d, C = _C;
-	float   *fp = (float*) _delay;
-	float   L = _L;
+	float   a = a_, b = b_, d = d_, C = C_;
+	float   *fp = (float*) delay_;
+	float   L = L_;
 	float   maxamp, dvmaxamp, maxampd2;
 
 	//if (UNLIKELY(fp == NULL)) goto err1;                   // RWD fix 
 	//if(fp == NULL) { return NOT_OK; }
-	//ar   = _ar;
+	//ar   = a_r;
 	/* L is k-rate so need to check */
 	if (L < FL(1.0f))
 		L = FL(1.0f);
@@ -91,12 +91,12 @@ void nlfilt::process_block(float *in, float *out, size_t size)
 		ynm1 = yn;
 		ynmL = fp[nmL];
 	}
-	_point = point;
+	point_ = point;
 } 
 
 int32_t nlfilt::set()
 {
 	// Initializes delay buffer.
-	memset(_delay, 0, MAX_DELAY * sizeof(float));  // Memset 
+	memset(delay_, 0, MAX_DELAY * sizeof(float));  // Memset 
     return OK;
 }
