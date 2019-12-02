@@ -9,7 +9,6 @@
 #pragma once
 #ifndef PHASOR_H
 #define PHASOR_H
-#include <stdint.h>
 #ifdef __cplusplus
 
 namespace daisysp
@@ -22,15 +21,15 @@ namespace daisysp
 
 // ### init
 // Initializes the phasor module
-// sr, and freq are in Hz
+// sample rate, and freq are in Hz
 // initial phase is in radians
 
 // ~~~~
-		inline void init(float sr, float freq, float initial_phase) 
+		inline void init(float sample_rate, float freq, float initial_phase) 
 // ~~~~
 		{
-			_sr = sr;
-			_phs = initial_phase;
+			sample_rate_ = sample_rate;
+			phs_ = initial_phase;
 			set_freq(freq);
 		}
 
@@ -46,24 +45,20 @@ namespace daisysp
 // ### set_freq
 // Sets frequency of the phasor in Hz
 // ~~~~
-		inline void set_freq(float freq) 
+		void set_freq(float freq);
 // ~~~~
-		{
-			_freq = freq;
-			_inc  = (2.0f * M_PI * _freq) / _sr;
-		}
 
 // ## Getters
 
 // ### get_freq
 // Returns current frequency value in Hz
 // ~~~~
-		inline float get_freq() { return _freq; }
+		inline float get_freq() { return freq_; }
 // ~~~~
 
 	private:
-		float _freq;
-		float _sr, _inc, _phs;
+		float freq_;
+		float sample_rate_, inc_, phs_;
 
 	};
 } // namespace daisysp
