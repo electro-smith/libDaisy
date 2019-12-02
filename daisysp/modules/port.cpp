@@ -1,5 +1,4 @@
 #include <math.h>
-#include <stdint.h>
 #include <stdlib.h>
 #define ROOT2 (1.4142135623730950488)
 
@@ -11,23 +10,23 @@
 
 using namespace daisysp;
 
-void port::init(int sr, float htime)
+void port::init(float sample_rate, float htime)
 {
-    _yt1 = 0;
-    _prvhtim = -100.0;
-    _htime = htime;
+    yt1_ = 0;
+    prvhtim_ = -100.0;
+    htime_ = htime;
 
-    _sr = sr;
-    _onedsr = 1.0/_sr;
+    sample_rate_ = sample_rate;
+    onedsr_ = 1.0/sample_rate_;
 }
 
 float port::process(float in)
 {
-    if(_prvhtim != _htime) {
-        _c2 = pow(0.5, _onedsr / _htime);
-        _c1 = 1.0 - _c2;
-        _prvhtim = _htime;
+    if(prvhtim_ != htime_) {
+        c2_ = pow(0.5, onedsr_ / htime_);
+        c1_ = 1.0 - c2_;
+        prvhtim_ = htime_;
     }
 
-    return _yt1 = _c1 * in + _c2 * _yt1;
+    return yt1_ = c1_ * in + c2_ * yt1_;
 }
