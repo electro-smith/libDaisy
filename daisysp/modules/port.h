@@ -46,7 +46,7 @@ namespace daisysp
 // Sets htime
 
 // ~~~~
-		inline void set_htime_(float htime) { htime_ = htime; }
+		inline void set_htime(float htime) { htime_ = htime; }
 // ~~~~
 
 // ## Getters
@@ -55,7 +55,7 @@ namespace daisysp
 // returns current value of htime
 
 // ~~~~
-		inline float get_htime_() { return htime_; }
+		inline float get_htime() { return htime_; }
 // ~~~~
 	private:
 		float htime_;
