@@ -1,9 +1,11 @@
 // # metro 
-// Creates a clock signal at specific frequency
+// 
+// Creates a clock signal at a specific frequency.
+// 
 
 #pragma once
-#ifndef METRO_H
-#define METRO_H
+#ifndef DSY_METRO_H
+#define DSY_METRO_H
 #include <stdint.h>
 #ifdef __cplusplus
 
@@ -16,7 +18,9 @@ namespace daisysp
 		~metro() {}
 
 // ### init
-// Initializes metro module
+// 
+// Initializes metro module.
+// 
 // Arguments:
 // - freq: frequency at which new clock signals will be generated
 // 	Input Range: 
@@ -35,7 +39,7 @@ namespace daisysp
 // ~~~~
 
 // ## Setters
-// ### setfreq_
+// ### set_freq
 // Sets frequency at which metro module will run at.
 
 // ~~~~
@@ -43,7 +47,7 @@ namespace daisysp
 // ~~~~
 
 // ## Getters
-// ### getfreq_
+// ### get_freq
 // Returns current value for frequency.
 
 // ~~~~
