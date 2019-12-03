@@ -5,14 +5,19 @@
 // then half as much again, etc., theoretically never reaching its asymptote.
 //
 // This code has been ported from Soundpipe to DaisySP by Paul Batchelor. 
+// 
 // The Soundpipe module was extracted from the Csound opcode "portk".
+//
 // Original Author(s): Robbin Whittle, John ffitch
+//
 // Year: 1995, 1998
+//
 // Location: Opcodes/biquad.c
+//
 
 #pragma once
-#ifndef PORT_H
-#define PORT_H
+#ifndef DSY_PORT_H
+#define DSY_PORT_H
 #ifdef __cplusplus
 
 namespace daisysp
@@ -24,8 +29,11 @@ namespace daisysp
 		~port() {}
 
 // ### init
+//
 // Initializes port module
+// 
 // Arguments:
+// 
 // - sample_rate: sample rate of audio engine
 // - htime: half-time of the function, in seconds.
 
@@ -42,7 +50,7 @@ namespace daisysp
 
 // ## Setters
 
-// ### sethtime_
+// ### set_htime
 // Sets htime
 
 // ~~~~
@@ -51,7 +59,7 @@ namespace daisysp
 
 // ## Getters
 
-// ### gethtime_
+// ### get_htime
 // returns current value of htime
 
 // ~~~~
