@@ -1,51 +1,101 @@
-/* 
- * This Source is a heavily modified version of the original
- * source from Csound.
- *
- * I've left the original license in place directly below.
- */
-/*
-    dsy_nlfilt.h:
-    Copyright (C) 1996 John ffitch, Richard Dobson
-    This file is part of Csound.
-    The Csound Library is free software; you can redistribute it
-    and/or modify it under the terms of the GNU Lesser General Public
-    License as published by the Free Software Foundation; either
-    version 2.1 of the License, or (at your option) any later version.
-    Csound is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Lesser General Public License for more details.
-    You should have received a copy of the GNU Lesser General Public
-    License along with Csound; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
-    02110-1301 USA
-*/
+// # nlfilt
+//
+// port by: stephen hensley, December 2019
+//
+// Non-linear filter. 
+//
+//
+// The four 5-coefficients: a, b, d, C, and L are used to configure different filter types.
+//
+// Structure for Dobson/Fitch nonlinear filter 
+//
+// Revised Formula from Risto Holopainen 12 Mar 2004
+//
+// `Y{n} =tanh(a Y{n-1} + b Y{n-2} + d Y^2{n-L} + X{n} - C)`
+//
+// Though traditional filter types can be made, 
+// the effect will always respond differently to different input.
+//
+// This Source is a heavily modified version of the original
+// source from Csound.
+//
+// TODO: 
+//
+// - make this work on a single sample instead of just on blocks at a time.
+//
 
-/* Structure for Dobson/Fitch nonlinear filter */
 #pragma once
 #ifndef DSY_NLFILT_H
 #define DSY_NLFILT_H
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 #include <stdlib.h>
 #include <stdint.h>
-
 #define DSY_NLFILT_MAX_DELAY 1024 
 
-	typedef struct {
-		float *ar, *in, *a, *b, *d, *C, *L;
-		size_t size;
-		float delay[DSY_NLFILT_MAX_DELAY];
-		int32_t point;
-	} dsy_nlfilt;
+namespace daisysp 
+{
+    class nlfilt
+    {
+        public:
 
-	void dsy_nlfilt_init(dsy_nlfilt *p, size_t size);
-	void dsy_nlfilt_process(dsy_nlfilt *p);
+// ### init
+// Initializes the nlfilt object.
+//
+// ~~~~
+        void init();
+// ~~~~
 
-#ifdef __cplusplus
-}
-#endif
+// ### process
+// Process the array pointed to by \*in and updates the output to \*out;
+//
+// This works on a block of audio at once, the size of which is set with the size. 
+// ~~~~
+        void process_block(float *in, float *out, size_t size);
+// ~~~~
+//
+// ## setters
+//
+// ### set_coefficients
+//
+// inputs these are the five coefficients for the filter.
+//
+// ~~~~
+        inline void set_coefficients(float a, float b, float d, float C, float L)
+// ~~~~
+        {
+            a_ = a;
+            b_ = b;
+            d_ = d;
+            C_ = C;
+            L_ = L;
+        }
+
+// ### individual setters for each coefficients.
+//
+// ~~~~
+        inline void set_a(float a) { a_ = a; }
+// ~~~~
+// ~~~~
+        inline void set_b(float b) { b_ = b; }
+// ~~~~
+// ~~~~
+        inline void set_d(float d) { d_ = d; }
+// ~~~~
+// ~~~~
+        inline void set_C(float C) { C_ = C; }
+// ~~~~
+// ~~~~
+        inline void set_L(float L) { L_ = L; }
+// ~~~~
+
+
+        private:
+
+        int32_t set();
+
+		float in_, a_, b_, d_, C_, L_;
+		float delay_[DSY_NLFILT_MAX_DELAY];
+		int32_t point_;
+    };
+} // namespace daisysp
+
 #endif
