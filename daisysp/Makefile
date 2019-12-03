@@ -6,7 +6,6 @@ adenv \
 crossfade \
 dcblock \
 decimator \
-delayline \
 line \
 nlfilt \
 metro \
@@ -17,6 +16,7 @@ reverbsc \
 svf \
 
 # certain modules are only header files:
+# delayline 
 # whitenoise
 
 # TODO: Consider making this work for PCs as well?
