@@ -14,89 +14,95 @@ void pluck::reinit()
 {
     int n;
     float val = 0;
-    float *ap = _buf;
-    //_npts = (int32_t)roundf(_decay * (float)(_maxpts - PLUKMIN) + PLUKMIN);
-    _npts = (int32_t)(_decay * (float)(_maxpts - PLUKMIN) + PLUKMIN);
-    //_sicps = ((float)_npts * INTERPFACTOR + INTERPFACTOR/2.0f) * (1.0f / _sr);
-    _sicps = ((float)_npts * 256.0f + 128.0f) * (1.0f / _sample_rate);
-    for (n=_npts; n--; ) {   
+    float *ap = buf_;
+    //npts_ = (int32_t)roundf(decay_ * (float)(maxpts_ - PLUKMIN) + PLUKMIN);
+    npts_ = (int32_t)(decay_ * (float)(maxpts_ - PLUKMIN) + PLUKMIN);
+    //sicps_ = ((float)npts_ * INTERPFACTOR + INTERPFACTOR/2.0f) * (1.0f / _sr);
+    sicps_ = ((float)npts_ * 256.0f + 128.0f) * (1.0f / sample_rate_);
+    for (n=npts_; n--; ) {   
         val = (float) ((float) rand() / RAND_MAX);
         *ap++ = (val * 2.0f) - 1.0f;
     }
-    _phs256 = 0;
+    phs256_ = 0;
 }
 
 void pluck::init(float sample_rate, float *buf, int32_t npts, int32_t mode)
 {
-    _amp = 0.5f;
-    _freq = 300;
-    _decay = 1.0f;
-    _sample_rate = sample_rate;
-    _mode = mode;
+    amp_ = 0.5f;
+    freq_ = 300;
+    decay_ = 1.0f;
+    sample_rate_ = sample_rate;
+    mode_ = mode;
 
-    _maxpts = npts;
-    _npts = npts;
-    _buf = buf;
+    maxpts_ = npts;
+    npts_ = npts;
+    buf_ = buf;
 
     reinit();
     /* tuned pitch convt */
-    _sicps = (npts * 256.0f + 128.0f) * (1.0f / _sample_rate);
-    _init = 1;
+    sicps_ = (npts * 256.0f + 128.0f) * (1.0f / sample_rate_);
+    init_ = 1;
 }
 
 void pluck::process(float *trig, float *out)
 {
     float *fp;
     int32_t phs256, phsinc, ltwopi, offset;
-    float coeff, inv_coeff;
+    float coeff;
+
+    // unused variable
+    // float inv_coeff;
+
     float frac, diff;
     float dampmin = 0.42f;
 
     if(*trig != 0) {
-        _init = 0;
+        init_ = 0;
         reinit();
     }
 
-    if(_init) {
+    if(init_) {
         *out = 0;
         return;
     }
     // Set Coeff for mode.
-    switch(_mode) {
+    switch(mode_) {
         case PLUCK_MODE_RECURSIVE:
-            coeff = ((0.5f - dampmin) * _damp) + dampmin;
+            coeff = ((0.5f - dampmin) * damp_) + dampmin;
             break;
         case PLUCK_MODE_WEIGHTED_AVERAGE:
-            coeff = 0.05f + (_damp * 0.90f);
+            coeff = 0.05f + (damp_ * 0.90f);
             break;
         default:
             coeff = 0.5f;
             break;
     }
-    inv_coeff = 1.0f - coeff;
+
+    // variable set but not used
+    //inv_coeff = 1.0f - coeff;
     
-    phsinc = (int32_t)(_freq * _sicps);
-    phs256 = _phs256;
-    ltwopi = _npts << 8;
+    phsinc = (int32_t)(freq_ * sicps_);
+    phs256 = phs256_;
+    ltwopi = npts_ << 8;
     offset = phs256 >> 8;
-    fp = (float *)_buf + offset;     /* lookup position   */
+    fp = (float *)buf_ + offset;     /* lookup position   */
     diff = fp[1] - fp[0];
     frac = (float)(phs256 & 255) / 256.0f; /*  w. interpolation */
-    *out = (fp[0] + diff*frac) * _amp; /*  gives output val */
+    *out = (fp[0] + diff*frac) * amp_; /*  gives output val */
     if ((phs256 += phsinc) >= ltwopi) {
         int nn;
         float preval;
         phs256 -= ltwopi;               
-        fp=_buf;
+        fp=buf_;
         preval = fp[0];                
-        fp[0] = fp[_npts];
+        fp[0] = fp[npts_];
         fp++;
-        nn = _npts;
+        nn = npts_;
         do {          
             /* 1st order recursive filter*/
             //preval = (*fp + preval) * coeff;
             /* weighted average - stretches decay times */
-            switch(_mode) {
+            switch(mode_) {
                 case PLUCK_MODE_RECURSIVE:
                     preval = (*fp + preval) * coeff;
                     break;
@@ -109,5 +115,5 @@ void pluck::process(float *trig, float *out)
             *fp++ = preval;
         } while (--nn);
     }
-    _phs256 = phs256;
+    phs256_ = phs256;
 }

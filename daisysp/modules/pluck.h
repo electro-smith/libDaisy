@@ -2,22 +2,24 @@
 // pluck
 // 
 // This code has been extracted from the Csound opcode "pluck"
-// It has been modified to work as a Daisy SOundpipe module.
+// It has been modified to work as a Daisy Soundpipe module.
 // 
 // Original Author(s): Barry Vercoe, John ffitch
+//
 // Year: 1991
+//
 // Location: OOps/ugens4.c
 //
-// 
 
 #pragma once
-#ifndef PLUCK_H
-#define PLUCK_H
-#define PLUCK_MODE_RECURSIVE 0
-#define PLUCK_MODE_WEIGHTED_AVERAGE 1
+#ifndef DSY_PLUCK_H
+#define DSY_PLUCK_H
 
 #include <stdint.h>
 #ifdef __cplusplus
+
+#define PLUCK_MODE_RECURSIVE 0
+#define PLUCK_MODE_WEIGHTED_AVERAGE 1
 
 namespace daisysp
 {
@@ -31,42 +33,26 @@ namespace daisysp
 		void process (float *trig, float *out);
 
 		// Setters
-		inline void set_amp(float amp) { _amp = amp; }
-		inline void set_freq(float freq) { _freq = freq; }
-		inline void set_decay(float decay) { _decay = decay; }
-		inline void set_sample_rate(float sample_rate) { _sample_rate = sample_rate; }
-		inline void set_mode(int32_t mode) { _mode = mode; }
+		inline void set_amp(float amp) { amp_ = amp; }
+		inline void set_freq(float freq) { freq_ = freq; }
+		inline void set_decay(float decay) { decay_ = decay; }
+		inline void set_mode(int32_t mode) { mode_ = mode; }
 
 		// Getters
-		inline float get_amp() { return _amp; }
-		inline float get_freq() { return _freq; }
-		inline float get_decay() { return _decay; }
-		inline float get_sample_rate() { return _sample_rate; }
-		inline int32_t get_mode() { return _mode; }
+		inline float get_amp() { return amp_; }
+		inline float get_freq() { return freq_; }
+		inline float get_decay() { return decay_; }
+		inline int32_t get_mode() { return mode_; }
 
 	private:
 		void reinit();
-		float _amp, _freq, _decay, _damp, _ifreq;
-	    float _sicps;
-	    int32_t _phs256, _npts, _maxpts;
-	    float *_buf;
-	    float _sample_rate;
-	    char _init;
-	    int32_t _mode;
-/*
-typedef struct {
-    float amp, freq, decay, damp, ifreq;
-    float sicps;
-    int32_t phs256, npts, maxpts;
-    float *buf;
-    float sr;
-    char init;
-    int32_t mode;
-} daisy_pluck;
-
-void daisy_pluck_init(daisy_pluck *p, float sr, float *buf, int32_t npt, int32_t mode);
-void daisy_pluck_compute(daisy_pluck *p, float *trig, float *out);
-*/
+		float amp_, freq_, decay_, damp_, ifreq_;
+	    float sicps_;
+	    int32_t phs256_, npts_, maxpts_;
+	    float *buf_;
+	    float sample_rate_;
+	    char init_;
+	    int32_t mode_;
 	};
 } // namespace daisysp
 #endif
