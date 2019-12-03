@@ -1,5 +1,5 @@
-
 // # crossfade
+// 
 // Performs a crossfade between two signals
 // 
 // Original author: Paul Batchelor
@@ -8,13 +8,12 @@
 // added curve option for constant power, etc.
 // 
 // TODO:
-// - implement constant power curve process
 // - implement exponential curve process
 // - implement logarithmic curve process
 
 #pragma once
-#ifndef CROSSFADE_H
-#define CROSSFADE_H
+#ifndef DSY_CROSSFADE_H
+#define DSY_CROSSFADE_H
 #include <stdint.h>
 #ifdef __cplusplus
 
@@ -68,14 +67,14 @@ namespace daisysp
 
 // ## Setters
 
-// ### setpos_
+// ### set_pos
 // Sets position of crossfade between two input signals
 // Input range: 0 to 1
 // ~~~~
 		inline void set_pos(float pos) { pos_ = pos; }
 // ~~~~
 
-// ### setcurve_
+// ### set_curve
 // Sets current curve applied to crossfade 
 // Expected input: See [Curve Options](##curve-options)
 // ~~~~
@@ -84,13 +83,13 @@ namespace daisysp
 
 // ## Getters
 
-// ### getpos_
+// ### get_pos
 // Returns current position
 // ~~~~
 		inline float get_pos(float pos) { return pos_; }
 // ~~~~
 
-// ### getcurve_
+// ### get_curve
 // Returns current curve
 // ~~~~
 		inline uint8_t get_curve(uint8_t curve) { return curve_; }
