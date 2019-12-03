@@ -95,7 +95,6 @@
     <ClCompile Include="modules\crossfade.c" />
     <ClCompile Include="modules\dcblock.c" />
     <ClCompile Include="modules\decimator.cpp" />
-    <ClCompile Include="modules\delayline.c" />
     <ClCompile Include="modules\line.cpp" />
     <ClCompile Include="modules\metro.c" />
     <ClCompile Include="modules\nlfilt.c" />
