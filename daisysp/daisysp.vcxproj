@@ -91,18 +91,18 @@
     <None Include="stm32.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="modules\adenv.c" />
+    <ClCompile Include="modules\adenv.cpp" />
     <ClCompile Include="modules\crossfade.c" />
     <ClCompile Include="modules\dcblock.c" />
-    <ClCompile Include="modules\decimator.c" />
+    <ClCompile Include="modules\decimator.cpp" />
     <ClCompile Include="modules\delayline.c" />
-    <ClCompile Include="modules\line.c" />
+    <ClCompile Include="modules\line.cpp" />
     <ClCompile Include="modules\metro.c" />
     <ClCompile Include="modules\nlfilt.c" />
     <ClCompile Include="modules\oscillator.cpp" />
     <ClCompile Include="modules\phasor.c" />
     <ClCompile Include="modules\port.c" />
-    <ClCompile Include="modules\reverbsc.c" />
-    <ClCompile Include="modules\svf.c" />
+    <ClCompile Include="modules\reverbsc.cpp" />
+    <ClCompile Include="modules\svf.cpp" />
   </ItemGroup>
 </Project>
