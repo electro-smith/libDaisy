@@ -34,7 +34,6 @@ typedef struct {
 #include "modules/crossfade.h"
 #include "modules/dcblock.h"
 #include "modules/decimator.h"
-#include "modules/delayline.h"
 #include "modules/line.h"
 #include "modules/nlfilt.h"
 #include "modules/metro.h"
@@ -44,6 +43,7 @@ typedef struct {
 #ifdef __cplusplus
 }
 
+#include "modules/delayline.h"
 #include "modules/reverbsc.h"
 #include "modules/whitenoise.h"
 #include "modules/svf.h"
