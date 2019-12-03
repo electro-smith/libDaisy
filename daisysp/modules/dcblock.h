@@ -1,9 +1,11 @@
 // # dcblock
+// 
 // Removes DC component of a signal
+// 
 
 #pragma once
-#ifndef DCBLOCK_H
-#define DCBLOCK_H
+#ifndef DSY_DCBLOCK_H
+#define DSY_DCBLOCK_H
 #ifdef __cplusplus
 
 namespace daisysp
@@ -15,6 +17,7 @@ namespace daisysp
 		~dcblock() {};
 
 // ### init
+// 
 // Initializes dcblock module
 // 
 // ~~~~
