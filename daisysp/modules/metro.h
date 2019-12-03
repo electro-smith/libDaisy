@@ -1,19 +1,64 @@
+// # metro 
+// 
+// Creates a clock signal at a specific frequency.
+// 
+
 #pragma once
 #ifndef DSY_METRO_H
 #define DSY_METRO_H
 #include <stdint.h>
-typedef struct
+#ifdef __cplusplus
+
+namespace daisysp
 {
-	float freq;
-	float phs, sr, phs_inc;
-} dsy_metro;
+	class metro
+	{
+	public:
+		metro() {}
+		~metro() {}
 
-void dsy_metro_init(dsy_metro *p, float freq, float sr);
+// ### init
+// 
+// Initializes metro module.
+// 
+// Arguments:
+// - freq: frequency at which new clock signals will be generated
+// 	Input Range: 
+// - sample_rate: sample rate of audio engine
+// 	Input range: 
 
-void dsy_metro_set_freq(dsy_metro *p, float freq);
+// ~~~~
+		void init(float freq, float sample_rate);
+// ~~~~
 
-// Returns 1 on trigger, otherwise 0
-uint8_t dsy_metro_process(dsy_metro *p);
+// ### process
+// checks current state of metro object and updates state if necesary.
 
+// ~~~~
+		uint8_t process();
+// ~~~~
+
+// ## Setters
+// ### set_freq
+// Sets frequency at which metro module will run at.
+
+// ~~~~
+		void set_freq(float freq);
+// ~~~~
+
+// ## Getters
+// ### get_freq
+// Returns current value for frequency.
+
+// ~~~~
+		inline float get_freq() { return freq_; }
+// ~~~~
+
+	private:
+		float freq_;
+		float phs_, sample_rate_, phs_inc_;
+
+	};
+} // namespace daisysp
 #endif
-
+#endif
