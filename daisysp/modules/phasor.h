@@ -7,8 +7,8 @@
 // - Setup a similar start function for an external mux, but that seems outside the scope of this file.
 
 #pragma once
-#ifndef PHASOR_H
-#define PHASOR_H
+#ifndef DSY_PHASOR_H
+#define DSY_PHASOR_H
 #ifdef __cplusplus
 
 namespace daisysp
@@ -20,8 +20,11 @@ namespace daisysp
 		~phasor() {}
 
 // ### init
+// 
 // Initializes the phasor module
+// 
 // sample rate, and freq are in Hz
+// 
 // initial phase is in radians
 
 // ~~~~
