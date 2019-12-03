@@ -61,7 +61,7 @@ typedef struct
 
 
 // THIS BREAKS WHEN ITS INLINED?
-void daisy_seed_init(daisy_handle *daisy_seed)
+inline void daisy_seed_init(daisy_handle *daisy_seed)
 {
 	dsy_gpio_pin *pin_group; // Pointer to an arbitrary group of pins.
 
