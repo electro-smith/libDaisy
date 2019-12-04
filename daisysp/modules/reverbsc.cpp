@@ -49,7 +49,7 @@ static int delay_line_bytes_alloc(float sr, float iPitchMod, int n);
 static const float outputGain  = 0.35;
 static const float jpScale     = 0.25;
 
-void reverbsc::init(float sr)
+int reverbsc::init(float sr)
 {
 	_iSampleRate = sr;
 	_sampleRate = sr;
@@ -71,6 +71,7 @@ void reverbsc::init(float sr)
 		init_delay_line(&_delayLines[i], i);
 		nBytes += delay_line_bytes_alloc(sr, 1, i);
 	}
+	return 0;
 }
 
 static int delay_line_max_samples(float sr, float iPitchMod, int n)
@@ -143,7 +144,7 @@ int reverbsc::init_delay_line(reverbsc_dl *lp, int n)
 	return REVSC_OK;
 }
 
-void reverbsc::process(float in1, float in2, float *out1, float *out2)
+int reverbsc::process(const float &in1, const float &in2, float *out1, float *out2)
 {
 	float ainL, ainR, aoutL, aoutR;
 	float vm1, v0, v1, v2, am1, a0, a1, a2, frac;
@@ -154,13 +155,13 @@ void reverbsc::process(float in1, float in2, float *out1, float *out2)
 	float dampFact = _dampFact;
 
 	//if (_initDone <= 0) return REVSC_NOT_OK;
+    if (_initDone <= 0) return REVSC_NOT_OK;
 
 	/* calculate tone filter coefficient if frequency changed */
-
 	if (_lpfreq != _prv_LPFreq) {
 		_prv_LPFreq = _lpfreq;
-		dampFact = 2.0 - cos(_prv_LPFreq * (2 * M_PI) / _sampleRate);
-		dampFact = _dampFact = dampFact - sqrt(dampFact * dampFact - 1.0);
+		dampFact = 2.0f - cosf(_prv_LPFreq * (2.0f * (float)M_PI) / _sampleRate);
+		dampFact = _dampFact = dampFact - sqrtf(dampFact * dampFact - 1.0f);
 	}
 
 	/* calculate "resultant junction pressure" and mix to input signals */
@@ -256,4 +257,5 @@ void reverbsc::process(float in1, float in2, float *out1, float *out2)
 
 	*out1  = aoutL * outputGain;
 	*out2 = aoutR * outputGain;
+	return REVSC_OK;
 }

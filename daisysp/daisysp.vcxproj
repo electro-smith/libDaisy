@@ -92,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="modules\adenv.cpp" />
-    <ClCompile Include="modules\crossfade.c" />
+    <ClCompile Include="modules\crossfade.cpp" />
     <ClCompile Include="modules\dcblock.cpp" />
     <ClCompile Include="modules\decimator.cpp" />
     <ClCompile Include="modules\line.cpp" />
