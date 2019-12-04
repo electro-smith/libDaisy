@@ -62,7 +62,7 @@ namespace daisysp
 // processes crossfade and returns single sample 
 // 
 // ~~~~
-		float process(float *in1, float *in2);
+		float process(float &in1, float &in2);
 // ~~~~
 
 // ## Setters
