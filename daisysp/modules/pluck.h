@@ -18,11 +18,14 @@
 #include <stdint.h>
 #ifdef __cplusplus
 
-#define PLUCK_MODE_RECURSIVE 0
-#define PLUCK_MODE_WEIGHTED_AVERAGE 1
-
 namespace daisysp
 {
+	enum 
+	{
+		PLUCK_MODE_RECURSIVE,
+		PLUCK_MODE_WEIGHTED_AVERAGE,
+	};
+
 	class pluck
 	{
 	public:
@@ -30,7 +33,7 @@ namespace daisysp
 		~pluck() {}
 
 		void init (float sample_rate, float *buf, int32_t npt, int32_t mode);
-		void process (float *trig, float *out);
+		float process (float *trig);
 
 		// Setters
 		inline void set_amp(float amp) { amp_ = amp; }

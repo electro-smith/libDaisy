@@ -44,9 +44,9 @@ void pluck::init(float sample_rate, float *buf, int32_t npts, int32_t mode)
     init_ = 1;
 }
 
-void pluck::process(float *trig, float *out)
+float pluck::process(float *trig)
 {
-    float *fp;
+    float *fp, out;
     int32_t phs256, phsinc, ltwopi, offset;
     float coeff;
 
@@ -62,8 +62,7 @@ void pluck::process(float *trig, float *out)
     }
 
     if(init_) {
-        *out = 0;
-        return;
+        return 0;
     }
     // Set Coeff for mode.
     switch(mode_) {
@@ -88,7 +87,7 @@ void pluck::process(float *trig, float *out)
     fp = (float *)buf_ + offset;     /* lookup position   */
     diff = fp[1] - fp[0];
     frac = (float)(phs256 & 255) / 256.0f; /*  w. interpolation */
-    *out = (fp[0] + diff*frac) * amp_; /*  gives output val */
+    out = (fp[0] + diff*frac) * amp_; /*  gives output val */
     if ((phs256 += phsinc) >= ltwopi) {
         int nn;
         float preval;
@@ -116,4 +115,5 @@ void pluck::process(float *trig, float *out)
         } while (--nn);
     }
     phs256_ = phs256;
+    return out;
 }
