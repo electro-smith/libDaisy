@@ -18,8 +18,8 @@ float crossfade::process(float &in1, float &in2)
     		return (in1 * (1.0f - scalar_1)) + (in2 * scalar_1);
 
     	case CROSSFADE_CPOW:
-            scalar_1 = sinf(pos_ * (M_PI * 0.5f));
-            scalar_2 = sinf((1.0f - pos_) * (M_PI * 0.5f));
+            scalar_1 = sinf(pos_ * ((float)M_PI * 0.5f));
+            scalar_2 = sinf((1.0f - pos_) * ((float)M_PI * 0.5f));
             return (in1 * scalar_2) + (in2 * scalar_1);
 
     	case CROSSFADE_LOG:

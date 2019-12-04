@@ -90,7 +90,7 @@ inline void daisy_seed_init(daisy_handle *daisy_seed)
 
 
 	// SAI - Serial Audio Interface
-	daisy_seed->sai_handle.init = DSY_AUDIO_INIT_BOTH;
+	daisy_seed->sai_handle.init = DSY_AUDIO_INIT_SAI1;
 	// SAI1 - config
 	daisy_seed->sai_handle.device[DSY_SAI_1]	  = DSY_AUDIO_DEVICE_WM8731;
 	daisy_seed->sai_handle.samplerate[DSY_SAI_1]  = DSY_AUDIO_SAMPLERATE_48K;

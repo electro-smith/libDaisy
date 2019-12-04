@@ -39,13 +39,13 @@ class reverbsc
 // ### init
 // Initializes the reverb module, and sets the samplerate at which the process function will be called.
 // ~~~~
-    void init(float samplerate);
+    int init(float samplerate);
 // ~~~~
     
 // ### process
 // process the input through the reverb, and updates values of out1, and out2 with the new processed signal.
 // ~~~~
-    void process(float in1, float in2, float *out1, float *out2);
+    int process(const float &in1, const float &in2, float *out1, float *out2);
 // ~~~~
 
 // ### set_feedabck
@@ -54,7 +54,7 @@ class reverbsc
 // range: 0.0 to 1.0
 //
 // ~~~~
-    inline void set_feedback(float fb) { _feedback = fb; }
+    inline void set_feedback(const float &fb) { _feedback = fb; }
 // ~~~~
 // ### set_lpfreq
 // controls the internal dampening filter's cutoff frequency.
@@ -62,7 +62,7 @@ class reverbsc
 // range: 0.0 to samplerate / 2
 //
 // ~~~~
-    inline void set_lpfreq(float freq) { _lpfreq = freq; }
+    inline void set_lpfreq(const float &freq) { _lpfreq = freq; }
 // ~~~~
 
     private:
