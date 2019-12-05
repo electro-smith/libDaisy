@@ -1,6 +1,6 @@
-// tone
+// # tone
 //
-// filter
+// A first-order recursive low-pass filter with variable frequency response.
 // 
 #pragma once
 #ifndef DSY_TONE_H
@@ -16,32 +16,57 @@ namespace daisysp
 	public:
 		tone() {}
 		~tone() {}
-
+// ### init
+//
+// Initializes the tone module.
+//
+// sample_rate - The sample rate of the audio engine being run. 
+// 
+// ~~~~
 		void init(float sample_rate);
-		float process(float *in);
+// ~~~~
 
-		// setters
-		set_freq(float freq);
+// ### process
+//
+// Processes one sample through the filter and returns one sample.
+//
+// in - input signal 
+// 
+// ~~~~
+		float process(float &in);
+// ~~~~
 
-		// getters
-		inline void get_freq() { return freq_; }
+// ## Setters
+// 
+// ### set_freq
+// 
+// Sets the cutoff frequency or half-way point of the filter.
+// 
+// Arguments
+//
+// - freq - frequency value in Hz. Range: Any positive value.
+//
+// ~~~~
+		inline void set_freq(float freq) 
+// ~~~~
+		{
+			freq_ = freq;
+    		calculate_coefficients();
+		}
+
+// ## Getters
+// 
+// ### get_freq
+// 
+// Returns the current value for the cutoff frequency or half-way point of the filter.
+//
+// ~~~~
+		inline float get_freq() { return freq_; }
+// ~~~~
 
 	private:
 		float out_, prevout_, in_, freq_, c1_, c2_, sample_rate_;
 		void calculate_coefficients();
-/*
-typedef struct {
-    float out;
-    float prevout;
-    float in;
-    float freq;
-    float c1, c2;
-}tone;
-
-void tone_init(tone *d);
-void tone_set_freq(tone *d, float freq);
-void tone_render(tone *d, float *in, float *out);
-*/
 	};
 } // namespace daisysp
 #endif

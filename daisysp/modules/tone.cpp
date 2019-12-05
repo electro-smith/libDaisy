@@ -1,6 +1,5 @@
 #include "tone.h"
-#include "audio.h"
-#include "arm_math.h"
+#include <math.h>
 
 using namespace daisysp;
 
@@ -13,7 +12,7 @@ void tone::init(float sample_rate)
     sample_rate_ = sample_rate;
 }
 
-float tone::process(float *in)
+float tone::process(float &in)
 {
     float out;
 
@@ -21,12 +20,6 @@ float tone::process(float *in)
     prevout_ = out;
     
     return out;
-}
-
-void tone::set_freq(float freq)
-{
-    freq_ = freq;
-    calculate_coefficients();
 }
 
 void tone::calculate_coefficients()
