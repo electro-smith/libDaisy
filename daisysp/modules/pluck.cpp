@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include <stdint.h>
 #include "pluck.h"
 
 #define PLUKMIN 64
@@ -44,7 +43,7 @@ void pluck::init(float sample_rate, float *buf, int32_t npts, int32_t mode)
     init_ = 1;
 }
 
-float pluck::process(float *trig)
+float pluck::process(float &trig)
 {
     float *fp, out;
     int32_t phs256, phsinc, ltwopi, offset;
@@ -56,7 +55,7 @@ float pluck::process(float *trig)
     float frac, diff;
     float dampmin = 0.42f;
 
-    if(*trig != 0) {
+    if(trig != 0) {
         init_ = 0;
         reinit();
     }
