@@ -68,6 +68,7 @@
     <ClInclude Include="daisysp.h" />
     <ClInclude Include="fft.h" />
     <ClInclude Include="modules\adenv.h" />
+    <ClInclude Include="modules\compressor.h" />
     <ClInclude Include="modules\crossfade.h" />
     <ClInclude Include="modules\dcblock.h" />
     <ClInclude Include="modules\decimator.h" />
@@ -93,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="modules\adenv.cpp" />
+    <ClCompile Include="modules\compressor.cpp" />
     <ClCompile Include="modules\crossfade.cpp" />
     <ClCompile Include="modules\dcblock.cpp" />
     <ClCompile Include="modules\decimator.cpp" />
