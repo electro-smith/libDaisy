@@ -26,10 +26,10 @@ void compressor::init(float samplerate)
     fConst1_ = 2.0f / (float)iConst0_;
     fConst2_ = 1.0f / (float) iConst0_; 
     // Skipped fHsliderN inits, but I'm going to init the 4 params
-    ratio_ = 0.1f;
-    thresh_ = 1.0f;
+    ratio_ = 2.0f;
+    thresh_ = -12.0f;
     atk_ = 0.1f;
-    rel_ = 0.0f; 
+    rel_ = 0.1f; 
     for(uint8_t i = 0; i < 2; i++)
     {
         fRec0_[i] = 0.1f;
@@ -52,7 +52,6 @@ float compressor::process(float &in, float &key)
 		= ((fSlow1_ * fRec0_[1])
 		   + (fSlow2_ * max(((20.f * log10(fRec1_[0])) - fSlow5_), 0.f)));
     out = (powf(10.0f, (0.05f * fRec0_[0] * (0.05f * makeupgain_))) * in);
-//	out *= (powf(10.0f, (0.05f * makeupgain_)));
 	fRec2_[1] = fRec2_[0];
     fRec1_[1] = fRec1_[0];
     fRec0_[1] = fRec0_[0];
