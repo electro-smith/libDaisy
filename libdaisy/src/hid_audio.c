@@ -6,11 +6,11 @@
 #include "stm32h7xx_hal.h"
 #include "sys_dma.h"
 
-//#define DSY_PROFILE_AUDIO_CALLBACK 1
+#define DSY_PROFILE_AUDIO_CALLBACK 1
 
 #ifdef DSY_PROFILE_AUDIO_CALLBACK
 // Initialize Gate Output GPIO (only for timing in this case)
-#define PROFILE_GPIO_PIN GPIO_PIN_10
+#define PROFILE_GPIO_PIN GPIO_PIN_14
 #define PROFILE_GPIO_PORT GPIOG
 static void init_gpio()
 {
@@ -234,7 +234,7 @@ void dsy_audio_exit_bypass(uint8_t intext)
 static void internal_callback(SAI_HandleTypeDef* hsai, size_t offset)
 {
 	#ifdef DSY_PROFILE_AUDIO_CALLBACK
-	HAL_GPIO_WritePin(PROFILE_GPIO_PORT, PROFILE_GPIO_PIN, 0);
+	HAL_GPIO_WritePin(PROFILE_GPIO_PORT, PROFILE_GPIO_PIN, 1);
 	#endif
 	dsy_audio* ah = get_audio_from_sai(hsai);
 
@@ -275,7 +275,7 @@ static void internal_callback(SAI_HandleTypeDef* hsai, size_t offset)
 		}
 	}
 	#ifdef DSY_PROFILE_AUDIO_CALLBACK
-	HAL_GPIO_WritePin(PROFILE_GPIO_PORT, PROFILE_GPIO_PIN, 1);
+	HAL_GPIO_WritePin(PROFILE_GPIO_PORT, PROFILE_GPIO_PIN, 0);
 	#endif
 }
 
