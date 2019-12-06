@@ -48,5 +48,6 @@ typedef struct {
 #include "modules/whitenoise.h"
 #include "modules/svf.h"
 #include "modules/oscillator.h"
+#include "modules/compressor.h"
 #endif
 #endif
