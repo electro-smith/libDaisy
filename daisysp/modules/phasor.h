@@ -26,6 +26,10 @@ namespace daisysp
 // sample rate, and freq are in Hz
 // 
 // initial phase is in radians
+// 
+// Additional init functions have defaults when arg is not specified:
+// - phs = 0.0f
+// - freq = 1.0f
 
 // ~~~~
 		inline void init(float sample_rate, float freq, float initial_phase) 
@@ -36,10 +40,29 @@ namespace daisysp
 			set_freq(freq);
 		}
 
-// ### process
-// processes phasor and returns current value
-//
 // ~~~~
+		inline void init(float sample_rate, float freq) 
+// ~~~~
+		{
+			sample_rate_ = sample_rate;
+			phs_		 = 0.0f;
+			freq_		 = freq;
+		}
+
+// ~~~~
+		inline void init(float sample_rate) 
+// ~~~~
+		{ 
+			sample_rate_ = sample_rate;
+			phs_		 = 0.0f;
+			freq_		 = 1.0f;
+		}
+
+
+		// ### process
+		// processes phasor and returns current value
+		//
+		// ~~~~
 		float process();
 // ~~~~
 
