@@ -15,7 +15,6 @@ void decimator::init()
 
 float decimator::process(float input)
 {
-	uint8_t bits_to_crush;
 	int32_t temp;
 	//downsample
 	_threshold = (uint32_t)((_downsample_factor *_downsample_factor) * 96.0f);
