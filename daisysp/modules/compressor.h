@@ -1,7 +1,19 @@
 // # compressor
 // 
 // influenced by compressor in soundpipe (from faust).
+// 
+// Modifications made to do:
+// - Less calculations during each process loop (coefficients recalculated on parameter change).
+// - C++-ified
+// - added sidechain support
 //
+// TODO:
+// - With fixed controls this is relatively quick, but changing controls now costs a lot more
+// - Still pretty expensive
+// - Maybe make stereo possible? (needing two for stereo is a bit silly, 
+// and their gain shouldn't be totally unique.
+// 
+// 
 // by: shensley
 //
 #pragma once
@@ -16,33 +28,71 @@ class compressor
     compressor() {}
     ~compressor() {}
 
+// ### init
+//
+// Initializes compressor
+// 
+// samplerate - rate at which samples will be produced by the audio engine.
+// ~~~~
     void init(float samplerate);
-    //float process(const float &in);
+// ~~~~
+
+// ### process
+// compresses the audio input signal, either keyed by itself, or a secondary input.
+// 
+// in - audio input signal (to be compressed)
+// 
+// (optional) key - audio input that will be used to side-chain the compressor. 
+// ~~~~
 	float process(float &in, float &key);
 	float process(float &in);
+// ~~~~
 
-	// Expects 0.001 -> 40.
+// ## setters
+
+// ### set_ratio
+// amount of gain reduction applied to compressed signals
+// 
+// Expects 1.0 -> 40. (untested with values < 1.0)
+// ~~~~
     void set_ratio(const float &ratio)
+// ~~~~
     {
         ratio_ = ratio;
 		recalculate_slopes();
 	}
 
-    // Expects 0.0 -> -80.
+// ### set_threshold
+// threshold in dB at which compression will be applied
+// 
+// Expects 0.0 -> -80.
+// ~~~~
     void set_threshold(const float &thresh)
+// ~~~~
     {
         thresh_ = thresh;
 		recalculate_slopes();
 	}
 
-    // Expects 0.001 -> 10
+// ### set_attack
+// envelope time for onset of compression for signals above the threshold.
+// 
+// Expects 0.001 -> 10
+// ~~~~
     void set_attack(const float &atk)
+// ~~~~
     {
         atk_ = atk;
 		recalculate_slopes();
     }
-    // Expects 0.001 -> 10
+
+// ### set_release
+// envelope time for release of compression as input signal falls below threshold.
+// 
+// Expects 0.001 -> 10
+// ~~~~
     void set_release(const float &rel)
+// ~~~~
     {
         rel_ = rel;
 		recalculate_slopes();
