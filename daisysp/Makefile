@@ -11,6 +11,7 @@ nlfilt \
 metro \
 oscillator \
 phasor \
+pluck \
 port \
 reverbsc \
 svf \
