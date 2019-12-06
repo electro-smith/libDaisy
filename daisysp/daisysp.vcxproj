@@ -66,6 +66,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="daisysp.h" />
+    <ClInclude Include="fft.h" />
     <ClInclude Include="modules\adenv.h" />
     <ClInclude Include="modules\crossfade.h" />
     <ClInclude Include="modules\dcblock.h" />
