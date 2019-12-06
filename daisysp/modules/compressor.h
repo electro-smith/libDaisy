@@ -3,13 +3,16 @@
 // influenced by compressor in soundpipe (from faust).
 // 
 // Modifications made to do:
+// 
 // - Less calculations during each process loop (coefficients recalculated on parameter change).
 // - C++-ified
 // - added sidechain support
 //
 // TODO:
+// 
 // - With fixed controls this is relatively quick, but changing controls now costs a lot more
 // - Still pretty expensive
+// - Add soft/hard knee settings 
 // - Maybe make stereo possible? (needing two for stereo is a bit silly, 
 // and their gain shouldn't be totally unique.
 // 
