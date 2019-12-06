@@ -49,15 +49,24 @@ namespace daisysp
 		inline void set_bitcrush_factor (float bitcrush_factor)
 // ~~~~
 		{
-			_bitcrush_factor = bitcrush_factor;
+			//			_bitcrush_factor = bitcrush_factor;
+			_bits_to_crush = bitcrush_factor * max_bits_to_crush;
 		}
 
-// ## Getters
+		// ### set_bits_to_crush
+		// Sets the exact number of bits to crush
+		// 0-16 bits
+		inline void set_bits_to_crush(const uint8_t &bits) 
+		{
+			_bits_to_crush = bits <= max_bits_to_crush ? bits : max_bits_to_crush;
+		}
 
-// ### get_downsample_factor
-// Returns current setting of downsample
+		// ## Getters
 
-// ~~~~
+		// ### get_downsample_factor
+		// Returns current setting of downsample
+
+		// ~~~~
 		inline float get_downsample_factor () { return _downsample_factor; }
 // ~~~~
 
@@ -66,10 +75,12 @@ namespace daisysp
 
 // ~~~~
 		inline float get_bitcrush_factor () { return _bitcrush_factor; }
-// ~~~~
+		// ~~~~
 
-	private:
+	  private:
+		const uint8_t max_bits_to_crush = 16;
 		float _downsample_factor, _bitcrush_factor;
+		uint32_t _bits_to_crush;
 		float _downsampled, _bitcrushed;
 		uint32_t _inc, _threshold;
 	};

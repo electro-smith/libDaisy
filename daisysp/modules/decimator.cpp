@@ -2,8 +2,7 @@
 
 using namespace daisysp;
 
-#define MAX_BITS_TO_CRUSH 16
-
+//#define MAX_BITS_TO_CRUSH 16
 void decimator::init()
 {
 	_downsample_factor = 1.0f;
@@ -28,14 +27,14 @@ float decimator::process(float input)
 	}
 	//bitcrush
 	// there are probably a million different ways to do this better.
-	bits_to_crush = (uint8_t)(_bitcrush_factor * MAX_BITS_TO_CRUSH);
-	if (bits_to_crush > MAX_BITS_TO_CRUSH)
-	{
-		bits_to_crush = MAX_BITS_TO_CRUSH;
-	}
+//	bits_to_crush = (uint8_t)(_bitcrush_factor * MAX_BITS_TO_CRUSH);
+//	if (bits_to_crush > MAX_BITS_TO_CRUSH)
+//	{
+//		bits_to_crush = MAX_BITS_TO_CRUSH;
+//	}
 	temp = (int32_t)(_downsampled * 65536.0f);
-	temp >>= bits_to_crush;  // shift off
-	temp <<= bits_to_crush;  // move back with zeros
+	temp >>= _bits_to_crush;  // shift off
+	temp <<= _bits_to_crush;  // move back with zeros
 	_bitcrushed = (float)temp / 65536.0f;
 	//_output = _bitcrushed;
 	return _bitcrushed;
