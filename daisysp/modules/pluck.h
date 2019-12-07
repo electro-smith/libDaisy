@@ -49,8 +49,8 @@ namespace daisysp
 // Arguments:
 // 
 // - sample_rate: Sample rate of the audio engine being run.
-// - buf: Buffer for ?
-// - npt: 
+// - buf: buffer used as an impulse when triggering the pluck algorithm
+// - npt: number of elementes in buf.
 // - mode: Sets the mode of the algorithm.
 // 
 // ~~~~

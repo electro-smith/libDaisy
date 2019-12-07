@@ -22,14 +22,17 @@ namespace daisysp
 
 // ### process
 // Processes line segment. Returns one sample.
-// Expected input: 
+//
+// value of finished will be updated to a 1, upon completion of the line's trajectory.
 // ~~~~
 		float process(uint8_t *finished);
 // ~~~~
 
 // ### start
 // Begin creation of line. 
+//
 // Arguments:
+//
 // - start - beginning value
 // - end - ending value
 // - dur - duration in seconds of line segment

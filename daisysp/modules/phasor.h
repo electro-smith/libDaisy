@@ -2,7 +2,9 @@
 // Generates a normalized signal moving from 0-1 at the specified frequency.
 //
 // TODO:
+//
 // I'd like to make the following things easily configurable:
+//
 // - Selecting which channels should be initialized/included in the sequence conversion.
 // - Setup a similar start function for an external mux, but that seems outside the scope of this file.
 
@@ -28,6 +30,7 @@ namespace daisysp
 // initial phase is in radians
 // 
 // Additional init functions have defaults when arg is not specified:
+//
 // - phs = 0.0f
 // - freq = 1.0f
 
@@ -59,10 +62,10 @@ namespace daisysp
 		}
 
 
-		// ### process
-		// processes phasor and returns current value
-		//
-		// ~~~~
+// ### process
+// processes phasor and returns current value
+//
+// ~~~~
 		float process();
 // ~~~~
 
