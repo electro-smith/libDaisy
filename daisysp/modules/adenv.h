@@ -1,11 +1,11 @@
-
 // # adenv
-
+// 
 // Author: shensley
 //
-// 		Trigger-able envelope with adjustable min/max, and independent per-segment time control.
+// Trigger-able envelope with adjustable min/max, and independent per-segment time control.
 // 
 // TODO:
+// 
 // - Add Cycling
 // - Implement Curve (its only linear for now).
 // - Maybe make this an AD_sr that has AD/AR/A_sr modes.
@@ -19,9 +19,10 @@
 namespace daisysp
 {
 
-// ## Envelope Segments
+// ### Envelope Segments
 // 
 // Distinct stages that the phase of the envelope can be located in. 
+// 
 // - IDLE = located at phase location 0, and not currently running
 // - ATTACK = First segment of envelope where phase moves from MIN value to MAX value
 // - DECAY = Second segment of envelope where phase moves from MAX to MIN value
@@ -48,6 +49,7 @@ namespace daisysp
 // float sample_rate - sample rate of the audio engine being run.
 //
 // Defaults
+// 
 // - current segment = idle
 // - curve = linear
 // - phase = 0

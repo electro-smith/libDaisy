@@ -8,6 +8,7 @@
 // added curve option for constant power, etc.
 // 
 // TODO:
+// 
 // - implement exponential curve process
 // - implement logarithmic curve process
 
@@ -22,6 +23,7 @@ namespace daisysp
 
 // ## Curve Options
 // Curve applied to the crossfade
+// 
 // - LIN = linear
 // - CPOW = constant power
 // - LOG = logarithmic
@@ -48,6 +50,7 @@ namespace daisysp
 // Initializes crossfade module
 // 
 // Defaults
+// 
 // - current position = .5
 // - curve = linear
 // 
@@ -69,13 +72,16 @@ namespace daisysp
 
 // ### set_pos
 // Sets position of crossfade between two input signals
+// 
 // Input range: 0 to 1
 // ~~~~
 		inline void set_pos(float pos) { pos_ = pos; }
 // ~~~~
 
 // ### set_curve
+// 
 // Sets current curve applied to crossfade 
+// 
 // Expected input: See [Curve Options](##curve-options)
 // ~~~~
 		inline void set_curve(uint8_t curve) { curve_ = curve; }
