@@ -18,20 +18,6 @@ extern "C"
 //#define SAMPLE_RATE 95820.0f
 #endif
 
-#ifdef AUDIO_TOTAL_BUF_SIZE
-#define DMA_BUFFER_SIZE AUDIO_TOTAL_BUF_SIZE / 2
-#else
-
-#ifndef DSY_AUDIO_DMA_BUFFER_SIZE
-#define DSY_AUDIO_DMA_BUFFER_SIZE 48
-//#define DSY_AUDIO_DMA_BUFFER_SIZE 64
-//#define DSY_AUDIO_DMA_BUFFER_SIZE 256
-#endif // DMA_BUFFER_SIZE
-
-#endif // AUDIO_TOTAL_BUF_SIZE
-
-#define DSY_AUDIO_BLOCK_SIZE (DSY_AUDIO_DMA_BUFFER_SIZE / 2)
-
 	// Thinking about getting rid of this...
 
 	// If initialized to a single channel, its just that.
@@ -43,11 +29,18 @@ extern "C"
 		DSY_AUDIO_LAST,
 	};
 
+	typedef struct
+	{
+		size_t			block_size;
+		dsy_sai_handle *sai;
+		dsy_i2c_handle *dev0_i2c;
+		dsy_i2c_handle *dev1_i2c;
+	} dsy_audio_handle;
+
 	typedef void (*dsy_audio_callback)(float*, float*, size_t);
-	void dsy_audio_init(dsy_sai_handle* sai_handle,
-						dsy_i2c_handle* dev0_i2c,
-						dsy_i2c_handle* dev1_i2c);
+	void dsy_audio_init(dsy_audio_handle* handle);
 	void dsy_audio_set_callback(uint8_t intext, dsy_audio_callback cb);
+	void dsy_audio_set_blocksize(uint8_t intext, size_t blocksize);
 
 	void dsy_audio_start(uint8_t intext);
 
