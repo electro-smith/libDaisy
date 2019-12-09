@@ -69,6 +69,8 @@ void dsy_led_driver_init(dsy_i2c_handle *dsy_i2c, uint8_t *addr, uint8_t addr_cn
 	{
 		leddriver.driver_addr[i] = addr[i];
 	}
+	// Overwrite anything critical about I2C
+	dsy_i2c->speed = DSY_I2C_SPEED_1MHZ;
 	dsy_i2c_init(dsy_i2c);
 	init_rgb_leds();
 	gen_sorted_table();
