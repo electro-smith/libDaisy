@@ -55,7 +55,7 @@ int reverbsc::init(float sr)
 	_sampleRate = sr;
 	_feedback = 0.97;
 	_lpfreq = 10000;
-	_iPitchMod = 1;
+	_iPitchMod = 0.5f;
 	_iSkipInit = 0;
 	_dampFact = 1.0;
 	_prv_LPFreq = 0.0;

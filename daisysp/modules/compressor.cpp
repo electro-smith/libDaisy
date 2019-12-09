@@ -1,4 +1,5 @@
-#include <math.h>
+//#include <math.h>
+#include <cmath>
 #include <stdlib.h>
 #include <stdint.h>
 #include "compressor.h"
@@ -50,7 +51,7 @@ float compressor::process(float &in, float &key)
     fRec1_[0] = fRec2_[0];
 	fRec0_[0]
 		= ((fSlow1_ * fRec0_[1])
-		   + (fSlow2_ * max(((20.f * log10(fRec1_[0])) - fSlow5_), 0.f)));
+		   + (fSlow2_ * max(((20.f * std::log10(fRec1_[0])) - fSlow5_), 0.f)));
     out = (powf(10.0f, (0.05f * fRec0_[0] * (0.05f * makeupgain_))) * in);
 	fRec2_[1] = fRec2_[0];
     fRec1_[1] = fRec1_[0];
