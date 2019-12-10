@@ -81,6 +81,10 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 	hadc1.Init.Overrun					= ADC_OVR_DATA_PRESERVED;
 	hadc1.Init.LeftBitShift				= ADC_LEFTBITSHIFT_NONE;
 	hadc1.Init.OversamplingMode			= DISABLE;
+// TODO: Fix the oversampling -- somethings funky
+//	hadc1.Init.OversamplingMode			= ENABLE;
+//	hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_5;
+//	hadc1.Init.Oversampling.Ratio		  = 32;
 	if(HAL_ADC_Init(&hadc1) != HAL_OK)
 	{
 		//Error_Handler();
