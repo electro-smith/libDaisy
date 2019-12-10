@@ -23,7 +23,7 @@ namespace daisysp
 // sample_rate - The sample rate of the audio engine being run. 
 // 
 // ~~~~
-		void init(float sample_rate);
+		void init(float &sample_rate);
 // ~~~~
 
 // ### process
@@ -47,7 +47,7 @@ namespace daisysp
 // - freq - frequency value in Hz. Range: Any positive value.
 //
 // ~~~~
-		inline void set_freq(float freq) 
+		inline void set_freq(float &freq) 
 // ~~~~
 		{
 			freq_ = freq;
@@ -65,8 +65,8 @@ namespace daisysp
 // ~~~~
 
 	private:
-		float out_, prevout_, in_, freq_, c1_, c2_, sample_rate_;
 		void calculate_coefficients();
+		float out_, prevout_, in_, freq_, c1_, c2_, sample_rate_;
 	};
 } // namespace daisysp
 #endif

@@ -39,6 +39,7 @@ typedef struct {
 #include "modules/metro.h"
 #include "modules/phasor.h"
 #include "modules/port.h"
+#include "modules/tone.h"
   
 #ifdef __cplusplus
 }
