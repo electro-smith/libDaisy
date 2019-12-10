@@ -14,6 +14,7 @@ phasor \
 port \
 reverbsc \
 svf \
+tone \
 
 # certain modules are only header files:
 # delayline 
