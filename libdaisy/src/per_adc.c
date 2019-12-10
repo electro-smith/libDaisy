@@ -67,7 +67,7 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 	/** Common config 
   */
 	hadc1.Instance						= ADC1;
-	hadc1.Init.ClockPrescaler			= ADC_CLOCK_ASYNC_DIV128;
+	hadc1.Init.ClockPrescaler			= ADC_CLOCK_ASYNC_DIV2;
 	hadc1.Init.Resolution				= ADC_RESOLUTION_16B;
 	hadc1.Init.ScanConvMode				= ADC_SCAN_ENABLE;
 	hadc1.Init.EOCSelection				= ADC_EOC_SEQ_CONV;
@@ -80,11 +80,59 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 	hadc1.Init.ConversionDataManagement = ADC_CONVERSIONDATA_DMA_CIRCULAR;
 	hadc1.Init.Overrun					= ADC_OVR_DATA_PRESERVED;
 	hadc1.Init.LeftBitShift				= ADC_LEFTBITSHIFT_NONE;
-	hadc1.Init.OversamplingMode			= DISABLE;
-// TODO: Fix the oversampling -- somethings funky
-//	hadc1.Init.OversamplingMode			= ENABLE;
-//	hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_5;
-//	hadc1.Init.Oversampling.Ratio		  = 32;
+	if(dsy_hadc->oversampling)
+	{
+		hadc1.Init.OversamplingMode = ENABLE;
+		hadc1.Init.Oversampling.OversamplingStopReset
+			= ADC_REGOVERSAMPLING_CONTINUED_MODE;
+		hadc1.Init.Oversampling.TriggeredMode
+			= ADC_TRIGGEREDMODE_SINGLE_TRIGGER;
+	}
+	else
+	{
+		hadc1.Init.OversamplingMode = DISABLE;
+	}
+	switch(dsy_hadc->oversampling)
+	{
+		case DSY_ADC_OVS_4:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_2;
+			hadc1.Init.Oversampling.Ratio		  = 3;
+			break;
+		case DSY_ADC_OVS_8:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_3;
+			hadc1.Init.Oversampling.Ratio		  = 7;
+			break;
+		case DSY_ADC_OVS_16:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_4;
+			hadc1.Init.Oversampling.Ratio		  = 15;
+			break;
+		case DSY_ADC_OVS_32:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_5;
+			hadc1.Init.Oversampling.Ratio		  = 31;
+			break;
+		case DSY_ADC_OVS_64:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_6;
+			hadc1.Init.Oversampling.Ratio		  = 63;
+			break;
+		case DSY_ADC_OVS_128:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_7;
+			hadc1.Init.Oversampling.Ratio		  = 127;
+			break;
+		case DSY_ADC_OVS_256:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_8;
+			hadc1.Init.Oversampling.Ratio		  = 255;
+			break;
+		case DSY_ADC_OVS_512:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_9;
+			hadc1.Init.Oversampling.Ratio		  = 511;
+			break;
+		case DSY_ADC_OVS_1024:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_10;
+			hadc1.Init.Oversampling.Ratio		  = 1023;
+			break;
+		default: break;
+	}
+
 	if(HAL_ADC_Init(&hadc1) != HAL_OK)
 	{
 		//Error_Handler();
@@ -99,7 +147,7 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 	/** Configure Regular Channel 
   */
 	// Configure Shared settings for all channels.
-	sConfig.SamplingTime = ADC_SAMPLETIME_64CYCLES_5;
+	sConfig.SamplingTime = ADC_SAMPLETIME_8CYCLES_5;
 	sConfig.SingleDiff   = ADC_SINGLE_ENDED;
 	sConfig.OffsetNumber = ADC_OFFSET_NONE;
 	sConfig.Offset		 = 0;
