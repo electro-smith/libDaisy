@@ -36,6 +36,12 @@ namespace daisysp
 
 // ~~~~
 		uint8_t process();
+		// ~~~~
+
+// ### reset
+// resets phase to 0
+// ~~~~
+		inline void reset() { phs_ = 0.0f; }
 // ~~~~
 
 // ## Setters
