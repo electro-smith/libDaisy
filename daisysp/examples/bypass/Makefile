@@ -46,7 +46,7 @@ DAISYSP_DIR = \
 ../..
 
 SYSTEM_FILES_DIR = \
-core
+../../../core
 
 ######################################
 # source

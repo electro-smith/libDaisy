@@ -1,11 +1,11 @@
-TARGET = ex_reverbsc
-CHIPSET = stm32h7x
+#TARGET = ex_bypass
+CHIPSET ?= stm32h7x
 
 PGM_DEVICE ?= interface/stlink-v2.cfg
 
 TARGET_BIN=$(TARGET).bin
 TARGET_ELF=$(TARGET).elf
-FLASH_ADDRESS = 0x08000000
+FLASH_ADDRESS ?= 0x08000000
 
 
 # If you have the arm-none-eabi- toolchain located in a particular place, but not installed for the entire system, add the path here:
@@ -29,7 +29,7 @@ GDB_FLAGS=
 #DEBUG = 1
 # optimization
 #OPT = -Og
-OPT = -O2
+OPT ?= -O2
 
 
 ######################################
@@ -39,14 +39,14 @@ OPT = -O2
 # Build path
 BUILD_DIR = build
 
-LIBDAISY_DIR = \
+LIBDAISY_DIR ?= \
 ../../../libdaisy
 
-DAISYSP_DIR = \
+DAISYSP_DIR ?= \
 ../..
 
-SYSTEM_FILES_DIR = \
-../../../core
+SYSTEM_FILES_DIR ?= \
+../core
 
 ######################################
 # source
@@ -56,7 +56,7 @@ C_SOURCES = \
 $(SYSTEM_FILES_DIR)/system_stm32h7xx.c
 
 CPP_SOURCES = \
-ex_reverbsc.cpp
+ex_bypass.cpp
 
 ASM_SOURCES = \
 $(SYSTEM_FILES_DIR)/startup_stm32h750xx.s
@@ -137,9 +137,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 
 CPPFLAGS = $(CFLAGS)
 CPPFLAGS += \
--fno-exceptions \
--finline-functions \
--funroll-loops
+-fno-exceptions
 
 #######################################
 # LDFLAGS
