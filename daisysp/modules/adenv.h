@@ -72,7 +72,7 @@ namespace daisysp
 		inline void trigger() {trigger_ = 1; }
 // ~~~~
 
-// ## Setters
+// ## Mutators
 
 // ### setsegment_time_
 // Sets the length of time(secondsVERIFYTHIS) for a specific segment.
@@ -110,13 +110,13 @@ namespace daisysp
 		inline void set_max(float max) {max_ = max; }
 // ~~~~
 
-// ## Getters
+// ## Accessors
 
 // ### current_segment
 //
 // Returns the segment of the envelope that the phase is currently located in. 
 // ~~~~		
-		inline void get_current_segment() { return current_segment_; }
+		inline uint8_t get_current_segment() { return current_segment_; }
 // ~~~~
 		private:
 		void calculate_multiplier(float start, float end, uint32_t length_in_samples);
