@@ -21,6 +21,7 @@ static void audioCallback(float *in, float *out, size_t size)
 
         env_out = env.process();
         osc.set_freq(env_out);
+        //osc.set_freq(440);
     	osc_out = osc.process();
 
     	// left out
@@ -46,9 +47,9 @@ int main(void)
     env.set_curve_scalar(0); // linear
 
     // Set parameters for oscillator
-    osc.set_waveform(osc.WAVE_POLYBLEP_TRI);
+    osc.set_waveform(osc.WAVE_TRI);
     osc.set_freq(1);
-    osc.set_amp(0.5);
+    osc.set_amp(0.25);
 
     // define callback
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
