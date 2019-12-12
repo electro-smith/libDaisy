@@ -43,19 +43,19 @@ int main(void)
 
     // set parameters for sine oscillator object
     osc_sine.init(DSY_AUDIO_SAMPLE_RATE);
-    osc_sine.set_waveform(osc_sine.WAVE_SIN);
-    osc_sine.set_freq(440);
+    osc_sine.set_waveform(oscillator::WAVE_SIN);
+    osc_sine.set_freq(100);
     osc_sine.set_amp(0.25);
 
     // set parameters for sawtooth oscillator object
     osc_saw.init(DSY_AUDIO_SAMPLE_RATE);
-    osc_saw.set_waveform(osc_saw.WAVE_SAW);
-    osc_saw.set_freq(440);
+    osc_saw.set_waveform(oscillator::WAVE_POLYBLEP_SAW);
+    osc_saw.set_freq(100);
     osc_saw.set_amp(0.25);
 
     // set parameters for triangle lfo oscillator object
     lfo.init(DSY_AUDIO_SAMPLE_RATE);
-    lfo.set_waveform(lfo.WAVE_TRI);
+    lfo.set_waveform(oscillator::WAVE_TRI);
     lfo.set_freq(.25);
     lfo.set_amp(1);
 
