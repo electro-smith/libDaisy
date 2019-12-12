@@ -6,17 +6,15 @@ using namespace daisysp;
 static daisy_handle seed;
 static adenv env;
 static oscillator osc;
-static metro clk;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
 	float osc_out, env_out;
-    uint8_t trig;
+    uint8_t current_segment;
     for (size_t i = 0; i < size; i += 2)
     {
-        trig = clk.process();
-
-        if (trig) 
+        current_segment = env.current_segment();
+        if (current_segment == ADENV_SEG_IDLE) 
         {
             env.trigger();
         }
@@ -39,10 +37,9 @@ int main(void)
     daisy_seed_init(&seed);
     env.init(DSY_AUDIO_SAMPLE_RATE);
     osc.init(DSY_AUDIO_SAMPLE_RATE);
-    clk.init(.2, DSY_AUDIO_SAMPLE_RATE);
 
     // set adenv parameters
-    env.set_time(ADENV_SEG_ATTACK, 3);
+    env.set_time(ADENV_SEG_ATTACK, 1);
     env.set_time(ADENV_SEG_DECAY, 1);
     env.set_min(1);
     env.set_max(1000);
