@@ -40,25 +40,24 @@ OPT ?= -O2
 BUILD_DIR = build
 
 LIBDAISY_DIR ?= \
-../../../libdaisy
+./libdaisy
 
 DAISYSP_DIR ?= \
-../..
+./daisysp
 
 SYSTEM_FILES_DIR ?= \
-../core
+./
 
 ######################################
 # source
 ######################################
 
-C_SOURCES = \
+CPP_SOURCES ?= 
+
+C_SOURCES += \
 $(SYSTEM_FILES_DIR)/system_stm32h7xx.c
 
-CPP_SOURCES = \
-ex_bypass.cpp
-
-ASM_SOURCES = \
+ASM_SOURCES += \
 $(SYSTEM_FILES_DIR)/startup_stm32h750xx.s
 
 #######################################
@@ -137,7 +136,13 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 
 CPPFLAGS = $(CFLAGS)
 CPPFLAGS += \
--fno-exceptions
+-fno-exceptions \
+-fasm \
+-finline \
+-finline-functions-called-once \
+-fshort-enums \
+-fno-move-loop-invariants \
+-fno-unwind-tables \
 
 #######################################
 # LDFLAGS
