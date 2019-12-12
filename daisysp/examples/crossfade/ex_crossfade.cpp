@@ -56,8 +56,8 @@ int main(void)
     // set parameters for triangle lfo oscillator object
     lfo.init(DSY_AUDIO_SAMPLE_RATE);
     lfo.set_waveform(lfo.WAVE_TRI);
-    lfo.set_freq(1);
-    lfo.set_amp(.75);
+    lfo.set_freq(.25);
+    lfo.set_amp(1);
 
     // define callback
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
