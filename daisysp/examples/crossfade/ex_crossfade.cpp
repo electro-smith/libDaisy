@@ -5,9 +5,7 @@ using namespace daisysp;
 
 static daisy_handle seed;
 static crossfade cfade;
-static oscillator osc_sine;
-static oscillator osc_saw;
-static oscillator lfo;
+static oscillator osc_sine, osc_saw, lfo;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
@@ -16,9 +14,14 @@ static void audioCallback(float *in, float *out, size_t size)
     {
     	sine = osc_sine.process();
         saw = osc_saw.process();
-        pos = lfo.process();
-        cfade.set_pos(pos);
 
+        // lfo output = -1 to 1
+        pos = lfo.process();
+
+        // scale signal between 0 and 1
+        pos = (pos + 1) / 2;
+
+        cfade.set_pos(pos);
         output = cfade.process(sine, saw);
 
     	// left out
