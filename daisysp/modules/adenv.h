@@ -8,7 +8,7 @@
 // 
 // - Add Cycling
 // - Implement Curve (its only linear for now).
-// - Maybe make this an AD_sr that has AD/AR/A_sr modes.
+// - Maybe make this an ADsr_ that has AD/AR/Asr_ modes.
 
 #pragma once
 #ifndef ADENV_H
@@ -69,21 +69,21 @@ namespace daisysp
 // ### trigger
 // Starts or retriggers the envelope. 
 // ~~~~
-		inline void trigger() {_trigger = 1; }
+		inline void trigger() {trigger_ = 1; }
 // ~~~~
 
 // ## Setters
 
-// ### set_segment_time
+// ### setsegment_time_
 // Sets the length of time(secondsVERIFYTHIS) for a specific segment.
 // ~~~~
 		inline void set_time(uint8_t seg, float time)
 // ~~~~
 		{
-			_segment_time[seg] = time; 
+			segment_time_[seg] = time; 
 		}
 
-// ### set_curve_scalar
+// ### setcurve_scalar_
 // Sets the amount of curve applied. 
 // Input range: -1 to 1. 
 // - At -1, curve = full logarithmic
@@ -91,23 +91,23 @@ namespace daisysp
 // - At 0, curve = linear
 
 // ~~~~
-		inline void set_curve_scalar(float scalar) { _curve_scalar = scalar; }
+		inline void set_curve_scalar(float scalar) { curve_scalar_ = scalar; }
 // ~~~~
 
 // ### set_min
 //
 // Sets the minimum value of the envelope output
-// Input range: -FLT_MAX, to FLT_MAX
+// Input range: -FLTmax_, to FLTmax_
 // ~~~~		
-		inline void set_min(float min) {_min = min; }
+		inline void set_min(float min) {min_ = min; }
 // ~~~~
 
 // ### set_max
 //
 // Sets the maximum value of the envelope output
-// Input range: -FLT_MAX, to FLT_MAX
+// Input range: -FLTmax_, to FLTmax_
 // ~~~~
-		inline void set_max(float max) {_max = max; }
+		inline void set_max(float max) {max_ = max; }
 // ~~~~
 
 // ## Getters
@@ -116,15 +116,15 @@ namespace daisysp
 //
 // Returns the segment of the envelope that the phase is currently located in. 
 // ~~~~		
-		inline void current_segment();
+		inline void get_current_segment() { return current_segment_; }
 // ~~~~
 		private:
 		void calculate_multiplier(float start, float end, uint32_t length_in_samples);
-		uint8_t _current_segment;
-		float _segment_time[ADENV_SEG_LAST];
-		float _sr, _phase_inc, _min, _max, _multiplier, _output, _curve_scalar;
-		uint32_t _phase;
-		uint8_t _trigger;
+		uint8_t current_segment_;
+		float segment_time_[ADENV_SEG_LAST];
+		float sample_rate_, phase_inc_, min_, max_, multiplier_, output_, curve_scalar_;
+		uint32_t phase_;
+		uint8_t trigger_;
 	};
 
 } // namespace daisysp
