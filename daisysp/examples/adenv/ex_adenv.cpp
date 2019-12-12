@@ -13,7 +13,7 @@ static void audioCallback(float *in, float *out, size_t size)
     uint8_t current_segment;
     for (size_t i = 0; i < size; i += 2)
     {
-        current_segment = env.current_segment();
+        current_segment = env.get_current_segment();
         if (current_segment == ADENV_SEG_IDLE) 
         {
             env.trigger();
