@@ -7,7 +7,7 @@ static daisy_handle seed;
 static crossfade cfade;
 static oscillator osc_sine;
 static oscillator osc_saw;
-static phasor phsr;
+static oscillator lfo;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
@@ -16,7 +16,7 @@ static void audioCallback(float *in, float *out, size_t size)
     {
     	sine = osc_sine.process();
         saw = osc_saw.process();
-        pos = phsr.process();
+        pos = lfo.process();
         cfade.set_pos(pos);
 
         output = cfade.process(sine, saw);
@@ -42,16 +42,19 @@ int main(void)
     osc_sine.init(DSY_AUDIO_SAMPLE_RATE);
     osc_sine.set_waveform(osc_sine.WAVE_SIN);
     osc_sine.set_freq(440);
-    osc_sine.set_amp(0.5);
+    osc_sine.set_amp(0.25);
 
     // set parameters for sawtooth oscillator object
     osc_saw.init(DSY_AUDIO_SAMPLE_RATE);
     osc_saw.set_waveform(osc_saw.WAVE_SAW);
     osc_saw.set_freq(440);
-    osc_saw.set_amp(0.5);
+    osc_saw.set_amp(0.25);
 
-    // set params for phasor object
-    phsr.init(DSY_AUDIO_SAMPLE_RATE, .5);
+    // set parameters for triangle lfo oscillator object
+    lfo.init(DSY_AUDIO_SAMPLE_RATE);
+    lfo.set_waveform(lfo.WAVE_TRI);
+    lfo.set_freq(1);
+    lfo.set_amp(.75);
 
     // define callback
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
