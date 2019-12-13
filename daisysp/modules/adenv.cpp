@@ -30,37 +30,51 @@ float adenv::process()
 		current_segment_ = ADENV_SEG_ATTACK;
 		phase_ = 0;
         time_samps = (uint32_t)(segment_time_[current_segment_] * sample_rate_);
-        calculate_multiplier(output_, 1.0f, time_samps);
-	}
-    else
-    {
-        time_samps = (uint32_t)(segment_time_[current_segment_] * sample_rate_);
-    }
-	if (phase_ >= time_samps)
-	{
-		switch (current_segment_)	
+		calculate_multiplier(output_, 1.0f, time_samps);
+		if(output_ == 0.0f)
 		{
-		case ADENV_SEG_ATTACK:
-			current_segment_ = ADENV_SEG_DECAY;
-			time_samps = (uint32_t)(segment_time_[current_segment_] * sample_rate_);
-			phase_ = 0;
-			output_ = 1.0f;
-			calculate_multiplier(1.0f, 0.0001f, time_samps);
-			break;
-		case ADENV_SEG_DECAY:
-			current_segment_ = ADENV_SEG_IDLE;
-			phase_ = 0;
-			multiplier_ = 1.0f;
-			output_ = 0.0f;
-			break;
-		default:
-			multiplier_ = 0.0f;		
-			output_ = 0.0f;
-			phase_ = 0;
-			break;
+			output_ = 1.f / time_samps;
 		}
 	}
-	output_ *= multiplier_;
+    time_samps = (uint32_t)(segment_time_[current_segment_] * sample_rate_);
+	switch(current_segment_)
+	{
+		case ADENV_SEG_ATTACK:
+			if(phase_ >= time_samps)
+			{
+				current_segment_ = ADENV_SEG_DECAY;
+				time_samps		 = (uint32_t)(segment_time_[current_segment_]
+										  * sample_rate_);
+				phase_			 = 0;
+				output_			 = 1.0f;
+				calculate_multiplier(1.0f, 0.0f, time_samps);
+			}
+			else
+			{
+				output_
+					= (static_cast<float>(phase_) / static_cast<float>(time_samps));
+			}
+			break;
+		case ADENV_SEG_DECAY:
+			if(phase_ >= time_samps)
+			{
+				current_segment_ = ADENV_SEG_IDLE;
+				phase_			 = 0;
+				multiplier_		 = 1.0f;
+				output_			 = 0.0f;
+			}
+			else
+			{
+				output_ = (static_cast<float>(time_samps - phase_)
+						   / static_cast<float>(time_samps));
+			}
+			break;
+		default:
+			multiplier_ = 0.0f;
+			output_		= 0.0f;
+			phase_		= 0;
+			break;
+	}
 	phase_ += 1;
 	return output_ * (max_ - min_) + min_;
 }
