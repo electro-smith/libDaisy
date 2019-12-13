@@ -7,7 +7,7 @@
 using namespace daisy;
 using namespace daisysp;
 
-static float mtof(float m);
+//static float mtof(float m);
 
 daisy_patch	hw;
 oscillator	 osc;
@@ -88,8 +88,8 @@ int main(void)
 		dsy_led_driver_update();
 	}
 }
-static float mtof(float m)
-{
-	return powf(2, (m - 69.0f) / 12.0f) * 440.0f;
-}
+//static float mtof(float m)
+//{
+//	return powf(2, (m - 69.0f) / 12.0f) * 440.0f;
+//}
 

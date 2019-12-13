@@ -1,6 +1,8 @@
 // Short Example showing how to write to the LEDs on Daisy Patch
 #include "daisy_patch.h"
 
+using namespace daisy;
+
 daisy_patch patch;
 
 static void clear_leds();
@@ -8,9 +10,7 @@ static void clear_leds();
 int main(void)
 {
     uint8_t selected_led = 0;
-    uint8_t addr = 0x00; // led driver address
-    daisy_patch_init(&patch);
-    dsy_led_driver_init(&patch.seed.i2c1_handle, &addr, 1);
+    patch.init();
     while(1) 
     {
         dsy_system_delay(100);
