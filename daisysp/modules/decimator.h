@@ -50,7 +50,7 @@ namespace daisysp
 // ~~~~
 		{
 			//			bitcrush_factor_ = bitcrush_factor;
-			bits_to_crush_ = bitcrush_factor * maxbits_to_crush_;
+			bits_to_crush_ = bitcrush_factor * k_max_bits_to_crush;
 		}
 
 // ### set_bits_to_crush
@@ -61,7 +61,7 @@ namespace daisysp
 		inline void set_bits_to_crush(const uint8_t &bits) 
 // ~~~~
 		{
-			bits_to_crush_ = bits <= maxbits_to_crush_ ? bits : maxbits_to_crush_;
+			bits_to_crush_ = bits <= k_max_bits_to_crush ? bits : k_max_bits_to_crush;
 		}
 
 // ## Accessors
@@ -81,7 +81,7 @@ namespace daisysp
 // ~~~~
 
 	  private:
-		const uint8_t maxbits_to_crush_ = 16;
+		const uint8_t k_max_bits_to_crush = 16;
 		float downsample_factor_, bitcrush_factor_;
 		uint32_t bits_to_crush_;
 		float downsampled_, bitcrushed_;
