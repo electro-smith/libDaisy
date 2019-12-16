@@ -68,7 +68,7 @@ class delayline
     {
         int32_t int_delay = static_cast<int32_t>(delay);
         frac_ = delay - static_cast<float>(int_delay);
-        delay_ = int_delay < max_size ? int_delay : max_size - 1;
+        delay_ = static_cast<size_t>(int_delay) < max_size ? int_delay : max_size - 1;
     }
 
 // ### write

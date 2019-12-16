@@ -1,10 +1,10 @@
-#include "daisysp.h"
-#include "daisy_seed.h"
-
 // Example that takes the mono input from channel 1 (left input), 
 // and pitchshifts it up 1 octave.
 // The left output will be pitchshifteed, while the right output
 // stays will be the unshifted left input.
+
+#include "daisysp.h"
+#include "daisy_seed.h"
 
 // Defines for Interleaved Audio
 #define LEFT (i)
