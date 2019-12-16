@@ -20,6 +20,7 @@ tone \
 
 # certain modules are only header files:
 # delayline 
+# pitchshifter
 # whitenoise
 
 # TODO: Consider making this work for PCs as well?
