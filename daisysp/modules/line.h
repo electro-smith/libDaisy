@@ -42,9 +42,9 @@ namespace daisysp
 // ~~~~
 
 	private:
-		float _start, _end, _dur;
-		float _inc, _val, _sr;
-		uint8_t _finished;
+		float start_, end_, dur_;
+		float inc_, val_, sample_rate_;
+		uint8_t finished_;
 	};
 } // namespace daisysp
 #endif
