@@ -2,40 +2,41 @@
 
 using namespace daisysp;
 
-void line::init(float sr) 
+void line::init(float sample_rate) 
 {
-	_sr	= sr;
-	_dur = 0.5f;
-	_end   = 0.0f;
-	_start = 1.0f;
-	_val   = 1.0f;
+	sample_rate_ = sample_rate;
+	dur_ = 0.5f;
+	end_   = 0.0f;
+	start_ = 1.0f;
+	val_   = 1.0f;
 }
+
 void line::start(float start, float end, float dur)
 {
-	_start = start;
-	_end   = end;
-	_dur   = dur;
-	_inc = (end - start) / ((_sr * _dur));
-	_val = _start;
-	_finished = 0;
+	start_ = start;
+	end_   = end;
+	dur_   = dur;
+	inc_ = (end - start) / ((sample_rate_ * dur_));
+	val_ = start_;
+	finished_ = 0;
 }
 
 float line::process(uint8_t *finished)
 {
 	float out;
-	out = _val;
+	out = val_;
 
-	if((_end > _start && out >= _end)
-	   || (_end < _start && out <= _end))
+	if((end_ > start_ && out >= end_)
+	   || (end_ < start_ && out <= end_))
 	{
-		_finished = 1;
-		_val		= _end;
-		out			= _end;
+		finished_ = 1;
+		val_		= end_;
+		out			= end_;
 	}
 	else
 	{
-		_val += _inc;
+		val_ += inc_;
 	}
-	*finished = _finished;
+	*finished = finished_;
 	return out;
 }
