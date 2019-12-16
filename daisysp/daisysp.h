@@ -50,5 +50,6 @@ typedef struct {
 #include "modules/svf.h"
 #include "modules/oscillator.h"
 #include "modules/compressor.h"
+#include "modules/pitchshifter.h"
 #endif
 #endif
