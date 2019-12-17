@@ -65,13 +65,13 @@ int main(void)
 	param_bright.init(hw.knob4, 0.0f, 1.0f, PARAM_CURVE_CUBE);
 #endif
 	// Init Osc and Nse
+	dsy_tim_start();
 	osc.init(SAMPLE_RATE);
 	nse.init();
-
 	// Old style still 
 	dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audio);
 	dsy_audio_start(DSY_AUDIO_INTERNAL);
-	dsy_adc_start();
+	//dsy_adc_start();
 
 	for(uint16_t i = 0; i < LED_LAST; i++) 
 	{
@@ -79,13 +79,11 @@ int main(void)
 	}
 	while(1) 
 	{
-		dsy_system_delay(20);
-		for(uint16_t i = 0; i < LED_LAST; i++) 
+		dsy_tim_delay_ms(20);
+		for(uint16_t i = 0; i < LED_LAST; i++)
 		{
 			dsy_led_driver_set_led(i, param_bright.value());
 		}
-		
-		dsy_led_driver_update();
 	}
 }
 //static float mtof(float m)
