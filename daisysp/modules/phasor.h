@@ -47,18 +47,14 @@ namespace daisysp
 		inline void init(float sample_rate, float freq) 
 // ~~~~
 		{
-			sample_rate_ = sample_rate;
-			phs_		 = 0.0f;
-			freq_		 = freq;
+            init(sample_rate, freq, 0.0f);
 		}
 
 // ~~~~
 		inline void init(float sample_rate) 
 // ~~~~
 		{ 
-			sample_rate_ = sample_rate;
-			phs_		 = 0.0f;
-			freq_		 = 1.0f;
+            init(sample_rate, 1.0f, 0.0f);
 		}
 
 
