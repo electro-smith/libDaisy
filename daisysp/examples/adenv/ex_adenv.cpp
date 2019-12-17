@@ -10,47 +10,25 @@
 #define LEFT (i)
 #define RIGHT (i+1)
 
-//#define LOOP 1
-
 using namespace daisysp;
 
 static daisy_handle seed;
 static adenv env;
 static oscillator osc;
-
-metro tick;
+static metro tick;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
 	float osc_out, env_out;
-    uint8_t current_segment;
     for (size_t i = 0; i < size; i += 2)
     {
-        // This is your looping mechanism
-        // which works fine, but requires a 
-        // deeper understanding of the stages, etc.
-        /*
-        current_segment = env.get_current_segment();
-        if (current_segment == ADENV_SEG_IDLE) 
-        {
-            env.trigger();
-        }
-        */
-
-#ifdef LOOP
-        // Here's a different one: (more typical C++ use of an accessor function)
-        if (!env.is_running())
-        {
-            env.trigger();
-        }
-#else
-        // Here's an easier to see example of using the 
-        // envelope with a typical trigger input.
+        // When the metro ticks, trigger the envelope to start.
         if (tick.process())
         {
             env.trigger();
         }
-#endif
+
+        // Use envelope to control the amplitude of the oscillator.
         env_out = env.process();
         osc.set_amp(env_out);
     	osc_out = osc.process();
