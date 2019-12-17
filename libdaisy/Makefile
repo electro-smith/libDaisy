@@ -15,6 +15,7 @@ per_i2c \
 per_sai \
 per_gpio \
 per_dac \
+per_tim \
 hid_switch \
 hid_encoder \
 hid_ctrl \
