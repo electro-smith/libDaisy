@@ -12,7 +12,7 @@ float freq;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
-    float sine;
+    float sine, slewed_freq;
     uint8_t tic;
     for (size_t i = 0; i < size; i += 2)
     {   
@@ -22,8 +22,8 @@ static void audioCallback(float *in, float *out, size_t size)
             freq = rand() % 500;
         }
 
-        freq = slew.process(freq);
-        osc_sine.set_freq(freq);
+        slewed_freq = slew.process(freq);
+        osc_sine.set_freq(slewed_freq);
 
         sine = osc_sine.process();
 
@@ -41,9 +41,9 @@ int main(void)
     daisy_seed_init(&seed);
 
     // set params for port object
-    slew.init(DSY_AUDIO_SAMPLE_RATE, .01);
+    slew.init(DSY_AUDIO_SAMPLE_RATE, .09);
 
-    clock.init(2, DSY_AUDIO_SAMPLE_RATE);
+    clock.init(1, DSY_AUDIO_SAMPLE_RATE);
 
     // set parameters for sine oscillator object
     osc_sine.init(DSY_AUDIO_SAMPLE_RATE);
