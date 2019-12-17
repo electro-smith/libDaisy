@@ -1,8 +1,8 @@
 # Project Name
-TARGET = ex_bypass
+TARGET = ex_metro
 
 # Sources
-CPP_SOURCES = ex_bypass.cpp
+CPP_SOURCES = ex_metro.cpp
 
 # Library Locations
 LIBDAISY_DIR = ../../../libdaisy

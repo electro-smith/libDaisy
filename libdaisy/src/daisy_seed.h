@@ -202,6 +202,7 @@ inline void daisy_seed_init(daisy_handle *daisy_seed)
 	dsy_gpio_init(&daisy_seed->led);
 	dsy_gpio_init(&daisy_seed->testpoint);
 	dsy_audio_init(&daisy_seed->audio_handle);
+	dsy_tim_init();
 #endif // DSY_SEED_NO_INIT
 }
 

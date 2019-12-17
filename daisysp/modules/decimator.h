@@ -28,17 +28,17 @@ namespace daisysp
 		float process(float input);
 // ~~~~
 
-// ## Setters
+// ## Mutators
 
 // ### set_downsample_factor
 // Sets amount of downsample 
 // Input range: 
 
 // ~~~~
-		inline void set_downsample_factor (float downsample_factor) 
+		inline void set_downsample_factor(float downsample_factor) 
 // ~~~~
 		{
-			_downsample_factor = downsample_factor;
+			downsample_factor_ = downsample_factor;
 		}
 
 // ### set_bitcrush_factor
@@ -46,11 +46,11 @@ namespace daisysp
 // Input range: 
 
 // ~~~~
-		inline void set_bitcrush_factor (float bitcrush_factor)
+		inline void set_bitcrush_factor(float bitcrush_factor)
 // ~~~~
 		{
-			//			_bitcrush_factor = bitcrush_factor;
-			_bits_to_crush = bitcrush_factor * max_bits_to_crush;
+			//			bitcrush_factor_ = bitcrush_factor;
+			bits_to_crush_ = bitcrush_factor * k_max_bits_to_crush;
 		}
 
 // ### set_bits_to_crush
@@ -61,31 +61,31 @@ namespace daisysp
 		inline void set_bits_to_crush(const uint8_t &bits) 
 // ~~~~
 		{
-			_bits_to_crush = bits <= max_bits_to_crush ? bits : max_bits_to_crush;
+			bits_to_crush_ = bits <= k_max_bits_to_crush ? bits : k_max_bits_to_crush;
 		}
 
-// ## Getters
+// ## Accessors
 
 // ### get_downsample_factor
 // Returns current setting of downsample
 
 // ~~~~
-		inline float get_downsample_factor () { return _downsample_factor; }
+		inline float get_downsample_factor() { return downsample_factor_; }
 // ~~~~
 
 // ### get_bitcrush_factor
 // Returns current setting of bitcrush
 
 // ~~~~
-		inline float get_bitcrush_factor () { return _bitcrush_factor; }
+		inline float get_bitcrush_factor() { return bitcrush_factor_; }
 // ~~~~
 
 	  private:
-		const uint8_t max_bits_to_crush = 16;
-		float _downsample_factor, _bitcrush_factor;
-		uint32_t _bits_to_crush;
-		float _downsampled, _bitcrushed;
-		uint32_t _inc, _threshold;
+		const uint8_t k_max_bits_to_crush = 16;
+		float downsample_factor_, bitcrush_factor_;
+		uint32_t bits_to_crush_;
+		float downsampled_, bitcrushed_;
+		uint32_t inc_, threshold_;
 	};
 } // namespace daisysp
 #endif

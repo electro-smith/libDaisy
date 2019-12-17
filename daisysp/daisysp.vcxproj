@@ -79,6 +79,7 @@
     <ClInclude Include="modules\nlfilt.h" />
     <ClInclude Include="modules\oscillator.h" />
     <ClInclude Include="modules\phasor.h" />
+    <ClInclude Include="modules\pitchshifter.h" />
     <ClInclude Include="modules\port.h" />
     <ClInclude Include="modules\reverbsc.h" />
     <ClInclude Include="modules\svf.h" />

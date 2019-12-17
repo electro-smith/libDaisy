@@ -1,8 +1,8 @@
 # Project Name
-TARGET = ex_bypass
+TARGET = ex_dcblock
 
 # Sources
-CPP_SOURCES = ex_bypass.cpp
+CPP_SOURCES = ex_dcblock.cpp
 
 # Library Locations
 LIBDAISY_DIR = ../../../libdaisy

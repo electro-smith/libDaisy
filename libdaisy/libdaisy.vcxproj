@@ -89,6 +89,7 @@
     <ClCompile Include="src\per_i2c.c" />
     <ClCompile Include="src\per_qspi.c" />
     <ClCompile Include="src\per_sai.c" />
+    <ClCompile Include="src\per_tim.c" />
     <ClCompile Include="src\system_stm32h7xx.c" />
     <ClCompile Include="src\sys_dma.c" />
     <ClCompile Include="src\sys_system.c" />
@@ -118,6 +119,7 @@
     <ClInclude Include="src\per_i2c.h" />
     <ClInclude Include="src\per_qspi.h" />
     <ClInclude Include="src\per_sai.h" />
+    <ClInclude Include="src\per_tim.h" />
     <ClInclude Include="src\stm32h7xx_hal_conf.h" />
     <ClInclude Include="src\sys_dma.h" />
     <ClInclude Include="src\sys_system.h" />
