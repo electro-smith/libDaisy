@@ -7,7 +7,7 @@ static daisy_handle seed;
 static line line_seg;
 static oscillator osc_sine;
 
-uint8_t finished = 1;
+uint8_t finished;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
@@ -39,6 +39,7 @@ int main(void)
 
     // initialize line module
     line_seg.init(DSY_AUDIO_SAMPLE_RATE);
+    finished = 1;
 
     // set parameters for sine oscillator object
     osc_sine.init(DSY_AUDIO_SAMPLE_RATE);
