@@ -141,9 +141,12 @@ T median(T a, T b, T c)
 inline float soft_saturate(float in, float thresh)
 // ~~~~
 {
-    return in < thresh ? in : in > 1.0f 
-        ? (thresh + 1.0f) / 2 : thresh + (in - thresh) / 
-            (1.0f + (((in - thresh) / (1.0f - thresh)) * ((in - thresh) / (1.0f - thresh))));
+    // Weirdly it breaks when you absolute value the input.. so somethings definitely funky
+    float val = (in);
+    return val < thresh ? val : val > 1.0f 
+        ? (thresh + 1.0f) / 2.0f
+        : thresh + (val - thresh) / 
+            (1.0f + (((val - thresh) / (1.0f - thresh)) * ((val - thresh) / (1.0f - thresh))));
 }
     
 } // namespace daisysp
