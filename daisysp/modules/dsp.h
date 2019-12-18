@@ -128,7 +128,7 @@ T median(T a, T b, T c)
 // Bram de Jong (2002-01-17)
 // 
 // This still needs to be tested.
-// 
+// ~~~~ 
 // described as:
 // x < a:
 //      f(x) = x
@@ -136,6 +136,7 @@ T median(T a, T b, T c)
 //      f(x) = a + (x-a)/(1+((x-a)/(1-a))^2)
 // x > 1:
 //      f(x) = (a + 1)/2
+// ~~~~
 // ~~~~
 inline float soft_saturate(float in, float thresh)
 // ~~~~
