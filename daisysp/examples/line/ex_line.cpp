@@ -16,7 +16,7 @@ static void audioCallback(float *in, float *out, size_t size)
     {
         if (finished)
         {
-            // start creating a line segment from 1 to 750 in 5 seconds
+            // start creating a line segment from 100 to 500 in 1 seconds
             line_seg.start(100, 500, 1);
         }
 
