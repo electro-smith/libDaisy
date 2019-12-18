@@ -44,6 +44,8 @@ typedef struct {
 #ifdef __cplusplus
 }
 
+#include "modules/dsp.h"
+
 #include "modules/delayline.h"
 #include "modules/reverbsc.h"
 #include "modules/whitenoise.h"
@@ -51,5 +53,6 @@ typedef struct {
 #include "modules/oscillator.h"
 #include "modules/compressor.h"
 #include "modules/pitchshifter.h"
+
 #endif
 #endif
