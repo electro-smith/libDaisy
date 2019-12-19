@@ -25,12 +25,24 @@ static void init_gpio()
 }
 #endif
 
+//  Static Buffers in DTCM for DMA
+static int32_t __attribute__((section(".sram1_bss"))) sai1_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+static int32_t __attribute__((section(".sram1_bss"))) sai1_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+static int32_t __attribute__((section(".sram1_bss"))) sai2_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+static int32_t __attribute__((section(".sram1_bss"))) sai2_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+//static int32_t  sai1_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+//static int32_t  sai1_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+//static int32_t  sai2_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+//static int32_t  sai2_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+
 // Define/Declare global audio structure.
 typedef struct
 {
 	dsy_audio_callback callback;
-	int32_t		   dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
-	int32_t		   dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+	//	int32_t		   dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+	//	int32_t		   dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+	int32_t*		   dma_buffer_rx;
+	int32_t*		   dma_buffer_tx;
 	float		   in[DSY_AUDIO_BLOCK_SIZE_MAX];
 	float		   out[DSY_AUDIO_BLOCK_SIZE_MAX];
 	size_t		   block_size, offset;
@@ -100,6 +112,11 @@ void dsy_audio_init(dsy_audio_handle* handle)
 	dsy_sai_init_from_handle(handle->sai);
 	dsy_i2c_init(handle->dev0_i2c);
 	dsy_i2c_init(handle->dev1_i2c);
+	audio_handle.dma_buffer_rx = sai1_dma_buffer_rx;
+	audio_handle.dma_buffer_tx = sai1_dma_buffer_tx;
+	audio_handle_ext.dma_buffer_rx = sai2_dma_buffer_rx;
+	audio_handle_ext.dma_buffer_tx = sai2_dma_buffer_tx;
+
 	if(intext == DSY_AUDIO_INIT_SAI1 || intext == DSY_AUDIO_INIT_BOTH)
 	{
 		audio_handle.device = dev0;

@@ -122,7 +122,39 @@ SECTIONS
 
 		PROVIDE(__bss_end__ = _ebss);
 	} > SRAM
-	/* --- begin generated external memory sections -- */
+
+	.dtcmram_bss :
+	{
+		. = ALIGN(4);
+		_sdtcmram_bss = .;
+
+		PROVIDE(__dtcmram_bss_start__ = _sdtcmram_bss);
+		*(.dtcmram_bss)
+		*(.dtcmram_bss*)
+		*(COMMON)
+		. = ALIGN(4);
+		_edtcmram_bss = .;
+
+		PROVIDE(__dtcmram_bss_end__ = _edtcmram_bss);
+	} > DTCMRAM
+
+	.sram1_bss :
+	{
+		. = ALIGN(4);
+		_ssram1_bss = .;
+
+		PROVIDE(__sram1_bss_start__ = _sram1_bss);
+		*(.sram1_bss)
+		*(.sram1_bss*)
+		*(COMMON)
+		. = ALIGN(4);
+		_esram1_bss = .;
+
+		PROVIDE(__sram1_bss_end__ = _esram1_bss);
+	} > RAM_D2
+
+
+
 	.sdram_text :
 	{
 		. = ALIGN(4);

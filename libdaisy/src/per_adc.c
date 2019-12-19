@@ -35,10 +35,12 @@ static const uint32_t dsy_adc_rank_map[] = {
 #define DSY_ADC_MAX_CHANNELS DSY_ADC_PIN_LAST
 #define DSY_ADC_MAX_MUX_CHANNELS 8
 #define DSY_ADC_MAX_RESOLUTION 65536.0f
+
+static uint16_t __attribute__((section(".sram1_bss"))) adc1_dma_buffer[DSY_ADC_MAX_CHANNELS];
 typedef struct
 {
 	uint8_t			  channels, mux_channels[DSY_ADC_MAX_CHANNELS];
-	uint16_t		  dma_buffer[DSY_ADC_MAX_CHANNELS];
+	uint16_t*		  dma_buffer;
 	uint16_t		  mux_cache[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
 	uint16_t		  mux_index[DSY_ADC_MAX_CHANNELS]; // 0->mux_channels per ADC channel
 	dsy_adc_handle* dsy_hadc;
@@ -58,7 +60,8 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 	//dsy_adc_handle.board	= board;
 	adc.dsy_hadc = dsy_hadc;
 	adc.channels = dsy_hadc->channels;
-//	dsy_adc.mux_channels = dsy_hadc->mux_channels;
+	adc.dma_buffer = adc1_dma_buffer;
+	//	dsy_adc.mux_channels = dsy_hadc->mux_channels;
 	for(uint8_t i = 0; i < DSY_ADC_MAX_CHANNELS; i++)
 	{
 		adc.dma_buffer[i] = 0;
@@ -165,7 +168,7 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 }
 void dsy_adc_start(uint32_t* buff)
 {
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adc.dma_buffer, adc.channels);
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 void dsy_adc_stop()
 {

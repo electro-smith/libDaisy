@@ -935,4 +935,7 @@
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
+  </ItemGroup>
 </Project>
