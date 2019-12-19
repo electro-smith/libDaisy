@@ -9,8 +9,6 @@
 using namespace daisy;
 using namespace daisysp;
 
-
-
 static uint32_t DSY_SDRAM_BSS test_buff[TEST_BUFF_SIZE];
 
 static daisy_handle hw;
@@ -21,7 +19,7 @@ void bad_callback(float *in, float *out, size_t size)
 	start = dsy_tim_get_tick();
 //	int32_t* ram = (int32_t*)0x20000000; // DTCM
 //	int32_t* ram = (int32_t*)0x38000000; // D3 RAM
-	int32_t *ram = (int32_t *)0xC0000000;
+	int32_t *ram = (int32_t *)0xC0000000; // SDRAM
 	memcpy(ram, in, sizeof(int32_t) * size);
 	for(int i = 0; i < 11; i++)
 	{
@@ -29,6 +27,11 @@ void bad_callback(float *in, float *out, size_t size)
 	}
 	end = dsy_tim_get_tick();
 	dur = (end - start) / 200; // us
+	memcpy(out, in, sizeof(float) * size);
+}
+
+void passthru(float *in, float *out, size_t size)
+{
 	memcpy(out, in, sizeof(float) * size);
 }
 
