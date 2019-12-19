@@ -23,7 +23,7 @@ namespace daisysp
 // sample_rate - The sample rate of the audio engine being run. 
 // 
 // ~~~~
-		void init(float &sample_rate);
+		void init(float sample_rate);
 // ~~~~
 
 // ### process

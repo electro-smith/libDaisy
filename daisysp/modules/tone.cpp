@@ -3,7 +3,7 @@
 
 using namespace daisysp;
 
-void tone::init(float &sample_rate)
+void tone::init(float sample_rate)
 {
     prevout_ = 0.0f;
     freq_ = 100.0f;
