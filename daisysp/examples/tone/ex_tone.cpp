@@ -12,7 +12,7 @@ static void audioCallback(float *in, float *out, size_t size)
 	float saw, freq, output;
     for (size_t i = 0; i < size; i += 2)
     {
-        freq = lfo.process()*5000;
+        freq = 2500 + ( lfo.process()*2500 );
     	saw = osc.process();
 
         flt.set_freq(freq);
@@ -37,8 +37,8 @@ int main(void)
     // set parameters for sine oscillator object
     lfo.init(DSY_AUDIO_SAMPLE_RATE);
     lfo.set_waveform(oscillator::WAVE_TRI);
-    lfo.set_amp(0.25);
-    lfo.set_freq(.2);
+    lfo.set_amp(1);
+    lfo.set_freq(.4);
 
     // set parameters for sine oscillator object
     osc.init(DSY_AUDIO_SAMPLE_RATE);
