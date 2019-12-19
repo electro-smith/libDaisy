@@ -49,7 +49,16 @@ void dsy_i2c_init(dsy_i2c_handle *dsy_hi2c)
 			break;
 	}
 	// Set Generic Parameters
-	hal_hi2c->Init.Timing = 0x00C0EAFF;
+	// Configure Speed
+	// TODO: make this dependent on the current I2C Clock speed set in sys
+	switch(dsy_hi2c->speed)
+	{
+		case DSY_I2C_SPEED_100KHZ: hal_hi2c->Init.Timing = 0x30E0628A; break;
+		case DSY_I2C_SPEED_400KHZ: hal_hi2c->Init.Timing = 0x20D01132; break;
+		case DSY_I2C_SPEED_1MHZ: hal_hi2c->Init.Timing = 0x1080091A; break;
+		default: break;
+	}
+//	hal_hi2c->Init.Timing = 0x00C0EAFF;
 	hal_hi2c->Init.OwnAddress1 = 0;
 	hal_hi2c->Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
 	hal_hi2c->Init.DualAddressMode = I2C_DUALADDRESS_DISABLE;

@@ -29,6 +29,11 @@
 #define DSY_MEMORY_OK ((uint32_t)0x00)
 #define DSY_MEMORY_ERROR ((uint32_t)0x01)
 
+ // Section Attributes
+ #define DSY_QSPI_TEXT __attribute__((section(".qspiflash_text")))
+ #define DSY_QSPI_DATA __attribute__((section(".qspiflash_data")))
+ #define DSY_QSPI_BSS __attribute__((section(".qspiflash_bss")))
+
  typedef enum
  {
 	 DSY_QSPI_PIN_IO0,

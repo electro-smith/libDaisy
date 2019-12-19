@@ -69,6 +69,8 @@ void dsy_led_driver_init(dsy_i2c_handle *dsy_i2c, uint8_t *addr, uint8_t addr_cn
 	{
 		leddriver.driver_addr[i] = addr[i];
 	}
+	// Overwrite anything critical about I2C
+	dsy_i2c->speed = DSY_I2C_SPEED_1MHZ;
 	dsy_i2c_init(dsy_i2c);
 	init_rgb_leds();
 	gen_sorted_table();
@@ -133,6 +135,7 @@ void dsy_led_driver_init(dsy_i2c_handle *dsy_i2c, uint8_t *addr, uint8_t addr_cn
 }
 void dsy_led_driver_update()
 {
+	uint8_t  status;
 	uint8_t  on;
 	uint16_t off;
 	uint8_t  drvr		 = leddriver.current_drv;
@@ -159,8 +162,15 @@ void dsy_led_driver_update()
 		idx += 4;
 	}
 	uint8_t driveraddr = PCA9685_I2C_BASE_ADDRESS | (addr << 1);
-	HAL_I2C_Master_Transmit(
+	
+	status = HAL_I2C_Master_Transmit(
 		leddriver.i2c, driveraddr, output_buff, LED_BUFF_SIZE, 5);
+	if(status != HAL_OK) 
+	{
+		// Reinit I2C (probably a flag to kill, but hey this works fairly well for now.)
+		dsy_i2c_init(leddriver.dsy_i2c);
+	}
+
 	leddriver.current_drv += 1;
 	if(leddriver.current_drv > leddriver.num_drivers - 1)
 	{

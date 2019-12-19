@@ -52,16 +52,17 @@ typedef struct
 {
 	dsy_sdram_handle sdram_handle;
 	dsy_qspi_handle  qspi_handle;
-	dsy_sai_handle   sai_handle;
+	dsy_audio_handle   audio_handle;
+	dsy_sai_handle	 sai_handle;
 	dsy_i2c_handle  i2c1_handle, i2c2_handle;
 	dsy_adc_handle   adc_handle;
-	dsy_dac_handle   dac_handle;
+	dsy_dac_handle	 dac_handle;
 	dsy_gpio		   led, testpoint;
 } daisy_handle;
 
 
 // THIS BREAKS WHEN ITS INLINED?
-void daisy_seed_init(daisy_handle *daisy_seed)
+inline void daisy_seed_init(daisy_handle *daisy_seed)
 {
 	dsy_gpio_pin *pin_group; // Pointer to an arbitrary group of pins.
 
@@ -90,7 +91,7 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 
 
 	// SAI - Serial Audio Interface
-	daisy_seed->sai_handle.init = DSY_AUDIO_INIT_BOTH;
+	daisy_seed->sai_handle.init = DSY_AUDIO_INIT_SAI1;
 	// SAI1 - config
 	daisy_seed->sai_handle.device[DSY_SAI_1]	  = DSY_AUDIO_DEVICE_WM8731;
 	daisy_seed->sai_handle.samplerate[DSY_SAI_1]  = DSY_AUDIO_SAMPLERATE_48K;
@@ -187,6 +188,12 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 	daisy_seed->testpoint.pin.pin  = SEED_TEST_POINT_PIN;
 	daisy_seed->testpoint.mode	 = DSY_GPIO_MODE_OUTPUT_PP;
 
+	// Audio
+	daisy_seed->audio_handle.sai = &daisy_seed->sai_handle;
+	daisy_seed->audio_handle.dev0_i2c = &daisy_seed->i2c2_handle;
+	daisy_seed->audio_handle.dev1_i2c = &daisy_seed->i2c1_handle;
+	daisy_seed->audio_handle.block_size = 48;
+
 	// System Initialization (optional)
 #ifndef DSY_SEED_NO_INIT
 	dsy_system_init();
@@ -194,9 +201,8 @@ void daisy_seed_init(daisy_handle *daisy_seed)
 	dsy_qspi_init(&daisy_seed->qspi_handle);
 	dsy_gpio_init(&daisy_seed->led);
 	dsy_gpio_init(&daisy_seed->testpoint);
-	dsy_audio_init(&daisy_seed->sai_handle,
-				   &daisy_seed->i2c2_handle,
-				   &daisy_seed->i2c1_handle);
+	dsy_audio_init(&daisy_seed->audio_handle);
+	dsy_tim_init();
 #endif // DSY_SEED_NO_INIT
 }
 

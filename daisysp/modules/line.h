@@ -1,21 +1,51 @@
+// # line
+// creates a line segment signal
+
 #pragma once
-#ifndef DSY_LINE_H
-#define DSY_LINE_H
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+#ifndef LINE_H
+#define LINE_H
 #include <stdint.h>
-typedef struct
-{
-	float start, end, dur;
-	float inc, val, sr;
-	uint8_t finished;
-} dsy_line;
-void dsy_line_init(dsy_line *p, float sr);
-void dsy_line_start(dsy_line *p, float start, float end, float dur);
-float dsy_line_process(dsy_line *p, uint8_t *finished);
 #ifdef __cplusplus
-}
+
+namespace daisysp
+{
+	class line
+	{
+	public:
+		line() {}
+		~line() {}
+// ### init
+// Initializes line module.
+// ~~~~
+		void init(float sample_rate);
+// ~~~~
+
+// ### process
+// Processes line segment. Returns one sample.
+//
+// value of finished will be updated to a 1, upon completion of the line's trajectory.
+// ~~~~
+		float process(uint8_t *finished);
+// ~~~~
+
+// ### start
+// Begin creation of line. 
+//
+// Arguments:
+//
+// - start - beginning value
+// - end - ending value
+// - dur - duration in seconds of line segment
+
+// ~~~~
+		void start(float start, float end, float dur);
+// ~~~~
+
+	private:
+		float start_, end_, dur_;
+		float inc_, val_, sample_rate_;
+		uint8_t finished_;
+	};
+} // namespace daisysp
 #endif
 #endif

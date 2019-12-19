@@ -35,10 +35,12 @@ static const uint32_t dsy_adc_rank_map[] = {
 #define DSY_ADC_MAX_CHANNELS DSY_ADC_PIN_LAST
 #define DSY_ADC_MAX_MUX_CHANNELS 8
 #define DSY_ADC_MAX_RESOLUTION 65536.0f
+
+static uint16_t __attribute__((section(".sram1_bss"))) adc1_dma_buffer[DSY_ADC_MAX_CHANNELS];
 typedef struct
 {
 	uint8_t			  channels, mux_channels[DSY_ADC_MAX_CHANNELS];
-	uint16_t		  dma_buffer[DSY_ADC_MAX_CHANNELS];
+	uint16_t*		  dma_buffer;
 	uint16_t		  mux_cache[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
 	uint16_t		  mux_index[DSY_ADC_MAX_CHANNELS]; // 0->mux_channels per ADC channel
 	dsy_adc_handle* dsy_hadc;
@@ -58,7 +60,8 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 	//dsy_adc_handle.board	= board;
 	adc.dsy_hadc = dsy_hadc;
 	adc.channels = dsy_hadc->channels;
-//	dsy_adc.mux_channels = dsy_hadc->mux_channels;
+	adc.dma_buffer = adc1_dma_buffer;
+	//	dsy_adc.mux_channels = dsy_hadc->mux_channels;
 	for(uint8_t i = 0; i < DSY_ADC_MAX_CHANNELS; i++)
 	{
 		adc.dma_buffer[i] = 0;
@@ -67,7 +70,7 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 	/** Common config 
   */
 	hadc1.Instance						= ADC1;
-	hadc1.Init.ClockPrescaler			= ADC_CLOCK_ASYNC_DIV128;
+	hadc1.Init.ClockPrescaler			= ADC_CLOCK_ASYNC_DIV2;
 	hadc1.Init.Resolution				= ADC_RESOLUTION_16B;
 	hadc1.Init.ScanConvMode				= ADC_SCAN_ENABLE;
 	hadc1.Init.EOCSelection				= ADC_EOC_SEQ_CONV;
@@ -80,7 +83,59 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 	hadc1.Init.ConversionDataManagement = ADC_CONVERSIONDATA_DMA_CIRCULAR;
 	hadc1.Init.Overrun					= ADC_OVR_DATA_PRESERVED;
 	hadc1.Init.LeftBitShift				= ADC_LEFTBITSHIFT_NONE;
-	hadc1.Init.OversamplingMode			= DISABLE;
+	if(dsy_hadc->oversampling)
+	{
+		hadc1.Init.OversamplingMode = ENABLE;
+		hadc1.Init.Oversampling.OversamplingStopReset
+			= ADC_REGOVERSAMPLING_CONTINUED_MODE;
+		hadc1.Init.Oversampling.TriggeredMode
+			= ADC_TRIGGEREDMODE_SINGLE_TRIGGER;
+	}
+	else
+	{
+		hadc1.Init.OversamplingMode = DISABLE;
+	}
+	switch(dsy_hadc->oversampling)
+	{
+		case DSY_ADC_OVS_4:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_2;
+			hadc1.Init.Oversampling.Ratio		  = 3;
+			break;
+		case DSY_ADC_OVS_8:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_3;
+			hadc1.Init.Oversampling.Ratio		  = 7;
+			break;
+		case DSY_ADC_OVS_16:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_4;
+			hadc1.Init.Oversampling.Ratio		  = 15;
+			break;
+		case DSY_ADC_OVS_32:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_5;
+			hadc1.Init.Oversampling.Ratio		  = 31;
+			break;
+		case DSY_ADC_OVS_64:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_6;
+			hadc1.Init.Oversampling.Ratio		  = 63;
+			break;
+		case DSY_ADC_OVS_128:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_7;
+			hadc1.Init.Oversampling.Ratio		  = 127;
+			break;
+		case DSY_ADC_OVS_256:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_8;
+			hadc1.Init.Oversampling.Ratio		  = 255;
+			break;
+		case DSY_ADC_OVS_512:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_9;
+			hadc1.Init.Oversampling.Ratio		  = 511;
+			break;
+		case DSY_ADC_OVS_1024:
+			hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_10;
+			hadc1.Init.Oversampling.Ratio		  = 1023;
+			break;
+		default: break;
+	}
+
 	if(HAL_ADC_Init(&hadc1) != HAL_OK)
 	{
 		//Error_Handler();
@@ -95,7 +150,7 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 	/** Configure Regular Channel 
   */
 	// Configure Shared settings for all channels.
-	sConfig.SamplingTime = ADC_SAMPLETIME_64CYCLES_5;
+	sConfig.SamplingTime = ADC_SAMPLETIME_8CYCLES_5;
 	sConfig.SingleDiff   = ADC_SINGLE_ENDED;
 	sConfig.OffsetNumber = ADC_OFFSET_NONE;
 	sConfig.Offset		 = 0;
@@ -113,7 +168,7 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 }
 void dsy_adc_start(uint32_t* buff)
 {
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)&adc.dma_buffer, adc.channels);
+	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 void dsy_adc_stop()
 {

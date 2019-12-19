@@ -6,11 +6,14 @@
 #include "stm32h7xx_hal.h"
 #include "sys_dma.h"
 
-//#define DSY_PROFILE_AUDIO_CALLBACK 1
+#define DSY_AUDIO_DMA_BUFFER_SIZE_MAX 96
+#define DSY_AUDIO_BLOCK_SIZE_MAX (DSY_AUDIO_DMA_BUFFER_SIZE_MAX / 2)
+
+#define DSY_PROFILE_AUDIO_CALLBACK 1
 
 #ifdef DSY_PROFILE_AUDIO_CALLBACK
 // Initialize Gate Output GPIO (only for timing in this case)
-#define PROFILE_GPIO_PIN GPIO_PIN_10
+#define PROFILE_GPIO_PIN GPIO_PIN_14
 #define PROFILE_GPIO_PORT GPIOG
 static void init_gpio()
 {
@@ -22,14 +25,26 @@ static void init_gpio()
 }
 #endif
 
+//  Static Buffers in DTCM for DMA
+static int32_t __attribute__((section(".sram1_bss"))) sai1_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+static int32_t __attribute__((section(".sram1_bss"))) sai1_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+static int32_t __attribute__((section(".sram1_bss"))) sai2_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+static int32_t __attribute__((section(".sram1_bss"))) sai2_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+//static int32_t  sai1_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+//static int32_t  sai1_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+//static int32_t  sai2_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+//static int32_t  sai2_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+
 // Define/Declare global audio structure.
 typedef struct
 {
 	dsy_audio_callback callback;
-	int32_t		   dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE];
-	int32_t		   dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE];
-	float		   in[DSY_AUDIO_BLOCK_SIZE];
-	float		   out[DSY_AUDIO_BLOCK_SIZE];
+	//	int32_t		   dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+	//	int32_t		   dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+	int32_t*		   dma_buffer_rx;
+	int32_t*		   dma_buffer_tx;
+	float		   in[DSY_AUDIO_BLOCK_SIZE_MAX];
+	float		   out[DSY_AUDIO_BLOCK_SIZE_MAX];
 	size_t		   block_size, offset;
 	uint8_t		   bitdepth, device;
 	I2C_HandleTypeDef* device_control_hi2c;
@@ -78,26 +93,34 @@ void dsy_audio_silence(float* in, float* out, size_t size)
 }
 
 // TODO: fix I2C to be compliant with the new model.
-void dsy_audio_init(dsy_sai_handle* sai_handle, dsy_i2c_handle* dev0_i2c, dsy_i2c_handle* dev1_i2c)
+//void dsy_audio_init(dsy_sai_handle* sai_handle, dsy_i2c_handle* dev0_i2c, dsy_i2c_handle* dev1_i2c)
+void dsy_audio_init(dsy_audio_handle* handle)
 {
 	uint8_t dev0, dev1, intext;
 	I2C_HandleTypeDef *hi2c_int, *hi2c_ext;
-	intext = sai_handle->init;
-	dev0		   = sai_handle->device[DSY_SAI_1];
-	dev1		   = sai_handle->device[DSY_SAI_2];
-	hi2c_int	   = dsy_i2c_hal_handle(dev0_i2c);
-	hi2c_ext	   = dsy_i2c_hal_handle(dev1_i2c);
-	audio_handle.block_size = DSY_AUDIO_BLOCK_SIZE; // default value; todo: add configuration of this
-	audio_handle_ext.block_size = DSY_AUDIO_BLOCK_SIZE; // default value
+	intext = handle->sai->init;
+	dev0		   = handle->sai->device[DSY_SAI_1];
+	dev1		   = handle->sai->device[DSY_SAI_2];
+	hi2c_int	   = dsy_i2c_hal_handle(handle->dev0_i2c);
+	hi2c_ext	   = dsy_i2c_hal_handle(handle->dev1_i2c);
+	audio_handle.block_size = handle->block_size <= DSY_AUDIO_BLOCK_SIZE_MAX ?
+		handle->block_size : DSY_AUDIO_BLOCK_SIZE_MAX; 
+	audio_handle_ext.block_size = handle->block_size <= DSY_AUDIO_BLOCK_SIZE_MAX ?
+		handle->block_size : DSY_AUDIO_BLOCK_SIZE_MAX; 
 	audio_handle.callback   = dsy_audio_passthru;
 	audio_handle_ext.callback   = dsy_audio_passthru;
-	dsy_sai_init_from_handle(sai_handle);
-	dsy_i2c_init(dev0_i2c);
-	dsy_i2c_init(dev1_i2c);
+	dsy_sai_init_from_handle(handle->sai);
+	dsy_i2c_init(handle->dev0_i2c);
+	dsy_i2c_init(handle->dev1_i2c);
+	audio_handle.dma_buffer_rx = sai1_dma_buffer_rx;
+	audio_handle.dma_buffer_tx = sai1_dma_buffer_tx;
+	audio_handle_ext.dma_buffer_rx = sai2_dma_buffer_rx;
+	audio_handle_ext.dma_buffer_tx = sai2_dma_buffer_tx;
+
 	if(intext == DSY_AUDIO_INIT_SAI1 || intext == DSY_AUDIO_INIT_BOTH)
 	{
 		audio_handle.device = dev0;
-		uint8_t mcu_is_master = sai_handle->sync_config[DSY_SAI_1] == DSY_AUDIO_SYNC_MASTER ? 1 : 0;
+		uint8_t mcu_is_master = handle->sai->sync_config[DSY_SAI_1] == DSY_AUDIO_SYNC_MASTER ? 1 : 0;
 		if(dev0 == DSY_AUDIO_DEVICE_WM8731) 
 		{
 			codec_wm8731_init(hi2c_int, mcu_is_master, 48000.0f, 16);
@@ -106,12 +129,12 @@ void dsy_audio_init(dsy_sai_handle* sai_handle, dsy_i2c_handle* dev0_i2c, dsy_i2
 		{
 			
 		}
-		for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE; i++)
+		for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE_MAX; i++)
 		{
 			audio_handle.dma_buffer_rx[i] = 0;
 			audio_handle.dma_buffer_tx[i] = 0;
 		}
-		for(size_t i = 0; i < DSY_AUDIO_BLOCK_SIZE; i++)
+		for(size_t i = 0; i < DSY_AUDIO_BLOCK_SIZE_MAX; i++)
 		{
 			audio_handle.in[i]  = 0.0f;
 			audio_handle.out[i] = 0.0f;
@@ -121,7 +144,7 @@ void dsy_audio_init(dsy_sai_handle* sai_handle, dsy_i2c_handle* dev0_i2c, dsy_i2
 	if(intext == DSY_AUDIO_INIT_SAI2 || intext == DSY_AUDIO_INIT_BOTH) 
 	{
 		audio_handle_ext.device = dev1;
-		uint8_t mcu_is_master = sai_handle->sync_config[DSY_SAI_2] == DSY_AUDIO_SYNC_MASTER ? 1 : 0;
+		uint8_t mcu_is_master = handle->sai->sync_config[DSY_SAI_2] == DSY_AUDIO_SYNC_MASTER ? 1 : 0;
 		if(dev1 == DSY_AUDIO_DEVICE_WM8731)
 		{
 			codec_wm8731_init(hi2c_ext, mcu_is_master, 48000.0f, 16);
@@ -129,12 +152,12 @@ void dsy_audio_init(dsy_sai_handle* sai_handle, dsy_i2c_handle* dev0_i2c, dsy_i2
 		else if(dev1 == DSY_AUDIO_DEVICE_PCM3060)
 		{
 		}
-		for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE; i++)
+		for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE_MAX; i++)
 		{
 			audio_handle_ext.dma_buffer_rx[i] = 0;
 			audio_handle_ext.dma_buffer_tx[i] = 0;
 		}
-		for(size_t i = 0; i < DSY_AUDIO_BLOCK_SIZE; i++)
+		for(size_t i = 0; i < DSY_AUDIO_BLOCK_SIZE_MAX; i++)
 		{
 			audio_handle_ext.in[i]  = 0.0f;
 			audio_handle_ext.out[i] = 0.0f;
@@ -163,25 +186,41 @@ void dsy_audio_set_callback(uint8_t intext, dsy_audio_callback cb)
 	}
 }
 
+void dsy_audio_set_blocksize(uint8_t intext, size_t blocksize) 
+{
+	if(intext == DSY_AUDIO_INTERNAL)
+	{
+		audio_handle.block_size = blocksize <= DSY_AUDIO_BLOCK_SIZE_MAX
+									  ? blocksize
+									  : DSY_AUDIO_BLOCK_SIZE_MAX;
+	}
+	else
+	{
+		audio_handle_ext.block_size = blocksize <= DSY_AUDIO_BLOCK_SIZE_MAX
+										  ? blocksize
+										  : DSY_AUDIO_BLOCK_SIZE_MAX;
+	}
+}
+
 void dsy_audio_start(uint8_t intext)
 {
 	if(intext == DSY_AUDIO_INTERNAL)
 	{
 		HAL_SAI_Receive_DMA(&hsai_BlockA1,
 							(uint8_t*)audio_handle.dma_buffer_rx,
-							DSY_AUDIO_DMA_BUFFER_SIZE);
+							audio_handle.block_size * 2);
 		HAL_SAI_Transmit_DMA(&hsai_BlockB1,
 							 (uint8_t*)audio_handle.dma_buffer_tx,
-							 DSY_AUDIO_DMA_BUFFER_SIZE);
+							 audio_handle.block_size * 2);
 	}
 	else
 	{
 		HAL_SAI_Receive_DMA(&hsai_BlockA2,
 							(uint8_t*)audio_handle_ext.dma_buffer_rx,
-							DSY_AUDIO_DMA_BUFFER_SIZE);
+							audio_handle_ext.block_size * 2);
 		HAL_SAI_Transmit_DMA(&hsai_BlockB2,
 							 (uint8_t*)audio_handle_ext.dma_buffer_tx,
-							 DSY_AUDIO_DMA_BUFFER_SIZE);
+							 audio_handle_ext.block_size * 2);
 	}
 }
 
@@ -234,7 +273,7 @@ void dsy_audio_exit_bypass(uint8_t intext)
 static void internal_callback(SAI_HandleTypeDef* hsai, size_t offset)
 {
 	#ifdef DSY_PROFILE_AUDIO_CALLBACK
-	HAL_GPIO_WritePin(PROFILE_GPIO_PORT, PROFILE_GPIO_PIN, 0);
+	HAL_GPIO_WritePin(PROFILE_GPIO_PORT, PROFILE_GPIO_PIN, 1);
 	#endif
 	dsy_audio* ah = get_audio_from_sai(hsai);
 
@@ -275,7 +314,7 @@ static void internal_callback(SAI_HandleTypeDef* hsai, size_t offset)
 		}
 	}
 	#ifdef DSY_PROFILE_AUDIO_CALLBACK
-	HAL_GPIO_WritePin(PROFILE_GPIO_PORT, PROFILE_GPIO_PIN, 1);
+	HAL_GPIO_WritePin(PROFILE_GPIO_PORT, PROFILE_GPIO_PIN, 0);
 	#endif
 }
 

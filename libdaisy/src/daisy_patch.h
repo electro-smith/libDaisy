@@ -20,6 +20,8 @@
 #define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
 #endif
 
+#define LED_DRIVER_I2C i2c1_handle
+
 // Leaving non-cplusplus version in place below so as not to break examples yet...
 #ifdef __cplusplus
 namespace daisy
@@ -34,7 +36,8 @@ namespace daisy
 		CV_2,
 		CV_3,
 		CV_4,
-		CV_LAST
+		CV_LAST,
+		KNOB_LAST = CV_1,
 	};
 
 	// Mapping of LEDs via dsy_leddriver.h
@@ -112,20 +115,45 @@ namespace daisy
 			{
 				seed.adc_handle.active_channels[i] = channel_order[i];
 			}
+			seed.adc_handle.oversampling = DSY_ADC_OVS_32;
 			dsy_adc_init(&seed.adc_handle);
 			dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
+
+			// Higher level hid_ctrls
+			for(uint8_t i = 0; i < KNOB_LAST; i++) 
+			{
+				pctrl[i].init(adc_ptr(i), SAMPLE_RATE);
+			}
+			for(uint8_t i = CV_1; i < CV_LAST; i++) 
+			{
+				pctrl[i].init_bipolar_cv(adc_ptr(i), SAMPLE_RATE);
+			}
+			knob1.init(adc_ptr(KNOB_1), SAMPLE_RATE);
+			knob2.init(adc_ptr(KNOB_2), SAMPLE_RATE);
+			knob3.init(adc_ptr(KNOB_3), SAMPLE_RATE);
+			knob4.init(adc_ptr(KNOB_4), SAMPLE_RATE);
+
+			// LEDs
+			uint8_t addr = 0x00;
+			dsy_led_driver_init(&seed.LED_DRIVER_I2C, &addr, 1);
 		}
 
+		inline hid_ctrl ctrl(uint8_t idx) { return pctrl[idx < CV_LAST ? idx : 0]; }
+
+		daisy_handle seed;
+		dsy_switch   button1, button2, toggle;
+		dsy_gpio	 gate_in1, gate_in2, gate_out;
+
+		// alternate hid_form with public access
+		hid_ctrl knob1, knob2, knob3, knob4;
+		hid_ctrl cv1, cv2, cv3, cv4;
+
+	  private:
 		inline uint16_t* adc_ptr(const uint8_t chn)
 		{
 			return dsy_adc_get_rawptr(chn);
 		}
-
-		dsy_switch   button1, button2, toggle;
-		dsy_gpio	 gate_in1, gate_in2, gate_out;
-		daisy_handle seed;
-
-	  private:
+		hid_ctrl pctrl[CV_LAST]; 
 	};
 } // namespace daisy
 

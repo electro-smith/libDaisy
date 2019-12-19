@@ -24,6 +24,16 @@ void	dsy_gpio_init(dsy_gpio *p)
 	ginit.Pin   = gpio_hal_pin_map[p->pin.pin];
 	HAL_GPIO_Init(port, &ginit);
 }
+
+void	dsy_gpio_deinit(dsy_gpio *p) 
+{
+	GPIO_TypeDef *port;
+	uint16_t	  pin;
+	port = (GPIO_TypeDef *)gpio_hal_port_map[p->pin.port];
+	pin  = gpio_hal_pin_map[p->pin.pin];
+	HAL_GPIO_DeInit(port, pin);
+}
+
 uint8_t dsy_gpio_read(dsy_gpio *p) 
 {
 	return HAL_GPIO_ReadPin((GPIO_TypeDef*)gpio_hal_port_map[p->pin.port], gpio_hal_pin_map[p->pin.pin]);

@@ -1,36 +1,103 @@
-// Simple Delay Line
+// # delayline
+//
+// Simple Delay line.
+//
 // November 2019
+//
+// Converted to Template December 2019
+//
+// declaration example: (1 second of floats)
+//
+// ```C++
+// delayline<float, SAMPLE_RATE> del;
+// ```
+//
 // By: shensley
 //
-// User manages their own buffer in order to provide 
-//     flexibility without dynamic memory.
-//
-// TODO: add some sort of type flexibility -- for now its just floats.
 #pragma once
 #ifndef DSY_DELAY_H
 #define DSY_DELAY_H
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include <stdint.h>
 #include <stdlib.h>
-
-typedef struct
+#include <stdint.h>
+namespace daisysp
 {
-	uint8_t interp;		
-	size_t write_ptr, delay, size;
-	float delay_frac, delay_sec, sr;
-	float *line;
-}dsy_delayline;
+template<typename T, size_t max_size>
+class delayline
+{
+    public:
+    delayline() { }
+    ~delayline() { }
 
-void dsy_delay_init(dsy_delayline *p, float* buff, size_t buff_size, float samplerate);
-void dsy_delay_reset(dsy_delayline *p);
-void dsy_delay_set_delay_samps(dsy_delayline *p, size_t size);
-void dsy_delay_set_delay_sec(dsy_delayline *p, float sec);
-void dsy_delay_line_write(dsy_delayline *p, float val);
-float dsy_delay_line_read(dsy_delayline *p);
+// ### init
+// initializes the delay line by clearing the values within, and setting delay to 1 sample.
+// ~~~~
+    void init()
+// ~~~~
+    {
+        reset();
+    }
 
-#ifdef __cplusplus
-}
-#endif
+// ### reset
+// clears buffer, sets write ptr to 0, and delay to 1 sample.
+// ~~~~
+    void reset() {
+// ~~~~
+        for (size_t i = 0; i < max_size; i++)
+        {
+            line_[i] = T(0);
+        }
+        write_ptr_ = 0;
+        delay_ = 1;
+    }
+
+// ### set_delay
+// sets the delay time in samples
+//
+// If a float is passed in, a fractional component will be calculated for interpolating the delay line.
+// ~~~~
+    inline void set_delay(size_t delay)
+// ~~~~
+    {
+        frac_ = 0.0f;
+        delay_ = delay < max_size ? delay : max_size - 1;
+    }
+
+// ~~~~
+    inline void set_delay(float delay)
+// ~~~~
+    {
+        int32_t int_delay = static_cast<int32_t>(delay);
+        frac_ = delay - static_cast<float>(int_delay);
+        delay_ = static_cast<size_t>(int_delay) < max_size ? int_delay : max_size - 1;
+    }
+
+// ### write
+// writes the sample of type T to the delay line, and advances the write ptr
+// ~~~~
+    inline void write(const T sample) 
+// ~~~~
+    {
+        line_[write_ptr_] = sample;
+        write_ptr_ = (write_ptr_ - 1 + max_size) % max_size;
+    }
+
+// ### read 
+// returns the next sample of type T in the delay line, interpolated if necessary.
+// ~~~~
+    inline const T read() const
+// ~~~~
+    {
+        T a = line_[(write_ptr_ + delay_) % max_size];
+        T b = line_[(write_ptr_ + delay_ + 1) % max_size];
+        return a + (b - a) * frac_;
+    }
+
+    private:
+    float frac_;
+    size_t write_ptr_;
+    size_t delay_;
+    T line_[max_size];
+
+};
+} // namespace daisysp
 #endif

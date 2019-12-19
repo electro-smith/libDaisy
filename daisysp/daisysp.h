@@ -34,20 +34,26 @@ typedef struct {
 #include "modules/crossfade.h"
 #include "modules/dcblock.h"
 #include "modules/decimator.h"
-#include "modules/delayline.h"
 #include "modules/line.h"
 #include "modules/nlfilt.h"
 #include "modules/metro.h"
 #include "modules/phasor.h"
 #include "modules/port.h"
-#include "modules/reverbsc.h"
-#include "modules/svf.h"
-#include "modules/whitenoise.h"
+#include "modules/tone.h"
   
 #ifdef __cplusplus
 }
 
+#include "modules/dsp.h"
+
+#include "modules/delayline.h"
+#include "modules/reverbsc.h"
+#include "modules/whitenoise.h"
+#include "modules/svf.h"
 #include "modules/oscillator.h"
-#include "modules/parameter.h"
+#include "modules/compressor.h"
+#include "modules/pitchshifter.h"
+#include "modules/pluck.h"
+
 #endif
 #endif

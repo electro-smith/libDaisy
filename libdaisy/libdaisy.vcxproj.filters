@@ -869,6 +869,12 @@
     <ClInclude Include="src\hid_ctrl.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="src\parameter.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per_tim.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dev_codec_pcm3060.c">
@@ -925,5 +931,11 @@
     <ClCompile Include="src\hid_ctrl.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="src\per_tim.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
   </ItemGroup>
 </Project>
