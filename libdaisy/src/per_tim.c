@@ -5,6 +5,7 @@ enum
 {
 	SCALE_MS,	
 	SCALE_US,
+	SCALE_NS,
 	SCALE_LAST,
 };
 
@@ -22,6 +23,7 @@ void dsy_tim_init()
 {
 	tim.scale[SCALE_MS] = 200000;
 	tim.scale[SCALE_US] = 200;
+	tim.scale[SCALE_NS] = 2;
 	sthal_tim_init();
 }
 void dsy_tim_start() 
@@ -70,7 +72,8 @@ static void sthal_tim_init()
   tim.htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
   tim.htim2.Init.Period = 0xffffffff;
   tim.htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-  tim.htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  //tim.htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  tim.htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
   if (HAL_TIM_Base_Init(&tim.htim2) != HAL_OK)
   {
 //    Error_Handler();

@@ -49,6 +49,7 @@ typedef void(*EntryPoint)(void);
 
 // Static Function Declaration
 static void SystemClock_Config();
+static void MPU_Config();
 static void Error_Handler(void);
 
 void SysTick_Handler(void)
@@ -67,8 +68,10 @@ void dsy_system_init()
 	// For now we won't use the board parameter since all three supported boards use the same 16MHz HSE.
 	// That said, 2hp Audio BB had a bit different setup, and actually a more accurate sample rate for audio iirc.
 	SystemClock_Config();
+	MPU_Config();
 	dsy_dma_init(); //
 	SCB_EnableICache();
+	SCB_EnableDCache();
 	//SCB_EnableDCache(); // This will require relocation of DMA buffers, or Cache Maintence. Performance is almost doubled, though.
 	HAL_Init();
 }
@@ -153,22 +156,22 @@ void SystemClock_Config()
 							  |RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_USB
 							  |RCC_PERIPHCLK_QSPI|RCC_PERIPHCLK_FMC;
   PeriphClkInitStruct.PLL2.PLL2M = 4;
-  PeriphClkInitStruct.PLL2.PLL2N = 100;
-  PeriphClkInitStruct.PLL2.PLL2P = 20; // 20MHz
-  PeriphClkInitStruct.PLL2.PLL2Q = 10; // 40MHz
-  PeriphClkInitStruct.PLL2.PLL2R = 8; // 50MHz
+  PeriphClkInitStruct.PLL2.PLL2N = 110;
+  PeriphClkInitStruct.PLL2.PLL2P = 8; // 83
+  PeriphClkInitStruct.PLL2.PLL2Q = 10; // 66.4
+  PeriphClkInitStruct.PLL2.PLL2R = 2; // 332Mhz
   PeriphClkInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_2;
   PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
   PeriphClkInitStruct.PLL2.PLL2FRACN = 0;
   PeriphClkInitStruct.PLL3.PLL3M = 6;
   PeriphClkInitStruct.PLL3.PLL3N = 295;
-  PeriphClkInitStruct.PLL3.PLL3P = 64;
+  PeriphClkInitStruct.PLL3.PLL3P = 64; // 12.29Mhz
   PeriphClkInitStruct.PLL3.PLL3Q = 4;
-  PeriphClkInitStruct.PLL3.PLL3R = 4;
+  PeriphClkInitStruct.PLL3.PLL3R = 32; // 24.xMhz
   PeriphClkInitStruct.PLL3.PLL3RGE = RCC_PLL3VCIRANGE_1;
   PeriphClkInitStruct.PLL3.PLL3VCOSEL = RCC_PLL3VCOWIDE;
   PeriphClkInitStruct.PLL3.PLL3FRACN = 0;
-  PeriphClkInitStruct.FmcClockSelection = RCC_FMCCLKSOURCE_PLL;
+  PeriphClkInitStruct.FmcClockSelection = RCC_FMCCLKSOURCE_PLL2;
 	//PeriphClkInitStruct.QspiClockSelection = RCC_QSPICLKSOURCE_PLL2;
 	PeriphClkInitStruct.QspiClockSelection = RCC_QSPICLKSOURCE_D1HCLK;
   PeriphClkInitStruct.SdmmcClockSelection = RCC_SDMMCCLKSOURCE_PLL;
@@ -183,7 +186,7 @@ void SystemClock_Config()
 	//PeriphClkInitStruct.I2c4ClockSelection = RCC_I2C4CLKSOURCE_D3PCLK1;
   PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
   //PeriphClkInitStruct.AdcClockSelection = RCC_ADCCLKSOURCE_PLL3;
-  PeriphClkInitStruct.AdcClockSelection = RCC_ADCCLKSOURCE_PLL2;
+  PeriphClkInitStruct.AdcClockSelection = RCC_ADCCLKSOURCE_PLL3;
   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -191,6 +194,44 @@ void SystemClock_Config()
   /** Enable USB Voltage detector 
   */
   HAL_PWREx_EnableUSBVoltageDetector();
+}
+
+static void MPU_Config() 
+{
+	MPU_Region_InitTypeDef MPU_InitStruct;
+	HAL_MPU_Disable();
+	// Configure RAM D2 (SRAM1) as non cacheable
+	MPU_InitStruct.Enable = MPU_REGION_ENABLE;
+	MPU_InitStruct.BaseAddress = 0x30000000;
+	MPU_InitStruct.Size		   = MPU_REGION_SIZE_16KB;
+	MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
+	MPU_InitStruct.IsBufferable		= MPU_ACCESS_NOT_BUFFERABLE;
+	MPU_InitStruct.IsCacheable		= MPU_ACCESS_NOT_CACHEABLE;
+	MPU_InitStruct.IsShareable		= MPU_ACCESS_SHAREABLE;
+	MPU_InitStruct.Number			= MPU_REGION_NUMBER0;
+	MPU_InitStruct.TypeExtField		= MPU_TEX_LEVEL1;
+	MPU_InitStruct.SubRegionDisable = 0x00;
+	MPU_InitStruct.DisableExec		= MPU_INSTRUCTION_ACCESS_ENABLE;
+	HAL_MPU_ConfigRegion(&MPU_InitStruct);
+//	MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
+//	MPU_InitStruct.Number	  = MPU_REGION_NUMBER1;
+//	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
+//	MPU_InitStruct.Size			= MPU_REGION_SIZE_64MB;
+//	MPU_InitStruct.BaseAddress  = 0xC0000000;
+//	HAL_MPU_ConfigRegion(&MPU_InitStruct);
+
+	//	uint32_t enable_bit = (1 << 0);
+	//	uint32_t privdefena = (1 << 2);
+	//	uint32_t rasr_enable = (1 << 0);
+
+
+	//	MPU->CTRL = enable_bit | privdefena;
+	//	MPU->RNR  = 0x00;
+	//	MPU->RBAR = 0x30000000;
+	//	MPU->RASR = rasr_enable;
+
+
+	HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
 }
 
 static void Error_Handler()
