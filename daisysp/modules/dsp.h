@@ -3,7 +3,7 @@
 #pragma once
 #ifndef DSY_CORE_DSP
 #define DSY_CORE_DSP
-#include <math.h> 
+#include <math.h>
 
 // ## Generic Defines
 // For now just PIs 
@@ -91,10 +91,11 @@ inline float fastroot(float f, int n)
 // ### mtof
 // Midi to frequency helper
 // ~~~~
-inline float mtof(float m)
-{
-	return powf(2, (m - 69.0f) / 12.0f) * 440.0f;
+inline float mtof(float m) 
+{ 
+	return powf(2, (m - 69.0f) / 12.0f) * 440.0f; 
 }
+
 // ~~~~
 
 // ## Filters
@@ -137,7 +138,7 @@ T median(T a, T b, T c)
 //
 // Bram de Jong (2002-01-17)
 // 
-// This still needs to be tested.
+// This still needs to be tested/fixed. Definitely does some weird stuff
 // ~~~~ 
 // described as:
 // x < a:
@@ -151,12 +152,39 @@ T median(T a, T b, T c)
 inline float soft_saturate(float in, float thresh)
 // ~~~~
 {
-    // Weirdly it breaks when you absolute value the input.. so somethings definitely funky
-    float val = (in);
-    return val < thresh ? val : val > 1.0f 
-        ? (thresh + 1.0f) / 2.0f
-        : thresh + (val - thresh) / 
-            (1.0f + (((val - thresh) / (1.0f - thresh)) * ((val - thresh) / (1.0f - thresh))));
+	bool  flip;
+	float val, out;
+	//val = fabsf(in);
+	flip = val < 0.0f;
+    val = flip ? -in : in;
+	if(val < thresh)
+	{
+		out = in;
+	}
+	else if(val > 1.0f)
+	{
+		out = (thresh + 1.0f)/2.0f;
+		if(flip)
+			out *= -1.0f;
+	}
+	else if(val > thresh)
+	{
+		float temp;
+		temp = (val - thresh) / (1 - thresh);
+		out  = thresh + (val - thresh) / (1.0f + (temp * temp));
+		if(flip)
+			out *= -1.0f;
+	}
+	return out;
+	//	return val < thresh
+	//			   ? val
+	//			   : val > 1.0f
+	//					 ? (thresh + 1.0f) / 2.0f
+	//					 : thresh
+	//						   + (val - thresh)
+	//								 / (1.0f
+	//									+ (((val - thresh) / (1.0f - thresh))
+	//									   * ((val - thresh) / (1.0f - thresh))));
 }
     
 } // namespace daisysp

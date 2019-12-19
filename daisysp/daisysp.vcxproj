@@ -73,6 +73,7 @@
     <ClInclude Include="modules\dcblock.h" />
     <ClInclude Include="modules\decimator.h" />
     <ClInclude Include="modules\delayline.h" />
+    <ClInclude Include="modules\dsp.h" />
     <ClInclude Include="modules\dsy_pstream.h" />
     <ClInclude Include="modules\line.h" />
     <ClInclude Include="modules\metro.h" />

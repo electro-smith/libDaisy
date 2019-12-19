@@ -115,6 +115,7 @@ namespace daisy
 			{
 				seed.adc_handle.active_channels[i] = channel_order[i];
 			}
+			seed.adc_handle.oversampling = DSY_ADC_OVS_32;
 			dsy_adc_init(&seed.adc_handle);
 			dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
 

@@ -9,13 +9,28 @@
 // For now all configuration is done specifically for
 //    the AS4C16M32MSA-6BIN 64MB SDRAM from Alliance Memory.
 
+// Notes from the Datasheet
+// tCK(3) - Clock Cycle Time (min.) 6ns
+// tAC(3) - Access time from Clk (max.) 5.5ns
+// tRAS	  - Row Active time (min.) 48ns
+// tRC    - Row Cycle time (min.) 60ns
+
+// 166MHz = 6.024ns
+// RAS = 8 ticks at 166
+// RC = 10 ticks at 166
 
 //#include "fmc.h"
 #define SDRAM_MODEREG_BURST_LENGTH_2 ((1 << 0))
+#define SDRAM_MODEREG_BURST_LENGTH_4 ((1 << 1))
+
 #define SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL ((0 << 3))
+
 #define SDRAM_MODEREG_CAS_LATENCY_3 ((1 << 4) | (1 << 5)) 
+
 #define SDRAM_MODEREG_OPERATING_MODE_STANDARD  ()
+
 #define SDRAM_MODEREG_WRITEBURST_MODE_SINGLE ((1 << 9))
+#define SDRAM_MODEREG_WRITEBURST_MODE_PROG_BURST ((0 << 9))
 
 typedef struct 
 {
@@ -59,17 +74,24 @@ static uint8_t sdram_periph_init()
 	dsy_sdram.hsdram.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
 	dsy_sdram.hsdram.Init.CASLatency = FMC_SDRAM_CAS_LATENCY_3;
 	dsy_sdram.hsdram.Init.WriteProtection = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
-	dsy_sdram.hsdram.Init.SDClockPeriod = FMC_SDRAM_CLOCK_PERIOD_3;
+	dsy_sdram.hsdram.Init.SDClockPeriod = FMC_SDRAM_CLOCK_PERIOD_2;
 	dsy_sdram.hsdram.Init.ReadBurst = FMC_SDRAM_RBURST_ENABLE;
-	dsy_sdram.hsdram.Init.ReadPipeDelay = FMC_SDRAM_RPIPE_DELAY_1;
+	dsy_sdram.hsdram.Init.ReadPipeDelay = FMC_SDRAM_RPIPE_DELAY_0;
 	/* SdramTiming */
 	SdramTiming.LoadToActiveDelay = 2;
 	SdramTiming.ExitSelfRefreshDelay = 7;
 	SdramTiming.SelfRefreshTime = 4;
-	SdramTiming.RowCycleDelay = 7;
+	SdramTiming.RowCycleDelay = 8; // started at 7
 	SdramTiming.WriteRecoveryTime = 3;
-	SdramTiming.RPDelay = 2;
-	SdramTiming.RCDDelay = 2;
+	SdramTiming.RPDelay = 0;
+	SdramTiming.RCDDelay = 10; // started at 2
+//	SdramTiming.LoadToActiveDelay = 16;
+//	SdramTiming.ExitSelfRefreshDelay = 16;
+//	SdramTiming.SelfRefreshTime = 16;
+//	SdramTiming.RowCycleDelay = 16;
+//	SdramTiming.WriteRecoveryTime = 16;
+//	SdramTiming.RPDelay = 16;
+//	SdramTiming.RCDDelay = 16;
 
 	if (HAL_SDRAM_Init(&dsy_sdram.hsdram, &SdramTiming) != HAL_OK)
 	{
@@ -116,7 +138,7 @@ static uint8_t sdram_device_init()
 	HAL_SDRAM_SendCommand(&dsy_sdram.hsdram, &Command, 0x1000);
 
 	/* Step 7: Program the external memory mode register */
-	tmpmrd = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_2          |
+	tmpmrd = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_4          |
 	                   SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL   |
 	                   SDRAM_MODEREG_CAS_LATENCY_3           |
 	                   SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;

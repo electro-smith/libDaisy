@@ -13,9 +13,8 @@ MEMORY
 	RAM_D2 (RWX)  : ORIGIN = 0x30000000, LENGTH = 288K
 	RAM_D3 (RWX)  : ORIGIN = 0x38000000, LENGTH = 64K
 	ITCMRAM (RWX) : ORIGIN = 0x00000000, LENGTH = 64K
-	/* --- begin generated external memories -- */
-	SDRAM (RWX) : ORIGIN = 0xc0000000, LENGTH = 64M
-	/* --- end generated external memories -- */
+	SDRAM (RWX)   : ORIGIN = 0xc0000000, LENGTH = 64M
+    	QSPIFLASH (RWX)  : ORIGIN = 0x90000000, LENGTH = 8M
 }
 
 _estack = 0x20020000;
@@ -122,7 +121,39 @@ SECTIONS
 
 		PROVIDE(__bss_end__ = _ebss);
 	} > SRAM
-	/* --- begin generated external memory sections -- */
+
+	.dtcmram_bss :
+	{
+		. = ALIGN(4);
+		_sdtcmram_bss = .;
+
+		PROVIDE(__dtcmram_bss_start__ = _sdtcmram_bss);
+		*(.dtcmram_bss)
+		*(.dtcmram_bss*)
+		*(COMMON)
+		. = ALIGN(4);
+		_edtcmram_bss = .;
+
+		PROVIDE(__dtcmram_bss_end__ = _edtcmram_bss);
+	} > DTCMRAM
+
+	.sram1_bss :
+	{
+		. = ALIGN(4);
+		_ssram1_bss = .;
+
+		PROVIDE(__sram1_bss_start__ = _sram1_bss);
+		*(.sram1_bss)
+		*(.sram1_bss*)
+		*(COMMON)
+		. = ALIGN(4);
+		_esram1_bss = .;
+
+		PROVIDE(__sram1_bss_end__ = _esram1_bss);
+	} > RAM_D2
+
+
+
 	.sdram_text :
 	{
 		. = ALIGN(4);
@@ -152,7 +183,48 @@ SECTIONS
 		PROVIDE(__sdram_bss_end = _esdram_bss);
 	} > SDRAM
 
-	/* --- end generated external memory sections -- */
+    	.qspiflash_text :
+	{
+		. = ALIGN(4);
+		_sqspiflash_text = .;
+
+		PROVIDE(__qspiflash_text_start = _sqspiflash_text);
+		*(.qspiflash_text)
+		*(.qspiflash_text*)
+		. = ALIGN(4);
+		_eqspiflash_text = .;
+
+		PROVIDE(__qspiflash_text_end = _eqspiflash_text);
+	} > QSPIFLASH
+
+	.qspiflash_data :
+	{
+		. = ALIGN(4);
+		_sqspiflash_data = .;
+
+		PROVIDE(__qspiflash_data_start = _sqspiflash_data);
+		*(.qspiflash_data)
+		*(.qspiflash_data*)
+		. = ALIGN(4);
+		_eqspiflash_data = .;
+
+		PROVIDE(__qspiflash_data_end = _eqspiflash_data);
+	} > QSPIFLASH
+
+	.qspiflash_bss (NOLOAD) :
+	{
+		. = ALIGN(4);
+		_sqspiflash_bss = .;
+
+		PROVIDE(__qspiflash_bss_start = _sqspiflash_bss);
+		*(.qspiflash_bss)
+		*(.qspiflash_bss*)
+		. = ALIGN(4);
+		_eqspiflash_bss = .;
+
+		PROVIDE(__qspiflash_bss_end = _eqspiflash_bss);
+	} > QSPIFLASH
+
 
 
 	PROVIDE(end = .);

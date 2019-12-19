@@ -2,40 +2,46 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source files">
-      <UniqueIdentifier>{59aa230b-1660-44b5-87c1-2a6ceee50f14}</UniqueIdentifier>
+      <UniqueIdentifier>{5deeb07d-87af-49cb-9aad-48fb1cfc98ab}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Header files">
-      <UniqueIdentifier>{d151fcc6-34fd-405b-a884-0ef4b26ab0a9}</UniqueIdentifier>
+      <UniqueIdentifier>{bf198600-7ecf-4ab6-a1e7-4d6600362747}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
     <Filter Include="Resource files">
-      <UniqueIdentifier>{0db6a33f-ab91-4e48-848e-c20ca67dd253}</UniqueIdentifier>
+      <UniqueIdentifier>{2ebd8dd6-d993-40a7-8a64-4bfb52493486}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="Source files\Device-specific files">
-      <UniqueIdentifier>{dc7152e9-ed42-402a-b255-30fc9227e423}</UniqueIdentifier>
+      <UniqueIdentifier>{a721619a-0742-48a6-b0ef-ae86a7abbed8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source files\Device-specific files\HAL">
-      <UniqueIdentifier>{db0aac9d-5500-49fb-a2f8-ab5474bd443c}</UniqueIdentifier>
+      <UniqueIdentifier>{7886524c-98a2-4b06-b7f3-09467f97bd96}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source files\Device-specific files\LL">
-      <UniqueIdentifier>{8d314a77-7e66-4851-8a0b-6c3db517f11f}</UniqueIdentifier>
+      <UniqueIdentifier>{5bf0492d-4c24-4d9b-9d32-6194517f3979}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header files\Device-specific files">
-      <UniqueIdentifier>{91fe0048-9069-4aa5-8a1a-a78904333b2d}</UniqueIdentifier>
+      <UniqueIdentifier>{9e5cbf8d-b54b-4d86-973a-a227ce867304}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header files\Device-specific files\HAL">
-      <UniqueIdentifier>{4a5eeb89-ffe5-4023-9b4e-0ed16a0f1f74}</UniqueIdentifier>
+      <UniqueIdentifier>{21e62c5f-c549-4eda-acbd-f865c43893bf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header files\Device-specific files\LL">
-      <UniqueIdentifier>{62aa12cb-caee-4180-b462-51106c94bdc8}</UniqueIdentifier>
+      <UniqueIdentifier>{29c145a4-ef83-48c0-bee3-e479c05df77e}</UniqueIdentifier>
     </Filter>
     <Filter Include="VisualGDB settings">
-      <UniqueIdentifier>{d804b7fb-bc78-40ec-98ce-9bea7733d09b}</UniqueIdentifier>
+      <UniqueIdentifier>{7bea5beb-13d9-430e-94ad-356e88ca36b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SeedQSPI.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="system_stm32h7xx.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
     <None Include="stm32.props">
       <Filter>Source files\Device-specific files</Filter>
     </None>
@@ -363,6 +369,9 @@
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_utils.c">
       <Filter>Source files\Device-specific files\LL</Filter>
     </ClCompile>
+    <ClInclude Include="stm32h7xx_hal_conf.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h">
       <Filter>Header files\Device-specific files\HAL</Filter>
     </ClInclude>
@@ -774,168 +783,14 @@
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_wwdg.h">
       <Filter>Header files\Device-specific files\LL</Filter>
     </ClInclude>
-    <None Include="libdaisy-Debug.vgdbsettings">
+    <None Include="SeedQSPI-Debug.vgdbsettings">
       <Filter>VisualGDB settings</Filter>
     </None>
-    <None Include="libdaisy-Release.vgdbsettings">
+    <None Include="SeedQSPI-Release.vgdbsettings">
       <Filter>VisualGDB settings</Filter>
     </None>
     <None Include="stm32.xml">
       <Filter>VisualGDB settings</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\daisy.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_core.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_field.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_patch.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_petal.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_pod.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_seed.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_codec_pcm3060.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_codec_wm8731.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_codec_wm8731_frame.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_flash_IS25LP064A.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_flash_IS25LP080D.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_leddriver.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_sdram.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_sr_4021.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hid_audio.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hid_encoder.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hid_switch.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_adc.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_dac.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_gpio.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_i2c.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_qspi.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_sai.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stm32h7xx_hal_conf.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sys_dma.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sys_system.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hid_ctrl.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\parameter.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_tim.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\dev_codec_pcm3060.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev_codec_wm8731.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev_leddriver.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev_sdram.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev_sr_4021.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid_audio.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid_encoder.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid_switch.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_adc.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_dac.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_gpio.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_i2c.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_qspi.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_sai.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sys_dma.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sys_system.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\system_stm32h7xx.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid_ctrl.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_tim.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
   </ItemGroup>
 </Project>
