@@ -3,6 +3,7 @@
 #pragma once
 #ifndef DSY_CORE_DSP
 #define DSY_CORE_DSP
+#include <math.h>
 
 // ## Generic Defines
 // For now just PIs 
@@ -86,6 +87,16 @@ inline float fastroot(float f, int n)
     *lp = l;
     return f;
 }
+
+// ### mtof
+// Midi to frequency helper
+// ~~~~
+inline float mtof(float m) 
+{ 
+	return powf(2, (m - 69.0f) / 12.0f) * 440.0f; 
+}
+
+// ~~~~
 
 // ## Filters
 
