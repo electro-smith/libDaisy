@@ -47,17 +47,14 @@ static void audioCallback(float *in, float *out, size_t size)
 
 int main(void)
 {
+    float init_buff[256]; // buffer for pluck impulse
+
     // initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
 
     // Set up metro to pulse every second
     tick.init(1.0f, SAMPLE_RATE);    
     // Set up pluck algo
-    float init_buff[256];
-    // Initialize init_buff with a single impulse
-    // other things to try are waveforms or noise/random values.
-    std::fill(init_buff, init_buff + 256, 0.0f);
-    init_buff[0] = 1.0f;
     plk.init(SAMPLE_RATE, init_buff, 256, PLUCK_MODE_RECURSIVE);
 
     arp_idx = 0;
