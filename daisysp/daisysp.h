@@ -53,6 +53,7 @@ typedef struct {
 #include "modules/oscillator.h"
 #include "modules/compressor.h"
 #include "modules/pitchshifter.h"
+#include "modules/pluck.h"
 
 #endif
 #endif

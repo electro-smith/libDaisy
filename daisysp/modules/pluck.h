@@ -90,10 +90,20 @@ namespace daisysp
 // 
 // Sets the time it takes for a triggered note to end in seconds.
 // 
-// Input range: Any positive value
+// Input range: 0-1
 // 
 // ~~~~
 		inline void set_decay(float decay) { decay_ = decay; }
+// ~~~~
+//
+// ### set_damp
+// 
+// Sets the dampening factor applied by the filter (based on PLUCK_MODE)
+// 
+// Input range: 0-1
+// 
+// ~~~~
+		inline void set_damp(float damp) { damp_ = damp; }
 // ~~~~
 
 // ### set_mode
@@ -128,6 +138,14 @@ namespace daisysp
 // 
 // ~~~~
 		inline float get_decay() { return decay_; }
+// ~~~~
+//
+// ### get_damp
+// 
+// Returns the current value for damp.
+// 
+// ~~~~
+		inline float get_damp() { return damp_; }
 // ~~~~
 
 // ### get_mode
