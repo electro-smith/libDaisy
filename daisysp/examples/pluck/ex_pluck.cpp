@@ -56,7 +56,8 @@ int main(void)
     tick.init(1.0f, SAMPLE_RATE);    
     // Set up pluck algo
     plk.init(SAMPLE_RATE, init_buff, 256, PLUCK_MODE_RECURSIVE);
-    plk.set_decay(0.65f);
+    plk.set_decay(0.85f);
+    plk.set_damp(0.8f);
     plk.set_amp(0.3f);
 
     arp_idx = 0;
