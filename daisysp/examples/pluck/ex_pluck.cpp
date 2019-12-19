@@ -20,7 +20,7 @@ static metro tick;
 static pluck plk;
 
 // MIDI note numbers for a major triad
-const float arpeggio[3] = { 36.0f, 40.0f, 45.0f };
+const float arpeggio[3] = { 48.0f, 52.0f, 55.0f };
 uint8_t arp_idx;
 
 static void audioCallback(float *in, float *out, size_t size)
@@ -34,7 +34,7 @@ static void audioCallback(float *in, float *out, size_t size)
         if (tick.process())
         {
             freq = mtof(arpeggio[arp_idx]); // convert midi nn to frequency.
-            arp_idx = arp_idx + 1 % 3; // advance the arpeggio, wrapping at the end.
+            arp_idx = (arp_idx + 1) % 3; // advance the arpeggio, wrapping at the end.
             plk.set_freq(freq);
             trig = 1.0f;
         }
@@ -56,8 +56,8 @@ int main(void)
     tick.init(1.0f, SAMPLE_RATE);    
     // Set up pluck algo
     plk.init(SAMPLE_RATE, init_buff, 256, PLUCK_MODE_RECURSIVE);
-    plk.set_decay(0.85f);
-    plk.set_damp(0.8f);
+    plk.set_decay(0.95f);
+    plk.set_damp(0.9f);
     plk.set_amp(0.3f);
 
     arp_idx = 0;
