@@ -21,7 +21,7 @@ void bad_callback(float *in, float *out, size_t size)
 //	int32_t* ram = (int32_t*)0x38000000; // D3 RAM
 	int32_t *ram = (int32_t *)0xC0000000; // SDRAM
 	memcpy(ram, in, sizeof(int32_t) * size);
-	for(int i = 0; i < 11; i++)
+	for(int i = 0; i < 300; i++)
 	{
 		memcpy((i + 1) * size + ram, ram, sizeof(int32_t) * size);
 	}

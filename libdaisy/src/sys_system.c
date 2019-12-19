@@ -155,14 +155,16 @@ void SystemClock_Config()
 							  |RCC_PERIPHCLK_I2C2|RCC_PERIPHCLK_ADC
 							  |RCC_PERIPHCLK_I2C1|RCC_PERIPHCLK_USB
 							  |RCC_PERIPHCLK_QSPI|RCC_PERIPHCLK_FMC;
+  // PLL 2
   PeriphClkInitStruct.PLL2.PLL2M = 4;
-  PeriphClkInitStruct.PLL2.PLL2N = 110;
-  PeriphClkInitStruct.PLL2.PLL2P = 8; // 83
-  PeriphClkInitStruct.PLL2.PLL2Q = 10; // 66.4
-  PeriphClkInitStruct.PLL2.PLL2R = 2; // 332Mhz
+  PeriphClkInitStruct.PLL2.PLL2N = 115;
+  PeriphClkInitStruct.PLL2.PLL2P = 8; // 57.5
+  PeriphClkInitStruct.PLL2.PLL2Q = 10; // 46
+  PeriphClkInitStruct.PLL2.PLL2R = 2; // 115Mhz
   PeriphClkInitStruct.PLL2.PLL2RGE = RCC_PLL2VCIRANGE_2;
   PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
   PeriphClkInitStruct.PLL2.PLL2FRACN = 0;
+  // PLL 3
   PeriphClkInitStruct.PLL3.PLL3M = 6;
   PeriphClkInitStruct.PLL3.PLL3N = 295;
   PeriphClkInitStruct.PLL3.PLL3P = 64; // 12.29Mhz
@@ -213,12 +215,15 @@ static void MPU_Config()
 	MPU_InitStruct.SubRegionDisable = 0x00;
 	MPU_InitStruct.DisableExec		= MPU_INSTRUCTION_ACCESS_ENABLE;
 	HAL_MPU_ConfigRegion(&MPU_InitStruct);
-//	MPU_InitStruct.IsCacheable = MPU_ACCESS_CACHEABLE;
-//	MPU_InitStruct.Number	  = MPU_REGION_NUMBER1;
-//	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
-//	MPU_InitStruct.Size			= MPU_REGION_SIZE_64MB;
-//	MPU_InitStruct.BaseAddress  = 0xC0000000;
-//	HAL_MPU_ConfigRegion(&MPU_InitStruct);
+
+	MPU_InitStruct.IsCacheable  = MPU_ACCESS_CACHEABLE;
+	MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
+	MPU_InitStruct.IsShareable = MPU_ACCESS_NOT_SHAREABLE;
+	MPU_InitStruct.Number		= MPU_REGION_NUMBER1;
+	MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
+	MPU_InitStruct.Size			= MPU_REGION_SIZE_64MB;
+	MPU_InitStruct.BaseAddress  = 0xC0000000;
+	HAL_MPU_ConfigRegion(&MPU_InitStruct);
 
 	//	uint32_t enable_bit = (1 << 0);
 	//	uint32_t privdefena = (1 << 2);
