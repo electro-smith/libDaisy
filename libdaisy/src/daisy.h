@@ -69,5 +69,6 @@ FORCE_INLINE float cube(float x)
 #ifdef __cplusplus
 #include "hid_ctrl.h"
 #include "parameter.h"
+#include "hid_usb.h"
 #endif
 #endif

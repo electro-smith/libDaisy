@@ -58,6 +58,7 @@ typedef struct
 	dsy_adc_handle   adc_handle;
 	dsy_dac_handle	 dac_handle;
 	dsy_gpio		   led, testpoint;
+    daisy::UsbHandle usb_handle;
 } daisy_handle;
 
 
@@ -194,14 +195,16 @@ inline void daisy_seed_init(daisy_handle *daisy_seed)
 	daisy_seed->audio_handle.dev1_i2c = &daisy_seed->i2c1_handle;
 	daisy_seed->audio_handle.block_size = 48;
 
-	// System Initialization (optional)
+
+    // System Initialization (optional)
 #ifndef DSY_SEED_NO_INIT
 	dsy_system_init();
-	dsy_sdram_init(&daisy_seed->sdram_handle);
-	dsy_qspi_init(&daisy_seed->qspi_handle);
+//	dsy_sdram_init(&daisy_seed->sdram_handle);
+//	dsy_qspi_init(&daisy_seed->qspi_handle);
 	dsy_gpio_init(&daisy_seed->led);
 	dsy_gpio_init(&daisy_seed->testpoint);
 	dsy_audio_init(&daisy_seed->audio_handle);
+    daisy_seed->usb_handle.Init(daisy::UsbHandle::FS_BOTH);
 	dsy_tim_init();
 #endif // DSY_SEED_NO_INIT
 }

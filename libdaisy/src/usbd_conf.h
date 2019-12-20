@@ -66,7 +66,7 @@
 /*---------- -----------*/
 #define USBD_SUPPORT_USER_STRING     0U
 /*---------- -----------*/
-#define USBD_DEBUG_LEVEL     0U
+#define USBD_DEBUG_LEVEL     3U
 /*---------- -----------*/
 #define USBD_LPM_ENABLED     0U
 /*---------- -----------*/

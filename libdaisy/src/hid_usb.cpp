@@ -8,9 +8,16 @@ using namespace daisy;
 
 static void UsbErrorHandler();
 
+// Externs for IRQ Handlers
+extern "C"
+{
 // Globals from Cube generated version:
 USBD_HandleTypeDef hUsbDeviceHS;
 USBD_HandleTypeDef hUsbDeviceFS;
+extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
+extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
+}
+
 
 static void InitFS() 
 {
@@ -63,8 +70,8 @@ void UsbHandle::Init(UsbPeriph dev)
         case FS_INTERNAL: InitFS(); break;
         case FS_EXTERNAL: InitHS(); break;
         case FS_BOTH: 
-            InitFS(); 
             InitHS();
+            InitFS(); 
             break;
         default: break;
     }
@@ -86,4 +93,38 @@ void UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
 static void UsbErrorHandler()
 {
     while(1) {}
+}
+
+// IRQ Handler
+extern "C"
+{
+void OTG_HS_EP1_OUT_IRQHandler(void)
+{
+    HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+}
+
+void OTG_HS_EP1_IN_IRQHandler(void)
+{
+    HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+}
+
+void OTG_HS_IRQHandler(void)
+{
+    HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+}
+
+void OTG_FS_EP1_OUT_IRQHandler(void)
+{
+    HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
+}
+
+void OTG_FS_EP1_IN_IRQHandler(void)
+{
+    HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
+}
+
+void OTG_FS_IRQHandler(void)
+{
+    HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
+}
 }

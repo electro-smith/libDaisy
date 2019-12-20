@@ -19,6 +19,7 @@ per_tim \
 hid_switch \
 hid_encoder \
 hid_ctrl \
+hid_usb \
 dev_sr_4021 \
 system_stm32h7xx \
 
@@ -36,6 +37,8 @@ CHIPSET = stm32f7x
 SOURCES_DIR =  \
 Drivers/CMSIS \
 Drivers/STM32H7xx_HAL_Driver \
+Middlewares/ST/STM32_USB_Device_Library/Core/Src \
+Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src \
 #Middlewares/FatFs \
 
 # Build path
@@ -93,6 +96,13 @@ Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_mdma.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_pwr_ex.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c \
+Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
+Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
+Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
+Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c \
+src/usbd_conf.c \
+src/usbd_desc.c \
+src/usbd_cdc_if.c \
 
 
 STARTUP_PATH = Drivers/CMSIS/Device/ST/STM32H7xx/Source/Templates/gcc
@@ -157,6 +167,8 @@ C_INCLUDES = \
 -IDrivers/CMSIS/Include \
 -IDrivers/CMSIS/Device/ST/STM32H7xx/Include \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
+-IMiddlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc \
+-IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc \
 -I. \
 
 # compile gcc flags
