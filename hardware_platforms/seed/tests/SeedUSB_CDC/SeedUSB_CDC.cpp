@@ -12,7 +12,7 @@ using namespace daisysp;
 static uint32_t DSY_SDRAM_BSS test_buff[TEST_BUFF_SIZE];
 
 static daisy_handle hw;
-static uint32_t start, end, dur;
+static uint32_t		start, end, dur;
 
 
 void passthru(float *in, float *out, size_t size)
@@ -24,13 +24,14 @@ int main(void)
 {
 	// Initialize Hardware
 	daisy_seed_init(&hw);
-	for(uint32_t i = 0; i < TEST_BUFF_SIZE; i++) 
+	// Test RAM
+	for(uint32_t i = 0; i < TEST_BUFF_SIZE; i++)
 	{
 		test_buff[i] = i;
 	}
-	for(uint32_t i = 0; i < TEST_BUFF_SIZE; i++) 
+	for(uint32_t i = 0; i < TEST_BUFF_SIZE; i++)
 	{
-		if(test_buff[i] != i) 
+		if(test_buff[i] != i)
 		{
 			asm("bkpt 255");
 		}
@@ -38,6 +39,11 @@ int main(void)
 	dsy_tim_start();
 	dsy_audio_set_callback(DSY_AUDIO_INTERNAL, passthru);
 	dsy_audio_start(DSY_AUDIO_INTERNAL);
-	while(1) {}
-}
+    uint32_t hello_count = 0;
+    while(1) 
+    {
+        dsy_tim_delay_ms(500);
+		
 
+    }
+}
