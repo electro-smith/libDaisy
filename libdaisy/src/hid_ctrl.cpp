@@ -1,17 +1,14 @@
 #include "hid_ctrl.h"
 #include <math.h>
+// Temporary amount to prevent bleed on the bottom of the pots/CVs
+#define BOTTOM_THRESH 0.002f
 using namespace daisy;
 float hid_ctrl::process() { 
 	float t;
-	t = (float)*raw / 65536.0f;
-	t = (t - offset) * scale * (flip ? -1.0f : 1.0f);
-	delta = (t - prev) + (0.999f * delta);
-	prev  = t;
-	lockstatus = fabsf(delta) < thresh ? true : false;
-	if(lockstatus)
-		t = val;
-	if(t < 0.02f)
+	t = (float)*raw_ / 65536.0f;
+	t = (t - offset_) * scale_ * (flip_ ? -1.0f : 1.0f);
+	if(t < BOTTOM_THRESH)
 		t = 0.0f;
-	val += coeff * (t - val);
-	return val;
+	val_ += coeff_ * (t - val_);
+	return val_;
 }

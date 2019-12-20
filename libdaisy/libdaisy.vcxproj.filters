@@ -934,6 +934,9 @@
     <ClCompile Include="src\per_tim.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="src\daisy_patch.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <LinkerScript Include="..\core\STM32H750IB_flash.lds" />

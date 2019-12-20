@@ -1,3 +1,12 @@
+// # Daisy Patch BSP
+// ## Description
+// Class that handles initializing all of the hardware specific to the Daisy Patch Board.
+// 
+// Helper funtions are also in place to provide easy access to built-in controls and peripherals.
+//
+// ## Credits
+// **Author:** Stephen Hensley
+// **Date Added:** November 2019
 #pragma once
 #ifndef DSY_PATCH_BSP_H
 #define DSY_PATCH_BSP_H
@@ -22,11 +31,19 @@
 
 #define LED_DRIVER_I2C i2c1_handle
 
-// Leaving non-cplusplus version in place below so as not to break examples yet...
 #ifdef __cplusplus
 namespace daisy
 {
-	enum
+class daisy_patch
+{
+  public:
+// ## Data Types
+// ### ctrl
+// These are the hardware controls accessed via hid_ctrl objects.
+// 
+// They can be accessed directly, or via the GetCtrl() function
+// ~~~~
+	enum ctrl
 	{
 		KNOB_1,
 		KNOB_2,
@@ -39,9 +56,14 @@ namespace daisy
 		CV_LAST,
 		KNOB_LAST = CV_1,
 	};
+// ~~~~
 
-	// Mapping of LEDs via dsy_leddriver.h
-	enum
+// ### led
+// These are the LEDs connected to the LED Driver peripheral
+// 
+// They can be accessed via the dsy_led_driver module, or using the [LED Helpers](#LED-Helpers) below
+// ~~~~
+	enum led
 	{
 		LED_A4,
 		LED_A3,
@@ -61,100 +83,95 @@ namespace daisy
 		LED_D1,
 		LED_LAST
 	};
-	class daisy_patch
+// ~~~~
+
+	daisy_patch() {}
+	~daisy_patch() {}
+
+// ### Init
+// Initializes the daisy seed, and patch hardware.
+// ~~~~
+	void Init();
+// ~~~~
+
+// ## Audio Helpers
+// ### StartAudio
+// Starts the audio calling the specified callback
+// ~~~~
+	void StartAudio(dsy_audio_callback cb) 
+// ~~~~
 	{
-	  public:
-		daisy_patch() {}
-		~daisy_patch() {}
+		dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+		dsy_audio_start(DSY_AUDIO_INTERNAL);
+	}
+// ### ChangeAudioCallback
+// Changes what callback is being called when audio is ready for new data.
+// ~~~~
+	void ChangeAudioCallback(dsy_audio_callback cb) 
+// ~~~~
+	{
+		dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+	}
 
-		inline void init()
+// ## LED helpers
+// Worth noting that all changes to LED brightness only apply UpdateLeds() is called.
+// ### SetLed
+// Sets the brightness of one of the LEDs 
+// ~~~~
+	inline void SetLed(led ld, float bright) 
+// ~~~~
+	{
+		dsy_led_driver_set_led(ld, bright);
+	}
+// ### ClearLeds
+// Sets the brightness of all LEDs to 0
+// ~~~~
+	inline void ClearLeds() 
+// ~~~~
+	{
+		for(int i = 0; i < LED_LAST; i++) 
 		{
-			daisy_seed_init(&seed);
-			// Pin config for everything
-			button1.pin_config = {BUTTON_1_PORT, BUTTON_1_PIN};
-			button2.pin_config = {BUTTON_2_PORT, BUTTON_2_PIN};
-			toggle.pin_config  = {TOGGLE_PORT, TOGGLE_PIN};
-			gate_in1.pin	   = {GATE_1_PORT, GATE_1_PIN};
-			gate_in2.pin	   = {GATE_2_PORT, GATE_2_PIN};
-			gate_out.pin	   = {GATE_OUT_PORT, GATE_OUT_PIN};
-
-			// Switches
-			button1.pull	 = DSY_SWITCH_PULLUP;
-			button1.polarity = DSY_SWITCH_POLARITY_INVERTED;
-			button1.type	 = DSY_SWITCH_TYPE_MOMENTARY;
-			dsy_switch_init(&button1);
-
-			button2.pull	 = DSY_SWITCH_PULLUP;
-			button2.polarity = DSY_SWITCH_POLARITY_INVERTED;
-			button2.type	 = DSY_SWITCH_TYPE_MOMENTARY;
-			dsy_switch_init(&button2);
-
-			toggle.pull = DSY_SWITCH_PULLUP;
-			toggle.type = DSY_SWITCH_TYPE_TOGGLE;
-			dsy_switch_init(&toggle);
-
-			// GPIO
-			gate_in1.mode = DSY_GPIO_MODE_INPUT;
-			dsy_gpio_init(&gate_in1);
-			gate_in2.mode = DSY_GPIO_MODE_INPUT;
-			dsy_gpio_init(&gate_in2);
-			gate_out.mode = DSY_GPIO_MODE_OUTPUT_PP;
-			dsy_gpio_init(&gate_out);
-
-			// ADCs
-			uint8_t channel_order[8]	= {DSY_ADC_PIN_CHN3,
-										   DSY_ADC_PIN_CHN10,
-										   DSY_ADC_PIN_CHN7,
-										   DSY_ADC_PIN_CHN11,
-										   DSY_ADC_PIN_CHN4,
-										   DSY_ADC_PIN_CHN5,
-										   DSY_ADC_PIN_CHN15,
-										   DSY_ADC_PIN_CHN17};
-			seed.adc_handle.channels = 8; // only initializing 8 primary channels.
-			for(uint8_t i = 0; i < 8; i++)
-			{
-				seed.adc_handle.active_channels[i] = channel_order[i];
-			}
-			seed.adc_handle.oversampling = DSY_ADC_OVS_32;
-			dsy_adc_init(&seed.adc_handle);
-			dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
-
-			// Higher level hid_ctrls
-			for(uint8_t i = 0; i < KNOB_LAST; i++) 
-			{
-				pctrl[i].init(adc_ptr(i), SAMPLE_RATE);
-			}
-			for(uint8_t i = CV_1; i < CV_LAST; i++) 
-			{
-				pctrl[i].init_bipolar_cv(adc_ptr(i), SAMPLE_RATE);
-			}
-			knob1.init(adc_ptr(KNOB_1), SAMPLE_RATE);
-			knob2.init(adc_ptr(KNOB_2), SAMPLE_RATE);
-			knob3.init(adc_ptr(KNOB_3), SAMPLE_RATE);
-			knob4.init(adc_ptr(KNOB_4), SAMPLE_RATE);
-
-			// LEDs
-			uint8_t addr = 0x00;
-			dsy_led_driver_init(&seed.LED_DRIVER_I2C, &addr, 1);
+			SetLed(static_cast<led>(i), 0);
 		}
+	}
+// ### UpdateLeds
+// Writes the changes in brightness to the actual LEDs
+// ~~~~
+	inline void UpdateLeds() 
+// ~~~~
+	{
+		dsy_led_driver_update();
+	}
 
-		inline hid_ctrl ctrl(uint8_t idx) { return pctrl[idx < CV_LAST ? idx : 0]; }
+// ### GetCtrl
+// Returns an hid_ctrl KNOB_1 through CV_4
+// ~~~~
+	inline hid_ctrl GetCtrl(ctrl c)
+// ~~~~
+	{
+		return pctrl[c];
+	}
 
-		daisy_handle seed;
-		dsy_switch   button1, button2, toggle;
-		dsy_gpio	 gate_in1, gate_in2, gate_out;
+// ## Public Members
+// These are in place to keep everything working for now.
+// 
+// All of these members can be accessed directly, and used 
+// with the rest of the C-Based libdaisy library.
+	daisy_handle seed;
+	dsy_switch   button1, button2, toggle;
+	dsy_gpio	 gate_in1, gate_in2, gate_out;
 
-		// alternate hid_form with public access
-		hid_ctrl knob1, knob2, knob3, knob4;
-		hid_ctrl cv1, cv2, cv3, cv4;
+	// alternate hid_form with public access
+	hid_ctrl knob1, knob2, knob3, knob4;
+	hid_ctrl cv1, cv2, cv3, cv4;
 
-	  private:
-		inline uint16_t* adc_ptr(const uint8_t chn)
-		{
-			return dsy_adc_get_rawptr(chn);
-		}
-		hid_ctrl pctrl[CV_LAST]; 
-	};
+  private:
+	inline uint16_t* adc_ptr(const uint8_t chn)
+	{
+		return dsy_adc_get_rawptr(chn);
+	}
+	hid_ctrl pctrl[CV_LAST];
+};
 } // namespace daisy
 
 #else

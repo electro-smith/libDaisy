@@ -74,6 +74,7 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="src\daisy_patch.cpp" />
     <ClCompile Include="src\dev_codec_pcm3060.c" />
     <ClCompile Include="src\dev_codec_wm8731.c" />
     <ClCompile Include="src\dev_leddriver.c" />
