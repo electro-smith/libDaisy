@@ -5,9 +5,9 @@ title:
 manufacturer:
 - electrosmith
 
-documentclass: extarticle
+documentclass: article
 
-fontsize: 10pt
+fontsize: 12pt
 
 ...
 
