@@ -128,8 +128,9 @@ transcode report.txt
 /daisysp/examples/*/build
 hardware_platforms/*/examples/*/build
 hardware_platforms/*/examples/*/VisualGDB/
+hardware_platforms/*/*/*/build
+hardware_platforms/*/*/*/build
 daisysp/doc/*.md
 libdaisy/doc/*.md
 core/build
-/*/build
 
