@@ -129,7 +129,7 @@ transcode report.txt
 hardware_platforms/*/examples/*/build
 hardware_platforms/*/examples/*/VisualGDB/
 hardware_platforms/*/*/*/build
-hardware_platforms/*/*/*/build
+hardware_platforms/*/*/*/VisualGDB
 daisysp/doc/*.md
 libdaisy/doc/*.md
 core/build
