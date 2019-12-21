@@ -16,7 +16,6 @@ USBD_HandleTypeDef hUsbDeviceHS;
 USBD_HandleTypeDef hUsbDeviceFS;
 extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
 extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
-}
 
 
 static void InitFS() 
@@ -60,6 +59,8 @@ static void InitHS()
     {
         UsbErrorHandler();
     }
+}
+
 }
 
 
