@@ -15,8 +15,8 @@ static void VerbCallback(float *in, float *out, size_t size)
     {
         //verb.set_feedback(0.15f + (dsy_adc_get_float(KNOB_1) * 0.85f));
         //verb.set_lpfreq(200.0f + (dsy_adc_get_float(KNOB_2) * 18000.0f));
-        drylevel = dsy_adc_get_float(KNOB_3);
-        send = dsy_adc_get_float(KNOB_4);
+        drylevel = dsy_adc_get_float(daisy_patch::KNOB_3);
+        send = dsy_adc_get_float(daisy_patch::KNOB_4);
         dryL = in[i];
         dryR = in[i+1];
         sendL = dryL * send;
@@ -31,14 +31,17 @@ static void VerbCallback(float *in, float *out, size_t size)
 
 int main(void)
 {
-    patch.init();
+    patch.Init();
+
     verb.init(SAMPLE_RATE);
     verb.set_feedback(0.85f);
     verb.set_lpfreq(18000.0f);
+
     blk[0].init(SAMPLE_RATE);
     blk[1].init(SAMPLE_RATE);
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, VerbCallback);
+
     dsy_adc_start();
-    dsy_audio_start(DSY_AUDIO_INTERNAL);
+    patch.StartAudio(VerbCallback);
+
     while(1) {}
 }
