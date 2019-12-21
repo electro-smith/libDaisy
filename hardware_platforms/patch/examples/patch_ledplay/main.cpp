@@ -5,31 +5,25 @@ using namespace daisy;
 
 daisy_patch patch;
 
-static void clear_leds();
-
 int main(void)
 {
     uint8_t selected_led = 0;
-    patch.init();
+    daisy_patch::led ld;
+    patch.Init();
     while(1) 
     {
         dsy_system_delay(100);
-        selected_led += 1;
-        if (selected_led > LED_LAST - 1)
-        {
-            selected_led = 0;
-        }
-        clear_leds();
-        dsy_led_driver_set_led(selected_led, 1.0f);
-        dsy_led_driver_update();
+
+        // Step through LEDs wrapping at the end 
+        selected_led = (selected_led + 1) % daisy_patch::LED_LAST;
+
+        // Cast the idx  to an led type
+        ld = static_cast<daisy_patch::led>(selected_led);
+
+        // Clear the LEDs, and set only the selected one to maximum brightness.
+        patch.ClearLeds();
+        patch.SetLed(ld, 1.0f);
+        patch.UpdateLeds();
     }
 }
 
-// Sets all LEDs to be off.
-static void clear_leds()
-{
-    for (int i = 0; i < LED_LAST; i++)
-    {
-        dsy_led_driver_set_led(i, 0.0f);    
-    }
-}

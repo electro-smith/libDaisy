@@ -2,6 +2,7 @@ TARGET = libdaisy
 
 MODULE_DIR=src
 MODULES = \
+daisy_patch \
 dev_codec_pcm3060 \
 dev_codec_wm8731 \
 sys_dma \
