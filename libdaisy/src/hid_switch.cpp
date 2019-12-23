@@ -1,18 +1,21 @@
 #include "hid_switch.h"
-
 using namespace daisy;
 
-void Switch::Init(dsy_gpio_pin pin, float update_rate, Type t, Polarity pol, Pull pu) 
+void Switch::Init(dsy_gpio_pin pin,
+                  float        update_rate,
+                  Type         t,
+                  Polarity     pol,
+                  Pull         pu)
 {
     time_per_update_ = 1.0f / update_rate;
     state_           = 0x00;
     time_held_       = 0;
-	// Flip may seem opposite to logical direction,
-    // but here 1 is pressed, 0 is not pressed so there's
-    // an implicit double flip.
-    flip_            = pol == POLARITY_INVERTED ? false : true;
-    hw_gpio_.pin     = pin;
-    hw_gpio_.mode    = DSY_GPIO_MODE_INPUT;
+    t_               = t;
+    // Flip may seem opposite to logical direction,
+    // but here 1 is pressed, 0 is not. 
+    flip_         = pol == POLARITY_INVERTED ? true : false;
+    hw_gpio_.pin  = pin;
+    hw_gpio_.mode = DSY_GPIO_MODE_INPUT;
     switch(pu)
     {
         case PULL_UP: hw_gpio_.pull = DSY_GPIO_PULLUP; break;
@@ -27,7 +30,8 @@ void Switch::Init(dsy_gpio_pin pin, float update_rate)
     Init(pin, update_rate, TYPE_MOMENTARY, POLARITY_INVERTED, PULL_UP);
 }
 
-void Switch::Debounce() {
+void Switch::Debounce()
+{
     // shift over, and introduce new state.
     state_ = (state_ << 1)
              | (flip_ ? !dsy_gpio_read(&hw_gpio_) : dsy_gpio_read(&hw_gpio_));

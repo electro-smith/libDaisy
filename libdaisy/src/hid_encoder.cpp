@@ -1,72 +1,44 @@
 #include "hid_encoder.h"
 
-void	 dsy_encoder_init(dsy_encoder *p) 
-{
-	
-	for(uint8_t i = 0; i < DSY_ENCODER_PIN_LAST; i++) 
-	{
-		p->pins[i].pin.port = p->pin_config[i].port;
-		p->pins[i].pin.pin = p->pin_config[i].pin;
-		p->pins[i].mode		= DSY_GPIO_MODE_INPUT;
-		p->pins[i].pull		= DSY_GPIO_PULLUP;
-		dsy_gpio_init(&p->pins[i]);
-		p->states[i] = 0;
-	}
-	p->time = 0;
-}
-void dsy_encoder_debounce(dsy_encoder *p)
-{
-	uint8_t a, b;
-	// Debounce Click
-	p->states[DSY_ENCODER_PIN_CLICK]
-		= (p->states[DSY_ENCODER_PIN_CLICK] << 1)
-		  | dsy_gpio_read(&p->pins[DSY_ENCODER_PIN_CLICK]);
-	// Debounce Quadrature States
-	p->states[DSY_ENCODER_PIN_A]
-		= (p->states[DSY_ENCODER_PIN_A] << 1)
-		  | dsy_gpio_read(&p->pins[DSY_ENCODER_PIN_A]);
-	p->states[DSY_ENCODER_PIN_B]
-		= (p->states[DSY_ENCODER_PIN_B] << 1)
-		  | dsy_gpio_read(&p->pins[DSY_ENCODER_PIN_B]);
-	// Check Encoder click time
-	if(p->states[DSY_ENCODER_PIN_CLICK] == 0x80)
-	{
-		p->time = 0;
-	}
-	else if(p->states[DSY_ENCODER_PIN_CLICK] == 0x00)
-	{
-		p->time += 1;
-	}
+using namespace daisy;
 
-	p->inc = 0;
-	a	  = p->states[DSY_ENCODER_PIN_A];
-	b	  = p->states[DSY_ENCODER_PIN_B];
-	if((a & 0x03) == 0x02 && (b & 0x03) == 0x00)
-	{
-		p->inc = 1;
-	}
-	else if((b & 0x03) == 0x02 && (a & 0x03) == 0x00)
-	{
-		p->inc = -1;
-	}
-}
-int32_t dsy_encoder_inc(dsy_encoder *p)
+void Encoder::Init(dsy_gpio_pin a,
+                   dsy_gpio_pin b,
+                   dsy_gpio_pin click,
+                   float        update_rate)
 {
-	return p->inc;
+    // Init GPIO for A, and B
+    hw_a_.pin  = a;
+    hw_a_.mode = DSY_GPIO_MODE_INPUT;
+    hw_a_.pull = DSY_GPIO_PULLUP;
+    hw_b_.pin  = b;
+    hw_b_.mode = DSY_GPIO_MODE_INPUT;
+    hw_b_.pull = DSY_GPIO_PULLUP;
+    dsy_gpio_init(&hw_a_);
+    dsy_gpio_init(&hw_b_);
+    // Default Initialization for Switch
+    sw_.Init(click, update_rate);
+    // Set initial states, etc.
+    inc_ = 0;
+    a_ = b_ = 0xff;
 }
-uint8_t dsy_encoder_state(dsy_encoder *p)
+
+void Encoder::Debounce()
 {
-	return p->states[DSY_ENCODER_PIN_CLICK] == 0x00;
+    // Shift Button states to debounce
+    a_ = (a_ << 1) | dsy_gpio_read(&hw_a_);
+    b_ = (b_ << 1) | dsy_gpio_read(&hw_b_);
+    // Debounce built-in switch
+    sw_.Debounce();
+    // infer increment direction
+    inc_ = 0; // reset inc_ first
+    if((a_ & 0x03) == 0x02 && (b_ & 0x03) == 0x00)
+    {
+        inc_ = 1;
+    }
+    else if((b_ & 0x03) == 0x02 && (a_ & 0x03) == 0x00)
+    {
+        inc_ = -1;
+    }
 }
-uint8_t dsy_encoder_rising_edge(dsy_encoder *p)
-{
-	return p->states[DSY_ENCODER_PIN_CLICK] == 0x80;
-}
-uint8_t dsy_encoder_falling_edge(dsy_encoder *p)
-{
-	return p->states[DSY_ENCODER_PIN_CLICK] == 0x7F;
-}
-uint32_t dsy_encoder_time_held(dsy_encoder *p)
-{
-	return p->time;
-}
+

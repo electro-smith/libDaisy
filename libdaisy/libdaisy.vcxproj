@@ -82,7 +82,7 @@
     <ClCompile Include="src\dev_sr_4021.c" />
     <ClCompile Include="src\hid_audio.c" />
     <ClCompile Include="src\hid_ctrl.cpp" />
-    <ClCompile Include="src\hid_encoder.c" />
+    <ClCompile Include="src\hid_encoder.cpp" />
     <ClCompile Include="src\hid_switch.cpp" />
     <ClCompile Include="src\per_adc.c" />
     <ClCompile Include="src\per_dac.c" />

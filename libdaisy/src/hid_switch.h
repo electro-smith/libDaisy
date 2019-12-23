@@ -63,8 +63,9 @@ class Switch
 // ## General Functions
 // ### Init
 // Initializes the switch object with a given port/pin combo.
-//
+// 
 // Parameters:
+// 
 // - pin: port/pin object to tell the switch which hardware pin to use.
 // - update_rate: the rate at which the Debounce() function will be called. (used for timing).
 // - t: switch type -- Default: TYPE_MOMENTARY
@@ -73,6 +74,7 @@ class Switch
 // ~~~~
     void
          Init(dsy_gpio_pin pin, float update_rate, Type t, Polarity pol, Pull pu);
+
     void Init(dsy_gpio_pin pin, float update_rate);
 // ~~~~
 
@@ -113,7 +115,7 @@ class Switch
     }
 
   private:
-    Type     t;
+    Type     t_;
     dsy_gpio hw_gpio_;
     uint8_t  state_;
     bool     flip_;

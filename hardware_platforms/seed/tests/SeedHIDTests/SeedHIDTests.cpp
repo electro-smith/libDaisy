@@ -16,11 +16,69 @@ using namespace daisy;
 
 static void init_led();
 
-// Functional Modules
-daisy_handle hw;
-dsy_gpio led_blue;
-// Module in progress.
-Switch sw_1;
+class BasicRgb
+{
+  public:
+    enum Color
+    {
+        OFF,
+        RED,
+        GREEN,
+        BLUE,
+        WHITE,
+    };
+    BasicRgb() {}
+    ~BasicRgb() {}
+    void Init(dsy_gpio_pin r, dsy_gpio_pin g, dsy_gpio_pin b) 
+    {
+        hw_r_.pin = r;
+        hw_g_.pin = g;
+        hw_b_.pin = b;
+        hw_r_.mode = hw_g_.mode = hw_b_.mode = DSY_GPIO_MODE_OUTPUT_PP;
+        hw_r_.pull = hw_g_.pull = hw_b_.pull = DSY_GPIO_NOPULL;
+        dsy_gpio_init(&hw_r_);
+        dsy_gpio_init(&hw_g_);
+        dsy_gpio_init(&hw_b_);
+    }
+
+    void Set(Color c) 
+    {
+        switch(c)
+        {
+            case OFF:
+                dsy_gpio_write(&hw_r_, 1);
+                dsy_gpio_write(&hw_g_, 1);
+                dsy_gpio_write(&hw_b_, 1);
+                break;
+            case RED: 
+                dsy_gpio_write(&hw_r_, 0); 
+                dsy_gpio_write(&hw_g_, 1); 
+                dsy_gpio_write(&hw_b_, 1); 
+                break;
+            case GREEN: 
+                dsy_gpio_write(&hw_r_, 1); 
+                dsy_gpio_write(&hw_g_, 0); 
+                dsy_gpio_write(&hw_b_, 1); 
+                break;
+            case BLUE: 
+                dsy_gpio_write(&hw_r_, 1); 
+                dsy_gpio_write(&hw_g_, 1); 
+                dsy_gpio_write(&hw_b_, 0); 
+                break;
+            case WHITE: 
+                dsy_gpio_write(&hw_r_, 0); 
+                dsy_gpio_write(&hw_g_, 0); 
+                dsy_gpio_write(&hw_b_, 0); 
+                break;
+            default: break;
+        }
+    }
+
+
+  private:
+    bool     r_, g_, b_;
+    dsy_gpio hw_r_, hw_g_, hw_b_;
+};
 
 enum class LedState
 {
@@ -28,21 +86,59 @@ enum class LedState
     OFF = 0x01,
 };
 
+// Functional Modules
+daisy_handle hw;
+dsy_gpio led_blue;
+// Module in progress.
+Switch sw_1;
+Encoder enc;
+BasicRgb led2;
+
+uint8_t c;
+
 void AudioCallback(float *in, float *out, size_t size)
 {
     // Ticks at FS/size (default 2kHz)
+    int32_t inc;
     sw_1.Debounce();
 	if(sw_1.RisingEdge())
         dsy_gpio_write(&led_blue, static_cast<uint8_t>(LedState::ON));
     if(sw_1.TimeHeldMs() > 1000 || sw_1.FallingEdge())
         dsy_gpio_write(&led_blue, static_cast<uint8_t>(LedState::OFF));
 
+    enc.Debounce();
+    inc = enc.Increment();
+    if(inc > 0)
+    {
+        c = (c + 1) % 5;
+    }
+    else if(inc < 0)
+    {
+        if(c == 0)
+            c = 4;
+        else
+            c -= 1;
+    }
+
+    if(enc.RisingEdge())
+        c = BasicRgb::Color::WHITE;
+
+    if(enc.FallingEdge())
+        c = BasicRgb::Color::OFF;
+
+    if(enc.TimeHeldMs() > 1000)
+        c = (dsy_system_getnow() & 255) > 127 ? BasicRgb::Color::WHITE
+                                              : BasicRgb::Color::OFF;
+
+    led2.Set(static_cast<BasicRgb::Color>(c));
+
+
     for(size_t i = 0; i < size; i += 2)
     {
         // Ticks at FS
         out[i]     = in[i];
         out[i + 1] = in[i + 1];
-    }
+        }
 }
 
 
@@ -52,12 +148,23 @@ int main(void)
     daisy_seed_init(&hw);
     dsy_tim_start();
     init_led();
+
+    led2.Init({seed_ports[0], seed_pins[0]},
+              {seed_ports[25], seed_pins[25]},
+              {seed_ports[24], seed_pins[24]});
+
     // Testing New Switch
     sw_1.Init({seed_ports[28], seed_pins[28]},
               DSY_AUDIO_SAMPLE_RATE / 24,
               Switch::TYPE_MOMENTARY,
-              Switch::POLARITY_NORMAL,
+              Switch::POLARITY_INVERTED,
               Switch::PULL_UP);
+    // Testing New Encoder
+    enc.Init({seed_ports[27], seed_pins[27]},
+             {seed_ports[26], seed_pins[26]},
+             {seed_ports[1], seed_pins[1]},
+             DSY_AUDIO_SAMPLE_RATE / 24);
+
     // Audio will get converted LAST
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
     dsy_audio_start(DSY_AUDIO_INTERNAL);

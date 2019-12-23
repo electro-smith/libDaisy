@@ -895,9 +895,6 @@
     <ClCompile Include="src\hid_audio.c">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="src\hid_encoder.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="src\per_adc.c">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -935,6 +932,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="src\hid_switch.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid_encoder.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
