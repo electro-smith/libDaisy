@@ -20,7 +20,6 @@
 #include "daisy_core.h"
 #include "per_gpio.h"
 
-
 namespace daisy
 {
 class Switch
