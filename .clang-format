@@ -1,10 +1,10 @@
 ﻿---
 AlignAfterOpenBracket: Align
-AlignConsecutiveAssignments: 'true'
-AlignConsecutiveDeclarations: 'true'
+AlignConsecutiveAssignments: true
+AlignConsecutiveDeclarations: true
 AlignEscapedNewlinesLeft: 'true'
-AlignOperands: 'true'
-AlignTrailingComments: 'true'
+AlignOperands: true
+AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: 'false'
 AllowShortBlocksOnASingleLine: 'true'
 AllowShortCaseLabelsOnASingleLine: 'true'
@@ -29,7 +29,7 @@ IndentWrappedFunctionNames: 'false'
 KeepEmptyLinesAtTheStartOfBlocks: 'false'
 Language: Cpp
 MaxEmptyLinesToKeep: '2'
-NamespaceIndentation: All
+NamespaceIndentation: Inner
 ReflowComments: 'false'
 SpaceAfterCStyleCast: 'false'
 SpaceBeforeAssignmentOperators: 'true'
@@ -40,7 +40,7 @@ SpacesInContainerLiterals: 'false'
 SpacesInParentheses: 'false'
 SpacesInSquareBrackets: 'false'
 Standard: Cpp11
-UseTab: Always
+UseTab: Never
 TabWidth: 4
 SortIncludes: false
 AccessModifierOffset: -2
@@ -61,6 +61,5 @@ BraceWrapping:
   SplitEmptyFunction: false
   SplitEmptyNamespace: false
   SplitEmptyRecord: false
-BreakBeforeBraces: Custom
+BreakBeforeBraces: Allman
 BreakBeforeBinaryOperators: All
-...
