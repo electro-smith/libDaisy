@@ -158,7 +158,7 @@ class daisy_patch
 // All of these members can be accessed directly, and used 
 // with the rest of the C-Based libdaisy library.
 	daisy_handle seed;
-	dsy_switch   button1, button2, toggle;
+	Switch button1, button2, toggle;
 	dsy_gpio	 gate_in1, gate_in2, gate_out;
 
 	// alternate hid_form with public access

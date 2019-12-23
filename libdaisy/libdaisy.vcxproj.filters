@@ -898,9 +898,6 @@
     <ClCompile Include="src\hid_encoder.c">
       <Filter>Source files</Filter>
     </ClCompile>
-    <ClCompile Include="src\hid_switch.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
     <ClCompile Include="src\per_adc.c">
       <Filter>Source files</Filter>
     </ClCompile>
@@ -935,6 +932,9 @@
       <Filter>Source files</Filter>
     </ClCompile>
     <ClCompile Include="src\daisy_patch.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid_switch.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
