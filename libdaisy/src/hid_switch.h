@@ -2,7 +2,7 @@
 // ## Description
 //
 // Generic Class for handling momentary/latching switches
-// 
+//
 // ## Files
 // hid_switch.*
 //
@@ -63,9 +63,9 @@ class Switch
 // ## General Functions
 // ### Init
 // Initializes the switch object with a given port/pin combo.
-// 
+//
 // Parameters:
-// 
+//
 // - pin: port/pin object to tell the switch which hardware pin to use.
 // - update_rate: the rate at which the Debounce() function will be called. (used for timing).
 // - t: switch type -- Default: TYPE_MOMENTARY
@@ -73,7 +73,7 @@ class Switch
 // - pu: switch pull up/down -- Default: PULL_UP
 // ~~~~
     void
-         Init(dsy_gpio_pin pin, float update_rate, Type t, Polarity pol, Pull pu);
+    Init(dsy_gpio_pin pin, float update_rate, Type t, Polarity pol, Pull pu);
 
     void Init(dsy_gpio_pin pin, float update_rate);
 // ~~~~
@@ -109,7 +109,7 @@ class Switch
 // Returns the time in milliseconds that the button has been held (or toggle has been on)
 // ~~~~
     inline float TimeHeldMs() const
-    // ~~~~
+// ~~~~
     {
         return Pressed() ? time_held_ * 1000.0f : 0;
     }

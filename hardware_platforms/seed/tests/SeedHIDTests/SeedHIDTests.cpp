@@ -15,6 +15,7 @@
 using namespace daisy;
 
 static void init_led();
+static void init_pod_adcs();
 
 class BasicRgb
 {
@@ -86,13 +87,18 @@ enum class LedState
     OFF = 0x01,
 };
 
+daisysp::oscillator osc;
+
 // Functional Modules
 daisy_handle hw;
 dsy_gpio led_blue;
-// Module in progress.
 Switch sw_1;
 Encoder enc;
 BasicRgb led2;
+AnalogControl pot1;
+parameter     p;
+
+// Module in progress.
 
 uint8_t c;
 
@@ -105,6 +111,7 @@ void AudioCallback(float *in, float *out, size_t size)
         dsy_gpio_write(&led_blue, static_cast<uint8_t>(LedState::ON));
     if(sw_1.TimeHeldMs() > 1000 || sw_1.FallingEdge())
         dsy_gpio_write(&led_blue, static_cast<uint8_t>(LedState::OFF));
+
 
     enc.Debounce();
     inc = enc.Increment();
@@ -136,9 +143,11 @@ void AudioCallback(float *in, float *out, size_t size)
     for(size_t i = 0; i < size; i += 2)
     {
         // Ticks at FS
-        out[i]     = in[i];
-        out[i + 1] = in[i + 1];
-        }
+        //osc.set_freq(daisysp::mtof(12.0f + (pot1.Process() * 96.0f)));
+        osc.set_freq(daisysp::mtof(p.process()));
+        out[i] = osc.process();
+        out[i + 1] = out[i];
+    }
 }
 
 
@@ -146,6 +155,10 @@ int main(void)
 {
     // Initialize Hardware
     daisy_seed_init(&hw);
+    init_pod_adcs();
+    osc.init(DSY_AUDIO_SAMPLE_RATE);
+    osc.set_amp(1.00f);
+    osc.set_waveform(daisysp::oscillator::WAVE_TRI);
     dsy_tim_start();
     init_led();
 
@@ -165,9 +178,13 @@ int main(void)
              {seed_ports[1], seed_pins[1]},
              DSY_AUDIO_SAMPLE_RATE / 24);
 
+    pot1.Init(dsy_adc_get_rawptr(0), DSY_AUDIO_SAMPLE_RATE);
+    p.init(pot1, 12.0f, 96.0f, parameter::LINEAR);
+
     // Audio will get converted LAST
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
     dsy_audio_start(DSY_AUDIO_INTERNAL);
+    dsy_adc_start();
 
     while(1) {}
 }
@@ -181,4 +198,15 @@ void init_led()
     led_blue.mode     = DSY_GPIO_MODE_OUTPUT_PP;
     led_blue.pull     = DSY_GPIO_NOPULL;
     dsy_gpio_init(&led_blue);
+}
+
+void init_pod_adcs()  
+{
+    uint8_t channel_order[2] = {DSY_ADC_PIN_CHN11, DSY_ADC_PIN_CHN10};
+    hw.adc_handle.channels      = 2;
+    for(uint8_t i = 0; i < 2; i++)
+    {
+        hw.adc_handle.active_channels[i] = channel_order[i];
+    }
+    dsy_adc_init(&hw.adc_handle);
 }

@@ -48,20 +48,20 @@ void daisy_patch::Init()
 	// Higher level hid_ctrls
 	for(uint8_t i = 0; i < KNOB_LAST; i++)
 	{
-		pctrl[i].init(adc_ptr(i), SAMPLE_RATE);
+		pctrl[i].Init(adc_ptr(i), SAMPLE_RATE);
 	}
 	for(uint8_t i = CV_1; i < CV_LAST; i++)
 	{
-		pctrl[i].init_bipolar_cv(adc_ptr(i), SAMPLE_RATE);
+		pctrl[i].InitBipolarCv(adc_ptr(i), SAMPLE_RATE);
 	}
-	knob1.init(adc_ptr(KNOB_1), SAMPLE_RATE);
-	knob2.init(adc_ptr(KNOB_2), SAMPLE_RATE);
-	knob3.init(adc_ptr(KNOB_3), SAMPLE_RATE);
-	knob4.init(adc_ptr(KNOB_4), SAMPLE_RATE);
-	cv1.init_bipolar_cv(adc_ptr(CV_1), SAMPLE_RATE);
-	cv2.init_bipolar_cv(adc_ptr(CV_2), SAMPLE_RATE);
-	cv3.init_bipolar_cv(adc_ptr(CV_3), SAMPLE_RATE);
-	cv4.init_bipolar_cv(adc_ptr(CV_4), SAMPLE_RATE);
+	knob1.Init(adc_ptr(KNOB_1), SAMPLE_RATE);
+	knob2.Init(adc_ptr(KNOB_2), SAMPLE_RATE);
+	knob3.Init(adc_ptr(KNOB_3), SAMPLE_RATE);
+	knob4.Init(adc_ptr(KNOB_4), SAMPLE_RATE);
+	cv1.InitBipolarCv(adc_ptr(CV_1), SAMPLE_RATE);
+	cv2.InitBipolarCv(adc_ptr(CV_2), SAMPLE_RATE);
+	cv3.InitBipolarCv(adc_ptr(CV_3), SAMPLE_RATE);
+	cv4.InitBipolarCv(adc_ptr(CV_4), SAMPLE_RATE);
 
 	// LEDs
 	uint8_t addr = 0x00;

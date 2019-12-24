@@ -143,34 +143,34 @@ class daisy_patch
 		dsy_led_driver_update();
 	}
 
-// ### GetCtrl
-// Returns an hid_ctrl KNOB_1 through CV_4
-// ~~~~
-	inline hid_ctrl GetCtrl(ctrl c)
-// ~~~~
-	{
-		return pctrl[c];
-	}
+    // ### GetCtrl
+    // Returns an AnalogControl KNOB_1 through CV_4
+    // ~~~~
+    inline AnalogControl GetCtrl(ctrl c)
+    // ~~~~
+    {
+        return pctrl[c];
+    }
 
-// ## Public Members
-// These are in place to keep everything working for now.
-// 
-// All of these members can be accessed directly, and used 
-// with the rest of the C-Based libdaisy library.
-	daisy_handle seed;
-	Switch button1, button2, toggle;
-	dsy_gpio	 gate_in1, gate_in2, gate_out;
+    // ## Public Members
+    // These are in place to keep everything working for now.
+    //
+    // All of these members can be accessed directly, and used
+    // with the rest of the C-Based libdaisy library.
+    daisy_handle seed;
+    Switch       button1, button2, toggle;
+    dsy_gpio     gate_in1, gate_in2, gate_out;
 
-	// alternate hid_form with public access
-	hid_ctrl knob1, knob2, knob3, knob4;
-	hid_ctrl cv1, cv2, cv3, cv4;
+    // alternate AnalogCtrl with public access
+    AnalogControl knob1, knob2, knob3, knob4;
+    AnalogControl cv1, cv2, cv3, cv4;
 
   private:
 	inline uint16_t* adc_ptr(const uint8_t chn)
 	{
 		return dsy_adc_get_rawptr(chn);
 	}
-	hid_ctrl pctrl[CV_LAST];
+	AnalogControl pctrl[CV_LAST];
 };
 } // namespace daisy
 

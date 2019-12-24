@@ -42,10 +42,10 @@ class parameter
 //
 // curve - the scaling curve for the input->output transformation.
 // ~~~~
-	inline void init(hid_ctrl input, float min, float max, Curve curve) 
+    inline void init(AnalogControl input, float min, float max, Curve curve)
 // ~~~~
-	{ 
-		pmin_ = min;
+    {
+        pmin_ = min;
 		pmax_ = max;
 		pcurve_ = curve;
 		in_	 = input;
@@ -64,17 +64,17 @@ class parameter
 		switch(pcurve_)
 		{
 			case LINEAR: 
-				val_ = (in_.process() * (pmax_ - pmin_)) + pmin_; 
+				val_ = (in_.Process() * (pmax_ - pmin_)) + pmin_; 
 				break;
 			case EXP:
-				val_ = in_.process();
+				val_ = in_.Process();
 				val_ = ((val_ * val_) * (pmax_ - pmin_)) + pmin_;
 				break;
 			case LOG: 
-				val_ = expf((in_.process() * (lmax_ - lmin_)) + lmin_);
+				val_ = expf((in_.Process() * (lmax_ - lmin_)) + lmin_);
 				break;
 			case CUBE:
-				val_ = in_.process();
+				val_ = in_.Process();
 				val_ = ((val_ *(val_ * val_)) * (pmax_ - pmin_)) + pmin_;
 				break;
 			default: break;
@@ -91,9 +91,9 @@ class parameter
 // ~~~~
 
   private:
-	hid_ctrl in_;
-	float   pmin_, pmax_;
-	float	lmin_, lmax_; // for log range
+    AnalogControl in_;
+    float    pmin_, pmax_;
+    float	lmin_, lmax_; // for log range
 	float	val_;
 	Curve pcurve_;
 };
