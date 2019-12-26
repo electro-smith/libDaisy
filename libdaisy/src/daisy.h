@@ -64,9 +64,9 @@ FORCE_INLINE float cube(float x)
 #include "dev_sdram.h"
 #include "dev_sr_4021.h"
 #include "hid_audio.h"
+#ifdef __cplusplus
 #include "hid_encoder.h"
 #include "hid_switch.h"
-#ifdef __cplusplus
 #include "hid_ctrl.h"
 #include "parameter.h"
 #endif

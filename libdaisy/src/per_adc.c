@@ -168,7 +168,9 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
 }
 void dsy_adc_start(uint32_t* buff)
 {
-	HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
+    HAL_ADCEx_Calibration_Start(
+        &hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
+    HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 void dsy_adc_stop()
 {

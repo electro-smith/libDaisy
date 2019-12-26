@@ -12,7 +12,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{1B07A9D3-1E1B-488A-9817-4B13EECA191C}</ProjectGuid>
+    <ProjectGuid>{EA625EAA-7C64-4842-AE4B-E618D4BD7D8F}</ProjectGuid>
     <BSP_ID>com.sysprogs.arm.stm32</BSP_ID>
     <BSP_VERSION>2019.06</BSP_VERSION>
     <InPlaceBSPSubdir />
@@ -34,96 +34,37 @@
     <GNUConfigurationType>Debug</GNUConfigurationType>
     <ToolchainID>com.sysprogs.gnuarm.arm-eabi</ToolchainID>
     <ToolchainVersion>8.3.1/8.0/r1</ToolchainVersion>
-    <GNUTargetType>StaticLibrary</GNUTargetType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <ToolchainID>com.sysprogs.gnuarm.arm-eabi</ToolchainID>
     <ToolchainVersion>8.3.1/8.0/r1</ToolchainVersion>
-    <GNUTargetType>StaticLibrary</GNUTargetType>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>src;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>DEBUG=1;__FPU_PRESENT=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Optimization>Og</Optimization>
-      <AdditionalOptions />
-      <CLanguageStandard />
-      <CPPLanguageStandard />
+      <AdditionalIncludeDirectories>../../../../libdaisy/src;../../../../daisysp;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DEBUG=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
       <LibrarySearchDirectories>;%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
       <AdditionalLibraryNames>;%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
-      <LinkerScript>../core/STM32H750IB_flash.lds</LinkerScript>
-      <AdditionalOptions />
+      <LinkerScript>../../../../core/STM32H750IB_flash.lds</LinkerScript>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
-    <ClCompile>
-      <AdditionalIncludeDirectories>src;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG=1;RELEASE=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <Link>
-      <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
-      <LibrarySearchDirectories>;%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
-      <AdditionalLibraryNames>;%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
-      <LinkerScript />
-    </Link>
-  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\daisysp\daisysp.vcxproj">
+      <Project>{44f4aea3-a6b2-4f03-9c28-34b2336bdf57}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\libdaisy\libdaisy.vcxproj">
+      <Project>{1b07a9d3-1e1b-488a-9817-4b13eeca191c}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="src\daisy_patch.cpp" />
-    <ClCompile Include="src\dev_codec_pcm3060.c" />
-    <ClCompile Include="src\dev_codec_wm8731.c" />
-    <ClCompile Include="src\dev_leddriver.c" />
-    <ClCompile Include="src\dev_sdram.c" />
-    <ClCompile Include="src\dev_sr_4021.c" />
-    <ClCompile Include="src\hid_audio.c" />
-    <ClCompile Include="src\hid_ctrl.cpp" />
-    <ClCompile Include="src\hid_encoder.cpp" />
-    <ClCompile Include="src\hid_switch.cpp" />
-    <ClCompile Include="src\per_adc.c" />
-    <ClCompile Include="src\per_dac.c" />
-    <ClCompile Include="src\per_gpio.c" />
-    <ClCompile Include="src\per_i2c.c" />
-    <ClCompile Include="src\per_qspi.c" />
-    <ClCompile Include="src\per_sai.c" />
-    <ClCompile Include="src\per_tim.c" />
-    <ClCompile Include="src\system_stm32h7xx.c" />
-    <ClCompile Include="src\sys_dma.c" />
-    <ClCompile Include="src\sys_system.c" />
-    <ClInclude Include="src\daisy.h" />
-    <ClInclude Include="src\daisy_core.h" />
-    <ClInclude Include="src\daisy_field.h" />
-    <ClInclude Include="src\daisy_patch.h" />
-    <ClInclude Include="src\daisy_petal.h" />
-    <ClInclude Include="src\daisy_pod.h" />
-    <ClInclude Include="src\daisy_seed.h" />
-    <ClInclude Include="src\dev_codec_pcm3060.h" />
-    <ClInclude Include="src\dev_codec_wm8731.h" />
-    <ClInclude Include="src\dev_codec_wm8731_frame.h" />
-    <ClInclude Include="src\dev_flash_IS25LP064A.h" />
-    <ClInclude Include="src\dev_flash_IS25LP080D.h" />
-    <ClInclude Include="src\dev_leddriver.h" />
-    <ClInclude Include="src\dev_sdram.h" />
-    <ClInclude Include="src\dev_sr_4021.h" />
-    <ClInclude Include="src\hid_audio.h" />
-    <ClInclude Include="src\hid_ctrl.h" />
-    <ClInclude Include="src\hid_encoder.h" />
-    <ClInclude Include="src\hid_switch.h" />
-    <ClInclude Include="src\parameter.h" />
-    <ClInclude Include="src\per_adc.h" />
-    <ClInclude Include="src\per_dac.h" />
-    <ClInclude Include="src\per_gpio.h" />
-    <ClInclude Include="src\per_i2c.h" />
-    <ClInclude Include="src\per_qspi.h" />
-    <ClInclude Include="src\per_sai.h" />
-    <ClInclude Include="src\per_tim.h" />
-    <ClInclude Include="src\stm32h7xx_hal_conf.h" />
-    <ClInclude Include="src\sys_dma.h" />
-    <ClInclude Include="src\sys_system.h" />
+    <ClCompile Include="SeedHIDTests.cpp" />
+    <ClCompile Include="system_stm32h7xx.c" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal.c" />
@@ -233,6 +174,7 @@
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usart.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usb.c" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_utils.c" />
+    <ClInclude Include="stm32h7xx_hal_conf.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_adc.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_adc_ex.h" />
@@ -370,11 +312,8 @@
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_usb.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_utils.h" />
     <ClInclude Include="$(BSP_ROOT)\STM32H7xxxx\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_wwdg.h" />
-    <None Include="libdaisy-Debug.vgdbsettings" />
-    <None Include="libdaisy-Release.vgdbsettings" />
+    <None Include="SeedHIDTests-Debug.vgdbsettings" />
+    <None Include="SeedHIDTests-Release.vgdbsettings" />
     <None Include="stm32.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
   </ItemGroup>
 </Project>
