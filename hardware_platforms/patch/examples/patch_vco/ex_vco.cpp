@@ -1,11 +1,15 @@
-// patch vco
+// Daisy Patch Example: VCO
+// Author: Andrew Ikenberry
+// Added: 12-2019
 // knob1 = coarse
 // knob2 = fine
 // knob3 = waveform
 // knob4 = fm index
-// toggle = naive or polyblep waveforms (TODO)
-// bottom row of LEDs = current waveform (TODO)
-// TODO (other) implement CVs
+// toggle = octave switch
+// top row of LEDs = current waveform
+// TODO: 
+// - implement v/oct cv
+
 #include "daisysp.h"
 #include "daisy_patch.h"
 
@@ -14,25 +18,72 @@ using namespace daisysp;
 
 daisy_patch patch;
 oscillator osc;
-parameter coarse_param, wave_param, fine_param, index_param;
-Switch wave_toggle;
+uint8_t waveforms[4] = {
+    oscillator::WAVE_SIN, 
+    oscillator::WAVE_TRI, 
+    oscillator::WAVE_POLYBLEP_SAW, 
+    oscillator::WAVE_POLYBLEP_SQUARE 
+};
+
+// knob parameters
+parameter coarse_knob, wave_knob, fine_knob, index_knob;
+
+// CV parameters
+parameter voct_cv, wave_cv;
 
 static void AudioCallback(float *in, float *out, size_t size)
 {
-	float freq, sig, index;
+	float freq, fine, sig, index, voct;
 	size_t wave;
-    bool wave_type;
+    bool octave;
 
     // read controls
-    freq = mtof(coarse_param.process());
-    freq  += mtof(fine_param.process());
-    index = index_param.process();
-    wave = wave_param.process();
-    wave_type = wave_toggle.Pressed();
-    wave_toggle.Debounce();
+    freq = mtof(coarse_knob.process());
+    fine = mtof(fine_knob.process());
+    freq  += fine;
+    index = index_knob.process();
+    wave = wave_knob.process();
+    patch.toggle.Debounce();
+    octave = patch.toggle.Pressed();
 
-    // Set osc params
-    osc.set_waveform(wave);
+    // read CV inputs
+    voct = mtof(voct_cv.process());
+    //freq += voct;
+    wave += wave_cv.process();
+    if (wave > 4)
+    {
+        wave = 3;
+    }
+
+    // implement parameters
+    if (octave)
+    {
+        freq *= 2;
+    }
+
+    // update waveform leds
+    if (wave == 0)
+    {
+        patch.ClearLeds();
+        patch.SetLed(patch.LED_A1, 1);
+    } 
+    else if (wave == 1)
+    {
+        patch.ClearLeds();
+        patch.SetLed(patch.LED_A2, 1);
+    } 
+    else if (wave == 2)
+    {
+        patch.ClearLeds();
+        patch.SetLed(patch.LED_A3, 1);
+    } 
+    else if (wave == 3)
+    {
+        patch.ClearLeds();
+        patch.SetLed(patch.LED_A4, 1);
+    }
+
+    osc.set_waveform(waveforms[wave]);
 
     // audio buffer
     for (size_t i = 0; i < size; i += 2)
@@ -43,7 +94,6 @@ static void AudioCallback(float *in, float *out, size_t size)
 
         // process
     	sig = osc.process();
-
     	// left out
         out[i] = sig;
         // right out
@@ -53,23 +103,29 @@ static void AudioCallback(float *in, float *out, size_t size)
 
 int main(void)
 {
-    //int num_waves = oscillator::WAVE_LAST - 1;
-
-    // initialize objects
-    patch.Init(); // initialize hardware (daisy seed, and patch)
-    osc.init(SAMPLE_RATE); // init oscillator
+    // initialize hardware and DaisySP modules
+    patch.Init(); 
+    patch.ClearLeds();
+    osc.init(SAMPLE_RATE);
     osc.set_amp(.25);
-    wave_toggle.Init(TOGGLE_PIN, 100);
 
-    // initialize controls
-    coarse_param.init(patch.knob1, 10.0f, 110.0f, parameter::LINEAR); // coarse frequency
-    wave_param.init(patch.knob2, 0.0, 4.0f, parameter::LINEAR); // waveform
-    fine_param.init(patch.knob3, 0.0, 0.5f, parameter::LINEAR); // fine frequency
-    index_param.init(patch.knob4, 0.0, 100.0f, parameter::LINEAR); // FM index
+    // initialize knob controls
+    coarse_knob.init(patch.knob1, 10, 110, parameter::LINEAR); // coarse frequency
+    wave_knob.init(patch.knob2, 0, 4, parameter::LINEAR); // waveform
+    fine_knob.init(patch.knob3, -6, 6, parameter::LINEAR); // fine frequency
+    index_knob.init(patch.knob4, 0, 100, parameter::LINEAR); // FM index
+
+    // initialize CV inputs
+    voct_cv.init(patch.cv1, 10, 110, parameter::LINEAR); // volt per octave
+    wave_cv.init(patch.cv2, 0, 4, parameter::LINEAR); // waveform CV 
 
     // start adc and audio
     dsy_adc_start();
     patch.StartAudio(AudioCallback);
 
-    while(1) {} // loop forever
+    while(1) 
+    {
+        patch.UpdateLeds();
+        dsy_system_delay(5);
+    }
 }
