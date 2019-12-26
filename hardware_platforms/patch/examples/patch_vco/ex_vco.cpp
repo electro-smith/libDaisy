@@ -5,10 +5,12 @@
 // knob2 = fine
 // knob3 = waveform
 // knob4 = fm index
+// cv2 = waveform
+// cv3 = v/oct
 // toggle = octave switch
 // top row of LEDs = current waveform
 // TODO: 
-// - implement v/oct cv
+// - make v/oct cv accurate, and remove slew
 
 #include "daisysp.h"
 #include "daisy_patch.h"
@@ -48,7 +50,7 @@ static void AudioCallback(float *in, float *out, size_t size)
 
     // read CV inputs
     voct = mtof(voct_cv.process());
-    //freq += voct;
+    freq += voct;
     wave += wave_cv.process();
     if (wave > 4)
     {
@@ -116,7 +118,7 @@ int main(void)
     index_knob.init(patch.knob4, 0, 100, parameter::LINEAR); // FM index
 
     // initialize CV inputs
-    voct_cv.init(patch.cv1, 10, 110, parameter::LINEAR); // volt per octave
+    voct_cv.init(patch.cv3, 10, 110, parameter::EXP); // volt per octave
     wave_cv.init(patch.cv2, 0, 4, parameter::LINEAR); // waveform CV 
 
     // start adc and audio
