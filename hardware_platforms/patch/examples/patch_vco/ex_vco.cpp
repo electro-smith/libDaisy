@@ -2,14 +2,24 @@
 // Author: Andrew Ikenberry
 // Added: 12-2019
 
-// knob1 = coarse
-// knob2 = fine
+// Description: Eurorack VCO with variable waveform output(sine, tri, ramp, square). 
+// 
+
+// knob1 = coarse frequency
+// knob2 = fine frequency
 // knob3 = waveform
 // knob4 = fm index
 // cv2 = waveform
 // cv3 = v/oct
 // toggle = octave switch
 // top row of LEDs = current waveform
+// audio 1 out 1 = VCO output
+// audio 1 out 2 = VCO output (dual mono)
+
+// TODO:
+// - make toggle hard/soft sync
+// - implement sync
+// - add buttons for octave + / -
 
 #include "daisysp.h"
 #include "daisy_patch.h"
@@ -20,7 +30,6 @@ using namespace daisysp;
 daisy_patch patch;
 oscillator osc;
 
-// waveforms array
 uint8_t waveforms[4] = {
     oscillator::WAVE_SIN, 
     oscillator::WAVE_TRI, 
@@ -28,7 +37,6 @@ uint8_t waveforms[4] = {
     oscillator::WAVE_POLYBLEP_SQUARE,
 };
 
-// LEDs array
 daisy_patch::led leds[4] = {
     patch.LED_A1,
     patch.LED_A2,
@@ -36,10 +44,7 @@ daisy_patch::led leds[4] = {
     patch.LED_A4,
 };
 
-// knob parameters
 parameter coarse_knob, wave_knob, fine_knob, index_knob;
-
-// CV parameters
 parameter voct_cv, wave_cv;
 
 static void AudioCallback(float *in, float *out, size_t size)
@@ -53,14 +58,12 @@ static void AudioCallback(float *in, float *out, size_t size)
     // convert midi note value to hz
     freq = mtof(freq);
 
-    // debounce, and implement octave switch 
     patch.toggle.Debounce();
     if (patch.toggle.Pressed())
     {
         freq *= 2;
     }
 
-    // read, clamp and set waveform control
     wave = wave_knob.process() + wave_cv.process(); 
     if (wave > 3)
     {
@@ -68,7 +71,6 @@ static void AudioCallback(float *in, float *out, size_t size)
     }
     osc.set_waveform(waveforms[wave]);
 
-    // update LEDs
     patch.ClearLeds();
     patch.SetLed(leds[wave], 1);
 
@@ -81,7 +83,6 @@ static void AudioCallback(float *in, float *out, size_t size)
         freq += in[i] * index;
         osc.set_freq(freq);
 
-        // process
     	sig = osc.process();
 
     	// left out
@@ -93,22 +94,17 @@ static void AudioCallback(float *in, float *out, size_t size)
 
 int main(void)
 {
-    // initialize hardware and DaisySP modules
     patch.Init(); 
     osc.init(SAMPLE_RATE);
     osc.set_amp(.25);
 
-    // initialize knob controls
     coarse_knob.init(patch.knob1, 10, 110, parameter::LINEAR); // coarse frequency
     wave_knob.init(patch.knob2, 0, 4, parameter::LINEAR); // waveform
     fine_knob.init(patch.knob3, -6, 6, parameter::LINEAR); // fine frequency
     index_knob.init(patch.knob4, 0, 100, parameter::LINEAR); // FM index
+    voct_cv.init(patch.cv3, 0, 60, parameter::LINEAR); // volt per octave cv
+    wave_cv.init(patch.cv2, 0, 4, parameter::LINEAR); // waveform cv
 
-    // initialize CV inputs
-    voct_cv.init(patch.cv3, 0, 60, parameter::LINEAR); // volt per octave
-    wave_cv.init(patch.cv2, 0, 4, parameter::LINEAR); // waveform CV 
-
-    // start adc and audio
     dsy_adc_start();
     patch.StartAudio(AudioCallback);
 
