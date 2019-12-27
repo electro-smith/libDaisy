@@ -29,6 +29,10 @@
 #define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
 #endif
 
+#ifndef CONTROL_RATE
+#define CONTROL_RATE (SAMPLE_RATE/48)
+#endif
+
 #define LED_DRIVER_I2C i2c1_handle
 
 #ifdef __cplusplus

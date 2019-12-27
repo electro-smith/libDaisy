@@ -1,6 +1,7 @@
 // Daisy Patch Example: VCO
 // Author: Andrew Ikenberry
 // Added: 12-2019
+
 // knob1 = coarse
 // knob2 = fine
 // knob3 = waveform
@@ -9,8 +10,6 @@
 // cv3 = v/oct
 // toggle = octave switch
 // top row of LEDs = current waveform
-// TODO: 
-// - make v/oct cv accurate, and remove slew
 
 #include "daisysp.h"
 #include "daisy_patch.h"
@@ -20,11 +19,21 @@ using namespace daisysp;
 
 daisy_patch patch;
 oscillator osc;
+
+// waveforms array
 uint8_t waveforms[4] = {
     oscillator::WAVE_SIN, 
     oscillator::WAVE_TRI, 
     oscillator::WAVE_POLYBLEP_SAW, 
-    oscillator::WAVE_POLYBLEP_SQUARE 
+    oscillator::WAVE_POLYBLEP_SQUARE,
+};
+
+// LEDs array
+daisy_patch::led leds[4] = {
+    patch.LED_A1,
+    patch.LED_A2,
+    patch.LED_A3,
+    patch.LED_A4,
 };
 
 // knob parameters
@@ -35,59 +44,37 @@ parameter voct_cv, wave_cv;
 
 static void AudioCallback(float *in, float *out, size_t size)
 {
-	float freq, fine, sig, index, voct;
+    // running at control_rate (sample_rate / 48)
+	float freq, sig, index;
 	size_t wave;
-    bool octave;
 
-    // read controls
-    freq = mtof(coarse_knob.process());
-    fine = mtof(fine_knob.process());
-    freq  += fine;
-    index = index_knob.process();
-    wave = wave_knob.process();
+    freq = coarse_knob.process() + fine_knob.process() + voct_cv.process();
+
+    // convert midi note value to hz
+    freq = mtof(freq);
+
+    // debounce, and implement octave switch 
     patch.toggle.Debounce();
-    octave = patch.toggle.Pressed();
-
-    // read CV inputs
-    voct = mtof(voct_cv.process());
-    freq += voct;
-    wave += wave_cv.process();
-    if (wave > 4)
-    {
-        wave = 3;
-    }
-
-    // implement parameters
-    if (octave)
+    if (patch.toggle.Pressed())
     {
         freq *= 2;
     }
 
-    // update waveform leds
-    if (wave == 0)
+    // read, clamp and set waveform control
+    wave = wave_knob.process() + wave_cv.process(); 
+    if (wave > 3)
     {
-        patch.ClearLeds();
-        patch.SetLed(patch.LED_A1, 1);
-    } 
-    else if (wave == 1)
-    {
-        patch.ClearLeds();
-        patch.SetLed(patch.LED_A2, 1);
-    } 
-    else if (wave == 2)
-    {
-        patch.ClearLeds();
-        patch.SetLed(patch.LED_A3, 1);
-    } 
-    else if (wave == 3)
-    {
-        patch.ClearLeds();
-        patch.SetLed(patch.LED_A4, 1);
+        wave = 3;
     }
-
     osc.set_waveform(waveforms[wave]);
 
-    // audio buffer
+    // update LEDs
+    patch.ClearLeds();
+    patch.SetLed(leds[wave], 1);
+
+    index = index_knob.process();
+
+    // audio buffer running at sample_rate
     for (size_t i = 0; i < size; i += 2)
     {
         // read FM input, scale by index and add to freq
@@ -96,6 +83,7 @@ static void AudioCallback(float *in, float *out, size_t size)
 
         // process
     	sig = osc.process();
+
     	// left out
         out[i] = sig;
         // right out
@@ -107,7 +95,6 @@ int main(void)
 {
     // initialize hardware and DaisySP modules
     patch.Init(); 
-    patch.ClearLeds();
     osc.init(SAMPLE_RATE);
     osc.set_amp(.25);
 
@@ -118,7 +105,7 @@ int main(void)
     index_knob.init(patch.knob4, 0, 100, parameter::LINEAR); // FM index
 
     // initialize CV inputs
-    voct_cv.init(patch.cv3, 10, 110, parameter::EXP); // volt per octave
+    voct_cv.init(patch.cv3, 0, 60, parameter::LINEAR); // volt per octave
     wave_cv.init(patch.cv2, 0, 4, parameter::LINEAR); // waveform CV 
 
     // start adc and audio
