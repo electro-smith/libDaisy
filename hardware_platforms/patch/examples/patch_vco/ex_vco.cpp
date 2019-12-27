@@ -1,10 +1,9 @@
 // Daisy Patch Example: VCO
 // Author: Andrew Ikenberry
 // Added: 12-2019
-
+//
 // Description: Eurorack VCO with variable waveform output(sine, tri, ramp, square). 
 // 
-
 // knob1 = coarse frequency
 // knob2 = fine frequency
 // knob3 = waveform
@@ -15,7 +14,7 @@
 // top row of LEDs = current waveform
 // audio 1 out 1 = VCO output
 // audio 1 out 2 = VCO output (dual mono)
-
+//
 // TODO:
 // - make toggle hard/soft sync
 // - implement sync
@@ -46,6 +45,7 @@ daisy_patch::led leds[4] = {
 
 parameter coarse_knob, wave_knob, fine_knob, index_knob;
 parameter voct_cv, wave_cv;
+size_t octave;
 
 static void AudioCallback(float *in, float *out, size_t size)
 {
@@ -54,16 +54,58 @@ static void AudioCallback(float *in, float *out, size_t size)
 	size_t wave;
 
     freq = coarse_knob.process() + fine_knob.process() + voct_cv.process();
-
-    // convert midi note value to hz
-    freq = mtof(freq);
+    freq = mtof(freq); // convert midi note value to hz
+    patch.button1.debounce();
+    if (patch.button1.Pressed())
+    {
+        octave--;
+        if (octave < 1)
+        {
+            octave = 1;
+        }
+    }
+    patch.button2.debounce();
+    if (patch.button2.Pressed())
+    {
+        octave++;
+        if (octave > 4) 
+        {
+            octave = 4;
+        }
+    }
+    switch (octave)
+    {
+        case 1:
+            freq += 12;
+            Break;
+        case 2:
+            freq += 24;
+            Break;
+        case 3:
+            freq += 36;
+            Break;
+        case 4:
+            freq += 48;
+            Break;
+    }
 
     patch.toggle.Debounce();
     if (patch.toggle.Pressed())
     {
-        freq *= 2;
+        // hard sync
+        if (patch.gate_in1)
+        {
+            osc.set_phase(0);
+        }
+    } 
+    else 
+    {
+        // soft sync
+        if (!patch.gate_in1)
+        {
+            osc.set_phase(0);
+        }
     }
-
     wave = wave_knob.process() + wave_cv.process(); 
     if (wave > 3)
     {
@@ -98,12 +140,13 @@ int main(void)
     osc.init(SAMPLE_RATE);
     osc.set_amp(.25);
 
-    coarse_knob.init(patch.knob1, 10, 110, parameter::LINEAR); // coarse frequency
+    coarse_knob.init(patch.knob1, 0, 52, parameter::LINEAR); // coarse frequency
     wave_knob.init(patch.knob2, 0, 4, parameter::LINEAR); // waveform
     fine_knob.init(patch.knob3, -6, 6, parameter::LINEAR); // fine frequency
     index_knob.init(patch.knob4, 0, 100, parameter::LINEAR); // FM index
     voct_cv.init(patch.cv3, 0, 60, parameter::LINEAR); // volt per octave cv
     wave_cv.init(patch.cv2, 0, 4, parameter::LINEAR); // waveform cv
+    octave = 1;
 
     dsy_adc_start();
     patch.StartAudio(AudioCallback);

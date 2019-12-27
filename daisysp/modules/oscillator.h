@@ -71,14 +71,14 @@ namespace daisysp
 			sr		  = samplerate;
 			freq	  = 100.0f;
 			amp		  = 0.5f;
-			phase	 = 0.0f;
+			phase_	 = 0.0f;
 			phase_inc = calc_phase_inc(freq);
 			waveform  = WAVE_SIN;
 		}
 
 // ### set_freq
 //
-// Changes the frequency of the oscillator, and recalculates phase increment.
+// Changes the frequency of the oscillator, and recalculates phase_ increment.
 // ~~~~
 		inline void set_freq(const float f) 
 // ~~~~
@@ -101,6 +101,13 @@ namespace daisysp
 		inline void set_waveform(const uint8_t wf) { waveform = wf < WAVE_LAST ? wf : WAVE_SIN; }
 // ~~~~
 
+// ### set_phase
+//
+// Sets the current phase in radians of the oscillator.
+// ~~~~
+		inline void set_phase(const float phase) { phase_ = phase; }
+// ~~~~ 
+
 // ### process
 //
 // Processes the waveform to be generated, returning one sample. This should be called once per sample period.
@@ -112,7 +119,7 @@ namespace daisysp
 		float   calc_phase_inc(float f);
 		uint8_t waveform;
 		float   amp, freq;
-		float   sr, phase, phase_inc;
+		float   sr, phase_, phase_inc;
 		float   last_out, last_freq;
 	};
 } // namespace daisysp
