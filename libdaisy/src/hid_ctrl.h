@@ -58,6 +58,11 @@ class AnalogControl
     float Process();
 // ~~~~
 
+// ### Value
+// Returns the current stored value, without reprocessing
+// ~~~~
+    inline float Value() const { return val_; }
+// ~~~~
 
   private:
 	uint16_t *raw_;
