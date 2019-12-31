@@ -112,7 +112,7 @@ enum
 typedef struct
 {
 	daisy_handle seed;
-	dsy_switch switches[SW_LAST];
+    daisy::Switch switches[SW_LAST];
 	dsy_gpio gate_in, gate_out;
 	dsy_sr_4021_handle keyboard_sr;
 	float knobs[KNOB_LAST];
@@ -132,13 +132,7 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 	// Init Switches
 	for(uint8_t i = 0; i < SW_LAST; i++) 
 	{
-		p->switches[i].pin_config.port = sw_ports[i];
-		p->switches[i].pin_config.pin  = sw_pins[i];
-		p->switches[i].polarity				= DSY_SWITCH_POLARITY_INVERTED;
-		p->switches[i].pull					= DSY_SWITCH_PULLUP;
-		p->switches[i].type
-			= i == SW_3 ? DSY_SWITCH_TYPE_TOGGLE : DSY_SWITCH_TYPE_MOMENTARY;
-		dsy_switch_init(&p->switches[i]);
+        p->switches[i].Init({sw_ports[i], sw_pins[i]}, 1000.0f);
 	}
 	// Init Gate Input
 	p->gate_in.pin.port = GATE_IN_PORT;

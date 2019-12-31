@@ -2,8 +2,6 @@
 #include "daisysp.h"
 #include <math.h>
 
-#define MYPREFERENCE
-
 using namespace daisy;
 using namespace daisysp;
 
@@ -21,8 +19,9 @@ static void audio(float *in, float *out, size_t size)
 {
 	float sig, namp, oamp;
 	// Check Switch to change waveform
-	dsy_switch_debounce(&hw.button1);
-	if(dsy_switch_falling_edge(&hw.button1))
+    hw.button1.Debounce();
+	//if(dsy_switch_falling_edge(&hw.button1))
+    if (hw.button1.FallingEdge())
 	{
 		wf = (wf + 1) % osc.WAVE_LAST; // increment and wrap
 		osc.set_waveform(wf);
@@ -51,19 +50,12 @@ static void audio(float *in, float *out, size_t size)
 int main(void)
 {
 	// Initialize Hardware
-	hw.init();
-#ifdef MYPREFERENCE
-	param_freq.init(hw.ctrl(KNOB_1), 10.0f, 20000.0f, PARAM_CURVE_LOG);
-	param_nse_amp.init(hw.ctrl(KNOB_2), 0.0f, 1.0f, PARAM_CURVE_EXP);
-	param_osc_amp.init(hw.ctrl(KNOB_3), 0.0f, 0.4f, PARAM_CURVE_LINEAR);
-	param_bright.init(hw.ctrl(KNOB_4), 0.0f, 1.0f, PARAM_CURVE_CUBE);
-	param_ampcv.init(hw.ctrl(CV_2), 0.0f, 1.0f, PARAM_CURVE_LINEAR);
-#else
-	param_freq.init(hw.knob1, 20.0f, 20000.0f, PARAM_CURVE_LOG);
-	param_nse_amp.init(hw.knob2, 0.0f, 1.0f, PARAM_CURVE_EXP);
-	param_osc_amp.init(hw.knob3, 0.0f, 0.4f, PARAM_CURVE_LINEAR);
-	param_bright.init(hw.knob4, 0.0f, 1.0f, PARAM_CURVE_CUBE);
-#endif
+	hw.Init();
+	param_freq.init(hw.GetCtrl(daisy_patch::KNOB_1), 10.0f, 20000.0f, parameter::LOG);
+	param_nse_amp.init(hw.GetCtrl(daisy_patch::KNOB_2), 0.0f, 1.0f, parameter::EXP);
+	param_osc_amp.init(hw.GetCtrl(daisy_patch::KNOB_3), 0.0f, 0.4f, parameter::LINEAR);
+	param_bright.init(hw.GetCtrl(daisy_patch::KNOB_4), 0.0f, 1.0f, parameter::CUBE);
+	param_ampcv.init(hw.GetCtrl(daisy_patch::CV_2), 0.0f, 1.0f, parameter::LINEAR);
 	// Init Osc and Nse
 	dsy_tim_start();
 	osc.init(SAMPLE_RATE);
@@ -73,21 +65,17 @@ int main(void)
 	dsy_audio_start(DSY_AUDIO_INTERNAL);
 	//dsy_adc_start();
 
-	for(uint16_t i = 0; i < LED_LAST; i++) 
+	for(uint16_t i = 0; i < daisy_patch::LED_LAST; i++) 
 	{
 		dsy_led_driver_set_led(i, 0.0f);
 	}
 	while(1) 
 	{
 		dsy_tim_delay_ms(20);
-		for(uint16_t i = 0; i < LED_LAST; i++)
+		for(uint16_t i = 0; i < daisy_patch::LED_LAST; i++)
 		{
 			dsy_led_driver_set_led(i, param_bright.value());
 		}
 	}
 }
-//static float mtof(float m)
-//{
-//	return powf(2, (m - 69.0f) / 12.0f) * 440.0f;
-//}
 

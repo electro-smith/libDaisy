@@ -33,6 +33,8 @@
 #define LED_2_B_PORT seed_ports[24]
 #define LED_2_B_PIN seed_pins[24]
 
+using namespace daisy;
+
 enum
 {
 	SW_1,
@@ -62,9 +64,9 @@ enum
 typedef struct
 {
 	daisy_handle seed;
-	dsy_switch switches[SW_LAST];
 	dsy_gpio   leds[LED_LAST];
-	dsy_encoder encoder;
+    Switch switches[SW_LAST];
+    Encoder encoder;
 	float knobs[KNOB_LAST];
 } daisy_pod;
 
@@ -90,12 +92,7 @@ FORCE_INLINE void daisy_pod_init(daisy_pod *p)
 	// Init Switches
 	for(uint8_t i = 0; i < SW_LAST; i++) 
 	{
-		p->switches[i].pin_config.port = sw_ports[i];
-		p->switches[i].pin_config.pin  = sw_pins[i];
-		p->switches[i].polarity				= DSY_SWITCH_POLARITY_INVERTED;
-		p->switches[i].pull					= DSY_SWITCH_PULLUP;
-		p->switches[i].type					= DSY_SWITCH_TYPE_MOMENTARY;
-		dsy_switch_init(&p->switches[i]);
+        p->switches[i].Init({sw_ports[i], sw_pins[i]}, 1000.0f);
 	}
 
 	// LEDs are just going to be on/off for now.
@@ -110,13 +107,10 @@ FORCE_INLINE void daisy_pod_init(daisy_pod *p)
 	}
 
 	// Encoder
-	p->encoder.pin_config[DSY_ENCODER_PIN_A].port = ENC_A_PORT;
-	p->encoder.pin_config[DSY_ENCODER_PIN_A].pin = ENC_A_PIN;
-	p->encoder.pin_config[DSY_ENCODER_PIN_B].port = ENC_B_PORT;
-	p->encoder.pin_config[DSY_ENCODER_PIN_B].pin = ENC_B_PIN;
-	p->encoder.pin_config[DSY_ENCODER_PIN_CLICK].port = ENC_CLICK_PORT;
-	p->encoder.pin_config[DSY_ENCODER_PIN_CLICK].pin = ENC_CLICK_PIN;
-	dsy_encoder_init(&p->encoder);
+    p->encoder.Init({ENC_A_PORT, ENC_A_PIN}, 
+                    {ENC_B_PORT, ENC_B_PIN},
+                    {ENC_CLICK_PORT, ENC_CLICK_PIN},
+                    1000.0f);
 
 	uint8_t channel_order[KNOB_LAST] = {DSY_ADC_PIN_CHN11, DSY_ADC_PIN_CHN10};
 	p->seed.adc_handle.channels		 = KNOB_LAST;
@@ -124,6 +118,7 @@ FORCE_INLINE void daisy_pod_init(daisy_pod *p)
 	{
 		p->seed.adc_handle.active_channels[i] = channel_order[i];
 	}
+    p->seed.adc_handle.oversampling = DSY_ADC_OVS_32;
 	dsy_adc_init(&p->seed.adc_handle);
 }
 
