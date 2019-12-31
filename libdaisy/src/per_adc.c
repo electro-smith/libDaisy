@@ -307,19 +307,18 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
 		// Handle Externally Multiplexed Pins
 		for(uint16_t i = 0; i < adc.channels; i++)
 		{
-			dsy_adc_pin t = (dsy_adc_pin)adc.dsy_hadc->active_channels[i];
 			uint8_t current_position = adc.mux_index[i];
-			if(adc.mux_channels[t] > 0)
+			if(adc.mux_channels[i] > 0)
 			{
 				// Capture current value to mux_cache
 				adc.mux_cache[i][current_position] = adc.dma_buffer[i];
 				// Update Mux Position, and write GPIO
 				adc.mux_index[i] += 1;
-				if(adc.mux_index[i] > adc.mux_channels[t])
+				if(adc.mux_index[i] > adc.mux_channels[i])
 				{
 					adc.mux_index[i] = 0;
 				}
-				write_mux_value(t, adc.mux_index[i]);
+				write_mux_value(i, adc.mux_index[i]);
 			}
 		}
 	}
