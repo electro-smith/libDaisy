@@ -81,9 +81,11 @@
     <ClInclude Include="modules\oscillator.h" />
     <ClInclude Include="modules\phasor.h" />
     <ClInclude Include="modules\pitchshifter.h" />
+    <ClInclude Include="modules\pluck.h" />
     <ClInclude Include="modules\port.h" />
     <ClInclude Include="modules\reverbsc.h" />
     <ClInclude Include="modules\svf.h" />
+    <ClInclude Include="modules\tone.h" />
     <ClInclude Include="modules\whitenoise.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
@@ -105,8 +107,10 @@
     <ClCompile Include="modules\nlfilt.cpp" />
     <ClCompile Include="modules\oscillator.cpp" />
     <ClCompile Include="modules\phasor.cpp" />
+    <ClCompile Include="modules\pluck.cpp" />
     <ClCompile Include="modules\port.cpp" />
     <ClCompile Include="modules\reverbsc.cpp" />
     <ClCompile Include="modules\svf.cpp" />
+    <ClCompile Include="modules\tone.cpp" />
   </ItemGroup>
 </Project>

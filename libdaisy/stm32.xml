@@ -29,7 +29,7 @@
       </KeyValue>
       <KeyValue>
         <Key>com.sysprogs.toolchainoptions.arm.syscallspecs</Key>
-        <Value>--specs=nosys.specs</Value>
+        <Value>--specs=rdimon.specs</Value>
       </KeyValue>
     </Entries>
   </MCUProperties>
