@@ -14,7 +14,7 @@ MEMORY
 	RAM_D3 (RWX)  : ORIGIN = 0x38000000, LENGTH = 64K
 	ITCMRAM (RWX) : ORIGIN = 0x00000000, LENGTH = 64K
 	SDRAM (RWX)   : ORIGIN = 0xc0000000, LENGTH = 64M
-    	QSPIFLASH (RWX)  : ORIGIN = 0x90000000, LENGTH = 8M
+    QSPIFLASH (RX)  : ORIGIN = 0x90000000, LENGTH = 8M
 }
 
 _estack = 0x20020000;
@@ -152,8 +152,6 @@ SECTIONS
 		PROVIDE(__sram1_bss_end__ = _esram1_bss);
 	} > RAM_D2
 
-
-
 	.sdram_text :
 	{
 		. = ALIGN(4);
@@ -183,7 +181,9 @@ SECTIONS
 		PROVIDE(__sdram_bss_end = _esdram_bss);
 	} > SDRAM
 
-    	.qspiflash_text :
+	PROVIDE(end = .);
+
+    .qspiflash_text :
 	{
 		. = ALIGN(4);
 		_sqspiflash_text = .;
@@ -224,10 +224,6 @@ SECTIONS
 
 		PROVIDE(__qspiflash_bss_end = _eqspiflash_bss);
 	} > QSPIFLASH
-
-
-
-	PROVIDE(end = .);
 
 	.heap (NOLOAD) :
 	{
