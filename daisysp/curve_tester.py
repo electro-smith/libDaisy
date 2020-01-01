@@ -13,16 +13,17 @@ def transeg(inval, pos, size, curve):
     val = inval
     if pos > size / 2.0:
         beg = 1.0
+        pos -= (size / 2.0)
     else:
         beg = 0.0
 
-    out = beg + (val - beg) * (1 - math.exp(pos * curve / (size - 1))) / (1 - math.exp(curve))
+    out = beg + (val - beg) * (1 - math.exp(pos * curve / ((size/2) - 1))) / (1 - math.exp(curve))
     return out
 
 test_size = 512
 out_shape = list(range(test_size))
 x_scale = list(range(test_size))
-test_curve = 1.0
+test_curve = -1.0
 linear_shape = triangle(test_size)
 for i in range(0, test_size):
     out_shape[i] = transeg(linear_shape[i], i, test_size, test_curve)
