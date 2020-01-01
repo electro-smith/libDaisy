@@ -124,10 +124,11 @@ namespace daisysp
 // Returns true if the envelope is currently in any stage apart from idle.
 // ~~~~
         inline bool is_running() const { return current_segment_ != ADENV_SEG_IDLE; }
-// ~~~~
+        // ~~~~
 
-		private:
-		void calculate_multiplier(float start, float end, uint32_t length_in_samples);
+      private:
+        float transeg();
+        void calculate_multiplier(float start, float end, uint32_t length_in_samples);
 		uint8_t current_segment_;
 		float segment_time_[ADENV_SEG_LAST];
 		float sample_rate_, phase_inc_, min_, max_, multiplier_, output_, curve_scalar_;
