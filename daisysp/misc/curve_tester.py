@@ -49,29 +49,19 @@ class tseg:
 
         return out
 
-# From csoundmanual:
-# y0 + (y1 - y0) * ( 1 - exp( i * alpha / ( n - 1 ) )) / (1 - exp(alpha))
-# from Csound source:
-# y0 + (y1 - y0) * (1 - exp( t * alpha )) / (1 - exp(alpha))
-
 t = tseg()
-
 test_size = 512
 out_shape = list(range(test_size))
 x_scale = list(range(test_size))
 test_curve = -15.0
 linear_shape = triangle(test_size)
 for i in range(0, test_size):
-    #out_shape[i] = transeg(linear_shape[i], i, test_size, test_curve)
     out_shape[i] = t.transeg(linear_shape[i], i, test_size, test_curve)
     x_scale[i] = i
-
 
 plt.plot(x_scale,linear_shape, label="lin")
 plt.plot(x_scale,out_shape, label="transeg")
 plt.title('transeg test')
 plt.legend() 
 plt.show()
-
-
 
