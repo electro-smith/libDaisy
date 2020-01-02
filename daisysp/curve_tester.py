@@ -8,25 +8,62 @@ def triangle(size):
         shape.append(val)
     return shape
 
-def transeg(inval, pos, size, curve):
-    #beg = pos > size / 2 ? 1.0 : 0.0
-    val = inval
-    if pos > size / 2.0:
-        beg = 1.0
-        pos -= (size / 2.0)
-    else:
-        beg = 0.0
+gval = 0.0
+gcurve = 0.0
 
-    out = beg + (val - beg) * (1 - math.exp(pos * curve / ((size/2) - 1))) / (1 - math.exp(curve))
-    return out
+class tseg:
+    gval = 0.0
+    gcurve = 0.0
+    curx = 0.0
+
+    def transeg(self, inval, pos, size, curve):
+        val = self.gval
+        if pos == (size / 2) or pos == 0:
+            # Reset stuff on segment change
+            self.curx = 0.0
+            self.gval = val
+
+        if pos < (size / 2):
+            beg = 0.0
+            end = 1.0
+        else:
+            beg = 1.0
+            end = 0.0
+
+        if (curve == 0.0):
+            c1 = ((end - beg) / (size/2))
+        else:
+            c1 = ((end - beg) / ((1.0 - math.exp(curve))))
+
+        inc = c1
+        print("Increment:\t" + str(c1))
+        if (curve == 0):
+            out = val
+            val = val + inc
+        else:
+            out = val
+            self.curx += (curve / (size/2))
+            val = beg + inc * (1.0 - math.exp(self.curx))
+
+        self.gval = val
+
+        return out
+
+# From csoundmanual:
+# y0 + (y1 - y0) * ( 1 - exp( i * alpha / ( n - 1 ) )) / (1 - exp(alpha))
+# from Csound source:
+# y0 + (y1 - y0) * (1 - exp( t * alpha )) / (1 - exp(alpha))
+
+t = tseg()
 
 test_size = 512
 out_shape = list(range(test_size))
 x_scale = list(range(test_size))
-test_curve = -1.0
+test_curve = -15.0
 linear_shape = triangle(test_size)
 for i in range(0, test_size):
-    out_shape[i] = transeg(linear_shape[i], i, test_size, test_curve)
+    #out_shape[i] = transeg(linear_shape[i], i, test_size, test_curve)
+    out_shape[i] = t.transeg(linear_shape[i], i, test_size, test_curve)
     x_scale[i] = i
 
 
