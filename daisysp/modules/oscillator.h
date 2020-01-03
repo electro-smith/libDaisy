@@ -57,7 +57,7 @@ namespace daisysp
 //
 // Initializes the oscillator 
 //
-// float samplerate - sample rate of the audio engine being run, and the frequency that the process function will be called.
+// float sample_rate - sample rate of the audio engine being run, and the frequency that the process function will be called.
 //
 // Defaults:
 // - freq = 100 Hz
@@ -65,10 +65,10 @@ namespace daisysp
 // - waveform = sine wave.
 //
 // ~~~~
-		void init(float samplerate)
+		void init(float sample_rate)
 // ~~~~
 		{
-			sr		  = samplerate;
+			sr		  = sample_rate;
 			freq	  = 100.0f;
 			amp		  = 0.5f;
 			phase	 = 0.0f;

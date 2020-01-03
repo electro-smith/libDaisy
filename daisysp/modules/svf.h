@@ -28,9 +28,9 @@ namespace daisysp
 // 
 // Initializes the filter
 // 
-// float samplerate - sample rate of the audio engine being run, and the frequency that the process function will be called.
+// float sample_rate - sample rate of the audio engine being run, and the frequency that the process function will be called.
 // ~~~~
-            void init(float samplerate);
+            void init(float sample_rate);
 // ~~~~
 
 
@@ -47,7 +47,7 @@ namespace daisysp
 //
 // sets the frequency of the cutoff frequency. 
 // 
-// f must be between 0.0 and samplerate / 2
+// f must be between 0.0 and sample_rate / 2
 // ~~~~
             void set_freq(float f);
 // ~~~~

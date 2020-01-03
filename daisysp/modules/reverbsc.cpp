@@ -51,8 +51,8 @@ static const float jpScale     = 0.25;
 
 int reverbsc::init(float sr)
 {
-	_iSampleRate = sr;
-	_sampleRate = sr;
+	_i_sample_rate = sr;
+	_sample_rate = sr;
 	_feedback = 0.97;
 	_lpfreq = 10000;
 	_iPitchMod = 1;
@@ -102,19 +102,19 @@ void reverbsc::next_random_lineseg(reverbsc_dl *lp, int n)
 	if (lp->seedVal >= 0x8000)
 		lp->seedVal -= 0x10000;
 	/* length of next segment in samples */
-	lp->randLine_cnt = (int)((_sampleRate / reverbParams[n][2]) + 0.5);
+	lp->randLine_cnt = (int)((_sample_rate / reverbParams[n][2]) + 0.5);
 	prvDel = (float) lp->writePos;
 	prvDel -= ((float) lp->readPos
 	           + ((float) lp->readPosFrac / (float) DELAYPOS_SCALE));
 	while (prvDel < 0.0)
 		prvDel += lp->bufferSize;
-	prvDel = prvDel / _sampleRate; /* previous delay time in seconds */
+	prvDel = prvDel / _sample_rate; /* previous delay time in seconds */
 	nxtDel = (float) lp->seedVal * reverbParams[n][1] / 32768.0;
 	/* next delay time in seconds */
 	nxtDel = reverbParams[n][0] + (nxtDel * (float) _iPitchMod);
 	/* calculate phase increment per sample */
 	phs_incVal = (prvDel - nxtDel) / (float) lp->randLine_cnt;
-	phs_incVal = phs_incVal * _sampleRate + 1.0;
+	phs_incVal = phs_incVal * _sample_rate + 1.0;
 	lp->readPosFrac_inc = (int)(phs_incVal * DELAYPOS_SCALE + 0.5);
 }
 
@@ -124,7 +124,7 @@ int reverbsc::init_delay_line(reverbsc_dl *lp, int n)
 	/* int     i; */
 
 	/* calculate length of delay line */
-	lp->bufferSize = delay_line_max_samples(_sampleRate, 1, n);
+	lp->bufferSize = delay_line_max_samples(_sample_rate, 1, n);
 	lp->dummy = 0;
 	lp->writePos = 0;
 	/* set random seed */
@@ -132,7 +132,7 @@ int reverbsc::init_delay_line(reverbsc_dl *lp, int n)
 	/* set initial delay time */
 	readPos = (float) lp->seedVal * reverbParams[n][1] / 32768;
 	readPos = reverbParams[n][0] + (readPos * (float) _iPitchMod);
-	readPos = (float) lp->bufferSize - (readPos * _sampleRate);
+	readPos = (float) lp->bufferSize - (readPos * _sample_rate);
 	lp->readPos = (int) readPos;
 	readPos = (readPos - (float) lp->readPos) * (float) DELAYPOS_SCALE;
 	lp->readPosFrac = (int)(readPos + 0.5);
@@ -160,7 +160,7 @@ int reverbsc::process(const float &in1, const float &in2, float *out1, float *ou
 	/* calculate tone filter coefficient if frequency changed */
 	if (_lpfreq != _prv_LPFreq) {
 		_prv_LPFreq = _lpfreq;
-		dampFact = 2.0f - cosf(_prv_LPFreq * (2.0f * (float)M_PI) / _sampleRate);
+		dampFact = 2.0f - cosf(_prv_LPFreq * (2.0f * (float)M_PI) / _sample_rate);
 		dampFact = _dampFact = dampFact - sqrtf(dampFact * dampFact - 1.0f);
 	}
 

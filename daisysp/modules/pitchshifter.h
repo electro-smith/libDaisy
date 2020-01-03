@@ -4,7 +4,7 @@
 // where:
 // s is the size of the delay
 // f is the frequency of the lfo
-// r is the samplerate
+// r is the sample_rate
 // solving for t = 12.0
 // f = (12 - 1) * 48000 / SHIFT_BUFFER_SIZE;
 #pragma once

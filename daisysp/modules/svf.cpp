@@ -5,9 +5,9 @@
 
 using namespace daisysp;
 
-void svf::init(float samplerate)
+void svf::init(float sample_rate)
 {
-	_sr = samplerate;
+	_sr = sample_rate;
 	_fc = 200.0f;
 	_res = 0.5f;
 	_drive = 0.5f;

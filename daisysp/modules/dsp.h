@@ -108,7 +108,7 @@ inline float mtof(float m)
 //
 // coeff can be calculated:
 //
-// coeff = 1.0 / (time * samplerate) ; where time is in seconds
+// coeff = 1.0 / (time * sample_rate) ; where time is in seconds
 // ~~~~
 inline void fonepole(float &out, float in, float coeff)
 // ~~~~

@@ -37,9 +37,9 @@ class reverbsc
         reverbsc() {}
         ~reverbsc() {}
 // ### init
-// Initializes the reverb module, and sets the samplerate at which the process function will be called.
+// Initializes the reverb module, and sets the sample_rate at which the process function will be called.
 // ~~~~
-    int init(float samplerate);
+    int init(float sample_rate);
 // ~~~~
     
 // ### process
@@ -59,7 +59,7 @@ class reverbsc
 // ### set_lpfreq
 // controls the internal dampening filter's cutoff frequency.
 // 
-// range: 0.0 to samplerate / 2
+// range: 0.0 to sample_rate / 2
 //
 // ~~~~
     inline void set_lpfreq(const float &freq) { _lpfreq = freq; }
@@ -69,8 +69,8 @@ class reverbsc
         void next_random_lineseg(reverbsc_dl *lp, int n);
         int init_delay_line(reverbsc_dl *lp, int n);
         float _feedback, _lpfreq;
-        float _iSampleRate, _iPitchMod, _iSkipInit;
-        float _sampleRate;
+        float _i_sample_rate, _iPitchMod, _iSkipInit;
+        float _sample_rate;
         float _dampFact;
         float _prv_LPFreq;
         int _initDone;
