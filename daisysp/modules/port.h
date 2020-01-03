@@ -1,6 +1,6 @@
 // # port
 // Applies portamento to an input signal. At each new step value, the input is low-pass filtered to 
-// move towards that value at a rate determined by ihtim. ihtim is the “half-time” of the 
+// move towards that value at a rate determined by ihtim. ihtim is the half-time of the 
 // function (in seconds), during which the curve will traverse half the distance towards the new value, 
 // then half as much again, etc., theoretically never reaching its asymptote.
 //
