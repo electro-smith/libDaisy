@@ -36,11 +36,11 @@ enum
 };
 // ~~~~
 
-class adenv
+class AdEnv
 {
   public:
-    adenv() {}
-    ~adenv() {}
+    AdEnv() {}
+    ~AdEnv() {}
 
     // ### init
     //

@@ -1,5 +1,5 @@
 #include <math.h>
-#include "adenv.h"
+#include "AdEnv.h"
 
 using namespace daisysp;
 
@@ -21,15 +21,12 @@ inline float expf_fast(float x)
 }
 
 // Private Functions
-void adenv::Init(float sample_rate)
+void AdEnv::Init(float sample_rate)
 {
     sample_rate_     = sample_rate;
     current_segment_ = ADENV_SEG_IDLE;
     curve_scalar_    = 0.0f; // full linear
     phase_           = 0;
-    multiplier_      = 1.0f;
-    //phase__inc_ = ((2.0f * PI * (1.0f / segment_time_[ADENV_SEG_ATTACK]) / SAMPLE_RATE));// / 2.0f);
-    phase_inc_ = 1.0f;
     min_       = 0.0f;
     max_       = 1.0f;
     output_    = 0.0001f;
@@ -39,7 +36,7 @@ void adenv::Init(float sample_rate)
     }
 }
 
-float adenv::Process()
+float AdEnv::Process()
 {
     uint32_t time_samps;
     float    val, out, end, beg, inc;
@@ -82,17 +79,17 @@ float adenv::Process()
         // This can happen only on transitions between curves
         if(curve_scalar_ == 0.0f)
         {
-            c1_ = (end - beg) / time_samps;
+            c_inc_ = (end - beg) / time_samps;
         }
         else
         {
-            c1_ = (end - beg) / (1.0f - EXPF(curve_scalar_));
+            c_inc_ = (end - beg) / (1.0f - EXPF(curve_scalar_));
         }
     }
 
     // update output
     val = output_;
-    inc = c1_;
+    inc = c_inc_;
     out = val;
     if(curve_scalar_ == 0.0f)
     {
