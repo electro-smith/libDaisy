@@ -21,7 +21,7 @@ inline float expf_fast(float x)
 }
 
 // Private Functions
-void adenv::init(float sample_rate)
+void adenv::Init(float sample_rate)
 {
     sample_rate_     = sample_rate;
     current_segment_ = ADENV_SEG_IDLE;
@@ -39,7 +39,7 @@ void adenv::init(float sample_rate)
     }
 }
 
-float adenv::process()
+float adenv::Process()
 {
     uint32_t time_samps;
     float    val, out, end, beg, inc;
@@ -121,11 +121,4 @@ float adenv::process()
     output_ = val;
 
     return out * (max_ - min_) + min_;
-}
-
-void adenv::calculate_multiplier(float    start,
-                                 float    end,
-                                 uint32_t length_in_samples)
-{
-    multiplier_ = 1.0f + ((end - start) / (float)length_in_samples);
 }
