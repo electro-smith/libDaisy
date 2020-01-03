@@ -49,7 +49,7 @@ def process_line(line):
             
 def process(filename):
     with open(filename, 'r') as f:
-        map(process_line, f.readlines())
+        list(map(process_line, f.readlines()))
     sys.stdout.flush()
 
         
