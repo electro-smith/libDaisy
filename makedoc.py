@@ -6,11 +6,10 @@ import sys
 from contextlib import contextmanager
 
 def start_section(line):
-    sys.stdout.write("\n{}".format(line[3:]))
-
+    sys.stdout.write("\n{}".format(line.lstrip()[3:]))
 
 def emit_line(line):
-    sys.stdout.write("{}".format(line[3:]))
+    sys.stdout.write("{}".format(line.lstrip()[3:]))
 
 def emit_line_nosub(line):
     sys.stdout.write(line)
@@ -24,10 +23,10 @@ in_code_section = False
 def process_line(line):
     global in_code_section 
 
-    section_match = re.compile(r'^// #')
-    line_match = re.compile(r'^// ')
-    space_match = re.compile(r'^//$')
-    code_section_match = re.compile(r'^// ~~~~')
+    section_match = re.compile(r'^\s{0,}// #')
+    line_match = re.compile(r'^\s{0,}// ')
+    space_match = re.compile(r'^\s{0,}//$')
+    code_section_match = re.compile(r'^\s{0,}// ~~~~')
     m = section_match.match(line)
     if m:
         start_section(line)
