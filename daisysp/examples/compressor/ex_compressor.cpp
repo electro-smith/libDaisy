@@ -16,7 +16,7 @@ static daisy_handle seed;
 
 static compressor comp;
 // Helper Modules
-static adenv env;
+static AdEnv env;
 static oscillator osc_a, osc_b;
 static metro tick;
 
@@ -30,11 +30,11 @@ static void audioCallback(float *in, float *out, size_t size)
         // trigger the envelope to start
         if (tick.process())
         {
-            env.trigger();
+            env.Trigger();
         }
 
         // Use envelope to control the amplitude of the oscillator.
-        env_out = env.process();
+        env_out = env.Process();
         osc_a.set_amp(env_out);
     	osc_a_out = osc_a.process();
         osc_b_out = osc_b.process();
@@ -52,7 +52,7 @@ int main(void)
     // initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
     comp.init(SAMPLE_RATE);
-    env.init(SAMPLE_RATE);
+    env.Init(SAMPLE_RATE);
     osc_a.init(SAMPLE_RATE);
     osc_b.init(SAMPLE_RATE);
 
@@ -66,11 +66,11 @@ int main(void)
     comp.set_release(0.1250);
 
     // set adenv parameters
-    env.set_time(ADENV_SEG_ATTACK, 0.001);
-    env.set_time(ADENV_SEG_DECAY, 0.50);
-    env.set_min(0.0);
-    env.set_max(0.25);
-    env.set_curve_scalar(0); // linear
+    env.SetTime(ADENV_SEG_ATTACK, 0.001);
+    env.SetTime(ADENV_SEG_DECAY, 0.50);
+    env.SetMin(0.0);
+    env.SetMax(0.25);
+    env.SetCurve(0); // linear
 
     // Set parameters for oscillator
     osc_a.set_waveform(oscillator::WAVE_TRI);
