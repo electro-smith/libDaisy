@@ -14,7 +14,7 @@ using namespace daisysp;
 
 static daisy_handle seed;
 
-static compressor comp;
+static Compressor comp;
 // Helper Modules
 static adenv env;
 static oscillator osc_a, osc_b;
@@ -39,7 +39,7 @@ static void audioCallback(float *in, float *out, size_t size)
     	osc_a_out = osc_a.process();
         osc_b_out = osc_b.process();
         // Compress the steady tone with the enveloped tone.
-        sig_out = comp.process(osc_b_out, osc_a_out);
+        sig_out = comp.Process(osc_b_out, osc_a_out);
 
         // Output
         out[LEFT] = sig_out; // compressed
@@ -51,7 +51,7 @@ int main(void)
 {
     // initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
-    comp.init(SAMPLE_RATE);
+    comp.Init(SAMPLE_RATE);
     env.init(SAMPLE_RATE);
     osc_a.init(SAMPLE_RATE);
     osc_b.init(SAMPLE_RATE);
@@ -60,10 +60,10 @@ int main(void)
     tick.init(1.0f, SAMPLE_RATE);    
 
     // set compressor parameters
-    comp.set_threshold(-64.0f);
-    comp.set_ratio(2.0f);
-    comp.set_attack(0.005f);
-    comp.set_release(0.1250);
+    comp.SetThreshold(-64.0f);
+    comp.SetRatio(2.0f);
+    comp.SetAttack(0.005f);
+    comp.SetRelease(0.1250);
 
     // set adenv parameters
     env.set_time(ADENV_SEG_ATTACK, 0.001);
