@@ -108,6 +108,9 @@ class AdEnv
     // ~~~~
 
     // ## Accessors
+    // ### GetValue
+    // Returns the current output value without processing the next sample
+    inline float GetValue() const { return (output_ * (max_ - min_)) + min_; }
 
     // ### GetCurrentSegment
     //
