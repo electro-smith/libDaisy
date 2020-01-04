@@ -19,7 +19,7 @@ static daisy_handle seed;
 
 // Helper Modules
 static AdEnv env;
-static oscillator osc;
+static Oscillator osc;
 static metro tick;
 
 // Declare a delayline of MAX_DELAY number of floats.
@@ -35,14 +35,14 @@ static void audioCallback(float *in, float *out, size_t size)
         if (tick.process())
         {
             float freq = rand() % 200;
-            osc.set_freq(freq + 100.0f);
+            osc.SetFreq(freq + 100.0f);
             env.Trigger();
         }
 
         // Use envelope to control the amplitude of the oscillator.
         env_out = env.Process();
-        osc.set_amp(env_out);
-    	osc_out = osc.process();
+        osc.SetAmp(env_out);
+    	osc_out = osc.Process();
 
         // Read from delay line
         del_out = del.read();
@@ -64,7 +64,7 @@ int main(void)
     // initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
     env.Init(SAMPLE_RATE);
-    osc.init(SAMPLE_RATE);
+    osc.Init(SAMPLE_RATE);
     del.init();
 
     // Set up metro to pulse every second
@@ -78,9 +78,9 @@ int main(void)
     env.SetCurve(0); // linear
 
     // Set parameters for oscillator
-    osc.set_waveform(osc.WAVE_TRI);
-    osc.set_freq(220);
-    osc.set_amp(0.25);
+    osc.SetWaveform(osc.WAVE_TRI);
+    osc.SetFreq(220);
+    osc.SetAmp(0.25);
 
     // Set Delay time to 0.75 seconds
     del.set_delay(SAMPLE_RATE * 0.75f);
