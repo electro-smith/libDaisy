@@ -14,7 +14,7 @@ using namespace daisysp;
 
 static daisy_handle seed;
 static AdEnv env;
-static oscillator osc;
+static Oscillator osc;
 static metro tick;
 
 static void audioCallback(float *in, float *out, size_t size)
@@ -30,8 +30,8 @@ static void audioCallback(float *in, float *out, size_t size)
 
         // Use envelope to control the amplitude of the oscillator.
         env_out = env.Process();
-        osc.set_amp(env_out);
-    	osc_out = osc.process();
+        osc.SetAmp(env_out);
+    	osc_out = osc.Process();
 
         out[LEFT] = osc_out;
         out[RIGHT] = osc_out;
@@ -43,7 +43,7 @@ int main(void)
     // initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
     env.Init(SAMPLE_RATE);
-    osc.init(SAMPLE_RATE);
+    osc.Init(SAMPLE_RATE);
 
     // Set up metro to pulse every second
     tick.init(1.0f, SAMPLE_RATE);    
@@ -56,9 +56,9 @@ int main(void)
     env.SetCurve(0); // linear
 
     // Set parameters for oscillator
-    osc.set_waveform(osc.WAVE_TRI);
-    osc.set_freq(220);
-    osc.set_amp(0.25);
+    osc.SetWaveform(osc.WAVE_TRI);
+    osc.SetFreq(220);
+    osc.SetAmp(0.25);
 
     // define callback
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
