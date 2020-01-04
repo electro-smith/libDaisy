@@ -6,7 +6,7 @@ using namespace daisysp;
 
 static daisy_handle seed;
 
-oscillator osc;
+Oscillator osc;
 svf filt;
 
 static void audioCallback(float *in, float *out, size_t size)
@@ -15,7 +15,7 @@ static void audioCallback(float *in, float *out, size_t size)
 
     for (size_t i = 0; i < size; i += 2)
     {
-        sig = osc.process();
+        sig = osc.Process();
 
         filt.process(sig);
 
@@ -32,10 +32,10 @@ int main(void)
     // initialize seed hardware and svf daisysp module
     daisy_seed_init(&seed);
     // Initialize Oscillator, and set parameters.
-    osc.init(DSY_AUDIO_SAMPLE_RATE);
-    osc.set_waveform(osc.WAVE_POLYBLEP_SAW);
-    osc.set_freq(250.0);
-    osc.set_amp(0.5);
+    osc.Init(DSY_AUDIO_SAMPLE_RATE);
+    osc.SetWaveform(osc.WAVE_POLYBLEP_SAW);
+    osc.SetFreq(250.0);
+    osc.SetAmp(0.5);
     // Initialize Filter, and set parameters.
     filt.init(DSY_AUDIO_SAMPLE_RATE);
     filt.set_freq(500.0);
