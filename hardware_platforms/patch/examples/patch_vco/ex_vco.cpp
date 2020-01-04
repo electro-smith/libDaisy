@@ -5,7 +5,7 @@ using namespace daisy;
 using namespace daisysp;
 
 daisy_patch patch;
-oscillator osc;
+Oscillator osc;
 parameter freqctrl, wavectrl, ampctrl;
 
 static void AudioCallback(float *in, float *out, size_t size)
@@ -19,11 +19,11 @@ static void AudioCallback(float *in, float *out, size_t size)
         wave = wavectrl.process();
         amp = ampctrl.process();
         // Set osc params
-        osc.set_freq(freq);
-        osc.set_waveform(wave);
-        osc.set_amp(amp);
+        osc.SetFreq(freq);
+        osc.SetWaveform(wave);
+        osc.SetAmp(amp);
         // process
-    	sig = osc.process();
+    	sig = osc.Process();
     	// left out
         out[i] = sig;
         // right out
@@ -33,9 +33,9 @@ static void AudioCallback(float *in, float *out, size_t size)
 
 int main(void)
 {
-    int num_waves = oscillator::WAVE_LAST - 1;
+    int num_waves = Oscillator::WAVE_LAST - 1;
     patch.Init(); // initialize hardware (daisy seed, and patch)
-    osc.init(SAMPLE_RATE); // init oscillator
+    osc.Init(SAMPLE_RATE); // init oscillator
 
     // This is with the GetCtrl, but it can also be done with the public members.
     //freqctrl.init(patch.GetCtrl(daisy_patch::KNOB_1), 10.0, 110.0, parameter::LINEAR);
