@@ -5,7 +5,7 @@ using namespace daisysp;
 
 static daisy_handle seed;
 static line line_seg;
-static oscillator osc_sine;
+static Oscillator osc_sine;
 
 uint8_t finished;
 
@@ -21,8 +21,8 @@ static void audioCallback(float *in, float *out, size_t size)
         }
 
         freq = line_seg.process(&finished);
-        osc_sine.set_freq(freq);
-    	sine = osc_sine.process();
+        osc_sine.SetFreq(freq);
+    	sine = osc_sine.Process();
 
     	// left out
         out[i] = sine;
@@ -42,10 +42,10 @@ int main(void)
     finished = 1;
 
     // set parameters for sine oscillator object
-    osc_sine.init(DSY_AUDIO_SAMPLE_RATE);
-    osc_sine.set_waveform(oscillator::WAVE_SIN);
-    osc_sine.set_freq(100);
-    osc_sine.set_amp(0.25);
+    osc_sine.Init(DSY_AUDIO_SAMPLE_RATE);
+    osc_sine.SetWaveform(Oscillator::WAVE_SIN);
+    osc_sine.SetFreq(100);
+    osc_sine.SetAmp(0.25);
 
     // define callback
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
