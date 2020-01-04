@@ -13,7 +13,7 @@
 using namespace daisysp;
 
 static daisy_handle seed;
-static oscillator osc;
+static Oscillator osc;
 static decimator decim;
 static phasor phs;
 
@@ -24,7 +24,7 @@ static void audioCallback(float *in, float *out, size_t size)
     for (size_t i = 0; i < size; i += 2)
     {
         // Generate a pure sine wave
-    	osc_out = osc.process();
+    	osc_out = osc.Process();
         // Modulate downsample amount via phasor
         downsample_amt = phs.process();
         decim.set_downsample_factor(downsample_amt);
@@ -40,14 +40,14 @@ int main(void)
 {
     // initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
-    osc.init(SAMPLE_RATE);
+    osc.Init(SAMPLE_RATE);
     phs.init(SAMPLE_RATE, 0.5f);
     decim.init();
 
     // Set parameters for oscillator
-    osc.set_waveform(osc.WAVE_SIN);
-    osc.set_freq(220);
-    osc.set_amp(0.25);
+    osc.SetWaveform(osc.WAVE_SIN);
+    osc.SetFreq(220);
+    osc.SetAmp(0.25);
     // Set downsampling, and bit crushing values.
     decim.set_downsample_factor(0.4f);
     decim.set_bits_to_crush(8);

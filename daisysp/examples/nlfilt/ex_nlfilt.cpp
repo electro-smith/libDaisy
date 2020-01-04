@@ -16,7 +16,7 @@ static daisy_handle seed;
 
 // Helper Modules
 static AdEnv env;
-static oscillator osc;
+static Oscillator osc;
 static metro tick;
 
 static nlfilt filt;
@@ -37,13 +37,13 @@ static void audioCallback(float *in, float *out, size_t size)
         if (tick.process())
         {
             float freq = rand() % 150;
-            osc.set_freq(freq + 25.0f);
+            osc.SetFreq(freq + 25.0f);
             env.Trigger();
         }
         // Use envelope to control the amplitude of the oscillator.
         env_out = env.Process();
-        osc.set_amp(env_out);
-    	dry[i] = osc.process();
+        osc.SetAmp(env_out);
+    	dry[i] = osc.Process();
     }
     // nonlinear filter
     filt.process_block(dry, wet, size/2);
@@ -60,7 +60,7 @@ int main(void)
     // initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
     env.Init(SAMPLE_RATE);
-    osc.init(SAMPLE_RATE);
+    osc.Init(SAMPLE_RATE);
 
     // Set up metro to pulse every 3 seconds
     tick.init(0.333f, SAMPLE_RATE);    
@@ -73,7 +73,7 @@ int main(void)
     env.SetCurve(0); // linear
 
     // Set parameters for oscillator
-    osc.set_waveform(osc.WAVE_POLYBLEP_SAW);
+    osc.SetWaveform(osc.WAVE_POLYBLEP_SAW);
 
     // Set coefficients for non-linear filter.
     filt.set_coefficients(0.7f, -0.2f, 0.95f, 0.24f, 1000.0f);

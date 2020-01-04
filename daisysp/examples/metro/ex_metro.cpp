@@ -5,7 +5,7 @@ using namespace daisysp;
 
 static daisy_handle seed;
 static metro clock;
-static oscillator osc_sine;
+static Oscillator osc_sine;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
@@ -17,10 +17,10 @@ static void audioCallback(float *in, float *out, size_t size)
         if (tic)
         {
             freq = rand() % 500;
-            osc_sine.set_freq(freq);
+            osc_sine.SetFreq(freq);
         }
 
-    	sine = osc_sine.process();
+    	sine = osc_sine.Process();
 
     	// left out
         out[i] = sine;
@@ -39,10 +39,10 @@ int main(void)
     clock.init(2, DSY_AUDIO_SAMPLE_RATE);
 
     // set parameters for sine oscillator object
-    osc_sine.init(DSY_AUDIO_SAMPLE_RATE);
-    osc_sine.set_waveform(oscillator::WAVE_SIN);
-    osc_sine.set_freq(100);
-    osc_sine.set_amp(0.25);
+    osc_sine.Init(DSY_AUDIO_SAMPLE_RATE);
+    osc_sine.SetWaveform(Oscillator::WAVE_SIN);
+    osc_sine.SetFreq(100);
+    osc_sine.SetAmp(0.25);
 
     // define callback
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);

@@ -8,7 +8,7 @@ using namespace daisysp;
 //static float mtof(float m);
 
 daisy_patch	hw;
-oscillator	 osc;
+Oscillator	 osc;
 whitenoise	 nse;
 static uint8_t wf;
 parameter	  param_freq, param_nse_amp, param_osc_amp, param_bright;
@@ -24,7 +24,7 @@ static void audio(float *in, float *out, size_t size)
     if (hw.button1.FallingEdge())
 	{
 		wf = (wf + 1) % osc.WAVE_LAST; // increment and wrap
-		osc.set_waveform(wf);
+		osc.SetWaveform(wf);
 	}
 	// Audio Loop
 	for(size_t i = 0; i < size; i += 2)
@@ -37,11 +37,11 @@ static void audio(float *in, float *out, size_t size)
 		oamp += param_ampcv.process();
 		namp += (param_ampcv.value() * param_ampcv.value()); // exp only for noise
 		// Set module parameters
-		osc.set_freq(freq);
-		osc.set_amp(oamp);
+		osc.SetFreq(freq);
+		osc.SetAmp(oamp);
 		nse.set_amp(namp);
 		// Process
-		sig	= osc.process();
+		sig	= osc.Process();
 		sig += nse.process();
 		out[i] = out[i+1] = sig;
 	}
@@ -58,7 +58,7 @@ int main(void)
 	param_ampcv.init(hw.GetCtrl(daisy_patch::CV_2), 0.0f, 1.0f, parameter::LINEAR);
 	// Init Osc and Nse
 	dsy_tim_start();
-	osc.init(SAMPLE_RATE);
+	osc.Init(SAMPLE_RATE);
 	nse.init();
 	// Old style still 
 	dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audio);

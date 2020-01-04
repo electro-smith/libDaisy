@@ -5,14 +5,14 @@ using namespace daisysp;
 
 static daisy_handle seed;
 static dcblock block;
-static oscillator osc_sine;
+static Oscillator osc_sine;
 
 static void audioCallback(float *in, float *out, size_t size)
 {
 	float output;
     for (size_t i = 0; i < size; i += 2)
     {
-    	output = osc_sine.process();
+    	output = osc_sine.Process();
 
         // add dc to signal
         output += 1;
@@ -36,10 +36,10 @@ int main(void)
     block.init(DSY_AUDIO_SAMPLE_RATE);
 
     // set parameters for sine oscillator object
-    osc_sine.init(DSY_AUDIO_SAMPLE_RATE);
-    osc_sine.set_waveform(oscillator::WAVE_SIN);
-    osc_sine.set_freq(100);
-    osc_sine.set_amp(0.25);
+    osc_sine.Init(DSY_AUDIO_SAMPLE_RATE);
+    osc_sine.SetWaveform(Oscillator::WAVE_SIN);
+    osc_sine.SetFreq(100);
+    osc_sine.SetAmp(0.25);
 
     // define callback
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
