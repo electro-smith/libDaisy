@@ -58,12 +58,12 @@ float Oscillator::Process()
 
 float Oscillator::CalcPhaseInc(float f)
 {
-	return ((2.0f * (float)M_PI * f) / sr);
+	return ((2.0f * (float)M_PI * f) / sr_);
 }
 
 static float Polyblep(float phase_inc, float t)
 {
-	float dt = phase_inc_ / (2.0f * (float)M_PI);
+	float dt = phase_inc / (2.0f * (float)M_PI);
 	if (t < dt)
 	{
 		t /= dt;
