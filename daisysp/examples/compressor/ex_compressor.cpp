@@ -17,7 +17,7 @@ static daisy_handle seed;
 static Compressor comp;
 // Helper Modules
 static AdEnv env;
-static oscillator osc_a, osc_b;
+static Oscillator osc_a, osc_b;
 static metro tick;
 
 
@@ -35,9 +35,9 @@ static void audioCallback(float *in, float *out, size_t size)
 
         // Use envelope to control the amplitude of the oscillator.
         env_out = env.Process();
-        osc_a.set_amp(env_out);
-    	osc_a_out = osc_a.process();
-        osc_b_out = osc_b.process();
+        osc_a.SetAmp(env_out);
+    	osc_a_out = osc_a.Process();
+        osc_b_out = osc_b.Process();
         // Compress the steady tone with the enveloped tone.
         sig_out = comp.Process(osc_b_out, osc_a_out);
 
@@ -53,8 +53,8 @@ int main(void)
     daisy_seed_init(&seed);
     comp.Init(SAMPLE_RATE);
     env.Init(SAMPLE_RATE);
-    osc_a.init(SAMPLE_RATE);
-    osc_b.init(SAMPLE_RATE);
+    osc_a.Init(SAMPLE_RATE);
+    osc_b.Init(SAMPLE_RATE);
 
     // Set up metro to pulse every second
     tick.init(1.0f, SAMPLE_RATE);    
@@ -73,12 +73,12 @@ int main(void)
     env.SetCurve(0); // linear
 
     // Set parameters for oscillator
-    osc_a.set_waveform(oscillator::WAVE_TRI);
-    osc_a.set_freq(110);
-    osc_a.set_amp(0.25);
-    osc_b.set_waveform(oscillator::WAVE_TRI);
-    osc_b.set_freq(220);
-    osc_b.set_amp(0.25);
+    osc_a.SetWaveform(Oscillator::WAVE_TRI);
+    osc_a.SetFreq(110);
+    osc_a.SetAmp(0.25);
+    osc_b.SetWaveform(Oscillator::WAVE_TRI);
+    osc_b.SetFreq(220);
+    osc_b.SetAmp(0.25);
 
     // define callback
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
