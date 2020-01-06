@@ -48,8 +48,8 @@ class Compressor
 // 
 // (optional) key - audio input that will be used to side-chain the compressor. 
 // ~~~~
-	float Process(float &in, float &key);
-	float Process(float &in);
+	float Process(float in, float key);
+	float Process(float in);
 // ~~~~
 
 // ## setters

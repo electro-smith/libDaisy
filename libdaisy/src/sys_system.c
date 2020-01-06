@@ -72,7 +72,6 @@ void dsy_system_init()
 	dsy_dma_init(); //
 	SCB_EnableICache();
 	SCB_EnableDCache();
-	//SCB_EnableDCache(); // This will require relocation of DMA buffers, or Cache Maintence. Performance is almost doubled, though.
 	HAL_Init();
 }
 
@@ -157,7 +156,8 @@ void SystemClock_Config()
 							  |RCC_PERIPHCLK_QSPI|RCC_PERIPHCLK_FMC;
   // PLL 2
   PeriphClkInitStruct.PLL2.PLL2M = 4;
-  PeriphClkInitStruct.PLL2.PLL2N = 115;
+//  PeriphClkInitStruct.PLL2.PLL2N = 115; // Max Freq @ 3v3
+  PeriphClkInitStruct.PLL2.PLL2N = 84; // Max Freq @ 1V9
   PeriphClkInitStruct.PLL2.PLL2P = 8; // 57.5
   PeriphClkInitStruct.PLL2.PLL2Q = 10; // 46
   PeriphClkInitStruct.PLL2.PLL2R = 2; // 115Mhz

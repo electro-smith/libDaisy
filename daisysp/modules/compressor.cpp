@@ -46,7 +46,7 @@ void Compressor::Init(float sample_rate)
 }
 
 //float compressor::process(const float &in)
-float Compressor::Process(float &in, float &key)
+float Compressor::Process(float in, float key)
 {
     float out;
 	// Makeup gain may still be a little hot.
@@ -65,7 +65,7 @@ float Compressor::Process(float &in, float &key)
 }
 
 // Same without sidechain
-float Compressor::Process(float &in) 
+float Compressor::Process(float in) 
 {
 	return Process(in, in);
 }
