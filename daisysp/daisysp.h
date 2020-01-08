@@ -45,7 +45,8 @@ typedef struct {
 }
 
 #include "modules/dsp.h"
-
+#include "modules/limiter.h"
+#include "modules/mode.h"
 #include "modules/delayline.h"
 #include "modules/reverbsc.h"
 #include "modules/whitenoise.h"

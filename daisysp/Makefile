@@ -8,8 +8,10 @@ crossfade \
 dcblock \
 decimator \
 line \
+limiter \
 nlfilt \
 metro \
+mode \
 oscillator \
 phasor \
 pluck \

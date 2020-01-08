@@ -75,8 +75,10 @@
     <ClInclude Include="modules\delayline.h" />
     <ClInclude Include="modules\dsp.h" />
     <ClInclude Include="modules\dsy_pstream.h" />
+    <ClInclude Include="modules\limiter.h" />
     <ClInclude Include="modules\line.h" />
     <ClInclude Include="modules\metro.h" />
+    <ClInclude Include="modules\mode.h" />
     <ClInclude Include="modules\nlfilt.h" />
     <ClInclude Include="modules\oscillator.h" />
     <ClInclude Include="modules\phasor.h" />
@@ -102,8 +104,10 @@
     <ClCompile Include="modules\crossfade.cpp" />
     <ClCompile Include="modules\dcblock.cpp" />
     <ClCompile Include="modules\decimator.cpp" />
+    <ClCompile Include="modules\limiter.cpp" />
     <ClCompile Include="modules\line.cpp" />
     <ClCompile Include="modules\metro.cpp" />
+    <ClCompile Include="modules\mode.cpp" />
     <ClCompile Include="modules\nlfilt.cpp" />
     <ClCompile Include="modules\oscillator.cpp" />
     <ClCompile Include="modules\phasor.cpp" />
