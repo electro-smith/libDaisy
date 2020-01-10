@@ -3,22 +3,24 @@
 
 using namespace daisysp;
 
-#define EXPF expf_fast
+#define EXPF expf
 
 // Fast Exp approximation
-inline float expf_fast(float x)
-{
-   x = 1.0f + x / 256;
-   x *= x;
-   x *= x; 
-   x *= x;
-   x *= x; 
-   x *= x;
-   x *= x; 
-   x *= x;
-   x *= x;
-   return x;
-}
+//#define EXPF expf_fast // This causes with infinity with certain curves,
+// which then causes NaN erros...
+//inline float expf_fast(float x)
+//{
+//   x = 1.0f + x / 256.0f;
+//   x *= x;
+//   x *= x; 
+//   x *= x;
+//   x *= x; 
+//   x *= x;
+//   x *= x; 
+//   x *= x;
+//   x *= x;
+//   return x;
+//}
 
 // Private Functions
 void AdEnv::Init(float sample_rate)
@@ -85,6 +87,7 @@ float AdEnv::Process()
         {
             c_inc_ = (end - beg) / (1.0f - EXPF(curve_scalar_));
         }
+		
     }
 
     // update output
