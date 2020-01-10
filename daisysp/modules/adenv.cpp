@@ -12,11 +12,11 @@ using namespace daisysp;
 //{
 //   x = 1.0f + x / 256.0f;
 //   x *= x;
-//   x *= x; 
 //   x *= x;
-//   x *= x; 
 //   x *= x;
-//   x *= x; 
+//   x *= x;
+//   x *= x;
+//   x *= x;
 //   x *= x;
 //   x *= x;
 //   return x;
