@@ -74,6 +74,7 @@
     <ClInclude Include="modules\decimator.h" />
     <ClInclude Include="modules\delayline.h" />
     <ClInclude Include="modules\dsp.h" />
+    <ClInclude Include="modules\dsp_lut.h" />
     <ClInclude Include="modules\dsy_pstream.h" />
     <ClInclude Include="modules\limiter.h" />
     <ClInclude Include="modules\line.h" />
@@ -104,6 +105,7 @@
     <ClCompile Include="modules\crossfade.cpp" />
     <ClCompile Include="modules\dcblock.cpp" />
     <ClCompile Include="modules\decimator.cpp" />
+    <ClCompile Include="modules\dsp_lut.cpp" />
     <ClCompile Include="modules\limiter.cpp" />
     <ClCompile Include="modules\line.cpp" />
     <ClCompile Include="modules\metro.cpp" />

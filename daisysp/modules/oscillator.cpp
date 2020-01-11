@@ -1,5 +1,6 @@
 #include <math.h>
 #include "oscillator.h"
+#include "dsp_lut.h"
 // TODO: Fix Polyblep triangle... something bad happened to it.
 using namespace daisysp;
 static inline float Polyblep(float phase_inc, float t);

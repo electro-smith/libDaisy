@@ -44,8 +44,8 @@ float AnalogControl::Process() {
 	float t;
 	t = (float)*raw_ / 65536.0f;
 	t = (t - offset_) * scale_ * (flip_ ? -1.0f : 1.0f);
-	if(t < BOTTOM_THRESH)
-		t = 0.0f;
+//	if(t < BOTTOM_THRESH)
+//		t = 0.0f;
 	val_ += coeff_ * (t - val_);
 	return val_;
 }
