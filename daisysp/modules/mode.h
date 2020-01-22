@@ -10,7 +10,9 @@
 // originally extracted from csound by Paul Batchelor.
 //
 // Original Author(s): Francois Blanc, Steven Yi
+// 
 // Year: 2001
+// 
 // Location: Opcodes/biquad.c (csound)
 //
 #pragma once
@@ -32,22 +34,20 @@ class Mode
     // ~~~~
     void Init(float sample_rate);
     // ~~~~
-    // ~~~~
     // ### Process
     // Processes one input sample through the filter, and returns the output.
-    //
+    // ~~~~
     float Process(float in);
     // ~~~~
     // ### Clear
     // Clears the filter, returning the output to 0.0
-    //
     // ~~~~
     void Clear();
     // ~~~~
-	// ## Parameters
-	// ### SetFreq
-	// Sets the resonant frequency of the modal filter.
-	// 
+    // ## Parameters
+    // ### SetFreq
+    // Sets the resonant frequency of the modal filter.
+    //
     // Range: Any frequency such that sample_rate / freq < PI (about 15.2kHz at 48kHz)
     // ~~~~
     inline void SetFreq(float freq) { freq_ = freq; }
