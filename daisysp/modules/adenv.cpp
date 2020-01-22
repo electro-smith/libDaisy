@@ -3,21 +3,45 @@
 
 using namespace daisysp;
 
-#define EXPF expf_fast
+//#define EXPF expf
+#define EXPF expf_fast // This causes with infinity with certain curves,
+						// which then causes NaN erros...
+
+// To resolve annoying bugs when using this you can:
+// if (val != val)
+//     val = 0.0f; // This will un-NaN the value.
 
 // Fast Exp approximation
+// 8x multiply version
+//inline float expf_fast(float x)
+//{
+//   x = 1.0f + x / 256.0f;
+//   x *= x;
+//   x *= x;
+//   x *= x;
+//   x *= x;
+//   x *= x;
+//   x *= x;
+//   x *= x;
+//   x *= x;
+//   return x;
+//}
+
+// 10x multiply version
 inline float expf_fast(float x)
 {
-   x = 1.0f + x / 256;
-   x *= x;
-   x *= x; 
-   x *= x;
-   x *= x; 
-   x *= x;
-   x *= x; 
-   x *= x;
-   x *= x;
-   return x;
+    x = 1.0f + x / 1024.0f;
+    x *= x;
+    x *= x;
+    x *= x;
+    x *= x;
+    x *= x;
+    x *= x;
+    x *= x;
+    x *= x;
+    x *= x;
+    x *= x;
+    return x;
 }
 
 // Private Functions
@@ -27,9 +51,9 @@ void AdEnv::Init(float sample_rate)
     current_segment_ = ADENV_SEG_IDLE;
     curve_scalar_    = 0.0f; // full linear
     phase_           = 0;
-    min_       = 0.0f;
-    max_       = 1.0f;
-    output_    = 0.0001f;
+    min_             = 0.0f;
+    max_             = 1.0f;
+    output_          = 0.0001f;
     for(uint8_t i = 0; i < ADENV_SEG_LAST; i++)
     {
         segment_time_[i] = 0.05f;
@@ -99,6 +123,8 @@ float AdEnv::Process()
     {
         curve_x_ += (curve_scalar_ / time_samps);
         val = beg + inc * (1.0f - EXPF(curve_x_));
+        if(val != val)
+            val = 0.0f; // NaN check
     }
 
     // Update Segment
