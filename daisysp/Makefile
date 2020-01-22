@@ -19,7 +19,6 @@ port \
 reverbsc \
 svf \
 tone \
-dsp_lut \
 
 # certain modules are only header files:
 # delayline 
