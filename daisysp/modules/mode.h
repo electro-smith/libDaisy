@@ -1,3 +1,18 @@
+// # Mode
+//
+// ## Description
+//
+// Resonant Modal Filter
+//
+// ## Credits
+//
+// Extracted from soundpipe to work as a Daisy Module,
+// originally extracted from csound by Paul Batchelor.
+//
+// Original Author(s): Francois Blanc, Steven Yi
+// Year: 2001
+// Location: Opcodes/biquad.c (csound)
+//
 #pragma once
 #ifndef DAISY_MODE
 #define DAISY_MODE
@@ -9,11 +24,41 @@ class Mode
   public:
     Mode() {}
     ~Mode() {}
-    void        Init(float sample_rate);
-    float       Process(float in);
-    void        Clear();
+    // ## Functions
+    // ### Init
+    // Initializes the instance of the module.
+    //
+    // sample_rate: frequency of the audio engine in Hz
+    // ~~~~
+    void Init(float sample_rate);
+    // ~~~~
+    // ~~~~
+    // ### Process
+    // Processes one input sample through the filter, and returns the output.
+    //
+    float Process(float in);
+    // ~~~~
+    // ### Clear
+    // Clears the filter, returning the output to 0.0
+    //
+    // ~~~~
+    void Clear();
+    // ~~~~
+	// ## Parameters
+	// ### SetFreq
+	// Sets the resonant frequency of the modal filter.
+	// 
+    // Range: Any frequency such that sample_rate / freq < PI (about 15.2kHz at 48kHz)
+    // ~~~~
     inline void SetFreq(float freq) { freq_ = freq; }
+    // ~~~~
+	// ### SetQ
+	// Sets the quality factor of the filter.
+    // 
+    // Range: Positive Numbers (Good values range from 70 to 1400)
+    // ~~~~
     inline void SetQ(float q) { q_ = q; }
+    // ~~~~
 
   private:
     float freq_, q_;
