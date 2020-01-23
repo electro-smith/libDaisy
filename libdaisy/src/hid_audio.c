@@ -6,8 +6,6 @@
 #include "stm32h7xx_hal.h"
 #include "sys_dma.h"
 
-#define DSY_AUDIO_BLOCK_SIZE_MAX 128
-#define DSY_AUDIO_CHANNELS_MAX 2
 #define DSY_AUDIO_DMA_BUFFER_SIZE_MAX \
     (DSY_AUDIO_BLOCK_SIZE_MAX * DSY_AUDIO_CHANNELS_MAX * 2)
 #define DSY_DMA_BUFFER_SECTOR __attribute__((section(".sram1_bss")))
