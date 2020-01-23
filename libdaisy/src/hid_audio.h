@@ -11,11 +11,7 @@ extern "C"
 
 // TODO Fix hard coding of these parameters
 #ifndef DSY_AUDIO_SAMPLE_RATE
-//#define SAMPLE_RATE 47916.0f
-//#define SAMPLE_RATE 31941.0f
-//#define SAMPLE_RATE 48014.0f
 #define DSY_AUDIO_SAMPLE_RATE 48014.0f
-//#define SAMPLE_RATE 95820.0f
 #endif
 
 	// Thinking about getting rid of this...
