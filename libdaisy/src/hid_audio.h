@@ -9,6 +9,9 @@ extern "C"
 {
 #endif
 
+#define DSY_AUDIO_BLOCK_SIZE_MAX 128
+#define DSY_AUDIO_CHANNELS_MAX 2
+
 // TODO Fix hard coding of these parameters
 #ifndef DSY_AUDIO_SAMPLE_RATE
 #define DSY_AUDIO_SAMPLE_RATE 48014.0f
