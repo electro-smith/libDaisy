@@ -136,6 +136,7 @@ void dsy_audio_init(dsy_audio_handle* handle)
         }
         else if(dev0 == DSY_AUDIO_DEVICE_PCM3060)
         {
+            codec_pcm3060_init(hi2c_int);
         }
         for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE_MAX; i++)
         {
