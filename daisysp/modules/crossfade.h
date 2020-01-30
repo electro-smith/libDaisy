@@ -1,6 +1,6 @@
-// # crossfade
+// # CrossFade
 // 
-// Performs a crossfade between two signals
+// Performs a CrossFade between two signals
 // 
 // Original author: Paul Batchelor
 //
@@ -9,8 +9,8 @@
 // 
 // TODO:
 // 
-// - implement exponential curve process
-// - implement logarithmic curve process
+// - implement exponential curve Process
+// - implement logarithmic curve Process
 
 #pragma once
 #ifndef DSY_CROSSFADE_H
@@ -22,7 +22,7 @@ namespace daisysp
 {
 
 // ## Curve Options
-// Curve applied to the crossfade
+// Curve applied to the CrossFade
 // 
 // - LIN = linear
 // - CPOW = constant power
@@ -40,14 +40,14 @@ namespace daisysp
 	};
 // ~~~~
 
-	class crossfade
+	class CrossFade
 	{
 	public:
-		crossfade() {}
-		~crossfade() {}
+		CrossFade() {}
+		~CrossFade() {}
 
         // ### init
-        // Initializes crossfade module
+        // Initializes CrossFade module
         //
         // Defaults
         //
@@ -67,44 +67,44 @@ namespace daisysp
 		{
             init(CROSSFADE_LIN);
         }
-        // ### process
-        // processes crossfade and returns single sample
+        // ### Process
+        // processes CrossFade and returns single sample
         //
         // ~~~~
-        float process(float &in1, float &in2);
+        float Process(float &in1, float &in2);
 // ~~~~
 
 // ## Setters
 
-// ### set_pos
-// Sets position of crossfade between two input signals
+// ### SetPos
+// Sets position of CrossFade between two input signals
 // 
 // Input range: 0 to 1
 // ~~~~
-		inline void set_pos(float pos) { pos_ = pos; }
+		inline void SetPos(float pos) { pos_ = pos; }
 // ~~~~
 
-// ### set_curve
+// ### SetCurve
 // 
-// Sets current curve applied to crossfade 
+// Sets current curve applied to CrossFade 
 // 
 // Expected input: See [Curve Options](##curve-options)
 // ~~~~
-		inline void set_curve(uint8_t curve) { curve_ = curve; }
+		inline void SetCurve(uint8_t curve) { curve_ = curve; }
 // ~~~~
 
 // ## Getters
 
-// ### get_pos
+// ### GetPos
 // Returns current position
 // ~~~~
-		inline float get_pos(float pos) { return pos_; }
+		inline float GetPos(float pos) { return pos_; }
 // ~~~~
 
-// ### get_curve
+// ### GetCurve
 // Returns current curve
 // ~~~~
-		inline uint8_t get_curve(uint8_t curve) { return curve_; }
+		inline uint8_t GetCurve(uint8_t curve) { return curve_; }
 // ~~~~
 
 	private:

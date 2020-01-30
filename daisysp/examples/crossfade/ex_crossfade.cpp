@@ -4,7 +4,7 @@
 using namespace daisysp;
 
 static daisy_handle seed;
-static crossfade cfade;
+static CrossFade cfade;
 static Oscillator osc_sine, osc_saw, lfo;
 
 static void audioCallback(float *in, float *out, size_t size)
@@ -21,8 +21,8 @@ static void audioCallback(float *in, float *out, size_t size)
         // scale signal between 0 and 1
         pos = (pos + 1) / 2;
 
-        cfade.set_pos(pos);
-        output = cfade.process(sine, saw);
+        cfade.SetPos(pos);
+        output = cfade.Process(sine, saw);
 
     	// left out
         out[i] = output;
@@ -37,9 +37,9 @@ int main(void)
 	// initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
 
-    // set params for crossfade object
+    // set params for CrossFade object
     cfade.init();
-    cfade.set_curve(CROSSFADE_LIN);
+    cfade.SetCurve(CROSSFADE_LIN);
 
     // set parameters for sine oscillator object
     osc_sine.Init(DSY_AUDIO_SAMPLE_RATE);

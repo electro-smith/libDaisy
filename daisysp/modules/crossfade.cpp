@@ -1,14 +1,14 @@
 #include <math.h>
-#include "crossfade.h"
+#include "CrossFade.h"
 
 #define REALLYSMALLFLOAT 0.000001f
 
 using namespace daisysp;
 
-const float cross_log_min = logf(REALLYSMALLFLOAT);
-const float cross_log_max = logf(1.0f);
+const float kCrossLogMin = logf(REALLYSMALLFLOAT);
+const float kCrossLogMax = logf(1.0f);
 
-float crossfade::process(float &in1, float &in2)
+float CrossFade::Process(float &in1, float &in2)
 {
     float scalar_1, scalar_2;
 	switch (curve_)
@@ -23,7 +23,7 @@ float crossfade::process(float &in1, float &in2)
             return (in1 * scalar_2) + (in2 * scalar_1);
 
     	case CROSSFADE_LOG:
-            scalar_1 = expf(pos_ * (cross_log_max - cross_log_min) + cross_log_min);
+            scalar_1 = expf(pos_ * (kCrossLogMax - kCrossLogMin) + kCrossLogMin);
     		return (in1 * (1.0f - scalar_1)) + (in2 * scalar_1);
 
     	case CROSSFADE_EXP:
