@@ -21,7 +21,7 @@ static Oscillator osc_a, osc_b;
 static metro tick;
 
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float osc_a_out, osc_b_out, env_out, sig_out;
     for (size_t i = 0; i < size; i += 2)
@@ -81,7 +81,7 @@ int main(void)
     osc_b.SetAmp(0.25);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

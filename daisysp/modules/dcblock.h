@@ -1,4 +1,4 @@
-// # dcblock
+// # DcBlock
 // 
 // Removes DC component of a signal
 // 
@@ -10,25 +10,25 @@
 
 namespace daisysp
 {
-	class dcblock
+	class DcBlock
 	{
 	public: 
-		dcblock() {};
-		~dcblock() {};
+		DcBlock() {};
+		~DcBlock() {};
 
-// ### init
+// ### Init
 // 
-// Initializes dcblock module
+// Initializes DcBlock module
 // 
 // ~~~~
-		void init(float sample_rate);
+		void Init(float sample_rate);
 // ~~~~
 
-// ### process
-// performs dcblock process 
+// ### Process
+// performs DcBlock Process 
 // 
 // ~~~~
-		float process(float in);
+		float Process(float in);
 // ~~~~
 
 		private:

@@ -23,7 +23,7 @@ static pluck plk;
 const float arpeggio[3] = { 48.0f, 52.0f, 55.0f };
 uint8_t arp_idx;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float sig_out, freq, trig;
     for (size_t i = 0; i < size; i += 2)
@@ -63,7 +63,7 @@ int main(void)
     arp_idx = 0;
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

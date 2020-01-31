@@ -1,4 +1,4 @@
-// # delayline
+// # DelayLine
 //
 // Simple Delay line.
 //
@@ -9,7 +9,7 @@
 // declaration example: (1 second of floats)
 //
 // ```C++
-// delayline<float, SAMPLE_RATE> del;
+// DelayLine<float, SAMPLE_RATE> del;
 // ```
 //
 // By: shensley
@@ -22,25 +22,25 @@
 namespace daisysp
 {
 template<typename T, size_t max_size>
-class delayline
+class DelayLine
 {
     public:
-    delayline() { }
-    ~delayline() { }
+    DelayLine() { }
+    ~DelayLine() { }
 
-// ### init
+// ### Init
 // initializes the delay line by clearing the values within, and setting delay to 1 sample.
 // ~~~~
-    void init()
+    void Init()
 // ~~~~
     {
-        reset();
+        Reset();
     }
 
-// ### reset
+// ### Reset
 // clears buffer, sets write ptr to 0, and delay to 1 sample.
 // ~~~~
-    void reset() {
+    void Reset() {
 // ~~~~
         for (size_t i = 0; i < max_size; i++)
         {
@@ -50,12 +50,12 @@ class delayline
         delay_ = 1;
     }
 
-// ### set_delay
+// ### SetDelay
 // sets the delay time in samples
 //
 // If a float is passed in, a fractional component will be calculated for interpolating the delay line.
 // ~~~~
-    inline void set_delay(size_t delay)
+    inline void SetDelay(size_t delay)
 // ~~~~
     {
         frac_ = 0.0f;
@@ -63,7 +63,7 @@ class delayline
     }
 
 // ~~~~
-    inline void set_delay(float delay)
+    inline void SetDelay(float delay)
 // ~~~~
     {
         int32_t int_delay = static_cast<int32_t>(delay);
@@ -71,20 +71,20 @@ class delayline
         delay_ = static_cast<size_t>(int_delay) < max_size ? int_delay : max_size - 1;
     }
 
-// ### write
+// ### Write
 // writes the sample of type T to the delay line, and advances the write ptr
 // ~~~~
-    inline void write(const T sample) 
+    inline void Write(const T sample) 
 // ~~~~
     {
         line_[write_ptr_] = sample;
         write_ptr_ = (write_ptr_ - 1 + max_size) % max_size;
     }
 
-// ### read 
+// ### Read 
 // returns the next sample of type T in the delay line, interpolated if necessary.
 // ~~~~
-    inline const T read() const
+    inline const T Read() const
 // ~~~~
     {
         T a = line_[(write_ptr_ + delay_) % max_size];

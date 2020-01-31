@@ -6,7 +6,7 @@ using namespace daisysp;
 static daisy_handle seed;
 static whitenoise nse;
  
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
     float sig;
 
@@ -29,7 +29,7 @@ int main(void)
     nse.init();
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

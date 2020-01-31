@@ -17,7 +17,7 @@ static AdEnv env;
 static Oscillator osc;
 static metro tick;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float osc_out, env_out;
     for (size_t i = 0; i < size; i += 2)
@@ -61,7 +61,7 @@ int main(void)
     osc.SetAmp(0.25);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

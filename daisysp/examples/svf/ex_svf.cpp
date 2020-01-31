@@ -9,7 +9,7 @@ static daisy_handle seed;
 Oscillator osc;
 svf filt;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
     float sig;
 
@@ -43,7 +43,7 @@ int main(void)
     filt.set_drive(0.8);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     dsy_adc_start();
 

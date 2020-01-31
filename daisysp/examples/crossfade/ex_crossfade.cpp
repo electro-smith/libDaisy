@@ -7,7 +7,7 @@ static daisy_handle seed;
 static CrossFade cfade;
 static Oscillator osc_sine, osc_saw, lfo;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float saw, sine, pos, output;
     for (size_t i = 0; i < size; i += 2)
@@ -60,7 +60,7 @@ int main(void)
     lfo.SetAmp(1);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

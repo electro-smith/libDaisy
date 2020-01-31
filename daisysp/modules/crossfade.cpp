@@ -1,5 +1,5 @@
 #include <math.h>
-#include "CrossFade.h"
+#include "crossfade.h"
 
 #define REALLYSMALLFLOAT 0.000001f
 

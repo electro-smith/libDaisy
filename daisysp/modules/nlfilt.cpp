@@ -10,10 +10,10 @@
 
 using namespace daisysp;
 
-void nlfilt::init()
+void NlFilt::Init()
 {
 	point_ = 0;  // Set delay pointer
-    set();
+    Set();
 	//dsy_nlfilt_set(p);  // Setup Delay
 	// For Now control pointers and i/o will be setup externally
 }
@@ -22,7 +22,7 @@ void nlfilt::init()
 /* Revised version due to Risto Holopainen 12 Mar 2004 */
 /* Y{n} =tanh(a Y{n-1} + b Y{n-2} + d Y^2{n-L} + X{n} - C) */
 
-void nlfilt::process_block(float *in, float *out, size_t size)
+void NlFilt::ProcessBlock(float *in, float *out, size_t size)
 {
 	//uint32_t offset = _h.insdshead->ksmps_offset;
 	//uint32_t early  = _h.insdshead->ksmps_no_end;
@@ -94,7 +94,7 @@ void nlfilt::process_block(float *in, float *out, size_t size)
 	point_ = point;
 } 
 
-int32_t nlfilt::set()
+int32_t NlFilt::Set()
 {
 	// Initializes delay buffer.
 	memset(delay_, 0, MAX_DELAY * sizeof(float));  // Memset 

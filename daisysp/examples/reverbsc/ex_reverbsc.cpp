@@ -7,7 +7,7 @@ static daisy_handle seed;
 
 reverbsc verb;
  
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
     for (size_t i = 0; i < size; i += 2)
     {
@@ -24,7 +24,7 @@ int main(void)
     verb.set_lpfreq(18000.0f);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

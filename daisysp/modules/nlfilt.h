@@ -1,6 +1,6 @@
-// # nlfilt
+// # NlFilt
 //
-// port by: stephen hensley, December 2019
+// port by: Stephen Hensley, December 2019
 //
 // Non-linear filter. 
 //
@@ -33,33 +33,33 @@
 
 namespace daisysp 
 {
-    class nlfilt
+    class NlFilt
     {
         public:
 
-// ### init
-// Initializes the nlfilt object.
+// ### Init
+// Initializes the NlFilt object.
 //
 // ~~~~
-        void init();
+        void Init();
 // ~~~~
 
-// ### process
+// ### ProcessBlock
 // Process the array pointed to by \*in and updates the output to \*out;
 //
 // This works on a block of audio at once, the size of which is set with the size. 
 // ~~~~
-        void process_block(float *in, float *out, size_t size);
+        void ProcessBlock(float *in, float *out, size_t size);
 // ~~~~
 //
 // ## setters
 //
-// ### set_coefficients
+// ### SetCoefficients
 //
 // inputs these are the five coefficients for the filter.
 //
 // ~~~~
-        inline void set_coefficients(float a, float b, float d, float C, float L)
+        inline void SetCoefficients(float a, float b, float d, float C, float L)
 // ~~~~
         {
             a_ = a;
@@ -72,25 +72,25 @@ namespace daisysp
 // ### individual setters for each coefficients.
 //
 // ~~~~
-        inline void set_a(float a) { a_ = a; }
+        inline void SetA(float a) { a_ = a; }
 // ~~~~
 // ~~~~
-        inline void set_b(float b) { b_ = b; }
+        inline void SetB(float b) { b_ = b; }
 // ~~~~
 // ~~~~
-        inline void set_d(float d) { d_ = d; }
+        inline void SetD(float d) { d_ = d; }
 // ~~~~
 // ~~~~
-        inline void set_C(float C) { C_ = C; }
+        inline void SetC(float C) { C_ = C; }
 // ~~~~
 // ~~~~
-        inline void set_L(float L) { L_ = L; }
+        inline void SetL(float L) { L_ = L; }
 // ~~~~
 
 
         private:
 
-        int32_t set();
+        int32_t Set();
 
 		float in_, a_, b_, d_, C_, L_;
 		float delay_[DSY_NLFILT_MAX_DELAY];

@@ -7,7 +7,7 @@ static daisy_handle seed;
 static tone flt;
 static Oscillator osc, lfo;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float saw, freq, output;
     for (size_t i = 0; i < size; i += 2)
@@ -47,7 +47,7 @@ int main(void)
     osc.SetAmp(0.25);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);
