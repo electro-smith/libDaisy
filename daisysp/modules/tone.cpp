@@ -3,7 +3,7 @@
 
 using namespace daisysp;
 
-void tone::init(float sample_rate)
+void Tone::Init(float sample_rate)
 {
     prevout_ = 0.0f;
     freq_ = 100.0f;
@@ -12,7 +12,7 @@ void tone::init(float sample_rate)
     sample_rate_ = sample_rate;
 }
 
-float tone::process(float &in)
+float Tone::Process(float &in)
 {
     float out;
 
@@ -22,7 +22,7 @@ float tone::process(float &in)
     return out;
 }
 
-void tone::calculate_coefficients()
+void Tone::CalculateCoefficients()
 {
     float b, c1, c2;
     b = 2.0f - cosf(2.0f * (float)M_PI * freq_ / sample_rate_);

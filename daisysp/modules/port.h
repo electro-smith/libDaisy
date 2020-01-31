@@ -1,4 +1,4 @@
-// # port
+// # Port
 // Applies portamento to an input signal. At each new step value, the input is low-pass filtered to 
 // move towards that value at a rate determined by ihtim. ihtim is the half-time of the 
 // function (in seconds), during which the curve will traverse half the distance towards the new value, 
@@ -22,15 +22,15 @@
 
 namespace daisysp
 {
-	class port
+	class Port
 	{
 	public:
-		port() {}
-		~port() {}
+		Port() {}
+		~Port() {}
 
-// ### init
+// ### Init
 //
-// Initializes port module
+// Initializes Port module
 // 
 // Arguments:
 // 
@@ -38,32 +38,32 @@ namespace daisysp
 // - htime: half-time of the function, in seconds.
 
 // ~~~~
-		void init(float sample_rate, float htime);
+		void Init(float sample_rate, float htime);
 // ~~~~
 
-// ### process
+// ### Process
 // Applies portamento to input signal and returns processed signal. 
 
 // ~~~~
-		float process(float in);
+		float Process(float in);
 // ~~~~
 
 // ## Setters
 
-// ### set_htime
+// ### SetHtime
 // Sets htime
 
 // ~~~~
-		inline void set_htime(float htime) { htime_ = htime; }
+		inline void SetHtime(float htime) { htime_ = htime; }
 // ~~~~
 
 // ## Getters
 
-// ### get_htime
+// ### GetHtime
 // returns current value of htime
 
 // ~~~~
-		inline float get_htime() { return htime_; }
+		inline float GetHtime() { return htime_; }
 // ~~~~
 	private:
 		float htime_;
