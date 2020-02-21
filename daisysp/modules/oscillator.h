@@ -92,6 +92,20 @@ class Oscillator
     float Process();
     // ~~~~
 
+    // ### PhaseAdd
+    //
+    // Adds a value 0.0-1.0 (mapped to 0.0-TWO_PI) to the current phase. Useful for PM and "FM" synthesis.
+    // ~~~~
+    void PhaseAdd(float _phase) { phase_ += (_phase * float(M_TWOPI)); }
+    // ~~~~
+
+    // ### Reset
+    //
+    // Resets the phase to the input argument. If no argument is present, it will reset phase to 0.0;
+    // ~~~~
+    void Reset(float _phase = 0.0f) { phase_ = _phase; }
+    // ~~~~
+
   private:
     float   CalcPhaseInc(float f);
     uint8_t waveform_;
