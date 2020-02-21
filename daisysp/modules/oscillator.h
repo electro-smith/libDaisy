@@ -49,6 +49,7 @@ class Oscillator
     // ~~~~
     {
         sr_        = sample_rate;
+        sr_recip_  = 1.0f / sample_rate;
         freq_      = 100.0f;
         amp_       = 0.5f;
         phase_     = 0.0f;
@@ -95,7 +96,7 @@ class Oscillator
     float   CalcPhaseInc(float f);
     uint8_t waveform_;
     float   amp_, freq_;
-    float   sr_, phase_, phase_inc_;
+    float   sr_, sr_recip_, phase_, phase_inc_;
     float   last_out_, last_freq_;
 };
 } // namespace daisysp
