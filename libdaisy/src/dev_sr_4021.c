@@ -1,4 +1,5 @@
 #include "dev_sr_4021.h"
+#include "per_tim.h"
 
 void dsy_sr_4021_init(dsy_sr_4021_handle *sr)
 {
@@ -31,17 +32,22 @@ void dsy_sr_4021_init(dsy_sr_4021_handle *sr)
 
 // Data read in so that daisy chain device states are sequential, 
 // parallel data is offset by 8*num_daisychain
+// takes about 18-20us * num_daisychained
 void	dsy_sr_4021_update(dsy_sr_4021_handle *sr) 
 {
 	uint8_t idx;
 	// Strobe CS Pin
+	dsy_gpio_write(&sr->clk, 0);
 	dsy_gpio_write(&sr->cs, 1);
-	dsy_gpio_write(&sr->cs, 0);
+    dsy_tim_delay_tick(100);
+    dsy_gpio_write(&sr->cs, 0);
 	// Clock through data.
 	for(uint8_t i = 0; i < 8 * sr->num_daisychained; i++) 
 	{
+        //dsy_tim_delay_tick(50);
+        // Grab data from each parallel data pin.
 		dsy_gpio_write(&sr->clk, 0);
-		// Grab data from each parallel data pin.
+		dsy_tim_delay_tick(100);
 		for(uint8_t j = 0; j < sr->num_parallel; j++) 
 		{
 			idx = (8*sr->num_daisychained - 1) - i;
