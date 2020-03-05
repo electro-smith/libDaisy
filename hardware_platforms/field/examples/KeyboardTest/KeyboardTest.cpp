@@ -1,7 +1,8 @@
 #include "daisy_field.h"
 #include "daisysp.h"
-daisy_field hw;
+
 #define NUM_VOICES 16
+daisy_field hw;
 
 
 struct voice
@@ -28,13 +29,10 @@ struct voice
     bool                on_;
 };
 
-//daisysp::Oscillator osc[8];
 voice v[NUM_VOICES];
-
-
 uint8_t buttons[16];
-
 // Use bottom row to set major scale
+// Top row chromatic notes, and the inbetween notes are just the octave.
 float scale[16]   = {0.f,
                    2.f,
                    4.f,
@@ -54,7 +52,7 @@ float active_note = scale[0];
 
 int8_t octaves = 0;
 
-static daisysp::reverbsc verb;
+static daisysp::ReverbSc verb;
 // Use two side buttons to change octaves.
 daisy::AnalogControl knobs[8];
 daisy::AnalogControl cvs[4];
@@ -134,7 +132,7 @@ void AudioCallback(float *in, float *out, size_t size)
                 sig += v[i].process();
         }
         send = sig * 0.35f;
-        verb.process(send, send, &wetl, &wetr);
+        verb.Process(send, send, &wetl, &wetr);
         //        wetl = wetr = sig;
         if(use_verb)
             wetl = wetr = 0.0f;
@@ -183,9 +181,9 @@ int main(void)
         v[i].init();
         v[i].set_note((12.0f * octaves) + 24.0f + scale[i]);
     }
-    verb.init(DSY_AUDIO_SAMPLE_RATE);
-    verb.set_feedback(0.94f);
-    verb.set_lpfreq(8000.0f);
+    verb.Init(DSY_AUDIO_SAMPLE_RATE);
+    verb.SetFeedback(0.94f);
+    verb.SetLpFreq(8000.0f);
     // Init muxsel1
     dsy_gpio foo;
     foo.mode = DSY_GPIO_MODE_OUTPUT_PP;
