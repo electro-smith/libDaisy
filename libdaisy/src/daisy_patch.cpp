@@ -4,7 +4,11 @@ using namespace daisy;
 
 void daisy_patch::Init() 
 {
-	daisy_seed_init(&seed);
+    size_t blocksize;
+    // Audio Blocksize 48 by default.
+    blocksize = 48; // (only used for CV inits here).
+	// Initialize Hardware
+    daisy_seed_init(&seed);
 	// Pin config for everything
     gate_in1.pin       = {GATE_1_PORT, GATE_1_PIN};
     gate_in2.pin       = {GATE_2_PORT, GATE_2_PIN};
@@ -48,20 +52,20 @@ void daisy_patch::Init()
 	// Higher level hid_ctrls
 	for(uint8_t i = 0; i < KNOB_LAST; i++)
 	{
-		pctrl[i].Init(adc_ptr(i), SAMPLE_RATE);
+		pctrl[i].Init(adc_ptr(i), SAMPLE_RATE/blocksize);
 	}
 	for(uint8_t i = CV_1; i < CV_LAST; i++)
 	{
-		pctrl[i].InitBipolarCv(adc_ptr(i), SAMPLE_RATE);
+		pctrl[i].InitBipolarCv(adc_ptr(i), SAMPLE_RATE/blocksize);
 	}
-	knob1.Init(adc_ptr(KNOB_1), SAMPLE_RATE);
-	knob2.Init(adc_ptr(KNOB_2), SAMPLE_RATE);
-	knob3.Init(adc_ptr(KNOB_3), SAMPLE_RATE);
-	knob4.Init(adc_ptr(KNOB_4), SAMPLE_RATE);
-	cv1.InitBipolarCv(adc_ptr(CV_1), SAMPLE_RATE);
-	cv2.InitBipolarCv(adc_ptr(CV_2), SAMPLE_RATE);
-	cv3.InitBipolarCv(adc_ptr(CV_3), SAMPLE_RATE);
-	cv4.InitBipolarCv(adc_ptr(CV_4), SAMPLE_RATE);
+	knob1.Init(adc_ptr(KNOB_1), SAMPLE_RATE/blocksize);
+	knob2.Init(adc_ptr(KNOB_2), SAMPLE_RATE/blocksize);
+	knob3.Init(adc_ptr(KNOB_3), SAMPLE_RATE/blocksize);
+	knob4.Init(adc_ptr(KNOB_4), SAMPLE_RATE/blocksize);
+	cv1.InitBipolarCv(adc_ptr(CV_1), SAMPLE_RATE/blocksize);
+	cv2.InitBipolarCv(adc_ptr(CV_2), SAMPLE_RATE/blocksize);
+	cv3.InitBipolarCv(adc_ptr(CV_3), SAMPLE_RATE/blocksize);
+	cv4.InitBipolarCv(adc_ptr(CV_4), SAMPLE_RATE/blocksize);
 
 	// LEDs
 	uint8_t addr = 0x00;
