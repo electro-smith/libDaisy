@@ -4,8 +4,13 @@
 using namespace daisy;
 using namespace daisysp;
 
-#define NUM_VOICES 16
+#define LEFT (i)
+#define RIGHT (i+1)
 
+#define NUM_VOICES 32
+#define MAX_DELAY ((size_t)(10.0f * SAMPLE_RATE))
+
+// Simple Gate In -- to be moved to a libdaisy class soon.
 struct GateIn
 {
     void Init(dsy_gpio *gatepin)
@@ -24,15 +29,14 @@ struct GateIn
         return out;
     }
 
-
     dsy_gpio *pin;
     uint8_t   prev_state;
 };
 
-// Synthesis w/ pseudo-polyphony
+// Synthesis w/ pseudo-polyphony and decay control.
+// Notes are set with MIDI note numbers.
 struct PolyPluck
 {
-    // Inits NUM_VOICES plucks.
     void Init()
     {
         active_voice = 0;
@@ -42,19 +46,11 @@ struct PolyPluck
         {
             plk[i].Init(SAMPLE_RATE, plkbuff[i], 256, PLUCK_MODE_RECURSIVE);
             plk[i].SetDamp(0.85f);
-            plk[i].SetAmp(0.25f);
+            plk[i].SetAmp(0.18f);
             plk[i].SetDecay(0.85f);
         }
         blk.Init(SAMPLE_RATE);
     }
-
-    void SetParams(float damp, float decay)
-    {
-        p_damp  = damp;
-        p_decay = decay;
-    }
-    void SetDecay(float p) { p_damp = p; }
-    // Triggers new note with specified midi note
     float Process(float trig, float note)
     {
         float sig, tval;
@@ -77,70 +73,85 @@ struct PolyPluck
         }
         return blk.Process(sig);
     }
-    Pluck  plk[NUM_VOICES];
+    void SetDecay(float p) { p_damp = p; }
+	// Member Variables
     DcBlock blk;
+    Pluck  plk[NUM_VOICES];
     float  plkbuff[NUM_VOICES][256];
     float  p_damp, p_decay;
     size_t active_voice;
 };
 
-DelayLine<float, (size_t)(SAMPLE_RATE * 10.0f)> DSY_SDRAM_BSS delay;
-//DelayLine<float, (size_t)(SAMPLE_RATE * 1.f)> delay;
-
 // Hardware
 daisy_patch hw;
 GateIn      trig_in;
+
 // Synthesis
 PolyPluck synth;
+// 10 second delay line on the external SDRAM
+DelayLine<float, MAX_DELAY> DSY_SDRAM_BSS delay;
 ReverbSc  verb;
 
+// Persistent filtered value for smooth delay time changes.
 float smooth_time;
 
 void AudioCallback(float *in, float *out, size_t size)
 {
-    float sig, delsig;
-    float trig, nn, decay;
-    float deltime, delfb, kval;
-    float dry, send, wetl, wetr;
+    float sig, delsig; // Mono Audio Vars
+    float trig, nn, decay; // Pluck Vars
+    float deltime, delfb, kval; // Delay Vars
+    float dry, send, wetl, wetr; // Effects Vars
+
+	// Handle Triggering the Plucks
     trig = 0.0f;
-    sig  = 0.0f;
     hw.button1.Debounce();
     if(hw.button1.RisingEdge() || trig_in.Trig())
-    {
         trig = 1.0f;
-    }
+
 	// Set MIDI Note for new Pluck notes.
     nn = 24.0f + hw.knob1.Process() * 60.0f;
     nn += hw.cv3.Process() * 60.0f;
     nn = static_cast<int32_t>(nn); // Quantize to semitones
+
     // Read knobs for decay;
     decay = 0.5f + (hw.knob2.Process() * 0.5f);
     synth.SetDecay(decay);
+
     // Get Delay Parameters from knobs.
     kval    = hw.knob3.Process();
     deltime = (0.001f + (kval*kval) * 5.0f) * SAMPLE_RATE;
     delfb   = hw.knob4.Process();
+
     // Synthesis.
     for(size_t i = 0; i < size; i += 2)
     {
+		// Smooth delaytime, and set.
         fonepole(smooth_time, deltime, 0.0005f);
         delay.SetDelay(smooth_time);
+
+		// Synthesize Plucks
         sig        = synth.Process(trig, nn);
+        if(trig)
+            trig = 0.0f; // Clear trig to avoid multiple trigs.
+
+		// Handle Delay
 		delsig     = delay.Read();
         delay.Write(sig + (delsig * delfb));
-        if(trig)
-            trig = 0.0f;
+
+		// Create Reverb Send
         dry        = sig + delsig;
         send       = dry * 0.6f;
         verb.Process(send,send, &wetl, &wetr);
-        out[i]     = dry + wetl;
-        out[i + 1] = dry + wetr;
+
+		// Output 
+        out[LEFT]     = dry + wetl;
+        out[RIGHT] = dry + wetr;
     }
 }
 
-
 int main(void)
 {
+	// Init everything.
     hw.Init();
     trig_in.Init(&hw.gate_in1);
     synth.Init();
@@ -149,6 +160,7 @@ int main(void)
     verb.Init(SAMPLE_RATE);
     verb.SetFeedback(0.85f);
     verb.SetLpFreq(2000.0f);
+    // Start the ADC and Audio Peripherals on the Hardware
     hw.StartAdc();
     hw.StartAudio(AudioCallback);
     for(;;) {}
