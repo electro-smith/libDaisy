@@ -33,61 +33,12 @@ struct GateIn
     uint8_t   prev_state;
 };
 
-// Synthesis w/ pseudo-polyphony and decay control.
-// Notes are set with MIDI note numbers.
-struct PolyPluck
-{
-    void Init()
-    {
-        active_voice = 0;
-        p_damp       = 0.95f;
-        p_decay      = 0.75f;
-        for(int i = 0; i < NUM_VOICES; i++)
-        {
-            plk[i].Init(SAMPLE_RATE, plkbuff[i], 256, PLUCK_MODE_RECURSIVE);
-            plk[i].SetDamp(0.85f);
-            plk[i].SetAmp(0.18f);
-            plk[i].SetDecay(0.85f);
-        }
-        blk.Init(SAMPLE_RATE);
-    }
-    float Process(float trig, float note)
-    {
-        float sig, tval;
-        sig = 0.0f;
-        if(trig > 0.0f)
-        {
-            // increment active voice
-            active_voice = (active_voice + 1) % NUM_VOICES;
-            // set new voice to new note
-            plk[active_voice].SetDamp(p_damp);
-            plk[active_voice].SetDecay(p_decay);
-            plk[active_voice].SetAmp(0.25f);
-        }
-		plk[active_voice].SetFreq(mtof(note));
-
-        for(int i = 0; i < NUM_VOICES; i++)
-        {
-            tval = (trig > 0.0f && i == active_voice) ? 1.0f : 0.0f;
-            sig += plk[i].Process(tval);
-        }
-        return blk.Process(sig);
-    }
-    void SetDecay(float p) { p_damp = p; }
-	// Member Variables
-    DcBlock blk;
-    Pluck  plk[NUM_VOICES];
-    float  plkbuff[NUM_VOICES][256];
-    float  p_damp, p_decay;
-    size_t active_voice;
-};
-
 // Hardware
 daisy_patch hw;
 GateIn      trig_in;
 
 // Synthesis
-PolyPluck synth;
+PolyPluck<NUM_VOICES> synth;
 // 10 second delay line on the external SDRAM
 DelayLine<float, MAX_DELAY> DSY_SDRAM_BSS delay;
 ReverbSc  verb;
@@ -131,8 +82,6 @@ void AudioCallback(float *in, float *out, size_t size)
 
 		// Synthesize Plucks
         sig        = synth.Process(trig, nn);
-        if(trig)
-            trig = 0.0f; // Clear trig to avoid multiple trigs.
 
 		// Handle Delay
 		delsig     = delay.Read();
@@ -154,7 +103,7 @@ int main(void)
 	// Init everything.
     hw.Init();
     trig_in.Init(&hw.gate_in1);
-    synth.Init();
+    synth.Init(SAMPLE_RATE);
     delay.Init();
     delay.SetDelay(SAMPLE_RATE * 0.8f); // half second delay
     verb.Init(SAMPLE_RATE);

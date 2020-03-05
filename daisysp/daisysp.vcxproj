@@ -66,7 +66,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="daisysp.h" />
-    <ClInclude Include="fft.h" />
     <ClInclude Include="modules\adenv.h" />
     <ClInclude Include="modules\compressor.h" />
     <ClInclude Include="modules\crossfade.h" />
@@ -74,8 +73,6 @@
     <ClInclude Include="modules\decimator.h" />
     <ClInclude Include="modules\delayline.h" />
     <ClInclude Include="modules\dsp.h" />
-    <ClInclude Include="modules\dsp_lut.h" />
-    <ClInclude Include="modules\dsy_pstream.h" />
     <ClInclude Include="modules\limiter.h" />
     <ClInclude Include="modules\line.h" />
     <ClInclude Include="modules\metro.h" />
@@ -85,6 +82,7 @@
     <ClInclude Include="modules\phasor.h" />
     <ClInclude Include="modules\pitchshifter.h" />
     <ClInclude Include="modules\pluck.h" />
+    <ClInclude Include="modules\PolyPluck.h" />
     <ClInclude Include="modules\port.h" />
     <ClInclude Include="modules\reverbsc.h" />
     <ClInclude Include="modules\svf.h" />
@@ -105,7 +103,6 @@
     <ClCompile Include="modules\crossfade.cpp" />
     <ClCompile Include="modules\dcblock.cpp" />
     <ClCompile Include="modules\decimator.cpp" />
-    <ClCompile Include="modules\dsp_lut.cpp" />
     <ClCompile Include="modules\limiter.cpp" />
     <ClCompile Include="modules\line.cpp" />
     <ClCompile Include="modules\metro.cpp" />

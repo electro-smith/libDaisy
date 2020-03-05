@@ -42,7 +42,7 @@ class AdEnv
     AdEnv() {}
     ~AdEnv() {}
 
-    // ### init
+    // ### Init
     //
     // Initializes the ad envelope
     //
@@ -60,13 +60,13 @@ class AdEnv
     void Init(float sample_rate);
     // ~~~~
 
-    // ### process
+    // ### Process
     // processes the current sample of the envelope. Returns the current envelope value. This should be called once per sample period.
     // ~~~~
     float Process();
     // ~~~~
 
-    // ### trigger
+    // ### Trigger
     // Starts or retriggers the envelope.
     // ~~~~
     inline void Trigger() { trigger_ = 1; }

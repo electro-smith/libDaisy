@@ -55,6 +55,7 @@ typedef struct {
 #include "modules/compressor.h"
 #include "modules/pitchshifter.h"
 #include "modules/pluck.h"
+#include "modules/PolyPluck.h"
 
 #endif
 #endif
