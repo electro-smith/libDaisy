@@ -1,4 +1,4 @@
-// # whitenoise
+// # WhiteNoise
 // 
 // fast white noise generator
 // I think this came from musicdsp.org at some point
@@ -10,42 +10,42 @@
 #ifdef __cplusplus
 namespace daisysp
 {
-	class whitenoise
+	class WhiteNoise
 	{
 	  public:
-		whitenoise() {}
-		~whitenoise() {}
+		WhiteNoise() {}
+		~WhiteNoise() {}
 
-// ### init
-// Initializes the whitenoise object
+// ### Init
+// Initializes the WhiteNoise object
 // ~~~~
-		void init()
+		void Init()
 // ~~~~
 		{
-			amp		 = 1.0f;
-			randseed = 1;
+			amp_	  = 1.0f;
+			randseed_ = 1;
 		}
 
-// ### set_amp
+// ### SetAmp
 // sets the amplitude of the noise output
 // ~~~~
-		inline void set_amp(float a) { amp = a; }
+		inline void SetAmp(float a) { amp_ = a; }
 // ~~~~
 
-// ### process
-// returns a new sample of noise in the range of -amp to amp
+// ### Process
+// returns a new sample of noise in the range of -amp_ to amp_
 // ~~~~
-		inline float process() 
+		inline float Process() 
 // ~~~~
 		{ 
-			randseed *= 16807;
-			return (randseed * coeff) * amp;
+			randseed_ *= 16807;
+			return (randseed_ * coeff_) * amp_;
 		}
 
 	  private:
-		static constexpr float coeff = 4.6566129e-010f;
-		float   amp;
-		int32_t randseed;
+		static constexpr float coeff_ = 4.6566129e-010f;
+		float   amp_;
+		int32_t randseed_;
 	};
 } // namespace daisysp
 #endif

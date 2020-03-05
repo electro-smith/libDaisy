@@ -14,10 +14,10 @@ using namespace daisysp;
 
 static daisy_handle seed;
 static Oscillator osc;
-static decimator decim;
-static phasor phs;
+static Decimator decim;
+static Phasor phs;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float osc_out, decimated_out;
     float downsample_amt;
@@ -25,11 +25,11 @@ static void audioCallback(float *in, float *out, size_t size)
     {
         // Generate a pure sine wave
     	osc_out = osc.Process();
-        // Modulate downsample amount via phasor
-        downsample_amt = phs.process();
-        decim.set_downsample_factor(downsample_amt);
+        // Modulate downsample amount via Phasor
+        downsample_amt = phs.Process();
+        decim.SetDownsampleFactor(downsample_amt);
         // downsample and bitcrush
-        decimated_out = decim.process(osc_out);
+        decimated_out = decim.Process(osc_out);
         // outputs
         out[LEFT] = decimated_out;
         out[RIGHT] = decimated_out;
@@ -41,19 +41,19 @@ int main(void)
     // initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
     osc.Init(SAMPLE_RATE);
-    phs.init(SAMPLE_RATE, 0.5f);
-    decim.init();
+    phs.Init(SAMPLE_RATE, 0.5f);
+    decim.Init();
 
     // Set parameters for oscillator
     osc.SetWaveform(osc.WAVE_SIN);
     osc.SetFreq(220);
     osc.SetAmp(0.25);
     // Set downsampling, and bit crushing values.
-    decim.set_downsample_factor(0.4f);
-    decim.set_bits_to_crush(8);
+    decim.SetDownsampleFactor(0.4f);
+    decim.SetBitsToCrush(8);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

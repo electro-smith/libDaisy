@@ -9,7 +9,7 @@
 
 using namespace daisysp;
 
-void pluck::reinit()
+void Pluck::Reinit()
 {
     int n;
     float val = 0;
@@ -25,7 +25,7 @@ void pluck::reinit()
     phs256_ = 0;
 }
 
-void pluck::init(float sample_rate, float *buf, int32_t npts, int32_t mode)
+void Pluck::Init(float sample_rate, float *buf, int32_t npts, int32_t mode)
 {
     amp_ = 0.5f;
     freq_ = 300;
@@ -37,13 +37,13 @@ void pluck::init(float sample_rate, float *buf, int32_t npts, int32_t mode)
     npts_ = npts;
     buf_ = buf;
 
-    reinit();
+    Reinit();
     /* tuned pitch convt */
     sicps_ = (npts * 256.0f + 128.0f) * (1.0f / sample_rate_);
     init_ = 1;
 }
 
-float pluck::process(float &trig)
+float Pluck::Process(float &trig)
 {
     float *fp, out;
     int32_t phs256, phsinc, ltwopi, offset;
@@ -57,7 +57,7 @@ float pluck::process(float &trig)
 
     if(trig != 0) {
         init_ = 0;
-        reinit();
+        Reinit();
     }
 
     if(init_) {

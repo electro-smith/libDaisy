@@ -18,17 +18,17 @@ static Compressor comp;
 // Helper Modules
 static AdEnv env;
 static Oscillator osc_a, osc_b;
-static metro tick;
+static Metro tick;
 
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float osc_a_out, osc_b_out, env_out, sig_out;
     for (size_t i = 0; i < size; i += 2)
     {
         // When the metro ticks: 
         // trigger the envelope to start
-        if (tick.process())
+        if (tick.Process())
         {
             env.Trigger();
         }
@@ -57,7 +57,7 @@ int main(void)
     osc_b.Init(SAMPLE_RATE);
 
     // Set up metro to pulse every second
-    tick.init(1.0f, SAMPLE_RATE);    
+    tick.Init(1.0f, SAMPLE_RATE);    
 
     // set compressor parameters
     comp.SetThreshold(-64.0f);
@@ -81,7 +81,7 @@ int main(void)
     osc_b.SetAmp(0.25);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

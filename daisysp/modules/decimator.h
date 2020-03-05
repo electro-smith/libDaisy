@@ -1,4 +1,4 @@
-// # decimator
+// # Decimator
 // Performs downsampling and bitcrush effects
 
 #pragma once
@@ -9,79 +9,79 @@
 
 namespace daisysp
 {
-	class decimator
+	class Decimator
 	{
 	public:
-		decimator() {}
-		~decimator() {}
+		Decimator() {}
+		~Decimator() {}
 
-// ### init
+// ### Init
 // Initializes downsample module
 // ~~~~
-		void init();
+		void Init();
 // ~~~~
 
-// ### process
+// ### Process
 // Applies downsample and bitcrush effects to input signal.
 // Returns one sample. This should be called once per sample period. 
 // ~~~~
-		float process(float input);
+		float Process(float input);
 // ~~~~
 
 // ## Mutators
 
-// ### set_downsample_factor
+// ### SetDownsampleFactor
 // Sets amount of downsample 
 // Input range: 
 
 // ~~~~
-		inline void set_downsample_factor(float downsample_factor) 
+		inline void SetDownsampleFactor(float downsample_factor) 
 // ~~~~
 		{
 			downsample_factor_ = downsample_factor;
 		}
 
-// ### set_bitcrush_factor
+// ### SetBitcrushFactor
 // Sets amount of bitcrushing 
 // Input range: 
 
 // ~~~~
-		inline void set_bitcrush_factor(float bitcrush_factor)
+		inline void SetBitcrushFactor(float bitcrush_factor)
 // ~~~~
 		{
 			//			bitcrush_factor_ = bitcrush_factor;
-			bits_to_crush_ = bitcrush_factor * k_max_bits_to_crush;
+			bits_to_crush_ = bitcrush_factor * kMaxBitsToCrush;
 		}
 
-// ### set_bits_to_crush
+// ### SetBitsToCrush
 // Sets the exact number of bits to crush
 // 
 // 0-16 bits
 // ~~~~
-		inline void set_bits_to_crush(const uint8_t &bits) 
+		inline void SetBitsToCrush(const uint8_t &bits) 
 // ~~~~
 		{
-			bits_to_crush_ = bits <= k_max_bits_to_crush ? bits : k_max_bits_to_crush;
+			bits_to_crush_ = bits <= kMaxBitsToCrush ? bits : kMaxBitsToCrush;
 		}
 
 // ## Accessors
 
-// ### get_downsample_factor
+// ### GetDownsampleFactor
 // Returns current setting of downsample
 
 // ~~~~
-		inline float get_downsample_factor() { return downsample_factor_; }
+		inline float GetDownsampleFactor() { return downsample_factor_; }
 // ~~~~
 
-// ### get_bitcrush_factor
+// ### GetBitcrushFactor
 // Returns current setting of bitcrush
 
 // ~~~~
-		inline float get_bitcrush_factor() { return bitcrush_factor_; }
+		inline float GetBitcrushFactor() { return bitcrush_factor_; }
 // ~~~~
 
 	  private:
-		const uint8_t k_max_bits_to_crush = 16;
+		const uint8_t kMaxBitsToCrush = 16;
 		float downsample_factor_, bitcrush_factor_;
 		uint32_t bits_to_crush_;
 		float downsampled_, bitcrushed_;

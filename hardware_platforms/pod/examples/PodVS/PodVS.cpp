@@ -9,7 +9,7 @@ using namespace daisysp;
 
 daisy_patch	hw;
 Oscillator	 osc;
-whitenoise	 nse;
+WhiteNoise	 nse;
 static uint8_t wf;
 parameter	  param_freq, param_nse_amp, param_osc_amp, param_bright;
 parameter	  param_ampcv;
@@ -39,10 +39,10 @@ static void audio(float *in, float *out, size_t size)
 		// Set module parameters
 		osc.SetFreq(freq);
 		osc.SetAmp(oamp);
-		nse.set_amp(namp);
+		nse.SetAmp(namp);
 		// Process
 		sig	= osc.Process();
-		sig += nse.process();
+		sig += nse.Process();
 		out[i] = out[i+1] = sig;
 	}
 }
@@ -59,7 +59,7 @@ int main(void)
 	// Init Osc and Nse
 	dsy_tim_start();
 	osc.Init(SAMPLE_RATE);
-	nse.init();
+	nse.Init();
 	// Old style still 
 	dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audio);
 	dsy_audio_start(DSY_AUDIO_INTERNAL);

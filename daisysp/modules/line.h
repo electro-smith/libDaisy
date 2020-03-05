@@ -1,5 +1,5 @@
-// # line
-// creates a line segment signal
+// # Line
+// creates a Line segment signal
 
 #pragma once
 #ifndef LINE_H
@@ -9,36 +9,36 @@
 
 namespace daisysp
 {
-	class line
+	class Line
 	{
 	public:
-		line() {}
-		~line() {}
-// ### init
-// Initializes line module.
+		Line() {}
+		~Line() {}
+// ### Init
+// Initializes Line module.
 // ~~~~
-		void init(float sample_rate);
+		void Init(float sample_rate);
 // ~~~~
 
-// ### process
-// Processes line segment. Returns one sample.
+// ### Process
+// Processes Line segment. Returns one sample.
 //
-// value of finished will be updated to a 1, upon completion of the line's trajectory.
+// value of finished will be updated to a 1, upon completion of the Line's trajectory.
 // ~~~~
-		float process(uint8_t *finished);
+		float Process(uint8_t *finished);
 // ~~~~
 
-// ### start
-// Begin creation of line. 
+// ### Start
+// Begin creation of Line. 
 //
 // Arguments:
 //
 // - start - beginning value
 // - end - ending value
-// - dur - duration in seconds of line segment
+// - dur - duration in seconds of Line segment
 
 // ~~~~
-		void start(float start, float end, float dur);
+		void Start(float start, float end, float dur);
 // ~~~~
 
 	private:

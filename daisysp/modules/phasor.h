@@ -1,4 +1,4 @@
-// # phasor
+// # Phasor
 // Generates a normalized signal moving from 0-1 at the specified frequency.
 //
 // TODO:
@@ -15,70 +15,70 @@
 
 namespace daisysp
 {
-	class phasor
+	class Phasor
 	{
 	public:
-		phasor() {}
-		~phasor() {}
+		Phasor() {}
+		~Phasor() {}
 
-// ### init
+// ### Init
 // 
-// Initializes the phasor module
+// Initializes the Phasor module
 // 
 // sample rate, and freq are in Hz
 // 
 // initial phase is in radians
 // 
-// Additional init functions have defaults when arg is not specified:
+// Additional Init functions have defaults when arg is not specified:
 //
 // - phs = 0.0f
 // - freq = 1.0f
 
 // ~~~~
-		inline void init(float sample_rate, float freq, float initial_phase) 
+		inline void Init(float sample_rate, float freq, float initial_phase) 
 // ~~~~
 		{
 			sample_rate_ = sample_rate;
 			phs_ = initial_phase;
-			set_freq(freq);
+			SetFreq(freq);
 		}
 
 // ~~~~
-		inline void init(float sample_rate, float freq) 
+		inline void Init(float sample_rate, float freq) 
 // ~~~~
 		{
-            init(sample_rate, freq, 0.0f);
+            Init(sample_rate, freq, 0.0f);
 		}
 
 // ~~~~
-		inline void init(float sample_rate) 
+		inline void Init(float sample_rate) 
 // ~~~~
 		{ 
-            init(sample_rate, 1.0f, 0.0f);
+            Init(sample_rate, 1.0f, 0.0f);
 		}
 
 
-// ### process
-// processes phasor and returns current value
+// ### Process
+// processes Phasor and returns current value
 //
 // ~~~~
-		float process();
+		float Process();
 // ~~~~
 
 // ## Setters
 
-// ### set_freq
-// Sets frequency of the phasor in Hz
+// ### SetFreq
+// Sets frequency of the Phasor in Hz
 // ~~~~
-		void set_freq(float freq);
+		void SetFreq(float freq);
 // ~~~~
 
 // ## Getters
 
-// ### get_freq
+// ### GetFreq
 // Returns current frequency value in Hz
 // ~~~~
-		inline float get_freq() { return freq_; }
+		inline float GetFreq() { return freq_; }
 // ~~~~
 
 	private:

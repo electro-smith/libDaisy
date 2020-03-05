@@ -20,19 +20,19 @@ static daisy_handle seed;
 // Helper Modules
 static AdEnv env;
 static Oscillator osc;
-static metro tick;
+static Metro tick;
 
-// Declare a delayline of MAX_DELAY number of floats.
-static delayline<float, MAX_DELAY> del;
+// Declare a DelayLine of MAX_DELAY number of floats.
+static DelayLine<float, MAX_DELAY> del;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float osc_out, env_out, feedback, del_out, sig_out;
     for (size_t i = 0; i < size; i += 2)
     {
-        // When the metro ticks: 
+        // When the Metro ticks: 
         // trigger the envelope to start, and change freq of oscillator.
-        if (tick.process())
+        if (tick.Process())
         {
             float freq = rand() % 200;
             osc.SetFreq(freq + 100.0f);
@@ -45,13 +45,13 @@ static void audioCallback(float *in, float *out, size_t size)
     	osc_out = osc.Process();
 
         // Read from delay line
-        del_out = del.read();
+        del_out = del.Read();
         // Calculate output and feedback
         sig_out = del_out + osc_out;
         feedback = (del_out * 0.75f) + osc_out;
 
         // Write to the delay
-        del.write(feedback);
+        del.Write(feedback);
 
         // Output
         out[LEFT] = sig_out;
@@ -65,10 +65,10 @@ int main(void)
     daisy_seed_init(&seed);
     env.Init(SAMPLE_RATE);
     osc.Init(SAMPLE_RATE);
-    del.init();
+    del.Init();
 
-    // Set up metro to pulse every second
-    tick.init(1.0f, SAMPLE_RATE);    
+    // Set up Metro to pulse every second
+    tick.Init(1.0f, SAMPLE_RATE);    
 
     // set adenv parameters
     env.SetTime(ADENV_SEG_ATTACK, 0.001);
@@ -83,10 +83,10 @@ int main(void)
     osc.SetAmp(0.25);
 
     // Set Delay time to 0.75 seconds
-    del.set_delay(SAMPLE_RATE * 0.75f);
+    del.SetDelay(SAMPLE_RATE * 0.75f);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

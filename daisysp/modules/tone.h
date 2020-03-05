@@ -1,4 +1,4 @@
-// # tone
+// # Tone
 //
 // A first-order recursive low-pass filter with variable frequency response.
 // 
@@ -11,34 +11,34 @@
 
 namespace daisysp
 {
-	class tone
+	class Tone
 	{
 	public:
-		tone() {}
-		~tone() {}
-// ### init
+		Tone() {}
+		~Tone() {}
+// ### Init
 //
-// Initializes the tone module.
+// Initializes the Tone module.
 //
 // sample_rate - The sample rate of the audio engine being run. 
 // 
 // ~~~~
-		void init(float sample_rate);
+		void Init(float sample_rate);
 // ~~~~
 
-// ### process
+// ### Process
 //
 // Processes one sample through the filter and returns one sample.
 //
 // in - input signal 
 // 
 // ~~~~
-		float process(float &in);
+		float Process(float &in);
 // ~~~~
 
 // ## Setters
 // 
-// ### set_freq
+// ### SetFreq
 // 
 // Sets the cutoff frequency or half-way point of the filter.
 // 
@@ -47,25 +47,25 @@ namespace daisysp
 // - freq - frequency value in Hz. Range: Any positive value.
 //
 // ~~~~
-		inline void set_freq(float &freq) 
+		inline void SetFreq(float &freq) 
 // ~~~~
 		{
 			freq_ = freq;
-    		calculate_coefficients();
+    		CalculateCoefficients();
 		}
 
 // ## Getters
 // 
-// ### get_freq
+// ### GetFreq
 // 
 // Returns the current value for the cutoff frequency or half-way point of the filter.
 //
 // ~~~~
-		inline float get_freq() { return freq_; }
+		inline float GetFreq() { return freq_; }
 // ~~~~
 
 	private:
-		void calculate_coefficients();
+		void CalculateCoefficients();
 		float out_, prevout_, in_, freq_, c1_, c2_, sample_rate_;
 	};
 } // namespace daisysp

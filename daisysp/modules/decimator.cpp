@@ -2,7 +2,7 @@
 
 using namespace daisysp;
 
-void decimator::init()
+void Decimator::Init()
 {
 	downsample_factor_ = 1.0f;
 	bitcrush_factor_ = 0.0f;
@@ -12,7 +12,7 @@ void decimator::init()
 	threshold_ = 0;
 }
 
-float decimator::process(float input)
+float Decimator::Process(float input)
 {
 	int32_t temp;
 	//downsample

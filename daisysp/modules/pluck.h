@@ -1,5 +1,5 @@
 //
-// # pluck
+// # Pluck
 //
 // Produces a naturally decaying plucked string or drum sound based on the Karplus-Strong algorithms.
 // 
@@ -33,131 +33,132 @@ namespace daisysp
 	{
 		PLUCK_MODE_RECURSIVE,
 		PLUCK_MODE_WEIGHTED_AVERAGE,
+        PLUCK_LAST,
 	};
 // ~~~~
 
-	class pluck
+	class Pluck
 	{
 	public:
-		pluck() {}
-		~pluck() {}
+		Pluck() {}
+		~Pluck() {}
 
-// ### init
+// ### Init
 // 
 // Initializes the Pluck module.
 //
 // Arguments:
 // 
 // - sample_rate: Sample rate of the audio engine being run.
-// - buf: buffer used as an impulse when triggering the pluck algorithm
+// - buf: buffer used as an impulse when triggering the Pluck algorithm
 // - npt: number of elementes in buf.
 // - mode: Sets the mode of the algorithm.
 // 
 // ~~~~
-		void init (float sample_rate, float *buf, int32_t npt, int32_t mode);
+		void Init (float sample_rate, float *buf, int32_t npt, int32_t mode);
 // ~~~~
 
-// ### process
+// ### Process
 //
 // Processes the waveform to be generated, returning one sample. This should be called once per sample period.
 // ~~~~
-		float process (float &trig);
+		float Process (float &trig);
 // ~~~~
 
 // ## Mutators
 // 
-// ### set_amp
+// ### SetAmp
 // 
 // Sets the amplitude of the output signal.
 // 
 // Input range: 0-1?
 // 
 // ~~~~
-		inline void set_amp(float amp) { amp_ = amp; }
+		inline void SetAmp(float amp) { amp_ = amp; }
 // ~~~~
 
-// ### set_freq
+// ### SetFreq
 // 
 // Sets the frequency of the output signal in Hz.
 // 
 // Input range: Any positive value
 // 
 // ~~~~
-		inline void set_freq(float freq) { freq_ = freq; }
+		inline void SetFreq(float freq) { freq_ = freq; }
 // ~~~~
 
-// ### set_decay
+// ### SetDecay
 // 
 // Sets the time it takes for a triggered note to end in seconds.
 // 
 // Input range: 0-1
 // 
 // ~~~~
-		inline void set_decay(float decay) { decay_ = decay; }
+		inline void SetDecay(float decay) { decay_ = decay; }
 // ~~~~
 //
-// ### set_damp
+// ### SetDamp
 // 
 // Sets the dampening factor applied by the filter (based on PLUCK_MODE)
 // 
 // Input range: 0-1
 // 
 // ~~~~
-		inline void set_damp(float damp) { damp_ = damp; }
+		inline void SetDamp(float damp) { damp_ = damp; }
 // ~~~~
 
-// ### set_mode
+// ### SetMode
 // 
 // Sets the mode of the algorithm.
 // 
 // ~~~~
-		inline void set_mode(int32_t mode) { mode_ = mode; }
+		inline void SetMode(int32_t mode) { mode_ = mode; }
 // ~~~~
 
 // ## Accessors
 // 
-// ### get_amp
+// ### GetAmp
 // 
 // Returns the current value for amp.
 // 
 // ~~~~
-		inline float get_amp() { return amp_; }
+		inline float GetAmp() { return amp_; }
 // ~~~~
 
-// ### get_freq
+// ### GetFreq
 // 
 // Returns the current value for freq.
 // 
 // ~~~~
-		inline float get_freq() { return freq_; }
+		inline float GetFreq() { return freq_; }
 // ~~~~
 
-// ### get_decay
+// ### GetDecay
 // 
 // Returns the current value for decay.
 // 
 // ~~~~
-		inline float get_decay() { return decay_; }
+		inline float GetDecay() { return decay_; }
 // ~~~~
 //
-// ### get_damp
+// ### GetDamp
 // 
 // Returns the current value for damp.
 // 
 // ~~~~
-		inline float get_damp() { return damp_; }
+		inline float GetDamp() { return damp_; }
 // ~~~~
 
-// ### get_mode
+// ### GetMode
 // 
 // Returns the current value for mode.
 // 
 // ~~~~
-		inline int32_t get_mode() { return mode_; }
+		inline int32_t GetMode() { return mode_; }
 // ~~~~
 
 	private:
-		void reinit();
+		void Reinit();
 		float amp_, freq_, decay_, damp_, ifreq_;
 	    float sicps_;
 	    int32_t phs256_, npts_, maxpts_;

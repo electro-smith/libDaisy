@@ -1,4 +1,4 @@
-// # metro 
+// # Metro 
 // 
 // Creates a clock signal at a specific frequency.
 // 
@@ -11,15 +11,15 @@
 
 namespace daisysp
 {
-	class metro
+	class Metro
 	{
 	public:
-		metro() {}
-		~metro() {}
+		Metro() {}
+		~Metro() {}
 
-// ### init
+// ### Init
 // 
-// Initializes metro module.
+// Initializes Metro module.
 // 
 // Arguments:
 // - freq: frequency at which new clock signals will be generated
@@ -28,36 +28,36 @@ namespace daisysp
 // 	Input range: 
 
 // ~~~~
-		void init(float freq, float sample_rate);
+		void Init(float freq, float sample_rate);
 // ~~~~
 
-// ### process
-// checks current state of metro object and updates state if necesary.
+// ### Process
+// checks current state of Metro object and updates state if necesary.
 
 // ~~~~
-		uint8_t process();
+		uint8_t Process();
 // ~~~~
 
-// ### reset
+// ### Reset
 // resets phase to 0
 // ~~~~
-		inline void reset() { phs_ = 0.0f; }
+		inline void Reset() { phs_ = 0.0f; }
 // ~~~~
 
 // ## Setters
-// ### set_freq
-// Sets frequency at which metro module will run at.
+// ### SetFreq
+// Sets frequency at which Metro module will run at.
 
 // ~~~~
-		void set_freq(float freq);
+		void SetFreq(float freq);
 // ~~~~
 
 // ## Getters
-// ### get_freq
+// ### GetFreq
 // Returns current value for frequency.
 
 // ~~~~
-		inline float get_freq() { return freq_; }
+		inline float GetFreq() { return freq_; }
 // ~~~~
 
 	private:

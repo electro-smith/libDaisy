@@ -15,15 +15,15 @@ using namespace daisysp;
 static daisy_handle seed;
 static AdEnv env;
 static Oscillator osc;
-static metro tick;
+static Metro tick;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float osc_out, env_out;
     for (size_t i = 0; i < size; i += 2)
     {
         // When the metro ticks, trigger the envelope to start.
-        if (tick.process())
+        if (tick.Process())
         {
             env.Trigger();
         }
@@ -46,7 +46,7 @@ int main(void)
     osc.Init(SAMPLE_RATE);
 
     // Set up metro to pulse every second
-    tick.init(1.0f, SAMPLE_RATE);    
+    tick.Init(1.0f, SAMPLE_RATE);    
 
     // set adenv parameters
     env.SetTime(ADENV_SEG_ATTACK, 0.15);
@@ -61,7 +61,7 @@ int main(void)
     osc.SetAmp(0.25);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);
