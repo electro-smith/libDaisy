@@ -184,9 +184,6 @@ class daisy_patch
     AnalogControl pctrl[CV_LAST];
 };
 
-
-// Synthesis w/ pseudo-polyphony and decay control.
-// Notes are set with MIDI note numbers.
 } // namespace daisy
 
 #else
