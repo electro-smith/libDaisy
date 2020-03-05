@@ -56,6 +56,10 @@ int8_t octaves = 0;
 
 static daisysp::reverbsc verb;
 // Use two side buttons to change octaves.
+daisy::AnalogControl knobs[8];
+daisy::AnalogControl cvs[4];
+float                kvals[8];
+float                cvvals[4];
 
 void AudioCallback(float *in, float *out, size_t size)
 {
@@ -80,11 +84,21 @@ void AudioCallback(float *in, float *out, size_t size)
     }
     else
     {
-		use_verb = false;
+        use_verb = false;
+    }
+    for(int i = 0; i < 8; i++)
+    {
+        //kvals[i] = knobs[i].Process();
+        kvals[i] = dsy_adc_get_mux_float(0, i);
+        if(i < 4)
+        {
+            //cvvals[i] = cvs[i].Process();
+            cvvals[i] = dsy_adc_get_float(i + 1);
+        }
     }
 
-    if(octaves < 0) 
-            octaves = 0;
+    if(octaves < 0)
+        octaves = 0;
     if(octaves > 4)
         octaves = 4;
 
@@ -98,10 +112,6 @@ void AudioCallback(float *in, float *out, size_t size)
     for(size_t i = 0; i < 16; i++)
     {
         buttons[i] = dsy_sr_4021_state(&hw.keyboard_sr, i) | (buttons[i] << 1);
-        //        if(buttons[i] == 0x80)
-        //        {
-
-        //		if(i < 8)
         {
             if(buttons[i] == 0xFF)
             {
@@ -112,10 +122,6 @@ void AudioCallback(float *in, float *out, size_t size)
                 v[i].on_ = true;
             }
         }
-        //        active_note = i < 8 ? scale[i] : 0.f;
-        // osc[i].SetFreq(
-        // daisysp::mtof((12.0f * octaves) + 24.0f + active_note));
-        //        }
     }
     float sig, send;
     float wetl, wetr;
@@ -124,22 +130,53 @@ void AudioCallback(float *in, float *out, size_t size)
         sig = 0.0f;
         for(int i = 0; i < NUM_VOICES; i++)
         {
-			if (i != 10 && i != 14 && i != 15)
-				sig += v[i].process();
+            if(i != 10 && i != 14 && i != 15)
+                sig += v[i].process();
         }
         send = sig * 0.35f;
-        verb.process(send,send, &wetl, &wetr);
+        verb.process(send, send, &wetl, &wetr);
         //        wetl = wetr = sig;
         if(use_verb)
             wetl = wetr = 0.0f;
-        out[i] = (sig + wetl) * 0.5f;
+        out[i]     = (sig + wetl) * 0.5f;
         out[i + 1] = (sig + wetr) * 0.5f;
+    }
+}
+
+void LightCallback(float *in, float *out, size_t size)
+{
+    for(int i = 0; i < 8; i++)
+    {
+        kvals[i] = knobs[i].Process();
+        //        kvals[i] = dsy_adc_get_mux_float(0, i);
+        if(i < 4)
+        {
+            cvvals[i] = cvs[i].Process();
+            //            cvvals[i] = dsy_adc_get_float(i + 1);
+        }
     }
 }
 
 int main(void)
 {
+    size_t blocksize = 48;
     daisy_field_init(&hw);
+    // initialize controls.
+    int potmap[8]
+        = {KNOB_1, KNOB_2, KNOB_3, KNOB_4, KNOB_5, KNOB_6, KNOB_7, KNOB_8};
+    for(int i = 0; i < 8; i++)
+    {
+        knobs[i].Init(dsy_adc_get_mux_rawptr(0, potmap[i]),
+                      DSY_AUDIO_SAMPLE_RATE / blocksize);
+    }
+    cvs[0].InitBipolarCv(dsy_adc_get_rawptr(1),
+                         DSY_AUDIO_SAMPLE_RATE / blocksize);
+    cvs[1].InitBipolarCv(dsy_adc_get_rawptr(2),
+                         DSY_AUDIO_SAMPLE_RATE / blocksize);
+    cvs[2].InitBipolarCv(dsy_adc_get_rawptr(3),
+                         DSY_AUDIO_SAMPLE_RATE / blocksize);
+    cvs[3].InitBipolarCv(dsy_adc_get_rawptr(4),
+                         DSY_AUDIO_SAMPLE_RATE / blocksize);
     octaves = 2;
     for(int i = 0; i < NUM_VOICES; i++)
     {
@@ -149,14 +186,20 @@ int main(void)
     verb.init(DSY_AUDIO_SAMPLE_RATE);
     verb.set_feedback(0.94f);
     verb.set_lpfreq(8000.0f);
-    //    osc.Init(DSY_AUDIO_SAMPLE_RATE);
-    //    osc.SetFreq(100.0f);
-    //    osc.SetAmp(0.5f);
-    //    osc.SetWaveform(daisysp::Oscillator::WAVE_POLYBLEP_SAW);
+    // Init muxsel1
+    dsy_gpio foo;
+    foo.mode = DSY_GPIO_MODE_OUTPUT_PP;
+    foo.pin  = {DSY_GPIOA, 7};
+    foo.pull = DSY_GPIO_NOPULL;
+    dsy_gpio_init(&foo);
     dsy_adc_start();
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
-    //dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, 48);
-    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, 256);
+    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, blocksize);
     dsy_audio_start(DSY_AUDIO_INTERNAL);
-    for(;;) {}
+
+    for(;;)
+    {
+        dsy_tim_delay_ms(250);
+        dsy_gpio_toggle(&hw.seed.led);
+    }
 }

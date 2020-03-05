@@ -194,7 +194,8 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 	{
 		p->seed.adc_handle.active_channels[i] = channel_order[i];
 	}
-	dsy_adc_init(&p->seed.adc_handle);
+    p->seed.adc_handle.oversampling = DSY_ADC_OVS_32;
+    dsy_adc_init(&p->seed.adc_handle);
     dsy_tim_init();
     dsy_tim_start();
     
