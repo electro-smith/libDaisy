@@ -7,8 +7,8 @@ using namespace daisysp;
 
 daisy_pod  hw;
 Oscillator osc;
-svf        filt;
-reverbsc   verb;
+Svf        filt;
+ReverbSc verb;
 AdEnv      env;
 
 parameter p_xf, p_vamt, p_dec, p_vtime;
@@ -65,15 +65,12 @@ static void  audio(float *in, float *out, size_t size)
         // Process
         rawsig = osc.Process();
         sig    = rawsig * env.Process();
-        //filt.set_freq(xf);
-        filt.process(sig);
-        filtsig = filt.low();
-        //filtsig = sig;
+        filt.Process(sig);
+        filtsig = filt.Low();
         sendsig = filtsig * vamt;
-        verb.process(sendsig, sendsig, &wetvl, &wetvr);
+        verb.Process(sendsig, sendsig, &wetvl, &wetvr);
         out[i]     = (filtsig + (wetvl)) * 0.707f;
         out[i + 1] = (filtsig + (wetvr)) * 0.707f;
-        //out[i] = out[i + 1] = rawsig;
     }
 }
 
@@ -101,13 +98,13 @@ int main(void)
     env.SetCurve(-15.0f);
     env.SetTime(ADENV_SEG_ATTACK, 0.002f);
     env.SetTime(ADENV_SEG_DECAY, 0.6f);
-    filt.init(SAMPLE_RATE);
-    filt.set_res(0.5f);
-    filt.set_drive(0.8f);
-    filt.set_freq(2400.0f);
-    verb.init(SAMPLE_RATE);
-    verb.set_feedback(0.87);
-    verb.set_lpfreq(10000.0f);
+    filt.Init(SAMPLE_RATE);
+    filt.SetRes(0.5f);
+    filt.SetDrive(0.8f);
+    filt.SetFreq(2400.0f);
+    verb.Init(SAMPLE_RATE);
+    verb.SetFeedback(0.87);
+    verb.SetLpFreq(10000.0f);
     // Old style still
     dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, 128);
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audio);
