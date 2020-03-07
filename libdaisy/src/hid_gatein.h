@@ -26,20 +26,9 @@ class GateIn
     GateIn() {}
     ~GateIn() {}
 
-    inline void Init(dsy_gpio *gatepin)
-    {
-        pin        = gatepin;
-        prev_state = 0;
-    }
+    void Init(dsy_gpio *gatepin);
 
-    inline bool Trig()
-    {
-        bool new_state, out;
-        new_state  = dsy_gpio_read(pin);
-        out        = new_state && !prev_state;
-        prev_state = new_state;
-        return out;
-    }
+    bool Trig();
 
 private:
     dsy_gpio *pin_;
