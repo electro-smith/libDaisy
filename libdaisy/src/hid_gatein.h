@@ -12,7 +12,6 @@
 //
 // **Date:** March 2020
 //
-
 #pragma once
 #ifndef DSY_GATEIN_H
 #define DSY_GATEIN_H
@@ -26,9 +25,20 @@ class GateIn
     GateIn() {}
     ~GateIn() {}
 
+// ## General Functions
+// ### Init
+// Initializes the gate input with specified hardware pin
+// 
+// ~~~~
     void Init(dsy_gpio *gatepin);
-
+// ~~~~
+// #### Trig
+// Checks current state of gate input. 
+// Returns FALSE if pin is low, and TRUE if high
+//
+// ~~~~
     bool Trig();
+// ~~~~
 
 private:
     dsy_gpio *pin_;
