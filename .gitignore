@@ -133,4 +133,5 @@ hardware_platforms/*/*/*/VisualGDB
 daisysp/doc/*.md
 libdaisy/doc/*.md
 core/build
+cube/Daisy_Seed_Rev2/
 
