@@ -20,6 +20,7 @@ per_tim \
 hid_switch \
 hid_encoder \
 hid_ctrl \
+hid_gatein \
 dev_sr_4021 \
 system_stm32h7xx \
 
