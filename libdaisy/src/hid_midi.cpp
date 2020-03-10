@@ -21,7 +21,7 @@ void MidiHandler::Init()
 // double check for packet size...
 // right now I'm only handling one message
 // I have a feeling a packet can contain many
-void MidiHandler::Parse(uint8_t *buffer, size_t size)
+MidiEvent MidiHandler::Parse(uint8_t *buffer, size_t size)
 {
 
     // check first byte
@@ -30,7 +30,7 @@ void MidiHandler::Parse(uint8_t *buffer, size_t size)
     bool valid;
     // Get bytes in place
     sb = (buffer[0] & kStatusByteMask) >> 4;
-    channel = (buffer[0] & kChannelMask)
+    channel = (buffer[0] & kChannelMask);
     db = buffer + 1;
     // Check Validity
     // TODO: Check number of size for valid MIDI Message
@@ -41,6 +41,11 @@ void MidiHandler::Parse(uint8_t *buffer, size_t size)
     uint8_t note, velocity; // For note messages
     uint8_t cc, val;
     int16_t pitch_bend;
+    MidiEvent event;
+    event.note_ = -1;
+    event.vel_ = -1;
+    event.cc_ = -1;
+    event.val_ = -1;
     switch (sb)
     {
         case NoteOn:
@@ -48,15 +53,15 @@ void MidiHandler::Parse(uint8_t *buffer, size_t size)
         case PolyphonicKeyPressure:
             if (size < 3)
             {
-                note = db[0];
-                velocity = db[1];
+                event.note_ = db[0];
+                event.vel_ = db[1];
             }
             break;
         case ControlChange:
             if (size < 3)
             {
-                cc = db[0];
-                val = db[1];
+                event.cc_ = db[0];
+                event.val_ = db[1];
             }
             break;
         case ProgramChange:
@@ -69,4 +74,5 @@ void MidiHandler::Parse(uint8_t *buffer, size_t size)
             break;
     }
     // TODO add output..
+    return event;
 }

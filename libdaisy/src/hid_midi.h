@@ -7,13 +7,15 @@
 
 namespace daisy 
 {
-
-
+struct MidiEvent
+{
+    bool is_note() { return note_ > -1 ? true : false; }
+    bool is_cc() { return cc_ > -1 ? true : false; }
+    int note_, vel_, cc_, val_;
+}; 
 class MidiHandler
 {
-
   public:
-
     // Channel Specific Messages
     enum Message
     {
@@ -24,7 +26,7 @@ class MidiHandler
         ProgramChange,
         ChannelPressure,
         PitchBend,
-        MessageLast, 
+        MessageLast,
     };
 
     MidiHandler() {}
@@ -34,13 +36,10 @@ class MidiHandler
     void Init();
 
     // Parses an Incoming Message
-    void Parse(uint8_t *buffer, size_t size);
+    MidiEvent Parse(uint8_t *buffer, size_t size);
 
   private:
-
-
-
-}
+};
 
 } // namespace daisy
 

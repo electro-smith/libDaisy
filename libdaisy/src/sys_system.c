@@ -70,8 +70,8 @@ void dsy_system_init()
 	SystemClock_Config();
 	MPU_Config();
 	dsy_dma_init(); //
-	SCB_EnableICache();
-	SCB_EnableDCache();
+//	SCB_EnableICache();
+//	SCB_EnableDCache();
 	HAL_Init();
 }
 
