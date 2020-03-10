@@ -180,6 +180,5 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
     {
         uhandle.rx_ptr[i] = uart_dma_buffer_rx[i];
     }
-
 }
 

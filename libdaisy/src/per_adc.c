@@ -301,12 +301,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
         chn_list   = adc.dsy_hadc->active_channels;
         for(uint8_t i = 0; i < adc.channels; i++)
         {
-            dsy_gpio_pin* p = &pin_config[i];
+            dsy_gpio_pin* p = &pin_config[chn_list[i]];
             port            = dsy_hal_map_get_port(p);
             pin             = dsy_hal_map_get_pin(p);
-            //            port = (GPIO_TypeDef*)
-            //                gpio_hal_port_map[pin_config[chn_list[i]].port];
-            //            pin = gpio_hal_pin_map[pin_config[chn_list[i]].pin];
             HAL_GPIO_DeInit(port, pin);
             // TODO: Add Mux DeInit
         }

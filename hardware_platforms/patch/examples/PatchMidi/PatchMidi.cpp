@@ -16,7 +16,6 @@ using namespace daisy;
 daisy_patch hw;
 UartHandler uart;
 uint8_t     mybuff[16];
-int         err;
 
 static uint8_t reverse(uint8_t b)
 {
@@ -29,13 +28,10 @@ static uint8_t reverse(uint8_t b)
 
 int main(void)
 {
-    // Init everything.
     hw.Init();
     uart.Init();
-    err = uart.Receive(mybuff, 3);
-
+    uart.Receive(mybuff, 3);
     for(;;)
     {
-        err = uart.CheckError();
     }
 }

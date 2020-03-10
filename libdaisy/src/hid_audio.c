@@ -28,7 +28,7 @@ typedef struct
     float              out[DSY_AUDIO_BLOCK_SIZE_MAX * DSY_AUDIO_CHANNELS_MAX];
     size_t             block_size, offset, dma_size;
     uint8_t            bitdepth, device, channels;
-    dsy_i2c_handle* device_control_hi2c;
+    dsy_i2c_handle*    device_control_hi2c;
 } dsy_audio;
 
 //  Static Buffers in non-cached SRAM1 for DMA
@@ -102,13 +102,10 @@ void dsy_audio_silence(float* in, float* out, size_t size)
 // TODO: fix I2C to be compliant with the new model.
 void dsy_audio_init(dsy_audio_handle* handle)
 {
-    uint8_t            dev0, dev1, intext;
-    I2C_HandleTypeDef *hi2c_int, *hi2c_ext;
+    uint8_t dev0, dev1, intext;
     intext                  = handle->sai->init;
     dev0                    = handle->sai->device[DSY_SAI_1];
     dev1                    = handle->sai->device[DSY_SAI_2];
-    hi2c_int                = dsy_hal_map_get_i2c(handle->dev0_i2c);
-    hi2c_ext                = dsy_hal_map_get_i2c(handle->dev1_i2c);
     audio_handle.block_size = handle->block_size <= DSY_AUDIO_BLOCK_SIZE_MAX
                                   ? handle->block_size
                                   : DSY_AUDIO_BLOCK_SIZE_MAX;
