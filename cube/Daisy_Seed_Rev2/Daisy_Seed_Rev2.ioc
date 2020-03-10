@@ -315,6 +315,7 @@ NVIC.PendSV_IRQn=true\:0\:0\:false\:false\:true\:false\:false
 NVIC.PriorityGroup=NVIC_PRIORITYGROUP_4
 NVIC.SVCall_IRQn=true\:0\:0\:false\:false\:true\:false\:false
 NVIC.SysTick_IRQn=true\:0\:0\:false\:false\:true\:false\:true
+NVIC.USART1_IRQn=true\:0\:0\:false\:false\:true\:true\:true
 NVIC.UsageFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false
 PA0.Mode=SAI_B_MasterWithClock
 PA0.Signal=SAI2_SD_B

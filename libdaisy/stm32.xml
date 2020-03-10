@@ -35,10 +35,7 @@
   </MCUProperties>
   <BSPSourceFolderName>Device-specific files</BSPSourceFolderName>
   <MCUMakFile>stm32.mak</MCUMakFile>
-  <ReferencedFrameworks>
-    <string>com.sysprogs.arm.stm32.hal</string>
-    <string>com.sysprogs.arm.stm32.ll</string>
-  </ReferencedFrameworks>
+  <ReferencedFrameworks />
   <FrameworkProperties>
     <Entries>
       <KeyValue>

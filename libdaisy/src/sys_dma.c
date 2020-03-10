@@ -23,9 +23,12 @@ void dsy_dma_init(void)
   // DMA1_Stream3_IRQn interrupt configuration
   HAL_NVIC_SetPriority(DMA1_Stream3_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream3_IRQn);
-  // DMA1_Stream3_IRQn interrupt configuration
+  // DMA1_Stream4_IRQn interrupt configuration
   HAL_NVIC_SetPriority(DMA1_Stream4_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Stream4_IRQn);
+  // DMA1_Stream5_IRQn interrupt configuration
+  HAL_NVIC_SetPriority(DMA1_Stream5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Stream5_IRQn);
 
 }
 

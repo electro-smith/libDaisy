@@ -14,6 +14,9 @@ class UartHandler
     void Init();
 
     int PollReceive(uint8_t *buff, size_t size);
+    int Receive(uint8_t *buff, size_t size);
+    int CheckError();
+//    bool Recieving();
 
   private:
 };

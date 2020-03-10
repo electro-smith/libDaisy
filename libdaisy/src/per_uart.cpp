@@ -6,55 +6,89 @@
 
 using namespace daisy;
 
+static void Error_Handler()
+{
+    asm("bkpt 255");
+}
+
+uint8_t __attribute__((section(".sram1_bss"))) uart_dma_buffer_rx[32];
+//UART_HandleTypeDef huart1;
+//DMA_HandleTypeDef  uhandle.hdma_usart1_rx;
+//uint8_t*           rx_ptr;
+
 struct uart_handle
 {
     UART_HandleTypeDef huart1;
     DMA_HandleTypeDef  hdma_usart1_rx;
+    uint8_t*           rx_ptr;
+    uint8_t*           dma_buffer_rx;
+    bool               receiving;
 };
-
-static uart_handle h_uart;
+uart_handle uhandle;
 
 void UartHandler::Init()
 {
-    h_uart.huart1.Instance      = USART1;
-    h_uart.huart1.Init.BaudRate = 31250;
-        h_uart.huart1.Init.WordLength
-            = UART_WORDLENGTH_8B; // 1 Start, 8 data, 1 stop
-    h_uart.huart1.Init.StopBits = UART_STOPBITS_1;
-    h_uart.huart1.Init.Parity   = UART_PARITY_NONE;
-    h_uart.huart1.Init.Mode     = UART_MODE_TX_RX;
-    h_uart.huart1.Init.HwFlowCtl              = UART_HWCONTROL_NONE;
-    h_uart.huart1.Init.OverSampling           = UART_OVERSAMPLING_16;
-    h_uart.huart1.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
-    h_uart.huart1.Init.ClockPrescaler         = UART_PRESCALER_DIV16;
-    h_uart.huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-    if(HAL_UART_Init(&h_uart.huart1) != HAL_OK)
+    uhandle.huart1.Instance                    = USART1;
+    uhandle.huart1.Init.BaudRate               = 31250;
+    uhandle.huart1.Init.WordLength             = UART_WORDLENGTH_8B;
+    uhandle.huart1.Init.StopBits               = UART_STOPBITS_1;
+    uhandle.huart1.Init.Parity                 = UART_PARITY_NONE;
+    uhandle.huart1.Init.Mode                   = UART_MODE_TX_RX;
+    uhandle.huart1.Init.HwFlowCtl              = UART_HWCONTROL_NONE;
+    uhandle.huart1.Init.OverSampling           = UART_OVERSAMPLING_16;
+    uhandle.huart1.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
+    uhandle.huart1.Init.ClockPrescaler         = UART_PRESCALER_DIV1;
+    uhandle.huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+    if(HAL_UART_Init(&uhandle.huart1) != HAL_OK)
     {
-        //        Error_Handler();
+        Error_Handler();
     }
-    if(HAL_UARTEx_SetTxFifoThreshold(&h_uart.huart1, UART_TXFIFO_THRESHOLD_1_8)
+    if(HAL_UARTEx_SetTxFifoThreshold(&uhandle.huart1, UART_TXFIFO_THRESHOLD_1_8)
        != HAL_OK)
     {
-        //        Error_Handler();
+        Error_Handler();
     }
-    if(HAL_UARTEx_SetRxFifoThreshold(&h_uart.huart1, UART_RXFIFO_THRESHOLD_1_8)
+    if(HAL_UARTEx_SetRxFifoThreshold(&uhandle.huart1, UART_RXFIFO_THRESHOLD_1_8)
        != HAL_OK)
     {
-        //        Error_Handler();
+        Error_Handler();
     }
-    if(HAL_UARTEx_DisableFifoMode(&h_uart.huart1) != HAL_OK)
+    if(HAL_UARTEx_DisableFifoMode(&uhandle.huart1) != HAL_OK)
     {
-        //        Error_Handler();
+        Error_Handler();
     }
-
-    //HAL_UART_Init(&h_uart.huart1);
+    // Internal bits
+    uhandle.dma_buffer_rx = uart_dma_buffer_rx;
 }
 
 int UartHandler::PollReceive(uint8_t* buff, size_t size)
 {
-    return HAL_UART_Receive(&h_uart.huart1, (uint8_t*)buff, size, 1);
+    return HAL_UART_Receive(&uhandle.huart1, (uint8_t*)buff, size, 10);
 }
 
+int UartHandler::Receive(uint8_t* buff, size_t size)
+{
+    int status = 0;
+    //    if(!receiving)
+    //    {
+    //        receiving = true;
+    //        status = HAL_UART_Receive_IT(&uhandle.huart1, (uint8_t*)buff, size);
+    //    }
+    uhandle.rx_ptr = buff;
+    status         = HAL_UART_Receive_DMA(
+        &uhandle.huart1, (uint8_t*)uhandle.dma_buffer_rx, size);
+    return status;
+}
+
+int UartHandler::CheckError()
+{
+    return HAL_UART_GetError(&uhandle.huart1);
+}
+
+//bool UartHandler::Recieving()
+//{
+//    return receiving;
+//}
 
 // Msp Functions for HAL
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
@@ -73,37 +107,35 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     PB7     ------> USART1_RX
     PB6     ------> USART1_TX 
     */
-//        GPIO_InitStruct.Pin       = GPIO_PIN_6;
-//        GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
-		GPIO_InitStruct.Pin       = GPIO_PIN_7 | GPIO_PIN_6;
-		GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
+        GPIO_InitStruct.Pin       = GPIO_PIN_7 | GPIO_PIN_6;
+        GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull      = GPIO_NOPULL;
         GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_LOW;
         GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
         HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-//        GPIO_InitStruct.Pin       = GPIO_PIN_7;
-//        GPIO_InitStruct.Mode      = GPIO_MODE_AF_OD;
-//        HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
         /* USART1 DMA Init */
         /* USART1_RX Init */
-        h_uart.hdma_usart1_rx.Instance                 = DMA1_Stream4;
-        h_uart.hdma_usart1_rx.Init.Request             = DMA_REQUEST_USART1_RX;
-        h_uart.hdma_usart1_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-        h_uart.hdma_usart1_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
-        h_uart.hdma_usart1_rx.Init.MemInc              = DMA_MINC_ENABLE;
-        h_uart.hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-        h_uart.hdma_usart1_rx.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-        h_uart.hdma_usart1_rx.Init.Mode                = DMA_NORMAL;
-        h_uart.hdma_usart1_rx.Init.Priority            = DMA_PRIORITY_LOW;
-        h_uart.hdma_usart1_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-        if(HAL_DMA_Init(&h_uart.hdma_usart1_rx) != HAL_OK)
+        uhandle.hdma_usart1_rx.Instance                 = DMA1_Stream5;
+        uhandle.hdma_usart1_rx.Init.Request             = DMA_REQUEST_USART1_RX;
+        uhandle.hdma_usart1_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+        uhandle.hdma_usart1_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
+        uhandle.hdma_usart1_rx.Init.MemInc              = DMA_MINC_ENABLE;
+        uhandle.hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+        uhandle.hdma_usart1_rx.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+        uhandle.hdma_usart1_rx.Init.Mode                = DMA_CIRCULAR;
+        uhandle.hdma_usart1_rx.Init.Priority            = DMA_PRIORITY_LOW;
+        uhandle.hdma_usart1_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+        if(HAL_DMA_Init(&uhandle.hdma_usart1_rx) != HAL_OK)
         {
-            //            Error_Handler();
+            Error_Handler();
         }
 
-        __HAL_LINKDMA(uartHandle, hdmarx, h_uart.hdma_usart1_rx);
+        __HAL_LINKDMA(uartHandle, hdmarx, uhandle.hdma_usart1_rx);
 
+        /* USART1 interrupt Init */
+        HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(USART1_IRQn);
         /* USER CODE BEGIN USART1_MspInit 1 */
 
         /* USER CODE END USART1_MspInit 1 */
@@ -128,8 +160,26 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
         /* USART1 DMA DeInit */
         HAL_DMA_DeInit(uartHandle->hdmarx);
+        HAL_NVIC_DisableIRQ(USART1_IRQn);
         /* USER CODE BEGIN USART1_MspDeInit 1 */
 
         /* USER CODE END USART1_MspDeInit 1 */
     }
 }
+
+extern "C"
+{
+    void USART1_IRQHandler() { HAL_UART_IRQHandler(&uhandle.huart1); }
+
+    void DMA1_Stream5_IRQHandler() { HAL_DMA_IRQHandler(&uhandle.hdma_usart1_rx); }
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
+{
+    for(int i = 0; i < 3; i++)
+    {
+        uhandle.rx_ptr[i] = uart_dma_buffer_rx[i];
+    }
+
+}
+
