@@ -8,7 +8,7 @@ static void Error_Handler()
     asm("bkpt 255");
 }
 
-uint8_t __attribute__((section(".sram1_bss"))) uart_dma_buffer_rx[32];
+uint8_t DMA_BUFFER_MEM_SECTION uart_dma_buffer_rx[32];
 
 // Uses HAL so these things have to be local to this file only
 struct uart_handle
