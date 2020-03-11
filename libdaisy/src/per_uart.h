@@ -10,7 +10,7 @@
 //     - data size, stop bits, parity, baud, etc.
 //     - dma vs interrupt (or not).
 // - Error handling
-// - Transmit functions
+// - Transmit function improvements.
 // - Other UART Peripherals (currently only handles USART1 in UART mode.
 // - Overflow handling, etc. for Rx Queue.
 
@@ -51,7 +51,7 @@ class UartHandler
     // the size will be set to the maximum.
     //
     // ~~~~
-    int StartRx(uint8_t *buff, size_t size);
+    int StartRx(size_t size);
     // ~~~~
 
 	// ### PollTx
@@ -60,10 +60,17 @@ class UartHandler
     int PollTx(uint8_t *buff, size_t size);
 	// ~~~~
 
+	// ### PopRx
+    // Pops the oldest byte from the FIFO.
     // ~~~~
     uint8_t PopRx();
 	// ~~~~
+	// ### Readable
+    // Checks if there are any unread bytes in the FIFO
+	// ~~~~
     size_t  Readable();
+	// ~~~~
+
     // ### CheckError
     // Returns the result of HAL_UART_GetError() to the user.
     // ~~~~

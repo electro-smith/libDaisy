@@ -16,11 +16,10 @@ struct uart_handle
 {
     UART_HandleTypeDef                      huart1;
     DMA_HandleTypeDef                       hdma_usart1_rx;
-    uint8_t*                                rx_ptr;
     uint8_t*                                dma_buffer_rx;
     bool                                    receiving;
     size_t                                  rx_size;
-    RingBuffer<uint8_t, kUartMaxBufferSize> queue_rx;
+    RingBuffer<uint8_t, 64> queue_rx;
 };
 static uart_handle uhandle;
 
@@ -65,11 +64,10 @@ int UartHandler::PollReceive(uint8_t* buff, size_t size)
     return HAL_UART_Receive(&uhandle.huart1, (uint8_t*)buff, size, 10);
 }
 
-int UartHandler::StartRx(uint8_t* buff, size_t size)
+int UartHandler::StartRx(size_t size)
 {
     int status      = 0;
     uhandle.rx_size = size <= 32 ? size : 32;
-    uhandle.rx_ptr  = buff;
     status          = HAL_UART_Receive_DMA(
         &uhandle.huart1, (uint8_t*)uhandle.dma_buffer_rx, size);
     return status;
@@ -100,10 +98,10 @@ size_t UartHandler::Readable()
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
-    // Keep this garbage in place for the moment.
-    for(int i = 0; i < 3; i++)
+    for(int i = 0; i < uhandle.rx_size; i++)
     {
-        uhandle.rx_ptr[i] = uart_dma_buffer_rx[i];
+        // TODO:
+        // Add handling for non-writable, overflow conditions, etc.
         uhandle.queue_rx.Write(uhandle.dma_buffer_rx[i]);
     }
 }

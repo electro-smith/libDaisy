@@ -19,8 +19,14 @@
 
 namespace daisy 
 {
+// ## Data
+// ### MidiMessageType
+// Parsed from the Status Byte, these are the common Midi Messages
+// that can be handled.
+// At this time only 3-byte messages are correctly parsed into MidiEvents.
 enum MidiMessageType
 {
+// ~~~~
     NoteOff,
     NoteOn,
     PolyphonicKeyPressure,
@@ -29,15 +35,14 @@ enum MidiMessageType
     ChannelPressure,
     PitchBend,
     MessageLast, // maybe change name to MessageUnsupported
+// ~~~~
 };
 
+// ### MidiEvent
+// Simple MidiEvent with message type, channel, and data[2] members.
 struct MidiEvent
 {
-	// Currently working primitive
-    bool is_note() { return note_ > -1 ? true : false; }
-    bool is_cc() { return cc_ > -1 ? true : false; }
-    int note_, vel_, cc_, val_;
-	// Newer ish.
+    // Newer ish.
     MidiMessageType type;
     int             channel;
     uint8_t         data[2];
@@ -46,25 +51,39 @@ struct MidiEvent
 class MidiHandler
 {
   public:
-    // Channel Specific Messages
-
     MidiHandler() {}
     ~MidiHandler() {}
 
+    // ## Functions
+
+	// ### Init
     // Initializes the MidiHandler
+	// ~~~~
     void Init();
+	// ~~~~
 
-    // Feed in bytes to state machine.
+    // ### Parse
+    // Feed in bytes to state machine from a queue.
+	//
+	// Populates internal FIFO queue with MIDI Messages
+    //
+    // For example with uart:
+    // midi.Parse(uart.PopRx());
+	// ~~~~
     void Parse(uint8_t byte);
+	// ~~~~
 
-    // Parses an Incoming Message
-	// To be deprectated I think.
-	// or at least changed to just a loop over Parse()
-	// -- too much duplication and slight difference.
-    MidiEvent ParseMessage(uint8_t *buffer, size_t size);
-
+    // ### HasEvents
+    // Checks if there are unhandled messages in the queue
+    // ~~~~
     bool HasEvents() const { return event_q_.readable(); }
+	// ~~~~
 
+	// ### PopEvent
+	// 
+	// Pops the oldest unhandled MidiEvent from the internal queue
+	// 
+	// 
     MidiEvent PopEvent()
     {
         return event_q_.Read();

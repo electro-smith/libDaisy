@@ -6,7 +6,7 @@ using namespace daisy;
 daisy_field         hw;
 UartHandler         uart;
 MidiHandler         midi;
-uint8_t             mybuff[16];
+uint8_t             mybuff[32];
 daisysp::Oscillator osc;
 daisysp::Svf        filt;
 AnalogControl       knobs[4];
@@ -26,6 +26,16 @@ void AudioCallback(float *in, float *out, size_t size)
     }
 }
 
+void clearleds()
+{
+    for(size_t i = 0; i < LED_LAST; i++)
+    {
+        dsy_led_driver_set_led(i, 0.0f);
+    }
+}
+
+float filtval, midifiltval;
+
 
 int main(void)
 {
@@ -41,7 +51,7 @@ int main(void)
     filt.Init(SAMPLE_RATE);
 
     // Start stuff.
-    uart.StartRx(mybuff, 3);
+    uart.StartRx(6);
     // This stuff needs to have an interface in daisy_field.h
     dsy_adc_start();
     size_t blocksize = 12;
@@ -57,6 +67,9 @@ int main(void)
     //    hw.StartAudio(AudioCallback);
     uint32_t last_send, now;
     now = last_send = dsy_system_getnow();
+    int curled      = 0;
+    // LED stuff.
+
     for(;;)
     {
         // Until a mechanism is added, we'll just test for sameness..
@@ -81,8 +94,8 @@ int main(void)
                     switch(m.data[0])
                     {
                         case 1:
+							midifiltval = (daisysp::mtof((float)m.data[1]));
                             // CC 1 for cutoff.
-                            filt.SetFreq(daisysp::mtof((float)m.data[1]));
                             break;
                         case 2:
                             // CC 2 for res.
@@ -95,24 +108,40 @@ int main(void)
                 default: break;
             }
         }
+        filtval = midifiltval + daisysp::mtof(knobs[0].Value() * 127.0f);
+        if(filtval > 14000.0f)
+        {
+            filtval = 14000.0f;
+        }
+        filt.SetFreq(filtval);
+        now = dsy_system_getnow();
+        if(now - last_send > 250)
+        {
+            last_send = now;
+            clearleds();
+            dsy_led_driver_set_led(curled, 1.0f);
+            curled = (curled + 1) % LED_LAST;
+            dsy_led_driver_update();
+            dsy_led_driver_update();
+        }
         // Write MIDI Out for Knobs..
         // 4 knobs do CC1-4 0-127
-//        now = dsy_system_getnow();
-//        if(now - last_send > 20)
-//        {
-//            last_send = now;
-//            for(size_t i = 0; i < 4; i++)
-//            {
-//                uint8_t outval, ccnum, sb;
-//                uint8_t buff[3];
-//                outval  = static_cast<uint8_t>(knobs[i].Value() * 127.0f);
-//                sb      = 0xb0;
-//                ccnum   = i + 1;
-//                buff[0] = sb;
-//                buff[1] = ccnum;
-//                buff[2] = outval;
-//                uart.PollTx(buff, 3);
-//            }
-//        }
+        //        now = dsy_system_getnow();
+        //        if(now - last_send > 20)
+        //        {
+        //            last_send = now;
+        //            for(size_t i = 0; i < 4; i++)
+        //            {
+        //                uint8_t outval, ccnum, sb;
+        //                uint8_t buff[3];
+        //                outval  = static_cast<uint8_t>(knobs[i].Value() * 127.0f);
+        //                sb      = 0xb0;
+        //                ccnum   = i + 1;
+        //                buff[0] = sb;
+        //                buff[1] = ccnum;
+        //                buff[2] = outval;
+        //                uart.PollTx(buff, 3);
+        //            }
+        //        }
     }
 }
