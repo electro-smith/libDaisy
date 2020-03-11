@@ -66,13 +66,14 @@ int main(void)
         {
             // Probably change mybuff to handle 'midimessage'
             event = midi.Parse(mybuff, 3);
-            if(event.is_note()) {
+            if(event.is_note())
+            {
                 mnote = event.note_;
                 mvel  = event.vel_;
             }
             if(event.is_cc())
             {
-                mcc = event.cc_;
+                mcc  = event.cc_;
                 mval = event.val_;
             }
         }

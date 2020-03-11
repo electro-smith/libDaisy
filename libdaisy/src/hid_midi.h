@@ -7,27 +7,34 @@
 
 namespace daisy 
 {
+enum MidiMessageType
+{
+    NoteOff,
+    NoteOn,
+    PolyphonicKeyPressure,
+    ControlChange,
+    ProgramChange,
+    ChannelPressure,
+    PitchBend,
+    MessageLast, // maybe change name to MessageUnsupported
+};
+
 struct MidiEvent
 {
+	// Currently working primitive
     bool is_note() { return note_ > -1 ? true : false; }
     bool is_cc() { return cc_ > -1 ? true : false; }
     int note_, vel_, cc_, val_;
-}; 
+	// Newer ish.
+    MidiMessageType type;
+    int             channel;
+    uint8_t         data[2];
+};
+
 class MidiHandler
 {
   public:
     // Channel Specific Messages
-    enum Message
-    {
-        NoteOff,
-        NoteOn,
-        PolyphonicKeyPressure,
-        ControlChange,
-        ProgramChange,
-        ChannelPressure,
-        PitchBend,
-        MessageLast,
-    };
 
     MidiHandler() {}
     ~MidiHandler() {}

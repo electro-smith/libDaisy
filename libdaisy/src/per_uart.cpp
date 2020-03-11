@@ -1,9 +1,6 @@
 #include <stm32h7xx_hal.h>
 #include "per_uart.h"
 
-// TODO:
-// - Add flexible parameters (for now just hard-coded for MIDI...)
-
 using namespace daisy;
 
 static void Error_Handler()
@@ -12,10 +9,8 @@ static void Error_Handler()
 }
 
 uint8_t __attribute__((section(".sram1_bss"))) uart_dma_buffer_rx[32];
-//UART_HandleTypeDef huart1;
-//DMA_HandleTypeDef  uhandle.hdma_usart1_rx;
-//uint8_t*           rx_ptr;
 
+// Uses HAL so these things have to be local to this file only
 struct uart_handle
 {
     UART_HandleTypeDef huart1;
@@ -24,7 +19,7 @@ struct uart_handle
     uint8_t*           dma_buffer_rx;
     bool               receiving;
 };
-uart_handle uhandle;
+static uart_handle uhandle;
 
 void UartHandler::Init()
 {

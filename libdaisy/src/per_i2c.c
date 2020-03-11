@@ -21,31 +21,27 @@ static void deinit_i2c_pins(dsy_i2c_handle* hi2c);
 void dsy_i2c_init(dsy_i2c_handle* dsy_hi2c)
 {
     I2C_HandleTypeDef* hal_hi2c;
+    hal_hi2c = dsy_hal_map_get_i2c(dsy_hi2c);
     switch(dsy_hi2c->periph)
     {
         case DSY_I2C_PERIPH_1:
             i2c1_handler       = *dsy_hi2c;
-            hal_hi2c           = &hi2c1;
             hal_hi2c->Instance = I2C1;
             break;
         case DSY_I2C_PERIPH_2:
             i2c2_handler       = *dsy_hi2c;
-            hal_hi2c           = &hi2c2;
             hal_hi2c->Instance = I2C2;
             break;
         case DSY_I2C_PERIPH_3:
             i2c3_handler       = *dsy_hi2c;
-            hal_hi2c           = &hi2c3;
             hal_hi2c->Instance = I2C3;
             break;
         case DSY_I2C_PERIPH_4:
             i2c4_handler       = *dsy_hi2c;
-            hal_hi2c           = &hi2c4;
             hal_hi2c->Instance = I2C4;
             break;
         default:
             i2c1_handler       = *dsy_hi2c;
-            hal_hi2c           = &hi2c1;
             hal_hi2c->Instance = I2C1;
             break;
     }
@@ -79,18 +75,6 @@ void dsy_i2c_init(dsy_i2c_handle* dsy_hi2c)
     if(HAL_I2CEx_ConfigDigitalFilter(hal_hi2c, 0) != HAL_OK)
     {
         //Error_Handler();
-    }
-}
-
-I2C_HandleTypeDef* dsy_i2c_hal_handle(dsy_i2c_handle* dsy_hi2c)
-{
-    switch(dsy_hi2c->periph)
-    {
-        case DSY_I2C_PERIPH_1: return &hi2c1;
-        case DSY_I2C_PERIPH_2: return &hi2c2;
-        case DSY_I2C_PERIPH_3: return &hi2c3;
-        case DSY_I2C_PERIPH_4: return &hi2c4;
-        default: return NULL;
     }
 }
 
