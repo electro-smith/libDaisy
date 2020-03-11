@@ -16,12 +16,33 @@ const uint8_t kRealTimeMask     = 0xF8;
 
 // TODO:
 // - provide an input interface so USB or UART data can be passed in.
-//     this could even be as simple as a buffer/new flag.
-void MidiHandler::Init()
+//     this could even bue as simple as a buffer/new flag.
+void MidiHandler::Init(MidiInputMode in_mode, MidiOutputMode out_mode)
 {
+    in_mode_ = in_mode;
+    out_mode_ = out_mode;
+    uart_.Init();
     event_q_.Init();
     incoming_message_.type = MessageLast;
     pstate_                = MidiHandler::ParserEmpty;
+}
+
+void MidiHandler::StartReceive() 
+{
+	if(in_mode_ & INPUT_MODE_UART1) 
+	{
+		uart_.StartRx(6);
+	}
+}
+
+void MidiHandler::Listen() {
+    if(in_mode_ & INPUT_MODE_UART1)
+    {
+        while(uart_.Readable())
+        {
+            Parse(uart_.PopRx());
+        }
+    }
 }
 
 void MidiHandler::Parse(uint8_t byte)

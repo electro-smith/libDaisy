@@ -4,12 +4,11 @@
 using namespace daisy;
 
 daisy_field         hw;
-UartHandler         uart;
 MidiHandler         midi;
-uint8_t             mybuff[32];
 daisysp::Oscillator osc;
 daisysp::Svf        filt;
 AnalogControl       knobs[4];
+float               filtval, midifiltval;
 
 void AudioCallback(float *in, float *out, size_t size)
 {
@@ -26,24 +25,13 @@ void AudioCallback(float *in, float *out, size_t size)
     }
 }
 
-void clearleds()
-{
-    for(size_t i = 0; i < LED_LAST; i++)
-    {
-        dsy_led_driver_set_led(i, 0.0f);
-    }
-}
-
-float filtval, midifiltval;
-
 
 int main(void)
 {
     // Init
     //    hw.Init();
     daisy_field_init(&hw);
-    uart.Init();
-    midi.Init();
+    midi.Init(MidiHandler::INPUT_MODE_UART1, MidiHandler::OUTPUT_MODE_UART1);
 
     // Synthesis
     osc.Init(SAMPLE_RATE);
@@ -51,7 +39,8 @@ int main(void)
     filt.Init(SAMPLE_RATE);
 
     // Start stuff.
-    uart.StartRx(6);
+    midi.StartReceive();
+
     // This stuff needs to have an interface in daisy_field.h
     dsy_adc_start();
     size_t blocksize = 12;
@@ -68,15 +57,11 @@ int main(void)
     uint32_t last_send, now;
     now = last_send = dsy_system_getnow();
     int curled      = 0;
-    // LED stuff.
 
     for(;;)
     {
-        // Until a mechanism is added, we'll just test for sameness..
-        while(uart.Readable())
-        {
-            midi.Parse(uart.PopRx());
-        }
+        midi.Listen();
+        // Handle MIDI Events
         while(midi.HasEvents())
         {
             MidiEvent m;
@@ -84,46 +69,45 @@ int main(void)
             switch(m.type)
             {
                 case NoteOn:
-                    if(m.data[1] != 0)
+                {
+                    NoteOnEvent p;
+                    if(m.data[1]
+                       != 0) // This is to avoid Max/MSP Note outs for now..
                     {
-                        osc.SetFreq(daisysp::mtof(m.data[0]));
-                        osc.SetAmp((m.data[1] / 127.0f));
+                        p = m.AsNoteOn();
+                        osc.SetFreq(daisysp::mtof(p.note));
+                        osc.SetAmp((p.velocity / 127.0f));
                     }
-                    break;
+                }
+                break;
                 case ControlChange:
-                    switch(m.data[0])
+                {
+                    ControlChangeEvent p;
+                    switch(p.control_number)
                     {
                         case 1:
-							midifiltval = (daisysp::mtof((float)m.data[1]));
                             // CC 1 for cutoff.
+                            midifiltval = (daisysp::mtof((float)p.value));
                             break;
                         case 2:
                             // CC 2 for res.
-                            filt.SetRes(((float)m.data[1] / 127.0f));
+                            filt.SetRes(((float)p.value / 127.0f));
                             break;
-
                         default: break;
                     }
                     break;
+                }
                 default: break;
             }
         }
+
+        // Handle Synthesis settings.
         filtval = midifiltval + daisysp::mtof(knobs[0].Value() * 127.0f);
         if(filtval > 14000.0f)
         {
             filtval = 14000.0f;
         }
         filt.SetFreq(filtval);
-        now = dsy_system_getnow();
-        if(now - last_send > 250)
-        {
-            last_send = now;
-            clearleds();
-            dsy_led_driver_set_led(curled, 1.0f);
-            curled = (curled + 1) % LED_LAST;
-            dsy_led_driver_update();
-            dsy_led_driver_update();
-        }
         // Write MIDI Out for Knobs..
         // 4 knobs do CC1-4 0-127
         //        now = dsy_system_getnow();

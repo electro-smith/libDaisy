@@ -15,9 +15,10 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include "per_uart.h"
 #include "util_ringbuffer.h"
 
-namespace daisy 
+namespace daisy
 {
 // ## Data
 // ### MidiMessageType
@@ -26,7 +27,7 @@ namespace daisy
 // At this time only 3-byte messages are correctly parsed into MidiEvents.
 enum MidiMessageType
 {
-// ~~~~
+    // ~~~~
     NoteOff,
     NoteOn,
     PolyphonicKeyPressure,
@@ -35,7 +36,21 @@ enum MidiMessageType
     ChannelPressure,
     PitchBend,
     MessageLast, // maybe change name to MessageUnsupported
-// ~~~~
+    // ~~~~
+};
+
+// ### M
+struct NoteOnEvent
+{
+    int     channel;
+    uint8_t note;
+    uint8_t velocity;
+};
+struct ControlChangeEvent
+{
+    int     channel;
+    uint8_t control_number;
+    uint8_t value;
 };
 
 // ### MidiEvent
@@ -46,6 +61,23 @@ struct MidiEvent
     MidiMessageType type;
     int             channel;
     uint8_t         data[2];
+    NoteOnEvent     AsNoteOn()
+    {
+        NoteOnEvent m;
+        m.channel  = channel;
+        m.note     = data[0];
+        m.velocity = data[1];
+        return m;
+    }
+
+    ControlChangeEvent AsControlChange()
+    {
+        ControlChangeEvent m;
+        m.channel = channel;
+        m.control_number = data[0];
+        m.value          = data[1];
+        return m;
+    }
 };
 
 class MidiHandler
@@ -53,41 +85,62 @@ class MidiHandler
   public:
     MidiHandler() {}
     ~MidiHandler() {}
+    // ### Midi IO Modes
+    // Input and Output can be configured separately
+    // Multiple Input modes can be selected by OR'ing the values.
+    enum MidiInputMode
+    {
+        INPUT_MODE_NONE    = 0x00,
+        INPUT_MODE_UART1   = 0x01,
+        INPUT_MODE_USB_INT = 0x02,
+        INPUT_MODE_USB_EXT = 0x04,
+    };
+    enum MidiOutputMode
+    {
+        OUTPUT_MODE_NONE    = 0x00,
+        OUTPUT_MODE_UART1   = 0x01,
+        OUTPUT_MODE_USB_INT = 0x02,
+        OUTPUT_MODE_USB_EXT = 0x04,
+    };
 
     // ## Functions
 
-	// ### Init
+    // ### Init
     // Initializes the MidiHandler
-	// ~~~~
-    void Init();
-	// ~~~~
+    // ~~~~
+    void Init(MidiInputMode in_mode, MidiOutputMode out_mode);
+    // ~~~~
+
+    // ### StartReceive
+    // Starts listening on the selected input mode(s).
+    // MidiEvent Queue will begin to fill, and can be checked with
+    void StartReceive();
+
+    void Listen();
 
     // ### Parse
     // Feed in bytes to state machine from a queue.
-	//
-	// Populates internal FIFO queue with MIDI Messages
+    //
+    // Populates internal FIFO queue with MIDI Messages
     //
     // For example with uart:
     // midi.Parse(uart.PopRx());
-	// ~~~~
+    // ~~~~
     void Parse(uint8_t byte);
-	// ~~~~
+    // ~~~~
 
     // ### HasEvents
     // Checks if there are unhandled messages in the queue
     // ~~~~
     bool HasEvents() const { return event_q_.readable(); }
-	// ~~~~
+    // ~~~~
 
-	// ### PopEvent
-	// 
-	// Pops the oldest unhandled MidiEvent from the internal queue
-	// 
-	// 
-    MidiEvent PopEvent()
-    {
-        return event_q_.Read();
-    }
+    // ### PopEvent
+    //
+    // Pops the oldest unhandled MidiEvent from the internal queue
+    //
+    //
+    MidiEvent PopEvent() { return event_q_.Read(); }
 
   private:
     enum ParserState
@@ -96,6 +149,9 @@ class MidiHandler
         ParserHasStatus,
         ParserHasData0,
     };
+    MidiInputMode            in_mode_;
+    MidiOutputMode           out_mode_;
+    UartHandler              uart_;
     ParserState              pstate_;
     MidiEvent                incoming_message_;
     RingBuffer<MidiEvent, 8> event_q_;
