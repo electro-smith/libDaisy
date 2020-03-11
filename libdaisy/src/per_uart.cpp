@@ -1,5 +1,6 @@
 #include <stm32h7xx_hal.h>
 #include "per_uart.h"
+#include "util_ringbuffer.h"
 
 using namespace daisy;
 
@@ -13,11 +14,13 @@ uint8_t DMA_BUFFER_MEM_SECTION uart_dma_buffer_rx[32];
 // Uses HAL so these things have to be local to this file only
 struct uart_handle
 {
-    UART_HandleTypeDef huart1;
-    DMA_HandleTypeDef  hdma_usart1_rx;
-    uint8_t*           rx_ptr;
-    uint8_t*           dma_buffer_rx;
-    bool               receiving;
+    UART_HandleTypeDef                      huart1;
+    DMA_HandleTypeDef                       hdma_usart1_rx;
+    uint8_t*                                rx_ptr;
+    uint8_t*                                dma_buffer_rx;
+    bool                                    receiving;
+    size_t                                  rx_size;
+    RingBuffer<uint8_t, kUartMaxBufferSize> queue_rx;
 };
 static uart_handle uhandle;
 
@@ -54,6 +57,7 @@ void UartHandler::Init()
     }
     // Internal bits
     uhandle.dma_buffer_rx = uart_dma_buffer_rx;
+    uhandle.queue_rx.Init();
 }
 
 int UartHandler::PollReceive(uint8_t* buff, size_t size)
@@ -61,18 +65,20 @@ int UartHandler::PollReceive(uint8_t* buff, size_t size)
     return HAL_UART_Receive(&uhandle.huart1, (uint8_t*)buff, size, 10);
 }
 
-int UartHandler::Receive(uint8_t* buff, size_t size)
+int UartHandler::StartRx(uint8_t* buff, size_t size)
 {
-    int status = 0;
-    //    if(!receiving)
-    //    {
-    //        receiving = true;
-    //        status = HAL_UART_Receive_IT(&uhandle.huart1, (uint8_t*)buff, size);
-    //    }
-    uhandle.rx_ptr = buff;
-    status         = HAL_UART_Receive_DMA(
+    int status      = 0;
+    uhandle.rx_size = size <= 32 ? size : 32;
+    uhandle.rx_ptr  = buff;
+    status          = HAL_UART_Receive_DMA(
         &uhandle.huart1, (uint8_t*)uhandle.dma_buffer_rx, size);
     return status;
+}
+
+int UartHandler::PollTx(uint8_t* buff, size_t size) 
+
+{
+    return HAL_UART_Transmit(&uhandle.huart1, (uint8_t*)buff, size, 10);
 }
 
 int UartHandler::CheckError()
@@ -80,12 +86,30 @@ int UartHandler::CheckError()
     return HAL_UART_GetError(&uhandle.huart1);
 }
 
-//bool UartHandler::Recieving()
-//{
-//    return receiving;
-//}
+uint8_t UartHandler::PopRx()
+{
+    return uhandle.queue_rx.Read();
+}
 
-// Msp Functions for HAL
+size_t UartHandler::Readable()
+{
+    return uhandle.queue_rx.readable();
+}
+
+// Callbacks
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
+{
+    // Keep this garbage in place for the moment.
+    for(int i = 0; i < 3; i++)
+    {
+        uhandle.rx_ptr[i] = uart_dma_buffer_rx[i];
+        uhandle.queue_rx.Write(uhandle.dma_buffer_rx[i]);
+    }
+}
+
+
+// HAL Interface functions
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
@@ -162,18 +186,13 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     }
 }
 
+// HAL Interrupts.
 extern "C"
 {
     void USART1_IRQHandler() { HAL_UART_IRQHandler(&uhandle.huart1); }
 
-    void DMA1_Stream5_IRQHandler() { HAL_DMA_IRQHandler(&uhandle.hdma_usart1_rx); }
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
-{
-    for(int i = 0; i < 3; i++)
+    void DMA1_Stream5_IRQHandler()
     {
-        uhandle.rx_ptr[i] = uart_dma_buffer_rx[i];
+        HAL_DMA_IRQHandler(&uhandle.hdma_usart1_rx);
     }
 }
-

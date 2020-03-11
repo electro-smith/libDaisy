@@ -10,9 +10,9 @@
 //     - data size, stop bits, parity, baud, etc.
 //     - dma vs interrupt (or not).
 // - Error handling
-// - Ring buffer queue for handling received data.
 // - Transmit functions
 // - Other UART Peripherals (currently only handles USART1 in UART mode.
+// - Overflow handling, etc. for Rx Queue.
 
 #pragma once
 #ifndef DSY_UART_H
@@ -21,6 +21,7 @@
 
 namespace daisy
 {
+const size_t kUartMaxBufferSize = 32;
 class UartHandler
 {
   public:
@@ -39,16 +40,35 @@ class UartHandler
     // ~~~~
     int PollReceive(uint8_t *buff, size_t size);
     // ~~~~
-    // ### Receive
-    // Reads the amount of bytes in non-blocking mode (using DMA).
-    // TODO: Add some sort of flag for new data (plus resolve this as ring buffer comes in).
+    // ### StartRx
+    // Starts a DMA Receive callback to fill a buffer of specified size.
+    //
+    // Data is populated into a FIFO queue, and can be queried with the
+    // functions below.
+    // Maximum Buffer size is defined above.
+    //
+    // If a value outside of the maximum is specified,
+    // the size will be set to the maximum.
+    //
     // ~~~~
-    int Receive(uint8_t *buff, size_t size);
+    int StartRx(uint8_t *buff, size_t size);
     // ~~~~
+
+	// ### PollTx
+	// Sends an amount of data in blocking mode.
 	// ~~~~
+    int PollTx(uint8_t *buff, size_t size);
+	// ~~~~
+
+    // ~~~~
+    uint8_t PopRx();
+	// ~~~~
+    size_t  Readable();
+    // ### CheckError
+    // Returns the result of HAL_UART_GetError() to the user.
+    // ~~~~
     int CheckError();
-	// ~~~~
-//    bool Recieving();
+    // ~~~~
 
   private:
 };

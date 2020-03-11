@@ -3,6 +3,7 @@
 #ifndef DSY_CORE_HW_H
 #define DSY_CORE_HW_H
 #include <stdint.h>
+#include <stdlib.h>
 
 // ## Memory Section Macros
 //

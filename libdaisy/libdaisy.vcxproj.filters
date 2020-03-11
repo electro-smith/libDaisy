@@ -560,6 +560,9 @@
     <ClInclude Include="src\util_hal_map.h">
       <Filter>Header files</Filter>
     </ClInclude>
+    <ClInclude Include="src\util_ringbuffer.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dev_codec_pcm3060.c">

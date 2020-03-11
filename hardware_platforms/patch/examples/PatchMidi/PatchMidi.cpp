@@ -1,81 +1,118 @@
-#include "daisy_patch.h"
+#include "daisy_field.h"
 #include "daisysp.h"
 
 using namespace daisy;
 
-struct MidiMessage
-{
-    void Set(uint8_t *bytes)
-    {
-        sb  = bytes[0];
-        db0 = bytes[1];
-        db1 = bytes[2];
-    }
-    bool Equals(const MidiMessage &m)
-    {
-        return (sb == m.sb) && (db0 == m.db0) && (db1 == m.db1);
-    }
-    uint8_t sb, db0, db1;
-};
-
-daisy_patch hw;
-UartHandler uart;
-MidiHandler midi;
-uint8_t     mybuff[16];
-
-uint8_t mnote, mvel;
-uint8_t mcc, mval;
-
+daisy_field         hw;
+UartHandler         uart;
+MidiHandler         midi;
+uint8_t             mybuff[16];
 daisysp::Oscillator osc;
-void                AudioCallback(float *in, float *out, size_t size)
+daisysp::Svf        filt;
+AnalogControl       knobs[4];
+
+void AudioCallback(float *in, float *out, size_t size)
 {
     float sig;
-    osc.SetAmp((mvel / 127.0f) * 0.7f);
-    osc.SetFreq(daisysp::mtof(mnote));
+    for(size_t i = 0; i < 4; i++)
+    {
+        knobs[i].Process();
+    }
     for(size_t i = 0; i < size; i += 2)
     {
-        sig    = osc.Process();
-        out[i] = out[i + 1] = sig;
+        sig = osc.Process();
+        filt.Process(sig);
+        out[i] = out[i + 1] = filt.Low();
     }
 }
 
+
 int main(void)
 {
-    // Local vars
-    MidiMessage cur, prev;
-    MidiEvent   event;
     // Init
-    hw.Init();
+    //    hw.Init();
+    daisy_field_init(&hw);
     uart.Init();
     midi.Init();
+
     // Synthesis
     osc.Init(SAMPLE_RATE);
     osc.SetWaveform(daisysp::Oscillator::WAVE_POLYBLEP_SAW);
+    filt.Init(SAMPLE_RATE);
 
     // Start stuff.
-    uart.Receive(mybuff, 3);
-    hw.StartAudio(AudioCallback);
+    uart.StartRx(mybuff, 3);
+    // This stuff needs to have an interface in daisy_field.h
+    dsy_adc_start();
+    size_t blocksize = 12;
+    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, blocksize);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
+    dsy_audio_start(DSY_AUDIO_INTERNAL);
+    for(int i = 0; i < 4; i++)
+    {
+        knobs[i].Init(dsy_adc_get_mux_rawptr(0, i), SAMPLE_RATE / blocksize);
+    }
+
+    //    hw.StartAdc();
+    //    hw.StartAudio(AudioCallback);
+    uint32_t last_send, now;
+    now = last_send = dsy_system_getnow();
     for(;;)
     {
         // Until a mechanism is added, we'll just test for sameness..
-        prev.sb  = cur.sb;
-        prev.db0 = cur.db0;
-        prev.db1 = cur.db1;
-        cur.Set(mybuff);
-        if(!cur.Equals(prev))
+        while(uart.Readable())
         {
-            // Probably change mybuff to handle 'midimessage'
-            event = midi.Parse(mybuff, 3);
-            if(event.is_note())
+            midi.Parse(uart.PopRx());
+        }
+        while(midi.HasEvents())
+        {
+            MidiEvent m;
+            m = midi.PopEvent();
+            switch(m.type)
             {
-                mnote = event.note_;
-                mvel  = event.vel_;
-            }
-            if(event.is_cc())
-            {
-                mcc  = event.cc_;
-                mval = event.val_;
+                case NoteOn:
+                    if(m.data[1] != 0)
+                    {
+                        osc.SetFreq(daisysp::mtof(m.data[0]));
+                        osc.SetAmp((m.data[1] / 127.0f));
+                    }
+                    break;
+                case ControlChange:
+                    switch(m.data[0])
+                    {
+                        case 1:
+                            // CC 1 for cutoff.
+                            filt.SetFreq(daisysp::mtof((float)m.data[1]));
+                            break;
+                        case 2:
+                            // CC 2 for res.
+                            filt.SetRes(((float)m.data[1] / 127.0f));
+                            break;
+
+                        default: break;
+                    }
+                    break;
+                default: break;
             }
         }
+        // Write MIDI Out for Knobs..
+        // 4 knobs do CC1-4 0-127
+//        now = dsy_system_getnow();
+//        if(now - last_send > 20)
+//        {
+//            last_send = now;
+//            for(size_t i = 0; i < 4; i++)
+//            {
+//                uint8_t outval, ccnum, sb;
+//                uint8_t buff[3];
+//                outval  = static_cast<uint8_t>(knobs[i].Value() * 127.0f);
+//                sb      = 0xb0;
+//                ccnum   = i + 1;
+//                buff[0] = sb;
+//                buff[1] = ccnum;
+//                buff[2] = outval;
+//                uart.PollTx(buff, 3);
+//            }
+//        }
     }
 }
