@@ -4,6 +4,7 @@ using namespace daisy;
 
 // Masks to check for message type, and byte content
 const uint8_t kStatusByteMask = 0x80;
+const uint8_t kMessageMask      = 0x70;
 const uint8_t kDataByteMask = 0x7F;
 const uint8_t kSystemCommonMask = 0xF0;
 const uint8_t kChannelMask = 0x0F;
@@ -29,7 +30,8 @@ MidiEvent MidiHandler::Parse(uint8_t *buffer, size_t size)
     size_t expected_packet_size;
     bool valid;
     // Get bytes in place
-    sb = (buffer[0] & kStatusByteMask) >> 4;
+
+    sb      = (buffer[0] & kMessageMask) >> 4;
     channel = (buffer[0] & kChannelMask);
     db = buffer + 1;
     // Check Validity
@@ -51,16 +53,16 @@ MidiEvent MidiHandler::Parse(uint8_t *buffer, size_t size)
         case NoteOn:
         case NoteOff:
         case PolyphonicKeyPressure:
-            if (size < 3)
+            if (size <= 3)
             {
                 event.note_ = db[0];
                 event.vel_ = db[1];
             }
             break;
         case ControlChange:
-            if (size < 3)
+            if(size <= 3)
             {
-                event.cc_ = db[0];
+                event.cc_  = db[0];
                 event.val_ = db[1];
             }
             break;
