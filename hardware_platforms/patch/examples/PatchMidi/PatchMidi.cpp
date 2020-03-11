@@ -42,6 +42,8 @@ int main(void)
     midi.StartReceive();
 
     // This stuff needs to have an interface in daisy_field.h
+    //    hw.StartAdc();
+    //    hw.StartAudio(AudioCallback);
     dsy_adc_start();
     size_t blocksize = 12;
     dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, blocksize);
@@ -52,8 +54,6 @@ int main(void)
         knobs[i].Init(dsy_adc_get_mux_rawptr(0, i), SAMPLE_RATE / blocksize);
     }
 
-    //    hw.StartAdc();
-    //    hw.StartAudio(AudioCallback);
     uint32_t last_send, now;
     now = last_send = dsy_system_getnow();
     int curled      = 0;
