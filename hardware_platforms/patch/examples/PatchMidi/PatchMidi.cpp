@@ -70,9 +70,9 @@ int main(void)
             {
                 case NoteOn:
                 {
-                    NoteOnEvent p;
-                    if(m.data[1]
-                       != 0) // This is to avoid Max/MSP Note outs for now..
+                    NoteOnEvent p = m.AsNoteOn();
+                    // This is to avoid Max/MSP Note outs for now..
+                    if(m.data[1] != 0)
                     {
                         p = m.AsNoteOn();
                         osc.SetFreq(daisysp::mtof(p.note));
@@ -82,7 +82,7 @@ int main(void)
                 break;
                 case ControlChange:
                 {
-                    ControlChangeEvent p;
+                    ControlChangeEvent p = m.AsControlChange();
                     switch(p.control_number)
                     {
                         case 1:
