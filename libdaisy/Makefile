@@ -2,6 +2,7 @@ TARGET = libdaisy
 
 MODULE_DIR=src
 MODULES = \
+daisy_patch \
 dev_codec_pcm3060 \
 dev_codec_wm8731 \
 sys_dma \
@@ -16,11 +17,14 @@ per_sai \
 per_gpio \
 per_dac \
 per_tim \
+per_uart \
 hid_switch \
 hid_encoder \
 hid_ctrl \
+hid_gatein \
 hid_usb \
 dev_sr_4021 \
+util_hal_map \
 system_stm32h7xx \
 
 ######################################

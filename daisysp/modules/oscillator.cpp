@@ -1,169 +1,80 @@
 #include <math.h>
 #include "oscillator.h"
-// TODO: Fix polyblep triangle... something bad happened to it.
+
+// TODO: Fix Polyblep triangle... something bad happened to it.
 using namespace daisysp;
-static inline float polyblep(float phase_inc, float t);
-float oscillator::process() 
+static inline float Polyblep(float phase_inc, float t);
+
+constexpr float     TWO_PI_F     = (float)M_TWOPI;
+constexpr float     TWO_PI_RECIP = 1.0f / TWO_PI_F;
+
+float               Oscillator::Process()
 {
-	float out, t;
-	switch(waveform)
-	{
-		case WAVE_SIN: out = sinf(phase); break;
-		case WAVE_TRI: 
-			t = -1.0f + (2.0f * phase / (2.0f * M_PI));
-			out = 2.0f * (fabsf(t) - 0.5f);
-			break;
-		case WAVE_SAW:
-			out = -1.0f * (((phase / (2.0f * M_PI) * 2.0f)) - 1.0f);
-			break;
-		case WAVE_RAMP:
-			out = ((phase / (2.0f * M_PI) * 2.0f)) - 1.0f;
-			break;
-		case WAVE_SQUARE:
-			out = phase < M_PI ? (1.0f) :  -1.0f;
-			break;
-		case WAVE_POLYBLEP_TRI:
-			t = phase / (2.0f * (float)M_PI);
-			out = phase < (float)M_PI ? 1.0f : -1.0f;
-			out += polyblep(phase_inc, t);
-			out -= polyblep(phase_inc, fmodf(t + 0.5f, 1.0f));
-			// Leaky Integrator:
-			// y[n] = A + x[n] + (1 - A) * y[n-1]
-			out = phase_inc * out + (1.0f - phase_inc) * last_out;
-			break;
-		case WAVE_POLYBLEP_SAW:
-			t = phase / (2.0f * (float)M_PI);
-			out = (2.0f * phase / (2.0f * (float)M_PI)) - 1.0f;
-			out -= polyblep(phase_inc, t);
-			out *=  -1.0f;
-			break;
-		case WAVE_POLYBLEP_SQUARE:
-			t = phase / (2.0f * (float)M_PI);
-			out = phase < M_PI ? 1.0f : -1.0f;
-			out += polyblep(phase_inc, t);
-			out -= polyblep(phase_inc, fmodf(t + 0.5f, 1.0f));
-			out *= 0.707f; // ?
-			break;
-		default:
-			out = 0.0f;
-			break;
-	}
-	phase += phase_inc;
-	if(phase > (2.0f * M_PI)) 
-	{
-		phase -= (2.0f * M_PI);
-	}
-	return out * amp;
-}
-float oscillator::calc_phase_inc(float f) {
-	return ((2.0f * (float)M_PI * f) / sr);
+    float out, t;
+    switch(waveform_)
+    {
+        case WAVE_SIN: out = sinf(phase_); break;
+        case WAVE_TRI:
+            t   = -1.0f + (2.0f * phase_ * TWO_PI_RECIP);
+            out = 2.0f * (fabsf(t) - 0.5f);
+            break;
+        case WAVE_SAW:
+            out = -1.0f * (((phase_ * TWO_PI_RECIP * 2.0f)) - 1.0f);
+            break;
+        case WAVE_RAMP: out = ((phase_ * TWO_PI_RECIP * 2.0f)) - 1.0f; break;
+        case WAVE_SQUARE: out = phase_ < (float)M_PI ? (1.0f) : -1.0f; break;
+        case WAVE_POLYBLEP_TRI:
+            t   = phase_ * TWO_PI_RECIP;
+            out = phase_ < (float)M_PI ? 1.0f : -1.0f;
+            out += Polyblep(phase_inc_, t);
+            out -= Polyblep(phase_inc_, fmodf(t + 0.5f, 1.0f));
+            // Leaky Integrator:
+            // y[n] = A + x[n] + (1 - A) * y[n-1]
+            out = phase_inc_ * out + (1.0f - phase_inc_) * last_out_;
+            break;
+        case WAVE_POLYBLEP_SAW:
+            t   = phase_ * TWO_PI_RECIP;
+            out = (2.0f * t) - 1.0f;
+            out -= Polyblep(phase_inc_, t);
+            out *= -1.0f;
+            break;
+        case WAVE_POLYBLEP_SQUARE:
+            t   = phase_ * TWO_PI_RECIP;
+            out = phase_ < (float)M_PI ? 1.0f : -1.0f;
+            out += Polyblep(phase_inc_, t);
+            out -= Polyblep(phase_inc_, fmodf(t + 0.5f, 1.0f));
+            out *= 0.707f; // ?
+            break;
+        default: out = 0.0f; break;
+    }
+    phase_ += phase_inc_;
+    if(phase_ > TWO_PI_F)
+    {
+        phase_ -= TWO_PI_F;
+    }
+    return out * amp_;
 }
 
-static float polyblep(float phase_inc, float t)
+float Oscillator::CalcPhaseInc(float f)
 {
-	float dt = phase_inc / (2.0f * (float)M_PI);
-	if (t < dt)
-	{
-		t /= dt;
-		return t + t - t * t - 1.0f;
-	}
-	else if (t > 1.0f - dt)
-	{
-		t = (t - 1.0f) / dt;
-		return t * t + t + t + 1.0f;
-	}
-	else
-	{
-		return 0.0f;
-	}
+    return (TWO_PI_F * f) * sr_recip_;
 }
-//static float polyblep(float phase_inc, float t);
-//void dsy_oscillator_init(dsy_oscillator *p, float sr)
-//{
-//	sr = sr;
-//	freq = 100.0f;	
-//	amp = 1.0f;
-//	phase = 0.0f;
-//	wave = WAVE_SIN;
-//	phase_inc = ((2.0f * (float)M_PI * p->freq) / p->sr);
-//	last_out = 0.0f;
-//	last_freq = p->freq;
-//}
-//float dsy_oscillator_process(dsy_oscillator *p)
-//{
-//	float out;
-//	if (last_freq != p->freq)
-//	{
-//		last_freq = p->freq;	
-//		// recompute phase inc only when freq changes
-//		phase_inc = ((2.0f * (float)M_PI * p->freq) / p->sr);
-//	}
-//	switch (wave)
-//	{
-//	case WAVE_SIN:
-//		out = sinf(phase);	
-//		break;
-//	case WAVE_TRI:
-//		{
-//			float val;
-//			val = -1.0f + (2.0f * phase / (2.0f * M_PI));
-//			out = (2.0f * (fabsf(val) - 0.5f));
-//		}
-//		break;
-//	case WAVE_SAW:
-//		out = -1.0f * (((phase / (2.0f * M_PI) * 2.0f)) - 1.0f);
-//		break;
-//	case WAVE_RAMP:
-//		out = ((phase / (2.0f * M_PI) * 2.0f)) - 1.0f;
-//		break;
-//	case WAVE_SQUARE:
-//		out = phase < M_PI ? (1.0f) :  -1.0f;
-//		break;
-//	case WAVE_POLYBLEP_TRI:
-//		{
-//			float t;
-//			t = phase / (2.0f * (float)M_PI);
-//			out = phase < (float)M_PI ? 1.0f : -1.0f;
-//			out += polyblep(phase_inc, t);
-//			out -= polyblep(phase_inc, fmodf(t + 0.5f, 1.0f));
-//			// Leaky Integrator:
-//			// y[n] = A + x[n] + (1 - A) * y[n-1]
-//			out = phase_inc * out + (1.0f - p->phase_inc) * p->last_out;
-//		}
-//		break;
-//	case WAVE_POLYBLEP_SAW:
-//		{
-//			float t;
-//			t = phase / (2.0f * (float)M_PI);
-//			out = (2.0f * phase / (2.0f * (float)M_PI)) - 1.0f;
-//			out -= polyblep(phase_inc, t);
-//			out *=  -1.0f;
-//		}
-//		break;
-//	case WAVE_POLYBLEP_SQUARE:
-//		{
-//			float t;	
-//			t = phase / (2.0f * (float)M_PI);
-//			out = phase < M_PI ? 1.0f : -1.0f;
-//			out += polyblep(phase_inc, t);
-//			out -= polyblep(phase_inc, fmodf(t + 0.5f, 1.0f));
-//			out *= 0.707f; // ?
-//		}
-//		break;
-//	default:
-//        out = 0.0f;
-//        break;
-//	}
-//	last_out = out;
-//	phase += p->phase_inc;
-//	if (phase > 2.0f * (float)M_PI)
-//	{
-//		phase -= (2.0f *(float)M_PI);
-//	}
-//	return out * amp;
-//}
-//void dsy_oscillator_reset_phase(dsy_oscillator *p)
-//{
-//	phase = 0.0f;
-//}
-//
+
+static float Polyblep(float phase_inc, float t)
+{
+    float dt = phase_inc * TWO_PI_RECIP;
+    if(t < dt)
+    {
+        t /= dt;
+        return t + t - t * t - 1.0f;
+    }
+    else if(t > 1.0f - dt)
+    {
+        t = (t - 1.0f) / dt;
+        return t * t + t + t + 1.0f;
+    }
+    else
+    {
+        return 0.0f;
+    }
+}

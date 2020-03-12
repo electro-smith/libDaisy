@@ -1,6 +1,7 @@
 #include "per_sai.h"
 #include "daisy_core.h"
 #include "sys_dma.h"
+#include "util_hal_map.h"
 
 SAI_HandleTypeDef hsai_BlockA1;
 SAI_HandleTypeDef hsai_BlockB1;
@@ -195,13 +196,13 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 			GPIO_TypeDef* port;
 			if(i != DSY_SAI_PIN_MCLK || sai_handle.sync_config[DSY_SAI_1] == DSY_AUDIO_SYNC_MASTER)
 			{
-				port = (GPIO_TypeDef*)
-					gpio_hal_port_map[sai_handle.sai1_pin_config[i].port];
-				GPIO_InitStruct.Pin
-					= gpio_hal_pin_map[sai_handle.sai1_pin_config[i].pin];
-				GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
-				GPIO_InitStruct.Pull  = GPIO_NOPULL;
-				GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+                dsy_gpio_pin* p;
+                p = &sai_handle.sai1_pin_config[i];
+                port = dsy_hal_map_get_port(p);
+                GPIO_InitStruct.Pin   = dsy_hal_map_get_pin(p);
+                GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
+                GPIO_InitStruct.Pull  = GPIO_NOPULL;
+                GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 				GPIO_InitStruct.Alternate
 					= GPIO_AF6_SAI1; // All SAI1 Pins so far use this AF.
 				HAL_GPIO_Init(port, &GPIO_InitStruct);
@@ -304,10 +305,14 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
 			GPIO_TypeDef* port;
 			if(i != DSY_SAI_PIN_MCLK || sai_handle.sync_config[DSY_SAI_2] == DSY_AUDIO_SYNC_MASTER)
 			{
-				port = (GPIO_TypeDef*)
-					gpio_hal_port_map[sai_handle.sai2_pin_config[i].port];
-				GPIO_InitStruct.Pin
-					= gpio_hal_pin_map[sai_handle.sai2_pin_config[i].pin];
+//				port = (GPIO_TypeDef*)
+//					gpio_hal_port_map[sai_handle.sai2_pin_config[i].port];
+//				GPIO_InitStruct.Pin
+//					= gpio_hal_pin_map[sai_handle.sai2_pin_config[i].pin];
+                dsy_gpio_pin* p;
+                p = &sai_handle.sai2_pin_config[i];
+                port = dsy_hal_map_get_port(p);
+                GPIO_InitStruct.Pin   = dsy_hal_map_get_pin(p);
 				GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
 				GPIO_InitStruct.Pull  = GPIO_NOPULL;
 				GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -355,10 +360,10 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
 			uint16_t	  pin;
 			if(i != DSY_SAI_PIN_MCLK || sai_handle.sync_config[DSY_SAI_1] == DSY_AUDIO_SYNC_MASTER)
 			{
-				port = (GPIO_TypeDef*)
-					gpio_hal_port_map[sai_handle.sai1_pin_config[i].port];
-				pin
-					= gpio_hal_pin_map[sai_handle.sai1_pin_config[i].pin];
+                dsy_gpio_pin* p;
+                p = &sai_handle.sai1_pin_config[i];
+                port = dsy_hal_map_get_port(p);
+                pin   = dsy_hal_map_get_pin(p);
 				HAL_GPIO_DeInit(port, pin);
 			}
 		}
@@ -378,11 +383,11 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
 			uint16_t	  pin;
 			if(i != DSY_SAI_PIN_MCLK || sai_handle.sync_config[DSY_SAI_1] == DSY_AUDIO_SYNC_MASTER)
 			{
-				port = (GPIO_TypeDef*)
-					gpio_hal_port_map[sai_handle.sai1_pin_config[i].port];
-				pin
-					= gpio_hal_pin_map[sai_handle.sai1_pin_config[i].pin];
-				HAL_GPIO_DeInit(port, pin);
+                dsy_gpio_pin* p;
+                p    = &sai_handle.sai1_pin_config[i];
+                port = dsy_hal_map_get_port(p);
+                pin  = dsy_hal_map_get_pin(p);
+                HAL_GPIO_DeInit(port, pin);
 			}
 		}
 
@@ -403,10 +408,14 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
 			uint16_t	  pin;
 			if(i != DSY_SAI_PIN_MCLK || sai_handle.sync_config[DSY_SAI_2] == DSY_AUDIO_SYNC_MASTER)
 			{
-				port = (GPIO_TypeDef*)
-					gpio_hal_port_map[sai_handle.sai2_pin_config[i].port];
-				pin
-					= gpio_hal_pin_map[sai_handle.sai2_pin_config[i].pin];
+                dsy_gpio_pin* p;
+                p    = &sai_handle.sai2_pin_config[i];
+                port = dsy_hal_map_get_port(p);
+                pin  = dsy_hal_map_get_pin(p);
+//				port = (GPIO_TypeDef*)
+//					gpio_hal_port_map[sai_handle.sai2_pin_config[i].port];
+//				pin
+//					= gpio_hal_pin_map[sai_handle.sai2_pin_config[i].pin];
 				HAL_GPIO_DeInit(port, pin);
 			}
 		}
@@ -424,10 +433,14 @@ void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
 			uint16_t	  pin;
 			if(i != DSY_SAI_PIN_MCLK || sai_handle.sync_config[DSY_SAI_2] == DSY_AUDIO_SYNC_MASTER)
 			{
-				port = (GPIO_TypeDef*)
-					gpio_hal_port_map[sai_handle.sai2_pin_config[i].port];
-				pin
-					= gpio_hal_pin_map[sai_handle.sai2_pin_config[i].pin];
+                dsy_gpio_pin* p;
+                p    = &sai_handle.sai2_pin_config[i];
+                port = dsy_hal_map_get_port(p);
+                pin  = dsy_hal_map_get_pin(p);
+//				port = (GPIO_TypeDef*)
+//					gpio_hal_port_map[sai_handle.sai2_pin_config[i].port];
+//				pin
+//					= gpio_hal_pin_map[sai_handle.sai2_pin_config[i].pin];
 				HAL_GPIO_DeInit(port, pin);
 			}
 		}

@@ -1,60 +1,126 @@
+// # Switch
+// ## Description
+//
+// Generic Class for handling momentary/latching switches
+//
+// ## Files
+// hid_switch.*
+//
+// ## Credits
+//
+// **Author:** Stephen Hensley
+//
+// **Date:** December 2019
+//
+// Inspired/influenced by Mutable Instruments (pichenettes) Switch classes
+//
 #pragma once
 #ifndef DSY_SWITCH_H
 #define DSY_SWITCH_H
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 #include "daisy_core.h"
 #include "per_gpio.h"
 
-// Usage:
-// Using the dsy_switch_state(), will work with no setup other than init.
-// For edge, and time based functions, you'll have to call debounce() at 
-// a regular interval (i.e. 1ms)
-// In order not to miss those events, the rising/falling edge checks should
-// be made at the same frequency as the debounce() function.
-
-typedef enum
+namespace daisy
 {
-	DSY_SWITCH_TYPE_TOGGLE,
-	DSY_SWITCH_TYPE_MOMENTARY,
-	DSY_SWITCH_TYPE_LAST,
-} dsy_switch_type;
-
-typedef enum
+class Switch
 {
-	DSY_SWITCH_POLARITY_NORMAL,
-	DSY_SWITCH_POLARITY_INVERTED,
-	DSY_SWITCH_POLARTIY_LAST,
-} dsy_switch_polarity;
+  public:
+// ## Data Types
+// ### Type
+// Specifies the expected behavior of the switch
+// ~~~~
+    enum Type
+    {
+        TYPE_TOGGLE,
+        TYPE_MOMENTARY,
+    };
+// ~~~~
+// ### Polarity
+// Specifies whether the pressed is HIGH or LOW.
+// ~~~~
+    enum Polarity
+    {
+        POLARITY_NORMAL,
+        POLARITY_INVERTED,
+    };
+// ~~~~
+// ### Pull
+// Specifies whether to use built-in Pull Up/Down resistors to hold button
+// at a given state when not engaged.
+// ~~~~
+    enum Pull
+    {
+        PULL_UP,
+        PULL_DOWN,
+        PULL_NONE,
+    };
+// ~~~~
 
-typedef enum
-{
-	DSY_SWITCH_NOPULL,
-	DSY_SWITCH_PULLUP,
-	DSY_SWITCH_PULLDOWN,
-} dsy_switch_pull;
+    Switch() {}
 
-typedef struct
-{
-	dsy_switch_type type;
-	dsy_switch_polarity polarity;
-	dsy_switch_pull		pull;
-	dsy_gpio gpio;
-	dsy_gpio_pin		pin_config;
-	uint8_t			state; // used for debouncing
-} dsy_switch;
+    ~Switch() {}
 
-void dsy_switch_init(dsy_switch *sw);
+// ## General Functions
+// ### Init
+// Initializes the switch object with a given port/pin combo.
+//
+// Parameters:
+//
+// - pin: port/pin object to tell the switch which hardware pin to use.
+// - update_rate: the rate at which the Debounce() function will be called. (used for timing).
+// - t: switch type -- Default: TYPE_MOMENTARY
+// - pol: switch polarity -- Default: POLARITY_INVERTED
+// - pu: switch pull up/down -- Default: PULL_UP
+// ~~~~
+    void
+    Init(dsy_gpio_pin pin, float update_rate, Type t, Polarity pol, Pull pu);
 
-void dsy_switch_debounce(dsy_switch *sw);
+    void Init(dsy_gpio_pin pin, float update_rate);
+// ~~~~
 
-uint8_t dsy_switch_falling_edge(dsy_switch *sw);
-uint8_t dsy_switch_rising_edge(dsy_switch *sw);
-uint8_t dsy_switch_state(dsy_switch *sw);
+// ### Debounce
+// Called at update_rate to debounce and handle timing for the switch.
+//
+// In order for events not to be missed, its important that the Edge/Pressed checks
+// be made at the same rate as the debounce function is being called.
+// ~~~~
+    void Debounce();
+// ~~~~
 
-#ifdef __cplusplus
-}
-#endif
+// ### RisingEdge
+// Returns true if a button was just pressed.
+// ~~~~
+    inline bool RisingEdge() const { return state_ == 0x7f; }
+// ~~~~
+
+// ### FallingEdge
+// Returns true if the button was just released
+// ~~~~
+    inline bool FallingEdge() const { return state_ == 0x80; }
+// ~~~~
+
+// ### Pressed
+// Returns true if the button is held down (or if the toggle is on).
+// ~~~~
+    inline bool Pressed() const { return state_ == 0xff; }
+// ~~~~
+
+// ### TimeHeldMs
+// Returns the time in milliseconds that the button has been held (or toggle has been on)
+// ~~~~
+    inline float TimeHeldMs() const
+// ~~~~
+    {
+        return Pressed() ? time_held_ * 1000.0f : 0;
+    }
+
+  private:
+    Type     t_;
+    dsy_gpio hw_gpio_;
+    uint8_t  state_;
+    bool     flip_;
+    float    time_per_update_, time_held_;
+};
+
+} // namespace daisy
 #endif

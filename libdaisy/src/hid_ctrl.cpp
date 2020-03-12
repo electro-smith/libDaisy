@@ -1,17 +1,51 @@
 #include "hid_ctrl.h"
 #include <math.h>
+// Temporary amount to prevent bleed on the bottom of the pots/CVs
+#define BOTTOM_THRESH 0.002f
 using namespace daisy;
-float hid_ctrl::process() { 
+
+void AnalogControl::Init(uint16_t *adcptr, float sr)
+// ~~~~
+{
+	val_		= 0.0f;
+	raw_		= adcptr;
+	samplerate_ = sr;
+	coeff_		= 1.0f / (0.002f * samplerate_ * 0.5f);
+	scale_		= 1.0f;
+	offset_		= 0.0f;
+	flip_		= false;
+}
+
+// ~~~~
+void AnalogControl::Init(uint16_t *adcptr, float sr, float slew_seconds)
+// ~~~~
+{
+	val_		= 0.0f;
+	raw_		= adcptr;
+	samplerate_ = sr;
+	coeff_		= 1.0f / (slew_seconds * samplerate_ * 0.5f);
+	scale_		= 1.0f;
+	offset_		= 0.0f;
+	flip_		= false;
+}
+
+void AnalogControl::InitBipolarCv(uint16_t *adcptr, float sr)
+{
+	val_		= 0.0f;
+	raw_		= adcptr;
+	samplerate_ = sr;
+	coeff_		= 1.0f / (0.002f * samplerate_ * 0.5f);
+	scale_  = 2.0f;
+	offset_ = 0.5f;
+	flip_   = true;
+}
+
+float AnalogControl::Process() { 
 	float t;
-	t = (float)*raw / 65536.0f;
-	t = (t - offset) * scale * (flip ? -1.0f : 1.0f);
-	delta = (t - prev) + (0.999f * delta);
-	prev  = t;
-	lockstatus = fabsf(delta) < thresh ? true : false;
-	if(lockstatus)
-		t = val;
-	if(t < 0.02f)
-		t = 0.0f;
-	val += coeff * (t - val);
-	return val;
+	t = (float)*raw_ / 65536.0f;
+	t = (t - offset_) * scale_ * (flip_ ? -1.0f : 1.0f);
+//	if(t < BOTTOM_THRESH)
+//		t = 0.0f;
+	val_ += coeff_ * (t - val_);
+	return val_;
 }

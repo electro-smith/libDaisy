@@ -7,10 +7,12 @@ static int32_t inc;
 static void callback(float *in, float *out, size_t size)
 {
     // Debounce the encoder at a steady, fixed rate.
-    dsy_encoder_debounce(&hw.encoder);
+    //dsy_encoder_debounce(&hw.encoder);
     // check the increment -- 
     // it's important to do this at the same rate as the debouncing
-    inc = dsy_encoder_inc(&hw.encoder);
+    //inc = dsy_encoder_inc(&hw.encoder);
+    hw.encoder.Debounce();
+    inc = hw.encoder.Increment();
     // Change the selected LED based on the increment.
     if (inc > 0)
     {
@@ -33,7 +35,7 @@ static void callback(float *in, float *out, size_t size)
             led_sel -= 1;
         }
     }
-    if (dsy_encoder_rising_edge(&hw.encoder))
+    if (hw.encoder.RisingEdge())
     {
         led_sel = 0;
     }

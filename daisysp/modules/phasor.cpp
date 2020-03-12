@@ -3,13 +3,13 @@
 
 using namespace daisysp;
 
-void phasor::set_freq(float freq) 
+void Phasor::SetFreq(float freq) 
 {
 	freq_ = freq;
 	inc_  = ((float)M_TWOPI * freq_) / sample_rate_;
 }
 
-float phasor::process() 
+float Phasor::Process() 
 {
 	float out;
 	out = phs_ / ((float)M_TWOPI);

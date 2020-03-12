@@ -18,40 +18,40 @@ using namespace daisysp;
 static daisy_handle seed;
 
 // Helper Modules
-static adenv env;
-static oscillator osc;
-static metro tick;
+static AdEnv env;
+static Oscillator osc;
+static Metro tick;
 
-// Declare a delayline of MAX_DELAY number of floats.
-static delayline<float, MAX_DELAY> del;
+// Declare a DelayLine of MAX_DELAY number of floats.
+static DelayLine<float, MAX_DELAY> del;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float osc_out, env_out, feedback, del_out, sig_out;
     for (size_t i = 0; i < size; i += 2)
     {
-        // When the metro ticks: 
+        // When the Metro ticks: 
         // trigger the envelope to start, and change freq of oscillator.
-        if (tick.process())
+        if (tick.Process())
         {
             float freq = rand() % 200;
-            osc.set_freq(freq + 100.0f);
-            env.trigger();
+            osc.SetFreq(freq + 100.0f);
+            env.Trigger();
         }
 
         // Use envelope to control the amplitude of the oscillator.
-        env_out = env.process();
-        osc.set_amp(env_out);
-    	osc_out = osc.process();
+        env_out = env.Process();
+        osc.SetAmp(env_out);
+    	osc_out = osc.Process();
 
         // Read from delay line
-        del_out = del.read();
+        del_out = del.Read();
         // Calculate output and feedback
         sig_out = del_out + osc_out;
         feedback = (del_out * 0.75f) + osc_out;
 
         // Write to the delay
-        del.write(feedback);
+        del.Write(feedback);
 
         // Output
         out[LEFT] = sig_out;
@@ -63,30 +63,30 @@ int main(void)
 {
     // initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
-    env.init(SAMPLE_RATE);
-    osc.init(SAMPLE_RATE);
-    del.init();
+    env.Init(SAMPLE_RATE);
+    osc.Init(SAMPLE_RATE);
+    del.Init();
 
-    // Set up metro to pulse every second
-    tick.init(1.0f, SAMPLE_RATE);    
+    // Set up Metro to pulse every second
+    tick.Init(1.0f, SAMPLE_RATE);    
 
     // set adenv parameters
-    env.set_time(ADENV_SEG_ATTACK, 0.001);
-    env.set_time(ADENV_SEG_DECAY, 0.50);
-    env.set_min(0.0);
-    env.set_max(0.25);
-    env.set_curve_scalar(0); // linear
+    env.SetTime(ADENV_SEG_ATTACK, 0.001);
+    env.SetTime(ADENV_SEG_DECAY, 0.50);
+    env.SetMin(0.0);
+    env.SetMax(0.25);
+    env.SetCurve(0); // linear
 
     // Set parameters for oscillator
-    osc.set_waveform(osc.WAVE_TRI);
-    osc.set_freq(220);
-    osc.set_amp(0.25);
+    osc.SetWaveform(osc.WAVE_TRI);
+    osc.SetFreq(220);
+    osc.SetAmp(0.25);
 
     // Set Delay time to 0.75 seconds
-    del.set_delay(SAMPLE_RATE * 0.75f);
+    del.SetDelay(SAMPLE_RATE * 0.75f);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

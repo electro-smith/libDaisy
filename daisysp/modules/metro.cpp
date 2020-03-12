@@ -3,7 +3,7 @@
 
 using namespace daisysp;
 
-void metro::init(float freq, float sample_rate) 
+void Metro::Init(float freq, float sample_rate) 
 {
 	freq_ = freq;
 	phs_  = 0.0f;
@@ -11,7 +11,7 @@ void metro::init(float freq, float sample_rate)
 	phs_inc_ = (2.0f * M_PI * freq_) / sample_rate_;
 }
 
-uint8_t metro::process() 
+uint8_t Metro::Process() 
 {
 	phs_ += phs_inc_;
 	if(phs_ >= 2.0f * M_PI) 
@@ -22,7 +22,7 @@ uint8_t metro::process()
 	return 0;
 }
 
-void metro::set_freq(float freq) 
+void Metro::SetFreq(float freq) 
 {
 	freq_ = freq;
 	phs_inc_ = (2.0f * M_PI * freq_) / sample_rate_;

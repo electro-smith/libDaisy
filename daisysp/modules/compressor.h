@@ -25,94 +25,95 @@
 
 namespace daisysp
 {
-class compressor
+
+class Compressor
 {
     public:
-    compressor() {}
-    ~compressor() {}
+    Compressor() {}
+    ~Compressor() {}
 
-// ### init
+// ### Init
 //
 // Initializes compressor
 // 
-// samplerate - rate at which samples will be produced by the audio engine.
+// sample_rate - rate at which samples will be produced by the audio engine.
 // ~~~~
-    void init(float samplerate);
+    void Init(float sample_rate);
 // ~~~~
 
-// ### process
+// ### Process
 // compresses the audio input signal, either keyed by itself, or a secondary input.
 // 
 // in - audio input signal (to be compressed)
 // 
 // (optional) key - audio input that will be used to side-chain the compressor. 
 // ~~~~
-	float process(float &in, float &key);
-	float process(float &in);
+	float Process(float in, float key);
+	float Process(float in);
 // ~~~~
 
 // ## setters
 
-// ### set_ratio
+// ### SetRatio
 // amount of gain reduction applied to compressed signals
 // 
 // Expects 1.0 -> 40. (untested with values < 1.0)
 // ~~~~
-    void set_ratio(const float &ratio)
+    inline void SetRatio(const float &ratio)
 // ~~~~
     {
         ratio_ = ratio;
-		recalculate_slopes();
+		RecalculateSlopes();
 	}
 
-// ### set_threshold
+// ### SetThreshold
 // threshold in dB at which compression will be applied
 // 
 // Expects 0.0 -> -80.
 // ~~~~
-    void set_threshold(const float &thresh)
+    inline void SetThreshold(const float &thresh)
 // ~~~~
     {
         thresh_ = thresh;
-		recalculate_slopes();
+		RecalculateSlopes();
 	}
 
-// ### set_attack
+// ### SetAttack
 // envelope time for onset of compression for signals above the threshold.
 // 
 // Expects 0.001 -> 10
 // ~~~~
-    void set_attack(const float &atk)
+    inline void SetAttack(const float &atk)
 // ~~~~
     {
         atk_ = atk;
-		recalculate_slopes();
+		RecalculateSlopes();
     }
 
-// ### set_release
+// ### SetRelease
 // envelope time for release of compression as input signal falls below threshold.
 // 
 // Expects 0.001 -> 10
 // ~~~~
-    void set_release(const float &rel)
+    inline void SetRelease(const float &rel)
 // ~~~~
     {
         rel_ = rel;
-		recalculate_slopes();
+		RecalculateSlopes();
     }
 
     private:
-	  void  recalculate_slopes();
+	  void  RecalculateSlopes();
 	  float sr_;
 	  float ratio_, thresh_, atk_, rel_;
-	  float makeupgain_;
+	  float makeup_gain_;
 	  // internals from faust struct
-	  float fRec2_[2], fRec1_[2], fRec0_[2];
-	  float fSlow0_, fSlow1_, fSlow2_, fSlow3_, fSlow4_, fSlow5_;
-	  int   iConst0_;
-	  float fConst1_, fConst2_;
+	  float f_rec2_[2], f_rec1_[2], f_rec0_[2];
+	  float f_slow0_, f_slow1_, f_slow2_, f_slow3_, f_slow4_, f_slow5_;
+	  int   i_const0_;
+	  float f_const1_, f_const2_;
 };
 
 } // namespace daisysp
 
-#endif
+#endif // DSY_COMPRESSOR_H

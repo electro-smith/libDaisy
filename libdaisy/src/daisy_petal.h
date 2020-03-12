@@ -2,12 +2,13 @@
 #ifndef DSY_PETAL_H
 #define DSY_PETAL_H
 
+#include "daisy_seed.h"
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-#include "daisy_seed.h"
 
 #ifndef SAMPLE_RATE
 #define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
@@ -112,7 +113,8 @@ enum
 typedef struct
 {
 	daisy_handle seed;
-	dsy_switch switches[SW_LAST];
+	//dsy_switch switches[SW_LAST];
+    daisy::Switch switches[SW_LAST];
 	float knobs[KNOB_LAST];
 	float cvs[CV_LAST];
 } daisy_petal;
@@ -129,12 +131,7 @@ FORCE_INLINE void daisy_petal_init(daisy_petal *p)
 	dsy_gpio_port sw_ports[SW_LAST]			= {SW_1_PORT, SW_2_PORT, SW_3_PORT, SW_4_PORT, SW_5_PORT, SW_6_PORT, SW_7_PORT};
 	for(uint8_t i = 0; i < SW_LAST; i++) 
 	{
-		p->switches[i].pin_config.port = sw_ports[i];
-		p->switches[i].pin_config.pin  = sw_pins[i];
-		p->switches[i].polarity				= DSY_SWITCH_POLARITY_INVERTED;
-		p->switches[i].pull					= DSY_SWITCH_PULLUP;
-		p->switches[i].type					= DSY_SWITCH_TYPE_TOGGLE;
-		dsy_switch_init(&p->switches[i]);
+        p->switches[i].Init({sw_ports[i], sw_pins[i]}, 1000.0f, daisy::Switch::TYPE_TOGGLE, daisy::Switch::POLARITY_INVERTED, daisy::Switch::PULL_UP);
 	}
 
 	// Encoder

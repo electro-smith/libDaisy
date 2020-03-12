@@ -4,19 +4,19 @@
 using namespace daisysp;
 
 static daisy_handle seed;
-static tone flt;
-static oscillator osc, lfo;
+static Tone flt;
+static Oscillator osc, lfo;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float saw, freq, output;
     for (size_t i = 0; i < size; i += 2)
     {
-        freq = 2500 + ( lfo.process()*2500 );
-    	saw = osc.process();
+        freq = 2500 + ( lfo.Process()*2500 );
+    	saw = osc.Process();
 
-        flt.set_freq(freq);
-        output = flt.process(saw);
+        flt.SetFreq(freq);
+        output = flt.Process(saw);
 
     	// left out
         out[i] = output;
@@ -31,23 +31,23 @@ int main(void)
 	// initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
 
-    // initialize tone object
-    flt.init(DSY_AUDIO_SAMPLE_RATE);
+    // initialize Tone object
+    flt.Init(DSY_AUDIO_SAMPLE_RATE);
 
     // set parameters for sine oscillator object
-    lfo.init(DSY_AUDIO_SAMPLE_RATE);
-    lfo.set_waveform(oscillator::WAVE_TRI);
-    lfo.set_amp(1);
-    lfo.set_freq(.4);
+    lfo.Init(DSY_AUDIO_SAMPLE_RATE);
+    lfo.SetWaveform(Oscillator::WAVE_TRI);
+    lfo.SetAmp(1);
+    lfo.SetFreq(.4);
 
     // set parameters for sine oscillator object
-    osc.init(DSY_AUDIO_SAMPLE_RATE);
-    osc.set_waveform(oscillator::WAVE_POLYBLEP_SAW);
-    osc.set_freq(100);
-    osc.set_amp(0.25);
+    osc.Init(DSY_AUDIO_SAMPLE_RATE);
+    osc.SetWaveform(Oscillator::WAVE_POLYBLEP_SAW);
+    osc.SetFreq(100);
+    osc.SetAmp(0.25);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

@@ -5,25 +5,25 @@ using namespace daisy;
 using namespace daisysp;
 
 daisy_patch patch;
-oscillator osc;
-parameter knob1, knob2, knob3;
+Oscillator osc;
+parameter freqctrl, wavectrl, ampctrl;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float sig, freq, amp;
 	size_t wave;
     for (size_t i = 0; i < size; i += 2)
     {
         // Read Knobs
-        freq = 10.0f + (knob1.process() * 2000.0f); // scaled to 2kHz
-        wave = knob2.process() * (osc.WAVE_LAST - 1);
-        amp = knob3.process();
+        freq = mtof(freqctrl.process());
+        wave = wavectrl.process();
+        amp = ampctrl.process();
         // Set osc params
-        osc.set_freq(freq);
-        osc.set_waveform(wave);
-        osc.set_amp(amp);
+        osc.SetFreq(freq);
+        osc.SetWaveform(wave);
+        osc.SetAmp(amp);
         // process
-    	sig = osc.process();
+    	sig = osc.Process();
     	// left out
         out[i] = sig;
         // right out
@@ -33,13 +33,21 @@ static void audioCallback(float *in, float *out, size_t size)
 
 int main(void)
 {
-    patch.init(); // initialize hardware (daisy seed, and patch)
-    osc.init(SAMPLE_RATE); // init oscillator
-    knob1.init(patch.ctrl(KNOB_1), 0.0, 1.0, PARAM_CURVE_LINEAR);
-    knob2.init(patch.ctrl(KNOB_2), 0.0, 1.0, PARAM_CURVE_LINEAR);
-    knob3.init(patch.ctrl(KNOB_3), 0.0, 1.0, PARAM_CURVE_LINEAR);
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback); // assign callback
-    dsy_adc_start(); // start the ADCs to read values in the background.
-    dsy_audio_start(DSY_AUDIO_INTERNAL); // start audio peripheral
+    int num_waves = Oscillator::WAVE_LAST - 1;
+    patch.Init(); // initialize hardware (daisy seed, and patch)
+    osc.Init(SAMPLE_RATE); // init oscillator
+
+    // This is with the GetCtrl, but it can also be done with the public members.
+    //freqctrl.init(patch.GetCtrl(daisy_patch::KNOB_1), 10.0, 110.0, parameter::LINEAR);
+    //wavectrl.init(patch.GetCtrl(daisy_patch::KNOB_2), 0.0, num_waves, parameter::LINEAR);
+    //ampctrl.init(patch.GetCtrl(daisy_patch::KNOB_2), 0.0, 0.5, parameter::LINEAR);
+    // Like this:
+    freqctrl.init(patch.knob1, 10.0, 110.0f, parameter::LINEAR);
+    wavectrl.init(patch.knob2, 0.0, num_waves, parameter::LINEAR);
+    ampctrl.init(patch.knob3, 0.0, 0.5f, parameter::LINEAR);
+
+    dsy_adc_start();
+    patch.StartAudio(AudioCallback);
+
     while(1) {} // loop forever
 }

@@ -56,6 +56,7 @@ typedef void (*EntryPoint)(void);
 static void SystemClock_Config();
 static void MPU_Config();
 static void Error_Handler(void);
+void        CubeClockConfig();
 
 void SysTick_Handler(void)
 {
@@ -70,12 +71,14 @@ void HardFault_Handler()
 
 void dsy_system_init()
 {
+    // For now we won't use the board parameter since all three supported boards use the same 16MHz HSE.
+    // That said, 2hp Audio BB had a bit different setup, and actually a more accurate sample rate for audio iirc.
     HAL_Init();
-    SystemClock_Config();
+	SystemClock_Config();
     MPU_Config();
     dsy_dma_init(); 
-//    SCB_EnableICache();
-//    SCB_EnableDCache();
+   	SCB_EnableICache();
+   	SCB_EnableDCache();
 }
 
 void dsy_system_jumptoqspi()
@@ -93,6 +96,7 @@ void dsy_system_delay(uint32_t delay_ms)
 {
     HAL_Delay(delay_ms);
 }
+
 
 void SystemClock_Config()
 {
@@ -123,7 +127,11 @@ void SystemClock_Config()
     RCC_OscInitStruct.PLL.PLLM      = 4;
     RCC_OscInitStruct.PLL.PLLN      = 200;
     RCC_OscInitStruct.PLL.PLLP      = 2;
+<<<<<<< HEAD
     RCC_OscInitStruct.PLL.PLLQ      = 5;
+=======
+    RCC_OscInitStruct.PLL.PLLQ      = 5; // was 4 in cube
+>>>>>>> master
     RCC_OscInitStruct.PLL.PLLR      = 2;
     RCC_OscInitStruct.PLL.PLLRGE    = RCC_PLL1VCIRANGE_2;
     RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;
@@ -155,8 +163,14 @@ void SystemClock_Config()
           | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_I2C1
           | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_QSPI | RCC_PERIPHCLK_FMC;
     // PLL 2
+<<<<<<< HEAD
     PeriphClkInitStruct.PLL2.PLL2M      = 4;
     PeriphClkInitStruct.PLL2.PLL2N      = 115;
+=======
+    PeriphClkInitStruct.PLL2.PLL2M = 4;
+    //  PeriphClkInitStruct.PLL2.PLL2N = 115; // Max Freq @ 3v3
+    PeriphClkInitStruct.PLL2.PLL2N      = 84; // Max Freq @ 1V9
+>>>>>>> master
     PeriphClkInitStruct.PLL2.PLL2P      = 8;  // 57.5
     PeriphClkInitStruct.PLL2.PLL2Q      = 10; // 46
     PeriphClkInitStruct.PLL2.PLL2R      = 2;  // 115Mhz
@@ -181,6 +195,11 @@ void SystemClock_Config()
     PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL2;
     PeriphClkInitStruct.Usart234578ClockSelection
         = RCC_USART234578CLKSOURCE_D2PCLK1;
+<<<<<<< HEAD
+=======
+    //PeriphClkInitStruct.Usart16ClockSelection = RCC_USART16CLKSOURCE_D2PCLK2;
+    //PeriphClkInitStruct.Usart16ClockSelection = RCC_USART16CLKSOURCE_PLL2;
+>>>>>>> master
     PeriphClkInitStruct.Usart16ClockSelection = RCC_USART16CLKSOURCE_D2PCLK2;
     //PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C123CLKSOURCE_PLL3;
     PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C123CLKSOURCE_D2PCLK1;
@@ -196,6 +215,7 @@ void SystemClock_Config()
     /** Enable USB Voltage detector 
   */
     HAL_PWREx_EnableUSBVoltageDetector();
+<<<<<<< HEAD
 }
 
 static void MPU_Config()
@@ -242,6 +262,49 @@ static void MPU_Config()
 void HAL_MspInit()
 {
     __HAL_RCC_SYSCFG_CLK_ENABLE();
+=======
+}
+
+static void MPU_Config()
+{
+    MPU_Region_InitTypeDef MPU_InitStruct;
+    HAL_MPU_Disable();
+    // Configure RAM D2 (SRAM1) as non cacheable
+    MPU_InitStruct.Enable           = MPU_REGION_ENABLE;
+    MPU_InitStruct.BaseAddress      = 0x30000000;
+    MPU_InitStruct.Size             = MPU_REGION_SIZE_16KB;
+    MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
+    MPU_InitStruct.IsBufferable     = MPU_ACCESS_NOT_BUFFERABLE;
+    MPU_InitStruct.IsCacheable      = MPU_ACCESS_NOT_CACHEABLE;
+    MPU_InitStruct.IsShareable      = MPU_ACCESS_SHAREABLE;
+    MPU_InitStruct.Number           = MPU_REGION_NUMBER0;
+    MPU_InitStruct.TypeExtField     = MPU_TEX_LEVEL1;
+    MPU_InitStruct.SubRegionDisable = 0x00;
+    MPU_InitStruct.DisableExec      = MPU_INSTRUCTION_ACCESS_ENABLE;
+    HAL_MPU_ConfigRegion(&MPU_InitStruct);
+
+    MPU_InitStruct.IsCacheable  = MPU_ACCESS_CACHEABLE;
+    MPU_InitStruct.IsBufferable = MPU_ACCESS_BUFFERABLE;
+    MPU_InitStruct.IsShareable  = MPU_ACCESS_NOT_SHAREABLE;
+    MPU_InitStruct.Number       = MPU_REGION_NUMBER1;
+    MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL0;
+    MPU_InitStruct.Size         = MPU_REGION_SIZE_64MB;
+    MPU_InitStruct.BaseAddress  = 0xC0000000;
+    HAL_MPU_ConfigRegion(&MPU_InitStruct);
+
+    //	uint32_t enable_bit = (1 << 0);
+    //	uint32_t privdefena = (1 << 2);
+    //	uint32_t rasr_enable = (1 << 0);
+
+
+    //	MPU->CTRL = enable_bit | privdefena;
+    //	MPU->RNR  = 0x00;
+    //	MPU->RBAR = 0x30000000;
+    //	MPU->RASR = rasr_enable;
+
+
+    HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
+>>>>>>> master
 }
 
 static void Error_Handler()

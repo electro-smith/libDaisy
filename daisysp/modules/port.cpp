@@ -10,7 +10,7 @@
 
 using namespace daisysp;
 
-void port::init(float sample_rate, float htime)
+void Port::Init(float sample_rate, float htime)
 {
     yt1_ = 0;
     prvhtim_ = -100.0;
@@ -20,7 +20,7 @@ void port::init(float sample_rate, float htime)
     onedsr_ = 1.0/sample_rate_;
 }
 
-float port::process(float in)
+float Port::Process(float in)
 {
     if(prvhtim_ != htime_) {
         c2_ = pow(0.5, onedsr_ / htime_);

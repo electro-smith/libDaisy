@@ -13,15 +13,15 @@
 using namespace daisysp;
 
 daisy_handle seed;
-pitchshifter ps;
+PitchShifter ps;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float shifted, unshifted;
     for (size_t i = 0; i < size; i += 2)
     {
         unshifted = in[LEFT];
-        shifted = ps.process(unshifted);
+        shifted = ps.Process(unshifted);
         out[LEFT] = shifted;
         out[RIGHT] = unshifted;
     }
@@ -32,12 +32,12 @@ int main(void)
 	// initialize seed hardware and daisysp modules
     daisy_seed_init(&seed);
 
-    ps.init(DSY_AUDIO_SAMPLE_RATE);
+    ps.Init(DSY_AUDIO_SAMPLE_RATE);
     // set transposition 1 octave up (12 semitones)
-    ps.set_transposition(12.0f);
+    ps.SetTransposition(12.0f);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

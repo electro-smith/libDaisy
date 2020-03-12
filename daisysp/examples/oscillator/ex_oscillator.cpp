@@ -4,14 +4,14 @@
 using namespace daisysp;
 
 static daisy_handle seed;
-static oscillator osc;
+static Oscillator osc;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
 	float sig;
     for (size_t i = 0; i < size; i += 2)
     {
-    	sig = osc.process();
+    	sig = osc.Process();
 
     	// left out
         out[i] = sig;
@@ -25,15 +25,15 @@ int main(void)
 {
 	// initialize seed hardware and oscillator daisysp module
     daisy_seed_init(&seed);
-    osc.init(DSY_AUDIO_SAMPLE_RATE);
+    osc.Init(DSY_AUDIO_SAMPLE_RATE);
 
     // Set parameters for oscillator
-    osc.set_waveform(osc.WAVE_SIN);
-    osc.set_freq(440);
-    osc.set_amp(0.5);
+    osc.SetWaveform(osc.WAVE_SIN);
+    osc.SetFreq(440);
+    osc.SetAmp(0.5);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     // start callback
     dsy_audio_start(DSY_AUDIO_INTERNAL);

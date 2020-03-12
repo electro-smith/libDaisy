@@ -1,4 +1,4 @@
-// # reverbsc
+// # ReverbSc
 // 
 //     Stereo Reverb
 //
@@ -19,63 +19,63 @@ namespace daisysp
 
 typedef struct
 {
-	int     writePos;
-	int     bufferSize;
-	int     readPos;
-	int     readPosFrac;
-	int     readPosFrac_inc;
+	int     write_pos;
+	int     buffer_size;
+	int     read_pos;
+	int     read_pos_frac;
+	int     read_pos_frac_inc;
 	int     dummy;
-	int     seedVal;
-	int     randLine_cnt;
-	float filterState;
+	int     seed_val;
+	int     rand_line_cnt;
+	float filter_state;
 	float *buf;
-}reverbsc_dl;
+}ReverbScDl;
 
-class reverbsc
+class ReverbSc
 {
     public:
-        reverbsc() {}
-        ~reverbsc() {}
-// ### init
-// Initializes the reverb module, and sets the samplerate at which the process function will be called.
+        ReverbSc() {}
+        ~ReverbSc() {}
+// ### Init
+// Initializes the reverb module, and sets the sample_rate at which the Process function will be called.
 // ~~~~
-    int init(float samplerate);
+    int Init(float sample_rate);
 // ~~~~
     
-// ### process
-// process the input through the reverb, and updates values of out1, and out2 with the new processed signal.
+// ### Process
+// Process the input through the reverb, and updates values of out1, and out2 with the new processed signal.
 // ~~~~
-    int process(const float &in1, const float &in2, float *out1, float *out2);
+    int Process(const float &in1, const float &in2, float *out1, float *out2);
 // ~~~~
 
-// ### set_feedabck
+// ### SetFeedback
 // controls the reverb time. reverb tail becomes infinite when set to 1.0
 // 
 // range: 0.0 to 1.0
 //
 // ~~~~
-    inline void set_feedback(const float &fb) { _feedback = fb; }
+    inline void SetFeedback(const float &fb) { feedback_ = fb; }
 // ~~~~
-// ### set_lpfreq
+// ### SetLpFreq
 // controls the internal dampening filter's cutoff frequency.
 // 
-// range: 0.0 to samplerate / 2
+// range: 0.0 to sample_rate / 2
 //
 // ~~~~
-    inline void set_lpfreq(const float &freq) { _lpfreq = freq; }
+    inline void SetLpFreq(const float &freq) { lpfreq_ = freq; }
 // ~~~~
 
     private:
-        void next_random_lineseg(reverbsc_dl *lp, int n);
-        int init_delay_line(reverbsc_dl *lp, int n);
-        float _feedback, _lpfreq;
-        float _iSampleRate, _iPitchMod, _iSkipInit;
-        float _sampleRate;
-        float _dampFact;
-        float _prv_LPFreq;
-        int _initDone;
-        reverbsc_dl _delayLines[8];
-        float _aux[DSY_REVERBSC_MAX_SIZE];
+        void NextRandomLineseg(ReverbScDl *lp, int n);
+        int InitDelayLine(ReverbScDl *lp, int n);
+        float feedback_, lpfreq_;
+        float i_sample_rate_, i_pitch_mod_, i_skip_init_;
+        float sample_rate_;
+        float damp_fact_;
+        float prv_lpfreq_;
+        int init_done_;
+        ReverbScDl delay_lines_[8];
+        float aux_[DSY_REVERBSC_MAX_SIZE];
 };
 
 

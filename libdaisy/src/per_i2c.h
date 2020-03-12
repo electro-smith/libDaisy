@@ -18,7 +18,7 @@ extern "C"
 {
 #endif
 
-#include "stm32h7xx_hal.h"
+//#include "stm32h7xx_hal.h"
 #include "daisy_core.h"
 
 // ## Types
@@ -71,8 +71,8 @@ typedef struct
 } dsy_i2c_handle;
 // ~~~~
 
-extern I2C_HandleTypeDef hi2c1;
-extern I2C_HandleTypeDef hi2c2;
+//extern I2C_HandleTypeDef hi2c1;
+//extern I2C_HandleTypeDef hi2c2;
 
 // ## Functions
 // ### dsy_i2c_init 
@@ -84,13 +84,13 @@ extern I2C_HandleTypeDef hi2c2;
 void dsy_i2c_init(dsy_i2c_handle *dsy_hi2c);
 // ~~~~
 
-// ### dsy_i2c_hal_handle
-//
-// Returns a pointer to the HAL I2C Handle, for use in device drivers.
-// 
-// ~~~~
-I2C_HandleTypeDef *dsy_i2c_hal_handle(dsy_i2c_handle *dsy_hi2c);
-// ~~~~
+//// ### dsy_i2c_hal_handle
+////
+//// Returns a pointer to the HAL I2C Handle, for use in device drivers.
+//// 
+//// ~~~~
+//I2C_HandleTypeDef *dsy_i2c_hal_handle(dsy_i2c_handle *dsy_hi2c);
+//// ~~~~
 
 #ifdef __cplusplus
 }

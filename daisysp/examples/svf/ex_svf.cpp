@@ -6,44 +6,44 @@ using namespace daisysp;
 
 static daisy_handle seed;
 
-oscillator osc;
-svf filt;
+Oscillator osc;
+Svf filt;
 
-static void audioCallback(float *in, float *out, size_t size)
+static void AudioCallback(float *in, float *out, size_t size)
 {
     float sig;
 
     for (size_t i = 0; i < size; i += 2)
     {
-        sig = osc.process();
+        sig = osc.Process();
 
-        filt.process(sig);
+        filt.Process(sig);
 
         // left out
-        out[i] = filt.low();
+        out[i] = filt.Low();
 
         // right out
-        out[i + 1] = filt.high();
+        out[i + 1] = filt.High();
     }
 }
 
 int main(void)
 {
-    // initialize seed hardware and svf daisysp module
+    // initialize seed hardware and Svf daisysp module
     daisy_seed_init(&seed);
     // Initialize Oscillator, and set parameters.
-    osc.init(DSY_AUDIO_SAMPLE_RATE);
-    osc.set_waveform(osc.WAVE_POLYBLEP_SAW);
-    osc.set_freq(250.0);
-    osc.set_amp(0.5);
+    osc.Init(DSY_AUDIO_SAMPLE_RATE);
+    osc.SetWaveform(osc.WAVE_POLYBLEP_SAW);
+    osc.SetFreq(250.0);
+    osc.SetAmp(0.5);
     // Initialize Filter, and set parameters.
-    filt.init(DSY_AUDIO_SAMPLE_RATE);
-    filt.set_freq(500.0);
-    filt.set_res(0.85);
-    filt.set_drive(0.8);
+    filt.Init(DSY_AUDIO_SAMPLE_RATE);
+    filt.SetFreq(500.0);
+    filt.SetRes(0.85);
+    filt.SetDrive(0.8);
 
     // define callback
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, audioCallback);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, AudioCallback);
 
     dsy_adc_start();
 

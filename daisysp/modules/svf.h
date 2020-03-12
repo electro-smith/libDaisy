@@ -1,4 +1,4 @@
-// # svf
+// # Svf
 //      Double Sampled, Stable State Variable Filter
 // 
 // Credit to Andrew Simper from musicdsp.org
@@ -11,91 +11,91 @@
 // Ported by: Stephen Hensley
 //
 // example:
-// daisysp/examples/svf/
+// daisysp/examples/Svf/
 #pragma once
 #ifndef DSY_SVF_H
 #define DSY_SVF_H
 
 namespace daisysp
 {
-    class svf
+    class Svf
     {
         public:
-            svf() {}
-            ~svf() {}
+            Svf() {}
+            ~Svf() {}
 
-// ### init
+// ### Init
 // 
 // Initializes the filter
 // 
-// float samplerate - sample rate of the audio engine being run, and the frequency that the process function will be called.
+// float sample_rate - sample rate of the audio engine being run, and the frequency that the Process function will be called.
 // ~~~~
-            void init(float samplerate);
+            void Init(float sample_rate);
 // ~~~~
 
 
-// ### process
+// ### Process
 // 
 // Process the input signal, updating all of the outputs.
 // ~~~~
-            void process(float in);
+            void Process(float in);
 // ~~~~
 
 // ## Setters
 //
-// ### set_freq
+// ### SetFreq
 //
 // sets the frequency of the cutoff frequency. 
 // 
-// f must be between 0.0 and samplerate / 2
+// f must be between 0.0 and sample_rate / 2
 // ~~~~
-            void set_freq(float f);
+            void SetFreq(float f);
 // ~~~~
 
-// ### set_res
+// ### SetRes
 // 
 // sets the resonance of the filter.
 //
 // Must be between 0.0 and 1.0 to ensure stability.
 // ~~~~
-            void set_res(float r);
+            void SetRes(float r);
 // ~~~~
 
-// ### set_drive
+// ### SetDrive
 // 
 // sets the drive of the filter, affecting the response of the resonance of
 // the filter..
 // ~~~~
-            inline void set_drive(float d) { _drive = d; }
+            inline void SetDrive(float d) { drive_ = d; }
 // ~~~~
 
 // ## Filter Outputs
 // ## Lowpass Filter
 // ~~~~
-            inline float low() { return _out_low; }
+            inline float Low() { return out_low_; }
 // ~~~~
 // ## Highpass Filter
 // ~~~~
-            inline float high() { return _out_high; }
+            inline float High() { return out_high_; }
 // ~~~~
 // ## Bandpass Filter
 // ~~~~
-            inline float band() { return _out_band; }
+            inline float Band() { return out_band_; }
 // ~~~~
 // ## Notch Filter
 // ~~~~
-            inline float notch() { return _out_notch; }
+            inline float Notch() { return out_notch_; }
 // ~~~~
 // ## Peak Filter
 // ~~~~
-            inline float peak() { return _out_peak; }
+            inline float Peak() { return out_peak_; }
 // ~~~~
 
         private:
-            float _sr, _fc, _res, _drive, _freq, _damp;
-            float _notch, _low, _high, _band, _peak;
-            float _input;
-            float _out_low, _out_high, _out_band, _out_peak, _out_notch;
+            float sr_, fc_, res_, drive_, freq_, damp_;
+            float notch_, low_, high_, band_, peak_;
+            float input_;
+            float out_low_, out_high_, out_band_, out_peak_, out_notch_;
         
     };
 } // namespace daisysp

@@ -2,7 +2,7 @@
 
 using namespace daisysp;
 
-void line::init(float sample_rate) 
+void Line::Init(float sample_rate) 
 {
 	sample_rate_ = sample_rate;
 	dur_ = 0.5f;
@@ -11,7 +11,7 @@ void line::init(float sample_rate)
 	val_   = 1.0f;
 }
 
-void line::start(float start, float end, float dur)
+void Line::Start(float start, float end, float dur)
 {
 	start_ = start;
 	end_   = end;
@@ -21,7 +21,7 @@ void line::start(float start, float end, float dur)
 	finished_ = 0;
 }
 
-float line::process(uint8_t *finished)
+float Line::Process(uint8_t *finished)
 {
 	float out;
 	out = val_;
