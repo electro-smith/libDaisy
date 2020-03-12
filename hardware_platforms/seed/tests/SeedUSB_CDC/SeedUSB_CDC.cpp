@@ -15,6 +15,9 @@ int main(void)
     int   hello_count = 0;
     char  buff[512];
 
+    uint8_t *mbuff;
+    mbuff = (uint8_t*)malloc(8);
+
     while(1)
     {
         dsy_system_delay(500);
@@ -23,6 +26,5 @@ int main(void)
         sprintf(buff, "Tick:\t%d\r\n", hello_count);
         hello_count = (hello_count + 1) % 100;
         hw.usb_handle.TransmitInternal((uint8_t*)buff, strlen(buff));
-		
     }
 }
