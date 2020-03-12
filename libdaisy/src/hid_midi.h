@@ -25,9 +25,9 @@ namespace daisy
 // Parsed from the Status Byte, these are the common Midi Messages
 // that can be handled.
 // At this time only 3-byte messages are correctly parsed into MidiEvents.
+// ~~~~
 enum MidiMessageType
 {
-    // ~~~~
     NoteOff,
     NoteOn,
     PolyphonicKeyPressure,
@@ -36,22 +36,33 @@ enum MidiMessageType
     ChannelPressure,
     PitchBend,
     MessageLast, // maybe change name to MessageUnsupported
-    // ~~~~
 };
+// ~~~~
 
-// ### M
+// ### NoteOnEvent
+// Struct containing note, and velocity data for a given channel.
+//
+// Can be made from MidiEvent
+// ~~~~
 struct NoteOnEvent
 {
     int     channel;
     uint8_t note;
     uint8_t velocity;
 };
+// ~~~~
+// ### ControlChangeEvent
+// Struct containing control number, and value for a given channel.
+//
+// Can be made from MidiEvent
+// ~~~~
 struct ControlChangeEvent
 {
     int     channel;
     uint8_t control_number;
     uint8_t value;
 };
+// ~~~~
 
 // ### MidiEvent
 // Simple MidiEvent with message type, channel, and data[2] members.
@@ -61,7 +72,11 @@ struct MidiEvent
     MidiMessageType type;
     int             channel;
     uint8_t         data[2];
+	// #### AsNoteOn
+    // Returns the data within the MidiEvent as a NoteOnEvent struct.
+	// ~~~~
     NoteOnEvent     AsNoteOn()
+	// ~~~~
     {
         NoteOnEvent m;
         m.channel  = channel;
@@ -70,7 +85,11 @@ struct MidiEvent
         return m;
     }
 
+	// #### AsNoteOn
+    // Returns the data within the MidiEvent as a NoteOnEvent struct.
+	// ~~~~
     ControlChangeEvent AsControlChange()
+    // ~~~~
     {
         ControlChangeEvent m;
         m.channel = channel;
@@ -80,6 +99,7 @@ struct MidiEvent
     }
 };
 
+// ## MidiHandler
 class MidiHandler
 {
   public:
@@ -88,6 +108,7 @@ class MidiHandler
     // ### Midi IO Modes
     // Input and Output can be configured separately
     // Multiple Input modes can be selected by OR'ing the values.
+	// ~~~~
     enum MidiInputMode
     {
         INPUT_MODE_NONE    = 0x00,
@@ -102,6 +123,7 @@ class MidiHandler
         OUTPUT_MODE_USB_INT = 0x02,
         OUTPUT_MODE_USB_EXT = 0x04,
     };
+    // ~~~~
 
     // ## Functions
 
