@@ -2,12 +2,13 @@
 #ifndef DSY_PETAL_H
 #define DSY_PETAL_H
 
+#include "daisy_seed.h"
+
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-#include "daisy_seed.h"
 
 #ifndef SAMPLE_RATE
 #define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
