@@ -18,10 +18,11 @@ per_gpio \
 per_dac \
 per_tim \
 per_uart \
-hid_switch \
-hid_encoder \
 hid_ctrl \
+hid_encoder \
 hid_gatein \
+hid_midi \
+hid_switch \
 hid_usb \
 dev_sr_4021 \
 util_hal_map \
