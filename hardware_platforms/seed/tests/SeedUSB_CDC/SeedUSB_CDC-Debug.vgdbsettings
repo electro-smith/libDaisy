@@ -40,7 +40,7 @@
   </CustomDebug>
   <DeviceTerminalSettings>
     <Connection xsi:type="com.sysprogs.terminal.connection.serial">
-      <ComPortName>COM3</ComPortName>
+      <ComPortName>COM4</ComPortName>
       <AdvancedSettings>
         <BaudRate>115200</BaudRate>
         <DataBits>8</DataBits>

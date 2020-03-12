@@ -89,7 +89,6 @@ void UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
     CDC_Transmit_HS(buff, size);
 }
 
-
 // Static Function Implementation
 static void UsbErrorHandler()
 {
