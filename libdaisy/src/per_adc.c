@@ -1,5 +1,6 @@
 #include <stm32h7xx_hal.h>
 #include "per_adc.h"
+#include "util_hal_map.h"
 
 static const uint32_t dsy_adc_channel_map[DSY_ADC_PIN_LAST] = {
     ADC_CHANNEL_3,
@@ -78,8 +79,8 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
     }
     /** Common config 
   */
-    hadc1.Instance = ADC1;
-    hadc1.Init.ClockPrescaler			= ADC_CLOCK_ASYNC_DIV2;
+    hadc1.Instance                      = ADC1;
+    hadc1.Init.ClockPrescaler           = ADC_CLOCK_ASYNC_DIV2;
     hadc1.Init.Resolution               = ADC_RESOLUTION_16B;
     hadc1.Init.ScanConvMode             = ADC_SCAN_ENABLE;
     hadc1.Init.EOCSelection             = ADC_EOC_SEQ_CONV;
@@ -159,7 +160,7 @@ void dsy_adc_init(dsy_adc_handle* dsy_hadc)
     /** Configure Regular Channel 
   */
     // Configure Shared settings for all channels.
-	sConfig.SamplingTime = ADC_SAMPLETIME_8CYCLES_5;
+    sConfig.SamplingTime = ADC_SAMPLETIME_8CYCLES_5;
     sConfig.SingleDiff   = ADC_SINGLE_ENDED;
     sConfig.OffsetNumber = ADC_OFFSET_NONE;
     sConfig.Offset       = 0;
@@ -231,14 +232,18 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
         GPIO_TypeDef* port;
         dsy_gpio_pin* pin_config;
         uint8_t*      chn_list;
-        pin_config = adc.dsy_hadc->pin_config;
-        chn_list   = adc.dsy_hadc->active_channels;
+        chn_list = adc.dsy_hadc->active_channels;
         for(uint8_t i = 0; i < adc.channels; i++)
         {
-            uint8_t chn;
-            chn  = chn_list[i];
-            port = (GPIO_TypeDef*)gpio_hal_port_map[pin_config[chn].port];
-            GPIO_InitStruct.Pin  = gpio_hal_pin_map[pin_config[chn].pin];
+            pin_config = adc.dsy_hadc->pin_config;
+            uint8_t       chn;
+            dsy_gpio_pin* p;
+            chn = chn_list[i];
+            //            port = (GPIO_TypeDef*)gpio_hal_port_map[pin_config[chn].port];
+            //            GPIO_InitStruct.Pin  = gpio_hal_pin_map[pin_config[chn].pin];
+            p                    = &pin_config[chn];
+            port                 = dsy_hal_map_get_port(p);
+            GPIO_InitStruct.Pin  = dsy_hal_map_get_pin(p);
             GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
             GPIO_InitStruct.Pull = GPIO_NOPULL;
             HAL_GPIO_Init(port, &GPIO_InitStruct);
@@ -248,8 +253,11 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
                 pin_config = adc.dsy_hadc->mux_pin_config[chn];
                 for(uint16_t j = 0; j < MUX_SEL_LAST; j++)
                 {
-                    port = (GPIO_TypeDef*)gpio_hal_port_map[pin_config[j].port];
-                    GPIO_InitStruct.Pin   = gpio_hal_pin_map[pin_config[j].pin];
+                    //                    port = (GPIO_TypeDef*)gpio_hal_port_map[pin_config[j].port];
+                    //                    GPIO_InitStruct.Pin   = gpio_hal_pin_map[pin_config[j].pin];
+                    p                     = &pin_config[j];
+                    port                  = dsy_hal_map_get_port(p);
+                    GPIO_InitStruct.Pin   = dsy_hal_map_get_pin(p);
                     GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
                     GPIO_InitStruct.Pull  = GPIO_NOPULL;
                     GPIO_InitStruct.Speed = GPIO_SPEED_FAST;
@@ -293,9 +301,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
         chn_list   = adc.dsy_hadc->active_channels;
         for(uint8_t i = 0; i < adc.channels; i++)
         {
-            port = (GPIO_TypeDef*)
-                gpio_hal_port_map[pin_config[chn_list[i]].port];
-            pin = gpio_hal_pin_map[pin_config[chn_list[i]].pin];
+            dsy_gpio_pin* p = &pin_config[chn_list[i]];
+            port            = dsy_hal_map_get_port(p);
+            pin             = dsy_hal_map_get_pin(p);
             HAL_GPIO_DeInit(port, pin);
             // TODO: Add Mux DeInit
         }
@@ -346,13 +354,19 @@ static void write_mux_value(uint8_t chn, uint8_t idx)
     b0                   = (GPIO_PinState)((idx & 0x01) > 0 ? 1 : 0);
     b1                   = (GPIO_PinState)((idx & 0x02) > 0 ? 1 : 0);
     b2                   = (GPIO_PinState)((idx & 0x04) > 0 ? 1 : 0);
-    HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[0].port],
-                      gpio_hal_pin_map[pincfg[0].pin],
-                      b0);
-    HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[1].port],
-                      gpio_hal_pin_map[pincfg[1].pin],
-                      b1);
-    HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[2].port],
-                      gpio_hal_pin_map[pincfg[2].pin],
-                      b2);
+    HAL_GPIO_WritePin(
+        dsy_hal_map_get_port(&pincfg[0]), dsy_hal_map_get_pin(&pincfg[0]), b0);
+    HAL_GPIO_WritePin(
+        dsy_hal_map_get_port(&pincfg[1]), dsy_hal_map_get_pin(&pincfg[1]), b1);
+    HAL_GPIO_WritePin(
+        dsy_hal_map_get_port(&pincfg[2]), dsy_hal_map_get_pin(&pincfg[2]), b2);
+//    HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[0].port],
+//                      gpio_hal_pin_map[pincfg[0].pin],
+//                      b0);
+//    HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[1].port],
+//                      gpio_hal_pin_map[pincfg[1].pin],
+//                      b1);
+//    HAL_GPIO_WritePin((GPIO_TypeDef*)gpio_hal_port_map[pincfg[2].port],
+//                      gpio_hal_pin_map[pincfg[2].pin],
+//                      b2);
 }

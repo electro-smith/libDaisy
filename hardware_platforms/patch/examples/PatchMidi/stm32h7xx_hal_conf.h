@@ -97,11 +97,11 @@
   *        (when HSE is used as system clock source, directly or through the PLL).
   */
 #if !defined  (HSE_VALUE)
-#define HSE_VALUE    ((uint32_t)16000000) /*!< Value of the External oscillator in Hz */
+#define HSE_VALUE    ((uint32_t)25000000) /*!< Value of the External oscillator in Hz */
 #endif /* HSE_VALUE */
 
 #if !defined  (HSE_STARTUP_TIMEOUT)
-  #define HSE_STARTUP_TIMEOUT    ((uint32_t)100)   /*!< Time out for HSE start up, in ms */
+  #define HSE_STARTUP_TIMEOUT    ((uint32_t)5000)   /*!< Time out for HSE start up, in ms */
 #endif /* HSE_STARTUP_TIMEOUT */
 
 /**
@@ -159,7 +159,7 @@
 #define  VDD_VALUE                    ((uint32_t)3300) /*!< Value of VDD in mv */
 #define  TICK_INT_PRIORITY            ((uint32_t)0x0F) /*!< tick interrupt priority */
 #define  USE_RTOS                     0
-#define  USE_SD_TRANSCEIVER           0U               /*!< use uSD Transceiver */
+#define  USE_SD_TRANSCEIVER           1U               /*!< use uSD Transceiver */
 
 #define  USE_HAL_ADC_REGISTER_CALLBACKS     0U /* ADC register callback disabled     */
 #define  USE_HAL_CEC_REGISTER_CALLBACKS     0U /* CEC register callback disabled     */

@@ -5,6 +5,7 @@
 #include "dev_codec_wm8731.h"
 #include "stm32h7xx_hal.h"
 #include "sys_dma.h"
+#include "util_hal_map.h"
 
 #define DSY_AUDIO_DMA_BUFFER_SIZE_MAX \
     (DSY_AUDIO_BLOCK_SIZE_MAX * DSY_AUDIO_CHANNELS_MAX * 2)
@@ -12,6 +13,10 @@
 
 #define DSY_PROFILE_AUDIO_CALLBACK 1
 
+extern SAI_HandleTypeDef hsai_BlockA1;
+extern SAI_HandleTypeDef hsai_BlockB1;
+extern SAI_HandleTypeDef hsai_BlockA2;
+extern SAI_HandleTypeDef hsai_BlockB2;
 
 // Define/Declare global audio structure.
 typedef struct
@@ -23,7 +28,7 @@ typedef struct
     float              out[DSY_AUDIO_BLOCK_SIZE_MAX * DSY_AUDIO_CHANNELS_MAX];
     size_t             block_size, offset, dma_size;
     uint8_t            bitdepth, device, channels;
-    I2C_HandleTypeDef* device_control_hi2c;
+    dsy_i2c_handle*    device_control_hi2c;
 } dsy_audio;
 
 //  Static Buffers in non-cached SRAM1 for DMA
@@ -97,13 +102,10 @@ void dsy_audio_silence(float* in, float* out, size_t size)
 // TODO: fix I2C to be compliant with the new model.
 void dsy_audio_init(dsy_audio_handle* handle)
 {
-    uint8_t            dev0, dev1, intext;
-    I2C_HandleTypeDef *hi2c_int, *hi2c_ext;
+    uint8_t dev0, dev1, intext;
     intext                  = handle->sai->init;
     dev0                    = handle->sai->device[DSY_SAI_1];
     dev1                    = handle->sai->device[DSY_SAI_2];
-    hi2c_int                = dsy_i2c_hal_handle(handle->dev0_i2c);
-    hi2c_ext                = dsy_i2c_hal_handle(handle->dev1_i2c);
     audio_handle.block_size = handle->block_size <= DSY_AUDIO_BLOCK_SIZE_MAX
                                   ? handle->block_size
                                   : DSY_AUDIO_BLOCK_SIZE_MAX;
@@ -132,11 +134,11 @@ void dsy_audio_init(dsy_audio_handle* handle)
                                                                            : 0;
         if(dev0 == DSY_AUDIO_DEVICE_WM8731)
         {
-            codec_wm8731_init(hi2c_int, mcu_is_master, 48000.0f, 16);
+            codec_wm8731_init(handle->dev0_i2c, mcu_is_master, 48000.0f, 16);
         }
         else if(dev0 == DSY_AUDIO_DEVICE_PCM3060)
         {
-            codec_pcm3060_init(hi2c_int);
+            codec_pcm3060_init(handle->dev0_i2c);
         }
         for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE_MAX; i++)
         {
@@ -158,7 +160,7 @@ void dsy_audio_init(dsy_audio_handle* handle)
                                                                            : 0;
         if(dev1 == DSY_AUDIO_DEVICE_WM8731)
         {
-            codec_wm8731_init(hi2c_ext, mcu_is_master, 48000.0f, 16);
+            codec_wm8731_init(handle->dev1_i2c, mcu_is_master, 48000.0f, 16);
         }
         else if(dev1 == DSY_AUDIO_DEVICE_PCM3060)
         {

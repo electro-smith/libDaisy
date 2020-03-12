@@ -1,5 +1,6 @@
 #include <stm32h7xx_hal.h>
 #include "dev_sdram.h"
+#include "util_hal_map.h"
 //#include "libdaisy.h"
 
 // TODO:
@@ -305,12 +306,15 @@ static void HAL_FMC_MspInit(void)
 	GPIO_TypeDef *port;
 	for(uint8_t i = 0; i < DSY_SDRAM_PIN_LAST; i++) 
 	{
-		port = (GPIO_TypeDef*)gpio_hal_port_map[dsy_sdram.dsy_hsdram->pin_config[i].port];
-		GPIO_InitStruct.Pin
-			= gpio_hal_pin_map[dsy_sdram.dsy_hsdram->pin_config[i].pin];
-		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-		GPIO_InitStruct.Pull = GPIO_NOPULL;
-		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+        //		port = (GPIO_TypeDef*)gpio_hal_port_map[dsy_sdram.dsy_hsdram->pin_config[i].port];
+        //		GPIO_InitStruct.Pin
+        //			= gpio_hal_pin_map[dsy_sdram.dsy_hsdram->pin_config[i].pin];
+        port = dsy_hal_map_get_port(&dsy_sdram.dsy_hsdram->pin_config[i]);
+        GPIO_InitStruct.Pin
+            = dsy_hal_map_get_pin(&dsy_sdram.dsy_hsdram->pin_config[i]);
+        GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
+        GPIO_InitStruct.Pull      = GPIO_NOPULL;
+        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 		GPIO_InitStruct.Alternate = GPIO_AF12_FMC; // They all seem to use this
 		HAL_GPIO_Init(port, &GPIO_InitStruct);
 	}

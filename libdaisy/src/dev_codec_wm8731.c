@@ -1,5 +1,6 @@
 // WM8371 Codec support.
 #include "dev_codec_wm8731.h"
+#include "util_hal_map.h"
 
 typedef struct {
   uint8_t mcu_is_master, bitdepth;
@@ -103,17 +104,17 @@ enum CodecAnalogSettings
 // BEGIN SHENSLEY PORT
 dsy_wm8731_handle_t codec_handle;
 uint8_t codec_wm8731_init( \
-	I2C_HandleTypeDef *hi2c, \
+	dsy_i2c_handle *hi2c, \
 	uint8_t mcu_is_master, \
 	int32_t sample_rate, 
 	uint8_t bitdepth) 
 {
-	codec_handle.sample_rate = sample_rate;
-	codec_handle.mcu_is_master = mcu_is_master;
-	codec_handle.i2c = hi2c;
-	codec_handle.bitdepth	= bitdepth;
+    codec_handle.sample_rate   = sample_rate;
+    codec_handle.mcu_is_master = mcu_is_master;
+    codec_handle.i2c           = dsy_hal_map_get_i2c(hi2c);
+    codec_handle.bitdepth      = bitdepth;
 
-	uint8_t s;
+    uint8_t s;
 	s = init_codec(mcu_is_master, sample_rate, bitdepth);
 	if (!codec_write_control_register(CODEC_REG_ACTIVE, 0x01)) {
 		return 0;
@@ -121,26 +122,26 @@ uint8_t codec_wm8731_init( \
 	return s;
 }
 
-uint8_t codec_wm8731_enter_bypass(I2C_HandleTypeDef *hi2c) 
+uint8_t codec_wm8731_enter_bypass(dsy_i2c_handle *hi2c)
 {
-	uint8_t s;
-	uint8_t bypass_mode_byte = 0;
-	codec_handle.i2c		 = hi2c;
+    uint8_t s;
+    uint8_t bypass_mode_byte = 0;
+    codec_handle.i2c           = dsy_hal_map_get_i2c(hi2c);
 	bypass_mode_byte |= CODEC_ANALOG_BYPASS | CODEC_ANALOG_MUTEMIC;
 	s = codec_write_control_register(CODEC_REG_ANALOGUE_ROUTING,
 										  bypass_mode_byte);
 	s = s && codec_write_control_register(CODEC_REG_ACTIVE, 0x00);
 	return s;
 }
-uint8_t codec_wm8731_exit_bypass(I2C_HandleTypeDef *hi2c) 
+uint8_t codec_wm8731_exit_bypass(dsy_i2c_handle *hi2c)
 {
-	uint8_t s;
-	uint8_t byte = 0;
-	codec_handle.i2c		 = hi2c;
-	byte |= CODEC_ANALOG_MUTEMIC | CODEC_ANALOG_DACSEL;
-	s = codec_write_control_register(CODEC_REG_ANALOGUE_ROUTING, byte);
-	s = s && codec_write_control_register(CODEC_REG_ACTIVE, 0x00);
-	return s;
+    uint8_t s;
+    uint8_t byte = 0;
+	codec_handle.i2c		 = dsy_hal_map_get_i2c(hi2c);
+    byte |= CODEC_ANALOG_MUTEMIC | CODEC_ANALOG_DACSEL;
+    s = codec_write_control_register(CODEC_REG_ANALOGUE_ROUTING, byte);
+    s = s && codec_write_control_register(CODEC_REG_ACTIVE, 0x00);
+    return s;
 }
 
 static uint8_t init_codec(uint8_t mcu_is_master, int32_t sample_rate, uint8_t bitdepth)

@@ -1,5 +1,6 @@
 #include "dev_leddriver.h"
 #include "per_i2c.h"
+#include "util_hal_map.h"
 
 #define PCA9685_I2C_BASE_ADDRESS 0b10000000
 #define PCA9685_MODE1 0x00  // location for Mode1 register address
@@ -63,7 +64,8 @@ void dsy_led_driver_init(dsy_i2c_handle *dsy_i2c, uint8_t *addr, uint8_t addr_cn
 	leddriver.dummy_bright = 0;
 	leddriver.master_dim   = 1.0f;
 	leddriver.dsy_i2c	  = dsy_i2c;
-	leddriver.i2c		   = dsy_i2c_hal_handle(dsy_i2c);
+    leddriver.i2c          = dsy_hal_map_get_i2c(dsy_i2c);
+    //leddriver.i2c		   = dsy_i2c_hal_handle(dsy_i2c);
 	leddriver.num_drivers  = addr_cnt;
 	for(uint8_t i = 0; i < addr_cnt; i++) 
 	{

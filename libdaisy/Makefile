@@ -17,11 +17,13 @@ per_sai \
 per_gpio \
 per_dac \
 per_tim \
+per_uart \
 hid_switch \
 hid_encoder \
 hid_ctrl \
 hid_gatein \
 dev_sr_4021 \
+util_hal_map \
 system_stm32h7xx \
 
 ######################################

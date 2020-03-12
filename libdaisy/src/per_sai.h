@@ -74,11 +74,11 @@ typedef struct
 	dsy_gpio_pin		 sai2_pin_config[DSY_SAI_PIN_LAST];
 } dsy_sai_handle;
 
-extern SAI_HandleTypeDef hsai_BlockA1;
-extern SAI_HandleTypeDef hsai_BlockB1;
-extern SAI_HandleTypeDef hsai_BlockA2;
-extern SAI_HandleTypeDef hsai_BlockB2;
-
+//extern SAI_HandleTypeDef hsai_BlockA1;
+//extern SAI_HandleTypeDef hsai_BlockB1;
+//extern SAI_HandleTypeDef hsai_BlockA2;
+//extern SAI_HandleTypeDef hsai_BlockB2;
+//
 void dsy_sai_init(dsy_audio_sai	   init,
 				  dsy_audio_samplerate sr[2],
 				  dsy_audio_bitdepth   bitdepth[2],

@@ -17,7 +17,7 @@
         <Revision>0</Revision>
       </Version>
     </ToolchainID>
-    <ProjectFile>libdaisy.vcxproj</ProjectFile>
+    <ProjectFile>PatchMidi.vcxproj</ProjectFile>
     <RemoteBuildEnvironment>
       <Records />
     </RemoteBuildEnvironment>
@@ -48,7 +48,7 @@
     <ExtraSettings>
       <HideErrorsInSystemHeaders>true</HideErrorsInSystemHeaders>
       <SupportLightweightReferenceAnalysis>true</SupportLightweightReferenceAnalysis>
-      <CheckForClangFormatFiles xsi:nil="true" />
+      <CheckForClangFormatFiles>true</CheckForClangFormatFiles>
       <FormattingEngine xsi:nil="true" />
     </ExtraSettings>
     <CodeAnalyzerSettings>
@@ -90,7 +90,29 @@
       <EnableNonStopMode>false</EnableNonStopMode>
       <MaxBreakpointLimit>0</MaxBreakpointLimit>
     </AdditionalGDBSettings>
-    <DebugMethod />
+    <DebugMethod>
+      <ID>com.sysprogs.arm.openocd</ID>
+      <Configuration xsi:type="com.visualgdb.edp.openocd.settings">
+        <CommandLine>-f interface/stlink.cfg -f target/stm32h7x.cfg -c init -c "reset init"</CommandLine>
+        <ExtraParameters>
+          <Frequency xsi:nil="true" />
+          <BoostedFrequency xsi:nil="true" />
+          <ConnectUnderReset>false</ConnectUnderReset>
+        </ExtraParameters>
+        <LoadProgressGUIThreshold>131072</LoadProgressGUIThreshold>
+        <ProgramMode>Enabled</ProgramMode>
+        <StartupCommands>
+          <string>set remotetimeout 60</string>
+          <string>target remote :$$SYS:GDB_PORT$$</string>
+          <string>mon halt</string>
+          <string>mon reset init</string>
+          <string>load</string>
+        </StartupCommands>
+        <ProgramFLASHUsingExternalTool>false</ProgramFLASHUsingExternalTool>
+        <PreferredGDBPort>0</PreferredGDBPort>
+        <PreferredTelnetPort>0</PreferredTelnetPort>
+      </Configuration>
+    </DebugMethod>
     <AutoDetectRTOS>true</AutoDetectRTOS>
     <SemihostingSupport>Auto</SemihostingSupport>
     <SemihostingPollingDelay>0</SemihostingPollingDelay>
