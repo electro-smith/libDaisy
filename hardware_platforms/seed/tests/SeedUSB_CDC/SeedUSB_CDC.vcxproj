@@ -41,7 +41,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>../../../../libdaisy/src;../../../../daisysp;../../../../libdaisy/Drivers/CMSIS/Device/ST/STM32H7xx/Include;../../../../libdaisy/Drivers/STM32H7xx_HAL_Driver/Inc;../../../../libdaisy/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;../../../../libdaisy/Drivers/CMSIS/Include;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../libdaisy/src;../../../../daisysp;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG=1;STM32H750xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -64,10 +64,8 @@
   </ImportGroup>
   <ItemGroup>
     <ClCompile Include="SeedUSB_CDC.cpp" />
-    <ClCompile Include="system_stm32h7xx.c" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c" />
-    <ClInclude Include="stm32h7xx_hal_conf.h" />
     <None Include="SeedUSB_CDC-Debug.vgdbsettings" />
     <None Include="SeedUSB_CDC-Release.vgdbsettings" />
     <None Include="stm32.xml" />

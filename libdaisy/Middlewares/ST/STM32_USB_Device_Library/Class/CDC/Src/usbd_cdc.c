@@ -94,6 +94,9 @@
   * @}
   */
 
+// TESTING WITH STATIC USB CDC
+static USBD_CDC_HandleTypeDef h_cdc;
+
 
 /** @defgroup USBD_CDC_Private_FunctionPrototypes
   * @{
@@ -506,8 +509,9 @@ static uint8_t  USBD_CDC_Init (USBD_HandleTypeDef *pdev, uint8_t cfgidx)
   USBD_LL_OpenEP(pdev, CDC_CMD_EP, USBD_EP_TYPE_INTR, CDC_CMD_PACKET_SIZE);
   pdev->ep_in[CDC_CMD_EP & 0xFU].is_used = 1U;
 
-  pdev->pClassData = USBD_malloc(sizeof (USBD_CDC_HandleTypeDef));
-  USBD_memset(pdev->pClassData, 0, sizeof(USBD_CDC_HandleTypeDef));
+  //pdev->pClassData = USBD_malloc(sizeof (USBD_CDC_HandleTypeDef));
+  pdev->pClassData = &h_cdc;
+  //  USBD_memset(pdev->pClassData, 0, sizeof(USBD_CDC_HandleTypeDef));
   if(pdev->pClassData == NULL)
   {
     ret = 1U;

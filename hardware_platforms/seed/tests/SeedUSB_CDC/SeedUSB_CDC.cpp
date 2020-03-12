@@ -14,12 +14,15 @@ int main(void)
     //	dsy_tim_start();
     int   hello_count = 0;
     char  buff[512];
+
     while(1)
     {
         dsy_system_delay(500);
         dsy_gpio_toggle(&hw.led);
         dsy_gpio_toggle(&hw.testpoint);
-        sprintf(buff, "Tick:\t%d\n", hello_count);
+        sprintf(buff, "Tick:\t%d\r\n", hello_count);
+        hello_count = (hello_count + 1) % 100;
         hw.usb_handle.TransmitInternal((uint8_t*)buff, strlen(buff));
+		
     }
 }

@@ -18,6 +18,7 @@ extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
 extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
 
+}
 static void InitFS() 
 {
     if(USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS) != USBD_OK)
@@ -61,7 +62,6 @@ static void InitHS()
     }
 }
 
-}
 
 
 void UsbHandle::Init(UsbPeriph dev)
