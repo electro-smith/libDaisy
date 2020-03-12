@@ -13,14 +13,16 @@
   </Project>
   <Build xsi:type="com.visualgdb.build.msbuild">
     <ToolchainID>
+      <ID>com.visualgdb.arm-eabi</ID>
       <Version>
-        <Revision>0</Revision>
+        <GCC>7.2.0</GCC>
+        <GDB>8.0.1</GDB>
+        <Revision>3</Revision>
       </Version>
     </ToolchainID>
     <ProjectFile>libdaisy.vcxproj</ProjectFile>
     <RemoteBuildEnvironment>
       <Records />
-      <EnvironmentSetupFiles />
     </RemoteBuildEnvironment>
     <ParallelJobCount>1</ParallelJobCount>
     <SuppressDirectoryChangeMessages>true</SuppressDirectoryChangeMessages>

@@ -95,7 +95,7 @@
   */
 
 // TESTING WITH STATIC USB CDC
-static USBD_CDC_HandleTypeDef   h_cdc;
+static USBD_CDC_HandleTypeDef   h_cdc_fs, h_cdc_hs;
 
 
 /** @defgroup USBD_CDC_Private_FunctionPrototypes
@@ -490,6 +490,8 @@ static uint8_t  USBD_CDC_Init (USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 
     pdev->ep_out[CDC_OUT_EP & 0xFU].is_used = 1U;
 
+	// Set pClassData
+	pdev->pClassData = &h_cdc_hs;
   }
   else
   {
@@ -504,6 +506,8 @@ static uint8_t  USBD_CDC_Init (USBD_HandleTypeDef *pdev, uint8_t cfgidx)
                    CDC_DATA_FS_OUT_PACKET_SIZE);
 
     pdev->ep_out[CDC_OUT_EP & 0xFU].is_used = 1U;
+	// Set pClassData
+	pdev->pClassData = &h_cdc_fs;
   }
   /* Open Command IN EP */
   USBD_LL_OpenEP(pdev, CDC_CMD_EP, USBD_EP_TYPE_INTR, CDC_CMD_PACKET_SIZE);
@@ -511,7 +515,6 @@ static uint8_t  USBD_CDC_Init (USBD_HandleTypeDef *pdev, uint8_t cfgidx)
 
   //  pdev->pClassData = USBD_malloc(sizeof (USBD_CDC_HandleTypeDef));
   //  USBD_memset(pdev->pClassData, 0, sizeof(USBD_CDC_HandleTypeDef));
-  pdev->pClassData = &h_cdc;
   if(pdev->pClassData == NULL)
   {
     ret = 1U;
