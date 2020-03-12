@@ -87,7 +87,7 @@ enum class LedState
     OFF = 0x01,
 };
 
-daisysp::oscillator osc;
+daisysp::Oscillator osc;
 
 // Functional Modules
 daisy_handle hw;
@@ -144,8 +144,8 @@ void AudioCallback(float *in, float *out, size_t size)
     {
         // Ticks at FS
         //osc.set_freq(daisysp::mtof(12.0f + (pot1.Process() * 96.0f)));
-        osc.set_freq(daisysp::mtof(p.process()));
-        out[i] = osc.process();
+        osc.SetFreq(daisysp::mtof(p.process()));
+        out[i] = osc.Process();
         out[i + 1] = out[i];
     }
 }
@@ -156,9 +156,9 @@ int main(void)
     // Initialize Hardware
     daisy_seed_init(&hw);
     init_pod_adcs();
-    osc.init(DSY_AUDIO_SAMPLE_RATE);
-    osc.set_amp(1.00f);
-    osc.set_waveform(daisysp::oscillator::WAVE_TRI);
+    osc.Init(DSY_AUDIO_SAMPLE_RATE);
+    osc.SetAmp(1.00f);
+    osc.SetWaveform(daisysp::Oscillator::WAVE_TRI);
     dsy_tim_start();
     init_led();
 
