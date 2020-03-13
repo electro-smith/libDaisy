@@ -31,6 +31,9 @@
     <Filter Include="USB Middleware">
       <UniqueIdentifier>{23cd5738-10d6-4357-bb0b-f9a24c84f81e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HAL\FATFS">
+      <UniqueIdentifier>{fd2e7ec2-53f4-4733-9433-f501b955cc93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="stm32.props">
@@ -593,6 +596,30 @@
     <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc\usbd_cdc.h">
       <Filter>USB Middleware</Filter>
     </ClInclude>
+    <ClInclude Include="src\per_sdmmc.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\diskio.h">
+      <Filter>HAL\FATFS</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\ff.h">
+      <Filter>HAL\FATFS</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.h">
+      <Filter>HAL\FATFS</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\integer.h">
+      <Filter>HAL\FATFS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ffconf.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util_sd_diskio.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util_bsp_sd_diskio.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dev_codec_pcm3060.c">
@@ -1020,6 +1047,24 @@
     </ClCompile>
     <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Src\usbd_cdc.c">
       <Filter>USB Middleware</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_sdmmc.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\diskio.c">
+      <Filter>HAL\FATFS</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff.c">
+      <Filter>HAL\FATFS</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.c">
+      <Filter>HAL\FATFS</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util_sd_diskio.c">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util_bsp_sd_diskio.c">
+      <Filter>Header files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
