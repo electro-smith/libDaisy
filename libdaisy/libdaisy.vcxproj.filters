@@ -593,6 +593,15 @@
     <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc\usbd_cdc.h">
       <Filter>USB Middleware</Filter>
     </ClInclude>
+    <ClInclude Include="src\per_spi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid_oled_display.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util_oled_fonts.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\dev_codec_pcm3060.c">
@@ -1020,6 +1029,15 @@
     </ClCompile>
     <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Src\usbd_cdc.c">
       <Filter>USB Middleware</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per_spi.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid_oled_display.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util_oled_fonts.c">
+      <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
