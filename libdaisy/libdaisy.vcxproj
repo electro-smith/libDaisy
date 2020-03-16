@@ -218,6 +218,7 @@
     <ClCompile Include="src\usbd_conf.c" />
     <ClCompile Include="src\usbd_desc.c" />
     <ClCompile Include="src\util_hal_map.c" />
+    <ClCompile Include="src\util_oled_fonts.c" />
     <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h750xx.h" />
     <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h" />
     <ClInclude Include="Drivers\CMSIS\Include\cmsis_armcc.h" />
@@ -400,6 +401,7 @@
     <ClInclude Include="src\usbd_conf.h" />
     <ClInclude Include="src\usbd_desc.h" />
     <ClInclude Include="src\util_hal_map.h" />
+    <ClInclude Include="src\util_oled_fonts.h" />
     <ClInclude Include="src\util_ringbuffer.h" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c" />
