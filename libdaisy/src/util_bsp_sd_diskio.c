@@ -1,4 +1,7 @@
 #include "util_bsp_sd_diskio.h"
+#include "util_hal_map.h"
+
+#define SD_DetectIRQHandler() HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_8) // I don't think this is right...
 
 /* Extern variables ---------------------------------------------------------*/
 
@@ -204,10 +207,11 @@ uint8_t BSP_SD_GetCardState(void)
   * @param  CardInfo: Pointer to HAL_SD_CardInfoTypedef structure
   * @retval None 
   */
-void BSP_SD_GetCardInfo(HAL_SD_CardInfoTypeDef *CardInfo)
+//void BSP_SD_GetCardInfo(HAL_SD_CardInfoTypeDef *CardInfo)
+void BSP_SD_GetCardInfo(DSY_SD_CardInfoTypeDef *CardInfo)
 {
     /* Get SD card Information */
-    HAL_SD_GetCardInfo(&hsd1, CardInfo);
+    HAL_SD_GetCardInfo(&hsd1, (HAL_SD_CardInfoTypeDef*)CardInfo);
 }
 
 /* USER CODE BEGIN BeforeCallBacksSection */

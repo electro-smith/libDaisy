@@ -2,18 +2,22 @@
 #include "util_hal_map.h"
 //#include "util_bsp_sd_diskio.h"
 // Actual FatFS
-#include "ff.h"
+//#include "ff.h"
 //#include "ff_gen_drv.h"
+
+#include "fatfs.h"
+
+
 
 using namespace daisy;
 
 SD_HandleTypeDef hsd1;
 // Fat stuff
-uint8_t retSD;
-char    SDPath[4];
-FATFS   SDFatFS;
-FIL     SDFile;
-// Driver Link
+//uint8_t retSD;
+//char    SDPath[4];
+//FATFS   SDFatFS;
+//FIL     SDFile;
+//// Driver Link
 // TODO: Probably separate this into drivers for
 // SD diskIO and FATFS instead of lumping it all together.
 // Especially since FATFS can be set up on the SDRAM, QSPI,
@@ -29,20 +33,9 @@ void SdmmcHandler::Init()
 //  hsd1.Init.ClockDiv = 168; // 476.2kHz works
   hsd1.Init.ClockDiv = 6; // 12MHz works
   // FatFs stuff.
-  // SD_Driver, likely from SD DiskIO
-  FATFS_LinkDriver(&SD_Driver, SDPath);
-  // Call local init here:
-  
+//  dsy_fatfs_init();
 }
 
-int SdmmcHandler::Mount() 
-{
-    if(f_mount(&SDFatFS, SDPath, 1) == FR_OK)
-    {
-        return DSY_SD_ERROR;
-    }
-    return DSY_SD_OK;
-}
 
 
 // HAL MSP Functions

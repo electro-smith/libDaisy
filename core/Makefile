@@ -112,7 +112,9 @@ C_DEFS =  \
 # AS includes
 AS_INCLUDES =
 
-C_INCLUDES = \
+C_INCLUDES ?= 
+
+C_INCLUDES += \
 -I$(SYSTEM_FILES_DIR)/ \
 -I$(LIBDAISY_DIR) \
 -I$(LIBDAISY_DIR)/src/ \

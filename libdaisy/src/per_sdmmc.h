@@ -2,6 +2,8 @@
 #ifndef DSY_SDMMC_H
 #define DSY_SDMMC_H
 
+#include <stdint.h>
+
 #define DSY_SD_OK 0
 #define DSY_SD_ERROR 1
 
@@ -33,7 +35,6 @@ class SdmmcHandler
     ~SdmmcHandler() {}
 
     void Init();
-    int Mount();
 
   private:
 };

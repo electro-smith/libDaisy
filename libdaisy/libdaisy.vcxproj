@@ -198,6 +198,7 @@
     <ClCompile Include="src\dev_leddriver.c" />
     <ClCompile Include="src\dev_sdram.c" />
     <ClCompile Include="src\dev_sr_4021.c" />
+    <ClCompile Include="src\fatfs.c" />
     <ClCompile Include="src\hid_audio.c" />
     <ClCompile Include="src\hid_ctrl.cpp" />
     <ClCompile Include="src\hid_encoder.cpp" />
@@ -387,6 +388,7 @@
     <ClInclude Include="src\dev_leddriver.h" />
     <ClInclude Include="src\dev_sdram.h" />
     <ClInclude Include="src\dev_sr_4021.h" />
+    <ClInclude Include="src\fatfs.h" />
     <ClInclude Include="src\ffconf.h" />
     <ClInclude Include="src\hid_audio.h" />
     <ClInclude Include="src\hid_ctrl.h" />
