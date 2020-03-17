@@ -618,6 +618,13 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="src\util_bsp_sd_diskio.h">
+    <ClInclude Include="src\per_spi.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid_oled_display.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util_oled_fonts.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1065,6 +1072,14 @@
     </ClCompile>
     <ClCompile Include="src\util_bsp_sd_diskio.c">
       <Filter>Header files</Filter>
+    <ClCompile Include="src\per_spi.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid_oled_display.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util_oled_fonts.c">
+      <Filter>Source files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

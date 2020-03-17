@@ -16,16 +16,19 @@ per_i2c \
 per_sai \
 per_gpio \
 per_dac \
+per_spi \
 per_tim \
 per_uart \
 hid_ctrl \
 hid_encoder \
 hid_gatein \
 hid_midi \
+hid_oled_display \
 hid_switch \
 hid_usb \
 dev_sr_4021 \
 util_hal_map \
+util_oled_fonts \
 system_stm32h7xx \
 
 ######################################
