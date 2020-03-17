@@ -2,17 +2,17 @@
 
 using namespace daisy;
 
-void daisy_patch::Init() 
+void daisy_patch::Init()
 {
     size_t blocksize;
     // Audio Blocksize 48 by default.
     blocksize = 48; // (only used for CV inits here).
-	// Initialize Hardware
+                    // Initialize Hardware
     daisy_seed_init(&seed);
-	// Pin config for everything
-    gate_in1.pin       = {GATE_1_PORT, GATE_1_PIN};
-    gate_in2.pin       = {GATE_2_PORT, GATE_2_PIN};
-    gate_out.pin	   = {GATE_OUT_PORT, GATE_OUT_PIN};
+    // Pin config for everything
+    gate_in1.pin = {GATE_1_PORT, GATE_1_PIN};
+    gate_in2.pin = {GATE_2_PORT, GATE_2_PIN};
+    gate_out.pin = {GATE_OUT_PORT, GATE_OUT_PIN};
 
     // Switches
     button1.Init({BUTTON_1_PORT, BUTTON_1_PIN}, 1000.0f);
@@ -44,30 +44,30 @@ void daisy_patch::Init()
     for(uint8_t i = 0; i < 8; i++)
     {
         seed.adc_handle.active_channels[i] = channel_order[i];
-	}
-	seed.adc_handle.oversampling = DSY_ADC_OVS_32;
-	dsy_adc_init(&seed.adc_handle);
-	dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
+    }
+    seed.adc_handle.oversampling = DSY_ADC_OVS_32;
+    dsy_adc_init(&seed.adc_handle);
+    dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
 
-	// Higher level hid_ctrls
-	for(uint8_t i = 0; i < KNOB_LAST; i++)
-	{
-		pctrl[i].Init(adc_ptr(i), SAMPLE_RATE/blocksize);
-	}
-	for(uint8_t i = CV_1; i < CV_LAST; i++)
-	{
-		pctrl[i].InitBipolarCv(adc_ptr(i), SAMPLE_RATE/blocksize);
-	}
-	knob1.Init(adc_ptr(KNOB_1), SAMPLE_RATE/blocksize);
-	knob2.Init(adc_ptr(KNOB_2), SAMPLE_RATE/blocksize);
-	knob3.Init(adc_ptr(KNOB_3), SAMPLE_RATE/blocksize);
-	knob4.Init(adc_ptr(KNOB_4), SAMPLE_RATE/blocksize);
-	cv1.InitBipolarCv(adc_ptr(CV_1), SAMPLE_RATE/blocksize);
-	cv2.InitBipolarCv(adc_ptr(CV_2), SAMPLE_RATE/blocksize);
-	cv3.InitBipolarCv(adc_ptr(CV_3), SAMPLE_RATE/blocksize);
-	cv4.InitBipolarCv(adc_ptr(CV_4), SAMPLE_RATE/blocksize);
+    // Higher level hid_ctrls
+    for(uint8_t i = 0; i < KNOB_LAST; i++)
+    {
+        pctrl[i].Init(adc_ptr(i), SAMPLE_RATE / blocksize);
+    }
+    for(uint8_t i = CV_1; i < CV_LAST; i++)
+    {
+        pctrl[i].InitBipolarCv(adc_ptr(i), SAMPLE_RATE / blocksize);
+    }
+    knob1.Init(adc_ptr(KNOB_1), SAMPLE_RATE / blocksize);
+    knob2.Init(adc_ptr(KNOB_2), SAMPLE_RATE / blocksize);
+    knob3.Init(adc_ptr(KNOB_3), SAMPLE_RATE / blocksize);
+    knob4.Init(adc_ptr(KNOB_4), SAMPLE_RATE / blocksize);
+    cv1.InitBipolarCv(adc_ptr(CV_1), SAMPLE_RATE / blocksize);
+    cv2.InitBipolarCv(adc_ptr(CV_2), SAMPLE_RATE / blocksize);
+    cv3.InitBipolarCv(adc_ptr(CV_3), SAMPLE_RATE / blocksize);
+    cv4.InitBipolarCv(adc_ptr(CV_4), SAMPLE_RATE / blocksize);
 
-	// LEDs
-	uint8_t addr = 0x00;
-	dsy_led_driver_init(&seed.LED_DRIVER_I2C, &addr, 1);
+    // LEDs
+    uint8_t addr = 0x00;
+    dsy_led_driver_init(&seed.LED_DRIVER_I2C, &addr, 1);
 }

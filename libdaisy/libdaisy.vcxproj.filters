@@ -1039,6 +1039,9 @@
     <ClCompile Include="src\util_oled_fonts.c">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="src\daisy_pod.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
