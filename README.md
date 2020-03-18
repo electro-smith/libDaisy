@@ -1,59 +1,74 @@
+# libdaisy
 
+Multi-layer hardware abstraction library for Daisy Product family
 
-# Daisy - Open Source Sound Computer
-- [Overview](#overview)
-- [Programming the Daisy](#programming-the-daisy)
-- [libDaisy](#libdaisy)
-- [DaisySP](#daisysp)
-- [How to Build](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Build)
-- [How to Flash](https://github.com/andrewikenberry/ES_libdaisy/wiki/How-To-Flash)
-- [Examples](https://github.com/andrewikenberry/ES_libdaisy/tree/master/examples)
-- [Cube](#cube)
+On STM32H7 MCUs
 
-## Overview
+Lower-levels use STM32 HAL (local copy w/ modifications in Drivers/)
 
-Daisy is an open source sound computer. It provides an embedded platform for high fidelity/low latency audio processing without the complexity of designing a system from scratch. 
+Prefixes and their meanings:
 
-## Programming the Daisy
-Daisy can be programmed in a number of languages / environments. Here are the ones that are currently operational with examples and documentation(quantity of examples/docs may vary):
+- sys - System level configuration (clocks, dma, etc.)
+- per - Peripheral level, internal to MCU (i2c, spi, etc.)
+- dev - External device support (external flash chips, DACs, codecs, etc.)
+- hid - User level interface elements (encoders, switches, audio, etc.)
+- daisy - core API files (specific boards, platforms have extended user APIs that configure libdaisy more below).
 
-- Arduino IDE
+----
 
-- C
+# Using libdaisy
 
-Coming soon:
+Due to the amount of hardware configuration and flexibility of the daisy platform, (in the present, and the future), a user can use libdaisy to define their own custom hardware, or include one of our supported board files to jumpstart the creativity, and hack on an existing piece of hardware.
 
-- Max/MSP Gen~
+If you are getting started, and have one of the Daisy Family Products, you can skip ahead to that section below.
 
-- FAUST
+## daisy.h
 
-- Pure Data export
+The base-level include file. This is all you need to include to create your own custom hardware that uses libdaisy.
 
-## libDaisy
+`daisy_seed.h` is an example of a board level file that utilizes libdaisy to define some hardware, and provide flexible access.
 
-Library for hardware abstraction and peripheral drivers including MIDI, USB, ADC, etc. 
+## daisy_seed.h
 
-License: MIT
+The SOM-level include file. This can be used with any boards that use the Daisy Seed hardware.
 
+Additional configuration files, with more specific hardware access are provided below for our supported hardware platforms.
 
-## DaisySP
+## daisy_platform.h
 
-DSP library for the Daisy family of boards.
+Several other pairs of files exist in the repo for each of the supported hardware platforms that work with Daisy Seed.
 
-License: MIT
+These are:
+- daisy_field
+- daisy_patch
+- daisy_petal
+- daisy_pod
 
-This library is intentionally kept separate so that it can be compiled outside of an ARM context. 
+With these files a number of additional initialization, and configuration is done by the library.
 
-This will allow for development and prototyping on a computer before running it on hardware.
+This allows a user to jump right into their new product with a simple api to do things like:
 
-## Cube
+```
+#include "daisy_patch.h"
 
-STM32CubeMX is a configurator, and code generator for STM32.
+void callback(float *in, float *out, size_t size)
+{
+    if (patch_get_sw(SW_3) == TOGGLE_POS_UP)
+    {
+        val = patch_get_knob(KNOB_1);
+        osc.freq = dsy_map(val, 0, 1, 20, 10000); 
+    }
+    else
+    {
+        val = 100; // steady tone;
+        osc.freq = val;
+    }
+}
+```
 
-Included are the cube files for the boards to generate code.
+without having a full understanding of what's going on under the hood.
 
-This can be helpful for generating initialization code, checking the clock configuration, etc. 
+------
 
-Generated code uses ST's HAL and/or LL drivers. These are currently the basis for libDaisy as well, though that may also change.
+With this flexible approach to the hardware configuration, we hope to promote a lot of fantastic hardware along with code to go with it.
 
-An entire copy of the ST HAL, as well as Middleware for CDC USB Device Class, and FatFS are included in the libdaisy/ folder.
