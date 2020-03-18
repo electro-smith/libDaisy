@@ -11,7 +11,12 @@
 #pragma once
 #ifndef DSY_POD_BSP_H
 #define DSY_POD_BSP_H
+
 #include "daisy_seed.h"
+#ifdef __cplusplus
+
+namespace daisy
+{
 
 #ifndef SAMPLE_RATE
 #define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
@@ -43,9 +48,6 @@
 #define LED_2_B_PORT seed_ports[24]
 #define LED_2_B_PIN seed_pins[24]
 
-#ifdef __cplusplus
-namespace daisy
-{
 class daisy_pod
 {
   public:
@@ -76,6 +78,7 @@ class daisy_pod
     daisy_pod() {}
     ~daisy_pod() {}
 
+    // init functions
     void Init();
 
     inline void StartAudio(dsy_audio_callback cb)
@@ -106,8 +109,6 @@ class daisy_pod
 
     inline void UpdateLeds() { dsy_led_driver_update(); }
 
-    inline AnalogControl GetCtrl(ctrl c) { return pctrl[c]; }
-
     daisy_handle  seed;
     Encoder       encoder;
     AnalogControl knob1, knob2;
@@ -118,11 +119,15 @@ class daisy_pod
     dsy_gpio leds[LED_LAST];
 
   private:
+    void             InitButtons();
+    void             InitEncoder();
+    void             InitLeds();
+    void             InitKnobs();
     inline uint16_t* adc_ptr(const uint8_t chn)
     {
         return dsy_adc_get_rawptr(chn);
     }
-    AnalogControl pctrl[CV_LAST];
 };
 
 } // namespace daisy
+#endif 

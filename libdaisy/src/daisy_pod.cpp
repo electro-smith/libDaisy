@@ -4,32 +4,45 @@ using namespace daisy;
 
 void daisy_pod::Init()
 {
-    blocksize = 48;
+    uint8_t blocksize = 48;
 
     // init seed
     daisy_seed_init(&seed);
-
-    // init button1
+    InitButtons();
+    InitEncoder();
+    InitLeds();
+    InitKnobs();
+}
+void daisy_pod::InitButtons()
+{
+    // button1
     dsy_gpio_pin button1_pin;
     button1_pin.pin  = SW_1_PIN;
     button1_pin.port = SW_1_PORT;
     button1.Init(button1_pin, 1000.0f);
 
-    // init button2
+    // button2
     dsy_gpio_pin button2_pin;
     button2_pin.pin  = SW_2_PIN;
     button2_pin.port = SW_2_PORT;
     button2.Init(button2_pin, 1000.0f);
+    //button2.Init(seed.ADC1, 1000.0f);
+    //button2.Init(seed.pin(1), 1000.0f);
+}
 
-    // init encoder
+void daisy_pod::InitEncoder()
+{
     encoder.Init({ENC_A_PORT, ENC_A_PIN},
                  {ENC_B_PORT, ENC_B_PIN},
                  {ENC_CLICK_PORT, ENC_CLICK_PIN},
                  1000.0f);
+}
 
+void daisy_pod::InitLeds()
+{
     // LEDs are just going to be on/off for now.
     // TODO: Add PWM support
-    // init leds
+
     dsy_gpio_port led_ports[LED_LAST] = {LED_1_R_PORT,
                                          LED_1_G_PORT,
                                          LED_1_B_PORT,
@@ -50,14 +63,22 @@ void daisy_pod::Init()
         leds[i].mode     = DSY_GPIO_MODE_OUTPUT_PP;
         leds[i].pull     = DSY_GPIO_NOPULL;
         dsy_gpio_init(&leds[i]);
-    }
 
+        led1_r.pin.port = LED_1_R_PORT;
+        led1_r.pin.pin  = LED_1_R_PIN;
+        led1_r.mode     = DSY_GPIO_MODE_OUTPUT_PP;
+        led1_r.pull     = DSY_GPIO_NOPULL;
+        dsy_gpio_init(&led1_r);
+    }
+}
+void daisy_pod::InitKnobs()
+{
     uint8_t channel_order[KNOB_LAST] = {DSY_ADC_PIN_CHN11, DSY_ADC_PIN_CHN10};
-    p->seed.adc_handle.channels      = KNOB_LAST;
+    seed.adc_handle.channels         = KNOB_LAST;
     for(uint8_t i = 0; i < KNOB_LAST; i++)
     {
-        p->seed.adc_handle.active_channels[i] = channel_order[i];
+        seed.adc_handle.active_channels[i] = channel_order[i];
     }
-    p->seed.adc_handle.oversampling = DSY_ADC_OVS_32;
-    dsy_adc_init(&p->seed.adc_handle);
+    seed.adc_handle.oversampling = DSY_ADC_OVS_32;
+    dsy_adc_init(&seed.adc_handle);
 }
