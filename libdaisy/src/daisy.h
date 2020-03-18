@@ -72,5 +72,8 @@ FORCE_INLINE float cube(float x)
 #include "hid_ctrl.h"
 #include "parameter.h"
 #include "hid_usb.h"
+#include "per_sdmmc.h"
+#include "per_spi.h"
+#include "hid_oled_display.h"
 #endif
 #endif

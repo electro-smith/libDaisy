@@ -43,7 +43,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>src;Drivers/CMSIS/Device/ST/STM32H7xx/Include;Drivers/STM32H7xx_HAL_Driver/Inc;Drivers/CMSIS/Include;Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;Middlewares/ST/STM32_USB_Device_Library/Core/Inc;Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;Drivers/CMSIS/Device/ST/STM32H7xx/Include;Drivers/STM32H7xx_HAL_Driver/Inc;Drivers/CMSIS/Include;Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;Middlewares/ST/STM32_USB_Device_Library/Core/Inc;Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;Middlewares/Third_Party/FatFs/src;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG=1;__FPU_PRESENT=1;STM32H750xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>Og</Optimization>
       <AdditionalOptions />
@@ -189,12 +189,16 @@
     <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_core.c" />
     <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c" />
     <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c" />
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\diskio.c" />
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff.c" />
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.c" />
     <ClCompile Include="src\daisy_patch.cpp" />
     <ClCompile Include="src\dev_codec_pcm3060.c" />
     <ClCompile Include="src\dev_codec_wm8731.c" />
     <ClCompile Include="src\dev_leddriver.c" />
     <ClCompile Include="src\dev_sdram.c" />
     <ClCompile Include="src\dev_sr_4021.c" />
+    <ClCompile Include="src\fatfs.c" />
     <ClCompile Include="src\hid_audio.c" />
     <ClCompile Include="src\hid_ctrl.cpp" />
     <ClCompile Include="src\hid_encoder.cpp" />
@@ -208,6 +212,7 @@
     <ClCompile Include="src\per_i2c.c" />
     <ClCompile Include="src\per_qspi.c" />
     <ClCompile Include="src\per_sai.c" />
+    <ClCompile Include="src\per_sdmmc.cpp" />
     <ClCompile Include="src\per_spi.cpp" />
     <ClCompile Include="src\per_tim.c" />
     <ClCompile Include="src\per_uart.cpp" />
@@ -217,7 +222,9 @@
     <ClCompile Include="src\usbd_cdc_if.c" />
     <ClCompile Include="src\usbd_conf.c" />
     <ClCompile Include="src\usbd_desc.c" />
+    <ClCompile Include="src\util_bsp_sd_diskio.c" />
     <ClCompile Include="src\util_hal_map.c" />
+    <ClCompile Include="src\util_sd_diskio.c" />
     <ClCompile Include="src\util_oled_fonts.c" />
     <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h750xx.h" />
     <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h" />
@@ -362,6 +369,10 @@
     <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h" />
     <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h" />
     <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h" />
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\diskio.h" />
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\ff.h" />
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.h" />
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\integer.h" />
     <ClInclude Include="src\daisy.h" />
     <ClInclude Include="src\daisy_core.h" />
     <ClInclude Include="src\daisy_field.h" />
@@ -377,6 +388,8 @@
     <ClInclude Include="src\dev_leddriver.h" />
     <ClInclude Include="src\dev_sdram.h" />
     <ClInclude Include="src\dev_sr_4021.h" />
+    <ClInclude Include="src\fatfs.h" />
+    <ClInclude Include="src\ffconf.h" />
     <ClInclude Include="src\hid_audio.h" />
     <ClInclude Include="src\hid_ctrl.h" />
     <ClInclude Include="src\hid_encoder.h" />
@@ -391,6 +404,7 @@
     <ClInclude Include="src\per_i2c.h" />
     <ClInclude Include="src\per_qspi.h" />
     <ClInclude Include="src\per_sai.h" />
+    <ClInclude Include="src\per_sdmmc.h" />
     <ClInclude Include="src\per_spi.h" />
     <ClInclude Include="src\per_tim.h" />
     <ClInclude Include="src\per_uart.h" />
@@ -400,9 +414,11 @@
     <ClInclude Include="src\usbd_cdc_if.h" />
     <ClInclude Include="src\usbd_conf.h" />
     <ClInclude Include="src\usbd_desc.h" />
+    <ClInclude Include="src\util_bsp_sd_diskio.h" />
     <ClInclude Include="src\util_hal_map.h" />
     <ClInclude Include="src\util_oled_fonts.h" />
     <ClInclude Include="src\util_ringbuffer.h" />
+    <ClInclude Include="src\util_sd_diskio.h" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c" />
     <None Include="libdaisy-Debug.vgdbsettings" />

@@ -1,152 +1,448 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source files">
-      <UniqueIdentifier>{59aa230b-1660-44b5-87c1-2a6ceee50f14}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header files">
-      <UniqueIdentifier>{d151fcc6-34fd-405b-a884-0ef4b26ab0a9}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource files">
-      <UniqueIdentifier>{0db6a33f-ab91-4e48-848e-c20ca67dd253}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
-    </Filter>
-    <Filter Include="Source files\Device-specific files">
-      <UniqueIdentifier>{dc7152e9-ed42-402a-b255-30fc9227e423}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header files\Device-specific files">
-      <UniqueIdentifier>{91fe0048-9069-4aa5-8a1a-a78904333b2d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="VisualGDB settings">
-      <UniqueIdentifier>{d804b7fb-bc78-40ec-98ce-9bea7733d09b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HAL">
-      <UniqueIdentifier>{687872cc-2267-4005-a717-839d536f75d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="CMSIS">
-      <UniqueIdentifier>{d09b4563-3bcf-452d-a23a-b147a545005b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="USB Middleware">
-      <UniqueIdentifier>{23cd5738-10d6-4357-bb0b-f9a24c84f81e}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="stm32.props">
-      <Filter>Source files\Device-specific files</Filter>
-    </None>
-    <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c">
-      <Filter>Source files\Device-specific files</Filter>
+    <ClCompile Include="src\daisy_patch.cpp" />
+    <ClCompile Include="src\dev_codec_pcm3060.c" />
+    <ClCompile Include="src\dev_codec_wm8731.c" />
+    <ClCompile Include="src\dev_leddriver.c" />
+    <ClCompile Include="src\dev_sdram.c" />
+    <ClCompile Include="src\dev_sr_4021.c" />
+    <ClCompile Include="src\hid_audio.c" />
+    <ClCompile Include="src\hid_ctrl.cpp" />
+    <ClCompile Include="src\hid_encoder.cpp" />
+    <ClCompile Include="src\hid_midi.cpp" />
+    <ClCompile Include="src\hid_oled_display.cpp" />
+    <ClCompile Include="src\hid_switch.cpp" />
+    <ClCompile Include="src\hid_usb.cpp" />
+    <ClCompile Include="src\per_adc.c" />
+    <ClCompile Include="src\per_dac.c" />
+    <ClCompile Include="src\per_gpio.c" />
+    <ClCompile Include="src\per_i2c.c" />
+    <ClCompile Include="src\per_qspi.c" />
+    <ClCompile Include="src\per_sai.c" />
+    <ClCompile Include="src\per_sdmmc.cpp" />
+    <ClCompile Include="src\per_spi.cpp" />
+    <ClCompile Include="src\per_tim.c" />
+    <ClCompile Include="src\per_uart.cpp" />
+    <ClCompile Include="src\system_stm32h7xx.c" />
+    <ClCompile Include="src\sys_dma.c" />
+    <ClCompile Include="src\sys_system.c" />
+    <ClCompile Include="src\usbd_cdc_if.c" />
+    <ClCompile Include="src\usbd_conf.c" />
+    <ClCompile Include="src\usbd_desc.c" />
+    <ClCompile Include="src\util_bsp_sd_diskio.c" />
+    <ClCompile Include="src\util_hal_map.c" />
+    <ClCompile Include="src\util_sd_diskio.c" />
+    <ClCompile Include="src\util_oled_fonts.c" />
+    <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c" />
+    <ClCompile Include="src\fatfs.c" />
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal.c">
+      <Filter>HAL</Filter>
     </ClCompile>
-    <None Include="libdaisy-Debug.vgdbsettings">
-      <Filter>VisualGDB settings</Filter>
-    </None>
-    <None Include="libdaisy-Release.vgdbsettings">
-      <Filter>VisualGDB settings</Filter>
-    </None>
-    <None Include="stm32.xml">
-      <Filter>VisualGDB settings</Filter>
-    </None>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_adc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_adc_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_cec.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_comp.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_cortex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_crc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_crc_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_cryp.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_cryp_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dac.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dac_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dcmi.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dfsdm.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dma.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dma_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dma2d.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dsi.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_eth.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_eth_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_exti.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_fdcan.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_flash.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_flash_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_gpio.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_hash.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_hash_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_hcd.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_hrtim.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_hsem.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_i2c.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_i2c_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_i2s.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_i2s_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_irda.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_iwdg.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_jpeg.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_lptim.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_ltdc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_ltdc_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_mdios.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_mdma.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_mmc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_mmc_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_msp_template.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_nand.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_nor.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_opamp.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_opamp_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_pcd.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_pcd_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_pwr.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_pwr_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_qspi.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_ramecc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rcc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rcc_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rng.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rtc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rtc_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sai.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sai_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sd.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sd_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sdram.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_smartcard.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_smartcard_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_smbus.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_spdifrx.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_spi.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_spi_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sram.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_swpmi.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_tim.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_tim_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_timebase_rtc_alarm_template.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_timebase_rtc_wakeup_template.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_timebase_tim_template.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_uart.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_uart_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_usart.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_usart_ex.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_wwdg.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_adc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_bdma.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_comp.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_crc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_dac.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_delayblock.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_dma.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_dma2d.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_exti.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_fmc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_gpio.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_hrtim.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_i2c.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_lptim.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_lpuart.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_mdma.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_opamp.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_pwr.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_rcc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_rng.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_rtc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_sdmmc.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_spi.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_swpmi.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_tim.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usart.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usb.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_utils.c">
+      <Filter>HAL</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\diskio.c">
+      <Filter>Middleware_FatFS</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff.c">
+      <Filter>Middleware_FatFS</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.c">
+      <Filter>Middleware_FatFS</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Src\usbd_cdc.c">
+      <Filter>Middleware_USB</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_core.c">
+      <Filter>Middleware_USB</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c">
+      <Filter>Middleware_USB</Filter>
+    </ClCompile>
+    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
+      <Filter>Middleware_USB</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\daisy.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_core.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_field.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_patch.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_petal.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_pod.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\daisy_seed.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_codec_pcm3060.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_codec_wm8731.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_codec_wm8731_frame.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_flash_IS25LP064A.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_flash_IS25LP080D.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_leddriver.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_sdram.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\dev_sr_4021.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hid_audio.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hid_encoder.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hid_switch.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_adc.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_dac.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_gpio.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_i2c.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_qspi.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_sai.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stm32h7xx_hal_conf.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sys_dma.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sys_system.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hid_ctrl.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\parameter.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_tim.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_uart.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hid_midi.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\stm32_assert_template.h">
+    <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h" />
+    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h" />
+    <ClInclude Include="src\daisy.h" />
+    <ClInclude Include="src\daisy_core.h" />
+    <ClInclude Include="src\daisy_field.h" />
+    <ClInclude Include="src\daisy_patch.h" />
+    <ClInclude Include="src\daisy_petal.h" />
+    <ClInclude Include="src\daisy_pod.h" />
+    <ClInclude Include="src\daisy_seed.h" />
+    <ClInclude Include="src\dev_codec_pcm3060.h" />
+    <ClInclude Include="src\dev_codec_wm8731.h" />
+    <ClInclude Include="src\dev_codec_wm8731_frame.h" />
+    <ClInclude Include="src\dev_flash_IS25LP064A.h" />
+    <ClInclude Include="src\dev_flash_IS25LP080D.h" />
+    <ClInclude Include="src\dev_leddriver.h" />
+    <ClInclude Include="src\dev_sdram.h" />
+    <ClInclude Include="src\dev_sr_4021.h" />
+    <ClInclude Include="src\ffconf.h" />
+    <ClInclude Include="src\hid_audio.h" />
+    <ClInclude Include="src\hid_ctrl.h" />
+    <ClInclude Include="src\hid_encoder.h" />
+    <ClInclude Include="src\hid_midi.h" />
+    <ClInclude Include="src\hid_oled_display.h" />
+    <ClInclude Include="src\hid_switch.h" />
+    <ClInclude Include="src\hid_usb.h" />
+    <ClInclude Include="src\parameter.h" />
+    <ClInclude Include="src\per_adc.h" />
+    <ClInclude Include="src\per_dac.h" />
+    <ClInclude Include="src\per_gpio.h" />
+    <ClInclude Include="src\per_i2c.h" />
+    <ClInclude Include="src\per_qspi.h" />
+    <ClInclude Include="src\per_sai.h" />
+    <ClInclude Include="src\per_sdmmc.h" />
+    <ClInclude Include="src\per_spi.h" />
+    <ClInclude Include="src\per_tim.h" />
+    <ClInclude Include="src\per_uart.h" />
+    <ClInclude Include="src\sys_dma.h" />
+    <ClInclude Include="src\sys_system.h" />
+    <ClInclude Include="src\usbd_cdc_if.h" />
+    <ClInclude Include="src\usbd_conf.h" />
+    <ClInclude Include="src\usbd_desc.h" />
+    <ClInclude Include="src\util_bsp_sd_diskio.h" />
+    <ClInclude Include="src\util_hal_map.h" />
+    <ClInclude Include="src\util_oled_fonts.h" />
+    <ClInclude Include="src\util_ringbuffer.h" />
+    <ClInclude Include="src\util_sd_diskio.h" />
+    <ClInclude Include="src\fatfs.h" />
+    <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h">
       <Filter>HAL</Filter>
     </ClInclude>
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h">
@@ -162,6 +458,9 @@
       <Filter>HAL</Filter>
     </ClInclude>
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_comp.h">
+      <Filter>HAL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\stm32h7xx_hal_conf.h">
       <Filter>HAL</Filter>
     </ClInclude>
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_conf_template.h">
@@ -503,15 +802,6 @@
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_wwdg.h">
       <Filter>HAL</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h">
-      <Filter>HAL</Filter>
-    </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h750xx.h">
-      <Filter>CMSIS</Filter>
-    </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h">
-      <Filter>CMSIS</Filter>
-    </ClInclude>
     <ClInclude Include="Drivers\CMSIS\Include\cmsis_armcc.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
@@ -557,490 +847,58 @@
     <ClInclude Include="Drivers\CMSIS\Include\core_sc300.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\diskio.h">
+      <Filter>Middleware_FatFS</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\ff.h">
+      <Filter>Middleware_FatFS</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.h">
+      <Filter>Middleware_FatFS</Filter>
+    </ClInclude>
+    <ClInclude Include="Middlewares\Third_Party\FatFs\src\integer.h">
+      <Filter>Middleware_FatFS</Filter>
+    </ClInclude>
     <ClInclude Include="Drivers\CMSIS\Include\tz_context.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="src\util_hal_map.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\util_ringbuffer.h">
-      <Filter>Header files</Filter>
+    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc\usbd_cdc.h">
+      <Filter>Middleware_USB</Filter>
     </ClInclude>
     <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h">
-      <Filter>USB Middleware</Filter>
+      <Filter>Middleware_USB</Filter>
     </ClInclude>
     <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h">
-      <Filter>USB Middleware</Filter>
-    </ClInclude>
-    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h">
-      <Filter>USB Middleware</Filter>
+      <Filter>Middleware_USB</Filter>
     </ClInclude>
     <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h">
-      <Filter>USB Middleware</Filter>
+      <Filter>Middleware_USB</Filter>
     </ClInclude>
-    <ClInclude Include="src\usbd_cdc_if.h">
-      <Filter>Header files</Filter>
+    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h750xx.h">
+      <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="src\usbd_conf.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\usbd_desc.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hid_usb.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc\usbd_cdc.h">
-      <Filter>USB Middleware</Filter>
-    </ClInclude>
-    <ClInclude Include="src\per_spi.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\hid_oled_display.h">
-      <Filter>Header files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\util_oled_fonts.h">
-      <Filter>Header files</Filter>
+    <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\stm32_assert_template.h">
+      <Filter>HAL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\dev_codec_pcm3060.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev_codec_wm8731.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev_leddriver.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev_sdram.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev_sr_4021.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid_audio.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_adc.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_dac.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_gpio.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_i2c.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_qspi.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_sai.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sys_dma.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sys_system.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\system_stm32h7xx.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid_ctrl.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_tim.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\daisy_patch.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid_switch.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid_encoder.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_uart.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid_midi.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_adc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_adc_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_cec.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_comp.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_cortex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_crc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_crc_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_cryp.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_cryp_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dac.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dac_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dcmi.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dfsdm.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dma.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dma_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dma2d.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_dsi.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_eth.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_eth_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_exti.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_fdcan.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_flash.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_flash_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_gpio.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_hash.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_hash_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_hcd.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_hrtim.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_hsem.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_i2c.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_i2c_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_i2s.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_i2s_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_irda.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_iwdg.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_jpeg.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_lptim.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_ltdc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_ltdc_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_mdios.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_mdma.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_mmc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_mmc_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_msp_template.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_nand.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_nor.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_opamp.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_opamp_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_pcd.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_pcd_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_pwr.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_pwr_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_qspi.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_ramecc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rcc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rcc_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rng.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rtc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_rtc_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sai.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sai_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sd.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sd_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sdram.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_smartcard.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_smartcard_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_smbus.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_spdifrx.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_spi.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_spi_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_sram.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_swpmi.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_tim.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_tim_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_timebase_rtc_alarm_template.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_timebase_rtc_wakeup_template.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_timebase_tim_template.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_uart.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_uart_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_usart.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_usart_ex.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_wwdg.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_adc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_bdma.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_comp.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_crc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_dac.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_delayblock.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_dma.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_dma2d.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_exti.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_fmc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_gpio.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_hrtim.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_i2c.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_lptim.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_lpuart.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_mdma.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_opamp.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_pwr.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_rcc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_rng.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_rtc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_sdmmc.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_spi.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_swpmi.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_tim.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usart.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_usb.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_utils.c">
-      <Filter>HAL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\util_hal_map.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_core.c">
-      <Filter>USB Middleware</Filter>
-    </ClCompile>
-    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c">
-      <Filter>USB Middleware</Filter>
-    </ClCompile>
-    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
-      <Filter>USB Middleware</Filter>
-    </ClCompile>
-    <ClCompile Include="src\usbd_cdc_if.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\usbd_conf.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\usbd_desc.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid_usb.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Src\usbd_cdc.c">
-      <Filter>USB Middleware</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per_spi.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid_oled_display.cpp">
-      <Filter>Source files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\util_oled_fonts.c">
-      <Filter>Source files</Filter>
-    </ClCompile>
+    <None Include="stm32.props" />
+    <None Include="libdaisy-Debug.vgdbsettings" />
+    <None Include="libdaisy-Release.vgdbsettings" />
+    <None Include="stm32.xml" />
   </ItemGroup>
   <ItemGroup>
-    <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
+    <Filter Include="HAL">
+      <UniqueIdentifier>{8c8f8771-ea73-443a-9177-a07a6fc5c893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CMSIS">
+      <UniqueIdentifier>{f307236b-3912-4cbe-8df4-07a88c78e270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Middleware_USB">
+      <UniqueIdentifier>{4bd31ebd-a7a9-488b-ba38-5b686f126430}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Middleware_FatFS">
+      <UniqueIdentifier>{0c75ac56-378f-4bfe-9776-3bfd88231752}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

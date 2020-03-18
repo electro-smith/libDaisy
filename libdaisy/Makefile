@@ -11,12 +11,14 @@ hid_audio \
 dev_leddriver \
 per_qspi \
 dev_sdram \
+fatfs \
 sys_system \
 per_i2c \
 per_sai \
 per_gpio \
 per_dac \
 per_spi \
+per_sdmmc \
 per_tim \
 per_uart \
 hid_ctrl \
@@ -27,8 +29,10 @@ hid_oled_display \
 hid_switch \
 hid_usb \
 dev_sr_4021 \
+util_bsp_sd_diskio \
 util_hal_map \
 util_oled_fonts \
+util_sd_diskio \
 system_stm32h7xx \
 
 ######################################
@@ -47,7 +51,7 @@ Drivers/CMSIS \
 Drivers/STM32H7xx_HAL_Driver \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src \
 Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src \
-#Middlewares/FatFs \
+Middlewares/Third_Party/FatFs/src \
 
 # Build path
 BUILD_DIR = build
@@ -177,6 +181,7 @@ C_INCLUDES = \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
 -IMiddlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc \
 -IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc \
+-IMiddlewares/Third_Party/FatFs/src \
 -I. \
 
 # compile gcc flags
