@@ -50,19 +50,35 @@ This allows a user to jump right into their new product with a simple api to do 
 
 ```
 #include "daisy_patch.h"
+#include "daisysp.h"
+
+using namespace daisy;
+
+DaisyPatch hardware;
+daisysp::Oscillator osc;
 
 void callback(float *in, float *out, size_t size)
 {
-    if (patch_get_sw(SW_3) == TOGGLE_POS_UP)
+    if (hardware.toggle.State() == Switch::TOGGLE_POS_UP)
     {
-        val = patch_get_knob(KNOB_1);
-        osc.freq = dsy_map(val, 0, 1, 20, 10000); 
+        val = hardware.GetKnob(KNOB_1) * 127.0f; // convert to MIDI Note number.
+        osc.SetFreq(daisysp::mtof(val)); 
     }
     else
     {
-        val = 100; // steady tone;
-        osc.freq = val;
+        osc.SetFreq(100); // steady tone
     }
+    for (size_t i = 0; i < size; i+=2)
+    {
+        out[LEFT] = out[RIGHT] = osc.Process();
+    }
+}
+int main()
+{
+    hardware.Init();
+    osc.Init();
+    hardware.StartAudio(callback);
+    for(;;) {}
 }
 ```
 
