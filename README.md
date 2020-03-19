@@ -12,7 +12,14 @@ Prefixes and their meanings:
 - per - Peripheral level, internal to MCU (i2c, spi, etc.)
 - dev - External device support (external flash chips, DACs, codecs, etc.)
 - hid - User level interface elements (encoders, switches, audio, etc.)
+- util - library level elements used within the library (not included via daisy.h)
 - daisy - core API files (specific boards, platforms have extended user APIs that configure libdaisy more below).
+
+Also included is a core/ folder containing:
+
+- a generic Makefile that can be included in a project Makefile to simplify getting started
+- a linker script for defining the sections of memory used by the firmware
+- core files for starting the hardware (system_stm32h7xx.c, startup_stm32h750xx.s, etc.)
 
 ----
 
