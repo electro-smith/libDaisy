@@ -28,6 +28,7 @@ hid_midi \
 hid_oled_display \
 hid_switch \
 hid_usb \
+hid_wavplayer \
 dev_sr_4021 \
 util_bsp_sd_diskio \
 util_hal_map \

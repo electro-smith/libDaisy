@@ -390,6 +390,7 @@
     <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
       <Filter>Middleware_USB</Filter>
     </ClCompile>
+    <ClCompile Include="src\hid_wavplayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
@@ -880,6 +881,8 @@
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\stm32_assert_template.h">
       <Filter>HAL</Filter>
     </ClInclude>
+    <ClInclude Include="src\hid_wavplayer.h" />
+    <ClInclude Include="src\util_wav_format.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="stm32.props" />

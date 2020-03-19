@@ -206,6 +206,7 @@
     <ClCompile Include="src\hid_oled_display.cpp" />
     <ClCompile Include="src\hid_switch.cpp" />
     <ClCompile Include="src\hid_usb.cpp" />
+    <ClCompile Include="src\hid_wavplayer.cpp" />
     <ClCompile Include="src\per_adc.c" />
     <ClCompile Include="src\per_dac.c" />
     <ClCompile Include="src\per_gpio.c" />
@@ -397,6 +398,7 @@
     <ClInclude Include="src\hid_oled_display.h" />
     <ClInclude Include="src\hid_switch.h" />
     <ClInclude Include="src\hid_usb.h" />
+    <ClInclude Include="src\hid_wavplayer.h" />
     <ClInclude Include="src\parameter.h" />
     <ClInclude Include="src\per_adc.h" />
     <ClInclude Include="src\per_dac.h" />
@@ -419,6 +421,7 @@
     <ClInclude Include="src\util_oled_fonts.h" />
     <ClInclude Include="src\util_ringbuffer.h" />
     <ClInclude Include="src\util_sd_diskio.h" />
+    <ClInclude Include="src\util_wav_format.h" />
     <None Include="stm32.props" />
     <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c" />
     <None Include="libdaisy-Debug.vgdbsettings" />

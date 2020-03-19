@@ -75,5 +75,6 @@ FORCE_INLINE float cube(float x)
 #include "per_sdmmc.h"
 #include "per_spi.h"
 #include "hid_oled_display.h"
+#include "hid_wavplayer.h"
 #endif
 #endif
