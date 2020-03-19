@@ -13,7 +13,10 @@
 #define DSY_POD_BSP_H
 
 #include "daisy_seed.h"
-namespace daisy {
+
+namespace daisy {
+
+
 #ifndef SAMPLE_RATE
 #define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
 #endif

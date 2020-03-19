@@ -26,8 +26,9 @@ void daisy_pod::InitButtons()
     button2_pin.pin  = SW_2_PIN;
     button2_pin.port = SW_2_PORT;
     button2.Init(button2_pin, 1000.0f);
-    //button2.Init(seed.ADC1, 1000.0f);
-    //button2.Init(seed.pin(1), 1000.0f);
+    /* ideal code:
+    button2.Init(seed.ADC1, 1000.0f);
+    button2.Init(seed.pin(1), 1000.0f); */
 }
 
 void daisy_pod::InitEncoder()
@@ -63,12 +64,6 @@ void daisy_pod::InitLeds()
         leds[i].mode     = DSY_GPIO_MODE_OUTPUT_PP;
         leds[i].pull     = DSY_GPIO_NOPULL;
         dsy_gpio_init(&leds[i]);
-
-        led1_r.pin.port = LED_1_R_PORT;
-        led1_r.pin.pin  = LED_1_R_PIN;
-        led1_r.mode     = DSY_GPIO_MODE_OUTPUT_PP;
-        led1_r.pull     = DSY_GPIO_NOPULL;
-        dsy_gpio_init(&led1_r);
     }
 }
 void daisy_pod::InitKnobs()
