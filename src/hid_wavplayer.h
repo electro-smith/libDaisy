@@ -32,7 +32,7 @@ struct WavFileInfo
     WAV_FormatTypeDef raw_data;
     char              name[WAV_FILENAME_MAX];
 };
-//~~~~
+// ~~~~
 
 // ## WavPlayer
 // Class for handling playback of WAV files.
