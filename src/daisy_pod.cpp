@@ -89,7 +89,7 @@ void DaisyPod::StartAdc()
     dsy_adc_start();
 }
 
-float DaisyPod::UpdateKnobs()
+void DaisyPod::UpdateKnobs()
 {
     knob1.Process();
     knob2.Process();

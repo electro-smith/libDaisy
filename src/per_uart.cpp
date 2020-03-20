@@ -98,7 +98,7 @@ size_t UartHandler::Readable()
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
-    for(int i = 0; i < uhandle.rx_size; i++)
+    for(size_t i = 0; i < uhandle.rx_size; i++)
     {
         // TODO:
         // Add handling for non-writable, overflow conditions, etc.
