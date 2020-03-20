@@ -49,20 +49,20 @@ namespace daisy {
 class DaisyPod
 {
   public:
-    enum sw
+    enum Sw
     {
         BUTTON_1,
         BUTTON_2,
         BUTTON_LAST,
     };
-    enum knob
+    enum Knob
     {
         KNOB_1,
         KNOB_2,
         KNOB_LAST,
     };
 
-    enum led
+    enum Led
     {
         LED_1_R,
         LED_1_G,
@@ -76,43 +76,21 @@ class DaisyPod
     DaisyPod() {}
     ~DaisyPod() {}
 
-    // init functions
     void Init();
 
-    inline void StartAudio(dsy_audio_callback cb)
-    {
-        dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
-        dsy_audio_start(DSY_AUDIO_INTERNAL);
-    }
+    void StartAudio(dsy_audio_callback cb);
+    void ChangeAudioCallback(dsy_audio_callback cb);
 
-    inline void ChangeAudioCallback(dsy_audio_callback cb)
-    {
-        dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
-    }
+    void StartAdc();
 
-    inline void StartAdc() { dsy_adc_start(); }
-
-    inline void SetLed(led ld, float bright)
-    {
-        //dsy_led_driver_set_led(ld, bright);
-        // no led driver so do it like it was on musicbox
-        
-    }
-
-    inline void ClearLeds()
-    {
-        for(int i = 0; i < LED_LAST; i++)
-        {
-            SetLed(static_cast<led>(i), 0);
-        }
-    }
-
-    inline void UpdateLeds() { dsy_led_driver_update(); }
+    void SetLed(Led ld, float bright);
+    void ClearLeds();
+    void UpdateLeds();
 
     daisy_handle  seed;
     Encoder       encoder;
-    AnalogControl knob1, knob2, knobs[KNOB_LAST];
-    Switch        button1, button2, buttons[BUTTON_LAST];
+    AnalogControl knob1, knob2, *knobs[KNOB_LAST];
+    Switch        button1, button2, *buttons[BUTTON_LAST];
     dsy_gpio      led1_r, led1_g, led1_b;
     dsy_gpio      led2_r, led2_g, led2_b, leds[LED_LAST];
 

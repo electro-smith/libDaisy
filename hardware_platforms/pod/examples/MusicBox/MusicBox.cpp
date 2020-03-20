@@ -5,7 +5,6 @@
 using namespace daisy;
 using namespace daisysp;
 
-// should daisy_pod be DaisyPod?
 DaisyPod  hw;
 Oscillator osc;
 Svf        filt;

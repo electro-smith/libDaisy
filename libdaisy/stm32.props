@@ -11,16 +11,24 @@
 		<ClCompile>
 			<PreprocessorDefinitions>ARM_MATH_CM7;flash_layout;CORE_CM7;STM32H750IB;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
 			<AdditionalIncludeDirectories>%(ClCompile.AdditionalIncludeDirectories);$(ProjectDir)</AdditionalIncludeDirectories>
-			<AdditionalOptions>-mcpu=cortex-m7 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard %(ClCompile.AdditionalOptions)</AdditionalOptions>
 		</ClCompile>
 	</ItemDefinitionGroup>
 	<ItemDefinitionGroup>
 		<Link>
 			<LinkerScript Condition="'%(Link.LinkerScript)' == ''">$(BSP_ROOT)/STM32H7xxxx/LinkerScripts/STM32H750IB_flash.lds</LinkerScript>
-			<AdditionalOptions>--specs=nano.specs $$com.sysprogs.toolchainoptions.arm.libnosys$$ -mcpu=cortex-m7 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard %(Link.AdditionalOptions)</AdditionalOptions>
+			<AdditionalOptions>--specs=nano.specs $$com.sysprogs.toolchainoptions.arm.libnosys$$ %(Link.AdditionalOptions)</AdditionalOptions>
 		</Link>
 	</ItemDefinitionGroup>
 	<PropertyGroup>
 		<DefaultLinkerScript>$(BSP_ROOT)/STM32H7xxxx/LinkerScripts/STM32H750IB_flash.lds</DefaultLinkerScript>
 	</PropertyGroup>
+
+	<ItemDefinitionGroup>
+		<ToolchainSettingsContainer>
+			<ARMCPU  Condition="'%(ToolchainSettingsContainer.ARMCPU)' == ''">cortex-m7</ARMCPU>
+			<InstructionSet  Condition="'%(ToolchainSettingsContainer.InstructionSet)' == ''">THUMB</InstructionSet>
+			<ARMFPU  Condition="'%(ToolchainSettingsContainer.ARMFPU)' == ''">fpv4-sp-d16</ARMFPU>
+			<FloatABI  Condition="'%(ToolchainSettingsContainer.FloatABI)' == ''">hard</FloatABI>
+		</ToolchainSettingsContainer>
+	</ItemDefinitionGroup>
 </Project>

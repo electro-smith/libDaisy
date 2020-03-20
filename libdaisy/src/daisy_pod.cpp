@@ -6,13 +6,48 @@ void DaisyPod::Init()
 {
     uint8_t blocksize = 48;
 
-    // init seed
     daisy_seed_init(&seed);
     InitButtons();
     InitEncoder();
     InitLeds();
     InitKnobs();
 }
+
+void DaisyPod::StartAudio(dsy_audio_callback cb)
+{
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+    dsy_audio_start(DSY_AUDIO_INTERNAL);
+}
+
+void DaisyPod::ChangeAudioCallback(dsy_audio_callback cb)
+{
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+}
+
+void DaisyPod::StartAdc()
+{
+    dsy_adc_start();
+}
+
+void DaisyPod::SetLed(Led ld, float bright)
+{
+    dsy_gpio_write(&leds[ld], bright);
+    dsy_gpio_write(&leds[ld], bright);
+}
+
+void DaisyPod::ClearLeds()
+{
+    for(int i = 0; i < LED_LAST; i++)
+    {
+        SetLed(static_cast<Led>(i), 0);
+    }
+}
+
+void DaisyPod::UpdateLeds()
+{
+    dsy_led_driver_update();
+}
+
 void DaisyPod::InitButtons()
 {
     // button1
@@ -29,6 +64,9 @@ void DaisyPod::InitButtons()
     /* ideal code:
     button2.Init(seed.ADC1, 1000.0f);
     button2.Init(seed.pin(1), 1000.0f); */
+
+    buttons[BUTTON_1] = &button1;
+    buttons[BUTTON_2] = &button2;
 }
 
 void DaisyPod::InitEncoder()
@@ -76,4 +114,7 @@ void DaisyPod::InitKnobs()
     }
     seed.adc_handle.oversampling = DSY_ADC_OVS_32;
     dsy_adc_init(&seed.adc_handle);
+    
+    knobs[KNOB_1] = &knob1;
+    knobs[KNOB_2] = &knob2;
 }
