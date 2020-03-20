@@ -2,7 +2,7 @@
 
 using namespace daisy;
 
-void daisy_pod::Init()
+void DaisyPod::Init()
 {
     uint8_t blocksize = 48;
 
@@ -13,7 +13,7 @@ void daisy_pod::Init()
     InitLeds();
     InitKnobs();
 }
-void daisy_pod::InitButtons()
+void DaisyPod::InitButtons()
 {
     // button1
     dsy_gpio_pin button1_pin;
@@ -31,7 +31,7 @@ void daisy_pod::InitButtons()
     button2.Init(seed.pin(1), 1000.0f); */
 }
 
-void daisy_pod::InitEncoder()
+void DaisyPod::InitEncoder()
 {
     encoder.Init({ENC_A_PORT, ENC_A_PIN},
                  {ENC_B_PORT, ENC_B_PIN},
@@ -39,7 +39,7 @@ void daisy_pod::InitEncoder()
                  1000.0f);
 }
 
-void daisy_pod::InitLeds()
+void DaisyPod::InitLeds()
 {
     // LEDs are just going to be on/off for now.
     // TODO: Add PWM support
@@ -66,7 +66,7 @@ void daisy_pod::InitLeds()
         dsy_gpio_init(&leds[i]);
     }
 }
-void daisy_pod::InitKnobs()
+void DaisyPod::InitKnobs()
 {
     uint8_t channel_order[KNOB_LAST] = {DSY_ADC_PIN_CHN11, DSY_ADC_PIN_CHN10};
     seed.adc_handle.channels         = KNOB_LAST;

@@ -16,7 +16,6 @@
 
 namespace daisy {
 
-
 #ifndef SAMPLE_RATE
 #define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
 #endif
@@ -47,7 +46,7 @@ namespace daisy {
 #define LED_2_B_PORT seed_ports[24]
 #define LED_2_B_PIN seed_pins[24]
 
-class daisy_pod
+class DaisyPod
 {
   public:
     enum sw
@@ -74,8 +73,8 @@ class daisy_pod
         LED_LAST,
     };
 
-    daisy_pod() {}
-    ~daisy_pod() {}
+    DaisyPod() {}
+    ~DaisyPod() {}
 
     // init functions
     void Init();
@@ -95,7 +94,9 @@ class daisy_pod
 
     inline void SetLed(led ld, float bright)
     {
-        dsy_led_driver_set_led(ld, bright);
+        //dsy_led_driver_set_led(ld, bright);
+        // no led driver so do it like it was on musicbox
+        
     }
 
     inline void ClearLeds()
@@ -110,12 +111,10 @@ class daisy_pod
 
     daisy_handle  seed;
     Encoder       encoder;
-    AnalogControl knob1, knob2;
-    Switch        button1, button2;
+    AnalogControl knob1, knob2, knobs[KNOB_LAST];
+    Switch        button1, button2, buttons[BUTTON_LAST];
     dsy_gpio      led1_r, led1_g, led1_b;
-    dsy_gpio      led2_r, led2_g, led2_b;
-
-    dsy_gpio leds[LED_LAST];
+    dsy_gpio      led2_r, led2_g, led2_b, leds[LED_LAST];
 
   private:
     void             InitButtons();
