@@ -16,36 +16,6 @@
 
 namespace daisy {
 
-#ifndef SAMPLE_RATE
-#define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
-#endif
-
-#define SW_1_PORT seed_ports[29]
-#define SW_1_PIN seed_pins[29]
-#define SW_2_PORT seed_ports[28]
-#define SW_2_PIN seed_pins[28]
-
-#define ENC_A_PORT seed_ports[27]
-#define ENC_A_PIN seed_pins[27]
-#define ENC_B_PORT seed_ports[26]
-#define ENC_B_PIN seed_pins[26]
-#define ENC_CLICK_PORT seed_ports[1]
-#define ENC_CLICK_PIN seed_pins[1]
-
-#define LED_1_R_PORT seed_ports[21]
-#define LED_1_R_PIN seed_pins[21]
-#define LED_1_G_PORT seed_ports[20]
-#define LED_1_G_PIN seed_pins[20]
-#define LED_1_B_PORT seed_ports[19]
-#define LED_1_B_PIN seed_pins[19]
-
-#define LED_2_R_PORT seed_ports[0]
-#define LED_2_R_PIN seed_pins[0]
-#define LED_2_G_PORT seed_ports[25]
-#define LED_2_G_PIN seed_pins[25]
-#define LED_2_B_PORT seed_ports[24]
-#define LED_2_B_PIN seed_pins[24]
-
 class DaisyPod
 {
   public:
@@ -55,6 +25,7 @@ class DaisyPod
         BUTTON_2,
         BUTTON_LAST,
     };
+
     enum Knob
     {
         KNOB_1,
@@ -76,17 +47,22 @@ class DaisyPod
     DaisyPod() {}
     ~DaisyPod() {}
 
+    // Functions
     void Init();
-
     void StartAudio(dsy_audio_callback cb);
     void ChangeAudioCallback(dsy_audio_callback cb);
-
+    void SetAudioBlockSize(size_t size); 
+    float AudioSampleRate();
+    float AudioBlockSize();
+    float AudioCallbackSize();
     void StartAdc();
-
+    float UpdateKnobs();
+    float GetKnobValue(Knob k);
+    void DebounceControls();
     void SetLed(Led ld, float bright);
     void ClearLeds();
     void UpdateLeds();
-
+    // Public Members.
     daisy_handle  seed;
     Encoder       encoder;
     AnalogControl knob1, knob2, *knobs[KNOB_LAST];
@@ -103,6 +79,8 @@ class DaisyPod
     {
         return dsy_adc_get_rawptr(chn);
     }
+    float sample_rate_, callback_rate_; 
+    size_t block_size_;
 };
 
 } // namespace daisy
