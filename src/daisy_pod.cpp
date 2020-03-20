@@ -40,10 +40,16 @@ void DaisyPod::Init()
     callback_rate_ = (sample_rate_ / static_cast<float>(block_size_);
     // Initialize the hardware.
     daisy_seed_init(&seed);
+	dsy_tim_init();
     InitButtons();
     InitEncoder();
     InitLeds();
     InitKnobs();
+}
+
+void DaisyPod::DelayMs(size_t del) 
+{
+    dsy_tim_delay_ms(del);
 }
 
 void DaisyPod::StartAudio(dsy_audio_callback cb)

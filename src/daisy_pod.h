@@ -14,8 +14,8 @@
 
 #include "daisy_seed.h"
 
-namespace daisy {
-
+namespace daisy
+{
 class DaisyPod
 {
   public:
@@ -48,20 +48,25 @@ class DaisyPod
     ~DaisyPod() {}
 
     // Functions
-    void Init();
-    void StartAudio(dsy_audio_callback cb);
-    void ChangeAudioCallback(dsy_audio_callback cb);
-    void SetAudioBlockSize(size_t size); 
+	// Init related stuff.
+    void  Init();
+	void DelayMs(size_t del);
+	// Audio Block size defaults to 48.
+    // Change it using this function before StartingAudio
+    void  SetAudioBlockSize(size_t size); 
+    void  StartAudio(dsy_audio_callback cb);
+    void  ChangeAudioCallback(dsy_audio_callback cb);
+    void  StartAdc();
+	// Hardware Accessors
     float AudioSampleRate();
     float AudioBlockSize();
     float AudioCallbackSize();
-    void StartAdc();
     float UpdateKnobs();
     float GetKnobValue(Knob k);
-    void DebounceControls();
-    void SetLed(Led ld, float bright);
-    void ClearLeds();
-    void UpdateLeds();
+    void  DebounceControls();
+    void  SetLed(Led ld, float bright);
+    void  ClearLeds();
+    void  UpdateLeds();
     // Public Members.
     daisy_handle  seed;
     Encoder       encoder;
@@ -79,9 +84,9 @@ class DaisyPod
     {
         return dsy_adc_get_rawptr(chn);
     }
-    float sample_rate_, callback_rate_; 
+    float  sample_rate_, callback_rate_;
     size_t block_size_;
 };
 
 } // namespace daisy
-#endif 
+#endif
