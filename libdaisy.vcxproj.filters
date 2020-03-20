@@ -391,6 +391,7 @@
       <Filter>Middleware_USB</Filter>
     </ClCompile>
     <ClCompile Include="src\hid_wavplayer.cpp" />
+    <ClCompile Include="src\daisy_pod.cpp" />
   </ItemGroup>
   <ItemGroup>
     <LinkerScript Include="..\core\STM32H750IB_flash.lds" />

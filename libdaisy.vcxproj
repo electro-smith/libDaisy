@@ -193,6 +193,7 @@
     <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff.c" />
     <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.c" />
     <ClCompile Include="src\daisy_patch.cpp" />
+    <ClCompile Include="src\daisy_pod.cpp" />
     <ClCompile Include="src\dev_codec_pcm3060.c" />
     <ClCompile Include="src\dev_codec_wm8731.c" />
     <ClCompile Include="src\dev_leddriver.c" />
