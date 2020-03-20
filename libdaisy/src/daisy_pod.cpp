@@ -32,7 +32,6 @@ void DaisyPod::StartAdc()
 void DaisyPod::SetLed(Led ld, float bright)
 {
     dsy_gpio_write(&leds[ld], bright);
-    dsy_gpio_write(&leds[ld], bright);
 }
 
 void DaisyPod::ClearLeds()
@@ -117,4 +116,7 @@ void DaisyPod::InitKnobs()
     
     knobs[KNOB_1] = &knob1;
     knobs[KNOB_2] = &knob2;
+    for(int i = 0; i < KNOB_LAST; i++) {
+        knobs[i]->Init(dsy_adc_get_rawptr(i), 1000.0f);
+    }
 }
