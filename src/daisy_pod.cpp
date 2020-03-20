@@ -35,19 +35,19 @@ using namespace daisy;
 void DaisyPod::Init()
 {
     // Set Some numbers up for accessors.
-    sample_rate_ = SAMPLE_RATE; // TODO add configurable SR to libdaisy audio.
-    block_size_ = 48; 
-    callback_rate_ = (sample_rate_ / static_cast<float>(block_size_);
+    sample_rate_   = SAMPLE_RATE; // TODO add configurable SR to libdaisy audio.
+    block_size_    = 48;
+    callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
     // Initialize the hardware.
     daisy_seed_init(&seed);
-	dsy_tim_init();
+    dsy_tim_init();
     InitButtons();
     InitEncoder();
     InitLeds();
     InitKnobs();
 }
 
-void DaisyPod::DelayMs(size_t del) 
+void DaisyPod::DelayMs(size_t del)
 {
     dsy_tim_delay_ms(del);
 }
@@ -65,21 +65,21 @@ void DaisyPod::ChangeAudioCallback(dsy_audio_callback cb)
 
 void DaisyPod::SetAudioBlockSize(size_t size)
 {
-    block_size_ = size;
-    callback_rate_ = (sample_rate_ / static_cast<float>(block_size_);
+    block_size_    = size;
+    callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
 }
 
-float DaisyPod::AudioSampleRate() const
+float DaisyPod::AudioSampleRate()
 {
     return sample_rate_;
 }
 
-size_t DaisyPod::AudioBlockSize() const
+size_t DaisyPod::AudioBlockSize()
 {
     return block_size_;
 }
 
-float DaisyPod::AudioCallbackSize() const
+float DaisyPod::AudioCallbackRate()
 {
     return callback_rate_;
 }
@@ -98,7 +98,7 @@ float DaisyPod::UpdateKnobs()
 float DaisyPod::GetKnobValue(Knob k)
 {
     size_t idx;
-    idx = k < LED_LAST ? static_cast<size_t>(k) : 0;
+    idx = k < KNOB_LAST ? k : KNOB_1;
     return knobs[idx]->Value();
 }
 
@@ -145,7 +145,7 @@ void DaisyPod::InitButtons()
     // ideal code:
     // in place until we fix the seed so that this is possible.
     //button2.Init(seed.ADC1, callback_rate_);
-    //button2.Init(seed.pin(1), callback_rate_); 
+    //button2.Init(seed.pin(1), callback_rate_);
 
     buttons[BUTTON_1] = &button1;
     buttons[BUTTON_2] = &button2;
@@ -191,7 +191,7 @@ void DaisyPod::InitKnobs()
     // Set order of ADCs based on CHANNEL NUMBER
     uint8_t channel_order[KNOB_LAST] = {DSY_ADC_PIN_CHN11, DSY_ADC_PIN_CHN10};
     // NUMBER OF CHANNELS
-    seed.adc_handle.channels         = KNOB_LAST;
+    seed.adc_handle.channels = KNOB_LAST;
     // Fill the ADCs active channel array.
     for(uint8_t i = 0; i < KNOB_LAST; i++)
     {
@@ -204,7 +204,8 @@ void DaisyPod::InitKnobs()
     // Make an array of pointers to the knobs.
     knobs[KNOB_1] = &knob1;
     knobs[KNOB_2] = &knob2;
-    for(int i = 0; i < KNOB_LAST; i++) {
+    for(int i = 0; i < KNOB_LAST; i++)
+    {
         knobs[i]->Init(dsy_adc_get_rawptr(i), callback_rate_);
     }
 }

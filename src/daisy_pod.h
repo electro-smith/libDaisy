@@ -42,31 +42,32 @@ class DaisyPod
         LED_2_G,
         LED_2_B,
         LED_LAST,
+        t
     };
 
     DaisyPod() {}
     ~DaisyPod() {}
 
     // Functions
-	// Init related stuff.
-    void  Init();
-	void DelayMs(size_t del);
-	// Audio Block size defaults to 48.
+    // Init related stuff.
+    void Init();
+    void DelayMs(size_t del);
+    // Audio Block size defaults to 48.
     // Change it using this function before StartingAudio
-    void  SetAudioBlockSize(size_t size); 
-    void  StartAudio(dsy_audio_callback cb);
-    void  ChangeAudioCallback(dsy_audio_callback cb);
-    void  StartAdc();
-	// Hardware Accessors
-    float AudioSampleRate();
-    float AudioBlockSize();
-    float AudioCallbackSize();
-    float UpdateKnobs();
-    float GetKnobValue(Knob k);
-    void  DebounceControls();
-    void  SetLed(Led ld, float bright);
-    void  ClearLeds();
-    void  UpdateLeds();
+    void SetAudioBlockSize(size_t size);
+    void StartAudio(dsy_audio_callback cb);
+    void ChangeAudioCallback(dsy_audio_callback cb);
+    void StartAdc();
+    // Hardware Accessors
+    float  AudioSampleRate();
+    size_t AudioBlockSize();
+    float  AudioCallbackRate();
+    float  UpdateKnobs();
+    float  GetKnobValue(Knob k);
+    void   DebounceControls();
+    void   SetLed(Led ld, float bright);
+    void   ClearLeds();
+    void   UpdateLeds();
     // Public Members.
     daisy_handle  seed;
     Encoder       encoder;
