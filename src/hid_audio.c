@@ -112,6 +112,7 @@ void dsy_audio_init(dsy_audio_handle* handle)
     audio_handle_ext.block_size = handle->block_size <= DSY_AUDIO_BLOCK_SIZE_MAX
                                       ? handle->block_size
                                       : DSY_AUDIO_BLOCK_SIZE_MAX;
+    audio_handle.bitdepth     = DSY_AUDIO_BITDEPTH_24;
     audio_handle.callback     = dsy_audio_passthru;
     audio_handle_ext.callback = dsy_audio_passthru;
     dsy_sai_init_from_handle(handle->sai);
@@ -224,10 +225,10 @@ void dsy_audio_start(uint8_t intext)
 {
     if(intext == DSY_AUDIO_INTERNAL)
     {
-        HAL_SAI_Receive_DMA(&hsai_BlockA1,
+        HAL_SAI_Receive_DMA(&hsai_BlockB1,
                             (uint8_t*)audio_handle.dma_buffer_rx,
                             audio_handle.dma_size);
-        HAL_SAI_Transmit_DMA(&hsai_BlockB1,
+        HAL_SAI_Transmit_DMA(&hsai_BlockA1,
                              (uint8_t*)audio_handle.dma_buffer_tx,
                              audio_handle.dma_size);
     }
@@ -344,6 +345,15 @@ void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef* hsai)
 }
 
 void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai)
+{
+    internal_callback(hsai, audio_handle.dma_size / 2);
+}
+void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef* hsai)
+{
+    internal_callback(hsai, 0);
+}
+
+void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef* hsai)
 {
     internal_callback(hsai, audio_handle.dma_size / 2);
 }

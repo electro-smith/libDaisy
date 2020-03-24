@@ -203,8 +203,10 @@
     <ClCompile Include="src\hid_audio.c" />
     <ClCompile Include="src\hid_ctrl.cpp" />
     <ClCompile Include="src\hid_encoder.cpp" />
+    <ClCompile Include="src\hid_led.cpp" />
     <ClCompile Include="src\hid_midi.cpp" />
     <ClCompile Include="src\hid_oled_display.cpp" />
+    <ClCompile Include="src\hid_rgb_led.cpp" />
     <ClCompile Include="src\hid_switch.cpp" />
     <ClCompile Include="src\hid_usb.cpp" />
     <ClCompile Include="src\hid_wavplayer.cpp" />
@@ -225,6 +227,7 @@
     <ClCompile Include="src\usbd_conf.c" />
     <ClCompile Include="src\usbd_desc.c" />
     <ClCompile Include="src\util_bsp_sd_diskio.c" />
+    <ClCompile Include="src\util_color.cpp" />
     <ClCompile Include="src\util_hal_map.c" />
     <ClCompile Include="src\util_sd_diskio.c" />
     <ClCompile Include="src\util_oled_fonts.c" />
@@ -395,8 +398,10 @@
     <ClInclude Include="src\hid_audio.h" />
     <ClInclude Include="src\hid_ctrl.h" />
     <ClInclude Include="src\hid_encoder.h" />
+    <ClInclude Include="src\hid_led.h" />
     <ClInclude Include="src\hid_midi.h" />
     <ClInclude Include="src\hid_oled_display.h" />
+    <ClInclude Include="src\hid_rgb_led.h" />
     <ClInclude Include="src\hid_switch.h" />
     <ClInclude Include="src\hid_usb.h" />
     <ClInclude Include="src\hid_wavplayer.h" />
@@ -418,6 +423,7 @@
     <ClInclude Include="src\usbd_conf.h" />
     <ClInclude Include="src\usbd_desc.h" />
     <ClInclude Include="src\util_bsp_sd_diskio.h" />
+    <ClInclude Include="src\util_color.h" />
     <ClInclude Include="src\util_hal_map.h" />
     <ClInclude Include="src\util_oled_fonts.h" />
     <ClInclude Include="src\util_ringbuffer.h" />

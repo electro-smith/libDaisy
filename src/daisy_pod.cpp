@@ -36,15 +36,16 @@ void DaisyPod::Init()
 {
     // Set Some numbers up for accessors.
     sample_rate_   = SAMPLE_RATE; // TODO add configurable SR to libdaisy audio.
-    block_size_    = 48;
+    block_size_    = 12;
     callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
     // Initialize the hardware.
     daisy_seed_init(&seed);
-    dsy_tim_init();
+    dsy_tim_start();
     InitButtons();
     InitEncoder();
     InitLeds();
     InitKnobs();
+    SetAudioBlockSize(block_size_);
 }
 
 void DaisyPod::DelayMs(size_t del)
@@ -109,24 +110,23 @@ void DaisyPod::DebounceControls()
     button2.Debounce();
 }
 
-void DaisyPod::SetLed(Led ld, float bright)
-{
-    // LEDs are inverted due to hardware.
-    dsy_gpio_write(&leds[ld], bright > 0.0f ? 0 : 1);
-}
-
 void DaisyPod::ClearLeds()
 {
-    for(int i = 0; i < LED_LAST; i++)
-    {
-        // LEDs are inverted due to hardware.
-        SetLed(static_cast<Led>(i), 1);
-    }
+    // Using Color
+    Color c;
+    c.Init(Color::PresetColor::OFF);
+    led1.SetColor(c);
+    led2.SetColor(c);
+    // Without
+    // led1.Set(0.0f, 0.0f, 0.0f);
+    // led2.Set(0.0f, 0.0f, 0.0f);
 }
 
 void DaisyPod::UpdateLeds()
 {
     // Does nothing on this platform at this time.
+    led1.Update();
+    led2.Update();
 }
 
 void DaisyPod::InitButtons()
@@ -163,28 +163,19 @@ void DaisyPod::InitLeds()
 {
     // LEDs are just going to be on/off for now.
     // TODO: Add PWM support
+    led1.Init({LED_1_R_PORT, LED_1_R_PIN},
+              {LED_1_G_PORT, LED_1_G_PIN},
+              {LED_1_B_PORT, LED_1_B_PIN},
+              true);
+    led2.Init({LED_2_R_PORT, LED_2_R_PIN},
+              {LED_2_G_PORT, LED_2_G_PIN},
+              {LED_2_B_PORT, LED_2_B_PIN},
+              true);
 
-    dsy_gpio_port led_ports[LED_LAST] = {LED_1_R_PORT,
-                                         LED_1_G_PORT,
-                                         LED_1_B_PORT,
-                                         LED_2_R_PORT,
-                                         LED_2_G_PORT,
-                                         LED_2_B_PORT};
-    uint8_t       led_pins[LED_LAST]  = {LED_1_R_PIN,
-                                  LED_1_G_PIN,
-                                  LED_1_B_PIN,
-                                  LED_2_R_PIN,
-                                  LED_2_G_PIN,
-                                  LED_2_B_PIN};
-
-    for(uint8_t i = 0; i < LED_LAST; i++)
-    {
-        leds[i].pin.port = led_ports[i];
-        leds[i].pin.pin  = led_pins[i];
-        leds[i].mode     = DSY_GPIO_MODE_OUTPUT_PP;
-        leds[i].pull     = DSY_GPIO_NOPULL;
-        dsy_gpio_init(&leds[i]);
-    }
+    Color c;
+    c.Init(Color::PresetColor::OFF);
+    led1.SetColor(c);
+    led2.SetColor(c);
 }
 void DaisyPod::InitKnobs()
 {

@@ -199,12 +199,12 @@ inline void daisy_seed_init(daisy_handle *daisy_seed)
     // System Initialization (optional)
 #ifndef DSY_SEED_NO_INIT
 	dsy_system_init();
-//	dsy_sdram_init(&daisy_seed->sdram_handle);
-//	dsy_qspi_init(&daisy_seed->qspi_handle);
+	dsy_sdram_init(&daisy_seed->sdram_handle);
+	dsy_qspi_init(&daisy_seed->qspi_handle);
 	dsy_gpio_init(&daisy_seed->led);
 	dsy_gpio_init(&daisy_seed->testpoint);
-	dsy_audio_init(&daisy_seed->audio_handle);
-    daisy_seed->usb_handle.Init(daisy::UsbHandle::FS_BOTH);
+//	dsy_audio_init(&daisy_seed->audio_handle);
+//    daisy_seed->usb_handle.Init(daisy::UsbHandle::FS_BOTH);
 	dsy_tim_init();
 #endif // DSY_SEED_NO_INIT
 }

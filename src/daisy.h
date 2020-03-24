@@ -2,17 +2,8 @@
 #define DSY_LIBDAISY_H
 
 #include<stdint.h>
+#include "daisy_core.h"
 
-#if defined(_MSC_VER)
-#define FORCE_INLINE __forceinline
-#elif defined(__clang__)
-#define FORCE_INLINE inline __attribute__((always_inline))
-#pragma clang diagnostic ignored "-Wduplicate-decl-specifier"
-#elif defined(__GNUC__)
-#define FORCE_INLINE inline __attribute__((always_inline))
-#else
-#error unknown compiler
-#endif
 
 #define FBIPMAX 0.999985f	//close to 1.0f-LSB at 16 bit
 #define FBIPMIN (-FBIPMAX)
@@ -46,12 +37,7 @@ FORCE_INLINE int32_t f2s24(float x)
 	return (int32_t)(x * F2S24_SCALE);
 }
 
-FORCE_INLINE float cube(float x) 
-{
-	return (x * x) * x;
-}
 
-#include "daisy_core.h"
 #include "sys_system.h" 
 #include "per_qspi.h"
 #include "per_adc.h"
@@ -76,5 +62,7 @@ FORCE_INLINE float cube(float x)
 #include "per_spi.h"
 #include "hid_oled_display.h"
 #include "hid_wavplayer.h"
+#include "hid_led.h"
+#include "hid_rgb_led.h"
 #endif
 #endif

@@ -33,18 +33,6 @@ class DaisyPod
         KNOB_LAST,
     };
 
-    enum Led
-    {
-        LED_1_R,
-        LED_1_G,
-        LED_1_B,
-        LED_2_R,
-        LED_2_G,
-        LED_2_B,
-        LED_LAST,
-        t
-    };
-
     DaisyPod() {}
     ~DaisyPod() {}
 
@@ -65,7 +53,6 @@ class DaisyPod
     void UpdateKnobs();
     float  GetKnobValue(Knob k);
     void   DebounceControls();
-    void   SetLed(Led ld, float bright);
     void   ClearLeds();
     void   UpdateLeds();
     // Public Members.
@@ -73,8 +60,7 @@ class DaisyPod
     Encoder       encoder;
     AnalogControl knob1, knob2, *knobs[KNOB_LAST];
     Switch        button1, button2, *buttons[BUTTON_LAST];
-    dsy_gpio      led1_r, led1_g, led1_b;
-    dsy_gpio      led2_r, led2_g, led2_b, leds[LED_LAST];
+    RgbLed        led1, led2;
 
   private:
     void             InitButtons();
