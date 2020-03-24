@@ -395,6 +395,7 @@
     <ClCompile Include="src\hid_led.cpp" />
     <ClCompile Include="src\hid_rgb_led.cpp" />
     <ClCompile Include="src\util_color.cpp" />
+    <ClCompile Include="daisy_seed.cpp" />
   </ItemGroup>
   <ItemGroup>
     <LinkerScript Include="..\core\STM32H750IB_flash.lds" />

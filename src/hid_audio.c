@@ -116,8 +116,10 @@ void dsy_audio_init(dsy_audio_handle* handle)
     audio_handle.callback     = dsy_audio_passthru;
     audio_handle_ext.callback = dsy_audio_passthru;
     dsy_sai_init_from_handle(handle->sai);
-    dsy_i2c_init(handle->dev0_i2c);
-    dsy_i2c_init(handle->dev1_i2c);
+	if (handle->dev0_i2c != NULL)
+		dsy_i2c_init(handle->dev0_i2c);
+	if (handle->dev1_i2c != NULL)
+		dsy_i2c_init(handle->dev1_i2c);
     audio_handle.dma_buffer_rx     = sai1_dma_buffer_rx;
     audio_handle.dma_buffer_tx     = sai1_dma_buffer_tx;
     audio_handle_ext.dma_buffer_rx = sai2_dma_buffer_rx;

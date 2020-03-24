@@ -4,31 +4,46 @@
 #define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
 #endif
 
-#define SW_1_PORT seed_ports[29]
-#define SW_1_PIN seed_pins[29]
-#define SW_2_PORT seed_ports[28]
-#define SW_2_PIN seed_pins[28]
+#define SW_1_PIN 29
+#define SW_2_PIN 28
 
-#define ENC_A_PORT seed_ports[27]
-#define ENC_A_PIN seed_pins[27]
-#define ENC_B_PORT seed_ports[26]
-#define ENC_B_PIN seed_pins[26]
-#define ENC_CLICK_PORT seed_ports[1]
-#define ENC_CLICK_PIN seed_pins[1]
+#define ENC_A_PIN 27
+#define ENC_B_PIN 26
+#define ENC_CLICK_PIN 1
 
-#define LED_1_R_PORT seed_ports[21]
-#define LED_1_R_PIN seed_pins[21]
-#define LED_1_G_PORT seed_ports[20]
-#define LED_1_G_PIN seed_pins[20]
-#define LED_1_B_PORT seed_ports[19]
-#define LED_1_B_PIN seed_pins[19]
+#define LED_1_R_PIN 21
+#define LED_1_G_PIN 20
+#define LED_1_B_PIN 19
+#define LED_2_R_PIN 0
+#define LED_2_G_PIN 25
+#define LED_2_B_PIN 24
 
-#define LED_2_R_PORT seed_ports[0]
-#define LED_2_R_PIN seed_pins[0]
-#define LED_2_G_PORT seed_ports[25]
-#define LED_2_G_PIN seed_pins[25]
-#define LED_2_B_PORT seed_ports[24]
-#define LED_2_B_PIN seed_pins[24]
+//
+//#define SW_1_PORT seed_ports[29]
+//#define SW_1_PIN seed_pins[29]
+//#define SW_2_PORT seed_ports[28]
+//#define SW_2_PIN seed_pins[28]
+//
+//#define ENC_A_PORT seed_ports[27]
+//#define ENC_A_PIN seed_pins[27]
+//#define ENC_B_PORT seed_ports[26]
+//#define ENC_B_PIN seed_pins[26]
+//#define ENC_CLICK_PORT seed_ports[1]
+//#define ENC_CLICK_PIN seed_pins[1]
+
+//#define LED_1_R_PORT seed_ports[21]
+//#define LED_1_R_PIN seed_pins[21]
+//#define LED_1_G_PORT seed_ports[20]
+//#define LED_1_G_PIN seed_pins[20]
+//#define LED_1_B_PORT seed_ports[19]
+//#define LED_1_B_PIN seed_pins[19]
+//
+//#define LED_2_R_PORT seed_ports[0]
+//#define LED_2_R_PIN seed_pins[0]
+//#define LED_2_G_PORT seed_ports[25]
+//#define LED_2_G_PIN seed_pins[25]
+//#define LED_2_B_PORT seed_ports[24]
+//#define LED_2_B_PIN seed_pins[24]
 
 using namespace daisy;
 
@@ -39,7 +54,8 @@ void DaisyPod::Init()
     block_size_    = 12;
     callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
     // Initialize the hardware.
-    daisy_seed_init(&seed);
+    seed.Configure();
+    seed.Init();
     dsy_tim_start();
     InitButtons();
     InitEncoder();
@@ -132,20 +148,9 @@ void DaisyPod::UpdateLeds()
 void DaisyPod::InitButtons()
 {
     // button1
-    dsy_gpio_pin button1_pin;
-    button1_pin.pin  = SW_1_PIN;
-    button1_pin.port = SW_1_PORT;
-    button1.Init(button1_pin, callback_rate_);
-
+    button1.Init(seed.GetPin(SW_1_PIN), callback_rate_);
     // button2
-    dsy_gpio_pin button2_pin;
-    button2_pin.pin  = SW_2_PIN;
-    button2_pin.port = SW_2_PORT;
-    button2.Init(button2_pin, callback_rate_);
-    // ideal code:
-    // in place until we fix the seed so that this is possible.
-    //button2.Init(seed.ADC1, callback_rate_);
-    //button2.Init(seed.pin(1), callback_rate_);
+    button2.Init(seed.GetPin(SW_2_PIN), callback_rate_);
 
     buttons[BUTTON_1] = &button1;
     buttons[BUTTON_2] = &button2;
@@ -153,24 +158,25 @@ void DaisyPod::InitButtons()
 
 void DaisyPod::InitEncoder()
 {
-    encoder.Init({ENC_A_PORT, ENC_A_PIN},
-                 {ENC_B_PORT, ENC_B_PIN},
-                 {ENC_CLICK_PORT, ENC_CLICK_PIN},
-                 callback_rate_);
+    dsy_gpio_pin a, b, click;
+    encoder.Init(a, b, click, callback_rate_);
 }
 
 void DaisyPod::InitLeds()
 {
     // LEDs are just going to be on/off for now.
     // TODO: Add PWM support
-    led1.Init({LED_1_R_PORT, LED_1_R_PIN},
-              {LED_1_G_PORT, LED_1_G_PIN},
-              {LED_1_B_PORT, LED_1_B_PIN},
-              true);
-    led2.Init({LED_2_R_PORT, LED_2_R_PIN},
-              {LED_2_G_PORT, LED_2_G_PIN},
-              {LED_2_B_PORT, LED_2_B_PIN},
-              true);
+    dsy_gpio_pin rpin, gpin, bpin;
+
+    rpin = seed.GetPin(LED_1_R_PIN);
+    gpin = seed.GetPin(LED_1_G_PIN);
+    bpin = seed.GetPin(LED_1_B_PIN);
+    led1.Init(rpin, gpin, bpin, true);
+
+    rpin = seed.GetPin(LED_2_R_PIN);
+    gpin = seed.GetPin(LED_2_G_PIN);
+    bpin = seed.GetPin(LED_2_B_PIN);
+    led2.Init(rpin, gpin, bpin, true);
 
     Color c;
     c.Init(Color::PresetColor::OFF);

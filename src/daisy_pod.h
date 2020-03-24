@@ -56,7 +56,7 @@ class DaisyPod
     void   ClearLeds();
     void   UpdateLeds();
     // Public Members.
-    daisy_handle  seed;
+    DaisySeed seed;
     Encoder       encoder;
     AnalogControl knob1, knob2, *knobs[KNOB_LAST];
     Switch        button1, button2, *buttons[BUTTON_LAST];
