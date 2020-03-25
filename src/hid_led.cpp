@@ -1,4 +1,5 @@
 #include "hid_led.h"
+#include "per_tim.h"
 using namespace daisy;
 void Led::Init(dsy_gpio_pin pin, bool invert)
 {
@@ -31,6 +32,7 @@ void Led::Set(float val)
 
 void Led::Update()
 {
-    pwm_cnt_ = (pwm_cnt_ + 1) % 256;
-    dsy_gpio_write(&hw_pin_, pwm_cnt_ < pwm_thresh_ ? on_ : off_);
+//    pwm_cnt_ = (pwm_cnt_ + 1) % 256;
+//    dsy_gpio_write(&hw_pin_, pwm_cnt_ < pwm_thresh_ ? on_ : off_);
+	dsy_gpio_write(&hw_pin_, (dsy_tim_get_tick() & 255) < pwm_thresh_ ? on_ : off_);
 }

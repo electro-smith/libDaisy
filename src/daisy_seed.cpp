@@ -162,9 +162,15 @@ void DaisySeed::ConfigureAudio()
     dsy_gpio_pin *pin_group;
     sai_handle.init = DSY_AUDIO_INIT_SAI1;
     // SAI1 - config
+#ifdef SEED_REV3
     sai_handle.device[DSY_SAI_1]      = DSY_AUDIO_DEVICE_AK4556;
     sai_handle.samplerate[DSY_SAI_1]  = DSY_AUDIO_SAMPLERATE_48K;
     sai_handle.bitdepth[DSY_SAI_1]    = DSY_AUDIO_BITDEPTH_24;
+#else
+    sai_handle.device[DSY_SAI_1]      = DSY_AUDIO_DEVICE_WM8731;
+    sai_handle.samplerate[DSY_SAI_1]  = DSY_AUDIO_SAMPLERATE_48K;
+    sai_handle.bitdepth[DSY_SAI_1]    = DSY_AUDIO_BITDEPTH_16;
+#endif
     sai_handle.sync_config[DSY_SAI_1] = DSY_AUDIO_SYNC_MASTER;
     pin_group                         = sai_handle.sai1_pin_config;
 
@@ -212,7 +218,7 @@ void DaisySeed::ConfigureAdc()
     pin_group = adc_handle.pin_config;
 
     pin_group[DSY_ADC_PIN_CHN3]  = dsy_pin(DSY_GPIOA, 6);
-    pin_group[DSY_ADC_PIN_CHN4]  = dsy_pin(DSY_GPIOC, 5);
+    pin_group[DSY_ADC_PIN_CHN4]  = dsy_pin(DSY_GPIOC, 4);
     pin_group[DSY_ADC_PIN_CHN5]  = dsy_pin(DSY_GPIOB, 1);
     pin_group[DSY_ADC_PIN_CHN7]  = dsy_pin(DSY_GPIOA, 7);
     pin_group[DSY_ADC_PIN_CHN10] = dsy_pin(DSY_GPIOC, 0);
@@ -226,7 +232,7 @@ void DaisySeed::ConfigureAdc()
     //    pin_group[DSY_ADC_PIN_CHN3].port  = DSY_GPIOA;
     //    pin_group[DSY_ADC_PIN_CHN3].pin   = 6;
     //    pin_group[DSY_ADC_PIN_CHN4].port  = DSY_GPIOC;
-    //    pin_group[DSY_ADC_PIN_CHN4].pin   = 5;
+    //    pin_group[DSY_ADC_PIN_CHN4].pin   = 5; // ADC is actually PC4, OPAMP in was PC5
     //    pin_group[DSY_ADC_PIN_CHN5].port  = DSY_GPIOB;
     //    pin_group[DSY_ADC_PIN_CHN5].pin   = 1;
     //    pin_group[DSY_ADC_PIN_CHN7].port  = DSY_GPIOA;

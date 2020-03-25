@@ -6,8 +6,8 @@ void RgbLed::Init(dsy_gpio_pin red,
                   bool         invert)
 {
     r_.Init(red, invert);
-    g_.Init(blue, invert);
-    b_.Init(green, invert);
+    g_.Init(green, invert);
+    b_.Init(blue, invert);
 }
 
 void RgbLed::Set(float r, float g, float b) 

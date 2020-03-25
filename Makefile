@@ -2,10 +2,12 @@ TARGET = libdaisy
 
 MODULE_DIR=src
 MODULES = \
+daisy_seed \
 daisy_patch \
 daisy_pod \
 dev_codec_pcm3060 \
 dev_codec_wm8731 \
+dev_codec_ak4556 \
 sys_dma \
 per_adc \
 hid_audio \
