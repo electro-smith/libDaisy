@@ -62,5 +62,14 @@ typedef struct
 	uint8_t pin; // number 0-15
 } dsy_gpio_pin;
 
+// ### dsy_pin
+// Helper for creating pins from port/pin combos easily
+inline dsy_gpio_pin dsy_pin(dsy_gpio_port port, uint8_t pin)
+{
+    dsy_gpio_pin p;
+    p.port = port;
+    p.pin  = pin;
+    return p;
+}
 
 #endif

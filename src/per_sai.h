@@ -53,6 +53,7 @@ typedef enum
 	DSY_AUDIO_NONE, // For unsupported, or custom devices.
 	DSY_AUDIO_DEVICE_PCM3060,
 	DSY_AUDIO_DEVICE_WM8731,
+	DSY_AUDIO_DEVICE_AK4556,
 	DSY_AUDIO_DEVICE_LAST,
 } dsy_audio_device;
 

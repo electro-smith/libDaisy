@@ -74,7 +74,6 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="daisy_seed.cpp" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal.c" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_adc.c" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_adc_ex.c" />
@@ -195,6 +194,8 @@
     <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.c" />
     <ClCompile Include="src\daisy_patch.cpp" />
     <ClCompile Include="src\daisy_pod.cpp" />
+    <ClCompile Include="src\daisy_seed.cpp" />
+    <ClCompile Include="src\dev_codec_ak4556.c" />
     <ClCompile Include="src\dev_codec_pcm3060.c" />
     <ClCompile Include="src\dev_codec_wm8731.c" />
     <ClCompile Include="src\dev_leddriver.c" />
@@ -386,6 +387,7 @@
     <ClInclude Include="src\daisy_petal.h" />
     <ClInclude Include="src\daisy_pod.h" />
     <ClInclude Include="src\daisy_seed.h" />
+    <ClInclude Include="src\dev_codec_ak4556.h" />
     <ClInclude Include="src\dev_codec_pcm3060.h" />
     <ClInclude Include="src\dev_codec_wm8731.h" />
     <ClInclude Include="src\dev_codec_wm8731_frame.h" />

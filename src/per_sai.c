@@ -111,6 +111,7 @@ static void dsy_sai1_init()
 	hsai_BlockB1.Init.MonoStereoMode = SAI_STEREOMODE;
 	hsai_BlockB1.Init.CompandingMode = SAI_NOCOMPANDING;
 	hsai_BlockB1.Init.TriState		 = SAI_OUTPUT_NOTRELEASED;
+
 	if(HAL_SAI_InitProtocol(&hsai_BlockB1, SAI_I2S_MSBJUSTIFIED, bd, 2) != HAL_OK)
 	{
 		//Error_Handler();

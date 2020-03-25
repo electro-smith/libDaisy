@@ -395,7 +395,8 @@
     <ClCompile Include="src\hid_led.cpp" />
     <ClCompile Include="src\hid_rgb_led.cpp" />
     <ClCompile Include="src\util_color.cpp" />
-    <ClCompile Include="daisy_seed.cpp" />
+    <ClCompile Include="src\dev_codec_ak4556.c" />
+    <ClCompile Include="src\daisy_seed.cpp" />
   </ItemGroup>
   <ItemGroup>
     <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
@@ -891,6 +892,7 @@
     <ClInclude Include="src\hid_led.h" />
     <ClInclude Include="src\hid_rgb_led.h" />
     <ClInclude Include="src\util_color.h" />
+    <ClInclude Include="src\dev_codec_ak4556.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="stm32.props" />

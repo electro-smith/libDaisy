@@ -1,8 +1,10 @@
 #include <string.h>
 #include "daisy.h" // todo figure out what to do about this.
+#include "daisy_core.h"
 #include "hid_audio.h"
 #include "dev_codec_pcm3060.h"
 #include "dev_codec_wm8731.h"
+#include "dev_codec_ak4556.h"
 #include "stm32h7xx_hal.h"
 #include "sys_dma.h"
 #include "util_hal_map.h"
@@ -61,7 +63,7 @@ static dsy_audio audio_handle_ext;
 
 static dsy_audio* get_audio_from_sai(SAI_HandleTypeDef* hsai)
 {
-    return (hsai->Instance == SAI1_Block_A) ? &audio_handle : &audio_handle_ext;
+    return (hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B) ? &audio_handle : &audio_handle_ext;
 }
 
 extern DMA_HandleTypeDef hdma_sai1_a;
@@ -135,13 +137,25 @@ void dsy_audio_init(dsy_audio_handle* handle)
         uint8_t mcu_is_master
             = handle->sai->sync_config[DSY_SAI_1] == DSY_AUDIO_SYNC_MASTER ? 1
                                                                            : 0;
-        if(dev0 == DSY_AUDIO_DEVICE_WM8731)
+        switch(dev0)
         {
-            codec_wm8731_init(handle->dev0_i2c, mcu_is_master, 48000.0f, 16);
-        }
-        else if(dev0 == DSY_AUDIO_DEVICE_PCM3060)
-        {
-            codec_pcm3060_init(handle->dev0_i2c);
+            case DSY_AUDIO_DEVICE_WM8731:
+                codec_wm8731_init(
+                    handle->dev0_i2c, mcu_is_master, 48000.0f, 16);
+                break;
+            case DSY_AUDIO_DEVICE_PCM3060:
+                codec_pcm3060_init(handle->dev0_i2c);
+                break;
+            case DSY_AUDIO_DEVICE_AK4556:
+                // Reset pin on board is PB11
+                {
+					dsy_gpio_pin rpin;
+                    rpin.port = DSY_GPIOB;
+                    rpin.pin  = 11;
+                    codec_ak4556_init(rpin);
+                }
+                break;
+            default: break;
         }
         for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE_MAX; i++)
         {
@@ -161,12 +175,25 @@ void dsy_audio_init(dsy_audio_handle* handle)
         uint8_t mcu_is_master
             = handle->sai->sync_config[DSY_SAI_2] == DSY_AUDIO_SYNC_MASTER ? 1
                                                                            : 0;
-        if(dev1 == DSY_AUDIO_DEVICE_WM8731)
+        switch(dev1)
         {
-            codec_wm8731_init(handle->dev1_i2c, mcu_is_master, 48000.0f, 16);
-        }
-        else if(dev1 == DSY_AUDIO_DEVICE_PCM3060)
-        {
+            case DSY_AUDIO_DEVICE_WM8731:
+                codec_wm8731_init(
+                    handle->dev1_i2c, mcu_is_master, 48000.0f, 16);
+                break;
+            case DSY_AUDIO_DEVICE_PCM3060:
+                codec_pcm3060_init(handle->dev1_i2c);
+                break;
+            case DSY_AUDIO_DEVICE_AK4556:
+                // Reset pin on board is PB11
+                {
+//					// Figure out how we want to support passing in the pin for this.
+//					dsy_gpio_pin rpin;
+//					rpin = {DSY_GPIOB, 11};
+//					codec_ak4556_init(rpin);
+                }
+                break;
+            default: break;
         }
         for(size_t i = 0; i < DSY_AUDIO_DMA_BUFFER_SIZE_MAX; i++)
         {
@@ -306,6 +333,7 @@ static void internal_callback(SAI_HandleTypeDef* hsai, size_t offset)
     {
         while(inf != endi)
         {
+//            *inf++ = s242f((*ini++) << 2);
             *inf++ = s242f(*ini++);
         }
     }
@@ -350,12 +378,12 @@ void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai)
 {
     internal_callback(hsai, audio_handle.dma_size / 2);
 }
-void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef* hsai)
-{
-    internal_callback(hsai, 0);
-}
-
-void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef* hsai)
-{
-    internal_callback(hsai, audio_handle.dma_size / 2);
-}
+//void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef* hsai)
+//{
+//    internal_callback(hsai, 0);
+//}
+//
+//void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef* hsai)
+//{
+//    internal_callback(hsai, audio_handle.dma_size / 2);
+//}
