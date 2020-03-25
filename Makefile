@@ -4,6 +4,7 @@ MODULE_DIR=src
 MODULES = \
 daisy_seed \
 daisy_patch \
+daisy_petal \
 daisy_pod \
 dev_codec_pcm3060 \
 dev_codec_wm8731 \
