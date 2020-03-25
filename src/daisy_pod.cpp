@@ -132,7 +132,6 @@ void DaisyPod::ClearLeds()
 
 void DaisyPod::UpdateLeds()
 {
-    // Does nothing on this platform at this time.
     led1.Update();
     led2.Update();
 }

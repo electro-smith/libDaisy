@@ -90,8 +90,12 @@ void DaisySeed::Init()
     dsy_gpio_init(&led_);
     dsy_gpio_init(&testpoint_);
     dsy_audio_init(&audio_handle);
-    usb_handle.Init(UsbHandle::FS_INTERNAL);
     dsy_tim_init();
+	// Due to the added 16kB+ of flash usage,
+    // and the fact that certain breakouts use
+    // both; USB won't be initialized by the 
+    // SEED file.
+    //usb_handle.Init(UsbHandle::FS_INTERNAL);
 }
 dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
 {

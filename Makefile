@@ -29,6 +29,8 @@ hid_encoder \
 hid_gatein \
 hid_midi \
 hid_oled_display \
+hid_led \
+hid_rgb_led \
 hid_switch \
 hid_usb \
 hid_wavplayer \
@@ -36,6 +38,7 @@ dev_sr_4021 \
 util_bsp_sd_diskio \
 util_hal_map \
 util_oled_fonts \
+util_color \
 util_sd_diskio \
 system_stm32h7xx \
 
