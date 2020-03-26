@@ -85,6 +85,8 @@ class DaisyPetal
     void   DebounceControls();
     void   ClearLeds();
     void   UpdateLeds();
+    void   SetRingLed(RingLed idx, float r, float g, float b);
+    void   SetFootswitchLed(FootswitchLed idx, float bright);
 
     DaisySeed seed;
     Encoder   encoder;

@@ -76,6 +76,7 @@ void DaisyPod::SetAudioBlockSize(size_t size)
 {
     block_size_    = size;
     callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
+    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
 }
 
 float DaisyPod::AudioSampleRate()
@@ -98,7 +99,7 @@ void DaisyPod::StartAdc()
     dsy_adc_start();
 }
 
-void DaisyPod::UpdateKnobs()
+void DaisyPod::UpdateAnalogControls()
 {
     knob1.Process();
     knob2.Process();

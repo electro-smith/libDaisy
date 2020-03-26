@@ -50,7 +50,7 @@ class DaisyPod
     float  AudioSampleRate();
     size_t AudioBlockSize();
     float  AudioCallbackRate();
-    void UpdateKnobs();
+    void UpdateAnalogControls();
     float  GetKnobValue(Knob k);
     void   DebounceControls();
     void   ClearLeds();

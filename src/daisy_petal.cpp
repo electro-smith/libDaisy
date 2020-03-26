@@ -100,6 +100,7 @@ void DaisyPetal::SetAudioBlockSize(size_t size)
 {
     block_size_    = size;
     callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
+    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
 }
 
 float DaisyPetal::AudioSampleRate()
@@ -163,6 +164,46 @@ void DaisyPetal::UpdateLeds()
 {
     // TODO:
     // Get the LED values into the LED Driver...
+    // Still have to call this once per driver -- need to update.
+    dsy_led_driver_update();
+    dsy_led_driver_update();
+}
+
+void DaisyPetal::SetRingLed(RingLed idx, float r, float g, float b)
+{
+    uint8_t r_addr[RING_LED_LAST] = {LED_RING_1_R,
+                                     LED_RING_2_R,
+                                     LED_RING_3_R,
+                                     LED_RING_4_R,
+                                     LED_RING_5_R,
+                                     LED_RING_6_R,
+                                     LED_RING_7_R,
+                                     LED_RING_8_R};
+    uint8_t g_addr[RING_LED_LAST] = {LED_RING_1_G,
+                                     LED_RING_2_G,
+                                     LED_RING_3_G,
+                                     LED_RING_4_G,
+                                     LED_RING_5_G,
+                                     LED_RING_6_G,
+                                     LED_RING_7_G,
+                                     LED_RING_8_G};
+    uint8_t b_addr[RING_LED_LAST] = {LED_RING_1_B,
+                                     LED_RING_2_B,
+                                     LED_RING_3_B,
+                                     LED_RING_4_B,
+                                     LED_RING_5_B,
+                                     LED_RING_6_B,
+                                     LED_RING_7_B,
+                                     LED_RING_8_B};
+
+    dsy_led_driver_set_led(r_addr[idx], cube(r));
+    dsy_led_driver_set_led(g_addr[idx], cube(g));
+    dsy_led_driver_set_led(b_addr[idx], cube(b));
+}
+void DaisyPetal::SetFootswitchLed(FootswitchLed idx, float bright)
+{
+    uint8_t fs_addr[FOOTSWITCH_LED_LAST] = { LED_FS_1, LED_FS_2, LED_FS_3, LED_FS_4};
+    dsy_led_driver_set_led(fs_addr[idx], cube(bright));
 }
 
 void DaisyPetal::InitSwitches()
