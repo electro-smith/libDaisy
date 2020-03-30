@@ -48,11 +48,11 @@ void DaisyPod::Init()
     // Initialize the hardware.
     seed.Configure();
     seed.Init();
-//    dsy_tim_start();
-//    InitButtons();
-//    InitEncoder();
-//    InitLeds();
-//    InitKnobs();
+    dsy_tim_start();
+    InitButtons();
+    InitEncoder();
+    InitLeds();
+    InitKnobs();
     SetAudioBlockSize(block_size_);
 }
 

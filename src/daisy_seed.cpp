@@ -60,6 +60,41 @@ const uint8_t seed_pins[32] = {
     8, 12, 11, 10, 9, 8, 7, 12, 10, 11, 4, 5,  8, 9, 6,  7,
     0, 1,  3,  1,  7, 6, 1, 5,  5,  4,  0, 11, 9, 2, 14, 15,
 };
+
+const dsy_gpio_pin seedgpio[32] = {
+    {seed_ports[0], seed_pins[0]},
+    {seed_ports[1], seed_pins[1]},
+    {seed_ports[2], seed_pins[2]},
+    {seed_ports[3], seed_pins[3]},
+    {seed_ports[4], seed_pins[4]},
+    {seed_ports[5], seed_pins[5]},
+    {seed_ports[6], seed_pins[6]},
+    {seed_ports[7], seed_pins[7]},
+    {seed_ports[8], seed_pins[8]},
+    {seed_ports[9], seed_pins[9]},
+    {seed_ports[10], seed_pins[10]},
+    {seed_ports[11], seed_pins[11]},
+    {seed_ports[12], seed_pins[12]},
+    {seed_ports[13], seed_pins[13]},
+    {seed_ports[14], seed_pins[14]},
+    {seed_ports[15], seed_pins[15]},
+    {seed_ports[16], seed_pins[16]},
+    {seed_ports[17], seed_pins[17]},
+    {seed_ports[18], seed_pins[18]},
+    {seed_ports[19], seed_pins[19]},
+    {seed_ports[20], seed_pins[20]},
+    {seed_ports[21], seed_pins[21]},
+    {seed_ports[22], seed_pins[22]},
+    {seed_ports[23], seed_pins[23]},
+    {seed_ports[24], seed_pins[24]},
+    {seed_ports[25], seed_pins[25]},
+    {seed_ports[26], seed_pins[26]},
+    {seed_ports[27], seed_pins[27]},
+    {seed_ports[28], seed_pins[28]},
+    {seed_ports[29], seed_pins[29]},
+    {seed_ports[30], seed_pins[30]},
+    {seed_ports[31], seed_pins[31]},
+};
 #endif
 
 // Public Initialization
@@ -86,14 +121,14 @@ void DaisySeed::Init()
 {
     dsy_system_init();
     dsy_sdram_init(&sdram_handle);
-//    dsy_qspi_init(&qspi_handle);
+    //    dsy_qspi_init(&qspi_handle);
     dsy_gpio_init(&led_);
     dsy_gpio_init(&testpoint_);
     dsy_audio_init(&audio_handle);
     dsy_tim_init();
-	// Due to the added 16kB+ of flash usage,
+    // Due to the added 16kB+ of flash usage,
     // and the fact that certain breakouts use
-    // both; USB won't be initialized by the 
+    // both; USB won't be initialized by the
     // SEED file.
     //usb_handle.Init(UsbHandle::FS_INTERNAL);
 }
@@ -104,7 +139,7 @@ dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
 #ifdef SEED_REV3
     p = seedgpio[pin_idx];
 #else
-    p = {seed_ports[pin_idx], seed_pins[pin_idx]};
+    p                            = {seed_ports[pin_idx], seed_pins[pin_idx]};
 #endif
     return p;
 }
@@ -167,13 +202,17 @@ void DaisySeed::ConfigureAudio()
     sai_handle.init = DSY_AUDIO_INIT_SAI1;
     // SAI1 - config
 #ifdef SEED_REV3
-    sai_handle.device[DSY_SAI_1]      = DSY_AUDIO_DEVICE_AK4556;
-    sai_handle.samplerate[DSY_SAI_1]  = DSY_AUDIO_SAMPLERATE_48K;
-    sai_handle.bitdepth[DSY_SAI_1]    = DSY_AUDIO_BITDEPTH_24;
+    sai_handle.device[DSY_SAI_1]     = DSY_AUDIO_DEVICE_AK4556;
+    sai_handle.samplerate[DSY_SAI_1] = DSY_AUDIO_SAMPLERATE_48K;
+    sai_handle.bitdepth[DSY_SAI_1]   = DSY_AUDIO_BITDEPTH_24;
+    sai_handle.a_direction[DSY_SAI_1] = DSY_AUDIO_TX;
+    sai_handle.b_direction[DSY_SAI_1] = DSY_AUDIO_RX;
 #else
-    sai_handle.device[DSY_SAI_1]      = DSY_AUDIO_DEVICE_WM8731;
-    sai_handle.samplerate[DSY_SAI_1]  = DSY_AUDIO_SAMPLERATE_48K;
-    sai_handle.bitdepth[DSY_SAI_1]    = DSY_AUDIO_BITDEPTH_16;
+    sai_handle.device[DSY_SAI_1] = DSY_AUDIO_DEVICE_WM8731;
+    sai_handle.samplerate[DSY_SAI_1] = DSY_AUDIO_SAMPLERATE_48K;
+    sai_handle.bitdepth[DSY_SAI_1]   = DSY_AUDIO_BITDEPTH_16;
+    sai_handle.a_direction[DSY_SAI_1] = DSY_AUDIO_RX;
+    sai_handle.b_direction[DSY_SAI_1] = DSY_AUDIO_TX;
 #endif
     sai_handle.sync_config[DSY_SAI_1] = DSY_AUDIO_SYNC_MASTER;
     pin_group                         = sai_handle.sai1_pin_config;
@@ -198,17 +237,6 @@ void DaisySeed::ConfigureAudio()
     pin_group[DSY_SAI_PIN_SIN]  = dsy_pin(DSY_GPIOD, 11);
     pin_group[DSY_SAI_PIN_SOUT] = dsy_pin(DSY_GPIOA, 0);
 
-    //    pin_group[DSY_SAI_PIN_MCLK].port = DSY_GPIOA;
-    //    pin_group[DSY_SAI_PIN_MCLK].pin  = 1;
-    //    pin_group[DSY_SAI_PIN_FS].port   = DSY_GPIOG;
-    //    pin_group[DSY_SAI_PIN_FS].pin    = 9;
-    //    pin_group[DSY_SAI_PIN_SCK].port  = DSY_GPIOA;
-    //    pin_group[DSY_SAI_PIN_SCK].pin   = 2;
-    //    pin_group[DSY_SAI_PIN_SIN].port  = DSY_GPIOD;
-    //    pin_group[DSY_SAI_PIN_SIN].pin   = 11;
-    //    pin_group[DSY_SAI_PIN_SOUT].port = DSY_GPIOA;
-    //    pin_group[DSY_SAI_PIN_SOUT].pin  = 0;
-
     audio_handle.sai        = &sai_handle;
     audio_handle.dev0_i2c   = &i2c2_handle;
     audio_handle.dev1_i2c   = &i2c1_handle;
@@ -232,29 +260,6 @@ void DaisySeed::ConfigureAdc()
     pin_group[DSY_ADC_PIN_CHN17] = dsy_pin(DSY_GPIOA, 1);
     pin_group[DSY_ADC_PIN_CHN18] = dsy_pin(DSY_GPIOA, 4);
     pin_group[DSY_ADC_PIN_CHN19] = dsy_pin(DSY_GPIOA, 5);
-
-    //    pin_group[DSY_ADC_PIN_CHN3].port  = DSY_GPIOA;
-    //    pin_group[DSY_ADC_PIN_CHN3].pin   = 6;
-    //    pin_group[DSY_ADC_PIN_CHN4].port  = DSY_GPIOC;
-    //    pin_group[DSY_ADC_PIN_CHN4].pin   = 5; // ADC is actually PC4, OPAMP in was PC5
-    //    pin_group[DSY_ADC_PIN_CHN5].port  = DSY_GPIOB;
-    //    pin_group[DSY_ADC_PIN_CHN5].pin   = 1;
-    //    pin_group[DSY_ADC_PIN_CHN7].port  = DSY_GPIOA;
-    //    pin_group[DSY_ADC_PIN_CHN7].pin   = 7;
-    //    pin_group[DSY_ADC_PIN_CHN10].port = DSY_GPIOC;
-    //    pin_group[DSY_ADC_PIN_CHN10].pin  = 0;
-    //    pin_group[DSY_ADC_PIN_CHN11].port = DSY_GPIOC;
-    //    pin_group[DSY_ADC_PIN_CHN11].pin  = 1;
-    //    pin_group[DSY_ADC_PIN_CHN15].port = DSY_GPIOA;
-    //    pin_group[DSY_ADC_PIN_CHN15].pin  = 3;
-    //    pin_group[DSY_ADC_PIN_CHN16].port = DSY_GPIOA;
-    //    pin_group[DSY_ADC_PIN_CHN16].pin  = 0;
-    //    pin_group[DSY_ADC_PIN_CHN17].port = DSY_GPIOA;
-    //    pin_group[DSY_ADC_PIN_CHN17].pin  = 1;
-    //    pin_group[DSY_ADC_PIN_CHN18].port = DSY_GPIOA;
-    //    pin_group[DSY_ADC_PIN_CHN18].pin  = 4;
-    //    pin_group[DSY_ADC_PIN_CHN19].port = DSY_GPIOA;
-    //    pin_group[DSY_ADC_PIN_CHN19].pin  = 5;
 }
 void DaisySeed::ConfigureDac()
 {
@@ -264,10 +269,6 @@ void DaisySeed::ConfigureDac()
     pin_group               = dac_handle.pin_config;
     pin_group[DSY_DAC_CHN1] = dsy_pin(DSY_GPIOA, 4);
     pin_group[DSY_DAC_CHN2] = dsy_pin(DSY_GPIOA, 5);
-    //    pin_group[DSY_DAC_CHN1].port = DSY_GPIOA;
-    //    pin_group[DSY_DAC_CHN1].pin  = 4;
-    //    pin_group[DSY_DAC_CHN2].port = DSY_GPIOA;
-    //    pin_group[DSY_DAC_CHN2].pin  = 5;
 }
 void DaisySeed::ConfigureI2c()
 {

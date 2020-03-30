@@ -31,6 +31,7 @@ typedef struct
     size_t             block_size, offset, dma_size;
     uint8_t            bitdepth, device, channels;
     dsy_i2c_handle*    device_control_hi2c;
+    dsy_audio_handle*  config_handle;
 } dsy_audio;
 
 //  Static Buffers in non-cached SRAM1 for DMA
@@ -63,7 +64,9 @@ static dsy_audio audio_handle_ext;
 
 static dsy_audio* get_audio_from_sai(SAI_HandleTypeDef* hsai)
 {
-    return (hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B) ? &audio_handle : &audio_handle_ext;
+    return (hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B)
+               ? &audio_handle
+               : &audio_handle_ext;
 }
 
 extern DMA_HandleTypeDef hdma_sai1_a;
@@ -105,23 +108,26 @@ void dsy_audio_silence(float* in, float* out, size_t size)
 void dsy_audio_init(dsy_audio_handle* handle)
 {
     uint8_t dev0, dev1, intext;
-    intext                  = handle->sai->init;
-    dev0                    = handle->sai->device[DSY_SAI_1];
-    dev1                    = handle->sai->device[DSY_SAI_2];
+    audio_handle.config_handle     = handle;
+    audio_handle_ext.config_handle = handle;
+    intext                         = handle->sai->init;
+    dev0                           = handle->sai->device[DSY_SAI_1];
+    dev1                           = handle->sai->device[DSY_SAI_2];
     audio_handle.block_size = handle->block_size <= DSY_AUDIO_BLOCK_SIZE_MAX
                                   ? handle->block_size
                                   : DSY_AUDIO_BLOCK_SIZE_MAX;
     audio_handle_ext.block_size = handle->block_size <= DSY_AUDIO_BLOCK_SIZE_MAX
                                       ? handle->block_size
                                       : DSY_AUDIO_BLOCK_SIZE_MAX;
-    audio_handle.bitdepth     = DSY_AUDIO_BITDEPTH_24;
+    audio_handle.bitdepth     = handle->sai->bitdepth[DSY_SAI_1];
+    audio_handle_ext.bitdepth = handle->sai->bitdepth[DSY_SAI_2];
     audio_handle.callback     = dsy_audio_passthru;
     audio_handle_ext.callback = dsy_audio_passthru;
     dsy_sai_init_from_handle(handle->sai);
-	if (handle->dev0_i2c != NULL)
-		dsy_i2c_init(handle->dev0_i2c);
-	if (handle->dev1_i2c != NULL)
-		dsy_i2c_init(handle->dev1_i2c);
+    if(handle->dev0_i2c != NULL)
+        dsy_i2c_init(handle->dev0_i2c);
+    if(handle->dev1_i2c != NULL)
+        dsy_i2c_init(handle->dev1_i2c);
     audio_handle.dma_buffer_rx     = sai1_dma_buffer_rx;
     audio_handle.dma_buffer_tx     = sai1_dma_buffer_tx;
     audio_handle_ext.dma_buffer_rx = sai2_dma_buffer_rx;
@@ -149,7 +155,7 @@ void dsy_audio_init(dsy_audio_handle* handle)
             case DSY_AUDIO_DEVICE_AK4556:
                 // Reset pin on board is PB11
                 {
-					dsy_gpio_pin rpin;
+                    dsy_gpio_pin rpin;
                     rpin.port = DSY_GPIOB;
                     rpin.pin  = 11;
                     codec_ak4556_init(rpin);
@@ -187,10 +193,10 @@ void dsy_audio_init(dsy_audio_handle* handle)
             case DSY_AUDIO_DEVICE_AK4556:
                 // Reset pin on board is PB11
                 {
-//					// Figure out how we want to support passing in the pin for this.
-//					dsy_gpio_pin rpin;
-//					rpin = {DSY_GPIOB, 11};
-//					codec_ak4556_init(rpin);
+                    //					// Figure out how we want to support passing in the pin for this.
+                    //					dsy_gpio_pin rpin;
+                    //					rpin = {DSY_GPIOB, 11};
+                    //					codec_ak4556_init(rpin);
                 }
                 break;
             default: break;
@@ -254,21 +260,62 @@ void dsy_audio_start(uint8_t intext)
 {
     if(intext == DSY_AUDIO_INTERNAL)
     {
-        HAL_SAI_Receive_DMA(&hsai_BlockB1,
-                            (uint8_t*)audio_handle.dma_buffer_rx,
-                            audio_handle.dma_size);
-        HAL_SAI_Transmit_DMA(&hsai_BlockA1,
-                             (uint8_t*)audio_handle.dma_buffer_tx,
-                             audio_handle.dma_size);
+        if(audio_handle.config_handle->sai->a_direction[DSY_SAI_1]
+           == DSY_AUDIO_RX)
+        {
+            HAL_SAI_Receive_DMA(&hsai_BlockA1,
+                                (uint8_t*)audio_handle.dma_buffer_rx,
+                                audio_handle.dma_size);
+        }
+        else
+        {
+            HAL_SAI_Transmit_DMA(&hsai_BlockA1,
+                                 (uint8_t*)audio_handle.dma_buffer_tx,
+                                 audio_handle.dma_size);
+        }
+        if(audio_handle.config_handle->sai->b_direction[DSY_SAI_1]
+           == DSY_AUDIO_RX)
+        {
+            HAL_SAI_Receive_DMA(&hsai_BlockB1,
+                                (uint8_t*)audio_handle.dma_buffer_rx,
+                                audio_handle.dma_size);
+        }
+        else
+        {
+            HAL_SAI_Transmit_DMA(&hsai_BlockB1,
+                                 (uint8_t*)audio_handle.dma_buffer_tx,
+                                 audio_handle.dma_size);
+        }
     }
     else
     {
-        HAL_SAI_Receive_DMA(&hsai_BlockA2,
-                            (uint8_t*)audio_handle_ext.dma_buffer_rx,
-                            audio_handle_ext.dma_size);
-        HAL_SAI_Transmit_DMA(&hsai_BlockB2,
-                             (uint8_t*)audio_handle_ext.dma_buffer_tx,
-                             audio_handle_ext.dma_size);
+
+        if(audio_handle_ext.config_handle->sai->a_direction[DSY_SAI_2]
+           == DSY_AUDIO_RX)
+        {
+            HAL_SAI_Receive_DMA(&hsai_BlockA2,
+                                (uint8_t*)audio_handle.dma_buffer_rx,
+                                audio_handle.dma_size);
+        }
+        else
+        {
+            HAL_SAI_Transmit_DMA(&hsai_BlockA2,
+                                 (uint8_t*)audio_handle.dma_buffer_tx,
+                                 audio_handle.dma_size);
+        }
+        if(audio_handle_ext.config_handle->sai->b_direction[DSY_SAI_2]
+           == DSY_AUDIO_RX)
+        {
+            HAL_SAI_Receive_DMA(&hsai_BlockB2,
+                                (uint8_t*)audio_handle.dma_buffer_rx,
+                                audio_handle.dma_size);
+        }
+        else
+        {
+            HAL_SAI_Transmit_DMA(&hsai_BlockB2,
+                                 (uint8_t*)audio_handle.dma_buffer_tx,
+                                 audio_handle.dma_size);
+        }
     }
 }
 
@@ -333,7 +380,7 @@ static void internal_callback(SAI_HandleTypeDef* hsai, size_t offset)
     {
         while(inf != endi)
         {
-//            *inf++ = s242f((*ini++) << 2);
+            //            *inf++ = s242f((*ini++) << 2);
             *inf++ = s242f(*ini++);
         }
     }
