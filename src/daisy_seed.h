@@ -10,7 +10,7 @@
 #include "daisy.h"
 
 // Comment this out if you're still using the rev2 hardware
-//#define SEED_REV3
+#define SEED_REV3
 
 namespace daisy
 {
@@ -74,6 +74,18 @@ class DaisySeed
 	// ~~~~
     void SetTestPoint(bool state);
 	// ~~~~
+    
+    // ### AudioSampleRate
+    // Returns the audio sample rate in Hz as a floating point number.
+    // ~~~~
+    float  AudioSampleRate();
+    // ~~~~
+    
+    // ### SetAudioBlockSize
+    // Sets the number of samples processed per channel by the audio callback.
+    // ~~~~
+    void SetAudioBlockSize(size_t blocksize);
+    // ~~~~
 
     // ## Public Members
     // While the library is still in heavy development, most of the
