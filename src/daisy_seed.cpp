@@ -38,7 +38,7 @@ const dsy_gpio_pin seedgpio[32] = {
     {DSY_GPIOC, 4},
     {DSY_GPIOA, 5},
     // GPIO 17-24
-    {DSY_GPIOC, 4},
+    {DSY_GPIOA, 4},
     {DSY_GPIOA, 1},
     {DSY_GPIOA, 0},
     {DSY_GPIOD, 11},

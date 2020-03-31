@@ -5,22 +5,11 @@
 #endif
 
 
-// Rev1 Pinout
-//#define SW_1_PIN 29
-//#define SW_2_PIN 28
-//
-//#define ENC_A_PIN 27
-//#define ENC_B_PIN 26
-//#define ENC_CLICK_PIN 1
-//
-//#define LED_1_R_PIN 21
-//#define LED_1_G_PIN 20
-//#define LED_1_B_PIN 19
-//#define LED_2_R_PIN 0
-//#define LED_2_G_PIN 25
-//#define LED_2_B_PIN 24
-//
+#ifdef SEED_REV3
+
 // Rev2 Pinout
+// Compatible with Seed rev1 and rev2
+
 #define SW_1_PIN 29
 #define SW_2_PIN 28
 
@@ -34,6 +23,27 @@
 #define LED_2_R_PIN 0
 #define LED_2_G_PIN 25
 #define LED_2_B_PIN 24
+
+#else
+
+// Rev1 Pinout
+// Compatible with Seed rev1 and rev2
+
+#define SW_1_PIN 29
+#define SW_2_PIN 28
+
+#define ENC_A_PIN 27
+#define ENC_B_PIN 26
+#define ENC_CLICK_PIN 1
+
+#define LED_1_R_PIN 21
+#define LED_1_G_PIN 20
+#define LED_1_B_PIN 19
+#define LED_2_R_PIN 0
+#define LED_2_G_PIN 25
+#define LED_2_B_PIN 24
+
+#endif
 
 
 
