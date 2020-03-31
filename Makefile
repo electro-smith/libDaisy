@@ -2,10 +2,13 @@ TARGET = libdaisy
 
 MODULE_DIR=src
 MODULES = \
+daisy_seed \
 daisy_patch \
+daisy_petal \
 daisy_pod \
 dev_codec_pcm3060 \
 dev_codec_wm8731 \
+dev_codec_ak4556 \
 sys_dma \
 per_adc \
 hid_audio \
@@ -27,6 +30,8 @@ hid_encoder \
 hid_gatein \
 hid_midi \
 hid_oled_display \
+hid_led \
+hid_rgb_led \
 hid_switch \
 hid_usb \
 hid_wavplayer \
@@ -34,6 +39,7 @@ dev_sr_4021 \
 util_bsp_sd_diskio \
 util_hal_map \
 util_oled_fonts \
+util_color \
 util_sd_diskio \
 system_stm32h7xx \
 

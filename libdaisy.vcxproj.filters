@@ -392,6 +392,12 @@
     </ClCompile>
     <ClCompile Include="src\hid_wavplayer.cpp" />
     <ClCompile Include="src\daisy_pod.cpp" />
+    <ClCompile Include="src\hid_led.cpp" />
+    <ClCompile Include="src\hid_rgb_led.cpp" />
+    <ClCompile Include="src\util_color.cpp" />
+    <ClCompile Include="src\dev_codec_ak4556.c" />
+    <ClCompile Include="src\daisy_seed.cpp" />
+    <ClCompile Include="src\daisy_petal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
@@ -884,6 +890,10 @@
     </ClInclude>
     <ClInclude Include="src\hid_wavplayer.h" />
     <ClInclude Include="src\util_wav_format.h" />
+    <ClInclude Include="src\hid_led.h" />
+    <ClInclude Include="src\hid_rgb_led.h" />
+    <ClInclude Include="src\util_color.h" />
+    <ClInclude Include="src\dev_codec_ak4556.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="stm32.props" />

@@ -4,31 +4,48 @@
 #define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
 #endif
 
-#define SW_1_PORT seed_ports[29]
-#define SW_1_PIN seed_pins[29]
-#define SW_2_PORT seed_ports[28]
-#define SW_2_PIN seed_pins[28]
 
-#define ENC_A_PORT seed_ports[27]
-#define ENC_A_PIN seed_pins[27]
-#define ENC_B_PORT seed_ports[26]
-#define ENC_B_PIN seed_pins[26]
-#define ENC_CLICK_PORT seed_ports[1]
-#define ENC_CLICK_PIN seed_pins[1]
+#ifdef SEED_REV3
 
-#define LED_1_R_PORT seed_ports[21]
-#define LED_1_R_PIN seed_pins[21]
-#define LED_1_G_PORT seed_ports[20]
-#define LED_1_G_PIN seed_pins[20]
-#define LED_1_B_PORT seed_ports[19]
-#define LED_1_B_PIN seed_pins[19]
+// Rev2 Pinout
+// Compatible with Seed rev1 and rev2
 
-#define LED_2_R_PORT seed_ports[0]
-#define LED_2_R_PIN seed_pins[0]
-#define LED_2_G_PORT seed_ports[25]
-#define LED_2_G_PIN seed_pins[25]
-#define LED_2_B_PORT seed_ports[24]
-#define LED_2_B_PIN seed_pins[24]
+#define SW_1_PIN 29
+#define SW_2_PIN 28
+
+#define ENC_A_PIN 27
+#define ENC_B_PIN 26
+#define ENC_CLICK_PIN 14
+
+#define LED_1_R_PIN 21
+#define LED_1_G_PIN 20
+#define LED_1_B_PIN 19
+#define LED_2_R_PIN 0
+#define LED_2_G_PIN 25
+#define LED_2_B_PIN 24
+
+#else
+
+// Rev1 Pinout
+// Compatible with Seed rev1 and rev2
+
+#define SW_1_PIN 29
+#define SW_2_PIN 28
+
+#define ENC_A_PIN 27
+#define ENC_B_PIN 26
+#define ENC_CLICK_PIN 1
+
+#define LED_1_R_PIN 21
+#define LED_1_G_PIN 20
+#define LED_1_B_PIN 19
+#define LED_2_R_PIN 0
+#define LED_2_G_PIN 25
+#define LED_2_B_PIN 24
+
+#endif
+
+
 
 using namespace daisy;
 
@@ -39,12 +56,14 @@ void DaisyPod::Init()
     block_size_    = 48;
     callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
     // Initialize the hardware.
-    daisy_seed_init(&seed);
-    dsy_tim_init();
+    seed.Configure();
+    seed.Init();
+    dsy_tim_start();
     InitButtons();
     InitEncoder();
     InitLeds();
     InitKnobs();
+    SetAudioBlockSize(block_size_);
 }
 
 void DaisyPod::DelayMs(size_t del)
@@ -67,6 +86,7 @@ void DaisyPod::SetAudioBlockSize(size_t size)
 {
     block_size_    = size;
     callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
+    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
 }
 
 float DaisyPod::AudioSampleRate()
@@ -89,7 +109,7 @@ void DaisyPod::StartAdc()
     dsy_adc_start();
 }
 
-void DaisyPod::UpdateKnobs()
+void DaisyPod::UpdateAnalogControls()
 {
     knob1.Process();
     knob2.Process();
@@ -109,43 +129,30 @@ void DaisyPod::DebounceControls()
     button2.Debounce();
 }
 
-void DaisyPod::SetLed(Led ld, float bright)
-{
-    // LEDs are inverted due to hardware.
-    dsy_gpio_write(&leds[ld], bright > 0.0f ? 0 : 1);
-}
-
 void DaisyPod::ClearLeds()
 {
-    for(int i = 0; i < LED_LAST; i++)
-    {
-        // LEDs are inverted due to hardware.
-        SetLed(static_cast<Led>(i), 1);
-    }
+    // Using Color
+    Color c;
+    c.Init(Color::PresetColor::OFF);
+    led1.SetColor(c);
+    led2.SetColor(c);
+    // Without
+    // led1.Set(0.0f, 0.0f, 0.0f);
+    // led2.Set(0.0f, 0.0f, 0.0f);
 }
 
 void DaisyPod::UpdateLeds()
 {
-    // Does nothing on this platform at this time.
+    led1.Update();
+    led2.Update();
 }
 
 void DaisyPod::InitButtons()
 {
     // button1
-    dsy_gpio_pin button1_pin;
-    button1_pin.pin  = SW_1_PIN;
-    button1_pin.port = SW_1_PORT;
-    button1.Init(button1_pin, callback_rate_);
-
+    button1.Init(seed.GetPin(SW_1_PIN), callback_rate_);
     // button2
-    dsy_gpio_pin button2_pin;
-    button2_pin.pin  = SW_2_PIN;
-    button2_pin.port = SW_2_PORT;
-    button2.Init(button2_pin, callback_rate_);
-    // ideal code:
-    // in place until we fix the seed so that this is possible.
-    //button2.Init(seed.ADC1, callback_rate_);
-    //button2.Init(seed.pin(1), callback_rate_);
+    button2.Init(seed.GetPin(SW_2_PIN), callback_rate_);
 
     buttons[BUTTON_1] = &button1;
     buttons[BUTTON_2] = &button2;
@@ -153,43 +160,36 @@ void DaisyPod::InitButtons()
 
 void DaisyPod::InitEncoder()
 {
-    encoder.Init({ENC_A_PORT, ENC_A_PIN},
-                 {ENC_B_PORT, ENC_B_PIN},
-                 {ENC_CLICK_PORT, ENC_CLICK_PIN},
-                 callback_rate_);
+    dsy_gpio_pin a, b, click;
+    a = seed.GetPin(ENC_A_PIN);
+    b = seed.GetPin(ENC_B_PIN);
+    click = seed.GetPin(ENC_CLICK_PIN);
+    encoder.Init(a, b, click, callback_rate_);
 }
 
 void DaisyPod::InitLeds()
 {
     // LEDs are just going to be on/off for now.
     // TODO: Add PWM support
+    dsy_gpio_pin rpin, gpin, bpin;
 
-    dsy_gpio_port led_ports[LED_LAST] = {LED_1_R_PORT,
-                                         LED_1_G_PORT,
-                                         LED_1_B_PORT,
-                                         LED_2_R_PORT,
-                                         LED_2_G_PORT,
-                                         LED_2_B_PORT};
-    uint8_t       led_pins[LED_LAST]  = {LED_1_R_PIN,
-                                  LED_1_G_PIN,
-                                  LED_1_B_PIN,
-                                  LED_2_R_PIN,
-                                  LED_2_G_PIN,
-                                  LED_2_B_PIN};
+    rpin = seed.GetPin(LED_1_R_PIN);
+    gpin = seed.GetPin(LED_1_G_PIN);
+    bpin = seed.GetPin(LED_1_B_PIN);
+    led1.Init(rpin, gpin, bpin, true);
 
-    for(uint8_t i = 0; i < LED_LAST; i++)
-    {
-        leds[i].pin.port = led_ports[i];
-        leds[i].pin.pin  = led_pins[i];
-        leds[i].mode     = DSY_GPIO_MODE_OUTPUT_PP;
-        leds[i].pull     = DSY_GPIO_NOPULL;
-        dsy_gpio_init(&leds[i]);
-    }
+    rpin = seed.GetPin(LED_2_R_PIN);
+    gpin = seed.GetPin(LED_2_G_PIN);
+    bpin = seed.GetPin(LED_2_B_PIN);
+    led2.Init(rpin, gpin, bpin, true);
+
+    ClearLeds();
+    UpdateLeds();
 }
 void DaisyPod::InitKnobs()
 {
     // Set order of ADCs based on CHANNEL NUMBER
-    uint8_t channel_order[KNOB_LAST] = {DSY_ADC_PIN_CHN11, DSY_ADC_PIN_CHN10};
+    uint8_t channel_order[KNOB_LAST] = {DSY_ADC_PIN_CHN4, DSY_ADC_PIN_CHN10};
     // NUMBER OF CHANNELS
     seed.adc_handle.channels = KNOB_LAST;
     // Fill the ADCs active channel array.

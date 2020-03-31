@@ -5,6 +5,17 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#if defined(_MSC_VER)
+#define FORCE_INLINE __forceinline
+#elif defined(__clang__)
+#define FORCE_INLINE inline __attribute__((always_inline))
+#pragma clang diagnostic ignored "-Wduplicate-decl-specifier"
+#elif defined(__GNUC__)
+#define FORCE_INLINE inline __attribute__((always_inline))
+#else
+#error unknown compiler
+#endif
+
 // ## Memory Section Macros
 //
 // Macro for area of memory that is configured as cacheless
@@ -15,6 +26,14 @@
 // for DMA transfers. Performance is on par with internal SRAM w/ 
 // cache enabled.
 #define DTCM_MEM_SECTION __attribute__((section(".dtcmram_bss")))
+
+// ## Helpful Functions
+// ### Cube
+
+FORCE_INLINE float cube(float x) 
+{
+	return (x * x) * x;
+}
 
 // ## GPIO
 // Enums and a simple struct for defining a hardware pin on the MCU
@@ -43,5 +62,14 @@ typedef struct
 	uint8_t pin; // number 0-15
 } dsy_gpio_pin;
 
+// ### dsy_pin
+// Helper for creating pins from port/pin combos easily
+inline dsy_gpio_pin dsy_pin(dsy_gpio_port port, uint8_t pin)
+{
+    dsy_gpio_pin p;
+    p.port = port;
+    p.pin  = pin;
+    return p;
+}
 
 #endif

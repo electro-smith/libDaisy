@@ -7,9 +7,11 @@ void daisy_patch::Init()
     size_t blocksize;
     // Audio Blocksize 48 by default.
     blocksize = 48; // (only used for CV inits here).
-	// Initialize Hardware
-    daisy_seed_init(&seed);
-	// Pin config for everything
+    // Initialize Hardware
+    //daisy_seed_init(&seed);
+    seed.Configure();
+    seed.Init();
+    // Pin config for everything
     gate_in1.pin       = {GATE_1_PORT, GATE_1_PIN};
     gate_in2.pin       = {GATE_2_PORT, GATE_2_PIN};
     gate_out.pin	   = {GATE_OUT_PORT, GATE_OUT_PIN};

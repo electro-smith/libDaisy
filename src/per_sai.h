@@ -40,12 +40,18 @@ typedef enum
 
 typedef enum
 {
-	DSY_SAI_PIN_MCLK,
-	DSY_SAI_PIN_FS,
-	DSY_SAI_PIN_SCK,
-	DSY_SAI_PIN_SIN,
-	DSY_SAI_PIN_SOUT,
-	DSY_SAI_PIN_LAST,
+    DSY_AUDIO_RX,
+    DSY_AUDIO_TX,
+} dsy_audio_dir;
+
+typedef enum
+{
+    DSY_SAI_PIN_MCLK,
+    DSY_SAI_PIN_FS,
+    DSY_SAI_PIN_SCK,
+    DSY_SAI_PIN_SIN,
+    DSY_SAI_PIN_SOUT,
+    DSY_SAI_PIN_LAST,
 } dsy_sai_pin;
 
 typedef enum
@@ -53,6 +59,7 @@ typedef enum
 	DSY_AUDIO_NONE, // For unsupported, or custom devices.
 	DSY_AUDIO_DEVICE_PCM3060,
 	DSY_AUDIO_DEVICE_WM8731,
+	DSY_AUDIO_DEVICE_AK4556,
 	DSY_AUDIO_DEVICE_LAST,
 } dsy_audio_device;
 
@@ -68,8 +75,11 @@ typedef struct
 	dsy_audio_sai		 init;
 	dsy_audio_samplerate samplerate[DSY_SAI_LAST];
 	dsy_audio_bitdepth   bitdepth[DSY_SAI_LAST];
-	dsy_audio_sync		 sync_config[DSY_SAI_LAST];
+    dsy_audio_dir        a_direction[DSY_SAI_LAST];
+    dsy_audio_dir        b_direction[DSY_SAI_LAST];
+    dsy_audio_sync		 sync_config[DSY_SAI_LAST];
 	dsy_audio_device	 device[DSY_SAI_LAST];
+	
 	dsy_gpio_pin		 sai1_pin_config[DSY_SAI_PIN_LAST];
 	dsy_gpio_pin		 sai2_pin_config[DSY_SAI_PIN_LAST];
 } dsy_sai_handle;
