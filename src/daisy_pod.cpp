@@ -10,8 +10,8 @@
 // Rev2 Pinout
 // Compatible with Seed rev1 and rev2
 
-#define SW_1_PIN 29
-#define SW_2_PIN 28
+#define SW_1_PIN 28
+#define SW_2_PIN 29
 
 #define ENC_A_PIN 27
 #define ENC_B_PIN 26
