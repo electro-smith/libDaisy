@@ -107,7 +107,7 @@ SECTIONS
 
 	_sidata = LOADADDR(.data);
 
-	.bss :
+	.bss (NOLOAD) :
 	{
 		. = ALIGN(4);
 		_sbss = .;
@@ -130,7 +130,6 @@ SECTIONS
 		PROVIDE(__dtcmram_bss_start__ = _sdtcmram_bss);
 		*(.dtcmram_bss)
 		*(.dtcmram_bss*)
-		*(COMMON)
 		. = ALIGN(4);
 		_edtcmram_bss = .;
 
@@ -145,7 +144,6 @@ SECTIONS
 		PROVIDE(__sram1_bss_start__ = _sram1_bss);
 		*(.sram1_bss)
 		*(.sram1_bss*)
-		*(COMMON)
 		. = ALIGN(4);
 		_esram1_bss = .;
 

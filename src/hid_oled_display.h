@@ -1,6 +1,6 @@
 // # OLED Display
 // ## Description
-// Human Interface Driver for using an OLED Display (SSD1309
+// Human Interface Driver for using an OLED Display (SSD1309)
 //
 // For all `bool on` arguments: true is on, false is off.
 //
@@ -32,19 +32,24 @@ namespace daisy
 class OledDisplay
 {
   public:
+    // ## Pins
+    // GPIO Pins that need to be used independent of peripheral used.
+    // ~~~~
     enum Pins
     {
         DATA_COMMAND,
         RESET,
         NUM_PINS,
     };
+    // ~~~~
     OledDisplay() {}
     ~OledDisplay() {}
     // ## Init
     // TODO:
+    //
     // - add I2C Support.
     // - add configuration for specific spi/i2c peripherals (currently only uses SPI1, w/ hardware controlled chip select.
-	// - re-add support for SSD1306 displays
+    // - re-add support for SSD1306 displays
     //
     // Takes an argument for the pin cfg
     // *pin_cfg should be a pointer to an array of OledDisplay::NUM_PINS dsy_gpio_pins
