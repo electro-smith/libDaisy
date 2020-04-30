@@ -400,9 +400,6 @@
     <ClCompile Include="src\daisy_petal.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h" />
     <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h" />
     <ClInclude Include="src\daisy.h" />
@@ -914,5 +911,8 @@
     <Filter Include="Middleware_FatFS">
       <UniqueIdentifier>{0c75ac56-378f-4bfe-9776-3bfd88231752}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <LinkerScript Include="core\STM32H750IB_flash.lds" />
   </ItemGroup>
 </Project>

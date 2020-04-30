@@ -71,8 +71,6 @@ void HardFault_Handler()
 
 void dsy_system_init()
 {
-    // For now we won't use the board parameter since all three supported boards use the same 16MHz HSE.
-    // That said, 2hp Audio BB had a bit different setup, and actually a more accurate sample rate for audio iirc.
     HAL_Init();
 	SystemClock_Config();
     MPU_Config();

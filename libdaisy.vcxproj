@@ -440,6 +440,6 @@
     <None Include="stm32.xml" />
   </ItemGroup>
   <ItemGroup>
-    <LinkerScript Include="..\core\STM32H750IB_flash.lds" />
+    <LinkerScript Include="core\STM32H750IB_flash.lds" />
   </ItemGroup>
 </Project>

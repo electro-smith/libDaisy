@@ -17,7 +17,7 @@ static void Error_Handler()
 
 void SpiHandle::Init()
 {
-    hspi1.Instance = SPI1;
+    hspi1.Instance               = SPI1;
     hspi1.Init.Mode              = SPI_MODE_MASTER;
     hspi1.Init.Direction         = SPI_DIRECTION_2LINES_TXONLY;
     hspi1.Init.DataSize          = SPI_DATASIZE_8BIT;
@@ -47,7 +47,7 @@ void SpiHandle::Init()
     }
 }
 
-void SpiHandle::BlockingTransmit(uint8_t *buff, size_t size) 
+void SpiHandle::BlockingTransmit(uint8_t* buff, size_t size)
 {
     HAL_SPI_Transmit(&hspi1, buff, size, 100);
 }
@@ -71,14 +71,29 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     PG11     ------> SPI1_SCK
     PG10     ------> SPI1_NSS 
     */
-        GPIO_InitStruct.Pin       = GPIO_PIN_5 | GPIO_PIN_4;
+        //        GPIO_InitStruct.Pin       = GPIO_PIN_5 | GPIO_PIN_4;
+        switch(spiHandle->Init.Direction)
+        {
+            case SPI_DIRECTION_2LINES_TXONLY:
+                GPIO_InitStruct.Pin = GPIO_PIN_5;
+                break;
+            case SPI_DIRECTION_2LINES_RXONLY:
+                GPIO_InitStruct.Pin = GPIO_PIN_4;
+                break;
+            default: GPIO_InitStruct.Pin = GPIO_PIN_4 | GPIO_PIN_5; break;
+        }
         GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull      = GPIO_NOPULL;
         GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_LOW;
         GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
         HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-        GPIO_InitStruct.Pin       = GPIO_PIN_11 | GPIO_PIN_10;
+        // Sck and CS
+        GPIO_InitStruct.Pin       = GPIO_PIN_11;
+        if(spiHandle->Init.NSS != SPI_NSS_SOFT) 
+        {
+            GPIO_InitStruct.Pin |= GPIO_PIN_10;
+        }
         GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull      = GPIO_NOPULL;
         GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_LOW;

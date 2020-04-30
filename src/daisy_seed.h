@@ -10,7 +10,7 @@
 #include "daisy.h"
 
 // Comment this out if you're still using the rev2 hardware
-//#define SEED_REV3
+#define SEED_REV3
 
 namespace daisy
 {

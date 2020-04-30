@@ -81,24 +81,28 @@ typedef struct
     uint8_t  Inverted;
     uint8_t  Initialized;
 } SSD1309_t;
-static SpiHandle    h_spi;
-static dsy_gpio     pin_reset, pin_dc;
-static dsy_gpio_pin cfg_reset = {DSY_GPIOB, 9};
-static dsy_gpio_pin cfg_dc    = {DSY_GPIOB, 8};
+static SpiHandle h_spi;
+static dsy_gpio  pin_reset, pin_dc;
+//static dsy_gpio_pin cfg_reset = {DSY_GPIOB, 9};  // O.G. Pod Test.
+//static dsy_gpio_pin cfg_dc    = {DSY_GPIOB, 8}; // O.G. Pod Test.
+static dsy_gpio_pin cfg_reset = {DSY_GPIOB, 15};
+static dsy_gpio_pin cfg_dc    = {DSY_GPIOB, 4};
 
 static SSD1309_t SSD1309;
 
 
-void OledDisplay::Init()
+void OledDisplay::Init(dsy_gpio_pin* pin_cfg)
 {
     // Initialize both GPIO
+	pin_dc.mode = DSY_GPIO_MODE_OUTPUT_PP;
+	pin_dc.pin  = pin_cfg[OledDisplay::DATA_COMMAND];
+	dsy_gpio_init(&pin_dc);
     pin_reset.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    pin_reset.pin  = cfg_reset;
+    pin_reset.pin  = pin_cfg[OledDisplay::RESET];
     dsy_gpio_init(&pin_reset);
-    pin_dc.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    pin_dc.pin  = cfg_dc;
-    dsy_gpio_init(&pin_dc);
+	// Initialize SPI
     h_spi.Init();
+	// Reset and Configure OLED.
     Reset();
     //SendCommand(0xAE); // display off
     SendCommand(SSD1309_CMD_SET_DISPLAY_OFF);
