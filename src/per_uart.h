@@ -38,7 +38,7 @@ class UartHandler
     // ### PollReceive
     // Reads the amount of bytes in blocking mode with a 10ms timeout.
     // ~~~~
-    int PollReceive(uint8_t *buff, size_t size);
+    int PollReceive(uint8_t *buff, size_t size, uint32_t timeout);
     // ~~~~
     // ### StartRx
     // Starts a DMA Receive callback to fill a buffer of specified size.
@@ -54,7 +54,18 @@ class UartHandler
     int StartRx(size_t size);
     // ~~~~
 
-	// ### PollTx
+    // ### RxActive
+    // Returns whether Rx DMA is listening or not.
+    bool RxActive();
+
+    // ### FlushRx
+    // Flushes the Receive Queue
+	// 
+    // ~~~~
+    int FlushRx();
+    // ~~~~
+
+    // ### PollTx
 	// Sends an amount of data in blocking mode.
 	// ~~~~
     int PollTx(uint8_t *buff, size_t size);

@@ -14,12 +14,13 @@ uint8_t DMA_BUFFER_MEM_SECTION uart_dma_buffer_rx[32];
 // Uses HAL so these things have to be local to this file only
 struct uart_handle
 {
-    UART_HandleTypeDef                      huart1;
-    DMA_HandleTypeDef                       hdma_usart1_rx;
-    uint8_t*                                dma_buffer_rx;
-    bool                                    receiving;
-    size_t                                  rx_size;
+    UART_HandleTypeDef      huart1;
+    DMA_HandleTypeDef       hdma_usart1_rx;
+    uint8_t*                dma_buffer_rx;
+    bool                    receiving;
+    size_t                  rx_size;
     RingBuffer<uint8_t, 64> queue_rx;
+    bool                    rx_active, tx_active;
 };
 static uart_handle uhandle;
 
@@ -57,23 +58,40 @@ void UartHandler::Init()
     // Internal bits
     uhandle.dma_buffer_rx = uart_dma_buffer_rx;
     uhandle.queue_rx.Init();
+    uhandle.rx_active = false;
+    uhandle.tx_active = false;
 }
 
-int UartHandler::PollReceive(uint8_t* buff, size_t size)
+int UartHandler::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
 {
-    return HAL_UART_Receive(&uhandle.huart1, (uint8_t*)buff, size, 10);
+    return HAL_UART_Receive(&uhandle.huart1, (uint8_t*)buff, size, timeout);
 }
 
 int UartHandler::StartRx(size_t size)
 {
-    int status      = 0;
+    int status = 0;
+    // Now start Rx
     uhandle.rx_size = size <= 32 ? size : 32;
     status          = HAL_UART_Receive_DMA(
         &uhandle.huart1, (uint8_t*)uhandle.dma_buffer_rx, size);
+    if(status == 0)
+        uhandle.rx_active = true;
     return status;
 }
 
-int UartHandler::PollTx(uint8_t* buff, size_t size) 
+bool UartHandler::RxActive()
+{
+    return uhandle.rx_active;
+}
+
+int UartHandler::FlushRx()
+{
+    int status = 0;
+    uhandle.queue_rx.Flush();
+    return status;
+}
+
+int UartHandler::PollTx(uint8_t* buff, size_t size)
 
 {
     return HAL_UART_Transmit(&uhandle.huart1, (uint8_t*)buff, size, 10);
@@ -105,6 +123,39 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
         uhandle.queue_rx.Write(uhandle.dma_buffer_rx[i]);
     }
 }
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
+{
+    switch(huart->ErrorCode)
+    {
+        case HAL_UART_ERROR_NONE: break;
+        case HAL_UART_ERROR_PE: break;
+        case HAL_UART_ERROR_NE: break;
+        case HAL_UART_ERROR_FE: break;
+        case HAL_UART_ERROR_ORE: break;
+        case HAL_UART_ERROR_DMA: break;
+        default: break;
+    }
+    // Mark rx as deactivated
+    uhandle.rx_active = false;
+}
+void HAL_UART_AbortCpltCallback(UART_HandleTypeDef* huart)
+{
+    //    asm("bkpt 255");
+}
+void HAL_UART_AbortTransmitCpltCallback(UART_HandleTypeDef* huart)
+{
+    //    asm("bkpt 255");
+}
+void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
+{
+    //    asm("bkpt 255");
+}
+
+// Unimplemented HAL Callbacks
+//void HAL_UART_TxHalfCpltCallback(UART_HandleTypeDef *huart);
+//void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
+//void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);
 
 
 // HAL Interface functions
