@@ -50,6 +50,7 @@ FORCE_INLINE int32_t f2s24(float x)
 #include "dev_sdram.h"
 #include "dev_sr_4021.h"
 #include "hid_audio.h"
+#include "util_unique_id.h"
 #ifdef __cplusplus
 #include "per_uart.h"
 #include "hid_midi.h"
@@ -64,5 +65,6 @@ FORCE_INLINE int32_t f2s24(float x)
 #include "hid_wavplayer.h"
 #include "hid_led.h"
 #include "hid_rgb_led.h"
+#include "dev_sr_595.h"
 #endif
 #endif

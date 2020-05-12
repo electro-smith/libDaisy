@@ -121,7 +121,7 @@ void DaisySeed::Init()
 {
     dsy_system_init();
     dsy_sdram_init(&sdram_handle);
-    //    dsy_qspi_init(&qspi_handle);
+	dsy_qspi_init(&qspi_handle);
     dsy_gpio_init(&led_);
     dsy_gpio_init(&testpoint_);
     dsy_audio_init(&audio_handle);
