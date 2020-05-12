@@ -36,11 +36,13 @@ hid_switch \
 hid_usb \
 hid_wavplayer \
 dev_sr_4021 \
+dev_sr_595 \
 util_bsp_sd_diskio \
 util_hal_map \
 util_oled_fonts \
 util_color \
 util_sd_diskio \
+util_unique_id \
 system_stm32h7xx \
 
 ######################################
