@@ -57,6 +57,7 @@ FORCE_INLINE int32_t f2s24(float x)
 #include "hid_encoder.h"
 #include "hid_switch.h"
 #include "hid_ctrl.h"
+#include "hid_gatein.h"
 #include "parameter.h"
 #include "hid_usb.h"
 #include "per_sdmmc.h"

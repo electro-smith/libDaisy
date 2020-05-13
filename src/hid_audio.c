@@ -294,27 +294,27 @@ void dsy_audio_start(uint8_t intext)
            == DSY_AUDIO_RX)
         {
             HAL_SAI_Receive_DMA(&hsai_BlockA2,
-                                (uint8_t*)audio_handle.dma_buffer_rx,
-                                audio_handle.dma_size);
+                                (uint8_t*)audio_handle_ext.dma_buffer_rx,
+                                audio_handle_ext.dma_size);
         }
         else
         {
             HAL_SAI_Transmit_DMA(&hsai_BlockA2,
-                                 (uint8_t*)audio_handle.dma_buffer_tx,
-                                 audio_handle.dma_size);
+                                 (uint8_t*)audio_handle_ext.dma_buffer_tx,
+                                 audio_handle_ext.dma_size);
         }
         if(audio_handle_ext.config_handle->sai->b_direction[DSY_SAI_2]
            == DSY_AUDIO_RX)
         {
             HAL_SAI_Receive_DMA(&hsai_BlockB2,
-                                (uint8_t*)audio_handle.dma_buffer_rx,
-                                audio_handle.dma_size);
+                                (uint8_t*)audio_handle_ext.dma_buffer_rx,
+                                audio_handle_ext.dma_size);
         }
         else
         {
             HAL_SAI_Transmit_DMA(&hsai_BlockB2,
-                                 (uint8_t*)audio_handle.dma_buffer_tx,
-                                 audio_handle.dma_size);
+                                 (uint8_t*)audio_handle_ext.dma_buffer_tx,
+                                 audio_handle_ext.dma_size);
         }
     }
 }
