@@ -60,8 +60,8 @@ void DaisyPatch::SetAudioBlockSize(size_t size)
 }
 void DaisyPatch::StartAudio(dsy_audio_callback cb)
 {
-    dsy_audio_set_callback(DSY_AUDIO_EXTERNAL, cb);
-    dsy_audio_start(DSY_AUDIO_EXTERNAL);
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+    dsy_audio_start(DSY_AUDIO_INTERNAL);
 }
 
 void DaisyPatch::ChangeAudioCallback(dsy_audio_callback cb)
@@ -161,7 +161,14 @@ void DaisyPatch::InitMidi()
     midi.Init(MidiHandler::MidiInputMode::INPUT_MODE_UART1,
               MidiHandler::MidiOutputMode::OUTPUT_MODE_UART1);
 }
-void DaisyPatch::InitCvOutputs() {}
+
+void DaisyPatch::InitCvOutputs()
+{
+    dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
+    dsy_dac_write(DSY_DAC_CHN1, 0);
+    dsy_dac_write(DSY_DAC_CHN2, 0);
+}
+
 void DaisyPatch::InitEncoder()
 {
     encoder.Init(seed.GetPin(PIN_ENC_A),
@@ -169,6 +176,7 @@ void DaisyPatch::InitEncoder()
                  seed.GetPin(PIN_ENC_CLICK),
                  AudioCallbackRate());
 }
+
 void DaisyPatch::InitGates()
 {
     // Gate Output
@@ -178,12 +186,9 @@ void DaisyPatch::InitGates()
     dsy_gpio_init(&gate_output);
 
     // Gate Inputs
-    gatepin1_.pin  = seed.GetPin(PIN_GATE_IN_1);
-    gatepin1_.mode = DSY_GPIO_MODE_INPUT;
-    gatepin1_.pull = DSY_GPIO_NOPULL;
-    gatepin2_.pin  = seed.GetPin(PIN_GATE_IN_2);
-    gatepin2_.mode = DSY_GPIO_MODE_INPUT;
-    gatepin2_.pull = DSY_GPIO_NOPULL;
-    gate_input[GATE_IN_1].Init(&gatepin1_);
-    gate_input[GATE_IN_2].Init(&gatepin2_);
+    dsy_gpio_pin pin;
+    pin = seed.GetPin(PIN_GATE_IN_1);
+    gate_input[GATE_IN_1].Init(&pin);
+    pin = seed.GetPin(PIN_GATE_IN_2);
+    gate_input[GATE_IN_2].Init(&pin);
 }

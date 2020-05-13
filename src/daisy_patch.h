@@ -31,7 +31,7 @@ class DaisyPatch
     };
     // ~~~~
 
-    enum GateInputs
+    enum GateInput
     {
         GATE_IN_1,
         GATE_IN_2,
@@ -90,7 +90,6 @@ class DaisyPatch
 
     // Private Members
     size_t block_size_;
-    dsy_gpio gatepin1_, gatepin2_;
     dsy_gpio ak4556_reset_pin_;
 };
 
