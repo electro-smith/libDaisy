@@ -25,25 +25,24 @@ class GateIn
     GateIn() {}
     ~GateIn() {}
 
-// ## General Functions
-// ### Init
-// Initializes the gate input with specified hardware pin
-// 
-// ~~~~
-    void Init(dsy_gpio *gatepin);
-// ~~~~
-// #### Trig
-// Checks current state of gate input. 
-// Returns FALSE if pin is low, and TRUE if high
-//
-// ~~~~
+    // ## General Functions
+    // ### Init
+    // Initializes the gate input with specified hardware pin
+    //
+    // ~~~~
+    void Init(dsy_gpio_pin *pin_cfg);
+    // ~~~~
+    // #### Trig
+    // Checks current state of gate input.
+    // Returns FALSE if pin is low, and TRUE if high
+    //
+    // ~~~~
     bool Trig();
-// ~~~~
+    // ~~~~
 
-private:
-    dsy_gpio *pin_;
-    uint8_t   prev_state_;
-
+  private:
+    dsy_gpio pin_;
+    uint8_t  prev_state_, state_;
 };
 } // namespace daisy
 #endif
