@@ -32,12 +32,15 @@ class AnalogControl
     //
     // slew_seconds is the slew time in seconds that it takes for the control to change to a new value.
     //
-    // flip determines whether the input is inverted or not before being processed.
+    // flip determines whether the input is flipped (i.e. 1.f - input) or not before being processed.
+	//
+    // invert determines whether the input is inverted (i.e. -1.f * input) or note before being processed.
     //
     // ~~~~
     void Init(uint16_t *adcptr,
               float     sr,
               bool      flip         = false,
+              bool      invert       = false,
               float     slew_seconds = 0.002f);
     // ~~~~
 
@@ -72,6 +75,7 @@ class AnalogControl
     float     coeff_, samplerate_, val_;
     float     scale_, offset_;
     bool      flip_;
+    bool      invert_;
 };
 } // namespace daisy
 #endif

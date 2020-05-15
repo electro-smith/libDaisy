@@ -106,10 +106,9 @@ void DaisyPatch::DebounceControls()
 }
 
 // This will render the display with the controls as vertical bars
-void DaisyPatch::DisplayControls()
+void DaisyPatch::DisplayControls(bool invert)
 {
-    bool invert, on, off;
-    invert = true;
+    bool on, off;
     on     = invert ? false : true;
     off     = invert ? true : false;
     if(dsy_system_getnow() - screen_update_last_ > screen_update_period_)
@@ -127,7 +126,7 @@ void DaisyPatch::DisplayControls()
             size_t dest;
             curx = (barspacing * i + 1) + (barwidth * i);
             cury = SSD1309_HEIGHT;
-            v    = GetCtrlValue(static_cast<DaisyPatch::Ctrl>(i)) + 1.0f;
+            v    = GetCtrlValue(static_cast<DaisyPatch::Ctrl>(i));
             dest = (v * SSD1309_HEIGHT);
             for(size_t j = dest; j > 0; j--)
             {

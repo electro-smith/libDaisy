@@ -61,12 +61,12 @@ class DaisyPatch
     void   UpdateAnalogControls();
     float  GetCtrlValue(Ctrl k);
     void   DebounceControls();
-    void   DisplayControls();
+    void   DisplayControls(bool invert = true);
 
     // ### Public Members
     // These are exposed for the user to access and manipulate directly
-	//
-	// Helper functions above provide easier access to much of what they are capable of.
+    //
+    // Helper functions above provide easier access to much of what they are capable of.
     DaisySeed     seed;
     Encoder       encoder;
     AnalogControl controls[CTRL_LAST];

@@ -459,26 +459,57 @@ static void combined_callback(size_t offset)
     const int32_t *ini_a, *ini_b;
     ini_a = audio_handle.dma_buffer_rx + offset;
     ini_b = audio_handle_ext.dma_buffer_rx + offset;
-    for(size_t i = 0; i < size; i++)
+    switch(audio_handle.bitdepth)
     {
-        inf[0][i] = s242f(ini_a[(i * 2)]);
-        inf[1][i] = s242f(ini_a[(i * 2) + 1]);
-        inf[2][i] = s242f(ini_b[(i * 2)]);
-        inf[3][i] = s242f(ini_b[(i * 2) + 1]);
+        case DSY_AUDIO_BITDEPTH_24:
+            for(size_t i = 0; i < size; i++)
+            {
+                inf[0][i] = s242f(ini_a[(i * 2)]);
+                inf[1][i] = s242f(ini_a[(i * 2) + 1]);
+                inf[2][i] = s242f(ini_b[(i * 2)]);
+                inf[3][i] = s242f(ini_b[(i * 2) + 1]);
+            }
+            break;
+        case DSY_AUDIO_BITDEPTH_16:
+            for(size_t i = 0; i < size; i++)
+            {
+                inf[0][i] = s162f(ini_a[(i * 2)]);
+                inf[1][i] = s162f(ini_a[(i * 2) + 1]);
+                inf[2][i] = s162f(ini_b[(i * 2)]);
+                inf[3][i] = s162f(ini_b[(i * 2) + 1]);
+            }
+            break;
+        default: break;
     }
+
     // Process
     audio_handle.mc_callback((float**)inf, (float**)outf, size);
-    //    test_mc_callback((float**)inf, (float**)outf, size);
+
     // Interleave Output Buffers
     int32_t *outi_a, *outi_b;
     outi_a = audio_handle.dma_buffer_tx + offset;
     outi_b = audio_handle_ext.dma_buffer_tx + offset;
-    for(size_t i = 0; i < size; i++)
+    switch(audio_handle.bitdepth)
     {
-        outi_a[(i * 2)]     = f2s24(outf[0][i]);
-        outi_a[(i * 2) + 1] = f2s24(outf[1][i]);
-        outi_b[(i * 2)]     = f2s24(outf[2][i]);
-        outi_b[(i * 2) + 1] = f2s24(outf[3][i]);
+        case DSY_AUDIO_BITDEPTH_24:
+            for(size_t i = 0; i < size; i++)
+            {
+                outi_a[(i * 2)]     = f2s24(outf[0][i]);
+                outi_a[(i * 2) + 1] = f2s24(outf[1][i]);
+                outi_b[(i * 2)]     = f2s24(outf[2][i]);
+                outi_b[(i * 2) + 1] = f2s24(outf[3][i]);
+            }
+            break;
+        case DSY_AUDIO_BITDEPTH_16:
+            for(size_t i = 0; i < size; i++)
+            {
+                outi_a[(i * 2)]     = f2s24(outf[0][i]);
+                outi_a[(i * 2) + 1] = f2s24(outf[1][i]);
+                outi_b[(i * 2)]     = f2s24(outf[2][i]);
+                outi_b[(i * 2) + 1] = f2s24(outf[3][i]);
+            }
+            break;
+        default: break;
     }
 }
 
