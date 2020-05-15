@@ -36,9 +36,15 @@ extern "C"
 		dsy_i2c_handle *dev1_i2c;
 	} dsy_audio_handle;
 
+	// Interleaved Stereo callback
 	typedef void (*dsy_audio_callback)(float*, float*, size_t);
+
+	// Non-Interleaved Multichannel callback
+	// Defaults to 4 channels, and is fixed for now.
+	typedef void (*dsy_audio_mc_callback)(float**, float**, size_t);
 	void dsy_audio_init(dsy_audio_handle* handle);
 	void dsy_audio_set_callback(uint8_t intext, dsy_audio_callback cb);
+	void dsy_audio_set_mc_callback(dsy_audio_mc_callback cb);
 	void dsy_audio_set_blocksize(uint8_t intext, size_t blocksize);
 
 	void dsy_audio_start(uint8_t intext);

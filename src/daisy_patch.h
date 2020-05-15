@@ -51,7 +51,7 @@ class DaisyPatch
     // Audio Block size defaults to 48.
     // Change it using this function before StartingAudio
     void SetAudioBlockSize(size_t size);
-    void StartAudio(dsy_audio_callback cb);
+    void StartAudio(dsy_audio_mc_callback cb);
     void ChangeAudioCallback(dsy_audio_callback cb);
     void StartAdc();
     // Hardware Accessors

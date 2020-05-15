@@ -309,6 +309,7 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     __HAL_RCC_GPIOF_CLK_ENABLE();
 
     GPIO_InitTypeDef GPIO_InitStruct;
+    HAL_DMA_MuxSyncConfigTypeDef pSyncConfig;
     /* SAI1 */
     if(hsai->Instance == SAI1_Block_A)
     {
@@ -437,6 +438,15 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
         {
             //Error_Handler();
         }
+//        pSyncConfig.SyncSignalID  = HAL_DMAMUX1_SYNC_DMAMUX1_CH1_EVT;
+//        pSyncConfig.SyncPolarity  = HAL_DMAMUX_SYNC_RISING;
+//        pSyncConfig.SyncEnable    = ENABLE;
+//        pSyncConfig.EventEnable   = DISABLE;
+//        pSyncConfig.RequestNumber = 1;
+//        if(HAL_DMAEx_ConfigMuxSync(&hdma_sai2_a, &pSyncConfig) != HAL_OK)
+//        {
+//            //Error_Handler();
+//        }
 
         /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
@@ -496,6 +506,15 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
             //Error_Handler();
         }
 
+//        pSyncConfig.SyncSignalID  = HAL_DMAMUX1_SYNC_DMAMUX1_CH1_EVT;
+//        pSyncConfig.SyncPolarity  = HAL_DMAMUX_SYNC_RISING;
+//        pSyncConfig.SyncEnable    = ENABLE;
+//        pSyncConfig.EventEnable   = DISABLE;
+//        pSyncConfig.RequestNumber = 1;
+//        if(HAL_DMAEx_ConfigMuxSync(&hdma_sai2_b, &pSyncConfig) != HAL_OK)
+//        {
+//            //Error_Handler();
+//        }
         /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
         __HAL_LINKDMA(hsai, hdmarx, hdma_sai2_b);
