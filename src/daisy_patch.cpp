@@ -28,7 +28,7 @@ using namespace daisy;
 
 const float kAudioSampleRate = DSY_AUDIO_SAMPLE_RATE;
 
-void DaisyPatch::DaisyPatch::Init()
+void DaisyPatch::Init()
 {
     // Configure Seed first
     seed.Configure();
@@ -46,6 +46,9 @@ void DaisyPatch::DaisyPatch::Init()
     dsy_gpio_write(&ak4556_reset_pin_, 0);
     DelayMs(10);
     dsy_gpio_write(&ak4556_reset_pin_, 1);
+    // Set Screen update vars
+    screen_update_period_ = 17; // roughly 60Hz
+    screen_update_last_   = dsy_system_getnow();
 }
 
 void DaisyPatch::DelayMs(size_t del)
@@ -99,6 +102,42 @@ float DaisyPatch::GetCtrlValue(Ctrl k)
 void DaisyPatch::DebounceControls()
 {
     encoder.Debounce();
+}
+
+// This will render the display with the controls as vertical bars
+void DaisyPatch::DisplayControls()
+{
+    bool invert, on, off;
+    invert = true;
+    on     = invert ? false : true;
+    off     = invert ? true : false;
+    if(dsy_system_getnow() - screen_update_last_ > screen_update_period_)
+    {
+        // Graph Knobs
+        size_t barwidth, barspacing, barheight;
+        size_t curx, cury;
+        barwidth   = 15;
+        barspacing = 20;
+        display.Fill(off);
+        // Bars for all four knobs.
+        for(size_t i = 0; i < DaisyPatch::CTRL_LAST; i++)
+        {
+            float  v;
+            size_t dest;
+            curx = (barspacing * i + 1) + (barwidth * i);
+            cury = SSD1309_HEIGHT;
+            v    = GetCtrlValue(static_cast<DaisyPatch::Ctrl>(i)) + 1.0f;
+            dest = (v * SSD1309_HEIGHT);
+            for(size_t j = dest; j > 0; j--)
+            {
+                for(size_t k = 0; k < barwidth; k++)
+                {
+                    display.DrawPixel(curx + k, cury - j, on);
+                }
+            }
+        }
+        display.Update();
+    }
 }
 
 // Private Function Implementations

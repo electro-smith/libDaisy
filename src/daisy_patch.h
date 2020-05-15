@@ -61,8 +61,7 @@ class DaisyPatch
     void   UpdateAnalogControls();
     float  GetCtrlValue(Ctrl k);
     void   DebounceControls();
-    void   ClearLeds();
-    void   UpdateLeds();
+    void   DisplayControls();
 
     // ### Public Members
     // These are exposed for the user to access and manipulate directly
@@ -88,9 +87,9 @@ class DaisyPatch
     void InitEncoder();
     void InitGates();
 
-    // Private Members
     size_t block_size_;
     dsy_gpio ak4556_reset_pin_;
+    uint32_t screen_update_last_, screen_update_period_;
 };
 
 } // namespace daisy
