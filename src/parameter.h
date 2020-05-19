@@ -12,7 +12,7 @@ namespace daisy
 {
 
 // ## parameter class
-class parameter
+class Parameter
 {
   public:
 // ## Data Types
@@ -28,8 +28,8 @@ class parameter
 		LAST,
 	};
 // ~~~~
-	parameter() {}
-	~parameter() {}
+	Parameter() {}
+	~Parameter() {}
 
 // ### init
 // initialize a parameter using an hid_ctrl object.
@@ -42,7 +42,7 @@ class parameter
 //
 // curve - the scaling curve for the input->output transformation.
 // ~~~~
-    inline void init(AnalogControl input, float min, float max, Curve curve)
+    inline void Init(AnalogControl input, float min, float max, Curve curve)
 // ~~~~
     {
         pmin_ = min;
@@ -58,7 +58,7 @@ class parameter
 //
 // returns a float with the specified transformation applied.
 // ~~~~
-	inline float process()
+	inline float Process()
 // ~~~~
 	{ 
 		switch(pcurve_)
@@ -87,7 +87,7 @@ class parameter
 // this is useful if you need to use the value multiple times, and don't store 
 // the output of process in a local variable.
 // ~~~~
-	inline float value() { return val_; }
+	inline float Value() { return val_; }
 // ~~~~
 
   private:
