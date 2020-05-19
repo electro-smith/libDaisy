@@ -22,8 +22,8 @@ class Parameter
 	enum Curve
 	{
 		LINEAR,
-		EXP,
-		LOG,
+		EXPONENTIAL,
+		LOGARITHMIC,
 		CUBE,
 		LAST,
 	};
@@ -66,11 +66,11 @@ class Parameter
 			case LINEAR: 
 				val_ = (in_.Process() * (pmax_ - pmin_)) + pmin_; 
 				break;
-			case EXP:
+			case EXPONENTIAL:
 				val_ = in_.Process();
 				val_ = ((val_ * val_) * (pmax_ - pmin_)) + pmin_;
 				break;
-			case LOG: 
+			case LOGARITHMIC: 
 				val_ = expf((in_.Process() * (lmax_ - lmin_)) + lmin_);
 				break;
 			case CUBE:
