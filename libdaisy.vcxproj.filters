@@ -400,6 +400,7 @@
     <ClCompile Include="src\daisy_petal.cpp" />
     <ClCompile Include="src\dev_sr_595.cpp" />
     <ClCompile Include="src\util_unique_id.c" />
+    <ClCompile Include="src\hid_parameter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h" />
@@ -427,7 +428,6 @@
     <ClInclude Include="src\hid_oled_display.h" />
     <ClInclude Include="src\hid_switch.h" />
     <ClInclude Include="src\hid_usb.h" />
-    <ClInclude Include="src\parameter.h" />
     <ClInclude Include="src\per_adc.h" />
     <ClInclude Include="src\per_dac.h" />
     <ClInclude Include="src\per_gpio.h" />
@@ -895,6 +895,7 @@
     <ClInclude Include="src\dev_codec_ak4556.h" />
     <ClInclude Include="src\dev_sr_595.h" />
     <ClInclude Include="src\util_unique_id.h" />
+    <ClInclude Include="src\hid_parameter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="stm32.props" />
