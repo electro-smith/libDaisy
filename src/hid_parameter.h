@@ -5,8 +5,6 @@
 //
 //      Simple parameter mapping tool that takes a 0-1 input from an hid_ctrl.
 //
-// TODO: Move init and process to .cpp file
-// - i was cool with them being in the h file until math.h got involved for the log stuff.
 namespace daisy
 {
 // ## parameter class
