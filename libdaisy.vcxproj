@@ -33,12 +33,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
     <GNUConfigurationType>Debug</GNUConfigurationType>
     <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
-    <ToolchainVersion>7.2.0/8.0.1/r3</ToolchainVersion>
+    <ToolchainVersion>9.2.1/8.3.0/r1</ToolchainVersion>
     <GNUTargetType>StaticLibrary</GNUTargetType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
-    <ToolchainID>com.sysprogs.gnuarm.arm-eabi</ToolchainID>
-    <ToolchainVersion>8.3.1/8.0/r1</ToolchainVersion>
+    <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
+    <ToolchainVersion>9.2.1/8.3.0/r1</ToolchainVersion>
     <GNUTargetType>StaticLibrary</GNUTargetType>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
@@ -210,6 +210,7 @@
     <ClCompile Include="src\hid_led.cpp" />
     <ClCompile Include="src\hid_midi.cpp" />
     <ClCompile Include="src\hid_oled_display.cpp" />
+    <ClCompile Include="src\hid_parameter.cpp" />
     <ClCompile Include="src\hid_rgb_led.cpp" />
     <ClCompile Include="src\hid_switch.cpp" />
     <ClCompile Include="src\hid_usb.cpp" />
@@ -412,7 +413,7 @@
     <ClInclude Include="src\hid_switch.h" />
     <ClInclude Include="src\hid_usb.h" />
     <ClInclude Include="src\hid_wavplayer.h" />
-    <ClInclude Include="src\parameter.h" />
+    <ClInclude Include="src\hid_parameter.h" />
     <ClInclude Include="src\per_adc.h" />
     <ClInclude Include="src\per_dac.h" />
     <ClInclude Include="src\per_gpio.h" />
