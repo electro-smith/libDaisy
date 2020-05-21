@@ -28,9 +28,10 @@ per_uart \
 hid_ctrl \
 hid_encoder \
 hid_gatein \
+hid_led \
 hid_midi \
 hid_oled_display \
-hid_led \
+hid_parameter \
 hid_rgb_led \
 hid_switch \
 hid_usb \

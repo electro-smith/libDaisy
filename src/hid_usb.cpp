@@ -11,16 +11,25 @@ static void UsbErrorHandler();
 // Externs for IRQ Handlers
 extern "C"
 {
-// Globals from Cube generated version:
-USBD_HandleTypeDef hUsbDeviceHS;
-USBD_HandleTypeDef hUsbDeviceFS;
-extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
-extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
+    // Globals from Cube generated version:
+    USBD_HandleTypeDef       hUsbDeviceHS;
+    USBD_HandleTypeDef       hUsbDeviceFS;
+    extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
+    extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
+    void DummyRxCallback(uint8_t* buf, uint32_t *size)
+    {
+        // Do Nothing
+    }
 
+    CDC_ReceiveCallback rxcallback;
 }
-static void InitFS() 
+
+UsbHandle::ReceiveCallback rx_callback;
+
+static void InitFS()
 {
+    rx_callback = DummyRxCallback;
     if(USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS) != USBD_OK)
     {
         UsbErrorHandler();
@@ -40,10 +49,10 @@ static void InitFS()
     }
 }
 
-static void InitHS() 
+static void InitHS()
 {
     // HS as FS
-    if(USBD_Init(&hUsbDeviceHS, &HS_Desc, DEVICE_HS) != USBD_OK) 
+    if(USBD_Init(&hUsbDeviceHS, &HS_Desc, DEVICE_HS) != USBD_OK)
     {
         UsbErrorHandler();
     }
@@ -63,16 +72,15 @@ static void InitHS()
 }
 
 
-
 void UsbHandle::Init(UsbPeriph dev)
 {
     switch(dev)
     {
         case FS_INTERNAL: InitFS(); break;
         case FS_EXTERNAL: InitHS(); break;
-        case FS_BOTH: 
+        case FS_BOTH:
             InitHS();
-            InitFS(); 
+            InitFS();
             break;
         default: break;
     }
@@ -80,13 +88,21 @@ void UsbHandle::Init(UsbPeriph dev)
     HAL_PWREx_EnableUSBVoltageDetector();
 }
 
-void UsbHandle::TransmitInternal(uint8_t* buff, size_t size) 
+void UsbHandle::TransmitInternal(uint8_t* buff, size_t size)
 {
     CDC_Transmit_FS(buff, size);
 }
-void UsbHandle::TransmitExternal(uint8_t* buff, size_t size) 
+void UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
 {
     CDC_Transmit_HS(buff, size);
+}
+
+void UsbHandle::SetReceiveCallback(ReceiveCallback cb) 
+{
+	// This is pretty silly, but we're working iteritavely...
+    rx_callback = cb;
+    rxcallback  = (CDC_ReceiveCallback)rx_callback;
+    CDC_Set_Rx_Callback_FS(rxcallback);
 }
 
 // Static Function Implementation
@@ -98,33 +114,27 @@ static void UsbErrorHandler()
 // IRQ Handler
 extern "C"
 {
-void OTG_HS_EP1_OUT_IRQHandler(void)
-{
-    HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
-}
+    void OTG_HS_EP1_OUT_IRQHandler(void)
+    {
+        HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+    }
 
-void OTG_HS_EP1_IN_IRQHandler(void)
-{
-    HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
-}
+    void OTG_HS_EP1_IN_IRQHandler(void)
+    {
+        HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+    }
 
-void OTG_HS_IRQHandler(void)
-{
-    HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
-}
+    void OTG_HS_IRQHandler(void) { HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS); }
 
-void OTG_FS_EP1_OUT_IRQHandler(void)
-{
-    HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
-}
+    void OTG_FS_EP1_OUT_IRQHandler(void)
+    {
+        HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
+    }
 
-void OTG_FS_EP1_IN_IRQHandler(void)
-{
-    HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
-}
+    void OTG_FS_EP1_IN_IRQHandler(void)
+    {
+        HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
+    }
 
-void OTG_FS_IRQHandler(void)
-{
-    HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
-}
+    void OTG_FS_IRQHandler(void) { HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS); }
 }

@@ -34,6 +34,11 @@ class UsbHandle
         // ~~~~
     };
 
+    // ### ReceiveCallback
+    // Function called upon reception of a buffer
+    // ~~~~
+    typedef void (*ReceiveCallback)(uint8_t* buff, uint32_t* len);
+
     UsbHandle() {}
 
     ~UsbHandle() {}
@@ -56,6 +61,11 @@ class UsbHandle
     // ~~~~
     void TransmitExternal(uint8_t* buff, size_t size);
     // ~~~~
+
+    // ### SetReceiveCallback
+    // sets the callback to be called upon reception of new data
+    // ~~~~
+    void SetReceiveCallback(ReceiveCallback cb);
 
   private:
 };
