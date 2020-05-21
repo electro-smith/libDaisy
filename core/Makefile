@@ -1,12 +1,9 @@
 #TARGET = ex_bypass
 CHIPSET ?= stm32h7x
 
-PGM_DEVICE ?= interface/stlink-v2.cfg
-
 TARGET_BIN=$(TARGET).bin
 TARGET_ELF=$(TARGET).elf
 FLASH_ADDRESS ?= 0x08000000
-
 
 # If you have the arm-none-eabi- toolchain located in a particular place, but not installed for the entire system, add the path here:
 # GCC_PATH=
