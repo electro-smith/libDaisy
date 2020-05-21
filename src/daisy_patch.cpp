@@ -2,74 +2,232 @@
 
 using namespace daisy;
 
-void daisy_patch::Init() 
+// Hardware Definitions
+#define PIN_ENC_CLICK 0
+#define PIN_ENC_B 11
+#define PIN_ENC_A 12
+#define PIN_OLED_DC 9
+#define PIN_OLED_RESET 30
+#define PIN_MIDI_OUT 13
+#define PIN_MIDI_IN 14
+#define PIN_GATE_OUT 17
+#define PIN_GATE_IN_1 20
+#define PIN_GATE_IN_2 19
+#define PIN_SAI_SCK_A 28
+#define PIN_SAI2_FS_A 27
+#define PIN_SAI2_SD_A 26
+#define PIN_SAI2_SD_B 25
+#define PIN_SAI2_MCLK 24
+
+#define PIN_AK4556_RESET 29
+
+#define ADC_CHN_CTRL_1 DSY_ADC_PIN_CHN10
+#define ADC_CHN_CTRL_2 DSY_ADC_PIN_CHN15
+#define ADC_CHN_CTRL_3 DSY_ADC_PIN_CHN4
+#define ADC_CHN_CTRL_4 DSY_ADC_PIN_CHN7
+
+const float kAudioSampleRate = DSY_AUDIO_SAMPLE_RATE;
+
+void DaisyPatch::Init()
 {
-    size_t blocksize;
-    // Audio Blocksize 48 by default.
-    blocksize = 48; // (only used for CV inits here).
-    // Initialize Hardware
-    //daisy_seed_init(&seed);
+    // Configure Seed first
     seed.Configure();
+    block_size_ = 48;
+    InitAudio();
     seed.Init();
-    // Pin config for everything
-    gate_in1.pin       = {GATE_1_PORT, GATE_1_PIN};
-    gate_in2.pin       = {GATE_2_PORT, GATE_2_PIN};
-    gate_out.pin	   = {GATE_OUT_PORT, GATE_OUT_PIN};
+    InitDisplay();
+    InitCvOutputs();
+    InitEncoder();
+    InitGates();
+    InitDisplay();
+    InitMidi();
+    InitControls();
+    // Reset AK4556
+    dsy_gpio_write(&ak4556_reset_pin_, 0);
+    DelayMs(10);
+    dsy_gpio_write(&ak4556_reset_pin_, 1);
+    // Set Screen update vars
+    screen_update_period_ = 17; // roughly 60Hz
+    screen_update_last_   = dsy_system_getnow();
+}
 
-    // Switches
-    button1.Init({BUTTON_1_PORT, BUTTON_1_PIN}, 1000.0f);
-    button2.Init({BUTTON_2_PORT, BUTTON_2_PIN}, 1000.0f);
-    toggle.Init({TOGGLE_PORT, TOGGLE_PIN},
-                1000.0f,
-                Switch::TYPE_TOGGLE,
-                Switch::POLARITY_INVERTED,
-                Switch::PULL_UP);
+void DaisyPatch::DelayMs(size_t del)
+{
+    dsy_system_delay(del);
+}
+void DaisyPatch::SetAudioBlockSize(size_t size)
+{
+    block_size_ = size;
+    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
+    dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, block_size_);
+}
+void DaisyPatch::StartAudio(dsy_audio_mc_callback cb)
+{
+    dsy_audio_set_mc_callback(cb);
+    dsy_audio_start(DSY_AUDIO_INTERNAL);
+    dsy_audio_start(DSY_AUDIO_EXTERNAL);
+}
 
-    // GPIO
-    gate_in1.mode = DSY_GPIO_MODE_INPUT;
-    dsy_gpio_init(&gate_in1);
-    gate_in2.mode = DSY_GPIO_MODE_INPUT;
-    dsy_gpio_init(&gate_in2);
-    gate_out.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    dsy_gpio_init(&gate_out);
+void DaisyPatch::ChangeAudioCallback(dsy_audio_callback cb)
+{
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+}
+void DaisyPatch::StartAdc()
+{
+    dsy_adc_start();
+}
+float DaisyPatch::AudioSampleRate()
+{
+    return kAudioSampleRate;
+}
+size_t DaisyPatch::AudioBlockSize()
+{
+    return block_size_;
+}
+float DaisyPatch::AudioCallbackRate()
+{
+    return kAudioSampleRate / block_size_;
+}
+void DaisyPatch::UpdateAnalogControls()
+{
+    for(size_t i = 0; i < CTRL_LAST; i++)
+    {
+        controls[i].Process();
+    }
+}
+float DaisyPatch::GetCtrlValue(Ctrl k)
+{
+    return (controls[k].Value());
+}
 
-    // ADCs
-    uint8_t channel_order[8] = {DSY_ADC_PIN_CHN3,
-                                DSY_ADC_PIN_CHN10,
-                                DSY_ADC_PIN_CHN7,
-                                DSY_ADC_PIN_CHN11,
-                                DSY_ADC_PIN_CHN4,
-                                DSY_ADC_PIN_CHN5,
-                                DSY_ADC_PIN_CHN15,
-                                DSY_ADC_PIN_CHN17};
-    seed.adc_handle.channels = 8; // only initializing 8 primary channels.
-    for(uint8_t i = 0; i < 8; i++)
+void DaisyPatch::DebounceControls()
+{
+    encoder.Debounce();
+}
+
+// This will render the display with the controls as vertical bars
+void DaisyPatch::DisplayControls(bool invert)
+{
+    bool on, off;
+    on     = invert ? false : true;
+    off     = invert ? true : false;
+    if(dsy_system_getnow() - screen_update_last_ > screen_update_period_)
+    {
+        // Graph Knobs
+        size_t barwidth, barspacing, barheight;
+        size_t curx, cury;
+        barwidth   = 15;
+        barspacing = 20;
+        display.Fill(off);
+        // Bars for all four knobs.
+        for(size_t i = 0; i < DaisyPatch::CTRL_LAST; i++)
+        {
+            float  v;
+            size_t dest;
+            curx = (barspacing * i + 1) + (barwidth * i);
+            cury = SSD1309_HEIGHT;
+            v    = GetCtrlValue(static_cast<DaisyPatch::Ctrl>(i));
+            dest = (v * SSD1309_HEIGHT);
+            for(size_t j = dest; j > 0; j--)
+            {
+                for(size_t k = 0; k < barwidth; k++)
+                {
+                    display.DrawPixel(curx + k, cury - j, on);
+                }
+            }
+        }
+        display.Update();
+    }
+}
+
+// Private Function Implementations
+// set SAI2 stuff -- run this between seed configure and init
+void DaisyPatch::InitAudio()
+{
+    seed.sai_handle.init                   = DSY_AUDIO_INIT_BOTH;
+    seed.sai_handle.device[DSY_SAI_2]      = DSY_AUDIO_DEVICE_AK4556;
+    seed.sai_handle.samplerate[DSY_SAI_2]  = DSY_AUDIO_SAMPLERATE_48K;
+    seed.sai_handle.bitdepth[DSY_SAI_2]    = DSY_AUDIO_BITDEPTH_24;
+    seed.sai_handle.a_direction[DSY_SAI_2] = DSY_AUDIO_TX;
+    seed.sai_handle.b_direction[DSY_SAI_2] = DSY_AUDIO_RX;
+    seed.sai_handle.sync_config[DSY_SAI_2] = DSY_AUDIO_SYNC_MASTER;
+
+    ak4556_reset_pin_.pin  = seed.GetPin(PIN_AK4556_RESET);
+    ak4556_reset_pin_.mode = DSY_GPIO_MODE_OUTPUT_PP;
+    ak4556_reset_pin_.pull = DSY_GPIO_NOPULL;
+    dsy_gpio_init(&ak4556_reset_pin_);
+
+    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
+    dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, block_size_);
+}
+void DaisyPatch::InitControls()
+{
+    // Set order of ADCs based on CHANNEL NUMBER
+    uint8_t channel_order[CTRL_LAST] = {
+        ADC_CHN_CTRL_1,
+        ADC_CHN_CTRL_2,
+        ADC_CHN_CTRL_3,
+        ADC_CHN_CTRL_4,
+    };
+    // NUMBER OF CHANNELS
+    seed.adc_handle.channels = CTRL_LAST;
+    // Fill the ADCs active channel array.
+    for(uint8_t i = 0; i < CTRL_LAST; i++)
     {
         seed.adc_handle.active_channels[i] = channel_order[i];
-	}
-	seed.adc_handle.oversampling = DSY_ADC_OVS_32;
-	dsy_adc_init(&seed.adc_handle);
-	dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
+    }
+    // Set Oversampling to 32x
+    seed.adc_handle.oversampling = DSY_ADC_OVS_32;
+    // Init ADC
+    dsy_adc_init(&seed.adc_handle);
 
-	// Higher level hid_ctrls
-	for(uint8_t i = 0; i < KNOB_LAST; i++)
-	{
-		pctrl[i].Init(adc_ptr(i), SAMPLE_RATE/blocksize);
-	}
-	for(uint8_t i = CV_1; i < CV_LAST; i++)
-	{
-		pctrl[i].InitBipolarCv(adc_ptr(i), SAMPLE_RATE/blocksize);
-	}
-	knob1.Init(adc_ptr(KNOB_1), SAMPLE_RATE/blocksize);
-	knob2.Init(adc_ptr(KNOB_2), SAMPLE_RATE/blocksize);
-	knob3.Init(adc_ptr(KNOB_3), SAMPLE_RATE/blocksize);
-	knob4.Init(adc_ptr(KNOB_4), SAMPLE_RATE/blocksize);
-	cv1.InitBipolarCv(adc_ptr(CV_1), SAMPLE_RATE/blocksize);
-	cv2.InitBipolarCv(adc_ptr(CV_2), SAMPLE_RATE/blocksize);
-	cv3.InitBipolarCv(adc_ptr(CV_3), SAMPLE_RATE/blocksize);
-	cv4.InitBipolarCv(adc_ptr(CV_4), SAMPLE_RATE/blocksize);
+    for(size_t i = 0; i < CTRL_LAST; i++)
+    {
+        controls[i].Init(dsy_adc_get_rawptr(i), AudioCallbackRate(), true);
+    }
+}
 
-	// LEDs
-	uint8_t addr = 0x00;
-	dsy_led_driver_init(&seed.LED_DRIVER_I2C, &addr, 1);
+void DaisyPatch::InitDisplay()
+{
+    dsy_gpio_pin pincfg[OledDisplay::NUM_PINS];
+    pincfg[OledDisplay::DATA_COMMAND] = seed.GetPin(PIN_OLED_DC);
+    pincfg[OledDisplay::RESET]        = seed.GetPin(PIN_OLED_RESET);
+    display.Init(pincfg);
+}
+
+void DaisyPatch::InitMidi()
+{
+    midi.Init(MidiHandler::MidiInputMode::INPUT_MODE_UART1,
+              MidiHandler::MidiOutputMode::OUTPUT_MODE_UART1);
+}
+
+void DaisyPatch::InitCvOutputs()
+{
+    dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
+    dsy_dac_write(DSY_DAC_CHN1, 0);
+    dsy_dac_write(DSY_DAC_CHN2, 0);
+}
+
+void DaisyPatch::InitEncoder()
+{
+    encoder.Init(seed.GetPin(PIN_ENC_A),
+                 seed.GetPin(PIN_ENC_B),
+                 seed.GetPin(PIN_ENC_CLICK),
+                 AudioCallbackRate());
+}
+
+void DaisyPatch::InitGates()
+{
+    // Gate Output
+    gate_output.pin  = seed.GetPin(PIN_GATE_OUT);
+    gate_output.mode = DSY_GPIO_MODE_OUTPUT_PP;
+    gate_output.pull = DSY_GPIO_NOPULL;
+    dsy_gpio_init(&gate_output);
+
+    // Gate Inputs
+    dsy_gpio_pin pin;
+    pin = seed.GetPin(PIN_GATE_IN_1);
+    gate_input[GATE_IN_1].Init(&pin);
+    pin = seed.GetPin(PIN_GATE_IN_2);
+    gate_input[GATE_IN_2].Init(&pin);
 }

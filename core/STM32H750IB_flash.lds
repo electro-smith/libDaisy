@@ -122,6 +122,8 @@ SECTIONS
 		PROVIDE(__bss_end__ = _ebss);
 	} > SRAM
 
+	PROVIDE(end = .); 
+
 	.dtcmram_bss (NOLOAD) :
 	{
 		. = ALIGN(4);
@@ -150,6 +152,7 @@ SECTIONS
 		PROVIDE(__sram1_bss_end__ = _esram1_bss);
 	} > RAM_D2
 
+	/*
 	.sdram_text :
 	{
 		. = ALIGN(4);
@@ -164,6 +167,7 @@ SECTIONS
 		PROVIDE(__sdram_text_end = _esdram_text);
 	} > SDRAM AT >FLASH
 	_sisdram_text = LOADADDR(.sdram_text);
+	*/
 
 	.sdram_bss (NOLOAD) :
 	{
@@ -179,7 +183,6 @@ SECTIONS
 		PROVIDE(__sdram_bss_end = _esdram_bss);
 	} > SDRAM
 
-	PROVIDE(end = _ebss); 
 
     .qspiflash_text :
 	{
@@ -223,7 +226,7 @@ SECTIONS
 		PROVIDE(__qspiflash_bss_end = _eqspiflash_bss);
 	} > QSPIFLASH
 
-	.heap :
+	.heap (NOLOAD) :
 	{
 		. = ALIGN(4);
 		PROVIDE(__heap_start__ = .);
@@ -232,7 +235,7 @@ SECTIONS
 		PROVIDE(__heap_end__ = .);
 	} > SRAM
 
-	.reserved_for_stack :
+	.reserved_for_stack (NOLOAD) :
 	{
 		. = ALIGN(4);
 		PROVIDE(__reserved_for_stack_start__ = .);

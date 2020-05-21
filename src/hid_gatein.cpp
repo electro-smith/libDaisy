@@ -2,17 +2,20 @@
 
 using namespace daisy;
 
-void GateIn::Init(dsy_gpio *gatepin)
+void GateIn::Init(dsy_gpio_pin *pin_cfg)
 {
-    pin_        = gatepin;
-    prev_state_ = 0;
+    pin_.pin        = *pin_cfg;
+    pin_.mode       = DSY_GPIO_MODE_INPUT;
+    pin_.pull       = DSY_GPIO_NOPULL;
+    prev_state_     = 0;
+    state_ = 0;
+    dsy_gpio_init(&pin_);
 }
 
 bool GateIn::Trig()
 {
-    bool new_state, out;
-    new_state  = dsy_gpio_read(pin_);
-    out        = new_state && !prev_state_;
-    prev_state_ = new_state;
-    return out;
+    // Inverted because of typical BJT input circuit.
+    prev_state_ = state_;
+    state_ = !dsy_gpio_read(&pin_); 
+    return state_ && !prev_state_;
 }

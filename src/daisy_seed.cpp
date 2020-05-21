@@ -8,10 +8,10 @@ using namespace daisy;
 #define SEED_TEST_POINT_PORT DSY_GPIOG
 #define SEED_TEST_POINT_PIN 14
 
-#ifdef SEED_REV3
-const dsy_gpio_pin seedgpio[32] = {
+#ifndef SEED_REV2
+const dsy_gpio_pin seedgpio[31] = {
     // GPIO 1-8
-    {DSY_GPIOA, 8},
+    //{DSY_GPIOA, 8}, // removed on Rev4
     {DSY_GPIOB, 12},
     {DSY_GPIOC, 11},
     {DSY_GPIOC, 10},
@@ -136,7 +136,7 @@ dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
 {
     dsy_gpio_pin p;
     pin_idx = pin_idx < 32 ? pin_idx : 0;
-#ifdef SEED_REV3
+#ifndef SEED_REV2
     p = seedgpio[pin_idx];
 #else
     p                            = {seed_ports[pin_idx], seed_pins[pin_idx]};
@@ -211,7 +211,7 @@ void DaisySeed::ConfigureAudio()
     dsy_gpio_pin *pin_group;
     sai_handle.init = DSY_AUDIO_INIT_SAI1;
     // SAI1 - config
-#ifdef SEED_REV3
+#ifndef SEED_REV2
     sai_handle.device[DSY_SAI_1]     = DSY_AUDIO_DEVICE_AK4556;
     sai_handle.samplerate[DSY_SAI_1] = DSY_AUDIO_SAMPLERATE_48K;
     sai_handle.bitdepth[DSY_SAI_1]   = DSY_AUDIO_BITDEPTH_24;
@@ -248,8 +248,8 @@ void DaisySeed::ConfigureAudio()
     pin_group[DSY_SAI_PIN_SOUT] = dsy_pin(DSY_GPIOA, 0);
 
     audio_handle.sai        = &sai_handle;
-    audio_handle.dev0_i2c   = &i2c2_handle;
-    audio_handle.dev1_i2c   = &i2c1_handle;
+    audio_handle.dev0_i2c   = NULL;
+    audio_handle.dev1_i2c   = NULL;
     audio_handle.block_size = 48;
     dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, 48);
     dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, 48);

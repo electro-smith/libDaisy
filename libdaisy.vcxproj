@@ -207,6 +207,7 @@
     <ClCompile Include="src\hid_audio.c" />
     <ClCompile Include="src\hid_ctrl.cpp" />
     <ClCompile Include="src\hid_encoder.cpp" />
+    <ClCompile Include="src\hid_gatein.cpp" />
     <ClCompile Include="src\hid_led.cpp" />
     <ClCompile Include="src\hid_midi.cpp" />
     <ClCompile Include="src\hid_oled_display.cpp" />
@@ -406,6 +407,7 @@
     <ClInclude Include="src\hid_audio.h" />
     <ClInclude Include="src\hid_ctrl.h" />
     <ClInclude Include="src\hid_encoder.h" />
+    <ClInclude Include="src\hid_gatein.h" />
     <ClInclude Include="src\hid_led.h" />
     <ClInclude Include="src\hid_midi.h" />
     <ClInclude Include="src\hid_oled_display.h" />
