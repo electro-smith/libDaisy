@@ -124,7 +124,6 @@ SECTIONS
 
 	PROVIDE(end = .); 
 
-	/*
 	.dtcmram_bss (NOLOAD) :
 	{
 		. = ALIGN(4);
@@ -138,7 +137,6 @@ SECTIONS
 
 		PROVIDE(__dtcmram_bss_end__ = _edtcmram_bss);
 	} > DTCMRAM
-	*/
 
 	.sram1_bss (NOLOAD) :
 	{
@@ -246,14 +244,12 @@ SECTIONS
 		PROVIDE(__reserved_for_stack_end__ = .);
 	} > SRAM
 
-	/*
     DISCARD :
     {
         libc.a ( * )
         libm.a ( * )
         libgcc.a ( * )
     }
-	*/
 
 }
 
