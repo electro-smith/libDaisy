@@ -39,9 +39,6 @@ BUILD_DIR = build
 LIBDAISY_DIR ?= \
 ./libdaisy
 
-DAISYSP_DIR ?= \
-./daisysp
-
 SYSTEM_FILES_DIR ?= \
 ./
 
@@ -154,7 +151,7 @@ LDSCRIPT = $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
 LIBS += -ldaisy -lc -lm -lnosys
 LIBDIR = -L$(LIBDAISY_DIR)/build 
 
-ifdef $(DAISYSP_DIR)
+ifdef DAISYSP_DIR
 LIBS += -ldaisysp
 LIBDIR += -L $(DAISYSP_DIR)/build
 endif
