@@ -30,8 +30,10 @@ class Led
     // Initializes an LED using the specified hardware pin.
 	//
     // invert will set whether to internally invert the brightness due to hardware config.
-	// ~~~~
-    void Init(dsy_gpio_pin pin, bool invert);
+	//
+    // samplerate sets the rate at which 'Update()' will be called (used for software PWM)
+	// ~~~~ 
+    void Init(dsy_gpio_pin pin, bool invert, float samplerate=1000.0f);
     // ~~~~
     // ### Set
     // Sets the brightness of the Led.
@@ -53,6 +55,8 @@ class Led
   private:
     size_t pwm_cnt_, pwm_thresh_;
     float  bright_;
+    float    pwm_;
+    float    samplerate_;
     bool     invert_, on_, off_;
     dsy_gpio hw_pin_;
 };
