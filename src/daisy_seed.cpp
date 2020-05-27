@@ -256,6 +256,7 @@ void DaisySeed::ConfigureAudio()
 }
 void DaisySeed::ConfigureAdc()
 {
+    /*
     dsy_gpio_pin *pin_group;
     pin_group = adc_handle.pin_config;
 
@@ -270,6 +271,7 @@ void DaisySeed::ConfigureAdc()
     pin_group[DSY_ADC_PIN_CHN17] = dsy_pin(DSY_GPIOA, 1);
     pin_group[DSY_ADC_PIN_CHN18] = dsy_pin(DSY_GPIOA, 4);
     pin_group[DSY_ADC_PIN_CHN19] = dsy_pin(DSY_GPIOA, 5);
+    */
 }
 void DaisySeed::ConfigureDac()
 {

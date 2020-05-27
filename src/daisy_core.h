@@ -64,12 +64,23 @@ typedef struct
 
 // ### dsy_pin
 // Helper for creating pins from port/pin combos easily
-inline dsy_gpio_pin dsy_pin(dsy_gpio_port port, uint8_t pin)
+FORCE_INLINE dsy_gpio_pin dsy_pin(dsy_gpio_port port, uint8_t pin)
 {
     dsy_gpio_pin p;
     p.port = port;
     p.pin  = pin;
     return p;
+}
+
+// ### dsy_pin_cmp
+// Helper for testing sameness of two dsy_gpio_pins
+//
+// returns 1 if same, 0 if different
+// ~~~~
+FORCE_INLINE uint8_t dsy_pin_cmp(dsy_gpio_pin *a, dsy_gpio_pin *b)
+// ~~~~
+{
+    return ((a->port == b->port) && (a->pin == b->pin));
 }
 
 #endif

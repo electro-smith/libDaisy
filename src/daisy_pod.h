@@ -67,10 +67,6 @@ class DaisyPod
     void             InitEncoder();
     void             InitLeds();
     void             InitKnobs();
-    inline uint16_t* adc_ptr(const uint8_t chn)
-    {
-        return dsy_adc_get_rawptr(chn);
-    }
     float  sample_rate_, callback_rate_;
     size_t block_size_;
 };
