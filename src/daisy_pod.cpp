@@ -5,7 +5,7 @@
 #endif
 
 
-#ifdef SEED_REV3
+#ifndef SEED_REV2
 
 // Rev2 Pinout
 // Compatible with Seed rev1 and rev2
