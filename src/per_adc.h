@@ -10,10 +10,9 @@
 
 namespace daisy
 {
-
 // ## AdcChannelConfig
-// Configuration Structure for a given channel 
-// 
+// Configuration Structure for a given channel
+//
 // While there may not be many configuration options here,
 // using a struct like this allows us to add more configuration
 // later without breaking existing functionality.
@@ -32,15 +31,8 @@ struct AdcChannelConfig
     // ### InitSingle
     // Initializes a single ADC pin as an ADC.
     // ~~~~
-    void InitSingle(dsy_gpio_pin pin)
+    void InitSingle(dsy_gpio_pin pin);
     // ~~~~
-    {
-        pin_.pin = pin;
-        mux_channels_ = 0;
-        pin_.mode = DSY_GPIO_MODE_ANALOG;
-        pin_.pull = DSY_GPIO_NOPULL;
-        //dsy_gpio_init(&pin_);
-    }
 
     // ### InitMux
     // Initializes a single ADC pin as a Multiplexed ADC.
@@ -48,46 +40,24 @@ struct AdcChannelConfig
     // Requires a CD4051 Multiplexor connected to the pin
     //
     // Internal Callbacks handle the pin addressing.
-    // 
+    //
     // channels must be 1-8
     // ~~~~
-    void InitMux(dsy_gpio_pin adc_pin, 
-            dsy_gpio_pin mux_0, 
-            dsy_gpio_pin mux_1, 
-            dsy_gpio_pin mux_2,
-            size_t channels)
+    void InitMux(dsy_gpio_pin adc_pin,
+                 dsy_gpio_pin mux_0,
+                 dsy_gpio_pin mux_1,
+                 dsy_gpio_pin mux_2,
+                 size_t       channels);
     // ~~~~
-    {
-        size_t pins_to_init;
-        // Init ADC Pin
-        pin_.pin = adc_pin;
-        pin_.mode = DSY_GPIO_MODE_ANALOG;
-        pin_.pull = DSY_GPIO_NOPULL;
-//        dsy_gpio_init(&pin_);
-        // Init Muxes
-        mux_pin_[0].pin = mux_0;
-        mux_pin_[1].pin = mux_1;
-        mux_pin_[2].pin = mux_2;
-        mux_channels_ = channels <  8 ? channels : 8;
-        pins_to_init = (mux_channels_ - 1) >> 1;
-        for (size_t i = 0; i <= pins_to_init; i++)
-        {
-            mux_pin_[i].mode = DSY_GPIO_MODE_OUTPUT_PP;
-            mux_pin_[i].pull = DSY_GPIO_NOPULL;
-//            dsy_gpio_init(&mux_pin_[i]);
-        }
-    }
 
-
-    dsy_gpio             pin_;
-    dsy_gpio             mux_pin_[MUX_SEL_LAST];
-    uint8_t              mux_channels_;
+    dsy_gpio pin_;
+    dsy_gpio mux_pin_[MUX_SEL_LAST];
+    uint8_t  mux_channels_;
 };
 
 class AdcHandle
 {
   public:
-
     enum OverSampling
     {
         OVS_NONE,
@@ -107,18 +77,25 @@ class AdcHandle
     ~AdcHandle() {}
     // ### Init
     // Initializes the ADC with the pins passed in.
-    // 
+    //
     // * *cfg: an array of AdcChannelConfig of the desired channel
     // * num_channels: number of ADC channels to initialize
+	// * ovs: Oversampling amount - Defaults to OVS_32
     // ~~~~
-    void Init(AdcChannelConfig *cfg, size_t num_channels, OverSampling ovs);
+    void Init(AdcChannelConfig *cfg, size_t num_channels, OverSampling ovs=OVS_32);
     // ~~~~
-    // 
+    //
     // ### Start
+	// Starts reading from the ADC
+	// ~~~~
     void Start();
+	// ~~~~
 
     // ### Stop
-    void      Stop();
+	// Stops reading from the ADC
+	// ~~~~
+    void Stop();
+	// ~~~~
 
     // ## Accessors
     //
@@ -136,10 +113,9 @@ class AdcHandle
     // ~~~~
 
 
-
   private:
-    OverSampling     oversampling_;
-    size_t num_channels_;
+    OverSampling oversampling_;
+    size_t       num_channels_;
 };
 
 } // namespace daisy

@@ -5,6 +5,8 @@
 using namespace daisy;
 
 // Pinout by channel as dsy_gpio_pin
+// TODO Figure out how to get this formatting 
+// to not suck..
 #define PIN_CHN_3    \
     {                \
         DSY_GPIOA, 6 \
@@ -123,8 +125,10 @@ struct dsy_adc
 };
 
 // Static Functions
+static void write_mux_value(uint8_t chn, uint8_t idx);
+static const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin);
 
-const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin)
+static const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin)
 {
     // For now just a rough switch case for all ADC_CHANNEL values
     dsy_gpio_pin adcpins[DSY_ADC_MAX_CHANNELS] = {
@@ -151,18 +155,48 @@ const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin)
     return 0; // we should check what zero actually means in this context.
 }
 
-static void write_mux_value(uint8_t chn, uint8_t idx);
-
 // Declare Global ADC Handle
 static dsy_adc adc;
 
 // Begin AdcChannelConfig Implementations
 
+void AdcChannelConfig::InitSingle(dsy_gpio_pin pin)
+{
+    pin_.pin      = pin;
+    mux_channels_ = 0;
+    pin_.mode     = DSY_GPIO_MODE_ANALOG;
+    pin_.pull     = DSY_GPIO_NOPULL;
+    dsy_gpio_init(&pin_);
+}
+void AdcChannelConfig::InitMux(dsy_gpio_pin adc_pin,
+                               dsy_gpio_pin mux_0,
+                               dsy_gpio_pin mux_1,
+                               dsy_gpio_pin mux_2,
+                               size_t       channels)
+{
+    size_t pins_to_init;
+    // Init ADC Pin
+    pin_.pin  = adc_pin;
+    pin_.mode = DSY_GPIO_MODE_ANALOG;
+    pin_.pull = DSY_GPIO_NOPULL;
+    dsy_gpio_init(&pin_);
+    // Init Muxes
+    mux_pin_[0].pin = mux_0;
+    mux_pin_[1].pin = mux_1;
+    mux_pin_[2].pin = mux_2;
+    mux_channels_   = channels < 8 ? channels : 8;
+    pins_to_init    = (mux_channels_ - 1) >> 1;
+    for(size_t i = 0; i <= pins_to_init; i++)
+    {
+        mux_pin_[i].mode = DSY_GPIO_MODE_OUTPUT_PP;
+        mux_pin_[i].pull = DSY_GPIO_NOPULL;
+        dsy_gpio_init(&mux_pin_[i]);
+    }
+}
+
 // Begin AdcHandle Implementations
 
-void AdcHandle::Init(AdcChannelConfig* cfg,
-                     size_t            num_channels,
-                     OverSampling      ovs)
+void AdcHandle::Init(AdcChannelConfig* cfg, size_t num_channels, OverSampling ovs)
 {
     ADC_MultiModeTypeDef   multimode = {0};
     ADC_ChannelConfTypeDef sConfig   = {0};
@@ -203,11 +237,9 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     // Handle Oversampling
     if(oversampling_)
     {
-        adc.hadc1.Init.OversamplingMode = ENABLE;
-        adc.hadc1.Init.Oversampling.OversamplingStopReset
-            = ADC_REGOVERSAMPLING_CONTINUED_MODE;
-        adc.hadc1.Init.Oversampling.TriggeredMode
-            = ADC_TRIGGEREDMODE_SINGLE_TRIGGER;
+        adc.hadc1.Init.OversamplingMode                   = ENABLE;
+        adc.hadc1.Init.Oversampling.OversamplingStopReset = ADC_REGOVERSAMPLING_CONTINUED_MODE;
+        adc.hadc1.Init.Oversampling.TriggeredMode         = ADC_TRIGGEREDMODE_SINGLE_TRIGGER;
         switch(oversampling_)
         {
             case OVS_4:
@@ -243,9 +275,8 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
                 adc.hadc1.Init.Oversampling.Ratio         = 511;
                 break;
             case OVS_1024:
-                adc.hadc1.Init.Oversampling.RightBitShift
-                    = ADC_RIGHTBITSHIFT_10;
-                adc.hadc1.Init.Oversampling.Ratio = 1023;
+                adc.hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_10;
+                adc.hadc1.Init.Oversampling.Ratio         = 1023;
                 break;
             default: break;
         }
@@ -282,11 +313,9 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     }
 }
 
-
 void AdcHandle::Start()
 {
-    HAL_ADCEx_Calibration_Start(
-        &adc.hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
+    HAL_ADCEx_Calibration_Start(&adc.hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
     HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 
@@ -294,6 +323,8 @@ void AdcHandle::Stop()
 {
     HAL_ADC_Stop_DMA(&adc.hadc1);
 }
+
+// Accessors
 
 uint16_t AdcHandle::Get(uint8_t chn)
 {
@@ -306,8 +337,7 @@ uint16_t* AdcHandle::GetPtr(uint8_t chn)
 
 float AdcHandle::GetFloat(uint8_t chn)
 {
-    return (float)adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0]
-           / DSY_ADC_MAX_RESOLUTION;
+    return (float)adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0] / DSY_ADC_MAX_RESOLUTION;
 }
 
 uint16_t AdcHandle::GetMux(uint8_t chn, uint8_t idx)
@@ -326,24 +356,54 @@ float AdcHandle::GetMuxFloat(uint8_t chn, uint8_t idx)
            / DSY_ADC_MAX_RESOLUTION;
 }
 
+
+// Internal Implementations
+
+static void write_mux_value(uint8_t chn, uint8_t idx)
+{
+    dsy_gpio *p0, *p1, *p2;
+    p0 = &adc.pin_cfg[chn].mux_pin_[0];
+    p1 = &adc.pin_cfg[chn].mux_pin_[1];
+    p2 = &adc.pin_cfg[chn].mux_pin_[2];
+    dsy_gpio_write(p0, (idx & 0x01) > 0);
+    dsy_gpio_write(p1, (idx & 0x02) > 0);
+    dsy_gpio_write(p2, (idx & 0x04) > 0);
+}
+
+static void adc_internal_callback()
+{
+    // Handle Externally Multiplexed Pins
+    for(uint16_t i = 0; i < adc.channels; i++)
+    {
+        uint8_t chn              = i;
+        uint8_t current_position = adc.mux_index[i];
+        if(adc.mux_channels[chn] > 0)
+        {
+            // Capture current value to mux_cache
+            *adc.mux_cache[i][current_position] = adc.dma_buffer[i];
+            // Update Mux Position, and write GPIO
+            adc.mux_index[chn] += 1;
+            if(adc.mux_index[chn] > adc.mux_channels[chn])
+            {
+                adc.mux_index[chn] = 0;
+            }
+            write_mux_value(chn, adc.mux_index[chn]);
+        }
+    }
+}
+
+
+// STM32 HAL function callbacks
 void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
 {
     if(adcHandle->Instance == ADC1)
     {
-        /* ADC1 clock enable */
+        // ADC1 clock enable
         __HAL_RCC_ADC12_CLK_ENABLE();
 
-        __HAL_RCC_GPIOC_CLK_ENABLE();
-        __HAL_RCC_GPIOB_CLK_ENABLE();
-        __HAL_RCC_GPIOA_CLK_ENABLE();
-
         // GPIO Init has already happened. . .
-        for(size_t i = 0; i < adc.channels; i++)
-        {
-            dsy_gpio_init(&adc.pin_cfg[i].pin_);
-        }
-        /* ADC1 DMA Init */
-        /* ADC1 Init */
+        // ADC1 DMA Init
+        // ADC1 Init
         adc.hdma_adc1.Instance                 = DMA1_Stream2;
         adc.hdma_adc1.Init.Request             = DMA_REQUEST_ADC1;
         adc.hdma_adc1.Init.Direction           = DMA_PERIPH_TO_MEMORY;
@@ -376,39 +436,6 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
         }
         HAL_DMA_DeInit(adcHandle->DMA_Handle);
     }
-}
-
-static void adc_internal_callback()
-{
-    // Handle Externally Multiplexed Pins
-    for(uint16_t i = 0; i < adc.channels; i++)
-    {
-        uint8_t chn              = i;
-        uint8_t current_position = adc.mux_index[i];
-        if(adc.mux_channels[chn] > 0)
-        {
-            // Capture current value to mux_cache
-            *adc.mux_cache[i][current_position] = adc.dma_buffer[i];
-            // Update Mux Position, and write GPIO
-            adc.mux_index[chn] += 1;
-            if(adc.mux_index[chn] > adc.mux_channels[chn])
-            {
-                adc.mux_index[chn] = 0;
-            }
-            write_mux_value(chn, adc.mux_index[chn]);
-        }
-    }
-}
-
-static void write_mux_value(uint8_t chn, uint8_t idx)
-{
-    dsy_gpio *p0, *p1, *p2;
-    p0 = &adc.pin_cfg[chn].mux_pin_[0];
-    p1 = &adc.pin_cfg[chn].mux_pin_[1];
-    p2 = &adc.pin_cfg[chn].mux_pin_[2];
-    dsy_gpio_write(p0, (idx & 0x01) > 0);
-    dsy_gpio_write(p1, (idx & 0x02) > 0);
-    dsy_gpio_write(p2, (idx & 0x04) > 0);
 }
 
 extern "C"
