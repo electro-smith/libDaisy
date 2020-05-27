@@ -3,9 +3,9 @@ TARGET = libdaisy
 MODULE_DIR=src
 MODULES = \
 daisy_seed \
+daisy_pod \
 daisy_patch \
 daisy_petal \
-daisy_pod \
 dev_codec_pcm3060 \
 dev_codec_wm8731 \
 dev_codec_ak4556 \
@@ -45,6 +45,8 @@ util_color \
 util_sd_diskio \
 util_unique_id \
 system_stm32h7xx \
+
+
 
 ######################################
 # building variables

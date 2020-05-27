@@ -11,6 +11,7 @@ void dsy_gpio_init(dsy_gpio *p)
         case DSY_GPIO_MODE_INPUT: ginit.Mode = GPIO_MODE_INPUT; break;
         case DSY_GPIO_MODE_OUTPUT_PP: ginit.Mode = GPIO_MODE_OUTPUT_PP; break;
         case DSY_GPIO_MODE_OUTPUT_OD: ginit.Mode = GPIO_MODE_OUTPUT_OD; break;
+        case DSY_GPIO_MODE_ANALOG: ginit.Mode = GPIO_MODE_ANALOG; break;
         default: ginit.Mode = GPIO_MODE_INPUT; break;
     }
     switch(p->pull)

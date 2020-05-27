@@ -21,6 +21,15 @@ using namespace daisy;
 #define ENC_B_PIN 28
 #define ENC_CLICK_PIN 15
 
+// Knobs
+#define PIN_EXPRESSION 15
+#define PIN_KNOB_1 16
+#define PIN_KNOB_2 19
+#define PIN_KNOB_3 17
+#define PIN_KNOB_4 20
+#define PIN_KNOB_5 18
+#define PIN_KNOB_6 21
+
 // Extra Peripherals
 #define LED_DRIVER_I2C i2c1_handle
 
@@ -120,7 +129,7 @@ float DaisyPetal::AudioCallbackRate()
 
 void DaisyPetal::StartAdc()
 {
-    dsy_adc_start();
+    seed.adc.Start();
 }
 
 void DaisyPetal::UpdateAnalogControls()
@@ -202,7 +211,8 @@ void DaisyPetal::SetRingLed(RingLed idx, float r, float g, float b)
 }
 void DaisyPetal::SetFootswitchLed(FootswitchLed idx, float bright)
 {
-    uint8_t fs_addr[FOOTSWITCH_LED_LAST] = { LED_FS_1, LED_FS_2, LED_FS_3, LED_FS_4};
+    uint8_t fs_addr[FOOTSWITCH_LED_LAST]
+        = {LED_FS_1, LED_FS_2, LED_FS_3, LED_FS_4};
     dsy_led_driver_set_led(fs_addr[idx], cube(bright));
 }
 
@@ -252,34 +262,22 @@ void DaisyPetal::InitLeds()
 }
 void DaisyPetal::InitAnalogControls()
 {
-    // +1 to the arrays and iterator to account for expression
-    // Expression will be at position KNOB_LAST (aka one after the
-    //     end of the knob.
-
     // Set order of ADCs based on CHANNEL NUMBER
-    uint8_t channel_order[KNOB_LAST + 1] = {DSY_ADC_PIN_CHN15,
-                                            DSY_ADC_PIN_CHN5,
-                                            DSY_ADC_PIN_CHN7,
-                                            DSY_ADC_PIN_CHN3,
-                                            DSY_ADC_PIN_CHN11,
-                                            DSY_ADC_PIN_CHN4,
-                                            DSY_ADC_PIN_CHN10};
-    // NUMBER OF CHANNELS
-    seed.adc_handle.channels = KNOB_LAST + 1;
-    // Fill the ADCs active channel array.
-    for(uint8_t i = 0; i < KNOB_LAST + 1; i++)
-    {
-        seed.adc_handle.active_channels[i] = channel_order[i];
-    }
-    // Set Oversampling to 32x
-    seed.adc_handle.oversampling = DSY_ADC_OVS_32;
-    // Init ADC
-    dsy_adc_init(&seed.adc_handle);
-
+    // KNOB_LAST + 1 because of Expression input
+    AdcChannelConfig cfg[KNOB_LAST + 1];
+	// Init with Single Pins
+    cfg[KNOB_1].InitSingle(seed.GetPin(PIN_KNOB_1));
+    cfg[KNOB_2].InitSingle(seed.GetPin(PIN_KNOB_2));
+    cfg[KNOB_3].InitSingle(seed.GetPin(PIN_KNOB_3));
+    cfg[KNOB_4].InitSingle(seed.GetPin(PIN_KNOB_4));
+    cfg[KNOB_5].InitSingle(seed.GetPin(PIN_KNOB_5));
+    cfg[KNOB_6].InitSingle(seed.GetPin(PIN_KNOB_6));
+	// Special case for Expression
+    cfg[KNOB_LAST].InitSingle(seed.GetPin(PIN_EXPRESSION));
     // Make an array of pointers to the knob.
     for(int i = 0; i < KNOB_LAST; i++)
     {
-        knob[i].Init(dsy_adc_get_rawptr(i), callback_rate_);
+        knob[i].Init(seed.adc.GetPtr(i), callback_rate_);
     }
-    expression.Init(dsy_adc_get_rawptr(KNOB_LAST), callback_rate_);
+    expression.Init(seed.adc.GetPtr(KNOB_LAST), callback_rate_);
 }

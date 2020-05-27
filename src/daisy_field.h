@@ -29,8 +29,16 @@
 #define MUX_SEL_1_PIN 20
 #define MUX_SEL_2_PIN 19
 
+#define MUX_ADC_PIN 16
+#define CV1_ADC_PIN 17
+#define CV2_ADC_PIN 18
+#define CV3_ADC_PIN 23
+#define CV4_ADC_PIN 22
+
 #define LED_DRIVER_I2C i2c1_handle
 
+namespace daisy
+{
 // enums for controls, etc.
 enum
 {
@@ -100,8 +108,8 @@ typedef struct
     daisy::Switch      switches[SW_LAST];
     dsy_gpio           gate_in, gate_out;
     dsy_sr_4021_handle keyboard_sr;
-    float              knobs[KNOB_LAST];
-    float              cvs[CV_LAST];
+    AnalogControl      knobs[KNOB_LAST];
+    AnalogControl      cvs[CV_LAST];
 } daisy_field;
 
 FORCE_INLINE void daisy_field_init(daisy_field *p)
@@ -148,33 +156,41 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
         = p->seed.GetPin(KB_SW_SR_D1_PIN);
     p->keyboard_sr.pin_config[DSY_SR_4021_PIN_DATA2]
         = p->seed.GetPin(KB_SW_SR_D2_PIN);
-    p->keyboard_sr.num_daisychained                       = 1;
-    p->keyboard_sr.num_parallel                           = 2;
+    p->keyboard_sr.num_daisychained = 1;
+    p->keyboard_sr.num_parallel     = 2;
     dsy_sr_4021_init(&p->keyboard_sr);
 
     // Init ADC (currently in daisy_seed).
-    uint8_t channel_order[5]    = {DSY_ADC_PIN_CHN10,
-                                DSY_ADC_PIN_CHN17,
-                                DSY_ADC_PIN_CHN15,
-                                DSY_ADC_PIN_CHN4,
-                                DSY_ADC_PIN_CHN11};
-    p->seed.adc_handle.channels = 5;
-    p->seed.adc_handle.mux_channels[DSY_ADC_PIN_CHN10]
-        = 8; // Use Mux on Channel 0
-    p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_0]
-        = p->seed.GetPin(MUX_SEL_0_PIN);
-    p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_1]
-        = p->seed.GetPin(MUX_SEL_1_PIN);
-    p->seed.adc_handle.mux_pin_config[DSY_ADC_PIN_CHN10][MUX_SEL_2]
-        = p->seed.GetPin(MUX_SEL_2_PIN);
-    for(uint8_t i = 0; i < 5; i++)
+    AdcChannelConfig cfg[5];
+    // Set up mux pin
+    cfg[0].InitMux(p->seed.GetPin(MUX_ADC_PIN),
+                   p->seed.GetPin(MUX_SEL_0_PIN),
+                   p->seed.GetPin(MUX_SEL_1_PIN),
+                   p->seed.GetPin(MUX_SEL_2_PIN),
+                   8);
+    // Set up CV inputs
+    cfg[1].InitSingle(p->seed.GetPin(CV1_ADC_PIN));
+    cfg[2].InitSingle(p->seed.GetPin(CV2_ADC_PIN));
+    cfg[3].InitSingle(p->seed.GetPin(CV3_ADC_PIN));
+    cfg[4].InitSingle(p->seed.GetPin(CV4_ADC_PIN));
+    // Init all 5 channels
+    p->seed.adc.Init(cfg, 5);
+
+    // Setup Knob/CV Analog Controls
+	// Mapped to ADCs
+    for(size_t i = 0; i < KNOB_LAST; i++)
     {
-        p->seed.adc_handle.active_channels[i] = channel_order[i];
+        p->knobs[i].Init(p->seed.adc.GetMuxPtr(0, i), 1000.0f);
     }
-    p->seed.adc_handle.oversampling = DSY_ADC_OVS_32;
-    dsy_adc_init(&p->seed.adc_handle);
-	// Start timer
+    p->cvs[CV_1].InitBipolarCv(p->seed.adc.GetPtr(1), 1000.0f);
+    p->cvs[CV_2].InitBipolarCv(p->seed.adc.GetPtr(2), 1000.0f);
+    p->cvs[CV_3].InitBipolarCv(p->seed.adc.GetPtr(3), 1000.0f);
+    p->cvs[CV_4].InitBipolarCv(p->seed.adc.GetPtr(4), 1000.0f);
+
+    // Start timer
     dsy_tim_start();
 }
+
+} // namespace daisy
 
 #endif
