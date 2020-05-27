@@ -128,7 +128,7 @@ float DaisyPod::AudioCallbackRate()
 
 void DaisyPod::StartAdc()
 {
-    seed.adc_handle.Start();
+    seed.adc.Start();
 }
 
 void DaisyPod::UpdateAnalogControls()
@@ -216,12 +216,12 @@ void DaisyPod::InitKnobs()
     knob_init[KNOB_2].InitSingle(seed.GetPin(KNOB_2_PIN));
     // Initialize with the knob init struct w/ 2 members
     // Set Oversampling to 32x
-    seed.adc_handle.Init(knob_init, KNOB_LAST, seed.adc_handle.OVS_32);
+    seed.adc.Init(knob_init, KNOB_LAST);
     // Make an array of pointers to the knobs.
     knobs[KNOB_1] = &knob1;
     knobs[KNOB_2] = &knob2;
     for(int i = 0; i < KNOB_LAST; i++)
     {
-        knobs[i]->Init(seed.adc_handle.GetPtr(i), callback_rate_);
+        knobs[i]->Init(seed.adc.GetPtr(i), callback_rate_);
     }
 }

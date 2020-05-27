@@ -96,8 +96,7 @@ class DaisySeed
     dsy_audio_handle audio_handle;
     dsy_sai_handle   sai_handle;
     dsy_i2c_handle   i2c1_handle, i2c2_handle;
-    AdcHandle adc_handle;
-    //dsy_adc_handle   adc_handle;
+    AdcHandle adc;
     dsy_dac_handle   dac_handle;
     UsbHandle        usb_handle;
 	// ~~~~

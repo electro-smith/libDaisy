@@ -400,6 +400,8 @@
     <ClCompile Include="src\hid_gatein.cpp" />
     <ClCompile Include="src\hid_parameter.cpp" />
     <ClCompile Include="src\per_adc.cpp" />
+    <ClCompile Include="src\daisy_patch.cpp" />
+    <ClCompile Include="src\daisy_petal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h" />
@@ -893,6 +895,9 @@
     <ClInclude Include="src\util_unique_id.h" />
     <ClInclude Include="src\hid_gatein.h" />
     <ClInclude Include="src\hid_parameter.h" />
+    <ClInclude Include="src\daisy_field.h" />
+    <ClInclude Include="src\daisy_patch.h" />
+    <ClInclude Include="src\daisy_petal.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="stm32.props" />

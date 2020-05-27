@@ -4,6 +4,8 @@ MODULE_DIR=src
 MODULES = \
 daisy_seed \
 daisy_pod \
+daisy_patch \
+daisy_petal \
 dev_codec_pcm3060 \
 dev_codec_wm8731 \
 dev_codec_ak4556 \
@@ -45,8 +47,6 @@ util_unique_id \
 system_stm32h7xx \
 
 
-#daisy_patch \
-#daisy_petal \
 
 ######################################
 # building variables

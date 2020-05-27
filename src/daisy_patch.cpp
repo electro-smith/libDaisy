@@ -21,10 +21,10 @@ using namespace daisy;
 
 #define PIN_AK4556_RESET 29
 
-#define ADC_CHN_CTRL_1 DSY_ADC_PIN_CHN10
-#define ADC_CHN_CTRL_2 DSY_ADC_PIN_CHN15
-#define ADC_CHN_CTRL_3 DSY_ADC_PIN_CHN4
-#define ADC_CHN_CTRL_4 DSY_ADC_PIN_CHN7
+#define PIN_CTRL_1 15
+#define PIN_CTRL_2 16
+#define PIN_CTRL_3 21
+#define PIN_CTRL_4 18
 
 const float kAudioSampleRate = DSY_AUDIO_SAMPLE_RATE;
 
@@ -74,7 +74,7 @@ void DaisyPatch::ChangeAudioCallback(dsy_audio_callback cb)
 }
 void DaisyPatch::StartAdc()
 {
-    dsy_adc_start();
+    seed.adc.Start();
 }
 float DaisyPatch::AudioSampleRate()
 {
@@ -162,28 +162,21 @@ void DaisyPatch::InitAudio()
 }
 void DaisyPatch::InitControls()
 {
-    // Set order of ADCs based on CHANNEL NUMBER
-    uint8_t channel_order[CTRL_LAST] = {
-        ADC_CHN_CTRL_1,
-        ADC_CHN_CTRL_2,
-        ADC_CHN_CTRL_3,
-        ADC_CHN_CTRL_4,
-    };
-    // NUMBER OF CHANNELS
-    seed.adc_handle.channels = CTRL_LAST;
-    // Fill the ADCs active channel array.
-    for(uint8_t i = 0; i < CTRL_LAST; i++)
-    {
-        seed.adc_handle.active_channels[i] = channel_order[i];
-    }
-    // Set Oversampling to 32x
-    seed.adc_handle.oversampling = DSY_ADC_OVS_32;
-    // Init ADC
-    dsy_adc_init(&seed.adc_handle);
+    AdcChannelConfig cfg[CTRL_LAST];
 
+    // Init ADC channels with Pins
+    cfg[CTRL_1].InitSingle(seed.GetPin(PIN_CTRL_1));
+    cfg[CTRL_2].InitSingle(seed.GetPin(PIN_CTRL_2));
+    cfg[CTRL_3].InitSingle(seed.GetPin(PIN_CTRL_3));
+    cfg[CTRL_4].InitSingle(seed.GetPin(PIN_CTRL_4));
+
+	// Initialize ADC
+    seed.adc.Init(cfg, CTRL_LAST);
+
+	// Initialize AnalogControls, with flip set to true
     for(size_t i = 0; i < CTRL_LAST; i++)
     {
-        controls[i].Init(dsy_adc_get_rawptr(i), AudioCallbackRate(), true);
+        controls[i].Init(seed.adc.GetPtr(i), AudioCallbackRate(), true);
     }
 }
 

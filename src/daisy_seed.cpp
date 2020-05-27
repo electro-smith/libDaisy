@@ -62,38 +62,22 @@ const uint8_t seed_pins[32] = {
 };
 
 const dsy_gpio_pin seedgpio[32] = {
-    {seed_ports[0], seed_pins[0]},
-    {seed_ports[1], seed_pins[1]},
-    {seed_ports[2], seed_pins[2]},
-    {seed_ports[3], seed_pins[3]},
-    {seed_ports[4], seed_pins[4]},
-    {seed_ports[5], seed_pins[5]},
-    {seed_ports[6], seed_pins[6]},
-    {seed_ports[7], seed_pins[7]},
-    {seed_ports[8], seed_pins[8]},
-    {seed_ports[9], seed_pins[9]},
-    {seed_ports[10], seed_pins[10]},
-    {seed_ports[11], seed_pins[11]},
-    {seed_ports[12], seed_pins[12]},
-    {seed_ports[13], seed_pins[13]},
-    {seed_ports[14], seed_pins[14]},
-    {seed_ports[15], seed_pins[15]},
-    {seed_ports[16], seed_pins[16]},
-    {seed_ports[17], seed_pins[17]},
-    {seed_ports[18], seed_pins[18]},
-    {seed_ports[19], seed_pins[19]},
-    {seed_ports[20], seed_pins[20]},
-    {seed_ports[21], seed_pins[21]},
-    {seed_ports[22], seed_pins[22]},
-    {seed_ports[23], seed_pins[23]},
-    {seed_ports[24], seed_pins[24]},
-    {seed_ports[25], seed_pins[25]},
-    {seed_ports[26], seed_pins[26]},
-    {seed_ports[27], seed_pins[27]},
-    {seed_ports[28], seed_pins[28]},
-    {seed_ports[29], seed_pins[29]},
-    {seed_ports[30], seed_pins[30]},
-    {seed_ports[31], seed_pins[31]},
+    {seed_ports[0], seed_pins[0]},   {seed_ports[1], seed_pins[1]},
+    {seed_ports[2], seed_pins[2]},   {seed_ports[3], seed_pins[3]},
+    {seed_ports[4], seed_pins[4]},   {seed_ports[5], seed_pins[5]},
+    {seed_ports[6], seed_pins[6]},   {seed_ports[7], seed_pins[7]},
+    {seed_ports[8], seed_pins[8]},   {seed_ports[9], seed_pins[9]},
+    {seed_ports[10], seed_pins[10]}, {seed_ports[11], seed_pins[11]},
+    {seed_ports[12], seed_pins[12]}, {seed_ports[13], seed_pins[13]},
+    {seed_ports[14], seed_pins[14]}, {seed_ports[15], seed_pins[15]},
+    {seed_ports[16], seed_pins[16]}, {seed_ports[17], seed_pins[17]},
+    {seed_ports[18], seed_pins[18]}, {seed_ports[19], seed_pins[19]},
+    {seed_ports[20], seed_pins[20]}, {seed_ports[21], seed_pins[21]},
+    {seed_ports[22], seed_pins[22]}, {seed_ports[23], seed_pins[23]},
+    {seed_ports[24], seed_pins[24]}, {seed_ports[25], seed_pins[25]},
+    {seed_ports[26], seed_pins[26]}, {seed_ports[27], seed_pins[27]},
+    {seed_ports[28], seed_pins[28]}, {seed_ports[29], seed_pins[29]},
+    {seed_ports[30], seed_pins[30]}, {seed_ports[31], seed_pins[31]},
 };
 #endif
 
@@ -105,7 +89,6 @@ void DaisySeed::Configure()
     ConfigureSdram();
     ConfigureQspi();
     ConfigureAudio();
-    ConfigureAdc();
     ConfigureDac();
     ConfigureI2c();
     // Configure the built-in GPIOs.
@@ -121,7 +104,7 @@ void DaisySeed::Init()
 {
     dsy_system_init();
     dsy_sdram_init(&sdram_handle);
-	dsy_qspi_init(&qspi_handle);
+    dsy_qspi_init(&qspi_handle);
     dsy_gpio_init(&led_);
     dsy_gpio_init(&testpoint_);
     dsy_audio_init(&audio_handle);
@@ -149,7 +132,7 @@ void DaisySeed::StartAudio(dsy_audio_callback cb)
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
     dsy_audio_start(DSY_AUDIO_INTERNAL);
 }
-float  DaisySeed::AudioSampleRate()
+float DaisySeed::AudioSampleRate()
 {
     // TODO fix to get this from configured rate.
     return DSY_AUDIO_SAMPLE_RATE;
@@ -192,19 +175,6 @@ void DaisySeed::ConfigureQspi()
     pin_group[DSY_QSPI_PIN_IO3] = dsy_pin(DSY_GPIOF, 6);
     pin_group[DSY_QSPI_PIN_CLK] = dsy_pin(DSY_GPIOF, 10);
     pin_group[DSY_QSPI_PIN_NCS] = dsy_pin(DSY_GPIOG, 6);
-
-    //    pin_group[DSY_QSPI_PIN_IO0].port = DSY_GPIOF;
-    //    pin_group[DSY_QSPI_PIN_IO0].pin  = 8;
-    //    pin_group[DSY_QSPI_PIN_IO1].port = DSY_GPIOF;
-    //    pin_group[DSY_QSPI_PIN_IO1].pin  = 9;
-    //    pin_group[DSY_QSPI_PIN_IO2].port = DSY_GPIOF;
-    //    pin_group[DSY_QSPI_PIN_IO2].pin  = 7;
-    //    pin_group[DSY_QSPI_PIN_IO3].port = DSY_GPIOF;
-    //    pin_group[DSY_QSPI_PIN_IO3].pin  = 6;
-    //    pin_group[DSY_QSPI_PIN_CLK].port = DSY_GPIOF;
-    //    pin_group[DSY_QSPI_PIN_CLK].pin  = 10;
-    //    pin_group[DSY_QSPI_PIN_NCS].port = DSY_GPIOG;
-    //    pin_group[DSY_QSPI_PIN_NCS].pin  = 6;
 }
 void DaisySeed::ConfigureAudio()
 {
@@ -212,15 +182,15 @@ void DaisySeed::ConfigureAudio()
     sai_handle.init = DSY_AUDIO_INIT_SAI1;
     // SAI1 - config
 #ifndef SEED_REV2
-    sai_handle.device[DSY_SAI_1]     = DSY_AUDIO_DEVICE_AK4556;
-    sai_handle.samplerate[DSY_SAI_1] = DSY_AUDIO_SAMPLERATE_48K;
-    sai_handle.bitdepth[DSY_SAI_1]   = DSY_AUDIO_BITDEPTH_24;
+    sai_handle.device[DSY_SAI_1]      = DSY_AUDIO_DEVICE_AK4556;
+    sai_handle.samplerate[DSY_SAI_1]  = DSY_AUDIO_SAMPLERATE_48K;
+    sai_handle.bitdepth[DSY_SAI_1]    = DSY_AUDIO_BITDEPTH_24;
     sai_handle.a_direction[DSY_SAI_1] = DSY_AUDIO_TX;
     sai_handle.b_direction[DSY_SAI_1] = DSY_AUDIO_RX;
 #else
     sai_handle.device[DSY_SAI_1] = DSY_AUDIO_DEVICE_WM8731;
-    sai_handle.samplerate[DSY_SAI_1] = DSY_AUDIO_SAMPLERATE_48K;
-    sai_handle.bitdepth[DSY_SAI_1]   = DSY_AUDIO_BITDEPTH_16;
+    sai_handle.samplerate[DSY_SAI_1]  = DSY_AUDIO_SAMPLERATE_48K;
+    sai_handle.bitdepth[DSY_SAI_1]    = DSY_AUDIO_BITDEPTH_16;
     sai_handle.a_direction[DSY_SAI_1] = DSY_AUDIO_RX;
     sai_handle.b_direction[DSY_SAI_1] = DSY_AUDIO_TX;
 #endif
@@ -253,25 +223,6 @@ void DaisySeed::ConfigureAudio()
     audio_handle.block_size = 48;
     dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, 48);
     dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, 48);
-}
-void DaisySeed::ConfigureAdc()
-{
-    /*
-    dsy_gpio_pin *pin_group;
-    pin_group = adc_handle.pin_config;
-
-    pin_group[DSY_ADC_PIN_CHN3]  = dsy_pin(DSY_GPIOA, 6);
-    pin_group[DSY_ADC_PIN_CHN4]  = dsy_pin(DSY_GPIOC, 4);
-    pin_group[DSY_ADC_PIN_CHN5]  = dsy_pin(DSY_GPIOB, 1);
-    pin_group[DSY_ADC_PIN_CHN7]  = dsy_pin(DSY_GPIOA, 7);
-    pin_group[DSY_ADC_PIN_CHN10] = dsy_pin(DSY_GPIOC, 0);
-    pin_group[DSY_ADC_PIN_CHN11] = dsy_pin(DSY_GPIOC, 1);
-    pin_group[DSY_ADC_PIN_CHN15] = dsy_pin(DSY_GPIOA, 3);
-    pin_group[DSY_ADC_PIN_CHN16] = dsy_pin(DSY_GPIOA, 0);
-    pin_group[DSY_ADC_PIN_CHN17] = dsy_pin(DSY_GPIOA, 1);
-    pin_group[DSY_ADC_PIN_CHN18] = dsy_pin(DSY_GPIOA, 4);
-    pin_group[DSY_ADC_PIN_CHN19] = dsy_pin(DSY_GPIOA, 5);
-    */
 }
 void DaisySeed::ConfigureDac()
 {
