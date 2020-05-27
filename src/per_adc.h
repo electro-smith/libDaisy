@@ -39,7 +39,7 @@ struct AdcChannelConfig
         mux_channels_ = 0;
         pin_.mode = DSY_GPIO_MODE_ANALOG;
         pin_.pull = DSY_GPIO_NOPULL;
-        dsy_gpio_init(&pin_);
+        //dsy_gpio_init(&pin_);
     }
 
     // ### InitMux
@@ -63,7 +63,7 @@ struct AdcChannelConfig
         pin_.pin = adc_pin;
         pin_.mode = DSY_GPIO_MODE_ANALOG;
         pin_.pull = DSY_GPIO_NOPULL;
-        dsy_gpio_init(&pin_);
+//        dsy_gpio_init(&pin_);
         // Init Muxes
         mux_pin_[0].pin = mux_0;
         mux_pin_[1].pin = mux_1;
@@ -72,9 +72,9 @@ struct AdcChannelConfig
         pins_to_init = (mux_channels_ - 1) >> 1;
         for (size_t i = 0; i <= pins_to_init; i++)
         {
-            dsy_gpio_init(&mux_pin_[i]);
             mux_pin_[i].mode = DSY_GPIO_MODE_OUTPUT_PP;
             mux_pin_[i].pull = DSY_GPIO_NOPULL;
+//            dsy_gpio_init(&mux_pin_[i]);
         }
     }
 
@@ -139,7 +139,6 @@ class AdcHandle
 
   private:
     OverSampling     oversampling_;
-    AdcChannelConfig config_[DSY_ADC_MAX_CHANNELS];
     size_t num_channels_;
 };
 
