@@ -53,43 +53,7 @@ These are:
 
 With these files a number of additional initialization, and configuration is done by the library.
 
-This allows a user to jump right into their new product with a simple api to do things like:
-
-```
-#include "daisy_patch.h"
-#include "daisysp.h"
-
-using namespace daisy;
-
-DaisyPatch hardware;
-daisysp::Oscillator osc;
-
-void callback(float *in, float *out, size_t size)
-{
-    if (hardware.toggle.State() == Switch::TOGGLE_POS_UP)
-    {
-        val = hardware.GetKnob(KNOB_1) * 127.0f; // convert to MIDI Note number.
-        osc.SetFreq(daisysp::mtof(val)); 
-    }
-    else
-    {
-        osc.SetFreq(100); // steady tone
-    }
-    for (size_t i = 0; i < size; i+=2)
-    {
-        out[LEFT] = out[RIGHT] = osc.Process();
-    }
-}
-int main()
-{
-    hardware.Init();
-    osc.Init();
-    hardware.StartAudio(callback);
-    for(;;) {}
-}
-```
-
-without having a full understanding of what's going on under the hood.
+This allows a user to jump right into their new product with a simple api to do things without having a full understanding of what's going on under the hood.
 
 ------
 
