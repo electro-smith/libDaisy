@@ -31,6 +31,7 @@ extern "C"
 //
 // The new clock tree has less than 0.01% error for all supported samplerates
 // ~~~~
+#define DSY_AUDIO_BLOCK_SIZE_MAX 128
 #define DSY_AUDIO_CHANNELS_MAX 2
 
 #ifndef DSY_AUDIO_SAMPLE_RATE
