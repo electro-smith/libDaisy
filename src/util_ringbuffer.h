@@ -21,7 +21,9 @@ class RingBuffer
 
 	// ### Init
     // Initializes the Ring Buffer
+	// ~~~~
     inline void Init() { read_ptr_ = write_ptr_ = 0; }
+	// ~~~~
 
 	// ### capacity
 	// Returns the total size of the ring buffer

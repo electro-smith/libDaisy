@@ -1,4 +1,3 @@
-// WM8371 Codec support.
 #ifndef SA_DRIVERS_CODEC_H_
 #define SA_DRIVERS_CODEC_H_
 

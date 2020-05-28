@@ -38,6 +38,7 @@ class UsbHandle
     // Function called upon reception of a buffer
     // ~~~~
     typedef void (*ReceiveCallback)(uint8_t* buff, uint32_t* len);
+	// ~~~~
 
     UsbHandle() {}
 
@@ -66,6 +67,7 @@ class UsbHandle
     // sets the callback to be called upon reception of new data
     // ~~~~
     void SetReceiveCallback(ReceiveCallback cb);
+	// ~~~~
 
   private:
 };
@@ -73,7 +75,7 @@ class UsbHandle
 } // namespace daisy
 #endif
 
-// TODO:
+// ## TODO:
 // - Add support for other USB classes (currently only CDC is supported)
-// - Add support for Receiving data (currently it is handled and tested,
-//		but there is no access to the rx buffer)
+// - DMA setup
+
