@@ -1,5 +1,7 @@
 # libdaisy
 
+## [Documentation available on our wiki!](https://github.com/electro-smith/DaisyWiki/wiki)
+
 Multi-layer hardware abstraction library for Daisy Product family
 
 On STM32H7 MCUs
