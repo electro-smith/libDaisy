@@ -1,9 +1,15 @@
+// # Wav Format
+// ## Description
+// Helper struct for handling the WAV file format
 #pragma once
 #ifndef DSY_WAV_FORMAT_H
 #define DSY_WAV_FORMAT_H
 
 #include <stdint.h>
 
+// ## Data Structures
+// ### WAV_FormatTypeDef
+// ~~~~
 typedef struct
 {
     uint32_t ChunkId;
@@ -20,5 +26,6 @@ typedef struct
     uint32_t SubChunk2ID;
     uint32_t SubCHunk2Size;
 } WAV_FormatTypeDef;
+// ~~~~
 
 #endif
