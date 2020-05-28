@@ -114,7 +114,7 @@ void DaisyPatch::DisplayControls(bool invert)
     if(dsy_system_getnow() - screen_update_last_ > screen_update_period_)
     {
         // Graph Knobs
-        size_t barwidth, barspacing, barheight;
+        size_t barwidth, barspacing;
         size_t curx, cury;
         barwidth   = 15;
         barspacing = 20;
