@@ -1,5 +1,6 @@
 #include "hid_led.h"
-#include "per_tim.h" 
+#include "per_tim.h"
+
 using namespace daisy;
 
 #define RESOLUTION_MAX (65535)

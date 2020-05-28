@@ -12,30 +12,53 @@
 
 namespace daisy
 {
+// ## RingBuffer
 template <typename T, size_t size>
 class RingBuffer
 {
   public:
     RingBuffer() {}
 
+	// ### Init
+    // Initializes the Ring Buffer
+	// ~~~~
     inline void Init() { read_ptr_ = write_ptr_ = 0; }
+	// ~~~~
 
+	// ### capacity
+	// Returns the total size of the ring buffer
+	// ~~~~
     inline size_t capacity() const { return size; }
+    // ~~~~
 
+    // ### writable
+    // Returns the number of samples that can be written to ring buffer without overwriting unread data.
+	// ~~~~
     inline size_t writable() const
+	// ~~~~
     {
         return (read_ptr_ - write_ptr_ - 1) % size;
     }
 
+	// ### readable
+    // Returns number of unread elements in ring buffer
+	// ~~~~
     inline size_t readable() const { return (write_ptr_ - read_ptr_) % size; }
+	// ~~~~
 
+	// ### Write
+    // Writes the value to the next available position in the ring buffer
+	// ~~~~
     inline void Write(T v)
+	// ~~~~
     {
         while(!writable())
             ;
         Overwrite(v);
     }
 
+	// ### Overwrite
+	// Writes the new element to the ring buffer, overwriting unread data if necessary.
     inline void Overwrite(T v)
     {
         size_t w   = write_ptr_;
@@ -43,14 +66,22 @@ class RingBuffer
         write_ptr_ = (w + 1) % size;
     }
 
+	// ### Read
+	// Reads the first available element from the ring buffer
+	// ~~~~
     inline T Read()
+	// ~~~~
     {
         while(!readable())
             ;
         return ImmediateRead();
     }
 
+	// ### ImmediateRead
+	// Reads next element from ring buffer immediately
+	// ~~~~
     inline T ImmediateRead()
+	// ~~~~
     {
         size_t r      = read_ptr_;
         T      result = buffer_[r];
@@ -58,11 +89,18 @@ class RingBuffer
         return result;
     }
 
+	// ### Flush
+	// Flushes unread elements from the ring buffer
+	// ~~~~
     inline void Flush() { write_ptr_ = read_ptr_; }
+	// ~~~~
 
+	// ### Swallow
+	// Read enough samples to make it possible to read 1 sample.
+	// ~~~~
     inline void Swallow(size_t n)
+	// ~~~~
     {
-        // Read enough samples to make it possible to read 1 sample.
         if(writable() >= n)
         {
             return;
@@ -70,7 +108,11 @@ class RingBuffer
         read_ptr_ = (write_ptr_ + 1 + n) % size;
     }
 
+	// ### ImmediateRead (Multiple elements)
+	// Reads a number of elements into a buffer immediately
+	// ~~~~
     inline void ImmediateRead(T* destination, size_t num_elements)
+	// ~~~~
     {
         size_t r    = read_ptr_;
         size_t read = num_elements;
@@ -88,7 +130,11 @@ class RingBuffer
         read_ptr_ = (r + num_elements) % size;
     }
 
+	// ### Overwrite (Multiple elements)
+	// Overwrites a number of elements using the source buffer as input.
+	// ~~~~
     inline void Overwrite(const T* source, size_t num_elements)
+	// ~~~~
     {
         size_t w       = write_ptr_;
         size_t written = num_elements;
