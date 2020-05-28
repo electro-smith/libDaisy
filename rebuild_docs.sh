@@ -43,7 +43,8 @@ for file in $libdaisy_dir/doc/*.md; do
     echo "\pagebreak" >> temp.md
 done
 echo "Generating documenation for " $pdf_name
-pandoc temp.md -s --template=./resources/template.tex --toc -o $pdf_name
+#pandoc temp.md -s --template=./resources/template.tex --toc -o $pdf_name
+pandoc temp.md -s --pdf-engine=xelatex --template=./resources/template.tex --toc -o $pdf_name
 echo "Created $pdf_name"
 # remove temp file.
 rm temp.md
