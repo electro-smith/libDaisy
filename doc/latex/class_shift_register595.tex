@@ -1,0 +1,129 @@
+\hypertarget{class_shift_register595}{}\section{Shift\+Register595 Class Reference}
+\label{class_shift_register595}\index{Shift\+Register595@{Shift\+Register595}}
+<<<<<<< HEAD
+
+
+{\ttfamily \#include $<$dev\+\_\+sr\+\_\+595.\+h$>$}
+
+=======
+>>>>>>> autogen documentation
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134}{Pins} \{ {\bfseries P\+I\+N\+\_\+\+L\+A\+T\+CH}, 
+<<<<<<< HEAD
+\hyperlink{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134a4e50d83a47cc620a8427d2879aca30ec}{P\+I\+N\+\_\+\+C\+LK}, 
+\hyperlink{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134ae9ea4e9926a41b050735081ea122036b}{P\+I\+N\+\_\+\+D\+A\+TA}, 
+\hyperlink{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134a831131c4aff6b1c4ab21fa12d9c47a38}{N\+U\+M\+\_\+\+P\+I\+NS}
+=======
+{\bfseries P\+I\+N\+\_\+\+C\+LK}, 
+{\bfseries P\+I\+N\+\_\+\+D\+A\+TA}, 
+{\bfseries N\+U\+M\+\_\+\+P\+I\+NS}
+>>>>>>> autogen documentation
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_shift_register595_acc9e7d74069edd4b2711a9de01e9617c}{Init} (\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} $\ast$pin\+\_\+cfg, size\+\_\+t num\+\_\+daisy\+\_\+chained=1)
+\item 
+void \hyperlink{class_shift_register595_a01d31561cd07890ea52d1f39e55a8385}{Set} (uint8\+\_\+t idx, bool state)
+\item 
+void \hyperlink{class_shift_register595_a9946a50af186043d5532a9ec10b404b7}{Write} ()
+\end{DoxyCompactItemize}
+
+
+<<<<<<< HEAD
+\subsection{Detailed Description}
+Maximum Number of chained devices Connect device\textquotesingle{}s QH\textquotesingle{} pin to the next chips serial input Device Driver for 8-\/bit shift register C\+D74\+H\+C595 -\/ 8-\/bit serial to parallel output shift Author$\ast$$\ast$\+: shensley Date Added$\ast$$\ast$\+: May 2020 
+
+=======
+>>>>>>> autogen documentation
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134}\label{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134}} 
+\index{Shift\+Register595@{Shift\+Register595}!Pins@{Pins}}
+\index{Pins@{Pins}!Shift\+Register595@{Shift\+Register595}}
+\subsubsection{\texorpdfstring{Pins}{Pins}}
+{\footnotesize\ttfamily enum \hyperlink{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134}{Shift\+Register595\+::\+Pins}}
+
+<<<<<<< HEAD
+The following pins correspond to the hardware connections to the 595. \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+I\+N\+\_\+\+C\+LK@{P\+I\+N\+\_\+\+C\+LK}!Shift\+Register595@{Shift\+Register595}}\index{Shift\+Register595@{Shift\+Register595}!P\+I\+N\+\_\+\+C\+LK@{P\+I\+N\+\_\+\+C\+LK}}}\mbox{\Hypertarget{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134a4e50d83a47cc620a8427d2879aca30ec}\label{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134a4e50d83a47cc620a8427d2879aca30ec}} 
+P\+I\+N\+\_\+\+C\+LK&L\+A\+T\+CH corresonds to Pin 12 \char`\"{}\+R\+C\+L\+K\char`\"{} \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P\+I\+N\+\_\+\+D\+A\+TA@{P\+I\+N\+\_\+\+D\+A\+TA}!Shift\+Register595@{Shift\+Register595}}\index{Shift\+Register595@{Shift\+Register595}!P\+I\+N\+\_\+\+D\+A\+TA@{P\+I\+N\+\_\+\+D\+A\+TA}}}\mbox{\Hypertarget{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134ae9ea4e9926a41b050735081ea122036b}\label{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134ae9ea4e9926a41b050735081ea122036b}} 
+P\+I\+N\+\_\+\+D\+A\+TA&C\+LK corresponds to Pin 11 \char`\"{}\+S\+R\+C\+L\+K\char`\"{} \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{N\+U\+M\+\_\+\+P\+I\+NS@{N\+U\+M\+\_\+\+P\+I\+NS}!Shift\+Register595@{Shift\+Register595}}\index{Shift\+Register595@{Shift\+Register595}!N\+U\+M\+\_\+\+P\+I\+NS@{N\+U\+M\+\_\+\+P\+I\+NS}}}\mbox{\Hypertarget{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134a831131c4aff6b1c4ab21fa12d9c47a38}\label{class_shift_register595_a2e0140c5d6cac8821d558b2683f7a134a831131c4aff6b1c4ab21fa12d9c47a38}} 
+N\+U\+M\+\_\+\+P\+I\+NS&D\+A\+TA corresponds to Pin 14 \char`\"{}\+S\+E\+R\char`\"{} \\
+\hline
+
+\end{DoxyEnumFields}
+
+=======
+The following pins correspond to the hardware connections to the 595.
+
+L\+A\+T\+CH corresonds to Pin 12 \char`\"{}\+R\+C\+L\+K\char`\"{} C\+LK corresponds to Pin 11 \char`\"{}\+S\+R\+C\+L\+K\char`\"{} D\+A\+TA corresponds to Pin 14 \char`\"{}\+S\+E\+R\char`\"{} {\itshape S\+R\+C\+LR} is not added here, but is tied to 3v3 on test hardware. 
+>>>>>>> autogen documentation
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_shift_register595_acc9e7d74069edd4b2711a9de01e9617c}\label{class_shift_register595_acc9e7d74069edd4b2711a9de01e9617c}} 
+\index{Shift\+Register595@{Shift\+Register595}!Init@{Init}}
+\index{Init@{Init}!Shift\+Register595@{Shift\+Register595}}
+\subsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily void Shift\+Register595\+::\+Init (\begin{DoxyParamCaption}\item[{\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} $\ast$}]{pin\+\_\+cfg,  }\item[{size\+\_\+t}]{num\+\_\+daisy\+\_\+chained = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+<<<<<<< HEAD
+Initializes the G\+P\+IO, and data for the Shift\+Register 
+\begin{DoxyParams}{Parameters}
+{\em pin\+\_\+cfg} & is an array of \hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} corresponding the the Pins enum above. \\
+\hline
+{\em num\+\_\+daisy\+\_\+chained} & (default = 1) is the number of 595 devices daisy chained together. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_shift_register595_a01d31561cd07890ea52d1f39e55a8385}\label{class_shift_register595_a01d31561cd07890ea52d1f39e55a8385}} 
+=======
+Initializes the G\+P\+IO, and data for the Shift\+Register
+
+Arguments\+:
+
+$\ast$pin\+\_\+cfg is an array of \hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} corresponding the the Pins enum above. num\+\_\+daisy\+\_\+chained (default = 1) is the number of 595 devices daisy chained together. \mbox{\Hypertarget{class_shift_register595_a01d31561cd07890ea52d1f39e55a8385}\label{class_shift_register595_a01d31561cd07890ea52d1f39e55a8385}} 
+>>>>>>> autogen documentation
+\index{Shift\+Register595@{Shift\+Register595}!Set@{Set}}
+\index{Set@{Set}!Shift\+Register595@{Shift\+Register595}}
+\subsubsection{\texorpdfstring{Set()}{Set()}}
+{\footnotesize\ttfamily void Shift\+Register595\+::\+Set (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{idx,  }\item[{bool}]{state }\end{DoxyParamCaption})}
+
+<<<<<<< HEAD
+Sets the state of the specified output. 
+\begin{DoxyParams}{Parameters}
+{\em idx} & The index starts with QA on the first device and ends with QH on the last device. \\
+\hline
+{\em state} & A true state will set the output H\+I\+GH, while a false state will set the output L\+OW. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_shift_register595_a9946a50af186043d5532a9ec10b404b7}\label{class_shift_register595_a9946a50af186043d5532a9ec10b404b7}} 
+=======
+Sets the state of the specified output. The index starts with QA on the first device and ends with QH on the last device.
+
+a true state will set the output H\+I\+GH, while a false state will set the output L\+OW. \mbox{\Hypertarget{class_shift_register595_a9946a50af186043d5532a9ec10b404b7}\label{class_shift_register595_a9946a50af186043d5532a9ec10b404b7}} 
+>>>>>>> autogen documentation
+\index{Shift\+Register595@{Shift\+Register595}!Write@{Write}}
+\index{Write@{Write}!Shift\+Register595@{Shift\+Register595}}
+\subsubsection{\texorpdfstring{Write()}{Write()}}
+{\footnotesize\ttfamily void Shift\+Register595\+::\+Write (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Writes the states of shift register out to the connected devices. 
+
+<<<<<<< HEAD
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/dev\+\_\+sr\+\_\+595.\+h\end{DoxyCompactItemize}
+=======
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/dev\+\_\+sr\+\_\+595.\+h\item 
+src/dev\+\_\+sr\+\_\+595.\+cpp\end{DoxyCompactItemize}
+>>>>>>> autogen documentation

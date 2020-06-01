@@ -1,0 +1,116 @@
+\hypertarget{classdaisy_1_1_usb_handle}{}\section{daisy\+:\+:Usb\+Handle Class Reference}
+\label{classdaisy_1_1_usb_handle}\index{daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}}
+\subsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{classdaisy_1_1_usb_handle_ad2a37421ade061875a30765e2b2e1318}{Usb\+Periph} \{ {\bfseries F\+S\+\_\+\+I\+N\+T\+E\+R\+N\+AL}, 
+{\bfseries F\+S\+\_\+\+E\+X\+T\+E\+R\+N\+AL}, 
+{\bfseries F\+S\+\_\+\+B\+O\+TH}
+ \}
+\item 
+typedef void($\ast$ \hyperlink{classdaisy_1_1_usb_handle_abd7ee9319fb0f5fa73f2c45e8ba14080}{Receive\+Callback}) (uint8\+\_\+t $\ast$buff, uint32\+\_\+t $\ast$len)
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+<<<<<<< HEAD
+void \hyperlink{classdaisy_1_1_usb_handle_ab66484e20fbef1d7b1397403a69768ea}{Init} (\hyperlink{classdaisy_1_1_usb_handle_ad2a37421ade061875a30765e2b2e1318}{Usb\+Periph} dev)
+\item 
+void \hyperlink{classdaisy_1_1_usb_handle_aaff1689cd8310f0b741829d6568f2ad0}{Transmit\+Internal} (uint8\+\_\+t $\ast$buff, size\+\_\+t size)
+\item 
+void \hyperlink{classdaisy_1_1_usb_handle_a66ba310745890b4ef51b923154b86fbf}{Transmit\+External} (uint8\+\_\+t $\ast$buff, size\+\_\+t size)
+\item 
+void \hyperlink{classdaisy_1_1_usb_handle_a14695d78459745b5749732ddd25317ae}{Set\+Receive\+Callback} (\hyperlink{classdaisy_1_1_usb_handle_abd7ee9319fb0f5fa73f2c45e8ba14080}{Receive\+Callback} cb)
+=======
+void \hyperlink{classdaisy_1_1_usb_handle_a0e30c290afb4d303ecf3b0c83d71f24d}{Init} (\hyperlink{classdaisy_1_1_usb_handle_ad2a37421ade061875a30765e2b2e1318}{Usb\+Periph} dev)
+\item 
+void \hyperlink{classdaisy_1_1_usb_handle_a990bf276c07c7e3f1ca122f7e320b303}{Transmit\+Internal} (uint8\+\_\+t $\ast$buff, size\+\_\+t size)
+\item 
+void \hyperlink{classdaisy_1_1_usb_handle_a46756800105521559e52a91a8b0efd3a}{Transmit\+External} (uint8\+\_\+t $\ast$buff, size\+\_\+t size)
+\item 
+void \hyperlink{classdaisy_1_1_usb_handle_ab8a881e946f264682ccb34a3b79ef55d}{Set\+Receive\+Callback} (\hyperlink{classdaisy_1_1_usb_handle_abd7ee9319fb0f5fa73f2c45e8ba14080}{Receive\+Callback} cb)
+>>>>>>> autogen documentation
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Typedef Documentation}
+\mbox{\Hypertarget{classdaisy_1_1_usb_handle_abd7ee9319fb0f5fa73f2c45e8ba14080}\label{classdaisy_1_1_usb_handle_abd7ee9319fb0f5fa73f2c45e8ba14080}} 
+\index{daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}!Receive\+Callback@{Receive\+Callback}}
+\index{Receive\+Callback@{Receive\+Callback}!daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}}
+\subsubsection{\texorpdfstring{Receive\+Callback}{ReceiveCallback}}
+{\footnotesize\ttfamily typedef void($\ast$ daisy\+::\+Usb\+Handle\+::\+Receive\+Callback) (uint8\+\_\+t $\ast$buff, uint32\+\_\+t $\ast$len)}
+
+Function called upon reception of a buffer 
+
+\subsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{classdaisy_1_1_usb_handle_ad2a37421ade061875a30765e2b2e1318}\label{classdaisy_1_1_usb_handle_ad2a37421ade061875a30765e2b2e1318}} 
+\index{daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}!Usb\+Periph@{Usb\+Periph}}
+\index{Usb\+Periph@{Usb\+Periph}!daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}}
+\subsubsection{\texorpdfstring{Usb\+Periph}{UsbPeriph}}
+{\footnotesize\ttfamily enum \hyperlink{classdaisy_1_1_usb_handle_ad2a37421ade061875a30765e2b2e1318}{daisy\+::\+Usb\+Handle\+::\+Usb\+Periph}}
+
+Specified which of the two U\+SB Peripherals to initialize.\+FS External D-\/ pin is Pin 37 (G\+P\+I\+O31)FS External D+ pin is Pin 38 (G\+P\+I\+O32) 
+
+\subsection{Member Function Documentation}
+<<<<<<< HEAD
+\mbox{\Hypertarget{classdaisy_1_1_usb_handle_ab66484e20fbef1d7b1397403a69768ea}\label{classdaisy_1_1_usb_handle_ab66484e20fbef1d7b1397403a69768ea}} 
+\index{daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}!Init@{Init}}
+\index{Init@{Init}!daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}}
+\subsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily void daisy\+::\+Usb\+Handle\+::\+Init (\begin{DoxyParamCaption}\item[{\hyperlink{classdaisy_1_1_usb_handle_ad2a37421ade061875a30765e2b2e1318}{Usb\+Periph}}]{dev }\end{DoxyParamCaption})}
+
+Initializes the specified peripheral(s) as U\+SB C\+DC Devices \mbox{\Hypertarget{classdaisy_1_1_usb_handle_a14695d78459745b5749732ddd25317ae}\label{classdaisy_1_1_usb_handle_a14695d78459745b5749732ddd25317ae}} 
+\index{daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}!Set\+Receive\+Callback@{Set\+Receive\+Callback}}
+\index{Set\+Receive\+Callback@{Set\+Receive\+Callback}!daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}}
+\subsubsection{\texorpdfstring{Set\+Receive\+Callback()}{SetReceiveCallback()}}
+{\footnotesize\ttfamily void daisy\+::\+Usb\+Handle\+::\+Set\+Receive\+Callback (\begin{DoxyParamCaption}\item[{\hyperlink{classdaisy_1_1_usb_handle_abd7ee9319fb0f5fa73f2c45e8ba14080}{Receive\+Callback}}]{cb }\end{DoxyParamCaption})}
+
+sets the callback to be called upon reception of new data \mbox{\Hypertarget{classdaisy_1_1_usb_handle_a66ba310745890b4ef51b923154b86fbf}\label{classdaisy_1_1_usb_handle_a66ba310745890b4ef51b923154b86fbf}} 
+\index{daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}!Transmit\+External@{Transmit\+External}}
+\index{Transmit\+External@{Transmit\+External}!daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}}
+\subsubsection{\texorpdfstring{Transmit\+External()}{TransmitExternal()}}
+{\footnotesize\ttfamily void daisy\+::\+Usb\+Handle\+::\+Transmit\+External (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{buff,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+Transmits a buffer of \textquotesingle{}size\textquotesingle{} bytes from a U\+SB port connected to the external U\+SB Pins of the daisy seed. \mbox{\Hypertarget{classdaisy_1_1_usb_handle_aaff1689cd8310f0b741829d6568f2ad0}\label{classdaisy_1_1_usb_handle_aaff1689cd8310f0b741829d6568f2ad0}} 
+\index{daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}!Transmit\+Internal@{Transmit\+Internal}}
+\index{Transmit\+Internal@{Transmit\+Internal}!daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}}
+\subsubsection{\texorpdfstring{Transmit\+Internal()}{TransmitInternal()}}
+{\footnotesize\ttfamily void daisy\+::\+Usb\+Handle\+::\+Transmit\+Internal (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{buff,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+Transmits a buffer of \textquotesingle{}size\textquotesingle{} bytes from the on board U\+SB FS port. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/hid\+\_\+usb.\+h\end{DoxyCompactItemize}
+=======
+\mbox{\Hypertarget{classdaisy_1_1_usb_handle_a0e30c290afb4d303ecf3b0c83d71f24d}\label{classdaisy_1_1_usb_handle_a0e30c290afb4d303ecf3b0c83d71f24d}} 
+\index{daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}!Init@{Init}}
+\index{Init@{Init}!daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}}
+\subsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily void Usb\+Handle\+::\+Init (\begin{DoxyParamCaption}\item[{\hyperlink{classdaisy_1_1_usb_handle_ad2a37421ade061875a30765e2b2e1318}{Usb\+Periph}}]{dev }\end{DoxyParamCaption})}
+
+Initializes the specified peripheral(s) as U\+SB C\+DC Devices \mbox{\Hypertarget{classdaisy_1_1_usb_handle_ab8a881e946f264682ccb34a3b79ef55d}\label{classdaisy_1_1_usb_handle_ab8a881e946f264682ccb34a3b79ef55d}} 
+\index{daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}!Set\+Receive\+Callback@{Set\+Receive\+Callback}}
+\index{Set\+Receive\+Callback@{Set\+Receive\+Callback}!daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}}
+\subsubsection{\texorpdfstring{Set\+Receive\+Callback()}{SetReceiveCallback()}}
+{\footnotesize\ttfamily void Usb\+Handle\+::\+Set\+Receive\+Callback (\begin{DoxyParamCaption}\item[{\hyperlink{classdaisy_1_1_usb_handle_abd7ee9319fb0f5fa73f2c45e8ba14080}{Receive\+Callback}}]{cb }\end{DoxyParamCaption})}
+
+sets the callback to be called upon reception of new data \mbox{\Hypertarget{classdaisy_1_1_usb_handle_a46756800105521559e52a91a8b0efd3a}\label{classdaisy_1_1_usb_handle_a46756800105521559e52a91a8b0efd3a}} 
+\index{daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}!Transmit\+External@{Transmit\+External}}
+\index{Transmit\+External@{Transmit\+External}!daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}}
+\subsubsection{\texorpdfstring{Transmit\+External()}{TransmitExternal()}}
+{\footnotesize\ttfamily void Usb\+Handle\+::\+Transmit\+External (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{buff,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+Transmits a buffer of \textquotesingle{}size\textquotesingle{} bytes from a U\+SB port connected to the external U\+SB Pins of the daisy seed. \mbox{\Hypertarget{classdaisy_1_1_usb_handle_a990bf276c07c7e3f1ca122f7e320b303}\label{classdaisy_1_1_usb_handle_a990bf276c07c7e3f1ca122f7e320b303}} 
+\index{daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}!Transmit\+Internal@{Transmit\+Internal}}
+\index{Transmit\+Internal@{Transmit\+Internal}!daisy\+::\+Usb\+Handle@{daisy\+::\+Usb\+Handle}}
+\subsubsection{\texorpdfstring{Transmit\+Internal()}{TransmitInternal()}}
+{\footnotesize\ttfamily void Usb\+Handle\+::\+Transmit\+Internal (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{buff,  }\item[{size\+\_\+t}]{size }\end{DoxyParamCaption})}
+
+Transmits a buffer of \textquotesingle{}size\textquotesingle{} bytes from the on board U\+SB FS port. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/hid\+\_\+usb.\+h\item 
+src/hid\+\_\+usb.\+cpp\end{DoxyCompactItemize}
+>>>>>>> autogen documentation

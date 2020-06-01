@@ -1,0 +1,92 @@
+\hypertarget{classdaisy_1_1_rgb_led}{}\section{daisy\+:\+:Rgb\+Led Class Reference}
+\label{classdaisy_1_1_rgb_led}\index{daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+<<<<<<< HEAD
+void \hyperlink{classdaisy_1_1_rgb_led_aff3dc6ce4e2415a32ad09c41f003b7fe}{Init} (\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} red, \hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} green, \hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} blue, bool invert)
+\item 
+void \hyperlink{classdaisy_1_1_rgb_led_a342c072e678f5df25a8f638a91479d1f}{Set} (float r, float g, float b)
+\item 
+void \hyperlink{classdaisy_1_1_rgb_led_afc530391dc068788952edbe9907df8e9}{Set\+Color} (\hyperlink{classdaisy_1_1_color}{Color} c)
+\item 
+void \hyperlink{classdaisy_1_1_rgb_led_a6bf7b10c72831aa2d2a7f021822f1899}{Update} ()
+=======
+void \hyperlink{classdaisy_1_1_rgb_led_aea7e214ca5f39d1df9d307b6fce4463b}{Init} (\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} red, \hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} green, \hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} blue, bool invert)
+\item 
+void \hyperlink{classdaisy_1_1_rgb_led_a36369f2837770bd4e6b8240cfdc9ce18}{Set} (float r, float g, float b)
+\item 
+void \hyperlink{classdaisy_1_1_rgb_led_a54576a6b4bd3df768562ac677287bc53}{Set\+Color} (\hyperlink{classdaisy_1_1_color}{Color} c)
+\item 
+void \hyperlink{classdaisy_1_1_rgb_led_a9bb58197c1b1a71ffd26a86b26972f60}{Update} ()
+>>>>>>> autogen documentation
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+<<<<<<< HEAD
+\mbox{\Hypertarget{classdaisy_1_1_rgb_led_aff3dc6ce4e2415a32ad09c41f003b7fe}\label{classdaisy_1_1_rgb_led_aff3dc6ce4e2415a32ad09c41f003b7fe}} 
+\index{daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}!Init@{Init}}
+\index{Init@{Init}!daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}}
+\subsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily void daisy\+::\+Rgb\+Led\+::\+Init (\begin{DoxyParamCaption}\item[{\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin}}]{red,  }\item[{\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin}}]{green,  }\item[{\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin}}]{blue,  }\item[{bool}]{invert }\end{DoxyParamCaption})}
+
+Initializes 3x G\+P\+IO Pins as red, green, and blue elements of an R\+GB L\+ED
+
+Invert will flip polarity of L\+ED. \mbox{\Hypertarget{classdaisy_1_1_rgb_led_a342c072e678f5df25a8f638a91479d1f}\label{classdaisy_1_1_rgb_led_a342c072e678f5df25a8f638a91479d1f}} 
+\index{daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}!Set@{Set}}
+\index{Set@{Set}!daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}}
+\subsubsection{\texorpdfstring{Set()}{Set()}}
+{\footnotesize\ttfamily void daisy\+::\+Rgb\+Led\+::\+Set (\begin{DoxyParamCaption}\item[{float}]{r,  }\item[{float}]{g,  }\item[{float}]{b }\end{DoxyParamCaption})}
+
+Sets each element of the L\+ED with a floating point number 0-\/1 \mbox{\Hypertarget{classdaisy_1_1_rgb_led_afc530391dc068788952edbe9907df8e9}\label{classdaisy_1_1_rgb_led_afc530391dc068788952edbe9907df8e9}} 
+\index{daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}!Set\+Color@{Set\+Color}}
+\index{Set\+Color@{Set\+Color}!daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}}
+\subsubsection{\texorpdfstring{Set\+Color()}{SetColor()}}
+{\footnotesize\ttfamily void daisy\+::\+Rgb\+Led\+::\+Set\+Color (\begin{DoxyParamCaption}\item[{\hyperlink{classdaisy_1_1_color}{Color}}]{c }\end{DoxyParamCaption})}
+
+Sets the R\+GB using a \hyperlink{classdaisy_1_1_color}{Color} object. \mbox{\Hypertarget{classdaisy_1_1_rgb_led_a6bf7b10c72831aa2d2a7f021822f1899}\label{classdaisy_1_1_rgb_led_a6bf7b10c72831aa2d2a7f021822f1899}} 
+\index{daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}!Update@{Update}}
+\index{Update@{Update}!daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void daisy\+::\+Rgb\+Led\+::\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Updates the P\+WM of the L\+ED based on the current values.\+Should be called at a regular interval. (i.\+e. 1k\+Hz/1ms) 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/hid\+\_\+rgb\+\_\+led.\+h\end{DoxyCompactItemize}
+=======
+\mbox{\Hypertarget{classdaisy_1_1_rgb_led_aea7e214ca5f39d1df9d307b6fce4463b}\label{classdaisy_1_1_rgb_led_aea7e214ca5f39d1df9d307b6fce4463b}} 
+\index{daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}!Init@{Init}}
+\index{Init@{Init}!daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}}
+\subsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily void Rgb\+Led\+::\+Init (\begin{DoxyParamCaption}\item[{\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin}}]{red,  }\item[{\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin}}]{green,  }\item[{\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin}}]{blue,  }\item[{bool}]{invert }\end{DoxyParamCaption})}
+
+Initializes 3x G\+P\+IO Pins as red, green, and blue elements of an R\+GB L\+ED
+
+Invert will flip polarity of L\+ED. \mbox{\Hypertarget{classdaisy_1_1_rgb_led_a36369f2837770bd4e6b8240cfdc9ce18}\label{classdaisy_1_1_rgb_led_a36369f2837770bd4e6b8240cfdc9ce18}} 
+\index{daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}!Set@{Set}}
+\index{Set@{Set}!daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}}
+\subsubsection{\texorpdfstring{Set()}{Set()}}
+{\footnotesize\ttfamily void Rgb\+Led\+::\+Set (\begin{DoxyParamCaption}\item[{float}]{r,  }\item[{float}]{g,  }\item[{float}]{b }\end{DoxyParamCaption})}
+
+Sets each element of the L\+ED with a floating point number 0-\/1 \mbox{\Hypertarget{classdaisy_1_1_rgb_led_a54576a6b4bd3df768562ac677287bc53}\label{classdaisy_1_1_rgb_led_a54576a6b4bd3df768562ac677287bc53}} 
+\index{daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}!Set\+Color@{Set\+Color}}
+\index{Set\+Color@{Set\+Color}!daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}}
+\subsubsection{\texorpdfstring{Set\+Color()}{SetColor()}}
+{\footnotesize\ttfamily void Rgb\+Led\+::\+Set\+Color (\begin{DoxyParamCaption}\item[{\hyperlink{classdaisy_1_1_color}{Color}}]{c }\end{DoxyParamCaption})}
+
+Sets the R\+GB using a \hyperlink{classdaisy_1_1_color}{Color} object. \mbox{\Hypertarget{classdaisy_1_1_rgb_led_a9bb58197c1b1a71ffd26a86b26972f60}\label{classdaisy_1_1_rgb_led_a9bb58197c1b1a71ffd26a86b26972f60}} 
+\index{daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}!Update@{Update}}
+\index{Update@{Update}!daisy\+::\+Rgb\+Led@{daisy\+::\+Rgb\+Led}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void Rgb\+Led\+::\+Update (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Updates the P\+WM of the L\+ED based on the current values.\+Should be called at a regular interval. (i.\+e. 1k\+Hz/1ms) 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/hid\+\_\+rgb\+\_\+led.\+h\item 
+src/hid\+\_\+rgb\+\_\+led.\+cpp\end{DoxyCompactItemize}
+>>>>>>> autogen documentation

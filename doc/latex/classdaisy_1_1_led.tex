@@ -1,0 +1,110 @@
+\hypertarget{classdaisy_1_1_led}{}\section{daisy\+:\+:Led Class Reference}
+\label{classdaisy_1_1_led}\index{daisy\+::\+Led@{daisy\+::\+Led}}
+<<<<<<< HEAD
+
+
+L\+ED Class providing simple Software P\+WM ability, etc Eventually this will work with hardware P\+WM, and external L\+ED Driver devices as well.  
+
+
+
+
+{\ttfamily \#include $<$hid\+\_\+led.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classdaisy_1_1_led_a0af3ce433660d9f21e94368d5d84fe6e}{Init} (\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} pin, bool invert, float samplerate=1000.\+0f)
+\item 
+void \hyperlink{classdaisy_1_1_led_a7394c869bc8b34d94c183c2b7fb16bc7}{Set} (float val)
+\item 
+void \hyperlink{classdaisy_1_1_led_aeec57ceddd9f685c50446321ba6e1492}{Update} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+L\+ED Class providing simple Software P\+WM ability, etc Eventually this will work with hardware P\+WM, and external L\+ED Driver devices as well. 
+
+\hyperlink{hid__led_8h_source}{hid\+\_\+led.\+h} \begin{DoxyAuthor}{Author}
+shensley 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+March 2020 
+\end{DoxyDate}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classdaisy_1_1_led_a0af3ce433660d9f21e94368d5d84fe6e}\label{classdaisy_1_1_led_a0af3ce433660d9f21e94368d5d84fe6e}} 
+\index{daisy\+::\+Led@{daisy\+::\+Led}!Init@{Init}}
+\index{Init@{Init}!daisy\+::\+Led@{daisy\+::\+Led}}
+\subsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily void daisy\+::\+Led\+::\+Init (\begin{DoxyParamCaption}\item[{\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin}}]{pin,  }\item[{bool}]{invert,  }\item[{float}]{samplerate = {\ttfamily 1000.0f} }\end{DoxyParamCaption})}
+
+Initializes an L\+ED using the specified hardware pin. 
+\begin{DoxyParams}{Parameters}
+{\em pin} & chooses L\+ED pin \\
+\hline
+{\em invert} & will set whether to internally invert the brightness due to hardware config. \\
+\hline
+{\em samplerate} & sets the rate at which \textquotesingle{}\hyperlink{classdaisy_1_1_led_aeec57ceddd9f685c50446321ba6e1492}{Update()}\textquotesingle{} will be called (used for software P\+WM) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classdaisy_1_1_led_a7394c869bc8b34d94c183c2b7fb16bc7}\label{classdaisy_1_1_led_a7394c869bc8b34d94c183c2b7fb16bc7}} 
+\index{daisy\+::\+Led@{daisy\+::\+Led}!Set@{Set}}
+\index{Set@{Set}!daisy\+::\+Led@{daisy\+::\+Led}}
+\subsubsection{\texorpdfstring{Set()}{Set()}}
+{\footnotesize\ttfamily void daisy\+::\+Led\+::\+Set (\begin{DoxyParamCaption}\item[{float}]{val }\end{DoxyParamCaption})}
+
+Sets the brightness of the \hyperlink{classdaisy_1_1_led}{Led}. 
+\begin{DoxyParams}{Parameters}
+{\em val} & will be cubed for gamma correction, and then quantized to 8-\/bit values for Software P\+WM 8-\/bit is for more flexible update rate options, as 12-\/bit or more would require faster update rates. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classdaisy_1_1_led_aeec57ceddd9f685c50446321ba6e1492}\label{classdaisy_1_1_led_aeec57ceddd9f685c50446321ba6e1492}} 
+\index{daisy\+::\+Led@{daisy\+::\+Led}!Update@{Update}}
+\index{Update@{Update}!daisy\+::\+Led@{daisy\+::\+Led}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void daisy\+::\+Led\+::\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This processes the pwm of the L\+ED sets the hardware accordingly. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/hid\+\_\+led.\+h\end{DoxyCompactItemize}
+=======
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classdaisy_1_1_led_a46819d4aa92d8744edc02bf8911c4fba}{Init} (\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin} pin, bool invert, float samplerate=1000.\+0f)
+\item 
+void \hyperlink{classdaisy_1_1_led_a007d36b37dee07e43b65789f1501b628}{Set} (float val)
+\item 
+void \hyperlink{classdaisy_1_1_led_ae8cbdb3e29cdc4f1f2aa50d7ce470fc9}{Update} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classdaisy_1_1_led_a46819d4aa92d8744edc02bf8911c4fba}\label{classdaisy_1_1_led_a46819d4aa92d8744edc02bf8911c4fba}} 
+\index{daisy\+::\+Led@{daisy\+::\+Led}!Init@{Init}}
+\index{Init@{Init}!daisy\+::\+Led@{daisy\+::\+Led}}
+\subsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily void Led\+::\+Init (\begin{DoxyParamCaption}\item[{\hyperlink{structdsy__gpio__pin}{dsy\+\_\+gpio\+\_\+pin}}]{pin,  }\item[{bool}]{invert,  }\item[{float}]{samplerate = {\ttfamily 1000.0f} }\end{DoxyParamCaption})}
+
+Initializes an L\+ED using the specified hardware pin.\+invert will set whether to internally invert the brightness due to hardware config.\+samplerate sets the rate at which \textquotesingle{}\hyperlink{classdaisy_1_1_led_ae8cbdb3e29cdc4f1f2aa50d7ce470fc9}{Update()}\textquotesingle{} will be called (used for software P\+WM) \mbox{\Hypertarget{classdaisy_1_1_led_a007d36b37dee07e43b65789f1501b628}\label{classdaisy_1_1_led_a007d36b37dee07e43b65789f1501b628}} 
+\index{daisy\+::\+Led@{daisy\+::\+Led}!Set@{Set}}
+\index{Set@{Set}!daisy\+::\+Led@{daisy\+::\+Led}}
+\subsubsection{\texorpdfstring{Set()}{Set()}}
+{\footnotesize\ttfamily void Led\+::\+Set (\begin{DoxyParamCaption}\item[{float}]{val }\end{DoxyParamCaption})}
+
+Sets the brightness of the Led.\+val will be cubed for gamma correction, and then quantized to 8-\/bit values for Software P\+W\+M.\+8-\/bit is for more flexible update rate options, as 12-\/bit or more would require faster update rates. \mbox{\Hypertarget{classdaisy_1_1_led_ae8cbdb3e29cdc4f1f2aa50d7ce470fc9}\label{classdaisy_1_1_led_ae8cbdb3e29cdc4f1f2aa50d7ce470fc9}} 
+\index{daisy\+::\+Led@{daisy\+::\+Led}!Update@{Update}}
+\index{Update@{Update}!daisy\+::\+Led@{daisy\+::\+Led}}
+\subsubsection{\texorpdfstring{Update()}{Update()}}
+{\footnotesize\ttfamily void Led\+::\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This processes the pwm of the L\+ED sets the hardware accordingly. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/hid\+\_\+led.\+h\item 
+src/hid\+\_\+led.\+cpp\end{DoxyCompactItemize}
+>>>>>>> autogen documentation

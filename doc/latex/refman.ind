@@ -1,0 +1,1558 @@
+\begin{theindex}
+
+<<<<<<< HEAD
+  \item {$\sim$\+Gate\+In}
+    \subitem {daisy\+::\+Gate\+In}, \hyperpage{70}
+  \item {$\sim$\+Parameter}
+    \subitem {daisy\+::\+Parameter}, \hyperpage{79}
+=======
+  \item {\+\_\+\+\_\+\+A\+L\+I\+G\+N\+\_\+\+E\+ND}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Variables}, 
+		\hyperpage{36}
+>>>>>>> autogen documentation
+
+  \indexspace
+
+  \item {As\+Control\+Change}
+<<<<<<< HEAD
+    \subitem {daisy\+::\+Midi\+Event}, \hyperpage{72}
+  \item {As\+Note\+On}
+    \subitem {daisy\+::\+Midi\+Event}, \hyperpage{72}
+  \item {Audio\+Block\+Size}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{48}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{52}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{57}
+  \item {Audio\+Callback\+Rate}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{48}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{52}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{57}
+  \item {Audio\+Sample\+Rate}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{48}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{53}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{57}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{60}
+=======
+    \subitem {daisy\+::\+Midi\+Event}, \hyperpage{94}
+  \item {As\+Note\+On}
+    \subitem {daisy\+::\+Midi\+Event}, \hyperpage{94}
+  \item {Audio\+Sample\+Rate}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{76}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{79}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{80}
+>>>>>>> autogen documentation
+
+  \indexspace
+
+  \item {Block\+Nbr}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+<<<<<<< HEAD
+		\hyperpage{65}
+  \item {Block\+Size}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{65}
+  \item {Blocking\+Transmit}
+    \subitem {daisy\+::\+Spi\+Handle}, \hyperpage{87}
+
+  \indexspace
+
+  \item {capacity}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{81}
+  \item {Card\+Speed}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{65}
+  \item {Card\+Type}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{65}
+  \item {Card\+Version}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{65}
+  \item {Change\+Audio\+Callback}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{48}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{53}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{57}
+  \item {Check\+Error}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{90}
+  \item {Class}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{66}
+  \item {Clear\+Leds}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{53}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{58}
+  \item {Close}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{94}
+  \item {codec\+\_\+frame\+\_\+t}, \hyperpage{43}
+  \item {color}, \hyperpage{43}
+  \item {Configure}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{60}
+  \item {Ctrl}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{47}
+  \item {Curve}
+    \subitem {daisy\+::\+Parameter}, \hyperpage{78}
+  \item {cvs}
+    \subitem {daisy\+::daisy\+\_\+field}, \hyperpage{45}
+=======
+		\hyperpage{87}
+  \item {Block\+Size}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{87}
+
+  \indexspace
+
+  \item {C\+D\+C\+\_\+\+Transmit\+\_\+\+FS}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Functions\+Prototype}, 
+		\hyperpage{23}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+IF}, \hyperpage{18}
+  \item {C\+D\+C\+\_\+\+Transmit\+\_\+\+HS}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Functions\+Prototype}, 
+		\hyperpage{23}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+IF}, \hyperpage{18}
+  \item {C\+M\+S\+IS}, \hyperpage{52}
+  \item {C\+S\+I\+\_\+\+V\+A\+L\+UE}
+    \subitem {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Includes}, 
+		\hyperpage{54}
+  \item {capacity}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{102}
+  \item {Card\+Speed}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{87}
+  \item {Card\+Type}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{87}
+  \item {Card\+Version}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{87}
+  \item {Check\+Error}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{110}
+  \item {Class}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{87}
+  \item {Close}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{114}
+  \item {codec\+\_\+frame\+\_\+t}, \hyperpage{73}
+  \item {color}, \hyperpage{73}
+  \item {Configure}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{80}
+  \item {Ctrl}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{76}
+  \item {Curve}
+    \subitem {daisy\+::\+Parameter}, \hyperpage{99}
+>>>>>>> autogen documentation
+
+  \indexspace
+
+  \item {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+<<<<<<< HEAD
+		\hyperpage{64}
+    \subitem {Block\+Nbr}, \hyperpage{65}
+    \subitem {Block\+Size}, \hyperpage{65}
+    \subitem {Card\+Speed}, \hyperpage{65}
+    \subitem {Card\+Type}, \hyperpage{65}
+    \subitem {Card\+Version}, \hyperpage{65}
+    \subitem {Class}, \hyperpage{66}
+    \subitem {Log\+Block\+Nbr}, \hyperpage{66}
+    \subitem {Log\+Block\+Size}, \hyperpage{66}
+    \subitem {Rel\+Card\+Add}, \hyperpage{66}
+  \item {daisy}, \hyperpage{33}
+    \subitem {daisy\+\_\+field\+\_\+init}, \hyperpage{36}
+    \subitem {Midi\+Message\+Type}, \hyperpage{35}
+    \subitem {Sdmmc\+Bit\+Width}, \hyperpage{35}
+    \subitem {Sdmmc\+Mode}, \hyperpage{35}
+    \subitem {Sdmmc\+Speed}, \hyperpage{36}
+    \subitem {Spi\+Periph}, \hyperpage{36}
+    \subitem {Spi\+Pin}, \hyperpage{36}
+  \item {daisy\+::\+Adc\+Channel\+Config}, \hyperpage{39}
+    \subitem {Init\+Mux}, \hyperpage{39}
+    \subitem {Init\+Single}, \hyperpage{40}
+  \item {daisy\+::\+Adc\+Handle}, \hyperpage{40}
+    \subitem {Get}, \hyperpage{40}
+    \subitem {Get\+Mux}, \hyperpage{41}
+    \subitem {Init}, \hyperpage{41}
+    \subitem {Start}, \hyperpage{41}
+    \subitem {Stop}, \hyperpage{41}
+  \item {daisy\+::\+Analog\+Control}, \hyperpage{42}
+    \subitem {Init}, \hyperpage{42}
+    \subitem {Init\+Bipolar\+Cv}, \hyperpage{42}
+    \subitem {Process}, \hyperpage{42}
+    \subitem {Value}, \hyperpage{42}
+  \item {daisy\+::\+Color}, \hyperpage{43}
+    \subitem {Init}, \hyperpage{44}
+    \subitem {Preset\+Color}, \hyperpage{44}
+    \subitem {Red}, \hyperpage{44}
+  \item {daisy\+::\+Control\+Change\+Event}, \hyperpage{44}
+  \item {daisy\+::\+Daisy\+Patch}, \hyperpage{46}
+    \subitem {Audio\+Block\+Size}, \hyperpage{48}
+    \subitem {Audio\+Callback\+Rate}, \hyperpage{48}
+    \subitem {Audio\+Sample\+Rate}, \hyperpage{48}
+    \subitem {Change\+Audio\+Callback}, \hyperpage{48}
+    \subitem {Ctrl}, \hyperpage{47}
+    \subitem {Delay\+Ms}, \hyperpage{48}
+    \subitem {Gate\+Input}, \hyperpage{47}
+    \subitem {Init}, \hyperpage{50}
+    \subitem {Set\+Audio\+Block\+Size}, \hyperpage{50}
+    \subitem {Start\+Adc}, \hyperpage{50}
+    \subitem {Start\+Audio}, \hyperpage{50}
+    \subitem {Update\+Analog\+Controls}, \hyperpage{50}
+  \item {daisy\+::\+Daisy\+Petal}, \hyperpage{51}
+    \subitem {Audio\+Block\+Size}, \hyperpage{52}
+    \subitem {Audio\+Callback\+Rate}, \hyperpage{52}
+    \subitem {Audio\+Sample\+Rate}, \hyperpage{53}
+    \subitem {Change\+Audio\+Callback}, \hyperpage{53}
+    \subitem {Clear\+Leds}, \hyperpage{53}
+    \subitem {Debounce\+Controls}, \hyperpage{53}
+    \subitem {Delay\+Ms}, \hyperpage{53}
+    \subitem {Get\+Knob\+Value}, \hyperpage{54}
+    \subitem {Init}, \hyperpage{54}
+    \subitem {Set\+Audio\+Block\+Size}, \hyperpage{54}
+    \subitem {Set\+Footswitch\+Led}, \hyperpage{54}
+    \subitem {Set\+Ring\+Led}, \hyperpage{55}
+    \subitem {Start\+Adc}, \hyperpage{55}
+    \subitem {Start\+Audio}, \hyperpage{55}
+    \subitem {Sw}, \hyperpage{52}
+    \subitem {Update\+Analog\+Controls}, \hyperpage{55}
+    \subitem {Update\+Leds}, \hyperpage{56}
+  \item {daisy\+::\+Daisy\+Pod}, \hyperpage{56}
+    \subitem {Audio\+Block\+Size}, \hyperpage{57}
+    \subitem {Audio\+Callback\+Rate}, \hyperpage{57}
+    \subitem {Audio\+Sample\+Rate}, \hyperpage{57}
+    \subitem {Change\+Audio\+Callback}, \hyperpage{57}
+    \subitem {Clear\+Leds}, \hyperpage{58}
+    \subitem {Delay\+Ms}, \hyperpage{58}
+    \subitem {Init}, \hyperpage{58}
+    \subitem {seed}, \hyperpage{59}
+    \subitem {Set\+Audio\+Block\+Size}, \hyperpage{58}
+    \subitem {Start\+Adc}, \hyperpage{58}
+    \subitem {Start\+Audio}, \hyperpage{58}
+    \subitem {Update\+Analog\+Controls}, \hyperpage{59}
+    \subitem {Update\+Leds}, \hyperpage{59}
+  \item {daisy\+::\+Daisy\+Seed}, \hyperpage{59}
+    \subitem {Audio\+Sample\+Rate}, \hyperpage{60}
+    \subitem {Configure}, \hyperpage{60}
+    \subitem {Get\+Pin}, \hyperpage{60}
+    \subitem {Init}, \hyperpage{60}
+    \subitem {sdram\+\_\+handle}, \hyperpage{61}
+    \subitem {Set\+Audio\+Block\+Size}, \hyperpage{60}
+    \subitem {Set\+Led}, \hyperpage{61}
+    \subitem {Set\+Test\+Point}, \hyperpage{61}
+    \subitem {Start\+Audio}, \hyperpage{61}
+  \item {daisy\+::\+Encoder}, \hyperpage{67}
+    \subitem {Debounce}, \hyperpage{67}
+    \subitem {Falling\+Edge}, \hyperpage{67}
+    \subitem {Increment}, \hyperpage{67}
+    \subitem {Init}, \hyperpage{67}
+    \subitem {Pressed}, \hyperpage{68}
+    \subitem {Rising\+Edge}, \hyperpage{68}
+    \subitem {Time\+Held\+Ms}, \hyperpage{68}
+  \item {daisy\+::\+Gate\+In}, \hyperpage{69}
+    \subitem {$\sim$\+Gate\+In}, \hyperpage{70}
+    \subitem {Gate\+In}, \hyperpage{70}
+    \subitem {Init}, \hyperpage{70}
+    \subitem {Trig}, \hyperpage{70}
+  \item {daisy\+::\+Led}, \hyperpage{70}
+    \subitem {Init}, \hyperpage{71}
+    \subitem {Set}, \hyperpage{71}
+    \subitem {Update}, \hyperpage{72}
+  \item {daisy\+::\+Midi\+Event}, \hyperpage{72}
+    \subitem {As\+Control\+Change}, \hyperpage{72}
+    \subitem {As\+Note\+On}, \hyperpage{72}
+    \subitem {type}, \hyperpage{73}
+  \item {daisy\+::\+Midi\+Handler}, \hyperpage{73}
+    \subitem {Has\+Events}, \hyperpage{74}
+    \subitem {Init}, \hyperpage{74}
+    \subitem {Midi\+Input\+Mode}, \hyperpage{73}
+    \subitem {Parse}, \hyperpage{74}
+    \subitem {Pop\+Event}, \hyperpage{74}
+    \subitem {Start\+Receive}, \hyperpage{74}
+  \item {daisy\+::\+Note\+On\+Event}, \hyperpage{74}
+  \item {daisy\+::\+Oled\+Display}, \hyperpage{75}
+    \subitem {Draw\+Pixel}, \hyperpage{76}
+    \subitem {Fill}, \hyperpage{76}
+    \subitem {Init}, \hyperpage{76}
+    \subitem {Pins}, \hyperpage{75}
+    \subitem {Set\+Cursor}, \hyperpage{77}
+    \subitem {Update}, \hyperpage{77}
+    \subitem {Write\+Char}, \hyperpage{77}
+    \subitem {Write\+String}, \hyperpage{77}
+  \item {daisy\+::\+Parameter}, \hyperpage{78}
+    \subitem {$\sim$\+Parameter}, \hyperpage{79}
+    \subitem {Curve}, \hyperpage{78}
+    \subitem {Init}, \hyperpage{79}
+    \subitem {Parameter}, \hyperpage{79}
+    \subitem {Process}, \hyperpage{79}
+    \subitem {Value}, \hyperpage{79}
+  \item {daisy\+::\+Rgb\+Led}, \hyperpage{80}
+    \subitem {Init}, \hyperpage{80}
+    \subitem {Set}, \hyperpage{80}
+    \subitem {Set\+Color}, \hyperpage{80}
+    \subitem {Update}, \hyperpage{81}
+  \item {daisy\+::\+Ring\+Buffer}
+    \subitem {capacity}, \hyperpage{81}
+    \subitem {Flush}, \hyperpage{81}
+    \subitem {Immediate\+Read}, \hyperpage{82}
+    \subitem {Init}, \hyperpage{82}
+    \subitem {Overwrite}, \hyperpage{82}
+    \subitem {Read}, \hyperpage{82}
+    \subitem {readable}, \hyperpage{83}
+    \subitem {Swallow}, \hyperpage{83}
+    \subitem {writable}, \hyperpage{83}
+    \subitem {Write}, \hyperpage{83}
+  \item {daisy\+::\+Ring\+Buffer$<$ T, 0 $>$}, \hyperpage{84}
+  \item {daisy\+::\+Ring\+Buffer$<$ T, size $>$}, \hyperpage{81}
+  \item {daisy\+::\+Sdmmc\+Handler}, \hyperpage{84}
+    \subitem {Init}, \hyperpage{84}
+  \item {daisy\+::\+Sdmmc\+Handler\+Init}, \hyperpage{84}
+  \item {daisy\+::\+Spi\+Handle}, \hyperpage{87}
+    \subitem {Blocking\+Transmit}, \hyperpage{87}
+    \subitem {Init}, \hyperpage{87}
+  \item {daisy\+::\+Switch}, \hyperpage{88}
+    \subitem {Debounce}, \hyperpage{88}
+    \subitem {Falling\+Edge}, \hyperpage{89}
+    \subitem {Init}, \hyperpage{89}
+    \subitem {Polarity}, \hyperpage{88}
+    \subitem {Pressed}, \hyperpage{89}
+    \subitem {Pull}, \hyperpage{88}
+    \subitem {Rising\+Edge}, \hyperpage{89}
+    \subitem {Time\+Held\+Ms}, \hyperpage{89}
+    \subitem {Type}, \hyperpage{88}
+  \item {daisy\+::\+Uart\+Handler}, \hyperpage{90}
+    \subitem {Check\+Error}, \hyperpage{90}
+    \subitem {Flush\+Rx}, \hyperpage{90}
+    \subitem {Init}, \hyperpage{90}
+    \subitem {Poll\+Receive}, \hyperpage{90}
+    \subitem {Poll\+Tx}, \hyperpage{91}
+    \subitem {Pop\+Rx}, \hyperpage{91}
+    \subitem {Readable}, \hyperpage{91}
+    \subitem {Rx\+Active}, \hyperpage{91}
+    \subitem {Start\+Rx}, \hyperpage{91}
+  \item {daisy\+::\+Usb\+Handle}, \hyperpage{92}
+    \subitem {Init}, \hyperpage{92}
+    \subitem {Receive\+Callback}, \hyperpage{92}
+    \subitem {Set\+Receive\+Callback}, \hyperpage{92}
+    \subitem {Transmit\+External}, \hyperpage{93}
+    \subitem {Transmit\+Internal}, \hyperpage{93}
+    \subitem {Usb\+Periph}, \hyperpage{92}
+  \item {daisy\+::\+Wav\+File\+Info}, \hyperpage{94}
+  \item {daisy\+::\+Wav\+Player}, \hyperpage{94}
+    \subitem {Close}, \hyperpage{94}
+    \subitem {Get\+Current\+File}, \hyperpage{95}
+    \subitem {Get\+Looping}, \hyperpage{95}
+    \subitem {Get\+Number\+Files}, \hyperpage{95}
+    \subitem {Init}, \hyperpage{95}
+    \subitem {Open}, \hyperpage{95}
+    \subitem {Prepare}, \hyperpage{95}
+    \subitem {Restart}, \hyperpage{95}
+    \subitem {Set\+Looping}, \hyperpage{96}
+    \subitem {Stream}, \hyperpage{96}
+  \item {daisy\+::daisy\+\_\+field}, \hyperpage{45}
+    \subitem {cvs}, \hyperpage{45}
+    \subitem {gate\+\_\+in}, \hyperpage{45}
+    \subitem {gate\+\_\+out}, \hyperpage{46}
+    \subitem {keyboard\+\_\+sr}, \hyperpage{46}
+    \subitem {knobs}, \hyperpage{46}
+    \subitem {switches}, \hyperpage{46}
+  \item {daisy\+\_\+field\+\_\+init}
+    \subitem {daisy}, \hyperpage{36}
+  \item {data}
+    \subitem {Font\+Def}, \hyperpage{68}
+  \item {Debounce}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{67}
+    \subitem {daisy\+::\+Switch}, \hyperpage{88}
+  \item {Debounce\+Controls}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{53}
+  \item {Delay\+Ms}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{48}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{53}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{58}
+  \item {Draw\+Pixel}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{76}
+  \item {dsy\+\_\+audio\+\_\+handle}, \hyperpage{61}
+  \item {dsy\+\_\+dac\+\_\+handle}, \hyperpage{62}
+  \item {dsy\+\_\+gpio}, \hyperpage{62}
+  \item {dsy\+\_\+gpio\+\_\+pin}, \hyperpage{63}
+  \item {dsy\+\_\+i2c\+\_\+handle}, \hyperpage{63}
+  \item {dsy\+\_\+qspi\+\_\+handle}, \hyperpage{63}
+  \item {dsy\+\_\+sai\+\_\+handle}, \hyperpage{64}
+  \item {dsy\+\_\+sr\+\_\+4021\+\_\+handle}, \hyperpage{66}
+=======
+		\hyperpage{86}
+    \subitem {Block\+Nbr}, \hyperpage{87}
+    \subitem {Block\+Size}, \hyperpage{87}
+    \subitem {Card\+Speed}, \hyperpage{87}
+    \subitem {Card\+Type}, \hyperpage{87}
+    \subitem {Card\+Version}, \hyperpage{87}
+    \subitem {Class}, \hyperpage{87}
+    \subitem {Log\+Block\+Nbr}, \hyperpage{87}
+    \subitem {Log\+Block\+Size}, \hyperpage{88}
+    \subitem {Rel\+Card\+Add}, \hyperpage{88}
+  \item {daisy}, \hyperpage{65}
+    \subitem {daisy\+\_\+field\+\_\+init}, \hyperpage{67}
+    \subitem {Midi\+Message\+Type}, \hyperpage{67}
+    \subitem {Sdmmc\+Bit\+Width}, \hyperpage{67}
+    \subitem {Sdmmc\+Mode}, \hyperpage{67}
+    \subitem {Sdmmc\+Speed}, \hyperpage{67}
+  \item {daisy\+::\+Adc\+Channel\+Config}, \hyperpage{69}
+    \subitem {Init\+Mux}, \hyperpage{69}
+    \subitem {Init\+Single}, \hyperpage{70}
+  \item {daisy\+::\+Adc\+Handle}, \hyperpage{70}
+    \subitem {Get}, \hyperpage{70}
+    \subitem {Get\+Mux}, \hyperpage{71}
+    \subitem {Init}, \hyperpage{71}
+    \subitem {Start}, \hyperpage{71}
+    \subitem {Stop}, \hyperpage{71}
+  \item {daisy\+::\+Analog\+Control}, \hyperpage{71}
+    \subitem {Init}, \hyperpage{72}
+    \subitem {Init\+Bipolar\+Cv}, \hyperpage{72}
+    \subitem {Process}, \hyperpage{72}
+    \subitem {Value}, \hyperpage{72}
+  \item {daisy\+::\+Color}, \hyperpage{73}
+    \subitem {Init}, \hyperpage{74}
+    \subitem {Preset\+Color}, \hyperpage{74}
+    \subitem {Red}, \hyperpage{74}
+  \item {daisy\+::\+Control\+Change\+Event}, \hyperpage{74}
+  \item {daisy\+::\+Daisy\+Patch}, \hyperpage{75}
+    \subitem {Audio\+Sample\+Rate}, \hyperpage{76}
+    \subitem {Ctrl}, \hyperpage{76}
+    \subitem {gate\+\_\+output}, \hyperpage{76}
+    \subitem {Init}, \hyperpage{76}
+    \subitem {seed}, \hyperpage{77}
+    \subitem {Set\+Audio\+Block\+Size}, \hyperpage{76}
+  \item {daisy\+::\+Daisy\+Petal}, \hyperpage{77}
+  \item {daisy\+::\+Daisy\+Pod}, \hyperpage{78}
+    \subitem {Audio\+Sample\+Rate}, \hyperpage{79}
+    \subitem {Init}, \hyperpage{79}
+    \subitem {seed}, \hyperpage{79}
+    \subitem {Set\+Audio\+Block\+Size}, \hyperpage{79}
+  \item {daisy\+::\+Daisy\+Seed}, \hyperpage{79}
+    \subitem {Audio\+Sample\+Rate}, \hyperpage{80}
+    \subitem {Configure}, \hyperpage{80}
+    \subitem {Get\+Pin}, \hyperpage{80}
+    \subitem {Init}, \hyperpage{80}
+    \subitem {sdram\+\_\+handle}, \hyperpage{81}
+    \subitem {Set\+Audio\+Block\+Size}, \hyperpage{80}
+    \subitem {Set\+Led}, \hyperpage{81}
+    \subitem {Set\+Test\+Point}, \hyperpage{81}
+    \subitem {Start\+Audio}, \hyperpage{81}
+  \item {daisy\+::\+Encoder}, \hyperpage{89}
+    \subitem {Debounce}, \hyperpage{90}
+    \subitem {Falling\+Edge}, \hyperpage{90}
+    \subitem {Increment}, \hyperpage{90}
+    \subitem {Init}, \hyperpage{90}
+    \subitem {Pressed}, \hyperpage{90}
+    \subitem {Rising\+Edge}, \hyperpage{90}
+    \subitem {Time\+Held\+Ms}, \hyperpage{90}
+  \item {daisy\+::\+Gate\+In}, \hyperpage{92}
+    \subitem {Init}, \hyperpage{92}
+    \subitem {Trig}, \hyperpage{92}
+  \item {daisy\+::\+Led}, \hyperpage{93}
+    \subitem {Init}, \hyperpage{93}
+    \subitem {Set}, \hyperpage{93}
+    \subitem {Update}, \hyperpage{93}
+  \item {daisy\+::\+Midi\+Event}, \hyperpage{93}
+    \subitem {As\+Control\+Change}, \hyperpage{94}
+    \subitem {As\+Note\+On}, \hyperpage{94}
+    \subitem {type}, \hyperpage{94}
+  \item {daisy\+::\+Midi\+Handler}, \hyperpage{95}
+    \subitem {Has\+Events}, \hyperpage{95}
+    \subitem {Init}, \hyperpage{95}
+    \subitem {Midi\+Input\+Mode}, \hyperpage{95}
+    \subitem {Parse}, \hyperpage{95}
+    \subitem {Pop\+Event}, \hyperpage{96}
+    \subitem {Start\+Receive}, \hyperpage{96}
+  \item {daisy\+::\+Note\+On\+Event}, \hyperpage{96}
+  \item {daisy\+::\+Oled\+Display}, \hyperpage{97}
+    \subitem {Draw\+Pixel}, \hyperpage{98}
+    \subitem {Fill}, \hyperpage{98}
+    \subitem {Init}, \hyperpage{98}
+    \subitem {Pins}, \hyperpage{97}
+    \subitem {Set\+Cursor}, \hyperpage{98}
+    \subitem {Update}, \hyperpage{98}
+    \subitem {Write\+Char}, \hyperpage{98}
+    \subitem {Write\+String}, \hyperpage{99}
+  \item {daisy\+::\+Parameter}, \hyperpage{99}
+    \subitem {Curve}, \hyperpage{99}
+    \subitem {Init}, \hyperpage{100}
+    \subitem {Process}, \hyperpage{100}
+    \subitem {Value}, \hyperpage{100}
+  \item {daisy\+::\+Rgb\+Led}, \hyperpage{101}
+    \subitem {Init}, \hyperpage{101}
+    \subitem {Set}, \hyperpage{101}
+    \subitem {Set\+Color}, \hyperpage{101}
+    \subitem {Update}, \hyperpage{101}
+  \item {daisy\+::\+Ring\+Buffer}
+    \subitem {capacity}, \hyperpage{102}
+    \subitem {Flush}, \hyperpage{102}
+    \subitem {Immediate\+Read}, \hyperpage{102}
+    \subitem {Init}, \hyperpage{102}
+    \subitem {Overwrite}, \hyperpage{103}
+    \subitem {Read}, \hyperpage{103}
+    \subitem {readable}, \hyperpage{103}
+    \subitem {Swallow}, \hyperpage{103}
+    \subitem {writable}, \hyperpage{103}
+    \subitem {Write}, \hyperpage{104}
+  \item {daisy\+::\+Ring\+Buffer$<$ T, 0 $>$}, \hyperpage{104}
+  \item {daisy\+::\+Ring\+Buffer$<$ T, size $>$}, \hyperpage{102}
+  \item {daisy\+::\+Sdmmc\+Handler}, \hyperpage{104}
+    \subitem {Init}, \hyperpage{105}
+  \item {daisy\+::\+Sdmmc\+Handler\+Init}, \hyperpage{105}
+  \item {daisy\+::\+Spi\+Handle}, \hyperpage{107}
+  \item {daisy\+::\+Switch}, \hyperpage{107}
+    \subitem {Debounce}, \hyperpage{108}
+    \subitem {Falling\+Edge}, \hyperpage{108}
+    \subitem {Init}, \hyperpage{108}
+    \subitem {Polarity}, \hyperpage{107}
+    \subitem {Pressed}, \hyperpage{108}
+    \subitem {Pull}, \hyperpage{108}
+    \subitem {Rising\+Edge}, \hyperpage{109}
+    \subitem {Time\+Held\+Ms}, \hyperpage{109}
+    \subitem {Type}, \hyperpage{108}
+  \item {daisy\+::\+Uart\+Handler}, \hyperpage{109}
+    \subitem {Check\+Error}, \hyperpage{110}
+    \subitem {Flush\+Rx}, \hyperpage{110}
+    \subitem {Init}, \hyperpage{110}
+    \subitem {Poll\+Receive}, \hyperpage{110}
+    \subitem {Poll\+Tx}, \hyperpage{110}
+    \subitem {Pop\+Rx}, \hyperpage{110}
+    \subitem {Readable}, \hyperpage{110}
+    \subitem {Rx\+Active}, \hyperpage{111}
+    \subitem {Start\+Rx}, \hyperpage{111}
+  \item {daisy\+::\+Usb\+Handle}, \hyperpage{111}
+    \subitem {Init}, \hyperpage{112}
+    \subitem {Receive\+Callback}, \hyperpage{111}
+    \subitem {Set\+Receive\+Callback}, \hyperpage{112}
+    \subitem {Transmit\+External}, \hyperpage{112}
+    \subitem {Transmit\+Internal}, \hyperpage{112}
+    \subitem {Usb\+Periph}, \hyperpage{112}
+  \item {daisy\+::\+Wav\+File\+Info}, \hyperpage{113}
+  \item {daisy\+::\+Wav\+Player}, \hyperpage{114}
+    \subitem {Close}, \hyperpage{114}
+    \subitem {Get\+Current\+File}, \hyperpage{114}
+    \subitem {Get\+Looping}, \hyperpage{115}
+    \subitem {Get\+Number\+Files}, \hyperpage{115}
+    \subitem {Init}, \hyperpage{115}
+    \subitem {Open}, \hyperpage{115}
+    \subitem {Prepare}, \hyperpage{115}
+    \subitem {Restart}, \hyperpage{115}
+    \subitem {Set\+Looping}, \hyperpage{115}
+    \subitem {Stream}, \hyperpage{115}
+  \item {daisy\+::daisy\+\_\+field}, \hyperpage{75}
+  \item {daisy\+\_\+field\+\_\+init}
+    \subitem {daisy}, \hyperpage{67}
+  \item {data}
+    \subitem {Font\+Def}, \hyperpage{91}
+  \item {Debounce}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{90}
+    \subitem {daisy\+::\+Switch}, \hyperpage{108}
+  \item {Draw\+Pixel}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{98}
+  \item {dsy\+\_\+adc}, \hyperpage{82}
+  \item {dsy\+\_\+audio}, \hyperpage{82}
+  \item {dsy\+\_\+audio\+\_\+handle}, \hyperpage{82}
+  \item {dsy\+\_\+dac\+\_\+handle}, \hyperpage{83}
+  \item {dsy\+\_\+dac\+\_\+t}, \hyperpage{83}
+  \item {dsy\+\_\+gpio}, \hyperpage{84}
+  \item {dsy\+\_\+gpio\+\_\+pin}, \hyperpage{84}
+  \item {dsy\+\_\+i2c\+\_\+handle}, \hyperpage{84}
+  \item {dsy\+\_\+led\+\_\+driver\+\_\+t}, \hyperpage{85}
+  \item {dsy\+\_\+qspi}, \hyperpage{85}
+  \item {dsy\+\_\+qspi\+\_\+handle}, \hyperpage{85}
+  \item {dsy\+\_\+sai\+\_\+handle}, \hyperpage{86}
+  \item {dsy\+\_\+sdram\+\_\+t}, \hyperpage{88}
+  \item {dsy\+\_\+sr\+\_\+4021\+\_\+handle}, \hyperpage{88}
+  \item {dsy\+\_\+tim}, \hyperpage{89}
+  \item {dsy\+\_\+wm8731\+\_\+handle\+\_\+t}, \hyperpage{89}
+>>>>>>> autogen documentation
+
+  \indexspace
+
+  \item {F\+S\+\_\+\+Desc}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Variables}, 
+<<<<<<< HEAD
+		\hyperpage{29}
+  \item {Falling\+Edge}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{67}
+    \subitem {daisy\+::\+Switch}, \hyperpage{89}
+  \item {Fill}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{76}
+  \item {Flush}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{81}
+  \item {Flush\+Rx}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{90}
+  \item {Font\+Def}, \hyperpage{68}
+    \subitem {data}, \hyperpage{68}
+    \subitem {Font\+Height}, \hyperpage{69}
+    \subitem {Font\+Width}, \hyperpage{69}
+  \item {Font\+Height}
+    \subitem {Font\+Def}, \hyperpage{69}
+  \item {Font\+Width}
+    \subitem {Font\+Def}, \hyperpage{69}
+
+  \indexspace
+
+  \item {gate\+\_\+in}
+    \subitem {daisy\+::daisy\+\_\+field}, \hyperpage{45}
+  \item {gate\+\_\+out}
+    \subitem {daisy\+::daisy\+\_\+field}, \hyperpage{46}
+  \item {Gate\+In}
+    \subitem {daisy\+::\+Gate\+In}, \hyperpage{70}
+  \item {Gate\+Input}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{47}
+  \item {Get}
+    \subitem {daisy\+::\+Adc\+Handle}, \hyperpage{40}
+  \item {Get\+Current\+File}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{95}
+  \item {Get\+Knob\+Value}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{54}
+  \item {Get\+Looping}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{95}
+  \item {Get\+Mux}
+    \subitem {daisy\+::\+Adc\+Handle}, \hyperpage{41}
+  \item {Get\+Number\+Files}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{95}
+  \item {Get\+Pin}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{60}
+
+  \indexspace
+
+  \item {H\+S\+\_\+\+Desc}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Variables}, 
+		\hyperpage{29}
+  \item {Has\+Events}
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{74}
+=======
+		\hyperpage{50}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Variables}, 
+		\hyperpage{36}
+  \item {Falling\+Edge}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{90}
+    \subitem {daisy\+::\+Switch}, \hyperpage{108}
+  \item {Fill}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{98}
+  \item {Flush}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{102}
+  \item {Flush\+Rx}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{110}
+  \item {Font\+Def}, \hyperpage{91}
+    \subitem {data}, \hyperpage{91}
+    \subitem {Font\+Height}, \hyperpage{91}
+    \subitem {Font\+Width}, \hyperpage{91}
+  \item {Font\+Height}
+    \subitem {Font\+Def}, \hyperpage{91}
+  \item {Font\+Width}
+    \subitem {Font\+Def}, \hyperpage{91}
+
+  \indexspace
+
+  \item {gate\+\_\+output}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{76}
+  \item {Get}
+    \subitem {daisy\+::\+Adc\+Handle}, \hyperpage{70}
+  \item {Get\+Current\+File}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{114}
+  \item {Get\+Looping}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{115}
+  \item {Get\+Mux}
+    \subitem {daisy\+::\+Adc\+Handle}, \hyperpage{71}
+  \item {Get\+Number\+Files}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{115}
+  \item {Get\+Pin}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{80}
+
+  \indexspace
+
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Connect\+Callback}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{122}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Data\+In\+Stage\+Callback}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{123}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Data\+Out\+Stage\+Callback}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{123}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Disconnect\+Callback}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{123}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+I\+S\+O\+I\+N\+Incomplete\+Callback}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{124}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+I\+S\+O\+O\+U\+T\+Incomplete\+Callback}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{124}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Msp\+De\+Init}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{125}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Msp\+Init}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{125}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Reset\+Callback}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{125}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Resume\+Callback}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{125}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+S\+O\+F\+Callback}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{127}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Setup\+Stage\+Callback}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{127}
+  \item {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Suspend\+Callback}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{127}
+  \item {H\+S\+\_\+\+Desc}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Variables}, 
+		\hyperpage{50}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Variables}, 
+		\hyperpage{37}
+  \item {H\+S\+E\+\_\+\+V\+A\+L\+UE}
+    \subitem {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Includes}, 
+		\hyperpage{54}
+  \item {H\+S\+I\+\_\+\+V\+A\+L\+UE}
+    \subitem {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Includes}, 
+		\hyperpage{54}
+  \item {Has\+Events}
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{95}
+>>>>>>> autogen documentation
+
+  \indexspace
+
+  \item {Immediate\+Read}
+<<<<<<< HEAD
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{82}
+  \item {Increment}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{67}
+  \item {Init}
+    \subitem {daisy\+::\+Adc\+Handle}, \hyperpage{41}
+    \subitem {daisy\+::\+Analog\+Control}, \hyperpage{42}
+    \subitem {daisy\+::\+Color}, \hyperpage{44}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{50}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{54}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{58}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{60}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{67}
+    \subitem {daisy\+::\+Gate\+In}, \hyperpage{70}
+    \subitem {daisy\+::\+Led}, \hyperpage{71}
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{74}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{76}
+    \subitem {daisy\+::\+Parameter}, \hyperpage{79}
+    \subitem {daisy\+::\+Rgb\+Led}, \hyperpage{80}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{82}
+    \subitem {daisy\+::\+Sdmmc\+Handler}, \hyperpage{84}
+    \subitem {daisy\+::\+Spi\+Handle}, \hyperpage{87}
+    \subitem {daisy\+::\+Switch}, \hyperpage{89}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{90}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{92}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{95}
+    \subitem {Shift\+Register595}, \hyperpage{86}
+  \item {Init\+Bipolar\+Cv}
+    \subitem {daisy\+::\+Analog\+Control}, \hyperpage{42}
+  \item {Init\+Mux}
+    \subitem {daisy\+::\+Adc\+Channel\+Config}, \hyperpage{39}
+  \item {Init\+Single}
+    \subitem {daisy\+::\+Adc\+Channel\+Config}, \hyperpage{40}
+
+  \indexspace
+
+  \item {keyboard\+\_\+sr}
+    \subitem {daisy\+::daisy\+\_\+field}, \hyperpage{46}
+  \item {knobs}
+    \subitem {daisy\+::daisy\+\_\+field}, \hyperpage{46}
+
+  \indexspace
+
+  \item {Log\+Block\+Nbr}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{66}
+  \item {Log\+Block\+Size}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{66}
+=======
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{102}
+  \item {Increment}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{90}
+  \item {Init}
+    \subitem {daisy\+::\+Adc\+Handle}, \hyperpage{71}
+    \subitem {daisy\+::\+Analog\+Control}, \hyperpage{72}
+    \subitem {daisy\+::\+Color}, \hyperpage{74}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{76}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{79}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{80}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{90}
+    \subitem {daisy\+::\+Gate\+In}, \hyperpage{92}
+    \subitem {daisy\+::\+Led}, \hyperpage{93}
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{95}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{98}
+    \subitem {daisy\+::\+Parameter}, \hyperpage{100}
+    \subitem {daisy\+::\+Rgb\+Led}, \hyperpage{101}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{102}
+    \subitem {daisy\+::\+Sdmmc\+Handler}, \hyperpage{105}
+    \subitem {daisy\+::\+Switch}, \hyperpage{108}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{110}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{112}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{115}
+    \subitem {Shift\+Register595}, \hyperpage{106}
+  \item {Init\+Bipolar\+Cv}
+    \subitem {daisy\+::\+Analog\+Control}, \hyperpage{72}
+  \item {Init\+Mux}
+    \subitem {daisy\+::\+Adc\+Channel\+Config}, \hyperpage{69}
+  \item {Init\+Single}
+    \subitem {daisy\+::\+Adc\+Channel\+Config}, \hyperpage{70}
+
+  \indexspace
+
+  \item {led}, \hyperpage{92}
+  \item {Log\+Block\+Nbr}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{87}
+  \item {Log\+Block\+Size}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{88}
+>>>>>>> autogen documentation
+
+  \indexspace
+
+  \item {Midi\+Input\+Mode}
+<<<<<<< HEAD
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{73}
+  \item {Midi\+Message\+Type}
+    \subitem {daisy}, \hyperpage{35}
+=======
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{95}
+  \item {Midi\+Message\+Type}
+    \subitem {daisy}, \hyperpage{67}
+
+  \indexspace
+
+  \item {N\+V\+I\+C\+\_\+\+Type\+Def}, \hyperpage{97}
+>>>>>>> autogen documentation
+
+  \indexspace
+
+  \item {Open}
+<<<<<<< HEAD
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{95}
+  \item {Overwrite}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{82}
+
+  \indexspace
+
+  \item {Parameter}
+    \subitem {daisy\+::\+Parameter}, \hyperpage{79}
+  \item {Parse}
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{74}
+  \item {Pins}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{75}
+    \subitem {Shift\+Register595}, \hyperpage{85}
+  \item {Polarity}
+    \subitem {daisy\+::\+Switch}, \hyperpage{88}
+  \item {Poll\+Receive}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{90}
+  \item {Poll\+Tx}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{91}
+  \item {Pop\+Event}
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{74}
+  \item {Pop\+Rx}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{91}
+  \item {Prepare}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{95}
+  \item {Preset\+Color}
+    \subitem {daisy\+::\+Color}, \hyperpage{44}
+  \item {Pressed}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{68}
+    \subitem {daisy\+::\+Switch}, \hyperpage{89}
+  \item {Process}
+    \subitem {daisy\+::\+Analog\+Control}, \hyperpage{42}
+    \subitem {daisy\+::\+Parameter}, \hyperpage{79}
+  \item {Pull}
+    \subitem {daisy\+::\+Switch}, \hyperpage{88}
+=======
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{115}
+  \item {Overwrite}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{103}
+
+  \indexspace
+
+  \item {Parse}
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{95}
+  \item {Pins}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{97}
+    \subitem {Shift\+Register595}, \hyperpage{106}
+  \item {Polarity}
+    \subitem {daisy\+::\+Switch}, \hyperpage{107}
+  \item {Poll\+Receive}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{110}
+  \item {Poll\+Tx}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{110}
+  \item {Pop\+Event}
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{96}
+  \item {Pop\+Rx}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{110}
+  \item {Prepare}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{115}
+  \item {Preset\+Color}
+    \subitem {daisy\+::\+Color}, \hyperpage{74}
+  \item {Pressed}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{90}
+    \subitem {daisy\+::\+Switch}, \hyperpage{108}
+  \item {Process}
+    \subitem {daisy\+::\+Analog\+Control}, \hyperpage{72}
+    \subitem {daisy\+::\+Parameter}, \hyperpage{100}
+  \item {Pull}
+    \subitem {daisy\+::\+Switch}, \hyperpage{108}
+>>>>>>> autogen documentation
+
+  \indexspace
+
+  \item {Read}
+<<<<<<< HEAD
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{82}
+  \item {Readable}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{91}
+  \item {readable}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{83}
+  \item {Receive\+Callback}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{92}
+  \item {Red}
+    \subitem {daisy\+::\+Color}, \hyperpage{44}
+  \item {Rel\+Card\+Add}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{66}
+  \item {Restart}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{95}
+  \item {Rising\+Edge}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{68}
+    \subitem {daisy\+::\+Switch}, \hyperpage{89}
+  \item {Rx\+Active}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{91}
+
+  \indexspace
+
+  \item {S\+T\+M32\+\_\+\+U\+S\+B\+\_\+\+O\+T\+G\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+L\+I\+B\+R\+A\+RY}, 
+		\hyperpage{31}
+  \item {Sdmmc\+Bit\+Width}
+    \subitem {daisy}, \hyperpage{35}
+  \item {Sdmmc\+Mode}
+    \subitem {daisy}, \hyperpage{35}
+  \item {Sdmmc\+Speed}
+    \subitem {daisy}, \hyperpage{36}
+  \item {sdram\+\_\+handle}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{61}
+  \item {seed}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{59}
+  \item {Set}
+    \subitem {daisy\+::\+Led}, \hyperpage{71}
+    \subitem {daisy\+::\+Rgb\+Led}, \hyperpage{80}
+    \subitem {Shift\+Register595}, \hyperpage{86}
+  \item {Set\+Audio\+Block\+Size}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{50}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{54}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{58}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{60}
+  \item {Set\+Color}
+    \subitem {daisy\+::\+Rgb\+Led}, \hyperpage{80}
+  \item {Set\+Cursor}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{77}
+  \item {Set\+Footswitch\+Led}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{54}
+  \item {Set\+Led}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{61}
+  \item {Set\+Looping}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{96}
+  \item {Set\+Receive\+Callback}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{92}
+  \item {Set\+Ring\+Led}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{55}
+  \item {Set\+Test\+Point}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{61}
+  \item {Shift\+Register595}, \hyperpage{85}
+    \subitem {Init}, \hyperpage{86}
+    \subitem {Pins}, \hyperpage{85}
+    \subitem {Set}, \hyperpage{86}
+    \subitem {Write}, \hyperpage{86}
+  \item {Spi\+Periph}
+    \subitem {daisy}, \hyperpage{36}
+  \item {Spi\+Pin}
+    \subitem {daisy}, \hyperpage{36}
+  \item {src/usbd\+\_\+cdc\+\_\+if.\+h}, \hyperpage{97}
+  \item {src/usbd\+\_\+conf.\+h}, \hyperpage{98}
+  \item {Start}
+    \subitem {daisy\+::\+Adc\+Handle}, \hyperpage{41}
+  \item {Start\+Adc}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{50}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{55}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{58}
+  \item {Start\+Audio}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{50}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{55}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{58}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{61}
+  \item {Start\+Receive}
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{74}
+  \item {Start\+Rx}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{91}
+  \item {Stop}
+    \subitem {daisy\+::\+Adc\+Handle}, \hyperpage{41}
+  \item {Stream}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{96}
+  \item {Sw}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{52}
+  \item {Swallow}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{83}
+  \item {switches}
+    \subitem {daisy\+::daisy\+\_\+field}, \hyperpage{46}
+=======
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{103}
+  \item {Readable}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{110}
+  \item {readable}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{103}
+  \item {Receive\+Callback}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{111}
+  \item {Red}
+    \subitem {daisy\+::\+Color}, \hyperpage{74}
+  \item {Rel\+Card\+Add}
+    \subitem {D\+S\+Y\+\_\+\+S\+D\+\_\+\+Card\+Info\+Type\+Def}, 
+		\hyperpage{88}
+  \item {Restart}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{115}
+  \item {rgb\+\_\+led}, \hyperpage{100}
+  \item {Rising\+Edge}
+    \subitem {daisy\+::\+Encoder}, \hyperpage{90}
+    \subitem {daisy\+::\+Switch}, \hyperpage{109}
+  \item {Rx\+Active}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{111}
+
+  \indexspace
+
+  \item {S\+S\+D1309\+\_\+t}, \hyperpage{107}
+  \item {S\+T\+M32\+\_\+\+U\+S\+B\+\_\+\+O\+T\+G\+\_\+\+D\+E\+V\+I\+C\+E\+\_\+\+L\+I\+B\+R\+A\+RY}, 
+		\hyperpage{62}
+  \item {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Defines}, 
+		\hyperpage{56}
+    \subitem {V\+E\+C\+T\+\_\+\+T\+A\+B\+\_\+\+O\+F\+F\+S\+ET}, 
+		\hyperpage{56}
+  \item {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Function\+Prototypes}, 
+		\hyperpage{59}
+  \item {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{60}
+    \subitem {System\+Core\+Clock\+Update}, \hyperpage{60}
+    \subitem {System\+Init}, \hyperpage{61}
+  \item {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Includes}, 
+		\hyperpage{54}
+    \subitem {C\+S\+I\+\_\+\+V\+A\+L\+UE}, \hyperpage{54}
+    \subitem {H\+S\+E\+\_\+\+V\+A\+L\+UE}, \hyperpage{54}
+    \subitem {H\+S\+I\+\_\+\+V\+A\+L\+UE}, \hyperpage{54}
+  \item {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Macros}, 
+		\hyperpage{57}
+  \item {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Types\+Definitions}, 
+		\hyperpage{55}
+  \item {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Variables}, 
+		\hyperpage{58}
+  \item {Sdmmc\+Bit\+Width}
+    \subitem {daisy}, \hyperpage{67}
+  \item {Sdmmc\+Mode}
+    \subitem {daisy}, \hyperpage{67}
+  \item {Sdmmc\+Speed}
+    \subitem {daisy}, \hyperpage{67}
+  \item {sdram\+\_\+handle}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{81}
+  \item {seed}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{77}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{79}
+  \item {Set}
+    \subitem {daisy\+::\+Led}, \hyperpage{93}
+    \subitem {daisy\+::\+Rgb\+Led}, \hyperpage{101}
+    \subitem {Shift\+Register595}, \hyperpage{106}
+  \item {Set\+Audio\+Block\+Size}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{76}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{79}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{80}
+  \item {Set\+Color}
+    \subitem {daisy\+::\+Rgb\+Led}, \hyperpage{101}
+  \item {Set\+Cursor}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{98}
+  \item {Set\+Led}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{81}
+  \item {Set\+Looping}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{115}
+  \item {Set\+Receive\+Callback}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{112}
+  \item {Set\+Test\+Point}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{81}
+  \item {Shift\+Register595}, \hyperpage{105}
+    \subitem {Init}, \hyperpage{106}
+    \subitem {Pins}, \hyperpage{106}
+    \subitem {Set}, \hyperpage{106}
+    \subitem {Write}, \hyperpage{106}
+  \item {src/system\+\_\+stm32h7xx.\+c}, \hyperpage{117}
+  \item {src/usbd\+\_\+cdc\+\_\+if.\+c}, \hyperpage{118}
+  \item {src/usbd\+\_\+cdc\+\_\+if.\+h}, \hyperpage{119}
+  \item {src/usbd\+\_\+conf.\+c}, \hyperpage{120}
+  \item {src/usbd\+\_\+conf.\+h}, \hyperpage{134}
+  \item {src/usbd\+\_\+desc.\+c}, \hyperpage{135}
+  \item {Start}
+    \subitem {daisy\+::\+Adc\+Handle}, \hyperpage{71}
+  \item {Start\+Audio}
+    \subitem {daisy\+::\+Daisy\+Seed}, \hyperpage{81}
+  \item {Start\+Receive}
+    \subitem {daisy\+::\+Midi\+Handler}, \hyperpage{96}
+  \item {Start\+Rx}
+    \subitem {daisy\+::\+Uart\+Handler}, \hyperpage{111}
+  \item {Stm32h7xx\+\_\+system}, \hyperpage{53}
+  \item {Stop}
+    \subitem {daisy\+::\+Adc\+Handle}, \hyperpage{71}
+  \item {Stream}
+    \subitem {daisy\+::\+Wav\+Player}, \hyperpage{115}
+  \item {Swallow}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{103}
+  \item {System\+Core\+Clock\+Update}
+    \subitem {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{60}
+  \item {System\+Init}
+    \subitem {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{61}
+>>>>>>> autogen documentation
+
+  \indexspace
+
+  \item {Time\+Held\+Ms}
+<<<<<<< HEAD
+    \subitem {daisy\+::\+Encoder}, \hyperpage{68}
+    \subitem {daisy\+::\+Switch}, \hyperpage{89}
+  \item {Transmit\+External}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{93}
+  \item {Transmit\+Internal}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{93}
+  \item {Trig}
+    \subitem {daisy\+::\+Gate\+In}, \hyperpage{70}
+  \item {Type}
+    \subitem {daisy\+::\+Switch}, \hyperpage{88}
+  \item {type}
+    \subitem {daisy\+::\+Midi\+Event}, \hyperpage{73}
+=======
+    \subitem {daisy\+::\+Encoder}, \hyperpage{90}
+    \subitem {daisy\+::\+Switch}, \hyperpage{109}
+  \item {Transmit\+External}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{112}
+  \item {Transmit\+Internal}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{112}
+  \item {Trig}
+    \subitem {daisy\+::\+Gate\+In}, \hyperpage{92}
+  \item {Type}
+    \subitem {daisy\+::\+Switch}, \hyperpage{108}
+  \item {type}
+    \subitem {daisy\+::\+Midi\+Event}, \hyperpage{94}
+>>>>>>> autogen documentation
+
+  \indexspace
+
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Defines}, 
+<<<<<<< HEAD
+		\hyperpage{12}
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Functions\+Prototype}, 
+		\hyperpage{16}
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{14}
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Types}, 
+		\hyperpage{13}
+=======
+		\hyperpage{20}
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Functions\+Prototype}, 
+		\hyperpage{23}
+    \subitem {C\+D\+C\+\_\+\+Transmit\+\_\+\+FS}, \hyperpage{23}
+    \subitem {C\+D\+C\+\_\+\+Transmit\+\_\+\+HS}, \hyperpage{23}
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{22}
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Types}, 
+		\hyperpage{21}
+>>>>>>> autogen documentation
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Variables}, 
+		\hyperpage{15}
+    \subitem {U\+S\+B\+D\+\_\+\+Interface\+\_\+fops\+\_\+\+FS}, 
+		\hyperpage{15}
+    \subitem {U\+S\+B\+D\+\_\+\+Interface\+\_\+fops\+\_\+\+HS}, 
+		\hyperpage{15}
+<<<<<<< HEAD
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+IF}, \hyperpage{11}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Defines}, 
+		\hyperpage{19}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Functions\+Prototype}, 
+		\hyperpage{23}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{20}
+    \subitem {U\+S\+B\+D\+\_\+\+Dbg\+Log}, \hyperpage{20}
+    \subitem {U\+S\+B\+D\+\_\+\+Delay}, \hyperpage{20}
+    \subitem {U\+S\+B\+D\+\_\+\+Err\+Log}, \hyperpage{20}
+    \subitem {U\+S\+B\+D\+\_\+\+Usr\+Log}, \hyperpage{21}
+    \subitem {U\+S\+B\+D\+\_\+free}, \hyperpage{21}
+    \subitem {U\+S\+B\+D\+\_\+malloc}, \hyperpage{21}
+    \subitem {U\+S\+B\+D\+\_\+memcpy}, \hyperpage{21}
+    \subitem {U\+S\+B\+D\+\_\+memset}, \hyperpage{21}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Types}, 
+		\hyperpage{22}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Variables}, 
+		\hyperpage{18}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+NF}, \hyperpage{17}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Constants}, 
+		\hyperpage{25}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Defines}, 
+		\hyperpage{26}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Functions\+Prototype}, 
+		\hyperpage{30}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{28}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Types\+Definitions}, 
+		\hyperpage{27}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Variables}, 
+		\hyperpage{29}
+    \subitem {F\+S\+\_\+\+Desc}, \hyperpage{29}
+    \subitem {H\+S\+\_\+\+Desc}, \hyperpage{29}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+SC}, \hyperpage{24}
+  \item {U\+S\+B\+D\+\_\+\+Dbg\+Log}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{20}
+  \item {U\+S\+B\+D\+\_\+\+Delay}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{20}
+  \item {U\+S\+B\+D\+\_\+\+Err\+Log}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{20}
+  \item {U\+S\+B\+D\+\_\+\+Interface\+\_\+fops\+\_\+\+FS}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Variables}, 
+		\hyperpage{15}
+  \item {U\+S\+B\+D\+\_\+\+Interface\+\_\+fops\+\_\+\+HS}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Variables}, 
+		\hyperpage{15}
+  \item {U\+S\+B\+D\+\_\+\+O\+T\+G\+\_\+\+D\+R\+I\+V\+ER}, 
+		\hyperpage{32}
+  \item {U\+S\+B\+D\+\_\+\+Usr\+Log}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{21}
+  \item {U\+S\+B\+D\+\_\+free}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{21}
+  \item {U\+S\+B\+D\+\_\+malloc}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{21}
+  \item {U\+S\+B\+D\+\_\+memcpy}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{21}
+  \item {U\+S\+B\+D\+\_\+memset}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{21}
+  \item {Update}
+    \subitem {daisy\+::\+Led}, \hyperpage{72}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{77}
+    \subitem {daisy\+::\+Rgb\+Led}, \hyperpage{81}
+  \item {Update\+Analog\+Controls}
+    \subitem {daisy\+::\+Daisy\+Patch}, \hyperpage{50}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{55}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{59}
+  \item {Update\+Leds}
+    \subitem {daisy\+::\+Daisy\+Petal}, \hyperpage{56}
+    \subitem {daisy\+::\+Daisy\+Pod}, \hyperpage{59}
+  \item {Usb\+Periph}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{92}
+
+  \indexspace
+
+  \item {Value}
+    \subitem {daisy\+::\+Analog\+Control}, \hyperpage{42}
+    \subitem {daisy\+::\+Parameter}, \hyperpage{79}
+
+  \indexspace
+
+  \item {W\+A\+V\+\_\+\+Format\+Type\+Def}, \hyperpage{93}
+  \item {writable}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{83}
+  \item {Write}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{83}
+    \subitem {Shift\+Register595}, \hyperpage{86}
+  \item {Write\+Char}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{77}
+  \item {Write\+String}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{77}
+=======
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Private\+\_\+\+Defines}, 
+		\hyperpage{12}
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Private\+\_\+\+Function\+Prototypes}, 
+		\hyperpage{16}
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Private\+\_\+\+Macros}, 
+		\hyperpage{13}
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Private\+\_\+\+Types\+Definitions}, 
+		\hyperpage{11}
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Private\+\_\+\+Variables}, 
+		\hyperpage{14}
+    \subitem {User\+Rx\+Buffer\+FS}, \hyperpage{14}
+    \subitem {User\+Rx\+Buffer\+HS}, \hyperpage{14}
+    \subitem {User\+Tx\+Buffer\+FS}, \hyperpage{14}
+    \subitem {User\+Tx\+Buffer\+HS}, \hyperpage{14}
+  \item {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+IF}, \hyperpage{17}
+    \subitem {C\+D\+C\+\_\+\+Transmit\+\_\+\+FS}, \hyperpage{18}
+    \subitem {C\+D\+C\+\_\+\+Transmit\+\_\+\+HS}, \hyperpage{18}
+    \subitem {U\+S\+B\+D\+\_\+\+Interface\+\_\+fops\+\_\+\+FS}, 
+		\hyperpage{18}
+    \subitem {U\+S\+B\+D\+\_\+\+Interface\+\_\+fops\+\_\+\+HS}, 
+		\hyperpage{19}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Defines}, 
+		\hyperpage{27}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Functions\+Prototype}, 
+		\hyperpage{31}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{28}
+    \subitem {U\+S\+B\+D\+\_\+\+Dbg\+Log}, \hyperpage{28}
+    \subitem {U\+S\+B\+D\+\_\+\+Delay}, \hyperpage{28}
+    \subitem {U\+S\+B\+D\+\_\+\+Err\+Log}, \hyperpage{28}
+    \subitem {U\+S\+B\+D\+\_\+\+Usr\+Log}, \hyperpage{29}
+    \subitem {U\+S\+B\+D\+\_\+free}, \hyperpage{29}
+    \subitem {U\+S\+B\+D\+\_\+malloc}, \hyperpage{29}
+    \subitem {U\+S\+B\+D\+\_\+memcpy}, \hyperpage{29}
+    \subitem {U\+S\+B\+D\+\_\+memset}, \hyperpage{29}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Types}, 
+		\hyperpage{30}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Variables}, 
+		\hyperpage{26}
+  \item {U\+S\+B\+D\+\_\+\+C\+O\+NF}, \hyperpage{25}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Constants}, 
+		\hyperpage{46}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Defines}, 
+		\hyperpage{47}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Functions\+Prototype}, 
+		\hyperpage{51}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{49}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Types\+Definitions}, 
+		\hyperpage{48}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Exported\+\_\+\+Variables}, 
+		\hyperpage{50}
+    \subitem {F\+S\+\_\+\+Desc}, \hyperpage{50}
+    \subitem {H\+S\+\_\+\+Desc}, \hyperpage{50}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Defines}, 
+		\hyperpage{33}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Function\+Prototypes}, 
+		\hyperpage{35}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{38}
+    \subitem {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Config\+Str\+Descriptor}, 
+		\hyperpage{38}
+    \subitem {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Device\+Descriptor}, 
+		\hyperpage{39}
+    \subitem {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Interface\+Str\+Descriptor}, 
+		\hyperpage{39}
+    \subitem {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Lang\+I\+D\+Str\+Descriptor}, 
+		\hyperpage{40}
+    \subitem {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Manufacturer\+Str\+Descriptor}, 
+		\hyperpage{40}
+    \subitem {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Product\+Str\+Descriptor}, 
+		\hyperpage{40}
+    \subitem {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Serial\+Str\+Descriptor}, 
+		\hyperpage{41}
+    \subitem {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Config\+Str\+Descriptor}, 
+		\hyperpage{41}
+    \subitem {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Device\+Descriptor}, 
+		\hyperpage{42}
+    \subitem {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Interface\+Str\+Descriptor}, 
+		\hyperpage{42}
+    \subitem {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Lang\+I\+D\+Str\+Descriptor}, 
+		\hyperpage{42}
+    \subitem {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Manufacturer\+Str\+Descriptor}, 
+		\hyperpage{43}
+    \subitem {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Product\+Str\+Descriptor}, 
+		\hyperpage{43}
+    \subitem {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Serial\+Str\+Descriptor}, 
+		\hyperpage{44}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Macros}, 
+		\hyperpage{34}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Types\+Definitions}, 
+		\hyperpage{32}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Variables}, 
+		\hyperpage{36}
+    \subitem {\+\_\+\+\_\+\+A\+L\+I\+G\+N\+\_\+\+E\+ND}, \hyperpage{36}
+    \subitem {F\+S\+\_\+\+Desc}, \hyperpage{36}
+    \subitem {H\+S\+\_\+\+Desc}, \hyperpage{37}
+  \item {U\+S\+B\+D\+\_\+\+D\+E\+SC}, \hyperpage{45}
+  \item {U\+S\+B\+D\+\_\+\+Dbg\+Log}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{28}
+  \item {U\+S\+B\+D\+\_\+\+Delay}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{28}
+  \item {U\+S\+B\+D\+\_\+\+Err\+Log}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{28}
+  \item {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Config\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{38}
+  \item {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Device\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{39}
+  \item {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Interface\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{39}
+  \item {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Lang\+I\+D\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{40}
+  \item {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Manufacturer\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{40}
+  \item {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Product\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{40}
+  \item {U\+S\+B\+D\+\_\+\+F\+S\+\_\+\+Serial\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{41}
+  \item {U\+S\+B\+D\+\_\+\+Get\+\_\+\+U\+S\+B\+\_\+\+Status}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{128}
+  \item {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Config\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{41}
+  \item {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Device\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{42}
+  \item {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Interface\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{42}
+  \item {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Lang\+I\+D\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{42}
+  \item {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Manufacturer\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{43}
+  \item {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Product\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{43}
+  \item {U\+S\+B\+D\+\_\+\+H\+S\+\_\+\+Serial\+Str\+Descriptor}
+    \subitem {U\+S\+B\+D\+\_\+\+D\+E\+S\+C\+\_\+\+Private\+\_\+\+Functions}, 
+		\hyperpage{44}
+  \item {U\+S\+B\+D\+\_\+\+Interface\+\_\+fops\+\_\+\+FS}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Variables}, 
+		\hyperpage{15}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+IF}, \hyperpage{18}
+  \item {U\+S\+B\+D\+\_\+\+Interface\+\_\+fops\+\_\+\+HS}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Exported\+\_\+\+Variables}, 
+		\hyperpage{15}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+IF}, \hyperpage{19}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Clear\+Stall\+EP}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{128}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Close\+EP}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{129}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+De\+Init}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{129}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Delay}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{129}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Flush\+EP}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{130}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Get\+Rx\+Data\+Size}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{130}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Init}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{130}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Is\+Stall\+EP}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{131}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Open\+EP}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{131}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Prepare\+Receive}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{132}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Set\+U\+S\+B\+Address}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{132}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Stall\+EP}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{132}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Start}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{133}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Stop}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{133}
+  \item {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Transmit}
+    \subitem {usbd\+\_\+conf.\+c}, \hyperpage{134}
+  \item {U\+S\+B\+D\+\_\+\+O\+T\+G\+\_\+\+D\+R\+I\+V\+ER}, 
+		\hyperpage{63}
+  \item {U\+S\+B\+D\+\_\+\+Usr\+Log}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{29}
+  \item {U\+S\+B\+D\+\_\+free}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{29}
+  \item {U\+S\+B\+D\+\_\+malloc}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{29}
+  \item {U\+S\+B\+D\+\_\+memcpy}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{29}
+  \item {U\+S\+B\+D\+\_\+memset}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+O\+N\+F\+\_\+\+Exported\+\_\+\+Macros}, 
+		\hyperpage{29}
+  \item {uart\+\_\+handle}, \hyperpage{109}
+  \item {Update}
+    \subitem {daisy\+::\+Led}, \hyperpage{93}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{98}
+    \subitem {daisy\+::\+Rgb\+Led}, \hyperpage{101}
+  \item {Usb\+Periph}
+    \subitem {daisy\+::\+Usb\+Handle}, \hyperpage{112}
+  \item {usbd\+\_\+conf.\+c}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Connect\+Callback}, 
+		\hyperpage{122}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Data\+In\+Stage\+Callback}, 
+		\hyperpage{123}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Data\+Out\+Stage\+Callback}, 
+		\hyperpage{123}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Disconnect\+Callback}, 
+		\hyperpage{123}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+I\+S\+O\+I\+N\+Incomplete\+Callback}, 
+		\hyperpage{124}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+I\+S\+O\+O\+U\+T\+Incomplete\+Callback}, 
+		\hyperpage{124}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Msp\+De\+Init}, 
+		\hyperpage{125}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Msp\+Init}, \hyperpage{125}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Reset\+Callback}, 
+		\hyperpage{125}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Resume\+Callback}, 
+		\hyperpage{125}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+S\+O\+F\+Callback}, 
+		\hyperpage{127}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Setup\+Stage\+Callback}, 
+		\hyperpage{127}
+    \subitem {H\+A\+L\+\_\+\+P\+C\+D\+\_\+\+Suspend\+Callback}, 
+		\hyperpage{127}
+    \subitem {U\+S\+B\+D\+\_\+\+Get\+\_\+\+U\+S\+B\+\_\+\+Status}, 
+		\hyperpage{128}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Clear\+Stall\+EP}, 
+		\hyperpage{128}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Close\+EP}, \hyperpage{129}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+De\+Init}, \hyperpage{129}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Delay}, \hyperpage{129}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Flush\+EP}, \hyperpage{130}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Get\+Rx\+Data\+Size}, 
+		\hyperpage{130}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Init}, \hyperpage{130}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Is\+Stall\+EP}, 
+		\hyperpage{131}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Open\+EP}, \hyperpage{131}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Prepare\+Receive}, 
+		\hyperpage{132}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Set\+U\+S\+B\+Address}, 
+		\hyperpage{132}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Stall\+EP}, \hyperpage{132}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Start}, \hyperpage{133}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Stop}, \hyperpage{133}
+    \subitem {U\+S\+B\+D\+\_\+\+L\+L\+\_\+\+Transmit}, \hyperpage{134}
+  \item {User\+Rx\+Buffer\+FS}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Private\+\_\+\+Variables}, 
+		\hyperpage{14}
+  \item {User\+Rx\+Buffer\+HS}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Private\+\_\+\+Variables}, 
+		\hyperpage{14}
+  \item {User\+Tx\+Buffer\+FS}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Private\+\_\+\+Variables}, 
+		\hyperpage{14}
+  \item {User\+Tx\+Buffer\+HS}
+    \subitem {U\+S\+B\+D\+\_\+\+C\+D\+C\+\_\+\+I\+F\+\_\+\+Private\+\_\+\+Variables}, 
+		\hyperpage{14}
+
+  \indexspace
+
+  \item {V\+E\+C\+T\+\_\+\+T\+A\+B\+\_\+\+O\+F\+F\+S\+ET}
+    \subitem {S\+T\+M32\+H7xx\+\_\+\+System\+\_\+\+Private\+\_\+\+Defines}, 
+		\hyperpage{56}
+  \item {Value}
+    \subitem {daisy\+::\+Analog\+Control}, \hyperpage{72}
+    \subitem {daisy\+::\+Parameter}, \hyperpage{100}
+
+  \indexspace
+
+  \item {W\+A\+V\+\_\+\+Format\+Type\+Def}, \hyperpage{113}
+  \item {writable}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{103}
+  \item {Write}
+    \subitem {daisy\+::\+Ring\+Buffer}, \hyperpage{104}
+    \subitem {Shift\+Register595}, \hyperpage{106}
+  \item {Write\+Char}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{98}
+  \item {Write\+String}
+    \subitem {daisy\+::\+Oled\+Display}, \hyperpage{99}
+>>>>>>> autogen documentation
+
+\end{theindex}

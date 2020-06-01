@@ -1,0 +1,41 @@
+var searchData=
+[
+<<<<<<< HEAD
+  ['timeheldms',['TimeHeldMs',['../classdaisy_1_1_encoder.html#a5f2e112fa7ab67140344af05f83172ab',1,'daisy::Encoder::TimeHeldMs()'],['../classdaisy_1_1_switch.html#a648bd3fc767286b3efd56daa7f15ace6',1,'daisy::Switch::TimeHeldMs()']]],
+  ['transmitexternal',['TransmitExternal',['../classdaisy_1_1_usb_handle.html#a66ba310745890b4ef51b923154b86fbf',1,'daisy::UsbHandle']]],
+  ['transmitinternal',['TransmitInternal',['../classdaisy_1_1_usb_handle.html#aaff1689cd8310f0b741829d6568f2ad0',1,'daisy::UsbHandle']]],
+  ['trig',['Trig',['../classdaisy_1_1_gate_in.html#a6a9bac9fe44985baa7097bd47a90a40f',1,'daisy::GateIn']]]
+=======
+  ['update',['Update',['../classdaisy_1_1_led.html#ae8cbdb3e29cdc4f1f2aa50d7ce470fc9',1,'daisy::Led::Update()'],['../classdaisy_1_1_oled_display.html#ae7785a2e9ebe3e5a6b10ef76f3db6035',1,'daisy::OledDisplay::Update()'],['../classdaisy_1_1_rgb_led.html#a9bb58197c1b1a71ffd26a86b26972f60',1,'daisy::RgbLed::Update()']]],
+  ['usbd_5ffs_5fconfigstrdescriptor',['USBD_FS_ConfigStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#ga40ed2a0fb60c50a285983a09ba6921d6',1,'usbd_desc.c']]],
+  ['usbd_5ffs_5fdevicedescriptor',['USBD_FS_DeviceDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#ga14798be38c08a37163e53167032485ff',1,'usbd_desc.c']]],
+  ['usbd_5ffs_5finterfacestrdescriptor',['USBD_FS_InterfaceStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#gab248f43276f92d982ab5853111e4fb10',1,'usbd_desc.c']]],
+  ['usbd_5ffs_5flangidstrdescriptor',['USBD_FS_LangIDStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#gac02628ceb6a6a071e192dcb85063c0cc',1,'usbd_desc.c']]],
+  ['usbd_5ffs_5fmanufacturerstrdescriptor',['USBD_FS_ManufacturerStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#ga6427a671827813efe1a46c3dfcb05683',1,'usbd_desc.c']]],
+  ['usbd_5ffs_5fproductstrdescriptor',['USBD_FS_ProductStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#ga0ec558c0303daabb851d584109a56514',1,'usbd_desc.c']]],
+  ['usbd_5ffs_5fserialstrdescriptor',['USBD_FS_SerialStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#gaad2a1d1451821845eda602a82b1cd213',1,'usbd_desc.c']]],
+  ['usbd_5fget_5fusb_5fstatus',['USBD_Get_USB_Status',['../usbd__conf_8c.html#a71e72e29fe464c7f3be4edf36806355e',1,'usbd_conf.c']]],
+  ['usbd_5fhs_5fconfigstrdescriptor',['USBD_HS_ConfigStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#gaf1d641e2167f37fe9dca9cf7e9c400e7',1,'usbd_desc.c']]],
+  ['usbd_5fhs_5fdevicedescriptor',['USBD_HS_DeviceDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#gaef234919e37b4261ded7cf0a6b6f9adb',1,'usbd_desc.c']]],
+  ['usbd_5fhs_5finterfacestrdescriptor',['USBD_HS_InterfaceStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#ga77299bb83b65537496ac8d3f94219b27',1,'usbd_desc.c']]],
+  ['usbd_5fhs_5flangidstrdescriptor',['USBD_HS_LangIDStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#ga1f97488a1b688c2e36828091adb1714b',1,'usbd_desc.c']]],
+  ['usbd_5fhs_5fmanufacturerstrdescriptor',['USBD_HS_ManufacturerStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#gaa6fc1499569c6e5129cc16789ad10094',1,'usbd_desc.c']]],
+  ['usbd_5fhs_5fproductstrdescriptor',['USBD_HS_ProductStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#ga61c64a916bb03b9bf0d0715839bb2718',1,'usbd_desc.c']]],
+  ['usbd_5fhs_5fserialstrdescriptor',['USBD_HS_SerialStrDescriptor',['../group___u_s_b_d___d_e_s_c___private___functions.html#ga804ea4a4ff7a927047c831e60658c13c',1,'usbd_desc.c']]],
+  ['usbd_5fll_5fclearstallep',['USBD_LL_ClearStallEP',['../usbd__conf_8c.html#ad4fa6f2eeefe95d07148c6c53d111eae',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fcloseep',['USBD_LL_CloseEP',['../usbd__conf_8c.html#ae12e7de3c398d5663976bf11faa63572',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fdeinit',['USBD_LL_DeInit',['../usbd__conf_8c.html#aae9bfb6a27b11f232fc55a1d1b28be24',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fdelay',['USBD_LL_Delay',['../usbd__conf_8c.html#a383d9a41089cf426cdc61b5b24e2ca0a',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fflushep',['USBD_LL_FlushEP',['../usbd__conf_8c.html#a10080ed9555110afba809de968314985',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fgetrxdatasize',['USBD_LL_GetRxDataSize',['../usbd__conf_8c.html#aeb80f50482e04c046ba41f5ea58a1b2b',1,'usbd_conf.c']]],
+  ['usbd_5fll_5finit',['USBD_LL_Init',['../usbd__conf_8c.html#a24b61e95db7e4c7ad30a835e8d905943',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fisstallep',['USBD_LL_IsStallEP',['../usbd__conf_8c.html#a2a0f10f93cc4246272b63661051a64b7',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fopenep',['USBD_LL_OpenEP',['../usbd__conf_8c.html#ad96254d74d95496ffb5f6f2248585cb0',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fpreparereceive',['USBD_LL_PrepareReceive',['../usbd__conf_8c.html#a259b00707b333065b66be515dd019428',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fsetusbaddress',['USBD_LL_SetUSBAddress',['../usbd__conf_8c.html#ad3674ea3c4a9c4bbe7c73192727f922f',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fstallep',['USBD_LL_StallEP',['../usbd__conf_8c.html#abc2b4a7c8307e04955b015fd32057ec7',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fstart',['USBD_LL_Start',['../usbd__conf_8c.html#a43e53e424e9850d8261e1f9a1be53348',1,'usbd_conf.c']]],
+  ['usbd_5fll_5fstop',['USBD_LL_Stop',['../usbd__conf_8c.html#ac522b28139c1868a2e24d044fc8288fd',1,'usbd_conf.c']]],
+  ['usbd_5fll_5ftransmit',['USBD_LL_Transmit',['../usbd__conf_8c.html#ab87eb9f3d4d9f8956d2c6b77230f265c',1,'usbd_conf.c']]]
+>>>>>>> autogen documentation
+];

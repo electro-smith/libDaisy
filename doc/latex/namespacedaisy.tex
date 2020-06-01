@@ -1,0 +1,411 @@
+\hypertarget{namespacedaisy}{}\section{daisy Namespace Reference}
+\label{namespacedaisy}\index{daisy@{daisy}}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structdaisy_1_1_adc_channel_config}{Adc\+Channel\+Config}
+\item 
+class \hyperlink{classdaisy_1_1_adc_handle}{Adc\+Handle}
+\item 
+class \hyperlink{classdaisy_1_1_analog_control}{Analog\+Control}
+\item 
+class \hyperlink{classdaisy_1_1_color}{Color}
+\item 
+struct \hyperlink{structdaisy_1_1_control_change_event}{Control\+Change\+Event}
+\item 
+struct \hyperlink{structdaisy_1_1daisy__field}{daisy\+\_\+field}
+\item 
+class \hyperlink{classdaisy_1_1_daisy_patch}{Daisy\+Patch}
+<<<<<<< HEAD
+\begin{DoxyCompactList}\small\item\em Class that handles initializing all of the hardware specific to the Daisy Patch Board. Helper funtions are also in place to provide easy access to built-\/in controls and peripherals. \end{DoxyCompactList}\item 
+class \hyperlink{classdaisy_1_1_daisy_petal}{Daisy\+Petal}
+\begin{DoxyCompactList}\small\item\em Helpers and hardware definitions for daisy petal. \end{DoxyCompactList}\item 
+=======
+\item 
+class \hyperlink{classdaisy_1_1_daisy_petal}{Daisy\+Petal}
+\item 
+>>>>>>> autogen documentation
+class \hyperlink{classdaisy_1_1_daisy_pod}{Daisy\+Pod}
+\item 
+class \hyperlink{classdaisy_1_1_daisy_seed}{Daisy\+Seed}
+\item 
+class \hyperlink{classdaisy_1_1_encoder}{Encoder}
+\item 
+class \hyperlink{classdaisy_1_1_gate_in}{Gate\+In}
+<<<<<<< HEAD
+\begin{DoxyCompactList}\small\item\em Generic Class for handling gate inputs through G\+P\+IO. \end{DoxyCompactList}\item 
+class \hyperlink{classdaisy_1_1_led}{Led}
+\begin{DoxyCompactList}\small\item\em L\+ED Class providing simple Software P\+WM ability, etc Eventually this will work with hardware P\+WM, and external L\+ED Driver devices as well. \end{DoxyCompactList}\item 
+=======
+\item 
+class \hyperlink{classdaisy_1_1_led}{Led}
+\item 
+>>>>>>> autogen documentation
+struct \hyperlink{structdaisy_1_1_midi_event}{Midi\+Event}
+\item 
+class \hyperlink{classdaisy_1_1_midi_handler}{Midi\+Handler}
+\item 
+struct \hyperlink{structdaisy_1_1_note_on_event}{Note\+On\+Event}
+\item 
+class \hyperlink{classdaisy_1_1_oled_display}{Oled\+Display}
+\item 
+class \hyperlink{classdaisy_1_1_parameter}{Parameter}
+\item 
+class \hyperlink{classdaisy_1_1_rgb_led}{Rgb\+Led}
+\item 
+class \hyperlink{classdaisy_1_1_ring_buffer}{Ring\+Buffer}
+\item 
+class \hyperlink{classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4}{Ring\+Buffer$<$ T, 0 $>$}
+\item 
+class \hyperlink{classdaisy_1_1_sdmmc_handler}{Sdmmc\+Handler}
+\item 
+struct \hyperlink{structdaisy_1_1_sdmmc_handler_init}{Sdmmc\+Handler\+Init}
+\item 
+class \hyperlink{classdaisy_1_1_spi_handle}{Spi\+Handle}
+\item 
+class \hyperlink{classdaisy_1_1_switch}{Switch}
+\item 
+class \hyperlink{classdaisy_1_1_uart_handler}{Uart\+Handler}
+\item 
+class \hyperlink{classdaisy_1_1_usb_handle}{Usb\+Handle}
+\item 
+struct \hyperlink{structdaisy_1_1_wav_file_info}{Wav\+File\+Info}
+\item 
+class \hyperlink{classdaisy_1_1_wav_player}{Wav\+Player}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ {\bfseries S\+W\+\_\+2}, 
+<<<<<<< HEAD
+\hyperlink{namespacedaisy_addc77b0887e2ab2d7341ab97015ce26fabd3e128a306f3ef06eaf46f189b0db76}{S\+W\+\_\+1}, 
+\hyperlink{namespacedaisy_addc77b0887e2ab2d7341ab97015ce26fa9348b017fbe9149d6d945705d3b5cb63}{S\+W\+\_\+3}, 
+\hyperlink{namespacedaisy_addc77b0887e2ab2d7341ab97015ce26fad28ab1e6a1609ca7d09b9ffd594ebde5}{S\+W\+\_\+\+L\+A\+ST}
+=======
+{\bfseries S\+W\+\_\+1}, 
+{\bfseries S\+W\+\_\+3}, 
+{\bfseries S\+W\+\_\+\+L\+A\+ST}
+>>>>>>> autogen documentation
+ \}
+\item 
+enum \{ \newline
+{\bfseries K\+N\+O\+B\+\_\+1}, 
+{\bfseries K\+N\+O\+B\+\_\+3}, 
+{\bfseries K\+N\+O\+B\+\_\+5}, 
+{\bfseries K\+N\+O\+B\+\_\+2}, 
+\newline
+{\bfseries K\+N\+O\+B\+\_\+4}, 
+{\bfseries K\+N\+O\+B\+\_\+6}, 
+{\bfseries K\+N\+O\+B\+\_\+7}, 
+{\bfseries K\+N\+O\+B\+\_\+8}, 
+\newline
+{\bfseries K\+N\+O\+B\+\_\+\+L\+A\+ST}
+ \}
+\item 
+<<<<<<< HEAD
+enum \{ \newline
+{\bfseries C\+V\+\_\+1}, 
+\hyperlink{namespacedaisy_a6be3271bd09db635a6318987eb086c07a19460cf285a94e9a6f292ff08649b5f8}{C\+V\+\_\+2}, 
+\hyperlink{namespacedaisy_a6be3271bd09db635a6318987eb086c07a2e5105b1853ba25676e68a668f9f7b08}{C\+V\+\_\+3}, 
+\hyperlink{namespacedaisy_a6be3271bd09db635a6318987eb086c07a1150d4e30b8d93e59da02a59c9f615aa}{C\+V\+\_\+4}, 
+\newline
+\hyperlink{namespacedaisy_a6be3271bd09db635a6318987eb086c07a085d02d6cdf0f9a6b575f7c9dd3c6813}{C\+V\+\_\+\+L\+A\+ST}
+=======
+\mbox{\Hypertarget{namespacedaisy_a6be3271bd09db635a6318987eb086c07}\label{namespacedaisy_a6be3271bd09db635a6318987eb086c07}} 
+enum \{ \newline
+{\bfseries C\+V\+\_\+1}, 
+{\bfseries C\+V\+\_\+2}, 
+{\bfseries C\+V\+\_\+3}, 
+{\bfseries C\+V\+\_\+4}, 
+\newline
+{\bfseries C\+V\+\_\+\+L\+A\+ST}
+>>>>>>> autogen documentation
+ \}
+\item 
+\mbox{\Hypertarget{namespacedaisy_ac2ea4f8bee97384fa7bad670cc24aa30}\label{namespacedaisy_ac2ea4f8bee97384fa7bad670cc24aa30}} 
+enum \{ \newline
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+A8}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+A7}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+A6}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+A5}, 
+\newline
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+A4}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+A3}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+A2}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+A1}, 
+\newline
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+B1}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+B2}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+B3}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+B4}, 
+\newline
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+B5}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+B6}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+B7}, 
+{\bfseries L\+E\+D\+\_\+\+K\+E\+Y\+\_\+\+B8}, 
+\newline
+{\bfseries L\+E\+D\+\_\+\+K\+N\+O\+B\+\_\+1}, 
+{\bfseries L\+E\+D\+\_\+\+K\+N\+O\+B\+\_\+2}, 
+{\bfseries L\+E\+D\+\_\+\+K\+N\+O\+B\+\_\+3}, 
+{\bfseries L\+E\+D\+\_\+\+K\+N\+O\+B\+\_\+4}, 
+\newline
+{\bfseries L\+E\+D\+\_\+\+K\+N\+O\+B\+\_\+5}, 
+{\bfseries L\+E\+D\+\_\+\+K\+N\+O\+B\+\_\+6}, 
+{\bfseries L\+E\+D\+\_\+\+K\+N\+O\+B\+\_\+7}, 
+{\bfseries L\+E\+D\+\_\+\+K\+N\+O\+B\+\_\+8}, 
+\newline
+{\bfseries L\+E\+D\+\_\+\+S\+W\+\_\+1}, 
+{\bfseries L\+E\+D\+\_\+\+S\+W\+\_\+2}, 
+{\bfseries L\+E\+D\+\_\+\+L\+A\+ST}
+ \}
+\item 
+enum \hyperlink{namespacedaisy_aaf09bb687034c8776ca0c68ed3ed4179}{Midi\+Message\+Type} \{ \newline
+{\bfseries Note\+Off}, 
+{\bfseries Note\+On}, 
+{\bfseries Polyphonic\+Key\+Pressure}, 
+{\bfseries Control\+Change}, 
+\newline
+{\bfseries Program\+Change}, 
+{\bfseries Channel\+Pressure}, 
+{\bfseries Pitch\+Bend}, 
+{\bfseries Message\+Last}
+ \}
+\item 
+enum \hyperlink{namespacedaisy_a06f91f8f9f006800c4b0cde1a650664b}{Sdmmc\+Mode} \{ {\bfseries S\+D\+M\+M\+C\+\_\+\+M\+O\+D\+E\+\_\+\+F\+A\+T\+FS}
+ \}
+\item 
+enum \hyperlink{namespacedaisy_a5df1c73d4f0fdbf01d987cef4c3b165e}{Sdmmc\+Bit\+Width} \{ {\bfseries S\+D\+M\+M\+C\+\_\+\+B\+I\+T\+S\+\_\+1}, 
+{\bfseries S\+D\+M\+M\+C\+\_\+\+B\+I\+T\+S\+\_\+4}
+ \}
+\item 
+enum \hyperlink{namespacedaisy_aa4d107ebcf4d77d94b63c90fdba9cf93}{Sdmmc\+Speed} \{ {\bfseries S\+D\+M\+M\+C\+\_\+\+S\+P\+E\+E\+D\+\_\+400\+K\+HZ}, 
+{\bfseries S\+D\+M\+M\+C\+\_\+\+S\+P\+E\+E\+D\+\_\+12\+M\+HZ}
+ \}
+\item 
+<<<<<<< HEAD
+enum \hyperlink{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6}{Spi\+Periph} \{ {\bfseries S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+1}, 
+\hyperlink{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6abe36a904be436f0e99a6c60bcdc5db03}{S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+3}, 
+\hyperlink{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6a73dc62e39838820d4779ed3cbfc421c0}{S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+6}
+ \}
+\item 
+enum \hyperlink{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1a}{Spi\+Pin} \{ {\bfseries S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+CS}, 
+\hyperlink{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1aaf0815c8244af198ed0fddd44cb62b8bd}{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+S\+CK}, 
+\hyperlink{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1aadbc82a205c33fae68c5acd4d11f909c0}{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+O\+SI}, 
+\hyperlink{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1aaf95730671f55a42b4d7012faea2f27c7}{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+I\+SO}
+=======
+\mbox{\Hypertarget{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6}\label{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6}} 
+enum {\bfseries Spi\+Periph} \{ {\bfseries S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+1}, 
+{\bfseries S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+3}, 
+{\bfseries S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+6}
+ \}
+\item 
+\mbox{\Hypertarget{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1a}\label{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1a}} 
+enum {\bfseries Spi\+Pin} \{ {\bfseries S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+CS}, 
+{\bfseries S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+S\+CK}, 
+{\bfseries S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+O\+SI}, 
+{\bfseries S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+I\+SO}
+>>>>>>> autogen documentation
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+F\+O\+R\+C\+E\+\_\+\+I\+N\+L\+I\+NE void \hyperlink{namespacedaisy_a49462ee18989a9c75b51b2cf864f3536}{daisy\+\_\+field\+\_\+init} (\hyperlink{structdaisy_1_1daisy__field}{daisy\+\_\+field} $\ast$p)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{namespacedaisy_a38e74b71650c295dc232837068d63ef0}\label{namespacedaisy_a38e74b71650c295dc232837068d63ef0}} 
+const size\+\_\+t {\bfseries k\+Uart\+Max\+Buffer\+Size} = 32
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+<<<<<<< HEAD
+\hyperlink{daisy__field_8h_source}{daisy\+\_\+field.\+h} Hardware defines and helpers for daisy field platform.
+
+=======
+>>>>>>> autogen documentation
+
+\begin{DoxyItemize}
+\item Get this set up to work with the dev\+\_\+leddriver stuff as well
+\end{DoxyItemize}
+
+Setup Hardware P\+WM for pins that have it
+
+<<<<<<< HEAD
+=======
+Simple parameter mapping tool that takes a 0-\/1 input from an hid\+\_\+ctrl.
+
+>>>>>>> autogen documentation
+T\+O\+DO\+:
+\begin{DoxyItemize}
+\item Add documentation
+\item Add configuration
+\item Add reception
+\item Add IT
+\item Add D\+MA 
+\end{DoxyItemize}
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespacedaisy_addc77b0887e2ab2d7341ab97015ce26f}\label{namespacedaisy_addc77b0887e2ab2d7341ab97015ce26f}} 
+\subsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+<<<<<<< HEAD
+enums for controls, etc. \begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+W\+\_\+1@{S\+W\+\_\+1}!daisy@{daisy}}\index{daisy@{daisy}!S\+W\+\_\+1@{S\+W\+\_\+1}}}\mbox{\Hypertarget{namespacedaisy_addc77b0887e2ab2d7341ab97015ce26fabd3e128a306f3ef06eaf46f189b0db76}\label{namespacedaisy_addc77b0887e2ab2d7341ab97015ce26fabd3e128a306f3ef06eaf46f189b0db76}} 
+S\+W\+\_\+1&tactile switch \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+W\+\_\+3@{S\+W\+\_\+3}!daisy@{daisy}}\index{daisy@{daisy}!S\+W\+\_\+3@{S\+W\+\_\+3}}}\mbox{\Hypertarget{namespacedaisy_addc77b0887e2ab2d7341ab97015ce26fa9348b017fbe9149d6d945705d3b5cb63}\label{namespacedaisy_addc77b0887e2ab2d7341ab97015ce26fa9348b017fbe9149d6d945705d3b5cb63}} 
+S\+W\+\_\+3&tactile switch \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+W\+\_\+\+L\+A\+ST@{S\+W\+\_\+\+L\+A\+ST}!daisy@{daisy}}\index{daisy@{daisy}!S\+W\+\_\+\+L\+A\+ST@{S\+W\+\_\+\+L\+A\+ST}}}\mbox{\Hypertarget{namespacedaisy_addc77b0887e2ab2d7341ab97015ce26fad28ab1e6a1609ca7d09b9ffd594ebde5}\label{namespacedaisy_addc77b0887e2ab2d7341ab97015ce26fad28ab1e6a1609ca7d09b9ffd594ebde5}} 
+S\+W\+\_\+\+L\+A\+ST&toggle \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespacedaisy_a1d966e2592114729edb2aa9d068dea69}\label{namespacedaisy_a1d966e2592114729edb2aa9d068dea69}} 
+\subsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+All knobs connect to A\+D\+C1\+\_\+\+I\+N\+P10 via C\+D4051 mux \mbox{\Hypertarget{namespacedaisy_a6be3271bd09db635a6318987eb086c07}\label{namespacedaisy_a6be3271bd09db635a6318987eb086c07}} 
+\subsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\+V\+\_\+2@{C\+V\+\_\+2}!daisy@{daisy}}\index{daisy@{daisy}!C\+V\+\_\+2@{C\+V\+\_\+2}}}\mbox{\Hypertarget{namespacedaisy_a6be3271bd09db635a6318987eb086c07a19460cf285a94e9a6f292ff08649b5f8}\label{namespacedaisy_a6be3271bd09db635a6318987eb086c07a19460cf285a94e9a6f292ff08649b5f8}} 
+C\+V\+\_\+2&Connected to A\+D\+C1\+\_\+\+I\+N\+P17 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\+V\+\_\+3@{C\+V\+\_\+3}!daisy@{daisy}}\index{daisy@{daisy}!C\+V\+\_\+3@{C\+V\+\_\+3}}}\mbox{\Hypertarget{namespacedaisy_a6be3271bd09db635a6318987eb086c07a2e5105b1853ba25676e68a668f9f7b08}\label{namespacedaisy_a6be3271bd09db635a6318987eb086c07a2e5105b1853ba25676e68a668f9f7b08}} 
+C\+V\+\_\+3&Connected to A\+D\+C1\+\_\+\+I\+N\+P15 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\+V\+\_\+4@{C\+V\+\_\+4}!daisy@{daisy}}\index{daisy@{daisy}!C\+V\+\_\+4@{C\+V\+\_\+4}}}\mbox{\Hypertarget{namespacedaisy_a6be3271bd09db635a6318987eb086c07a1150d4e30b8d93e59da02a59c9f615aa}\label{namespacedaisy_a6be3271bd09db635a6318987eb086c07a1150d4e30b8d93e59da02a59c9f615aa}} 
+C\+V\+\_\+4&Connected to A\+D\+C1\+\_\+\+I\+N\+P4 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C\+V\+\_\+\+L\+A\+ST@{C\+V\+\_\+\+L\+A\+ST}!daisy@{daisy}}\index{daisy@{daisy}!C\+V\+\_\+\+L\+A\+ST@{C\+V\+\_\+\+L\+A\+ST}}}\mbox{\Hypertarget{namespacedaisy_a6be3271bd09db635a6318987eb086c07a085d02d6cdf0f9a6b575f7c9dd3c6813}\label{namespacedaisy_a6be3271bd09db635a6318987eb086c07a085d02d6cdf0f9a6b575f7c9dd3c6813}} 
+C\+V\+\_\+\+L\+A\+ST&Connected to A\+D\+C1\+\_\+\+I\+N\+P11 \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespacedaisy_aaf09bb687034c8776ca0c68ed3ed4179}\label{namespacedaisy_aaf09bb687034c8776ca0c68ed3ed4179}} 
+=======
+enums for controls, etc. \mbox{\Hypertarget{namespacedaisy_a1d966e2592114729edb2aa9d068dea69}\label{namespacedaisy_a1d966e2592114729edb2aa9d068dea69}} 
+\subsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+All knobs connect to A\+D\+C1\+\_\+\+I\+N\+P10 via C\+D4051 mux \mbox{\Hypertarget{namespacedaisy_aaf09bb687034c8776ca0c68ed3ed4179}\label{namespacedaisy_aaf09bb687034c8776ca0c68ed3ed4179}} 
+>>>>>>> autogen documentation
+\index{daisy@{daisy}!Midi\+Message\+Type@{Midi\+Message\+Type}}
+\index{Midi\+Message\+Type@{Midi\+Message\+Type}!daisy@{daisy}}
+\subsubsection{\texorpdfstring{Midi\+Message\+Type}{MidiMessageType}}
+{\footnotesize\ttfamily enum \hyperlink{namespacedaisy_aaf09bb687034c8776ca0c68ed3ed4179}{daisy\+::\+Midi\+Message\+Type}}
+
+Parsed from the Status Byte, these are the common Midi Messages that can be handled. At this time only 3-\/byte messages are correctly parsed into Midi\+Events. \mbox{\Hypertarget{namespacedaisy_a5df1c73d4f0fdbf01d987cef4c3b165e}\label{namespacedaisy_a5df1c73d4f0fdbf01d987cef4c3b165e}} 
+\index{daisy@{daisy}!Sdmmc\+Bit\+Width@{Sdmmc\+Bit\+Width}}
+\index{Sdmmc\+Bit\+Width@{Sdmmc\+Bit\+Width}!daisy@{daisy}}
+\subsubsection{\texorpdfstring{Sdmmc\+Bit\+Width}{SdmmcBitWidth}}
+{\footnotesize\ttfamily enum \hyperlink{namespacedaisy_a5df1c73d4f0fdbf01d987cef4c3b165e}{daisy\+::\+Sdmmc\+Bit\+Width}}
+
+Sets whether 4-\/bit mode or 1-\/bit mode is used for the S\+D\+M\+MC \mbox{\Hypertarget{namespacedaisy_a06f91f8f9f006800c4b0cde1a650664b}\label{namespacedaisy_a06f91f8f9f006800c4b0cde1a650664b}} 
+\index{daisy@{daisy}!Sdmmc\+Mode@{Sdmmc\+Mode}}
+\index{Sdmmc\+Mode@{Sdmmc\+Mode}!daisy@{daisy}}
+\subsubsection{\texorpdfstring{Sdmmc\+Mode}{SdmmcMode}}
+{\footnotesize\ttfamily enum \hyperlink{namespacedaisy_a06f91f8f9f006800c4b0cde1a650664b}{daisy\+::\+Sdmmc\+Mode}}
+
+Operating Mode\+Currently only Fat\+FS is supported. \mbox{\Hypertarget{namespacedaisy_aa4d107ebcf4d77d94b63c90fdba9cf93}\label{namespacedaisy_aa4d107ebcf4d77d94b63c90fdba9cf93}} 
+\index{daisy@{daisy}!Sdmmc\+Speed@{Sdmmc\+Speed}}
+\index{Sdmmc\+Speed@{Sdmmc\+Speed}!daisy@{daisy}}
+\subsubsection{\texorpdfstring{Sdmmc\+Speed}{SdmmcSpeed}}
+{\footnotesize\ttfamily enum \hyperlink{namespacedaisy_aa4d107ebcf4d77d94b63c90fdba9cf93}{daisy\+::\+Sdmmc\+Speed}}
+
+<<<<<<< HEAD
+Sets the desired clock speed of the SD card bus.\+Initialization is always done at or below 400k\+Hz, and then the user speed is set. \mbox{\Hypertarget{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6}\label{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6}} 
+\index{daisy@{daisy}!Spi\+Periph@{Spi\+Periph}}
+\index{Spi\+Periph@{Spi\+Periph}!daisy@{daisy}}
+\subsubsection{\texorpdfstring{Spi\+Periph}{SpiPeriph}}
+{\footnotesize\ttfamily enum \hyperlink{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6}{daisy\+::\+Spi\+Periph}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+3@{S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+3}!daisy@{daisy}}\index{daisy@{daisy}!S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+3@{S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+3}}}\mbox{\Hypertarget{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6abe36a904be436f0e99a6c60bcdc5db03}\label{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6abe36a904be436f0e99a6c60bcdc5db03}} 
+S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+3&S\+PI peripheral 1 \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+6@{S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+6}!daisy@{daisy}}\index{daisy@{daisy}!S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+6@{S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+6}}}\mbox{\Hypertarget{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6a73dc62e39838820d4779ed3cbfc421c0}\label{namespacedaisy_af711442ff4ba0ed7d1e6f6bae7c574b6a73dc62e39838820d4779ed3cbfc421c0}} 
+S\+P\+I\+\_\+\+P\+E\+R\+I\+P\+H\+\_\+6&S\+PI peripheral 3 \\
+\hline
+
+\end{DoxyEnumFields}
+\mbox{\Hypertarget{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1a}\label{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1a}} 
+\index{daisy@{daisy}!Spi\+Pin@{Spi\+Pin}}
+\index{Spi\+Pin@{Spi\+Pin}!daisy@{daisy}}
+\subsubsection{\texorpdfstring{Spi\+Pin}{SpiPin}}
+{\footnotesize\ttfamily enum \hyperlink{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1a}{daisy\+::\+Spi\+Pin}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+S\+CK@{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+S\+CK}!daisy@{daisy}}\index{daisy@{daisy}!S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+S\+CK@{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+S\+CK}}}\mbox{\Hypertarget{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1aaf0815c8244af198ed0fddd44cb62b8bd}\label{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1aaf0815c8244af198ed0fddd44cb62b8bd}} 
+S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+S\+CK&CS pin \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+O\+SI@{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+O\+SI}!daisy@{daisy}}\index{daisy@{daisy}!S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+O\+SI@{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+O\+SI}}}\mbox{\Hypertarget{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1aadbc82a205c33fae68c5acd4d11f909c0}\label{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1aadbc82a205c33fae68c5acd4d11f909c0}} 
+S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+O\+SI&S\+CK pin \\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+I\+SO@{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+I\+SO}!daisy@{daisy}}\index{daisy@{daisy}!S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+I\+SO@{S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+I\+SO}}}\mbox{\Hypertarget{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1aaf95730671f55a42b4d7012faea2f27c7}\label{namespacedaisy_ab9d0e8af9fe3d0320cdf38af4ec31a1aaf95730671f55a42b4d7012faea2f27c7}} 
+S\+P\+I\+\_\+\+P\+I\+N\+\_\+\+M\+I\+SO&M\+O\+SI pin \\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacedaisy_a49462ee18989a9c75b51b2cf864f3536}\label{namespacedaisy_a49462ee18989a9c75b51b2cf864f3536}} 
+\index{daisy@{daisy}!daisy\+\_\+field\+\_\+init@{daisy\+\_\+field\+\_\+init}}
+\index{daisy\+\_\+field\+\_\+init@{daisy\+\_\+field\+\_\+init}!daisy@{daisy}}
+\subsubsection{\texorpdfstring{daisy\+\_\+field\+\_\+init()}{daisy\_field\_init()}}
+{\footnotesize\ttfamily F\+O\+R\+C\+E\+\_\+\+I\+N\+L\+I\+NE void daisy\+::daisy\+\_\+field\+\_\+init (\begin{DoxyParamCaption}\item[{\hyperlink{structdaisy_1_1daisy__field}{daisy\+\_\+field} $\ast$}]{p }\end{DoxyParamCaption})}
+
+Initializes daisy field 
+\begin{DoxyParams}{Parameters}
+{\em p} & \hyperlink{structdaisy_1_1daisy__field}{daisy\+\_\+field} struct to initialize \\
+\hline
+\end{DoxyParams}
+=======
+Sets the desired clock speed of the SD card bus.\+Initialization is always done at or below 400k\+Hz, and then the user speed is set. 
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespacedaisy_a49462ee18989a9c75b51b2cf864f3536}\label{namespacedaisy_a49462ee18989a9c75b51b2cf864f3536}} 
+\index{daisy@{daisy}!daisy\+\_\+field\+\_\+init@{daisy\+\_\+field\+\_\+init}}
+\index{daisy\+\_\+field\+\_\+init@{daisy\+\_\+field\+\_\+init}!daisy@{daisy}}
+\subsubsection{\texorpdfstring{daisy\+\_\+field\+\_\+init()}{daisy\_field\_init()}}
+{\footnotesize\ttfamily F\+O\+R\+C\+E\+\_\+\+I\+N\+L\+I\+NE void daisy\+::daisy\+\_\+field\+\_\+init (\begin{DoxyParamCaption}\item[{\hyperlink{structdaisy_1_1daisy__field}{daisy\+\_\+field} $\ast$}]{p }\end{DoxyParamCaption})}
+
+Init Daisy Seed
+
+Init Switches
+
+Init Gate Input
+
+Init Gate Output
+
+Init L\+ED Driver 2x P\+C\+A9685 addresses 0x00, and 0x01 T\+O\+DO\+: add multidriver support
+
+Init Keyboard Switches T\+O\+DO\+: add cd4021 with parallel data support
+
+Init A\+DC (currently in daisy\+\_\+seed).
+
+Set up mux pin
+
+Set up CV inputs
+
+Init all 5 channels
+
+Setup Knob/\+CV Analog Controls Mapped to A\+D\+Cs
+
+Start timer
+>>>>>>> autogen documentation
