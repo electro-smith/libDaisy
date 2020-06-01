@@ -5,7 +5,9 @@
 // ## Credit
 // Written by: shensley
 // Date Added: March 2020
+//
 // ## TODO:
+//
 // - Add flexible config for:
 //     - data size, stop bits, parity, baud, etc.
 //     - dma vs interrupt (or not).

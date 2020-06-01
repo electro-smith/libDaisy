@@ -8,16 +8,20 @@
 #define DSY_OLED_FONTS_H
 #include <stdint.h>
 
+// ## Data Structures
+// ### FontDef
+// ~~~~
 typedef struct
 {
     const uint8_t   FontWidth;  /*!< Font width in pixels */
     uint8_t         FontHeight; /*!< Font height in pixels */
     const uint16_t *data;       /*!< Pointer to data font data array */
 } FontDef;
+// ~~~~
 
 
 // ## Fonts
-// These are the different sizes of fonts (width x height in pixels per character)(
+// These are the different sizes of fonts (width x height in pixels per character)
 // ~~~~
 extern FontDef Font_6x8;
 extern FontDef Font_7x10;

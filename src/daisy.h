@@ -40,7 +40,6 @@ FORCE_INLINE int32_t f2s24(float x)
 
 #include "sys_system.h" 
 #include "per_qspi.h"
-#include "per_adc.h"
 #include "per_dac.h"
 #include "per_gpio.h"
 #include "per_i2c.h"
@@ -52,6 +51,7 @@ FORCE_INLINE int32_t f2s24(float x)
 #include "hid_audio.h"
 #include "util_unique_id.h"
 #ifdef __cplusplus
+#include "per_adc.h"
 #include "per_uart.h"
 #include "hid_midi.h"
 #include "hid_encoder.h"

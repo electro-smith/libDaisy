@@ -3,6 +3,11 @@ libdaisy_dir=./
 
 # Generate MD
 
+#TODO:
+# * Add ignored prefix functionality for the following file prefixes:
+#     * usbd_
+#     * system_ (note: not sys_)
+
 ## libdaisy
 echo "creating libdaisy markdown files. . . "
 for header in $libdaisy_dir/src/*.h; do
@@ -38,7 +43,8 @@ for file in $libdaisy_dir/doc/*.md; do
     echo "\pagebreak" >> temp.md
 done
 echo "Generating documenation for " $pdf_name
-pandoc temp.md -s --template=./resources/template.tex --toc -o $pdf_name
+#pandoc temp.md -s --template=./resources/template.tex --toc -o $pdf_name
+pandoc temp.md -s --pdf-engine=xelatex --template=./resources/template.tex --toc -o $pdf_name
 echo "Created $pdf_name"
 # remove temp file.
 rm temp.md

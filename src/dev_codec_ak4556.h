@@ -9,6 +9,8 @@
 
 // ### Init
 // Resets the AK4556
+//
+// reset_pin should be a dsy_gpio_pin that is connected to the RST pin of the AK4556
 // ~~~~
 void codec_ak4556_init(dsy_gpio_pin reset_pin);
 // ~~~~

@@ -1,3 +1,4 @@
+#include "stm32h7xx_hal.h"
 #include "sys_dma.h"
 
 #ifdef __cplusplus

@@ -5,7 +5,28 @@
 #endif
 
 
-#ifdef SEED_REV3
+// # Rev3 and Rev4 with newest pinout.
+// Compatible with Seed Rev3 and Rev4 
+#define SW_1_PIN 28
+#define SW_2_PIN 27
+
+#define ENC_A_PIN 26
+#define ENC_B_PIN 25
+#define ENC_CLICK_PIN 13
+
+#define LED_1_R_PIN 20
+#define LED_1_G_PIN 19
+#define LED_1_B_PIN 18
+#define LED_2_R_PIN 17
+#define LED_2_G_PIN 24
+#define LED_2_B_PIN 23
+
+#define KNOB_1_PIN 21
+#define KNOB_2_PIN 15
+
+/*
+// Leaving in place until older hardware is totally deprecated.
+#ifndef SEED_REV2
 
 // Rev2 Pinout
 // Compatible with Seed rev1 and rev2
@@ -44,6 +65,7 @@
 #define LED_2_B_PIN 24
 
 #endif
+*/
 
 
 
@@ -106,7 +128,7 @@ float DaisyPod::AudioCallbackRate()
 
 void DaisyPod::StartAdc()
 {
-    dsy_adc_start();
+    seed.adc.Start();
 }
 
 void DaisyPod::UpdateAnalogControls()
@@ -188,24 +210,18 @@ void DaisyPod::InitLeds()
 }
 void DaisyPod::InitKnobs()
 {
-    // Set order of ADCs based on CHANNEL NUMBER
-    uint8_t channel_order[KNOB_LAST] = {DSY_ADC_PIN_CHN4, DSY_ADC_PIN_CHN10};
-    // NUMBER OF CHANNELS
-    seed.adc_handle.channels = KNOB_LAST;
-    // Fill the ADCs active channel array.
-    for(uint8_t i = 0; i < KNOB_LAST; i++)
-    {
-        seed.adc_handle.active_channels[i] = channel_order[i];
-    }
+    // Configure the ADC channels using the desired pin
+    AdcChannelConfig knob_init[KNOB_LAST];
+    knob_init[KNOB_1].InitSingle(seed.GetPin(KNOB_1_PIN));
+    knob_init[KNOB_2].InitSingle(seed.GetPin(KNOB_2_PIN));
+    // Initialize with the knob init struct w/ 2 members
     // Set Oversampling to 32x
-    seed.adc_handle.oversampling = DSY_ADC_OVS_32;
-    // Init ADC
-    dsy_adc_init(&seed.adc_handle);
+    seed.adc.Init(knob_init, KNOB_LAST);
     // Make an array of pointers to the knobs.
     knobs[KNOB_1] = &knob1;
     knobs[KNOB_2] = &knob2;
     for(int i = 0; i < KNOB_LAST; i++)
     {
-        knobs[i]->Init(dsy_adc_get_rawptr(i), callback_rate_);
+        knobs[i]->Init(seed.adc.GetPtr(i), callback_rate_);
     }
 }
