@@ -1,14 +1,14 @@
-// # Util - Unique Id
 //
-// ## Description
 //
-// Returns 96-bit Unique ID of the MCU
+/** Returns 96-bit Unique ID of the MCU
+*/
 //
-// ## Credit
 //
-// **Author**: shensley
+/** **Author**: shensley
+*/
 //
-// **Date**: May 2020
+/** **Date**: May 2020
+*/
 //
 #pragma once
 #ifndef DSY_UTIL_UNIQUE_ID_H
@@ -21,8 +21,8 @@ extern "C"
 {
 #endif
 
-// ### dsy_get_unique_id
-// fills the three pointer arguments with the unique ID of the MCU.
+/** fills the three pointer arguments with the unique ID of the MCU.
+*/
 void dsy_get_unique_id(uint32_t *w0, uint32_t *w1, uint32_t *w2);
 
 #ifdef __cplusplus

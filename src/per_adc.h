@@ -10,15 +10,14 @@
 
 namespace daisy
 {
-// ## AdcChannelConfig
-// Configuration Structure for a given channel
+/** Configuration Structure for a given channel
+*/
 //
-// While there may not be many configuration options here,
-// using a struct like this allows us to add more configuration
-// later without breaking existing functionality.
-// ~~~~
+/** While there may not be many configuration options here,
+using a struct like this allows us to add more configuration
+later without breaking existing functionality.
+*/
 struct AdcChannelConfig
-// ~~~~
 {
     enum MuxPin
     {
@@ -28,27 +27,26 @@ struct AdcChannelConfig
         MUX_SEL_LAST,
     };
 
-    // ### InitSingle
-    // Initializes a single ADC pin as an ADC.
-    // ~~~~
+/** Initializes a single ADC pin as an ADC.
+*/
     void InitSingle(dsy_gpio_pin pin);
-    // ~~~~
 
-    // ### InitMux
-    // Initializes a single ADC pin as a Multiplexed ADC.
+/** Initializes a single ADC pin as a Multiplexed ADC.
+*/
     //
-    // Requires a CD4051 Multiplexor connected to the pin
+/** Requires a CD4051 Multiplexor connected to the pin
+*/
     //
-    // Internal Callbacks handle the pin addressing.
+/** Internal Callbacks handle the pin addressing.
+*/
     //
-    // channels must be 1-8
-    // ~~~~
+/** channels must be 1-8
+*/
     void InitMux(dsy_gpio_pin adc_pin,
                  dsy_gpio_pin mux_0,
                  dsy_gpio_pin mux_1,
                  dsy_gpio_pin mux_2,
                  size_t       channels);
-    // ~~~~
 
     dsy_gpio pin_;
     dsy_gpio mux_pin_[MUX_SEL_LAST];
@@ -75,42 +73,34 @@ class AdcHandle
 
     AdcHandle() {}
     ~AdcHandle() {}
-    // ### Init
-    // Initializes the ADC with the pins passed in.
+/** Initializes the ADC with the pins passed in.
+*/
     //
-    // * *cfg: an array of AdcChannelConfig of the desired channel
-    // * num_channels: number of ADC channels to initialize
-	// * ovs: Oversampling amount - Defaults to OVS_32
-    // ~~~~
+/** * *cfg: an array of AdcChannelConfig of the desired channel
+* num_channels: number of ADC channels to initialize
+* ovs: Oversampling amount - Defaults to OVS_32
+*/
     void Init(AdcChannelConfig *cfg, size_t num_channels, OverSampling ovs=OVS_32);
-    // ~~~~
     //
-    // ### Start
-	// Starts reading from the ADC
-	// ~~~~
+/** Starts reading from the ADC
+*/
     void Start();
-	// ~~~~
 
-    // ### Stop
-	// Stops reading from the ADC
-	// ~~~~
+/** Stops reading from the ADC
+*/
     void Stop();
-	// ~~~~
 
-    // ## Accessors
     //
-    // These are getters for a single channel
-    // ~~~~
+/** These are getters for a single channel
+*/
     uint16_t  Get(uint8_t chn);
     uint16_t *GetPtr(uint8_t chn);
     float     GetFloat(uint8_t chn);
-    // ~~~~
-    // These are getters for multiplexed inputs on a single channel (up to 8 per ADC input).
-    // ~~~~
+/** These are getters for multiplexed inputs on a single channel (up to 8 per ADC input).
+*/
     uint16_t  GetMux(uint8_t chn, uint8_t idx);
     uint16_t *GetMuxPtr(uint8_t chn, uint8_t idx);
     float     GetMuxFloat(uint8_t chn, uint8_t idx);
-    // ~~~~
 
 
   private:

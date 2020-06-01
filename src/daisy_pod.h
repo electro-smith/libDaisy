@@ -1,12 +1,8 @@
-// # Daisy Pod BSP
-// ## Description
-// Class that handles initializing all of the hardware specific to the Daisy Patch Board.
-//
-// Helper funtions are also in place to provide easy access to built-in controls and peripherals.
-//
-// ## Credits
-// **Author:** Stephen Hensley
-// **Date Added:** November 2019
+/** Class that handles initializing all of the hardware specific to the Daisy Patch Board.
+Helper funtions are also in place to provide easy access to built-in controls and peripherals.
+**Author:** Stephen Hensley
+**Date Added:** November 2019
+*/
 
 #pragma once
 #ifndef DSY_POD_BSP_H
@@ -36,17 +32,20 @@ class DaisyPod
     DaisyPod() {}
     ~DaisyPod() {}
 
-    // Functions
-    // Init related stuff.
+/** Functions
+Init related stuff.
+*/
     void Init();
     void DelayMs(size_t del);
-    // Audio Block size defaults to 48.
-    // Change it using this function before StartingAudio
+/** Audio Block size defaults to 48.
+Change it using this function before StartingAudio
+*/
     void SetAudioBlockSize(size_t size);
     void StartAudio(dsy_audio_callback cb);
     void ChangeAudioCallback(dsy_audio_callback cb);
     void StartAdc();
-    // Hardware Accessors
+/** Hardware Accessors
+*/
     float  AudioSampleRate();
     size_t AudioBlockSize();
     float  AudioCallbackRate();
@@ -55,7 +54,8 @@ class DaisyPod
     void   DebounceControls();
     void   ClearLeds();
     void   UpdateLeds();
-    // Public Members.
+/** Public Members.
+*/
     DaisySeed seed;
     Encoder       encoder;
     AnalogControl knob1, knob2, *knobs[KNOB_LAST];

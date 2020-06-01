@@ -1,16 +1,16 @@
-// # GateIn
-// ## Description
 //
-// Generic Class for handling gate inputs through GPIO.
+/** Generic Class for handling gate inputs through GPIO.
+*/
 //
-// ## Files
-// hid_gatein.h
+/** hid_gatein.h
+*/
 //
-// ## Credits
 //
-// **Author:** Stephen Hensley
+/** **Author:** Stephen Hensley
+*/
 //
-// **Date:** March 2020
+/** **Date:** March 2020
+*/
 //
 #pragma once
 #ifndef DSY_GATEIN_H
@@ -25,20 +25,15 @@ class GateIn
     GateIn() {}
     ~GateIn() {}
 
-    // ## General Functions
-    // ### Init
-    // Initializes the gate input with specified hardware pin
+/** Initializes the gate input with specified hardware pin
+*/
     //
-    // ~~~~
     void Init(dsy_gpio_pin *pin_cfg);
-    // ~~~~
-    // #### Trig
-    // Checks current state of gate input.
-    // Returns FALSE if pin is low, and TRUE if high
+/** Checks current state of gate input.
+Returns FALSE if pin is low, and TRUE if high
+*/
     //
-    // ~~~~
     bool Trig();
-    // ~~~~
 
   private:
     dsy_gpio pin_;

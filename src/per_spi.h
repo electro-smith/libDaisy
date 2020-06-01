@@ -4,13 +4,13 @@
 
 #include "daisy_core.h"
 
-// # SPI
-// TODO:
-// - Add documentation
-// - Add configuration
-// - Add reception
-// - Add IT
-// - Add DMA
+/** TODO:
+- Add documentation
+- Add configuration
+- Add reception
+- Add IT
+- Add DMA
+*/
 
 
 namespace daisy

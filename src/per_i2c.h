@@ -1,15 +1,19 @@
-// # PER_I2C
-// Driver for controlling I2C devices
+/** Driver for controlling I2C devices
+*/
 //
-// TODO:
+/** TODO:
+*/
 //
-// - Add DMA support
-// - Add timing calc based on current clock source freq.
-// - Add discrete rx/tx functions (currently other drivers still need to call ST HAL functions).
+/** - Add DMA support
+- Add timing calc based on current clock source freq.
+- Add discrete rx/tx functions (currently other drivers still need to call ST HAL functions).
+*/
 //
-// Errata:
+/** Errata:
+*/
 //
-// - 1MHZ (FastMode+) is currently only 886kHZ (should get remeasured with latest clock tree).
+/** - 1MHZ (FastMode+) is currently only 886kHZ (should get remeasured with latest clock tree).
+*/
 //
 #ifndef DSY_I2C_H
 #define DSY_I2C_H
@@ -21,11 +25,9 @@ extern "C"
 //#include "stm32h7xx_hal.h"
 #include "daisy_core.h"
 
-    // ## Types
-    // ### dsy_i2c_periph
-    // Specifices the internal peripheral to use (these are mapped to different pins on the hardware).
+/** Specifices the internal peripheral to use (these are mapped to different pins on the hardware).
+*/
     //
-    // ~~~~
     typedef enum
     {
         DSY_I2C_PERIPH_1,
@@ -33,25 +35,22 @@ extern "C"
         DSY_I2C_PERIPH_3,
         DSY_I2C_PERIPH_4,
     } dsy_i2c_periph;
-    // ~~~~
 
-    // ### dsy_i2c_pin
-    // List of pins associated with the peripheral. These must be set in the handle's pin_config.
+/** List of pins associated with the peripheral. These must be set in the handle's pin_config.
+*/
     //
-    // ~~~~
     typedef enum
     {
         DSY_I2C_PIN_SCL,
         DSY_I2C_PIN_SDA,
         DSY_I2C_PIN_LAST,
     } dsy_i2c_pin;
-    // ~~~~
 
-    // ### dsy_i2c_speed
-    // Rate at which the clock/data will be sent/received. The device being used will have maximum speeds.
+/** Rate at which the clock/data will be sent/received. The device being used will have maximum speeds.
+*/
     //
-    // **1MHZ Mode is currently 886kHz**
-    // ~~~~
+/** **1MHZ Mode is currently 886kHz**
+*/
     typedef enum
     {
         DSY_I2C_SPEED_100KHZ,
@@ -59,29 +58,24 @@ extern "C"
         DSY_I2C_SPEED_1MHZ,
         DSY_I2C_SPEED_LAST,
     } dsy_i2c_speed;
-    // ~~~~
 
-    // ### dsy_i2c_handle
-    // this object will be used to initialize the I2C interface,
-    // and can be passed to dev_ drivers that require I2C.
-    // ~~~~
+/** this object will be used to initialize the I2C interface,
+and can be passed to dev_ drivers that require I2C.
+*/
     typedef struct
     {
         dsy_i2c_periph periph;
         dsy_gpio_pin   pin_config[DSY_I2C_PIN_LAST];
         dsy_i2c_speed  speed;
     } dsy_i2c_handle;
-    // ~~~~
 
-    // ## Functions
-    // ### dsy_i2c_init
-    // initializes an I2C peripheral with the data given from the handle.
+/** initializes an I2C peripheral with the data given from the handle.
+*/
     //
-    // Requires a dsy_i2c_handle object to initialize.
+/** Requires a dsy_i2c_handle object to initialize.
+*/
     //
-    // ~~~~
     void dsy_i2c_init(dsy_i2c_handle *dsy_hi2c);
-    // ~~~~
 
 #ifdef __cplusplus
 }

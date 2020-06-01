@@ -1,5 +1,3 @@
-// # Daisy Petal
-// ## Description
 //
 #pragma once
 #ifndef DSY_PETAL_H
