@@ -54,14 +54,14 @@ struct ControlChangeEvent
 */
 struct MidiEvent
 {
-/** Newer ish.
+    /** Newer ish.
 */
     MidiMessageType type;
     int             channel;
     uint8_t         data[2];
-/** Returns the data within the MidiEvent as a NoteOnEvent struct.
+    /** Returns the data within the MidiEvent as a NoteOnEvent struct.
 */
-    NoteOnEvent     AsNoteOn()
+    NoteOnEvent AsNoteOn()
     {
         NoteOnEvent m;
         m.channel  = channel;
@@ -70,12 +70,12 @@ struct MidiEvent
         return m;
     }
 
-/** Returns the data within the MidiEvent as a NoteOnEvent struct.
+    /** Returns the data within the MidiEvent as a NoteOnEvent struct.
 */
     ControlChangeEvent AsControlChange()
     {
         ControlChangeEvent m;
-        m.channel = channel;
+        m.channel        = channel;
         m.control_number = data[0];
         m.value          = data[1];
         return m;
@@ -87,7 +87,7 @@ class MidiHandler
   public:
     MidiHandler() {}
     ~MidiHandler() {}
-/** Input and Output can be configured separately
+    /** Input and Output can be configured separately
 Multiple Input modes can be selected by OR'ing the values.
 */
     enum MidiInputMode
@@ -106,30 +106,30 @@ Multiple Input modes can be selected by OR'ing the values.
     };
 
 
-/** Initializes the MidiHandler
+    /** Initializes the MidiHandler
 */
     void Init(MidiInputMode in_mode, MidiOutputMode out_mode);
 
-/** Starts listening on the selected input mode(s).
+    /** Starts listening on the selected input mode(s).
 MidiEvent Queue will begin to fill, and can be checked with
 */
     void StartReceive();
 
     void Listen();
 
-/** Feed in bytes to state machine from a queue.
+    /** Feed in bytes to state machine from a queue.
 Populates internal FIFO queue with MIDI Messages
 For example with uart:
 midi.Parse(uart.PopRx());
 */
     void Parse(uint8_t byte);
 
-/** Checks if there are unhandled messages in the queue
+    /** Checks if there are unhandled messages in the queue
 */
     bool HasEvents() const { return event_q_.readable(); }
 
 
-/** Pops the oldest unhandled MidiEvent from the internal queue
+    /** Pops the oldest unhandled MidiEvent from the internal queue
 */
     MidiEvent PopEvent() { return event_q_.Read(); }
 

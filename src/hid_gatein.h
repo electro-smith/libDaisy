@@ -25,11 +25,11 @@ class GateIn
     GateIn() {}
     ~GateIn() {}
 
-/** Initializes the gate input with specified hardware pin
+    /** Initializes the gate input with specified hardware pin
 */
     //
     void Init(dsy_gpio_pin *pin_cfg);
-/** Checks current state of gate input.
+    /** Checks current state of gate input.
 Returns FALSE if pin is low, and TRUE if high
 */
     //

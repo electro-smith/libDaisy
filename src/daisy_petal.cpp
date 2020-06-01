@@ -265,14 +265,14 @@ void DaisyPetal::InitAnalogControls()
     // Set order of ADCs based on CHANNEL NUMBER
     // KNOB_LAST + 1 because of Expression input
     AdcChannelConfig cfg[KNOB_LAST + 1];
-	// Init with Single Pins
+    // Init with Single Pins
     cfg[KNOB_1].InitSingle(seed.GetPin(PIN_KNOB_1));
     cfg[KNOB_2].InitSingle(seed.GetPin(PIN_KNOB_2));
     cfg[KNOB_3].InitSingle(seed.GetPin(PIN_KNOB_3));
     cfg[KNOB_4].InitSingle(seed.GetPin(PIN_KNOB_4));
     cfg[KNOB_5].InitSingle(seed.GetPin(PIN_KNOB_5));
     cfg[KNOB_6].InitSingle(seed.GetPin(PIN_KNOB_6));
-	// Special case for Expression
+    // Special case for Expression
     cfg[KNOB_LAST].InitSingle(seed.GetPin(PIN_EXPRESSION));
     // Make an array of pointers to the knob.
     for(int i = 0; i < KNOB_LAST; i++)

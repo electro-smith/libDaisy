@@ -60,10 +60,10 @@ class SdmmcHandler
     SdmmcHandler() {}
     ~SdmmcHandler() {}
 
-/** Initializes the SD Card Interface
+    /** Initializes the SD Card Interface
 */
     //
-/** For now all settings are fixed (See todo at top of section)
+    /** For now all settings are fixed (See todo at top of section)
 */
     void Init();
 

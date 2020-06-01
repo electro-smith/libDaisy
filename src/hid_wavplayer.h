@@ -9,7 +9,8 @@ double-buffering.
 - Only 1 file playing back at a time.
 - Not sure how this would interfere with trying to use the SDCard/FatFs outside of
 */
-//		this module. However, by using the extern'd SDFile, etc. I think that would break things.
+/**        this module. However, by using the extern'd SDFile, etc. I think that would break things.
+*/
 //
 //
 #pragma once
@@ -45,39 +46,39 @@ class WavPlayer
     WavPlayer() {}
     ~WavPlayer() {}
 
-/** Initializes the WavPlayer, loading up to max_files of wav files
+    /** Initializes the WavPlayer, loading up to max_files of wav files
 from an SD Card.
 */
     void Init();
-/** Opens the file at index sel for reading.
+    /** Opens the file at index sel for reading.
 */
     int Open(size_t sel);
-/** Closes whatever file is currently open.
+    /** Closes whatever file is currently open.
 */
     int Close();
-/** Returns the next sample if playing, otherwise returns 0
+    /** Returns the next sample if playing, otherwise returns 0
 */
     int16_t Stream();
-/** Collects buffer for playback when needed.
+    /** Collects buffer for playback when needed.
 */
     void Prepare();
-/** Resets the playback position to the beginning of the file immediately
+    /** Resets the playback position to the beginning of the file immediately
 */
     void Restart();
 
-/** Sets whether or not the current file will repeat after completing playback.
+    /** Sets whether or not the current file will repeat after completing playback.
 */
     inline void SetLooping(bool loop) { looping_ = loop; }
 
-/** Returns whether the WavPlayer is looping or not.
+    /** Returns whether the WavPlayer is looping or not.
 */
     inline bool GetLooping() const { return looping_; }
 
-/** Returns the number of files loaded by the WavPlayer
+    /** Returns the number of files loaded by the WavPlayer
 */
     inline size_t GetNumberFiles() const { return file_cnt_; }
 
-/** Returns currently selected file.
+    /** Returns currently selected file.
 */
     inline size_t GetCurrentFile() const { return file_sel_; }
 
@@ -91,14 +92,14 @@ from an SD Card.
 
     BufferState GetNextBuffState();
 
-    static constexpr size_t kMaxFiles = 8;
+    static constexpr size_t kMaxFiles   = 8;
     static constexpr size_t kBufferSize = 512;
-    WavFileInfo file_info_[kMaxFiles];
-    size_t      file_cnt_, file_sel_;
+    WavFileInfo             file_info_[kMaxFiles];
+    size_t                  file_cnt_, file_sel_;
     BufferState             buff_state_;
     int16_t                 buff_[kBufferSize];
     size_t                  read_ptr_;
-    bool        looping_, playing_;
+    bool                    looping_, playing_;
 };
 
 } // namespace daisy

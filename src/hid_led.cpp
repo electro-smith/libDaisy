@@ -16,7 +16,7 @@ void Led::Init(dsy_gpio_pin pin, bool invert, float samplerate)
     bright_  = 0.0f;
     pwm_cnt_ = 0;
     Set(bright_);
-    invert_ = invert;
+    invert_     = invert;
     samplerate_ = samplerate;
     if(invert_)
     {
@@ -37,7 +37,7 @@ void Led::Set(float val)
 
 void Led::Update()
 {
-	// Shout out to @grrwaaa for the quick fix for pwm
+    // Shout out to @grrwaaa for the quick fix for pwm
     pwm_ += 120.f / samplerate_;
     if(pwm_ > 1.f)
         pwm_ -= 1.f;

@@ -15,34 +15,34 @@ extern "C"
 {
 #endif
 #include <stdint.h>
-/** initializes the TIM2 peripheral with maximum counter autoreload, and no prescalers.
+    /** initializes the TIM2 peripheral with maximum counter autoreload, and no prescalers.
 */
-void dsy_tim_init();
-/** Starts the timer ticking.
+    void dsy_tim_init();
+    /** Starts the timer ticking.
 */
-void dsy_tim_start();
-/** These functions are specific to the actual clock ticks at the timer frequency 
+    void dsy_tim_start();
+    /** These functions are specific to the actual clock ticks at the timer frequency 
 which is currently fixed at 200MHz
 Returns a number 0x00000000-0xffffffff of the current tick
 */
-uint32_t dsy_tim_get_tick();
-/** blocking delay of cnt timer ticks.
+    uint32_t dsy_tim_get_tick();
+    /** blocking delay of cnt timer ticks.
 */
-void	 dsy_tim_delay_tick(uint32_t cnt);
-/** These functions are converted to use milliseconds as their time base.
+    void dsy_tim_delay_tick(uint32_t cnt);
+    /** These functions are converted to use milliseconds as their time base.
 returns the number of milliseconds through the timer period.
 */
-uint32_t dsy_tim_get_ms();
-/** blocking delay of cnt milliseconds.
+    uint32_t dsy_tim_get_ms();
+    /** blocking delay of cnt milliseconds.
 */
-void	 dsy_tim_delay_ms(uint32_t cnt);
-/** These functions are converted to use microseconds as their time base.
+    void dsy_tim_delay_ms(uint32_t cnt);
+    /** These functions are converted to use microseconds as their time base.
 returns the number of microseconds through the timer period.
 */
-uint32_t dsy_tim_get_us();
-/** blocking delay of cnt microseconds.
+    uint32_t dsy_tim_get_us();
+    /** blocking delay of cnt microseconds.
 */
-void	 dsy_tim_delay_us(uint32_t cnt);
+    void dsy_tim_delay_us(uint32_t cnt);
 #ifdef __cplusplus
 }
 #endif

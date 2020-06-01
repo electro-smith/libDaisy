@@ -28,9 +28,9 @@ cache enabled.
 #define DTCM_MEM_SECTION __attribute__((section(".dtcmram_bss")))
 
 
-FORCE_INLINE float cube(float x) 
+FORCE_INLINE float cube(float x)
 {
-	return (x * x) * x;
+    return (x * x) * x;
 }
 
 /** Enums and a simple struct for defining a hardware pin on the MCU
@@ -57,7 +57,7 @@ typedef enum
 typedef struct
 {
     dsy_gpio_port port;
-	uint8_t pin; // number 0-15
+    uint8_t       pin; // number 0-15
 } dsy_gpio_pin;
 
 /** Helper for creating pins from port/pin combos easily

@@ -29,48 +29,48 @@ class UartHandler
     UartHandler() {}
     ~UartHandler() {}
 
-/** Initializes the UART Peripheral
+    /** Initializes the UART Peripheral
 */
     void Init();
 
-/** Reads the amount of bytes in blocking mode with a 10ms timeout.
+    /** Reads the amount of bytes in blocking mode with a 10ms timeout.
 */
     int PollReceive(uint8_t *buff, size_t size, uint32_t timeout);
-/** Starts a DMA Receive callback to fill a buffer of specified size.
+    /** Starts a DMA Receive callback to fill a buffer of specified size.
 */
     //
-/** Data is populated into a FIFO queue, and can be queried with the
+    /** Data is populated into a FIFO queue, and can be queried with the
 functions below.
 Maximum Buffer size is defined above.
 */
     //
-/** If a value outside of the maximum is specified,
+    /** If a value outside of the maximum is specified,
 the size will be set to the maximum.
 */
     //
     int StartRx(size_t size);
 
-/** Returns whether Rx DMA is listening or not.
+    /** Returns whether Rx DMA is listening or not.
 */
     bool RxActive();
 
-/** Flushes the Receive Queue
+    /** Flushes the Receive Queue
 
 */
     int FlushRx();
 
-/** Sends an amount of data in blocking mode.
+    /** Sends an amount of data in blocking mode.
 */
     int PollTx(uint8_t *buff, size_t size);
 
-/** Pops the oldest byte from the FIFO.
+    /** Pops the oldest byte from the FIFO.
 */
     uint8_t PopRx();
-/** Checks if there are any unread bytes in the FIFO
+    /** Checks if there are any unread bytes in the FIFO
 */
-    size_t  Readable();
+    size_t Readable();
 
-/** Returns the result of HAL_UART_GetError() to the user.
+    /** Returns the result of HAL_UART_GetError() to the user.
 */
     int CheckError();
 

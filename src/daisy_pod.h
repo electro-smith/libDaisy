@@ -32,41 +32,41 @@ class DaisyPod
     DaisyPod() {}
     ~DaisyPod() {}
 
-/** Functions
+    /** Functions
 Init related stuff.
 */
     void Init();
     void DelayMs(size_t del);
-/** Audio Block size defaults to 48.
+    /** Audio Block size defaults to 48.
 Change it using this function before StartingAudio
 */
     void SetAudioBlockSize(size_t size);
     void StartAudio(dsy_audio_callback cb);
     void ChangeAudioCallback(dsy_audio_callback cb);
     void StartAdc();
-/** Hardware Accessors
+    /** Hardware Accessors
 */
     float  AudioSampleRate();
     size_t AudioBlockSize();
     float  AudioCallbackRate();
-    void UpdateAnalogControls();
+    void   UpdateAnalogControls();
     float  GetKnobValue(Knob k);
     void   DebounceControls();
     void   ClearLeds();
     void   UpdateLeds();
-/** Public Members.
+    /** Public Members.
 */
-    DaisySeed seed;
+    DaisySeed     seed;
     Encoder       encoder;
     AnalogControl knob1, knob2, *knobs[KNOB_LAST];
     Switch        button1, button2, *buttons[BUTTON_LAST];
     RgbLed        led1, led2;
 
   private:
-    void             InitButtons();
-    void             InitEncoder();
-    void             InitLeds();
-    void             InitKnobs();
+    void   InitButtons();
+    void   InitEncoder();
+    void   InitLeds();
+    void   InitKnobs();
     float  sample_rate_, callback_rate_;
     size_t block_size_;
 };

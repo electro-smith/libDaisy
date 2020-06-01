@@ -15,7 +15,6 @@
 
 namespace daisy
 {
-
 enum SpiPeriph
 {
     SPI_PERIPH_1,

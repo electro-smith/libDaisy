@@ -34,7 +34,7 @@ namespace daisy
 class OledDisplay
 {
   public:
-/** GPIO Pins that need to be used independent of peripheral used.
+    /** GPIO Pins that need to be used independent of peripheral used.
 */
     enum Pins
     {
@@ -44,40 +44,40 @@ class OledDisplay
     };
     OledDisplay() {}
     ~OledDisplay() {}
-/** TODO:
+    /** TODO:
 */
     //
-/** - add I2C Support.
+    /** - add I2C Support.
 - add configuration for specific spi/i2c peripherals (currently only uses SPI1, w/ hardware controlled chip select.
 - re-add support for SSD1306 displays
 */
     //
-/** Takes an argument for the pin cfg
+    /** Takes an argument for the pin cfg
 *pin_cfg should be a pointer to an array of OledDisplay::NUM_PINS dsy_gpio_pins
 */
     void Init(dsy_gpio_pin* pin_cfg);
-/** Fills the entire display with either on/off.
+    /** Fills the entire display with either on/off.
 */
     //
     void Fill(bool on);
-/** Sets the pixel at the specified coordinate to be on/off.
+    /** Sets the pixel at the specified coordinate to be on/off.
 */
     void DrawPixel(uint8_t x, uint8_t y, bool on);
-/** Writes the character with the specific FontDef
+    /** Writes the character with the specific FontDef
 to the display buffer at the current Cursor position.
 */
     char WriteChar(char ch, FontDef font, bool on);
-/** Similar to WriteChar, except it will handle an entire String.
+    /** Similar to WriteChar, except it will handle an entire String.
 */
     //
-/** Wrapping does not happen automatically, so the width
+    /** Wrapping does not happen automatically, so the width
 of the string must be kept within the dimensions of the screen.
 */
     char WriteString(char* str, FontDef font, bool on);
-/** Moves the 'Cursor' position used for WriteChar, and WriteStr to the specified coordinate.
+    /** Moves the 'Cursor' position used for WriteChar, and WriteStr to the specified coordinate.
 */
     void SetCursor(uint8_t x, uint8_t y);
-/** Writes the current display buffer to the OLED device using SPI or I2C depending on 
+    /** Writes the current display buffer to the OLED device using SPI or I2C depending on 
 how the object was initialized.
 */
     void Update();

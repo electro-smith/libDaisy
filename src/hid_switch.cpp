@@ -12,7 +12,7 @@ void Switch::Init(dsy_gpio_pin pin,
     time_held_       = 0;
     t_               = t;
     // Flip may seem opposite to logical direction,
-    // but here 1 is pressed, 0 is not. 
+    // but here 1 is pressed, 0 is not.
     flip_         = pol == POLARITY_INVERTED ? true : false;
     hw_gpio_.pin  = pin;
     hw_gpio_.mode = DSY_GPIO_MODE_INPUT;

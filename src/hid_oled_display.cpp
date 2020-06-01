@@ -94,15 +94,15 @@ static SSD1309_t SSD1309;
 void OledDisplay::Init(dsy_gpio_pin* pin_cfg)
 {
     // Initialize both GPIO
-	pin_dc.mode = DSY_GPIO_MODE_OUTPUT_PP;
-	pin_dc.pin  = pin_cfg[OledDisplay::DATA_COMMAND];
-	dsy_gpio_init(&pin_dc);
+    pin_dc.mode = DSY_GPIO_MODE_OUTPUT_PP;
+    pin_dc.pin  = pin_cfg[OledDisplay::DATA_COMMAND];
+    dsy_gpio_init(&pin_dc);
     pin_reset.mode = DSY_GPIO_MODE_OUTPUT_PP;
     pin_reset.pin  = pin_cfg[OledDisplay::RESET];
     dsy_gpio_init(&pin_reset);
-	// Initialize SPI
+    // Initialize SPI
     h_spi.Init();
-	// Reset and Configure OLED.
+    // Reset and Configure OLED.
     Reset();
     //SendCommand(0xAE); // display off
     SendCommand(SSD1309_CMD_SET_DISPLAY_OFF);

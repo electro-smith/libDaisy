@@ -9,7 +9,7 @@ namespace daisy
 class Parameter
 {
   public:
-/** Curves are applied to the output signal
+    /** Curves are applied to the output signal
 */
     enum Curve
     {
@@ -22,7 +22,7 @@ class Parameter
     Parameter() {}
     ~Parameter() {}
 
-/** initialize a parameter using an hid_ctrl object.
+    /** initialize a parameter using an hid_ctrl object.
 hid_ctrl input - object containing the direct link to a hardware control source.
 min - bottom of range. (when input is 0.0)
 max - top of range (when input is 1.0)
@@ -30,12 +30,12 @@ curve - the scaling curve for the input->output transformation.
 */
     void Init(AnalogControl input, float min, float max, Curve curve);
 
-/** processes the input signal, this should be called at the samplerate of the hid_ctrl passed in.
+    /** processes the input signal, this should be called at the samplerate of the hid_ctrl passed in.
 returns a float with the specified transformation applied.
 */
     float Process();
 
-/** returns the current value from the parameter without processing another sample.
+    /** returns the current value from the parameter without processing another sample.
 this is useful if you need to use the value multiple times, and don't store
 the output of process in a local variable.
 */

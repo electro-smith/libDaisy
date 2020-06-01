@@ -30,7 +30,7 @@ const size_t kMaxSr595DaisyChain = 16;
 class ShiftRegister595
 {
   public:
-/** The following pins correspond to the hardware connections
+    /** The following pins correspond to the hardware connections
 to the 595. 
 
 * LATCH corresonds to Pin 12 "RCLK" 
@@ -43,11 +43,11 @@ to the 595.
         PIN_LATCH,
         PIN_CLK,
         PIN_DATA,
-		NUM_PINS,
+        NUM_PINS,
     };
     ShiftRegister595() {}
     ~ShiftRegister595() {}
-/** Initializes the GPIO, and data for the ShiftRegister
+    /** Initializes the GPIO, and data for the ShiftRegister
 
 Arguments:
 
@@ -56,22 +56,22 @@ Arguments:
 */
     void Init(dsy_gpio_pin *pin_cfg, size_t num_daisy_chained = 1);
 
-/** Sets the state of the specified output.
+    /** Sets the state of the specified output.
 */
-	//
-/** The index starts with QA on the first device and ends with QH on the last device.
+    //
+    /** The index starts with QA on the first device and ends with QH on the last device.
 
 a true state will set the output HIGH, while a false state will set the output LOW.
 */
     void Set(uint8_t idx, bool state);
 
-/** Writes the states of shift register out to the connected devices.
+    /** Writes the states of shift register out to the connected devices.
 */
     void Write();
 
   private:
     dsy_gpio pin_[NUM_PINS];
-    uint8_t state_[kMaxSr595DaisyChain];
+    uint8_t  state_[kMaxSr595DaisyChain];
     size_t   num_devices_;
 };
 

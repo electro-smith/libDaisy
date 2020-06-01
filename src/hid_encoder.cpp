@@ -41,4 +41,3 @@ void Encoder::Debounce()
         inc_ = -1;
     }
 }
-

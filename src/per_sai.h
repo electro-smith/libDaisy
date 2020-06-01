@@ -22,134 +22,134 @@ extern "C"
 #include "daisy_core.h"
 
 
-/** selects which SAI (or both/none) to initialize
+    /** selects which SAI (or both/none) to initialize
 */
-typedef enum
-{
-    DSY_AUDIO_INIT_SAI1,
-    DSY_AUDIO_INIT_SAI2,
-    DSY_AUDIO_INIT_BOTH,
-    DSY_AUDIO_INIT_NONE,
-    DSY_AUDIO_INIT_LAST,
-} dsy_audio_sai;
+    typedef enum
+    {
+        DSY_AUDIO_INIT_SAI1,
+        DSY_AUDIO_INIT_SAI2,
+        DSY_AUDIO_INIT_BOTH,
+        DSY_AUDIO_INIT_NONE,
+        DSY_AUDIO_INIT_LAST,
+    } dsy_audio_sai;
 
-/** 
+    /** 
 Currently Sample Rates are not correclty supported.
 All audio is currently run at 48kHz
 
 */
-typedef enum
-{
-	DSY_AUDIO_SAMPLERATE_32K,
-	DSY_AUDIO_SAMPLERATE_48K,
-	DSY_AUDIO_SAMPLERATE_96K,
-	DSY_AUDIO_SAMPLERATE_LAST,
-}dsy_audio_samplerate;
+    typedef enum
+    {
+        DSY_AUDIO_SAMPLERATE_32K,
+        DSY_AUDIO_SAMPLERATE_48K,
+        DSY_AUDIO_SAMPLERATE_96K,
+        DSY_AUDIO_SAMPLERATE_LAST,
+    } dsy_audio_samplerate;
 
-/** Specifies the bitdepth of the hardware connected
+    /** Specifies the bitdepth of the hardware connected
 to the SAI peripheral
 */
-typedef enum
-{
-    DSY_AUDIO_BITDEPTH_16,
-    DSY_AUDIO_BITDEPTH_24,
-    DSY_AUDIO_BITDEPTH_LAST
-} dsy_audio_bitdepth;
+    typedef enum
+    {
+        DSY_AUDIO_BITDEPTH_16,
+        DSY_AUDIO_BITDEPTH_24,
+        DSY_AUDIO_BITDEPTH_LAST
+    } dsy_audio_bitdepth;
 
-/** Setting for each SAI that sets whether the processor
+    /** Setting for each SAI that sets whether the processor
 is generating the MCLK signal or not.
 
 */
-typedef enum
-{
-	DSY_AUDIO_SYNC_MASTER,// No Crystal
-	DSY_AUDIO_SYNC_SLAVE, // Crystal
-	DSY_AUDIO_SYNC_LAST
-} dsy_audio_sync;
+    typedef enum
+    {
+        DSY_AUDIO_SYNC_MASTER, // No Crystal
+        DSY_AUDIO_SYNC_SLAVE,  // Crystal
+        DSY_AUDIO_SYNC_LAST
+    } dsy_audio_sync;
 
-/** Each SAI has two datalines, they can independently be configured as
+    /** Each SAI has two datalines, they can independently be configured as
 inputs or outputs.
 */
-typedef enum
-{
-    DSY_AUDIO_RX,
-    DSY_AUDIO_TX,
-} dsy_audio_dir;
+    typedef enum
+    {
+        DSY_AUDIO_RX,
+        DSY_AUDIO_TX,
+    } dsy_audio_dir;
 
-/** List of the pins that need to be initialized
+    /** List of the pins that need to be initialized
 */
-//
-/** SIN/SOUT is a bit misleading, and should be turned into A/B since 
+    //
+    /** SIN/SOUT is a bit misleading, and should be turned into A/B since 
 it is possible to configure two inputs or two outputs on a single SAI.
 */
-//
-typedef enum
-{
-    DSY_SAI_PIN_MCLK,
-    DSY_SAI_PIN_FS,
-    DSY_SAI_PIN_SCK,
-    DSY_SAI_PIN_SIN,
-    DSY_SAI_PIN_SOUT,
-    DSY_SAI_PIN_LAST,
-} dsy_sai_pin;
+    //
+    typedef enum
+    {
+        DSY_SAI_PIN_MCLK,
+        DSY_SAI_PIN_FS,
+        DSY_SAI_PIN_SCK,
+        DSY_SAI_PIN_SIN,
+        DSY_SAI_PIN_SOUT,
+        DSY_SAI_PIN_LAST,
+    } dsy_sai_pin;
 
-/** List of devices with built in support
+    /** List of devices with built in support
 Devices not listed here, will need to have initialization done externally.
 */
-typedef enum
-{
-	DSY_AUDIO_NONE, // For unsupported, or custom devices.
-	DSY_AUDIO_DEVICE_PCM3060,
-	DSY_AUDIO_DEVICE_WM8731,
-	DSY_AUDIO_DEVICE_AK4556,
-	DSY_AUDIO_DEVICE_LAST,
-} dsy_audio_device;
+    typedef enum
+    {
+        DSY_AUDIO_NONE, // For unsupported, or custom devices.
+        DSY_AUDIO_DEVICE_PCM3060,
+        DSY_AUDIO_DEVICE_WM8731,
+        DSY_AUDIO_DEVICE_AK4556,
+        DSY_AUDIO_DEVICE_LAST,
+    } dsy_audio_device;
 
-/** Index for the several arrays in the sai_handle struct below.
+    /** Index for the several arrays in the sai_handle struct below.
 */
-enum
-{
-	DSY_SAI_1,
-	DSY_SAI_2,
-	DSY_SAI_LAST,
-};
+    enum
+    {
+        DSY_SAI_1,
+        DSY_SAI_2,
+        DSY_SAI_LAST,
+    };
 
-/** Configuration structure for SAI
+    /** Configuration structure for SAI
 */
-//
-/** contains all above settings, and passes them to internal structure
+    //
+    /** contains all above settings, and passes them to internal structure
 for hardware initialization.
 */
-typedef struct
-{
-	dsy_audio_sai		 init;
-	dsy_audio_samplerate samplerate[DSY_SAI_LAST];
-	dsy_audio_bitdepth   bitdepth[DSY_SAI_LAST];
-    dsy_audio_dir        a_direction[DSY_SAI_LAST];
-    dsy_audio_dir        b_direction[DSY_SAI_LAST];
-    dsy_audio_sync		 sync_config[DSY_SAI_LAST];
-	dsy_audio_device	 device[DSY_SAI_LAST];
-	
-	dsy_gpio_pin		 sai1_pin_config[DSY_SAI_PIN_LAST];
-	dsy_gpio_pin		 sai2_pin_config[DSY_SAI_PIN_LAST];
-} dsy_sai_handle;
+    typedef struct
+    {
+        dsy_audio_sai        init;
+        dsy_audio_samplerate samplerate[DSY_SAI_LAST];
+        dsy_audio_bitdepth   bitdepth[DSY_SAI_LAST];
+        dsy_audio_dir        a_direction[DSY_SAI_LAST];
+        dsy_audio_dir        b_direction[DSY_SAI_LAST];
+        dsy_audio_sync       sync_config[DSY_SAI_LAST];
+        dsy_audio_device     device[DSY_SAI_LAST];
 
-/** Intializes the SAI peripheral(s) with
+        dsy_gpio_pin sai1_pin_config[DSY_SAI_PIN_LAST];
+        dsy_gpio_pin sai2_pin_config[DSY_SAI_PIN_LAST];
+    } dsy_sai_handle;
+
+    /** Intializes the SAI peripheral(s) with
 the specified settings.
 */
-//
-/** pinlists should be arrays of DSY_SAI_PIN_LAST elements
+    //
+    /** pinlists should be arrays of DSY_SAI_PIN_LAST elements
 */
-void dsy_sai_init(dsy_audio_sai        init,
-                  dsy_audio_samplerate sr[2],
-                  dsy_audio_bitdepth   bitdepth[2],
-                  dsy_audio_sync       sync_config[2],
-                  dsy_gpio_pin *       sai1_pin_list,
-                  dsy_gpio_pin *       sai2_pin_list);
+    void dsy_sai_init(dsy_audio_sai        init,
+                      dsy_audio_samplerate sr[2],
+                      dsy_audio_bitdepth   bitdepth[2],
+                      dsy_audio_sync       sync_config[2],
+                      dsy_gpio_pin *       sai1_pin_list,
+                      dsy_gpio_pin *       sai2_pin_list);
 
-/** uses the data within *hsai to initialize the peripheral(s)
+    /** uses the data within *hsai to initialize the peripheral(s)
 */
-void dsy_sai_init_from_handle(dsy_sai_handle *hsai);
+    void dsy_sai_init_from_handle(dsy_sai_handle *hsai);
 
 #ifdef __cplusplus
 }

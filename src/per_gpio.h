@@ -9,62 +9,63 @@ extern "C"
 {
 #endif
 
-/** Sets the mode of the GPIO 
+    /** Sets the mode of the GPIO 
 */
-typedef enum
-{
-	DSY_GPIO_MODE_INPUT,
-	DSY_GPIO_MODE_OUTPUT_PP, // Push-Pull
-	DSY_GPIO_MODE_OUTPUT_OD, // Open-Drain
-    DSY_GPIO_MODE_ANALOG,
-	DSY_GPIO_MODE_LAST,
-} dsy_gpio_mode;
+    typedef enum
+    {
+        DSY_GPIO_MODE_INPUT,
+        DSY_GPIO_MODE_OUTPUT_PP, // Push-Pull
+        DSY_GPIO_MODE_OUTPUT_OD, // Open-Drain
+        DSY_GPIO_MODE_ANALOG,
+        DSY_GPIO_MODE_LAST,
+    } dsy_gpio_mode;
 
-/** Configures whether an internal Pull up
+    /** Configures whether an internal Pull up
  or Pull down resistor is used
 */
-typedef enum
-{
-    DSY_GPIO_NOPULL,
-    DSY_GPIO_PULLUP,
-    DSY_GPIO_PULLDOWN,
-} dsy_gpio_pull;
+    typedef enum
+    {
+        DSY_GPIO_NOPULL,
+        DSY_GPIO_PULLUP,
+        DSY_GPIO_PULLDOWN,
+    } dsy_gpio_pull;
 
-/** Struct for holding the pin, and configuration
+    /** Struct for holding the pin, and configuration
 */
-typedef struct
-{
-	dsy_gpio_pin pin;
-	dsy_gpio_mode mode;
-	dsy_gpio_pull pull;
-} dsy_gpio;
+    typedef struct
+    {
+        dsy_gpio_pin  pin;
+        dsy_gpio_mode mode;
+        dsy_gpio_pull pull;
+    } dsy_gpio;
 
-/** Initializes the gpio with the settings configured.
+    /** Initializes the gpio with the settings configured.
 */
-void dsy_gpio_init(dsy_gpio *p);
+    void dsy_gpio_init(dsy_gpio *p);
 
-/** Deinitializes the gpio pin
+    /** Deinitializes the gpio pin
 */
-void dsy_gpio_deinit(dsy_gpio *p);
+    void dsy_gpio_deinit(dsy_gpio *p);
 
-/** Reads the state of the gpio pin
+    /** Reads the state of the gpio pin
 */
-//
-/** returning 1 if the pin is HIGH, and 0 if the pin is LOW
+    //
+    /** returning 1 if the pin is HIGH, and 0 if the pin is LOW
 */
-uint8_t dsy_gpio_read(dsy_gpio *p);
+    uint8_t dsy_gpio_read(dsy_gpio *p);
 
-/** Writes the state to the gpio pin
+    /** Writes the state to the gpio pin
 */
-//
-/** Pin will be set to 3v3 when state is 1, and 0V when state is 0
+    //
+    /** Pin will be set to 3v3 when state is 1, and 0V when state is 0
 */
-void dsy_gpio_write(dsy_gpio *p, uint8_t state);
+    void dsy_gpio_write(dsy_gpio *p, uint8_t state);
 
-/** Toggles the state of the pin so that it is not at the same
+    /** Toggles the state of the pin so that it is not at the same
 */
-//		state as it was previously.
-void dsy_gpio_toggle(dsy_gpio *p);
+/**        state as it was previously.
+*/
+    void dsy_gpio_toggle(dsy_gpio *p);
 #ifdef __cplusplus
 }
 #endif

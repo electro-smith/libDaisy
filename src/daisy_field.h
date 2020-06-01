@@ -121,35 +121,36 @@ typedef struct
 FORCE_INLINE void daisy_field_init(daisy_field *p)
 {
     uint8_t sw_pins[SW_LAST] = {SW_1_PIN, SW_2_PIN, SW_3_PIN};
-    //	dsy_gpio_port sw_ports[SW_LAST]			= {SW_1_PORT, SW_2_PORT, SW_3_PORT};
+/**    dsy_gpio_port sw_ports[SW_LAST]            = {SW_1_PORT, SW_2_PORT, SW_3_PORT};
+*/
 
-/** Init Daisy Seed
+    /** Init Daisy Seed
 */
     p->seed.Configure();
     p->seed.Init();
 
-/** Init Switches
+    /** Init Switches
 */
     for(uint8_t i = 0; i < SW_LAST; i++)
     {
         p->switches[i].Init(p->seed.GetPin(sw_pins[i]), 1000.0f);
     }
 
-/** Init Gate Input
+    /** Init Gate Input
 */
     p->gate_in.pin  = p->seed.GetPin(GATE_IN_PIN);
     p->gate_in.mode = DSY_GPIO_MODE_INPUT;
     p->gate_in.pull = DSY_GPIO_NOPULL;
     dsy_gpio_init(&p->gate_in);
 
-/** Init Gate Output
+    /** Init Gate Output
 */
     p->gate_out.pin  = p->seed.GetPin(GATE_OUT_PIN);
     p->gate_out.mode = DSY_GPIO_MODE_OUTPUT_PP;
     p->gate_out.pull = DSY_GPIO_NOPULL;
     dsy_gpio_init(&p->gate_out);
 
-/** Init LED Driver
+    /** Init LED Driver
 2x PCA9685 addresses 0x00, and 0x01
 TODO: add multidriver support
 */
@@ -157,7 +158,7 @@ TODO: add multidriver support
 
     dsy_led_driver_init(&p->seed.LED_DRIVER_I2C, addr, 2);
 
-/** Init Keyboard Switches
+    /** Init Keyboard Switches
 TODO: add cd4021 with parallel data support
 */
     p->keyboard_sr.pin_config[DSY_SR_4021_PIN_CS]
@@ -172,27 +173,27 @@ TODO: add cd4021 with parallel data support
     p->keyboard_sr.num_parallel     = 2;
     dsy_sr_4021_init(&p->keyboard_sr);
 
-/** Init ADC (currently in daisy_seed).
+    /** Init ADC (currently in daisy_seed).
 */
     AdcChannelConfig cfg[5];
-/** Set up mux pin
+    /** Set up mux pin
 */
     cfg[0].InitMux(p->seed.GetPin(MUX_ADC_PIN),
                    p->seed.GetPin(MUX_SEL_0_PIN),
                    p->seed.GetPin(MUX_SEL_1_PIN),
                    p->seed.GetPin(MUX_SEL_2_PIN),
                    8);
-/** Set up CV inputs
+    /** Set up CV inputs
 */
     cfg[1].InitSingle(p->seed.GetPin(CV1_ADC_PIN));
     cfg[2].InitSingle(p->seed.GetPin(CV2_ADC_PIN));
     cfg[3].InitSingle(p->seed.GetPin(CV3_ADC_PIN));
     cfg[4].InitSingle(p->seed.GetPin(CV4_ADC_PIN));
-/** Init all 5 channels
+    /** Init all 5 channels
 */
     p->seed.adc.Init(cfg, 5);
 
-/** Setup Knob/CV Analog Controls
+    /** Setup Knob/CV Analog Controls
 Mapped to ADCs
 */
     for(size_t i = 0; i < KNOB_LAST; i++)
@@ -204,7 +205,7 @@ Mapped to ADCs
     p->cvs[CV_3].InitBipolarCv(p->seed.adc.GetPtr(3), 1000.0f);
     p->cvs[CV_4].InitBipolarCv(p->seed.adc.GetPtr(4), 1000.0f);
 
-/** Start timer
+    /** Start timer
 */
     dsy_tim_start();
 }

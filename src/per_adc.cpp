@@ -5,7 +5,7 @@
 using namespace daisy;
 
 // Pinout by channel as dsy_gpio_pin
-// TODO Figure out how to get this formatting 
+// TODO Figure out how to get this formatting
 // to not suck..
 #define PIN_CHN_3    \
     {                \
@@ -125,7 +125,7 @@ struct dsy_adc
 };
 
 // Static Functions
-static void write_mux_value(uint8_t chn, uint8_t idx);
+static void           write_mux_value(uint8_t chn, uint8_t idx);
 static const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin);
 
 static const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin)
@@ -196,7 +196,9 @@ void AdcChannelConfig::InitMux(dsy_gpio_pin adc_pin,
 
 // Begin AdcHandle Implementations
 
-void AdcHandle::Init(AdcChannelConfig* cfg, size_t num_channels, OverSampling ovs)
+void AdcHandle::Init(AdcChannelConfig* cfg,
+                     size_t            num_channels,
+                     OverSampling      ovs)
 {
     ADC_MultiModeTypeDef   multimode = {0};
     ADC_ChannelConfTypeDef sConfig   = {0};
@@ -237,9 +239,11 @@ void AdcHandle::Init(AdcChannelConfig* cfg, size_t num_channels, OverSampling ov
     // Handle Oversampling
     if(oversampling_)
     {
-        adc.hadc1.Init.OversamplingMode                   = ENABLE;
-        adc.hadc1.Init.Oversampling.OversamplingStopReset = ADC_REGOVERSAMPLING_CONTINUED_MODE;
-        adc.hadc1.Init.Oversampling.TriggeredMode         = ADC_TRIGGEREDMODE_SINGLE_TRIGGER;
+        adc.hadc1.Init.OversamplingMode = ENABLE;
+        adc.hadc1.Init.Oversampling.OversamplingStopReset
+            = ADC_REGOVERSAMPLING_CONTINUED_MODE;
+        adc.hadc1.Init.Oversampling.TriggeredMode
+            = ADC_TRIGGEREDMODE_SINGLE_TRIGGER;
         switch(oversampling_)
         {
             case OVS_4:
@@ -275,8 +279,9 @@ void AdcHandle::Init(AdcChannelConfig* cfg, size_t num_channels, OverSampling ov
                 adc.hadc1.Init.Oversampling.Ratio         = 511;
                 break;
             case OVS_1024:
-                adc.hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_10;
-                adc.hadc1.Init.Oversampling.Ratio         = 1023;
+                adc.hadc1.Init.Oversampling.RightBitShift
+                    = ADC_RIGHTBITSHIFT_10;
+                adc.hadc1.Init.Oversampling.Ratio = 1023;
                 break;
             default: break;
         }
@@ -315,7 +320,8 @@ void AdcHandle::Init(AdcChannelConfig* cfg, size_t num_channels, OverSampling ov
 
 void AdcHandle::Start()
 {
-    HAL_ADCEx_Calibration_Start(&adc.hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
+    HAL_ADCEx_Calibration_Start(
+        &adc.hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
     HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 
@@ -337,7 +343,8 @@ uint16_t* AdcHandle::GetPtr(uint8_t chn)
 
 float AdcHandle::GetFloat(uint8_t chn)
 {
-    return (float)adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0] / DSY_ADC_MAX_RESOLUTION;
+    return (float)adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0]
+           / DSY_ADC_MAX_RESOLUTION;
 }
 
 uint16_t AdcHandle::GetMux(uint8_t chn, uint8_t idx)

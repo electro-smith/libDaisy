@@ -26,33 +26,33 @@ class Led
     Led() {}
     ~Led() {}
 
-/** Initializes an LED using the specified hardware pin.
-*/
-	//
-/** invert will set whether to internally invert the brightness due to hardware config.
-*/
-	//
-/** samplerate sets the rate at which 'Update()' will be called (used for software PWM)
-*/
-    void Init(dsy_gpio_pin pin, bool invert, float samplerate=1000.0f);
-/** Sets the brightness of the Led.
+    /** Initializes an LED using the specified hardware pin.
 */
     //
-/** val will be cubed for gamma correction, and then quantized to 8-bit values for Software PWM.
+    /** invert will set whether to internally invert the brightness due to hardware config.
 */
     //
-/** 8-bit is for more flexible update rate options, as 12-bit or more would require faster update rates.
+    /** samplerate sets the rate at which 'Update()' will be called (used for software PWM)
+*/
+    void Init(dsy_gpio_pin pin, bool invert, float samplerate = 1000.0f);
+    /** Sets the brightness of the Led.
+*/
+    //
+    /** val will be cubed for gamma correction, and then quantized to 8-bit values for Software PWM.
+*/
+    //
+    /** 8-bit is for more flexible update rate options, as 12-bit or more would require faster update rates.
 */
     void Set(float val);
 
-/** This processes the pwm of the LED
+    /** This processes the pwm of the LED
 sets the hardware accordingly.
 */
     void Update();
 
   private:
-    size_t pwm_cnt_, pwm_thresh_;
-    float  bright_;
+    size_t   pwm_cnt_, pwm_thresh_;
+    float    bright_;
     float    pwm_;
     float    samplerate_;
     bool     invert_, on_, off_;

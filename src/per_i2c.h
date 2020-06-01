@@ -25,7 +25,7 @@ extern "C"
 //#include "stm32h7xx_hal.h"
 #include "daisy_core.h"
 
-/** Specifices the internal peripheral to use (these are mapped to different pins on the hardware).
+    /** Specifices the internal peripheral to use (these are mapped to different pins on the hardware).
 */
     //
     typedef enum
@@ -36,7 +36,7 @@ extern "C"
         DSY_I2C_PERIPH_4,
     } dsy_i2c_periph;
 
-/** List of pins associated with the peripheral. These must be set in the handle's pin_config.
+    /** List of pins associated with the peripheral. These must be set in the handle's pin_config.
 */
     //
     typedef enum
@@ -46,10 +46,10 @@ extern "C"
         DSY_I2C_PIN_LAST,
     } dsy_i2c_pin;
 
-/** Rate at which the clock/data will be sent/received. The device being used will have maximum speeds.
+    /** Rate at which the clock/data will be sent/received. The device being used will have maximum speeds.
 */
     //
-/** **1MHZ Mode is currently 886kHz**
+    /** **1MHZ Mode is currently 886kHz**
 */
     typedef enum
     {
@@ -59,7 +59,7 @@ extern "C"
         DSY_I2C_SPEED_LAST,
     } dsy_i2c_speed;
 
-/** this object will be used to initialize the I2C interface,
+    /** this object will be used to initialize the I2C interface,
 and can be passed to dev_ drivers that require I2C.
 */
     typedef struct
@@ -69,10 +69,10 @@ and can be passed to dev_ drivers that require I2C.
         dsy_i2c_speed  speed;
     } dsy_i2c_handle;
 
-/** initializes an I2C peripheral with the data given from the handle.
+    /** initializes an I2C peripheral with the data given from the handle.
 */
     //
-/** Requires a dsy_i2c_handle object to initialize.
+    /** Requires a dsy_i2c_handle object to initialize.
 */
     //
     void dsy_i2c_init(dsy_i2c_handle *dsy_hi2c);

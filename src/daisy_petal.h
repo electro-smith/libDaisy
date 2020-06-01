@@ -61,10 +61,10 @@ class DaisyPetal
     void Init();
     void DelayMs(size_t del);
 
-    void SetAudioBlockSize(size_t size);
-    void StartAudio(dsy_audio_callback cb);
-    void ChangeAudioCallback(dsy_audio_callback cb);
-    void StartAdc();
+    void   SetAudioBlockSize(size_t size);
+    void   StartAudio(dsy_audio_callback cb);
+    void   ChangeAudioCallback(dsy_audio_callback cb);
+    void   StartAdc();
     float  AudioSampleRate();
     size_t AudioBlockSize();
     float  AudioCallbackRate();
@@ -93,10 +93,7 @@ class DaisyPetal
     void InitLeds();
     void InitAnalogControls();
 
-    inline uint16_t* adc_ptr(const uint8_t chn)
-    {
-        return seed.adc.GetPtr(chn);
-    }
+    inline uint16_t* adc_ptr(const uint8_t chn) { return seed.adc.GetPtr(chn); }
 
     float  sample_rate_, callback_rate_;
     size_t block_size_;

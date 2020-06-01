@@ -21,9 +21,9 @@ extern "C"
 {
 #endif
 
-/** fills the three pointer arguments with the unique ID of the MCU.
+    /** fills the three pointer arguments with the unique ID of the MCU.
 */
-void dsy_get_unique_id(uint32_t *w0, uint32_t *w1, uint32_t *w2);
+    void dsy_get_unique_id(uint32_t *w0, uint32_t *w1, uint32_t *w2);
 
 #ifdef __cplusplus
 }

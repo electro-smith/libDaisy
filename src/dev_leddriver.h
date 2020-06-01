@@ -34,13 +34,13 @@ extern "C"
         LED_COLOR_LAST
     };
 
-/** Simple color struct
+    /** Simple color struct
 */
     //
-/** Different from util_color only in type (0-4095 vs 0-1)
+    /** Different from util_color only in type (0-4095 vs 0-1)
 */
     //
-/** This could easily be migrated to work with those instead.
+    /** This could easily be migrated to work with those instead.
 */
     typedef struct
     {
@@ -48,36 +48,36 @@ extern "C"
     } color;
 
 
-/** Initializes the LED Driver(s) on the specified I2C Bus
+    /** Initializes the LED Driver(s) on the specified I2C Bus
 
 * dsy_i2c should be any dsy_i2c_handle with pins and speed configured.
 * addr is either a pointer to 1 device address, or an array of addresses for multiple devices
 * addr_cnt is the number of addresses passed in (use '1' for a single device)
 
 */
-    void   dsy_led_driver_init(dsy_i2c_handle *dsy_i2c,
-                               uint8_t *       addr,
-                               uint8_t         addr_cnt);
+    void dsy_led_driver_init(dsy_i2c_handle *dsy_i2c,
+                             uint8_t *       addr,
+                             uint8_t         addr_cnt);
 
-/** Updates the LED Driver with the values set using the set function
+    /** Updates the LED Driver with the values set using the set function
 
 Currently only updates one driver at a time due to the time it takes to update all of the devices.
 
 This can likely be set up to use DMA so that the function doesn't block for so long.
 */
-	//
-    void   dsy_led_driver_update();
+    //
+    void dsy_led_driver_update();
 
-/** sets the LED at the index to the specified brightness (0-1)
+    /** sets the LED at the index to the specified brightness (0-1)
 */
-	//
-/** Index is sequential so device 0 will have idx 0-15,
+    //
+    /** Index is sequential so device 0 will have idx 0-15,
 while device 1 will have idx 16-31, etc.
 */
-	//
-    void   dsy_led_driver_set_led(uint8_t idx, float bright);
+    //
+    void dsy_led_driver_set_led(uint8_t idx, float bright);
 
-/** Passing in one of the preset colors will return a pointer to a 
+    /** Passing in one of the preset colors will return a pointer to a 
 color struct
 */
     color *dsy_led_driver_color_by_name(uint8_t name);

@@ -26,21 +26,21 @@ namespace daisy
 class Switch
 {
   public:
-/** Specifies the expected behavior of the switch
+    /** Specifies the expected behavior of the switch
 */
     enum Type
     {
         TYPE_TOGGLE,
         TYPE_MOMENTARY,
     };
-/** Specifies whether the pressed is HIGH or LOW.
+    /** Specifies whether the pressed is HIGH or LOW.
 */
     enum Polarity
     {
         POLARITY_NORMAL,
         POLARITY_INVERTED,
     };
-/** Specifies whether to use built-in Pull Up/Down resistors to hold button
+    /** Specifies whether to use built-in Pull Up/Down resistors to hold button
 at a given state when not engaged.
 */
     enum Pull
@@ -54,13 +54,13 @@ at a given state when not engaged.
 
     ~Switch() {}
 
-/** Initializes the switch object with a given port/pin combo.
+    /** Initializes the switch object with a given port/pin combo.
 */
-//
-/** Parameters:
+    //
+    /** Parameters:
 */
-//
-/** - pin: port/pin object to tell the switch which hardware pin to use.
+    //
+    /** - pin: port/pin object to tell the switch which hardware pin to use.
 - update_rate: the rate at which the Debounce() function will be called. (used for timing).
 - t: switch type -- Default: TYPE_MOMENTARY
 - pol: switch polarity -- Default: POLARITY_INVERTED
@@ -71,27 +71,27 @@ at a given state when not engaged.
 
     void Init(dsy_gpio_pin pin, float update_rate);
 
-/** Called at update_rate to debounce and handle timing for the switch.
+    /** Called at update_rate to debounce and handle timing for the switch.
 */
-//
-/** In order for events not to be missed, its important that the Edge/Pressed checks
+    //
+    /** In order for events not to be missed, its important that the Edge/Pressed checks
 be made at the same rate as the debounce function is being called.
 */
     void Debounce();
 
-/** Returns true if a button was just pressed.
+    /** Returns true if a button was just pressed.
 */
     inline bool RisingEdge() const { return state_ == 0x7f; }
 
-/** Returns true if the button was just released
+    /** Returns true if the button was just released
 */
     inline bool FallingEdge() const { return state_ == 0x80; }
 
-/** Returns true if the button is held down (or if the toggle is on).
+    /** Returns true if the button is held down (or if the toggle is on).
 */
     inline bool Pressed() const { return state_ == 0xff; }
 
-/** Returns the time in milliseconds that the button has been held (or toggle has been on)
+    /** Returns the time in milliseconds that the button has been held (or toggle has been on)
 */
     inline float TimeHeldMs() const
     {

@@ -3,7 +3,8 @@
 //
 /** The STM32 has 2 Channels of independently configurable
 */
-//		DACs, with up to 12-bit resolution.
+/**        DACs, with up to 12-bit resolution.
+*/
 //
 //
 /** - Add Interrupt/DMA modes for block transfers, etc.
@@ -20,7 +21,7 @@ extern "C"
 {
 #endif
 
-/** Currently only Polling is supported.
+    /** Currently only Polling is supported.
 */
     typedef enum
     {
@@ -28,10 +29,10 @@ extern "C"
         DSY_DAC_MODE_LAST,
     } dsy_dac_mode;
 
-/** Sets the bit depth of the DAC output
+    /** Sets the bit depth of the DAC output
 */
     //
-/** This can be set independently for each channel.
+    /** This can be set independently for each channel.
 */
     typedef enum
     {
@@ -40,7 +41,7 @@ extern "C"
         DSY_DAC_BITS_LAST,
     } dsy_dac_bitdepth;
 
-/** Sets which channel(s) are initialized with the settings chosen.
+    /** Sets which channel(s) are initialized with the settings chosen.
 */
     typedef enum
     {
@@ -50,13 +51,14 @@ extern "C"
         DSY_DAC_CHN_BOTH,
     } dsy_dac_channel;
 
-/** Configuration structure for DAC initialization and settings.
+    /** Configuration structure for DAC initialization and settings.
 
 pin_config must be filled out. However, the DACs are pretty
 */
-    //		consistently on pins PA4, and PA5 across all STM32 MCUs
-    //		that I've used.
-	//
+/**        consistently on pins PA4, and PA5 across all STM32 MCUs
+       that I've used.
+*/
+    //
     typedef struct
     {
         dsy_dac_mode     mode;
@@ -64,21 +66,21 @@ pin_config must be filled out. However, the DACs are pretty
         dsy_gpio_pin     pin_config[DSY_DAC_CHN_LAST];
     } dsy_dac_handle;
 
-/** Initializes the specified channel(s) of the DAC
+    /** Initializes the specified channel(s) of the DAC
 */
     void dsy_dac_init(dsy_dac_handle *dsy_hdac, dsy_dac_channel channel);
 
-/** Turns on the DAC and turns on any internal timer if necessary.
+    /** Turns on the DAC and turns on any internal timer if necessary.
 */
     void dsy_dac_start(dsy_dac_channel channel);
 
-/** Sets the specified channel of the dac to the value (within bitdepth) resolution.
+    /** Sets the specified channel of the dac to the value (within bitdepth) resolution.
 */
     //
-/** When set to 8-bit, val should be 0-255
+    /** When set to 8-bit, val should be 0-255
 */
     //
-/** When set to 12-bit, val should be 0-4095
+    /** When set to 12-bit, val should be 0-4095
 */
     void dsy_dac_write(dsy_dac_channel channel, uint16_t val);
 

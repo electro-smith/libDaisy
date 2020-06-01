@@ -21,7 +21,8 @@
  configured correctly in the LINKER SCRIPT.
  using BSS is advised for most things, since the
 */
-//	DATA section must also fit in flash in order to be initialized.
+/**    DATA section must also fit in flash in order to be initialized.
+*/
 //
 /** * Data section init not properly set up, as SDRAM is not initialized until after startup code.
 */
@@ -31,40 +32,45 @@
 /** ```
 MEMORY
 {
-	SDRAM (RWX) : ORIGIN = 0xC0000000, LENGTH = 64M
+    SDRAM (RWX) : ORIGIN = 0xC0000000, LENGTH = 64M
 }
 */
 //
 /** SECTIONS
 {
 */
-//	.sdram_data :
-//	{
-//		. = ALIGN(4);
-//		_ssdram_data = .;
+/**    .sdram_data :
+   {
+       . = ALIGN(4);
+       _ssdram_data = .;
+*/
 //
-//		PROVIDE(__sdram_data_start = _ssdram_data);
-//		*(.sdram_data)
-//		*(.sdram_data*)
-//		. = ALIGN(4);
-//		_esdram_data = .;
+/**        PROVIDE(__sdram_data_start = _ssdram_data);
+       *(.sdram_data)
+       *(.sdram_data*)
+       . = ALIGN(4);
+       _esdram_data = .;
+*/
 //
-//		PROVIDE(__sdram_data_end = _esdram_data);
-//	} > SDRAM AT >FLASH
-//	_sisdram_data = LOADADDR(.sdram_data);
+/**        PROVIDE(__sdram_data_end = _esdram_data);
+   } > SDRAM AT >FLASH
+   _sisdram_data = LOADADDR(.sdram_data);
+*/
 //
-//	.sdram_bss (NOLOAD):
-//	{
-//		. = ALIGN(4);
-//		__ssdram_bss = .;
-//		PROVIDE(__sdram_bss_start = _ssdram_bss);
-//		*(.sdram_bss)
-//		*(.sdram_bss*)
-//		. = ALIGN(4);
-//		_esdram_bss = .;
+/**    .sdram_bss (NOLOAD):
+   {
+       . = ALIGN(4);
+       __ssdram_bss = .;
+       PROVIDE(__sdram_bss_start = _ssdram_bss);
+       *(.sdram_bss)
+       *(.sdram_bss*)
+       . = ALIGN(4);
+       _esdram_bss = .;
+*/
 //
-//		PROVIDE(__sdram_bss_end = _esdram_bss);
-/** 	} > SDRAM
+/**        PROVIDE(__sdram_bss_end = _esdram_bss);
+*/
+/**     } > SDRAM
 }
 ```
 */
@@ -80,7 +86,8 @@ extern "C"
 //
 /** As mentioned above, this does not currently initialize correctly (startup
 */
-//	code needs to be modified to init SDRAM, and fill
+/**    code needs to be modified to init SDRAM, and fill
+*/
 //
 /** The variables placed here will also need to fit inside of the flash in order to initialize.
 */
@@ -105,7 +112,7 @@ E.g. int DSY_SDRAM_BSS uninitialized_var;
         DSY_SDRAM_ERR,
     };
 
-/** Determines whether chip is initialized, and activated.
+    /** Determines whether chip is initialized, and activated.
 */
     typedef enum
     {
@@ -115,18 +122,18 @@ E.g. int DSY_SDRAM_BSS uninitialized_var;
     } dsy_sdram_state;
 
     //
-/** For now this is the only supported pinswap
+    /** For now this is the only supported pinswap
 */
     //
-/** The Chipselect/bank could likely be changed, but we haven't had any
+    /** The Chipselect/bank could likely be changed, but we haven't had any
 hardware that does that yet.
 */
     //
-/** Pins that have functions that cannot be moved to another pin will
+    /** Pins that have functions that cannot be moved to another pin will
 be hardcoded into the driver.
 */
     //
-/** This is PH5 on Daisy
+    /** This is PH5 on Daisy
 */
     //
     typedef enum
@@ -136,7 +143,7 @@ be hardcoded into the driver.
     } dsy_sdram_pin;
 
 
-/** Configuration struct for passing to initialization
+    /** Configuration struct for passing to initialization
 */
     typedef struct
     {
@@ -144,7 +151,7 @@ be hardcoded into the driver.
         dsy_gpio_pin    pin_config[DSY_SDRAM_PIN_LAST];
     } dsy_sdram_handle;
 
-/** Initializes the SDRAM peripheral
+    /** Initializes the SDRAM peripheral
 */
     uint8_t dsy_sdram_init(dsy_sdram_handle *dsy_hsdram);
 
