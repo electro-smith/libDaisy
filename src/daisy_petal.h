@@ -75,49 +75,91 @@ class DaisyPetal
     void DelayMs(size_t del);
 
     /**
-       
+       Set size of audio blocks.
        \param Audio block size
      */
     void   SetAudioBlockSize(size_t size);
 
+    /**
+       Start audio callback
+       \param cb Callback function.
+    */
     void   StartAudio(dsy_audio_callback cb);
 
+    /**
+       Change callback function
+       \param cb New callback function.
+     */
     void   ChangeAudioCallback(dsy_audio_callback cb);
 
-
+    /**
+       Start analog to digital conversion.
+     */
     void   StartAdc();
 
+    /**
+       Device audio sample rate.
+     */
     float  AudioSampleRate();
 
+    /** Get audio block size */
     size_t AudioBlockSize();
 
+    /** Get callback rate */
     float  AudioCallbackRate();
 
+    /** Call at the same frequency as controls are read for stable readings.*/
     void   UpdateAnalogControls();
 
+    /** Get value per knob.
+	\param knob Which knob to get
+	\return Floating point knob position.
+    */
     float  GetKnobValue(Knob k);
 
+    /** */
     float  GetExpression();
 
+    /** 
+	Debounce inputs.
+     */
     void   DebounceControls();
 
+    /**
+       Reset Leds to default values.
+     */
     void   ClearLeds();
 
+    /**
+       Udate Leds to values you had set.
+     */
     void   UpdateLeds();
 
+    /**
+       Set ring LED colors
+       \param idx Index to set
+       \param r Red value
+       \param g Green value
+       \param b Blue value
+     */
     void   SetRingLed(RingLed idx, float r, float g, float b);
 
+    /**
+       Set footswitch LED
+       \param idx Led Index
+       \param bright Brightness
+     */
     void   SetFootswitchLed(FootswitchLed idx, float bright);
 
-    DaisySeed seed;
-    Encoder   encoder;
+    DaisySeed seed; /** */
+    Encoder   encoder;/** */
 
-    AnalogControl knob[KNOB_LAST];
-    AnalogControl expression;
-    Switch        switches[SW_LAST];
+    AnalogControl knob[KNOB_LAST];/** */
+    AnalogControl expression;/** */
+    Switch        switches[SW_LAST]/** */;
 
-    RgbLed ring_led[8];
-    Led    footswitch_led[4];
+    RgbLed ring_led[8];/** */
+    Led    footswitch_led[4];/** */
 
   private:
     void InitSwitches();

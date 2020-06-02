@@ -41,16 +41,21 @@
 
 #define LED_DRIVER_I2C i2c1_handle
 
+/**
+   daisy_field.h
+   Hardware defines and helpers for daisy field platform.
+*/
+
 namespace daisy
 {
 /** enums for controls, etc.
 */
 enum
 {
-    SW_2, // tactile switch
-    SW_1, // tactile switch
-    SW_3, // toggle
-    SW_LAST,
+    SW_2, /** tactile switch */
+    SW_1, /** tactile switch */
+    SW_3, /** toggle */
+    SW_LAST, /** */
 };
 
 /** All knobs connect to ADC1_INP10 via CD4051 mux
@@ -74,7 +79,7 @@ enum
     CV_2, /** Connected  to ADC1_INP15 */
     CV_3, /** Connected to ADC1_INP4 */
     CV_4, /** Connected to ADC1_INP11 */
-    CV_LAST,
+    CV_LAST, /** */
 };
 
 enum
@@ -108,14 +113,16 @@ enum
     LED_LAST/** */
 };
 
+ /** Struct containing hardware defines and daisy seed */
 typedef struct
 {
-    daisy::DaisySeed   seed; /** */
-    daisy::Switch      switches[SW_LAST]; /** */
-    dsy_gpio           gate_in, gate_out; /** */
-    dsy_sr_4021_handle keyboard_sr; /** */
-    AnalogControl      knobs[KNOB_LAST]; /** */
-    AnalogControl      cvs[CV_LAST]; /** */
+    daisy::DaisySeed   seed; /** Daisy seed */
+    daisy::Switch      switches[SW_LAST]; /** Array of hardware switches */
+    dsy_gpio           gate_in,  /** Gate input. */
+                       gate_out; /** Gate output */
+    dsy_sr_4021_handle keyboard_sr; /** Keyboard shift register*/
+    AnalogControl      knobs[KNOB_LAST]; /** Array of hardware knobs*/
+    AnalogControl      cvs[CV_LAST];     /** Array of cv ins */
 } daisy_field;
 
 /** Initializes daisy field 

@@ -52,7 +52,7 @@ class DaisyPatch
 	\param size Audio block size.
     */
     void SetAudioBlockSize(size_t size);
-
+    
     /**
        Start audio output.
        \param cb Audio callback function
@@ -69,31 +69,35 @@ class DaisyPatch
        Start analog to digital conversion.
      */
     void StartAdc();
-    /** Hardware Accessors
-*/
+    
+    // Hardware Accessors
+    /** Get sample rate */
     float  AudioSampleRate();
+    /** Get block size */
     size_t AudioBlockSize();
+    /** Get callback rate */
     float  AudioCallbackRate();
+    /** Call at same rate as reading controls for good reads. */
     void   UpdateAnalogControls();
+    /** */
     float  GetCtrlValue(Ctrl k);
+    /* Debounce analog controls. Call at same rate as reading controls.*/
     void   DebounceControls();
+    /** */
     void   DisplayControls(bool invert = true);
 
-    /** These are exposed for the user to access and manipulate directly
-*/
-    //
-    /** Helper functions above provide easier access to much of what they are capable of.
-*/
-    DaisySeed     seed;
-    Encoder       encoder;
-    AnalogControl controls[CTRL_LAST];
-    GateIn        gate_input[GATE_IN_LAST];
-    MidiHandler   midi;
-    OledDisplay   display;
+    /* These are exposed for the user to access and manipulate directly
+       Helper functions above provide easier access to much of what they are capable of.
+    */
+    DaisySeed     seed; /** */
+    Encoder       encoder;/** */
+    AnalogControl controls[CTRL_LAST]; /** */
+    GateIn        gate_input[GATE_IN_LAST];/** */
+    MidiHandler   midi;/** */
+    OledDisplay   display;/** */
 
-    /** TODO: Add class for Gate output
-*/
-    dsy_gpio gate_output;
+    // TODO: Add class for Gate output
+    dsy_gpio gate_output; /**  */
 
 
   private:
