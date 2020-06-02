@@ -4213,7 +4213,7 @@ arm_status arm_rfft_init_f32(
   S->fftLenReal = (uint16_t) fftLenReal;
 
   /*  Initialize the Complex FFT length */
-  S->fftLenBy2 = (uint16_t) fftLenReal / 2U;
+  S->fftLenBy2 = (uint16_t) fftLenReal / 2u;
 
   /*  Initialize the Twiddle coefficientA pointer */
   S->pTwiddleAReal = (float32_t *) realCoefA;
@@ -4231,17 +4231,17 @@ arm_status arm_rfft_init_f32(
   switch (S->fftLenReal)
   {
     /* Init table modifier value */
-  case 8192U:
-    S->twidCoefRModifier = 1U;
+  case 8192u:
+    S->twidCoefRModifier = 1u;
     break;
-  case 2048U:
-    S->twidCoefRModifier = 4U;
+  case 2048u:
+    S->twidCoefRModifier = 4u;
     break;
-  case 512U:
-    S->twidCoefRModifier = 16U;
+  case 512u:
+    S->twidCoefRModifier = 16u;
     break;
-  case 128U:
-    S->twidCoefRModifier = 64U;
+  case 128u:
+    S->twidCoefRModifier = 64u;
     break;
   default:
     /*  Reporting argument error if rfftSize is not valid value */
@@ -4255,12 +4255,12 @@ arm_status arm_rfft_init_f32(
   if (S->ifftFlagR)
   {
     /* Initializes the CIFFT Module for fftLenreal/2 length */
-    arm_cfft_radix4_init_f32(S->pCfft, S->fftLenBy2, 1U, 0U);
+    arm_cfft_radix4_init_f32(S->pCfft, S->fftLenBy2, 1u, 0u);
   }
   else
   {
     /* Initializes the CFFT Module for fftLenreal/2 length */
-    arm_cfft_radix4_init_f32(S->pCfft, S->fftLenBy2, 0U, 0U);
+    arm_cfft_radix4_init_f32(S->pCfft, S->fftLenBy2, 0u, 0u);
   }
 
   /* return the status of RFFT Init function */

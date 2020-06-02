@@ -80,7 +80,7 @@ void arm_fir_sparse_init_q15(
   S->maxDelay = maxDelay;
 
   /* reset the stateIndex to 0 */
-  S->stateIndex = 0U;
+  S->stateIndex = 0u;
 
   /* Clear state buffer and size is always maxDelay + blockSize */
   memset(pState, 0, (maxDelay + blockSize) * sizeof(q15_t));

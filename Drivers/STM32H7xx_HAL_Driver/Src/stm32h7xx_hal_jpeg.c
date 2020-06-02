@@ -1100,11 +1100,7 @@ HAL_StatusTypeDef HAL_JPEG_UnRegisterDataReadyCallback(JPEG_HandleTypeDef *hjpeg
 HAL_StatusTypeDef HAL_JPEG_ConfigEncoding(JPEG_HandleTypeDef *hjpeg, JPEG_ConfTypeDef *pConf)
 {
   uint32_t error;
-  uint32_t numberMCU;
-  uint32_t hfactor;
-  uint32_t vfactor;
-  uint32_t hMCU;
-  uint32_t vMCU;
+  uint32_t numberMCU, hfactor, vfactor, hMCU, vMCU;
 
   /* Check the JPEG handle allocation */
   if ((hjpeg == NULL) || (pConf == NULL))
@@ -1289,9 +1285,7 @@ HAL_StatusTypeDef HAL_JPEG_ConfigEncoding(JPEG_HandleTypeDef *hjpeg, JPEG_ConfTy
   */
 HAL_StatusTypeDef HAL_JPEG_GetInfo(JPEG_HandleTypeDef *hjpeg, JPEG_ConfTypeDef *pInfo)
 {
-  uint32_t yblockNb;
-  uint32_t cBblockNb;
-  uint32_t cRblockNb;
+  uint32_t yblockNb, cBblockNb, cRblockNb;
 
   /* Check the JPEG handle allocation */
   if ((hjpeg == NULL) || (pInfo == NULL))
@@ -2198,8 +2192,7 @@ void HAL_JPEG_ConfigOutputBuffer(JPEG_HandleTypeDef *hjpeg, uint8_t *pNewOutputB
   */
 HAL_StatusTypeDef HAL_JPEG_Abort(JPEG_HandleTypeDef *hjpeg)
 {
-  uint32_t tickstart;
-  uint32_t tmpContext;
+  uint32_t tickstart, tmpContext;
   tmpContext = hjpeg->Context;
 
   /*Reset the Context operation and method*/
@@ -2529,11 +2522,7 @@ uint32_t HAL_JPEG_GetError(JPEG_HandleTypeDef *hjpeg)
   */
 static HAL_StatusTypeDef JPEG_Bits_To_SizeCodes(uint8_t *Bits, uint8_t *Huffsize, uint32_t *Huffcode, uint32_t *LastK)
 {
-  uint32_t i;
-  uint32_t p;
-  uint32_t l;
-  uint32_t code;
-  uint32_t si;
+  uint32_t i, p, l, code, si;
 
   /* Figure C.1: Generation of table of Huffman code sizes */
   p = 0;
@@ -2699,9 +2688,7 @@ static HAL_StatusTypeDef JPEG_Set_HuffDC_Mem(JPEG_HandleTypeDef *hjpeg, JPEG_DCH
 {
   HAL_StatusTypeDef error;
   JPEG_DC_HuffCodeTableTypeDef dcSizeCodesTable;
-  uint32_t i;
-  uint32_t lsb;
-  uint32_t msb;
+  uint32_t i, lsb, msb;
   __IO uint32_t *address, *addressDef;
 
   if (DCTableAddress == (hjpeg->Instance->HUFFENC_DC0))
@@ -3066,11 +3053,7 @@ static void JPEG_Set_Huff_DHTMem(JPEG_HandleTypeDef *hjpeg)
 static uint32_t JPEG_Set_Quantization_Mem(JPEG_HandleTypeDef *hjpeg, uint8_t *QTable,
                                                     __IO uint32_t *QTableAddress)
 {
-  uint32_t i;
-  uint32_t j;
-  uint32_t quantRow;
-  uint32_t quantVal;
-  uint32_t ScaleFactor;
+  uint32_t i, j, quantRow, quantVal, ScaleFactor;
   __IO uint32_t *tableAddress;
 
   tableAddress = QTableAddress;
@@ -3472,10 +3455,7 @@ static uint32_t JPEG_Process(JPEG_HandleTypeDef *hjpeg)
   */
 static void JPEG_StoreOutputData(JPEG_HandleTypeDef *hjpeg, uint32_t nbOutputWords)
 {
-  uint32_t index;
-  uint32_t nb_words;
-  uint32_t nb_bytes;
-  uint32_t dataword;
+  uint32_t index, nBwords, nbBytes, dataword;
 
   if (hjpeg->OutDataLength >= (hjpeg->JpegOutCount + (nbOutputWords * 4UL)))
   {
@@ -3502,8 +3482,8 @@ static void JPEG_StoreOutputData(JPEG_HandleTypeDef *hjpeg, uint32_t nbOutputWor
   }
   else if (hjpeg->OutDataLength > hjpeg->JpegOutCount)
   {
-    nb_words = (hjpeg->OutDataLength - hjpeg->JpegOutCount) / 4UL;
-    for (index = 0; index < nb_words; index++)
+    nBwords = (hjpeg->OutDataLength - hjpeg->JpegOutCount) / 4UL;
+    for (index = 0; index < nBwords; index++)
     {
       /*Transfer 32 bits from the JPEG output FIFO*/
       dataword = hjpeg->Instance->DOR;
@@ -3525,9 +3505,9 @@ static void JPEG_StoreOutputData(JPEG_HandleTypeDef *hjpeg, uint32_t nbOutputWor
     }
     else
     {
-      nb_bytes = hjpeg->OutDataLength - hjpeg->JpegOutCount;
+      nbBytes = hjpeg->OutDataLength - hjpeg->JpegOutCount;
       dataword = hjpeg->Instance->DOR;
-      for (index = 0; index < nb_bytes; index++)
+      for (index = 0; index < nbBytes; index++)
       {
         hjpeg->pJpegOutBuffPtr[hjpeg->JpegOutCount] = (uint8_t)((dataword >> (8UL * (index & 0x3UL))) & 0xFFUL);
         hjpeg->JpegOutCount++;
@@ -3541,8 +3521,8 @@ static void JPEG_StoreOutputData(JPEG_HandleTypeDef *hjpeg, uint32_t nbOutputWor
 
       hjpeg->JpegOutCount = 0;
 
-      nb_bytes = 4UL - nb_bytes;
-      for (index = nb_bytes; index < 4UL; index++)
+      nbBytes = 4UL - nbBytes;
+      for (index = nbBytes; index < 4UL; index++)
       {
         hjpeg->pJpegOutBuffPtr[hjpeg->JpegOutCount] = (uint8_t)((dataword >> (8UL * index)) & 0xFFUL);
         hjpeg->JpegOutCount++;
@@ -3566,11 +3546,7 @@ static void JPEG_StoreOutputData(JPEG_HandleTypeDef *hjpeg, uint32_t nbOutputWor
   */
 static void JPEG_ReadInputData(JPEG_HandleTypeDef *hjpeg, uint32_t nbRequestWords)
 {
-  uint32_t nb_bytes = 0;
-  uint32_t nb_words;
-  uint32_t index;
-  uint32_t dataword;
-  uint32_t input_count;
+  uint32_t nbBytes = 0, nBwords, index, Dataword, inputCount;
 
   if ((hjpeg->InDataLength == 0UL) || (nbRequestWords == 0UL))
   {
@@ -3579,7 +3555,7 @@ static void JPEG_ReadInputData(JPEG_HandleTypeDef *hjpeg, uint32_t nbRequestWord
   }
   else if (hjpeg->InDataLength > hjpeg->JpegInCount)
   {
-    nb_bytes = hjpeg->InDataLength - hjpeg->JpegInCount;
+    nbBytes = hjpeg->InDataLength - hjpeg->JpegInCount;
   }
   else if (hjpeg->InDataLength == hjpeg->JpegInCount)
   {
@@ -3595,39 +3571,39 @@ static void JPEG_ReadInputData(JPEG_HandleTypeDef *hjpeg, uint32_t nbRequestWord
       hjpeg->InDataLength = hjpeg->InDataLength - (hjpeg->InDataLength % 4UL);
     }
     hjpeg->JpegInCount = 0;
-    nb_bytes = hjpeg->InDataLength;
+    nbBytes = hjpeg->InDataLength;
   }
   else
   {
     /* Nothing to do */
   }
-  if (((hjpeg->Context &  JPEG_CONTEXT_PAUSE_INPUT) == 0UL) && (nb_bytes > 0UL))
+  if (((hjpeg->Context &  JPEG_CONTEXT_PAUSE_INPUT) == 0UL) && (nbBytes > 0UL))
   {
-    nb_words = nb_bytes / 4UL;
-    if (nb_words >= nbRequestWords)
+    nBwords = nbBytes / 4UL;
+    if (nBwords >= nbRequestWords)
     {
       for (index = 0; index < nbRequestWords; index++)
       {
-        input_count = hjpeg->JpegInCount;
-        hjpeg->Instance->DIR = (((uint32_t)(hjpeg->pJpegInBuffPtr[input_count])) | \
-                                (((uint32_t)(hjpeg->pJpegInBuffPtr[input_count + 1UL])) << 8) | \
-                                (((uint32_t)(hjpeg->pJpegInBuffPtr[input_count + 2UL])) << 16) | \
-                                (((uint32_t)(hjpeg->pJpegInBuffPtr[input_count + 3UL])) << 24));
+        inputCount = hjpeg->JpegInCount;
+        hjpeg->Instance->DIR = (((uint32_t)(hjpeg->pJpegInBuffPtr[inputCount])) | \
+                                (((uint32_t)(hjpeg->pJpegInBuffPtr[inputCount + 1UL])) << 8) | \
+                                (((uint32_t)(hjpeg->pJpegInBuffPtr[inputCount + 2UL])) << 16) | \
+                                (((uint32_t)(hjpeg->pJpegInBuffPtr[inputCount + 3UL])) << 24));
 
         hjpeg->JpegInCount += 4UL;
       }
     }
-    else /*nb_words < nbRequestWords*/
+    else /*nBwords < nbRequestWords*/
     {
-      if (nb_words > 0UL)
+      if (nBwords > 0UL)
       {
-        for (index = 0; index < nb_words; index++)
+        for (index = 0; index < nBwords; index++)
         {
-          input_count = hjpeg->JpegInCount;
-          hjpeg->Instance->DIR = (((uint32_t)(hjpeg->pJpegInBuffPtr[input_count])) | \
-                                  (((uint32_t)(hjpeg->pJpegInBuffPtr[input_count + 1UL])) << 8) | \
-                                  (((uint32_t)(hjpeg->pJpegInBuffPtr[input_count + 2UL])) << 16) | \
-                                  (((uint32_t)(hjpeg->pJpegInBuffPtr[input_count + 3UL])) << 24));
+          inputCount = hjpeg->JpegInCount;
+          hjpeg->Instance->DIR = (((uint32_t)(hjpeg->pJpegInBuffPtr[inputCount])) | \
+                                  (((uint32_t)(hjpeg->pJpegInBuffPtr[inputCount + 1UL])) << 8) | \
+                                  (((uint32_t)(hjpeg->pJpegInBuffPtr[inputCount + 2UL])) << 16) | \
+                                  (((uint32_t)(hjpeg->pJpegInBuffPtr[inputCount + 3UL])) << 24));
 
           hjpeg->JpegInCount += 4UL;
         }
@@ -3635,13 +3611,13 @@ static void JPEG_ReadInputData(JPEG_HandleTypeDef *hjpeg, uint32_t nbRequestWord
       else
       {
         /* end of file*/
-        dataword = 0;
-        for (index = 0; index < nb_bytes; index++)
+        Dataword = 0;
+        for (index = 0; index < nbBytes; index++)
         {
-          dataword |= (uint32_t)hjpeg->pJpegInBuffPtr[hjpeg->JpegInCount] << (8UL * (index & 0x03UL));
+          Dataword |= (uint32_t)hjpeg->pJpegInBuffPtr[hjpeg->JpegInCount] << (8UL * (index & 0x03UL));
           hjpeg->JpegInCount++;
         }
-        hjpeg->Instance->DIR = dataword;
+        hjpeg->Instance->DIR = Dataword;
       }
     }
   }
@@ -3874,9 +3850,7 @@ static void JPEG_DMA_EndProcess(JPEG_HandleTypeDef *hjpeg)
   */
 static void JPEG_DMA_PollResidualData(JPEG_HandleTypeDef *hjpeg)
 {
-  uint32_t tmpContext;
-  uint32_t count;
-  uint32_t dataOut;
+  uint32_t tmpContext, count, dataOut;
 
   for (count = JPEG_FIFO_SIZE; count > 0UL; count--)
   {

@@ -66,11 +66,11 @@ void arm_cmplx_mag_q15(
 
 
   /*loop Unrolling */
-  blkCnt = numSamples >> 2U;
+  blkCnt = numSamples >> 2u;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
 
     /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
@@ -96,9 +96,9 @@ void arm_cmplx_mag_q15(
 
   /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = numSamples % 0x4U;
+  blkCnt = numSamples % 0x4u;
 
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* C[0] = sqrt(A[0] * A[0] + A[1] * A[1]) */
     in1 = *__SIMD32(pSrc)++;
@@ -116,7 +116,7 @@ void arm_cmplx_mag_q15(
   /* Run the below code for Cortex-M0 */
   q15_t real, imag;                              /* Temporary variables to hold input values */
 
-  while (numSamples > 0U)
+  while (numSamples > 0u)
   {
     /* out = sqrt(real * real + imag * imag) */
     real = *pSrc++;

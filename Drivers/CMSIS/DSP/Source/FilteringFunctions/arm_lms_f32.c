@@ -189,7 +189,7 @@ void arm_lms_f32(
 
   /* S->pState points to state array which contains previous frame (numTaps - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = &(S->pState[(numTaps - 1U)]);
+  pStateCurnt = &(S->pState[(numTaps - 1u)]);
 
   blkCnt = blockSize;
 
@@ -198,7 +198,7 @@ void arm_lms_f32(
 
   /* Run the below code for Cortex-M4 and Cortex-M3 */
 
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -215,7 +215,7 @@ void arm_lms_f32(
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = numTaps >> 2;
 
-    while (tapCnt > 0U)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       sum += (*px++) * (*pb++);
@@ -228,9 +228,9 @@ void arm_lms_f32(
     }
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
-    tapCnt = numTaps % 0x4U;
+    tapCnt = numTaps % 0x4u;
 
-    while (tapCnt > 0U)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       sum += (*px++) * (*pb++);
@@ -260,7 +260,7 @@ void arm_lms_f32(
     tapCnt = numTaps >> 2;
 
     /* Update filter coefficients */
-    while (tapCnt > 0U)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       *pb = *pb + (w * (*px++));
@@ -280,9 +280,9 @@ void arm_lms_f32(
     }
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
-    tapCnt = numTaps % 0x4U;
+    tapCnt = numTaps % 0x4u;
 
-    while (tapCnt > 0U)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       *pb = *pb + (w * (*px++));
@@ -307,11 +307,11 @@ void arm_lms_f32(
   /* Points to the start of the pState buffer */
   pStateCurnt = S->pState;
 
-  /* Loop unrolling for (numTaps - 1U) samples copy */
-  tapCnt = (numTaps - 1U) >> 2U;
+  /* Loop unrolling for (numTaps - 1u) samples copy */
+  tapCnt = (numTaps - 1u) >> 2u;
 
   /* copy data */
-  while (tapCnt > 0U)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -323,10 +323,10 @@ void arm_lms_f32(
   }
 
   /* Calculate remaining number of copies */
-  tapCnt = (numTaps - 1U) % 0x4U;
+  tapCnt = (numTaps - 1u) % 0x4u;
 
   /* Copy the remaining q31_t data */
-  while (tapCnt > 0U)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -338,7 +338,7 @@ void arm_lms_f32(
 
   /* Run the below code for Cortex-M0 */
 
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* Copy the new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -355,7 +355,7 @@ void arm_lms_f32(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0U)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       sum += (*px++) * (*pb++);
@@ -384,7 +384,7 @@ void arm_lms_f32(
     /* Loop over numTaps number of values */
     tapCnt = numTaps;
 
-    while (tapCnt > 0U)
+    while (tapCnt > 0u)
     {
       /* Perform the multiply-accumulate */
       *pb = *pb + (w * (*px++));
@@ -409,11 +409,11 @@ void arm_lms_f32(
   /* Points to the start of the pState buffer */
   pStateCurnt = S->pState;
 
-  /*  Copy (numTaps - 1U) samples  */
-  tapCnt = (numTaps - 1U);
+  /*  Copy (numTaps - 1u) samples  */
+  tapCnt = (numTaps - 1u);
 
   /* Copy the data */
-  while (tapCnt > 0U)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 

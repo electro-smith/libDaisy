@@ -96,11 +96,11 @@ arm_status arm_mat_sub_f32(
     /* Run the below code for Cortex-M4 and Cortex-M3 */
 
     /* Loop Unrolling */
-    blkCnt = numSamples >> 2U;
+    blkCnt = numSamples >> 2u;
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0U)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) - B(m,n) */
       /* Subtract and then store the results in the destination buffer. */
@@ -153,9 +153,9 @@ arm_status arm_mat_sub_f32(
 
 
       /* update pointers to process next sampels */
-      pIn1 += 4U;
-      pIn2 += 4U;
-      pOut += 4U;
+      pIn1 += 4u;
+      pIn2 += 4u;
+      pOut += 4u;
 
       /* Decrement the loop counter */
       blkCnt--;
@@ -163,7 +163,7 @@ arm_status arm_mat_sub_f32(
 
     /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    blkCnt = numSamples % 0x4U;
+    blkCnt = numSamples % 0x4u;
 
 #else
 
@@ -174,7 +174,7 @@ arm_status arm_mat_sub_f32(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-    while (blkCnt > 0U)
+    while (blkCnt > 0u)
     {
       /* C(m,n) = A(m,n) - B(m,n) */
       /* Subtract and then store the results in the destination buffer. */

@@ -89,7 +89,7 @@ arm_status arm_mat_cmplx_mult_q15(
   uint16_t numColsB = pSrcB->numCols;            /* number of columns of input matrix B */
   uint16_t numColsA = pSrcA->numCols;            /* number of columns of input matrix A */
   uint16_t numRowsB = pSrcB->numRows;            /* number of rows of input matrix A    */
-  uint16_t col, i = 0U, row = numRowsB, colCnt;  /* loop counters */
+  uint16_t col, i = 0u, row = numRowsB, colCnt;  /* loop counters */
   arm_status status;                             /* status of matrix multiplication */
   q63_t sumReal, sumImag;
 
@@ -124,7 +124,7 @@ arm_status arm_mat_cmplx_mult_q15(
 
       /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
        ** a second loop below computes the remaining 1 to 3 samples. */
-      while (col > 0U)
+      while (col > 0u)
       {
 #ifdef UNALIGNED_SUPPORT_DISABLE
         /* Read two elements from the row */
@@ -169,9 +169,9 @@ arm_status arm_mat_cmplx_mult_q15(
 
       /* If the columns of pSrcB is not a multiple of 4, compute any remaining output samples here.
        ** No loop unrolling is used. */
-      col = numColsB % 0x4U;
+      col = numColsB % 0x4u;
 
-      while (col > 0U)
+      while (col > 0u)
       {
         /* Read two elements from the row */
         in = *pInB++;
@@ -219,9 +219,9 @@ arm_status arm_mat_cmplx_mult_q15(
 
       /* If the columns of pSrcB is not a multiple of 4, compute any remaining output samples here.
        ** No loop unrolling is used. */
-      col = numColsB % 0x4U;
+      col = numColsB % 0x4u;
 
-      while (col > 0U)
+      while (col > 0u)
       {
         /* Read two elements from the row */
         in = *__SIMD32(pInB)++;
@@ -236,16 +236,16 @@ arm_status arm_mat_cmplx_mult_q15(
         col--;
       }
 
-      i = i + 2U;
+      i = i + 2u;
 
       /* Decrement the row loop counter */
       row--;
 
-    } while (row > 0U);
+    } while (row > 0u);
 
     /* Reset the variables for the usage in the following multiplication process */
     row = numRowsA;
-    i = 0U;
+    i = 0u;
     px = pDst->pData;
 
     /* The following loop performs the dot-product of each row in pSrcA with each column in pSrcB */
@@ -274,7 +274,7 @@ arm_status arm_mat_cmplx_mult_q15(
 
 
         /* matrix multiplication */
-        while (colCnt > 0U)
+        while (colCnt > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
 
@@ -282,10 +282,10 @@ arm_status arm_mat_cmplx_mult_q15(
 
           /* read real and imag values from pSrcA buffer */
           a = *pInA;
-          b = *(pInA + 1U);
+          b = *(pInA + 1u);
           /* read real and imag values from pSrcB buffer */
           c = *pInB;
-          d = *(pInB + 1U);
+          d = *(pInB + 1u);
 
           /* Multiply and Accumlates */
           sumReal += (q31_t) a *c;
@@ -294,14 +294,14 @@ arm_status arm_mat_cmplx_mult_q15(
           sumImag += (q31_t) b *c;
 
           /* read next real and imag values from pSrcA buffer */
-          a = *(pInA + 2U);
-          b = *(pInA + 3U);
+          a = *(pInA + 2u);
+          b = *(pInA + 3u);
           /* read next real and imag values from pSrcB buffer */
-          c = *(pInB + 2U);
-          d = *(pInB + 3U);
+          c = *(pInB + 2u);
+          d = *(pInB + 3u);
 
           /* update pointer */
-          pInA += 4U;
+          pInA += 4u;
 
           /* Multiply and Accumlates */
           sumReal += (q31_t) a *c;
@@ -309,7 +309,7 @@ arm_status arm_mat_cmplx_mult_q15(
           sumReal -= (q31_t) b *d;
           sumImag += (q31_t) b *c;
           /* update pointer */
-          pInB += 4U;
+          pInB += 4u;
 #else
           /* read real and imag values from pSrcA and pSrcB buffer */
           pSourceA = *__SIMD32(pInA)++;
@@ -346,7 +346,7 @@ arm_status arm_mat_cmplx_mult_q15(
         }
 
         /* process odd column samples */
-        if ((numColsA & 0x1U) > 0U)
+        if ((numColsA & 0x1u) > 0u)
         {
           /* c(m,n) = a(1,1)*b(1,1) + a(1,2) * b(2,1) + .... + a(m,p)*b(p,n) */
 
@@ -391,14 +391,14 @@ arm_status arm_mat_cmplx_mult_q15(
         /* Decrement the column loop counter */
         col--;
 
-      } while (col > 0U);
+      } while (col > 0u);
 
       i = i + numColsA;
 
       /* Decrement the row loop counter */
       row--;
 
-    } while (row > 0U);
+    } while (row > 0u);
 
     /* set status as ARM_MATH_SUCCESS */
     status = ARM_MATH_SUCCESS;

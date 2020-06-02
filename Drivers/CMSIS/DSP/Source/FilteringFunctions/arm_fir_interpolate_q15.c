@@ -86,19 +86,19 @@ void arm_fir_interpolate_q15(
   blkCntN2 = blockSize - (2 * blkCnt);
 
   /* Samples loop unrolled by 2 */
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
     *pStateCurnt++ = *pSrc++;
 
     /* Address modifier index of coefficient buffer */
-    j = 1U;
+    j = 1u;
 
     /* Loop over the Interpolation factor. */
     i = (S->L);
 
-    while (i > 0U)
+    while (i > 0u)
     {
       /* Set accumulator to zero */
       acc0 = 0;
@@ -112,11 +112,11 @@ void arm_fir_interpolate_q15(
 
       /* Loop over the polyPhase length. Unroll by a factor of 4.
        ** Repeat until we've computed numTaps-(4*S->L) coefficients. */
-      tapCnt = phaseLen >> 2U;
+      tapCnt = phaseLen >> 2u;
 
       x0 = *(ptr1++);
 
-      while (tapCnt > 0U)
+      while (tapCnt > 0u)
       {
 
         /* Read the input sample */
@@ -172,9 +172,9 @@ void arm_fir_interpolate_q15(
       }
 
       /* If the polyPhase length is not a multiple of 4, compute the remaining filter taps */
-      tapCnt = phaseLen % 0x4U;
+      tapCnt = phaseLen % 0x4u;
 
-      while (tapCnt > 0U)
+      while (tapCnt > 0u)
       {
 
         /* Read the input sample */
@@ -225,17 +225,17 @@ void arm_fir_interpolate_q15(
   blkCnt = blkCntN2;
 
   /* Loop over the blockSize. */
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
 
     /* Address modifier index of coefficient buffer */
-    j = 1U;
+    j = 1u;
 
     /* Loop over the Interpolation factor. */
     i = S->L;
-    while (i > 0U)
+    while (i > 0u)
     {
       /* Set accumulator to zero */
       sum0 = 0;
@@ -249,7 +249,7 @@ void arm_fir_interpolate_q15(
       /* Loop over the polyPhase length. Unroll by a factor of 4.
        ** Repeat until we've computed numTaps-(4*S->L) coefficients. */
       tapCnt = phaseLen >> 2;
-      while (tapCnt > 0U)
+      while (tapCnt > 0u)
       {
 
         /* Read the coefficient */
@@ -307,9 +307,9 @@ void arm_fir_interpolate_q15(
       }
 
       /* If the polyPhase length is not a multiple of 4, compute the remaining filter taps */
-      tapCnt = phaseLen & 0x3U;
+      tapCnt = phaseLen & 0x3u;
 
-      while (tapCnt > 0U)
+      while (tapCnt > 0u)
       {
         /* Read the coefficient */
         c0 = *(ptr2);
@@ -352,10 +352,10 @@ void arm_fir_interpolate_q15(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  i = ((uint32_t) phaseLen - 1U) >> 2U;
+  i = ((uint32_t) phaseLen - 1u) >> 2u;
 
   /* copy data */
-  while (i > 0U)
+  while (i > 0u)
   {
 #ifndef UNALIGNED_SUPPORT_DISABLE
 
@@ -375,9 +375,9 @@ void arm_fir_interpolate_q15(
     i--;
   }
 
-  i = ((uint32_t) phaseLen - 1U) % 0x04U;
+  i = ((uint32_t) phaseLen - 1u) % 0x04u;
 
-  while (i > 0U)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -408,13 +408,13 @@ void arm_fir_interpolate_q15(
 
   /* S->pState buffer contains previous frame (phaseLen - 1) samples */
   /* pStateCurnt points to the location where the new input data should be written */
-  pStateCurnt = S->pState + (phaseLen - 1U);
+  pStateCurnt = S->pState + (phaseLen - 1u);
 
   /* Total number of intput samples */
   blkCnt = blockSize;
 
   /* Loop over the blockSize. */
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* Copy new input sample into the state buffer */
     *pStateCurnt++ = *pSrc++;
@@ -422,7 +422,7 @@ void arm_fir_interpolate_q15(
     /* Loop over the Interpolation factor. */
     i = S->L;
 
-    while (i > 0U)
+    while (i > 0u)
     {
       /* Set accumulator to zero */
       sum = 0;
@@ -431,12 +431,12 @@ void arm_fir_interpolate_q15(
       ptr1 = pState;
 
       /* Initialize coefficient pointer */
-      ptr2 = pCoeffs + (i - 1U);
+      ptr2 = pCoeffs + (i - 1u);
 
       /* Loop over the polyPhase length */
       tapCnt = (uint32_t) phaseLen;
 
-      while (tapCnt > 0U)
+      while (tapCnt > 0u)
       {
         /* Read the coefficient */
         c0 = *ptr2;
@@ -476,9 +476,9 @@ void arm_fir_interpolate_q15(
   /* Points to the start of the state buffer */
   pStateCurnt = S->pState;
 
-  i = (uint32_t) phaseLen - 1U;
+  i = (uint32_t) phaseLen - 1u;
 
-  while (i > 0U)
+  while (i > 0u)
   {
     *pStateCurnt++ = *pState++;
 

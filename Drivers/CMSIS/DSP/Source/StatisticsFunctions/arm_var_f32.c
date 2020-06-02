@@ -76,7 +76,7 @@ void arm_var_f32(
     float32_t in1, in2, in3, in4;
     #endif
 
-    if (blockSize <= 1U)
+    if (blockSize <= 1u)
     {
         *pResult = 0;
         return;
@@ -86,11 +86,11 @@ void arm_var_f32(
         /* Run the below code for Cortex-M4 and Cortex-M7 */
 
         /*loop Unrolling */
-        blkCnt = blockSize >> 2U;
+        blkCnt = blockSize >> 2u;
 
         /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
         ** a second loop below computes the remaining 1 to 3 samples. */
-        while (blkCnt > 0U)
+        while (blkCnt > 0u)
         {
             /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
             in1 = *pInput++;
@@ -109,7 +109,7 @@ void arm_var_f32(
 
         /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
         ** No loop unrolling is used. */
-        blkCnt = blockSize % 0x4U;
+        blkCnt = blockSize % 0x4u;
 
     #else
         /* Run the below code for Cortex-M0 or Cortex-M3 */
@@ -119,7 +119,7 @@ void arm_var_f32(
 
     #endif
 
-    while (blkCnt > 0U)
+    while (blkCnt > 0u)
     {
         /* C = (A[0] + A[1] + A[2] + ... + A[blockSize-1]) */
         sum += *pInput++;
@@ -136,11 +136,11 @@ void arm_var_f32(
     #if defined(ARM_MATH_DSP)
 
         /*loop Unrolling */
-        blkCnt = blockSize >> 2U;
+        blkCnt = blockSize >> 2u;
 
         /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
         ** a second loop below computes the remaining 1 to 3 samples. */
-        while (blkCnt > 0U)
+        while (blkCnt > 0u)
         {
             fValue = *pInput++ - fMean;
             fSum += fValue * fValue;
@@ -155,7 +155,7 @@ void arm_var_f32(
             blkCnt--;
         }
 
-        blkCnt = blockSize % 0x4U;
+        blkCnt = blockSize % 0x4u;
     #else
         /* Run the below code for Cortex-M0 or Cortex-M3 */
 
@@ -163,7 +163,7 @@ void arm_var_f32(
         blkCnt = blockSize;
     #endif
 
-    while (blkCnt > 0U)
+    while (blkCnt > 0u)
     {
         fValue = *pInput++ - fMean;
         fSum += fValue * fValue;

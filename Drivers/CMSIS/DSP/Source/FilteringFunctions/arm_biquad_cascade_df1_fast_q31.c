@@ -100,11 +100,11 @@ void arm_biquad_cascade_df1_fast_q31(
      *    acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2]
      */
 
-    sample = blockSize >> 2U;
+    sample = blockSize >> 2u;
 
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (sample > 0U)
+    while (sample > 0u)
     {
       /* Read the input */
       Xn = *pIn;
@@ -130,7 +130,7 @@ void arm_biquad_cascade_df1_fast_q31(
       Yn2 = acc << shift;
 
       /* Read the second input */
-      Xn2 = *(pIn + 1U);
+      Xn2 = *(pIn + 1u);
 
       /* Store the output in the destination buffer. */
       *pOut = Yn2;
@@ -156,10 +156,10 @@ void arm_biquad_cascade_df1_fast_q31(
       Yn1 = acc << shift;
 
       /* Read the third input  */
-      Xn1 = *(pIn + 2U);
+      Xn1 = *(pIn + 2u);
 
       /* Store the output in the destination buffer. */
-      *(pOut + 1U) = Yn1;
+      *(pOut + 1u) = Yn1;
 
       /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
       /* acc =  b0 * x[n] */
@@ -182,11 +182,11 @@ void arm_biquad_cascade_df1_fast_q31(
       Yn2 = acc << shift;
 
       /* Read the forth input */
-      Xn = *(pIn + 3U);
+      Xn = *(pIn + 3u);
 
       /* Store the output in the destination buffer. */
-      *(pOut + 2U) = Yn2;
-      pIn += 4U;
+      *(pOut + 2u) = Yn2;
+      pIn += 4u;
 
       /* acc =  b0 * x[n] + b1 * x[n-1] + b2 * x[n-2] + a1 * y[n-1] + a2 * y[n-2] */
       /* acc =  b0 * x[n] */
@@ -217,8 +217,8 @@ void arm_biquad_cascade_df1_fast_q31(
       Xn1 = Xn;
 
       /* Store the output in the destination buffer. */
-      *(pOut + 3U) = Yn1;
-      pOut += 4U;
+      *(pOut + 3u) = Yn1;
+      pOut += 4u;
 
       /* decrement the loop counter */
       sample--;
@@ -226,9 +226,9 @@ void arm_biquad_cascade_df1_fast_q31(
 
     /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
      ** No loop unrolling is used. */
-    sample = (blockSize & 0x3U);
+    sample = (blockSize & 0x3u);
 
-   while (sample > 0U)
+   while (sample > 0u)
    {
       /* Read the input */
       Xn = *pIn++;

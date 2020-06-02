@@ -35,7 +35,7 @@ extern "C"
 #define DSY_AUDIO_CHANNELS_MAX 2
 
 #ifndef DSY_AUDIO_SAMPLE_RATE
-#define DSY_AUDIO_SAMPLE_RATE 48000.0f
+#define DSY_AUDIO_SAMPLE_RATE 48014.0f
 #endif
 // ~~~~
 

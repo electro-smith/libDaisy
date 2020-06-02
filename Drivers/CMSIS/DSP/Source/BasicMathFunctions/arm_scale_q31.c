@@ -73,13 +73,13 @@ void arm_scale_q31(
 
 
   /*loop Unrolling */
-  blkCnt = blockSize >> 2U;
+  blkCnt = blockSize >> 2u;
 
-  if (sign == 0U)
+  if (sign == 0u)
   {
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0U)
+    while (blkCnt > 0u)
     {
       /* read four inputs from source */
       in1 = *pSrc;
@@ -121,8 +121,8 @@ void arm_scale_q31(
       *(pDst + 3) = out4;
 
       /* Update pointers to process next sampels */
-      pSrc += 4U;
-      pDst += 4U;
+      pSrc += 4u;
+      pDst += 4u;
 
       /* Decrement the loop counter */
       blkCnt--;
@@ -133,7 +133,7 @@ void arm_scale_q31(
   {
     /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
      ** a second loop below computes the remaining 1 to 3 samples. */
-    while (blkCnt > 0U)
+    while (blkCnt > 0u)
     {
       /* read four inputs from source */
       in1 = *pSrc;
@@ -162,8 +162,8 @@ void arm_scale_q31(
       *(pDst + 3) = out4;
 
       /* Update pointers to process next sampels */
-      pSrc += 4U;
-      pDst += 4U;
+      pSrc += 4u;
+      pDst += 4u;
 
       /* Decrement the loop counter */
       blkCnt--;
@@ -171,7 +171,7 @@ void arm_scale_q31(
   }
   /* If the blockSize is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = blockSize % 0x4U;
+  blkCnt = blockSize % 0x4u;
 
 #else
 
@@ -184,7 +184,7 @@ void arm_scale_q31(
 
   if (sign == 0)
   {
-	  while (blkCnt > 0U)
+	  while (blkCnt > 0u)
 	  {
 		/* C = A * scale */
 		/* Scale the input and then store the result in the destination buffer. */
@@ -204,7 +204,7 @@ void arm_scale_q31(
   }
   else
   {
-	  while (blkCnt > 0U)
+	  while (blkCnt > 0u)
 	  {
 		/* C = A * scale */
 		/* Scale the input and then store the result in the destination buffer. */

@@ -171,7 +171,7 @@ uint32_t blockSize)
         b2 = pCoeffs[2];
         a1 = pCoeffs[3];
         /* Apply loop unrolling and compute 8 output values simultaneously. */
-        sample = blockSize >> 3U;
+        sample = blockSize >> 3u;
         a2 = pCoeffs[4];
 
         /*Reading the state values */
@@ -180,11 +180,11 @@ uint32_t blockSize)
         d1b = pState[2];
         d2b = pState[3];
 
-        pCoeffs += 5U;
+        pCoeffs += 5u;
 
         /* First part of the processing with loop unrolling.  Compute 8 outputs at a time.
         ** a second loop below computes the remaining 1 to 7 samples. */
-        while (sample > 0U) {
+        while (sample > 0u) {
 
             /* y[n] = b0 * x[n] + d1 */
             /* d1 = b1 * x[n] + a1 * y[n] + d2 */
@@ -367,8 +367,8 @@ uint32_t blockSize)
             d2b += a2 * acc8b;
         }
 
-        sample = blockSize & 0x7U;
-        while (sample > 0U) {
+        sample = blockSize & 0x7u;
+        while (sample > 0u) {
             /* Read the input */
             Xn1a = *pIn++; //Channel a
             Xn1b = *pIn++; //Channel b
@@ -405,11 +405,11 @@ uint32_t blockSize)
         /* decrement the loop counter */
         stage--;
 
-        pState += 4U;
+        pState += 4u;
         /*Reset the output working pointer */
         pOut = pDst;
 
-    } while (stage > 0U);
+    } while (stage > 0u);
 
 #elif defined(ARM_MATH_CM0_FAMILY)
 
@@ -433,7 +433,7 @@ uint32_t blockSize)
 
         sample = blockSize;
 
-        while (sample > 0U)
+        while (sample > 0u)
         {
             /* Read the input */
             Xn1a = *pIn++; //Channel a
@@ -475,7 +475,7 @@ uint32_t blockSize)
         /* decrement the loop counter */
         stage--;
 
-    } while (stage > 0U);
+    } while (stage > 0u);
 
 #else
 
@@ -503,11 +503,11 @@ uint32_t blockSize)
         d2b = pState[3];
 
         /* Apply loop unrolling and compute 4 output values simultaneously. */
-        sample = blockSize >> 2U;
+        sample = blockSize >> 2u;
 
         /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
         ** a second loop below computes the remaining 1 to 3 samples. */
-        while (sample > 0U) {
+        while (sample > 0u) {
 
             /* y[n] = b0 * x[n] + d1 */
             /* d1 = b1 * x[n] + a1 * y[n] + d2 */
@@ -613,8 +613,8 @@ uint32_t blockSize)
             sample--;
         }
 
-        sample = blockSize & 0x3U;
-        while (sample > 0U) {
+        sample = blockSize & 0x3u;
+        while (sample > 0u) {
             Xn1a = *pIn++;
             Xn1b = *pIn++;
 
@@ -658,7 +658,7 @@ uint32_t blockSize)
         /* decrement the loop counter */
         stage--;
 
-    } while (stage > 0U);
+    } while (stage > 0u);
 
 #endif
 

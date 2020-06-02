@@ -143,49 +143,49 @@ const arm_cfft_instance_q15 arm_cfft_sR_q15_len4096 = {
 /* Floating-point structs */
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len32 = {
 	{ 16, twiddleCoef_32, armBitRevIndexTable32, ARMBITREVINDEXTABLE_16_TABLE_LENGTH },
-	32U,
+	32u,
 	(float32_t *)twiddleCoef_rfft_32
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len64 = {
 	 { 32, twiddleCoef_32, armBitRevIndexTable32, ARMBITREVINDEXTABLE_32_TABLE_LENGTH },
-	64U,
+	64u,
 	(float32_t *)twiddleCoef_rfft_64
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len128 = {
 	{ 64, twiddleCoef_64, armBitRevIndexTable64, ARMBITREVINDEXTABLE_64_TABLE_LENGTH },
-	128U,
+	128u,
 	(float32_t *)twiddleCoef_rfft_128
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len256 = {
 	{ 128, twiddleCoef_128, armBitRevIndexTable128, ARMBITREVINDEXTABLE_128_TABLE_LENGTH },
-	256U,
+	256u,
 	(float32_t *)twiddleCoef_rfft_256
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len512 = {
 	{ 256, twiddleCoef_256, armBitRevIndexTable256, ARMBITREVINDEXTABLE_256_TABLE_LENGTH },
-	512U,
+	512u,
 	(float32_t *)twiddleCoef_rfft_512
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len1024 = {
 	{ 512, twiddleCoef_512, armBitRevIndexTable512, ARMBITREVINDEXTABLE_512_TABLE_LENGTH },
-	1024U,
+	1024u,
 	(float32_t *)twiddleCoef_rfft_1024
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len2048 = {
 	{ 1024, twiddleCoef_1024, armBitRevIndexTable1024, ARMBITREVINDEXTABLE_1024_TABLE_LENGTH },
-	2048U,
+	2048u,
 	(float32_t *)twiddleCoef_rfft_2048
 };
 
 const arm_rfft_fast_instance_f32 arm_rfft_fast_sR_f32_len4096 = {
 	{ 2048, twiddleCoef_2048, armBitRevIndexTable2048, ARMBITREVINDEXTABLE_2048_TABLE_LENGTH },
-	4096U,
+	4096u,
 	(float32_t *)twiddleCoef_rfft_4096
 };
 
@@ -195,90 +195,90 @@ extern const q31_t realCoefAQ31[8192];
 extern const q31_t realCoefBQ31[8192];
 
 const arm_rfft_instance_q31 arm_rfft_sR_q31_len32 = {
-	32U,
+	32u,
 	0,
 	1,
-	256U,
+	256u,
 	(q31_t*)realCoefAQ31,
 	(q31_t*)realCoefBQ31,
 	&arm_cfft_sR_q31_len16
 };
 
 const arm_rfft_instance_q31 arm_rfft_sR_q31_len64 = {
-	64U,
+	64u,
 	0,
 	1,
-	128U,
+	128u,
 	(q31_t*)realCoefAQ31,
 	(q31_t*)realCoefBQ31,
 	&arm_cfft_sR_q31_len32
 };
 
 const arm_rfft_instance_q31 arm_rfft_sR_q31_len128 = {
-	128U,
+	128u,
 	0,
 	1,
-	64U,
+	64u,
 	(q31_t*)realCoefAQ31,
 	(q31_t*)realCoefBQ31,
 	&arm_cfft_sR_q31_len64
 };
 
 const arm_rfft_instance_q31 arm_rfft_sR_q31_len256 = {
-	256U,
+	256u,
 	0,
 	1,
-	32U,
+	32u,
 	(q31_t*)realCoefAQ31,
 	(q31_t*)realCoefBQ31,
 	&arm_cfft_sR_q31_len128
 };
 
 const arm_rfft_instance_q31 arm_rfft_sR_q31_len512 = {
-	512U,
+	512u,
 	0,
 	1,
-	16U,
+	16u,
 	(q31_t*)realCoefAQ31,
 	(q31_t*)realCoefBQ31,
 	&arm_cfft_sR_q31_len256
 };
 
 const arm_rfft_instance_q31 arm_rfft_sR_q31_len1024 = {
-	1024U,
+	1024u,
 	0,
 	1,
-	8U,
+	8u,
 	(q31_t*)realCoefAQ31,
 	(q31_t*)realCoefBQ31,
 	&arm_cfft_sR_q31_len512
 };
 
 const arm_rfft_instance_q31 arm_rfft_sR_q31_len2048 = {
-	2048U,
+	2048u,
 	0,
 	1,
-	4U,
+	4u,
 	(q31_t*)realCoefAQ31,
 	(q31_t*)realCoefBQ31,
 	&arm_cfft_sR_q31_len1024
 };
 
 const arm_rfft_instance_q31 arm_rfft_sR_q31_len4096 = {
-	4096U,
+	4096u,
 	0,
 	1,
-	2U,
+	2u,
 	(q31_t*)realCoefAQ31,
 	(q31_t*)realCoefBQ31,
 	&arm_cfft_sR_q31_len2048
 };
 
 const arm_rfft_instance_q31 arm_rfft_sR_q31_len8192 = {
-	8192U,
+	8192u,
 	0,
 	1,
-	1U,
+	1u,
 	(q31_t*)realCoefAQ31,
 	(q31_t*)realCoefBQ31,
 	&arm_cfft_sR_q31_len4096
@@ -289,90 +289,90 @@ extern const q15_t realCoefAQ15[8192];
 extern const q15_t realCoefBQ15[8192];
 
 const arm_rfft_instance_q15 arm_rfft_sR_q15_len32 = {
-	32U,
+	32u,
 	0,
 	1,
-	256U,
+	256u,
 	(q15_t*)realCoefAQ15,
 	(q15_t*)realCoefBQ15,
 	&arm_cfft_sR_q15_len16
 };
 
 const arm_rfft_instance_q15 arm_rfft_sR_q15_len64 = {
-	64U,
+	64u,
 	0,
 	1,
-	128U,
+	128u,
 	(q15_t*)realCoefAQ15,
 	(q15_t*)realCoefBQ15,
 	&arm_cfft_sR_q15_len32
 };
 
 const arm_rfft_instance_q15 arm_rfft_sR_q15_len128 = {
-	128U,
+	128u,
 	0,
 	1,
-	64U,
+	64u,
 	(q15_t*)realCoefAQ15,
 	(q15_t*)realCoefBQ15,
 	&arm_cfft_sR_q15_len64
 };
 
 const arm_rfft_instance_q15 arm_rfft_sR_q15_len256 = {
-	256U,
+	256u,
 	0,
 	1,
-	32U,
+	32u,
 	(q15_t*)realCoefAQ15,
 	(q15_t*)realCoefBQ15,
 	&arm_cfft_sR_q15_len128
 };
 
 const arm_rfft_instance_q15 arm_rfft_sR_q15_len512 = {
-	512U,
+	512u,
 	0,
 	1,
-	16U,
+	16u,
 	(q15_t*)realCoefAQ15,
 	(q15_t*)realCoefBQ15,
 	&arm_cfft_sR_q15_len256
 };
 
 const arm_rfft_instance_q15 arm_rfft_sR_q15_len1024 = {
-	1024U,
+	1024u,
 	0,
 	1,
-	8U,
+	8u,
 	(q15_t*)realCoefAQ15,
 	(q15_t*)realCoefBQ15,
 	&arm_cfft_sR_q15_len512
 };
 
 const arm_rfft_instance_q15 arm_rfft_sR_q15_len2048 = {
-	2048U,
+	2048u,
 	0,
 	1,
-	4U,
+	4u,
 	(q15_t*)realCoefAQ15,
 	(q15_t*)realCoefBQ15,
 	&arm_cfft_sR_q15_len1024
 };
 
 const arm_rfft_instance_q15 arm_rfft_sR_q15_len4096 = {
-	4096U,
+	4096u,
 	0,
 	1,
-	2U,
+	2u,
 	(q15_t*)realCoefAQ15,
 	(q15_t*)realCoefBQ15,
 	&arm_cfft_sR_q15_len2048
 };
 
 const arm_rfft_instance_q15 arm_rfft_sR_q15_len8192 = {
-	8192U,
+	8192u,
 	0,
 	1,
-	1U,
+	1u,
 	(q15_t*)realCoefAQ15,
 	(q15_t*)realCoefBQ15,
 	&arm_cfft_sR_q15_len4096
