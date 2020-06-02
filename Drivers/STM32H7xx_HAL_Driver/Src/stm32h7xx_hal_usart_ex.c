@@ -54,11 +54,17 @@
 #ifdef HAL_USART_MODULE_ENABLED
 
 /* Private typedef -----------------------------------------------------------*/
-/* UART RX FIFO depth */
+/** @defgroup USARTEx_Private_Constants USARTEx Private Constants
+  * @{
+  */
+/* USART RX FIFO depth */
 #define RX_FIFO_DEPTH 8U
 
-/* UART TX FIFO depth */
+/* USART TX FIFO depth */
 #define TX_FIFO_DEPTH 8U
+/**
+  * @}
+  */
 
 /* Private define ------------------------------------------------------------*/
 /* Private macros ------------------------------------------------------------*/
@@ -237,7 +243,7 @@ HAL_StatusTypeDef HAL_USARTEx_DisableSlaveMode(USART_HandleTypeDef *husart)
   /* Restore USART configuration */
   WRITE_REG(husart->Instance->CR1, tmpcr1);
 
-  husart->SlaveMode = USART_SLAVEMODE_ENABLE;
+  husart->SlaveMode = USART_SLAVEMODE_DISABLE;
 
   husart->State = HAL_USART_STATE_READY;
 
