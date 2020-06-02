@@ -15,7 +15,7 @@
 #error unknown compiler
 #endif
 
-//
+
 /** Macro for area of memory that is configured as cacheless
 This should be used primarily for DMA buffers, and the like.
 */
@@ -39,25 +39,25 @@ the hardware.
 */
 typedef enum
 {
-    DSY_GPIOA,
-    DSY_GPIOB,
-    DSY_GPIOC,
-    DSY_GPIOD,
-    DSY_GPIOE,
-    DSY_GPIOF,
-    DSY_GPIOG,
-    DSY_GPIOH,
-    DSY_GPIOI,
-    DSY_GPIOJ,
-    DSY_GPIOK,
-    DSY_GPIOX, // This is a non-existant port for unsupported bits of hardware.
-    DSY_GPIO_LAST,
+    DSY_GPIOA, /** */
+    DSY_GPIOB, /** */
+    DSY_GPIOC, /** */
+    DSY_GPIOD, /** */
+    DSY_GPIOE, /** */
+    DSY_GPIOF, /** */
+    DSY_GPIOG, /** */
+    DSY_GPIOH, /** */
+    DSY_GPIOI, /** */
+    DSY_GPIOJ, /** */
+    DSY_GPIOK, /** */
+    DSY_GPIOX, /** This is a non-existant port for unsupported bits of hardware. */
+    DSY_GPIO_LAST, /** Final enum member */
 } dsy_gpio_port;
 
 typedef struct
 {
-    dsy_gpio_port port;
-    uint8_t       pin; // number 0-15
+    dsy_gpio_port port; /** */
+    uint8_t       pin; /** number 0-15 */
 } dsy_gpio_pin;
 
 /** Helper for creating pins from port/pin combos easily
@@ -71,9 +71,7 @@ FORCE_INLINE dsy_gpio_pin dsy_pin(dsy_gpio_port port, uint8_t pin)
 }
 
 /** Helper for testing sameness of two dsy_gpio_pins
-*/
-//
-/** returns 1 if same, 0 if different
+    \return    1 if same, 0 if different
 */
 FORCE_INLINE uint8_t dsy_pin_cmp(dsy_gpio_pin *a, dsy_gpio_pin *b)
 {

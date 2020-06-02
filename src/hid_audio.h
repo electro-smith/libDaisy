@@ -83,7 +83,7 @@ audio data is ready to be received/transmitted.
 void AudioCallback(float *in, float *out, size_t size)
 {
 */
-/**        for (size_t i = 0; i < size; i+=2)
+    /**        for (size_t i = 0; i < size; i+=2)
        {
            out[i] = in[i]; // Left
            out[i+1] = in[i+1]; // Right
@@ -109,7 +109,7 @@ void AudioCallback(float *in, float *out, size_t size)
 void AudioCallback(float **in, float **out, size_t size)
 {
 */
-/**        for (size_t i = 0; i < size; i++)
+    /**        for (size_t i = 0; i < size; i++)
        {
            for (size_t chn = 0; chn < num_channels; chn++)
            {

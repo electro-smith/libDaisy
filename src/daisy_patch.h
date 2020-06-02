@@ -1,12 +1,3 @@
-/** Class that handles initializing all of the hardware specific to the Daisy Patch Board.
-*/
-//
-/** Helper funtions are also in place to provide easy access to built-in controls and peripherals.
-*/
-//
-/** **Author:** Stephen Hensley
-**Date Added:** November 2019
-*/
 #pragma once
 #ifndef DSY_PATCH_BSP_H
 #define DSY_PATCH_BSP_H
@@ -14,41 +5,69 @@
 
 namespace daisy
 {
+/** 
+    daisy_patch.h
+    @brief Class that handles initializing all of the hardware specific to the Daisy Patch Board.
+    Helper funtions are also in place to provide easy access to built-in controls and peripherals.
+    @author Stephen Hensley
+    @date November 2019
+*/
 class DaisyPatch
 {
   public:
     /** Enum of Ctrls to represent the four CV/Knob combos on the Patch
-*/
+     */
     enum Ctrl
     {
-        CTRL_1,
-        CTRL_2,
-        CTRL_3,
-        CTRL_4,
-        CTRL_LAST,
+        CTRL_1, /** */
+        CTRL_2, /** */
+        CTRL_3, /** */ 
+        CTRL_4, /** */
+        CTRL_LAST, /** */
     };
 
+    /** Daisy patch gate inputs */
     enum GateInput
     {
-        GATE_IN_1,
-        GATE_IN_2,
-        GATE_IN_LAST,
+        GATE_IN_1, /** */
+        GATE_IN_2, /** */
+        GATE_IN_LAST, /** */
     };
 
 
     DaisyPatch() {}
     ~DaisyPatch() {}
 
-    /** Initializes the daisy seed, and patch hardware.
-*/
+    /** Initializes the daisy seed, and patch hardware.*/
     void Init();
+
+    /** 
+	Wait some ms before going on.
+	\param del Delay time in ms.
+    */
     void DelayMs(size_t del);
+
     /** Audio Block size defaults to 48.
-Change it using this function before StartingAudio
-*/
+	Change it using this function before StartingAudio
+	\param size Audio block size.
+    */
     void SetAudioBlockSize(size_t size);
+
+    /**
+       Start audio output.
+       \param cb Audio callback function
+    */
     void StartAudio(dsy_audio_mc_callback cb);
+
+    /**
+       Change to a different callback function.
+       \param cb New callback function.
+     */
     void ChangeAudioCallback(dsy_audio_callback cb);
+
+    /**
+       Start analog to digital conversion.
+     */
     void StartAdc();
     /** Hardware Accessors
 */

@@ -2,10 +2,12 @@
 #include <stdint.h>
 #include "hid_ctrl.h"
 
-/**      Simple parameter mapping tool that takes a 0-1 input from an hid_ctrl.
-*/
+
 namespace daisy
 {
+
+/**      Simple parameter mapping tool that takes a 0-1 input from an hid_ctrl.
+*/
 class Parameter
 {
   public:
@@ -13,26 +15,28 @@ class Parameter
 */
     enum Curve
     {
-        LINEAR,
-        EXPONENTIAL,
-        LOGARITHMIC,
-        CUBE,
-        LAST,
+        LINEAR,      /** Linear curve */
+        EXPONENTIAL, /**Exponential curve */
+        LOGARITHMIC, /** Logarithmic curve */
+        CUBE,        /**Cubic curve */
+        LAST,        /** Final enum element. */
     };
+    /** Constructor */
     Parameter() {}
+    /** Destructor */
     ~Parameter() {}
 
     /** initialize a parameter using an hid_ctrl object.
-hid_ctrl input - object containing the direct link to a hardware control source.
-min - bottom of range. (when input is 0.0)
-max - top of range (when input is 1.0)
-curve - the scaling curve for the input->output transformation.
-*/
+	hid_ctrl input - object containing the direct link to a hardware control source.
+	min - bottom of range. (when input is 0.0)
+	max - top of range (when input is 1.0)
+	curve - the scaling curve for the input->output transformation.
+    */
     void Init(AnalogControl input, float min, float max, Curve curve);
 
     /** processes the input signal, this should be called at the samplerate of the hid_ctrl passed in.
-returns a float with the specified transformation applied.
-*/
+	returns a float with the specified transformation applied.
+    */
     float Process();
 
     /** returns the current value from the parameter without processing another sample.

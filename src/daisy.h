@@ -13,11 +13,18 @@
 #define S242F_SCALE 1.192092896e-07f
 #define S24SIGN 0x800000
 
+/** 
+    Scales float by 1/(2 ^ 15)
+    \param x Number to be scaled.
+    \return Scaled number.
+*/
 FORCE_INLINE float s162f(int16_t x)
 {
     return (float)x * S162F_SCALE;
 }
 
+/**
+ */
 FORCE_INLINE int16_t f2s16(float x)
 {
     x = x <= FBIPMIN ? FBIPMIN : x;
@@ -25,11 +32,15 @@ FORCE_INLINE int16_t f2s16(float x)
     return (int32_t)(x * F2S16_SCALE);
 }
 
+/**
+ */
 FORCE_INLINE float s242f(int32_t x)
 {
     x = (x ^ S24SIGN) - S24SIGN; //sign extend aka ((x<<8)>>8)
     return (float)x * S242F_SCALE;
 }
+/**
+ */
 FORCE_INLINE int32_t f2s24(float x)
 {
     x = x <= FBIPMIN ? FBIPMIN : x;

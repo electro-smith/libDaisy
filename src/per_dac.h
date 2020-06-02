@@ -55,7 +55,7 @@ extern "C"
 
 pin_config must be filled out. However, the DACs are pretty
 */
-/**        consistently on pins PA4, and PA5 across all STM32 MCUs
+    /**        consistently on pins PA4, and PA5 across all STM32 MCUs
        that I've used.
 */
     //

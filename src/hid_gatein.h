@@ -1,17 +1,3 @@
-//
-/** Generic Class for handling gate inputs through GPIO.
-*/
-//
-/** hid_gatein.h
-*/
-//
-//
-/** **Author:** Stephen Hensley
-*/
-//
-/** **Date:** March 2020
-*/
-//
 #pragma once
 #ifndef DSY_GATEIN_H
 #define DSY_GATEIN_H
@@ -19,20 +5,34 @@
 
 namespace daisy
 {
+
+  /** 
+    hid_gatein.h 
+    @brief Generic Class for handling gate inputs through GPIO.
+    @author Stephen Hensley
+    @date    March 2020
+  */
 class GateIn
 {
   public:
+    /** GateIn 
+	Constructor 
+    */
     GateIn() {}
+    /** GateIn~
+	Destructor 
+    */
     ~GateIn() {}
 
-    /** Initializes the gate input with specified hardware pin
-*/
-    //
+    /** Init
+	Initializes the gate input with specified hardware pin
+    */
     void Init(dsy_gpio_pin *pin_cfg);
-    /** Checks current state of gate input.
-Returns FALSE if pin is low, and TRUE if high
-*/
-    //
+
+    /** Trig
+	Checks current state of gate input.
+	\return FALSE if pin is low, and TRUE if high
+    */
     bool Trig();
 
   private:

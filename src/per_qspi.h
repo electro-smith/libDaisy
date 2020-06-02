@@ -42,12 +42,12 @@ extern "C"
 /
 Memory Mapped mode: QSPI configured so that the QSPI can be
 */
-/**        read from starting address 0x90000000. Writing is not
+    /**        read from starting address 0x90000000. Writing is not
        possible in this mode.
 */
     /** Indirect Polling mode: Device driver enabled.
 */
-/**        Read/Write possible via dsy_qspi_* functions
+    /**        Read/Write possible via dsy_qspi_* functions
 */
     typedef enum
     {
@@ -58,7 +58,7 @@ Memory Mapped mode: QSPI configured so that the QSPI can be
 
     /** Flash Devices supported. (Both of these are more-or-less the same,
 */
-/**        just different sizes).
+    /**        just different sizes).
 */
     typedef enum
     {

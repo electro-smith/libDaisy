@@ -63,7 +63,7 @@ extern "C"
 
     /** Toggles the state of the pin so that it is not at the same
 */
-/**        state as it was previously.
+    /**        state as it was previously.
 */
     void dsy_gpio_toggle(dsy_gpio *p);
 #ifdef __cplusplus
