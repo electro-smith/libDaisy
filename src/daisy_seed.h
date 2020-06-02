@@ -75,15 +75,16 @@ class DaisySeed
     /** While the library is still in heavy development, most of the
 	configuration handles will remain public.
     */
-    dsy_sdram_handle sdram_handle;
-    dsy_qspi_handle  qspi_handle;
-    dsy_audio_handle audio_handle;
-    dsy_sai_handle   sai_handle;
-    dsy_i2c_handle   i2c1_handle, i2c2_handle;
-    AdcHandle        adc;
-    dsy_dac_handle   dac_handle;
-    UsbHandle        usb_handle;
-
+    dsy_sdram_handle sdram_handle; /**< # */
+    dsy_qspi_handle  qspi_handle; /**< # */
+    dsy_audio_handle audio_handle; /**< # */
+    dsy_sai_handle   sai_handle; /**< # */
+    dsy_i2c_handle   i2c1_handle, /**< # */
+                     i2c2_handle; /**< # */
+    AdcHandle        adc; /**< # */
+    dsy_dac_handle   dac_handle; /**< # */
+    UsbHandle        usb_handle; /**< # */
+ 
   private:
     void     ConfigureSdram();
     void     ConfigureQspi();

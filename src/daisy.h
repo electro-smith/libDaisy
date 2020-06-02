@@ -24,7 +24,8 @@ FORCE_INLINE float s162f(int16_t x)
 }
 
 /**
- */
+   #
+*/
 FORCE_INLINE int16_t f2s16(float x)
 {
     x = x <= FBIPMIN ? FBIPMIN : x;
@@ -33,6 +34,7 @@ FORCE_INLINE int16_t f2s16(float x)
 }
 
 /**
+#
  */
 FORCE_INLINE float s242f(int32_t x)
 {
@@ -40,6 +42,7 @@ FORCE_INLINE float s242f(int32_t x)
     return (float)x * S242F_SCALE;
 }
 /**
+   #
  */
 FORCE_INLINE int32_t f2s24(float x)
 {

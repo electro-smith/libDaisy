@@ -27,7 +27,11 @@ cache enabled.
 */
 #define DTCM_MEM_SECTION __attribute__((section(".dtcmram_bss")))
 
-
+/** 
+    Computes cube.
+    \param x Number to be cubed
+    \return x ^ 3
+*/
 FORCE_INLINE float cube(float x)
 {
     return (x * x) * x;
@@ -39,25 +43,26 @@ the hardware.
 */
 typedef enum
 {
-    DSY_GPIOA, /** */
-    DSY_GPIOB, /** */
-    DSY_GPIOC, /** */
-    DSY_GPIOD, /** */
-    DSY_GPIOE, /** */
-    DSY_GPIOF, /** */
-    DSY_GPIOG, /** */
-    DSY_GPIOH, /** */
-    DSY_GPIOI, /** */
-    DSY_GPIOJ, /** */
-    DSY_GPIOK, /** */
+    DSY_GPIOA, /**< # */
+    DSY_GPIOB, /**< # */
+    DSY_GPIOC, /**< # */
+    DSY_GPIOD, /**< # */
+    DSY_GPIOE, /**< # */
+    DSY_GPIOF, /**< # */
+    DSY_GPIOG, /**< # */
+    DSY_GPIOH, /**< # */
+    DSY_GPIOI, /**< # */
+    DSY_GPIOJ, /**< # */
+    DSY_GPIOK, /**< # */
     DSY_GPIOX, /** This is a non-existant port for unsupported bits of hardware. */
     DSY_GPIO_LAST, /** Final enum member */
 } dsy_gpio_port;
 
+/** Hardware define pins */
 typedef struct
 {
-    dsy_gpio_port port; /** */
-    uint8_t       pin; /** number 0-15 */
+    dsy_gpio_port port; /**< # */
+    uint8_t       pin; /**< number 0-15 */
 } dsy_gpio_pin;
 
 /** Helper for creating pins from port/pin combos easily

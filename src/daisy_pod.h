@@ -16,18 +16,20 @@ namespace daisy
 class DaisyPod
 {
   public:
+    /** Switches */
     enum Sw
     {
-        BUTTON_1, /** */
-	BUTTON_2, /** */
-	BUTTON_LAST, /** */
+        BUTTON_1, /** # */
+	BUTTON_2, /** # */
+	BUTTON_LAST, /** #  */
     }; 
 
+    /** Knobs */
     enum Knob
     {
-        KNOB_1, /** */
-	KNOB_2, /** */
-	KNOB_LAST, /** */
+        KNOB_1, /** #  */
+	KNOB_2, /** # */
+	KNOB_LAST, /** # */
     }; 
 
     DaisyPod() {}
@@ -37,7 +39,7 @@ class DaisyPod
     void Init();
 
     /** Wait for a bit
-	\del Time to wait in ms.
+	\param del Time to wait in ms.
     */
     void DelayMs(size_t del);
     
@@ -71,26 +73,26 @@ class DaisyPod
     float  AudioCallbackRate();/** */
     /** Call at same rate as analog reads for smooth reading.*/
     void   UpdateAnalogControls();/** */
-    /** */
+    /** # */
     float  GetKnobValue(Knob k);
-    /** */
+    /** # */
     void   DebounceControls();
     /** Reset Leds*/
     void   ClearLeds();
     /** Update Leds to set colors*/
-    void   UpdateLeds();/** */
+    void   UpdateLeds();
     
     /** Public Members */
-    DaisySeed     seed; /** */
-    Encoder       encoder;/** */
-    AnalogControl knob1,
-                  knob2, /** */
-                  knobs[KNOB_LAST]; /** */
-    Switch        button1, /** */
-                  button2,/** */
-                  *buttons[BUTTON_LAST];/** */
-    RgbLed        led1,/** */
-                  led2;/** */
+    DaisySeed     seed; /**<# */
+    Encoder       encoder;/**< # */
+    AnalogControl knob1, /**< # */
+                  knob2, /**< # */
+                  knobs[KNOB_LAST]; /**< # */
+    Switch        button1, /**< # */
+                  button2,/**< # */
+                  *buttons[BUTTON_LAST];/**< # */
+    RgbLed        led1,/**< # */
+                  led2;/**< # */
 
   private:
     void   InitButtons();

@@ -1,0 +1,171 @@
+Creating doxygen documentation
+warning: ignoring unsupported tag `OUTPUT_TEXT_DIRECTION  =' at line 102, file Doxyfile
+warning: ignoring unsupported tag `JAVADOC_BANNER         =' at line 208, file Doxyfile
+warning: ignoring unsupported tag `OPTIMIZE_OUTPUT_SLICE  =' at line 300, file Doxyfile
+warning: ignoring unsupported tag `EXTRACT_PRIV_VIRTUAL   =' at line 476, file Doxyfile
+warning: ignoring unsupported tag `HTML_DYNAMIC_MENUS     =' at line 1228, file Doxyfile
+warning: ignoring unsupported tag `HTML_FORMULA_FORMAT    =' at line 1500, file Doxyfile
+warning: ignoring unsupported tag `FORMULA_MACROFILE      =' at line 1526, file Doxyfile
+warning: ignoring unsupported tag `LATEX_MAKEINDEX_CMD    =' at line 1710, file Doxyfile
+warning: ignoring unsupported tag `LATEX_EMOJI_DIRECTORY  =' at line 1852, file Doxyfile
+warning: ignoring unsupported tag `XML_NS_MEMB_FILE_SCOPE =' at line 1996, file Doxyfile
+/home/beserge/libdaisy/src/dev_sdram.h:163: warning: reached end of file while inside a ``` block!
+The command that should end the block seems to be missing!
+
+/home/beserge/libdaisy/src/usbd_desc.h:4: warning: the name `usbd_desc.c' supplied as the second argument in the \file statement is not an input file
+/home/beserge/libdaisy/src/per_sdmmc.h:58: warning: Compound daisy::SdmmcHandler is not documented.
+/home/beserge/libdaisy/src/hid_rgb_led.h:13: warning: Compound daisy::RgbLed is not documented.
+/home/beserge/libdaisy/src/daisy_patch.h:16: warning: Compound daisy::DaisyPatch is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:15: warning: Compound daisy::RingBuffer is not documented.
+/home/beserge/libdaisy/src/hid_usb.h:18: warning: Compound daisy::UsbHandle is not documented.
+/home/beserge/libdaisy/src/per_uart.h:27: warning: Compound daisy::UartHandler is not documented.
+/home/beserge/libdaisy/src/util_oled_fonts.h:10: warning: Compound FontDef is not documented.
+/home/beserge/libdaisy/src/hid_switch.h:27: warning: Compound daisy::Switch is not documented.
+/home/beserge/libdaisy/src/hid_ctrl.h:19: warning: Compound daisy::AnalogControl is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:10: warning: Compound WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_color.h:21: warning: Compound daisy::Color is not documented.
+/home/beserge/libdaisy/src/per_adc.h:57: warning: Compound daisy::AdcHandle is not documented.
+/home/beserge/libdaisy/src/hid_midi.h:86: warning: Compound daisy::MidiHandler is not documented.
+/home/beserge/libdaisy/src/hid_encoder.h:28: warning: Compound daisy::Encoder is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:138: warning: Compound daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/usbd_cdc_if.h:66: warning: Member CDC_ReceiveCallback)(uint8_t *buf, uint32_t *size) (typedef) of group USBD_CDC_IF_Exported_Types is not documented.
+/home/beserge/libdaisy/src/usbd_cdc_if.h:109: warning: Member CDC_Set_Rx_Callback_FS(CDC_ReceiveCallback cb) (function) of group USBD_CDC_IF_Exported_FunctionsPrototype is not documented.
+/home/beserge/libdaisy/src/usbd_cdc_if.h:110: warning: Member CDC_Transmit_FS(uint8_t *Buf, uint16_t Len) (function) of group USBD_CDC_IF_Exported_FunctionsPrototype is not documented.
+/home/beserge/libdaisy/src/usbd_cdc_if.h:111: warning: Member CDC_Transmit_HS(uint8_t *Buf, uint16_t Len) (function) of group USBD_CDC_IF_Exported_FunctionsPrototype is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:62: warning: Member USBD_MAX_NUM_INTERFACES (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:64: warning: Member USBD_MAX_NUM_CONFIGURATION (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:66: warning: Member USBD_MAX_STR_DESC_SIZ (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:68: warning: Member USBD_SUPPORT_USER_STRING (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:70: warning: Member USBD_DEBUG_LEVEL (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:72: warning: Member USBD_LPM_ENABLED (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:74: warning: Member USBD_SELF_POWERED (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:78: warning: Member DEVICE_FS (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:79: warning: Member DEVICE_HS (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:110: warning: Member USBD_UsrLog(...) (macro definition) of group USBD_CONF_Exported_Macros is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:119: warning: Member USBD_ErrLog(...) (macro definition) of group USBD_CONF_Exported_Macros is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:128: warning: Member USBD_DbgLog(...) (macro definition) of group USBD_CONF_Exported_Macros is not documented.
+/home/beserge/libdaisy/src/usbd_cdc_if.h:66: warning: Member CDC_ReceiveCallback)(uint8_t *buf, uint32_t *size) (typedef) of group USBD_CDC_IF_Exported_Types is not documented.
+/home/beserge/libdaisy/src/usbd_cdc_if.h:109: warning: Member CDC_Set_Rx_Callback_FS(CDC_ReceiveCallback cb) (function) of group USBD_CDC_IF_Exported_FunctionsPrototype is not documented.
+/home/beserge/libdaisy/src/usbd_cdc_if.h:110: warning: Member CDC_Transmit_FS(uint8_t *Buf, uint16_t Len) (function) of group USBD_CDC_IF_Exported_FunctionsPrototype is not documented.
+/home/beserge/libdaisy/src/usbd_cdc_if.h:111: warning: Member CDC_Transmit_HS(uint8_t *Buf, uint16_t Len) (function) of group USBD_CDC_IF_Exported_FunctionsPrototype is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:62: warning: Member USBD_MAX_NUM_INTERFACES (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:64: warning: Member USBD_MAX_NUM_CONFIGURATION (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:66: warning: Member USBD_MAX_STR_DESC_SIZ (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:68: warning: Member USBD_SUPPORT_USER_STRING (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:70: warning: Member USBD_DEBUG_LEVEL (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:72: warning: Member USBD_LPM_ENABLED (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:74: warning: Member USBD_SELF_POWERED (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:78: warning: Member DEVICE_FS (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:79: warning: Member DEVICE_HS (macro definition) of group USBD_CONF_Exported_Defines is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:110: warning: Member USBD_UsrLog(...) (macro definition) of group USBD_CONF_Exported_Macros is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:119: warning: Member USBD_ErrLog(...) (macro definition) of group USBD_CONF_Exported_Macros is not documented.
+/home/beserge/libdaisy/src/usbd_conf.h:128: warning: Member USBD_DbgLog(...) (macro definition) of group USBD_CONF_Exported_Macros is not documented.
+/home/beserge/libdaisy/src/usbd_desc.h:50: warning: Member DEVICE_ID1 (macro definition) of group USBD_DESC_Exported_Constants is not documented.
+/home/beserge/libdaisy/src/usbd_desc.h:51: warning: Member DEVICE_ID2 (macro definition) of group USBD_DESC_Exported_Constants is not documented.
+/home/beserge/libdaisy/src/usbd_desc.h:52: warning: Member DEVICE_ID3 (macro definition) of group USBD_DESC_Exported_Constants is not documented.
+/home/beserge/libdaisy/src/usbd_desc.h:54: warning: Member USB_SIZ_STRING_SERIAL (macro definition) of group USBD_DESC_Exported_Constants is not documented.
+/home/beserge/libdaisy/src/hid_audio.h:60: warning: Member block_size (variable) of class dsy_audio_handle is not documented.
+/home/beserge/libdaisy/src/hid_audio.h:61: warning: Member sai (variable) of class dsy_audio_handle is not documented.
+/home/beserge/libdaisy/src/hid_audio.h:62: warning: Member dev0_i2c (variable) of class dsy_audio_handle is not documented.
+/home/beserge/libdaisy/src/hid_audio.h:63: warning: Member dev1_i2c (variable) of class dsy_audio_handle is not documented.
+/home/beserge/libdaisy/src/per_dac.h:64: warning: Member mode (variable) of class dsy_dac_handle is not documented.
+/home/beserge/libdaisy/src/per_dac.h:65: warning: Member bitdepth (variable) of class dsy_dac_handle is not documented.
+/home/beserge/libdaisy/src/per_dac.h:66: warning: Member pin_config[DSY_DAC_CHN_LAST] (variable) of class dsy_dac_handle is not documented.
+/home/beserge/libdaisy/src/per_gpio.h:37: warning: Member pin (variable) of class dsy_gpio is not documented.
+/home/beserge/libdaisy/src/per_gpio.h:38: warning: Member mode (variable) of class dsy_gpio is not documented.
+/home/beserge/libdaisy/src/per_gpio.h:39: warning: Member pull (variable) of class dsy_gpio is not documented.
+/home/beserge/libdaisy/src/per_i2c.h:67: warning: Member periph (variable) of class dsy_i2c_handle is not documented.
+/home/beserge/libdaisy/src/per_i2c.h:68: warning: Member pin_config[DSY_I2C_PIN_LAST] (variable) of class dsy_i2c_handle is not documented.
+/home/beserge/libdaisy/src/per_i2c.h:69: warning: Member speed (variable) of class dsy_i2c_handle is not documented.
+/home/beserge/libdaisy/src/per_qspi.h:73: warning: Member mode (variable) of class dsy_qspi_handle is not documented.
+/home/beserge/libdaisy/src/per_qspi.h:74: warning: Member device (variable) of class dsy_qspi_handle is not documented.
+/home/beserge/libdaisy/src/per_qspi.h:75: warning: Member pin_config[DSY_QSPI_PIN_LAST] (variable) of class dsy_qspi_handle is not documented.
+/home/beserge/libdaisy/src/per_sai.h:125: warning: Member init (variable) of class dsy_sai_handle is not documented.
+/home/beserge/libdaisy/src/per_sai.h:126: warning: Member samplerate[DSY_SAI_LAST] (variable) of class dsy_sai_handle is not documented.
+/home/beserge/libdaisy/src/per_sai.h:127: warning: Member bitdepth[DSY_SAI_LAST] (variable) of class dsy_sai_handle is not documented.
+/home/beserge/libdaisy/src/per_sai.h:128: warning: Member a_direction[DSY_SAI_LAST] (variable) of class dsy_sai_handle is not documented.
+/home/beserge/libdaisy/src/per_sai.h:129: warning: Member b_direction[DSY_SAI_LAST] (variable) of class dsy_sai_handle is not documented.
+/home/beserge/libdaisy/src/per_sai.h:130: warning: Member sync_config[DSY_SAI_LAST] (variable) of class dsy_sai_handle is not documented.
+/home/beserge/libdaisy/src/per_sai.h:131: warning: Member device[DSY_SAI_LAST] (variable) of class dsy_sai_handle is not documented.
+/home/beserge/libdaisy/src/per_sai.h:133: warning: Member sai1_pin_config[DSY_SAI_PIN_LAST] (variable) of class dsy_sai_handle is not documented.
+/home/beserge/libdaisy/src/per_sai.h:134: warning: Member sai2_pin_config[DSY_SAI_PIN_LAST] (variable) of class dsy_sai_handle is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:11: warning: Member ChunkId (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:12: warning: Member FileSize (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:13: warning: Member FileFormat (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:14: warning: Member SubChunk1ID (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:15: warning: Member SubChunk1Size (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:16: warning: Member AudioFormat (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:17: warning: Member NbrChannels (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:18: warning: Member SampleRate (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:19: warning: Member ByteRate (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:20: warning: Member BlockAlign (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:21: warning: Member BitPerSample (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:22: warning: Member SubChunk2ID (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/util_wav_format.h:23: warning: Member SubCHunk2Size (variable) of class WAV_FormatTypeDef is not documented.
+/home/beserge/libdaisy/src/per_spi.h:19: warning: Member SpiPeriph (enumeration) of namespace daisy is not documented.
+/home/beserge/libdaisy/src/per_spi.h:26: warning: Member SpiPin (enumeration) of namespace daisy is not documented.
+/home/beserge/libdaisy/src/per_uart.h:25: warning: Member kUartMaxBufferSize (variable) of namespace daisy is not documented.
+/home/beserge/libdaisy/src/per_spi.h:13: warning: Invalid list item found
+/home/beserge/libdaisy/src/per_adc.h:23: warning: Member MuxPin (enumeration) of class daisy::AdcChannelConfig is not documented.
+/home/beserge/libdaisy/src/per_adc.h:51: warning: Member pin_ (variable) of class daisy::AdcChannelConfig is not documented.
+/home/beserge/libdaisy/src/per_adc.h:52: warning: Member mux_pin_[MUX_SEL_LAST] (variable) of class daisy::AdcChannelConfig is not documented.
+/home/beserge/libdaisy/src/per_adc.h:53: warning: Member mux_channels_ (variable) of class daisy::AdcChannelConfig is not documented.
+/home/beserge/libdaisy/src/per_adc.h:60: warning: Member OverSampling (enumeration) of class daisy::AdcHandle is not documented.
+/home/beserge/libdaisy/src/per_adc.h:98: warning: Member GetPtr(uint8_t chn) (function) of class daisy::AdcHandle is not documented.
+/home/beserge/libdaisy/src/per_adc.h:99: warning: Member GetFloat(uint8_t chn) (function) of class daisy::AdcHandle is not documented.
+/home/beserge/libdaisy/src/per_adc.h:103: warning: Member GetMuxPtr(uint8_t chn, uint8_t idx) (function) of class daisy::AdcHandle is not documented.
+/home/beserge/libdaisy/src/per_adc.h:104: warning: Member GetMuxFloat(uint8_t chn, uint8_t idx) (function) of class daisy::AdcHandle is not documented.
+/home/beserge/libdaisy/src/per_adc.h:84: warning: The following parameters of daisy::AdcHandle::Init(AdcChannelConfig *cfg, size_t num_channels, OverSampling ovs=OVS_32) are not documented:
+  parameter 'cfg'
+/home/beserge/libdaisy/src/util_color.h:54: warning: Member Green() const (function) of class daisy::Color is not documented.
+/home/beserge/libdaisy/src/util_color.h:55: warning: Member Blue() const (function) of class daisy::Color is not documented.
+/home/beserge/libdaisy/src/hid_midi.h:48: warning: Member channel (variable) of class daisy::ControlChangeEvent is not documented.
+/home/beserge/libdaisy/src/hid_midi.h:49: warning: Member control_number (variable) of class daisy::ControlChangeEvent is not documented.
+/home/beserge/libdaisy/src/hid_midi.h:50: warning: Member value (variable) of class daisy::ControlChangeEvent is not documented.
+/home/beserge/libdaisy/src/hid_midi.h:60: warning: Member channel (variable) of class daisy::MidiEvent is not documented.
+/home/beserge/libdaisy/src/hid_midi.h:61: warning: Member data[2] (variable) of class daisy::MidiEvent is not documented.
+/home/beserge/libdaisy/src/hid_midi.h:101: warning: Member MidiOutputMode (enumeration) of class daisy::MidiHandler is not documented.
+/home/beserge/libdaisy/src/hid_midi.h:118: warning: Member Listen() (function) of class daisy::MidiHandler is not documented.
+/home/beserge/libdaisy/src/hid_midi.h:39: warning: Member channel (variable) of class daisy::NoteOnEvent is not documented.
+/home/beserge/libdaisy/src/hid_midi.h:40: warning: Member note (variable) of class daisy::NoteOnEvent is not documented.
+/home/beserge/libdaisy/src/hid_midi.h:41: warning: Member velocity (variable) of class daisy::NoteOnEvent is not documented.
+/home/beserge/libdaisy/src/hid_oled_display.h:55: warning: Found unknown command `\pin_cfg'
+/home/beserge/libdaisy/src/hid_oled_display.h:71: warning: argument 'char' of command @param is not found in the argument list of daisy::OledDisplay::WriteChar(char ch, FontDef font, bool on)
+/home/beserge/libdaisy/src/hid_oled_display.h:76: warning: Found unknown command `\bool'
+/home/beserge/libdaisy/src/hid_oled_display.h:78: warning: The following parameters of daisy::OledDisplay::WriteChar(char ch, FontDef font, bool on) are not documented:
+  parameter 'ch'
+  parameter 'on'
+/home/beserge/libdaisy/src/util_ringbuffer.h:142: warning: Member Init() (function) of class daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:143: warning: Member capacity() const (function) of class daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:144: warning: Member writable() const (function) of class daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:145: warning: Member readable() const (function) of class daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:146: warning: Member Write(T v) (function) of class daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:147: warning: Member Overwrite(T v) (function) of class daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:148: warning: Member Read() (function) of class daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:149: warning: Member ImmediateRead() (function) of class daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:150: warning: Member Flush() (function) of class daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:151: warning: Member ImmediateRead(T *destination, size_t num_elements) (function) of class daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/util_ringbuffer.h:152: warning: Member Overwrite(const T *source, size_t num_elements) (function) of class daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/per_sdmmc.h:54: warning: Member bitdepth (variable) of class daisy::SdmmcHandlerInit is not documented.
+/home/beserge/libdaisy/src/per_sdmmc.h:55: warning: Member speed (variable) of class daisy::SdmmcHandlerInit is not documented.
+/home/beserge/libdaisy/src/hid_switch.h:72: warning: Member Init(dsy_gpio_pin pin, float update_rate) (function) of class daisy::Switch is not documented.
+/home/beserge/libdaisy/src/hid_wavplayer.h:33: warning: Member raw_data (variable) of class daisy::WavFileInfo is not documented.
+/home/beserge/libdaisy/src/hid_wavplayer.h:34: warning: Member name[256] (variable) of class daisy::WavFileInfo is not documented.
+/home/beserge/libdaisy/README.md:4: warning: found subsection command outside of section context!
+/home/beserge/libdaisy/README.md:4: warning: found subsection command outside of section context!
+Generating reference manual PDF
+This is makeindex, version 2.15 [TeX Live 2017] (kpathsea + Thai support).
+Scanning input file refman.idx....done (626 entries accepted, 212 rejected).
+Sorting entries........done (6508 comparisons).
+Generating output file refman.ind....done (951 lines written, 0 warnings).
+Output written in refman.ind.
+Transcript written in refman.ilg.
+This is makeindex, version 2.15 [TeX Live 2017] (kpathsea + Thai support).
+Scanning input file refman.idx....done (626 entries accepted, 212 rejected).
+Sorting entries........done (6508 comparisons).
+Generating output file refman.ind....done (951 lines written, 0 warnings).
+Output written in refman.ind.
+Transcript written in refman.ilg.
+Creating Style Guide PDF
+pandoc: ./resources/Style-Guide.md: openFile: does not exist (No such file or directory)
+finished.
