@@ -144,7 +144,7 @@ void arm_iir_lattice_f32(
   pState = &S->pState[0];
 
   /* Sample processing */
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* Read Sample from input buffer */
     /* fN(n) = x(n) */
@@ -166,7 +166,7 @@ void arm_iir_lattice_f32(
     /* Loop unrolling.  Process 4 taps at a time. */
     tapCnt = (numStages) >> 2;
 
-    while (tapCnt > 0U)
+    while (tapCnt > 0u)
     {
       /* Read gN-1(n-1) from state buffer */
       gcurr1 = *px1;
@@ -181,13 +181,13 @@ void arm_iir_lattice_f32(
       v1 = *pv;
 
       /* read next reflection coefficient kN-1 */
-      k2 = *(pk + 1U);
+      k2 = *(pk + 1u);
 
       /* Read gN-2(n-1) from state buffer */
-      gcurr2 = *(px1 + 1U);
+      gcurr2 = *(px1 + 1u);
 
       /* read next ladder coefficient vN-1 */
-      v2 = *(pv + 1U);
+      v2 = *(pv + 1u);
 
       /* fN-2(n) = fN-1(n) - kN-1 * gN-2(n-1) */
       fnext2 = fnext1 - (k2 * gcurr2);
@@ -196,13 +196,13 @@ void arm_iir_lattice_f32(
       gnext = gcurr1 + (k1 * fnext1);
 
       /* read reflection coefficient kN-2 */
-      k1 = *(pk + 2U);
+      k1 = *(pk + 2u);
 
       /* write gN(n) into state for next sample processing */
       *px2++ = gnext;
 
       /* Read gN-3(n-1) from state buffer */
-      gcurr1 = *(px1 + 2U);
+      gcurr1 = *(px1 + 2u);
 
       /* y(n) += gN(n) * vN  */
       acc += (gnext * v1);
@@ -214,13 +214,13 @@ void arm_iir_lattice_f32(
       gnext = gcurr2 + (k2 * fnext2);
 
       /* Read gN-4(n-1) from state buffer */
-      gcurr2 = *(px1 + 3U);
+      gcurr2 = *(px1 + 3u);
 
       /* y(n) += gN-1(n) * vN-1  */
       acc += (gnext * v2);
 
       /* read reflection coefficient kN-3 */
-      k2 = *(pk + 3U);
+      k2 = *(pk + 3u);
 
       /* write gN-1(n) into state for next sample processing */
       *px2++ = gnext;
@@ -232,7 +232,7 @@ void arm_iir_lattice_f32(
       gnext = gcurr1 + (k1 * fnext1);
 
       /* read ladder coefficient vN-2 */
-      v3 = *(pv + 2U);
+      v3 = *(pv + 2u);
 
       /* y(n) += gN-2(n) * vN-2  */
       acc += (gnext * v3);
@@ -241,13 +241,13 @@ void arm_iir_lattice_f32(
       *px2++ = gnext;
 
       /* update pointer */
-      pk += 4U;
+      pk += 4u;
 
       /* gN-3(n) = kN-3 * fN-4(n) + gN-4(n-1) */
       gnext = (fnext2 * k2) + gcurr2;
 
       /* read next ladder coefficient vN-3 */
-      v4 = *(pv + 3U);
+      v4 = *(pv + 3u);
 
       /* y(n) += gN-4(n) * vN-4  */
       acc += (gnext * v4);
@@ -256,17 +256,17 @@ void arm_iir_lattice_f32(
       *px2++ = gnext;
 
       /* update pointers */
-      px1 += 4U;
-      pv += 4U;
+      px1 += 4u;
+      pv += 4u;
 
       tapCnt--;
 
     }
 
     /* If the filter length is not a multiple of 4, compute the remaining filter taps */
-    tapCnt = (numStages) % 0x4U;
+    tapCnt = (numStages) % 0x4u;
 
-    while (tapCnt > 0U)
+    while (tapCnt > 0u)
     {
       gcurr1 = *px1++;
       /* Process sample for last taps */
@@ -290,7 +290,7 @@ void arm_iir_lattice_f32(
     *pDst++ = acc;
 
     /* Advance the state pointer by 4 to process the next group of 4 samples */
-    pState = pState + 1U;
+    pState = pState + 1u;
 
     blkCnt--;
 
@@ -303,10 +303,10 @@ void arm_iir_lattice_f32(
   pStateCurnt = &S->pState[0];
   pState = &S->pState[blockSize];
 
-  tapCnt = numStages >> 2U;
+  tapCnt = numStages >> 2u;
 
   /* copy data */
-  while (tapCnt > 0U)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
     *pStateCurnt++ = *pState++;
@@ -319,10 +319,10 @@ void arm_iir_lattice_f32(
   }
 
   /* Calculate remaining number of copies */
-  tapCnt = (numStages) % 0x4U;
+  tapCnt = (numStages) % 0x4u;
 
   /* Copy the remaining q31_t data */
-  while (tapCnt > 0U)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 
@@ -355,7 +355,7 @@ void arm_iir_lattice_f32(
   pState = &S->pState[0];
 
   /* Sample processing */
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* Read Sample from input buffer */
     /* fN(n) = x(n) */
@@ -376,7 +376,7 @@ void arm_iir_lattice_f32(
     /* Process sample for numStages */
     tapCnt = numStages;
 
-    while (tapCnt > 0U)
+    while (tapCnt > 0u)
     {
       gcurr = *px1++;
       /* Process sample for last taps */
@@ -402,7 +402,7 @@ void arm_iir_lattice_f32(
     *pDst++ = acc;
 
     /* Advance the state pointer by 1 to process the next group of samples */
-    pState = pState + 1U;
+    pState = pState + 1u;
     blkCnt--;
 
   }
@@ -417,7 +417,7 @@ void arm_iir_lattice_f32(
   tapCnt = numStages;
 
   /* Copy the data */
-  while (tapCnt > 0U)
+  while (tapCnt > 0u)
   {
     *pStateCurnt++ = *pState++;
 

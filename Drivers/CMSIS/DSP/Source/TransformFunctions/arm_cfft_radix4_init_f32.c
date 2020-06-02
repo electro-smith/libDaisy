@@ -86,26 +86,26 @@ arm_status arm_cfft_radix4_init_f32(
   switch (S->fftLen)
   {
 
-  case 4096U:
+  case 4096u:
     /*  Initializations of structure parameters for 4096 point FFT */
 
     /*  Initialise the twiddle coef modifier value */
-    S->twidCoefModifier = 1U;
+    S->twidCoefModifier = 1u;
     /*  Initialise the bit reversal table modifier */
-    S->bitRevFactor = 1U;
+    S->bitRevFactor = 1u;
     /*  Initialise the bit reversal table pointer */
     S->pBitRevTable = (uint16_t *) armBitRevTable;
     /*  Initialise the 1/fftLen Value */
     S->onebyfftLen = 0.000244140625;
     break;
 
-  case 1024U:
+  case 1024u:
     /*  Initializations of structure parameters for 1024 point FFT */
 
     /*  Initialise the twiddle coef modifier value */
-    S->twidCoefModifier = 4U;
+    S->twidCoefModifier = 4u;
     /*  Initialise the bit reversal table modifier */
-    S->bitRevFactor = 4U;
+    S->bitRevFactor = 4u;
     /*  Initialise the bit reversal table pointer */
     S->pBitRevTable = (uint16_t *) & armBitRevTable[3];
     /*  Initialise the 1/fftLen Value */
@@ -113,26 +113,26 @@ arm_status arm_cfft_radix4_init_f32(
     break;
 
 
-  case 256U:
+  case 256u:
     /*  Initializations of structure parameters for 256 point FFT */
-    S->twidCoefModifier = 16U;
-    S->bitRevFactor = 16U;
+    S->twidCoefModifier = 16u;
+    S->bitRevFactor = 16u;
     S->pBitRevTable = (uint16_t *) & armBitRevTable[15];
     S->onebyfftLen = 0.00390625f;
     break;
 
-  case 64U:
+  case 64u:
     /*  Initializations of structure parameters for 64 point FFT */
-    S->twidCoefModifier = 64U;
-    S->bitRevFactor = 64U;
+    S->twidCoefModifier = 64u;
+    S->bitRevFactor = 64u;
     S->pBitRevTable = (uint16_t *) & armBitRevTable[63];
     S->onebyfftLen = 0.015625f;
     break;
 
-  case 16U:
+  case 16u:
     /*  Initializations of structure parameters for 16 point FFT */
-    S->twidCoefModifier = 256U;
-    S->bitRevFactor = 256U;
+    S->twidCoefModifier = 256u;
+    S->bitRevFactor = 256u;
     S->pBitRevTable = (uint16_t *) & armBitRevTable[255];
     S->onebyfftLen = 0.0625f;
     break;

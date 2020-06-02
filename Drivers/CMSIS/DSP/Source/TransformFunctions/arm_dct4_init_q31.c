@@ -7654,19 +7654,19 @@ arm_status arm_dct4_init_q31(
   switch (N)
   {
     /* Initialize the table modifier values */
-  case 8192U:
+  case 8192u:
     S->pTwiddle = twiddlePtr[3];
     S->pCosFactor = pCosFactor[3];
     break;
-  case 2048U:
+  case 2048u:
     S->pTwiddle = twiddlePtr[2];
     S->pCosFactor = pCosFactor[2];
     break;
-  case 512U:
+  case 512u:
     S->pTwiddle = twiddlePtr[1];
     S->pCosFactor = pCosFactor[1];
     break;
-  case 128U:
+  case 128u:
     S->pTwiddle = twiddlePtr[0];
     S->pCosFactor = pCosFactor[0];
     break;

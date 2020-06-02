@@ -4,7 +4,7 @@
   * @author  MCD Application Team
   * @brief   Header file of LPTIM LL module.
   ******************************************************************************
-  * @attention
+    * @attention
   *
   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -196,17 +196,6 @@ typedef struct
 #define LL_LPTIM_TRIG_SOURCE_RTCTAMP3         (LPTIM_CFGR_TRIGSEL_2 | LPTIM_CFGR_TRIGSEL_0)                        /*!<External input trigger is connected to RTC Tamper 3*/
 #define LL_LPTIM_TRIG_SOURCE_COMP1            (LPTIM_CFGR_TRIGSEL_2 | LPTIM_CFGR_TRIGSEL_1)                        /*!<External input trigger is connected to COMP1 output*/
 #define LL_LPTIM_TRIG_SOURCE_COMP2            LPTIM_CFGR_TRIGSEL                                                   /*!<External input trigger is connected to COMP2 output*/
-#define LL_LPTIM_TRIG_SOURCE_LPTIM2           0x00000000U                                                          /*!<External input trigger is connected to LPTIM2 output*/
-#define LL_LPTIM_TRIG_SOURCE_LPTIM3           LPTIM_CFGR_TRIGSEL_0                                                 /*!<External input trigger is connected to LPTIM3 output*/
-#define LL_LPTIM_TRIG_SOURCE_LPTIM4           LPTIM_CFGR_TRIGSEL_1                                                 /*!<External input trigger is connected to LPTIM4 output*/
-#define LL_LPTIM_TRIG_SOURCE_LPTIM5           (LPTIM_CFGR_TRIGSEL_1|LPTIM_CFGR_TRIGSEL_0)                          /*!<External input trigger is connected to LPTIM5 output*/
-#define LL_LPTIM_TRIG_SOURCE_SAI1_FS_A        LPTIM_CFGR_TRIGSEL_2                                                 /*!<External input trigger is connected to SAI1 FS A output*/
-#define LL_LPTIM_TRIG_SOURCE_SAI1_FS_B        (LPTIM_CFGR_TRIGSEL_2|LPTIM_CFGR_TRIGSEL_0)                          /*!<External input trigger is connected to SAI1 FS B output*/
-#define LL_LPTIM_TRIG_SOURCE_SAI2_FS_A        LPTIM_CFGR_TRIGSEL_2                                                 /*!<External input trigger is connected to SAI2 FS A output*/
-#define LL_LPTIM_TRIG_SOURCE_SAI2_FS_B        (LPTIM_CFGR_TRIGSEL_2|LPTIM_CFGR_TRIGSEL_0)                          /*!<External input trigger is connected to SAI2 FS B output*/
-#define LL_LPTIM_TRIG_SOURCE_SAI4_FS_A        (LPTIM_CFGR_TRIGSEL_1|LPTIM_CFGR_TRIGSEL_0)                          /*!<External input trigger is connected to SAI4 FS A output*/
-#define LL_LPTIM_TRIG_SOURCE_SAI4_FS_B        LPTIM_CFGR_TRIGSEL_2                                                 /*!<External input trigger is connected to SAI4 FS B output*/
-#define LL_LPTIM_TRIG_SOURCE_DFSDM2_BRK       (LPTIM_CFGR_TRIGSEL_2|LPTIM_CFGR_TRIGSEL_1)                          /*!<External input trigger is connected to DFSDM2_BRK[0] */
 /**
   * @}
   */
@@ -294,6 +283,7 @@ typedef struct
   * @}
   */
 
+
 /**
   * @}
   */
@@ -314,7 +304,7 @@ typedef struct
   * @param  __VALUE__ Value to be written in the register
   * @retval None
   */
-#define LL_LPTIM_WriteReg(__INSTANCE__, __REG__, __VALUE__) WRITE_REG((__INSTANCE__)->__REG__, (__VALUE__))
+#define LL_LPTIM_WriteReg(__INSTANCE__, __REG__, __VALUE__) WRITE_REG((__INSTANCE__)->(__REG__), (__VALUE__))
 
 /**
   * @brief  Read a value in LPTIM register
@@ -322,7 +312,7 @@ typedef struct
   * @param  __REG__ Register to be read
   * @retval Register value
   */
-#define LL_LPTIM_ReadReg(__INSTANCE__, __REG__) READ_REG((__INSTANCE__)->__REG__)
+#define LL_LPTIM_ReadReg(__INSTANCE__, __REG__) READ_REG((__INSTANCE__)->(__REG__))
 /**
   * @}
   */
@@ -375,7 +365,7 @@ __STATIC_INLINE void LL_LPTIM_Enable(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsEnabled(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->CR, LPTIM_CR_ENABLE) == LPTIM_CR_ENABLE) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->CR, LPTIM_CR_ENABLE) == LPTIM_CR_ENABLE)? 1UL : 0UL));
 }
 
 /**
@@ -428,7 +418,7 @@ __STATIC_INLINE void LL_LPTIM_DisableResetAfterRead(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledResetAfterRead(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->CR, LPTIM_CR_RSTARE) == LPTIM_CR_RSTARE) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->CR, LPTIM_CR_RSTARE) == LPTIM_CR_RSTARE)? 1UL : 0UL));
 }
 
 /**
@@ -479,7 +469,7 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetUpdateMode(LPTIM_TypeDef *LPTIMx)
   * @note The LPTIMx_ARR register content must only be modified when the LPTIM is enabled
   * @note After a write to the LPTIMx_ARR register a new write operation to the
   *       same register can only be performed when the previous write operation
-  *       is completed. Any successive write before  the ARROK flag is set, will
+  *       is completed. Any successive write before  the ARROK flag be set, will
   *       lead to unpredictable results.
   * @note autoreload value be strictly greater than the compare value.
   * @rmtoll ARR          ARR           LL_LPTIM_SetAutoReload
@@ -507,7 +497,7 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetAutoReload(LPTIM_TypeDef *LPTIMx)
   * @brief  Set the compare value
   * @note After a write to the LPTIMx_CMP register a new write operation to the
   *       same register can only be performed when the previous write operation
-  *       is completed. Any successive write before the CMPOK flag is set, will
+  *       is completed. Any successive write before the CMPOK flag be set, will
   *       lead to unpredictable results.
   * @rmtoll CMP          CMP           LL_LPTIM_SetCompare
   * @param  LPTIMx Low-Power Timer instance
@@ -708,7 +698,7 @@ __STATIC_INLINE uint32_t LL_LPTIM_GetPrescaler(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE void LL_LPTIM_SetInput1Src(LPTIM_TypeDef *LPTIMx, uint32_t Src)
 {
-  MODIFY_REG(LPTIMx->CFGR2, LPTIM_CFGR2_IN1SEL, Src);
+  WRITE_REG(LPTIMx->CFGR2, Src);
 }
 
 /**
@@ -722,7 +712,7 @@ __STATIC_INLINE void LL_LPTIM_SetInput1Src(LPTIM_TypeDef *LPTIMx, uint32_t Src)
   */
 __STATIC_INLINE void LL_LPTIM_SetInput2Src(LPTIM_TypeDef *LPTIMx, uint32_t Src)
 {
-  MODIFY_REG(LPTIMx->CFGR2, LPTIM_CFGR2_IN2SEL, Src);
+  WRITE_REG(LPTIMx->CFGR2, Src);
 }
 
 /**
@@ -772,7 +762,7 @@ __STATIC_INLINE void LL_LPTIM_DisableTimeout(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledTimeout(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_TIMOUT) == LPTIM_CFGR_TIMOUT) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_TIMOUT) == LPTIM_CFGR_TIMOUT)? 1UL : 0UL));
 }
 
 /**
@@ -805,20 +795,6 @@ __STATIC_INLINE void LL_LPTIM_TrigSw(LPTIM_TypeDef *LPTIMx)
   *         @arg @ref LL_LPTIM_TRIG_SOURCE_RTCTAMP3
   *         @arg @ref LL_LPTIM_TRIG_SOURCE_COMP1
   *         @arg @ref LL_LPTIM_TRIG_SOURCE_COMP2
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_LPTIM2     (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_LPTIM3     (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_LPTIM4     (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_LPTIM5     (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI1_FS_A  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI1_FS_B  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI2_FS_A  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI2_FS_B  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI4_FS_A  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI4_FS_B  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_DFSDM2_BRK (*)
-  *
-  *         (*)  Value not defined in all devices. \n
-  *
   * @param  Filter This parameter can be one of the following values:
   *         @arg @ref LL_LPTIM_TRIG_FILTER_NONE
   *         @arg @ref LL_LPTIM_TRIG_FILTER_2
@@ -848,20 +824,6 @@ __STATIC_INLINE void LL_LPTIM_ConfigTrigger(LPTIM_TypeDef *LPTIMx, uint32_t Sour
   *         @arg @ref LL_LPTIM_TRIG_SOURCE_RTCTAMP3
   *         @arg @ref LL_LPTIM_TRIG_SOURCE_COMP1
   *         @arg @ref LL_LPTIM_TRIG_SOURCE_COMP2
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_LPTIM2     (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_LPTIM3     (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_LPTIM4     (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_LPTIM5     (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI1_FS_A  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI1_FS_B  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI2_FS_A  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI2_FS_B  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI4_FS_A  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_SAI4_FS_B  (*)
-  *         @arg @ref LL_LPTIM_TRIG_SOURCE_DFSDM2_BRK (*)
-  *
-  *         (*)  Value not defined in all devices. \n
-  *
   */
 __STATIC_INLINE uint32_t LL_LPTIM_GetTriggerSource(LPTIM_TypeDef *LPTIMx)
 {
@@ -1063,7 +1025,7 @@ __STATIC_INLINE void LL_LPTIM_DisableEncoderMode(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledEncoderMode(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_ENC) == LPTIM_CFGR_ENC) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->CFGR, LPTIM_CFGR_ENC) == LPTIM_CFGR_ENC)? 1UL : 0UL));
 }
 
 /**
@@ -1093,7 +1055,7 @@ __STATIC_INLINE void LL_LPTIM_ClearFLAG_CMPM(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_CMPM(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_CMPM) == LPTIM_ISR_CMPM) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_CMPM) == LPTIM_ISR_CMPM)? 1UL : 0UL));
 }
 
 /**
@@ -1108,14 +1070,14 @@ __STATIC_INLINE void LL_LPTIM_ClearFLAG_ARRM(LPTIM_TypeDef *LPTIMx)
 }
 
 /**
-  * @brief  Inform application whether a autoreload match interrupt has occurred.
+  * @brief  Inform application whether a autoreload match interrupt has occured.
   * @rmtoll ISR          ARRM          LL_LPTIM_IsActiveFlag_ARRM
   * @param  LPTIMx Low-Power Timer instance
   * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_ARRM(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_ARRM) == LPTIM_ISR_ARRM) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_ARRM) == LPTIM_ISR_ARRM)? 1UL : 0UL));
 }
 
 /**
@@ -1137,7 +1099,7 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_EXTTRIG(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_EXTTRIG(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_EXTTRIG) == LPTIM_ISR_EXTTRIG) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_EXTTRIG) == LPTIM_ISR_EXTTRIG)? 1UL : 0UL));
 }
 
 /**
@@ -1159,7 +1121,7 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_CMPOK(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_CMPOK(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_CMPOK) == LPTIM_ISR_CMPOK) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_CMPOK) == LPTIM_ISR_CMPOK)? 1UL : 0UL));
 }
 
 /**
@@ -1181,7 +1143,7 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_ARROK(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_ARROK(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_ARROK) == LPTIM_ISR_ARROK) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_ARROK) == LPTIM_ISR_ARROK)? 1UL : 0UL));
 }
 
 /**
@@ -1203,7 +1165,7 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_UP(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_UP(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_UP) == LPTIM_ISR_UP) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_UP) == LPTIM_ISR_UP)? 1UL : 0UL));
 }
 
 /**
@@ -1225,7 +1187,7 @@ __STATIC_INLINE void LL_LPTIM_ClearFlag_DOWN(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsActiveFlag_DOWN(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_DOWN) == LPTIM_ISR_DOWN) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->ISR, LPTIM_ISR_DOWN) == LPTIM_ISR_DOWN)? 1UL : 0UL));
 }
 
 /**
@@ -1266,7 +1228,7 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_CMPM(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_CMPM(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_CMPMIE) == LPTIM_IER_CMPMIE) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_CMPMIE) == LPTIM_IER_CMPMIE)? 1UL : 0UL));
 }
 
 /**
@@ -1299,7 +1261,7 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_ARRM(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_ARRM(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_ARRMIE) == LPTIM_IER_ARRMIE) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_ARRMIE) == LPTIM_IER_ARRMIE)? 1UL : 0UL));
 }
 
 /**
@@ -1332,7 +1294,7 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_EXTTRIG(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_EXTTRIG(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_EXTTRIGIE) == LPTIM_IER_EXTTRIGIE) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_EXTTRIGIE) == LPTIM_IER_EXTTRIGIE)? 1UL : 0UL));
 }
 
 /**
@@ -1365,7 +1327,7 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_CMPOK(LPTIM_TypeDef *LPTIMx)
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_CMPOK(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_CMPOKIE) == LPTIM_IER_CMPOKIE) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_CMPOKIE) == LPTIM_IER_CMPOKIE)? 1UL : 0UL));
 }
 
 /**
@@ -1394,11 +1356,11 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_ARROK(LPTIM_TypeDef *LPTIMx)
   * @brief  Indicates whether the autoreload register write completed interrupt (ARROKIE) is enabled.
   * @rmtoll IER          ARROKIE       LL_LPTIM_IsEnabledIT_ARROK
   * @param  LPTIMx Low-Power Timer instance
-  * @retval State of bit(1 or 0).
+  * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_ARROK(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_ARROKIE) == LPTIM_IER_ARROKIE) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_ARROKIE) == LPTIM_IER_ARROKIE)? 1UL : 0UL));
 }
 
 /**
@@ -1427,11 +1389,11 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_UP(LPTIM_TypeDef *LPTIMx)
   * @brief  Indicates whether the direction change to up interrupt (UPIE) is enabled.
   * @rmtoll IER          UPIE          LL_LPTIM_IsEnabledIT_UP
   * @param  LPTIMx Low-Power Timer instance
-  * @retval State of bit(1 or 0).
+  * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_UP(LPTIM_TypeDef *LPTIMx)
 {
-  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_UPIE) == LPTIM_IER_UPIE) ? 1UL : 0UL));
+  return (((READ_BIT(LPTIMx->IER, LPTIM_IER_UPIE) == LPTIM_IER_UPIE)? 1UL : 0UL));
 }
 
 /**
@@ -1460,11 +1422,11 @@ __STATIC_INLINE void LL_LPTIM_DisableIT_DOWN(LPTIM_TypeDef *LPTIMx)
   * @brief  Indicates whether the direction change to down interrupt (DOWNIE) is enabled.
   * @rmtoll IER          DOWNIE        LL_LPTIM_IsEnabledIT_DOWN
   * @param  LPTIMx Low-Power Timer instance
-  * @retval State of bit(1 or 0).
+  * @retval State of bit (1 or 0).
   */
 __STATIC_INLINE uint32_t LL_LPTIM_IsEnabledIT_DOWN(LPTIM_TypeDef *LPTIMx)
 {
-  return ((READ_BIT(LPTIMx->IER, LPTIM_IER_DOWNIE) == LPTIM_IER_DOWNIE) ? 1UL : 0UL);
+  return ((READ_BIT(LPTIMx->IER, LPTIM_IER_DOWNIE) == LPTIM_IER_DOWNIE)? 1UL : 0UL);
 }
 
 /**

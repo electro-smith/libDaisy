@@ -60,16 +60,16 @@ void arm_max_q31(
   uint32_t blkCnt, outIndex, count;              /* loop counter */
 
   /* Initialise the count value. */
-  count = 0U;
+  count = 0u;
   /* Initialise the index value to zero. */
-  outIndex = 0U;
+  outIndex = 0u;
   /* Load first input value that act as reference value for comparision */
   out = *pSrc++;
 
   /* Loop unrolling */
-  blkCnt = (blockSize - 1U) >> 2U;
+  blkCnt = (blockSize - 1u) >> 2u;
 
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* Initialize maxVal to the next consecutive values one by one */
     maxVal1 = *pSrc++;
@@ -80,7 +80,7 @@ void arm_max_q31(
     {
       /* Update the maximum value and its index */
       out = maxVal1;
-      outIndex = count + 1U;
+      outIndex = count + 1u;
     }
 
     /* compare for the maximum value */
@@ -88,7 +88,7 @@ void arm_max_q31(
     {
       /* Update the maximum value and its index */
       out = maxVal2;
-      outIndex = count + 2U;
+      outIndex = count + 2u;
     }
 
     /* Initialize maxVal to the next consecutive values one by one */
@@ -100,7 +100,7 @@ void arm_max_q31(
     {
       /* Update the maximum value and its index */
       out = maxVal1;
-      outIndex = count + 3U;
+      outIndex = count + 3u;
     }
 
     /* compare for the maximum value */
@@ -108,17 +108,17 @@ void arm_max_q31(
     {
       /* Update the maximum value and its index */
       out = maxVal2;
-      outIndex = count + 4U;
+      outIndex = count + 4u;
     }
 
-    count += 4U;
+    count += 4u;
 
     /* Decrement the loop counter */
     blkCnt--;
   }
 
-  /* if (blockSize - 1U) is not multiple of 4 */
-  blkCnt = (blockSize - 1U) % 4U;
+  /* if (blockSize - 1u) is not multiple of 4 */
+  blkCnt = (blockSize - 1u) % 4u;
 
 #else
   /* Run the below code for Cortex-M0 */
@@ -127,15 +127,15 @@ void arm_max_q31(
   uint32_t blkCnt, outIndex;                     /* loop counter */
 
   /* Initialise the index value to zero. */
-  outIndex = 0U;
+  outIndex = 0u;
   /* Load first input value that act as reference value for comparision */
   out = *pSrc++;
 
-  blkCnt = (blockSize - 1U);
+  blkCnt = (blockSize - 1u);
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* Initialize maxVal to the next consecutive values one by one */
     maxVal1 = *pSrc++;

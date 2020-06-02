@@ -86,11 +86,11 @@ void arm_cmplx_mult_cmplx_f32(
 
 
   /* loop Unrolling */
-  blkCnt = numSamples >> 2U;
+  blkCnt = numSamples >> 2u;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */
@@ -145,18 +145,18 @@ void arm_cmplx_mult_cmplx_f32(
     acc4 = (b2 * c2);
 
     *(pDst + 4) = acc1;
-    pSrcA += 8U;
+    pSrcA += 8u;
 
     acc3 -= (b2 * d2);
     acc4 += (a2 * d2);
 
     *(pDst + 5) = acc2;
-    pSrcB += 8U;
+    pSrcB += 8u;
 
     *(pDst + 6) = acc3;
     *(pDst + 7) = acc4;
 
-    pDst += 8U;
+    pDst += 8u;
 
     /* Decrement the numSamples loop counter */
     blkCnt--;
@@ -164,7 +164,7 @@ void arm_cmplx_mult_cmplx_f32(
 
   /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = numSamples % 0x4U;
+  blkCnt = numSamples % 0x4u;
 
 #else
 
@@ -173,7 +173,7 @@ void arm_cmplx_mult_cmplx_f32(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[2 * i] - A[2 * i + 1] * B[2 * i + 1].  */
     /* C[2 * i + 1] = A[2 * i] * B[2 * i + 1] + A[2 * i + 1] * B[2 * i].  */

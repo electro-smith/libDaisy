@@ -89,11 +89,11 @@ void arm_cmplx_mult_real_f32(
   float32_t out5, out6, out7, out8;              /* Temporary variables to hold output data */
 
   /* loop Unrolling */
-  blkCnt = numSamples >> 2U;
+  blkCnt = numSamples >> 2u;
 
   /* First part of the processing with loop unrolling.  Compute 4 outputs at a time.
    ** a second loop below computes the remaining 1 to 3 samples. */
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[i].            */
     /* C[2 * i + 1] = A[2 * i + 1] * B[i].        */
@@ -164,20 +164,20 @@ void arm_cmplx_mult_real_f32(
     pCmplxDst[4] = out5;
 
     /* incremnet complex input buffer by 8 to process next samples */
-    pSrcCmplx += 8U;
+    pSrcCmplx += 8u;
 
     /* store result to destination bufer */
     pCmplxDst[5] = out6;
 
     /* increment real input buffer by 4 to process next samples */
-    pSrcReal += 4U;
+    pSrcReal += 4u;
 
     /* store result to destination bufer */
     pCmplxDst[6] = out7;
     pCmplxDst[7] = out8;
 
     /* increment destination buffer by 8 to process next sampels */
-    pCmplxDst += 8U;
+    pCmplxDst += 8u;
 
     /* Decrement the numSamples loop counter */
     blkCnt--;
@@ -185,7 +185,7 @@ void arm_cmplx_mult_real_f32(
 
   /* If the numSamples is not a multiple of 4, compute any remaining output samples here.
    ** No loop unrolling is used. */
-  blkCnt = numSamples % 0x4U;
+  blkCnt = numSamples % 0x4u;
 
 #else
 
@@ -194,7 +194,7 @@ void arm_cmplx_mult_real_f32(
 
 #endif /* #if defined (ARM_MATH_DSP) */
 
-  while (blkCnt > 0U)
+  while (blkCnt > 0u)
   {
     /* C[2 * i] = A[2 * i] * B[i].            */
     /* C[2 * i + 1] = A[2 * i + 1] * B[i].        */

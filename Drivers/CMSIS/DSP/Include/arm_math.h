@@ -1,11 +1,15 @@
-/******************************************************************************
- * @file     arm_math.h
- * @brief    Public header file for CMSIS DSP LibraryU
- * @version  V1.5.3
- * @date     10. January 2018
- ******************************************************************************/
+/* ----------------------------------------------------------------------
+ * Project:      CMSIS DSP Library
+ * Title:        arm_math.h
+ * Description:  Public header file for CMSIS DSP Library
+ *
+ * $Date:        27. January 2017
+ * $Revision:    V.1.5.1
+ *
+ * Target Processor: Cortex-M cores
+ * -------------------------------------------------------------------- */
 /*
- * Copyright (c) 2010-2018 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (C) 2010-2017 ARM Limited or its affiliates. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -64,19 +68,19 @@
    * - arm_cortexM3b_math.lib (Cortex-M3, Big endian)
    * - arm_cortexM0l_math.lib (Cortex-M0 / Cortex-M0+, Little endian)
    * - arm_cortexM0b_math.lib (Cortex-M0 / Cortex-M0+, Big endian)
-   * - arm_ARMv8MBLl_math.lib (Armv8-M Baseline, Little endian)
-   * - arm_ARMv8MMLl_math.lib (Armv8-M Mainline, Little endian)
-   * - arm_ARMv8MMLlfsp_math.lib (Armv8-M Mainline, Little endian, Single Precision Floating Point Unit)
-   * - arm_ARMv8MMLld_math.lib (Armv8-M Mainline, Little endian, DSP instructions)
-   * - arm_ARMv8MMLldfsp_math.lib (Armv8-M Mainline, Little endian, DSP instructions, Single Precision Floating Point Unit)
+   * - arm_ARMv8MBLl_math.lib (ARMv8M Baseline, Little endian)
+   * - arm_ARMv8MMLl_math.lib (ARMv8M Mainline, Little endian)
+   * - arm_ARMv8MMLlfsp_math.lib (ARMv8M Mainline, Little endian, Single Precision Floating Point Unit)
+   * - arm_ARMv8MMLld_math.lib (ARMv8M Mainline, Little endian, DSP instructions)
+   * - arm_ARMv8MMLldfsp_math.lib (ARMv8M Mainline, Little endian, DSP instructions, Single Precision Floating Point Unit)
    *
    * The library functions are declared in the public file <code>arm_math.h</code> which is placed in the <code>Include</code> folder.
    * Simply include this file and link the appropriate library in the application and begin calling the library functions. The Library supports single
    * public header file <code> arm_math.h</code> for Cortex-M cores with little endian and big endian. Same header file will be used for floating point unit(FPU) variants.
-   * Define the appropriate preprocessor macro ARM_MATH_CM7 or ARM_MATH_CM4 or ARM_MATH_CM3 or
+   * Define the appropriate pre processor MACRO ARM_MATH_CM7 or ARM_MATH_CM4 or  ARM_MATH_CM3 or
    * ARM_MATH_CM0 or ARM_MATH_CM0PLUS depending on the target processor in the application.
-   * For Armv8-M cores define preprocessor macro ARM_MATH_ARMV8MBL or ARM_MATH_ARMV8MML.
-   * Set preprocessor macro __DSP_PRESENT if Armv8-M Mainline core supports DSP instructions.
+   * For ARMv8M cores define pre processor MACRO ARM_MATH_ARMV8MBL or ARM_MATH_ARMV8MML.
+   * Set Pre processor MACRO __DSP_PRESENT if ARMv8M Mainline core supports DSP instructions.
    * 
    *
    * Examples
@@ -87,22 +91,22 @@
    * Toolchain Support
    * ------------
    *
-   * The library has been developed and tested with MDK version 5.14.0.0
+   * The library has been developed and tested with MDK-ARM version 5.14.0.0
    * The library is being tested in GCC and IAR toolchains and updates on this activity will be made available shortly.
    *
    * Building the Library
    * ------------
    *
-   * The library installer contains a project file to rebuild libraries on MDK toolchain in the <code>CMSIS\\DSP_Lib\\Source\\ARM</code> folder.
+   * The library installer contains a project file to re build libraries on MDK-ARM Tool chain in the <code>CMSIS\\DSP_Lib\\Source\\ARM</code> folder.
    * - arm_cortexM_math.uvprojx
    *
    *
-   * The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecting a specific target, and defining the optional preprocessor macros detailed above.
+   * The libraries can be built by opening the arm_cortexM_math.uvprojx project in MDK-ARM, selecting a specific target, and defining the optional pre processor MACROs detailed above.
    *
-   * Preprocessor Macros
+   * Pre-processor Macros
    * ------------
    *
-   * Each library project have different preprocessor macros.
+   * Each library project have differant pre-processor macros.
    *
    * - UNALIGNED_SUPPORT_DISABLE:
    *
@@ -128,8 +132,8 @@
    *
    * - ARM_MATH_ARMV8MxL:
    *
-   * Define macro ARM_MATH_ARMV8MBL for building the library on Armv8-M Baseline target, ARM_MATH_ARMV8MML for building library
-   * on Armv8-M Mainline target.
+   * Define macro ARM_MATH_ARMV8MBL for building the library on ARMv8M Baseline target, ARM_MATH_ARMV8MBL for building library
+   * on ARMv8M Mainline target.
    *
    * - __FPU_PRESENT:
    *
@@ -137,7 +141,7 @@
    *
    * - __DSP_PRESENT:
    *
-   * Initialize macro __DSP_PRESENT = 1 when Armv8-M Mainline core supports DSP instructions.
+   * Initialize macro __DSP_PRESENT = 1 when ARMv8M Mainline core supports DSP instructions.
    *
    * <hr>
    * CMSIS-DSP in ARM::CMSIS Pack
@@ -159,7 +163,7 @@
    * Copyright Notice
    * ------------
    *
-   * Copyright (C) 2010-2015 Arm Limited. All rights reserved.
+   * Copyright (C) 2010-2015 ARM Limited. All rights reserved.
    */
 
 
@@ -239,9 +243,9 @@
  *
  * \par Size Checking
  * By default all of the matrix functions perform size checking on the input and
- * output matrices. For example, the matrix addition function verifies that the
+ * output matrices.  For example, the matrix addition function verifies that the
  * two input matrices and the output matrix all have the same number of rows and
- * columns. If the size check fails the functions return:
+ * columns.  If the size check fails the functions return:
  * <pre>
  *     ARM_MATH_SIZE_MISMATCH
  * </pre>
@@ -255,9 +259,9 @@
  *     ARM_MATH_MATRIX_CHECK
  * </pre>
  * within the library project settings.  By default this macro is defined
- * and size checking is enabled. By changing the project settings and
+ * and size checking is enabled.  By changing the project settings and
  * undefining this macro size checking is eliminated and the functions
- * run a bit faster. With size checking disabled the functions always
+ * run a bit faster.  With size checking disabled the functions always
  * return <code>ARM_MATH_SUCCESS</code>.
  */
 
@@ -289,29 +293,13 @@
 #ifndef _ARM_MATH_H
 #define _ARM_MATH_H
 
-/* Compiler specific diagnostic adjustment */
-#if   defined ( __CC_ARM )
-
-#elif defined ( __ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
-
-#elif defined ( __GNUC__ )
+/* ignore some GCC warnings */
+#if defined ( __GNUC__ )
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #pragma GCC diagnostic ignored "-Wconversion"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
-
-#elif defined ( __ICCARM__ )
-
-#elif defined ( __TI_ARM__ )
-
-#elif defined ( __CSMC__ )
-
-#elif defined ( __TASKING__ )
-
-#else
-  #error Unknown compiler
 #endif
-
 
 #define __CMSIS_GENERIC         /* disable NVIC and Systick functions */
 
@@ -484,6 +472,7 @@ extern "C"
 #define _SIMD32_OFFSET(addr)  (*(__SIMD32_TYPE *)  (addr))
 #define __SIMD64(addr)        (*(int64_t **) & (addr))
 
+/* #if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
 #if !defined (ARM_MATH_DSP)
   /**
    * @brief definition to pack two 16 bit values.
@@ -493,6 +482,7 @@ extern "C"
 #define __PKHTB(ARG1, ARG2, ARG3) ( (((int32_t)(ARG1) <<    0) & (int32_t)0xFFFF0000) | \
                                     (((int32_t)(ARG2) >> ARG3) & (int32_t)0x0000FFFF)  )
 
+/* #endif // defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
 #endif /* !defined (ARM_MATH_DSP) */
 
    /**
@@ -566,6 +556,32 @@ extern "C"
             (((q63_t) (x >> 32) * y)));
   }
 
+/*
+  #if defined (ARM_MATH_CM0_FAMILY) && defined ( __CC_ARM   )
+  #define __CLZ __clz
+  #endif
+ */
+/* note: function can be removed when all toolchain support __CLZ for Cortex-M0 */
+#if defined (ARM_MATH_CM0_FAMILY) && ((defined (__ICCARM__))  )
+  CMSIS_INLINE __STATIC_INLINE uint32_t __CLZ(
+  q31_t data);
+
+  CMSIS_INLINE __STATIC_INLINE uint32_t __CLZ(
+  q31_t data)
+  {
+    uint32_t count = 0;
+    uint32_t mask = 0x80000000;
+
+    while ((data & mask) == 0)
+    {
+      count += 1u;
+      mask = mask >> 1u;
+    }
+
+    return (count);
+  }
+#endif
+
   /**
    * @brief Function to Calculates 1/in (reciprocal) value of Q31 Data type.
    */
@@ -601,7 +617,7 @@ extern "C"
 
     /* calculation of reciprocal value */
     /* running approximation for two iterations */
-    for (i = 0U; i < 2U; i++)
+    for (i = 0u; i < 2u; i++)
     {
       tempVal = (uint32_t) (((q63_t) in * out) >> 31);
       tempVal = 0x7FFFFFFFu - tempVal;
@@ -614,7 +630,7 @@ extern "C"
     *dst = out;
 
     /* return num of signbits of out = 1/in value */
-    return (signBits + 1U);
+    return (signBits + 1u);
   }
 
 
@@ -652,7 +668,7 @@ extern "C"
 
     /* calculation of reciprocal value */
     /* running approximation for two iterations */
-    for (i = 0U; i < 2U; i++)
+    for (i = 0u; i < 2u; i++)
     {
       tempVal = (uint32_t) (((q31_t) in * out) >> 15);
       tempVal = 0x7FFFu - tempVal;
@@ -669,9 +685,50 @@ extern "C"
   }
 
 
-/*
- * @brief C custom defined intrinsic function for M3 and M0 processors
- */
+  /*
+   * @brief C custom defined intrinisic function for only M0 processors
+   */
+#if defined(ARM_MATH_CM0_FAMILY)
+  CMSIS_INLINE __STATIC_INLINE q31_t __SSAT(
+  q31_t x,
+  uint32_t y)
+  {
+    int32_t posMax, negMin;
+    uint32_t i;
+
+    posMax = 1;
+    for (i = 0; i < (y - 1); i++)
+    {
+      posMax = posMax * 2;
+    }
+
+    if (x > 0)
+    {
+      posMax = (posMax - 1);
+
+      if (x > posMax)
+      {
+        x = posMax;
+      }
+    }
+    else
+    {
+      negMin = -posMax;
+
+      if (x < negMin)
+      {
+        x = negMin;
+      }
+    }
+    return (x);
+  }
+#endif /* end of ARM_MATH_CM0_FAMILY */
+
+
+  /*
+   * @brief C custom defined intrinsic function for M3 and M0 processors
+   */
+/* #if defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
 #if !defined (ARM_MATH_DSP)
 
   /*
@@ -1001,6 +1058,33 @@ extern "C"
     return (sum + (int32_t) (((int64_t) x * y) >> 32));
   }
 
+#if 0
+  /*
+   * @brief C custom defined PKHBT for unavailable DSP extension
+   */
+  CMSIS_INLINE __STATIC_INLINE uint32_t __PKHBT(
+  uint32_t x,
+  uint32_t y,
+  uint32_t leftshift)
+  {
+    return ( ((x             ) & 0x0000FFFFUL) |
+             ((y << leftshift) & 0xFFFF0000UL)  );
+  }
+
+  /*
+   * @brief C custom defined PKHTB for unavailable DSP extension
+   */
+  CMSIS_INLINE __STATIC_INLINE uint32_t __PKHTB(
+  uint32_t x,
+  uint32_t y,
+  uint32_t rightshift)
+  {
+    return ( ((x              ) & 0xFFFF0000UL) |
+             ((y >> rightshift) & 0x0000FFFFUL)  );
+  }
+#endif
+
+/* #endif // defined (ARM_MATH_CM3) || defined (ARM_MATH_CM0_FAMILY) */
 #endif /* !defined (ARM_MATH_DSP) */
 
 
@@ -4824,7 +4908,7 @@ void arm_rfft_fast_f32(
     acc += (q63_t) S->A2 * S->state[1];
 
     /* convert output to 1.31 format to add y[n-1] */
-    out = (q31_t) (acc >> 31U);
+    out = (q31_t) (acc >> 31u);
 
     /* out += y[n-1] */
     out += S->state[2];
@@ -5508,7 +5592,7 @@ void arm_rfft_fast_f32(
       y += ((q31_t) (((q63_t) y1 * fract) >> 32));
 
       /* Convert y to 1.31 format */
-      return (y << 1U);
+      return (y << 1u);
     }
   }
 
@@ -5792,7 +5876,7 @@ void arm_rfft_fast_f32(
   int32_t srcInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0U;
+    uint32_t i = 0u;
     int32_t wOffset;
 
     /* Copy the value of Index pointer that points
@@ -5802,7 +5886,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0U)
+    while (i > 0u)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -5839,7 +5923,7 @@ void arm_rfft_fast_f32(
   int32_t dstInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0U;
+    uint32_t i = 0u;
     int32_t rOffset, dst_end;
 
     /* Copy the value of Index pointer that points
@@ -5850,7 +5934,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0U)
+    while (i > 0u)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -5892,7 +5976,7 @@ void arm_rfft_fast_f32(
   int32_t srcInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0U;
+    uint32_t i = 0u;
     int32_t wOffset;
 
     /* Copy the value of Index pointer that points
@@ -5902,7 +5986,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0U)
+    while (i > 0u)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -5950,7 +6034,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0U)
+    while (i > 0u)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -5992,7 +6076,7 @@ void arm_rfft_fast_f32(
   int32_t srcInc,
   uint32_t blockSize)
   {
-    uint32_t i = 0U;
+    uint32_t i = 0u;
     int32_t wOffset;
 
     /* Copy the value of Index pointer that points
@@ -6002,7 +6086,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0U)
+    while (i > 0u)
     {
       /* copy the input sample to the circular buffer */
       circBuffer[wOffset] = *src;
@@ -6050,7 +6134,7 @@ void arm_rfft_fast_f32(
     /* Loop over the blockSize */
     i = blockSize;
 
-    while (i > 0U)
+    while (i > 0u)
     {
       /* copy the sample from the circular buffer to the destination buffer */
       *dst = circBuffer[rOffset];
@@ -6828,7 +6912,7 @@ void arm_rfft_fast_f32(
 
     /* 20 bits for the fractional part */
     /* shift left xfract by 11 to keep 1.31 format */
-    xfract = (X & 0x000FFFFF) << 11U;
+    xfract = (X & 0x000FFFFF) << 11u;
 
     /* Read two nearest output values from the index */
     x1 = pYData[(rI) + (int32_t)nCols * (cI)    ];
@@ -6836,7 +6920,7 @@ void arm_rfft_fast_f32(
 
     /* 20 bits for the fractional part */
     /* shift left yfract by 11 to keep 1.31 format */
-    yfract = (Y & 0x000FFFFF) << 11U;
+    yfract = (Y & 0x000FFFFF) << 11u;
 
     /* Read two nearest output values from the index */
     y1 = pYData[(rI) + (int32_t)nCols * (cI + 1)    ];
@@ -6920,19 +7004,19 @@ void arm_rfft_fast_f32(
 
     /* x1 is in 1.15(q15), xfract in 12.20 format and out is in 13.35 format */
     /* convert 13.35 to 13.31 by right shifting  and out is in 1.31 */
-    out = (q31_t) (((q63_t) x1 * (0xFFFFF - xfract)) >> 4U);
+    out = (q31_t) (((q63_t) x1 * (0xFFFFF - xfract)) >> 4u);
     acc = ((q63_t) out * (0xFFFFF - yfract));
 
     /* x2 * (xfract) * (1-yfract)  in 1.51 and adding to acc */
-    out = (q31_t) (((q63_t) x2 * (0xFFFFF - yfract)) >> 4U);
+    out = (q31_t) (((q63_t) x2 * (0xFFFFF - yfract)) >> 4u);
     acc += ((q63_t) out * (xfract));
 
     /* y1 * (1 - xfract) * (yfract)  in 1.51 and adding to acc */
-    out = (q31_t) (((q63_t) y1 * (0xFFFFF - xfract)) >> 4U);
+    out = (q31_t) (((q63_t) y1 * (0xFFFFF - xfract)) >> 4u);
     acc += ((q63_t) out * (yfract));
 
     /* y2 * (xfract) * (yfract)  in 1.51 and adding to acc */
-    out = (q31_t) (((q63_t) y2 * (xfract)) >> 4U);
+    out = (q31_t) (((q63_t) y2 * (xfract)) >> 4u);
     acc += ((q63_t) out * (yfract));
 
     /* acc is in 13.51 format and down shift acc by 36 times */
@@ -7129,24 +7213,9 @@ void arm_rfft_fast_f32(
 }
 #endif
 
-/* Compiler specific diagnostic adjustment */
-#if   defined ( __CC_ARM )
 
-#elif defined ( __ARMCC_VERSION ) && ( __ARMCC_VERSION >= 6010050 )
-
-#elif defined ( __GNUC__ )
+#if defined ( __GNUC__ )
 #pragma GCC diagnostic pop
-
-#elif defined ( __ICCARM__ )
-
-#elif defined ( __TI_ARM__ )
-
-#elif defined ( __CSMC__ )
-
-#elif defined ( __TASKING__ )
-
-#else
-  #error Unknown compiler
 #endif
 
 #endif /* _ARM_MATH_H */
