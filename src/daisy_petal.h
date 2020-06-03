@@ -49,7 +49,7 @@ class DaisyPetal
         RING_LED_6,    /**< # */
         RING_LED_7,    /**< # */
         RING_LED_8,    /**< # */
-        RING_LED_LAST, /**< # */
+        RING_LED_LAST /**< # */
     };
 
     /** footswitch leds */

@@ -58,7 +58,7 @@ class Switch
        \param pin port/pin object to tell the switch which hardware pin to use.
        \param update_rate the rate at which the Debounce() function will be called. (used for timing).
     */
-    void Init(dsy_gpio_pin pin, float update_rate)
+    void Init(dsy_gpio_pin pin, float update_rate);
 
         /** 
     Called at update_rate to debounce and handle timing for the switch.

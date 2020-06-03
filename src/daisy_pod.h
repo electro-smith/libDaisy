@@ -86,13 +86,13 @@ class DaisyPod
     DaisySeed     seed;        /**<# */
     Encoder       encoder;     /**< # */
     AnalogControl knob1,       /**< # */
-        knob2,                 /**< # */
-        knobs[KNOB_LAST];      /**< # */
+                  knob2,       /**< # */
+                  *knobs[KNOB_LAST]; /**< # */
     Switch button1,            /**< # */
-        button2,               /**< # */
-        *buttons[BUTTON_LAST]; /**< # */
+           button2,            /**< # */
+           *buttons[BUTTON_LAST]; /**< # */
     RgbLed led1,               /**< # */
-        led2;                  /**< # */
+           led2;               /**< # */
 
   private:
     void   InitButtons();

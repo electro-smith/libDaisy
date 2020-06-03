@@ -114,7 +114,7 @@ typedef struct
     daisy::DaisySeed seed;               /**< Daisy seed */
     daisy::Switch    switches[SW_LAST];  /**< Array of hardware switches */
     dsy_gpio         gate_in,            /**< Gate input. */
-        gate_out;                        /**< Gate output */
+                     gate_out;           /**< Gate output */
     dsy_sr_4021_handle keyboard_sr;      /**< Keyboard shift register*/
     AnalogControl      knobs[KNOB_LAST]; /**< Array of hardware knobs*/
     AnalogControl      cvs[CV_LAST];     /**< Array of cv ins */
