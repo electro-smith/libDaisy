@@ -4,7 +4,7 @@
 
 #include "daisy_core.h"
 
-/** TODO:
+/* TODO:
 - Add documentation
 - Add configuration
 - Add reception
@@ -12,27 +12,29 @@
 - Add DMA
 */
 
+/** @file per_spi.h */
 
 namespace daisy
 {
+
+  /** SPI peripheral enum */
 enum SpiPeriph
 {
-    SPI_PERIPH_1, /** SPI peripheral 1 */
-    SPI_PERIPH_3, /** SPI peripheral 3 */
-    SPI_PERIPH_6, /** SPI peripheral 3 */
+    SPI_PERIPH_1, /**< SPI peripheral 1 */
+    SPI_PERIPH_3, /**< SPI peripheral 3 */
+    SPI_PERIPH_6, /**< SPI peripheral 3 */
 };
 
+/** SPI pins */
 enum SpiPin
 {
-    SPI_PIN_CS, /** CS pin */
-    SPI_PIN_SCK, /** SCK pin */
-    SPI_PIN_MOSI, /** MOSI pin */
-    SPI_PIN_MISO, /** MISO pin */
+    SPI_PIN_CS, /**< CS pin */
+    SPI_PIN_SCK, /**< SCK pin */
+    SPI_PIN_MOSI, /**< MOSI pin */
+    SPI_PIN_MISO, /**< MISO pin */
 };
 
-/** 
-    Handler for serial peripheral interface 
-*/
+/**  Handler for serial peripheral interface */
 class SpiHandle
 {
   public:

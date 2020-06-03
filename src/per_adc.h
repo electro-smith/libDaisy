@@ -112,7 +112,7 @@ class AdcHandle
 
     /** 
 	Get floating point from single channel
-	\chn Channel to get from
+	\param chn Channel to get from
 	\return Floating point converted value
     */
     float     GetFloat(uint8_t chn);

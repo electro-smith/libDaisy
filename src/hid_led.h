@@ -5,7 +5,7 @@
 #include "daisy_core.h"
 #include "per_gpio.h"
 
-/** - Get this set up to work with the dev_leddriver stuff as well
+/* TODO - Get this set up to work with the dev_leddriver stuff as well
 - Setup Hardware PWM for pins that have it
 */
 

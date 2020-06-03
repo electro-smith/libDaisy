@@ -59,27 +59,27 @@ extern "C"
   */
 
 /*---------- -----------*/
-#define USBD_MAX_NUM_INTERFACES 1U
+#define USBD_MAX_NUM_INTERFACES 1U /**< # */
 /*---------- -----------*/
-#define USBD_MAX_NUM_CONFIGURATION 1U
+#define USBD_MAX_NUM_CONFIGURATION 1U /**< # */
 /*---------- -----------*/
-#define USBD_MAX_STR_DESC_SIZ 512U
+#define USBD_MAX_STR_DESC_SIZ 512U /**< # */
 /*---------- -----------*/
-#define USBD_SUPPORT_USER_STRING 0U
+#define USBD_SUPPORT_USER_STRING 0U /**< # */
 /*---------- -----------*/
-#define USBD_DEBUG_LEVEL 3U
+#define USBD_DEBUG_LEVEL 3U /**< # */
 /*---------- -----------*/
-#define USBD_LPM_ENABLED 0U
+#define USBD_LPM_ENABLED 0U /**< # */
 /*---------- -----------*/
-#define USBD_SELF_POWERED 1U
+#define USBD_SELF_POWERED 1U /**< # */
 
-/****************************************/
-/* #define for FS and HS identification */
-#define DEVICE_FS 0
-#define DEVICE_HS 1
+/****************************************/ 
+/** FS and HS identification */
+#define DEVICE_FS 0 
+#define DEVICE_HS 1/**< # */
 
-/**
-  * @}
+  /**
+  * @} 
   */
 
 /** @defgroup USBD_CONF_Exported_Macros USBD_CONF_Exported_Macros
@@ -90,9 +90,9 @@ extern "C"
 /* Memory management macros */
 
 /** Alias for memory allocation. */
-#define USBD_malloc malloc
+#define USBD_malloc malloc 
 
-/** Alias for memory release. */
+  /** Alias for memory release. */
 #define USBD_free free
 
 /** Alias for memory set. */
@@ -109,9 +109,9 @@ extern "C"
 #if(USBD_DEBUG_LEVEL > 0)
 #define USBD_UsrLog(...) \
     printf(__VA_ARGS__); \
-    printf("\n");
+    printf("\n");  /**< # */
 #else
-#define USBD_UsrLog(...)
+#define USBD_UsrLog(...)/**< # */
 #endif
 
 #if(USBD_DEBUG_LEVEL > 1)
@@ -119,18 +119,18 @@ extern "C"
 #define USBD_ErrLog(...) \
     printf("ERROR: ");   \
     printf(__VA_ARGS__); \
-    printf("\n");
+    printf("\n"); /**< # */
 #else
-#define USBD_ErrLog(...)
+#define USBD_ErrLog(...) /**< # */
 #endif
 
 #if(USBD_DEBUG_LEVEL > 2)
 #define USBD_DbgLog(...) \
     printf("DEBUG : ");  \
     printf(__VA_ARGS__); \
-    printf("\n");
+    printf("\n"); /**< # */
 #else
-#define USBD_DbgLog(...)
+#define USBD_DbgLog(...) /**< # */
 #endif
 
     /**
