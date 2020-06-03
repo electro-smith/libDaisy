@@ -158,9 +158,9 @@ class RingBuffer<T, 0>
     inline T      ImmediateRead() { return T(0); } /**< \return Read value */
     inline void   Flush() {}                       /**< Flush the buffer */
     inline void   ImmediateRead(T* destination, size_t num_elements) {
-    } /**< \param destination # \param num_elements # */
+    } /**< \param destination & \param num_elements & */
     inline void Overwrite(const T* source, size_t num_elements) {
-    } /**< \param source 3 \param num_elements # */
+    } /**< \param source 3 \param num_elements & */
 
   private:
 };

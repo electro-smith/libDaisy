@@ -1,5 +1,5 @@
 #ifndef __fatfs_H
-#define __fatfs_H /**< # */
+#define __fatfs_H /**< & */
 
 #ifdef __cplusplus
 extern "C"
@@ -14,11 +14,11 @@ extern "C"
       @brief fatfs support.
   */
 
-    extern uint8_t retSD;                /**< # */
-    extern char    SDPath[4];            /**< # */
-    extern FATFS   SDFatFS;              /**< # */
-    extern FIL     SDFile;               /**< # */
-    void           dsy_fatfs_init(void); /**< # */
+    extern uint8_t retSD;                /**< & */
+    extern char    SDPath[4];            /**< & */
+    extern FATFS   SDFatFS;              /**< & */
+    extern FIL     SDFile;               /**< & */
+    void           dsy_fatfs_init(void); /**< & */
 
 #ifdef __cplusplus
 }

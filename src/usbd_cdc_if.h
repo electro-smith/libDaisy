@@ -110,9 +110,9 @@ extern "C"
   * @brief Public functions declaration.
   * @{
   */
-    void    CDC_Set_Rx_Callback_FS(CDC_ReceiveCallback cb); /**< # */
-    uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);    /**< # */
-    uint8_t CDC_Transmit_HS(uint8_t* Buf, uint16_t Len);    /**< # */
+    void    CDC_Set_Rx_Callback_FS(CDC_ReceiveCallback cb); /**< & */
+    uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);    /**< & */
+    uint8_t CDC_Transmit_HS(uint8_t* Buf, uint16_t Len);    /**< & */
 
     /* USER CODE BEGIN EXPORTED_FUNCTIONS */
 

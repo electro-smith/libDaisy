@@ -1,6 +1,6 @@
 #pragma once
 #ifndef DSY_PETAL_H
-#define DSY_PETAL_H /**< # */
+#define DSY_PETAL_H /**< & */
 
 #include "daisy_seed.h"
 
@@ -29,37 +29,37 @@ class DaisyPetal
     /** Knobs */
     enum Knob
     {
-        KNOB_1,    /**< # */
-        KNOB_2,    /**< # */
-        KNOB_3,    /**< # */
-        KNOB_4,    /**< # */
-        KNOB_5,    /**< # */
-        KNOB_6,    /**< # */
-        KNOB_LAST, /**< # */
+        KNOB_1,    /**< & */
+        KNOB_2,    /**< & */
+        KNOB_3,    /**< & */
+        KNOB_4,    /**< & */
+        KNOB_5,    /**< & */
+        KNOB_6,    /**< & */
+        KNOB_LAST, /**< & */
     };
 
     /** Leds in ringled */
     enum RingLed
     {
-        RING_LED_1,    /**< # */
-        RING_LED_2,    /**< # */
-        RING_LED_3,    /**< # */
-        RING_LED_4,    /**< # */
-        RING_LED_5,    /**< # */
-        RING_LED_6,    /**< # */
-        RING_LED_7,    /**< # */
-        RING_LED_8,    /**< # */
-        RING_LED_LAST /**< # */
+        RING_LED_1,   /**< & */
+        RING_LED_2,   /**< & */
+        RING_LED_3,   /**< & */
+        RING_LED_4,   /**< & */
+        RING_LED_5,   /**< & */
+        RING_LED_6,   /**< & */
+        RING_LED_7,   /**< & */
+        RING_LED_8,   /**< & */
+        RING_LED_LAST /**< & */
     };
 
     /** footswitch leds */
     enum FootswitchLed
     {
-        FOOTSWITCH_LED_1,    /**< # */
-        FOOTSWITCH_LED_2,    /**< # */
-        FOOTSWITCH_LED_3,    /**< # */
-        FOOTSWITCH_LED_4,    /**< # */
-        FOOTSWITCH_LED_LAST, /**< # */
+        FOOTSWITCH_LED_1,    /**< & */
+        FOOTSWITCH_LED_2,    /**< & */
+        FOOTSWITCH_LED_3,    /**< & */
+        FOOTSWITCH_LED_4,    /**< & */
+        FOOTSWITCH_LED_LAST, /**< & */
     };
 
     /** Constructor */
@@ -115,7 +115,7 @@ class DaisyPetal
     */
     float GetKnobValue(Knob k);
 
-    /** # */
+    /** & */
     float GetExpression();
 
     /** Debounce inputs.*/
@@ -143,15 +143,15 @@ class DaisyPetal
      */
     void SetFootswitchLed(FootswitchLed idx, float bright);
 
-    DaisySeed seed;    /**< # */
-    Encoder   encoder; /**< # */
+    DaisySeed seed;    /**< & */
+    Encoder   encoder; /**< & */
 
-    AnalogControl knob[KNOB_LAST]; /**< # */
-    AnalogControl expression;      /**< # */
-    Switch        switches[SW_LAST] /**< # */;
+    AnalogControl knob[KNOB_LAST]; /**< & */
+    AnalogControl expression;      /**< & */
+    Switch        switches[SW_LAST] /**< & */;
 
-    RgbLed ring_led[8];       /**< # */
-    Led    footswitch_led[4]; /**< # */
+    RgbLed ring_led[8];       /**< & */
+    Led    footswitch_led[4]; /**< & */
 
   private:
     void InitSwitches();

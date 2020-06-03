@@ -20,22 +20,22 @@ class Switch
     /** Specifies the expected behavior of the switch */
     enum Type
     {
-        TYPE_TOGGLE,    /**< # */
-        TYPE_MOMENTARY, /**< # */
+        TYPE_TOGGLE,    /**< & */
+        TYPE_MOMENTARY, /**< & */
     };
     /** Specifies whether the pressed is HIGH or LOW. */
     enum Polarity
     {
-        POLARITY_NORMAL,   /**< # */
-        POLARITY_INVERTED, /**< # */
+        POLARITY_NORMAL,   /**< & */
+        POLARITY_INVERTED, /**< & */
     };
 
     /** Specifies whether to use built-in Pull Up/Down resistors to hold button at a given state when not engaged. */
     enum Pull
     {
-        PULL_UP,   /**< # */
-        PULL_DOWN, /**< # */
-        PULL_NONE, /**< # */
+        PULL_UP,   /**< & */
+        PULL_DOWN, /**< & */
+        PULL_NONE, /**< & */
     };
 
     Switch() {}
@@ -60,12 +60,12 @@ class Switch
     */
     void Init(dsy_gpio_pin pin, float update_rate);
 
-        /** 
+    /** 
     Called at update_rate to debounce and handle timing for the switch.
     In order for events not to be missed, its important that the Edge/Pressed checks
     be made at the same rate as the debounce function is being called.
     */
-        void Debounce();
+    void Debounce();
 
     /** \return true if a button was just pressed. */
     inline bool RisingEdge() const { return state_ == 0x7f; }

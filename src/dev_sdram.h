@@ -54,7 +54,7 @@ SECTIONS
 }
 */
 #ifndef RAM_AS4C16M16SA_H
-#define RAM_AS4C16M16SA_H /**< # */
+#define RAM_AS4C16M16SA_H /**< & */
 #ifdef __cplusplus
 extern "C"
 {
@@ -83,16 +83,16 @@ extern "C"
 
     enum
     {
-        DSY_SDRAM_OK,  /**< # */
-        DSY_SDRAM_ERR, /**< # */
+        DSY_SDRAM_OK,  /**< & */
+        DSY_SDRAM_ERR, /**< & */
     };
 
     /** Determines whether chip is initialized, and activated. */
     typedef enum
     {
-        DSY_SDRAM_STATE_ENABLE,  /**< # */
-        DSY_SDRAM_STATE_DISABLE, /**< # */
-        DSY_SDRAM_STATE_LAST,    /**< # */
+        DSY_SDRAM_STATE_ENABLE,  /**< & */
+        DSY_SDRAM_STATE_DISABLE, /**< & */
+        DSY_SDRAM_STATE_LAST,    /**< & */
     } dsy_sdram_state;
 
 
@@ -107,16 +107,16 @@ extern "C"
     /** This is PH5 on Daisy*/
     typedef enum
     {
-        DSY_SDRAM_PIN_SDNWE, /**< # */
-        DSY_SDRAM_PIN_LAST,  /**< # */
+        DSY_SDRAM_PIN_SDNWE, /**< & */
+        DSY_SDRAM_PIN_LAST,  /**< & */
     } dsy_sdram_pin;
 
 
     /** Configuration struct for passing to initialization */
     typedef struct
     {
-        dsy_sdram_state state;                          /**< # */
-        dsy_gpio_pin    pin_config[DSY_SDRAM_PIN_LAST]; /**< # */
+        dsy_sdram_state state;                          /**< & */
+        dsy_gpio_pin    pin_config[DSY_SDRAM_PIN_LAST]; /**< & */
     } dsy_sdram_handle;
 
     /** Initializes the SDRAM peripheral */

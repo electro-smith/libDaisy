@@ -1,5 +1,5 @@
 #ifndef DSY_AUDIO_H
-/** # */
+/** & */
 #define DSY_AUDIO_H
 #include <stddef.h>
 #include <stdint.h>
@@ -40,9 +40,9 @@ extern "C"
   */
     enum
     {
-        DSY_AUDIO_INTERNAL, /**< # */
-        DSY_AUDIO_EXTERNAL, /**< # */
-        DSY_AUDIO_LAST,     /**< # */
+        DSY_AUDIO_INTERNAL, /**< & */
+        DSY_AUDIO_EXTERNAL, /**< & */
+        DSY_AUDIO_LAST,     /**< & */
     };
 
 
@@ -50,10 +50,10 @@ extern "C"
      */
     typedef struct
     {
-        size_t          block_size; /**< # */
-        dsy_sai_handle* sai;        /**< # */
-        dsy_i2c_handle* dev0_i2c;   /**< # */
-        dsy_i2c_handle* dev1_i2c;   /**< # */
+        size_t          block_size; /**< & */
+        dsy_sai_handle* sai;        /**< & */
+        dsy_i2c_handle* dev0_i2c;   /**< & */
+        dsy_i2c_handle* dev1_i2c;   /**< & */
     } dsy_audio_handle;
 
     /** These are user-defineable callbacks that are called when 

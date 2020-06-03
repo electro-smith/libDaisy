@@ -25,15 +25,15 @@ class Color
     /** List of colors that have a preset RGB value */
     enum PresetColor
     {
-        RED,    /**< # */
-        GREEN,  /**< # */
-        BLUE,   /**< # */
-        WHITE,  /**< # */
-        PURPLE, /**< # */
-        CYAN,   /**< # */
-        GOLD,   /**< # */
-        OFF,    /**< # */
-        LAST    /**< # */
+        RED,    /**< & */
+        GREEN,  /**< & */
+        BLUE,   /**< & */
+        WHITE,  /**< & */
+        PURPLE, /**< & */
+        CYAN,   /**< & */
+        GOLD,   /**< & */
+        OFF,    /**< & */
+        LAST    /**< & */
     };
 
     /** Initializes the Color with a given preset. 

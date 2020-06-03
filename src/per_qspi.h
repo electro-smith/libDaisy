@@ -8,8 +8,8 @@ extern "C"
 #include <stdint.h>
 #include "daisy_core.h" // Added for dsy_gpio_pin typedef
 
-#define DSY_MEMORY_OK ((uint32_t)0x00)    /**< # */
-#define DSY_MEMORY_ERROR ((uint32_t)0x01) /**< # */
+#define DSY_MEMORY_OK ((uint32_t)0x00)    /**< & */
+#define DSY_MEMORY_ERROR ((uint32_t)0x01) /**< & */
 
 #define DSY_QSPI_TEXT       \
     __attribute__((section( \
@@ -31,13 +31,13 @@ extern "C"
     /** List of Pins used in QSPI (passed in during Init) */
     typedef enum
     {
-        DSY_QSPI_PIN_IO0,  /**< # */
-        DSY_QSPI_PIN_IO1,  /**< # */
-        DSY_QSPI_PIN_IO2,  /**< # */
-        DSY_QSPI_PIN_IO3,  /**< # */
-        DSY_QSPI_PIN_CLK,  /**< # */
-        DSY_QSPI_PIN_NCS,  /**< # */
-        DSY_QSPI_PIN_LAST, /**< # */
+        DSY_QSPI_PIN_IO0,  /**< & */
+        DSY_QSPI_PIN_IO1,  /**< & */
+        DSY_QSPI_PIN_IO2,  /**< & */
+        DSY_QSPI_PIN_IO3,  /**< & */
+        DSY_QSPI_PIN_CLK,  /**< & */
+        DSY_QSPI_PIN_NCS,  /**< & */
+        DSY_QSPI_PIN_LAST, /**< & */
     } dsy_qspi_pin;
 
     /** 
@@ -50,25 +50,25 @@ extern "C"
     */
     typedef enum
     {
-        DSY_QSPI_MODE_DSY_MEMORY_MAPPED, /**< # */
-        DSY_QSPI_MODE_INDIRECT_POLLING,  /**< # */
-        DSY_QSPI_MODE_LAST,              /**< # */
+        DSY_QSPI_MODE_DSY_MEMORY_MAPPED, /**< & */
+        DSY_QSPI_MODE_INDIRECT_POLLING,  /**< & */
+        DSY_QSPI_MODE_LAST,              /**< & */
     } dsy_qspi_mode;
 
     /** Flash Devices supported. (Both of these are more-or-less the same, just different sizes). */
     typedef enum
     {
-        DSY_QSPI_DEVICE_IS25LP080D, /**< # */
-        DSY_QSPI_DEVICE_IS25LP064A, /**< # */
-        DSY_QSPI_DEVICE_LAST,       /**< # */
+        DSY_QSPI_DEVICE_IS25LP080D, /**< & */
+        DSY_QSPI_DEVICE_IS25LP064A, /**< & */
+        DSY_QSPI_DEVICE_LAST,       /**< & */
     } dsy_qspi_device;
 
     /** Configuration structure for interfacing with QSPI Driver */
     typedef struct
     {
-        dsy_qspi_mode   mode;                          /**< # */
-        dsy_qspi_device device;                        /**< # */
-        dsy_gpio_pin    pin_config[DSY_QSPI_PIN_LAST]; /**< # */
+        dsy_qspi_mode   mode;                          /**< & */
+        dsy_qspi_device device;                        /**< & */
+        dsy_gpio_pin    pin_config[DSY_QSPI_PIN_LAST]; /**< & */
     } dsy_qspi_handle;
 
     /** 

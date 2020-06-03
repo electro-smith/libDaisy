@@ -1,6 +1,6 @@
 #pragma once
 #ifndef DEV_SR_4021_H
-/** # */
+/** & */
 #define DEV_SR_4021_H
 #ifdef __cplusplus
 extern "C"

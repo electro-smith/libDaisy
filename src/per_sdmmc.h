@@ -18,14 +18,14 @@ namespace daisy
 /** Operating Mode. Currently only FatFS is supported. */
 enum SdmmcMode
 {
-    SDMMC_MODE_FATFS, /**< # */
+    SDMMC_MODE_FATFS, /**< & */
 };
 
 /** Sets whether 4-bit mode or 1-bit mode is used for the SDMMC */
 enum SdmmcBitWidth
 {
-    SDMMC_BITS_1, /**< # */
-    SDMMC_BITS_4, /**< # */
+    SDMMC_BITS_1, /**< & */
+    SDMMC_BITS_4, /**< & */
 };
 /** 
     Sets the desired clock speed of the SD card bus. \n 
@@ -33,14 +33,14 @@ enum SdmmcBitWidth
 */
 enum SdmmcSpeed
 {
-    SDMMC_SPEED_400KHZ, /**< # */
-    SDMMC_SPEED_12MHZ,  /**< # */
+    SDMMC_SPEED_400KHZ, /**< & */
+    SDMMC_SPEED_12MHZ,  /**< & */
 };
 /** Structure for setting the options above. Used to intiailize SdmmcHandler */
 struct SdmmcHandlerInit
 {
-    SdmmcBitWidth bitdepth; /**< # */
-    SdmmcSpeed    speed;    /**< # */
+    SdmmcBitWidth bitdepth; /**< & */
+    SdmmcSpeed    speed;    /**< & */
 };
 
 /** Configuration for interfacing with SD cards.

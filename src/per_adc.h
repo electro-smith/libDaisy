@@ -23,10 +23,10 @@ struct AdcChannelConfig
     /** Which pin to use for multiplexing */
     enum MuxPin
     {
-        MUX_SEL_0,    /**< # */
-        MUX_SEL_1,    /**< # */
-        MUX_SEL_2,    /**< # */
-        MUX_SEL_LAST, /**< # */
+        MUX_SEL_0,    /**< & */
+        MUX_SEL_1,    /**< & */
+        MUX_SEL_2,    /**< & */
+        MUX_SEL_LAST, /**< & */
     };
 
     /** Initializes a single ADC pin as an ADC. 
@@ -50,9 +50,9 @@ struct AdcChannelConfig
                  dsy_gpio_pin mux_2,
                  size_t       channels);
 
-    dsy_gpio pin_;                   /**< # */
-    dsy_gpio mux_pin_[MUX_SEL_LAST]; /**< # */
-    uint8_t  mux_channels_;          /**< # */
+    dsy_gpio pin_;                   /**< & */
+    dsy_gpio mux_pin_[MUX_SEL_LAST]; /**< & */
+    uint8_t  mux_channels_;          /**< & */
 };
 
 /**
@@ -64,17 +64,17 @@ class AdcHandle
     /** Supported oversampling amounts */
     enum OverSampling
     {
-        OVS_NONE, /**< # */
-        OVS_4,    /**< # */
-        OVS_8,    /**< # */
-        OVS_16,   /**< # */
-        OVS_32,   /**< # */
-        OVS_64,   /**< # */
-        OVS_128,  /**< # */
-        OVS_256,  /**< # */
-        OVS_512,  /**< # */
-        OVS_1024, /**< # */
-        OVS_LAST, /**< # */
+        OVS_NONE, /**< & */
+        OVS_4,    /**< & */
+        OVS_8,    /**< & */
+        OVS_16,   /**< & */
+        OVS_32,   /**< & */
+        OVS_64,   /**< & */
+        OVS_128,  /**< & */
+        OVS_256,  /**< & */
+        OVS_512,  /**< & */
+        OVS_1024, /**< & */
+        OVS_LAST, /**< & */
     };
 
     AdcHandle() {}

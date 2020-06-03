@@ -16,15 +16,15 @@ At this time only 3-byte messages are correctly parsed into MidiEvents.
 */
 enum MidiMessageType
 {
-    NoteOff,               /**< # */
-    NoteOn,                /**< # */
-    PolyphonicKeyPressure, /**< # */
-    ControlChange,         /**< # */
-    ProgramChange,         /**< # */
-    ChannelPressure,       /**< # */
-    PitchBend,             /**< # */
+    NoteOff,               /**< & */
+    NoteOn,                /**< & */
+    PolyphonicKeyPressure, /**< & */
+    ControlChange,         /**< & */
+    ProgramChange,         /**< & */
+    ChannelPressure,       /**< & */
+    PitchBend,             /**< & */
     MessageLast,
-    /**< # */ // maybe change name to MessageUnsupported
+    /**< & */ // maybe change name to MessageUnsupported
 };
 
 /** Struct containing note, and velocity data for a given channel.
@@ -32,18 +32,18 @@ Can be made from MidiEvent
 */
 struct NoteOnEvent
 {
-    int     channel;  /**< # */
-    uint8_t note;     /**< # */
-    uint8_t velocity; /**< # */
+    int     channel;  /**< & */
+    uint8_t note;     /**< & */
+    uint8_t velocity; /**< & */
 };
 /** Struct containing control number, and value for a given channel.
 Can be made from MidiEvent
 */
 struct ControlChangeEvent
 {
-    int     channel;        /**< # */
-    uint8_t control_number; /**< # */
-    uint8_t value;          /**< # */
+    int     channel;        /**< & */
+    uint8_t control_number; /**< & */
+    uint8_t value;          /**< & */
 };
 
 /** Simple MidiEvent with message type, channel, and data[2] members.
@@ -51,9 +51,9 @@ struct ControlChangeEvent
 struct MidiEvent
 {
     // Newer ish.
-    MidiMessageType type;    /**< # */
-    int             channel; /**< # */
-    uint8_t         data[2]; /**< # */
+    MidiMessageType type;    /**< & */
+    int             channel; /**< & */
+    uint8_t         data[2]; /**< & */
 
     /** Returns the data within the MidiEvent as a NoteOnEvent struct */
     NoteOnEvent AsNoteOn()
@@ -93,18 +93,18 @@ class MidiHandler
     */
     enum MidiInputMode
     {
-        INPUT_MODE_NONE    = 0x00, /**< # */
-        INPUT_MODE_UART1   = 0x01, /**< # */
-        INPUT_MODE_USB_INT = 0x02, /**< # */
-        INPUT_MODE_USB_EXT = 0x04, /**< # */
+        INPUT_MODE_NONE    = 0x00, /**< & */
+        INPUT_MODE_UART1   = 0x01, /**< & */
+        INPUT_MODE_USB_INT = 0x02, /**< & */
+        INPUT_MODE_USB_EXT = 0x04, /**< & */
     };
     /** Output mode */
     enum MidiOutputMode
     {
-        OUTPUT_MODE_NONE    = 0x00, /**< # */
-        OUTPUT_MODE_UART1   = 0x01, /**< # */
-        OUTPUT_MODE_USB_INT = 0x02, /**< # */
-        OUTPUT_MODE_USB_EXT = 0x04, /**< # */
+        OUTPUT_MODE_NONE    = 0x00, /**< & */
+        OUTPUT_MODE_UART1   = 0x01, /**< & */
+        OUTPUT_MODE_USB_INT = 0x02, /**< & */
+        OUTPUT_MODE_USB_EXT = 0x04, /**< & */
     };
 
 

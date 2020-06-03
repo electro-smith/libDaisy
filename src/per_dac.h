@@ -33,18 +33,18 @@ extern "C"
   */
     typedef enum
     {
-        DSY_DAC_BITS_8,    /**< # */
-        DSY_DAC_BITS_12,   /**< # */
-        DSY_DAC_BITS_LAST, /**< # */
+        DSY_DAC_BITS_8,    /**< & */
+        DSY_DAC_BITS_12,   /**< & */
+        DSY_DAC_BITS_LAST, /**< & */
     } dsy_dac_bitdepth;
 
     /** Sets which channel(s) are initialized with the settings chosen. */
     typedef enum
     {
-        DSY_DAC_CHN1,     /**< # */
-        DSY_DAC_CHN2,     /**< # */
-        DSY_DAC_CHN_LAST, /**< # */
-        DSY_DAC_CHN_BOTH, /**< # */
+        DSY_DAC_CHN1,     /**< & */
+        DSY_DAC_CHN2,     /**< & */
+        DSY_DAC_CHN_LAST, /**< & */
+        DSY_DAC_CHN_BOTH, /**< & */
     } dsy_dac_channel;
 
     /** 
@@ -55,9 +55,9 @@ extern "C"
     */
     typedef struct
     {
-        dsy_dac_mode     mode;                         /**< # */
-        dsy_dac_bitdepth bitdepth;                     /**< # */
-        dsy_gpio_pin     pin_config[DSY_DAC_CHN_LAST]; /**< # */
+        dsy_dac_mode     mode;                         /**< & */
+        dsy_dac_bitdepth bitdepth;                     /**< & */
+        dsy_gpio_pin     pin_config[DSY_DAC_CHN_LAST]; /**< & */
     } dsy_dac_handle;
 
     /** Initializes the specified channel(s) of the DAC 

@@ -19,17 +19,17 @@ class DaisyPod
     /** Switches */
     enum Sw
     {
-        BUTTON_1,    /** # */
-        BUTTON_2,    /** # */
-        BUTTON_LAST, /** #  */
+        BUTTON_1,    /** & */
+        BUTTON_2,    /** & */
+        BUTTON_LAST, /** &  */
     };
 
     /** Knobs */
     enum Knob
     {
-        KNOB_1,    /** #  */
-        KNOB_2,    /** # */
-        KNOB_LAST, /** # */
+        KNOB_1,    /** &  */
+        KNOB_2,    /** & */
+        KNOB_LAST, /** & */
     };
 
     DaisyPod() {}
@@ -73,9 +73,9 @@ class DaisyPod
     float AudioCallbackRate(); /** */
     /** Call at same rate as analog reads for smooth reading.*/
     void UpdateAnalogControls(); /** */
-    /** # */
+    /** & */
     float GetKnobValue(Knob k);
-    /** # */
+    /** & */
     void DebounceControls();
     /** Reset Leds*/
     void ClearLeds();
@@ -84,15 +84,15 @@ class DaisyPod
 
     /** Public Members */
     DaisySeed     seed;        /**<# */
-    Encoder       encoder;     /**< # */
-    AnalogControl knob1,       /**< # */
-                  knob2,       /**< # */
-                  *knobs[KNOB_LAST]; /**< # */
-    Switch button1,            /**< # */
-           button2,            /**< # */
-           *buttons[BUTTON_LAST]; /**< # */
-    RgbLed led1,               /**< # */
-           led2;               /**< # */
+    Encoder       encoder;     /**< & */
+    AnalogControl knob1,       /**< & */
+        knob2,                 /**< & */
+        *knobs[KNOB_LAST];     /**< & */
+    Switch button1,            /**< & */
+        button2,               /**< & */
+        *buttons[BUTTON_LAST]; /**< & */
+    RgbLed led1,               /**< & */
+        led2;                  /**< & */
 
   private:
     void   InitButtons();

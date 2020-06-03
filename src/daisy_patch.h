@@ -98,10 +98,10 @@ class DaisyPatch
     AnalogControl controls[CTRL_LAST];      /**< Array of controls*/
     GateIn        gate_input[GATE_IN_LAST]; /**< Gate inputs  */
     MidiHandler   midi;                     /**< Handles midi*/
-    OledDisplay   display;                  /**< # */
+    OledDisplay   display;                  /**< & */
 
     // TODO: Add class for Gate output
-    dsy_gpio gate_output; /**< #  */
+    dsy_gpio gate_output; /**< &  */
 
 
   private:

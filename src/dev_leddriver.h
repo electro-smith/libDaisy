@@ -1,6 +1,6 @@
 #pragma once
 #ifndef SA_LED_DRIVER_H
-#define SA_LED_DRIVER_H /**< # */
+#define SA_LED_DRIVER_H /**< & */
 #ifdef __cplusplus
 extern "C"
 {
@@ -26,15 +26,15 @@ extern "C"
     /** Different Led colors */
     enum
     {
-        LED_COLOR_RED,    /**< # */
-        LED_COLOR_GREEN,  /**< # */
-        LED_COLOR_BLUE,   /**< # */
-        LED_COLOR_WHITE,  /**< # */
-        LED_COLOR_PURPLE, /**< # */
-        LED_COLOR_CYAN,   /**< # */
-        LED_COLOR_GOLD,   /**< # */
-        LED_COLOR_OFF,    /**< # */
-        LED_COLOR_LAST    /**< # */
+        LED_COLOR_RED,    /**< & */
+        LED_COLOR_GREEN,  /**< & */
+        LED_COLOR_BLUE,   /**< & */
+        LED_COLOR_WHITE,  /**< & */
+        LED_COLOR_PURPLE, /**< & */
+        LED_COLOR_CYAN,   /**< & */
+        LED_COLOR_GOLD,   /**< & */
+        LED_COLOR_OFF,    /**< & */
+        LED_COLOR_LAST    /**< & */
     };
 
     /** Simple color struct
@@ -43,9 +43,9 @@ extern "C"
   */
     typedef struct
     {
-        uint16_t red, /**< # */
-            green,    /**< # */
-            blue;     /**< # */
+        uint16_t red, /**< & */
+            green,    /**< & */
+            blue;     /**< & */
     } color;
 
 

@@ -227,9 +227,9 @@ This option switches support of multi-partition on a physical drive.
 /  When enable exFAT, also LFN needs to be enabled. (_USE_LFN >= 1)
 /  Note that enabling exFAT discards C89 compatibility. */
 
-#define _FS_NORTC 0   /**< # */
-#define _NORTC_MON 6  /**< # */
-#define _NORTC_MDAY 4 /**< # */
+#define _FS_NORTC 0   /**< & */
+#define _NORTC_MON 6  /**< & */
+#define _NORTC_MDAY 4 /**< & */
 #define _NORTC_YEAR \
     2015 /**< 
 The option _FS_NORTC switches timestamp functiton. If the system does not have 
