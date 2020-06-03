@@ -3,8 +3,8 @@
 #include <stddef.h>
 
 /**
-   \file dev_codec_wm8731_frame.h
-   \brief WM8731 Codec framework
+   @file dev_codec_wm8731_frame.h
+   @brief WM8731 Codec framework
 */
 
 /**

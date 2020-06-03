@@ -1,47 +1,46 @@
 #pragma once
 #ifndef DSY_FIELD_BSP_H
-#define DSY_FIELD_BSP_H
+#define DSY_FIELD_BSP_H /**< # */
 #include "daisy_seed.h"
 
 #ifndef SAMPLE_RATE
-#define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
+#define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE /**< # */
 #endif
 
 // Hardware related defines.
-#define SW_1_PIN 29
-#define SW_2_PIN 28
-#define SW_3_PIN 27
-#define GATE_OUT_PIN 0
-#define GATE_IN_PIN 1
+#define SW_1_PIN 29 /**< # */
+#define SW_2_PIN 28/**< # */
+#define SW_3_PIN 27/**< # */
+#define GATE_OUT_PIN 0/**< # */
+#define GATE_IN_PIN 1/**< # */
 
 // keyboard switches shift register
-#define KB_SW_SR_CS_PIN 8
-#define KB_SW_SR_CLK_PIN 9
-#define KB_SW_SR_D1_PIN 10
-#define KB_SW_SR_D2_PIN 11
+#define KB_SW_SR_CS_PIN 8/**< # */
+#define KB_SW_SR_CLK_PIN 9/**< # */
+#define KB_SW_SR_D1_PIN 10/**< # */
+#define KB_SW_SR_D2_PIN 11/**< # */
 
 // UART for MIDI via TRS jacks on Field
-#define MIDI_OUT_PIN 14
-#define MIDI_IN_PIN 15
+#define MIDI_OUT_PIN 14/**< # */
+#define MIDI_IN_PIN 15/**< # */
 
 //CD4051 Select Pin controls
-#define MUX_SEL_0_PIN 21
-#define MUX_SEL_1_PIN 20
-#define MUX_SEL_2_PIN 19
+#define MUX_SEL_0_PIN 21/**< # */
+#define MUX_SEL_1_PIN 20/**< # */
+#define MUX_SEL_2_PIN 19/**< # */
 
-#define MUX_ADC_PIN 16
-#define CV1_ADC_PIN 17
-#define CV2_ADC_PIN 18
-#define CV3_ADC_PIN 23
-#define CV4_ADC_PIN 22
+#define MUX_ADC_PIN 16 /**< # */
+#define CV1_ADC_PIN 17/**< # */
+#define CV2_ADC_PIN 18/**< # */
+#define CV3_ADC_PIN 23/**< # */
+#define CV4_ADC_PIN 22/**< # */
 
-#define LED_DRIVER_I2C i2c1_handle
+#define LED_DRIVER_I2C i2c1_handle/**< # */
 
 /**
-   daisy_field.h
-   Hardware defines and helpers for daisy field platform.
+   @file daisy_field.h
+   @brief Hardware defines and helpers for daisy field platform.
 */
-
 namespace daisy
 {
 /** enums for controls, etc.

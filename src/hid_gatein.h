@@ -6,12 +6,12 @@
 namespace daisy
 {
 
-  /** 
-    hid_gatein.h 
-    @brief Generic Class for handling gate inputs through GPIO.
-    @author Stephen Hensley
-    @date    March 2020
-  */
+/** @file hid_gatein.h */
+/**
+   @brief Generic Class for handling gate inputs through GPIO.
+   @author Stephen Hensley
+   @date    March 2020
+*/
 class GateIn
 {
   public:

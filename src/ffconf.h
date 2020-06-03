@@ -1,4 +1,5 @@
 /* USER CODE BEGIN Header */
+/** @file ffconf.h Further fatfs support. */
 /**
   ******************************************************************************
   *  FatFs - Generic FAT file system module  R0.12c (C)ChaN, 2017

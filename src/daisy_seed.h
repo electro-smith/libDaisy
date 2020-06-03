@@ -10,9 +10,9 @@
 
 namespace daisy
 {
-/** 
-    daisy_seed.h
-    This is the higher-level interface for the Daisy board.
+/** @file daisy_seed.h */
+/**
+   @brief This is the higher-level interface for the Daisy board. \n 
     All basic peripheral configuration/initialization is setup here.
 */
 class DaisySeed
@@ -28,9 +28,11 @@ class DaisySeed
 	handles prior to initialization.
     */
     
-    /** Defaults listed below:
-	TODO: Add defaults
-    */
+    //Defaults listed below:
+    //TODO: Add defaults
+    
+
+    /** # */
     void Configure();
 
     /** 
@@ -72,9 +74,9 @@ class DaisySeed
      */
     void SetAudioBlockSize(size_t blocksize);
     
-    /** While the library is still in heavy development, most of the
-	configuration handles will remain public.
-    */
+    // While the library is still in heavy development, most of the
+    // configuration handles will remain public.
+    
     dsy_sdram_handle sdram_handle; /**< # */
     dsy_qspi_handle  qspi_handle; /**< # */
     dsy_audio_handle audio_handle; /**< # */

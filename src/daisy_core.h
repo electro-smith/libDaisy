@@ -1,20 +1,21 @@
 #pragma once
 #ifndef DSY_CORE_HW_H
-#define DSY_CORE_HW_H
+#define DSY_CORE_HW_H /**< # */
 #include <stdint.h>
 #include <stdlib.h>
 
 #if defined(_MSC_VER)
-#define FORCE_INLINE __forceinline
+#define FORCE_INLINE __forceinline /**< # */
 #elif defined(__clang__)
-#define FORCE_INLINE inline __attribute__((always_inline))
+#define FORCE_INLINE inline __attribute__((always_inline)) /**< # */
 #pragma clang diagnostic ignored "-Wduplicate-decl-specifier"
 #elif defined(__GNUC__)
-#define FORCE_INLINE inline __attribute__((always_inline))
+#define FORCE_INLINE inline __attribute__((always_inline)) /**< # */
 #else
 #error unknown compiler
 #endif
 
+/** @file daisy_core.h */
 
 /** Macro for area of memory that is configured as cacheless
 This should be used primarily for DMA buffers, and the like.

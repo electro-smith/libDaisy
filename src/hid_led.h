@@ -11,9 +11,9 @@
 
 namespace daisy
 {
-/** 
-    hid_led.h
-    @brief LED Class providing simple Software PWM ability, etc 
+/** @file hid_led.h */
+/**
+    @brief LED Class providing simple Software PWM ability, etc \n 
     Eventually this will work with hardware PWM, and external LED Driver devices as well.
     @author shensley
     @date March 2020

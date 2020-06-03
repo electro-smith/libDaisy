@@ -6,8 +6,8 @@
 #include "per_i2c.h"
 
 /** 
-    Driver for the WM8731 Codec
-    \file dev_codec_wm8731.h
+    @brief Driver for the WM8731 Codec
+    @file dev_codec_wm8731.h
 */
 
 /** 

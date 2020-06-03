@@ -4,8 +4,8 @@
 
 
 /** 
-    Driver for the PCM3060 Codec.
-    \file dev_codec_pcm3060.h
+    @brief Driver for the PCM3060 Codec.
+    @file dev_codec_pcm3060.h
 */
 
 /** 

@@ -1,7 +1,6 @@
 #pragma once
 #ifndef SA_LED_DRIVER_H
-/** # */
-#define SA_LED_DRIVER_H
+#define SA_LED_DRIVER_H /**< # */
 #ifdef __cplusplus
 extern "C"
 {
@@ -14,8 +13,8 @@ extern "C"
 
 
 /** 
-    \file dev_leddriver.h
-    Device driver for PCA9685 16-channel 12-bit PWM generator
+    @file dev_leddriver.h
+    @brief Device driver for PCA9685 16-channel 12-bit PWM generator
 */
     /*
     TODO

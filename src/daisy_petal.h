@@ -1,21 +1,20 @@
-//
 #pragma once
 #ifndef DSY_PETAL_H
-#define DSY_PETAL_H
+#define DSY_PETAL_H /**< # */
 
 #include "daisy_seed.h"
 
 namespace daisy
 {
 
-  /**
-     daisy_petal.h
-     @brief Helpers and hardware definitions for daisy petal. 
-  */
+/** @file daisy_petal.h */
+/**
+   @brief Helpers and hardware definitions for daisy petal.
+*/
 class DaisyPetal
 {
   public:
-  /** Switches */
+    /** Switches */
     enum Sw
     {
         SW_1, /**< Footswitch */

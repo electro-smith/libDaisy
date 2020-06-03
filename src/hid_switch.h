@@ -1,98 +1,81 @@
-//
-/** Generic Class for handling momentary/latching switches
-*/
-//
-/** hid_switch.*
-*/
-//
-//
-/** **Author:** Stephen Hensley
-*/
-//
-/** **Date:** December 2019
-*/
-//
-/** Inspired/influenced by Mutable Instruments (pichenettes) Switch classes
-*/
-//
 #pragma once
 #ifndef DSY_SWITCH_H
 #define DSY_SWITCH_H
 #include "daisy_core.h"
 #include "per_gpio.h"
 
+/** @file hid_switch.h */
+
 namespace daisy
 {
+/** 
+    Generic Class for handling momentary/latching switches \n 
+    Inspired/influenced by Mutable Instruments (pichenettes) Switch classes
+    @author Stephen Hensley
+    @date December 2019
+*/
 class Switch
 {
   public:
-    /** Specifies the expected behavior of the switch
-*/
+    /** Specifies the expected behavior of the switch */
     enum Type
     {
-        TYPE_TOGGLE,
-        TYPE_MOMENTARY,
+        TYPE_TOGGLE, /**< # */
+	TYPE_MOMENTARY,/**< # */
     };
-    /** Specifies whether the pressed is HIGH or LOW.
-*/
+    /** Specifies whether the pressed is HIGH or LOW. */
     enum Polarity
     {
-        POLARITY_NORMAL,
-        POLARITY_INVERTED,
+        POLARITY_NORMAL, /**< # */
+        POLARITY_INVERTED,/**< # */
     };
-    /** Specifies whether to use built-in Pull Up/Down resistors to hold button
-at a given state when not engaged.
-*/
+
+    /** Specifies whether to use built-in Pull Up/Down resistors to hold button at a given state when not engaged. */
     enum Pull
     {
-        PULL_UP,
-        PULL_DOWN,
-        PULL_NONE,
+        PULL_UP, /**< # */
+	PULL_DOWN,/**< # */
+	PULL_NONE,/**< # */
     };
 
     Switch() {}
 
     ~Switch() {}
 
-    /** Initializes the switch object with a given port/pin combo.
-*/
-    //
-    /** Parameters:
-*/
-    //
-    /** - pin: port/pin object to tell the switch which hardware pin to use.
-- update_rate: the rate at which the Debounce() function will be called. (used for timing).
-- t: switch type -- Default: TYPE_MOMENTARY
-- pol: switch polarity -- Default: POLARITY_INVERTED
-- pu: switch pull up/down -- Default: PULL_UP
-*/
-    void
-    Init(dsy_gpio_pin pin, float update_rate, Type t, Polarity pol, Pull pu);
+    /** 
+	Initializes the switch object with a given port/pin combo.
+	\param pin port/pin object to tell the switch which hardware pin to use.
+	\param update_rate the rate at which the Debounce() function will be called. (used for timing).
+	\param t switch type -- Default: TYPE_MOMENTARY
+	\param pol switch polarity -- Default: POLARITY_INVERTED
+	\param pu switch pull up/down -- Default: PULL_UP
+    */
+    void Init(dsy_gpio_pin pin, float update_rate, Type t, Polarity pol, Pull pu);
 
-    void Init(dsy_gpio_pin pin, float update_rate);
+    /**
+       Simplified Init.
+       \param pin port/pin object to tell the switch which hardware pin to use.
+       \param update_rate the rate at which the Debounce() function will be called. (used for timing).
+    */
+    void Init(dsy_gpio_pin pin, float update_rate)
 
-    /** Called at update_rate to debounce and handle timing for the switch.
-*/
-    //
-    /** In order for events not to be missed, its important that the Edge/Pressed checks
-be made at the same rate as the debounce function is being called.
-*/
+    /** 
+	Called at update_rate to debounce and handle timing for the switch.
+	In order for events not to be missed, its important that the Edge/Pressed checks
+	be made at the same rate as the debounce function is being called.
+    */
     void Debounce();
 
-    /** Returns true if a button was just pressed.
-*/
+    /** \return true if a button was just pressed. */
     inline bool RisingEdge() const { return state_ == 0x7f; }
 
-    /** Returns true if the button was just released
-*/
+    /** \return true if the button was just released */
     inline bool FallingEdge() const { return state_ == 0x80; }
 
-    /** Returns true if the button is held down (or if the toggle is on).
-*/
+    /** \return true if the button is held down (or if the toggle is on) */
     inline bool Pressed() const { return state_ == 0xff; }
 
-    /** Returns the time in milliseconds that the button has been held (or toggle has been on)
-*/
+    /** \return the time in milliseconds that the button has been held (or toggle has been on) */
     inline float TimeHeldMs() const
     {
         return Pressed() ? time_held_ * 1000.0f : 0;

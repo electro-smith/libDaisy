@@ -1,20 +1,3 @@
-//
-/** Generic Class for handling Quadrature Encoders
-*/
-//
-/** hid_encoder.*
-*/
-//
-//
-/** **Author:** Stephen Hensley
-*/
-//
-/** **Date:** December 2019
-*/
-//
-/** Inspired/influenced by Mutable Instruments (pichenettes) Encoder classes
-*/
-//
 #pragma once
 #ifndef DSY_ENCODER_H
 #define DSY_ENCODER_H
@@ -22,8 +5,16 @@
 #include "per_gpio.h"
 #include "hid_switch.h"
 
+/** @file hid_encoder.h */
+
 namespace daisy
 {
+/** 
+    @brief Generic Class for handling Quadrature Encoders \n 
+    Inspired/influenced by Mutable Instruments (pichenettes) Encoder classes
+    @author Stephen Hensley
+    @date December 2019
+*/
 class Encoder
 {
   public:

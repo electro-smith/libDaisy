@@ -9,7 +9,7 @@ extern "C"
 
 #include "per_gpio.h"
 
-/** Fixed maximums for parallel/daisychained use
+/** Fixed maximums for parallel/daisychained use \n 
     These could be expanded, but haven't been tested beyond this
 */
 #define SR_4021_MAX_PARALLEL 2
@@ -17,12 +17,12 @@ extern "C"
 #define SR_4021_MAX_DAISYCHAIN 1
 
 
-/** \file dev_sr_4021.h
-    Device driver for the CD4021
+/** @file dev_sr_4021.h
+    @brief Device driver for the CD4021. 
     Bit-banged serial shift input.
 */
   
-  /** Pins that need to be configured to use
+  /** Pins that need to be configured to use. 
       DATA2 only needs to be set if num_parallel is > 1
   */
     enum

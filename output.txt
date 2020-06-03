@@ -9,25 +9,198 @@ warning: ignoring unsupported tag `FORMULA_MACROFILE      =' at line 1526, file 
 warning: ignoring unsupported tag `LATEX_MAKEINDEX_CMD    =' at line 1710, file Doxyfile
 warning: ignoring unsupported tag `LATEX_EMOJI_DIRECTORY  =' at line 1852, file Doxyfile
 warning: ignoring unsupported tag `XML_NS_MEMB_FILE_SCOPE =' at line 1996, file Doxyfile
-/home/beserge/libdaisy/src/dev_sdram.h:163: warning: reached end of file while inside a ``` block!
-The command that should end the block seems to be missing!
-
 /home/beserge/libdaisy/src/usbd_desc.h:4: warning: the name `usbd_desc.c' supplied as the second argument in the \file statement is not an input file
 /home/beserge/libdaisy/src/per_sdmmc.h:58: warning: Compound daisy::SdmmcHandler is not documented.
-/home/beserge/libdaisy/src/hid_rgb_led.h:13: warning: Compound daisy::RgbLed is not documented.
-/home/beserge/libdaisy/src/daisy_patch.h:16: warning: Compound daisy::DaisyPatch is not documented.
 /home/beserge/libdaisy/src/util_ringbuffer.h:15: warning: Compound daisy::RingBuffer is not documented.
-/home/beserge/libdaisy/src/hid_usb.h:18: warning: Compound daisy::UsbHandle is not documented.
 /home/beserge/libdaisy/src/per_uart.h:27: warning: Compound daisy::UartHandler is not documented.
 /home/beserge/libdaisy/src/util_oled_fonts.h:10: warning: Compound FontDef is not documented.
-/home/beserge/libdaisy/src/hid_switch.h:27: warning: Compound daisy::Switch is not documented.
-/home/beserge/libdaisy/src/hid_ctrl.h:19: warning: Compound daisy::AnalogControl is not documented.
 /home/beserge/libdaisy/src/util_wav_format.h:10: warning: Compound WAV_FormatTypeDef is not documented.
 /home/beserge/libdaisy/src/util_color.h:21: warning: Compound daisy::Color is not documented.
 /home/beserge/libdaisy/src/per_adc.h:57: warning: Compound daisy::AdcHandle is not documented.
-/home/beserge/libdaisy/src/hid_midi.h:86: warning: Compound daisy::MidiHandler is not documented.
-/home/beserge/libdaisy/src/hid_encoder.h:28: warning: Compound daisy::Encoder is not documented.
 /home/beserge/libdaisy/src/util_ringbuffer.h:138: warning: Compound daisy::RingBuffer< T, 0 > is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:9: warning: Member IS25LP064A_FLASH_SIZE (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:11: warning: Member IS25LP064A_SECTOR_SIZE (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:12: warning: Member IS25LP064A_SUBSECTOR_SIZE (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:13: warning: Member IS25LP064A_PAGE_SIZE (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:15: warning: Member IS25LP064A_DUMMY_CYCLES_READ_QUAD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:16: warning: Member IS25LP064A_DUMMY_CYCLES_READ (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:17: warning: Member IS25LP064A_DUMMY_CYCLES_READ_DTR (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:18: warning: Member IS25LP064A_DUMMY_CYCLES_READ_QUAD_DTR (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:21: warning: Member IS25LP064A_DIE_ERASE_MAX_TIME (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:22: warning: Member IS25LP064A_SECTOR_ERASE_MAX_TIME (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:23: warning: Member IS25LP064A_SUBSECTOR_ERASE_MAX_TIME (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:30: warning: Member RESET_ENABLE_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:31: warning: Member RESET_MEMORY_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:34: warning: Member READ_ID_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:35: warning: Member READ_ID_CMD2 (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:36: warning: Member MULTIPLE_IO_READ_ID_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:37: warning: Member READ_SERIAL_FLASH_DISCO_PARAM_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:40: warning: Member READ_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:41: warning: Member READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:43: warning: Member FAST_READ_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:44: warning: Member FAST_READ_DTR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:45: warning: Member FAST_READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:47: warning: Member DUAL_OUT_FAST_READ_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:48: warning: Member DUAL_OUT_FAST_READ_DTR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:49: warning: Member DUAL_OUT_FAST_READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:51: warning: Member DUAL_INOUT_FAST_READ_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:52: warning: Member DUAL_INOUT_FAST_READ_DTR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:53: warning: Member DUAL_INOUT_FAST_READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:55: warning: Member QUAD_OUT_FAST_READ_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:56: warning: Member QUAD_OUT_FAST_READ_DTR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:57: warning: Member QUAD_OUT_FAST_READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:59: warning: Member QUAD_INOUT_FAST_READ_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:60: warning: Member QUAD_INOUT_FAST_READ_DTR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:61: warning: Member QUAD_INOUT_FAST_READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:64: warning: Member WRITE_ENABLE_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:65: warning: Member WRITE_DISABLE_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:68: warning: Member READ_STATUS_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:69: warning: Member WRITE_STATUS_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:71: warning: Member READ_LOCK_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:72: warning: Member WRITE_LOCK_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:74: warning: Member READ_FLAG_STATUS_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:75: warning: Member CLEAR_FLAG_STATUS_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:77: warning: Member READ_NONVOL_CFG_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:78: warning: Member WRITE_NONVOL_CFG_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:80: warning: Member READ_READ_PARAM_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:81: warning: Member WRITE_READ_PARAM_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:83: warning: Member READ_ENHANCED_VOL_CFG_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:84: warning: Member WRITE_ENHANCED_VOL_CFG_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:86: warning: Member READ_EXT_ADDR_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:87: warning: Member WRITE_EXT_ADDR_REG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:90: warning: Member PAGE_PROG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:91: warning: Member PAGE_PROG_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:93: warning: Member DUAL_IN_FAST_PROG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:94: warning: Member EXT_DUAL_IN_FAST_PROG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:96: warning: Member QUAD_IN_FAST_PROG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:97: warning: Member EXT_QUAD_IN_FAST_PROG_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:98: warning: Member QUAD_IN_FAST_PROG_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:101: warning: Member SUBSECTOR_ERASE_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:102: warning: Member SUBSECTOR_ERASE_QPI_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:103: warning: Member SUBSECTOR_ERASE_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:105: warning: Member SECTOR_ERASE_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:106: warning: Member SECTOR_ERASE_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:108: warning: Member BLOCK_ERASE_32K_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:110: warning: Member DIE_ERASE_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:112: warning: Member PROG_ERASE_RESUME_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:113: warning: Member PROG_ERASE_SUSPEND_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:116: warning: Member READ_OTP_ARRAY_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:117: warning: Member PROG_OTP_ARRAY_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:120: warning: Member ENTER_4_BYTE_ADDR_MODE_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:121: warning: Member EXIT_4_BYTE_ADDR_MODE_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:124: warning: Member ENTER_QUAD_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:125: warning: Member EXIT_QUAD_CMD (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP064A.h:137: warning: Member IS25LP064A_SR_QE (macro definition) of file dev_flash_IS25LP064A.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:9: warning: Member IS25LP080D_FLASH_SIZE (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:11: warning: Member IS25LP080D_SECTOR_SIZE (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:12: warning: Member IS25LP080D_SUBSECTOR_SIZE (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:13: warning: Member IS25LP080D_PAGE_SIZE (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:15: warning: Member IS25LP080D_DUMMY_CYCLES_READ_QUAD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:16: warning: Member IS25LP080D_DUMMY_CYCLES_READ (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:17: warning: Member IS25LP080D_DUMMY_CYCLES_READ_DTR (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:18: warning: Member IS25LP080D_DUMMY_CYCLES_READ_QUAD_DTR (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:21: warning: Member IS25LP080D_DIE_ERASE_MAX_TIME (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:22: warning: Member IS25LP080D_SECTOR_ERASE_MAX_TIME (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:23: warning: Member IS25LP080D_SUBSECTOR_ERASE_MAX_TIME (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:30: warning: Member RESET_ENABLE_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:31: warning: Member RESET_MEMORY_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:34: warning: Member READ_ID_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:35: warning: Member READ_ID_CMD2 (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:36: warning: Member MULTIPLE_IO_READ_ID_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:37: warning: Member READ_SERIAL_FLASH_DISCO_PARAM_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:40: warning: Member READ_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:41: warning: Member READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:43: warning: Member FAST_READ_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:44: warning: Member FAST_READ_DTR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:45: warning: Member FAST_READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:47: warning: Member DUAL_OUT_FAST_READ_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:48: warning: Member DUAL_OUT_FAST_READ_DTR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:49: warning: Member DUAL_OUT_FAST_READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:51: warning: Member DUAL_INOUT_FAST_READ_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:52: warning: Member DUAL_INOUT_FAST_READ_DTR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:53: warning: Member DUAL_INOUT_FAST_READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:55: warning: Member QUAD_OUT_FAST_READ_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:56: warning: Member QUAD_OUT_FAST_READ_DTR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:57: warning: Member QUAD_OUT_FAST_READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:59: warning: Member QUAD_INOUT_FAST_READ_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:60: warning: Member QUAD_INOUT_FAST_READ_DTR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:61: warning: Member QUAD_INOUT_FAST_READ_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:64: warning: Member WRITE_ENABLE_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:65: warning: Member WRITE_DISABLE_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:68: warning: Member READ_STATUS_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:69: warning: Member WRITE_STATUS_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:71: warning: Member READ_LOCK_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:72: warning: Member WRITE_LOCK_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:74: warning: Member READ_FLAG_STATUS_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:75: warning: Member CLEAR_FLAG_STATUS_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:77: warning: Member READ_NONVOL_CFG_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:78: warning: Member WRITE_NONVOL_CFG_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:80: warning: Member READ_READ_PARAM_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:81: warning: Member WRITE_READ_PARAM_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:83: warning: Member READ_ENHANCED_VOL_CFG_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:84: warning: Member WRITE_ENHANCED_VOL_CFG_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:86: warning: Member READ_EXT_ADDR_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:87: warning: Member WRITE_EXT_ADDR_REG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:90: warning: Member PAGE_PROG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:91: warning: Member PAGE_PROG_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:93: warning: Member DUAL_IN_FAST_PROG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:94: warning: Member EXT_DUAL_IN_FAST_PROG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:96: warning: Member QUAD_IN_FAST_PROG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:97: warning: Member EXT_QUAD_IN_FAST_PROG_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:98: warning: Member QUAD_IN_FAST_PROG_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:101: warning: Member SUBSECTOR_ERASE_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:102: warning: Member SUBSECTOR_ERASE_QPI_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:103: warning: Member SUBSECTOR_ERASE_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:105: warning: Member SECTOR_ERASE_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:106: warning: Member SECTOR_ERASE_4_BYTE_ADDR_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:108: warning: Member BLOCK_ERASE_32K_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:110: warning: Member DIE_ERASE_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:112: warning: Member PROG_ERASE_RESUME_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:113: warning: Member PROG_ERASE_SUSPEND_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:116: warning: Member READ_OTP_ARRAY_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:117: warning: Member PROG_OTP_ARRAY_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:120: warning: Member ENTER_4_BYTE_ADDR_MODE_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:121: warning: Member EXIT_4_BYTE_ADDR_MODE_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:124: warning: Member ENTER_QUAD_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:125: warning: Member EXIT_QUAD_CMD (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_flash_IS25LP080D.h:137: warning: Member IS25LP080D_SR_QE (macro definition) of file dev_flash_IS25LP080D.h is not documented.
+/home/beserge/libdaisy/src/dev_sr_595.h:8: warning: Member kMaxSr595DaisyChain (variable) of file dev_sr_595.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:34: warning: Member _FS_READONLY (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:40: warning: Member _FS_MINIMIZE (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:49: warning: Member _USE_STRFUNC (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:57: warning: Member _USE_FIND (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:61: warning: Member _USE_MKFS (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:64: warning: Member _USE_FASTSEEK (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:67: warning: Member _USE_EXPAND (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:70: warning: Member _USE_CHMOD (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:74: warning: Member _USE_LABEL (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:78: warning: Member _USE_FORWARD (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:85: warning: Member _CODE_PAGE (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:113: warning: Member _USE_LFN (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:114: warning: Member _MAX_LFN (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:130: warning: Member _LFN_UNICODE (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:135: warning: Member _STRF_ENCODE (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:146: warning: Member _FS_RPATH (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:158: warning: Member _VOLUMES (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:162: warning: Member _STR_VOLUME_ID (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:164: warning: Member _VOLUME_STRS (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:172: warning: Member _MULTI_PARTITION (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:179: warning: Member _MIN_SS (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:180: warning: Member _MAX_SS (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:188: warning: Member _USE_TRIM (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:193: warning: Member _FS_NOFSINFO (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:208: warning: Member _FS_TINY (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:214: warning: Member _FS_EXFAT (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:219: warning: Member _FS_NORTC (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:220: warning: Member _NORTC_MON (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:221: warning: Member _NORTC_MDAY (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:222: warning: Member _NORTC_YEAR (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:232: warning: Member _FS_LOCK (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:243: warning: Member _FS_REENTRANT (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:244: warning: Member _FS_TIMEOUT (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:245: warning: Member _SYNC_t (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:266: warning: Member ff_malloc (macro definition) of file ffconf.h is not documented.
+/home/beserge/libdaisy/src/ffconf.h:267: warning: Member ff_free (macro definition) of file ffconf.h is not documented.
 /home/beserge/libdaisy/src/usbd_cdc_if.h:66: warning: Member CDC_ReceiveCallback)(uint8_t *buf, uint32_t *size) (typedef) of group USBD_CDC_IF_Exported_Types is not documented.
 /home/beserge/libdaisy/src/usbd_cdc_if.h:109: warning: Member CDC_Set_Rx_Callback_FS(CDC_ReceiveCallback cb) (function) of group USBD_CDC_IF_Exported_FunctionsPrototype is not documented.
 /home/beserge/libdaisy/src/usbd_cdc_if.h:110: warning: Member CDC_Transmit_FS(uint8_t *Buf, uint16_t Len) (function) of group USBD_CDC_IF_Exported_FunctionsPrototype is not documented.
@@ -64,10 +237,6 @@ The command that should end the block seems to be missing!
 /home/beserge/libdaisy/src/usbd_desc.h:51: warning: Member DEVICE_ID2 (macro definition) of group USBD_DESC_Exported_Constants is not documented.
 /home/beserge/libdaisy/src/usbd_desc.h:52: warning: Member DEVICE_ID3 (macro definition) of group USBD_DESC_Exported_Constants is not documented.
 /home/beserge/libdaisy/src/usbd_desc.h:54: warning: Member USB_SIZ_STRING_SERIAL (macro definition) of group USBD_DESC_Exported_Constants is not documented.
-/home/beserge/libdaisy/src/hid_audio.h:60: warning: Member block_size (variable) of class dsy_audio_handle is not documented.
-/home/beserge/libdaisy/src/hid_audio.h:61: warning: Member sai (variable) of class dsy_audio_handle is not documented.
-/home/beserge/libdaisy/src/hid_audio.h:62: warning: Member dev0_i2c (variable) of class dsy_audio_handle is not documented.
-/home/beserge/libdaisy/src/hid_audio.h:63: warning: Member dev1_i2c (variable) of class dsy_audio_handle is not documented.
 /home/beserge/libdaisy/src/per_dac.h:64: warning: Member mode (variable) of class dsy_dac_handle is not documented.
 /home/beserge/libdaisy/src/per_dac.h:65: warning: Member bitdepth (variable) of class dsy_dac_handle is not documented.
 /home/beserge/libdaisy/src/per_dac.h:66: warning: Member pin_config[DSY_DAC_CHN_LAST] (variable) of class dsy_dac_handle is not documented.
@@ -105,7 +274,7 @@ The command that should end the block seems to be missing!
 /home/beserge/libdaisy/src/per_spi.h:19: warning: Member SpiPeriph (enumeration) of namespace daisy is not documented.
 /home/beserge/libdaisy/src/per_spi.h:26: warning: Member SpiPin (enumeration) of namespace daisy is not documented.
 /home/beserge/libdaisy/src/per_uart.h:25: warning: Member kUartMaxBufferSize (variable) of namespace daisy is not documented.
-/home/beserge/libdaisy/src/per_spi.h:13: warning: Invalid list item found
+/home/beserge/libdaisy/src/per_spi.h:8: warning: Invalid list item found
 /home/beserge/libdaisy/src/per_adc.h:23: warning: Member MuxPin (enumeration) of class daisy::AdcChannelConfig is not documented.
 /home/beserge/libdaisy/src/per_adc.h:51: warning: Member pin_ (variable) of class daisy::AdcChannelConfig is not documented.
 /home/beserge/libdaisy/src/per_adc.h:52: warning: Member mux_pin_[MUX_SEL_LAST] (variable) of class daisy::AdcChannelConfig is not documented.
@@ -119,22 +288,6 @@ The command that should end the block seems to be missing!
   parameter 'cfg'
 /home/beserge/libdaisy/src/util_color.h:54: warning: Member Green() const (function) of class daisy::Color is not documented.
 /home/beserge/libdaisy/src/util_color.h:55: warning: Member Blue() const (function) of class daisy::Color is not documented.
-/home/beserge/libdaisy/src/hid_midi.h:48: warning: Member channel (variable) of class daisy::ControlChangeEvent is not documented.
-/home/beserge/libdaisy/src/hid_midi.h:49: warning: Member control_number (variable) of class daisy::ControlChangeEvent is not documented.
-/home/beserge/libdaisy/src/hid_midi.h:50: warning: Member value (variable) of class daisy::ControlChangeEvent is not documented.
-/home/beserge/libdaisy/src/hid_midi.h:60: warning: Member channel (variable) of class daisy::MidiEvent is not documented.
-/home/beserge/libdaisy/src/hid_midi.h:61: warning: Member data[2] (variable) of class daisy::MidiEvent is not documented.
-/home/beserge/libdaisy/src/hid_midi.h:101: warning: Member MidiOutputMode (enumeration) of class daisy::MidiHandler is not documented.
-/home/beserge/libdaisy/src/hid_midi.h:118: warning: Member Listen() (function) of class daisy::MidiHandler is not documented.
-/home/beserge/libdaisy/src/hid_midi.h:39: warning: Member channel (variable) of class daisy::NoteOnEvent is not documented.
-/home/beserge/libdaisy/src/hid_midi.h:40: warning: Member note (variable) of class daisy::NoteOnEvent is not documented.
-/home/beserge/libdaisy/src/hid_midi.h:41: warning: Member velocity (variable) of class daisy::NoteOnEvent is not documented.
-/home/beserge/libdaisy/src/hid_oled_display.h:55: warning: Found unknown command `\pin_cfg'
-/home/beserge/libdaisy/src/hid_oled_display.h:71: warning: argument 'char' of command @param is not found in the argument list of daisy::OledDisplay::WriteChar(char ch, FontDef font, bool on)
-/home/beserge/libdaisy/src/hid_oled_display.h:76: warning: Found unknown command `\bool'
-/home/beserge/libdaisy/src/hid_oled_display.h:78: warning: The following parameters of daisy::OledDisplay::WriteChar(char ch, FontDef font, bool on) are not documented:
-  parameter 'ch'
-  parameter 'on'
 /home/beserge/libdaisy/src/util_ringbuffer.h:142: warning: Member Init() (function) of class daisy::RingBuffer< T, 0 > is not documented.
 /home/beserge/libdaisy/src/util_ringbuffer.h:143: warning: Member capacity() const (function) of class daisy::RingBuffer< T, 0 > is not documented.
 /home/beserge/libdaisy/src/util_ringbuffer.h:144: warning: Member writable() const (function) of class daisy::RingBuffer< T, 0 > is not documented.
@@ -148,22 +301,19 @@ The command that should end the block seems to be missing!
 /home/beserge/libdaisy/src/util_ringbuffer.h:152: warning: Member Overwrite(const T *source, size_t num_elements) (function) of class daisy::RingBuffer< T, 0 > is not documented.
 /home/beserge/libdaisy/src/per_sdmmc.h:54: warning: Member bitdepth (variable) of class daisy::SdmmcHandlerInit is not documented.
 /home/beserge/libdaisy/src/per_sdmmc.h:55: warning: Member speed (variable) of class daisy::SdmmcHandlerInit is not documented.
-/home/beserge/libdaisy/src/hid_switch.h:72: warning: Member Init(dsy_gpio_pin pin, float update_rate) (function) of class daisy::Switch is not documented.
-/home/beserge/libdaisy/src/hid_wavplayer.h:33: warning: Member raw_data (variable) of class daisy::WavFileInfo is not documented.
-/home/beserge/libdaisy/src/hid_wavplayer.h:34: warning: Member name[256] (variable) of class daisy::WavFileInfo is not documented.
 /home/beserge/libdaisy/README.md:4: warning: found subsection command outside of section context!
 /home/beserge/libdaisy/README.md:4: warning: found subsection command outside of section context!
 Generating reference manual PDF
 This is makeindex, version 2.15 [TeX Live 2017] (kpathsea + Thai support).
-Scanning input file refman.idx....done (626 entries accepted, 212 rejected).
-Sorting entries........done (6508 comparisons).
-Generating output file refman.ind....done (951 lines written, 0 warnings).
+Scanning input file refman.idx....done (963 entries accepted, 312 rejected).
+Sorting entries...........done (11273 comparisons).
+Generating output file refman.ind....done (1598 lines written, 0 warnings).
 Output written in refman.ind.
 Transcript written in refman.ilg.
 This is makeindex, version 2.15 [TeX Live 2017] (kpathsea + Thai support).
-Scanning input file refman.idx....done (626 entries accepted, 212 rejected).
-Sorting entries........done (6508 comparisons).
-Generating output file refman.ind....done (951 lines written, 0 warnings).
+Scanning input file refman.idx....done (963 entries accepted, 312 rejected).
+Sorting entries...........done (11273 comparisons).
+Generating output file refman.ind....done (1598 lines written, 0 warnings).
 Output written in refman.ind.
 Transcript written in refman.ilg.
 Creating Style Guide PDF

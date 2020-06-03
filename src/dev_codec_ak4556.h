@@ -5,8 +5,8 @@
 #include "daisy_core.h"
 
 /** 
-    Driver for the AK4556 Stereo Codec
-    \file dev_codec_ak4556.h
+    @brief Driver for the AK4556 Stereo Codec
+    @file dev_codec_ak4556.h
 */
 
 /** 

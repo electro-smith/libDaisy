@@ -22,7 +22,8 @@ extern "C"
 #define IS25LP064A_SECTOR_ERASE_MAX_TIME 1000
 #define IS25LP064A_SUBSECTOR_ERASE_MAX_TIME 400
 
-    /** 
+    /**
+     * @file dev_flash_IS25LP064A.h
      * @brief  IS25LP08D Commands  
      */
     /* Reset Operations */

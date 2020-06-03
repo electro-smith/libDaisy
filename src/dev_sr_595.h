@@ -7,11 +7,13 @@
 
 const size_t kMaxSr595DaisyChain = 16; /** Maximum Number of chained devices Connect device's QH' pin to the next chips serial input*/
 
+/** @file dev_sr_595.h */
+
 /**
-   Device Driver for 8-bit shift register
+   @brief Device Driver for 8-bit shift register. \n 
    CD74HC595 - 8-bit serial to parallel output shift
-   **Author**: shensley
-   **Date Added**: May 2020
+   @author shensley
+   @date May 2020
 */
 class ShiftRegister595
 {
