@@ -8,10 +8,10 @@ extern "C"
 #include <stdint.h>
 
     /** @file sys_system.h */
-  
-    /** Initializes Clock tree, MPU, and internal memories voltage regulators.	
-	This function _must_ be called at the beginning of any program using libdaisy
-	Higher level daisy_ files call this through the DaisySeed object.
+
+    /** Initializes Clock tree, MPU, and internal memories voltage regulators.    
+    This function _must_ be called at the beginning of any program using libdaisy
+    Higher level daisy_ files call this through the DaisySeed object.
     */
     void dsy_system_init();
 
@@ -22,18 +22,18 @@ extern "C"
     void dsy_system_jumpto(uint32_t addr);
 
     /** Jumps to the first address of the external flash chip (0x90000000)
-	If there is no code there, the chip will likely fall through to the while() loop
-	TODO: Documentation/Loader for using external flash coming soon.
+    If there is no code there, the chip will likely fall through to the while() loop
+    TODO: Documentation/Loader for using external flash coming soon.
     */
     void dsy_system_jumptoqspi();
 
     /** \return a uint32_t value of milliseconds since the SysTick started \n 
-	Note! This is a HAL_GetTick()	
+    Note! This is a HAL_GetTick()    
     */
-    uint32_t dsy_system_getnow(); 
+    uint32_t dsy_system_getnow();
 
     /** Blocking Delay that uses the SysTick (1ms callback) to wait.
-	\param delay_ms Time to delay in ms
+    \param delay_ms Time to delay in ms
     */
     void dsy_system_delay(uint32_t delay_ms);
 

@@ -25,27 +25,27 @@ class Color
     /** List of colors that have a preset RGB value */
     enum PresetColor
     {
-        RED, /**< # */
-	GREEN, /**< # */
-	BLUE, /**< # */
-	WHITE, /**< # */
-	PURPLE, /**< # */
-	CYAN, /**< # */
-	GOLD, /**< # */
-	OFF, /**< # */
-	LAST /**< # */
-    }; 
+        RED,    /**< # */
+        GREEN,  /**< # */
+        BLUE,   /**< # */
+        WHITE,  /**< # */
+        PURPLE, /**< # */
+        CYAN,   /**< # */
+        GOLD,   /**< # */
+        OFF,    /**< # */
+        LAST    /**< # */
+    };
 
     /** Initializes the Color with a given preset. 
-	\param c Color to init to
+    \param c Color to init to
     */
     void Init(PresetColor c);
 
     /** Initializes the Color with a specific RGB value
-	red, green, and blue should be floats between 0 and 1
-	\param red Red value
-	\param green Green value
-	\param blue Blue value
+    red, green, and blue should be floats between 0 and 1
+    \param red Red value
+    \param green Green value
+    \param blue Blue value
     */
     void Init(float red, float green, float blue);
 

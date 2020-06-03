@@ -5,13 +5,13 @@
 #include "daisy_core.h"
 
 
-#define FBIPMAX 0.999985f /**< close to 1.0f-LSB at 16 bit */
-#define FBIPMIN (-FBIPMAX) /**< - (1 - LSB) */
+#define FBIPMAX 0.999985f             /**< close to 1.0f-LSB at 16 bit */
+#define FBIPMIN (-FBIPMAX)            /**< - (1 - LSB) */
 #define S162F_SCALE 3.0517578125e-05f /**< 1 / (2** 15) */
-#define F2S16_SCALE 32767.0f /**< (2 ** 15) - 1 */
-#define F2S24_SCALE 8388608.0f /**< 2 ** 23 */
-#define S242F_SCALE 1.192092896e-07f /**< 1 / (2 ** 23) */
-#define S24SIGN 0x800000 /**< 2 ** 23 */
+#define F2S16_SCALE 32767.0f          /**< (2 ** 15) - 1 */
+#define F2S24_SCALE 8388608.0f        /**< 2 ** 23 */
+#define S242F_SCALE 1.192092896e-07f  /**< 1 / (2 ** 23) */
+#define S24SIGN 0x800000              /**< 2 ** 23 */
 
 /** @file daisy.h */
 

@@ -19,18 +19,18 @@ class DaisyPatch
      */
     enum Ctrl
     {
-        CTRL_1, /**< */
-        CTRL_2, /**< */
-        CTRL_3, /**< */ 
-        CTRL_4, /**< */
+        CTRL_1,    /**< */
+        CTRL_2,    /**< */
+        CTRL_3,    /**< */
+        CTRL_4,    /**< */
         CTRL_LAST, /**< */
     };
 
     /** Daisy patch gate inputs */
     enum GateInput
     {
-        GATE_IN_1, /**< */
-        GATE_IN_2, /** <*/
+        GATE_IN_1,    /**< */
+        GATE_IN_2,    /** <*/
         GATE_IN_LAST, /**< */
     };
 
@@ -43,17 +43,17 @@ class DaisyPatch
     void Init();
 
     /** 
-	Wait some ms before going on.
-	\param del Delay time in ms.
+    Wait some ms before going on.
+    \param del Delay time in ms.
     */
     void DelayMs(size_t del);
 
     /** Audio Block size defaults to 48.
-	Change it using this function before StartingAudio
-	\param size Audio block size.
+    Change it using this function before StartingAudio
+    \param size Audio block size.
     */
     void SetAudioBlockSize(size_t size);
-    
+
     /**
        Start audio output.
        \param cb Audio callback function
@@ -68,37 +68,37 @@ class DaisyPatch
 
     /** Start analog to digital conversion.*/
     void StartAdc();
-    
+
     // Hardware Accessors
     /** Get sample rate */
-    float  AudioSampleRate();
+    float AudioSampleRate();
     /** Get block size */
     size_t AudioBlockSize();
     /** Get callback rate */
-    float  AudioCallbackRate();
+    float AudioCallbackRate();
     /** Call at same rate as reading controls for good reads. */
-    void   UpdateAnalogControls();
+    void UpdateAnalogControls();
     /**
        Get value for a partiular control
        \param k Which control to get
      */
-    float  GetCtrlValue(Ctrl k);
+    float GetCtrlValue(Ctrl k);
 
     /** Debounce analog controls. Call at same rate as reading controls.*/
-    void   DebounceControls();
+    void DebounceControls();
 
     /**  Control the display */
-    void   DisplayControls(bool invert = true);
+    void DisplayControls(bool invert = true);
 
     /* These are exposed for the user to access and manipulate directly
        Helper functions above provide easier access to much of what they are capable of.
     */
-    DaisySeed     seed; /**< Seed object */
-    Encoder       encoder;/**< Encoder object */
-    AnalogControl controls[CTRL_LAST]; /**< Array of controls*/
-    GateIn        gate_input[GATE_IN_LAST];/**< Gate inputs  */
-    MidiHandler   midi;/**< Handles midi*/
-    OledDisplay   display;/**< # */
+    DaisySeed     seed;                     /**< Seed object */
+    Encoder       encoder;                  /**< Encoder object */
+    AnalogControl controls[CTRL_LAST];      /**< Array of controls*/
+    GateIn        gate_input[GATE_IN_LAST]; /**< Gate inputs  */
+    MidiHandler   midi;                     /**< Handles midi*/
+    OledDisplay   display;                  /**< # */
 
     // TODO: Add class for Gate output
     dsy_gpio gate_output; /**< #  */

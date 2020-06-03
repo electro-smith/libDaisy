@@ -17,9 +17,9 @@ typedef struct
 
 
 /** These are the different sizes of fonts (width x height in pixels per character) */
-extern FontDef Font_6x8; 
-extern FontDef Font_7x10; /**< # */
+extern FontDef Font_6x8;
+extern FontDef Font_7x10;  /**< # */
 extern FontDef Font_11x18; /**< # */
 extern FontDef Font_16x26; /**< # */
- 
+
 #endif

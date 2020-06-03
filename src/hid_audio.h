@@ -17,7 +17,7 @@ extern "C"
     Hard-coded samplerate is calculated from original clock tree.  
     The new clock tree has less than 0.01% error for all supported samplerates
 */
-  
+
 /** Max block size */
 #define DSY_AUDIO_BLOCK_SIZE_MAX 128
 /** Max number of audio channels */
@@ -27,34 +27,34 @@ extern "C"
 #define DSY_AUDIO_SAMPLE_RATE 48014.0f /**< Default sample rate */
 #endif
 
-/** 
+    /** 
     @file hid_audio.h
     @brief Audio Driver \n 
     Configures Audio Device and provides callback for signal processing. \n 
     Many of the hard-coded values here will change (increase), and/or \n 
     be replaced by configurable options \n 
 */
-  
-  /** Internally, there are two separate 'audio blocks' that can
+
+    /** Internally, there are two separate 'audio blocks' that can
       be configured together or separately
   */
     enum
     {
         DSY_AUDIO_INTERNAL, /**< # */
         DSY_AUDIO_EXTERNAL, /**< # */
-        DSY_AUDIO_LAST, /**< # */
+        DSY_AUDIO_LAST,     /**< # */
     };
 
-    
+
     /** Simple config struct that holds peripheral drivers.
      */
     typedef struct
     {
-      size_t          block_size; /**< # */
-        dsy_sai_handle* sai; /**< # */
-        dsy_i2c_handle* dev0_i2c; /**< # */
-        dsy_i2c_handle* dev1_i2c; /**< # */
-    } dsy_audio_handle; 
+        size_t          block_size; /**< # */
+        dsy_sai_handle* sai;        /**< # */
+        dsy_i2c_handle* dev0_i2c;   /**< # */
+        dsy_i2c_handle* dev1_i2c;   /**< # */
+    } dsy_audio_handle;
 
     /** These are user-defineable callbacks that are called when 
 audio data is ready to be received/transmitted.

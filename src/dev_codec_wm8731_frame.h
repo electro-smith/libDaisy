@@ -12,8 +12,8 @@
  */
 typedef struct
 {
-  short l; /**< # */
-  short r; /**< # */
+    short l; /**< # */
+    short r; /**< # */
 } codec_frame_t;
 
 /** # */

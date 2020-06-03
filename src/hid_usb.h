@@ -19,8 +19,8 @@ class UsbHandle
     enum UsbPeriph
     {
         FS_INTERNAL, /**< Internal pin */
-	FS_EXTERNAL, /**< FS External D+ pin is Pin 38 (GPIO32). FS External D- pin is Pin 37 (GPIO31) */  
-	FS_BOTH, /**< Both */
+        FS_EXTERNAL, /**< FS External D+ pin is Pin 38 (GPIO32). FS External D- pin is Pin 37 (GPIO31) */
+        FS_BOTH,     /**< Both */
     };
 
     /** Function called upon reception of a buffer */
@@ -31,24 +31,24 @@ class UsbHandle
     ~UsbHandle() {}
 
     /** Initializes the specified peripheral(s) as USB CDC Devices
-	\param dev Device to initialize
+    \param dev Device to initialize
      */
     void Init(UsbPeriph dev);
 
     /** Transmits a buffer of 'size' bytes from the on board USB FS port. 
-	\param buff Buffer to transmit
-	\param size Buffer size
+    \param buff Buffer to transmit
+    \param size Buffer size
      */
     void TransmitInternal(uint8_t* buff, size_t size);
     /** Transmits a buffer of 'size' bytes from a USB port connected to the
-	external USB Pins of the daisy seed.
-	\param buff Buffer to transmit
-	\param size Buffer size
+    external USB Pins of the daisy seed.
+    \param buff Buffer to transmit
+    \param size Buffer size
     */
     void TransmitExternal(uint8_t* buff, size_t size);
 
     /** sets the callback to be called upon reception of new data
-	\param cb Function to serve as callback
+    \param cb Function to serve as callback
      */
     void SetReceiveCallback(ReceiveCallback cb);
 

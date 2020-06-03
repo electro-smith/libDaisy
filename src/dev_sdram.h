@@ -62,9 +62,9 @@ extern "C"
 #include <stdint.h>
 #include "daisy_core.h"
 
-/** @file dev_sdram.h */
-  
-  /*
+    /** @file dev_sdram.h */
+
+    /*
     As mentioned above, this does not currently initialize correctly (startup
     code needs to be modified to init SDRAM, and fill
     The variables placed here will also need to fit inside of the flash in order to initialize.
@@ -83,39 +83,39 @@ extern "C"
 
     enum
     {
-        DSY_SDRAM_OK, /**< # */
+        DSY_SDRAM_OK,  /**< # */
         DSY_SDRAM_ERR, /**< # */
     };
 
     /** Determines whether chip is initialized, and activated. */
     typedef enum
     {
-        DSY_SDRAM_STATE_ENABLE,/**< # */
-        DSY_SDRAM_STATE_DISABLE,/**< # */
-        DSY_SDRAM_STATE_LAST,/**< # */
+        DSY_SDRAM_STATE_ENABLE,  /**< # */
+        DSY_SDRAM_STATE_DISABLE, /**< # */
+        DSY_SDRAM_STATE_LAST,    /**< # */
     } dsy_sdram_state;
 
-    
-  /*
+
+    /*
       For now this is the only supported pinswap
       The Chipselect/bank could likely be changed, but we haven't had any
       hardware that does that yet.
       Pins that have functions that cannot be moved to another pin will
       be hardcoded into the driver.
   */
-  
+
     /** This is PH5 on Daisy*/
     typedef enum
     {
         DSY_SDRAM_PIN_SDNWE, /**< # */
-        DSY_SDRAM_PIN_LAST,/**< # */
+        DSY_SDRAM_PIN_LAST,  /**< # */
     } dsy_sdram_pin;
 
 
     /** Configuration struct for passing to initialization */
     typedef struct
     {
-        dsy_sdram_state state; /**< # */
+        dsy_sdram_state state;                          /**< # */
         dsy_gpio_pin    pin_config[DSY_SDRAM_PIN_LAST]; /**< # */
     } dsy_sdram_handle;
 

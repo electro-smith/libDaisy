@@ -8,34 +8,34 @@
 #endif
 
 // Hardware related defines.
-#define SW_1_PIN 29 /**< # */
-#define SW_2_PIN 28/**< # */
-#define SW_3_PIN 27/**< # */
-#define GATE_OUT_PIN 0/**< # */
-#define GATE_IN_PIN 1/**< # */
+#define SW_1_PIN 29    /**< # */
+#define SW_2_PIN 28    /**< # */
+#define SW_3_PIN 27    /**< # */
+#define GATE_OUT_PIN 0 /**< # */
+#define GATE_IN_PIN 1  /**< # */
 
 // keyboard switches shift register
-#define KB_SW_SR_CS_PIN 8/**< # */
-#define KB_SW_SR_CLK_PIN 9/**< # */
-#define KB_SW_SR_D1_PIN 10/**< # */
-#define KB_SW_SR_D2_PIN 11/**< # */
+#define KB_SW_SR_CS_PIN 8  /**< # */
+#define KB_SW_SR_CLK_PIN 9 /**< # */
+#define KB_SW_SR_D1_PIN 10 /**< # */
+#define KB_SW_SR_D2_PIN 11 /**< # */
 
 // UART for MIDI via TRS jacks on Field
-#define MIDI_OUT_PIN 14/**< # */
-#define MIDI_IN_PIN 15/**< # */
+#define MIDI_OUT_PIN 14 /**< # */
+#define MIDI_IN_PIN 15  /**< # */
 
 //CD4051 Select Pin controls
-#define MUX_SEL_0_PIN 21/**< # */
-#define MUX_SEL_1_PIN 20/**< # */
-#define MUX_SEL_2_PIN 19/**< # */
+#define MUX_SEL_0_PIN 21 /**< # */
+#define MUX_SEL_1_PIN 20 /**< # */
+#define MUX_SEL_2_PIN 19 /**< # */
 
 #define MUX_ADC_PIN 16 /**< # */
-#define CV1_ADC_PIN 17/**< # */
-#define CV2_ADC_PIN 18/**< # */
-#define CV3_ADC_PIN 23/**< # */
-#define CV4_ADC_PIN 22/**< # */
+#define CV1_ADC_PIN 17 /**< # */
+#define CV2_ADC_PIN 18 /**< # */
+#define CV3_ADC_PIN 23 /**< # */
+#define CV4_ADC_PIN 22 /**< # */
 
-#define LED_DRIVER_I2C i2c1_handle/**< # */
+#define LED_DRIVER_I2C i2c1_handle /**< # */
 
 /**
    @file daisy_field.h
@@ -47,9 +47,9 @@ namespace daisy
 */
 enum
 {
-    SW_2, /**< tactile switch */
-    SW_1, /**< tactile switch */
-    SW_3, /**< toggle */
+    SW_2,    /**< tactile switch */
+    SW_1,    /**< tactile switch */
+    SW_3,    /**< toggle */
     SW_LAST, /**< # */
 };
 
@@ -57,23 +57,23 @@ enum
 */
 enum
 {
-    KNOB_1, /**< # */
-    KNOB_3, /**< # */
-    KNOB_5, /**< # */
-    KNOB_2, /**< # */
-    KNOB_4, /**< # */
-    KNOB_6, /**< # */
-    KNOB_7, /**< # */
-    KNOB_8, /**< # */
+    KNOB_1,    /**< # */
+    KNOB_3,    /**< # */
+    KNOB_5,    /**< # */
+    KNOB_2,    /**< # */
+    KNOB_4,    /**< # */
+    KNOB_6,    /**< # */
+    KNOB_7,    /**< # */
+    KNOB_8,    /**< # */
     KNOB_LAST, /**< # */
 };
 
 enum
 {
-    CV_1, /** Connected to ADC1_INP17 */
-    CV_2, /** Connected  to ADC1_INP15 */
-    CV_3, /** Connected to ADC1_INP4 */
-    CV_4, /** Connected to ADC1_INP11 */
+    CV_1,    /** Connected to ADC1_INP17 */
+    CV_2,    /** Connected  to ADC1_INP15 */
+    CV_3,    /** Connected to ADC1_INP4 */
+    CV_4,    /** Connected to ADC1_INP11 */
     CV_LAST, /**< # */
 };
 
@@ -87,35 +87,35 @@ enum
     LED_KEY_A3, /**< # */
     LED_KEY_A2, /**< # */
     LED_KEY_A1, /**< # */
-    LED_KEY_B1,/**< # */
-    LED_KEY_B2,/**< # */
-    LED_KEY_B3,/**< # */
-    LED_KEY_B4,/**< # */
-    LED_KEY_B5,/**< # */
-    LED_KEY_B6,/**< # */
-    LED_KEY_B7,/**< # */
-    LED_KEY_B8,/**< # */
-    LED_KNOB_1,/**< # */
-    LED_KNOB_2,/**< # */
-    LED_KNOB_3,/**< # */
-    LED_KNOB_4,/**< # */
-    LED_KNOB_5,/**< # */
-    LED_KNOB_6,/**< # */
-    LED_KNOB_7,/**< # */
-    LED_KNOB_8,/**< # */
-    LED_SW_1,/**< # */
-    LED_SW_2,/**< # */
-    LED_LAST/**< # */
+    LED_KEY_B1, /**< # */
+    LED_KEY_B2, /**< # */
+    LED_KEY_B3, /**< # */
+    LED_KEY_B4, /**< # */
+    LED_KEY_B5, /**< # */
+    LED_KEY_B6, /**< # */
+    LED_KEY_B7, /**< # */
+    LED_KEY_B8, /**< # */
+    LED_KNOB_1, /**< # */
+    LED_KNOB_2, /**< # */
+    LED_KNOB_3, /**< # */
+    LED_KNOB_4, /**< # */
+    LED_KNOB_5, /**< # */
+    LED_KNOB_6, /**< # */
+    LED_KNOB_7, /**< # */
+    LED_KNOB_8, /**< # */
+    LED_SW_1,   /**< # */
+    LED_SW_2,   /**< # */
+    LED_LAST    /**< # */
 };
 
- /** Struct containing hardware defines and daisy seed */
+/** Struct containing hardware defines and daisy seed */
 typedef struct
 {
-    daisy::DaisySeed   seed; /**< Daisy seed */
-    daisy::Switch      switches[SW_LAST]; /**< Array of hardware switches */
-    dsy_gpio           gate_in,  /**< Gate input. */
-                       gate_out; /**< Gate output */
-    dsy_sr_4021_handle keyboard_sr; /**< Keyboard shift register*/
+    daisy::DaisySeed seed;               /**< Daisy seed */
+    daisy::Switch    switches[SW_LAST];  /**< Array of hardware switches */
+    dsy_gpio         gate_in,            /**< Gate input. */
+        gate_out;                        /**< Gate output */
+    dsy_sr_4021_handle keyboard_sr;      /**< Keyboard shift register*/
     AnalogControl      knobs[KNOB_LAST]; /**< Array of hardware knobs*/
     AnalogControl      cvs[CV_LAST];     /**< Array of cv ins */
 } daisy_field;
@@ -126,7 +126,7 @@ typedef struct
 FORCE_INLINE void daisy_field_init(daisy_field *p)
 {
     uint8_t sw_pins[SW_LAST] = {SW_1_PIN, SW_2_PIN, SW_3_PIN};
-    //    dsy_gpio_port sw_ports[SW_LAST]            = {SW_1_PORT, SW_2_PORT, SW_3_PORT}; 
+    //    dsy_gpio_port sw_ports[SW_LAST]            = {SW_1_PORT, SW_2_PORT, SW_3_PORT};
 
     // Init Daisy Seed
     p->seed.Configure();
@@ -160,7 +160,7 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 
     //Init Keyboard Switches
     //TODO: add cd4021 with parallel data support
-    
+
     p->keyboard_sr.pin_config[DSY_SR_4021_PIN_CS]
         = p->seed.GetPin(KB_SW_SR_CS_PIN);
     p->keyboard_sr.pin_config[DSY_SR_4021_PIN_CLK]

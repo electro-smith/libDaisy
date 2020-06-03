@@ -11,7 +11,8 @@ this module. However, by using the extern'd SDFile, etc. I think that would brea
 #include "daisy_core.h"
 #include "util_wav_format.h"
 
-#define WAV_FILENAME_MAX 256 /**< Maximum LFN (set to same in FatFs (ffconf.h) */
+#define WAV_FILENAME_MAX \
+    256 /**< Maximum LFN (set to same in FatFs (ffconf.h) */
 
 /** @file hid_wavplayer.h */
 
@@ -21,7 +22,7 @@ namespace daisy
 /** Struct containing details of Wav File. */
 struct WavFileInfo
 {
-    WAV_FormatTypeDef raw_data; /**< Raw wav data */
+    WAV_FormatTypeDef raw_data;               /**< Raw wav data */
     char              name[WAV_FILENAME_MAX]; /**< Wav filename */
 };
 
@@ -44,12 +45,12 @@ class WavPlayer
     void Init();
 
     /** Opens the file at index sel for reading.
-	\param sel File to open
+    \param sel File to open
      */
     int Open(size_t sel);
 
     /** Closes whatever file is currently open.
-	\return #
+    \return #
      */
     int Close();
 
@@ -63,7 +64,7 @@ class WavPlayer
     void Restart();
 
     /** Sets whether or not the current file will repeat after completing playback. 
-	\param loop To loop or not to loop.
+    \param loop To loop or not to loop.
     */
     inline void SetLooping(bool loop) { looping_ = loop; }
 

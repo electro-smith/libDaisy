@@ -73,12 +73,12 @@ extern "C"
 /*---------- -----------*/
 #define USBD_SELF_POWERED 1U /**< # */
 
-/****************************************/ 
+/****************************************/
 /** FS and HS identification */
-#define DEVICE_FS 0 
-#define DEVICE_HS 1/**< # */
+#define DEVICE_FS 0
+#define DEVICE_HS 1 /**< # */
 
-  /**
+    /**
   * @} 
   */
 
@@ -90,9 +90,9 @@ extern "C"
 /* Memory management macros */
 
 /** Alias for memory allocation. */
-#define USBD_malloc malloc 
+#define USBD_malloc malloc
 
-  /** Alias for memory release. */
+    /** Alias for memory release. */
 #define USBD_free free
 
 /** Alias for memory set. */
@@ -109,9 +109,9 @@ extern "C"
 #if(USBD_DEBUG_LEVEL > 0)
 #define USBD_UsrLog(...) \
     printf(__VA_ARGS__); \
-    printf("\n");  /**< # */
+    printf("\n"); /**< # */
 #else
-#define USBD_UsrLog(...)/**< # */
+#define USBD_UsrLog(...) /**< # */
 #endif
 
 #if(USBD_DEBUG_LEVEL > 1)

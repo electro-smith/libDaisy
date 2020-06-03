@@ -16,7 +16,7 @@ extern "C"
 
     /** initializes the TIM2 peripheral with maximum counter autoreload, and no prescalers. */
     void dsy_tim_init();
-  
+
     /** Starts the timer ticking. */
     void dsy_tim_start();
 
@@ -26,28 +26,28 @@ extern "C"
     uint32_t dsy_tim_get_tick();
 
     /** 
-	blocking delay of cnt timer ticks. 
-	\param cnt Number of ticks
+    blocking delay of cnt timer ticks. 
+    \param cnt Number of ticks
      */
     void dsy_tim_delay_tick(uint32_t cnt);
-  
+
     /** These functions are converted to use milliseconds as their time base.
-	\return the number of milliseconds through the timer period.
+    \return the number of milliseconds through the timer period.
     */
     uint32_t dsy_tim_get_ms();
 
     /** blocking delay of cnt milliseconds.
-	\param cnt Delay time in ms
+    \param cnt Delay time in ms
     */
     void dsy_tim_delay_ms(uint32_t cnt);
 
     /** These functions are converted to use microseconds as their time base.
-	\return the number of microseconds through the timer period.
+    \return the number of microseconds through the timer period.
     */
     uint32_t dsy_tim_get_us();
-  
+
     /** blocking delay of cnt microseconds. 
-	\param cnt Delay time in us
+    \param cnt Delay time in us
      */
     void dsy_tim_delay_us(uint32_t cnt);
 #ifdef __cplusplus

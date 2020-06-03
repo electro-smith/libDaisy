@@ -63,7 +63,7 @@ typedef enum
 typedef struct
 {
     dsy_gpio_port port; /**< # */
-    uint8_t       pin; /**< number 0-15 */
+    uint8_t       pin;  /**< number 0-15 */
 } dsy_gpio_pin;
 
 /** Helper for creating pins from port/pin combos easily

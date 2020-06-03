@@ -1,7 +1,7 @@
 #pragma once
 #ifndef DSY_BSP_SD_DISKIO_H
 #define DSY_BSP_SD_DISKIO_H /**< # */
-#include <stdint.h> 
+#include <stdint.h>
 
 /** @file util_bsp_sd_diskio.h */
 /** Functions for handling DiskIO via SDMMC
@@ -17,8 +17,7 @@ typedef struct
 {
     uint32_t CardType; /*!< Specifies the card Type */
 
-    uint32_t
-        CardVersion; /*!< Specifies the card version */
+    uint32_t CardVersion; /*!< Specifies the card version */
 
     uint32_t Class; /*!< Specifies the class of the card class  */
 
@@ -28,28 +27,26 @@ typedef struct
 
     uint32_t BlockSize; /*!< Specifies one block size in bytes */
 
-    uint32_t
-        LogBlockNbr; /*!< Specifies the Card logical Capacity in blocks */
+    uint32_t LogBlockNbr; /*!< Specifies the Card logical Capacity in blocks */
 
-    uint32_t
-        LogBlockSize; /*!< Specifies logical block size in bytes */
+    uint32_t LogBlockSize; /*!< Specifies logical block size in bytes */
 
     uint32_t CardSpeed; /*!< Specifies the card Speed */
 
 } DSY_SD_CardInfoTypeDef;
 
-#define BSP_SD_CardInfo DSY_SD_CardInfoTypeDef /**< # */
-#define MSD_OK ((uint8_t)0x00) /**< # */
-#define MSD_ERROR ((uint8_t)0x01) /**< # */
-#define MSD_ERROR_SD_NOT_PRESENT ((uint8_t) 0x02) /**< # */
-#define SD_TRANSFER_OK ((uint8_t)0x00) /**< # */
-#define SD_TRANSFER_BUSY ((uint8_t)0x01) /**< # */
-#define SD_PRESENT ((uint8_t)0x01) /**< # */
-#define SD_NOT_PRESENT ((uint8_t)0x00)  /**< # */
-#define SD_DATATIMEOUT ((uint32_t)100000000) /**< # */ 
- 
+#define BSP_SD_CardInfo DSY_SD_CardInfoTypeDef   /**< # */
+#define MSD_OK ((uint8_t)0x00)                   /**< # */
+#define MSD_ERROR ((uint8_t)0x01)                /**< # */
+#define MSD_ERROR_SD_NOT_PRESENT ((uint8_t)0x02) /**< # */
+#define SD_TRANSFER_OK ((uint8_t)0x00)           /**< # */
+#define SD_TRANSFER_BUSY ((uint8_t)0x01)         /**< # */
+#define SD_PRESENT ((uint8_t)0x01)               /**< # */
+#define SD_NOT_PRESENT ((uint8_t)0x00)           /**< # */
+#define SD_DATATIMEOUT ((uint32_t)100000000)     /**< # */
+
 // Functions internal for diskIO
-uint8_t BSP_SD_Init(void); /**< \return card state, ERROR, etc.*/
+uint8_t BSP_SD_Init(void);     /**< \return card state, ERROR, etc.*/
 uint8_t BSP_SD_ITConfig(void); /**< \return card state, ERROR, etc. */
 
 /** \param  *pData #
@@ -79,7 +76,8 @@ uint8_t BSP_SD_WriteBlocks(uint32_t *pData,
     \param  NumOfBlocks Number of blocks to be read
     \return card state, ERROR, etc.
 */
-uint8_t BSP_SD_ReadBlocks_DMA(uint32_t *pData, uint32_t ReadAddr, uint32_t NumOfBlocks);
+uint8_t
+BSP_SD_ReadBlocks_DMA(uint32_t *pData, uint32_t ReadAddr, uint32_t NumOfBlocks);
 
 /** No timeout
     \param  *pData #
@@ -102,7 +100,7 @@ uint8_t BSP_SD_Erase(uint32_t StartAddr, uint32_t EndAddr);
 uint8_t BSP_SD_GetCardState(void);
 
 /** \param *CardInfo Pointer to write card info to */
-void    BSP_SD_GetCardInfo(BSP_SD_CardInfo *CardInfo);
+void BSP_SD_GetCardInfo(BSP_SD_CardInfo *CardInfo);
 
 /** \return Is card detected */
 uint8_t BSP_SD_IsDetected(void);

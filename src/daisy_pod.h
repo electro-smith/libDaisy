@@ -19,18 +19,18 @@ class DaisyPod
     /** Switches */
     enum Sw
     {
-        BUTTON_1, /** # */
-	BUTTON_2, /** # */
-	BUTTON_LAST, /** #  */
-    }; 
+        BUTTON_1,    /** # */
+        BUTTON_2,    /** # */
+        BUTTON_LAST, /** #  */
+    };
 
     /** Knobs */
     enum Knob
     {
-        KNOB_1, /** #  */
-	KNOB_2, /** # */
-	KNOB_LAST, /** # */
-    }; 
+        KNOB_1,    /** #  */
+        KNOB_2,    /** # */
+        KNOB_LAST, /** # */
+    };
 
     DaisyPod() {}
     ~DaisyPod() {}
@@ -39,12 +39,12 @@ class DaisyPod
     void Init();
 
     /** Wait for a bit
-	\param del Time to wait in ms.
+    \param del Time to wait in ms.
     */
     void DelayMs(size_t del);
-    
+
     /** Audio Block size defaults to 48. Change it using this function before StartingAudio. 
-	\param size Block size to set.
+    \param size Block size to set.
      */
     void SetAudioBlockSize(size_t size);
 
@@ -66,33 +66,33 @@ class DaisyPod
     void StartAdc();
 
     /** Get sample rate */
-    float  AudioSampleRate();
+    float AudioSampleRate();
     /** Get block size */
     size_t AudioBlockSize();
     /** Get callback rate */
-    float  AudioCallbackRate();/** */
+    float AudioCallbackRate(); /** */
     /** Call at same rate as analog reads for smooth reading.*/
-    void   UpdateAnalogControls();/** */
+    void UpdateAnalogControls(); /** */
     /** # */
-    float  GetKnobValue(Knob k);
+    float GetKnobValue(Knob k);
     /** # */
-    void   DebounceControls();
+    void DebounceControls();
     /** Reset Leds*/
-    void   ClearLeds();
+    void ClearLeds();
     /** Update Leds to set colors*/
-    void   UpdateLeds();
-    
+    void UpdateLeds();
+
     /** Public Members */
-    DaisySeed     seed; /**<# */
-    Encoder       encoder;/**< # */
-    AnalogControl knob1, /**< # */
-                  knob2, /**< # */
-                  knobs[KNOB_LAST]; /**< # */
-    Switch        button1, /**< # */
-                  button2,/**< # */
-                  *buttons[BUTTON_LAST];/**< # */
-    RgbLed        led1,/**< # */
-                  led2;/**< # */
+    DaisySeed     seed;        /**<# */
+    Encoder       encoder;     /**< # */
+    AnalogControl knob1,       /**< # */
+        knob2,                 /**< # */
+        knobs[KNOB_LAST];      /**< # */
+    Switch button1,            /**< # */
+        button2,               /**< # */
+        *buttons[BUTTON_LAST]; /**< # */
+    RgbLed led1,               /**< # */
+        led2;                  /**< # */
 
   private:
     void   InitButtons();

@@ -19,31 +19,30 @@ namespace daisy
     @date March 2020
 */
 
-  class Led
+class Led
 {
   public:
-
     Led() {}
     ~Led() {}
 
     /** 
-	Initializes an LED using the specified hardware pin.
-	\param pin chooses LED pin
-	\param invert will set whether to internally invert the brightness due to hardware config.
+    Initializes an LED using the specified hardware pin.
+    \param pin chooses LED pin
+    \param invert will set whether to internally invert the brightness due to hardware config.
         \param samplerate sets the rate at which 'Update()' will be called (used for software PWM)
     */
     void Init(dsy_gpio_pin pin, bool invert, float samplerate = 1000.0f);
 
     /** 
-	Sets the brightness of the Led.
-	\param val will be cubed for gamma correction, and then quantized to 8-bit values for Software PWM
-	8-bit is for more flexible update rate options, as 12-bit or more would require faster update rates.
+    Sets the brightness of the Led.
+    \param val will be cubed for gamma correction, and then quantized to 8-bit values for Software PWM
+    8-bit is for more flexible update rate options, as 12-bit or more would require faster update rates.
     */
     void Set(float val);
 
     /** 
-	This processes the pwm of the LED
-	sets the hardware accordingly.
+    This processes the pwm of the LED
+    sets the hardware accordingly.
     */
     void Update();
 

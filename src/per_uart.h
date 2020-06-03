@@ -18,11 +18,11 @@ TODO
 
 namespace daisy
 {
-    const size_t kUartMaxBufferSize = 32; /**<  Maximum Queue buffer size */
-    /** 
-	Uart Peripheral
-	@author shensley
-	@date March 2020
+const size_t kUartMaxBufferSize = 32; /**<  Maximum Queue buffer size */
+/** 
+    Uart Peripheral
+    @author shensley
+    @date March 2020
     */
 class UartHandler
 {
@@ -35,46 +35,46 @@ class UartHandler
 
     /** Reads the amount of bytes in blocking mode with a 10ms timeout.
         \param *buff Buffer  to read to
-	\param size Buff size
-	\param timeout How long to timeout for (10ms?)
-	\return Data received
+    \param size Buff size
+    \param timeout How long to timeout for (10ms?)
+    \return Data received
      */
     int PollReceive(uint8_t *buff, size_t size, uint32_t timeout);
 
     /** Starts a DMA Receive callback to fill a buffer of specified size.
-	Data is populated into a FIFO queue, and can be queried with the
-	functions below.
-	Maximum Buffer size is defined above.
-	If a value outside of the maximum is specified,
-	the size will be set to the maximum.
-	\param size Queue size
-	\return OK or ERROR
+    Data is populated into a FIFO queue, and can be queried with the
+    functions below.
+    Maximum Buffer size is defined above.
+    If a value outside of the maximum is specified,
+    the size will be set to the maximum.
+    \param size Queue size
+    \return OK or ERROR
     */
-    
+
     int StartRx(size_t size);
 
     /** \return whether Rx DMA is listening or not. */
     bool RxActive();
 
     /** Flushes the Receive Queue
-	\return OK or ERROR
+    \return OK or ERROR
     */
     int FlushRx();
 
     /** Sends an amount of data in blocking mode.
-	\param *buff Buffer of data to send
-	\param size Buffer size
-	\return OK or ERROR
+    \param *buff Buffer of data to send
+    \param size Buffer size
+    \return OK or ERROR
      */
     int PollTx(uint8_t *buff, size_t size);
 
     /** Pops the oldest byte from the FIFO. 
-	\return Popped byte
+    \return Popped byte
      */
     uint8_t PopRx();
 
     /** Checks if there are any unread bytes in the FIFO
-	\return 1 or 0 ??
+    \return 1 or 0 ??
      */
     size_t Readable();
 

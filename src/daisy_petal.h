@@ -6,7 +6,6 @@
 
 namespace daisy
 {
-
 /** @file daisy_petal.h */
 /**
    @brief Helpers and hardware definitions for daisy petal.
@@ -17,58 +16,58 @@ class DaisyPetal
     /** Switches */
     enum Sw
     {
-        SW_1, /**< Footswitch */
-        SW_2, /**< Footswitch */
-        SW_3, /**< Footswitch */
-        SW_4, /**< Footswitch */
-        SW_5, /**< Toggle */
-        SW_6, /**< Toggle */
-        SW_7, /**< Toggle */
+        SW_1,    /**< Footswitch */
+        SW_2,    /**< Footswitch */
+        SW_3,    /**< Footswitch */
+        SW_4,    /**< Footswitch */
+        SW_5,    /**< Toggle */
+        SW_6,    /**< Toggle */
+        SW_7,    /**< Toggle */
         SW_LAST, /**< Last enum item */
     };
 
     /** Knobs */
     enum Knob
     {
-        KNOB_1, /**< # */
-        KNOB_2, /**< # */
-        KNOB_3, /**< # */
-        KNOB_4, /**< # */
-        KNOB_5, /**< # */
-        KNOB_6, /**< # */
+        KNOB_1,    /**< # */
+        KNOB_2,    /**< # */
+        KNOB_3,    /**< # */
+        KNOB_4,    /**< # */
+        KNOB_5,    /**< # */
+        KNOB_6,    /**< # */
         KNOB_LAST, /**< # */
     };
 
     /** Leds in ringled */
     enum RingLed
     {
-        RING_LED_1, /**< # */
-        RING_LED_2, /**< # */
-        RING_LED_3, /**< # */
-        RING_LED_4, /**< # */
-        RING_LED_5, /**< # */
-        RING_LED_6, /**< # */
-        RING_LED_7, /**< # */
-        RING_LED_8, /**< # */
+        RING_LED_1,    /**< # */
+        RING_LED_2,    /**< # */
+        RING_LED_3,    /**< # */
+        RING_LED_4,    /**< # */
+        RING_LED_5,    /**< # */
+        RING_LED_6,    /**< # */
+        RING_LED_7,    /**< # */
+        RING_LED_8,    /**< # */
         RING_LED_LAST, /**< # */
     };
 
     /** footswitch leds */
     enum FootswitchLed
     {
-        FOOTSWITCH_LED_1, /**< # */
-        FOOTSWITCH_LED_2, /**< # */
-	FOOTSWITCH_LED_3, /**< # */
-        FOOTSWITCH_LED_4, /**< # */
+        FOOTSWITCH_LED_1,    /**< # */
+        FOOTSWITCH_LED_2,    /**< # */
+        FOOTSWITCH_LED_3,    /**< # */
+        FOOTSWITCH_LED_4,    /**< # */
         FOOTSWITCH_LED_LAST, /**< # */
     };
 
-     /** Constructor */
-     DaisyPetal() {}
-     /** Destructor */
-     ~DaisyPetal() {}
+    /** Constructor */
+    DaisyPetal() {}
+    /** Destructor */
+    ~DaisyPetal() {}
 
-    /** Initialize daisy petal */ 
+    /** Initialize daisy petal */
     void Init();
 
     /**
@@ -81,52 +80,52 @@ class DaisyPetal
        Set size of audio blocks.
        \param size Audio block size
      */
-    void   SetAudioBlockSize(size_t size);
+    void SetAudioBlockSize(size_t size);
 
     /**
        Start audio callback
        \param cb Callback function.
     */
-    void   StartAudio(dsy_audio_callback cb);
+    void StartAudio(dsy_audio_callback cb);
 
     /**
        Change callback function
        \param cb New callback function.
      */
-    void   ChangeAudioCallback(dsy_audio_callback cb);
+    void ChangeAudioCallback(dsy_audio_callback cb);
 
     /** Start analog to digital conversion. */
-    void   StartAdc();
+    void StartAdc();
 
     /** Device audio sample rate. */
-    float  AudioSampleRate();
+    float AudioSampleRate();
 
     /** Get audio block size */
     size_t AudioBlockSize();
 
     /** Get callback rate */
-    float  AudioCallbackRate();
+    float AudioCallbackRate();
 
     /** Call at the same frequency as controls are read for stable readings.*/
-    void   UpdateAnalogControls();
+    void UpdateAnalogControls();
 
     /** Get value per knob.
-	\param k Which knob to get
-	\return Floating point knob position.
+    \param k Which knob to get
+    \return Floating point knob position.
     */
-    float  GetKnobValue(Knob k);
+    float GetKnobValue(Knob k);
 
     /** # */
-    float  GetExpression();
+    float GetExpression();
 
     /** Debounce inputs.*/
-    void   DebounceControls();
+    void DebounceControls();
 
     /** Turn all leds off */
-    void   ClearLeds();
+    void ClearLeds();
 
     /** Update Leds to values you had set. */
-    void   UpdateLeds();
+    void UpdateLeds();
 
     /**
        Set ring LED colors
@@ -135,24 +134,24 @@ class DaisyPetal
        \param g Green value
        \param b Blue value
      */
-    void   SetRingLed(RingLed idx, float r, float g, float b);
+    void SetRingLed(RingLed idx, float r, float g, float b);
 
     /**
        Set footswitch LED
        \param idx Led Index
        \param bright Brightness
      */
-    void   SetFootswitchLed(FootswitchLed idx, float bright);
+    void SetFootswitchLed(FootswitchLed idx, float bright);
 
-    DaisySeed seed; /**< # */
-    Encoder   encoder;/**< # */
+    DaisySeed seed;    /**< # */
+    Encoder   encoder; /**< # */
 
-    AnalogControl knob[KNOB_LAST];/**< # */
-    AnalogControl expression;/**< # */
-    Switch        switches[SW_LAST]/**< # */;
+    AnalogControl knob[KNOB_LAST]; /**< # */
+    AnalogControl expression;      /**< # */
+    Switch        switches[SW_LAST] /**< # */;
 
-    RgbLed ring_led[8];/**< # */
-    Led    footswitch_led[4];/**< # */
+    RgbLed ring_led[8];       /**< # */
+    Led    footswitch_led[4]; /**< # */
 
   private:
     void InitSwitches();

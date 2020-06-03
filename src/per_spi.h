@@ -16,8 +16,7 @@
 
 namespace daisy
 {
-
-  /** SPI peripheral enum */
+/** SPI peripheral enum */
 enum SpiPeriph
 {
     SPI_PERIPH_1, /**< SPI peripheral 1 */
@@ -28,8 +27,8 @@ enum SpiPeriph
 /** SPI pins */
 enum SpiPin
 {
-    SPI_PIN_CS, /**< CS pin */
-    SPI_PIN_SCK, /**< SCK pin */
+    SPI_PIN_CS,   /**< CS pin */
+    SPI_PIN_SCK,  /**< SCK pin */
     SPI_PIN_MOSI, /**< MOSI pin */
     SPI_PIN_MISO, /**< MISO pin */
 };
@@ -45,8 +44,8 @@ class SpiHandle
     void Init();
 
     /** Blocking transmit 
-	\param *buff input buffer
-	\param size  buffer size
+    \param *buff input buffer
+    \param size  buffer size
     */
     void BlockingTransmit(uint8_t *buff, size_t size);
 

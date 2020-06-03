@@ -68,7 +68,7 @@ extern "C"
        \param size buffer size
     */
     typedef void (*CDC_ReceiveCallback)(uint8_t* buf, uint32_t* size);
- 
+
     /* USER CODE END EXPORTED_TYPES */
 
     /**
@@ -111,9 +111,9 @@ extern "C"
   * @{
   */
     void    CDC_Set_Rx_Callback_FS(CDC_ReceiveCallback cb); /**< # */
-    uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len); /**< # */
-    uint8_t CDC_Transmit_HS(uint8_t* Buf, uint16_t Len); /**< # */
- 
+    uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);    /**< # */
+    uint8_t CDC_Transmit_HS(uint8_t* Buf, uint16_t Len);    /**< # */
+
     /* USER CODE BEGIN EXPORTED_FUNCTIONS */
 
 

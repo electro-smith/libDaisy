@@ -22,39 +22,39 @@ class DaisySeed
     ~DaisySeed() {}
 
     /** 
-	Configures the settings for all internal peripherals,
-	but does not initialize them.
-	This allows for modification of the configuration
-	handles prior to initialization.
+    Configures the settings for all internal peripherals,
+    but does not initialize them.
+    This allows for modification of the configuration
+    handles prior to initialization.
     */
-    
+
     //Defaults listed below:
     //TODO: Add defaults
-    
+
 
     /** # */
     void Configure();
 
     /** 
-	Initializes the Daisy Seed and the following peripherals:
-	SDRAM, QSPI, 24-bit 48kHz Audio via AK4556, Internal USB,
-	as well as the built-in LED and Testpoint.
+    Initializes the Daisy Seed and the following peripherals:
+    SDRAM, QSPI, 24-bit 48kHz Audio via AK4556, Internal USB,
+    as well as the built-in LED and Testpoint.
 
-	ADCs, DACs, and other special peripherals (such as I2C, SPI, etc.)
-	can be initialized using their specific initializers within libdaisy
-	for a specific application.
+    ADCs, DACs, and other special peripherals (such as I2C, SPI, etc.)
+    can be initialized using their specific initializers within libdaisy
+    for a specific application.
     */
     void Init();
 
     /** 
-	Returns the gpio_pin corresponding to the index 0-31.
-	For the given GPIO on the Daisy Seed (labeled 1-32 in docs).
+    Returns the gpio_pin corresponding to the index 0-31.
+    For the given GPIO on the Daisy Seed (labeled 1-32 in docs).
     */
     dsy_gpio_pin GetPin(uint8_t pin_idx);
 
     /** Begins the audio for the seeds builtin audio.
-	the specified callback will get called whenever
-	new data is ready to be prepared.
+    the specified callback will get called whenever
+    new data is ready to be prepared.
     */
     void StartAudio(dsy_audio_callback cb);
 
@@ -65,28 +65,28 @@ class DaisySeed
     /** Sets the state of the test point near pin 10
      */
     void SetTestPoint(bool state);
-    
+
     /** Returns the audio sample rate in Hz as a floating point number.
      */
     float AudioSampleRate();
-    
+
     /** Sets the number of samples processed per channel by the audio callback.
      */
     void SetAudioBlockSize(size_t blocksize);
-    
+
     // While the library is still in heavy development, most of the
     // configuration handles will remain public.
-    
+
     dsy_sdram_handle sdram_handle; /**< # */
-    dsy_qspi_handle  qspi_handle; /**< # */
+    dsy_qspi_handle  qspi_handle;  /**< # */
     dsy_audio_handle audio_handle; /**< # */
-    dsy_sai_handle   sai_handle; /**< # */
-    dsy_i2c_handle   i2c1_handle, /**< # */
-                     i2c2_handle; /**< # */
-    AdcHandle        adc; /**< # */
-    dsy_dac_handle   dac_handle; /**< # */
-    UsbHandle        usb_handle; /**< # */
- 
+    dsy_sai_handle   sai_handle;   /**< # */
+    dsy_i2c_handle   i2c1_handle,  /**< # */
+        i2c2_handle;               /**< # */
+    AdcHandle      adc;            /**< # */
+    dsy_dac_handle dac_handle;     /**< # */
+    UsbHandle      usb_handle;     /**< # */
+
   private:
     void     ConfigureSdram();
     void     ConfigureQspi();

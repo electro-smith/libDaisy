@@ -8,7 +8,7 @@ extern "C"
 
 #include "util_bsp_sd_diskio.h"
 
-  extern const Diskio_drvTypeDef SD_Driver; /**< # */
+    extern const Diskio_drvTypeDef SD_Driver; /**< # */
 
 #ifdef __cplusplus
 }

@@ -5,7 +5,6 @@
 
 namespace daisy
 {
-
 /** @file hid_gatein.h */
 /**
    @brief Generic Class for handling gate inputs through GPIO.
@@ -16,22 +15,22 @@ class GateIn
 {
   public:
     /** GateIn 
-	Constructor 
+    Constructor 
     */
     GateIn() {}
     /** GateIn~
-	Destructor 
+    Destructor 
     */
     ~GateIn() {}
 
     /** Init
-	Initializes the gate input with specified hardware pin
+    Initializes the gate input with specified hardware pin
     */
     void Init(dsy_gpio_pin *pin_cfg);
 
     /** Trig
-	Checks current state of gate input.
-	\return FALSE if pin is low, and TRUE if high
+    Checks current state of gate input.
+    \return FALSE if pin is low, and TRUE if high
     */
     bool Trig();
 
