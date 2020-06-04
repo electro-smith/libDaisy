@@ -49,7 +49,7 @@ typedef struct
 uint8_t BSP_SD_Init(void);     /**< \return card state, ERROR, etc.*/
 uint8_t BSP_SD_ITConfig(void); /**< \return card state, ERROR, etc. */
 
-/** \param  *pData #
+/** \param  *pData &
     \param  ReadAddr Address to read from
     \param  NumOfBlocks Number of blocks to be read
     \param  Timeout Timeout len in ms
@@ -59,7 +59,7 @@ uint8_t BSP_SD_ReadBlocks(uint32_t *pData,
                           uint32_t  ReadAddr,
                           uint32_t  NumOfBlocks,
                           uint32_t  Timeout);
-/** \param  *pData #
+/** \param  *pData &
     \param  WriteAddr Address to write to
     \param  NumOfBlocks Number of blocks to be written
     \param  Timeout Timeout len in ms
@@ -71,7 +71,7 @@ uint8_t BSP_SD_WriteBlocks(uint32_t *pData,
                            uint32_t  Timeout);
 
 /** No timeout
-    \param  *pData #
+    \param  *pData &
     \param  ReadAddr Address to read from
     \param  NumOfBlocks Number of blocks to be read
     \return card state, ERROR, etc.
@@ -80,7 +80,7 @@ uint8_t
 BSP_SD_ReadBlocks_DMA(uint32_t *pData, uint32_t ReadAddr, uint32_t NumOfBlocks);
 
 /** No timeout
-    \param  *pData #
+    \param  *pData &
     \param  WriteAddr Address to write to
     \param  NumOfBlocks Number of blocks to be read
     \return card state, ERROR, etc.

@@ -50,7 +50,7 @@ class WavPlayer
     int Open(size_t sel);
 
     /** Closes whatever file is currently open.
-    \return #
+    \return &
      */
     int Close();
 

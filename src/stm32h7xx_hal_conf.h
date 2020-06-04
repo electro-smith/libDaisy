@@ -30,7 +30,7 @@ extern "C"
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-/* ########################## Module Selection ############################## */
+/* &######################### Module Selection &############################# */
 /**
   * @brief This is the list of modules to be used in the HAL driver
   */
@@ -90,7 +90,7 @@ extern "C"
 #define HAL_USART_MODULE_ENABLED
 #define HAL_WWDG_MODULE_ENABLED
 
-/* ########################## Oscillator Values adaptation ####################*/
+/* &######################### Oscillator Values adaptation &###################*/
 /**
   * @brief Adjust the value of External High Speed oscillator (HSE) used in your application.
   *        This value is used by the RCC HAL module to compute the system frequency
@@ -158,7 +158,7 @@ extern "C"
 /* Tip: To avoid modifying this file each time you need to use different HSE,
    ===  you can define the HSE value in your toolchain compiler preprocessor. */
 
-/* ########################### System Configuration ######################### */
+/* &########################## System Configuration &######################## */
 /**
   * @brief This is the HAL system configuration section
   */
@@ -240,7 +240,7 @@ extern "C"
 #define USE_HAL_WWDG_REGISTER_CALLBACKS \
     0U /* WWDG register callback disabled    */
 
-/* ########################### Ethernet Configuration ######################### */
+/* &########################## Ethernet Configuration &######################## */
 #define ETH_TX_DESC_CNT 4 /* number of Ethernet Tx DMA descriptors */
 #define ETH_RX_DESC_CNT 4 /* number of Ethernet Rx DMA descriptors */
 
@@ -251,7 +251,7 @@ extern "C"
 #define ETH_MAC_ADDR4 ((uint8_t)0x00)
 #define ETH_MAC_ADDR5 ((uint8_t)0x00)
 
-    /* ########################## Assert Selection ############################## */
+    /* &######################### Assert Selection &############################# */
     /**
   * @brief Uncomment the line below to expanse the "assert_param" macro in the
   *        HAL drivers code

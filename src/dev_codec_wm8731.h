@@ -13,7 +13,7 @@
 /** 
     Resets the WM8731
     \param *hi2c array of pins handling i2c?
-    \param mcu_is_master #
+    \param mcu_is_master &
     \param sample_rate Sample rate to run codec at
     \param bitdepth Bit depth to run codec at
 */

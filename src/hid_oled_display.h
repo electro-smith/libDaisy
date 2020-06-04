@@ -70,7 +70,7 @@ class OledDisplay
     \param ch character to be written
     \param font font to be written in
     \param on    on or off
-    \return #
+    \return &
     */
     char WriteChar(char ch, FontDef font, bool on);
 
@@ -81,7 +81,7 @@ class OledDisplay
     \param str string to be written
     \param font font to use
     \param on  on or off
-    \return #
+    \return &
     */
     char WriteString(char* str, FontDef font, bool on);
 

@@ -42,7 +42,7 @@ struct AdcChannelConfig
     \param mux_0 First mux pin
         \param mux_1 Second mux pin
         \param mux_2 Third mux pin
-    \param adc_pin #
+    \param adc_pin &
     */
     void InitMux(dsy_gpio_pin adc_pin,
                  dsy_gpio_pin mux_0,
@@ -120,7 +120,7 @@ class AdcHandle
     /**
        Getters for multiplexed inputs on a single channel (up to 8 per ADC input). 
        \param chn Channel to get from
-       \param idx #
+       \param idx &
        \return data
     */
     uint16_t GetMux(uint8_t chn, uint8_t idx);
@@ -128,7 +128,7 @@ class AdcHandle
     /**
        Getters for multiplexed inputs on a single channel. (Max 8 per chan)
        \param chn Channel to get from
-       \param idx #
+       \param idx &
        \return Pointer to data
     */
     uint16_t *GetMuxPtr(uint8_t chn, uint8_t idx);
@@ -136,7 +136,7 @@ class AdcHandle
     /**
        Getters for multiplexed inputs on a single channel (up to 8 per ADC input). 
        \param chn Channel to get from
-       \param idx #
+       \param idx &
        \return Floating point data
     */
     float GetMuxFloat(uint8_t chn, uint8_t idx);

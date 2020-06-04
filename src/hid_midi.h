@@ -124,7 +124,7 @@ class MidiHandler
     Populates internal FIFO queue with MIDI Messages
     For example with uart:
     midi.Parse(uart.PopRx());
-    \param byte #
+    \param byte &
     */
     void Parse(uint8_t byte);
 

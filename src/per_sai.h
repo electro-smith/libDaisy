@@ -105,12 +105,12 @@ extern "C"
     } dsy_sai_handle;
 
     /** Intializes the SAI peripheral(s) with the specified settings. Pinlists should be arrays of DSY_SAI_PIN_LAST elements 
-      \param init #
+      \param init &
       \param sr[] Sample rate per chan: 0, 1
       \param bitdepth[] Bitdepth per chan: 0, 1 
       \param sync_config[] & sync config per chan: 0, 1
-      \param *sai1_pin_list #
-      \param *sai2_pin_list #
+      \param *sai1_pin_list &
+      \param *sai2_pin_list &
   */
     void dsy_sai_init(dsy_audio_sai        init,
                       dsy_audio_samplerate sr[2],
@@ -120,7 +120,7 @@ extern "C"
                       dsy_gpio_pin*        sai2_pin_list);
 
     /** Uses the data within *hsai to initialize the peripheral(s) 
-    \param hsai #
+    \param hsai &
      */
     void dsy_sai_init_from_handle(dsy_sai_handle* hsai);
 
