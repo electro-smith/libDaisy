@@ -1,4 +1,5 @@
-#TARGET = ex_bypass
+# Core Makefile for Daisy
+
 CHIPSET ?= stm32h7x
 
 TARGET_BIN=$(TARGET).bin
