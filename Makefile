@@ -197,10 +197,13 @@ C_INCLUDES = \
 -IMiddlewares/Third_Party/FatFs/src \
 -I. \
 
-# compile gcc flags
-ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+# TODO: Consider adding -Werror once the unused function/variables that are currently in place are fixed.
+WARNINGS = -Wall -Wno-attributes -Wno-strict-aliasing
 
-CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+# compile gcc flags
+ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) $(WARNINGS) -fdata-sections -ffunction-sections
+
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) $(WARNINGS) -fdata-sections -ffunction-sections
 
 
 ifeq ($(DEBUG), 1)
