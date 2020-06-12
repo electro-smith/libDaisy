@@ -148,6 +148,11 @@ float DaisyPetal::GetKnobValue(Knob k)
     return knob[idx].Value();
 }
 
+float DaisyPetal::GetExpression() 
+{
+    return expression.Value();
+}
+
 void DaisyPetal::DebounceControls()
 {
     encoder.Debounce();
@@ -161,15 +166,21 @@ void DaisyPetal::DebounceControls()
 void DaisyPetal::ClearLeds()
 {
     // Using Color
-    //    Color c;
-    //    c.Init(Color::PresetColor::OFF);
-    //    for(size_t i = 0; i < RING_LED_LAST; i++)
-    //    {
-    //        ring_led[i].SetColor(c);
-    //    }
-    for(size_t i = 0; i < LED_LAST; i++) {
-        dsy_led_driver_set_led(i, 0);
-	}
+//    Color c;
+//    c.Init(Color::PresetColor::OFF);
+//    for(size_t i = 0; i < RING_LED_LAST; i++)
+//    {
+//        ring_led[i].SetColor(c);
+//    }
+    for(size_t i = 0; i < RING_LED_LAST; i++)
+    {
+        SetRingLed(static_cast<RingLed>(i), 0.0f, 0.0f, 0.0f);
+    }
+    for(size_t i = 0; i < FOOTSWITCH_LED_LAST; i++)
+    {
+        SetFootswitchLed(static_cast<FootswitchLed>(i), 0.0f);
+    }
+
 }
 
 void DaisyPetal::UpdateLeds()
@@ -268,15 +279,16 @@ void DaisyPetal::InitAnalogControls()
     // Set order of ADCs based on CHANNEL NUMBER
     // KNOB_LAST + 1 because of Expression input
     AdcChannelConfig cfg[KNOB_LAST + 1];
-    // Init with Single Pins
+	// Init with Single Pins
     cfg[KNOB_1].InitSingle(seed.GetPin(PIN_KNOB_1));
     cfg[KNOB_2].InitSingle(seed.GetPin(PIN_KNOB_2));
     cfg[KNOB_3].InitSingle(seed.GetPin(PIN_KNOB_3));
     cfg[KNOB_4].InitSingle(seed.GetPin(PIN_KNOB_4));
     cfg[KNOB_5].InitSingle(seed.GetPin(PIN_KNOB_5));
     cfg[KNOB_6].InitSingle(seed.GetPin(PIN_KNOB_6));
-    // Special case for Expression
+	// Special case for Expression
     cfg[KNOB_LAST].InitSingle(seed.GetPin(PIN_EXPRESSION));
+
     seed.adc.Init(cfg, KNOB_LAST + 1);
     // Make an array of pointers to the knob.
     for(int i = 0; i < KNOB_LAST; i++)
