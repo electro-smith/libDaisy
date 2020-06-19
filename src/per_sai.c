@@ -309,7 +309,6 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     __HAL_RCC_GPIOF_CLK_ENABLE();
 
     GPIO_InitTypeDef GPIO_InitStruct;
-    HAL_DMA_MuxSyncConfigTypeDef pSyncConfig;
     /* SAI1 */
     if(hsai->Instance == SAI1_Block_A)
     {

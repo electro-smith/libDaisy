@@ -83,11 +83,6 @@ typedef struct
 } SSD1309_t;
 static SpiHandle h_spi;
 static dsy_gpio  pin_reset, pin_dc;
-//static dsy_gpio_pin cfg_reset = {DSY_GPIOB, 9};  // O.G. Pod Test.
-//static dsy_gpio_pin cfg_dc    = {DSY_GPIOB, 8}; // O.G. Pod Test.
-static dsy_gpio_pin cfg_reset = {DSY_GPIOB, 15};
-static dsy_gpio_pin cfg_dc    = {DSY_GPIOB, 4};
-
 static SSD1309_t SSD1309;
 
 
