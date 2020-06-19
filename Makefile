@@ -197,8 +197,7 @@ C_INCLUDES = \
 -IMiddlewares/Third_Party/FatFs/src \
 -I. \
 
-# TODO: Consider adding -Werror once the unused function/variables that are currently in place are fixed.
-WARNINGS = -Wall -Wno-attributes -Wno-strict-aliasing
+WARNINGS = -Wall -Werror -Wno-attributes -Wno-strict-aliasing
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) $(WARNINGS) -fdata-sections -ffunction-sections
