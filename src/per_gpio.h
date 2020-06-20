@@ -51,13 +51,13 @@ typedef struct
 // ### init
 // Initializes the gpio with the settings configured.
 // ~~~~
-void dsy_gpio_init(dsy_gpio *p);
+void dsy_gpio_init(const dsy_gpio *p);
 // ~~~~
 
 // ### deinit
 // Deinitializes the gpio pin
 // ~~~~
-void dsy_gpio_deinit(dsy_gpio *p);
+void dsy_gpio_deinit(const dsy_gpio *p);
 // ~~~~
 
 // ### read
@@ -65,7 +65,7 @@ void dsy_gpio_deinit(dsy_gpio *p);
 //
 // returning 1 if the pin is HIGH, and 0 if the pin is LOW
 // ~~~~
-uint8_t dsy_gpio_read(dsy_gpio *p);
+uint8_t dsy_gpio_read(const dsy_gpio *p);
 // ~~~~
 
 // ### write
@@ -73,14 +73,14 @@ uint8_t dsy_gpio_read(dsy_gpio *p);
 //
 // Pin will be set to 3v3 when state is 1, and 0V when state is 0
 // ~~~~
-void dsy_gpio_write(dsy_gpio *p, uint8_t state);
+void dsy_gpio_write(const dsy_gpio *p, uint8_t state);
 // ~~~~
 
 // ### toggle
 // Toggles the state of the pin so that it is not at the same
 //		state as it was previously.
 // ~~~~
-void dsy_gpio_toggle(dsy_gpio *p);
+void dsy_gpio_toggle(const dsy_gpio *p);
 // ~~~~
 #ifdef __cplusplus
 }
