@@ -338,32 +338,32 @@ void AdcHandle::Stop()
 
 // Accessors
 
-uint16_t AdcHandle::Get(uint8_t chn)
+uint16_t AdcHandle::Get(uint8_t chn) const
 {
     return adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0];
 }
-uint16_t* AdcHandle::GetPtr(uint8_t chn)
+uint16_t* AdcHandle::GetPtr(uint8_t chn) const
 {
     return &adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0];
 }
 
-float AdcHandle::GetFloat(uint8_t chn)
+float AdcHandle::GetFloat(uint8_t chn) const
 {
     return (float)adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0]
            / DSY_ADC_MAX_RESOLUTION;
 }
 
-uint16_t AdcHandle::GetMux(uint8_t chn, uint8_t idx)
+uint16_t AdcHandle::GetMux(uint8_t chn, uint8_t idx) const
 {
     return *adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx];
 }
 
-uint16_t* AdcHandle::GetMuxPtr(uint8_t chn, uint8_t idx)
+uint16_t* AdcHandle::GetMuxPtr(uint8_t chn, uint8_t idx) const
 {
     return adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx];
 }
 
-float AdcHandle::GetMuxFloat(uint8_t chn, uint8_t idx)
+float AdcHandle::GetMuxFloat(uint8_t chn, uint8_t idx) const
 {
     return (float)*adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx]
            / DSY_ADC_MAX_RESOLUTION;
