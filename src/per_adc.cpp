@@ -190,7 +190,6 @@ void AdcChannelConfig::InitMux(dsy_gpio_pin adc_pin,
     {
         mux_pin_[i].mode = DSY_GPIO_MODE_OUTPUT_PP;
         mux_pin_[i].pull = DSY_GPIO_NOPULL;
-        dsy_gpio_init(&mux_pin_[i]);
     }
 }
 
@@ -309,6 +308,13 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     sConfig.Offset       = 0;
     for(uint8_t i = 0; i < adc.channels; i++)
     {
+    	// init pins
+		const auto& cfg = adc.pin_cfg[i];
+		const auto pins_to_init    = (cfg.mux_channels_ - 1) >> 1;
+		for(int j = 0; j <= pins_to_init; j++)
+			dsy_gpio_init(&cfg.mux_pin_[j]);
+
+		// init adc channel sequence
         sConfig.Channel = adc_channel_from_pin(&adc.pin_cfg[i].pin_.pin);
         sConfig.Rank    = dsy_adc_rank_map[i];
         if(HAL_ADC_ConfigChannel(&adc.hadc1, &sConfig) != HAL_OK)
