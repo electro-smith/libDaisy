@@ -71,7 +71,7 @@ uint8_t dsy_gpio_read(const dsy_gpio *p);
 // ### write
 // Writes the state to the gpio pin
 //
-// Pin will be set to 3v3 when state is 1, and 0V when state is 0
+// Pin will be set to 3v3 when state is >0, and 0V when state is 0
 // ~~~~
 void dsy_gpio_write(const dsy_gpio *p, uint8_t state);
 // ~~~~
