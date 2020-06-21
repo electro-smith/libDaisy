@@ -169,10 +169,10 @@ void AdcChannelConfig::InitSingle(dsy_gpio_pin pin)
     dsy_gpio_init(&pin_);
 }
 void AdcChannelConfig::InitMux(dsy_gpio_pin adc_pin,
+                               size_t       muxChannels,
                                dsy_gpio_pin mux_0,
                                dsy_gpio_pin mux_1,
-                               dsy_gpio_pin mux_2,
-                               size_t       channels)
+                               dsy_gpio_pin mux_2)
 {
     size_t pins_to_init;
     // Init ADC Pin
@@ -184,7 +184,7 @@ void AdcChannelConfig::InitMux(dsy_gpio_pin adc_pin,
     mux_pin_[0].pin = mux_0;
     mux_pin_[1].pin = mux_1;
     mux_pin_[2].pin = mux_2;
-    mux_channels_   = channels < 8 ? channels : 8;
+    mux_channels_   = muxChannels < 8 ? muxChannels : 8;
     pins_to_init    = (mux_channels_ - 1) >> 1;
     for(size_t i = 0; i <= pins_to_init; i++)
     {
