@@ -37,7 +37,9 @@ struct AdcChannelConfig
     // ### InitMux
     // Initializes a single ADC pin as a Multiplexed ADC.
     //
-    // Requires a CD4051 Multiplexor connected to the pin
+    // Requires a CD405X Multiplexer connected to the pin.
+    // You only need to supply the mux pins that are required,
+    // e.g. a 4052 mux would only require mux_0 and mux_1.
     //
     // Internal Callbacks handle the pin addressing.
     //
@@ -101,15 +103,15 @@ class AdcHandle
     //
     // These are getters for a single channel
     // ~~~~
-    uint16_t  Get(uint8_t chn);
-    uint16_t *GetPtr(uint8_t chn);
-    float     GetFloat(uint8_t chn);
+    uint16_t  Get(uint8_t chn) const;
+    uint16_t *GetPtr(uint8_t chn) const;
+    float     GetFloat(uint8_t chn) const;
     // ~~~~
     // These are getters for multiplexed inputs on a single channel (up to 8 per ADC input).
     // ~~~~
-    uint16_t  GetMux(uint8_t chn, uint8_t idx);
-    uint16_t *GetMuxPtr(uint8_t chn, uint8_t idx);
-    float     GetMuxFloat(uint8_t chn, uint8_t idx);
+    uint16_t  GetMux(uint8_t chn, uint8_t idx) const;
+    uint16_t *GetMuxPtr(uint8_t chn, uint8_t idx) const;
+    float     GetMuxFloat(uint8_t chn, uint8_t idx) const;
     // ~~~~
 
 
