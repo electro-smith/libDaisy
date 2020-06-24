@@ -4,6 +4,10 @@
 #include "daisy_core.h"
 #include "per_gpio.h"
 
+/** @addtogroup controls
+    @{
+*/
+
 /** @file hid_switch.h */
 
 namespace daisy
@@ -92,3 +96,4 @@ class Switch
 
 } // namespace daisy
 #endif
+/** @} */

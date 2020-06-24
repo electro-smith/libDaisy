@@ -25,7 +25,10 @@ extern "C"
 #define DSY_AUDIO_SAMPLE_RATE 48014.0f /**< Default sample rate */
 #endif
 
-    /** @ingroup audio @{ */
+    /** @ingroup audio 
+	@{ 
+    */
+
     /** 
     @file hid_audio.h
     @brief Audio Driver \n 

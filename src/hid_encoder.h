@@ -5,6 +5,10 @@
 #include "per_gpio.h"
 #include "hid_switch.h"
 
+/** @addtogroup controls
+    @{
+*/
+
 /** @file hid_encoder.h */
 
 namespace daisy
@@ -61,3 +65,4 @@ be made at the same rate as the debounce function is being called.
 };
 } // namespace daisy
 #endif
+/** @} */

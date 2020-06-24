@@ -3,6 +3,7 @@
     @{ 
 */
 
+
 /** @defgroup human_interface HUMAN_INTERFACE
     @brief Interface with the world.
     @{ 
@@ -16,8 +17,15 @@
     @brief Hardware Controls 
 */
 
-/** @} */
-/** @} */
+/** @} END HID */ 
+
+/** @defgroup peripherals PERIPHERALS
+    @brief Peripheral devices, not meant for human interaction.
+    @{ 
+*/
+
+/** @} END PERIPHERALS */
+/** @} END LIBDAISY*/
 
 #ifndef DSY_LIBDAISY_H
 #define DSY_LIBDAISY_H

@@ -2,6 +2,10 @@
 #include <stdint.h>
 #include "hid_ctrl.h"
 
+/** @addtogroup controls
+    @{
+*/
+
 /** @file hid_parameter.h */
 
 namespace daisy
@@ -52,3 +56,4 @@ class Parameter
     Curve         pcurve_;
 };
 } // namespace daisy
+/** @} */
