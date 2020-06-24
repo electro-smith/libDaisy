@@ -9,7 +9,12 @@ namespace daisy
 /** @addtogroup libdaisy
     @{
 */
-/** @addtogroup human_interface_device
+/** @addtogroup human_interface
+    @{
+*/
+
+/** @defgroup controls CONTROLS
+    @brief Hardware Controls
     @{
 */
     
@@ -74,5 +79,6 @@ class AnalogControl
 } // namespace daisy
 #endif
 #endif
+/** @} */
 /** @} */
 /** @} */

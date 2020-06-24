@@ -9,25 +9,25 @@ extern "C"
 {
 #endif
 
-/** @defgroup libdaisy
+/** @defgroup libdaisy LIBDAISY
     @brief The daisy library
     @{
 */
-/** @defgroup human_interface_device
+/** @defgroup human_interface HUMAN_INTERFACE
     @brief Interface with the world.
     @{
 */
+/** @defgroup audio AUDIO
+    @brief Embedded Audio Engine
+    @{
+*/
 
-
-
-    
 /** Defines for generic maximums
     While 'Audio Channels Max' is set to 2, this is per-SAI 
     4x4 Audio I/O is possible using the dsy_audio_mc_callback
     Hard-coded samplerate is calculated from original clock tree.  
     The new clock tree has less than 0.01% error for all supported samplerates
 */
-
 /** Max block size */
 #define DSY_AUDIO_BLOCK_SIZE_MAX 128
 /** Max number of audio channels */
@@ -159,5 +159,6 @@ extern "C"
 }
 #endif
 #endif
+/** @} */
 /** @} */
 /** @} */
