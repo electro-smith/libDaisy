@@ -4,10 +4,12 @@
 #include "hid_led.h"
 #include "util_color.h"
 
-/** @file hid_rgb_led.h */
-
 namespace daisy
 {
+/** @addtogroup feedback
+    @{
+*/
+
 /** 3x LEDs configured as an RGB for ease of use. */
 class RgbLed
 {
@@ -47,3 +49,4 @@ class RgbLed
 } // namespace daisy
 
 #endif
+/** @} */

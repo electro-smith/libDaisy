@@ -7,11 +7,8 @@
 namespace daisy
 {
 
-/** @ingroup controls 
+/** @addtogroup controls 
     @{ 
-*/
-    
-/** @file hid_ctrl.h 
 */
 
 /**

@@ -2,14 +2,12 @@
 #include <stdint.h>
 #include "hid_ctrl.h"
 
+namespace daisy
+{
 /** @addtogroup controls
     @{
 */
 
-/** @file hid_parameter.h */
-
-namespace daisy
-{
 /**      Simple parameter mapping tool that takes a 0-1 input from an hid_ctrl. */
 class Parameter
 {
@@ -44,6 +42,7 @@ class Parameter
     /** 
     \return the current value from the parameter without processing another sample.
     this is useful if you need to use the value multiple times, and don't store
+
     the output of process in a local variable.
     */
     inline float Value() { return val_; }

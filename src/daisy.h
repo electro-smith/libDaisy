@@ -7,12 +7,17 @@
 	@{ */
 
         /** @defgroup audio AUDIO
-	    @brief Embedded Audio Engine 
-	*/
+	    @brief Embedded Audio Engine */
 
         /** @defgroup controls CONTROLS
-	    @brief Hardware Controls 
-	*/
+	    @brief Hardware Controls */
+
+        /** @defgroup feedback FEEDBACK
+	    @brief Screens, leds, etc. */
+
+        /** @defgroup  external EXTERNAL
+	    @brief External interface devices */
+
     /** @} END HID */ 
 
     /** @defgroup peripheral PERIPHERAL
@@ -40,7 +45,7 @@
     /** @} END DAISY */
 
     /** @defgroup utility UTILITY
-        @brief General utilities. Rinbuffers, LED colors, OLED stuff, etc.
+        @brief General utilities. Ringbuffers, LED colors, OLED stuff, etc.
 	@{ 
     */
     /** @} END UTILITY */

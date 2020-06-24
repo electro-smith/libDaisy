@@ -5,14 +5,12 @@
 #include "per_gpio.h"
 #include "hid_switch.h"
 
+namespace daisy
+{
 /** @addtogroup controls
     @{
 */
 
-/** @file hid_encoder.h */
-
-namespace daisy
-{
 /** 
     @brief Generic Class for handling Quadrature Encoders \n 
     Inspired/influenced by Mutable Instruments (pichenettes) Encoder classes

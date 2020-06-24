@@ -7,10 +7,13 @@
 #include "per_uart.h"
 #include "util_ringbuffer.h"
 
-/** @file hid_midi.h */
-
 namespace daisy
 {
+/** @addtogroup external 
+    @{ 
+*/
+
+
 /** Parsed from the Status Byte, these are the common Midi Messages that can be handled. \n
 At this time only 3-byte messages are correctly parsed into MidiEvents.
 */
@@ -157,3 +160,4 @@ class MidiHandler
 } // namespace daisy
 
 #endif
+/** @} */

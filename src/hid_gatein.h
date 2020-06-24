@@ -5,6 +5,10 @@
 
 namespace daisy
 {
+
+/** @ingroup devices
+    @{
+*/
 /** @file hid_gatein.h */
 /**
    @brief Generic Class for handling gate inputs through GPIO.
@@ -40,3 +44,4 @@ class GateIn
 };
 } // namespace daisy
 #endif
+/** @} */

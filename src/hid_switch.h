@@ -4,14 +4,12 @@
 #include "daisy_core.h"
 #include "per_gpio.h"
 
+namespace daisy
+{
 /** @addtogroup controls
     @{
 */
 
-/** @file hid_switch.h */
-
-namespace daisy
-{
 /** 
     Generic Class for handling momentary/latching switches \n 
     Inspired/influenced by Mutable Instruments (pichenettes) Switch classes
@@ -43,8 +41,7 @@ class Switch
     };
 
     Switch() {}
-
-    ~Switch() {}
+  ~Switch() {}
 
     /** 
     Initializes the switch object with a given port/pin combo.
@@ -95,5 +92,5 @@ class Switch
 };
 
 } // namespace daisy
-#endif
+#endifx
 /** @} */

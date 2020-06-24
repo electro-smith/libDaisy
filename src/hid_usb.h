@@ -4,8 +4,11 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-/** @file hid_usb.h */
 namespace daisy
+/** @addtogroup externals
+    @{
+*/
+
 {
 /** 
     @brief Interface for initializing and using the USB Peripherals on the daisy
@@ -58,6 +61,7 @@ class UsbHandle
 } // namespace daisy
 #endif
 
-/** - Add support for other USB classes (currently only CDC is supported)
+/* - Add support for other USB classes (currently only CDC is supported)
 - DMA setup
 */
+/** @} */

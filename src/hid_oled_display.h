@@ -14,10 +14,12 @@
 #define SSD1309_WIDTH 128 /**< SSD1309 width in pixels */
 #endif
 
-/** @file hid_oled_display.h */
-
 namespace daisy
 {
+/** @addtogroup feedback
+    @{ 
+*/
+
 /** 
     Human Interface Driver for using an OLED Display (SSD1309)
     For all `bool on` arguments: true is on, false is off.
@@ -106,3 +108,4 @@ class OledDisplay
 } // namespace daisy
 
 #endif
+/** @} */

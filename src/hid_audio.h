@@ -29,9 +29,8 @@ extern "C"
 	@{ 
     */
 
-    /** 
-    @file hid_audio.h
-    @brief Audio Driver \n 
+    /*
+      brief Audio Driver \n 
     Configures Audio Device and provides callback for signal processing. \n 
     Many of the hard-coded values here will change (increase), and/or \n 
     be replaced by configurable options 
