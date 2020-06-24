@@ -1,30 +1,50 @@
 /** @defgroup libdaisy LIBDAISY
     @brief The daisy library
-    @{ 
-*/
+    @{ */
 
+    /** @defgroup human_interface HUMAN_INTERFACE
+	@brief Interface with the world.
+	@{ */
 
-/** @defgroup human_interface HUMAN_INTERFACE
-    @brief Interface with the world.
-    @{ 
-*/
+        /** @defgroup audio AUDIO
+	    @brief Embedded Audio Engine 
+	*/
 
-/** @defgroup audio AUDIO
-    @brief Embedded Audio Engine 
-*/
+        /** @defgroup controls CONTROLS
+	    @brief Hardware Controls 
+	*/
+    /** @} END HID */ 
 
-/** @defgroup controls CONTROLS
-    @brief Hardware Controls 
-*/
+    /** @defgroup peripheral PERIPHERAL
+	@brief Peripheral devices, not meant for human interaction.
+	@{ 
+    */
+    /** @} END PERIPHERAL */
 
-/** @} END HID */ 
+    /** @defgroup system SYSTEM
+	@brief 
+	@{ 
+    */
+    /** @} END SYSTEM */
 
-/** @defgroup peripherals PERIPHERALS
-    @brief Peripheral devices, not meant for human interaction.
-    @{ 
-*/
+    /** @defgroup dev DEV
+        @brief Peripheral devices, not meant for human interaction.
+	@{ 
+    */
+    /** @} END DEV */
 
-/** @} END PERIPHERALS */
+    /** @defgroup daisy DAISY
+	@brief Peripheral devices, not meant for human interaction.
+	@{ 
+    */
+    /** @} END DAISY */
+
+    /** @defgroup system SYSTEM
+        @brief Peripheral devices, not meant for human interaction.
+	@{ 
+    */
+    /** @} END SYSTEM */
+
 /** @} END LIBDAISY*/
 
 #ifndef DSY_LIBDAISY_H
@@ -84,7 +104,7 @@ FORCE_INLINE int32_t f2s24(float x)
 
 
 #include "sys_system.h"
-#include "per_qspi.h"
+#include "per_qspi.h" 
 #include "per_dac.h"
 #include "per_gpio.h"
 #include "per_i2c.h"
