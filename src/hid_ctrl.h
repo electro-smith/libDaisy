@@ -1,12 +1,21 @@
 #pragma once
 #ifndef DSY_KNOB_H
-#define DSY_KNOB_H
+#define DSY_KNOB_H /**< & */
 #include <stdint.h>
 
 #ifdef __cplusplus
 namespace daisy
 {
-/** @file hid_ctrl.h */
+/** @addtogroup libdaisy
+    @{
+*/
+/** @addtogroup human_interface_device
+    @{
+*/
+    
+/** @file hid_ctrl.h 
+*/
+
 /**
     @brief Hardware Interface for control inputs \n 
     Primarily designed for ADC input controls such as \n 
@@ -65,3 +74,5 @@ class AnalogControl
 } // namespace daisy
 #endif
 #endif
+/** @} */
+/** @} */
