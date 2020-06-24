@@ -11,7 +11,7 @@ extern "C"
 #endif
 #include <stdint.h>
 
-    /** @addtogroup peripheral
+    /** @addtogroup other
 	@{
     */
 

@@ -16,7 +16,7 @@ extern "C"
 //#include "stm32h7xx_hal.h"
 #include "daisy_core.h"
 
-    /** @addtogroup peripheral
+    /** @addtogroup serial
 	@{
     */
 

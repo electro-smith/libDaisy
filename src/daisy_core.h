@@ -15,7 +15,7 @@
 #error unknown compiler
 #endif
 
-/** @addtogroup daisy
+/** @addtogroup utility
     @{
 */
 

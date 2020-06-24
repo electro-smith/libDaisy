@@ -5,7 +5,7 @@
 
 namespace daisy
 {
-/** @addtogroup daisy
+/** @addtogroup boards
     @{
 */
 

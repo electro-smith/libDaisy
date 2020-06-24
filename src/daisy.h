@@ -13,7 +13,7 @@
 #define S242F_SCALE 1.192092896e-07f  /**< 1 / (2 ** 23) */
 #define S24SIGN 0x800000              /**< 2 ** 23 */
 
-/** @addtogroup daisy
+/** @addtogroup boards
     @{
 */
 
@@ -118,6 +118,16 @@ FORCE_INLINE int32_t f2s24(float x)
 	@brief Peripheral devices, not meant for human interaction.
 	@{ 
     */
+
+        /** @defgroup  serial SERIAL
+	    @brief Serial Communications */
+
+        /** @defgroup  analog_digital_conversion ANALOG_DIGITAL_CONVERSION
+	    @brief Convert from digital to analog, or vice-versa */
+
+        /** @defgroup  other OTHER
+	    @brief GPIO, timers, and SDMMC */
+
     /** @} END PERIPHERAL */
 
     /** @defgroup system SYSTEM
@@ -147,11 +157,11 @@ FORCE_INLINE int32_t f2s24(float x)
 
     /** @} END DEV */
 
-    /** @defgroup daisy DAISY
+    /** @defgroup boards BOARDS
 	@brief Daisy devices. Pod, seed, etc.
 	@{ 
     */
-    /** @} END DAISY */
+    /** @} END BOARDS */
 
     /** @defgroup utility UTILITY
         @brief General utilities. Ringbuffers, LED colors, OLED stuff, etc.

@@ -13,7 +13,7 @@ extern "C"
 {
 #endif
 
-    /** @addtogroup peripheral
+    /** @addtogroup analog_digital_conversion
 	@{
     */
 

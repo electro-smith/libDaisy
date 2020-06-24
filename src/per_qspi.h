@@ -21,7 +21,7 @@ extern "C"
     __attribute__((section( \
         ".qspiflash_bss"))) /**< used for reading memory in memory_mapped mode. */
 
-    /** @addtogroup peripheral
+    /** @addtogroup serial
 	@{
     */    
     

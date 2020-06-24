@@ -17,7 +17,7 @@ TODO
 
 namespace daisy
 {
-    /** @addtogroup peripheral
+    /** @addtogroup serial
 	@{
     */
 

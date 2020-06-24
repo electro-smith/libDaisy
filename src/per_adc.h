@@ -10,7 +10,7 @@
 
 namespace daisy
 {
-/** @addtogroup peripheral
+/** @addtogroup analog_digital_conversion
     @{
 */
 

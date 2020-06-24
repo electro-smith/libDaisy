@@ -9,7 +9,7 @@ extern "C"
 
     /** General Purpose IO driver */
 
-    /** @addtogroup peripheral
+    /** @addtogroup other
 	@{
     */
 

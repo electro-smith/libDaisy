@@ -15,7 +15,7 @@ TODO:
 namespace daisy
 {
 
-    /** @addtogroup peripheral
+    /** @addtogroup other
 	@{
     */    
 
@@ -38,8 +38,8 @@ enum SdmmcBitWidth
 enum SdmmcSpeed
 {
     SDMMC_SPEED_400KHZ, /**< & */
-    SDMMC_SPEED_12MHZ,  /**< & */
-};
+    SDMMC_SPEED_12MHZ,  /serialxd
+ ;
 /** Structure for setting the options above. Used to intiailize SdmmcHandler */
 struct SdmmcHandlerInit
 {

@@ -15,7 +15,7 @@ extern "C"
 #endif
 #include "daisy_core.h"
 
-    /** @addtogroup peripheral
+    /** @addtogroup serial
 	@{
     */
     
