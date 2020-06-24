@@ -3,7 +3,11 @@
 #define DSY_BSP_SD_DISKIO_H /**< & */
 #include <stdint.h>
 
-/** @file util_bsp_sd_diskio.h */
+    /** @addtogroup utility
+	@{
+    */
+
+
 /** Functions for handling DiskIO via SDMMC
     These are usually configured through the FatFS driver/interface,
     and won't need to be accessed directly often.
@@ -116,3 +120,4 @@ void BSP_SD_WriteCpltCallback(void);
 void BSP_SD_ReadCpltCallback(void);
 
 #endif
+/** @} */

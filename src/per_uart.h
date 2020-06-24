@@ -14,11 +14,14 @@ TODO
 #define DSY_UART_H /**< macro */
 #include "daisy_core.h"
 
-/** @file per_uart.h */
 
 namespace daisy
 {
-const size_t kUartMaxBufferSize = 32; /**<  Maximum Queue buffer size */
+    /** @addtogroup peripheral
+	@{
+    */
+
+    const size_t kUartMaxBufferSize = 32; /**<  Maximum Queue buffer size */
 /** 
     Uart Peripheral
     @author shensley
@@ -87,3 +90,4 @@ class UartHandler
 } // namespace daisy
 
 #endif
+/** @} */

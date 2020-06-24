@@ -17,11 +17,17 @@ extern "C"
 #define SR_4021_MAX_DAISYCHAIN 1
 
 
-    /** @file dev_sr_4021.h
+    /** 
     @brief Device driver for the CD4021. 
     Bit-banged serial shift input.
-*/
+    */
 
+    /** @addtogroup shiftregister
+	@{
+    */
+
+
+    
     /** Pins that need to be configured to use. 
       DATA2 only needs to be set if num_parallel is > 1
   */
@@ -75,3 +81,4 @@ extern "C"
 }
 #endif
 #endif
+/** @} */

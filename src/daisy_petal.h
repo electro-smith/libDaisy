@@ -6,7 +6,10 @@
 
 namespace daisy
 {
-/** @file daisy_petal.h */
+/** @addtogroup daisy
+    @{
+*/
+
 /**
    @brief Helpers and hardware definitions for daisy petal.
 */
@@ -168,3 +171,4 @@ class DaisyPetal
 } // namespace daisy
 
 #endif
+/** @} */

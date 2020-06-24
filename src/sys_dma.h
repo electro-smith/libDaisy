@@ -1,4 +1,6 @@
-/** @file sys_dma.h */
+/** @addtogroup system
+    @{
+*/
 
 /** Initializes the Direct Memory Access Peripheral used by
 many internal elements of libdaisy. */
@@ -19,3 +21,4 @@ extern "C"
 #endif
 
 #endif
+/** @} */

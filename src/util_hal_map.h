@@ -5,7 +5,11 @@
 #include "daisy_core.h"
 #include "per_i2c.h"
 
-/** @file util_hal_map.h */
+/** @addtogroup utility
+    @{
+*/
+
+
 /** global structs, and helper functions for interfacing with the stm32 HAL library
     while it remains a dependancy.
     This file should only be included from source files (c/cpp)
@@ -36,3 +40,4 @@ uint16_t dsy_hal_map_get_pin(dsy_gpio_pin *p);
 I2C_HandleTypeDef *dsy_hal_map_get_i2c(dsy_i2c_handle *p);
 
 #endif
+/** @} */

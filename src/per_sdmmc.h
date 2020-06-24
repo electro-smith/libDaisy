@@ -11,10 +11,14 @@ TODO:
 #define DSY_SD_OK 0    /**< OK return */
 #define DSY_SD_ERROR 1 /**< ERROR return */
 
-/** @file per_sdmmc.h */
 
 namespace daisy
 {
+
+    /** @addtogroup peripheral
+	@{
+    */    
+
 /** Operating Mode. Currently only FatFS is supported. */
 enum SdmmcMode
 {
@@ -60,3 +64,4 @@ class SdmmcHandler
 } // namespace daisy
 
 #endif
+/** @} */

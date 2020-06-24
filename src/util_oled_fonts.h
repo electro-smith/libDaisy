@@ -2,6 +2,11 @@
 #ifndef DSY_OLED_FONTS_H
 #define DSY_OLED_FONTS_H
 #include <stdint.h>
+
+/** @addtogroup utility
+    @{
+*/
+
 /** Utility for displaying fonts on OLED displays \n 
 Migrated to work with libdaisy from stm32-ssd1306 
 @author afiskon on github.
@@ -23,3 +28,4 @@ extern FontDef Font_11x18; /**< & */
 extern FontDef Font_16x26; /**< & */
 
 #endif
+/** @} */

@@ -5,7 +5,10 @@
 
 /** 
     @brief Driver for the PCM3060 Codec.
-    @file dev_codec_pcm3060.h
+*/
+
+/** @addtogroup codec
+    @{
 */
 
 /** 
@@ -14,3 +17,4 @@
 */
 void codec_pcm3060_init(dsy_i2c_handle *hi2c);
 #endif
+/** @} */

@@ -13,9 +13,14 @@ extern "C"
 
 
     /** 
-    @file dev_leddriver.h
     @brief Device driver for PCA9685 16-channel 12-bit PWM generator
-*/
+    */
+
+    /** @addtogroup led
+	@{
+    */
+
+    
     /*
     TODO
     Move color usage to util_color
@@ -82,3 +87,4 @@ extern "C"
 }
 #endif
 #endif
+/** @} */

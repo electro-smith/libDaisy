@@ -8,7 +8,9 @@
 const size_t kMaxSr595DaisyChain
     = 16; /**< Maximum Number of chained devices Connect device's QH' pin to the next chips serial input*/
 
-/** @file dev_sr_595.h */
+    /** @addtogroup shiftregister
+	@{
+    */
 
 /**
    @brief Device Driver for 8-bit shift register. \n 
@@ -56,3 +58,4 @@ class ShiftRegister595
 };
 
 #endif
+/** @} */

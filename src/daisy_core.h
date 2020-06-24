@@ -15,7 +15,10 @@
 #error unknown compiler
 #endif
 
-/** @file daisy_core.h */
+/** @addtogroup daisy
+    @{
+*/
+
 
 /** Macro for area of memory that is configured as cacheless
 This should be used primarily for DMA buffers, and the like.
@@ -85,3 +88,4 @@ FORCE_INLINE uint8_t dsy_pin_cmp(dsy_gpio_pin *a, dsy_gpio_pin *b)
 }
 
 #endif
+/** @} */

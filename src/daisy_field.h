@@ -38,11 +38,14 @@
 #define LED_DRIVER_I2C i2c1_handle /**< & */
 
 /**
-   @file daisy_field.h
    @brief Hardware defines and helpers for daisy field platform.
 */
 namespace daisy
 {
+/** @addtogroup daisy
+    @{
+*/
+
 /** enums for controls, etc.
 */
 enum
@@ -208,3 +211,4 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
 } // namespace daisy
 
 #endif
+/** @} */

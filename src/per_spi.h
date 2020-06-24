@@ -12,10 +12,13 @@
 - Add DMA
 */
 
-/** @file per_spi.h */
-
 namespace daisy
 {
+
+    /** @addtogroup peripheral
+	@{
+    */
+
 /** SPI peripheral enum */
 enum SpiPeriph
 {
@@ -56,3 +59,4 @@ class SpiHandle
 } // namespace daisy
 
 #endif
+/** @} */

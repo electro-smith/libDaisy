@@ -12,10 +12,13 @@ TODO:
 #define DSY_COLOR_H
 #include <stdint.h>
 
-/** @file util_color.h */
 
 namespace daisy
 {
+/** @addtogroup utility
+    @{
+*/
+
 /** Class for handling simple colors */
 class Color
 {
@@ -65,3 +68,4 @@ class Color
 } // namespace daisy
 
 #endif
+/** @} */

@@ -8,10 +8,12 @@
 
 #define DSY_ADC_MAX_CHANNELS 14 /**< Maximum number of ADC channels */
 
-/** @file per_adc.h */
-
 namespace daisy
 {
+/** @addtogroup peripheral
+    @{
+*/
+
 /* While there may not be many configuration options here,
 using a struct like this allows us to add more configuration
 later without breaking existing functionality.
@@ -150,3 +152,4 @@ class AdcHandle
 } // namespace daisy
 
 #endif // DSY_ADC_H
+/** @} */

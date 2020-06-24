@@ -3,8 +3,11 @@
 #include <stddef.h>
 
 /**
-   @file dev_codec_wm8731_frame.h
    @brief WM8731 Codec framework
+*/
+
+/** @addtogroup codec
+    @{
 */
 
 /**
@@ -19,3 +22,4 @@ typedef struct
 /** & */
 typedef void (*sa_audio_callback)(codec_frame_t*, codec_frame_t*, size_t);
 #endif
+/** @} */

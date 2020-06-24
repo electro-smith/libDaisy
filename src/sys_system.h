@@ -7,8 +7,10 @@ extern "C"
 #endif
 #include <stdint.h>
 
-    /** @file sys_system.h */
-
+    /** @addtogroup system
+	@{
+    */
+    
     /** Initializes Clock tree, MPU, and internal memories voltage regulators.    
     This function _must_ be called at the beginning of any program using libdaisy
     Higher level daisy_ files call this through the DaisySeed object.
@@ -41,3 +43,4 @@ extern "C"
 };
 #endif
 #endif
+/** @} */

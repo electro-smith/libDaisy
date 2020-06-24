@@ -9,7 +9,9 @@ extern "C"
 
     /** General Purpose IO driver */
 
-    /** @file per_gpio.h */
+    /** @addtogroup peripheral
+	@{
+    */
 
     /** Sets the mode of the GPIO */
     typedef enum
@@ -70,3 +72,4 @@ extern "C"
 #endif
 
 #endif
+/** @} */

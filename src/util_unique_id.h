@@ -9,11 +9,15 @@ extern "C"
 {
 #endif
 
-    /** @file util_unique_id.h */
-    /** Returns 96-bit Unique ID of the MCU
-@author shensley
-@date May 2020
+/** @addtogroup utility
+    @{
 */
+
+    
+    /** Returns 96-bit Unique ID of the MCU
+	@author shensley
+	@date May 2020
+    */
 
     /** fills the three pointer arguments with the unique ID of the MCU. 
     \param *w0 First pointer
@@ -27,3 +31,4 @@ extern "C"
 #endif
 
 #endif
+/** @} */

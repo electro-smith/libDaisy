@@ -11,7 +11,11 @@ extern "C"
 #endif
 #include <stdint.h>
 
-    /** @file per_tim.h */
+    /** @addtogroup peripheral
+	@{
+    */
+
+
     /** General purpose timer for delays and general timing. */
 
     /** initializes the TIM2 peripheral with maximum counter autoreload, and no prescalers. */
@@ -54,3 +58,4 @@ extern "C"
 }
 #endif
 #endif
+/** @} */

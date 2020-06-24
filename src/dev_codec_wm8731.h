@@ -7,7 +7,10 @@
 
 /** 
     @brief Driver for the WM8731 Codec
-    @file dev_codec_wm8731.h
+*/
+
+/** @addtogroup codec
+    @{
 */
 
 /** 
@@ -35,3 +38,4 @@ uint8_t codec_wm8731_enter_bypass(dsy_i2c_handle *hi2c);
 uint8_t codec_wm8731_exit_bypass(dsy_i2c_handle *hi2c);
 
 #endif
+/** @} */

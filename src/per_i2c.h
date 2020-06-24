@@ -16,10 +16,14 @@ extern "C"
 //#include "stm32h7xx_hal.h"
 #include "daisy_core.h"
 
-    /** @file per_i2c.h */
+    /** @addtogroup peripheral
+	@{
+    */
+
+    
     /** Driver for controlling I2C devices */
 
-    /** Specifices the internal peripheral to use (these are mapped to different pins on the hardware). */
+    /** Specifices the internal peripheral to use (these are mapped to different pins on the hardware).    */
     typedef enum
     {
         DSY_I2C_PERIPH_1, /**< & */
@@ -66,3 +70,4 @@ extern "C"
 }
 #endif
 #endif /*__ i2c_H */
+/** @} */

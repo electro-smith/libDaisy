@@ -62,8 +62,11 @@ extern "C"
 #include <stdint.h>
 #include "daisy_core.h"
 
-    /** @file dev_sdram.h */
+    /** @addtogroup sdram
+	@{
+    */
 
+    
     /*
     As mentioned above, this does not currently initialize correctly (startup
     code needs to be modified to init SDRAM, and fill
@@ -127,3 +130,4 @@ extern "C"
 #endif
 
 #endif
+/** @} */

@@ -15,7 +15,10 @@ extern "C"
 #endif
 #include "daisy_core.h"
 
-    /** @file per_sai.h */
+    /** @addtogroup peripheral
+	@{
+    */
+    
     /** Driver for the SAI peripheral Supports SAI1 and SAI2 with several configuration options */
 
     /** selects which SAI (or both/none) to initialize */
@@ -128,3 +131,4 @@ extern "C"
 }
 #endif
 #endif //DSY_SAI_H
+/** @} */

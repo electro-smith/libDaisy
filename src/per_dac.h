@@ -13,12 +13,15 @@ extern "C"
 {
 #endif
 
-    /** @file per_dac.h */
+    /** @addtogroup peripheral
+	@{
+    */
 
+    
     /** Driver for the built in DAC on the STM32
- The STM32 has 2 Channels of independently configurable
- DACs, with up to 12-bit resolution.
-*/
+	The STM32 has 2 Channels of independently configurable
+	DACs, with up to 12-bit resolution.
+    */
 
     /** Currently only Polling is supported. */
     typedef enum
@@ -83,3 +86,4 @@ extern "C"
 }
 #endif
 #endif
+/** @} */

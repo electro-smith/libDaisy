@@ -1,57 +1,3 @@
-/** @defgroup libdaisy LIBDAISY
-    @brief The daisy library
-    @{ */
-
-    /** @defgroup human_interface HUMAN_INTERFACE
-	@brief Interface with the world.
-	@{ */
-
-        /** @defgroup audio AUDIO
-	    @brief Embedded Audio Engine */
-
-        /** @defgroup controls CONTROLS
-	    @brief Hardware Controls */
-
-        /** @defgroup feedback FEEDBACK
-	    @brief Screens, leds, etc. */
-
-        /** @defgroup  external EXTERNAL
-	    @brief External interface devices */
-
-    /** @} END HID */ 
-
-    /** @defgroup peripheral PERIPHERAL
-	@brief Peripheral devices, not meant for human interaction.
-	@{ 
-    */
-    /** @} END PERIPHERAL */
-
-    /** @defgroup system SYSTEM
-	@brief Deals with system. DMA, clocks, etc.
-	@{ 
-    */
-    /** @} END SYSTEM */
-
-    /** @defgroup dev DEV
-        @brief Low level development. Led drivers, codecs, etc.
-	@{ 
-    */
-    /** @} END DEV */
-
-    /** @defgroup daisy DAISY
-	@brief Daisy devices. Pod, seed, etc.
-	@{ 
-    */
-    /** @} END DAISY */
-
-    /** @defgroup utility UTILITY
-        @brief General utilities. Ringbuffers, LED colors, OLED stuff, etc.
-	@{ 
-    */
-    /** @} END UTILITY */
-
-/** @} END LIBDAISY*/
-
 #ifndef DSY_LIBDAISY_H
 #define DSY_LIBDAISY_H
 
@@ -67,7 +13,9 @@
 #define S242F_SCALE 1.192092896e-07f  /**< 1 / (2 ** 23) */
 #define S24SIGN 0x800000              /**< 2 ** 23 */
 
-/** @file daisy.h */
+/** @addtogroup daisy
+    @{
+*/
 
 /** 
     Scales float by 1/(2 ^ 15)
@@ -139,3 +87,76 @@ FORCE_INLINE int32_t f2s24(float x)
 #include "dev_sr_595.h"
 #endif
 #endif
+
+/** @} */
+
+//Define the groups to be used throughout all of libdaisy
+
+/** @defgroup libdaisy LIBDAISY
+    @brief The daisy library
+    @{ */
+
+    /** @defgroup human_interface HUMAN_INTERFACE
+	@brief Interface with the world.
+	@{ */
+
+        /** @defgroup audio AUDIO
+	    @brief Embedded Audio Engine */
+
+        /** @defgroup controls CONTROLS
+	    @brief Hardware Controls */
+
+        /** @defgroup feedback FEEDBACK
+	    @brief Screens, leds, etc. */
+
+        /** @defgroup  external EXTERNAL
+	    @brief External interface devices */
+
+    /** @} END HID */ 
+
+    /** @defgroup peripheral PERIPHERAL
+	@brief Peripheral devices, not meant for human interaction.
+	@{ 
+    */
+    /** @} END PERIPHERAL */
+
+    /** @defgroup system SYSTEM
+	@brief Deals with system. DMA, clocks, etc.
+	@{ 
+    */
+    /** @} END SYSTEM */
+
+    /** @defgroup device DEVICE
+        @brief Low level devices. Led drivers, codecs, etc.
+	@{ 
+    */
+        /** @defgroup  shiftregister SHIFTREGISTER
+	    @brief Digital shift registers*/
+
+        /** @defgroup  flash FLASH
+	    @brief Flash memory */
+
+        /** @defgroup codec CODEC
+	    @brief Audio codecs */
+
+        /** @defgroup  led LED
+	    @brief LED driver devices */
+
+        /** @defgroup  sdram SDRAM
+	    @brief SDRAM devices */
+
+    /** @} END DEV */
+
+    /** @defgroup daisy DAISY
+	@brief Daisy devices. Pod, seed, etc.
+	@{ 
+    */
+    /** @} END DAISY */
+
+    /** @defgroup utility UTILITY
+        @brief General utilities. Ringbuffers, LED colors, OLED stuff, etc.
+	@{ 
+    */
+    /** @} END UTILITY */
+
+/** @} END LIBDAISY*/

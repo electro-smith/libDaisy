@@ -4,10 +4,13 @@
 
 #include <algorithm>
 
-/** @file util_ringbuffer.h */
-
 namespace daisy
 {
+/** @addtogroup utility
+    @{
+*/
+
+
 /**
 Utility Ring Buffer \n 
 imported from pichenettes/stmlib
@@ -168,3 +171,4 @@ class RingBuffer<T, 0>
 } // namespace daisy
 
 #endif
+/** @} */

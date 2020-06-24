@@ -6,7 +6,10 @@
 
 /** 
     @brief Driver for the AK4556 Stereo Codec
-    @file dev_codec_ak4556.h
+*/
+
+/** @addtogroup codec
+    @{
 */
 
 /** 
@@ -16,3 +19,4 @@
 void codec_ak4556_init(dsy_gpio_pin reset_pin);
 
 #endif
+/** @} */

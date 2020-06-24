@@ -4,7 +4,10 @@
 
 #include <stdint.h>
 
-/** @file util_wav_format.h */
+/** @addtogroup utility
+    @{
+*/
+
 /** Helper struct for handling the WAV file format */
 
 typedef struct
@@ -25,3 +28,4 @@ typedef struct
 } WAV_FormatTypeDef;
 
 #endif
+/** @} */
