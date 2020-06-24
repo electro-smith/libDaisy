@@ -22,28 +22,28 @@
     /** @} END PERIPHERAL */
 
     /** @defgroup system SYSTEM
-	@brief 
+	@brief Deals with system. DMA, clocks, etc.
 	@{ 
     */
     /** @} END SYSTEM */
 
     /** @defgroup dev DEV
-        @brief Peripheral devices, not meant for human interaction.
+        @brief Low level development. Led drivers, codecs, etc.
 	@{ 
     */
     /** @} END DEV */
 
     /** @defgroup daisy DAISY
-	@brief Peripheral devices, not meant for human interaction.
+	@brief Daisy devices. Pod, seed, etc.
 	@{ 
     */
     /** @} END DAISY */
 
-    /** @defgroup system SYSTEM
-        @brief Peripheral devices, not meant for human interaction.
+    /** @defgroup utility UTILITY
+        @brief General utilities. Rinbuffers, LED colors, OLED stuff, etc.
 	@{ 
     */
-    /** @} END SYSTEM */
+    /** @} END UTILITY */
 
 /** @} END LIBDAISY*/
 
