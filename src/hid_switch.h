@@ -92,5 +92,5 @@ class Switch
 };
 
 } // namespace daisy
-#endifx
+#endif
 /** @} */

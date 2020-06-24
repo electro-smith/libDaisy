@@ -38,8 +38,9 @@ enum SdmmcBitWidth
 enum SdmmcSpeed
 {
     SDMMC_SPEED_400KHZ, /**< & */
-    SDMMC_SPEED_12MHZ,  /serialxd
- ;
+    SDMMC_SPEED_12MHZ,  /**< & */
+};
+
 /** Structure for setting the options above. Used to intiailize SdmmcHandler */
 struct SdmmcHandlerInit
 {

@@ -26,8 +26,8 @@ else
 fi
 
 # Generate Style Guide
-echo "Creating Style Guide PDF"
-pdf_name=doc/style_guide.pdf
-pandoc ./resources/Style-Guide.md  -s --template=./resources/template.tex --toc -o $pdf_name
+# echo "Creating Style Guide PDF"
+# pdf_name=doc/style_guide.pdf
+# pandoc ./resources/Style-Guide.md  -s --template=./resources/template.tex --toc -o $pdf_name
 
 echo "finished."
