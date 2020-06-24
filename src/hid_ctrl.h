@@ -6,16 +6,9 @@
 #ifdef __cplusplus
 namespace daisy
 {
-/** @addtogroup libdaisy
-    @{
-*/
-/** @addtogroup human_interface
-    @{
-*/
 
-/** @defgroup controls CONTROLS
-    @brief Hardware Controls
-    @{
+/** @ingroup controls 
+    @{ 
 */
     
 /** @file hid_ctrl.h 
@@ -79,6 +72,4 @@ class AnalogControl
 } // namespace daisy
 #endif
 #endif
-/** @} */
-/** @} */
 /** @} */

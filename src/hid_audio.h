@@ -9,19 +9,7 @@ extern "C"
 {
 #endif
 
-/** @defgroup libdaisy LIBDAISY
-    @brief The daisy library
-    @{
-*/
-/** @defgroup human_interface HUMAN_INTERFACE
-    @brief Interface with the world.
-    @{
-*/
-/** @defgroup audio AUDIO
-    @brief Embedded Audio Engine
-    @{
-*/
-
+    
 /** Defines for generic maximums
     While 'Audio Channels Max' is set to 2, this is per-SAI 
     4x4 Audio I/O is possible using the dsy_audio_mc_callback
@@ -37,6 +25,7 @@ extern "C"
 #define DSY_AUDIO_SAMPLE_RATE 48014.0f /**< Default sample rate */
 #endif
 
+    /** @ingroup audio @{ */
     /** 
     @file hid_audio.h
     @brief Audio Driver \n 
@@ -159,6 +148,4 @@ extern "C"
 }
 #endif
 #endif
-/** @} */
-/** @} */
 /** @} */

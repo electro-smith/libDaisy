@@ -1,3 +1,24 @@
+/** @defgroup libdaisy LIBDAISY
+    @brief The daisy library
+    @{ 
+*/
+
+/** @defgroup human_interface HUMAN_INTERFACE
+    @brief Interface with the world.
+    @{ 
+*/
+
+/** @defgroup audio AUDIO
+    @brief Embedded Audio Engine 
+*/
+
+/** @defgroup controls CONTROLS
+    @brief Hardware Controls 
+*/
+
+/** @} */
+/** @} */
+
 #ifndef DSY_LIBDAISY_H
 #define DSY_LIBDAISY_H
 
