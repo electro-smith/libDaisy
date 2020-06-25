@@ -35,7 +35,8 @@ void ShiftRegister595::Write()
     {
         dsy_gpio_write(&pin_[PIN_CLK], 0);
         dsy_gpio_write(&pin_[PIN_DATA],
-                       state_[((num_devices_ - 1)- (i / 8))] & (1 << (7 - (i % 8))));
+                       state_[((num_devices_ - 1) - (i / 8))]
+                           & (1 << (7 - (i % 8))));
         dsy_gpio_write(&pin_[PIN_CLK], 1);
     }
     dsy_gpio_write(&pin_[PIN_LATCH], 1);

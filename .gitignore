@@ -126,4 +126,6 @@ transcode report.txt
 /examples/*/build
 /doc/*.md
 /core/build
-
+/doc/html
+/doc/latex
+#*

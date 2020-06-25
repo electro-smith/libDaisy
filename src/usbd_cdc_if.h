@@ -19,110 +19,115 @@
   */
 /* USER CODE END Header */
 
-/* Define to prevent recursive inclusion -------------------------------------*/
+/**< Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __USBD_CDC_IF_H__
 #define __USBD_CDC_IF_H__
 
 #ifdef __cplusplus
- extern "C" {
+extern "C"
+{
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_cdc.h"
 
-/* USER CODE BEGIN INCLUDE */
+    /* USER CODE BEGIN INCLUDE */
 
-/* USER CODE END INCLUDE */
+    /* USER CODE END INCLUDE */
 
-/** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
+    /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
   * @brief For Usb device.
   * @{
   */
-  
-/** @defgroup USBD_CDC_IF USBD_CDC_IF
+
+    /** @defgroup USBD_CDC_IF USBD_CDC_IF
   * @brief Usb VCP device module
   * @{
-  */ 
+  */
 
-/** @defgroup USBD_CDC_IF_Exported_Defines USBD_CDC_IF_Exported_Defines
+    /** @defgroup USBD_CDC_IF_Exported_Defines USBD_CDC_IF_Exported_Defines
   * @brief Defines.
   * @{
   */
-/* USER CODE BEGIN EXPORTED_DEFINES */
+    /* USER CODE BEGIN EXPORTED_DEFINES */
 
-/* USER CODE END EXPORTED_DEFINES */
+    /* USER CODE END EXPORTED_DEFINES */
 
-/**
+    /**
   * @}
   */
 
-/** @defgroup USBD_CDC_IF_Exported_Types USBD_CDC_IF_Exported_Types
+    /** @defgroup USBD_CDC_IF_Exported_Types USBD_CDC_IF_Exported_Types
   * @brief Types.
   * @{
   */
 
-/* USER CODE BEGIN EXPORTED_TYPES */
-typedef void (*CDC_ReceiveCallback)(uint8_t* buf, uint32_t *size);
+    /* USER CODE BEGIN EXPORTED_TYPES */
+    /**
+       \param buf buffer
+       \param size buffer size
+    */
+    typedef void (*CDC_ReceiveCallback)(uint8_t* buf, uint32_t* size);
 
-/* USER CODE END EXPORTED_TYPES */
+    /* USER CODE END EXPORTED_TYPES */
 
-/**
+    /**
   * @}
   */
 
-/** @defgroup USBD_CDC_IF_Exported_Macros USBD_CDC_IF_Exported_Macros
+    /** @defgroup USBD_CDC_IF_Exported_Macros USBD_CDC_IF_Exported_Macros
   * @brief Aliases.
   * @{
   */
 
-/* USER CODE BEGIN EXPORTED_MACRO */
+    /* USER CODE BEGIN EXPORTED_MACRO */
 
-/* USER CODE END EXPORTED_MACRO */
+    /* USER CODE END EXPORTED_MACRO */
 
-/**
+    /**
   * @}
   */
 
-/** @defgroup USBD_CDC_IF_Exported_Variables USBD_CDC_IF_Exported_Variables
+    /** @defgroup USBD_CDC_IF_Exported_Variables USBD_CDC_IF_Exported_Variables
   * @brief Public variables.
   * @{
   */
 
-/** CDC Interface callback. */
-extern USBD_CDC_ItfTypeDef USBD_Interface_fops_FS;
-/** CDC Interface callback. */
-extern USBD_CDC_ItfTypeDef USBD_Interface_fops_HS;
+    /** CDC Interface callback. */
+    extern USBD_CDC_ItfTypeDef USBD_Interface_fops_FS;
+    /** CDC Interface callback. */
+    extern USBD_CDC_ItfTypeDef USBD_Interface_fops_HS;
 
-/* USER CODE BEGIN EXPORTED_VARIABLES */
+    /* USER CODE BEGIN EXPORTED_VARIABLES */
 
-/* USER CODE END EXPORTED_VARIABLES */
+    /* USER CODE END EXPORTED_VARIABLES */
 
-/**
+    /**
   * @}
   */
 
-/** @defgroup USBD_CDC_IF_Exported_FunctionsPrototype USBD_CDC_IF_Exported_FunctionsPrototype
+    /** @defgroup USBD_CDC_IF_Exported_FunctionsPrototype USBD_CDC_IF_Exported_FunctionsPrototype
   * @brief Public functions declaration.
   * @{
   */
-void    CDC_Set_Rx_Callback_FS(CDC_ReceiveCallback cb);
-uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
-uint8_t CDC_Transmit_HS(uint8_t* Buf, uint16_t Len);
+    void    CDC_Set_Rx_Callback_FS(CDC_ReceiveCallback cb); /**< & */
+    uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);    /**< & */
+    uint8_t CDC_Transmit_HS(uint8_t* Buf, uint16_t Len);    /**< & */
 
-/* USER CODE BEGIN EXPORTED_FUNCTIONS */
+    /* USER CODE BEGIN EXPORTED_FUNCTIONS */
 
 
-/* USER CODE END EXPORTED_FUNCTIONS */
+    /* USER CODE END EXPORTED_FUNCTIONS */
 
-/**
+    /**
   * @}
   */
 
-/**
+    /**
   * @}
   */
 
-/**
+    /**
   * @}
   */
 

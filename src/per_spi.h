@@ -4,48 +4,58 @@
 
 #include "daisy_core.h"
 
-// # SPI
-// TODO:
-// - Add documentation
-// - Add configuration
-// - Add reception
-// - Add IT
-// - Add DMA
-
+/* TODO:
+- Add documentation
+- Add configuration
+- Add reception
+- Add IT
+- Add DMA
+*/
 
 namespace daisy
 {
+/** @addtogroup serial
+@{
+*/
 
+/** SPI peripheral enum */
 enum SpiPeriph
 {
-    SPI_PERIPH_1,
-    SPI_PERIPH_3,
-    SPI_PERIPH_6,
+    SPI_PERIPH_1, /**< SPI peripheral 1 */
+    SPI_PERIPH_3, /**< SPI peripheral 3 */
+    SPI_PERIPH_6, /**< SPI peripheral 3 */
 };
 
+/** SPI pins */
 enum SpiPin
 {
-    SPI_PIN_CS,
-    SPI_PIN_SCK,
-    SPI_PIN_MOSI,
-    SPI_PIN_MISO,
+    SPI_PIN_CS,   /**< CS pin */
+    SPI_PIN_SCK,  /**< SCK pin */
+    SPI_PIN_MOSI, /**< MOSI pin */
+    SPI_PIN_MISO, /**< MISO pin */
 };
 
-
+/**  Handler for serial peripheral interface */
 class SpiHandle
 {
   public:
     SpiHandle() {}
     ~SpiHandle() {}
 
+    /** Initializes handler */
     void Init();
 
+    /** Blocking transmit 
+    \param *buff input buffer
+    \param size  buffer size
+    */
     void BlockingTransmit(uint8_t *buff, size_t size);
 
   private:
 };
 
 
+/** @} */
 } // namespace daisy
 
 #endif

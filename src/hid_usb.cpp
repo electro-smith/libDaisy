@@ -17,7 +17,7 @@ extern "C"
     extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
     extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
-    void DummyRxCallback(uint8_t* buf, uint32_t *size)
+    void DummyRxCallback(uint8_t* buf, uint32_t* size)
     {
         // Do Nothing
     }
@@ -97,9 +97,9 @@ void UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
     CDC_Transmit_HS(buff, size);
 }
 
-void UsbHandle::SetReceiveCallback(ReceiveCallback cb) 
+void UsbHandle::SetReceiveCallback(ReceiveCallback cb)
 {
-	// This is pretty silly, but we're working iteritavely...
+    // This is pretty silly, but we're working iteritavely...
     rx_callback = cb;
     rxcallback  = (CDC_ReceiveCallback)rx_callback;
     CDC_Set_Rx_Callback_FS(rxcallback);

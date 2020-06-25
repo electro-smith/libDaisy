@@ -10,7 +10,7 @@ void RgbLed::Init(dsy_gpio_pin red,
     b_.Init(blue, invert);
 }
 
-void RgbLed::Set(float r, float g, float b) 
+void RgbLed::Set(float r, float g, float b)
 {
     r_.Set(r);
     g_.Set(g);
@@ -25,7 +25,7 @@ void RgbLed::SetColor(Color c)
 }
 
 
-void RgbLed::Update() 
+void RgbLed::Update()
 {
     r_.Update();
     g_.Update();

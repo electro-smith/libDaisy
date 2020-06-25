@@ -12,8 +12,8 @@ const float Color::standard_colors[Color::LAST][3] = {
     {1.0f, 1.0f, 1.0f},   // WHITE
     {0.25f, 0.0f, 1.0f},  // PURPLE
     {0.0f, 0.25f, 0.75f}, // CYAN
-    {1.0f, 0.33f, 0.0f},   // GOLD
-    {0.0f, 0.0f, 0.0f},  // OFF
+    {1.0f, 0.33f, 0.0f},  // GOLD
+    {0.0f, 0.0f, 0.0f},   // OFF
 };
 
 void Color::Init(PresetColor c)
@@ -23,8 +23,9 @@ void Color::Init(PresetColor c)
     blue_  = standard_colors[c][BLUE];
 }
 
-void Color::Init(float red, float green, float blue) {
-    red_ = red;
+void Color::Init(float red, float green, float blue)
+{
+    red_   = red;
     green_ = green;
-    blue_ = blue;
+    blue_  = blue;
 }

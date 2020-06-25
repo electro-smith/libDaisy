@@ -6,7 +6,7 @@
 
 
 // # Rev3 and Rev4 with newest pinout.
-// Compatible with Seed Rev3 and Rev4 
+// Compatible with Seed Rev3 and Rev4
 #define SW_1_PIN 28
 #define SW_2_PIN 27
 
@@ -66,7 +66,6 @@
 
 #endif
 */
-
 
 
 using namespace daisy;
@@ -183,8 +182,8 @@ void DaisyPod::InitButtons()
 void DaisyPod::InitEncoder()
 {
     dsy_gpio_pin a, b, click;
-    a = seed.GetPin(ENC_A_PIN);
-    b = seed.GetPin(ENC_B_PIN);
+    a     = seed.GetPin(ENC_A_PIN);
+    b     = seed.GetPin(ENC_B_PIN);
     click = seed.GetPin(ENC_CLICK_PIN);
     encoder.Init(a, b, click, callback_rate_);
 }

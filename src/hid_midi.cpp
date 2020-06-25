@@ -12,14 +12,14 @@ const uint8_t kRealTimeMask     = 0xF8;
 
 // Currently only setting this up to handle 3-byte messages (i.e. Notes, CCs, Pitchbend).
 // We'll have to do some minor tweaking to handle program changes, sysex,
-//	realtime messages, and most system common messages.
+//    realtime messages, and most system common messages.
 
 // TODO:
 // - provide an input interface so USB or UART data can be passed in.
 //     this could even bue as simple as a buffer/new flag.
 void MidiHandler::Init(MidiInputMode in_mode, MidiOutputMode out_mode)
 {
-    in_mode_ = in_mode;
+    in_mode_  = in_mode;
     out_mode_ = out_mode;
     uart_.Init();
     event_q_.Init();
@@ -27,15 +27,16 @@ void MidiHandler::Init(MidiInputMode in_mode, MidiOutputMode out_mode)
     pstate_                = MidiHandler::ParserEmpty;
 }
 
-void MidiHandler::StartReceive() 
+void MidiHandler::StartReceive()
 {
-	if(in_mode_ & INPUT_MODE_UART1) 
-	{
-		uart_.StartRx(6);
-	}
+    if(in_mode_ & INPUT_MODE_UART1)
+    {
+        uart_.StartRx(6);
+    }
 }
 
-void MidiHandler::Listen() {
+void MidiHandler::Listen()
+{
     if(in_mode_ & INPUT_MODE_UART1)
     {
         while(uart_.Readable())

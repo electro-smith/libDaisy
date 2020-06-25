@@ -109,8 +109,8 @@ void DaisyPatch::DebounceControls()
 void DaisyPatch::DisplayControls(bool invert)
 {
     bool on, off;
-    on     = invert ? false : true;
-    off     = invert ? true : false;
+    on  = invert ? false : true;
+    off = invert ? true : false;
     if(dsy_system_getnow() - screen_update_last_ > screen_update_period_)
     {
         // Graph Knobs
@@ -170,10 +170,10 @@ void DaisyPatch::InitControls()
     cfg[CTRL_3].InitSingle(seed.GetPin(PIN_CTRL_3));
     cfg[CTRL_4].InitSingle(seed.GetPin(PIN_CTRL_4));
 
-	// Initialize ADC
+    // Initialize ADC
     seed.adc.Init(cfg, CTRL_LAST);
 
-	// Initialize AnalogControls, with flip set to true
+    // Initialize AnalogControls, with flip set to true
     for(size_t i = 0; i < CTRL_LAST; i++)
     {
         controls[i].Init(seed.adc.GetPtr(i), AudioCallbackRate(), true);

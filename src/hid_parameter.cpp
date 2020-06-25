@@ -14,24 +14,22 @@ void Parameter::Init(AnalogControl input, float min, float max, Curve curve)
 }
 
 float Parameter::Process()
+{
+    switch(pcurve_)
     {
-        switch(pcurve_)
-        {
-            case LINEAR:
-                val_ = (in_.Process() * (pmax_ - pmin_)) + pmin_;
-                break;
-            case EXPONENTIAL:
-                val_ = in_.Process();
-                val_ = ((val_ * val_) * (pmax_ - pmin_)) + pmin_;
-                break;
-            case LOGARITHMIC:
-                val_ = expf((in_.Process() * (lmax_ - lmin_)) + lmin_);
-                break;
-            case CUBE:
-                val_ = in_.Process();
-                val_ = ((val_ * (val_ * val_)) * (pmax_ - pmin_)) + pmin_;
-                break;
-            default: break;
-        }
-        return val_;
+        case LINEAR: val_ = (in_.Process() * (pmax_ - pmin_)) + pmin_; break;
+        case EXPONENTIAL:
+            val_ = in_.Process();
+            val_ = ((val_ * val_) * (pmax_ - pmin_)) + pmin_;
+            break;
+        case LOGARITHMIC:
+            val_ = expf((in_.Process() * (lmax_ - lmin_)) + lmin_);
+            break;
+        case CUBE:
+            val_ = in_.Process();
+            val_ = ((val_ * (val_ * val_)) * (pmax_ - pmin_)) + pmin_;
+            break;
+        default: break;
     }
+    return val_;
+}

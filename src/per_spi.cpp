@@ -89,8 +89,8 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
         HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
         // Sck and CS
-        GPIO_InitStruct.Pin       = GPIO_PIN_11;
-        if(spiHandle->Init.NSS != SPI_NSS_SOFT) 
+        GPIO_InitStruct.Pin = GPIO_PIN_11;
+        if(spiHandle->Init.NSS != SPI_NSS_SOFT)
         {
             GPIO_InitStruct.Pin |= GPIO_PIN_10;
         }

@@ -1,9 +1,3 @@
-// # RingBuffer
-// ## Description
-// Utility Ring Buffer
-// ## Credit
-// imported from pichenettes/stmlib
-//
 #pragma once
 #ifndef DSY_RINGBUFFER_H
 #define DSY_RINGBUFFER_H
@@ -12,53 +6,48 @@
 
 namespace daisy
 {
-// ## RingBuffer
+/** @addtogroup utility
+    @{
+*/
+
+/**
+Utility Ring Buffer \n 
+imported from pichenettes/stmlib
+*/
 template <typename T, size_t size>
 class RingBuffer
 {
   public:
     RingBuffer() {}
 
-	// ### Init
-    // Initializes the Ring Buffer
-	// ~~~~
+    /** Initializes the Ring Buffer */
     inline void Init() { read_ptr_ = write_ptr_ = 0; }
-	// ~~~~
 
-	// ### capacity
-	// Returns the total size of the ring buffer
-	// ~~~~
+    /** \return The total size of the ring buffer */
     inline size_t capacity() const { return size; }
-    // ~~~~
 
-    // ### writable
-    // Returns the number of samples that can be written to ring buffer without overwriting unread data.
-	// ~~~~
+    /** \return the number of samples that can be written to ring buffer without overwriting unread data. */
     inline size_t writable() const
-	// ~~~~
     {
         return (read_ptr_ - write_ptr_ - 1) % size;
     }
 
-	// ### readable
-    // Returns number of unread elements in ring buffer
-	// ~~~~
+    /** \return number of unread elements in ring buffer */
     inline size_t readable() const { return (write_ptr_ - read_ptr_) % size; }
-	// ~~~~
 
-	// ### Write
-    // Writes the value to the next available position in the ring buffer
-	// ~~~~
+    /** Writes the value to the next available position in the ring buffer
+    \param v Value to write
+    */
     inline void Write(T v)
-	// ~~~~
     {
         while(!writable())
             ;
         Overwrite(v);
     }
 
-	// ### Overwrite
-	// Writes the new element to the ring buffer, overwriting unread data if necessary.
+    /** Writes the new element to the ring buffer, overwriting unread data if necessary. 
+    \param v Value to overwrite
+     */
     inline void Overwrite(T v)
     {
         size_t w   = write_ptr_;
@@ -66,22 +55,20 @@ class RingBuffer
         write_ptr_ = (w + 1) % size;
     }
 
-	// ### Read
-	// Reads the first available element from the ring buffer
-	// ~~~~
+    /** Reads the first available element from the ring buffer
+    \return read value
+     */
     inline T Read()
-	// ~~~~
     {
         while(!readable())
             ;
         return ImmediateRead();
     }
 
-	// ### ImmediateRead
-	// Reads next element from ring buffer immediately
-	// ~~~~
+    /** Reads next element from ring buffer immediately
+    \return read value
+     */
     inline T ImmediateRead()
-	// ~~~~
     {
         size_t r      = read_ptr_;
         T      result = buffer_[r];
@@ -89,17 +76,13 @@ class RingBuffer
         return result;
     }
 
-	// ### Flush
-	// Flushes unread elements from the ring buffer
-	// ~~~~
+    /** Flushes unread elements from the ring buffer */
     inline void Flush() { write_ptr_ = read_ptr_; }
-	// ~~~~
 
-	// ### Swallow
-	// Read enough samples to make it possible to read 1 sample.
-	// ~~~~
+    /** Read enough samples to make it possible to read 1 sample. 
+    \param n Size of T ?
+     */
     inline void Swallow(size_t n)
-	// ~~~~
     {
         if(writable() >= n)
         {
@@ -108,11 +91,11 @@ class RingBuffer
         read_ptr_ = (write_ptr_ + 1 + n) % size;
     }
 
-	// ### ImmediateRead (Multiple elements)
-	// Reads a number of elements into a buffer immediately
-	// ~~~~
+    /** Reads a number of elements into a buffer immediately
+    \param destination buffer to write to
+    \param num_elements number of elements in buffer    
+     */
     inline void ImmediateRead(T* destination, size_t num_elements)
-	// ~~~~
     {
         size_t r    = read_ptr_;
         size_t read = num_elements;
@@ -130,11 +113,11 @@ class RingBuffer
         read_ptr_ = (r + num_elements) % size;
     }
 
-	// ### Overwrite (Multiple elements)
-	// Overwrites a number of elements using the source buffer as input.
-	// ~~~~
+    /** Overwrites a number of elements using the source buffer as input. 
+    \param source Input buffer
+    \param num_elements Number of elements in source
+     */
     inline void Overwrite(const T* source, size_t num_elements)
-	// ~~~~
     {
         size_t w       = write_ptr_;
         size_t written = num_elements;
@@ -158,27 +141,33 @@ class RingBuffer
     volatile size_t write_ptr_;
 };
 
+/** Utility Ring Buffer
+imported from pichenettes/stmlib
+*/
 template <typename T>
 class RingBuffer<T, 0>
 {
   public:
     RingBuffer() {}
 
-    inline void   Init() {}
-    inline size_t capacity() const { return 0; }
-    inline size_t writable() const { return 0; }
-    inline size_t readable() const { return 0; }
-    inline void   Write(T v) {}
-    inline void   Overwrite(T v) {}
-    inline T      Read() { return T(0); }
-    inline T      ImmediateRead() { return T(0); }
-    inline void   Flush() {}
-    inline void   ImmediateRead(T* destination, size_t num_elements) {}
-    inline void   Overwrite(const T* source, size_t num_elements) {}
+    inline void   Init() {}                      /**< Initialize ringbuffer */
+    inline size_t capacity() const { return 0; } /**< \return 0 */
+    inline size_t writable() const { return 0; } /**< \return 0 */
+    inline size_t readable() const { return 0; } /**< \return 0 */
+    inline void   Write(T v) {}           /**<  \param v Value to write */
+    inline void   Overwrite(T v) {}       /**< \param v Value to overwrite */
+    inline T      Read() { return T(0); } /**< \return Read value */
+    inline T      ImmediateRead() { return T(0); } /**< \return Read value */
+    inline void   Flush() {}                       /**< Flush the buffer */
+    inline void   ImmediateRead(T* destination, size_t num_elements) {
+    } /**< \param destination & \param num_elements & */
+    inline void Overwrite(const T* source, size_t num_elements) {
+    } /**< \param source 3 \param num_elements & */
 
   private:
 };
 
+/** @} */
 } // namespace daisy
 
 #endif
