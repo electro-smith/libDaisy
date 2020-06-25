@@ -29,12 +29,21 @@ class GateIn
     Initializes the gate input with specified hardware pin
     */
     void Init(dsy_gpio_pin *pin_cfg);
+    // ~~~~
 
     /** Trig
     Checks current state of gate input.
-    \return FALSE if pin is low, and TRUE if high
+
+    @return True if the GPIO just transitioned.
     */
     bool Trig();
+
+    /** State
+    Checks current state of gate input (no state required)
+
+    read function is inverted because of suggested BJT input circuit
+    */
+    inline bool State() { return !dsy_gpio_read(&pin_); }
 
   private:
     dsy_gpio pin_;

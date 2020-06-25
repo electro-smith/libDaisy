@@ -8,18 +8,18 @@ using namespace daisy;
 
 // Hardware related defines.
 // Switches
-#define SW_1_PIN 9
-#define SW_2_PIN 10
-#define SW_3_PIN 11
-#define SW_4_PIN 14
-#define SW_5_PIN 0
-#define SW_6_PIN 27
-#define SW_7_PIN 8
+#define SW_1_PIN 8
+#define SW_2_PIN 9
+#define SW_3_PIN 10
+#define SW_4_PIN 13
+#define SW_5_PIN 25
+#define SW_6_PIN 26
+#define SW_7_PIN 7
 
 // Encoder
-#define ENC_A_PIN 29
-#define ENC_B_PIN 28
-#define ENC_CLICK_PIN 15
+#define ENC_A_PIN 28
+#define ENC_B_PIN 27
+#define ENC_CLICK_PIN 14
 
 // Knobs
 #define PIN_EXPRESSION 15
@@ -148,6 +148,11 @@ float DaisyPetal::GetKnobValue(Knob k)
     return knob[idx].Value();
 }
 
+float DaisyPetal::GetExpression() 
+{
+    return expression.Value();
+}
+
 void DaisyPetal::DebounceControls()
 {
     encoder.Debounce();
@@ -161,12 +166,21 @@ void DaisyPetal::DebounceControls()
 void DaisyPetal::ClearLeds()
 {
     // Using Color
-    Color c;
-    c.Init(Color::PresetColor::OFF);
+//    Color c;
+//    c.Init(Color::PresetColor::OFF);
+//    for(size_t i = 0; i < RING_LED_LAST; i++)
+//    {
+//        ring_led[i].SetColor(c);
+//    }
     for(size_t i = 0; i < RING_LED_LAST; i++)
     {
-        ring_led[i].SetColor(c);
+        SetRingLed(static_cast<RingLed>(i), 0.0f, 0.0f, 0.0f);
     }
+    for(size_t i = 0; i < FOOTSWITCH_LED_LAST; i++)
+    {
+        SetFootswitchLed(static_cast<FootswitchLed>(i), 0.0f);
+    }
+
 }
 
 void DaisyPetal::UpdateLeds()
@@ -274,6 +288,8 @@ void DaisyPetal::InitAnalogControls()
     cfg[KNOB_6].InitSingle(seed.GetPin(PIN_KNOB_6));
     // Special case for Expression
     cfg[KNOB_LAST].InitSingle(seed.GetPin(PIN_EXPRESSION));
+
+    seed.adc.Init(cfg, KNOB_LAST + 1);
     // Make an array of pointers to the knob.
     for(int i = 0; i < KNOB_LAST; i++)
     {
