@@ -142,11 +142,11 @@ class MidiHandler
      */
     MidiEvent PopEvent() { return event_q_.Read(); }
 
-    // ### SendMessage
-	// Send raw bytes as message
-	// ~~~~
+    /** SendMessage
+	Send raw bytes as message
+    */
     void SendMessage(uint8_t *bytes, size_t size);
-	// ~~~~
+
 
   private:
     enum ParserState
