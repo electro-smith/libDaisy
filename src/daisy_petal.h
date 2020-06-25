@@ -6,12 +6,10 @@
 
 namespace daisy
 {
-/** @addtogroup boards
-    @{
-*/
 
 /**
    @brief Helpers and hardware definitions for daisy petal.
+   @ingroup boards
 */
 class DaisyPetal
 {
@@ -171,4 +169,3 @@ class DaisyPetal
 } // namespace daisy
 
 #endif
-/** @} */

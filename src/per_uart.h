@@ -87,7 +87,7 @@ class UartHandler
   private:
 };
 
+/** @} */
 } // namespace daisy
 
 #endif
-/** @} */

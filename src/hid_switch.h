@@ -6,15 +6,13 @@
 
 namespace daisy
 {
-/** @addtogroup controls
-    @{
-*/
 
 /** 
     Generic Class for handling momentary/latching switches \n 
     Inspired/influenced by Mutable Instruments (pichenettes) Switch classes
     @author Stephen Hensley
     @date December 2019
+    @ingroup controls
 */
 class Switch
 {
@@ -93,4 +91,3 @@ class Switch
 
 } // namespace daisy
 #endif
-/** @} */

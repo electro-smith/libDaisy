@@ -54,5 +54,5 @@ class Parameter
     float         val_;
     Curve         pcurve_;
 };
-} // namespace daisy
 /** @} */
+} // namespace daisy

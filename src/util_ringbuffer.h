@@ -10,7 +10,6 @@ namespace daisy
     @{
 */
 
-
 /**
 Utility Ring Buffer \n 
 imported from pichenettes/stmlib
@@ -168,7 +167,7 @@ class RingBuffer<T, 0>
   private:
 };
 
+/** @} */
 } // namespace daisy
 
 #endif
-/** @} */

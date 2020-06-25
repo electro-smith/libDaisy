@@ -105,7 +105,7 @@ class OledDisplay
     void SendCommand(uint8_t byte);
     void SendData(uint8_t* buff, size_t size);
 };
+/** @} */
 } // namespace daisy
 
 #endif
-/** @} */

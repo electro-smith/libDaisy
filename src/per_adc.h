@@ -149,7 +149,7 @@ class AdcHandle
     size_t       num_channels_;
 };
 
+/** @} */
 } // namespace daisy
 
 #endif // DSY_ADC_H
-/** @} */

@@ -14,9 +14,9 @@
 
 namespace daisy
 {
-    /** @addtogroup serial
-	@{
-    */
+/** @addtogroup serial
+@{
+*/
 
 /** SPI peripheral enum */
 enum SpiPeriph
@@ -55,7 +55,7 @@ class SpiHandle
 };
 
 
+/** @} */
 } // namespace daisy
 
 #endif
-/** @} */

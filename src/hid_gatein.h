@@ -6,14 +6,12 @@
 namespace daisy
 {
 
-/** @ingroup devices
-    @{
-*/
 /** @file hid_gatein.h */
 /**
    @brief Generic Class for handling gate inputs through GPIO.
    @author Stephen Hensley
    @date    March 2020
+   @ingroup controls
 */
 class GateIn
 {
@@ -44,4 +42,3 @@ class GateIn
 };
 } // namespace daisy
 #endif
-/** @} */

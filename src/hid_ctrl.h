@@ -7,16 +7,13 @@
 namespace daisy
 {
 
-/** @addtogroup controls 
-    @{ 
-*/
-
 /**
     @brief Hardware Interface for control inputs \n 
     Primarily designed for ADC input controls such as \n 
     potentiometers, and control voltage. \n 
     @author Stephen Hensley
     @date November 2019
+    @ingroup controls
 */
 class AnalogControl
 {
@@ -69,4 +66,3 @@ class AnalogControl
 } // namespace daisy
 #endif
 #endif
-/** @} */

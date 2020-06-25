@@ -65,7 +65,7 @@ class Color
     static const float standard_colors[LAST][3];
     float              red_, green_, blue_;
 };
+/** @} */
 } // namespace daisy
 
 #endif
-/** @} */

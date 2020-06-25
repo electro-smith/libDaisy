@@ -157,7 +157,6 @@ class MidiHandler
     RingBuffer<MidiEvent, 8> event_q_;
 };
 
-} // namespace daisy
-
-#endif
 /** @} */
+} // namespace daisy
+#endif

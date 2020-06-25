@@ -62,7 +62,7 @@ class SdmmcHandler
 
   private:
 };
+/** @} */
 } // namespace daisy
 
 #endif
-/** @} */

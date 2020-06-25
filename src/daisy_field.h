@@ -208,7 +208,8 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
     dsy_tim_start();
 }
 
+/** @} */
+
 } // namespace daisy
 
 #endif
-/** @} */

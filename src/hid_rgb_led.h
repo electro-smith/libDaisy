@@ -46,7 +46,7 @@ class RgbLed
   private:
     Led r_, g_, b_;
 };
+/** @} */
 } // namespace daisy
 
 #endif
-/** @} */

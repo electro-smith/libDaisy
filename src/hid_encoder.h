@@ -7,15 +7,13 @@
 
 namespace daisy
 {
-/** @addtogroup controls
-    @{
-*/
 
 /** 
     @brief Generic Class for handling Quadrature Encoders \n 
     Inspired/influenced by Mutable Instruments (pichenettes) Encoder classes
     @author Stephen Hensley
     @date December 2019
+    @ingroup controls
 */
 class Encoder
 {
@@ -63,4 +61,3 @@ be made at the same rate as the debounce function is being called.
 };
 } // namespace daisy
 #endif
-/** @} */

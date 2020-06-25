@@ -10,13 +10,11 @@
 
 namespace daisy
 {
-/** @addtogroup boards
-    @{
-*/
 
 /**
    @brief This is the higher-level interface for the Daisy board. \n 
     All basic peripheral configuration/initialization is setup here.
+   @ingroup boards
 */
 class DaisySeed
 {
@@ -103,4 +101,4 @@ class DaisySeed
 } // namespace daisy
 
 #endif
-/** @} */
+
