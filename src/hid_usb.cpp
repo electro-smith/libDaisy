@@ -97,12 +97,22 @@ void UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
     CDC_Transmit_HS(buff, size);
 }
 
-void UsbHandle::SetReceiveCallback(ReceiveCallback cb)
+void UsbHandle::SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev)
 {
     // This is pretty silly, but we're working iteritavely...
     rx_callback = cb;
     rxcallback  = (CDC_ReceiveCallback)rx_callback;
-    CDC_Set_Rx_Callback_FS(rxcallback);
+
+    switch(dev)
+    {
+        case FS_INTERNAL: CDC_Set_Rx_Callback_FS(rxcallback); break;
+        case FS_EXTERNAL: CDC_Set_Rx_Callback_HS(rxcallback); break;
+        case FS_BOTH:
+            CDC_Set_Rx_Callback_FS(rxcallback);
+            CDC_Set_Rx_Callback_HS(rxcallback);
+            break;
+        default: break;
+    }
 }
 
 // Static Function Implementation

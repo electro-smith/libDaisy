@@ -108,6 +108,7 @@ uint8_t UserTxBufferHS[APP_TX_DATA_SIZE];
 
 /* USER CODE BEGIN PRIVATE_VARIABLES */
 CDC_ReceiveCallback rx_callback_fs;
+CDC_ReceiveCallback rx_callback_hs;
 void dummy_rx_callback(uint8_t *buf, uint32_t *len)
 {
     // do nothing
@@ -318,6 +319,7 @@ static int8_t CDC_Init_HS(void)
     /* Set Application Buffers */
     USBD_CDC_SetTxBuffer(&hUsbDeviceHS, UserTxBufferHS, 0);
     USBD_CDC_SetRxBuffer(&hUsbDeviceHS, UserRxBufferHS);
+    rx_callback_hs = dummy_rx_callback;
     return (USBD_OK);
     /* USER CODE END 8 */
 }
@@ -408,6 +410,7 @@ static int8_t CDC_Receive_HS(uint8_t* Buf, uint32_t* Len)
     //CDC_Transmit_HS(Buf, *Len);
     USBD_CDC_SetRxBuffer(&hUsbDeviceHS, &Buf[0]);
     USBD_CDC_ReceivePacket(&hUsbDeviceHS);
+    rx_callback_hs(Buf, Len);
     return (USBD_OK);
     /* USER CODE END 11 */
 }
@@ -440,6 +443,12 @@ uint8_t CDC_Transmit_HS(uint8_t* Buf, uint16_t Len)
 void CDC_Set_Rx_Callback_FS(CDC_ReceiveCallback cb)
 {
     rx_callback_fs = cb;
+
+}
+
+void CDC_Set_Rx_Callback_HS(CDC_ReceiveCallback cb)
+{
+    rx_callback_hs = cb;
 
 }
 

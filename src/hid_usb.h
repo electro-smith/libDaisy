@@ -52,8 +52,9 @@ class UsbHandle
 
     /** sets the callback to be called upon reception of new data
     \param cb Function to serve as callback
+    \param dev Device to set callback for
      */
-    void SetReceiveCallback(ReceiveCallback cb);
+     void SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev);
 
   private:
 };
