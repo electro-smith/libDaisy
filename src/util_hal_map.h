@@ -26,18 +26,18 @@ extern I2C_HandleTypeDef hi2c4; /**< externs of HAL handles... */
 /** \param  *p Pin pin to get
     \return HAL GPIO_TypeDef as used in the HAL from a dsy_gpio_pin input. 
 */
-GPIO_TypeDef *dsy_hal_map_get_port(dsy_gpio_pin *p);
+GPIO_TypeDef *dsy_hal_map_get_port(const dsy_gpio_pin *p);
 
 /** \param  *p Pin pin to get
     \return HAL GPIO Pin as used in the HAL from a dsy_gpio_pin input. 
 */
-uint16_t dsy_hal_map_get_pin(dsy_gpio_pin *p);
+uint16_t      dsy_hal_map_get_pin(const dsy_gpio_pin *p);
 
 
 /** \param  *p dsy_i2c_handle to get
     \return The I2C_HandleTypeDef for the given *p
 */
-I2C_HandleTypeDef *dsy_hal_map_get_i2c(dsy_i2c_handle *p);
+I2C_HandleTypeDef *dsy_hal_map_get_i2c(const dsy_i2c_handle *p);
 
 #endif
 /** @} */

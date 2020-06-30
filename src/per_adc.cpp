@@ -169,10 +169,10 @@ void AdcChannelConfig::InitSingle(dsy_gpio_pin pin)
     dsy_gpio_init(&pin_);
 }
 void AdcChannelConfig::InitMux(dsy_gpio_pin adc_pin,
+                               size_t       mux_channels,
                                dsy_gpio_pin mux_0,
                                dsy_gpio_pin mux_1,
-                               dsy_gpio_pin mux_2,
-                               size_t       channels)
+                               dsy_gpio_pin mux_2)
 {
     size_t pins_to_init;
     // Init ADC Pin
@@ -184,13 +184,12 @@ void AdcChannelConfig::InitMux(dsy_gpio_pin adc_pin,
     mux_pin_[0].pin = mux_0;
     mux_pin_[1].pin = mux_1;
     mux_pin_[2].pin = mux_2;
-    mux_channels_   = channels < 8 ? channels : 8;
+    mux_channels_   = mux_channels < 8 ? mux_channels : 8;
     pins_to_init    = (mux_channels_ - 1) >> 1;
     for(size_t i = 0; i <= pins_to_init; i++)
     {
         mux_pin_[i].mode = DSY_GPIO_MODE_OUTPUT_PP;
         mux_pin_[i].pull = DSY_GPIO_NOPULL;
-        dsy_gpio_init(&mux_pin_[i]);
     }
 }
 
@@ -309,6 +308,13 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     sConfig.Offset       = 0;
     for(uint8_t i = 0; i < adc.channels; i++)
     {
+    	// init pins
+		const auto& cfg = adc.pin_cfg[i];
+		const auto pins_to_init    = (cfg.mux_channels_ - 1) >> 1;
+		for(int j = 0; j <= pins_to_init; j++)
+			dsy_gpio_init(&cfg.mux_pin_[j]);
+
+		// init adc channel sequence
         sConfig.Channel = adc_channel_from_pin(&adc.pin_cfg[i].pin_.pin);
         sConfig.Rank    = dsy_adc_rank_map[i];
         if(HAL_ADC_ConfigChannel(&adc.hadc1, &sConfig) != HAL_OK)
@@ -332,32 +338,32 @@ void AdcHandle::Stop()
 
 // Accessors
 
-uint16_t AdcHandle::Get(uint8_t chn)
+uint16_t AdcHandle::Get(uint8_t chn) const
 {
     return adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0];
 }
-uint16_t* AdcHandle::GetPtr(uint8_t chn)
+uint16_t* AdcHandle::GetPtr(uint8_t chn) const
 {
     return &adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0];
 }
 
-float AdcHandle::GetFloat(uint8_t chn)
+float AdcHandle::GetFloat(uint8_t chn) const
 {
     return (float)adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0]
            / DSY_ADC_MAX_RESOLUTION;
 }
 
-uint16_t AdcHandle::GetMux(uint8_t chn, uint8_t idx)
+uint16_t AdcHandle::GetMux(uint8_t chn, uint8_t idx) const
 {
     return *adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx];
 }
 
-uint16_t* AdcHandle::GetMuxPtr(uint8_t chn, uint8_t idx)
+uint16_t* AdcHandle::GetMuxPtr(uint8_t chn, uint8_t idx) const
 {
     return adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx];
 }
 
-float AdcHandle::GetMuxFloat(uint8_t chn, uint8_t idx)
+float AdcHandle::GetMuxFloat(uint8_t chn, uint8_t idx) const
 {
     return (float)*adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx]
            / DSY_ADC_MAX_RESOLUTION;
