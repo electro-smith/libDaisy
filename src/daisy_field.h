@@ -180,11 +180,12 @@ FORCE_INLINE void daisy_field_init(daisy_field *p)
     AdcChannelConfig cfg[5];
 
     // Set up mux pin
-    cfg[0].InitMux(p->seed.GetPin(MUX_ADC_PIN),
+    cfg[0].InitMux(8, 
+                   p->seed.GetPin(MUX_ADC_PIN),
                    p->seed.GetPin(MUX_SEL_0_PIN),
                    p->seed.GetPin(MUX_SEL_1_PIN),
-                   p->seed.GetPin(MUX_SEL_2_PIN),
-                   8);
+                   p->seed.GetPin(MUX_SEL_2_PIN));
+
     // Set up CV inputs
     cfg[1].InitSingle(p->seed.GetPin(CV1_ADC_PIN));
     cfg[2].InitSingle(p->seed.GetPin(CV2_ADC_PIN));

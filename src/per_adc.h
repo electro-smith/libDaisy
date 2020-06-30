@@ -47,7 +47,7 @@ struct AdcChannelConfig
     \param adc_pin &
     */
     void InitMux(dsy_gpio_pin adc_pin,
-                 size_t       muxChannels,
+                 size_t       mux_channels,
                  dsy_gpio_pin mux_0,
                  dsy_gpio_pin mux_1 = { DSY_GPIOX, 0 },
                  dsy_gpio_pin mux_2 = { DSY_GPIOX, 0 });
@@ -97,8 +97,6 @@ class AdcHandle
     void Stop();
 
 
-    // These are getters for a single channel
-<<<<<<< HEAD
     /** 
     Single channel getter
     \param chn channel to get
