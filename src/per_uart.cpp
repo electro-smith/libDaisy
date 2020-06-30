@@ -120,8 +120,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
     {
         // TODO:
         // Add handling for non-writable, overflow conditions, etc.
-		if (uhandle.queue_rx.writable())
-			uhandle.queue_rx.Write(uhandle.dma_buffer_rx[i]);
+        if(uhandle.queue_rx.writable())
+            uhandle.queue_rx.Write(uhandle.dma_buffer_rx[i]);
         else
             uhandle.queue_rx.Overwrite(uhandle.dma_buffer_rx[i]);
     }

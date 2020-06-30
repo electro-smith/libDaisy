@@ -6,7 +6,6 @@
 
 namespace daisy
 {
-
 /**
     @brief Class that handles initializing all of the hardware specific to the Daisy Patch Board. \n 
     Helper funtions are also in place to provide easy access to built-in controls and peripherals.

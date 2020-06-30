@@ -16,9 +16,9 @@ extern "C"
 #include "daisy_core.h"
 
     /** @addtogroup serial
-	@{
+    @{
     */
-    
+
     /** Driver for the SAI peripheral Supports SAI1 and SAI2 with several configuration options */
 
     /** selects which SAI (or both/none) to initialize */

@@ -106,7 +106,7 @@ static const uint32_t dsy_adc_rank_map[] = {
 // Globals
 // DMA Buffers
 static uint16_t DMA_BUFFER_MEM_SECTION
-                adc1_mux_cache[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
+                                       adc1_mux_cache[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
 static uint16_t DMA_BUFFER_MEM_SECTION adc1_dma_buffer[DSY_ADC_MAX_CHANNELS];
 
 // Global ADC Struct
@@ -308,13 +308,13 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     sConfig.Offset       = 0;
     for(uint8_t i = 0; i < adc.channels; i++)
     {
-    	// init pins
-		const auto& cfg = adc.pin_cfg[i];
-		const auto pins_to_init    = (cfg.mux_channels_ - 1) >> 1;
-		for(int j = 0; j <= pins_to_init; j++)
-			dsy_gpio_init(&cfg.mux_pin_[j]);
+        // init pins
+        const auto& cfg          = adc.pin_cfg[i];
+        const auto  pins_to_init = (cfg.mux_channels_ - 1) >> 1;
+        for(int j = 0; j <= pins_to_init; j++)
+            dsy_gpio_init(&cfg.mux_pin_[j]);
 
-		// init adc channel sequence
+        // init adc channel sequence
         sConfig.Channel = adc_channel_from_pin(&adc.pin_cfg[i].pin_.pin);
         sConfig.Rank    = dsy_adc_rank_map[i];
         if(HAL_ADC_ConfigChannel(&adc.hadc1, &sConfig) != HAL_OK)

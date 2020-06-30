@@ -17,11 +17,11 @@ TODO
 
 namespace daisy
 {
-    /** @addtogroup serial
-	@{
+/** @addtogroup serial
+    @{
     */
 
-    const size_t kUartMaxBufferSize = 32; /**<  Maximum Queue buffer size */
+const size_t kUartMaxBufferSize = 32; /**<  Maximum Queue buffer size */
 /** 
     Uart Peripheral
     @author shensley

@@ -14,10 +14,9 @@ TODO:
 
 namespace daisy
 {
-
-    /** @addtogroup other
-	@{
-    */    
+/** @addtogroup other
+    @{
+    */
 
 /** Operating Mode. Currently only FatFS is supported. */
 enum SdmmcMode

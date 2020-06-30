@@ -23,11 +23,10 @@ extern "C"
     */
 
     /** @addtogroup shiftregister
-	@{
+    @{
     */
 
 
-    
     /** Pins that need to be configured to use. 
       DATA2 only needs to be set if num_parallel is > 1
   */

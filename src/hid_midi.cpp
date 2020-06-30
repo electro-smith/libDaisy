@@ -93,10 +93,10 @@ void MidiHandler::Parse(uint8_t byte)
     }
 }
 
-void MidiHandler::SendMessage(uint8_t *bytes, size_t size) 
+void MidiHandler::SendMessage(uint8_t *bytes, size_t size)
 {
-    if(out_mode_ == MidiHandler::OUTPUT_MODE_UART1) 
-	{
+    if(out_mode_ == MidiHandler::OUTPUT_MODE_UART1)
+    {
         uart_.PollTx(bytes, size);
     }
 }

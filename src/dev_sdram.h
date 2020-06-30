@@ -63,10 +63,10 @@ extern "C"
 #include "daisy_core.h"
 
     /** @addtogroup sdram
-	@{
+    @{
     */
 
-    
+
     /*
     As mentioned above, this does not currently initialize correctly (startup
     code needs to be modified to init SDRAM, and fill

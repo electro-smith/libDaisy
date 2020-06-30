@@ -6,7 +6,6 @@
 #ifdef __cplusplus
 namespace daisy
 {
-
 /**
     @brief Hardware Interface for control inputs \n 
     Primarily designed for ADC input controls such as \n 
