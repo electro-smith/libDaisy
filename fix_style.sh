@@ -1,4 +1,5 @@
 #!/bin/bash
+# Uses clang-format-10.0.0
 #TODO:
 # - fix all the hard-coding
 STARTDIR='./src/'
