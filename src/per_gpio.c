@@ -2,7 +2,7 @@
 #include "per_gpio.h"
 #include "util_hal_map.h"
 
-void dsy_gpio_init(dsy_gpio *p)
+void dsy_gpio_init(const dsy_gpio *p)
 {
     GPIO_TypeDef *   port;
     GPIO_InitTypeDef ginit;
@@ -27,7 +27,7 @@ void dsy_gpio_init(dsy_gpio *p)
     HAL_GPIO_Init(port, &ginit);
 }
 
-void dsy_gpio_deinit(dsy_gpio *p)
+void dsy_gpio_deinit(const dsy_gpio *p)
 {
     GPIO_TypeDef *port;
     uint16_t      pin;
@@ -36,7 +36,7 @@ void dsy_gpio_deinit(dsy_gpio *p)
     HAL_GPIO_DeInit(port, pin);
 }
 
-uint8_t dsy_gpio_read(dsy_gpio *p)
+uint8_t dsy_gpio_read(const dsy_gpio *p)
 {
     return HAL_GPIO_ReadPin(dsy_hal_map_get_port(&p->pin),
                             dsy_hal_map_get_pin(&p->pin));
@@ -44,7 +44,7 @@ uint8_t dsy_gpio_read(dsy_gpio *p)
     //                            gpio_hal_pin_map[p->pin.pin]);
 }
 
-void dsy_gpio_write(dsy_gpio *p, uint8_t state)
+void dsy_gpio_write(const dsy_gpio *p, uint8_t state)
 {
     return HAL_GPIO_WritePin(dsy_hal_map_get_port(&p->pin),
                              dsy_hal_map_get_pin(&p->pin),
@@ -53,7 +53,7 @@ void dsy_gpio_write(dsy_gpio *p, uint8_t state)
     //                      gpio_hal_pin_map[p->pin.pin],
     //                      (GPIO_PinState)(state > 0 ? 1 : 0));
 }
-void dsy_gpio_toggle(dsy_gpio *p)
+void dsy_gpio_toggle(const dsy_gpio *p)
 {
     return HAL_GPIO_TogglePin(dsy_hal_map_get_port(&p->pin),
                             dsy_hal_map_get_pin(&p->pin));

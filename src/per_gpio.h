@@ -42,18 +42,18 @@ extern "C"
     /** Initializes the gpio with the settings configured. 
     \param *p Pin pointer
     */
-    void dsy_gpio_init(dsy_gpio *p);
+    void dsy_gpio_init(const dsy_gpio *p);
 
     /** Deinitializes the gpio pin 
     \param *p Pin pointer
      */
-    void dsy_gpio_deinit(dsy_gpio *p);
+    void dsy_gpio_deinit(const dsy_gpio *p);
 
     /** 
     Reads the state of the gpio pin
     \param *p Pin pointer 
     \return 1 if the pin is HIGH, and 0 if the pin is LOW */
-    uint8_t dsy_gpio_read(dsy_gpio *p);
+    uint8_t dsy_gpio_read(const dsy_gpio *p);
 
     /** 
     Writes the state to the gpio pin
@@ -61,12 +61,13 @@ extern "C"
     \param *p Pin pointer
     \param state State to write
     */
-    void dsy_gpio_write(dsy_gpio *p, uint8_t state);
+    void dsy_gpio_write(const dsy_gpio *p, uint8_t state);
 
     /** Toggles the state of the pin so that it is not at the same state as it was previously.
     \param *p Pin pointer
      */
-    void dsy_gpio_toggle(dsy_gpio *p);
+    void dsy_gpio_toggle(const dsy_gpio *p);
+
 #ifdef __cplusplus
 }
 #endif
