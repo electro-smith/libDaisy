@@ -59,6 +59,13 @@ class DaisySeed
     */
     void StartAudio(dsy_audio_callback cb);
 
+    /** Begins the audio for the seeds builtin audio.
+    the specified callback will get called whenever
+    new data is ready to be prepared.
+    This will use the newer non-interleaved callback.
+    */
+    void StartAudio(dsy_audio_mc_callback cb);
+
     /** Sets the state of the built in LED
      */
     void SetLed(bool state);
