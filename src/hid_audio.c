@@ -39,13 +39,13 @@ typedef struct
 
 //  Static Buffers in non-cached SRAM1 for DMA
 static int32_t DSY_DMA_BUFFER_SECTOR
-               sai1_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+    sai1_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
 static int32_t DSY_DMA_BUFFER_SECTOR
-               sai1_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+    sai1_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
 static int32_t DSY_DMA_BUFFER_SECTOR
-               sai2_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+    sai2_dma_buffer_rx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
 static int32_t DSY_DMA_BUFFER_SECTOR
-               sai2_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
+    sai2_dma_buffer_tx[DSY_AUDIO_DMA_BUFFER_SIZE_MAX];
 
 // Initialize Gate Output GPIO (only for timing in this case)
 #ifdef DSY_PROFILE_AUDIO_CALLBACK

@@ -39,7 +39,7 @@ void codec_pcm3060_init(dsy_i2c_handle *hi2c)
               | (1 << ADC_POWERSAVE_CTRL); // Should be 0b01110000 (MRST)
     I2C_HandleTypeDef *hal_hi2c;
     hal_hi2c = dsy_hal_map_get_i2c(hi2c);
-    ret = HAL_I2C_Master_Transmit(hal_hi2c, addr, buff, 2, 1);
+    ret      = HAL_I2C_Master_Transmit(hal_hi2c, addr, buff, 2, 1);
     if(ret != HAL_OK)
     {
         // Do something

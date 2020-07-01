@@ -23,9 +23,12 @@ static uint32_t autopolling_mem_ready(QSPI_HandleTypeDef *hqspi,
                                       uint32_t            timeout);
 
 // These functions are defined, but we haven't added the ability to switch to quad mode. So they're currently unused.
-static uint32_t enter_quad_mode(QSPI_HandleTypeDef *hqspi) __attribute__((unused));
-static uint32_t exit_quad_mode(QSPI_HandleTypeDef *hqspi) __attribute__((unused));
-static uint8_t  get_status_register(QSPI_HandleTypeDef *hqspi) __attribute__((unused));
+static uint32_t enter_quad_mode(QSPI_HandleTypeDef *hqspi)
+    __attribute__((unused));
+static uint32_t exit_quad_mode(QSPI_HandleTypeDef *hqspi)
+    __attribute__((unused));
+static uint8_t get_status_register(QSPI_HandleTypeDef *hqspi)
+    __attribute__((unused));
 
 typedef struct
 {

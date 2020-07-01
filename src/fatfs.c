@@ -10,7 +10,7 @@ void dsy_fatfs_init(void)
     retSD = FATFS_LinkDriver(&SD_Driver, SDPath);
 }
 
-DWORD get_fattime(void) 
+DWORD get_fattime(void)
 {
     return 0;
 }

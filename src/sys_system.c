@@ -72,11 +72,11 @@ void HardFault_Handler()
 void dsy_system_init()
 {
     HAL_Init();
-	SystemClock_Config();
+    SystemClock_Config();
     MPU_Config();
-    dsy_dma_init(); 
-   	SCB_EnableICache();
-   	SCB_EnableDCache();
+    dsy_dma_init();
+    SCB_EnableICache();
+    SCB_EnableDCache();
 }
 
 void dsy_system_jumptoqspi()
@@ -109,7 +109,7 @@ void SystemClock_Config()
     /** Configure the main internal regulator output voltage 
   */
     __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-//    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
+    //    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
 
     while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
     /** Macro to configure the PLL clock source 
@@ -125,7 +125,7 @@ void SystemClock_Config()
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
     RCC_OscInitStruct.PLL.PLLM      = 4;
     RCC_OscInitStruct.PLL.PLLN      = 200;
-//    RCC_OscInitStruct.PLL.PLLN      = 240;
+    //    RCC_OscInitStruct.PLL.PLLN      = 240;
     RCC_OscInitStruct.PLL.PLLP      = 2;
     RCC_OscInitStruct.PLL.PLLQ      = 5; // was 4 in cube
     RCC_OscInitStruct.PLL.PLLR      = 2;

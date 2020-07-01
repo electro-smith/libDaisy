@@ -56,7 +56,7 @@ void dsy_gpio_write(const dsy_gpio *p, uint8_t state)
 void dsy_gpio_toggle(const dsy_gpio *p)
 {
     return HAL_GPIO_TogglePin(dsy_hal_map_get_port(&p->pin),
-                            dsy_hal_map_get_pin(&p->pin));
+                              dsy_hal_map_get_pin(&p->pin));
     //    HAL_GPIO_TogglePin((GPIO_TypeDef *)gpio_hal_port_map[p->pin.port],
     //                       gpio_hal_pin_map[p->pin.pin]);
 }

@@ -49,14 +49,14 @@ I2C_HandleTypeDef hi2c3;
 I2C_HandleTypeDef hi2c4;
 
 
-
 // GPIO FUNCTIONS
 
 GPIO_TypeDef* dsy_hal_map_get_port(const dsy_gpio_pin* p)
 {
     return (GPIO_TypeDef*)gpio_hal_port_map[p->port];
 }
-uint16_t dsy_hal_map_get_pin(const dsy_gpio_pin* p) {
+uint16_t dsy_hal_map_get_pin(const dsy_gpio_pin* p)
+{
     return (uint16_t)gpio_hal_pin_map[p->pin];
 }
 

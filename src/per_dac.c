@@ -109,17 +109,17 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef *hdac)
         if(dac.active_channels == DSY_DAC_CHN1
            || dac.active_channels == DSY_DAC_CHN_BOTH)
         {
-            p    = &dac.dsy_hdac->pin_config[DSY_DAC_CHN1];
-            port = dsy_hal_map_get_port(p);
-            ginit.Pin  = dsy_hal_map_get_pin(p);
+            p         = &dac.dsy_hdac->pin_config[DSY_DAC_CHN1];
+            port      = dsy_hal_map_get_port(p);
+            ginit.Pin = dsy_hal_map_get_pin(p);
             HAL_GPIO_Init(port, &ginit);
         }
         if(dac.active_channels == DSY_DAC_CHN2
            || dac.active_channels == DSY_DAC_CHN_BOTH)
         {
-            p    = &dac.dsy_hdac->pin_config[DSY_DAC_CHN2];
-            port = dsy_hal_map_get_port(p);
-            ginit.Pin  = dsy_hal_map_get_pin(p);
+            p         = &dac.dsy_hdac->pin_config[DSY_DAC_CHN2];
+            port      = dsy_hal_map_get_port(p);
+            ginit.Pin = dsy_hal_map_get_pin(p);
             HAL_GPIO_Init(port, &ginit);
         }
     }
