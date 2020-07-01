@@ -1,7 +1,8 @@
 ![](https://github.com/electro-smith/libdaisy/blob/master/resources/assets/banner.png)
+
 [![Build Status](https://travis-ci.org/electro-smith/libDaisy.svg?branch=master)](https://travis-ci.org/electro-smith/libDaisy)
 
-## libDaisy is a hardware abstraction library for the [Daisy Embedded Audio Platform.](https://www.electro-smith.com/daisy) 
+**libDaisy is a hardware abstraction library for the [Daisy Embedded Audio Platform.](https://www.electro-smith.com/daisy)** 
 
 It  provides easy access to things such as GPIO, MIDI, USB communication, and more.
 
