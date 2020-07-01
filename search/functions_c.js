@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['s162f',['s162f',['../group__boards.html#ga56923e56a9229dd76da5ca8c31e1cd4a',1,'daisy.h']]],
+  ['s242f',['s242f',['../group__boards.html#gaf3c84ac6360476468f2ab11807c40fa0',1,'daisy.h']]],
+  ['sendmessage',['SendMessage',['../classdaisy_1_1_midi_handler.html#a59e40ad2f2293880b6664e83e40c0a30',1,'daisy::MidiHandler']]],
+  ['set',['Set',['../class_shift_register595.html#a01d31561cd07890ea52d1f39e55a8385',1,'ShiftRegister595::Set()'],['../classdaisy_1_1_led.html#a7394c869bc8b34d94c183c2b7fb16bc7',1,'daisy::Led::Set()'],['../classdaisy_1_1_rgb_led.html#a342c072e678f5df25a8f638a91479d1f',1,'daisy::RgbLed::Set()']]],
+  ['setaudioblocksize',['SetAudioBlockSize',['../classdaisy_1_1_daisy_patch.html#a3eb9d0267312bbe4997124afc9d75b89',1,'daisy::DaisyPatch::SetAudioBlockSize()'],['../classdaisy_1_1_daisy_petal.html#a2356b5fdb0f87f28920c96828b2c0c93',1,'daisy::DaisyPetal::SetAudioBlockSize()'],['../classdaisy_1_1_daisy_pod.html#ac05d6bd0d67760e875c2071652fa0ff3',1,'daisy::DaisyPod::SetAudioBlockSize()'],['../classdaisy_1_1_daisy_seed.html#a4209c18a3c181e8427ebc7639d4170b6',1,'daisy::DaisySeed::SetAudioBlockSize()']]],
+  ['setcolor',['SetColor',['../classdaisy_1_1_rgb_led.html#afc530391dc068788952edbe9907df8e9',1,'daisy::RgbLed']]],
+  ['setcursor',['SetCursor',['../classdaisy_1_1_oled_display.html#a6464c4429950b9d3ebe3ceedc9edb606',1,'daisy::OledDisplay']]],
+  ['setfootswitchled',['SetFootswitchLed',['../classdaisy_1_1_daisy_petal.html#a562d597f10b98d36bf1c37314a317d8c',1,'daisy::DaisyPetal']]],
+  ['setled',['SetLed',['../classdaisy_1_1_daisy_seed.html#ac4501329b4a5a5cfb9e3cd6003fcda6f',1,'daisy::DaisySeed']]],
+  ['setlooping',['SetLooping',['../classdaisy_1_1_wav_player.html#a29d340360f073bd1767e51a06876eafe',1,'daisy::WavPlayer']]],
+  ['setreceivecallback',['SetReceiveCallback',['../class_usb_handle.html#a52c22cce6616ab3948d7933bfc0e7d0b',1,'UsbHandle::SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev)'],['../class_usb_handle.html#a52c22cce6616ab3948d7933bfc0e7d0b',1,'UsbHandle::SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev)']]],
+  ['setringled',['SetRingLed',['../classdaisy_1_1_daisy_petal.html#ad92270ffe128bc678b78be2067d4fcfe',1,'daisy::DaisyPetal']]],
+  ['settestpoint',['SetTestPoint',['../classdaisy_1_1_daisy_seed.html#a213214b79bb612175f2e82241887d42e',1,'daisy::DaisySeed']]],
+  ['start',['Start',['../classdaisy_1_1_adc_handle.html#a6fddddc75eb2d4ba0365a68d4bac2bd3',1,'daisy::AdcHandle']]],
+  ['startadc',['StartAdc',['../classdaisy_1_1_daisy_patch.html#aef89b7d3492d87652af2207f315e6c6d',1,'daisy::DaisyPatch::StartAdc()'],['../classdaisy_1_1_daisy_petal.html#aa622a3f66ecb66b1980afd8ed223a60b',1,'daisy::DaisyPetal::StartAdc()'],['../classdaisy_1_1_daisy_pod.html#ac98cbdd0e34ec2cb994ca012f05e6317',1,'daisy::DaisyPod::StartAdc()']]],
+  ['startaudio',['StartAudio',['../classdaisy_1_1_daisy_patch.html#a0187184a92724b936d7e7307565ade32',1,'daisy::DaisyPatch::StartAudio()'],['../classdaisy_1_1_daisy_petal.html#abeccbd23f29072e86da1ffc6267bb87d',1,'daisy::DaisyPetal::StartAudio()'],['../classdaisy_1_1_daisy_pod.html#a765da8887de68b071367d6a88ac54cf2',1,'daisy::DaisyPod::StartAudio()'],['../classdaisy_1_1_daisy_seed.html#a3a0b0dd45b4b87808f7d67912d4b7422',1,'daisy::DaisySeed::StartAudio(dsy_audio_callback cb)'],['../classdaisy_1_1_daisy_seed.html#adcdf420023b03cf3fd575a7d7ada2c7a',1,'daisy::DaisySeed::StartAudio(dsy_audio_mc_callback cb)']]],
+  ['startreceive',['StartReceive',['../classdaisy_1_1_midi_handler.html#aec305ba283ba3efdc0e95c822e87040b',1,'daisy::MidiHandler']]],
+  ['startrx',['StartRx',['../classdaisy_1_1_uart_handler.html#aad056734542e930d281412eca2faeeb2',1,'daisy::UartHandler']]],
+  ['state',['State',['../classdaisy_1_1_gate_in.html#a08f75c6621307249de3107df96cfab2d',1,'daisy::GateIn']]],
+  ['stop',['Stop',['../classdaisy_1_1_adc_handle.html#ab6a016e484c9b7389e6302521e778bc9',1,'daisy::AdcHandle']]],
+  ['stream',['Stream',['../classdaisy_1_1_wav_player.html#a52be0ed680b908241ffc287f879c6c7a',1,'daisy::WavPlayer']]],
+  ['swallow',['Swallow',['../classdaisy_1_1_ring_buffer.html#ac7bdb6693448c488bda8e6d830f9bfcb',1,'daisy::RingBuffer']]]
+];
