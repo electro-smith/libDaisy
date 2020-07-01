@@ -42,7 +42,7 @@ int main(void)
 ```
 
 ## Getting Started
-- Browse the [reference documentation](https://github.com/electro-smith/libDaisy/blob/master/doc/libdaisy_reference.pdf)
+- Browse the [reference documentation on the web](https://electro-smith.github.io/libDaisy) or in [pdf form](https://github.com/electro-smith/libDaisy/blob/master/doc/libdaisy_reference.pdf)
 - Check out our [Getting Started Wiki Page](https://github.com/electro-smith/DaisyWiki/wiki)
 - Make some sound!
 
