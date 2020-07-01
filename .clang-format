@@ -25,7 +25,7 @@ Cpp11BracedListStyle: 'true'
 DerivePointerAlignment: 'true'
 DisableFormat: 'false'
 IndentCaseLabels: 'true'
-IndentWidth: '4'
+IndentWidth: 4
 IndentWrappedFunctionNames: 'false'
 KeepEmptyLinesAtTheStartOfBlocks: 'false'
 Language: Cpp
