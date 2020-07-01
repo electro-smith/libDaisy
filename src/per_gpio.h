@@ -10,7 +10,7 @@ extern "C"
     /** General Purpose IO driver */
 
     /** @addtogroup other
-	@{
+    @{
     */
 
     /** Sets the mode of the GPIO */

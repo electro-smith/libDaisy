@@ -6,7 +6,6 @@
 
 namespace daisy
 {
-
 /**
    @brief Helpers and hardware definitions for daisy petal.
    @ingroup boards

@@ -109,7 +109,7 @@ uint8_t UserTxBufferHS[APP_TX_DATA_SIZE];
 /* USER CODE BEGIN PRIVATE_VARIABLES */
 CDC_ReceiveCallback rx_callback_fs;
 CDC_ReceiveCallback rx_callback_hs;
-void dummy_rx_callback(uint8_t *buf, uint32_t *len)
+void                dummy_rx_callback(uint8_t* buf, uint32_t* len)
 {
     // do nothing
 }
@@ -443,13 +443,11 @@ uint8_t CDC_Transmit_HS(uint8_t* Buf, uint16_t Len)
 void CDC_Set_Rx_Callback_FS(CDC_ReceiveCallback cb)
 {
     rx_callback_fs = cb;
-
 }
 
 void CDC_Set_Rx_Callback_HS(CDC_ReceiveCallback cb)
 {
     rx_callback_hs = cb;
-
 }
 
 /* USER CODE END PRIVATE_FUNCTIONS_IMPLEMENTATION */

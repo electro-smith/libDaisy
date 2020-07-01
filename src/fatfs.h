@@ -11,10 +11,10 @@ extern "C"
 #include "util_sd_diskio.h"
 
     /** 
-	@brief fatfs support.
+    @brief fatfs support.
     */
 
-    
+
     extern uint8_t retSD;                /**< & */
     extern char    SDPath[4];            /**< & */
     extern FATFS   SDFatFS;              /**< & */

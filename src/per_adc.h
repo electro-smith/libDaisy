@@ -51,8 +51,8 @@ struct AdcChannelConfig
     void InitMux(dsy_gpio_pin adc_pin,
                  size_t       mux_channels,
                  dsy_gpio_pin mux_0,
-                 dsy_gpio_pin mux_1 = { DSY_GPIOX, 0 },
-                 dsy_gpio_pin mux_2 = { DSY_GPIOX, 0 });
+                 dsy_gpio_pin mux_1 = {DSY_GPIOX, 0},
+                 dsy_gpio_pin mux_2 = {DSY_GPIOX, 0});
 
     dsy_gpio pin_;                   /**< & */
     dsy_gpio mux_pin_[MUX_SEL_LAST]; /**< & */

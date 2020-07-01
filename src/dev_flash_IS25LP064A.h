@@ -29,7 +29,7 @@ extern "C"
     /** @addtogroup flash
     @{
     */
-    
+
 /** Reset Operations */
 #define RESET_ENABLE_CMD 0x66
 #define RESET_MEMORY_CMD 0x99 /**< & */

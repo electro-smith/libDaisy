@@ -72,13 +72,13 @@ void dsy_sai_init_from_handle(dsy_sai_handle* hsai)
             dsy_sai_blocks_init(DSY_SAI_1, &hsai_BlockA1, &hsai_BlockB1);
             break;
         case DSY_AUDIO_INIT_SAI2:
-//            dsy_sai_blocks_init(DSY_SAI_2, &hsai_BlockA2, &hsai_BlockB2);
-                dsy_sai2_init();
+            //            dsy_sai_blocks_init(DSY_SAI_2, &hsai_BlockA2, &hsai_BlockB2);
+            dsy_sai2_init();
             break;
         case DSY_AUDIO_INIT_BOTH:
             dsy_sai_blocks_init(DSY_SAI_1, &hsai_BlockA1, &hsai_BlockB1);
-//            dsy_sai_blocks_init(DSY_SAI_2, &hsai_BlockA2, &hsai_BlockB2);
-                dsy_sai2_init();
+            //            dsy_sai_blocks_init(DSY_SAI_2, &hsai_BlockA2, &hsai_BlockB2);
+            dsy_sai2_init();
             break;
         case DSY_AUDIO_INIT_NONE: break;
         default: break;
@@ -101,7 +101,7 @@ static void dsy_sai_blocks_init(uint8_t            sai_idx,
                                 SAI_HandleTypeDef* blockA,
                                 SAI_HandleTypeDef* blockB)
 {
-	// Block A
+    // Block A
     uint8_t  bd;
     uint32_t protocol;
     switch(sai_handle.bitdepth[sai_idx])
@@ -136,7 +136,7 @@ static void dsy_sai_blocks_init(uint8_t            sai_idx,
         default: hsai_BlockA1.Init.AudioMode = SAI_MODEMASTER_RX; break;
     }
 
-    blockA->Init.Synchro        = SAI_ASYNCHRONOUS;
+    blockA->Init.Synchro = SAI_ASYNCHRONOUS;
 
     blockA->Init.OutputDrive    = SAI_OUTPUTDRIVE_DISABLE;
     blockA->Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
@@ -274,8 +274,8 @@ static void dsy_sai2_init()
         //Error_Handler();
     }
 
-    hsai_BlockB2.Instance = SAI2_Block_B;
-	hsai_BlockB2.Init.AudioMode      = SAI_MODEMASTER_RX;
+    hsai_BlockB2.Instance            = SAI2_Block_B;
+    hsai_BlockB2.Init.AudioMode      = SAI_MODEMASTER_RX;
     hsai_BlockB2.Init.Synchro        = SAI_ASYNCHRONOUS;
     hsai_BlockB2.Init.OutputDrive    = SAI_OUTPUTDRIVE_DISABLE;
     hsai_BlockB2.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_EMPTY;
@@ -437,15 +437,15 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
         {
             //Error_Handler();
         }
-//        pSyncConfig.SyncSignalID  = HAL_DMAMUX1_SYNC_DMAMUX1_CH1_EVT;
-//        pSyncConfig.SyncPolarity  = HAL_DMAMUX_SYNC_RISING;
-//        pSyncConfig.SyncEnable    = ENABLE;
-//        pSyncConfig.EventEnable   = DISABLE;
-//        pSyncConfig.RequestNumber = 1;
-//        if(HAL_DMAEx_ConfigMuxSync(&hdma_sai2_a, &pSyncConfig) != HAL_OK)
-//        {
-//            //Error_Handler();
-//        }
+        //        pSyncConfig.SyncSignalID  = HAL_DMAMUX1_SYNC_DMAMUX1_CH1_EVT;
+        //        pSyncConfig.SyncPolarity  = HAL_DMAMUX_SYNC_RISING;
+        //        pSyncConfig.SyncEnable    = ENABLE;
+        //        pSyncConfig.EventEnable   = DISABLE;
+        //        pSyncConfig.RequestNumber = 1;
+        //        if(HAL_DMAEx_ConfigMuxSync(&hdma_sai2_a, &pSyncConfig) != HAL_OK)
+        //        {
+        //            //Error_Handler();
+        //        }
 
         /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
@@ -505,15 +505,15 @@ void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
             //Error_Handler();
         }
 
-//        pSyncConfig.SyncSignalID  = HAL_DMAMUX1_SYNC_DMAMUX1_CH1_EVT;
-//        pSyncConfig.SyncPolarity  = HAL_DMAMUX_SYNC_RISING;
-//        pSyncConfig.SyncEnable    = ENABLE;
-//        pSyncConfig.EventEnable   = DISABLE;
-//        pSyncConfig.RequestNumber = 1;
-//        if(HAL_DMAEx_ConfigMuxSync(&hdma_sai2_b, &pSyncConfig) != HAL_OK)
-//        {
-//            //Error_Handler();
-//        }
+        //        pSyncConfig.SyncSignalID  = HAL_DMAMUX1_SYNC_DMAMUX1_CH1_EVT;
+        //        pSyncConfig.SyncPolarity  = HAL_DMAMUX_SYNC_RISING;
+        //        pSyncConfig.SyncEnable    = ENABLE;
+        //        pSyncConfig.EventEnable   = DISABLE;
+        //        pSyncConfig.RequestNumber = 1;
+        //        if(HAL_DMAEx_ConfigMuxSync(&hdma_sai2_b, &pSyncConfig) != HAL_OK)
+        //        {
+        //            //Error_Handler();
+        //        }
         /* Several peripheral DMA handle pointers point to the same DMA handle.
      Be aware that there is only one channel to perform all the requested DMAs. */
         __HAL_LINKDMA(hsai, hdmarx, hdma_sai2_b);

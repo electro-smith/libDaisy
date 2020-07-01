@@ -17,10 +17,10 @@ extern "C"
     */
 
     /** @addtogroup led
-	@{
+    @{
     */
 
-    
+
     /*
     TODO
     Move color usage to util_color

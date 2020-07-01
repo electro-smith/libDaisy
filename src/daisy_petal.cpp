@@ -148,7 +148,7 @@ float DaisyPetal::GetKnobValue(Knob k)
     return knob[idx].Value();
 }
 
-float DaisyPetal::GetExpression() 
+float DaisyPetal::GetExpression()
 {
     return expression.Value();
 }
@@ -166,12 +166,12 @@ void DaisyPetal::DebounceControls()
 void DaisyPetal::ClearLeds()
 {
     // Using Color
-//    Color c;
-//    c.Init(Color::PresetColor::OFF);
-//    for(size_t i = 0; i < RING_LED_LAST; i++)
-//    {
-//        ring_led[i].SetColor(c);
-//    }
+    //    Color c;
+    //    c.Init(Color::PresetColor::OFF);
+    //    for(size_t i = 0; i < RING_LED_LAST; i++)
+    //    {
+    //        ring_led[i].SetColor(c);
+    //    }
     for(size_t i = 0; i < RING_LED_LAST; i++)
     {
         SetRingLed(static_cast<RingLed>(i), 0.0f, 0.0f, 0.0f);
@@ -180,7 +180,6 @@ void DaisyPetal::ClearLeds()
     {
         SetFootswitchLed(static_cast<FootswitchLed>(i), 0.0f);
     }
-
 }
 
 void DaisyPetal::UpdateLeds()

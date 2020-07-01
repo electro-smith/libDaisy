@@ -5,7 +5,7 @@
 void codec_ak4556_init(dsy_gpio_pin reset_pin)
 {
     dsy_gpio reset;
-    reset.pin = reset_pin;
+    reset.pin  = reset_pin;
     reset.mode = DSY_GPIO_MODE_OUTPUT_PP;
     reset.pull = DSY_GPIO_NOPULL;
     dsy_gpio_init(&reset);

@@ -22,9 +22,9 @@ extern "C"
         ".qspiflash_bss"))) /**< used for reading memory in memory_mapped mode. */
 
     /** @addtogroup serial
-	@{
-    */    
-    
+    @{
+    */
+
     /** 
      Driver for QSPI peripheral to interface with external flash memory. \n 
      Currently supported QSPI Devices: \n 

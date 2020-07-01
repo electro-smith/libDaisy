@@ -12,7 +12,7 @@ extern "C"
 #include <stdint.h>
 
     /** @addtogroup other
-	@{
+    @{
     */
 
 

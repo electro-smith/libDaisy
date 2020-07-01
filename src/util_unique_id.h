@@ -9,14 +9,14 @@ extern "C"
 {
 #endif
 
-/** @addtogroup utility
+    /** @addtogroup utility
     @{
 */
 
-    
+
     /** Returns 96-bit Unique ID of the MCU
-	@author shensley
-	@date May 2020
+    @author shensley
+    @date May 2020
     */
 
     /** fills the three pointer arguments with the unique ID of the MCU. 

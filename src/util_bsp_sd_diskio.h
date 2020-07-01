@@ -3,8 +3,8 @@
 #define DSY_BSP_SD_DISKIO_H /**< & */
 #include <stdint.h>
 
-    /** @addtogroup utility
-	@{
+/** @addtogroup utility
+    @{
     */
 
 

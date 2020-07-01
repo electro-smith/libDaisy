@@ -31,7 +31,7 @@ GPIO_TypeDef *dsy_hal_map_get_port(const dsy_gpio_pin *p);
 /** \param  *p Pin pin to get
     \return HAL GPIO Pin as used in the HAL from a dsy_gpio_pin input. 
 */
-uint16_t      dsy_hal_map_get_pin(const dsy_gpio_pin *p);
+uint16_t dsy_hal_map_get_pin(const dsy_gpio_pin *p);
 
 
 /** \param  *p dsy_i2c_handle to get

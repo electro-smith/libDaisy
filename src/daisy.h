@@ -57,7 +57,7 @@ FORCE_INLINE int32_t f2s24(float x)
 
 
 #include "sys_system.h"
-#include "per_qspi.h" 
+#include "per_qspi.h"
 #include "per_dac.h"
 #include "per_gpio.h"
 #include "per_i2c.h"
@@ -96,77 +96,77 @@ FORCE_INLINE int32_t f2s24(float x)
     @brief The daisy library
     @{ */
 
-    /** @defgroup human_interface HUMAN_INTERFACE
-	@brief Interface with the world.
-	@{ */
+/** @defgroup human_interface HUMAN_INTERFACE
+    @brief Interface with the world.
+    @{ */
 
-        /** @defgroup audio AUDIO
-	    @brief Embedded Audio Engine */
+/** @defgroup audio AUDIO
+        @brief Embedded Audio Engine */
 
-        /** @defgroup controls CONTROLS
-	    @brief Hardware Controls */
+/** @defgroup controls CONTROLS
+        @brief Hardware Controls */
 
-        /** @defgroup feedback FEEDBACK
-	    @brief Screens, leds, etc. */
+/** @defgroup feedback FEEDBACK
+        @brief Screens, leds, etc. */
 
-        /** @defgroup  external EXTERNAL
-	    @brief External interface devices */
+/** @defgroup  external EXTERNAL
+        @brief External interface devices */
 
-    /** @} END HID */ 
+/** @} END HID */
 
-    /** @defgroup peripheral PERIPHERAL
-	@brief Peripheral devices, not meant for human interaction.
-	@{ 
+/** @defgroup peripheral PERIPHERAL
+    @brief Peripheral devices, not meant for human interaction.
+    @{ 
     */
 
-        /** @defgroup  serial SERIAL
-	    @brief Serial Communications */
+/** @defgroup  serial SERIAL
+        @brief Serial Communications */
 
-        /** @defgroup  analog_digital_conversion ANALOG_DIGITAL_CONVERSION
-	    @brief Convert from digital to analog, or vice-versa */
+/** @defgroup  analog_digital_conversion ANALOG_DIGITAL_CONVERSION
+        @brief Convert from digital to analog, or vice-versa */
 
-        /** @defgroup  other OTHER
-	    @brief GPIO, timers, and SDMMC */
+/** @defgroup  other OTHER
+        @brief GPIO, timers, and SDMMC */
 
-    /** @} END PERIPHERAL */
+/** @} END PERIPHERAL */
 
-    /** @defgroup system SYSTEM
-	@brief Deals with system. DMA, clocks, etc.
-	@{ 
+/** @defgroup system SYSTEM
+    @brief Deals with system. DMA, clocks, etc.
+    @{ 
     */
-    /** @} END SYSTEM */
+/** @} END SYSTEM */
 
-    /** @defgroup device DEVICE
+/** @defgroup device DEVICE
         @brief Low level devices. Led drivers, codecs, etc.
-	@{ 
+    @{ 
     */
-        /** @defgroup  shiftregister SHIFTREGISTER
-	    @brief Digital shift registers*/
+/** @defgroup  shiftregister SHIFTREGISTER
+        @brief Digital shift registers*/
 
-        /** @defgroup  flash FLASH
-	    @brief Flash memory */
+/** @defgroup  flash FLASH
+        @brief Flash memory */
 
-        /** @defgroup codec CODEC
-	    @brief Audio codecs */
+/** @defgroup codec CODEC
+        @brief Audio codecs */
 
-        /** @defgroup  led LED
-	    @brief LED driver devices */
+/** @defgroup  led LED
+        @brief LED driver devices */
 
-        /** @defgroup  sdram SDRAM
-	    @brief SDRAM devices */
+/** @defgroup  sdram SDRAM
+        @brief SDRAM devices */
 
-    /** @} END DEV */
+/** @} END DEV */
 
-    /** @defgroup boards BOARDS
-	@brief Daisy devices. Pod, seed, etc.
-	@{ 
+/** @defgroup boards BOARDS
+    @brief Daisy devices. Pod, seed, etc.
+    @{ 
     */
-    /** @} END BOARDS */
+/** @} END BOARDS */
 
-    /** @defgroup utility UTILITY
+/** @defgroup utility UTILITY
         @brief General utilities. Ringbuffers, LED colors, OLED stuff, etc.
-	@{ 
+    @{ 
     */
-    /** @} END UTILITY */
+/** @} END UTILITY */
 
 /** @} END LIBDAISY*/
