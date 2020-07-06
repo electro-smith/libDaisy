@@ -197,7 +197,6 @@ CPP_SOURCES += $(addsuffix .cpp, $(MODULE_DIR)/$(CPP_MODULES))
 
 # C sources
 C_SOURCES += $(addsuffix .c, $(MODULE_DIR)/$(C_MODULES))
-
 C_SOURCES += core/startup_stm32h750xx.c
 
 #STARTUP_PATH = Drivers/CMSIS/Device/ST/STM32H7xx/Source/Templates/gcc
@@ -308,25 +307,28 @@ all: $(BUILD_DIR)/$(TARGET).a
 #######################################
 
 # list of C program objects
-OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
+OBJECTS = $(addprefix $(BUILD_DIR)/,$(C_SOURCES:.c=.o))
 vpath %.c $(sort $(dir $(C_SOURCES)))
 # list of CPP program objects
-OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(CPP_SOURCES:.cpp=.o)))
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(CPP_SOURCES:.cpp=.o))
 vpath %.cpp $(sort $(dir $(CPP_SOURCES)))
 # list of ASM program objects
-OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(ASM_SOURCES:.s=.o))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
 # Prunes duplicates, and orders lexically (for archive build)
 SORTED_OBJECTS = $(sort $(OBJECTS))
 
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
+	mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(C_STANDARD) -c $< -o $@ -MD -MP -MF $(BUILD_DIR)/$(notdir $(<:.c=.dep))
 
 $(BUILD_DIR)/%.o: %.cpp Makefile | $(BUILD_DIR)
+	mkdir -p $(@D)
 	$(CXX) $(CPPFLAGS) $(CPP_STANDARD) -c $< -o $@ -MD -MP -MF $(BUILD_DIR)/$(notdir $(<:.cpp=.dep))
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
+	mkdir -p $(@D)
 	$(AS) -c $(CFLAGS) $< -o $@ -MD -MP -MF $(BUILD_DIR)/$(notdir $(<:.s =.dep))
 
 $(BUILD_DIR)/$(TARGET).a: $(SORTED_OBJECTS) Makefile
