@@ -1,6 +1,6 @@
 #pragma once
 #include <stdint.h>
-#include "hid_ctrl.h"
+#include "hid/ctrl.h"
 
 namespace daisy
 {

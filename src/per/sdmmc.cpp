@@ -1,6 +1,6 @@
-#include "per_sdmmc.h"
-#include "util_hal_map.h"
-//#include "util_bsp_sd_diskio.h"
+#include "per/sdmmc.h"
+#include "util/hal_map.h"
+//#include "util/bsp_sd_diskio.h"
 // Actual FatFS
 //#include "ff.h"
 //#include "ff_gen_drv.h"

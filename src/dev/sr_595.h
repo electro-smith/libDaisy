@@ -3,7 +3,7 @@
 #define DSY_DEV_SR_595_H
 
 #include "daisy_core.h"
-#include "per_gpio.h"
+#include "per/gpio.h"
 
 const size_t kMaxSr595DaisyChain
     = 16; /**< Maximum Number of chained devices Connect device's QH' pin to the next chips serial input*/

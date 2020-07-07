@@ -1,6 +1,6 @@
 #include "stm32h7xx_hal.h"
-#include "per_gpio.h"
-#include "util_hal_map.h"
+#include "per/gpio.h"
+#include "util/hal_map.h"
 
 void dsy_gpio_init(const dsy_gpio *p)
 {

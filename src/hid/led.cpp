@@ -1,5 +1,5 @@
-#include "hid_led.h"
-#include "per_tim.h"
+#include "hid/led.h"
+#include "per/tim.h"
 
 using namespace daisy;
 

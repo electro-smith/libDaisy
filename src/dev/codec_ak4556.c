@@ -1,6 +1,6 @@
-#include "dev_codec_ak4556.h"
-#include "sys_system.h"
-#include "per_gpio.h"
+#include "dev/codec_ak4556.h"
+#include "sys/system.h"
+#include "per/gpio.h"
 
 void codec_ak4556_init(dsy_gpio_pin reset_pin)
 {

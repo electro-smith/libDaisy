@@ -1,6 +1,6 @@
 #include <stm32h7xx_hal.h>
-#include "dev_sdram.h"
-#include "util_hal_map.h"
+#include "dev/sdram.h"
+#include "util/hal_map.h"
 //#include "libdaisy.h"
 
 // TODO:

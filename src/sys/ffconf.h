@@ -25,7 +25,7 @@
 / Additional user header to be used  
 /-----------------------------------------------------------------------------*/
 
-#include "util_bsp_sd_diskio.h"
+#include "util/bsp_sd_diskio.h"
 
 /*-----------------------------------------------------------------------------/
 / Function Configurations

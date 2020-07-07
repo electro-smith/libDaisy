@@ -1,4 +1,4 @@
-#include "hid_switch.h"
+#include "hid/switch.h"
 using namespace daisy;
 
 void Switch::Init(dsy_gpio_pin pin,

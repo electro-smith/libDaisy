@@ -1,5 +1,5 @@
 #include <string.h>
-#include "hid_wavplayer.h"
+#include "hid/wavplayer.h"
 #include "fatfs.h"
 
 using namespace daisy;

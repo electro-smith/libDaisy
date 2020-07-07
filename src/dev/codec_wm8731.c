@@ -1,6 +1,6 @@
 // WM8371 Codec support.
-#include "dev_codec_wm8731.h"
-#include "util_hal_map.h"
+#include "dev/codec_wm8731.h"
+#include "util/hal_map.h"
 
 typedef struct
 {

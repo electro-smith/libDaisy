@@ -1,5 +1,5 @@
 #include <algorithm>
-#include "dev_sr_595.h"
+#include "dev/sr_595.h"
 void ShiftRegister595::Init(dsy_gpio_pin *pin_cfg, size_t num_daisy_chained)
 {
     // Initialize Pins as outputs

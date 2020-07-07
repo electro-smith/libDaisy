@@ -7,7 +7,7 @@ extern "C"
 {
 #endif
 
-#include "per_gpio.h"
+#include "per/gpio.h"
 
 /** Fixed maximums for parallel/daisychained use \n 
     These could be expanded, but haven't been tested beyond this

@@ -4,8 +4,8 @@
 
 #include <stdint.h>
 #include <stdlib.h>
-#include "per_uart.h"
-#include "util_ringbuffer.h"
+#include "per/uart.h"
+#include "util/ringbuffer.h"
 
 namespace daisy
 {

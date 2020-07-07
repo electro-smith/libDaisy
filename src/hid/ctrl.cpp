@@ -1,4 +1,4 @@
-#include "hid_ctrl.h"
+#include "hid/ctrl.h"
 #include <math.h>
 // Temporary amount to prevent bleed on the bottom of the pots/CVs
 #define BOTTOM_THRESH 0.002f

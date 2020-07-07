@@ -2,13 +2,13 @@
 #include <stdint.h>
 #include "daisy.h" // todo figure out what to do about this.
 #include "daisy_core.h"
-#include "hid_audio.h"
-//#include "dev_codec_pcm3060.h"
-//#include "dev_codec_wm8731.h"
-#include "dev_codec_ak4556.h"
+#include "hid/audio.h"
+//#include "dev/codec_pcm3060.h"
+//#include "dev/codec_wm8731.h"
+#include "dev/codec_ak4556.h"
 #include "stm32h7xx_hal.h"
-#include "sys_dma.h"
-#include "util_hal_map.h"
+#include "sys/dma.h"
+#include "util/hal_map.h"
 
 #define DSY_AUDIO_DMA_BUFFER_SIZE_MAX \
     (DSY_AUDIO_BLOCK_SIZE_MAX * DSY_AUDIO_CHANNELS_MAX * 2)

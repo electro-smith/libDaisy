@@ -1,6 +1,6 @@
 #include <stm32h7xx_hal.h>
-#include "sys_system.h"
-#include "sys_dma.h"
+#include "sys/system.h"
+#include "sys/dma.h"
 
 // global init functions for peripheral drivers.
 extern void dsy_i2c_global_init();

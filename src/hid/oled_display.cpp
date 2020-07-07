@@ -1,8 +1,8 @@
-#include "hid_oled_display.h"
+#include "hid/oled_display.h"
 #include "daisy_core.h"
-#include "per_spi.h"
-#include "per_gpio.h"
-#include "sys_system.h"
+#include "per/spi.h"
+#include "per/gpio.h"
+#include "sys/system.h"
 
 
 // Set up for now with:

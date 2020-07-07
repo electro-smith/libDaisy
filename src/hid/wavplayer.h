@@ -9,7 +9,7 @@ this module. However, by using the extern'd SDFile, etc. I think that would brea
 #ifndef DSY_WAVPLAYER_H
 #define DSY_WAVPLAYER_H /**< Macro */
 #include "daisy_core.h"
-#include "util_wav_format.h"
+#include "util/wav_format.h"
 
 #define WAV_FILENAME_MAX \
     256 /**< Maximum LFN (set to same in FatFs (ffconf.h) */

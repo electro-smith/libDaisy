@@ -1,4 +1,4 @@
-#include "hid_gatein.h"
+#include "hid/gatein.h"
 
 using namespace daisy;
 

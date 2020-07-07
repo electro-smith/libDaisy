@@ -1,4 +1,4 @@
-#include "hid_rgb_led.h"
+#include "hid/rgb_led.h"
 using namespace daisy;
 void RgbLed::Init(dsy_gpio_pin red,
                   dsy_gpio_pin green,

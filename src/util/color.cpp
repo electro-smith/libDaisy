@@ -1,4 +1,4 @@
-#include "util_color.h"
+#include "util/color.h"
 using namespace daisy;
 
 #define RED 0

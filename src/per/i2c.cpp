@@ -1,7 +1,7 @@
-#include "per_i2c.h"
+#include "per/i2c.h"
 extern "C"
 {
-#include "util_hal_map.h"
+#include "util/hal_map.h"
 }
 
 namespace daisy

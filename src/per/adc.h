@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "daisy_core.h"
-#include "per_gpio.h"
+#include "per/gpio.h"
 
 #define DSY_ADC_MAX_CHANNELS 14 /**< Maximum number of ADC channels */
 

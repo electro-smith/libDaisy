@@ -2,8 +2,8 @@
 #ifndef DSY_ENCODER_H
 #define DSY_ENCODER_H
 #include "daisy_core.h"
-#include "per_gpio.h"
-#include "hid_switch.h"
+#include "per/gpio.h"
+#include "hid/switch.h"
 
 namespace daisy
 {

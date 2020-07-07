@@ -5,8 +5,9 @@
 #ifdef __cplusplus
 
 #include <stdint.h>
-#include "per_i2c.h"
-#include "per_gpio.h"
+#include "per/i2c.h"
+#include "per/gpio.h"
+
 namespace daisy
 {
 /** LED driver for one or multiple PCA9685 12bit PWM chips connected to

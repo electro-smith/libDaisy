@@ -2,7 +2,7 @@
 #ifndef DSY_SWITCH_H
 #define DSY_SWITCH_H
 #include "daisy_core.h"
-#include "per_gpio.h"
+#include "per/gpio.h"
 
 namespace daisy
 {

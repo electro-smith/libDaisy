@@ -1,8 +1,8 @@
 #pragma once
 #ifndef DSY_RGB_LED_H
 #define DSY_RGB_LED_H
-#include "hid_led.h"
-#include "util_color.h"
+#include "hid/led.h"
+#include "util/color.h"
 
 namespace daisy
 {

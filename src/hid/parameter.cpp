@@ -1,4 +1,4 @@
-#include "hid_parameter.h"
+#include "hid/parameter.h"
 #include <math.h>
 
 using namespace daisy;

@@ -1,6 +1,6 @@
 #include <stm32h7xx_hal.h>
-#include "per_uart.h"
-#include "util_ringbuffer.h"
+#include "per/uart.h"
+#include "util/ringbuffer.h"
 
 using namespace daisy;
 

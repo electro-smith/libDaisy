@@ -1,7 +1,7 @@
-#include "per_sai.h"
+#include "per/sai.h"
 #include "daisy_core.h"
-#include "sys_dma.h"
-#include "util_hal_map.h"
+#include "sys/dma.h"
+#include "util/hal_map.h"
 
 // TODO:
 // There is a lot of redundant duplication between sai1 and sai2,

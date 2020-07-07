@@ -1,8 +1,8 @@
-#include "per_qspi.h"
+#include "per/qspi.h"
 #include "stm32h7xx_hal.h"
-#include "dev_flash_IS25LP080D.h"
-#include "dev_flash_IS25LP064A.h"
-#include "util_hal_map.h"
+#include "dev/flash_IS25LP080D.h"
+#include "dev/flash_IS25LP064A.h"
+#include "util/hal_map.h"
 
 // TODO: Add handling for alternate device types,
 //		This will be a thing much sooner than anticipated

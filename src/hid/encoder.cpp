@@ -1,4 +1,4 @@
-#include "hid_encoder.h"
+#include "hid/encoder.h"
 
 using namespace daisy;
 

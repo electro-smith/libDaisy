@@ -1,5 +1,5 @@
-#include "dev_sr_4021.h"
-#include "per_tim.h"
+#include "dev/sr_4021.h"
+#include "per/tim.h"
 
 void dsy_sr_4021_init(dsy_sr_4021_handle *sr)
 {

@@ -1,5 +1,5 @@
-#include "hid_midi.h"
-#include "sys_system.h"
+#include "hid/midi.h"
+#include "sys/system.h"
 
 using namespace daisy;
 

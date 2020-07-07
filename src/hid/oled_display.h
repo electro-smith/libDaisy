@@ -4,7 +4,7 @@
 #include <cmath>
 #include <stdlib.h>
 #include <stdint.h>
-#include "util_oled_fonts.h"
+#include "util/oled_fonts.h"
 #include "daisy_core.h"
 
 #ifndef SSD1309_HEIGHT

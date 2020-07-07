@@ -1,5 +1,5 @@
 #include "stm32h7xx_hal.h"
-#include "sys_dma.h"
+#include "sys/dma.h"
 
 #ifdef __cplusplus
 extern "C"

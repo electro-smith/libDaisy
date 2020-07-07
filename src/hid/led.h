@@ -3,7 +3,7 @@
 #ifndef DSY_LED_H
 #define DSY_LED_H
 #include "daisy_core.h"
-#include "per_gpio.h"
+#include "per/gpio.h"
 
 /* TODO - Get this set up to work with the dev_leddriver stuff as well
 - Setup Hardware PWM for pins that have it

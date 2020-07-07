@@ -1,6 +1,6 @@
 #ifndef CODEC_PCM3060_H
 #define CODEC_PCM3060_H
-#include "per_i2c.h"
+#include "per/i2c.h"
 
 
 /** 

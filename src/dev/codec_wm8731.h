@@ -2,8 +2,8 @@
 #define SA_DRIVERS_CODEC_H_
 
 #include <stddef.h>
-#include "per_sai.h"
-#include "per_i2c.h"
+#include "per/sai.h"
+#include "per/i2c.h"
 
 /** 
     @brief Driver for the WM8731 Codec

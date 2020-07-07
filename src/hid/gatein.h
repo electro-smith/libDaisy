@@ -1,7 +1,7 @@
 #pragma once
 #ifndef DSY_GATEIN_H
 #define DSY_GATEIN_H
-#include "per_gpio.h"
+#include "per/gpio.h"
 
 namespace daisy
 {
