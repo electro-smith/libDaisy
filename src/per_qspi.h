@@ -31,6 +31,8 @@ extern "C"
      * IS25LP080D
     */
 
+
+    //SCK,  CE# (active low)
     /** List of Pins used in QSPI (passed in during Init) */
     typedef enum
     {
@@ -51,12 +53,17 @@ extern "C"
     Indirect Polling mode: Device driver enabled. \n     
     Read/Write possible via dsy_qspi_* functions
     */
+
+
+    //SPI and QPI
+    //the modes named here don't exist
     typedef enum
     {
         DSY_QSPI_MODE_DSY_MEMORY_MAPPED, /**< & */
         DSY_QSPI_MODE_INDIRECT_POLLING,  /**< & */
         DSY_QSPI_MODE_LAST,              /**< & */
     } dsy_qspi_mode;
+
 
     /** Flash Devices supported. (Both of these are more-or-less the same, just different sizes). */
     typedef enum
