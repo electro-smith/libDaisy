@@ -4,6 +4,12 @@
 
 using namespace daisy;
 
+static void Error_Handler()
+{
+    asm("bkpt 255");
+    while(1) {}
+}
+
 // Pinout by channel as dsy_gpio_pin
 // TODO Figure out how to get this formatting
 // to not suck..
@@ -114,6 +120,7 @@ struct dsy_adc
 {
     // Channel config ptr (has 'channels' elements)
     AdcChannelConfig pin_cfg[DSY_ADC_MAX_CHANNELS];
+    uint8_t          num_mux_pins_required[DSY_ADC_MAX_CHANNELS];
     // channel data
     uint8_t  channels, mux_channels[DSY_ADC_MAX_CHANNELS];
     uint16_t mux_index[DSY_ADC_MAX_CHANNELS]; // 0->mux_channels per ADC channel
@@ -125,7 +132,19 @@ struct dsy_adc
 };
 
 // Static Functions
-static void           write_mux_value(uint8_t chn, uint8_t idx);
+static int get_num_mux_pins_required(int num_mux_ch)
+{
+    if(num_mux_ch > 4)
+        return 3;
+    if(num_mux_ch > 2)
+        return 2;
+    if(num_mux_ch > 1)
+        return 1;
+    else
+        return 0;
+}
+static void
+                      write_mux_value(uint8_t chn, uint8_t idx, uint8_t num_mux_pins_to_write);
 static const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin);
 
 static const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin)
@@ -166,7 +185,6 @@ void AdcChannelConfig::InitSingle(dsy_gpio_pin pin)
     mux_channels_ = 0;
     pin_.mode     = DSY_GPIO_MODE_ANALOG;
     pin_.pull     = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&pin_);
 }
 void AdcChannelConfig::InitMux(dsy_gpio_pin adc_pin,
                                size_t       mux_channels,
@@ -179,14 +197,13 @@ void AdcChannelConfig::InitMux(dsy_gpio_pin adc_pin,
     pin_.pin  = adc_pin;
     pin_.mode = DSY_GPIO_MODE_ANALOG;
     pin_.pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&pin_);
     // Init Muxes
     mux_pin_[0].pin = mux_0;
     mux_pin_[1].pin = mux_1;
     mux_pin_[2].pin = mux_2;
     mux_channels_   = mux_channels < 8 ? mux_channels : 8;
-    pins_to_init    = (mux_channels_ - 1) >> 1;
-    for(size_t i = 0; i <= pins_to_init; i++)
+    pins_to_init    = get_num_mux_pins_required(mux_channels_);
+    for(size_t i = 0; i < pins_to_init; i++)
     {
         mux_pin_[i].mode = DSY_GPIO_MODE_OUTPUT_PP;
         mux_pin_[i].pull = DSY_GPIO_NOPULL;
@@ -292,13 +309,13 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     // Init ADC
     if(HAL_ADC_Init(&adc.hadc1) != HAL_OK)
     {
-        //Error_Handler();
+        Error_Handler();
     }
     // Configure the ADC multi-mode
     multimode.Mode = ADC_MODE_INDEPENDENT;
     if(HAL_ADCEx_MultiModeConfigChannel(&adc.hadc1, &multimode) != HAL_OK)
     {
-        //Error_Handler();
+        Error_Handler();
     }
     // Configure Regular Channel
     // Configure Shared settings for all channels.
@@ -308,18 +325,26 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     sConfig.Offset       = 0;
     for(uint8_t i = 0; i < adc.channels; i++)
     {
-        // init pins
-        const auto& cfg          = adc.pin_cfg[i];
-        const auto  pins_to_init = (cfg.mux_channels_ - 1) >> 1;
-        for(int j = 0; j <= pins_to_init; j++)
-            dsy_gpio_init(&cfg.mux_pin_[j]);
+        const auto& cfg = adc.pin_cfg[i];
+
+        // init ADC pin
+        dsy_gpio_init(&cfg.pin_);
+
+        // init mux pins (if any)
+        adc.num_mux_pins_required[i]
+            = get_num_mux_pins_required(cfg.mux_channels_);
+        if(cfg.mux_channels_ > 0)
+        {
+            for(int j = 0; j < adc.num_mux_pins_required[i]; j++)
+                dsy_gpio_init(&cfg.mux_pin_[j]);
+        }
 
         // init adc channel sequence
         sConfig.Channel = adc_channel_from_pin(&adc.pin_cfg[i].pin_.pin);
         sConfig.Rank    = dsy_adc_rank_map[i];
         if(HAL_ADC_ConfigChannel(&adc.hadc1, &sConfig) != HAL_OK)
         {
-            // Error_Handler();
+            Error_Handler();
         }
     }
 }
@@ -372,15 +397,22 @@ float AdcHandle::GetMuxFloat(uint8_t chn, uint8_t idx) const
 
 // Internal Implementations
 
-static void write_mux_value(uint8_t chn, uint8_t idx)
+static void
+write_mux_value(uint8_t chn, uint8_t idx, uint8_t num_mux_pins_to_write)
 {
     dsy_gpio *p0, *p1, *p2;
     p0 = &adc.pin_cfg[chn].mux_pin_[0];
-    p1 = &adc.pin_cfg[chn].mux_pin_[1];
-    p2 = &adc.pin_cfg[chn].mux_pin_[2];
     dsy_gpio_write(p0, (idx & 0x01) > 0);
-    dsy_gpio_write(p1, (idx & 0x02) > 0);
-    dsy_gpio_write(p2, (idx & 0x04) > 0);
+    if(num_mux_pins_to_write > 1)
+    {
+        p1 = &adc.pin_cfg[chn].mux_pin_[1];
+        dsy_gpio_write(p1, (idx & 0x02) > 0);
+    }
+    if(num_mux_pins_to_write > 2)
+    {
+        p2 = &adc.pin_cfg[chn].mux_pin_[2];
+        dsy_gpio_write(p2, (idx & 0x04) > 0);
+    }
 }
 
 static void adc_internal_callback()
@@ -388,19 +420,18 @@ static void adc_internal_callback()
     // Handle Externally Multiplexed Pins
     for(uint16_t i = 0; i < adc.channels; i++)
     {
-        uint8_t chn              = i;
-        uint8_t current_position = adc.mux_index[i];
+        const uint8_t chn              = i;
+        const uint8_t current_position = adc.mux_index[i];
         if(adc.mux_channels[chn] > 0)
         {
             // Capture current value to mux_cache
             *adc.mux_cache[i][current_position] = adc.dma_buffer[i];
             // Update Mux Position, and write GPIO
             adc.mux_index[chn] += 1;
-            if(adc.mux_index[chn] > adc.mux_channels[chn])
-            {
+            if(adc.mux_index[chn] >= adc.mux_channels[chn])
                 adc.mux_index[chn] = 0;
-            }
-            write_mux_value(chn, adc.mux_index[chn]);
+            write_mux_value(
+                chn, adc.mux_index[chn], adc.num_mux_pins_required[chn]);
         }
     }
 }
@@ -429,7 +460,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
         adc.hdma_adc1.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
         if(HAL_DMA_Init(&adc.hdma_adc1) != HAL_OK)
         {
-            //Error_Handler();
+            Error_Handler();
         }
 
         __HAL_LINKDMA(adcHandle, DMA_Handle, adc.hdma_adc1);
@@ -442,10 +473,12 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
     {
         // Peripheral clock disable
         __HAL_RCC_ADC12_CLK_DISABLE();
-        // We should probably hit the mux pins, too.
+        // deinit pins
         for(size_t i = 0; i < adc.channels; i++)
         {
             dsy_gpio_deinit(&adc.pin_cfg[i].pin_);
+            for(size_t muxCh = 0; muxCh < adc.num_mux_pins_required[i]; muxCh++)
+                dsy_gpio_deinit(&adc.pin_cfg[i].mux_pin_[muxCh]);
         }
         HAL_DMA_DeInit(adcHandle->DMA_Handle);
     }
