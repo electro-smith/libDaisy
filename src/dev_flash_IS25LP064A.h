@@ -30,10 +30,6 @@ extern "C"
     @{
     */
 
-//problems:
-    // set read parameters (c0) (WRITE_READ_PARAM_REG_CMD)
-    // read read, write read. Used, but not mentioned in Datasheet
-
 /** Low Power Modes */
 #define ENTER_DEEP_POWER_DOWN 0XB9 /**< & */
 #define EXIT_DEEP_POWER_DOWN 0XB9 /**< & */
@@ -89,8 +85,7 @@ extern "C"
 #define READ_STATUS_REG_CMD 0x05 
 #define WRITE_STATUS_REG_CMD 0x01 /**< & */ 
 
-#define READ_READ_PARAM_REG_CMD 0x61  /**< & */ //???
-#define WRITE_READ_PARAM_REG_CMD 0xC0 /**< & */ //???
+#define SET_READ_PARAM_CMD 0xC0 /**< & */
     
     /** Page Program Operations */
 #define PAGE_PROG_CMD 0x02 
