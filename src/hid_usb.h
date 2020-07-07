@@ -42,13 +42,13 @@ class UsbHandle
     \param buff Buffer to transmit
     \param size Buffer size
      */
-    void TransmitInternal(uint8_t* buff, size_t size);
+    uint8_t TransmitInternal(uint8_t* buff, size_t size);
     /** Transmits a buffer of 'size' bytes from a USB port connected to the
     external USB Pins of the daisy seed.
     \param buff Buffer to transmit
     \param size Buffer size
     */
-    void TransmitExternal(uint8_t* buff, size_t size);
+    uint8_t TransmitExternal(uint8_t* buff, size_t size);
 
     /** sets the callback to be called upon reception of new data
     \param cb Function to serve as callback

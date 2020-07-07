@@ -201,7 +201,7 @@ static int8_t CDC_DeInit_FS(void)
   * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
   */
 // line coding:					115200 bps, 1 stop, no parity, 8-bit
-static uint8_t line_coding[7] = {0x00, 0xC2, 0x01, 0x00, 0x00, 0x00, 0x08};
+static uint8_t line_coding_fs[7] = {0x00, 0xC2, 0x01, 0x00, 0x00, 0x00, 0x08};
 
 static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 {
@@ -238,11 +238,11 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
             /* 6      | bDataBits  |   1   | Number Data bits (5, 6, 7, 8 or 16).          */
             /*******************************************************************************/
         case CDC_SET_LINE_CODING:
-            memcpy(line_coding, pbuf, sizeof(line_coding));
+            memcpy(line_coding_fs, pbuf, sizeof(line_coding_fs));
             break;
 
         case CDC_GET_LINE_CODING:
-            memcpy(pbuf, line_coding, sizeof(line_coding));
+            memcpy(pbuf, line_coding_fs, sizeof(line_coding_fs));
             break;
 
         case CDC_SET_CONTROL_LINE_STATE: break;
@@ -343,6 +343,8 @@ static int8_t CDC_DeInit_HS(void)
   * @param  length: Number of data to be sent (in bytes)
   * @retval Result of the operation: USBD_OK if all operations are OK else USBD_FAIL
   */
+static uint8_t line_coding_hs[7] = {0x00, 0xC2, 0x01, 0x00, 0x00, 0x00, 0x08};
+
 static int8_t CDC_Control_HS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
 {
     /* USER CODE BEGIN 10 */
@@ -375,9 +377,13 @@ static int8_t CDC_Control_HS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
         /*                                        4 - Space                            */
         /* 6      | bDataBits  |   1   | Number Data bits (5, 6, 7, 8 or 16).          */
         /*******************************************************************************/
-        case CDC_SET_LINE_CODING: break;
+        case CDC_SET_LINE_CODING:
+            memcpy(line_coding_hs, pbuf, sizeof(line_coding_hs));
+            break;
 
-        case CDC_GET_LINE_CODING: break;
+        case CDC_GET_LINE_CODING:
+            memcpy(pbuf, line_coding_hs, sizeof(line_coding_hs));
+            break;
 
         case CDC_SET_CONTROL_LINE_STATE: break;
 

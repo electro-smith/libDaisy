@@ -88,13 +88,13 @@ void UsbHandle::Init(UsbPeriph dev)
     HAL_PWREx_EnableUSBVoltageDetector();
 }
 
-void UsbHandle::TransmitInternal(uint8_t* buff, size_t size)
+uint8_t UsbHandle::TransmitInternal(uint8_t* buff, size_t size)
 {
-    CDC_Transmit_FS(buff, size);
+    return CDC_Transmit_FS(buff, size);
 }
-void UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
+uint8_t UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
 {
-    CDC_Transmit_HS(buff, size);
+    return CDC_Transmit_HS(buff, size);
 }
 
 void UsbHandle::SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev)
