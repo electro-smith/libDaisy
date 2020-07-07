@@ -39,11 +39,10 @@ extern "C"
 #define RESET_MEMORY_CMD 0x99 /**< & */ 
     
     /** Identification Operations */
-#define READ_ID_CMD 0x9E 
+#define READ_ID_CMD 0xAB
 #define READ_ID_CMD2 0x9F                      /**< & */ 
 #define MULTIPLE_IO_READ_ID_CMD 0xAF           /**< & */ 
 #define READ_SERIAL_FLASH_DISCO_PARAM_CMD 0x5A /**< & */ 
-#define READ_PRODUCT_ID 0xAB /**< & */
 #define READ_MANUFACT_AND_ID 0x90 /**< & */
 #define READ_UNIQUE_ID 0x4B /**< & */
     
@@ -72,10 +71,6 @@ extern "C"
 
 #define QUAD_INOUT_FAST_READ_CMD 0xEB             /**< & */ 
 #define QUAD_INOUT_FAST_READ_DTR_CMD 0xED         /**< & */ 
-
-#define READ_FUNCTION_REGISTER 0X48       /**< & */
-#define WRITE_FUNCTION_REGISTER 0x42     /**< & */
-    
     
     /** Write Operations */
 #define WRITE_ENABLE_CMD 0x06 
@@ -85,7 +80,10 @@ extern "C"
 #define READ_STATUS_REG_CMD 0x05 
 #define WRITE_STATUS_REG_CMD 0x01 /**< & */ 
 
-#define SET_READ_PARAM_CMD 0xC0 /**< & */
+#define READ_FUNCTION_REGISTER 0X48       /**< & */
+#define WRITE_FUNCTION_REGISTER 0x42     /**< & */
+    
+#define WRITE_READ_PARAM_REG_CMD 0xC0 /**< & */
     
     /** Page Program Operations */
 #define PAGE_PROG_CMD 0x02 
@@ -98,7 +96,8 @@ extern "C"
 #define SECTOR_ERASE_QPI_CMD 0x20         /**< & */ 
 
 #define BLOCK_ERASE_CMD 0xD8             /**< & */  
-
+#define BLOCK_ERASE_32K_CMD 0x52 /**< & */
+    
 #define CHIP_ERASE_CMD 0xC7 /**< & */
 #define EXT_CHIP_ERASE_CMD 0x60 /**< & */
     

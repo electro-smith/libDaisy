@@ -395,7 +395,7 @@ static uint32_t dummy_cycles_cfg(QSPI_HandleTypeDef *hqspi, uint8_t device)
 
 
     /* Update volatile configuration register (with new dummy cycles) */
-    s_command.Instruction = SET_READ_PARAM_CMD;
+    s_command.Instruction = WRITE_READ_PARAM_REG_CMD;
 
     /* Configure the write volatile configuration register command */
     if(HAL_QSPI_Command(hqspi, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
