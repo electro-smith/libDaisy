@@ -65,11 +65,13 @@ ifdef GCC_PATH
 CC = $(GCC_PATH)/$(PREFIX)gcc
 AS = $(GCC_PATH)/$(PREFIX)gcc -x assembler-with-cpp
 CXX = $(GCC_PATH)/$(PREFIX)g++ 
+GDB = $(GCC_PATH)/$(PREFIX)gdb
 CP = $(GCC_PATH)/$(PREFIX)objcopy
 SZ = $(GCC_PATH)/$(PREFIX)size
 else
 CC = $(PREFIX)gcc
 CXX = $(PREFIX)g++ 
+GDB = $(PREFIX)gdb
 AS = $(PREFIX)gcc -x assembler-with-cpp
 CP = $(PREFIX)objcopy
 SZ = $(PREFIX)size

@@ -207,6 +207,7 @@ CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) $(WARNINGS) -fdata-sections -ffun
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2
+OPT = -O0
 endif
 
 # Generate dependency information

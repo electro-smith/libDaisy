@@ -32,6 +32,24 @@ extern "C"
         HAL_NVIC_EnableIRQ(DMA1_Stream5_IRQn);
     }
 
+    void dsy_dma_clear_cache_for_buffer(uint8_t* buffer, size_t size)
+    {
+        // clear all cache lines (32bytes each) that span the memory section
+        // of our transmit buffer. This makes sure that the SRAM contains the
+        // most recent version of the buffer.
+        SCB_CleanDCache_by_Addr(
+            (uint32_t*)((uint32_t)(buffer) & ~(uint32_t)0x1F), size + 32);
+    }
+
+    void dsy_dma_invalidate_cache_for_buffer(uint8_t* buffer, size_t size)
+    {
+        // invalidate all cache lines (32bytes each) that span the memory section
+        // of our transmit buffer. This makes sure that the cache contains the
+        // most recent version of the buffer.
+        SCB_InvalidateDCache_by_Addr(
+            (uint32_t*)((uint32_t)(buffer) & ~(uint32_t)0x1F), size + 32);
+    }
+
 #ifdef __cplusplus
 }
 #endif
