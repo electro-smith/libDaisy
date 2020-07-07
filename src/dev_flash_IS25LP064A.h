@@ -8,8 +8,8 @@ extern "C"
 
 #define IS25LP064A_FLASH_SIZE \
     0x800000 /**< 2 * 8 MBits => 1 * 1MBytes => 1MBytes*/
-#define IS25LP064A_SECTOR_SIZE 0x10000   /**< 2 * 1024 sectors of 64KBytes */
-#define IS25LP064A_SUBSECTOR_SIZE 0x1000 /**< 2 * 16384 subsectors of 4kBytes */
+#define IS25LP064A_BLOCK_SIZE 0x10000   /**< 2 * 1024 sectors of 64KBytes */
+#define IS25LP064A_SECTOR_SIZE 0x1000 /**< 2 * 16384 subsectors of 4kBytes */
 #define IS25LP064A_PAGE_SIZE 0x100       /**< 2 * 262144 pages of 256 bytes */
 
 #define IS25LP064A_DUMMY_CYCLES_READ_QUAD 8     /**< & */
@@ -19,8 +19,8 @@ extern "C"
 
 
 #define IS25LP064A_DIE_ERASE_MAX_TIME 460000    /**< & */
-#define IS25LP064A_SECTOR_ERASE_MAX_TIME 1000   /**< & */
-#define IS25LP064A_SUBSECTOR_ERASE_MAX_TIME 400 /**< & */
+#define IS25LP064A_BLOCK_ERASE_MAX_TIME 1000   /**< & */
+#define IS25LP064A_SECTOR_ERASE_MAX_TIME 400 /**< & */
 
     /**
      * @brief  IS25LP08D Commands  
@@ -31,7 +31,6 @@ extern "C"
     */
 
 //problems:
-    // Quad in page program (32/38) is listed as a different command
     // No address: hold, erase
     // Chip erase (C7/60)
     // Blocks/sectors are called sectors/subsectors
@@ -46,6 +45,7 @@ extern "C"
     // security information row?
     // info row erase/program/read (64,62,68)
     // sector lock/unlock  (24,26)
+    // read read, write read. Used, but not mentioned in Datasheet
     
 /** Reset Operations */
 #define RESET_ENABLE_CMD 0x66 
@@ -81,24 +81,23 @@ extern "C"
 #define READ_STATUS_REG_CMD 0x05 
 #define WRITE_STATUS_REG_CMD 0x01 /**< & */ 
 
-#define READ_READ_PARAM_REG_CMD 0x61  /**< & */ ???
-#define WRITE_READ_PARAM_REG_CMD 0xC0 /**< & */ ???
+#define READ_READ_PARAM_REG_CMD 0x61  /**< & */ //???
+#define WRITE_READ_PARAM_REG_CMD 0xC0 /**< & */ //???
 
-    /** Program Operations */
+    /** Page Program Operations */
 #define PAGE_PROG_CMD 0x02 
 
-#define QUAD_IN_FAST_PROG_CMD 0x32             /**< & */ 
-#define EXT_QUAD_IN_FAST_PROG_CMD 0x38         /**< & */ 
+#define QUAD_IN_PAGE_PROG_CMD 0x32             /**< & */ 
+#define EXT_QUAD_IN_PAGE_PROG_CMD 0x38         /**< & */ 
 
     /** Erase Operations */
-#define SUBSECTOR_ERASE_CMD 0xd7 
-#define SUBSECTOR_ERASE_QPI_CMD 0x20         /**< & */ 
+#define SECTOR_ERASE_CMD 0xd7  //already defined in 80
+#define SECTOR_ERASE_QPI_CMD 0x20         /**< & */ 
 
-#define SECTOR_ERASE_CMD 0xD8             /**< & */  
+#define BLOCK_ERASE_CMD 0xD8             /**< & */  
 
 #define PROG_ERASE_RESUME_CMD 0x7A  /**< & */ //0x30
 #define PROG_ERASE_SUSPEND_CMD 0x75 /**< & */ //0xB0
-
 
     /** Quad Operations */
 #define ENTER_QUAD_CMD 0x35 

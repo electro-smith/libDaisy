@@ -103,12 +103,12 @@ extern "C"
 #define QUAD_IN_FAST_PROG_4_BYTE_ADDR_CMD 0x34 /**< & */
 
     /** Erase Operations */
-#define SUBSECTOR_ERASE_CMD 0xd7
-#define SUBSECTOR_ERASE_QPI_CMD 0x20         /**< & */
-#define SUBSECTOR_ERASE_4_BYTE_ADDR_CMD 0x21 /**< & */
+#define SECTOR_ERASE_CMD 0xd7
+#define SECTOR_ERASE_QPI_CMD 0x20         /**< & */
+#define SECTOR_ERASE_4_BYTE_ADDR_CMD 0x21 /**< & */
 
-#define SECTOR_ERASE_CMD 0xD8             /**< & */
-#define SECTOR_ERASE_4_BYTE_ADDR_CMD 0xDC /**< & */
+#define BLOCK_ERASE_CMD 0xD8             /**< & */
+#define BLOCK_ERASE_4_BYTE_ADDR_CMD 0xDC /**< & */
 
 #define BLOCK_ERASE_32K_CMD 0x52 /**< & */
 
