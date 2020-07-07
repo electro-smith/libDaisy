@@ -31,32 +31,36 @@ extern "C"
     */
 
 //problems:
-    // No address: hold, erase
-    // Chip erase (C7/60)
-    // Blocks/sectors are called sectors/subsectors
-    // Read/Write function register (48/42) respectively
-    // program/erase suspend & resume (what about 30/B0?)
-    // enter/release deep power down (b9,ab)
     // set read parameters (c0) (WRITE_READ_PARAM_REG_CMD)
-    // read product id (ab)
-    // read device manufacturer & device id (90)
-    // read unique id (4b) (READ_OTP_ARRAY)
-    // no-op (00) (cancels CE)
-    // security information row?
-    // info row erase/program/read (64,62,68)
-    // sector lock/unlock  (24,26)
     // read read, write read. Used, but not mentioned in Datasheet
+
+/** Low Power Modes */
+#define ENTER_DEEP_POWER_DOWN 0XB9 /**< & */
+#define EXIT_DEEP_POWER_DOWN 0XB9 /**< & */
     
 /** Reset Operations */
 #define RESET_ENABLE_CMD 0x66 
 #define RESET_MEMORY_CMD 0x99 /**< & */ 
-
+    
     /** Identification Operations */
 #define READ_ID_CMD 0x9E 
 #define READ_ID_CMD2 0x9F                      /**< & */ 
 #define MULTIPLE_IO_READ_ID_CMD 0xAF           /**< & */ 
 #define READ_SERIAL_FLASH_DISCO_PARAM_CMD 0x5A /**< & */ 
+#define READ_PRODUCT_ID 0xAB /**< & */
+#define READ_MANUFACT_AND_ID 0x90 /**< & */
+#define READ_UNIQUE_ID 0x4B /**< & */
+    
+#define NO_OP 0x00 /**< Cancels Reset Enable */
 
+#define SECTOR_UNLOCK 0x26 /**< & */
+#define SECTOR_LOCK 0x24 /**< & */    
+
+/** Security Information Row */
+#define INFO_ROW_ERASE_CMD 0x64 /**< & */
+#define INFO_ROW_PROGRAM_CMD 0x62 /**< & */
+#define INFO_ROW_READ_CMD 0x68 /**< & */
+    
     /** Read Operations */
 #define READ_CMD 0x03  
 
@@ -73,6 +77,10 @@ extern "C"
 #define QUAD_INOUT_FAST_READ_CMD 0xEB             /**< & */ 
 #define QUAD_INOUT_FAST_READ_DTR_CMD 0xED         /**< & */ 
 
+#define READ_FUNCTION_REGISTER 0X48       /**< & */
+#define WRITE_FUNCTION_REGISTER 0x42     /**< & */
+    
+    
     /** Write Operations */
 #define WRITE_ENABLE_CMD 0x06 
 #define WRITE_DISABLE_CMD 0x04 /**< & */ 
@@ -83,7 +91,7 @@ extern "C"
 
 #define READ_READ_PARAM_REG_CMD 0x61  /**< & */ //???
 #define WRITE_READ_PARAM_REG_CMD 0xC0 /**< & */ //???
-
+    
     /** Page Program Operations */
 #define PAGE_PROG_CMD 0x02 
 
@@ -96,9 +104,15 @@ extern "C"
 
 #define BLOCK_ERASE_CMD 0xD8             /**< & */  
 
-#define PROG_ERASE_RESUME_CMD 0x7A  /**< & */ //0x30
-#define PROG_ERASE_SUSPEND_CMD 0x75 /**< & */ //0xB0
-
+#define CHIP_ERASE_CMD 0xC7 /**< & */
+#define EXT_CHIP_ERASE_CMD 0x60 /**< & */
+    
+#define PROG_ERASE_RESUME_CMD 0x7A  /**< & */
+#define EXT_PROG_ERASE_RESUME_CMD 0x30  /**< & */
+    
+#define PROG_ERASE_SUSPEND_CMD 0x75 /**< & */ 
+#define EXT_PROG_ERASE_SUSPEND_CMD 0xB0 /**< & */
+    
     /** Quad Operations */
 #define ENTER_QUAD_CMD 0x35 
 #define EXIT_QUAD_CMD 0xF5 /**< & */  
