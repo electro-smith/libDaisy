@@ -8,9 +8,9 @@ extern "C"
 
 #define IS25LP080D_FLASH_SIZE \
     0x100000 /**< 2 * 8 MBits => 1 * 1MBytes => 1MBytes */
-#define IS25LP080D_BLOCK_SIZE 0x10000   /**< 2 * 1024 blocks of 64KBytes */
+#define IS25LP080D_BLOCK_SIZE 0x10000 /**< 2 * 1024 blocks of 64KBytes */
 #define IS25LP080D_SECTOR_SIZE 0x1000 /**< 2 * 16384 sectors of 4kBytes */
-#define IS25LP080D_PAGE_SIZE 0x100       /**< 2 * 262144 pages of 256 bytes */
+#define IS25LP080D_PAGE_SIZE 0x100    /**< 2 * 262144 pages of 256 bytes */
 
 #define IS25LP080D_DUMMY_CYCLES_READ_QUAD 8     /**< & */
 #define IS25LP080D_DUMMY_CYCLES_READ 8          /**< & */
@@ -18,8 +18,8 @@ extern "C"
 #define IS25LP080D_DUMMY_CYCLES_READ_QUAD_DTR 6 /**< & */
 
 
-#define IS25LP080D_DIE_ERASE_MAX_TIME 460000    /**< & */
-#define IS25LP080D_BLOCK_ERASE_MAX_TIME 1000   /**< & */
+#define IS25LP080D_DIE_ERASE_MAX_TIME 460000 /**< & */
+#define IS25LP080D_BLOCK_ERASE_MAX_TIME 1000 /**< & */
 #define IS25LP080D_SECTOR_ERASE_MAX_TIME 400 /**< & */
 
     /**
@@ -31,54 +31,54 @@ extern "C"
     */
 
 //register stuff is CRAZY
-    
+
 /** Low Power Modes */
-#define ENTER_DEEP_POWER_DOWN 0XB9 /**< & */  //yes
+#define ENTER_DEEP_POWER_DOWN 0XB9 /**< & */ //yes
 #define EXIT_DEEP_POWER_DOWN 0XB9 /**< & */  //yes
-    
+
 /** Reset Operations */
-#define RESET_ENABLE_CMD 0x66  //yes
-#define RESET_MEMORY_CMD 0x99 /**< & */  //yes
+#define RESET_ENABLE_CMD 0x66           //yes
+#define RESET_MEMORY_CMD 0x99 /**< & */ //yes
 
     /** Identification Operations */
-#define READ_ID_CMD 0xAB  //yes  
-#define READ_ID_CMD2 0x9F                      /**< & */  //yes
-#define MULTIPLE_IO_READ_ID_CMD 0xAF           /**< & */  //yes
+#define READ_ID_CMD 0xAB                       //yes
+#define READ_ID_CMD2 0x9F /**< & */            //yes
+#define MULTIPLE_IO_READ_ID_CMD 0xAF /**< & */ //yes
 #define READ_SERIAL_FLASH_DISCO_PARAM_CMD 0x5A /**< & */
-#define READ_MANUFACT_AND_ID 0x90 /**< & */
-#define READ_UNIQUE_ID 0x4B /**< & */
-    
+#define READ_MANUFACT_AND_ID 0x90              /**< & */
+#define READ_UNIQUE_ID 0x4B                    /**< & */
+
 #define NO_OP 0x00 /**< Cancels Reset Enable */
 
 #define SECTOR_UNLOCK 0x26 /**< & */
-#define SECTOR_LOCK 0x24 /**< & */ 
-    
+#define SECTOR_LOCK 0x24   /**< & */
+
     /** Security Information Row */
-#define INFO_ROW_ERASE_CMD 0x64 /**< & */
+#define INFO_ROW_ERASE_CMD 0x64   /**< & */
 #define INFO_ROW_PROGRAM_CMD 0x62 /**< & */
-#define INFO_ROW_READ_CMD 0x68 /**< & */
-    
+#define INFO_ROW_READ_CMD 0x68    /**< & */
+
 /** Page Operations */
 #define PAGE_PROG_CMD 0x02
 
-#define QUAD_IN_PAGE_PROG_CMD 0x32             /**< & */ 
-#define EXT_QUAD_IN_PAGE_PROG_CMD 0x38         /**< & */ 
+#define QUAD_IN_PAGE_PROG_CMD 0x32     /**< & */
+#define EXT_QUAD_IN_PAGE_PROG_CMD 0x38 /**< & */
 
     /** Read Operations */
 #define READ_CMD 0x03 //yes
 
-#define FAST_READ_CMD 0x0B             /**< & */  
-#define FAST_READ_DTR_CMD 0x0D         /**< & */
+#define FAST_READ_CMD 0x0B     /**< & */
+#define FAST_READ_DTR_CMD 0x0D /**< & */
 
-#define DUAL_OUT_FAST_READ_CMD 0x3B             /**< & */
+#define DUAL_OUT_FAST_READ_CMD 0x3B /**< & */
 
-#define DUAL_INOUT_FAST_READ_CMD 0xBB             /**< & */
-#define DUAL_INOUT_FAST_READ_DTR_CMD 0xBD         /**< & */
+#define DUAL_INOUT_FAST_READ_CMD 0xBB     /**< & */
+#define DUAL_INOUT_FAST_READ_DTR_CMD 0xBD /**< & */
 
-#define QUAD_OUT_FAST_READ_CMD 0x6B             /**< & */
+#define QUAD_OUT_FAST_READ_CMD 0x6B /**< & */
 
-#define QUAD_INOUT_FAST_READ_CMD 0xEB             /**< & */
-#define QUAD_INOUT_FAST_READ_DTR_CMD 0xED         /**< & */
+#define QUAD_INOUT_FAST_READ_CMD 0xEB     /**< & */
+#define QUAD_INOUT_FAST_READ_DTR_CMD 0xED /**< & */
 
     /** Write Operations */
 #define WRITE_ENABLE_CMD 0x06
@@ -88,42 +88,42 @@ extern "C"
 #define READ_STATUS_REG_CMD 0x05
 #define WRITE_STATUS_REG_CMD 0x01 /**< & */
 
-#define READ_FUNCTION_REGISTER 0X48       /**< & */
-#define WRITE_FUNCTION_REGISTER 0x42     /**< & */
-    
+#define READ_FUNCTION_REGISTER 0X48  /**< & */
+#define WRITE_FUNCTION_REGISTER 0x42 /**< & */
+
 #define READ_READ_PARAM_REG_CMD 0x61  /**< & */
-#define READ_EXT_READ_PARAM_CMD 0x81 /**< & */
+#define READ_EXT_READ_PARAM_CMD 0x81  /**< & */
 #define CLEAR_EXT_READ_PARAM_CMD 0x82 /**< &  */
-    
-#define WRITE_READ_PARAM_REG_CMD 0xC0 /**< volatile */
-#define WRITE_NV_READ_PARAM_REG_CMD 0x65 /**< non-volatile */
+
+#define WRITE_READ_PARAM_REG_CMD 0xC0     /**< volatile */
+#define WRITE_NV_READ_PARAM_REG_CMD 0x65  /**< non-volatile */
 #define EXT_WRITE_READ_PARAM_REG_CMD 0x63 /**< volatile */
 
-#define WRITE_EXT_READ_PARAM_REG_CMD 0x83 /**< volatile */
+#define WRITE_EXT_READ_PARAM_REG_CMD 0x83    /**< volatile */
 #define WRITE_EXT_NV_READ_PARAM_REG_CMD 0x85 /**< non-volatile */
-    
+
     /** Program Operations */
 #define PAGE_PROG_CMD 0x02
 
-#define QUAD_IN_FAST_PROG_CMD 0x32             /**< & */
-#define EXT_QUAD_IN_FAST_PROG_CMD 0x38         /**< & */
+#define QUAD_IN_FAST_PROG_CMD 0x32     /**< & */
+#define EXT_QUAD_IN_FAST_PROG_CMD 0x38 /**< & */
 
     /** Erase Operations */
 #define SECTOR_ERASE_CMD 0xd7
-#define SECTOR_ERASE_QPI_CMD 0x20         /**< & */
+#define SECTOR_ERASE_QPI_CMD 0x20 /**< & */
 
-#define BLOCK_ERASE_CMD 0xD8             /**< & */
+#define BLOCK_ERASE_CMD 0xD8     /**< & */
 #define BLOCK_ERASE_32K_CMD 0x52 /**< & */
 
-#define CHIP_ERASE_CMD 0xC7 /**< & */
+#define CHIP_ERASE_CMD 0xC7     /**< & */
 #define EXT_CHIP_ERASE_CMD 0x60 /**< & */
 
-#define PROG_ERASE_RESUME_CMD 0x7A  /**< & */
-#define EXT_PROG_ERASE_RESUME_CMD 0x30  /**< & */
-    
-#define PROG_ERASE_SUSPEND_CMD 0x75 /**< & */
+#define PROG_ERASE_RESUME_CMD 0x7A     /**< & */
+#define EXT_PROG_ERASE_RESUME_CMD 0x30 /**< & */
+
+#define PROG_ERASE_SUSPEND_CMD 0x75     /**< & */
 #define EXT_PROG_ERASE_SUSPEND_CMD 0xB0 /**< & */
-    
+
     /** Quad Operations */
 #define ENTER_QUAD_CMD 0x35
 #define EXIT_QUAD_CMD 0xF5 /**< & */

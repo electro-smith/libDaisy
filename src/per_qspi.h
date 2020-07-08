@@ -53,10 +53,6 @@ extern "C"
     Indirect Polling mode: Device driver enabled. \n     
     Read/Write possible via dsy_qspi_* functions
     */
-
-
-    //SPI and QPI
-    //the modes named here don't exist
     typedef enum
     {
         DSY_QSPI_MODE_DSY_MEMORY_MAPPED, /**< & */
