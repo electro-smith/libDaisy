@@ -33,17 +33,17 @@ extern "C"
 //register stuff is CRAZY
 
 /** Low Power Modes */
-#define ENTER_DEEP_POWER_DOWN 0XB9 /**< & */ //yes
-#define EXIT_DEEP_POWER_DOWN 0XB9 /**< & */  //yes
+#define ENTER_DEEP_POWER_DOWN 0XB9 /**< & */
+#define EXIT_DEEP_POWER_DOWN 0XB9  /**< & */
 
 /** Reset Operations */
-#define RESET_ENABLE_CMD 0x66           //yes
-#define RESET_MEMORY_CMD 0x99 /**< & */ //yes
+#define RESET_ENABLE_CMD 0x66
+#define RESET_MEMORY_CMD 0x99 /**< & */
 
     /** Identification Operations */
-#define READ_ID_CMD 0xAB                       //yes
-#define READ_ID_CMD2 0x9F /**< & */            //yes
-#define MULTIPLE_IO_READ_ID_CMD 0xAF /**< & */ //yes
+#define READ_ID_CMD 0xAB
+#define READ_ID_CMD2 0x9F                      /**< & */
+#define MULTIPLE_IO_READ_ID_CMD 0xAF           /**< & */
 #define READ_SERIAL_FLASH_DISCO_PARAM_CMD 0x5A /**< & */
 #define READ_MANUFACT_AND_ID 0x90              /**< & */
 #define READ_UNIQUE_ID 0x4B                    /**< & */
@@ -65,7 +65,7 @@ extern "C"
 #define EXT_QUAD_IN_PAGE_PROG_CMD 0x38 /**< & */
 
     /** Read Operations */
-#define READ_CMD 0x03 //yes
+#define READ_CMD 0x03
 
 #define FAST_READ_CMD 0x0B     /**< & */
 #define FAST_READ_DTR_CMD 0x0D /**< & */
