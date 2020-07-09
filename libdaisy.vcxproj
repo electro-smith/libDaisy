@@ -74,6 +74,7 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
+    <ClCompile Include="daisy_field.cpp" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal.c" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_adc.c" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_adc_ex.c" />
@@ -192,8 +193,8 @@
     <ClCompile Include="Middlewares\Third_Party\FatFs\src\diskio.c" />
     <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff.c" />
     <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.c" />
+    <ClCompile Include="src\daisy_field.cpp" />
     <ClCompile Include="src\daisy_patch.cpp" />
-    <ClCompile Include="src\daisy_petal.cpp" />
     <ClCompile Include="src\daisy_pod.cpp" />
     <ClCompile Include="src\daisy_seed.cpp" />
     <ClCompile Include="src\dev_codec_ak4556.c" />
