@@ -56,10 +56,10 @@
 #define PIN_SW_1 30
 
 // IT LOOKS LIKE THESE MAY NEED TO GET SWAPPED.....
-#define PIN_ADC_CV_4 22
-#define PIN_ADC_CV_3 23
-#define PIN_DAC_2 24
-#define PIN_DAC_1 25
+#define PIN_DAC_2 22 // Jumped on Rev2 from 24
+#define PIN_DAC_1 23 // Jumped on Rev2 from 25
+#define PIN_ADC_CV_4 24 // Jumped on Rev2 from 22
+#define PIN_ADC_CV_3 25 // Jumped on Rev2 from 23 
 
 #define LED_DRIVER_I2C i2c1_handle /**< & */
 
@@ -139,6 +139,8 @@ void DaisyField::Init()
     gate_out_.pull = DSY_GPIO_NOPULL;
     gate_out_.pin  = seed.GetPin(PIN_GATE_OUT);
     dsy_gpio_init(&gate_out_);
+    dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
+    dsy_tim_start();
 }
 
 void DaisyField::VegasMode()
@@ -174,15 +176,17 @@ void DaisyField::VegasMode()
                            LED_KNOB_8};
     if(now - last_led_update_ > 10)
     {
-        idx        = (now >> 8) % 8;
-        key_bright = (now & 511) > 255;
-        // Knob LEDs dance in order
-        for(size_t i = 0; i < 8; i++)
+        idx        = (now >> 10) % 8;
+        key_bright = (float)(now & 1023) / 1023.0f;
+		// Clear
+        for(size_t i = 0; i < LED_LAST; i++)
         {
-            dsy_led_driver_set_led(led_grp_a[i], cube(key_bright));
-            dsy_led_driver_set_led(led_grp_b[i], cube(1.0f - key_bright));
-            dsy_led_driver_set_led(led_grp_c[i], key_bright);
+            dsy_led_driver_set_led(i, 0.0f);
         }
+        // Knob LEDs dance in order
+		dsy_led_driver_set_led(led_grp_a[idx], cube(key_bright));
+		dsy_led_driver_set_led(led_grp_b[idx], cube(1.0f - key_bright));
+		dsy_led_driver_set_led(led_grp_c[idx], key_bright);
         // OLED moves a bar across the screen
         uint32_t bar_x = (now >> 4) % SSD1309_WIDTH;
         display_.Fill(false);

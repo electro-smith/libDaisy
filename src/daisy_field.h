@@ -122,6 +122,7 @@ class DaisyField
     /** Debounces, the tactile switches and keyboard states */
     void UpdateDigitalControls()
     {
+        // Switches
         for(size_t i = 0; i < SW_LAST; i++)
         {
             sw_[i].Debounce();
@@ -130,9 +131,14 @@ class DaisyField
         dsy_sr_4021_update(&keyboard_sr_);
         for(size_t i = 0; i < 16; i++)
         {
-            keyboard_state_[i] = dsy_sr_4021_state(&keyboard_sr_, i)
-                                 | (keyboard_state_[i] << 1);
+            uint8_t keyidx, keyoffset;
+            keyoffset               = i > 7 ? 8 : 0;
+            keyidx                  = (7 - (i % 8)) + keyoffset;
+            keyboard_state_[keyidx] = dsy_sr_4021_state(&keyboard_sr_, i)
+                                      | (keyboard_state_[keyidx] << 1);
         }
+        // Gate Input
+        gate_in_trig_ = gate_in_.Trig();
     }
 
     inline bool KeyboardState(size_t idx) const
@@ -180,6 +186,7 @@ class DaisyField
     void VegasMode();
 
     DaisySeed seed;
+    dsy_gpio  gate_out_;
 
   private:
     float              samplerate_, blockrate_;
@@ -187,12 +194,12 @@ class DaisyField
     Switch             sw_[SW_LAST];
     dsy_sr_4021_handle keyboard_sr_;
     GateIn             gate_in_;
-    dsy_gpio           gate_out_;
     AnalogControl      knob_[KNOB_LAST];
     AnalogControl      cv_[CV_LAST];
     OledDisplay        display_;
     uint8_t            keyboard_state_[16];
     uint32_t           last_led_update_; // for vegas mode
+    bool               gate_in_trig_;   // True when triggered.
 };
 
 /** @} */
