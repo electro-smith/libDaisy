@@ -112,8 +112,15 @@ static const uint32_t dsy_adc_rank_map[] = {
 // Globals
 // DMA Buffers
 static uint16_t DMA_BUFFER_MEM_SECTION
-                                       adc1_mux_cache[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
-static uint16_t DMA_BUFFER_MEM_SECTION adc1_dma_buffer[DSY_ADC_MAX_CHANNELS];
+    adc1_mux_cache[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
+
+/** Buffer for ADC Input channels
+ ** It is 2x the number of channels for double-buffered support
+ **
+ ** Also used to provide buffer for trash data during mux pin changes.
+ ***/
+static uint16_t DMA_BUFFER_MEM_SECTION
+    adc1_dma_buffer[DSY_ADC_MAX_CHANNELS * 2];
 
 // Global ADC Struct
 struct dsy_adc
@@ -129,6 +136,7 @@ struct dsy_adc
     uint16_t (*mux_cache)[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
     ADC_HandleTypeDef hadc1;
     DMA_HandleTypeDef hdma_adc1;
+    bool              mux_used; // flag set when mux is configured
 };
 
 // Static Functions
@@ -323,6 +331,8 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     sConfig.SingleDiff   = ADC_SINGLE_ENDED;
     sConfig.OffsetNumber = ADC_OFFSET_NONE;
     sConfig.Offset       = 0;
+    adc.mux_used
+        = false; // set false, and let any pin using it override this setting.
     for(uint8_t i = 0; i < adc.channels; i++)
     {
         const auto& cfg = adc.pin_cfg[i];
@@ -335,6 +345,7 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
             = get_num_mux_pins_required(cfg.mux_channels_);
         if(cfg.mux_channels_ > 0)
         {
+            adc.mux_used = true;
             for(int j = 0; j < adc.num_mux_pins_required[i]; j++)
                 dsy_gpio_init(&cfg.mux_pin_[j]);
         }
@@ -351,9 +362,15 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
 
 void AdcHandle::Start()
 {
+    size_t rx_size;
     HAL_ADCEx_Calibration_Start(
         &adc.hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
-    HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
+
+    // When using the mux we use the HalfCplt callback to fill data, and the pins change
+    // while converting the 'second half' of data (which just gets trashed for now).
+    // This does affect the ADC read speed so we only do this when the mux is used.
+    rx_size = adc.mux_used ? adc.channels * 2 : adc.channels;
+    HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, rx_size);
 }
 
 void AdcHandle::Stop()
@@ -418,6 +435,12 @@ write_mux_value(uint8_t chn, uint8_t idx, uint8_t num_mux_pins_to_write)
 static void adc_internal_callback()
 {
     // Handle Externally Multiplexed Pins
+    // This is called from the HalfCpltCallback. The data from the second half will
+    // be trash because the mux pins are being changed during conversion.
+    //
+    // We could set up everything to run from a timer and provide a few microseconds
+    // to adjust pins before resuming reading, but that won't work with how everything
+    // is set up right now.
     for(uint16_t i = 0; i < adc.channels; i++)
     {
         const uint8_t chn              = i;
@@ -488,7 +511,7 @@ extern "C"
 {
     void DMA1_Stream2_IRQHandler(void) { HAL_DMA_IRQHandler(&adc.hdma_adc1); }
 
-    void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+    void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc)
     {
         if(hadc->Instance == ADC1)
         {
