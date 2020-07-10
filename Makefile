@@ -6,6 +6,7 @@ daisy_seed \
 daisy_pod \
 daisy_patch \
 daisy_petal \
+daisy_field \
 dev_codec_pcm3060 \
 dev_codec_wm8731 \
 dev_codec_ak4556 \

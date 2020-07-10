@@ -192,8 +192,8 @@
     <ClCompile Include="Middlewares\Third_Party\FatFs\src\diskio.c" />
     <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff.c" />
     <ClCompile Include="Middlewares\Third_Party\FatFs\src\ff_gen_drv.c" />
+    <ClCompile Include="src\daisy_field.cpp" />
     <ClCompile Include="src\daisy_patch.cpp" />
-    <ClCompile Include="src\daisy_petal.cpp" />
     <ClCompile Include="src\daisy_pod.cpp" />
     <ClCompile Include="src\daisy_seed.cpp" />
     <ClCompile Include="src\dev_codec_ak4556.c" />
