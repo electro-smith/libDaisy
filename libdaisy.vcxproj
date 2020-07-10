@@ -74,7 +74,6 @@
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
-    <ClCompile Include="daisy_field.cpp" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal.c" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_adc.c" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_hal_adc_ex.c" />

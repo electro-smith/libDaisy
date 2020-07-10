@@ -401,7 +401,6 @@
     <ClCompile Include="src\hid_parameter.cpp" />
     <ClCompile Include="src\per_adc.cpp" />
     <ClCompile Include="src\daisy_patch.cpp" />
-    <ClCompile Include="daisy_field.cpp" />
     <ClCompile Include="src\daisy_field.cpp" />
   </ItemGroup>
   <ItemGroup>

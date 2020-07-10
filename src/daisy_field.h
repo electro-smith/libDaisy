@@ -23,15 +23,16 @@ class DaisyField
         SW_LAST, /**< & */
     };
 
-    /** All knobs connect to ADC1_INP10 via CD4051 mux
-*/
+    /** All knobs connect to Daisy Seed's ADC1 pin via CD4051 mux
+        Knobs are in order that they are laid out on hardware.
+    */
     enum
     {
         KNOB_1,    /**< & */
-        KNOB_2,    /**< & */
-        KNOB_3,    /**< & */
         KNOB_4,    /**< & */
+        KNOB_2,    /**< & */
         KNOB_5,    /**< & */
+        KNOB_3,    /**< & */
         KNOB_6,    /**< & */
         KNOB_7,    /**< & */
         KNOB_8,    /**< & */
