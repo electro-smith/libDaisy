@@ -148,7 +148,7 @@ void DaisyField::VegasMode()
     uint32_t now;
     now = dsy_system_getnow();
     size_t idx;
-    float  key_bright, knob_bright;
+    float  key_bright;
     // Cycle all 16 LEDs on keyboard SM in opposite pattern or something
     uint8_t led_grp_a[] = {LED_KEY_A8,
                            LED_KEY_A7,
