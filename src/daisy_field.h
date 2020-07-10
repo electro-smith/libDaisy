@@ -199,7 +199,7 @@ class DaisyField
     OledDisplay        display_;
     uint8_t            keyboard_state_[16];
     uint32_t           last_led_update_; // for vegas mode
-    bool               gate_in_trig_;   // True when triggered.
+    bool               gate_in_trig_;    // True when triggered.
 };
 
 /** @} */
