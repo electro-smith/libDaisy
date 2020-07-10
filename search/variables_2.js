@@ -9,6 +9,5 @@ var searchData=
   ['clk',['clk',['../structdsy__sr__4021__handle.html#a08278b03f809d9112d68b17848a631cf',1,'dsy_sr_4021_handle']]],
   ['control_5fnumber',['control_number',['../structdaisy_1_1_control_change_event.html#ac69453ad29a6c7737dd0ca7608f145e3',1,'daisy::ControlChangeEvent']]],
   ['controls',['controls',['../classdaisy_1_1_daisy_patch.html#af2ad231a452402baa2df7a5fdbdf8a5b',1,'daisy::DaisyPatch']]],
-  ['cs',['cs',['../structdsy__sr__4021__handle.html#a725e8943d415da8715aac8ad9b74e944',1,'dsy_sr_4021_handle']]],
-  ['cvs',['cvs',['../structdaisy_1_1daisy__field.html#abc14be5d1126a04a15e5aacca45768f7',1,'daisy::daisy_field']]]
+  ['cs',['cs',['../structdsy__sr__4021__handle.html#a725e8943d415da8715aac8ad9b74e944',1,'dsy_sr_4021_handle']]]
 ];

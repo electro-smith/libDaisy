@@ -2,8 +2,7 @@ var searchData=
 [
   ['dac_5fhandle',['dac_handle',['../classdaisy_1_1_daisy_seed.html#a7e515e9523bffb657cab3b2617fd3063',1,'daisy::DaisySeed']]],
   ['daisy',['daisy',['../namespacedaisy.html',1,'']]],
-  ['daisy_5ffield',['daisy_field',['../structdaisy_1_1daisy__field.html',1,'daisy']]],
-  ['daisy_5ffield_5finit',['daisy_field_init',['../group__boards.html#ga49462ee18989a9c75b51b2cf864f3536',1,'daisy']]],
+  ['daisyfield',['DaisyField',['../classdaisy_1_1_daisy_field.html',1,'daisy']]],
   ['daisypatch',['DaisyPatch',['../classdaisy_1_1_daisy_patch.html',1,'daisy']]],
   ['daisypatch',['DaisyPatch',['../classdaisy_1_1_daisy_patch.html#a6cc5fa371efdf5abaa390d24134023d3',1,'daisy::DaisyPatch']]],
   ['daisypetal',['DaisyPetal',['../classdaisy_1_1_daisy_petal.html#a18045ceb262832673128c9ab9c587083',1,'daisy::DaisyPetal']]],

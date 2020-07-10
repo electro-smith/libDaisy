@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['daisy_5ffield_5finit',['daisy_field_init',['../group__boards.html#ga49462ee18989a9c75b51b2cf864f3536',1,'daisy']]],
   ['daisypatch',['DaisyPatch',['../classdaisy_1_1_daisy_patch.html#a6cc5fa371efdf5abaa390d24134023d3',1,'daisy::DaisyPatch']]],
   ['daisypetal',['DaisyPetal',['../classdaisy_1_1_daisy_petal.html#a18045ceb262832673128c9ab9c587083',1,'daisy::DaisyPetal']]],
   ['debounce',['Debounce',['../classdaisy_1_1_encoder.html#a5bed96517dbffee1fb16255ec9faa7e7',1,'daisy::Encoder::Debounce()'],['../classdaisy_1_1_switch.html#a564849b2de31395dda3cb464a65c5a24',1,'daisy::Switch::Debounce()']]],

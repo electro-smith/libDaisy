@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['daisy_5ffield',['daisy_field',['../structdaisy_1_1daisy__field.html',1,'daisy']]],
+  ['daisyfield',['DaisyField',['../classdaisy_1_1_daisy_field.html',1,'daisy']]],
   ['daisypatch',['DaisyPatch',['../classdaisy_1_1_daisy_patch.html',1,'daisy']]],
   ['daisypetal',['DaisyPetal',['../classdaisy_1_1_daisy_petal.html',1,'daisy']]],
   ['daisypod',['DaisyPod',['../classdaisy_1_1_daisy_pod.html',1,'daisy']]],

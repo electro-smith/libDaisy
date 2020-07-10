@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['gate_5fin',['gate_in',['../structdaisy_1_1daisy__field.html#a0998eb84a118dc2fc8c7e8cf8f84f01d',1,'daisy::daisy_field']]],
   ['gate_5fin_5flast',['GATE_IN_LAST',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953ad276bd6100dc0a8ef5c4b9aa307f45cc',1,'daisy::DaisyPatch']]],
   ['gate_5finput',['gate_input',['../classdaisy_1_1_daisy_patch.html#aa2a65b214c0c247dd246428962ccd060',1,'daisy::DaisyPatch']]],
-  ['gate_5fout',['gate_out',['../structdaisy_1_1daisy__field.html#af0b4e5553d91f35b328195bba616780a',1,'daisy::daisy_field']]],
   ['gate_5foutput',['gate_output',['../classdaisy_1_1_daisy_patch.html#a91a7d7e5aae230d58794b63c78f2cfda',1,'daisy::DaisyPatch']]],
   ['gatein',['GateIn',['../classdaisy_1_1_gate_in.html',1,'daisy']]],
   ['gatein',['GateIn',['../classdaisy_1_1_gate_in.html#a0ee9c8b8015845e9ac290f1de287ce03',1,'daisy::GateIn']]],
@@ -22,5 +20,5 @@ var searchData=
   ['getpin',['GetPin',['../classdaisy_1_1_daisy_seed.html#a0b123a4bc00a936e3d78ca2ab4aa2773',1,'daisy::DaisySeed']]],
   ['getptr',['GetPtr',['../classdaisy_1_1_adc_handle.html#ac6dafe79e4f97f61fce4abd998f2f370',1,'daisy::AdcHandle']]],
   ['gold',['GOLD',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a0b32c5df8961411a66895e57509677ac',1,'daisy::Color']]],
-  ['green',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color::GREEN()'],['../classdaisy_1_1_color.html#a6846adea834d5d4fdb36aa0c923b5f6b',1,'daisy::Color::Green() const '],['../structcolor.html#a3c70c1ca87b129dd8a81c80d2b6fbc22',1,'color::green()']]]
+  ['green',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color::GREEN()'],['../structcolor.html#a3c70c1ca87b129dd8a81c80d2b6fbc22',1,'color::green()'],['../classdaisy_1_1_color.html#a6846adea834d5d4fdb36aa0c923b5f6b',1,'daisy::Color::Green()']]]
 ];
