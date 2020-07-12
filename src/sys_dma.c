@@ -30,6 +30,9 @@ extern "C"
         // DMA1_Stream5_IRQn interrupt configuration
         HAL_NVIC_SetPriority(DMA1_Stream5_IRQn, 0, 0);
         HAL_NVIC_EnableIRQ(DMA1_Stream5_IRQn);
+        // DMA1_Stream6_IRQn interrupt configuration for I2C
+        HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);
     }
 
     void dsy_dma_clear_cache_for_buffer(uint8_t* buffer, size_t size)

@@ -2,6 +2,9 @@
 #include "sys_system.h"
 #include "sys_dma.h"
 
+// global init functions for peripheral drivers.
+extern void dsy_i2c_global_init();
+
 // Jump related stuff
 
 #define u32 uint32_t
@@ -75,6 +78,7 @@ void dsy_system_init()
     SystemClock_Config();
     MPU_Config();
     dsy_dma_init();
+    dsy_i2c_global_init();
     SCB_EnableICache();
     SCB_EnableDCache();
 }
