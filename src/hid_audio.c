@@ -1,9 +1,10 @@
 #include <string.h>
+#include <stdint.h>
 #include "daisy.h" // todo figure out what to do about this.
 #include "daisy_core.h"
 #include "hid_audio.h"
-#include "dev_codec_pcm3060.h"
-#include "dev_codec_wm8731.h"
+//#include "dev_codec_pcm3060.h"
+//#include "dev_codec_wm8731.h"
 #include "dev_codec_ak4556.h"
 #include "stm32h7xx_hal.h"
 #include "sys_dma.h"
@@ -30,10 +31,10 @@ typedef struct
     int32_t*              dma_buffer_rx;
     int32_t*              dma_buffer_tx;
     float                 in[DSY_AUDIO_BLOCK_SIZE_MAX * DSY_AUDIO_CHANNELS_MAX];
-    float             out[DSY_AUDIO_BLOCK_SIZE_MAX * DSY_AUDIO_CHANNELS_MAX];
-    size_t            block_size, offset, dma_size;
-    uint8_t           bitdepth, device, channels;
-    dsy_i2c_handle*   device_control_hi2c;
+    float   out[DSY_AUDIO_BLOCK_SIZE_MAX * DSY_AUDIO_CHANNELS_MAX];
+    size_t  block_size, offset, dma_size;
+    uint8_t bitdepth, device, channels;
+    //dsy_i2c_handle*   device_control_hi2c;
     dsy_audio_handle* config_handle;
 } dsy_audio;
 
@@ -127,10 +128,10 @@ void dsy_audio_init(dsy_audio_handle* handle)
     audio_handle.callback     = dsy_audio_passthru;
     audio_handle_ext.callback = dsy_audio_passthru;
     dsy_sai_init_from_handle(handle->sai);
-    if(handle->dev0_i2c != NULL)
+    /*if(handle->dev0_i2c != NULL)
         dsy_i2c_init(handle->dev0_i2c);
     if(handle->dev1_i2c != NULL)
-        dsy_i2c_init(handle->dev1_i2c);
+        dsy_i2c_init(handle->dev1_i2c);*/
     audio_handle.dma_buffer_rx     = sai1_dma_buffer_rx;
     audio_handle.dma_buffer_tx     = sai1_dma_buffer_tx;
     audio_handle_ext.dma_buffer_rx = sai2_dma_buffer_rx;
@@ -143,18 +144,18 @@ void dsy_audio_init(dsy_audio_handle* handle)
     if(intext == DSY_AUDIO_INIT_SAI1 || intext == DSY_AUDIO_INIT_BOTH)
     {
         audio_handle.device = dev0;
-        uint8_t mcu_is_master
-            = handle->sai->sync_config[DSY_SAI_1] == DSY_AUDIO_SYNC_MASTER ? 1
-                                                                           : 0;
+        //uint8_t mcu_is_master
+        //    = handle->sai->sync_config[DSY_SAI_1] == DSY_AUDIO_SYNC_MASTER ? 1
+        //                                                                   : 0;
         switch(dev0)
         {
-            case DSY_AUDIO_DEVICE_WM8731:
+            /*case DSY_AUDIO_DEVICE_WM8731:
                 codec_wm8731_init(
                     handle->dev0_i2c, mcu_is_master, 48000.0f, 16);
                 break;
             case DSY_AUDIO_DEVICE_PCM3060:
                 codec_pcm3060_init(handle->dev0_i2c);
-                break;
+                break;*/
             case DSY_AUDIO_DEVICE_AK4556:
                 // Reset pin on board is PB11
                 {
@@ -181,18 +182,18 @@ void dsy_audio_init(dsy_audio_handle* handle)
     if(intext == DSY_AUDIO_INIT_SAI2 || intext == DSY_AUDIO_INIT_BOTH)
     {
         audio_handle_ext.device = dev1;
-        uint8_t mcu_is_master
-            = handle->sai->sync_config[DSY_SAI_2] == DSY_AUDIO_SYNC_MASTER ? 1
-                                                                           : 0;
+        //uint8_t mcu_is_master
+        //    = handle->sai->sync_config[DSY_SAI_2] == DSY_AUDIO_SYNC_MASTER ? 1
+        //                                                                   : 0;
         switch(dev1)
         {
-            case DSY_AUDIO_DEVICE_WM8731:
+            /*case DSY_AUDIO_DEVICE_WM8731:
                 codec_wm8731_init(
                     handle->dev1_i2c, mcu_is_master, 48000.0f, 16);
                 break;
             case DSY_AUDIO_DEVICE_PCM3060:
                 codec_pcm3060_init(handle->dev1_i2c);
-                break;
+                break;*/
             case DSY_AUDIO_DEVICE_AK4556:
                 // Reset pin on board is PB11
                 {
@@ -356,9 +357,9 @@ void dsy_audio_enter_bypass(uint8_t intext)
     {
         switch(audio_handle.device)
         {
-            case DSY_AUDIO_DEVICE_WM8731:
+            /*case DSY_AUDIO_DEVICE_WM8731:
                 codec_wm8731_enter_bypass(audio_handle.device_control_hi2c);
-                break;
+                break;*/
             default: break;
         }
     }
@@ -371,10 +372,10 @@ void dsy_audio_exit_bypass(uint8_t intext)
     {
         switch(audio_handle.device)
         {
-            case DSY_AUDIO_DEVICE_WM8731:
+            /*case DSY_AUDIO_DEVICE_WM8731:
                 // TODO: Fix this, it doesn't work
                 codec_wm8731_exit_bypass(audio_handle.device_control_hi2c);
-                break;
+                break;*/
             default: break;
         }
     }

@@ -90,7 +90,7 @@ void DaisySeed::Configure()
     ConfigureQspi();
     ConfigureAudio();
     ConfigureDac();
-    ConfigureI2c();
+    //ConfigureI2c();
     // Configure the built-in GPIOs.
     led_.pin.port       = SEED_LED_PORT;
     led_.pin.pin        = SEED_LED_PIN;
@@ -224,9 +224,9 @@ void DaisySeed::ConfigureAudio()
     pin_group[DSY_SAI_PIN_SIN]  = dsy_pin(DSY_GPIOD, 11);
     pin_group[DSY_SAI_PIN_SOUT] = dsy_pin(DSY_GPIOA, 0);
 
-    audio_handle.sai        = &sai_handle;
-    audio_handle.dev0_i2c   = NULL;
-    audio_handle.dev1_i2c   = NULL;
+    audio_handle.sai = &sai_handle;
+    //audio_handle.dev0_i2c   = NULL;
+    //audio_handle.dev1_i2c   = NULL;
     audio_handle.block_size = 48;
     dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, 48);
     dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, 48);
@@ -240,7 +240,7 @@ void DaisySeed::ConfigureDac()
     pin_group[DSY_DAC_CHN1] = dsy_pin(DSY_GPIOA, 4);
     pin_group[DSY_DAC_CHN2] = dsy_pin(DSY_GPIOA, 5);
 }
-void DaisySeed::ConfigureI2c()
+/*void DaisySeed::ConfigureI2c()
 {
     dsy_gpio_pin *pin_group;
     // TODO: Add Config for I2C3 and I2C4
@@ -260,4 +260,4 @@ void DaisySeed::ConfigureI2c()
     pin_group[DSY_I2C_PIN_SCL].pin  = 4;
     pin_group[DSY_I2C_PIN_SDA].port = DSY_GPIOB;
     pin_group[DSY_I2C_PIN_SDA].pin  = 11;
-}
+}*/
