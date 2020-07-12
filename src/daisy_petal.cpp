@@ -30,8 +30,10 @@ using namespace daisy;
 #define PIN_KNOB_5 18
 #define PIN_KNOB_6 21
 
-// Extra Peripherals
-#define LED_DRIVER_I2C i2c1_handle
+static constexpr I2CHandle::Config petal_led_i2c_config
+    = {I2CHandle::Config::Peripheral::I2C_1,
+       {{DSY_GPIOB, 8}, {DSY_GPIOB, 9}},
+       I2CHandle::Config::Speed::I2C_1MHZ};
 
 enum LedOrder
 {
@@ -70,6 +72,9 @@ enum LedOrder
     LED_LAST,
 };
 
+static LedDriverPca9685<2, true>::DmaBuffer DMA_BUFFER_MEM_SECTION
+    petal_led_dma_buffer_a,
+    petal_led_dma_buffer_b;
 
 void DaisyPetal::Init()
 {
@@ -184,11 +189,7 @@ void DaisyPetal::ClearLeds()
 
 void DaisyPetal::UpdateLeds()
 {
-    // TODO:
-    // Get the LED values into the LED Driver...
-    // Still have to call this once per driver -- need to update.
-    dsy_led_driver_update();
-    dsy_led_driver_update();
+    led_driver_.SwapBuffersAndTransmit();
 }
 
 void DaisyPetal::SetRingLed(RingLed idx, float r, float g, float b)
@@ -218,15 +219,16 @@ void DaisyPetal::SetRingLed(RingLed idx, float r, float g, float b)
                                      LED_RING_7_B,
                                      LED_RING_8_B};
 
-    dsy_led_driver_set_led(r_addr[idx], cube(r));
-    dsy_led_driver_set_led(g_addr[idx], cube(g));
-    dsy_led_driver_set_led(b_addr[idx], cube(b));
+
+    led_driver_.SetLed(r_addr[idx], r);
+    led_driver_.SetLed(g_addr[idx], g);
+    led_driver_.SetLed(b_addr[idx], b);
 }
 void DaisyPetal::SetFootswitchLed(FootswitchLed idx, float bright)
 {
     uint8_t fs_addr[FOOTSWITCH_LED_LAST]
         = {LED_FS_1, LED_FS_2, LED_FS_3, LED_FS_4};
-    dsy_led_driver_set_led(fs_addr[idx], cube(bright));
+    led_driver_.SetLed(fs_addr[idx], bright);
 }
 
 void DaisyPetal::InitSwitches()
@@ -268,11 +270,14 @@ void DaisyPetal::InitLeds()
     // LEDs are on the LED Driver.
 
     // Need to figure out how we want to handle that.
-    uint8_t addr[2] = {0x00, 0x01};
-    dsy_led_driver_init(&seed.LED_DRIVER_I2C, addr, 2);
+    uint8_t   addr[2] = {0x00, 0x01};
+    I2CHandle i2c;
+    i2c.Init(petal_led_i2c_config);
+    led_driver_.Init(i2c, addr, petal_led_dma_buffer_a, petal_led_dma_buffer_b);
     ClearLeds();
     UpdateLeds();
 }
+
 void DaisyPetal::InitAnalogControls()
 {
     // Set order of ADCs based on CHANNEL NUMBER
