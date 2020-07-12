@@ -11,7 +11,6 @@ dev_codec_ak4556 \
 sys_dma \
 per_adc \
 hid_audio \
-dev_leddriver \
 per_qspi \
 dev_sdram \
 fatfs \
