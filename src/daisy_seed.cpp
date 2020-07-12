@@ -109,6 +109,7 @@ void DaisySeed::Init()
     dsy_gpio_init(&testpoint_);
     dsy_audio_init(&audio_handle);
     dsy_tim_init();
+    dsy_tim_start();
     // Due to the added 16kB+ of flash usage,
     // and the fact that certain breakouts use
     // both; USB won't be initialized by the
