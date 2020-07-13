@@ -4,6 +4,7 @@ var searchData=
   ['bitdepth',['bitdepth',['../structdsy__dac__handle.html#abef82b9e9f042d39151a3b0854b005ba',1,'dsy_dac_handle::bitdepth()'],['../structdsy__sai__handle.html#a853a1049fcbf96324d2f9f1cb85c07fb',1,'dsy_sai_handle::bitdepth()'],['../structdaisy_1_1_sdmmc_handler_init.html#a1c0e454b79884b6b1342d7406cb106ef',1,'daisy::SdmmcHandlerInit::bitdepth()']]],
   ['bitpersample',['BitPerSample',['../struct_w_a_v___format_type_def.html#a2a763477c7aecbf9e45446d13a44d162',1,'WAV_FormatTypeDef']]],
   ['block_5ferase_5f32k_5fcmd',['BLOCK_ERASE_32K_CMD',['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;dev_flash_IS25LP080D.h']]],
+  ['block_5ferase_5fcmd',['BLOCK_ERASE_CMD',['../group__flash.html#ga9b58e3d8eaefa240d9ccbac870fc1c2b',1,'BLOCK_ERASE_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga9b58e3d8eaefa240d9ccbac870fc1c2b',1,'BLOCK_ERASE_CMD():&#160;dev_flash_IS25LP080D.h']]],
   ['block_5fsize',['block_size',['../structdsy__audio__handle.html#a2c7161c106d61b80dc599dae5e09bee2',1,'dsy_audio_handle']]],
   ['blockalign',['BlockAlign',['../struct_w_a_v___format_type_def.html#ac255fb2e05945824a36614af89675228',1,'WAV_FormatTypeDef']]],
   ['blockingtransmit',['BlockingTransmit',['../classdaisy_1_1_spi_handle.html#a99adb49a6d7c8583d565dc450610af25',1,'daisy::SpiHandle']]],

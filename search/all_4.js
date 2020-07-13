@@ -22,7 +22,6 @@ var searchData=
   ['device_5fid1',['DEVICE_ID1',['../group___u_s_b_d___d_e_s_c___exported___constants.html#gacba0623797117dcaf178232d734c9c24',1,'usbd_desc.h']]],
   ['device_5fid2',['DEVICE_ID2',['../group___u_s_b_d___d_e_s_c___exported___constants.html#gacb8818cd7029deb2affd8a8a482bc86a',1,'usbd_desc.h']]],
   ['device_5fid3',['DEVICE_ID3',['../group___u_s_b_d___d_e_s_c___exported___constants.html#ga2b63a0afba377e3cf5a76f78abb2a970',1,'usbd_desc.h']]],
-  ['die_5ferase_5fcmd',['DIE_ERASE_CMD',['../group__flash.html#gae5382eb0e3556799155501c2c2c67c51',1,'DIE_ERASE_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#gae5382eb0e3556799155501c2c2c67c51',1,'DIE_ERASE_CMD():&#160;dev_flash_IS25LP080D.h']]],
   ['display',['display',['../classdaisy_1_1_daisy_patch.html#a7e75f0c508d8272b6d40aae283639d31',1,'daisy::DaisyPatch']]],
   ['displaycontrols',['DisplayControls',['../classdaisy_1_1_daisy_patch.html#a92c7dc12ffda2fff994a19935cd251e1',1,'daisy::DaisyPatch']]],
   ['dma_5fbuffer_5fmem_5fsection',['DMA_BUFFER_MEM_SECTION',['../group__utility.html#ga42cc36a89607437fe4bc26d3f7d57043',1,'daisy_core.h']]],
@@ -220,11 +219,7 @@ var searchData=
   ['dsy_5ftim_5fstart',['dsy_tim_start',['../group__other.html#ga4ed648b2401b27701a5640e999757658',1,'per_tim.h']]],
   ['dsy_5fwavplayer_5fh',['DSY_WAVPLAYER_H',['../hid__wavplayer_8h.html#ad384c43689d53e261578fa4dcb9dd00a',1,'hid_wavplayer.h']]],
   ['dtcm_5fmem_5fsection',['DTCM_MEM_SECTION',['../group__utility.html#gaaf0e22ddbb535a314fdf30825b0620a2',1,'daisy_core.h']]],
-  ['dual_5fin_5ffast_5fprog_5fcmd',['DUAL_IN_FAST_PROG_CMD',['../group__flash.html#gafb8e3f6df135723c6f25b47b5470bb68',1,'DUAL_IN_FAST_PROG_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#gafb8e3f6df135723c6f25b47b5470bb68',1,'DUAL_IN_FAST_PROG_CMD():&#160;dev_flash_IS25LP080D.h']]],
-  ['dual_5finout_5ffast_5fread_5f4_5fbyte_5faddr_5fcmd',['DUAL_INOUT_FAST_READ_4_BYTE_ADDR_CMD',['../group__flash.html#gac75aa54e377bea2fc9c7f336ddb70cc3',1,'DUAL_INOUT_FAST_READ_4_BYTE_ADDR_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#gac75aa54e377bea2fc9c7f336ddb70cc3',1,'DUAL_INOUT_FAST_READ_4_BYTE_ADDR_CMD():&#160;dev_flash_IS25LP080D.h']]],
   ['dual_5finout_5ffast_5fread_5fcmd',['DUAL_INOUT_FAST_READ_CMD',['../group__flash.html#ga7d41c156bf7cc13fbefd7ab284cc37e6',1,'DUAL_INOUT_FAST_READ_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga7d41c156bf7cc13fbefd7ab284cc37e6',1,'DUAL_INOUT_FAST_READ_CMD():&#160;dev_flash_IS25LP080D.h']]],
   ['dual_5finout_5ffast_5fread_5fdtr_5fcmd',['DUAL_INOUT_FAST_READ_DTR_CMD',['../group__flash.html#gaa2a65174af18ed764c6d1c3db1c849b6',1,'DUAL_INOUT_FAST_READ_DTR_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#gaa2a65174af18ed764c6d1c3db1c849b6',1,'DUAL_INOUT_FAST_READ_DTR_CMD():&#160;dev_flash_IS25LP080D.h']]],
-  ['dual_5fout_5ffast_5fread_5f4_5fbyte_5faddr_5fcmd',['DUAL_OUT_FAST_READ_4_BYTE_ADDR_CMD',['../group__flash.html#ga8ff822cc39431df6152f8c1798182081',1,'DUAL_OUT_FAST_READ_4_BYTE_ADDR_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga8ff822cc39431df6152f8c1798182081',1,'DUAL_OUT_FAST_READ_4_BYTE_ADDR_CMD():&#160;dev_flash_IS25LP080D.h']]],
-  ['dual_5fout_5ffast_5fread_5fcmd',['DUAL_OUT_FAST_READ_CMD',['../group__flash.html#ga73c9113cb75af5967e7293a9b796fc32',1,'DUAL_OUT_FAST_READ_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga73c9113cb75af5967e7293a9b796fc32',1,'DUAL_OUT_FAST_READ_CMD():&#160;dev_flash_IS25LP080D.h']]],
-  ['dual_5fout_5ffast_5fread_5fdtr_5fcmd',['DUAL_OUT_FAST_READ_DTR_CMD',['../group__flash.html#ga58b440d2c93d6ada54055414ff6cb5a3',1,'DUAL_OUT_FAST_READ_DTR_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga58b440d2c93d6ada54055414ff6cb5a3',1,'DUAL_OUT_FAST_READ_DTR_CMD():&#160;dev_flash_IS25LP080D.h']]]
+  ['dual_5fout_5ffast_5fread_5fcmd',['DUAL_OUT_FAST_READ_CMD',['../group__flash.html#ga73c9113cb75af5967e7293a9b796fc32',1,'DUAL_OUT_FAST_READ_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga73c9113cb75af5967e7293a9b796fc32',1,'DUAL_OUT_FAST_READ_CMD():&#160;dev_flash_IS25LP080D.h']]]
 ];
