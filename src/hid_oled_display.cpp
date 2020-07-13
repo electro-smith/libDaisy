@@ -69,6 +69,10 @@
 // 0x3c - ~0.84 x Vcc
 #define SSD1309_CMD_SET_VCOMH_DESEL_LVL (0xdb)
 
+#ifndef deg2rad
+#define deg2rad(deg) ((deg)*3.141592 / 180.0)
+#endif
+
 
 using namespace daisy;
 
@@ -195,6 +199,130 @@ void OledDisplay::DrawPixel(uint8_t x, uint8_t y, bool on)
     else
         SSD1309_Buffer[x + (y / 8) * SSD1309_WIDTH] &= ~(1 << (y % 8));
 }
+
+void OledDisplay::DrawLine(int16_t x1,
+                           int16_t y1,
+                           int16_t x2,
+                           int16_t y2,
+                           bool    on)
+{
+    uint8_t deltaX = abs(x2 - x1);
+    uint8_t deltaY = abs(y2 - y1);
+    int8_t  signX  = ((x1 < x2) ? 1 : -1);
+    int8_t  signY  = ((y1 < y2) ? 1 : -1);
+    int16_t error  = deltaX - deltaY;
+    int16_t error2;
+
+    DrawPixel(x2, y2, on);
+    while((x1 != x2) || (y1 != y2))
+    {
+        DrawPixel(x1, y1, on);
+        error2 = error * 2;
+        if(error2 > -deltaY)
+        {
+            error -= deltaY;
+            x1 += signX;
+        }
+
+        if(error2 < deltaX)
+        {
+            error += deltaX;
+            y1 += signY;
+        }
+    }
+}
+
+void OledDisplay::DrawRect(uint8_t x1,
+                           uint8_t y1,
+                           uint8_t x2,
+                           uint8_t y2,
+                           bool    on)
+{
+    DrawLine(x1, y1, x2, y1, on);
+    DrawLine(x2, y1, x2, y2, on);
+    DrawLine(x2, y2, x1, y2, on);
+    DrawLine(x1, y2, x1, y1, on);
+}
+
+
+void OledDisplay::DrawArc(int16_t x,
+                          int16_t y,
+                          uint8_t radius,
+                          int16_t start_angle,
+                          int16_t sweep,
+                          bool    on)
+{
+    uint8_t approx_segments;
+    int16_t xp1, xp2;
+    int16_t yp1, yp2;
+    uint8_t count = 0;
+    float   rad;
+    float   rad_inc;
+
+    if(sweep < 0)
+    {
+        start_angle -= sweep;
+        sweep = -sweep;
+    }
+
+    sweep = (sweep < 360) ? sweep : 360;
+
+    // Base the number of segments on the radius
+    approx_segments = (sweep * radius) / 360;
+    rad             = deg2rad(start_angle);
+    rad_inc         = deg2rad(sweep / (float)approx_segments);
+    xp1             = x + (int16_t)(cos(rad) * radius);
+    yp1             = y - (int16_t)(sin(rad) * radius);
+
+    while(count < approx_segments)
+    {
+        rad += rad_inc;
+
+        xp2 = x + (int16_t)(cos(rad) * radius);
+        yp2 = y - (int16_t)(sin(rad) * radius);
+        DrawLine(xp1, yp1, xp2, yp2, on);
+
+        xp1 = xp2;
+        yp1 = yp2;
+
+        count++;
+    }
+    rad = deg2rad(start_angle + sweep);
+    xp2 = x + (int16_t)(cos(rad) * radius);
+    yp2 = y - (int16_t)(sin(rad) * radius);
+    DrawLine(xp1, yp1, xp2, yp2, on);
+}
+
+void OledDisplay::DrawCircle(int16_t x, int16_t y, uint8_t r, bool on)
+{
+    int16_t t_x = -r;
+    int16_t t_y = 0;
+    int16_t err = 2 - 2 * r;
+    int16_t e2;
+
+    do
+    {
+        DrawPixel(x - t_x, y + t_y, on);
+        DrawPixel(x + t_x, y + t_y, on);
+        DrawPixel(x + t_x, y - t_y, on);
+        DrawPixel(x - t_x, y - t_y, on);
+        e2 = err;
+        if(e2 <= t_y)
+        {
+            t_y++;
+            err = err + (t_y * 2 + 1);
+            if(-t_x == t_y && e2 <= t_x)
+            {
+                e2 = 0;
+            }
+        }
+        if(e2 > t_x)
+        {
+            t_x++;
+            err = err + (t_x * 2 + 1);
+        }
+    } while(t_x <= 0);
+}
 char OledDisplay::WriteChar(char ch, FontDef font, bool on)
 {
     uint32_t i, b, j;
@@ -258,12 +386,12 @@ void OledDisplay::SetCursor(uint8_t x, uint8_t y)
     SSD1309.CurrentY = y;
 }
 
-
 void OledDisplay::SendCommand(uint8_t byte)
 {
     dsy_gpio_write(&pin_dc, 0);
     h_spi.BlockingTransmit(&byte, 1);
 }
+
 void OledDisplay::SendData(uint8_t* buff, size_t size)
 {
     dsy_gpio_write(&pin_dc, 1);
