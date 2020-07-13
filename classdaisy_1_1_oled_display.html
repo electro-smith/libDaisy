@@ -114,6 +114,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae0170fddb3afb9b8b008a69ad2578737"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad139e5a2b86e1a38cb07693488839a59"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#ad139e5a2b86e1a38cb07693488839a59">DrawPixel</a> (uint8_t x, uint8_t y, bool on)</td></tr>
 <tr class="separator:ad139e5a2b86e1a38cb07693488839a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb1a02651497d073d99f7b0c2a54867d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#acb1a02651497d073d99f7b0c2a54867d">DrawLine</a> (int16_t x1, int16_t y1, int16_t x2, int16_t y2, bool on)</td></tr>
+<tr class="separator:acb1a02651497d073d99f7b0c2a54867d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca22a5f187040dda3873bf79f69d9169"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#aca22a5f187040dda3873bf79f69d9169">DrawRect</a> (uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, bool on)</td></tr>
+<tr class="separator:aca22a5f187040dda3873bf79f69d9169"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8be435304b70cd5e8ea72027da39371e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a8be435304b70cd5e8ea72027da39371e">DrawArc</a> (int16_t x, int16_t y, uint8_t radius, int16_t start_angle, int16_t sweep, bool on)</td></tr>
+<tr class="separator:a8be435304b70cd5e8ea72027da39371e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53d53c661762dc6c17601fea66b26ab3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a53d53c661762dc6c17601fea66b26ab3">DrawCircle</a> (int16_t x, int16_t y, uint8_t r, bool on)</td></tr>
+<tr class="separator:a53d53c661762dc6c17601fea66b26ab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeca27f2d60a0aeff4b79b88977d20779"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#aeca27f2d60a0aeff4b79b88977d20779">WriteChar</a> (char ch, <a class="el" href="struct_font_def.html">FontDef</a> font, bool on)</td></tr>
 <tr class="separator:aeca27f2d60a0aeff4b79b88977d20779"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa88602ddad7cc30b567e1bc3264233a5"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#aa88602ddad7cc30b567e1bc3264233a5">WriteString</a> (char *str, <a class="el" href="struct_font_def.html">FontDef</a> font, bool on)</td></tr>
@@ -151,6 +159,168 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a8be435304b70cd5e8ea72027da39371e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::OledDisplay::DrawArc </td>
+          <td>(</td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>radius</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>start_angle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>sweep</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>on</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws an arc around the specified coordinate </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>x Coordinate of the center of the arc </td></tr>
+    <tr><td class="paramname">y</td><td>y Coordinate of the center of the arc </td></tr>
+    <tr><td class="paramname">radius</td><td>radius of the arc </td></tr>
+    <tr><td class="paramname">start_angle</td><td>angle where to start the arc </td></tr>
+    <tr><td class="paramname">sweep</td><td>total angle of the arc </td></tr>
+    <tr><td class="paramname">on</td><td>on or off </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a53d53c661762dc6c17601fea66b26ab3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::OledDisplay::DrawCircle </td>
+          <td>(</td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>on</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws a circle around the specified coordinate </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>x Coordinate of the center of the circle </td></tr>
+    <tr><td class="paramname">y</td><td>y Coordinate of the center of the circle </td></tr>
+    <tr><td class="paramname">radius</td><td>radius of the circle </td></tr>
+    <tr><td class="paramname">on</td><td>on or off </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="acb1a02651497d073d99f7b0c2a54867d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::OledDisplay::DrawLine </td>
+          <td>(</td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>x1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>y1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>x2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int16_t&#160;</td>
+          <td class="paramname"><em>y2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>on</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws a line from (x1, y1) to (y1, y2) </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x1</td><td>x Coordinate of the starting point </td></tr>
+    <tr><td class="paramname">y1</td><td>y Coordinate of the starting point </td></tr>
+    <tr><td class="paramname">x2</td><td>x Coordinate of the ending point </td></tr>
+    <tr><td class="paramname">y2</td><td>y Coordinate of the ending point </td></tr>
+    <tr><td class="paramname">on</td><td>on or off </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="ad139e5a2b86e1a38cb07693488839a59"></a>
 <div class="memitem">
 <div class="memproto">
@@ -184,6 +354,60 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">x</td><td>x Coordinate </td></tr>
     <tr><td class="paramname">y</td><td>y coordinate </td></tr>
+    <tr><td class="paramname">on</td><td>on or off </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aca22a5f187040dda3873bf79f69d9169"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::OledDisplay::DrawRect </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>x2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>y2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>on</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Draws a rectangle based on two coordinates. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x1</td><td>x Coordinate of the first point </td></tr>
+    <tr><td class="paramname">y1</td><td>y Coordinate of the first point </td></tr>
+    <tr><td class="paramname">x2</td><td>x Coordinate of the second point </td></tr>
+    <tr><td class="paramname">y2</td><td>y Coordinate of the second point </td></tr>
     <tr><td class="paramname">on</td><td>on or off </td></tr>
   </table>
   </dd>
