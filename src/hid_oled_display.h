@@ -1,6 +1,7 @@
 #pragma once
 #ifndef DSY_OLED_DISPLAY_H
 #define DSY_OLED_DISPLAY_H /**< Macro */
+#include <cmath>
 #include <stdlib.h>
 #include <stdint.h>
 #include "util_oled_fonts.h"
@@ -65,6 +66,36 @@ class OledDisplay
     \param on  on or off
     */
     void DrawPixel(uint8_t x, uint8_t y, bool on);
+
+	/**
+	Draws a line from (x1, y1) to (y1, y2)
+	\param x1  x Coordinate of the starting point
+	\param y1  y Coordinate of the starting point
+	\param x2  x Coordinate of the ending point
+	\param y2  y Coordinate of the ending point
+	\param on  on or off
+	*/
+    void DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, bool on);
+
+    /**
+	Draws an arc around the specified coordinate
+	\param x           x Coordinate of the center of the arc
+	\param y           y Coordinate of the center of the arc
+	\param radius      radius of the arc
+	\param start_angle angle where to start the arc
+	\param sweep       total angle of the arc
+	\param on  on or off
+	*/
+	void DrawArc(uint8_t x, uint8_t y, uint8_t radius, int16_t start_angle, int16_t sweep, bool on);
+
+    /**
+	Draws an circle around the specified coordinate
+	\param x           x Coordinate of the center of the circle
+	\param y           y Coordinate of the center of the circle
+	\param radius      radius of the circle
+	\param on  on or off
+	*/
+	void DrawCircle(uint8_t x, uint8_t y, uint8_t r, bool on);
 
     /** 
     Writes the character with the specific FontDef
