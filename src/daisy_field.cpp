@@ -123,7 +123,7 @@ void DaisyField::Init()
     dsy_gpio_pin oled_pins[OledDisplay::NUM_PINS];
     oled_pins[OledDisplay::DATA_COMMAND] = seed.GetPin(PIN_OLED_CMD);
     oled_pins[OledDisplay::RESET]        = {DSY_GPIOX, 0}; // Not a real pin...
-    display_.Init(oled_pins);
+    display.Init(oled_pins);
 
     // LEDs
     // 2x PCA9685 addresses 0x00, and 0x02
@@ -189,12 +189,12 @@ void DaisyField::VegasMode()
         dsy_led_driver_set_led(led_grp_c[idx], key_bright);
         // OLED moves a bar across the screen
         uint32_t bar_x = (now >> 4) % SSD1309_WIDTH;
-        display_.Fill(false);
+        display.Fill(false);
         for(size_t i = 0; i < SSD1309_HEIGHT; i++)
         {
-            display_.DrawPixel(bar_x, i, true);
+            display.DrawPixel(bar_x, i, true);
         }
-        display_.Update();
+        display.Update();
         dsy_led_driver_update();
         dsy_led_driver_update();
     }
