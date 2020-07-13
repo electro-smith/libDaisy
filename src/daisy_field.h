@@ -186,9 +186,9 @@ class DaisyField
      **/
     void VegasMode();
 
-    DaisySeed seed;
-    OledDisplay        display;
-    dsy_gpio  gate_out_;
+    DaisySeed   seed;
+    OledDisplay display;
+    dsy_gpio    gate_out_;
 
   private:
     float              samplerate_, blockrate_;
