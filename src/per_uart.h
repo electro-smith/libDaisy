@@ -53,7 +53,6 @@ class UartHandler
     \param size Queue size
     \return OK or ERROR
     */
-
     int StartRx(size_t size);
 
     /** \return whether Rx DMA is listening or not. */

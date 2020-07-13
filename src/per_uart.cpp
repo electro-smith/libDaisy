@@ -132,11 +132,11 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
     switch(huart->ErrorCode)
     {
         case HAL_UART_ERROR_NONE: break;
-        case HAL_UART_ERROR_PE: break;
-        case HAL_UART_ERROR_NE: break;
-        case HAL_UART_ERROR_FE: break;
-        case HAL_UART_ERROR_ORE: break;
-        case HAL_UART_ERROR_DMA: break;
+        case HAL_UART_ERROR_PE: break; // Parity Error
+        case HAL_UART_ERROR_NE: break; // Noise Error
+        case HAL_UART_ERROR_FE: break; // Frame Error
+        case HAL_UART_ERROR_ORE: break; // Overrun Error
+        case HAL_UART_ERROR_DMA: break; // DMA Transfer Erro
         default: break;
     }
     // Mark rx as deactivated
