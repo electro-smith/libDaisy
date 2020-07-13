@@ -243,7 +243,7 @@ int dsy_qspi_write(uint32_t address, uint32_t size, uint8_t *buffer)
 int dsy_qspi_erase(uint32_t start_adr, uint32_t end_adr)
 {
     uint32_t block_addr;
-    uint32_t block_size = IS25LP080D_SUBSECTOR_SIZE; // 4kB blocks for now.
+    uint32_t block_size = IS25LP080D_SECTOR_SIZE; // 4kB blocks for now.
     // 64kB chunks for now.
     start_adr = start_adr - (start_adr % block_size);
     while(end_adr >= start_adr)
@@ -265,13 +265,13 @@ int dsy_qspi_erasesector(uint32_t addr)
     if(use_qpi)
     {
         s_command.InstructionMode = QSPI_INSTRUCTION_4_LINES;
-        s_command.Instruction     = SUBSECTOR_ERASE_QPI_CMD;
+        s_command.Instruction     = SECTOR_ERASE_QPI_CMD;
         s_command.AddressMode     = QSPI_ADDRESS_4_LINES;
     }
     else
     {
         s_command.InstructionMode = QSPI_INSTRUCTION_1_LINE;
-        s_command.Instruction     = SUBSECTOR_ERASE_CMD;
+        s_command.Instruction     = SECTOR_ERASE_CMD;
         s_command.AddressMode     = QSPI_ADDRESS_1_LINE;
     }
     s_command.AddressSize       = QSPI_ADDRESS_24_BITS;

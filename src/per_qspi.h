@@ -31,6 +31,8 @@ extern "C"
      * IS25LP080D
     */
 
+
+    //SCK,  CE# (active low)
     /** List of Pins used in QSPI (passed in during Init) */
     typedef enum
     {
@@ -57,6 +59,7 @@ extern "C"
         DSY_QSPI_MODE_INDIRECT_POLLING,  /**< & */
         DSY_QSPI_MODE_LAST,              /**< & */
     } dsy_qspi_mode;
+
 
     /** Flash Devices supported. (Both of these are more-or-less the same, just different sizes). */
     typedef enum
