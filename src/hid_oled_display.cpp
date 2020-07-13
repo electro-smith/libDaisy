@@ -200,7 +200,7 @@ void OledDisplay::DrawPixel(uint8_t x, uint8_t y, bool on)
         SSD1309_Buffer[x + (y / 8) * SSD1309_WIDTH] &= ~(1 << (y % 8));
 }
 
-void OledDisplay::DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, bool on)
+void OledDisplay::DrawLine(int16_t x1, int16_t y1, int16_t x2, int16_t y2, bool on)
 {
     uint8_t deltaX = abs(x2 - x1);
     uint8_t deltaY = abs(y2 - y1);
@@ -228,11 +228,11 @@ void OledDisplay::DrawLine(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, bool 
     }
 }
 
-void OledDisplay::DrawArc(uint8_t x, uint8_t y, uint8_t radius, int16_t start_angle, int16_t sweep, bool on)
+void OledDisplay::DrawArc(int16_t x, int16_t y, uint8_t radius, int16_t start_angle, int16_t sweep, bool on)
 {
     uint8_t  approx_segments;
-    uint8_t  xp1, xp2;
-    uint8_t  yp1, yp2;
+    int16_t  xp1, xp2;
+    int16_t  yp1, yp2;
     uint8_t  count     = 0;
     float    rad;
     float    rad_inc;
@@ -247,15 +247,15 @@ void OledDisplay::DrawArc(uint8_t x, uint8_t y, uint8_t radius, int16_t start_an
 	approx_segments = (sweep * radius) / 360; // Base the number of segments on the radius
     rad             = deg2rad(start_angle);
     rad_inc         = deg2rad(sweep / (float)approx_segments);
-    xp1             = x + (int8_t)(cos(rad) * radius);
-    yp1             = y - (int8_t)(sin(rad) * radius);
+    xp1             = x + (int16_t)(cos(rad) * radius);
+    yp1             = y - (int16_t)(sin(rad) * radius);
 
     while(count < approx_segments)
     {
         rad += rad_inc;
 
-        xp2 = x + (int8_t)(cos(rad) * radius);
-        yp2 = y - (int8_t)(sin(rad) * radius);
+        xp2 = x + (int16_t)(cos(rad) * radius);
+        yp2 = y - (int16_t)(sin(rad) * radius);
         DrawLine(xp1, yp1, xp2, yp2, on);
 
         xp1 = xp2;
@@ -264,12 +264,12 @@ void OledDisplay::DrawArc(uint8_t x, uint8_t y, uint8_t radius, int16_t start_an
 		count++;
     }
     rad = deg2rad(start_angle + sweep);
-    xp2 = x + (int8_t)(cos(rad) * radius);
-    yp2 = y - (int8_t)(sin(rad) * radius);
+    xp2 = x + (int16_t)(cos(rad) * radius);
+    yp2 = y - (int16_t)(sin(rad) * radius);
     DrawLine(xp1, yp1, xp2, yp2, on);
 }
 
-void OledDisplay::DrawCircle(uint8_t x, uint8_t y, uint8_t r, bool on) {
+void OledDisplay::DrawCircle(int16_t x, int16_t y, uint8_t r, bool on) {
     int16_t t_x   = -r;
     int16_t t_y   = 0;
     int16_t err = 2 - 2 * r;
@@ -297,6 +297,13 @@ void OledDisplay::DrawCircle(uint8_t x, uint8_t y, uint8_t r, bool on) {
             err = err + (t_x * 2 + 1);
         }
     } while(t_x <= 0);
+}
+
+void OledDisplay::DrawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, bool on) {
+    DrawLine(x1, y1, x2, y1, on);
+    DrawLine(x2, y1, x2, y2, on);
+    DrawLine(x2, y2, x1, y2, on);
+    DrawLine(x1, y2, x1, y1, on);
 }
 
 char OledDisplay::WriteChar(char ch, FontDef font, bool on)
