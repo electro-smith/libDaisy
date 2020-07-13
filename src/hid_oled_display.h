@@ -78,6 +78,16 @@ class OledDisplay
     void DrawLine(int16_t x1, int16_t y1, int16_t x2, int16_t y2, bool on);
 
     /**
+	Draws a rectangle based on two coordinates.
+	\param x1 x Coordinate of the first point
+	\param y1 y Coordinate of the first point
+	\param x2 x Coordinate of the second point
+	\param y2 y Coordinate of the second point
+	\param on on or off
+	*/
+    void DrawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, bool on);
+
+    /**
 	Draws an arc around the specified coordinate
 	\param x           x Coordinate of the center of the arc
 	\param y           y Coordinate of the center of the arc
@@ -96,16 +106,6 @@ class OledDisplay
 	\param on  on or off
 	*/
     void DrawCircle(int16_t x, int16_t y, uint8_t r, bool on);
-
-    /**
-	Draws a rectangle based on two coordinates.
-	\param x1 x Coordinate of the first point
-	\param y1 y Coordinate of the first point
-	\param x1 x Coordinate of the second point
-	\param y1 y Coordinate of the second point
-	\param on on or off
-	*/
-    void DrawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, bool on);
 
     /** 
     Writes the character with the specific FontDef

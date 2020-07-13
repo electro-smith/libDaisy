@@ -228,6 +228,14 @@ void OledDisplay::DrawLine(int16_t x1, int16_t y1, int16_t x2, int16_t y2, bool 
     }
 }
 
+void OledDisplay::DrawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, bool on) {
+    DrawLine(x1, y1, x2, y1, on);
+    DrawLine(x2, y1, x2, y2, on);
+    DrawLine(x2, y2, x1, y2, on);
+    DrawLine(x1, y2, x1, y1, on);
+}
+
+
 void OledDisplay::DrawArc(int16_t x, int16_t y, uint8_t radius, int16_t start_angle, int16_t sweep, bool on)
 {
     uint8_t  approx_segments;
@@ -298,14 +306,6 @@ void OledDisplay::DrawCircle(int16_t x, int16_t y, uint8_t r, bool on) {
         }
     } while(t_x <= 0);
 }
-
-void OledDisplay::DrawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, bool on) {
-    DrawLine(x1, y1, x2, y1, on);
-    DrawLine(x2, y1, x2, y2, on);
-    DrawLine(x2, y2, x1, y2, on);
-    DrawLine(x1, y2, x1, y1, on);
-}
-
 char OledDisplay::WriteChar(char ch, FontDef font, bool on)
 {
     uint32_t i, b, j;
