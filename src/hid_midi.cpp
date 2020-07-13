@@ -1,4 +1,5 @@
 #include "hid_midi.h"
+#include "sys_system.h"
 
 using namespace daisy;
 
@@ -24,24 +25,37 @@ void MidiHandler::Init(MidiInputMode in_mode, MidiOutputMode out_mode)
     uart_.Init();
     event_q_.Init();
     incoming_message_.type = MessageLast;
-    pstate_                = MidiHandler::ParserEmpty;
+    pstate_                = ParserEmpty;
 }
 
 void MidiHandler::StartReceive()
 {
     if(in_mode_ & INPUT_MODE_UART1)
     {
-        uart_.StartRx(6);
+        uart_.StartRx(1);
     }
 }
 
 void MidiHandler::Listen()
 {
+    uint32_t now;
+    now = dsy_system_getnow();
     if(in_mode_ & INPUT_MODE_UART1)
     {
         while(uart_.Readable())
         {
+            last_read_ = now;
             Parse(uart_.PopRx());
+        }
+
+        // In case of UART Error, (particularly
+        //  overrun error), UART disables itself.
+        // Flush the buff, and restart.
+        if(!uart_.RxActive())
+        {
+            pstate_ = ParserEmpty;
+            uart_.FlushRx();
+            StartReceive();
         }
     }
 }
@@ -50,7 +64,7 @@ void MidiHandler::Parse(uint8_t byte)
 {
     switch(pstate_)
     {
-        case MidiHandler::ParserEmpty:
+        case ParserEmpty:
             // check byte for valid Status Byte
             if(byte & kStatusByteMask)
             {
@@ -61,24 +75,24 @@ void MidiHandler::Parse(uint8_t byte)
                 // Validate, and move on.
                 if(incoming_message_.type < MessageLast)
                 {
-                    pstate_ = MidiHandler::ParserHasStatus;
+                    pstate_ = ParserHasStatus;
                 }
                 // Else we'll keep waiting for a valid incoming status byte
             }
             break;
-        case MidiHandler::ParserHasStatus:
+        case ParserHasStatus:
             if((byte & kStatusByteMask) == 0)
             {
                 incoming_message_.data[0] = byte & kDataByteMask;
-                pstate_                   = MidiHandler::ParserHasData0;
+                pstate_                   = ParserHasData0;
             }
             else
             {
                 // invalid message go back to start ;p
-                pstate_ = MidiHandler::ParserEmpty;
+                pstate_ = ParserEmpty;
             }
             break;
-        case MidiHandler::ParserHasData0:
+        case ParserHasData0:
             if((byte & kStatusByteMask) == 0)
             {
                 incoming_message_.data[1] = byte & kDataByteMask;
@@ -87,7 +101,7 @@ void MidiHandler::Parse(uint8_t byte)
             }
             // Regardless, of whether the data was valid or not we go back to empty
             // because either the message is queued for handling or its not.
-            pstate_ = MidiHandler::ParserEmpty;
+            pstate_ = ParserEmpty;
             break;
         default: break;
     }
@@ -95,7 +109,7 @@ void MidiHandler::Parse(uint8_t byte)
 
 void MidiHandler::SendMessage(uint8_t *bytes, size_t size)
 {
-    if(out_mode_ == MidiHandler::OUTPUT_MODE_UART1)
+    if(out_mode_ == OUTPUT_MODE_UART1)
     {
         uart_.PollTx(bytes, size);
     }
