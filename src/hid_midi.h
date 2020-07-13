@@ -155,12 +155,13 @@ class MidiHandler
         ParserHasStatus,
         ParserHasData0,
     };
-    MidiInputMode            in_mode_;
-    MidiOutputMode           out_mode_;
-    UartHandler              uart_;
-    ParserState              pstate_;
-    MidiEvent                incoming_message_;
-    RingBuffer<MidiEvent, 8> event_q_;
+    MidiInputMode             in_mode_;
+    MidiOutputMode            out_mode_;
+    UartHandler               uart_;
+    ParserState               pstate_;
+    MidiEvent                 incoming_message_;
+    RingBuffer<MidiEvent, 64> event_q_;
+    uint32_t                  last_read_; // time of last byte
 };
 
 /** @} */

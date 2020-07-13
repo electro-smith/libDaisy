@@ -918,6 +918,12 @@
     <Filter Include="Middleware_FatFS">
       <UniqueIdentifier>{0c75ac56-378f-4bfe-9776-3bfd88231752}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Device-specific files">
+      <UniqueIdentifier>{9a2cb93d-8359-431a-9b73-85f19ad83902}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{6962d58c-c4e1-4ae2-a369-9f41fa5a2572}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <LinkerScript Include="core\STM32H750IB_flash.lds" />

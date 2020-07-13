@@ -45,7 +45,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>src;Drivers/CMSIS/Device/ST/STM32H7xx/Include;Drivers/STM32H7xx_HAL_Driver/Inc;Drivers/CMSIS/Include;Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;Middlewares/ST/STM32_USB_Device_Library/Core/Inc;Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;Middlewares/Third_Party/FatFs/src;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>DEBUG=1;__FPU_PRESENT=1;STM32H750xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Optimization>Og</Optimization>
+      <Optimization>O0</Optimization>
       <AdditionalOptions />
       <CLanguageStandard />
       <CPPLanguageStandard />
@@ -60,14 +60,14 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>src;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG=1;RELEASE=1;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;Drivers/CMSIS/Device/ST/STM32H7xx/Include;Drivers/STM32H7xx_HAL_Driver/Inc;Drivers/CMSIS/Include;Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;Middlewares/ST/STM32_USB_Device_Library/Core/Inc;Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;Middlewares/Third_Party/FatFs/src;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG=1;RELEASE=1;__FPU_PRESENT=1;STM32H750xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
       <LibrarySearchDirectories>;%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
       <AdditionalLibraryNames>;%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
-      <LinkerScript />
+      <LinkerScript>core/STM32H750IB_flash.lds</LinkerScript>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

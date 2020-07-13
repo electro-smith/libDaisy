@@ -186,8 +186,9 @@ class DaisyField
      **/
     void VegasMode();
 
-    DaisySeed seed;
-    dsy_gpio  gate_out_;
+    DaisySeed   seed;
+    OledDisplay display;
+    dsy_gpio    gate_out_;
 
   private:
     float              samplerate_, blockrate_;
@@ -197,7 +198,6 @@ class DaisyField
     GateIn             gate_in_;
     AnalogControl      knob_[KNOB_LAST];
     AnalogControl      cv_[CV_LAST];
-    OledDisplay        display_;
     uint8_t            keyboard_state_[16];
     uint32_t           last_led_update_; // for vegas mode
     bool               gate_in_trig_;    // True when triggered.
