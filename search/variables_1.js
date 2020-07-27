@@ -7,7 +7,6 @@ var searchData=
   ['blockalign',['BlockAlign',['../struct_w_a_v___format_type_def.html#ac255fb2e05945824a36614af89675228',1,'WAV_FormatTypeDef']]],
   ['blocknbr',['BlockNbr',['../struct_d_s_y___s_d___card_info_type_def.html#a1955247be547523e0a16fd37c288b918',1,'DSY_SD_CardInfoTypeDef']]],
   ['blocksize',['BlockSize',['../struct_d_s_y___s_d___card_info_type_def.html#a030b9e7d12a77aa526ef7fc86bcb01e0',1,'DSY_SD_CardInfoTypeDef']]],
-  ['blue',['blue',['../structcolor.html#a26ab54f26b28c482a812079e509207c7',1,'color']]],
   ['button1',['button1',['../classdaisy_1_1_daisy_pod.html#a9e2edc159de61e03b99fa5cf0d91f79e',1,'daisy::DaisyPod']]],
   ['button2',['button2',['../classdaisy_1_1_daisy_pod.html#ac4a6df2ec7c2675f769d231e036231b9',1,'daisy::DaisyPod']]],
   ['buttons',['buttons',['../classdaisy_1_1_daisy_pod.html#adc40296adf43258c9ac99bcf45a3554e',1,'daisy::DaisyPod']]],

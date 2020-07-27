@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['parameter',['Parameter',['../classdaisy_1_1_parameter.html',1,'daisy']]]
+  ['oleddisplay',['OledDisplay',['../classdaisy_1_1_oled_display.html',1,'daisy']]]
 ];

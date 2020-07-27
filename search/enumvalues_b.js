@@ -1,6 +1,7 @@
 var searchData=
 [
   ['off',['OFF',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a725dbdfb5e3ab465acff41a70f1f5a9d',1,'daisy::Color']]],
+  ['ok',['OK',['../classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16ae0aa021e21dddbd6d8cecec71e9cf564',1,'daisy::I2CHandle']]],
   ['output_5fmode_5fnone',['OUTPUT_MODE_NONE',['../classdaisy_1_1_midi_handler.html#a2bb8e841f287ba5fecfa2cead766a40caae5f9f77fd089a64af1bf3a3a6c7882f',1,'daisy::MidiHandler']]],
   ['output_5fmode_5fuart1',['OUTPUT_MODE_UART1',['../classdaisy_1_1_midi_handler.html#a2bb8e841f287ba5fecfa2cead766a40ca7bda13e50dc111b5a6651e2fbf1e89b9',1,'daisy::MidiHandler']]],
   ['output_5fmode_5fusb_5fext',['OUTPUT_MODE_USB_EXT',['../classdaisy_1_1_midi_handler.html#a2bb8e841f287ba5fecfa2cead766a40ca1823039084f8c92e8f046c1d80dfd628',1,'daisy::MidiHandler']]],

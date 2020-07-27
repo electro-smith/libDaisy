@@ -9,7 +9,6 @@ var searchData=
   ['dsy_5fdac_5fhandle',['dsy_dac_handle',['../structdsy__dac__handle.html',1,'']]],
   ['dsy_5fgpio',['dsy_gpio',['../structdsy__gpio.html',1,'']]],
   ['dsy_5fgpio_5fpin',['dsy_gpio_pin',['../structdsy__gpio__pin.html',1,'']]],
-  ['dsy_5fi2c_5fhandle',['dsy_i2c_handle',['../structdsy__i2c__handle.html',1,'']]],
   ['dsy_5fqspi_5fhandle',['dsy_qspi_handle',['../structdsy__qspi__handle.html',1,'']]],
   ['dsy_5fsai_5fhandle',['dsy_sai_handle',['../structdsy__sai__handle.html',1,'']]],
   ['dsy_5fsd_5fcardinfotypedef',['DSY_SD_CardInfoTypeDef',['../struct_d_s_y___s_d___card_info_type_def.html',1,'']]],

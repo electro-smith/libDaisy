@@ -1,15 +1,6 @@
 var searchData=
 [
   ['last',['LAST',['../classdaisy_1_1_parameter.html#a2fcb1b7095721f0de77594aabb9594daafd1a0bfdbd74a9f915abd72694b57621',1,'daisy::Parameter::LAST()'],['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a59fb8f2d16bd5cd2cc0e5ca7fe7def92',1,'daisy::Color::LAST()']]],
-  ['led_5fcolor_5fblue',['LED_COLOR_BLUE',['../group__led.html#ggadc29c2ff13d900c2f185ee95427fb06ca457a1e8f0680efd8cf6d76d1a6465b2b',1,'dev_leddriver.h']]],
-  ['led_5fcolor_5fcyan',['LED_COLOR_CYAN',['../group__led.html#ggadc29c2ff13d900c2f185ee95427fb06ca20221062a48820a1e6caabc3fe8c0723',1,'dev_leddriver.h']]],
-  ['led_5fcolor_5fgold',['LED_COLOR_GOLD',['../group__led.html#ggadc29c2ff13d900c2f185ee95427fb06caf85061c505e2b550ec3bbe69e9208544',1,'dev_leddriver.h']]],
-  ['led_5fcolor_5fgreen',['LED_COLOR_GREEN',['../group__led.html#ggadc29c2ff13d900c2f185ee95427fb06ca64cda76c497793915fcf24c216d0f37c',1,'dev_leddriver.h']]],
-  ['led_5fcolor_5flast',['LED_COLOR_LAST',['../group__led.html#ggadc29c2ff13d900c2f185ee95427fb06caec48bfe4e81ce951f3e2b5109545bb44',1,'dev_leddriver.h']]],
-  ['led_5fcolor_5foff',['LED_COLOR_OFF',['../group__led.html#ggadc29c2ff13d900c2f185ee95427fb06cafea1b6d1e36efeb9177297ad5b634bdd',1,'dev_leddriver.h']]],
-  ['led_5fcolor_5fpurple',['LED_COLOR_PURPLE',['../group__led.html#ggadc29c2ff13d900c2f185ee95427fb06cabc94ee3b9f2ff2553c77741c2a530647',1,'dev_leddriver.h']]],
-  ['led_5fcolor_5fred',['LED_COLOR_RED',['../group__led.html#ggadc29c2ff13d900c2f185ee95427fb06ca20c3f7e3db2eca4ce0fe784975373384',1,'dev_leddriver.h']]],
-  ['led_5fcolor_5fwhite',['LED_COLOR_WHITE',['../group__led.html#ggadc29c2ff13d900c2f185ee95427fb06cae0568a71373a19d68ac019a67fcb2c3b',1,'dev_leddriver.h']]],
   ['led_5fkey_5fa1',['LED_KEY_A1',['../classdaisy_1_1_daisy_field.html#a934bafad363c30d198a71961d32a2fdaae960daa550abed7fb149bb3d58083f7c',1,'daisy::DaisyField']]],
   ['led_5fkey_5fa2',['LED_KEY_A2',['../classdaisy_1_1_daisy_field.html#a934bafad363c30d198a71961d32a2fdaa5f995baced93c7fa68c474e26a231102',1,'daisy::DaisyField']]],
   ['led_5fkey_5fa3',['LED_KEY_A3',['../classdaisy_1_1_daisy_field.html#a934bafad363c30d198a71961d32a2fdaaaf69b6332bcc63e551b34cdd2f9ff104',1,'daisy::DaisyField']]],

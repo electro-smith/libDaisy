@@ -1,6 +1,7 @@
 var searchData=
 [
   ['off',['OFF',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a725dbdfb5e3ab465acff41a70f1f5a9d',1,'daisy::Color']]],
+  ['ok',['OK',['../classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16ae0aa021e21dddbd6d8cecec71e9cf564',1,'daisy::I2CHandle']]],
   ['oleddisplay',['OledDisplay',['../classdaisy_1_1_oled_display.html',1,'daisy']]],
   ['open',['Open',['../classdaisy_1_1_wav_player.html#ab125d0c6fb01b45443b57df96255efb9',1,'daisy::WavPlayer']]],
   ['other',['OTHER',['../group__other.html',1,'']]],

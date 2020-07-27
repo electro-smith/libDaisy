@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['callbackfunctionptr',['CallbackFunctionPtr',['../classdaisy_1_1_i2_c_handle.html#a865f3f2c45b937c4084081f807e15d7b',1,'daisy::I2CHandle']]],
   ['capacity',['capacity',['../classdaisy_1_1_ring_buffer.html#a27c0012f632e2332dec0d4b2b415ba93',1,'daisy::RingBuffer::capacity()'],['../classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html#aed99c9354638979ffe236ab6e891407b',1,'daisy::RingBuffer&lt; T, 0 &gt;::capacity()']]],
   ['cardspeed',['CardSpeed',['../struct_d_s_y___s_d___card_info_type_def.html#a9d42091e137076f567f930e4c53ae26f',1,'DSY_SD_CardInfoTypeDef']]],
   ['cardtype',['CardType',['../struct_d_s_y___s_d___card_info_type_def.html#ac81e655382c886e8a638669ad1f63b55',1,'DSY_SD_CardInfoTypeDef']]],
@@ -27,8 +28,8 @@ var searchData=
   ['codec_5fwm8731_5fenter_5fbypass',['codec_wm8731_enter_bypass',['../group__codec.html#gad7b5b5b7621de4fd1cff9a61365e03a7',1,'dev_codec_wm8731.h']]],
   ['codec_5fwm8731_5fexit_5fbypass',['codec_wm8731_exit_bypass',['../group__codec.html#ga057b990b91531d6ea06749636bffe221',1,'dev_codec_wm8731.h']]],
   ['codec_5fwm8731_5finit',['codec_wm8731_init',['../group__codec.html#gaed42c2cc2914d7fe441e6718bb589743',1,'dev_codec_wm8731.h']]],
-  ['color',['color',['../structcolor.html',1,'']]],
   ['color',['Color',['../classdaisy_1_1_color.html',1,'daisy']]],
+  ['config',['Config',['../structdaisy_1_1_i2_c_handle_1_1_config.html',1,'daisy::I2CHandle']]],
   ['configure',['Configure',['../classdaisy_1_1_daisy_seed.html#a756338e5ffbd605a56930d1e634d30e6',1,'daisy::DaisySeed']]],
   ['control_5fnumber',['control_number',['../structdaisy_1_1_control_change_event.html#ac69453ad29a6c7737dd0ca7608f145e3',1,'daisy::ControlChangeEvent']]],
   ['controlchange',['ControlChange',['../group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a0b1ada1624d07a8111c54257702313df',1,'daisy']]],

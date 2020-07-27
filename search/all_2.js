@@ -11,7 +11,7 @@ var searchData=
   ['blocknbr',['BlockNbr',['../struct_d_s_y___s_d___card_info_type_def.html#a1955247be547523e0a16fd37c288b918',1,'DSY_SD_CardInfoTypeDef']]],
   ['blockrate',['BlockRate',['../classdaisy_1_1_daisy_field.html#ad24bde9f1c654ee1400930274380ba7b',1,'daisy::DaisyField']]],
   ['blocksize',['BlockSize',['../struct_d_s_y___s_d___card_info_type_def.html#a030b9e7d12a77aa526ef7fc86bcb01e0',1,'DSY_SD_CardInfoTypeDef::BlockSize()'],['../classdaisy_1_1_daisy_field.html#afb60b1c9a718de0657e6597ad18034f9',1,'daisy::DaisyField::BlockSize()']]],
-  ['blue',['blue',['../structcolor.html#a26ab54f26b28c482a812079e509207c7',1,'color::blue()'],['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a7030ad36aea5814566cd1c9da26afe6d',1,'daisy::Color::BLUE()'],['../classdaisy_1_1_color.html#a5192f53cce080bbce9cf082d0ab71040',1,'daisy::Color::Blue() const ']]],
+  ['blue',['Blue',['../classdaisy_1_1_color.html#a5192f53cce080bbce9cf082d0ab71040',1,'daisy::Color::Blue() const '],['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a7030ad36aea5814566cd1c9da26afe6d',1,'daisy::Color::BLUE()']]],
   ['boards',['BOARDS',['../group__boards.html',1,'']]],
   ['bsp_5fsd_5fabortcallback',['BSP_SD_AbortCallback',['../group__utility.html#ga0a395393d1522c9844c525f0dc61fe3e',1,'util_bsp_sd_diskio.h']]],
   ['bsp_5fsd_5fcardinfo',['BSP_SD_CardInfo',['../group__utility.html#gaa27bc16108f37dbef348fe7e2644da4d',1,'util_bsp_sd_diskio.h']]],

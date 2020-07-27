@@ -1,7 +1,9 @@
 var searchData=
 [
-  ['update',['Update',['../classdaisy_1_1_led.html#aeec57ceddd9f685c50446321ba6e1492',1,'daisy::Led::Update()'],['../classdaisy_1_1_oled_display.html#a41b556a03d7b340a7d64cc09600b6ddf',1,'daisy::OledDisplay::Update()'],['../classdaisy_1_1_rgb_led.html#a6bf7b10c72831aa2d2a7f021822f1899',1,'daisy::RgbLed::Update()']]],
-  ['updateanalogcontrols',['UpdateAnalogControls',['../classdaisy_1_1_daisy_patch.html#ae2ad525616e3ae3a336e8cff2fec9ab0',1,'daisy::DaisyPatch::UpdateAnalogControls()'],['../classdaisy_1_1_daisy_petal.html#ac79b389c66164768a964725189deb12f',1,'daisy::DaisyPetal::UpdateAnalogControls()'],['../classdaisy_1_1_daisy_pod.html#a2c20c15231d0ef1477a9bf3a7868d4d9',1,'daisy::DaisyPod::UpdateAnalogControls()']]],
-  ['updatedigitalcontrols',['UpdateDigitalControls',['../classdaisy_1_1_daisy_field.html#a717928516898bb366cbb711d5163c706',1,'daisy::DaisyField']]],
-  ['updateleds',['UpdateLeds',['../classdaisy_1_1_daisy_petal.html#ab224cad4e33c800d36ab90184859b006',1,'daisy::DaisyPetal::UpdateLeds()'],['../classdaisy_1_1_daisy_pod.html#a77da50cfdca4810687adde08a4913135',1,'daisy::DaisyPod::UpdateLeds()']]]
+  ['timeheldms',['TimeHeldMs',['../classdaisy_1_1_encoder.html#af27e8236a898562728ba578824bbbe19',1,'daisy::Encoder::TimeHeldMs()'],['../classdaisy_1_1_switch.html#a8651810f94dfc2f8639b230dd99701df',1,'daisy::Switch::TimeHeldMs()']]],
+  ['transmitblocking',['TransmitBlocking',['../classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae',1,'daisy::I2CHandle']]],
+  ['transmitdma',['TransmitDma',['../classdaisy_1_1_i2_c_handle.html#a2def35901e936c7c7c88aef8e1633f14',1,'daisy::I2CHandle']]],
+  ['transmitexternal',['TransmitExternal',['../class_usb_handle.html#a307663bf165218f39dfce82f9c41fcdd',1,'UsbHandle::TransmitExternal(uint8_t *buff, size_t size)'],['../class_usb_handle.html#a307663bf165218f39dfce82f9c41fcdd',1,'UsbHandle::TransmitExternal(uint8_t *buff, size_t size)']]],
+  ['transmitinternal',['TransmitInternal',['../class_usb_handle.html#a807f67cbd0cf5737dce72a437b3a6731',1,'UsbHandle::TransmitInternal(uint8_t *buff, size_t size)'],['../class_usb_handle.html#a807f67cbd0cf5737dce72a437b3a6731',1,'UsbHandle::TransmitInternal(uint8_t *buff, size_t size)']]],
+  ['trig',['Trig',['../classdaisy_1_1_gate_in.html#a6a9bac9fe44985baa7097bd47a90a40f',1,'daisy::GateIn']]]
 ];
