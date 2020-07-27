@@ -27,6 +27,7 @@ GDB_FLAGS=
 #DEBUG = 1
 # optimization
 #OPT = -Og
+OPT ?= -O2
 
 
 
