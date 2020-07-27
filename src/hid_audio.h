@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "per_sai.h"
-#include "per_i2c.h"
+//#include "per_i2c.h"
 #ifdef __cplusplus
 extern "C"
 {
@@ -52,8 +52,8 @@ extern "C"
     {
         size_t          block_size; /**< & */
         dsy_sai_handle* sai;        /**< & */
-        dsy_i2c_handle* dev0_i2c;   /**< & */
-        dsy_i2c_handle* dev1_i2c;   /**< & */
+        //dsy_i2c_handle* dev0_i2c;   /**< & */
+        //dsy_i2c_handle* dev1_i2c;   /**< & */
     } dsy_audio_handle;
 
     /* typical example:

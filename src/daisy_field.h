@@ -191,16 +191,17 @@ class DaisyField
     dsy_gpio    gate_out_;
 
   private:
-    float              samplerate_, blockrate_;
-    size_t             blocksize_;
-    Switch             sw_[SW_LAST];
-    dsy_sr_4021_handle keyboard_sr_;
-    GateIn             gate_in_;
-    AnalogControl      knob_[KNOB_LAST];
-    AnalogControl      cv_[CV_LAST];
-    uint8_t            keyboard_state_[16];
-    uint32_t           last_led_update_; // for vegas mode
-    bool               gate_in_trig_;    // True when triggered.
+    float                     samplerate_, blockrate_;
+    size_t                    blocksize_;
+    Switch                    sw_[SW_LAST];
+    dsy_sr_4021_handle        keyboard_sr_;
+    GateIn                    gate_in_;
+    AnalogControl             knob_[KNOB_LAST];
+    AnalogControl             cv_[CV_LAST];
+    uint8_t                   keyboard_state_[16];
+    uint32_t                  last_led_update_; // for vegas mode
+    bool                      gate_in_trig_;    // True when triggered.
+    LedDriverPca9685<2, true> led_driver_;
 };
 
 /** @} */

@@ -61,9 +61,16 @@
 #define PIN_ADC_CV_4 24 // Jumped on Rev2 from 22
 #define PIN_ADC_CV_3 25 // Jumped on Rev2 from 23
 
-#define LED_DRIVER_I2C i2c1_handle /**< & */
-
 using namespace daisy;
+
+static constexpr I2CHandle::Config field_led_i2c_config
+    = {I2CHandle::Config::Peripheral::I2C_1,
+       {{DSY_GPIOB, 8}, {DSY_GPIOB, 9}},
+       I2CHandle::Config::Speed::I2C_1MHZ};
+
+static LedDriverPca9685<2, true>::DmaBuffer DMA_BUFFER_MEM_SECTION
+    field_led_dma_buffer_a,
+    field_led_dma_buffer_b;
 
 void DaisyField::Init()
 {
@@ -127,8 +134,10 @@ void DaisyField::Init()
 
     // LEDs
     // 2x PCA9685 addresses 0x00, and 0x02
-    uint8_t addr[2] = {0x00, 0x02};
-    dsy_led_driver_init(&seed.LED_DRIVER_I2C, addr, 2);
+    uint8_t   addr[2] = {0x00, 0x02};
+    I2CHandle i2c;
+    i2c.Init(field_led_i2c_config);
+    led_driver_.Init(i2c, addr, field_led_dma_buffer_a, field_led_dma_buffer_b);
 
     // Gate In
     dsy_gpio_pin gate_in_pin;
@@ -181,12 +190,12 @@ void DaisyField::VegasMode()
         // Clear
         for(size_t i = 0; i < LED_LAST; i++)
         {
-            dsy_led_driver_set_led(i, 0.0f);
+            led_driver_.SetLed(i, 0.0f);
         }
         // Knob LEDs dance in order
-        dsy_led_driver_set_led(led_grp_a[idx], cube(key_bright));
-        dsy_led_driver_set_led(led_grp_b[idx], cube(1.0f - key_bright));
-        dsy_led_driver_set_led(led_grp_c[idx], key_bright);
+        led_driver_.SetLed(led_grp_a[idx], key_bright);
+        led_driver_.SetLed(led_grp_b[idx], 1.0f - key_bright);
+        led_driver_.SetLed(led_grp_c[idx], key_bright);
         // OLED moves a bar across the screen
         uint32_t bar_x = (now >> 4) % SSD1309_WIDTH;
         display.Fill(false);
@@ -194,8 +203,8 @@ void DaisyField::VegasMode()
         {
             display.DrawPixel(bar_x, i, true);
         }
+
         display.Update();
-        dsy_led_driver_update();
-        dsy_led_driver_update();
+        led_driver_.SwapBuffersAndTransmit();
     }
 }
