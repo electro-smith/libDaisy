@@ -74,6 +74,12 @@ class Switch
     /** \return true if the button is held down (or if the toggle is on) */
     inline bool Pressed() const { return state_ == 0xff; }
 
+    /** \return true if the button is held down, without debouncing */
+    inline bool RawState()
+    {
+        return flip_ ? !dsy_gpio_read(&hw_gpio_) : dsy_gpio_read(&hw_gpio_);
+    }
+
     /** \return the time in milliseconds that the button has been held (or toggle has been on) */
     inline float TimeHeldMs() const
     {
