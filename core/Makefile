@@ -27,7 +27,7 @@ GDB_FLAGS=
 #DEBUG = 1
 # optimization
 #OPT = -Og
-OPT ?= -O2
+
 
 
 ######################################
@@ -99,7 +99,8 @@ MCU = $(CPU) -mthumb $(FPU) $(FLOAT-ABI)
 AS_DEFS =
 
 # C defines
-C_DEFS =  \
+C_DEFS ?=
+C_DEFS +=  \
 -DUSE_HAL_DRIVER \
 -DSTM32H750xx \
 -DUSE_HAL_DRIVER \
