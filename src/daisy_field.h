@@ -86,15 +86,15 @@ class DaisyField
     void Init();
 
     /** Starts the callback
-	\cb Interleaved callback function
+    \cb Interleaved callback function
     */
     void StartAudio(dsy_audio_callback cb);
 
     /** Starts the callback
-	\cb multichannel callback function
+    \cb multichannel callback function
     */
     void StartAudio(dsy_audio_mc_callback cb);
-    
+
     /**
        Switch callback functions
        \param cb New interleaved callback function.
