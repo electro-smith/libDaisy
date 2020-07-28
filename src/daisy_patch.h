@@ -54,18 +54,28 @@ class DaisyPatch
     */
     void SetAudioBlockSize(size_t size);
 
-    /**
-       Start audio output.
-       \param cb Audio callback function
+    /** Starts the callback
+	\cb Interleaved callback function
+    */
+    void StartAudio(dsy_audio_callback cb);
+
+    /** Starts the callback
+	\cb multichannel callback function
     */
     void StartAudio(dsy_audio_mc_callback cb);
-
+    
     /**
-       Change to a different callback function.
-       \param cb New callback function.
-     */
+       Switch callback functions
+       \param cb New interleaved callback function.
+    */
     void ChangeAudioCallback(dsy_audio_callback cb);
 
+    /**
+       Switch callback functions
+       \param cb New multichannel callback function.
+    */
+    void ChangeAudioCallback(dsy_audio_mc_callback cb);
+    
     /** Start analog to digital conversion.*/
     void StartAdc();
 

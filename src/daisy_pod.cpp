@@ -98,10 +98,22 @@ void DaisyPod::StartAudio(dsy_audio_callback cb)
     dsy_audio_start(DSY_AUDIO_INTERNAL);
 }
 
+void DaisyPod::StartAudio(dsy_audio_mc_callback cb)
+{
+    dsy_audio_set_mc_callback(cb);
+    dsy_audio_start(DSY_AUDIO_INTERNAL);
+}
+
 void DaisyPod::ChangeAudioCallback(dsy_audio_callback cb)
 {
     dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
 }
+
+void DaisyPod::ChangeAudioCallback(dsy_audio_mc_callback cb)
+{
+    dsy_audio_set_mc_callback(cb);
+}
+
 
 void DaisyPod::SetAudioBlockSize(size_t size)
 {

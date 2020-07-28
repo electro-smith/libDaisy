@@ -152,6 +152,28 @@ void DaisyField::Init()
     dsy_tim_start();
 }
 
+void DaisyField::StartAudio(dsy_audio_callback cb)
+{
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+    dsy_audio_start(DSY_AUDIO_INTERNAL);
+}
+
+void DaisyField::StartAudio(dsy_audio_mc_callback cb)
+{
+    dsy_audio_set_mc_callback(cb);
+    dsy_audio_start(DSY_AUDIO_INTERNAL);
+}
+
+void DaisyField::ChangeAudioCallback(dsy_audio_callback cb)
+{
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+}
+
+void DaisyField::ChangeAudioCallback(dsy_audio_mc_callback cb)
+{
+    dsy_audio_set_mc_callback(cb);
+}
+
 void DaisyField::VegasMode()
 {
     uint32_t now;
