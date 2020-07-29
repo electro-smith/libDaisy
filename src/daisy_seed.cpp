@@ -140,6 +140,16 @@ void DaisySeed::StartAudio(dsy_audio_mc_callback cb)
     dsy_audio_start(DSY_AUDIO_INTERNAL);
 }
 
+void DaisySeed::ChangeAudioCallback(dsy_audio_callback cb)
+{
+    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+}
+
+void DaisySeed::ChangeAudioCallback(dsy_audio_mc_callback cb)
+{
+    dsy_audio_set_mc_callback(cb);
+}
+
 float DaisySeed::AudioSampleRate()
 {
     // TODO fix to get this from configured rate.
