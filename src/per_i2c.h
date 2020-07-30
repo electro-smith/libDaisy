@@ -147,7 +147,7 @@ extern "C"
 #include "daisy_core.h"
 
     /** @addtogroup serial
-	@{
+    @{
     */
 
     /** Driver for controlling I2C devices.

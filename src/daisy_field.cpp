@@ -152,6 +152,26 @@ void DaisyField::Init()
     dsy_tim_start();
 }
 
+void DaisyField::StartAudio(dsy_audio_callback cb)
+{
+    seed.StartAudio(cb);
+}
+
+void DaisyField::StartAudio(dsy_audio_mc_callback cb)
+{
+    seed.StartAudio(cb);
+}
+
+void DaisyField::ChangeAudioCallback(dsy_audio_callback cb)
+{
+    seed.ChangeAudioCallback(cb);
+}
+
+void DaisyField::ChangeAudioCallback(dsy_audio_mc_callback cb)
+{
+    seed.ChangeAudioCallback(cb);
+}
+
 void DaisyField::VegasMode()
 {
     uint32_t now;

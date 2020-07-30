@@ -191,7 +191,7 @@ I2CHandle::Result I2CHandle::Impl::Init(const I2CHandle::Config& config)
             break;
         default: break;
     }
-    //	i2c_hal_handle_.Init.Timing = 0x00C0EAFF;
+    //    i2c_hal_handle_.Init.Timing = 0x00C0EAFF;
     i2c_hal_handle_.Init.OwnAddress1      = 0;
     i2c_hal_handle_.Init.AddressingMode   = I2C_ADDRESSINGMODE_7BIT;
     i2c_hal_handle_.Init.DualAddressMode  = I2C_DUALADDRESS_DISABLE;

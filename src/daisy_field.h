@@ -85,19 +85,27 @@ class DaisyField
     /**Initializes the Daisy Field, and all of its hardware.*/
     void Init();
 
-    /** Starts the Audio Engine, calling the specified interleaving callback when new data is ready */
-    void StartAudio(dsy_audio_callback cb)
-    {
-        dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
-        dsy_audio_start(DSY_AUDIO_INTERNAL);
-    }
+    /** Starts the callback
+    \cb Interleaved callback function
+    */
+    void StartAudio(dsy_audio_callback cb);
 
-    /** Starts the Audio Engine, calling the specified non-interleaving callback when new data is ready */
-    void StartAudio(dsy_audio_mc_callback cb)
-    {
-        dsy_audio_set_mc_callback(cb);
-        dsy_audio_start(DSY_AUDIO_INTERNAL);
-    }
+    /** Starts the callback
+    \cb multichannel callback function
+    */
+    void StartAudio(dsy_audio_mc_callback cb);
+
+    /**
+       Switch callback functions
+       \param cb New interleaved callback function.
+    */
+    void ChangeAudioCallback(dsy_audio_callback cb);
+
+    /**
+       Switch callback functions
+       \param cb New multichannel callback function.
+    */
+    void ChangeAudioCallback(dsy_audio_mc_callback cb);
 
     /** Starts Transfering data from the ADC */
     void StartAdc() { seed.adc.Start(); }

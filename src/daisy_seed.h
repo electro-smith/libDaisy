@@ -65,6 +65,15 @@ class DaisySeed
     */
     void StartAudio(dsy_audio_mc_callback cb);
 
+    /** Changes to a new interleaved callback
+     */
+    void ChangeAudioCallback(dsy_audio_callback cb);
+
+    /** Changes to a new multichannel callback
+     */
+    void ChangeAudioCallback(dsy_audio_mc_callback cb);
+
+
     /** Sets the state of the built in LED
      */
     void SetLed(bool state);
