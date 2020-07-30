@@ -126,8 +126,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac05d6bd0d67760e875c2071652fa0ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a765da8887de68b071367d6a88ac54cf2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a765da8887de68b071367d6a88ac54cf2">StartAudio</a> (<a class="el" href="group__audio.html#ga102410471d41f1fcc029a3e9ec811579">dsy_audio_callback</a> cb)</td></tr>
 <tr class="separator:a765da8887de68b071367d6a88ac54cf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d9a1e0f79df26a189596d134f230843"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a5d9a1e0f79df26a189596d134f230843">StartAudio</a> (<a class="el" href="group__audio.html#gabce1c5fc2c2db646faee810a6d6e27d1">dsy_audio_mc_callback</a> cb)</td></tr>
+<tr class="separator:a5d9a1e0f79df26a189596d134f230843"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a65e2919087209592aa41260b4e91dc26"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a65e2919087209592aa41260b4e91dc26">ChangeAudioCallback</a> (<a class="el" href="group__audio.html#ga102410471d41f1fcc029a3e9ec811579">dsy_audio_callback</a> cb)</td></tr>
 <tr class="separator:a65e2919087209592aa41260b4e91dc26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7557c587f6b87ca31dc989abf0db2711"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a7557c587f6b87ca31dc989abf0db2711">ChangeAudioCallback</a> (<a class="el" href="group__audio.html#gabce1c5fc2c2db646faee810a6d6e27d1">dsy_audio_mc_callback</a> cb)</td></tr>
+<tr class="separator:a7557c587f6b87ca31dc989abf0db2711"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac98cbdd0e34ec2cb994ca012f05e6317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#ac98cbdd0e34ec2cb994ca012f05e6317">StartAdc</a> ()</td></tr>
 <tr class="separator:ac98cbdd0e34ec2cb994ca012f05e6317"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a228688fe03c569148141a8826fb20460"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a228688fe03c569148141a8826fb20460">AudioSampleRate</a> ()</td></tr>
@@ -282,7 +286,29 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p><a class="el" href="classdaisy_1_1_switch.html">Switch</a> callback functions </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">cb</td><td>New callback function. </td></tr>
+    <tr><td class="paramname">cb</td><td>New interleaved callback function. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a7557c587f6b87ca31dc989abf0db2711"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPod::ChangeAudioCallback </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__audio.html#gabce1c5fc2c2db646faee810a6d6e27d1">dsy_audio_mc_callback</a>&#160;</td>
+          <td class="paramname"><em>cb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><a class="el" href="classdaisy_1_1_switch.html">Switch</a> callback functions </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cb</td><td>New multichannel callback function. </td></tr>
   </table>
   </dd>
 </dl>
@@ -427,12 +453,24 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Start audio callback </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">cb</td><td>Callback function. </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Starts the callback  Interleaved callback function </p>
+
+</div>
+</div>
+<a class="anchor" id="a5d9a1e0f79df26a189596d134f230843"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPod::StartAudio </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__audio.html#gabce1c5fc2c2db646faee810a6d6e27d1">dsy_audio_mc_callback</a>&#160;</td>
+          <td class="paramname"><em>cb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Starts the callback  multichannel callback function </p>
 
 </div>
 </div>
