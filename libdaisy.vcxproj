@@ -37,8 +37,8 @@
     <GNUTargetType>StaticLibrary</GNUTargetType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
-    <ToolchainID>com.visualgdb.arm-eabi</ToolchainID>
-    <ToolchainVersion>9.2.1/8.3.0/r1</ToolchainVersion>
+    <ToolchainID>com.sysprogs.gnuarm.arm-eabi</ToolchainID>
+    <ToolchainVersion>8.3.1/8.0/r1</ToolchainVersion>
     <GNUTargetType>StaticLibrary</GNUTargetType>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
@@ -57,11 +57,27 @@
       <LinkerScript>core/STM32H750IB_flash.lds</LinkerScript>
       <AdditionalOptions />
     </Link>
+    <ToolchainSettingsContainer>
+      <InstructionSet>THUMB</InstructionSet>
+    </ToolchainSettingsContainer>
+    <ToolchainSettingsContainer>
+      <FloatABI>hard</FloatABI>
+    </ToolchainSettingsContainer>
+    <ToolchainSettingsContainer>
+      <ARMFPU>fpv5-sp-d16</ARMFPU>
+    </ToolchainSettingsContainer>
+    <ToolchainSettingsContainer>
+      <ARMCPU>cortex-m7</ARMCPU>
+    </ToolchainSettingsContainer>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>src;Drivers/CMSIS/Device/ST/STM32H7xx/Include;Drivers/STM32H7xx_HAL_Driver/Inc;Drivers/CMSIS/Include;Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;Middlewares/ST/STM32_USB_Device_Library/Core/Inc;Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;Middlewares/Third_Party/FatFs/src;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Drivers/CMSIS/Device/ST/STM32H7xx/Include;Drivers/STM32H7xx_HAL_Driver/Inc;Drivers/CMSIS/Include;Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;Middlewares/ST/STM32_USB_Device_Library/Core/Inc;Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;Middlewares/Third_Party/FatFs/src;src;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG=1;RELEASE=1;__FPU_PRESENT=1;STM32H750xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
+      <InlineFunctions>true</InlineFunctions>
+      <WarningLevel>All</WarningLevel>
+      <CLanguageStandard>GNU11</CLanguageStandard>
+      <CPPLanguageStandard>GNUPP14</CPPLanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
@@ -69,6 +85,18 @@
       <AdditionalLibraryNames>;%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
       <LinkerScript>core/STM32H750IB_flash.lds</LinkerScript>
     </Link>
+    <ToolchainSettingsContainer>
+      <InstructionSet>THUMB</InstructionSet>
+    </ToolchainSettingsContainer>
+    <ToolchainSettingsContainer>
+      <FloatABI>hard</FloatABI>
+    </ToolchainSettingsContainer>
+    <ToolchainSettingsContainer>
+      <ARMFPU>fpv5-d16</ARMFPU>
+    </ToolchainSettingsContainer>
+    <ToolchainSettingsContainer>
+      <ARMCPU>cortex-m7</ARMCPU>
+    </ToolchainSettingsContainer>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -197,9 +225,6 @@
     <ClCompile Include="src\daisy_pod.cpp" />
     <ClCompile Include="src\daisy_seed.cpp" />
     <ClCompile Include="src\dev_codec_ak4556.c" />
-    <ClCompile Include="src\dev_codec_pcm3060.c" />
-    <ClCompile Include="src\dev_codec_wm8731.c" />
-    <ClCompile Include="src\dev_leddriver.c" />
     <ClCompile Include="src\dev_sdram.c" />
     <ClCompile Include="src\dev_sr_4021.c" />
     <ClCompile Include="src\dev_sr_595.cpp" />
@@ -219,7 +244,7 @@
     <ClCompile Include="src\per_adc.cpp" />
     <ClCompile Include="src\per_dac.c" />
     <ClCompile Include="src\per_gpio.c" />
-    <ClCompile Include="src\per_i2c.c" />
+    <ClCompile Include="src\per_i2c.cpp" />
     <ClCompile Include="src\per_qspi.c" />
     <ClCompile Include="src\per_sai.c" />
     <ClCompile Include="src\per_sdmmc.cpp" />
@@ -393,8 +418,6 @@
     <ClInclude Include="src\daisy_pod.h" />
     <ClInclude Include="src\daisy_seed.h" />
     <ClInclude Include="src\dev_codec_ak4556.h" />
-    <ClInclude Include="src\dev_codec_pcm3060.h" />
-    <ClInclude Include="src\dev_codec_wm8731.h" />
     <ClInclude Include="src\dev_codec_wm8731_frame.h" />
     <ClInclude Include="src\dev_flash_IS25LP064A.h" />
     <ClInclude Include="src\dev_flash_IS25LP080D.h" />

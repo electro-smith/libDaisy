@@ -109,9 +109,11 @@ void DaisyField::Init()
                              seed.GetPin(PIN_MUX_SEL_2));
     seed.adc.Init(adc_cfg, 5);
 
+    // Order of pots on the hardware connected to mux.
+    size_t pot_order[KNOB_LAST] = {0, 3, 1, 4, 2, 5, 6, 7};
     for(size_t i = 0; i < KNOB_LAST; i++)
     {
-        knob_[i].Init(seed.adc.GetMuxPtr(4, i), blockrate_);
+        knob_[i].Init(seed.adc.GetMuxPtr(4, pot_order[i]), blockrate_);
     }
     for(size_t i = 0; i < CV_LAST; i++)
     {
