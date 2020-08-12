@@ -36,21 +36,20 @@ void dsy_sr_4021_init(dsy_sr_4021_handle *sr)
 //void __attribute__((optimize("O0"))) dsy_sr_4021_update(dsy_sr_4021_handle *sr)
 
 // 3000 = 15us max clock/rise/fall time
-static const uint32_t kGpioDelayAmt = 1; // in ticks @ 200MHz
 void dsy_sr_4021_update(dsy_sr_4021_handle *sr)
 {
     uint8_t idx;
     // Strobe CS Pin
     dsy_gpio_write(&sr->clk, 0);
     dsy_gpio_write(&sr->cs, 1);
-    dsy_tim_delay_tick(kGpioDelayAmt);
+    dsy_tim_delay_tick(1);
     dsy_gpio_write(&sr->cs, 0);
     // Clock through data.
     for(uint8_t i = 0; i < 8 * sr->num_daisychained; i++)
     {
         // Grab data from each parallel data pin.
         dsy_gpio_write(&sr->clk, 0);
-        dsy_tim_delay_tick(kGpioDelayAmt);
+        dsy_tim_delay_tick(1);
         for(uint8_t j = 0; j < sr->num_parallel; j++)
         {
             idx = (8 * sr->num_daisychained - 1) - i;
@@ -58,7 +57,7 @@ void dsy_sr_4021_update(dsy_sr_4021_handle *sr)
             sr->states[idx] = dsy_gpio_read(&sr->data[j]);
         }
         dsy_gpio_write(&sr->clk, 1);
-        dsy_tim_delay_tick(kGpioDelayAmt);
+        dsy_tim_delay_tick(1);
     }
 }
 

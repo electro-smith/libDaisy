@@ -153,10 +153,10 @@ class DaisyField
         gate_in_trig_ = gate_in_.Trig();
     }
 
-	/** Sets the output of CV out 1 to a value between 0-4095 that corresponds to 0-5V */
+    /** Sets the output of CV out 1 to a value between 0-4095 that corresponds to 0-5V */
     inline void SetCvOut1(uint16_t val) { dsy_dac_write(DSY_DAC_CHN1, val); }
 
-	/** Sets the output of CV out 1 to a value between 0-4095 that corresponds to 0-5V */
+    /** Sets the output of CV out 1 to a value between 0-4095 that corresponds to 0-5V */
     inline void SetCvOut2(uint16_t val) { dsy_dac_write(DSY_DAC_CHN2, val); }
 
     inline bool KeyboardState(size_t idx) const
