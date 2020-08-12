@@ -30,7 +30,7 @@ var searchData=
   ['prog_5ferase_5fresume_5fcmd',['PROG_ERASE_RESUME_CMD',['../group__flash.html#ga5636bed05f7ecd27f6a4eeeb7c6d3ed3',1,'PROG_ERASE_RESUME_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga5636bed05f7ecd27f6a4eeeb7c6d3ed3',1,'PROG_ERASE_RESUME_CMD():&#160;dev_flash_IS25LP080D.h']]],
   ['prog_5ferase_5fsuspend_5fcmd',['PROG_ERASE_SUSPEND_CMD',['../group__flash.html#ga15383120ee1aebbe28abbf04db5faf41',1,'PROG_ERASE_SUSPEND_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga15383120ee1aebbe28abbf04db5faf41',1,'PROG_ERASE_SUSPEND_CMD():&#160;dev_flash_IS25LP080D.h']]],
   ['programchange',['ProgramChange',['../group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a27e60326355eedaf215c23c4527ce627',1,'daisy']]],
-  ['pull',['pull',['../structdsy__gpio.html#af15905326174d62efafda5775d2aea8a',1,'dsy_gpio::pull()'],['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51',1,'daisy::Switch::Pull()']]],
+  ['pull',['Pull',['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51',1,'daisy::Switch::Pull()'],['../structdsy__gpio.html#af15905326174d62efafda5775d2aea8a',1,'dsy_gpio::pull()']]],
   ['pull_5fdown',['PULL_DOWN',['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51aec89c3f7c267f0eaacd65441ef854bca',1,'daisy::Switch']]],
   ['pull_5fnone',['PULL_NONE',['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51a2ea8b603f1a3f5864f2f5a40a09be347',1,'daisy::Switch']]],
   ['pull_5fup',['PULL_UP',['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51a1f6f843c9fc60e6d00e2cbcbe97bbe8d',1,'daisy::Switch']]],

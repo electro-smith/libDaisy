@@ -4,7 +4,7 @@ var searchData=
   ['sai1_5fpin_5fconfig',['sai1_pin_config',['../structdsy__sai__handle.html#a46d7202cbd2da930f073f0f16c656fb0',1,'dsy_sai_handle']]],
   ['sai2_5fpin_5fconfig',['sai2_pin_config',['../structdsy__sai__handle.html#ad6ab4b2b747f0f86f8b4c7c60083985d',1,'dsy_sai_handle']]],
   ['sai_5fhandle',['sai_handle',['../classdaisy_1_1_daisy_seed.html#a7e98c7767df72042ff7cfbb136ebf503',1,'daisy::DaisySeed']]],
-  ['samplerate',['samplerate',['../structdsy__sai__handle.html#a192250070ae6e51d6b3e01de54790b71',1,'dsy_sai_handle::samplerate()'],['../struct_w_a_v___format_type_def.html#ae8c4e494feaf378e05635d989f95b0b1',1,'WAV_FormatTypeDef::SampleRate()']]],
+  ['samplerate',['SampleRate',['../struct_w_a_v___format_type_def.html#ae8c4e494feaf378e05635d989f95b0b1',1,'WAV_FormatTypeDef::SampleRate()'],['../structdsy__sai__handle.html#a192250070ae6e51d6b3e01de54790b71',1,'dsy_sai_handle::samplerate()']]],
   ['scl',['scl',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a168960729dc107c030c3a7cfe5c4b138',1,'daisy::I2CHandle::Config']]],
   ['sda',['sda',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a8d0a82df1f49113e5e4e2aff071e16e3',1,'daisy::I2CHandle::Config']]],
   ['sdram_5fhandle',['sdram_handle',['../classdaisy_1_1_daisy_seed.html#a03d712e565ea71ec3d7126d0bbab6220',1,'daisy::DaisySeed']]],
