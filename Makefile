@@ -7,7 +7,7 @@ dev/codec_ak4556 \
 sys/dma \
 hid/audio \
 dev/sdram \
-fatfs \
+sys/fatfs \
 sys/system \
 per/dac \
 per/gpio \
@@ -21,7 +21,7 @@ util/hal_map \
 util/oled_fonts \
 util/sd_diskio \
 util/unique_id \
-system/stm32h7xx \
+sys/system_stm32h7xx \
 usbd/usbd_cdc_if \
 usbd/usbd_desc \
 usbd/usbd_conf 
@@ -194,10 +194,10 @@ Middlewares/Third_Party/FatFs/src/ff.c \
 Middlewares/Third_Party/FatFs/src/ff_gen_drv.c 
 
 # C++ Source
-CPP_SOURCES += $(addsuffix .cpp, $(MODULE_DIR)/$(CPP_MODULES))
+CPP_SOURCES += $(addsuffix .cpp, $(addprefix $(MODULE_DIR)/, $(CPP_MODULES)))
 
 # C sources
-C_SOURCES += $(addsuffix .c, $(MODULE_DIR)/$(C_MODULES))
+C_SOURCES += $(addsuffix .c, $(addprefix $(MODULE_DIR)/, $(C_MODULES)))
 C_SOURCES += core/startup_stm32h750xx.c
 
 #STARTUP_PATH = Drivers/CMSIS/Device/ST/STM32H7xx/Source/Templates/gcc
