@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['scopedirqblocker',['ScopedIrqBlocker',['../classdaisy_1_1_scoped_irq_blocker.html',1,'daisy']]],
   ['sdmmchandler',['SdmmcHandler',['../classdaisy_1_1_sdmmc_handler.html',1,'daisy']]],
   ['sdmmchandlerinit',['SdmmcHandlerInit',['../structdaisy_1_1_sdmmc_handler_init.html',1,'daisy']]],
   ['shiftregister595',['ShiftRegister595',['../class_shift_register595.html',1,'']]],

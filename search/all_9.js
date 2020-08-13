@@ -84,5 +84,6 @@ var searchData=
   ['is25lp080d_5fsr_5fwren',['IS25LP080D_SR_WREN',['../group__flash.html#ga3669a15eb6127b163120997053ac2946',1,'flash_IS25LP080D.h']]],
   ['is25lp080d_5fvcr_5fnb_5fdummy',['IS25LP080D_VCR_NB_DUMMY',['../group__flash.html#ga73ef317e70d221347230018152749727',1,'flash_IS25LP080D.h']]],
   ['is25lp080d_5fvcr_5fwrap',['IS25LP080D_VCR_WRAP',['../group__flash.html#ga18d1eb584a16a8dbf577822d18f08a7c',1,'flash_IS25LP080D.h']]],
-  ['is25lp080d_5fvcr_5fxip',['IS25LP080D_VCR_XIP',['../group__flash.html#gaa2371656f25790f0cc317fbeb5a07fd5',1,'flash_IS25LP080D.h']]]
+  ['is25lp080d_5fvcr_5fxip',['IS25LP080D_VCR_XIP',['../group__flash.html#gaa2371656f25790f0cc317fbeb5a07fd5',1,'flash_IS25LP080D.h']]],
+  ['isempty',['isEmpty',['../classdaisy_1_1_ring_buffer.html#a89d5f992cc573ef5be83ae0bbcd5014d',1,'daisy::RingBuffer']]]
 ];
