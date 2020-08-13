@@ -35,6 +35,9 @@ class RingBuffer
     /** \return number of unread elements in ring buffer */
     inline size_t readable() const { return (write_ptr_ - read_ptr_) % size; }
 
+    /** \returns True, if the buffer is empty. */
+    inline bool isEmpty() const { return write_ptr_ == read_ptr_; }
+
     /** Writes the value to the next available position in the ring buffer
     \param v Value to write
     */
