@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['page_5fprog_5fcmd',['PAGE_PROG_CMD',['../group__flash.html#ga69adbf63db6a1f1a286e4f77b95f7c25',1,'PAGE_PROG_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga69adbf63db6a1f1a286e4f77b95f7c25',1,'PAGE_PROG_CMD():&#160;dev_flash_IS25LP080D.h'],['../group__flash.html#ga69adbf63db6a1f1a286e4f77b95f7c25',1,'PAGE_PROG_CMD():&#160;dev_flash_IS25LP080D.h']]],
+  ['page_5fprog_5fcmd',['PAGE_PROG_CMD',['../group__flash.html#ga69adbf63db6a1f1a286e4f77b95f7c25',1,'PAGE_PROG_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga69adbf63db6a1f1a286e4f77b95f7c25',1,'PAGE_PROG_CMD():&#160;flash_IS25LP080D.h'],['../group__flash.html#ga69adbf63db6a1f1a286e4f77b95f7c25',1,'PAGE_PROG_CMD():&#160;flash_IS25LP080D.h']]],
   ['parameter',['Parameter',['../classdaisy_1_1_parameter.html#ac53e51f76edd3958bc201a8eda419afb',1,'daisy::Parameter']]],
   ['parameter',['Parameter',['../classdaisy_1_1_parameter.html',1,'daisy']]],
   ['parse',['Parse',['../classdaisy_1_1_midi_handler.html#a6ad7f3e96e321775266f4e58d356c2a9',1,'daisy::MidiHandler']]],
@@ -27,8 +27,8 @@ var searchData=
   ['pressed',['Pressed',['../classdaisy_1_1_encoder.html#ad20a28645f585857f99cbfccdb95798a',1,'daisy::Encoder::Pressed()'],['../classdaisy_1_1_switch.html#a6b5d5ab68b0ed20ff2fc96206a33acc0',1,'daisy::Switch::Pressed()']]],
   ['process',['Process',['../classdaisy_1_1_analog_control.html#a7109593bfc106dd8ef35aba4434b8321',1,'daisy::AnalogControl::Process()'],['../classdaisy_1_1_parameter.html#a6af6747924f1651e6698a4d72c86532d',1,'daisy::Parameter::Process()']]],
   ['processanalogcontrols',['ProcessAnalogControls',['../classdaisy_1_1_daisy_field.html#a347b7586d8f335447f6c31925f12dfdd',1,'daisy::DaisyField']]],
-  ['prog_5ferase_5fresume_5fcmd',['PROG_ERASE_RESUME_CMD',['../group__flash.html#ga5636bed05f7ecd27f6a4eeeb7c6d3ed3',1,'PROG_ERASE_RESUME_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga5636bed05f7ecd27f6a4eeeb7c6d3ed3',1,'PROG_ERASE_RESUME_CMD():&#160;dev_flash_IS25LP080D.h']]],
-  ['prog_5ferase_5fsuspend_5fcmd',['PROG_ERASE_SUSPEND_CMD',['../group__flash.html#ga15383120ee1aebbe28abbf04db5faf41',1,'PROG_ERASE_SUSPEND_CMD():&#160;dev_flash_IS25LP064A.h'],['../group__flash.html#ga15383120ee1aebbe28abbf04db5faf41',1,'PROG_ERASE_SUSPEND_CMD():&#160;dev_flash_IS25LP080D.h']]],
+  ['prog_5ferase_5fresume_5fcmd',['PROG_ERASE_RESUME_CMD',['../group__flash.html#ga5636bed05f7ecd27f6a4eeeb7c6d3ed3',1,'PROG_ERASE_RESUME_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga5636bed05f7ecd27f6a4eeeb7c6d3ed3',1,'PROG_ERASE_RESUME_CMD():&#160;flash_IS25LP080D.h']]],
+  ['prog_5ferase_5fsuspend_5fcmd',['PROG_ERASE_SUSPEND_CMD',['../group__flash.html#ga15383120ee1aebbe28abbf04db5faf41',1,'PROG_ERASE_SUSPEND_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga15383120ee1aebbe28abbf04db5faf41',1,'PROG_ERASE_SUSPEND_CMD():&#160;flash_IS25LP080D.h']]],
   ['programchange',['ProgramChange',['../group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a27e60326355eedaf215c23c4527ce627',1,'daisy']]],
   ['pull',['Pull',['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51',1,'daisy::Switch::Pull()'],['../structdsy__gpio.html#af15905326174d62efafda5775d2aea8a',1,'dsy_gpio::pull()']]],
   ['pull_5fdown',['PULL_DOWN',['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51aec89c3f7c267f0eaacd65441ef854bca',1,'daisy::Switch']]],

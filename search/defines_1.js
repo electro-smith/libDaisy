@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['dsy_5fwavplayer_5fh',['DSY_WAVPLAYER_H',['../hid__wavplayer_8h.html#ad384c43689d53e261578fa4dcb9dd00a',1,'hid_wavplayer.h']]]
+  ['ff_5ffree',['ff_free',['../ffconf_8h.html#ac7b5118894bfc43cc0d19f7290a7be0c',1,'ffconf.h']]],
+  ['ff_5fmalloc',['ff_malloc',['../ffconf_8h.html#a1eee011a3d69ab8a3d199b985fe2ad36',1,'ffconf.h']]]
 ];
