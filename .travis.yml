@@ -35,12 +35,6 @@ jobs:
                   packages:
                       - doxygen
                       - pandoc
-                      - texlive-fonts-recommended
-                      - texlive-latex-extra
-                      - texlive-fonts-extra
-                      - dvipng
-                      - texlive-latex-recommended
-                      - lmodern # needed for style guide pdf
           env:
               - BUILD_DOCS=1
           deploy:
