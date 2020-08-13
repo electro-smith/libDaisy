@@ -1,29 +1,30 @@
 TARGET = libdaisy
 
 MODULE_DIR=src
+
 C_MODULES = \
-dev_codec_ak4556 \
-sys_dma \
-hid_audio \
-dev_sdram \
-fatfs \
-sys_system \
-per_dac \
-per_gpio \
-per_qspi \
-per_sai \
-per_sdmmc \
-per_tim \
-dev_sr_4021 \
-util_bsp_sd_diskio \
-util_hal_map \
-util_oled_fonts \
-util_sd_diskio \
-util_unique_id \
-system_stm32h7xx \
-usbd_cdc_if \
-usbd_desc \
-usbd_conf 
+dev/codec_ak4556 \
+sys/dma \
+hid/audio \
+dev/sdram \
+sys/fatfs \
+sys/system \
+per/dac \
+per/gpio \
+per/qspi \
+per/sai \
+per/sdmmc \
+per/tim \
+dev/sr_4021 \
+util/bsp_sd_diskio \
+util/hal_map \
+util/oled_fonts \
+util/sd_diskio \
+util/unique_id \
+sys/system_stm32h7xx \
+usbd/usbd_cdc_if \
+usbd/usbd_desc \
+usbd/usbd_conf 
 
 CPP_MODULES = \
 daisy_seed \
@@ -31,23 +32,23 @@ daisy_pod \
 daisy_patch \
 daisy_petal \
 daisy_field \
-dev_sr_595 \
-hid_ctrl \
-hid_encoder \
-hid_gatein \
-hid_led \
-hid_midi \
-hid_oled_display \
-hid_parameter \
-hid_rgb_led \
-hid_switch \
-hid_usb \
-hid_wavplayer \
-per_adc \
-per_i2c \
-per_spi \
-per_uart \
-util_color 
+dev/sr_595 \
+hid/ctrl \
+hid/encoder \
+hid/gatein \
+hid/led \
+hid/midi \
+hid/oled_display \
+hid/parameter \
+hid/rgb_led \
+hid/switch \
+hid/usb \
+hid/wavplayer \
+per/adc \
+per/i2c \
+per/spi \
+per/uart \
+util/color
 
 ######################################
 # building variables
@@ -193,11 +194,10 @@ Middlewares/Third_Party/FatFs/src/ff.c \
 Middlewares/Third_Party/FatFs/src/ff_gen_drv.c 
 
 # C++ Source
-CPP_SOURCES += $(addsuffix .cpp, $(MODULE_DIR)/$(CPP_MODULES))
+CPP_SOURCES += $(addsuffix .cpp, $(addprefix $(MODULE_DIR)/, $(CPP_MODULES)))
 
 # C sources
-C_SOURCES += $(addsuffix .c, $(MODULE_DIR)/$(C_MODULES))
-
+C_SOURCES += $(addsuffix .c, $(addprefix $(MODULE_DIR)/, $(C_MODULES)))
 C_SOURCES += core/startup_stm32h750xx.c
 
 #STARTUP_PATH = Drivers/CMSIS/Device/ST/STM32H7xx/Source/Templates/gcc
@@ -263,6 +263,9 @@ C_DEFS =  \
 
 
 C_INCLUDES = \
+-I$(MODULE_DIR) \
+-I$(MODULE_DIR)/sys \
+-I$(MODULE_DIR)/usbd \
 -IDrivers/CMSIS/Include \
 -IDrivers/CMSIS/Device/ST/STM32H7xx/Include \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
@@ -308,25 +311,28 @@ all: $(BUILD_DIR)/$(TARGET).a
 #######################################
 
 # list of C program objects
-OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
+OBJECTS = $(addprefix $(BUILD_DIR)/,$(C_SOURCES:.c=.o))
 vpath %.c $(sort $(dir $(C_SOURCES)))
 # list of CPP program objects
-OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(CPP_SOURCES:.cpp=.o)))
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(CPP_SOURCES:.cpp=.o))
 vpath %.cpp $(sort $(dir $(CPP_SOURCES)))
 # list of ASM program objects
-OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(ASM_SOURCES:.s=.o))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
 # Prunes duplicates, and orders lexically (for archive build)
 SORTED_OBJECTS = $(sort $(OBJECTS))
 
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
+	mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(C_STANDARD) -c $< -o $@ -MD -MP -MF $(BUILD_DIR)/$(notdir $(<:.c=.dep))
 
 $(BUILD_DIR)/%.o: %.cpp Makefile | $(BUILD_DIR)
+	mkdir -p $(@D)
 	$(CXX) $(CPPFLAGS) $(CPP_STANDARD) -c $< -o $@ -MD -MP -MF $(BUILD_DIR)/$(notdir $(<:.cpp=.dep))
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
+	mkdir -p $(@D)
 	$(AS) -c $(CFLAGS) $< -o $@ -MD -MP -MF $(BUILD_DIR)/$(notdir $(<:.s =.dep))
 
 $(BUILD_DIR)/$(TARGET).a: $(SORTED_OBJECTS) Makefile
