@@ -7,8 +7,8 @@
 
 // # Rev3 and Rev4 with newest pinout.
 // Compatible with Seed Rev3 and Rev4
-#define SW_1_PIN 28
-#define SW_2_PIN 27
+#define SW_1_PIN 27
+#define SW_2_PIN 28
 
 #define ENC_A_PIN 26
 #define ENC_B_PIN 25
