@@ -355,50 +355,138 @@
     <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
       <Filter>Middleware_USB</Filter>
     </ClCompile>
-    <ClCompile Include="src\daisy_field.cpp" />
-    <ClCompile Include="src\daisy_patch.cpp" />
-    <ClCompile Include="src\daisy_petal.cpp" />
-    <ClCompile Include="src\daisy_pod.cpp" />
-    <ClCompile Include="src\daisy_seed.cpp" />
-    <ClCompile Include="src\dev\codec_ak4556.c" />
-    <ClCompile Include="src\dev\sdram.c" />
-    <ClCompile Include="src\dev\sr_595.cpp" />
-    <ClCompile Include="src\dev\sr_4021.c" />
-    <ClCompile Include="src\hid\audio.c" />
-    <ClCompile Include="src\hid\ctrl.cpp" />
-    <ClCompile Include="src\hid\encoder.cpp" />
-    <ClCompile Include="src\hid\gatein.cpp" />
-    <ClCompile Include="src\hid\led.cpp" />
-    <ClCompile Include="src\hid\midi.cpp" />
-    <ClCompile Include="src\hid\oled_display.cpp" />
-    <ClCompile Include="src\hid\parameter.cpp" />
-    <ClCompile Include="src\hid\rgb_led.cpp" />
-    <ClCompile Include="src\hid\switch.cpp" />
-    <ClCompile Include="src\hid\usb.cpp" />
-    <ClCompile Include="src\hid\wavplayer.cpp" />
-    <ClCompile Include="src\per\adc.cpp" />
-    <ClCompile Include="src\per\dac.c" />
-    <ClCompile Include="src\per\gpio.c" />
-    <ClCompile Include="src\per\i2c.cpp" />
-    <ClCompile Include="src\per\qspi.c" />
-    <ClCompile Include="src\per\sai.c" />
-    <ClCompile Include="src\per\sdmmc.cpp" />
-    <ClCompile Include="src\per\spi.cpp" />
-    <ClCompile Include="src\per\tim.c" />
-    <ClCompile Include="src\per\uart.cpp" />
-    <ClCompile Include="src\sys\dma.c" />
-    <ClCompile Include="src\sys\fatfs.c" />
-    <ClCompile Include="src\sys\system.c" />
-    <ClCompile Include="src\sys\system_stm32h7xx.c" />
-    <ClCompile Include="src\usbd\usbd_cdc_if.c" />
-    <ClCompile Include="src\usbd\usbd_conf.c" />
-    <ClCompile Include="src\usbd\usbd_desc.c" />
-    <ClCompile Include="src\util\bsp_sd_diskio.c" />
-    <ClCompile Include="src\util\color.cpp" />
-    <ClCompile Include="src\util\hal_map.c" />
-    <ClCompile Include="src\util\oled_fonts.c" />
-    <ClCompile Include="src\util\sd_diskio.c" />
-    <ClCompile Include="src\util\unique_id.c" />
+    <ClCompile Include="src\sys\system.c">
+      <Filter>sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sys\fatfs.c">
+      <Filter>sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sys\system_stm32h7xx.c">
+      <Filter>sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sys\dma.c">
+      <Filter>sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\adc.cpp">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\dac.c">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\gpio.c">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\i2c.cpp">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\qspi.c">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\sai.c">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\sdmmc.cpp">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\spi.cpp">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\tim.c">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\uart.cpp">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\audio.c">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\ctrl.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\encoder.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\gatein.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\led.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\oled_display.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\parameter.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\rgb_led.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\switch.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\usb.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\wavplayer.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev\codec_ak4556.c">
+      <Filter>dev</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev\sr_4021.c">
+      <Filter>dev</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev\sr_595.cpp">
+      <Filter>dev</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev\sdram.c">
+      <Filter>dev</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\unique_id.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\sd_diskio.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\oled_fonts.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\hal_map.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\color.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\bsp_sd_diskio.c">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\midi.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\usbd\usbd_cdc_if.c">
+      <Filter>usbd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\usbd\usbd_conf.c">
+      <Filter>usbd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\usbd\usbd_desc.c">
+      <Filter>usbd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\daisy_field.cpp">
+      <Filter>boards</Filter>
+    </ClCompile>
+    <ClCompile Include="src\daisy_patch.cpp">
+      <Filter>boards</Filter>
+    </ClCompile>
+    <ClCompile Include="src\daisy_petal.cpp">
+      <Filter>boards</Filter>
+    </ClCompile>
+    <ClCompile Include="src\daisy_pod.cpp">
+      <Filter>boards</Filter>
+    </ClCompile>
+    <ClCompile Include="src\daisy_seed.cpp">
+      <Filter>boards</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h">
@@ -841,57 +929,159 @@
     </ClInclude>
     <ClInclude Include="src\daisy.h" />
     <ClInclude Include="src\daisy_core.h" />
-    <ClInclude Include="src\daisy_field.h" />
-    <ClInclude Include="src\daisy_patch.h" />
-    <ClInclude Include="src\daisy_petal.h" />
-    <ClInclude Include="src\daisy_pod.h" />
-    <ClInclude Include="src\daisy_seed.h" />
-    <ClInclude Include="src\dev\codec_ak4556.h" />
-    <ClInclude Include="src\dev\flash_IS25LP064A.h" />
-    <ClInclude Include="src\dev\flash_IS25LP080D.h" />
-    <ClInclude Include="src\dev\leddriver.h" />
-    <ClInclude Include="src\dev\sdram.h" />
-    <ClInclude Include="src\dev\sr_595.h" />
-    <ClInclude Include="src\dev\sr_4021.h" />
-    <ClInclude Include="src\hid\audio.h" />
-    <ClInclude Include="src\hid\ctrl.h" />
-    <ClInclude Include="src\hid\encoder.h" />
-    <ClInclude Include="src\hid\gatein.h" />
-    <ClInclude Include="src\hid\led.h" />
-    <ClInclude Include="src\hid\midi.h" />
-    <ClInclude Include="src\hid\oled_display.h" />
-    <ClInclude Include="src\hid\parameter.h" />
-    <ClInclude Include="src\hid\rgb_led.h" />
-    <ClInclude Include="src\hid\switch.h" />
-    <ClInclude Include="src\hid\usb.h" />
-    <ClInclude Include="src\hid\wavplayer.h" />
-    <ClInclude Include="src\per\adc.h" />
-    <ClInclude Include="src\per\dac.h" />
-    <ClInclude Include="src\per\gpio.h" />
-    <ClInclude Include="src\per\i2c.h" />
-    <ClInclude Include="src\per\qspi.h" />
-    <ClInclude Include="src\per\sai.h" />
-    <ClInclude Include="src\per\sdmmc.h" />
-    <ClInclude Include="src\per\spi.h" />
-    <ClInclude Include="src\per\tim.h" />
-    <ClInclude Include="src\per\uart.h" />
-    <ClInclude Include="src\sys\dma.h" />
-    <ClInclude Include="src\sys\fatfs.h" />
-    <ClInclude Include="src\sys\ffconf.h" />
-    <ClInclude Include="src\sys\stm32h7xx_hal_conf.h" />
-    <ClInclude Include="src\sys\system.h" />
-    <ClInclude Include="src\usbd\usbd_cdc_if.h" />
-    <ClInclude Include="src\usbd\usbd_conf.h" />
-    <ClInclude Include="src\usbd\usbd_desc.h" />
-    <ClInclude Include="src\util\bsp_sd_diskio.h" />
-    <ClInclude Include="src\util\color.h" />
-    <ClInclude Include="src\util\hal_map.h" />
-    <ClInclude Include="src\util\oled_fonts.h" />
-    <ClInclude Include="src\util\ringbuffer.h" />
-    <ClInclude Include="src\util\scopedirqblocker.h" />
-    <ClInclude Include="src\util\sd_diskio.h" />
-    <ClInclude Include="src\util\unique_id.h" />
-    <ClInclude Include="src\util\wav_format.h" />
+    <ClInclude Include="src\sys\system.h">
+      <Filter>sys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sys\fatfs.h">
+      <Filter>sys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sys\ffconf.h">
+      <Filter>sys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sys\stm32h7xx_hal_conf.h">
+      <Filter>sys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sys\dma.h">
+      <Filter>sys</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per\adc.h">
+      <Filter>per</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per\dac.h">
+      <Filter>per</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per\gpio.h">
+      <Filter>per</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per\i2c.h">
+      <Filter>per</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per\qspi.h">
+      <Filter>per</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per\sai.h">
+      <Filter>per</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per\sdmmc.h">
+      <Filter>per</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per\spi.h">
+      <Filter>per</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per\tim.h">
+      <Filter>per</Filter>
+    </ClInclude>
+    <ClInclude Include="src\per\uart.h">
+      <Filter>per</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\audio.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\ctrl.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\encoder.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\gatein.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\led.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\oled_display.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\parameter.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\rgb_led.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\switch.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\usb.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\wavplayer.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev\codec_ak4556.h">
+      <Filter>dev</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev\flash_IS25LP064A.h">
+      <Filter>dev</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev\flash_IS25LP080D.h">
+      <Filter>dev</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev\sr_4021.h">
+      <Filter>dev</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev\sr_595.h">
+      <Filter>dev</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev\leddriver.h">
+      <Filter>dev</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev\sdram.h">
+      <Filter>dev</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\wav_format.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\unique_id.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\sd_diskio.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\scopedirqblocker.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\ringbuffer.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\oled_fonts.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\hal_map.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\color.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\bsp_sd_diskio.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\midi.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\usbd\usbd_cdc_if.h">
+      <Filter>usbd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\usbd\usbd_conf.h">
+      <Filter>usbd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\usbd\usbd_desc.h">
+      <Filter>usbd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_field.h">
+      <Filter>boards</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_patch.h">
+      <Filter>boards</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_petal.h">
+      <Filter>boards</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_pod.h">
+      <Filter>boards</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_seed.h">
+      <Filter>boards</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="stm32.props" />
@@ -917,6 +1107,27 @@
     </Filter>
     <Filter Include="VisualGDB settings">
       <UniqueIdentifier>{6962d58c-c4e1-4ae2-a369-9f41fa5a2572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sys">
+      <UniqueIdentifier>{e5897b1d-950f-4d07-bada-c8c49a70c198}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="per">
+      <UniqueIdentifier>{e79bc437-e735-416b-a7f3-5764c4fc2afa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hid">
+      <UniqueIdentifier>{9942455a-4756-43b9-9272-401a2c86e492}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dev">
+      <UniqueIdentifier>{9018304c-9d07-4d22-8457-3cdc11480bb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{68254c6f-3c43-4c0e-9f8d-6ad9b1086bf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="usbd">
+      <UniqueIdentifier>{234f1ff0-c95c-4f1f-9389-4e9804033584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="boards">
+      <UniqueIdentifier>{6f3e94cb-2892-489f-9425-85b28f730729}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
