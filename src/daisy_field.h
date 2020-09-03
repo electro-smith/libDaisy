@@ -50,14 +50,6 @@ class DaisyField
 
     enum
     {
-        LED_KEY_A8, /**< & */
-        LED_KEY_A7, /**< & */
-        LED_KEY_A6, /**< & */
-        LED_KEY_A5, /**< & */
-        LED_KEY_A4, /**< & */
-        LED_KEY_A3, /**< & */
-        LED_KEY_A2, /**< & */
-        LED_KEY_A1, /**< & */
         LED_KEY_B1, /**< & */
         LED_KEY_B2, /**< & */
         LED_KEY_B3, /**< & */
@@ -66,6 +58,14 @@ class DaisyField
         LED_KEY_B6, /**< & */
         LED_KEY_B7, /**< & */
         LED_KEY_B8, /**< & */
+        LED_KEY_A8, /**< & */
+        LED_KEY_A7, /**< & */
+        LED_KEY_A6, /**< & */
+        LED_KEY_A5, /**< & */
+        LED_KEY_A4, /**< & */
+        LED_KEY_A3, /**< & */
+        LED_KEY_A2, /**< & */
+        LED_KEY_A1, /**< & */
         LED_KNOB_1, /**< & */
         LED_KNOB_2, /**< & */
         LED_KNOB_3, /**< & */
