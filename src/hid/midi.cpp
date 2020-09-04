@@ -60,6 +60,7 @@ void MidiHandler::Listen()
     }
 }
 
+
 void MidiHandler::Parse(uint8_t byte)
 {
     switch(pstate_)
@@ -76,8 +77,17 @@ void MidiHandler::Parse(uint8_t byte)
                 if(incoming_message_.type < MessageLast)
                 {
                     pstate_ = ParserHasStatus;
+                    // Mark this status byte as running_status
+                    running_status_ = incoming_message_.type;
                 }
                 // Else we'll keep waiting for a valid incoming status byte
+            }
+            else
+            {
+                // Handle as running status
+                incoming_message_.type = running_status_;
+                incoming_message_.data[0] = byte & kDataByteMask;
+                pstate_                   = ParserHasData0;
             }
             break;
         case ParserHasStatus:

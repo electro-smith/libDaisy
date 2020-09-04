@@ -162,6 +162,7 @@ class MidiHandler
     MidiEvent                 incoming_message_;
     RingBuffer<MidiEvent, 64> event_q_;
     uint32_t                  last_read_; // time of last byte
+    MidiMessageType           running_status_;
 };
 
 /** @} */
