@@ -85,7 +85,7 @@ void MidiHandler::Parse(uint8_t byte)
             else
             {
                 // Handle as running status
-                incoming_message_.type = running_status_;
+                incoming_message_.type    = running_status_;
                 incoming_message_.data[0] = byte & kDataByteMask;
                 pstate_                   = ParserHasData0;
             }
