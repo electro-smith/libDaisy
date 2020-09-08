@@ -139,9 +139,11 @@ class RingBuffer
     }
 
     /**Advances the write pointer, for when a peripheral is writing to the buffer. */
-    inline void Advance(size_t num_elements) { size_t free;
-        free = this->writable();
-        num_elements  = num_elements < free ? num_elements : free;
+    inline void Advance(size_t num_elements)
+    {
+        size_t free;
+        free         = this->writable();
+        num_elements = num_elements < free ? num_elements : free;
         write_ptr_ += num_elements;
         if(write_ptr_ > size)
             write_ptr_ -= size;

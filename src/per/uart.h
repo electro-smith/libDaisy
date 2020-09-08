@@ -46,9 +46,9 @@ class UartHandler
     /** Starts a DMA Receive callback to fill a buffer of specified size.
     Data is populated into a FIFO queue, and can be queried with the
     functions below.
-	Size of the buffer is internally fixed to 256.
-	Variable message lengths are transferred to the FIFO queue 
-	anytime there is 1 byte-period without incoming data
+    Size of the buffer is internally fixed to 256.
+    Variable message lengths are transferred to the FIFO queue 
+    anytime there is 1 byte-period without incoming data
     \return OK or ERROR
     */
     int StartRx();
