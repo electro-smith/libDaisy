@@ -138,6 +138,21 @@ class RingBuffer
         write_ptr_ = (w + num_elements) % size;
     }
 
+    /**Advances the write pointer, for when a peripheral is writing to the buffer. */
+    inline void Advance(size_t num_elements)
+    {
+        size_t free;
+        free         = this->writable();
+        num_elements = num_elements < free ? num_elements : free;
+        write_ptr_ += num_elements;
+        if(write_ptr_ > size)
+            write_ptr_ -= size;
+    }
+
+    /**Returns a pointer to the actual Ring Buffer
+     * Useful for when a peripheral needs direct access to the buffer. */
+    inline T* GetMutableBuffer() { return buffer_; }
+
   private:
     T               buffer_[size];
     volatile size_t read_ptr_;

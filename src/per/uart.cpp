@@ -4,23 +4,36 @@
 
 using namespace daisy;
 
+// Uncomment to use a second FIFO that is copied during the UART callback
+// This will help with issues where data is overwritten while its being processed
+// Cost:
+// * 264 bytes (sizeof(UartRingBuffer)), to D1 RAM
+// * 160 bytes on FLASH
+// * Time to copy DMA FIFO to queue FIFO
+#define UART_RX_DOUBLE_BUFFER 1
+
+#define UART_RX_BUFF_SIZE 256
+
+typedef RingBuffer<uint8_t, UART_RX_BUFF_SIZE> UartRingBuffer;
+static UartRingBuffer DMA_BUFFER_MEM_SECTION   uart_dma_fifo;
+
 static void Error_Handler()
 {
     asm("bkpt 255");
 }
 
-uint8_t DMA_BUFFER_MEM_SECTION uart_dma_buffer_rx[32];
-
 // Uses HAL so these things have to be local to this file only
 struct uart_handle
 {
-    UART_HandleTypeDef      huart1;
-    DMA_HandleTypeDef       hdma_usart1_rx;
-    uint8_t*                dma_buffer_rx;
-    bool                    receiving;
-    size_t                  rx_size;
-    RingBuffer<uint8_t, 64> queue_rx;
-    bool                    rx_active, tx_active;
+    UART_HandleTypeDef huart1;
+    DMA_HandleTypeDef  hdma_usart1_rx;
+    bool               receiving;
+    size_t             rx_size, rx_last_pos;
+    UartRingBuffer*    dma_fifo_rx;
+    bool               rx_active, tx_active;
+#ifdef UART_RX_DOUBLE_BUFFER
+    UartRingBuffer queue_rx;
+#endif
 };
 static uart_handle uhandle;
 
@@ -56,10 +69,15 @@ void UartHandler::Init()
         Error_Handler();
     }
     // Internal bits
-    uhandle.dma_buffer_rx = uart_dma_buffer_rx;
-    uhandle.queue_rx.Init();
+    uhandle.dma_fifo_rx = &uart_dma_fifo;
+    uhandle.dma_fifo_rx->Init();
+    uhandle.rx_size = UART_RX_BUFF_SIZE;
+    // Buffer that gets copied
     uhandle.rx_active = false;
     uhandle.tx_active = false;
+#ifdef UART_RX_DOUBLE_BUFFER
+    uhandle.queue_rx.Init();
+#endif
 }
 
 int UartHandler::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
@@ -67,13 +85,14 @@ int UartHandler::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
     return HAL_UART_Receive(&uhandle.huart1, (uint8_t*)buff, size, timeout);
 }
 
-int UartHandler::StartRx(size_t size)
+int UartHandler::StartRx()
 {
     int status = 0;
     // Now start Rx
-    uhandle.rx_size = size <= 32 ? size : 32;
-    status          = HAL_UART_Receive_DMA(
-        &uhandle.huart1, (uint8_t*)uhandle.dma_buffer_rx, size);
+    status = HAL_UART_Receive_DMA(
+        &uhandle.huart1,
+        (uint8_t*)uhandle.dma_fifo_rx->GetMutableBuffer(),
+        uhandle.rx_size);
     if(status == 0)
         uhandle.rx_active = true;
     return status;
@@ -87,12 +106,15 @@ bool UartHandler::RxActive()
 int UartHandler::FlushRx()
 {
     int status = 0;
+#ifdef UART_RX_DOUBLE_BUFFER
     uhandle.queue_rx.Flush();
+#else
+    uhandle.dma_fifo_rx->Flush();
+#endif
     return status;
 }
 
 int UartHandler::PollTx(uint8_t* buff, size_t size)
-
 {
     return HAL_UART_Transmit(&uhandle.huart1, (uint8_t*)buff, size, 10);
 }
@@ -104,26 +126,59 @@ int UartHandler::CheckError()
 
 uint8_t UartHandler::PopRx()
 {
+#ifdef UART_RX_DOUBLE_BUFFER
     return uhandle.queue_rx.Read();
+#else
+    return uhandle.dma_fifo_rx->Read();
+#endif
 }
 
 size_t UartHandler::Readable()
 {
+#ifdef UART_RX_DOUBLE_BUFFER
     return uhandle.queue_rx.readable();
+#else
+    return uhandle.dma_fifo_rx->readable();
+#endif
 }
 
 // Callbacks
-
+static void UARTRxComplete(void)
+{
+    size_t len, cur_pos;
+    //get current write pointer
+    cur_pos = (uhandle.rx_size
+               - ((DMA_Stream_TypeDef*)uhandle.huart1.hdmarx->Instance)->NDTR)
+              & (uhandle.rx_size - 1);
+    //calculate how far the DMA write pointer has moved
+    len = (cur_pos - uhandle.rx_last_pos + uhandle.rx_size) % uhandle.rx_size;
+    //check message size
+    if(len <= uhandle.rx_size)
+    {
+        uhandle.dma_fifo_rx->Advance(len);
+        uhandle.rx_last_pos = cur_pos;
+#ifdef UART_RX_DOUBLE_BUFFER
+        // Copy to queue fifo we don't want to use primary fifo to avoid
+        // changes to the buffer while its being processed
+        uint8_t processbuf[256];
+        uhandle.dma_fifo_rx->ImmediateRead(processbuf, len);
+        uhandle.queue_rx.Overwrite(processbuf, len);
+#endif
+    }
+    else
+    {
+        while(1)
+            ; //implement message to large exception
+    }
+}
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
-    for(size_t i = 0; i < uhandle.rx_size; i++)
+    if(huart->Instance == USART1)
     {
-        // TODO:
-        // Add handling for non-writable, overflow conditions, etc.
-        if(uhandle.queue_rx.writable())
-            uhandle.queue_rx.Write(uhandle.dma_buffer_rx[i]);
-        else
-            uhandle.queue_rx.Overwrite(uhandle.dma_buffer_rx[i]);
+        if(__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))
+        {
+            UARTRxComplete();
+        }
     }
 }
 
@@ -208,6 +263,10 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
         HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
         HAL_NVIC_EnableIRQ(USART1_IRQn);
         /* USER CODE BEGIN USART1_MspInit 1 */
+        __HAL_UART_ENABLE_IT(&uhandle.huart1, UART_IT_IDLE);
+        // Disable HalfTransfer Interrupt
+        ((DMA_Stream_TypeDef*)uhandle.hdma_usart1_rx.Instance)->CR
+            &= ~(DMA_SxCR_HTIE);
 
         /* USER CODE END USART1_MspInit 1 */
     }
@@ -241,7 +300,18 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 // HAL Interrupts.
 extern "C"
 {
-    void USART1_IRQHandler() { HAL_UART_IRQHandler(&uhandle.huart1); }
+    void USART1_IRQHandler()
+    {
+        HAL_UART_IRQHandler(&uhandle.huart1);
+        //        if(__HAL_UART_GET_FLAG(&uhandle.huart1, UART_FLAG_IDLE))
+        //        {
+        if((uhandle.huart1.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
+        {
+            HAL_UART_RxCpltCallback(&uhandle.huart1);
+            //__HAL_UART_CLEAR_IDLEFLAG(&uhandle.huart1);
+            uhandle.huart1.Instance->ICR = UART_FLAG_IDLE;
+        }
+    }
 
     void DMA1_Stream5_IRQHandler()
     {
