@@ -125,6 +125,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae77037eb83533028e4abcdd3a649ecfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cd4bb607dbd2137b4e808e68eccc744"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_ring_buffer.html#a1cd4bb607dbd2137b4e808e68eccc744">Overwrite</a> (const T *source, size_t num_elements)</td></tr>
 <tr class="separator:a1cd4bb607dbd2137b4e808e68eccc744"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae916dcd391cdfedb7d58079cfe533e84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_ring_buffer.html#ae916dcd391cdfedb7d58079cfe533e84">Advance</a> (size_t num_elements)</td></tr>
+<tr class="separator:ae916dcd391cdfedb7d58079cfe533e84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afab0d33be904e8988fd9f9c35181b538"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_ring_buffer.html#afab0d33be904e8988fd9f9c35181b538">GetMutableBuffer</a> ()</td></tr>
+<tr class="separator:afab0d33be904e8988fd9f9c35181b538"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h3>template&lt;typename T, size_t size&gt;<br />
@@ -133,6 +137,33 @@ class daisy::RingBuffer&lt; T, size &gt;</h3>
 <p>Utility Ring Buffer <br />
  imported from pichenettes/stmlib </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="ae916dcd391cdfedb7d58079cfe533e84"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, size_t size&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_ring_buffer.html">daisy::RingBuffer</a>&lt; T, size &gt;::Advance </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>num_elements</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Advances the write pointer, for when a peripheral is writing to the buffer. </p>
+
+</div>
+</div>
 <a class="anchor" id="a27c0012f632e2332dec0d4b2b415ba93"></a>
 <div class="memitem">
 <div class="memproto">
@@ -182,6 +213,32 @@ template&lt;typename T, size_t size&gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Flushes unread elements from the ring buffer </p>
+
+</div>
+</div>
+<a class="anchor" id="afab0d33be904e8988fd9f9c35181b538"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, size_t size&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T* <a class="el" href="classdaisy_1_1_ring_buffer.html">daisy::RingBuffer</a>&lt; T, size &gt;::GetMutableBuffer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns a pointer to the actual Ring Buffer Useful for when a peripheral needs direct access to the buffer. </p>
 
 </div>
 </div>

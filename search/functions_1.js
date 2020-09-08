@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['advance',['Advance',['../classdaisy_1_1_ring_buffer.html#ae916dcd391cdfedb7d58079cfe533e84',1,'daisy::RingBuffer']]],
   ['analogcontrol',['AnalogControl',['../classdaisy_1_1_analog_control.html#a1030730b53fe183361b282c277fd0d57',1,'daisy::AnalogControl']]],
   ['ascontrolchange',['AsControlChange',['../structdaisy_1_1_midi_event.html#a95ed496b1b526f640376d5819131d064',1,'daisy::MidiEvent']]],
   ['asnoteon',['AsNoteOn',['../structdaisy_1_1_midi_event.html#af7ea0405629907b3a10acdc50c1ce7ec',1,'daisy::MidiEvent']]],

@@ -14,6 +14,7 @@ var searchData=
   ['getfloat',['GetFloat',['../classdaisy_1_1_adc_handle.html#a6f80347c11028e4978ae97804a3bb1c1',1,'daisy::AdcHandle']]],
   ['getknobvalue',['GetKnobValue',['../classdaisy_1_1_daisy_petal.html#a1e0156fca684721f0ae445b8e4c2ebd7',1,'daisy::DaisyPetal::GetKnobValue()'],['../classdaisy_1_1_daisy_pod.html#a8c4ae1af60b078bb71e6b86a3cf8cf5a',1,'daisy::DaisyPod::GetKnobValue()']]],
   ['getlooping',['GetLooping',['../classdaisy_1_1_wav_player.html#a599fcc5e72d87c9888adacfc81f909e4',1,'daisy::WavPlayer']]],
+  ['getmutablebuffer',['GetMutableBuffer',['../classdaisy_1_1_ring_buffer.html#afab0d33be904e8988fd9f9c35181b538',1,'daisy::RingBuffer']]],
   ['getmux',['GetMux',['../classdaisy_1_1_adc_handle.html#ae46d0554b71ac856a567a76a24b1bbaf',1,'daisy::AdcHandle']]],
   ['getmuxfloat',['GetMuxFloat',['../classdaisy_1_1_adc_handle.html#a2b20d682175e2fc6bd5f912f716131d7',1,'daisy::AdcHandle']]],
   ['getmuxptr',['GetMuxPtr',['../classdaisy_1_1_adc_handle.html#a20f2e34603e56abca3474eebd6c99218',1,'daisy::AdcHandle']]],

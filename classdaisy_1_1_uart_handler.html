@@ -103,8 +103,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:abe1b41b60b230b27b0a62d2a0c1c0f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9641f3808cf70559d3d988f5ae8e254c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a9641f3808cf70559d3d988f5ae8e254c">PollReceive</a> (uint8_t *buff, size_t size, uint32_t timeout)</td></tr>
 <tr class="separator:a9641f3808cf70559d3d988f5ae8e254c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad056734542e930d281412eca2faeeb2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#aad056734542e930d281412eca2faeeb2">StartRx</a> (size_t size)</td></tr>
-<tr class="separator:aad056734542e930d281412eca2faeeb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6e0590380805e55cd349fdb6ceffdbf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ae6e0590380805e55cd349fdb6ceffdbf">StartRx</a> ()</td></tr>
+<tr class="separator:ae6e0590380805e55cd349fdb6ceffdbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeeb804c58c2ccf574142b2a030d2d83b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#aeeb804c58c2ccf574142b2a030d2d83b">RxActive</a> ()</td></tr>
 <tr class="separator:aeeb804c58c2ccf574142b2a030d2d83b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7c66d512b976542a71d10666c415aa3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#aa7c66d512b976542a71d10666c415aa3">FlushRx</a> ()</td></tr>
@@ -293,26 +293,19 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aad056734542e930d281412eca2faeeb2"></a>
+<a class="anchor" id="ae6e0590380805e55cd349fdb6ceffdbf"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int daisy::UartHandler::StartRx </td>
           <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Starts a DMA Receive callback to fill a buffer of specified size. Data is populated into a FIFO queue, and can be queried with the functions below. Maximum Buffer size is defined above. If a value outside of the maximum is specified, the size will be set to the maximum. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">size</td><td>Queue size </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>OK or ERROR </dd></dl>
+<p>Starts a DMA Receive callback to fill a buffer of specified size. Data is populated into a FIFO queue, and can be queried with the functions below. Size of the buffer is internally fixed to 256. Variable message lengths are transferred to the FIFO queue anytime there is 1 byte-period without incoming data </p><dl class="section return"><dt>Returns</dt><dd>OK or ERROR </dd></dl>
 
 </div>
 </div>

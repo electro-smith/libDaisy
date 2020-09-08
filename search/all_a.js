@@ -12,6 +12,5 @@ var searchData=
   ['knob_5f7',['KNOB_7',['../classdaisy_1_1_daisy_field.html#a495b406b72ef5c20317a685cf2ec1c79a6113019f8cc8e5f69aa8e6fa12ceec61',1,'daisy::DaisyField']]],
   ['knob_5f8',['KNOB_8',['../classdaisy_1_1_daisy_field.html#a495b406b72ef5c20317a685cf2ec1c79a9474c0bc8383e6d8157596ff46e73176',1,'daisy::DaisyField']]],
   ['knob_5flast',['KNOB_LAST',['../classdaisy_1_1_daisy_field.html#a495b406b72ef5c20317a685cf2ec1c79a8ca3ec9018e930851657f2fd1fd5c175',1,'daisy::DaisyField::KNOB_LAST()'],['../classdaisy_1_1_daisy_petal.html#a0273fd343346e74767bb5fc7bd290d64afbbce5004921a8933b3f108d1f4aa230',1,'daisy::DaisyPetal::KNOB_LAST()'],['../classdaisy_1_1_daisy_pod.html#a43462bcc3a3d5167a383a5eda489878fade1d0759fdad89607dcf495c24a6f34f',1,'daisy::DaisyPod::KNOB_LAST()']]],
-  ['knobs',['knobs',['../classdaisy_1_1_daisy_pod.html#a1ddf61e634293aaf600dd7fd01c47598',1,'daisy::DaisyPod']]],
-  ['kuartmaxbuffersize',['kUartMaxBufferSize',['../group__serial.html#ga38e74b71650c295dc232837068d63ef0',1,'daisy']]]
+  ['knobs',['knobs',['../classdaisy_1_1_daisy_pod.html#a1ddf61e634293aaf600dd7fd01c47598',1,'daisy::DaisyPod']]]
 ];
