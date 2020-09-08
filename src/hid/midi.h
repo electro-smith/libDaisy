@@ -160,7 +160,7 @@ class MidiHandler
     UartHandler               uart_;
     ParserState               pstate_;
     MidiEvent                 incoming_message_;
-    RingBuffer<MidiEvent, 64> event_q_;
+    RingBuffer<MidiEvent, 256> event_q_;
     uint32_t                  last_read_; // time of last byte
     MidiMessageType           running_status_;
 };

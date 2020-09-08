@@ -21,7 +21,6 @@ namespace daisy
     @{
     */
 
-const size_t kUartMaxBufferSize = 32; /**<  Maximum Queue buffer size */
 /** 
     Uart Peripheral
     @author shensley
@@ -47,13 +46,12 @@ class UartHandler
     /** Starts a DMA Receive callback to fill a buffer of specified size.
     Data is populated into a FIFO queue, and can be queried with the
     functions below.
-    Maximum Buffer size is defined above.
-    If a value outside of the maximum is specified,
-    the size will be set to the maximum.
-    \param size Queue size
+	Size of the buffer is internally fixed to 256.
+	Variable message lengths are transferred to the FIFO queue 
+	anytime there is 1 byte-period without incoming data
     \return OK or ERROR
     */
-    int StartRx(size_t size);
+    int StartRx();
 
     /** \return whether Rx DMA is listening or not. */
     bool RxActive();

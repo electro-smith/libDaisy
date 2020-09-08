@@ -32,7 +32,7 @@ void MidiHandler::StartReceive()
 {
     if(in_mode_ & INPUT_MODE_UART1)
     {
-        uart_.StartRx(1);
+        uart_.StartRx();
     }
 }
 
