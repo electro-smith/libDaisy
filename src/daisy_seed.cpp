@@ -107,7 +107,7 @@ void DaisySeed::Init()
     dsy_qspi_init(&qspi_handle);
     dsy_gpio_init(&led_);
     dsy_gpio_init(&testpoint_);
-    dsy_audio_init(&audio_handle);
+    //dsy_audio_init(&audio_handle);
     dsy_tim_init();
     dsy_tim_start();
     // Due to the added 16kB+ of flash usage,
@@ -123,42 +123,43 @@ dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
 #ifndef SEED_REV2
     p = seedgpio[pin_idx];
 #else
-    p                            = {seed_ports[pin_idx], seed_pins[pin_idx]};
+    p = {seed_ports[pin_idx], seed_pins[pin_idx]};
 #endif
     return p;
 }
 
 void DaisySeed::StartAudio(dsy_audio_callback cb)
 {
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
-    dsy_audio_start(DSY_AUDIO_INTERNAL);
+//    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+//    dsy_audio_start(DSY_AUDIO_INTERNAL);
 }
 
 void DaisySeed::StartAudio(dsy_audio_mc_callback cb)
 {
-    dsy_audio_set_mc_callback(cb);
-    dsy_audio_start(DSY_AUDIO_INTERNAL);
+//    dsy_audio_set_mc_callback(cb);
+//    dsy_audio_start(DSY_AUDIO_INTERNAL);
 }
 
 void DaisySeed::ChangeAudioCallback(dsy_audio_callback cb)
 {
-    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+    //dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
 }
 
 void DaisySeed::ChangeAudioCallback(dsy_audio_mc_callback cb)
 {
-    dsy_audio_set_mc_callback(cb);
+    //dsy_audio_set_mc_callback(cb);
 }
 
 float DaisySeed::AudioSampleRate()
 {
     // TODO fix to get this from configured rate.
-    return DSY_AUDIO_SAMPLE_RATE;
+    //return DSY_AUDIO_SAMPLE_RATE;
+    return 48014.f;
 }
 
 void DaisySeed::SetAudioBlockSize(size_t blocksize)
 {
-    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, blocksize);
+    //dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, blocksize);
 }
 
 void DaisySeed::SetLed(bool state)
@@ -196,6 +197,7 @@ void DaisySeed::ConfigureQspi()
 }
 void DaisySeed::ConfigureAudio()
 {
+    /*
     dsy_gpio_pin *pin_group;
     sai_handle.init = DSY_AUDIO_INIT_SAI1;
     // SAI1 - config
@@ -241,6 +243,24 @@ void DaisySeed::ConfigureAudio()
     audio_handle.block_size = 48;
     dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, 48);
     dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, 48);
+	*/
+	// Only SAI1
+    SaiHandle::Config sai_config;
+    sai_config.periph          = SaiHandle::Config::Peripheral::SAI_1;
+    sai_config.sr              = SaiHandle::Config::SampleRate::SAI_48KHZ;
+    sai_config.bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
+    sai_config.a_sync          = SaiHandle::Config::Sync::MASTER;
+    sai_config.b_sync          = SaiHandle::Config::Sync::SLAVE;
+    sai_config.a_dir           = SaiHandle::Config::Direction::RECEIVE;
+    sai_config.b_dir           = SaiHandle::Config::Direction::TRANSMIT;
+    sai_config.pin_config.fs   = {DSY_GPIOE, 4};
+    sai_config.pin_config.mclk = {DSY_GPIOE, 2};
+    sai_config.pin_config.sck  = {DSY_GPIOE, 5};
+    sai_config.pin_config.sa   = {DSY_GPIOE, 6};
+    sai_config.pin_config.sb   = {DSY_GPIOE, 3};
+    // Then Initialize
+	SaiHandle sai;
+    sai.Init(sai_config);
 }
 void DaisySeed::ConfigureDac()
 {

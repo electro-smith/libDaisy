@@ -7,6 +7,41 @@ TODO
 - Add 32-bit bitdepth (for devices that may need that)
 - Move the 'device' chunk of this to hid_audio. given that they sometimes need other pins or i2c, etc.
 */
+
+/** 
+ * Support for I2S Audio Protocol with different bit-depth, samplerate options
+ * Allows for master or slave, as well as freedom of selecting direction, 
+ * and other behavior for each peripheral, and block.
+ * 
+ * DMA Transfer commands must use buffers located within non-cached memory or use cache maintenance
+ * To declare an unitialized global element in the DMA memory section:
+ *	int32_t DSY_DMA_BUFFER_SECTOR my_buffer[96];
+ *
+ * Callback functions will be called once per half of the buffer. In the above example, 
+ * the callback function would be called once for every 48 samples.
+ * 
+ * Use SAI Handle like this:
+ * 
+ *  SaiHandle::Config sai_config;
+ *  sai_config.periph          = SaiHandle::Config::Peripheral::SAI_1;
+ *  sai_config.sr              = SaiHandle::Config::SampleRate::SAI_48KHZ;
+ *  sai_config.bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
+ *  sai_config.a_sync          = SaiHandle::Config::Sync::MASTER;
+ *  sai_config.b_sync          = SaiHandle::Config::Sync::SLAVE;
+ *  sai_config.a_dir           = SaiHandle::Config::Direction::RECEIVE;
+ *  sai_config.b_dir           = SaiHandle::Config::Direction::TRANSMIT;
+ *  sai_config.pin_config.fs   = {DSY_GPIOE, 4};
+ *  sai_config.pin_config.mclk = {DSY_GPIOE, 2};
+ *  sai_config.pin_config.sck  = {DSY_GPIOE, 5};
+ *  sai_config.pin_config.sa   = {DSY_GPIOE, 6};
+ *  sai_config.pin_config.sb   = {DSY_GPIOE, 3};
+ *  // Then Initialize
+ *  SaiHandle sai;
+ *  sai.Init(sai_config);
+ *  // Now you can use it:
+ *  sai.StartDma(. . .);
+ *
+ */
 #ifndef DSY_SAI_H
 #define DSY_SAI_H
 
@@ -78,7 +113,7 @@ class SaiHandle
     const Config& GetConfig() const;
 
     // Starts Rx and Tx in Circular Buffer Mode
-    Result StartDma(int32_t* data, size_t size);
+    Result StartDma(int32_t* buffer_rx, int32_t* buffer_tx, size_t size);
 
     Result StopDma();
 

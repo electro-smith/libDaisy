@@ -1,5 +1,6 @@
 #include "per/sai.h"
 #include "daisy_core.h"
+#include <string.h>
 
 extern "C"
 {
@@ -15,17 +16,27 @@ class SaiHandle::Impl
     SaiHandle::Result        Init(const SaiHandle::Config& config);
     const SaiHandle::Config& GetConfig() const { return config_; }
 
-    SaiHandle::Result StartDmaTransfer(int32_t* data, size_t size);
+    SaiHandle::Result
+                      StartDmaTransfer(int32_t* buffer_rx, int32_t* buffer_tx, size_t size);
+    SaiHandle::Result StopDmaTransfer();
 
     SaiHandle::Config config_;
     SAI_HandleTypeDef sai_a_handle_, sai_b_handle_;
     DMA_HandleTypeDef sai_a_dma_handle_, sai_b_dma_handle_;
+
+    int32_t *buff_rx_, *buff_tx_;
+    size_t   buff_size_;
 
     // If we need it, which I don't think we do for this one.
     //static void GlobalInit();
 
     void InitPins();
     void DeinitPins();
+
+    void InitDma();
+    void DeinitDma();
+
+    void TestCallback(size_t offset);
 };
 
 // ================================================================
@@ -44,7 +55,6 @@ static void Error_Handler()
 
 static SaiHandle::Impl sai_handles[2];
 
-
 // ================================================================
 // Scheduling and global functions
 // ================================================================
@@ -60,20 +70,402 @@ static SaiHandle::Impl sai_handles[2];
 SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
 {
     // do some init stuff
+    const int sai_idx = int(config.periph);
+    if(sai_idx >= 2)
+        return Result::ERR;
+
+    // Default Buffer states
+    buff_rx_   = nullptr;
+    buff_tx_   = nullptr;
+    buff_size_ = 0;
+
+    config_                                     = config;
+    constexpr SAI_Block_TypeDef* a_instances[2] = {SAI1_Block_A, SAI2_Block_A};
+    constexpr SAI_Block_TypeDef* b_instances[2] = {SAI1_Block_B, SAI2_Block_B};
+
+    sai_a_handle_.Instance = a_instances[sai_idx];
+    sai_b_handle_.Instance = b_instances[sai_idx];
+
+    // Samplerate
+    switch(config.sr)
+    {
+        case Config::SampleRate::SAI_8KHZ:
+            sai_a_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_8K;
+            sai_b_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_8K;
+            break;
+        case Config::SampleRate::SAI_16KHZ:
+            sai_a_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_16K;
+            sai_b_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_16K;
+            break;
+        case Config::SampleRate::SAI_32KHZ:
+            sai_a_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_32K;
+            sai_b_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_32K;
+            break;
+        case Config::SampleRate::SAI_48KHZ:
+            sai_a_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
+            sai_b_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
+            break;
+        case Config::SampleRate::SAI_96KHZ:
+            sai_a_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_96K;
+            sai_b_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_96K;
+            break;
+        default: break;
+    }
+    // Audio Mode A
+    if(config.a_sync == Config::Sync::MASTER)
+    {
+        sai_a_handle_.Init.AudioMode
+            = config.a_dir == Config::Direction::TRANSMIT ? SAI_MODEMASTER_TX
+                                                          : SAI_MODEMASTER_RX;
+    }
+    else
+    {
+        sai_a_handle_.Init.AudioMode
+            = config.a_dir == Config::Direction::TRANSMIT ? SAI_MODESLAVE_TX
+                                                          : SAI_MODESLAVE_RX;
+    }
+    // Audio Mode B
+    if(config.b_sync == Config::Sync::MASTER)
+    {
+        sai_b_handle_.Init.AudioMode
+            = config.b_dir == Config::Direction::TRANSMIT ? SAI_MODEMASTER_TX
+                                                          : SAI_MODEMASTER_RX;
+    }
+    else
+    {
+        sai_b_handle_.Init.AudioMode
+            = config.b_dir == Config::Direction::TRANSMIT ? SAI_MODESLAVE_TX
+                                                          : SAI_MODESLAVE_RX;
+    }
+    // Bitdepth / protocol (currently based on bitdepth..)
+    // TODO probably split these up for better flexibility..
+    // These are also currently fixed to be the same per block.
+    uint8_t  bd;
+    uint32_t protocol;
+    switch(config.bit_depth)
+    {
+        case Config::BitDepth::SAI_16BIT:
+            bd       = SAI_PROTOCOL_DATASIZE_16BIT;
+            protocol = SAI_I2S_STANDARD;
+            break;
+        case Config::BitDepth::SAI_24BIT:
+            bd       = SAI_PROTOCOL_DATASIZE_16BIT;
+            protocol = SAI_I2S_STANDARD;
+            break;
+        case Config::BitDepth::SAI_32BIT:
+            bd       = SAI_PROTOCOL_DATASIZE_16BIT;
+            protocol = SAI_I2S_STANDARD;
+            break;
+        default: break;
+    }
+
+    // Generic Inits that we don't have API control over.
+    // A
+    sai_a_handle_.Init.OutputDrive    = SAI_OUTPUTDRIVE_DISABLE;
+    sai_a_handle_.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
+    sai_a_handle_.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_EMPTY;
+    sai_a_handle_.Init.MonoStereoMode = SAI_STEREOMODE;
+    sai_a_handle_.Init.CompandingMode = SAI_NOCOMPANDING;
+    sai_a_handle_.Init.TriState       = SAI_OUTPUT_NOTRELEASED;
+    // B
+    sai_b_handle_.Init.OutputDrive    = SAI_OUTPUTDRIVE_DISABLE;
+    sai_b_handle_.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
+    sai_b_handle_.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_EMPTY;
+    sai_b_handle_.Init.MonoStereoMode = SAI_STEREOMODE;
+    sai_b_handle_.Init.CompandingMode = SAI_NOCOMPANDING;
+    sai_b_handle_.Init.TriState       = SAI_OUTPUT_NOTRELEASED;
+
+    if(HAL_SAI_InitProtocol(&sai_a_handle_, protocol, bd, 2) != HAL_OK)
+    {
+        Error_Handler();
+        return Result::ERR;
+    }
+
+    if(HAL_SAI_InitProtocol(&sai_b_handle_, protocol, bd, 2) != HAL_OK)
+    {
+        Error_Handler();
+        return Result::ERR;
+    }
+
     return Result::OK;
+}
+
+void SaiHandle::Impl::InitDma()
+{
+    // DMA Init
+    const int                     sai_idx = int(config_.periph);
+    uint32_t                      req_a, req_b;
+    uint32_t                      dir_a, dir_b;
+    constexpr DMA_Stream_TypeDef* a_dma_instances[2]{DMA1_Stream0,
+                                                     DMA1_Stream2};
+    constexpr DMA_Stream_TypeDef* b_dma_instances[2]{DMA1_Stream1,
+                                                     DMA1_Stream3};
+    // Set Conditional DMA settings
+    req_a = sai_idx == int(Config::Peripheral::SAI_1) ? DMA_REQUEST_SAI1_A
+                                                      : DMA_REQUEST_SAI2_A;
+    req_b = sai_idx == int(Config::Peripheral::SAI_1) ? DMA_REQUEST_SAI1_B
+                                                      : DMA_REQUEST_SAI2_B;
+    dir_a = config_.a_dir == Config::Direction::RECEIVE ? DMA_PERIPH_TO_MEMORY
+                                                        : DMA_MEMORY_TO_PERIPH;
+    dir_b = config_.b_dir == Config::Direction::RECEIVE ? DMA_PERIPH_TO_MEMORY
+                                                        : DMA_MEMORY_TO_PERIPH;
+    sai_a_dma_handle_.Instance = a_dma_instances[sai_idx];
+    sai_b_dma_handle_.Instance = b_dma_instances[sai_idx];
+
+    // Generic
+    // A
+    sai_a_dma_handle_.Init.Request             = req_a;
+    sai_a_dma_handle_.Init.Direction           = dir_a;
+    sai_a_dma_handle_.Init.PeriphInc           = DMA_PINC_DISABLE;
+    sai_a_dma_handle_.Init.MemInc              = DMA_MINC_ENABLE;
+    sai_a_dma_handle_.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    sai_a_dma_handle_.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
+    sai_a_dma_handle_.Init.Mode                = DMA_CIRCULAR;
+    sai_a_dma_handle_.Init.Priority            = DMA_PRIORITY_HIGH;
+    sai_a_dma_handle_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    if(HAL_DMA_Init(&sai_a_dma_handle_) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    // B
+    sai_b_dma_handle_.Init.Request             = req_b;
+    sai_b_dma_handle_.Init.Direction           = dir_b;
+    sai_b_dma_handle_.Init.PeriphInc           = DMA_PINC_DISABLE;
+    sai_b_dma_handle_.Init.MemInc              = DMA_MINC_ENABLE;
+    sai_b_dma_handle_.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    sai_b_dma_handle_.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
+    sai_b_dma_handle_.Init.Mode                = DMA_CIRCULAR;
+    sai_b_dma_handle_.Init.Priority            = DMA_PRIORITY_HIGH;
+    sai_b_dma_handle_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    if(HAL_DMA_Init(&sai_b_dma_handle_) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    // Kinda weird because macro logic. . .
+    if(config_.a_dir == Config::Direction::RECEIVE)
+        __HAL_LINKDMA(&sai_a_handle_, hdmarx, sai_a_dma_handle_);
+    else // TRANSMIT
+        __HAL_LINKDMA(&sai_a_handle_, hdmatx, sai_a_dma_handle_);
+
+    if(config_.b_dir == Config::Direction::RECEIVE)
+        __HAL_LINKDMA(&sai_b_handle_, hdmarx, sai_b_dma_handle_);
+    else // TRANSMIT
+        __HAL_LINKDMA(&sai_b_handle_, hdmatx, sai_b_dma_handle_);
+}
+
+void SaiHandle::Impl::DeinitDma()
+{
+    HAL_DMA_DeInit(sai_a_handle_.hdmarx);
+    HAL_DMA_DeInit(sai_a_handle_.hdmatx);
+}
+
+void SaiHandle::Impl::TestCallback(size_t offset)
+{
+    if(buff_tx_ != nullptr && buff_rx_ != nullptr)
+        memcpy(buff_tx_, buff_rx_, sizeof(buff_tx_[0]) * (buff_size_ / 2));
+}
+
+SaiHandle::Result SaiHandle::Impl::StartDmaTransfer(int32_t* buffer_rx,
+                                                    int32_t* buffer_tx,
+                                                    size_t   size)
+{
+    buff_rx_   = buffer_rx;
+    buff_tx_   = buffer_tx;
+    buff_size_ = size;
+    config_.a_dir == Config::Direction::RECEIVE
+        ? HAL_SAI_Receive_DMA(&sai_a_handle_, (uint8_t*)buffer_rx, size)
+        : HAL_SAI_Transmit_DMA(&sai_a_handle_, (uint8_t*)buffer_tx, size);
+    config_.b_dir == Config::Direction::RECEIVE
+        ? HAL_SAI_Receive_DMA(&sai_b_handle_, (uint8_t*)buffer_rx, size)
+        : HAL_SAI_Transmit_DMA(&sai_b_handle_, (uint8_t*)buffer_tx, size);
+    return Result::OK;
+}
+SaiHandle::Result SaiHandle::Impl::StopDmaTransfer()
+{
+    HAL_SAI_DMAStop(&sai_a_handle_);
+    HAL_SAI_DMAStop(&sai_b_handle_);
+    return Result::OK;
+}
+
+void SaiHandle::Impl::InitPins()
+{
+    bool             is_master;
+    GPIO_InitTypeDef GPIO_InitStruct;
+    GPIO_TypeDef*    port;
+    dsy_gpio_pin*    pin_cfg;
+    dsy_gpio_pin*    cfg[] = {&config_.pin_config.fs,
+                           &config_.pin_config.mclk,
+                           &config_.pin_config.sck,
+                           &config_.pin_config.sa,
+                           &config_.pin_config.sb};
+    // Special Case checks
+    dsy_gpio_pin sck_af_pin = {DSY_GPIOA, 2};
+    is_master               = (config_.a_sync == Config::Sync::MASTER
+                 || config_.b_sync == Config::Sync::MASTER);
+    // Generics
+    GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
+    for(size_t i = 0; i < 5; i++)
+    {
+        // Skip MCLK if not master.
+        if(dsy_pin_cmp(&config_.pin_config.mclk, cfg[i]) && !is_master)
+            continue;
+
+        // Special case for SAI2-sck (should add a map for Alternate Functions at some point..)
+        switch(config_.periph)
+        {
+            case Config::Peripheral::SAI_1:
+                GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
+                break;
+            case Config::Peripheral::SAI_2:
+                GPIO_InitStruct.Alternate = dsy_pin_cmp(pin_cfg, &sck_af_pin)
+                                                ? GPIO_AF10_SAI2
+                                                : GPIO_AF8_SAI2;
+                break;
+            default: break;
+        }
+
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(cfg[i]);
+        port                = dsy_hal_map_get_port(cfg[i]);
+        HAL_GPIO_Init(port, &GPIO_InitStruct);
+    }
+}
+
+void SaiHandle::Impl::DeinitPins()
+{
+    GPIO_TypeDef* port;
+    uint16_t      pin;
+    bool          is_master;
+    is_master = (config_.a_sync == Config::Sync::MASTER
+                 || config_.b_sync == Config::Sync::MASTER);
+    if(is_master)
+    {
+        port = dsy_hal_map_get_port(&config_.pin_config.mclk);
+        pin  = dsy_hal_map_get_pin(&config_.pin_config.mclk);
+        HAL_GPIO_DeInit(port, pin);
+    }
+    port = dsy_hal_map_get_port(&config_.pin_config.fs);
+    pin  = dsy_hal_map_get_pin(&config_.pin_config.fs);
+    HAL_GPIO_DeInit(port, pin);
+    port = dsy_hal_map_get_port(&config_.pin_config.sck);
+    pin  = dsy_hal_map_get_pin(&config_.pin_config.sck);
+    HAL_GPIO_DeInit(port, pin);
+    port = dsy_hal_map_get_port(&config_.pin_config.sa);
+    pin  = dsy_hal_map_get_pin(&config_.pin_config.sa);
+    HAL_GPIO_DeInit(port, pin);
+    port = dsy_hal_map_get_port(&config_.pin_config.sb);
+    pin  = dsy_hal_map_get_pin(&config_.pin_config.sb);
+    HAL_GPIO_DeInit(port, pin);
 }
 
 // ================================================================
 // HAL Service Functions
 // ================================================================
 
+extern "C" void HAL_SAI_MspInit(SAI_HandleTypeDef* sai_handle)
+{
+    // Due to the BlockA/BlockB stuff right now
+    // it is required that they both be used.
+    // We could add a layer of separate config for them.
+    if(sai_handle->Instance == SAI1_Block_A)
+    {
+        __HAL_RCC_GPIOE_CLK_ENABLE();
+        sai_handles[0].InitPins();
+        __HAL_RCC_SAI1_CLK_ENABLE();
+        __HAL_RCC_DMA1_CLK_ENABLE();
+        sai_handles[0].InitDma();
+        HAL_NVIC_SetPriority(SAI1_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(SAI1_IRQn);
+    }
+    else if(sai_handle->Instance == SAI2_Block_A)
+    {
+        __HAL_RCC_GPIOA_CLK_ENABLE();
+        __HAL_RCC_GPIOD_CLK_ENABLE();
+        __HAL_RCC_GPIOG_CLK_ENABLE();
+        sai_handles[1].InitPins();
+        __HAL_RCC_SAI2_CLK_ENABLE();
+        __HAL_RCC_DMA1_CLK_ENABLE();
+        sai_handles[1].InitDma();
+        HAL_NVIC_SetPriority(SAI1_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(SAI1_IRQn);
+    }
+}
+extern "C" void HAL_SAI_MspDeInit(SAI_HandleTypeDef* sai_handle)
+{
+    if(sai_handle->Instance == SAI1_Block_A)
+    {
+        __HAL_RCC_SAI1_CLK_DISABLE();
+        sai_handles[0].DeinitPins();
+    }
+    else if(sai_handle->Instance == SAI2_Block_A)
+    {
+        __HAL_RCC_SAI2_CLK_DISABLE();
+        sai_handles[1].DeinitPins();
+    }
+}
+
+
 // ================================================================
 // ISRs and event handlers
 // ================================================================
 
+void DMA1_Stream0_IRQHandler(void)
+{
+    HAL_DMA_IRQHandler(&sai_handles[0].sai_a_dma_handle_);
+}
+void DMA1_Stream1_IRQHandler(void)
+{
+    HAL_DMA_IRQHandler(&sai_handles[0].sai_b_dma_handle_);
+}
+void DMA1_Stream2_IRQHandler(void)
+{
+    HAL_DMA_IRQHandler(&sai_handles[1].sai_a_dma_handle_);
+}
+void DMA1_Stream3_IRQHandler(void)
+{
+    HAL_DMA_IRQHandler(&sai_handles[1].sai_b_dma_handle_);
+}
+
+void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef* hsai)
+{
+    // Get instance
+    if(hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B)
+    {
+        sai_handles[0].TestCallback(0);
+    }
+    else if(hsai->Instance == SAI2_Block_A || hsai->Instance == SAI2_Block_B)
+    {
+        sai_handles[1].TestCallback(sai_handles[1].buff_size_/2);
+    }
+}
+
+void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai) {}
+
+
 // ================================================================
 // SaiHandle -> SaiHandle::Pimpl
 // ================================================================
+
+SaiHandle::Result SaiHandle::Init(const Config& config)
+{
+    return pimpl_->Init(config);
+}
+const SaiHandle::Config& SaiHandle::GetConfig() const
+{
+    return pimpl_->GetConfig();
+}
+
+SaiHandle::Result
+SaiHandle::StartDma(int32_t* buffer_rx, int32_t* buffer_tx, size_t size)
+{
+    return pimpl_->StartDmaTransfer(buffer_rx, buffer_tx, size);
+}
+
+SaiHandle::Result SaiHandle::StopDma()
+{
+    return pimpl_->StopDmaTransfer();
+}
 
 
 } // namespace daisy

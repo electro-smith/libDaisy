@@ -26,7 +26,8 @@ using namespace daisy;
 #define PIN_CTRL_3 21
 #define PIN_CTRL_4 18
 
-const float kAudioSampleRate = DSY_AUDIO_SAMPLE_RATE;
+//const float kAudioSampleRate = DSY_AUDIO_SAMPLE_RATE;
+const float kAudioSampleRate = 48014.f;
 
 void DaisyPatch::Init()
 {
@@ -57,21 +58,21 @@ void DaisyPatch::DelayMs(size_t del)
 }
 void DaisyPatch::SetAudioBlockSize(size_t size)
 {
-    block_size_ = size;
-    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
-    dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, block_size_);
+    //    block_size_ = size;
+    //    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
+    //    dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, block_size_);
 }
 
 void DaisyPatch::StartAudio(dsy_audio_mc_callback cb)
 {
-    dsy_audio_set_mc_callback(cb);
-    dsy_audio_start(DSY_AUDIO_INTERNAL);
-    dsy_audio_start(DSY_AUDIO_EXTERNAL);
+    //    dsy_audio_set_mc_callback(cb);
+    //    dsy_audio_start(DSY_AUDIO_INTERNAL);
+    //    dsy_audio_start(DSY_AUDIO_EXTERNAL);
 }
 
 void DaisyPatch::ChangeAudioCallback(dsy_audio_mc_callback cb)
 {
-    dsy_audio_set_mc_callback(cb);
+    //    dsy_audio_set_mc_callback(cb);
 }
 
 void DaisyPatch::StartAdc()
@@ -146,21 +147,21 @@ void DaisyPatch::DisplayControls(bool invert)
 // set SAI2 stuff -- run this between seed configure and init
 void DaisyPatch::InitAudio()
 {
-    seed.sai_handle.init                   = DSY_AUDIO_INIT_BOTH;
-    seed.sai_handle.device[DSY_SAI_2]      = DSY_AUDIO_DEVICE_AK4556;
-    seed.sai_handle.samplerate[DSY_SAI_2]  = DSY_AUDIO_SAMPLERATE_48K;
-    seed.sai_handle.bitdepth[DSY_SAI_2]    = DSY_AUDIO_BITDEPTH_24;
-    seed.sai_handle.a_direction[DSY_SAI_2] = DSY_AUDIO_TX;
-    seed.sai_handle.b_direction[DSY_SAI_2] = DSY_AUDIO_RX;
-    seed.sai_handle.sync_config[DSY_SAI_2] = DSY_AUDIO_SYNC_MASTER;
-
-    ak4556_reset_pin_.pin  = seed.GetPin(PIN_AK4556_RESET);
-    ak4556_reset_pin_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    ak4556_reset_pin_.pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&ak4556_reset_pin_);
-
-    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
-    dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, block_size_);
+//    seed.sai_handle.init                   = DSY_AUDIO_INIT_BOTH;
+//    seed.sai_handle.device[DSY_SAI_2]      = DSY_AUDIO_DEVICE_AK4556;
+//    seed.sai_handle.samplerate[DSY_SAI_2]  = DSY_AUDIO_SAMPLERATE_48K;
+//    seed.sai_handle.bitdepth[DSY_SAI_2]    = DSY_AUDIO_BITDEPTH_24;
+//    seed.sai_handle.a_direction[DSY_SAI_2] = DSY_AUDIO_TX;
+//    seed.sai_handle.b_direction[DSY_SAI_2] = DSY_AUDIO_RX;
+//    seed.sai_handle.sync_config[DSY_SAI_2] = DSY_AUDIO_SYNC_MASTER;
+//
+//    ak4556_reset_pin_.pin  = seed.GetPin(PIN_AK4556_RESET);
+//    ak4556_reset_pin_.mode = DSY_GPIO_MODE_OUTPUT_PP;
+//    ak4556_reset_pin_.pull = DSY_GPIO_NOPULL;
+//    dsy_gpio_init(&ak4556_reset_pin_);
+//
+//    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
+//    dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, block_size_);
 }
 void DaisyPatch::InitControls()
 {

@@ -4,6 +4,9 @@
 
 #include "daisy.h"
 
+typedef void (*dsy_audio_callback)(float*, float*, size_t);
+typedef void (*dsy_audio_mc_callback)(float**, float**, size_t);
+
 
 //Uncomment this out if you're still using the rev2 hardware
 //#define SEED_REV2
@@ -95,8 +98,8 @@ class DaisySeed
 
     dsy_sdram_handle sdram_handle; /**< & */
     dsy_qspi_handle  qspi_handle;  /**< & */
-    dsy_audio_handle audio_handle; /**< & */
-    dsy_sai_handle   sai_handle;   /**< & */
+    //dsy_audio_handle audio_handle; /**< & */
+    SaiHandle        sai_handle;   /**< & */
     AdcHandle        adc;          /**< & */
     dsy_dac_handle   dac_handle;   /**< & */
     UsbHandle        usb_handle;   /**< & */

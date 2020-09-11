@@ -1,7 +1,8 @@
 #include "daisy_pod.h"
 
 #ifndef SAMPLE_RATE
-#define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
+//#define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
+#define SAMPLE_RATE 48014.f
 #endif
 
 
@@ -114,9 +115,9 @@ void DaisyPod::ChangeAudioCallback(dsy_audio_mc_callback cb)
 
 void DaisyPod::SetAudioBlockSize(size_t size)
 {
-    block_size_    = size;
-    callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
-    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
+//    block_size_    = size;
+//    callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
+//    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
 }
 
 float DaisyPod::AudioSampleRate()
