@@ -382,9 +382,6 @@
     <ClCompile Include="src\per\qspi.c">
       <Filter>per</Filter>
     </ClCompile>
-    <ClCompile Include="src\per\sai.c">
-      <Filter>per</Filter>
-    </ClCompile>
     <ClCompile Include="src\per\sdmmc.cpp">
       <Filter>per</Filter>
     </ClCompile>
@@ -396,9 +393,6 @@
     </ClCompile>
     <ClCompile Include="src\per\uart.cpp">
       <Filter>per</Filter>
-    </ClCompile>
-    <ClCompile Include="src\hid\audio.c">
-      <Filter>hid</Filter>
     </ClCompile>
     <ClCompile Include="src\hid\ctrl.cpp">
       <Filter>hid</Filter>
@@ -486,6 +480,12 @@
     </ClCompile>
     <ClCompile Include="src\daisy_seed.cpp">
       <Filter>boards</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\sai.cpp">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\audio.cpp">
+      <Filter>hid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

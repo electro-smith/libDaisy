@@ -229,7 +229,7 @@
     <ClCompile Include="src\dev\sdram.c" />
     <ClCompile Include="src\dev\sr_4021.c" />
     <ClCompile Include="src\dev\sr_595.cpp" />
-    <ClCompile Include="src\hid\audio.c" />
+    <ClCompile Include="src\hid\audio.cpp" />
     <ClCompile Include="src\hid\ctrl.cpp" />
     <ClCompile Include="src\hid\encoder.cpp" />
     <ClCompile Include="src\hid\gatein.cpp" />
@@ -246,7 +246,7 @@
     <ClCompile Include="src\per\gpio.c" />
     <ClCompile Include="src\per\i2c.cpp" />
     <ClCompile Include="src\per\qspi.c" />
-    <ClCompile Include="src\per\sai.c" />
+    <ClCompile Include="src\per\sai.cpp" />
     <ClCompile Include="src\per\sdmmc.cpp" />
     <ClCompile Include="src\per\spi.cpp" />
     <ClCompile Include="src\per\tim.c" />
