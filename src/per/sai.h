@@ -42,6 +42,7 @@ TODO
  *  sai.StartDma(. . .);
  *
  */
+#pragma once
 #ifndef DSY_SAI_H
 #define DSY_SAI_H
 

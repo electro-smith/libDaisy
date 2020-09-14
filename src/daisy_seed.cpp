@@ -88,7 +88,7 @@ void DaisySeed::Configure()
     // Configure internal peripherals
     ConfigureSdram();
     ConfigureQspi();
-    ConfigureAudio();
+    //ConfigureAudio();
     ConfigureDac();
     //ConfigureI2c();
     // Configure the built-in GPIOs.
@@ -108,6 +108,7 @@ void DaisySeed::Init()
     dsy_gpio_init(&led_);
     dsy_gpio_init(&testpoint_);
     //dsy_audio_init(&audio_handle);
+    ConfigureAudio();
     dsy_tim_init();
     dsy_tim_start();
     // Due to the added 16kB+ of flash usage,
@@ -251,16 +252,16 @@ void DaisySeed::ConfigureAudio()
     sai_config.bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
     sai_config.a_sync          = SaiHandle::Config::Sync::MASTER;
     sai_config.b_sync          = SaiHandle::Config::Sync::SLAVE;
-    sai_config.a_dir           = SaiHandle::Config::Direction::RECEIVE;
-    sai_config.b_dir           = SaiHandle::Config::Direction::TRANSMIT;
+    sai_config.a_dir           = SaiHandle::Config::Direction::TRANSMIT;
+    sai_config.b_dir           = SaiHandle::Config::Direction::RECEIVE;
     sai_config.pin_config.fs   = {DSY_GPIOE, 4};
     sai_config.pin_config.mclk = {DSY_GPIOE, 2};
     sai_config.pin_config.sck  = {DSY_GPIOE, 5};
     sai_config.pin_config.sa   = {DSY_GPIOE, 6};
     sai_config.pin_config.sb   = {DSY_GPIOE, 3};
     // Then Initialize
-	SaiHandle sai;
-    sai.Init(sai_config);
+	//SaiHandle sai;
+    sai_handle.Init(sai_config);
 }
 void DaisySeed::ConfigureDac()
 {
