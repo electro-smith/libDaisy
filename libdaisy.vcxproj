@@ -47,8 +47,8 @@
       <PreprocessorDefinitions>DEBUG=1;__FPU_PRESENT=1;STM32H750xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>O0</Optimization>
       <AdditionalOptions />
-      <CLanguageStandard />
-      <CPPLanguageStandard />
+      <CLanguageStandard>GNU11</CLanguageStandard>
+      <CPPLanguageStandard>GNUPP14</CPPLanguageStandard>
       <InlineFunctions>true</InlineFunctions>
     </ClCompile>
     <Link>

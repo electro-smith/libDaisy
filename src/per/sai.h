@@ -123,7 +123,10 @@ class SaiHandle
 	 */
     typedef void (*CallbackFunctionPtr)(int32_t* in, int32_t* out, size_t size);
 
-    /** Starts Rx and Tx in Circular Buffer Mode */
+    /** Starts Rx and Tx in Circular Buffer Mode 
+	 ** The callback will be called when half of the buffer is ready, 
+	 ** and will handle size/2 samples per callback.
+     */
     Result StartDma(int32_t*            buffer_rx,
                     int32_t*            buffer_tx,
                     size_t              size,
@@ -131,6 +134,18 @@ class SaiHandle
 
     /** Stops the DMA stream for the SAI blocks in use. */
     Result StopDma();
+
+    /** Returns the samplerate based on the current configuration */
+    float GetSampleRate();
+
+	/** Returns the number of samples per audio block 
+	 ** Calculated as Buffer Size / 2 / number of channels */
+    size_t GetBlockSize();
+
+    /** Returns the Block Rate of the current stream based on the size 
+     ** of the buffer passed in, and the current samplerate. 
+     */
+    float GetBlockRate();
 
     class Impl; /**< Private Implementation class */
 

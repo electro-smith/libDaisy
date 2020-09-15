@@ -107,7 +107,6 @@ void DaisySeed::Init()
     dsy_qspi_init(&qspi_handle);
     dsy_gpio_init(&led_);
     dsy_gpio_init(&testpoint_);
-    //dsy_audio_init(&audio_handle);
     ConfigureAudio();
     dsy_tim_init();
     dsy_tim_start();
@@ -260,7 +259,6 @@ void DaisySeed::ConfigureAudio()
     sai_config.pin_config.sa   = {DSY_GPIOE, 6};
     sai_config.pin_config.sb   = {DSY_GPIOE, 3};
     // Then Initialize
-	//SaiHandle sai;
     sai_handle.Init(sai_config);
 }
 void DaisySeed::ConfigureDac()

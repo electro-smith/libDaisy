@@ -18,6 +18,7 @@ class SaiHandle::Impl
         BLOCK_A,
         BLOCK_B,
     };
+
     SaiHandle::Result        Init(const SaiHandle::Config& config);
     const SaiHandle::Config& GetConfig() const { return config_; }
 
@@ -26,6 +27,11 @@ class SaiHandle::Impl
                                        size_t                         size,
                                        SaiHandle::CallbackFunctionPtr callback);
     SaiHandle::Result StopDmaTransfer();
+
+    // Utility functions
+    float  GetSampleRate();
+    size_t GetBlockSize();
+    float  GetBlockRate();
 
     SaiHandle::Config config_;
     SAI_HandleTypeDef sai_a_handle_, sai_b_handle_;
@@ -266,13 +272,13 @@ void SaiHandle::Impl::DeinitDma(PeripheralBlock block)
     }
 }
 
-void         SaiHandle::Impl::InternalCallback(size_t offset)
+void SaiHandle::Impl::InternalCallback(size_t offset)
 {
     int32_t *in, *out;
-    in = buff_rx_ + offset;
+    in  = buff_rx_ + offset;
     out = buff_tx_ + offset;
-	if (callback_)
-		callback_(in, out, buff_size_ / 2);
+    if(callback_)
+        callback_(in, out, buff_size_ / 2);
 }
 
 SaiHandle::Result
@@ -298,6 +304,28 @@ SaiHandle::Result SaiHandle::Impl::StopDmaTransfer()
     HAL_SAI_DMAStop(&sai_a_handle_);
     HAL_SAI_DMAStop(&sai_b_handle_);
     return Result::OK;
+}
+
+float SaiHandle::Impl::GetSampleRate()
+{
+    switch(config_.sr)
+    {
+        case Config::SampleRate::SAI_8KHZ: return 8000.f;
+        case Config::SampleRate::SAI_16KHZ: return 16000.f;
+        case Config::SampleRate::SAI_32KHZ: return 32000.f;
+        case Config::SampleRate::SAI_48KHZ: return 48000.f;
+        case Config::SampleRate::SAI_96KHZ: return 96000.f;
+        default: return 48000.f;
+    }
+}
+size_t SaiHandle::Impl::GetBlockSize()
+{
+    // Buffer handled in halves, 2 samples per frame (1 per channel)
+    return buff_size_ / 2 / 2;
+}
+float SaiHandle::Impl::GetBlockRate()
+{
+    return GetSampleRate() / GetBlockSize();
 }
 
 void SaiHandle::Impl::InitPins()
@@ -491,6 +519,21 @@ SaiHandle::Result SaiHandle::StartDma(int32_t*            buffer_rx,
 SaiHandle::Result SaiHandle::StopDma()
 {
     return pimpl_->StopDmaTransfer();
+}
+
+float SaiHandle::GetSampleRate()
+{
+    return pimpl_->GetSampleRate();
+}
+
+float SaiHandle::GetBlockRate()
+{
+    return pimpl_->GetBlockRate();
+}
+
+size_t SaiHandle::GetBlockSize()
+{
+    return pimpl_->GetBlockSize();
 }
 
 } // namespace daisy
