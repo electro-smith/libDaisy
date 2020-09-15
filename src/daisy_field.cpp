@@ -154,22 +154,22 @@ void DaisyField::Init()
     dsy_tim_start();
 }
 
-void DaisyField::StartAudio(dsy_audio_callback cb)
+void DaisyField::StartAudio(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.StartAudio(cb);
 }
 
-void DaisyField::StartAudio(dsy_audio_mc_callback cb)
+void DaisyField::StartAudio(AudioHandle::AudioCallback cb)
 {
     seed.StartAudio(cb);
 }
 
-void DaisyField::ChangeAudioCallback(dsy_audio_callback cb)
+void DaisyField::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
 }
 
-void DaisyField::ChangeAudioCallback(dsy_audio_mc_callback cb)
+void DaisyField::ChangeAudioCallback(AudioHandle::AudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
 }

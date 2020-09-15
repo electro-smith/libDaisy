@@ -4,10 +4,6 @@
 
 #include "daisy.h"
 
-typedef void (*dsy_audio_callback)(float*, float*, size_t);
-typedef void (*dsy_audio_mc_callback)(float**, float**, size_t);
-
-
 //Uncomment this out if you're still using the rev2 hardware
 //#define SEED_REV2
 
@@ -34,7 +30,6 @@ class DaisySeed
     //Defaults listed below:
     //TODO: Add defaults
 
-
     /** & */
     void Configure();
 
@@ -59,22 +54,22 @@ class DaisySeed
     the specified callback will get called whenever
     new data is ready to be prepared.
     */
-    void StartAudio(dsy_audio_callback cb);
+    void StartAudio(AudioHandle::InterleavingAudioCallback cb);
 
     /** Begins the audio for the seeds builtin audio.
     the specified callback will get called whenever
     new data is ready to be prepared.
     This will use the newer non-interleaved callback.
     */
-    void StartAudio(dsy_audio_mc_callback cb);
+    void StartAudio(AudioHandle::AudioCallback cb);
 
     /** Changes to a new interleaved callback
      */
-    void ChangeAudioCallback(dsy_audio_callback cb);
+    void ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb);
 
     /** Changes to a new multichannel callback
      */
-    void ChangeAudioCallback(dsy_audio_mc_callback cb);
+    void ChangeAudioCallback(AudioHandle::AudioCallback cb);
 
 
     /** Sets the state of the built in LED
@@ -98,8 +93,7 @@ class DaisySeed
 
     dsy_sdram_handle sdram_handle; /**< & */
     dsy_qspi_handle  qspi_handle;  /**< & */
-    //dsy_audio_handle audio_handle; /**< & */
-    SaiHandle        sai_handle;   /**< & */
+    AudioHandle      audio_handle; /**< & */
     AdcHandle        adc;          /**< & */
     dsy_dac_handle   dac_handle;   /**< & */
     UsbHandle        usb_handle;   /**< & */

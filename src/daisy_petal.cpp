@@ -100,22 +100,22 @@ void DaisyPetal::DelayMs(size_t del)
     dsy_tim_delay_ms(del);
 }
 
-void DaisyPetal::StartAudio(dsy_audio_callback cb)
+void DaisyPetal::StartAudio(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.StartAudio(cb);
 }
 
-void DaisyPetal::StartAudio(dsy_audio_mc_callback cb)
+void DaisyPetal::StartAudio(AudioHandle::AudioCallback cb)
 {
     seed.StartAudio(cb);
 }
 
-void DaisyPetal::ChangeAudioCallback(dsy_audio_callback cb)
+void DaisyPetal::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
 }
 
-void DaisyPetal::ChangeAudioCallback(dsy_audio_mc_callback cb)
+void DaisyPetal::ChangeAudioCallback(AudioHandle::AudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
 }

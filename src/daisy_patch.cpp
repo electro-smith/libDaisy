@@ -63,14 +63,14 @@ void DaisyPatch::SetAudioBlockSize(size_t size)
     //    dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, block_size_);
 }
 
-void DaisyPatch::StartAudio(dsy_audio_mc_callback cb)
+void DaisyPatch::StartAudio(AudioHandle::AudioCallback cb)
 {
     //    dsy_audio_set_mc_callback(cb);
     //    dsy_audio_start(DSY_AUDIO_INTERNAL);
     //    dsy_audio_start(DSY_AUDIO_EXTERNAL);
 }
 
-void DaisyPatch::ChangeAudioCallback(dsy_audio_mc_callback cb)
+void DaisyPatch::ChangeAudioCallback(AudioHandle::AudioCallback cb)
 {
     //    dsy_audio_set_mc_callback(cb);
 }

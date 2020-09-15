@@ -57,13 +57,13 @@ class DaisyPatch
     /** Starts the callback
     \cb multichannel callback function
     */
-    void StartAudio(dsy_audio_mc_callback cb);
+    void StartAudio(AudioHandle::AudioCallback cb);
 
     /**
        Switch callback functions
        \param cb New multichannel callback function.
     */
-    void ChangeAudioCallback(dsy_audio_mc_callback cb);
+    void ChangeAudioCallback(AudioHandle::AudioCallback cb);
 
     /** Start analog to digital conversion.*/
     void StartAdc();

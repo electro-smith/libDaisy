@@ -93,22 +93,22 @@ void DaisyPod::DelayMs(size_t del)
     dsy_tim_delay_ms(del);
 }
 
-void DaisyPod::StartAudio(dsy_audio_callback cb)
+void DaisyPod::StartAudio(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.StartAudio(cb);
 }
 
-void DaisyPod::StartAudio(dsy_audio_mc_callback cb)
+void DaisyPod::StartAudio(AudioHandle::AudioCallback cb)
 {
     seed.StartAudio(cb);
 }
 
-void DaisyPod::ChangeAudioCallback(dsy_audio_callback cb)
+void DaisyPod::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
 }
 
-void DaisyPod::ChangeAudioCallback(dsy_audio_mc_callback cb)
+void DaisyPod::ChangeAudioCallback(AudioHandle::AudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
 }

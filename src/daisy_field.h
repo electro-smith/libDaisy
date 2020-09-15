@@ -88,24 +88,24 @@ class DaisyField
     /** Starts the callback
     \cb Interleaved callback function
     */
-    void StartAudio(dsy_audio_callback cb);
+    void StartAudio(AudioHandle::InterleavingAudioCallback cb);
 
     /** Starts the callback
     \cb multichannel callback function
     */
-    void StartAudio(dsy_audio_mc_callback cb);
+    void StartAudio(AudioHandle::AudioCallback cb);
 
     /**
        Switch callback functions
        \param cb New interleaved callback function.
     */
-    void ChangeAudioCallback(dsy_audio_callback cb);
+    void ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb);
 
     /**
        Switch callback functions
        \param cb New multichannel callback function.
     */
-    void ChangeAudioCallback(dsy_audio_mc_callback cb);
+    void ChangeAudioCallback(AudioHandle::AudioCallback cb);
 
     /** Starts Transfering data from the ADC */
     void StartAdc() { seed.adc.Start(); }
