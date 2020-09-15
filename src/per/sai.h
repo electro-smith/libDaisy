@@ -147,6 +147,10 @@ class SaiHandle
      */
     float GetBlockRate();
 
+    inline bool IsInitialized() const {
+        return pimpl_ == nullptr ? false : true;
+    }
+
     class Impl; /**< Private Implementation class */
 
   private:
