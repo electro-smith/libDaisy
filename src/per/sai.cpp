@@ -219,7 +219,7 @@ void SaiHandle::Impl::InitDma(PeripheralBlock block)
         if(sai_idx == int(Config::Peripheral::SAI_1))
             hdma->Instance = DMA1_Stream0;
         else
-            hdma->Instance = DMA1_Stream2;
+            hdma->Instance = DMA1_Stream3;
     }
     else
     {
@@ -234,7 +234,7 @@ void SaiHandle::Impl::InitDma(PeripheralBlock block)
         if(sai_idx == int(Config::Peripheral::SAI_1))
             hdma->Instance = DMA1_Stream1;
         else
-            hdma->Instance = DMA1_Stream3;
+            hdma->Instance = DMA1_Stream4;
     }
 
     // Generic
@@ -457,12 +457,12 @@ extern "C" void DMA1_Stream1_IRQHandler(void)
     HAL_DMA_IRQHandler(&sai_handles[0].sai_b_dma_handle_);
 }
 
-extern "C" void DMA1_Stream2_IRQHandler(void)
+extern "C" void DMA1_Stream3_IRQHandler(void)
 {
     HAL_DMA_IRQHandler(&sai_handles[1].sai_a_dma_handle_);
 }
 
-extern "C" void DMA1_Stream3_IRQHandler(void)
+extern "C" void DMA1_Stream4_IRQHandler(void)
 {
     HAL_DMA_IRQHandler(&sai_handles[1].sai_b_dma_handle_);
 }
