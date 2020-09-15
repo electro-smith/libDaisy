@@ -21,27 +21,31 @@ class SaiHandle::Impl
     SaiHandle::Result        Init(const SaiHandle::Config& config);
     const SaiHandle::Config& GetConfig() const { return config_; }
 
-    SaiHandle::Result
-                      StartDmaTransfer(int32_t* buffer_rx, int32_t* buffer_tx, size_t size);
+    SaiHandle::Result StartDmaTransfer(int32_t*                       buffer_rx,
+                                       int32_t*                       buffer_tx,
+                                       size_t                         size,
+                                       SaiHandle::CallbackFunctionPtr callback);
     SaiHandle::Result StopDmaTransfer();
 
     SaiHandle::Config config_;
     SAI_HandleTypeDef sai_a_handle_, sai_b_handle_;
     DMA_HandleTypeDef sai_a_dma_handle_, sai_b_dma_handle_;
 
-    int32_t *buff_rx_, *buff_tx_;
-    size_t   buff_size_;
+    // Data kept for Callback usage
+    int32_t *                      buff_rx_, *buff_tx_;
+    size_t                         buff_size_;
+    SaiHandle::CallbackFunctionPtr callback_;
 
-    // If we need it, which I don't think we do for this one.
-    //static void GlobalInit();
+    /** Callback that dispatches user callback from Cplt and HalfCplt DMA Callbacks */
+    void InternalCallback(size_t offset);
 
+    /** Pin Initiazlization */
     void InitPins();
     void DeinitPins();
 
+    /** DMA Initialization */
     void InitDma(PeripheralBlock block);
     void DeinitDma(PeripheralBlock block);
-
-    void TestCallback(size_t offset);
 };
 
 // ================================================================
@@ -61,14 +65,6 @@ static void Error_Handler()
 static SaiHandle::Impl sai_handles[2];
 
 // ================================================================
-// Scheduling and global functions
-// ================================================================
-
-// If we need it, which I don't think we do for this one.
-//void SaiHandle::Impl::GlobalInit() {}
-
-
-// ================================================================
 // SAI Functions
 // ================================================================
 
@@ -83,8 +79,8 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
     buff_rx_   = nullptr;
     buff_tx_   = nullptr;
     buff_size_ = 0;
+    config_    = config;
 
-    config_                                     = config;
     constexpr SAI_Block_TypeDef* a_instances[2] = {SAI1_Block_A, SAI2_Block_A};
     constexpr SAI_Block_TypeDef* b_instances[2] = {SAI1_Block_B, SAI2_Block_B};
 
@@ -123,7 +119,6 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
             = config.a_dir == Config::Direction::TRANSMIT ? SAI_MODEMASTER_TX
                                                           : SAI_MODEMASTER_RX;
         sai_a_handle_.Init.Synchro = SAI_ASYNCHRONOUS;
-
     }
     else
     {
@@ -206,7 +201,7 @@ void SaiHandle::Impl::InitDma(PeripheralBlock block)
     DMA_HandleTypeDef* hdma;
     uint32_t           req, dir;
 
-    const int          sai_idx = int(config_.periph);
+    const int sai_idx = int(config_.periph);
 
     if(block == PeripheralBlock::BLOCK_A)
     {
@@ -271,31 +266,25 @@ void SaiHandle::Impl::DeinitDma(PeripheralBlock block)
     }
 }
 
-// Test vals
-static float sig, phs;
-void SaiHandle::Impl::TestCallback(size_t offset)
+void         SaiHandle::Impl::InternalCallback(size_t offset)
 {
-    for(size_t i = 0; i < buff_size_; i += 2)
-    {
-//                buff_tx_[offset + i] = f2s24(sig);
-//                buff_tx_[offset + i + 1] = f2s24(sig);
-//                sig                  = sinf(phs);
-//                phs += 0.0130861526f;
-//                if(phs > (2.f * (float)M_PI))
-//                    phs -= (2.f * (float)M_PI);
-        buff_tx_[offset + i] = buff_rx_[offset + i];
-        buff_tx_[offset + i + 1] = buff_rx_[offset + i + 1];
-    }
+    int32_t *in, *out;
+    in = buff_rx_ + offset;
+    out = buff_tx_ + offset;
+	if (callback_)
+		callback_(in, out, buff_size_ / 2);
 }
 
-
-SaiHandle::Result SaiHandle::Impl::StartDmaTransfer(int32_t* buffer_rx,
-                                                    int32_t* buffer_tx,
-                                                    size_t   size)
+SaiHandle::Result
+SaiHandle::Impl::StartDmaTransfer(int32_t*                       buffer_rx,
+                                  int32_t*                       buffer_tx,
+                                  size_t                         size,
+                                  SaiHandle::CallbackFunctionPtr callback)
 {
     buff_rx_   = buffer_rx;
     buff_tx_   = buffer_tx;
     buff_size_ = size;
+    callback_  = callback;
     config_.a_dir == Config::Direction::RECEIVE
         ? HAL_SAI_Receive_DMA(&sai_a_handle_, (uint8_t*)buffer_rx, size)
         : HAL_SAI_Transmit_DMA(&sai_a_handle_, (uint8_t*)buffer_tx, size);
@@ -457,11 +446,11 @@ extern "C" void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef* hsai)
 {
     if(hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B)
     {
-        sai_handles[0].TestCallback(0);
+        sai_handles[0].InternalCallback(0);
     }
     else if(hsai->Instance == SAI2_Block_A || hsai->Instance == SAI2_Block_B)
     {
-        sai_handles[1].TestCallback(0);
+        sai_handles[1].InternalCallback(0);
     }
 }
 
@@ -469,11 +458,11 @@ extern "C" void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai)
 {
     if(hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B)
     {
-        sai_handles[0].TestCallback(sai_handles[0].buff_size_ / 2);
+        sai_handles[0].InternalCallback(sai_handles[0].buff_size_ / 2);
     }
     else if(hsai->Instance == SAI2_Block_A || hsai->Instance == SAI2_Block_B)
     {
-        sai_handles[1].TestCallback(sai_handles[1].buff_size_ / 2);
+        sai_handles[1].InternalCallback(sai_handles[1].buff_size_ / 2);
     }
 }
 
@@ -491,10 +480,12 @@ const SaiHandle::Config& SaiHandle::GetConfig() const
     return pimpl_->GetConfig();
 }
 
-SaiHandle::Result
-SaiHandle::StartDma(int32_t* buffer_rx, int32_t* buffer_tx, size_t size)
+SaiHandle::Result SaiHandle::StartDma(int32_t*            buffer_rx,
+                                      int32_t*            buffer_tx,
+                                      size_t              size,
+                                      CallbackFunctionPtr callback)
 {
-    return pimpl_->StartDmaTransfer(buffer_rx, buffer_tx, size);
+    return pimpl_->StartDmaTransfer(buffer_rx, buffer_tx, size, callback);
 }
 
 SaiHandle::Result SaiHandle::StopDma()
@@ -503,4 +494,3 @@ SaiHandle::Result SaiHandle::StopDma()
 }
 
 } // namespace daisy
-
