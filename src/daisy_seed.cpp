@@ -1,5 +1,10 @@
 #include "daisy_seed.h"
 
+extern "C"
+{
+#include "dev/codec_ak4556.h"
+}
+
 using namespace daisy;
 
 #define SEED_LED_PORT DSY_GPIOC
@@ -88,9 +93,7 @@ void DaisySeed::Configure()
     // Configure internal peripherals
     ConfigureSdram();
     ConfigureQspi();
-    //ConfigureAudio();
     ConfigureDac();
-    //ConfigureI2c();
     // Configure the built-in GPIOs.
     led_.pin.port       = SEED_LED_PORT;
     led_.pin.pin        = SEED_LED_PIN;
@@ -128,24 +131,22 @@ dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
     return p;
 }
 
-void DaisySeed::StartAudio(dsy_audio_callback cb)
+void DaisySeed::StartAudio(AudioHandle::InterleavingAudioCallback cb)
 {
-//    dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
-//    dsy_audio_start(DSY_AUDIO_INTERNAL);
+    audio_handle.Start(cb);
 }
 
-void DaisySeed::StartAudio(dsy_audio_mc_callback cb)
+void DaisySeed::StartAudio(AudioHandle::AudioCallback cb)
 {
-//    dsy_audio_set_mc_callback(cb);
-//    dsy_audio_start(DSY_AUDIO_INTERNAL);
+    audio_handle.Start(cb);
 }
 
-void DaisySeed::ChangeAudioCallback(dsy_audio_callback cb)
+void DaisySeed::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
 {
     //dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
 }
 
-void DaisySeed::ChangeAudioCallback(dsy_audio_mc_callback cb)
+void DaisySeed::ChangeAudioCallback(AudioHandle::AudioCallback cb)
 {
     //dsy_audio_set_mc_callback(cb);
 }
@@ -197,54 +198,18 @@ void DaisySeed::ConfigureQspi()
 }
 void DaisySeed::ConfigureAudio()
 {
-    /*
-    dsy_gpio_pin *pin_group;
-    sai_handle.init = DSY_AUDIO_INIT_SAI1;
-    // SAI1 - config
-#ifndef SEED_REV2
-    sai_handle.device[DSY_SAI_1]      = DSY_AUDIO_DEVICE_AK4556;
-    sai_handle.samplerate[DSY_SAI_1]  = DSY_AUDIO_SAMPLERATE_48K;
-    sai_handle.bitdepth[DSY_SAI_1]    = DSY_AUDIO_BITDEPTH_24;
-    sai_handle.a_direction[DSY_SAI_1] = DSY_AUDIO_TX;
-    sai_handle.b_direction[DSY_SAI_1] = DSY_AUDIO_RX;
-#else
-    sai_handle.device[DSY_SAI_1] = DSY_AUDIO_DEVICE_WM8731;
-    sai_handle.samplerate[DSY_SAI_1]  = DSY_AUDIO_SAMPLERATE_48K;
-    sai_handle.bitdepth[DSY_SAI_1]    = DSY_AUDIO_BITDEPTH_16;
-    sai_handle.a_direction[DSY_SAI_1] = DSY_AUDIO_RX;
-    sai_handle.b_direction[DSY_SAI_1] = DSY_AUDIO_TX;
-#endif
-    sai_handle.sync_config[DSY_SAI_1] = DSY_AUDIO_SYNC_MASTER;
-    pin_group                         = sai_handle.sai1_pin_config;
-
-    pin_group[DSY_SAI_PIN_MCLK] = dsy_pin(DSY_GPIOE, 2);
-    pin_group[DSY_SAI_PIN_FS]   = dsy_pin(DSY_GPIOE, 4);
-    pin_group[DSY_SAI_PIN_SCK]  = dsy_pin(DSY_GPIOE, 5);
-    pin_group[DSY_SAI_PIN_SIN]  = dsy_pin(DSY_GPIOE, 6);
-    pin_group[DSY_SAI_PIN_SOUT] = dsy_pin(DSY_GPIOE, 3);
-
     // SAI2 - config
     // Example Config
-    //    sai_handle.device[DSY_SAI_2]      = DSY_AUDIO_DEVICE_WM8731;
-    //    sai_handle.samplerate[DSY_SAI_2]  = DSY_AUDIO_SAMPLERATE_48K;
-    //    sai_handle.bitdepth[DSY_SAI_2]    = DSY_AUDIO_BITDEPTH_16;
-    //    sai_handle.sync_config[DSY_SAI_2] = DSY_AUDIO_SYNC_SLAVE;
-    pin_group = sai_handle.sai2_pin_config;
+    //	  SAI2 Pins (available on pinout)
+    //    pin_group = sai_handle.sai2_pin_config;
+    //    pin_group[DSY_SAI_PIN_MCLK] = dsy_pin(DSY_GPIOA, 1);
+    //    pin_group[DSY_SAI_PIN_FS]   = dsy_pin(DSY_GPIOG, 9);
+    //    pin_group[DSY_SAI_PIN_SCK]  = dsy_pin(DSY_GPIOA, 2);
+    //    pin_group[DSY_SAI_PIN_SIN]  = dsy_pin(DSY_GPIOD, 11);
+    //    pin_group[DSY_SAI_PIN_SOUT] = dsy_pin(DSY_GPIOA, 0);
 
-    pin_group[DSY_SAI_PIN_MCLK] = dsy_pin(DSY_GPIOA, 1);
-    pin_group[DSY_SAI_PIN_FS]   = dsy_pin(DSY_GPIOG, 9);
-    pin_group[DSY_SAI_PIN_SCK]  = dsy_pin(DSY_GPIOA, 2);
-    pin_group[DSY_SAI_PIN_SIN]  = dsy_pin(DSY_GPIOD, 11);
-    pin_group[DSY_SAI_PIN_SOUT] = dsy_pin(DSY_GPIOA, 0);
-
-    audio_handle.sai = &sai_handle;
-    //audio_handle.dev0_i2c   = NULL;
-    //audio_handle.dev1_i2c   = NULL;
-    audio_handle.block_size = 48;
-    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, 48);
-    dsy_audio_set_blocksize(DSY_AUDIO_EXTERNAL, 48);
-	*/
-	// Only SAI1
+    // SAI1 -- Peripheral 
+	// Configure
     SaiHandle::Config sai_config;
     sai_config.periph          = SaiHandle::Config::Peripheral::SAI_1;
     sai_config.sr              = SaiHandle::Config::SampleRate::SAI_48KHZ;
@@ -259,7 +224,18 @@ void DaisySeed::ConfigureAudio()
     sai_config.pin_config.sa   = {DSY_GPIOE, 6};
     sai_config.pin_config.sb   = {DSY_GPIOE, 3};
     // Then Initialize
-    sai_handle.Init(sai_config);
+    SaiHandle sai_1_handle;
+    sai_1_handle.Init(sai_config);
+
+    // Device Init
+    dsy_gpio_pin codec_reset_pin;
+    codec_reset_pin = {DSY_GPIOB, 11};
+    codec_ak4556_init(codec_reset_pin);
+
+    // Audio
+    AudioHandle::Config audio_config;
+    audio_config.blocksize = 48;
+    audio_handle.Init(audio_config, sai_1_handle);
 }
 void DaisySeed::ConfigureDac()
 {
