@@ -4,56 +4,9 @@
 #include <stdint.h>
 #include "daisy_core.h"
 
-
-#define FBIPMAX 0.999985f             /**< close to 1.0f-LSB at 16 bit */
-#define FBIPMIN (-FBIPMAX)            /**< - (1 - LSB) */
-#define S162F_SCALE 3.0517578125e-05f /**< 1 / (2** 15) */
-#define F2S16_SCALE 32767.0f          /**< (2 ** 15) - 1 */
-#define F2S24_SCALE 8388608.0f        /**< 2 ** 23 */
-#define S242F_SCALE 1.192092896e-07f  /**< 1 / (2 ** 23) */
-#define S24SIGN 0x800000              /**< 2 ** 23 */
-
 /** @addtogroup boards
     @{
 */
-
-/** 
-    Scales float by 1/(2 ^ 15)
-    \param x Number to be scaled.
-    \return Scaled number.
-*/
-FORCE_INLINE float s162f(int16_t x)
-{
-    return (float)x * S162F_SCALE;
-}
-
-/**
-   &
-*/
-FORCE_INLINE int16_t f2s16(float x)
-{
-    x = x <= FBIPMIN ? FBIPMIN : x;
-    x = x >= FBIPMAX ? FBIPMAX : x;
-    return (int32_t)(x * F2S16_SCALE);
-}
-
-/**
-#
- */
-FORCE_INLINE float s242f(int32_t x)
-{
-    x = (x ^ S24SIGN) - S24SIGN; //sign extend aka ((x<<8)>>8)
-    return (float)x * S242F_SCALE;
-}
-/**
-   &
- */
-FORCE_INLINE int32_t f2s24(float x)
-{
-    x = x <= FBIPMIN ? FBIPMIN : x;
-    x = x >= FBIPMAX ? FBIPMAX : x;
-    return (int32_t)(x * F2S24_SCALE);
-}
 
 #include "sys/system.h"
 #include "per/qspi.h"
