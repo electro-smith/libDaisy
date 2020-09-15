@@ -1,8 +1,5 @@
 #include "per/sai.h"
-//#include "daisy_core.h"
-#include "daisy.h"
-#include <string.h>
-#include <cmath>
+#include "daisy_core.h"
 extern "C"
 {
 #include "util/hal_map.h"
