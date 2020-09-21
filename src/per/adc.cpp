@@ -133,7 +133,7 @@ struct dsy_adc
     uint16_t mux_index[DSY_ADC_MAX_CHANNELS]; // 0->mux_channels per ADC channel
     // dma buffer ptrs
     uint16_t* dma_buffer;
-    uint16_t (*mux_cache)[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
+    uint16_t (*mux_cache)[DSY_ADC_MAX_MUX_CHANNELS];
     ADC_HandleTypeDef hadc1;
     DMA_HandleTypeDef hdma_adc1;
     bool              mux_used; // flag set when mux is configured
@@ -231,12 +231,13 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     // Set DMA buffers
     num_channels_  = num_channels;
     adc.dma_buffer = adc1_dma_buffer;
-    adc.mux_cache  = &adc1_mux_cache;
+    adc.mux_cache  = &adc1_mux_cache[0];
     // Clear Buffers
     for(size_t i = 0; i < DSY_ADC_MAX_CHANNELS; i++)
     {
         adc.dma_buffer[i]   = 0;
         adc.mux_channels[i] = 0; // set to 0 mux first.
+        adc.mux_index[i]    = 0;
     }
     // Set Config Pointer and data for use in MspInit
     adc.channels = num_channels;
@@ -397,17 +398,17 @@ float AdcHandle::GetFloat(uint8_t chn) const
 
 uint16_t AdcHandle::GetMux(uint8_t chn, uint8_t idx) const
 {
-    return *adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx];
+    return adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx];
 }
 
 uint16_t* AdcHandle::GetMuxPtr(uint8_t chn, uint8_t idx) const
 {
-    return adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx];
+    return &adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx];
 }
 
 float AdcHandle::GetMuxFloat(uint8_t chn, uint8_t idx) const
 {
-    return (float)*adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx]
+    return (float)adc.mux_cache[chn < DSY_ADC_MAX_CHANNELS ? chn : 0][idx]
            / DSY_ADC_MAX_RESOLUTION;
 }
 
@@ -448,7 +449,8 @@ static void adc_internal_callback()
         if(adc.mux_channels[chn] > 0)
         {
             // Capture current value to mux_cache
-            *adc.mux_cache[i][current_position] = adc.dma_buffer[i];
+            const auto value                   = adc.dma_buffer[i];
+            adc.mux_cache[i][current_position] = value;
             // Update Mux Position, and write GPIO
             adc.mux_index[chn] += 1;
             if(adc.mux_index[chn] >= adc.mux_channels[chn])
