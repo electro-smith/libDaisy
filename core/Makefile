@@ -142,6 +142,8 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 
 CPPFLAGS = $(CFLAGS)
 CPPFLAGS += \
+-fdata-sections \
+-ffunction-sections \
 -fno-exceptions \
 -fasm \
 -finline \
@@ -170,7 +172,7 @@ LIBS += -ldaisysp
 LIBDIR += -L $(DAISYSP_DIR)/build
 endif
 
-LDFLAGS = $(MCU) --specs=nano.specs --specs=nosys.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
+LDFLAGS = $(MCU) --specs=nano.specs --specs=nosys.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections,-flto
 
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
