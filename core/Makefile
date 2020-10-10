@@ -151,7 +151,7 @@ CPPFLAGS += \
 -fno-unwind-tables 
 
 C_STANDARD = -std=gnu11
-CPP_STANDARD = -std=gnu++14
+CPP_STANDARD ?= -std=gnu++14
 
 #######################################
 # LDFLAGS
