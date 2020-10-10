@@ -265,10 +265,10 @@ void OledDisplay::DrawArc(uint_fast8_t x,
                           int_fast16_t sweep,
                           bool         on)
 {
-	// Values to calculate the circle
+    // Values to calculate the circle
     int_fast16_t t_x, t_y, err, e2;
 
-	// Temporary values to speed up comparisons
+    // Temporary values to speed up comparisons
     float t_sxy, t_syx, t_sxny, t_synx;
     float t_exy, t_eyx, t_exny, t_eynx;
 
@@ -313,7 +313,7 @@ void OledDisplay::DrawArc(uint_fast8_t x,
 
     do
     {
-		if (!circle)
+        if(!circle)
         {
             t_sxy  = start_x * t_y;
             t_syx  = start_y * t_x;
@@ -324,20 +324,20 @@ void OledDisplay::DrawArc(uint_fast8_t x,
             t_exny = end_x * -t_y;
             t_eynx = end_y * -t_x;
 
-			if (sweep > 180)
-			{
+            if(sweep > 180)
+            {
                 d1 = (t_sxy - t_synx < 0 || t_exy - t_eynx > 0);
                 d2 = (t_sxy - t_syx < 0 || t_exy - t_eyx > 0);
                 d3 = (t_sxny - t_syx < 0 || t_exny - t_eyx > 0);
                 d4 = (t_sxny - t_synx < 0 || t_exny - t_eynx > 0);
-			}
-			else
-			{
+            }
+            else
+            {
                 d1 = (t_sxy - t_synx < 0 && t_exy - t_eynx > 0);
                 d2 = (t_sxy - t_syx < 0 && t_exy - t_eyx > 0);
                 d3 = (t_sxny - t_syx < 0 && t_exny - t_eyx > 0);
                 d4 = (t_sxny - t_synx < 0 && t_exny - t_eynx > 0);
-			}
+            }
         }
 
         if(d1)
