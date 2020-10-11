@@ -131,7 +131,7 @@ class OledDisplay
     \param on  on or off
     \return &
     */
-    char WriteString(char* str, FontDef font, bool on);
+    char WriteString(const char* str, FontDef font, bool on);
 
     /** 
     Moves the 'Cursor' position used for WriteChar, and WriteStr to the specified coordinate.

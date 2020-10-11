@@ -362,7 +362,7 @@ char OledDisplay::WriteChar(char ch, FontDef font, bool on)
     // Return written char for validation
     return ch;
 }
-char OledDisplay::WriteString(char* str, FontDef font, bool on)
+char OledDisplay::WriteString(const char* str, FontDef font, bool on)
 {
     // Write until null-byte
     while(*str)
