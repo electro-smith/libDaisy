@@ -78,7 +78,7 @@ class DaisyPatch
     /** Call at same rate as reading controls for good reads. */
     void UpdateAnalogControls();
     /**
-       Get value for a partiular control
+       Get value for a particular control
        \param k Which control to get
      */
     float GetCtrlValue(Ctrl k);
