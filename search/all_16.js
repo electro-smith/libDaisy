@@ -15,5 +15,5 @@ var searchData=
   ['write_5fread_5fparam_5freg_5fcmd',['WRITE_READ_PARAM_REG_CMD',['../group__flash.html#ga84be0facd4f8826caa06489155815937',1,'WRITE_READ_PARAM_REG_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga84be0facd4f8826caa06489155815937',1,'WRITE_READ_PARAM_REG_CMD():&#160;flash_IS25LP080D.h']]],
   ['write_5fstatus_5freg_5fcmd',['WRITE_STATUS_REG_CMD',['../group__flash.html#ga8ba5c5c22f19ff7047d85ef8c2a954b3',1,'WRITE_STATUS_REG_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga8ba5c5c22f19ff7047d85ef8c2a954b3',1,'WRITE_STATUS_REG_CMD():&#160;flash_IS25LP080D.h']]],
   ['writechar',['WriteChar',['../classdaisy_1_1_oled_display.html#aeca27f2d60a0aeff4b79b88977d20779',1,'daisy::OledDisplay']]],
-  ['writestring',['WriteString',['../classdaisy_1_1_oled_display.html#aa88602ddad7cc30b567e1bc3264233a5',1,'daisy::OledDisplay']]]
+  ['writestring',['WriteString',['../classdaisy_1_1_oled_display.html#a574063322b9c94766b7c8cc6d4cbbab3',1,'daisy::OledDisplay']]]
 ];
