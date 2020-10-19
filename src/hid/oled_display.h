@@ -65,7 +65,7 @@ class OledDisplay
     \param y   y coordinate
     \param on  on or off
     */
-    void DrawPixel(uint8_t x, uint8_t y, bool on);
+    void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on);
 
     /**
     Draws a line from (x1, y1) to (y1, y2)
@@ -75,7 +75,11 @@ class OledDisplay
     \param y2  y Coordinate of the ending point
     \param on  on or off
     */
-    void DrawLine(int16_t x1, int16_t y1, int16_t x2, int16_t y2, bool on);
+    void DrawLine(uint_fast8_t x1,
+                  uint_fast8_t y1,
+                  uint_fast8_t x2,
+                  uint_fast8_t y2,
+                  bool         on);
 
     /**
     Draws a rectangle based on two coordinates.
@@ -85,7 +89,12 @@ class OledDisplay
     \param y2 y Coordinate of the second point
     \param on on or off
     */
-    void DrawRect(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, bool on);
+    void DrawRect(uint_fast8_t x1,
+                  uint_fast8_t y1,
+                  uint_fast8_t x2,
+                  uint_fast8_t y2,
+                  bool         on,
+                  bool         fill = false);
 
     /**
     Draws an arc around the specified coordinate
@@ -96,12 +105,12 @@ class OledDisplay
     \param sweep       total angle of the arc
     \param on  on or off
     */
-    void DrawArc(int16_t x,
-                 int16_t y,
-                 uint8_t radius,
-                 int16_t start_angle,
-                 int16_t sweep,
-                 bool    on);
+    void DrawArc(uint_fast8_t x,
+                 uint_fast8_t y,
+                 uint_fast8_t radius,
+                 int_fast16_t start_angle,
+                 int_fast16_t sweep,
+                 bool         on);
 
     /**
     Draws a circle around the specified coordinate
@@ -110,7 +119,11 @@ class OledDisplay
     \param radius      radius of the circle
     \param on  on or off
     */
-    void DrawCircle(int16_t x, int16_t y, uint8_t r, bool on);
+    void
+    DrawCircle(uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, bool on)
+    {
+        DrawArc(x, y, radius, 0, 360, on);
+    };
 
     /** 
     Writes the character with the specific FontDef
@@ -131,7 +144,7 @@ class OledDisplay
     \param on  on or off
     \return &
     */
-    char WriteString(char* str, FontDef font, bool on);
+    char WriteString(const char* str, FontDef font, bool on);
 
     /** 
     Moves the 'Cursor' position used for WriteChar, and WriteStr to the specified coordinate.
