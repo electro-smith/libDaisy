@@ -48,12 +48,12 @@ class AudioHandle
     const Config& GetConfig() const;
 
     /** Returns the number of channels of audio.  
-	 **
-	 ** When using a single SAI this returns 2, when using two SAI it returns 4
-	 ** If no SAI is initialized this returns 0
-	 **
-	 ** Eventually when we add non-standard I2S for each SAI this will be work differently
-	 */
+     **
+     ** When using a single SAI this returns 2, when using two SAI it returns 4
+     ** If no SAI is initialized this returns 0
+     **
+     ** Eventually when we add non-standard I2S for each SAI this will be work differently
+     */
     size_t GetChannels() const;
 
     /** Returns the Samplerate as a float */
@@ -63,8 +63,8 @@ class AudioHandle
     Result SetSampleRate(SaiHandle::Config::SampleRate samplerate);
 
     /** Sets the block size after initialization, and updates the internal configuration struct.
-	 ** Get BlockSize and other details via the GetConfig 
-	 */
+     ** Get BlockSize and other details via the GetConfig 
+     */
     Result SetBlockSize(size_t size);
 
 

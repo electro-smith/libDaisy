@@ -13,7 +13,7 @@ namespace daisy
  * 
  * DMA Transfer commands must use buffers located within non-cached memory or use cache maintenance
  * To declare an unitialized global element in the DMA memory section:
- *	int32_t DSY_DMA_BUFFER_SECTOR my_buffer[96];
+ *    int32_t DSY_DMA_BUFFER_SECTOR my_buffer[96];
  *
  * Callback functions will be called once per half of the buffer. In the above example, 
  * the callback function would be called once for every 48 samples.
@@ -71,9 +71,9 @@ class SaiHandle
         };
 
         /** Specifies whether a particular block is the master or the slave 
-		 ** If both are set to slave, no MCLK signal will be used, and it is
-		 ** expected that the codec will have its own xtal.
-		 */
+         ** If both are set to slave, no MCLK signal will be used, and it is
+         ** expected that the codec will have its own xtal.
+         */
         enum class Sync
         {
             MASTER,
@@ -116,16 +116,16 @@ class SaiHandle
     const Config& GetConfig() const;
 
     /** Callback Function to be called when DMA transfer is complete and half complete. 
-	 ** This callback is prepared however the data is transmitted/received from the device.
-	 ** For example, using an AK4556 the data will be interleaved 24bit MSB Justified
-	 ** 
-	 ** The hid/audio class will be allow for type conversions, de-interleaving, etc.
-	 */
+     ** This callback is prepared however the data is transmitted/received from the device.
+     ** For example, using an AK4556 the data will be interleaved 24bit MSB Justified
+     ** 
+     ** The hid/audio class will be allow for type conversions, de-interleaving, etc.
+     */
     typedef void (*CallbackFunctionPtr)(int32_t* in, int32_t* out, size_t size);
 
     /** Starts Rx and Tx in Circular Buffer Mode 
-	 ** The callback will be called when half of the buffer is ready, 
-	 ** and will handle size/2 samples per callback.
+     ** The callback will be called when half of the buffer is ready, 
+     ** and will handle size/2 samples per callback.
      */
     Result StartDma(int32_t*            buffer_rx,
                     int32_t*            buffer_tx,
@@ -139,7 +139,7 @@ class SaiHandle
     float GetSampleRate();
 
     /** Returns the number of samples per audio block 
-	 ** Calculated as Buffer Size / 2 / number of channels */
+     ** Calculated as Buffer Size / 2 / number of channels */
     size_t GetBlockSize();
 
     /** Returns the Block Rate of the current stream based on the size 

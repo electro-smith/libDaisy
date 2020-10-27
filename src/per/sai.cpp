@@ -335,7 +335,6 @@ void SaiHandle::Impl::InitPins()
     bool             is_master;
     GPIO_InitTypeDef GPIO_InitStruct;
     GPIO_TypeDef*    port;
-    dsy_gpio_pin*    pin_cfg;
     dsy_gpio_pin*    cfg[] = {&config_.pin_config.fs,
                            &config_.pin_config.mclk,
                            &config_.pin_config.sck,

@@ -18,9 +18,9 @@ static const size_t kAudioMaxChannels   = 4;
 // 1k samples in, 1k samples out, 4 bytes per sample.
 // One buffer per 2 channels (Interleaved on hardware)
 static int32_t DMA_BUFFER_MEM_SECTION
-               dsy_audio_rx_buffer[kAudioMaxChannels / 2][kAudioMaxBufferSize];
+    dsy_audio_rx_buffer[kAudioMaxChannels / 2][kAudioMaxBufferSize];
 static int32_t DMA_BUFFER_MEM_SECTION
-               dsy_audio_tx_buffer[kAudioMaxChannels / 2][kAudioMaxBufferSize];
+    dsy_audio_tx_buffer[kAudioMaxChannels / 2][kAudioMaxBufferSize];
 
 // ================================================================
 // Private Implementation Definition
@@ -192,9 +192,9 @@ AudioHandle::Impl::SetSampleRate(SaiHandle::Config::SampleRate samplerate)
     {
         // Set, and reinit
         SaiHandle::Config cfg;
-        cfg = sai1_.GetConfig();
+        cfg    = sai1_.GetConfig();
         cfg.sr = config_.samplerate;
-        if (sai1_.Init(cfg) != SaiHandle::Result::OK)
+        if(sai1_.Init(cfg) != SaiHandle::Result::OK)
         {
             return Result::ERR;
         }
@@ -203,9 +203,9 @@ AudioHandle::Impl::SetSampleRate(SaiHandle::Config::SampleRate samplerate)
     {
         // Set, and reinit
         SaiHandle::Config cfg;
-        cfg = sai2_.GetConfig();
+        cfg    = sai2_.GetConfig();
         cfg.sr = config_.samplerate;
-        if (sai2_.Init(cfg) != SaiHandle::Result::OK)
+        if(sai2_.Init(cfg) != SaiHandle::Result::OK)
         {
             return Result::ERR;
         }
@@ -446,7 +446,8 @@ float AudioHandle::GetSampleRate()
     return pimpl_->GetSampleRate();
 }
 
-AudioHandle::Result AudioHandle::SetSampleRate(SaiHandle::Config::SampleRate samplerate)
+AudioHandle::Result
+AudioHandle::SetSampleRate(SaiHandle::Config::SampleRate samplerate)
 {
     return pimpl_->SetSampleRate(samplerate);
 }

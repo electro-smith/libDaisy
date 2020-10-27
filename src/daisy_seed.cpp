@@ -202,7 +202,7 @@ void DaisySeed::ConfigureAudio()
 {
     // SAI2 - config
     // Example Config
-    //	  SAI2 Pins (available on pinout)
+    //      SAI2 Pins (available on pinout)
     //    pin_group = sai_handle.sai2_pin_config;
     //    pin_group[DSY_SAI_PIN_MCLK] = dsy_pin(DSY_GPIOA, 1);
     //    pin_group[DSY_SAI_PIN_FS]   = dsy_pin(DSY_GPIOG, 9);
@@ -211,7 +211,7 @@ void DaisySeed::ConfigureAudio()
     //    pin_group[DSY_SAI_PIN_SOUT] = dsy_pin(DSY_GPIOA, 0);
 
     // SAI1 -- Peripheral 
-	// Configure
+    // Configure
     SaiHandle::Config sai_config;
     sai_config.periph          = SaiHandle::Config::Peripheral::SAI_1;
     sai_config.sr              = SaiHandle::Config::SampleRate::SAI_48KHZ;

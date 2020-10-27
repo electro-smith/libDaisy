@@ -61,7 +61,7 @@ FORCE_INLINE float s162f(int16_t x)
 }
 
 /**
-	Converts float to Signed 16-bit
+    Converts float to Signed 16-bit
 */
 FORCE_INLINE int16_t f2s16(float x)
 {
@@ -71,7 +71,7 @@ FORCE_INLINE int16_t f2s16(float x)
 }
 
 /**
-	Converts Signed 24-bit to float
+    Converts Signed 24-bit to float
  */
 FORCE_INLINE float s242f(int32_t x)
 {
@@ -79,7 +79,7 @@ FORCE_INLINE float s242f(int32_t x)
     return (float)x * S242F_SCALE;
 }
 /**
-	Converts float to Signed 24-bit
+    Converts float to Signed 24-bit
  */
 FORCE_INLINE int32_t f2s24(float x)
 {
@@ -89,14 +89,14 @@ FORCE_INLINE int32_t f2s24(float x)
 }
 
 /**
-	Converts Signed 32-bit to float
+    Converts Signed 32-bit to float
  */
 FORCE_INLINE float s322f(int32_t x)
 {
     return (float)x * S322F_SCALE;
 }
 /**
-	Converts float to Signed 24-bit
+    Converts float to Signed 24-bit
  */
 FORCE_INLINE int32_t f2s32(float x)
 {
