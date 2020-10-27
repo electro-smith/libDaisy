@@ -39,6 +39,9 @@ class SaiHandle::Impl
     size_t                         buff_size_;
     SaiHandle::CallbackFunctionPtr callback_;
 
+    /** Offset stored for weird inter-SAI stuff.*/
+    size_t dma_offset;
+
     /** Callback that dispatches user callback from Cplt and HalfCplt DMA Callbacks */
     void InternalCallback(size_t offset);
 
@@ -173,6 +176,7 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
     sai_a_handle_.Init.OutputDrive    = SAI_OUTPUTDRIVE_DISABLE;
     sai_a_handle_.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
     sai_a_handle_.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_EMPTY;
+    sai_a_handle_.Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
     sai_a_handle_.Init.MonoStereoMode = SAI_STEREOMODE;
     sai_a_handle_.Init.CompandingMode = SAI_NOCOMPANDING;
     sai_a_handle_.Init.TriState       = SAI_OUTPUT_NOTRELEASED;
@@ -180,6 +184,7 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
     sai_b_handle_.Init.OutputDrive    = SAI_OUTPUTDRIVE_DISABLE;
     sai_b_handle_.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
     sai_b_handle_.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_EMPTY;
+    sai_b_handle_.Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
     sai_b_handle_.Init.MonoStereoMode = SAI_STEREOMODE;
     sai_b_handle_.Init.CompandingMode = SAI_NOCOMPANDING;
     sai_b_handle_.Init.TriState       = SAI_OUTPUT_NOTRELEASED;
@@ -357,9 +362,9 @@ void SaiHandle::Impl::InitPins()
                 GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
                 break;
             case Config::Peripheral::SAI_2:
-                GPIO_InitStruct.Alternate = dsy_pin_cmp(pin_cfg, &sck_af_pin)
-                                                ? GPIO_AF10_SAI2
-                                                : GPIO_AF8_SAI2;
+                GPIO_InitStruct.Alternate = dsy_pin_cmp(cfg[i], &sck_af_pin)
+                                                ? GPIO_AF8_SAI2
+                                                : GPIO_AF10_SAI2;
                 break;
             default: break;
         }
@@ -471,10 +476,12 @@ extern "C" void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef* hsai)
 {
     if(hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B)
     {
+        sai_handles[0].dma_offset = 0;
         sai_handles[0].InternalCallback(0);
     }
     else if(hsai->Instance == SAI2_Block_A || hsai->Instance == SAI2_Block_B)
     {
+        sai_handles[1].dma_offset = 0;
         sai_handles[1].InternalCallback(0);
     }
 }
@@ -483,11 +490,13 @@ extern "C" void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai)
 {
     if(hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B)
     {
-        sai_handles[0].InternalCallback(sai_handles[0].buff_size_ / 2);
+        sai_handles[0].dma_offset = sai_handles[0].buff_size_ / 2;
+        sai_handles[0].InternalCallback(sai_handles[0].dma_offset);
     }
     else if(hsai->Instance == SAI2_Block_A || hsai->Instance == SAI2_Block_B)
     {
-        sai_handles[1].InternalCallback(sai_handles[1].buff_size_ / 2);
+        sai_handles[1].dma_offset = sai_handles[1].buff_size_ / 2;
+        sai_handles[1].InternalCallback(sai_handles[1].dma_offset);
     }
 }
 
@@ -523,14 +532,20 @@ float SaiHandle::GetSampleRate()
     return pimpl_->GetSampleRate();
 }
 
+size_t SaiHandle::GetBlockSize()
+{
+    return pimpl_->GetBlockSize();
+}
+
 float SaiHandle::GetBlockRate()
 {
     return pimpl_->GetBlockRate();
 }
 
-size_t SaiHandle::GetBlockSize()
+size_t SaiHandle::GetOffset() const
 {
-    return pimpl_->GetBlockSize();
+    return pimpl_->dma_offset;
 }
+
 
 } // namespace daisy

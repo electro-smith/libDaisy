@@ -138,7 +138,7 @@ class SaiHandle
     /** Returns the samplerate based on the current configuration */
     float GetSampleRate();
 
-	/** Returns the number of samples per audio block 
+    /** Returns the number of samples per audio block 
 	 ** Calculated as Buffer Size / 2 / number of channels */
     size_t GetBlockSize();
 
@@ -147,7 +147,11 @@ class SaiHandle
      */
     float GetBlockRate();
 
-    inline bool IsInitialized() const {
+    /** Returns the current offset within the SAI buffer, will be either 0 or size/2 */
+    size_t GetOffset() const;
+
+    inline bool IsInitialized() const
+    {
         return pimpl_ == nullptr ? false : true;
     }
 
