@@ -71,6 +71,9 @@ class DaisySeed
      */
     void ChangeAudioCallback(AudioHandle::AudioCallback cb);
 
+    /** Stops the audio if it is running. */
+    void StopAudio();
+
 
     /** Sets the state of the built in LED
      */

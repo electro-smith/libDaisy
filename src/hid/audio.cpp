@@ -2,7 +2,6 @@
 
 namespace daisy
 {
-
 // ================================================================
 // Static Globals
 // ================================================================
@@ -11,12 +10,17 @@ namespace daisy
 // in the interest in encourage newcomers, and this also being an audio-centric platform
 // these buffers will always be present, and usable.
 //
+static const size_t kAudioMaxBufferSize = 1024;
+static const size_t kAudioMaxChannels   = 4;
+
 // Static Global Buffers
 // 8kB in SRAM1, non-cached memory
 // 1k samples in, 1k samples out, 4 bytes per sample.
-static const size_t kAudioMaxBufferSize = 1024;
-static int32_t DMA_BUFFER_MEM_SECTION dsy_audio_rx_buffer[kAudioMaxBufferSize];
-static int32_t DMA_BUFFER_MEM_SECTION dsy_audio_tx_buffer[kAudioMaxBufferSize];
+// One buffer per 2 channels (Interleaved on hardware)
+static int32_t DMA_BUFFER_MEM_SECTION
+               dsy_audio_rx_buffer[kAudioMaxChannels / 2][kAudioMaxBufferSize];
+static int32_t DMA_BUFFER_MEM_SECTION
+               dsy_audio_tx_buffer[kAudioMaxChannels / 2][kAudioMaxBufferSize];
 
 // ================================================================
 // Private Implementation Definition
@@ -31,6 +35,31 @@ class AudioHandle::Impl
     AudioHandle::Result Start(AudioHandle::AudioCallback callback);
     AudioHandle::Result Start(AudioHandle::InterleavingAudioCallback callback);
     AudioHandle::Result Stop();
+    AudioHandle::Result ChangeCallback(AudioHandle::AudioCallback callback);
+    AudioHandle::Result
+    ChangeCallback(AudioHandle::InterleavingAudioCallback callback);
+
+    inline size_t GetChannels() const
+    {
+        if(sai1_.IsInitialized() && sai2_.IsInitialized())
+            return 4;
+        else if(sai1_.IsInitialized() || sai2_.IsInitialized())
+            return 2;
+        else
+            return 0;
+    }
+
+    AudioHandle::Result SetBlockSize(size_t size)
+    {
+        config_.blocksize
+            = size <= kAudioMaxBufferSize ? size : kAudioMaxBufferSize;
+        return size <= kAudioMaxBufferSize ? AudioHandle::Result::OK
+                                           : AudioHandle::Result::ERR;
+    }
+
+    float GetSampleRate() { return sai1_.GetSampleRate(); }
+
+    AudioHandle::Result SetSampleRate(SaiHandle::Config::SampleRate sampelrate);
 
     // Internal Callback
     static void InternalCallback(int32_t* in, int32_t* out, size_t size);
@@ -40,8 +69,8 @@ class AudioHandle::Impl
     // Data
     AudioHandle::Config config_;
     SaiHandle           sai1_, sai2_;
-    int32_t*            buff_rx_;
-    int32_t*            buff_tx_;
+    int32_t*            buff_rx_[2];
+    int32_t*            buff_tx_[2];
 };
 
 // ================================================================
@@ -59,11 +88,16 @@ AudioHandle::Result AudioHandle::Impl::Init(const AudioHandle::Config config,
 {
     config_ = config;
     if(sai.IsInitialized())
-        sai1_ = sai;
+    {
+        sai1_              = sai;
+        config_.samplerate = sai1_.GetConfig().sr;
+    }
     else
+    {
         return Result::ERR;
-    buff_rx_ = dsy_audio_rx_buffer;
-    buff_tx_ = dsy_audio_tx_buffer;
+    }
+    buff_rx_[0] = dsy_audio_rx_buffer[0];
+    buff_tx_[0] = dsy_audio_tx_buffer[0];
     return Result::OK;
 }
 
@@ -72,39 +106,110 @@ AudioHandle::Result AudioHandle::Impl::Init(const AudioHandle::Config config,
                                             SaiHandle                 sai2)
 {
     this->Init(config, sai1);
-    sai2_ = sai2;
+    sai2_       = sai2;
+    buff_rx_[1] = dsy_audio_rx_buffer[1];
+    buff_tx_[1] = dsy_audio_tx_buffer[1];
     // How do we want to handle the rx/tx buffs for the second peripheral of audio..?
     return Result::OK;
 }
-
 
 AudioHandle::Result
 AudioHandle::Impl::Start(AudioHandle::AudioCallback callback)
 {
     // Get instance of object
-    sai1_.StartDma(buff_rx_,
-                   buff_tx_,
+    sai1_.StartDma(buff_rx_[0],
+                   buff_tx_[0],
                    config_.blocksize * 2 * 2,
                    audio_handle.InternalCallback);
+    if(sai2_.IsInitialized())
+    {
+        // Start stream with no callback. Data will be filled externally.
+        sai2_.StartDma(
+            buff_rx_[1], buff_tx_[1], config_.blocksize * 2 * 2, nullptr);
+    }
     callback_             = (void*)callback;
     interleaved_callback_ = nullptr;
     return Result::OK;
 }
+
 AudioHandle::Result
 AudioHandle::Impl::Start(AudioHandle::InterleavingAudioCallback callback)
 {
     // Get instance of object
-    sai1_.StartDma(buff_rx_,
-                   buff_tx_,
+    sai1_.StartDma(buff_rx_[0],
+                   buff_tx_[0],
                    config_.blocksize * 2 * 2,
                    audio_handle.InternalCallback);
     interleaved_callback_ = (void*)callback;
     callback_             = nullptr;
     return Result::OK;
 }
+
 AudioHandle::Result AudioHandle::Impl::Stop()
 {
-    sai1_.StopDma();
+    if(sai1_.IsInitialized())
+        sai1_.StopDma();
+    if(sai2_.IsInitialized())
+        sai2_.StopDma();
+    return Result::OK;
+}
+
+AudioHandle::Result
+AudioHandle::Impl::ChangeCallback(AudioHandle::AudioCallback callback)
+{
+    if(callback != nullptr)
+    {
+        callback_             = (void*)callback;
+        interleaved_callback_ = nullptr;
+        return Result::OK;
+    }
+    else
+    {
+        return Result::ERR;
+    }
+}
+
+AudioHandle::Result AudioHandle::Impl::ChangeCallback(
+    AudioHandle::InterleavingAudioCallback callback)
+{
+    if(callback != nullptr)
+    {
+        interleaved_callback_ = (void*)callback;
+        callback_             = nullptr;
+        return Result::OK;
+    }
+    else
+    {
+        return Result::ERR;
+    }
+}
+
+AudioHandle::Result
+AudioHandle::Impl::SetSampleRate(SaiHandle::Config::SampleRate samplerate)
+{
+    config_.samplerate = samplerate;
+    if(sai1_.IsInitialized())
+    {
+        // Set, and reinit
+        SaiHandle::Config cfg;
+        cfg = sai1_.GetConfig();
+        cfg.sr = config_.samplerate;
+        if (sai1_.Init(cfg) != SaiHandle::Result::OK)
+        {
+            return Result::ERR;
+        }
+    }
+    if(sai2_.IsInitialized())
+    {
+        // Set, and reinit
+        SaiHandle::Config cfg;
+        cfg = sai2_.GetConfig();
+        cfg.sr = config_.samplerate;
+        if (sai2_.Init(cfg) != SaiHandle::Result::OK)
+        {
+            return Result::ERR;
+        }
+    }
     return Result::OK;
 }
 
@@ -117,8 +222,12 @@ AudioHandle::Result AudioHandle::Impl::Stop()
 void AudioHandle::Impl::InternalCallback(int32_t* in, int32_t* out, size_t size)
 {
     // Convert from sai format to float, and call user callback
+    size_t                      chns;
     SaiHandle::Config::BitDepth bd;
-    bd = audio_handle.sai1_.GetConfig().bit_depth;
+    bd   = audio_handle.sai1_.GetConfig().bit_depth;
+    chns = audio_handle.GetChannels();
+    if(chns == 0)
+        return;
     // Handle Interleaved / Non Interleaved separate
     if(audio_handle.interleaved_callback_)
     {
@@ -183,13 +292,23 @@ void AudioHandle::Impl::InternalCallback(int32_t* in, int32_t* out, size_t size)
     else if(audio_handle.callback_)
     {
         AudioCallback cb = (AudioCallback)audio_handle.callback_;
-        float         finbuff[size], foutbuff[size];
-        float*        fin[2];
-        float*        fout[2];
+        // offset needed for 2nd audio codec.
+        size_t offset    = audio_handle.sai2_.GetOffset();
+        size_t buff_size = chns > 2 ? size * 2 : size;
+        float  finbuff[buff_size], foutbuff[buff_size];
+        float* fin[chns];
+        float* fout[chns];
         fin[0]  = finbuff;
-        fin[1]  = finbuff + (size / 2);
+        fin[1]  = finbuff + (buff_size / chns);
         fout[0] = foutbuff;
-        fout[1] = foutbuff + (size / 2);
+        fout[1] = foutbuff + (buff_size / chns);
+        if(chns > 2)
+        {
+            fin[2]  = fin[1] + (buff_size / chns);
+            fin[3]  = fin[2] + (buff_size / chns);
+            fout[2] = fout[1] + (buff_size / chns);
+            fout[3] = fout[2] + (buff_size / chns);
+        }
         // Deinterleave and scale
         switch(bd)
         {
@@ -198,6 +317,13 @@ void AudioHandle::Impl::InternalCallback(int32_t* in, int32_t* out, size_t size)
                 {
                     fin[0][i / 2] = s162f(in[i]);
                     fin[1][i / 2] = s162f(in[i + 1]);
+                    if(chns > 2)
+                    {
+                        fin[2][i / 2]
+                            = s162f(audio_handle.buff_rx_[1][offset + i]);
+                        fin[3][i / 2]
+                            = s162f(audio_handle.buff_rx_[1][offset + i + 1]);
+                    }
                 }
                 break;
             case SaiHandle::Config::BitDepth::SAI_24BIT:
@@ -205,6 +331,13 @@ void AudioHandle::Impl::InternalCallback(int32_t* in, int32_t* out, size_t size)
                 {
                     fin[0][i / 2] = s242f(in[i]);
                     fin[1][i / 2] = s242f(in[i + 1]);
+                    if(chns > 2)
+                    {
+                        fin[2][i / 2]
+                            = s242f(audio_handle.buff_rx_[1][offset + i]);
+                        fin[3][i / 2]
+                            = s242f(audio_handle.buff_rx_[1][offset + i + 1]);
+                    }
                 }
                 break;
             case SaiHandle::Config::BitDepth::SAI_32BIT:
@@ -212,6 +345,13 @@ void AudioHandle::Impl::InternalCallback(int32_t* in, int32_t* out, size_t size)
                 {
                     fin[0][i / 2] = s322f(in[i]);
                     fin[1][i / 2] = s322f(in[i + 1]);
+                    if(chns > 2)
+                    {
+                        fin[2][i / 2]
+                            = s322f(audio_handle.buff_rx_[1][offset + i]);
+                        fin[3][i / 2]
+                            = s322f(audio_handle.buff_rx_[1][offset + i + 1]);
+                    }
                 }
                 break;
             default: break;
@@ -225,6 +365,13 @@ void AudioHandle::Impl::InternalCallback(int32_t* in, int32_t* out, size_t size)
                 {
                     out[i]     = f2s16(fout[0][i / 2]);
                     out[i + 1] = f2s24(fout[1][i / 2]);
+                    if(chns > 2)
+                    {
+                        audio_handle.buff_tx_[1][offset + i]
+                            = f2s16(fout[2][i / 2]);
+                        audio_handle.buff_tx_[1][offset + i + 1]
+                            = f2s16(fout[3][i / 2]);
+                    }
                 }
                 break;
             case SaiHandle::Config::BitDepth::SAI_24BIT:
@@ -232,6 +379,13 @@ void AudioHandle::Impl::InternalCallback(int32_t* in, int32_t* out, size_t size)
                 {
                     out[i]     = f2s24(fout[0][i / 2]);
                     out[i + 1] = f2s24(fout[1][i / 2]);
+                    if(chns > 2)
+                    {
+                        audio_handle.buff_tx_[1][offset + i]
+                            = f2s24(fout[2][i / 2]);
+                        audio_handle.buff_tx_[1][offset + i + 1]
+                            = f2s24(fout[3][i / 2]);
+                    }
                 }
                 break;
             case SaiHandle::Config::BitDepth::SAI_32BIT:
@@ -239,6 +393,13 @@ void AudioHandle::Impl::InternalCallback(int32_t* in, int32_t* out, size_t size)
                 {
                     out[i]     = f2s32(fout[0][i / 2]);
                     out[i + 1] = f2s32(fout[1][i / 2]);
+                    if(chns > 2)
+                    {
+                        audio_handle.buff_tx_[1][offset + i]
+                            = f2s32(fout[2][i / 2]);
+                        audio_handle.buff_tx_[1][offset + i + 1]
+                            = f2s32(fout[3][i / 2]);
+                    }
                 }
                 break;
             default: break;
@@ -264,17 +425,56 @@ AudioHandle::Init(const Config& config, SaiHandle sai1, SaiHandle sai2)
     pimpl_ = &audio_handle;
     return pimpl_->Init(config, sai1, sai2);
 }
+
+const AudioHandle::Config& AudioHandle::GetConfig() const
+{
+    return pimpl_->config_;
+}
+
+size_t AudioHandle::GetChannels() const
+{
+    return pimpl_->GetChannels();
+}
+
+AudioHandle::Result AudioHandle::SetBlockSize(size_t size)
+{
+    return pimpl_->SetBlockSize(size);
+}
+
+float AudioHandle::GetSampleRate()
+{
+    return pimpl_->GetSampleRate();
+}
+
+AudioHandle::Result AudioHandle::SetSampleRate(SaiHandle::Config::SampleRate samplerate)
+{
+    return pimpl_->SetSampleRate(samplerate);
+}
+
 AudioHandle::Result AudioHandle::Start(AudioCallback callback)
 {
     return pimpl_->Start(callback);
 }
+
 AudioHandle::Result AudioHandle::Start(InterleavingAudioCallback callback)
 {
     return pimpl_->Start(callback);
 }
+
 AudioHandle::Result AudioHandle::Stop()
 {
     return pimpl_->Stop();
+}
+
+AudioHandle::Result AudioHandle::ChangeCallback(AudioCallback callback)
+{
+    return pimpl_->ChangeCallback(callback);
+}
+
+AudioHandle::Result
+AudioHandle::ChangeCallback(InterleavingAudioCallback callback)
+{
+    return pimpl_->ChangeCallback(callback);
 }
 
 } // namespace daisy

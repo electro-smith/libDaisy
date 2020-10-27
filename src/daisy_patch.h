@@ -59,6 +59,9 @@ class DaisyPatch
     */
     void StartAudio(AudioHandle::AudioCallback cb);
 
+    /** Stops the audio */
+    void StopAudio();
+
     /**
        Switch callback functions
        \param cb New multichannel callback function.

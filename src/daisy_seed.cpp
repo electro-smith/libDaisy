@@ -141,26 +141,28 @@ void DaisySeed::StartAudio(AudioHandle::AudioCallback cb)
     audio_handle.Start(cb);
 }
 
+void DaisySeed::StopAudio() { audio_handle.Stop(); }
+
 void DaisySeed::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
 {
-    //dsy_audio_set_callback(DSY_AUDIO_INTERNAL, cb);
+    audio_handle.ChangeCallback(cb);
 }
 
 void DaisySeed::ChangeAudioCallback(AudioHandle::AudioCallback cb)
 {
-    //dsy_audio_set_mc_callback(cb);
+    audio_handle.ChangeCallback(cb);
 }
 
 float DaisySeed::AudioSampleRate()
 {
     // TODO fix to get this from configured rate.
     //return DSY_AUDIO_SAMPLE_RATE;
-    return 48014.f;
+    return audio_handle.GetSampleRate();
 }
 
 void DaisySeed::SetAudioBlockSize(size_t blocksize)
 {
-    //dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, blocksize);
+    audio_handle.SetBlockSize(blocksize);
 }
 
 void DaisySeed::SetLed(bool state)
