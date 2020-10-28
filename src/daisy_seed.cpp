@@ -141,8 +141,6 @@ void DaisySeed::StartAudio(AudioHandle::AudioCallback cb)
     audio_handle.Start(cb);
 }
 
-void DaisySeed::StopAudio() { audio_handle.Stop(); }
-
 void DaisySeed::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
 {
     audio_handle.ChangeCallback(cb);
@@ -153,22 +151,43 @@ void DaisySeed::ChangeAudioCallback(AudioHandle::AudioCallback cb)
     audio_handle.ChangeCallback(cb);
 }
 
+void DaisySeed::StopAudio()
+{
+    audio_handle.Stop();
+}
+
+void DaisySeed::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
+{
+    audio_handle.SetSampleRate(samplerate);
+    callback_rate_ = AudioSampleRate() / AudioBlockSize();
+}
+
 float DaisySeed::AudioSampleRate()
 {
-    // TODO fix to get this from configured rate.
-    //return DSY_AUDIO_SAMPLE_RATE;
     return audio_handle.GetSampleRate();
 }
 
 void DaisySeed::SetAudioBlockSize(size_t blocksize)
 {
     audio_handle.SetBlockSize(blocksize);
+    callback_rate_ = AudioSampleRate() / AudioBlockSize();
+}
+
+size_t DaisySeed::AudioBlockSize()
+{
+    return audio_handle.GetConfig().blocksize;
+}
+
+float DaisySeed::AudioCallbackRate() const
+{
+    return callback_rate_;
 }
 
 void DaisySeed::SetLed(bool state)
 {
     dsy_gpio_write(&led_, state);
 }
+
 void DaisySeed::SetTestPoint(bool state)
 {
     dsy_gpio_write(&testpoint_, state);
@@ -210,7 +229,7 @@ void DaisySeed::ConfigureAudio()
     //    pin_group[DSY_SAI_PIN_SIN]  = dsy_pin(DSY_GPIOD, 11);
     //    pin_group[DSY_SAI_PIN_SOUT] = dsy_pin(DSY_GPIOA, 0);
 
-    // SAI1 -- Peripheral 
+    // SAI1 -- Peripheral
     // Configure
     SaiHandle::Config sai_config;
     sai_config.periph          = SaiHandle::Config::Peripheral::SAI_1;

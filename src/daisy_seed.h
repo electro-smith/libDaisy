@@ -74,14 +74,10 @@ class DaisySeed
     /** Stops the audio if it is running. */
     void StopAudio();
 
-
-    /** Sets the state of the built in LED
+    /** Updates the Audio Sample Rate, and reinitializes.
+     ** Audio must be stopped for this to work.
      */
-    void SetLed(bool state);
-
-    /** Sets the state of the test point near pin 10
-     */
-    void SetTestPoint(bool state);
+    void SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate);
 
     /** Returns the audio sample rate in Hz as a floating point number.
      */
@@ -91,9 +87,22 @@ class DaisySeed
      */
     void SetAudioBlockSize(size_t blocksize);
 
+    /** Returns the number of samples per channel in a block of audio. */
+    size_t AudioBlockSize();
+
+    /** Returns the rate in Hz that the Audio callback is called */
+    float AudioCallbackRate() const;
+
+    /** Sets the state of the built in LED
+     */
+    void SetLed(bool state);
+
+    /** Sets the state of the test point near pin 10
+     */
+    void SetTestPoint(bool state);
+
     // While the library is still in heavy development, most of the
     // configuration handles will remain public.
-
     dsy_sdram_handle sdram_handle; /**< & */
     dsy_qspi_handle  qspi_handle;  /**< & */
     AudioHandle      audio_handle; /**< & */
@@ -109,6 +118,7 @@ class DaisySeed
     void ConfigureDac();
     //void     ConfigureI2c();
     dsy_gpio led_, testpoint_;
+    float    callback_rate_;
 };
 
 } // namespace daisy

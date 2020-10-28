@@ -48,19 +48,11 @@ class DaisyPatch
     */
     void DelayMs(size_t del);
 
-    /** Audio Block size defaults to 48.
-    Change it using this function before StartingAudio
-    \param size Audio block size.
-    */
-    void SetAudioBlockSize(size_t size);
 
     /** Starts the callback
     \cb multichannel callback function
     */
     void StartAudio(AudioHandle::AudioCallback cb);
-
-    /** Stops the audio */
-    void StopAudio();
 
     /**
        Switch callback functions
@@ -68,18 +60,33 @@ class DaisyPatch
     */
     void ChangeAudioCallback(AudioHandle::AudioCallback cb);
 
+    /** Stops the audio */
+    void StopAudio();
+
+    /** Set the sample rate for the audio */
+    void SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate);
+
+    /** Get sample rate */
+    float AudioSampleRate();
+
+    /** Audio Block size defaults to 48.
+    Change it using this function before StartingAudio
+    \param size Audio block size.
+    */
+    void SetAudioBlockSize(size_t size);
+
+    /** Returns the number of samples per channel in a block of audio. */
+    size_t AudioBlockSize();
+
+    /** Returns the rate in Hz that the Audio callback is called */
+    float AudioCallbackRate();
+
     /** Start analog to digital conversion.*/
     void StartAdc();
 
-    // Hardware Accessors
-    /** Get sample rate */
-    float AudioSampleRate();
-    /** Get block size */
-    size_t AudioBlockSize();
-    /** Get callback rate */
-    float AudioCallbackRate();
     /** Call at same rate as reading controls for good reads. */
     void UpdateAnalogControls();
+
     /**
        Get value for a partiular control
        \param k Which control to get

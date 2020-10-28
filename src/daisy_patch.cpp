@@ -57,41 +57,50 @@ void DaisyPatch::DelayMs(size_t del)
 {
     dsy_system_delay(del);
 }
-void DaisyPatch::SetAudioBlockSize(size_t size)
-{
-    seed.audio_handle.SetBlockSize(size);
-}
 
 void DaisyPatch::StartAudio(AudioHandle::AudioCallback cb)
 {
-    seed.audio_handle.Start(cb);
-}
-
-void DaisyPatch::StopAudio()
-{
-    seed.audio_handle.Stop();
+    seed.StartAudio(cb);
 }
 
 void DaisyPatch::ChangeAudioCallback(AudioHandle::AudioCallback cb)
 {
-    seed.audio_handle.ChangeCallback(cb);
+    seed.ChangeAudioCallback(cb);
+}
+
+void DaisyPatch::StopAudio()
+{
+    seed.StopAudio();
+}
+
+void DaisyPatch::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
+{
+    seed.SetAudioSampleRate(samplerate);
+}
+
+float DaisyPatch::AudioSampleRate()
+{
+    return kAudioSampleRate;
+}
+
+void DaisyPatch::SetAudioBlockSize(size_t size)
+{
+    seed.SetAudioBlockSize(size);
+}
+
+size_t DaisyPatch::AudioBlockSize()
+{
+    return seed.AudioBlockSize();
+}
+
+float DaisyPatch::AudioCallbackRate()
+{
+    return seed.AudioCallbackRate();
 }
 
 void DaisyPatch::StartAdc()
 {
     seed.adc.Start();
-}
-float DaisyPatch::AudioSampleRate()
-{
-    return kAudioSampleRate;
-}
-size_t DaisyPatch::AudioBlockSize()
-{
-    return block_size_;
-}
-float DaisyPatch::AudioCallbackRate()
-{
-    return kAudioSampleRate / block_size_;
 }
 void DaisyPatch::UpdateAnalogControls()
 {

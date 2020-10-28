@@ -43,11 +43,6 @@ class DaisyPod
     */
     void DelayMs(size_t del);
 
-    /** Audio Block size defaults to 48. Change it using this function before StartingAudio. 
-    \param size Block size to set.
-     */
-    void SetAudioBlockSize(size_t size);
-
     /** Starts the callback
     \cb Interleaved callback function
     */
@@ -70,25 +65,45 @@ class DaisyPod
     */
     void ChangeAudioCallback(AudioHandle::AudioCallback cb);
 
+    /** Stops the audio if it is running. */
+    void StopAudio();
+
+    /** Updates the Audio Sample Rate, and reinitializes.
+     ** Audio must be stopped for this to work.
+     */
+    void SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate);
+
+    /** Returns the audio sample rate in Hz as a floating point number.
+     */
+    float AudioSampleRate();
+
+    /** Sets the number of samples processed per channel by the audio callback.
+     */
+    void SetAudioBlockSize(size_t blocksize);
+
+    /** Returns the number of samples per channel in a block of audio. */
+    size_t AudioBlockSize();
+
+    /** Returns the rate in Hz that the Audio callback is called */
+    float AudioCallbackRate(); 
+
     /**
        Start analog to digital conversion.
      */
     void StartAdc();
 
-    /** Get sample rate */
-    float AudioSampleRate();
-    /** Get block size */
-    size_t AudioBlockSize();
-    /** Get callback rate */
-    float AudioCallbackRate(); /** */
     /** Call at same rate as analog reads for smooth reading.*/
     void UpdateAnalogControls(); /** */
+
     /** & */
     float GetKnobValue(Knob k);
+
     /** & */
     void DebounceControls();
+
     /** Reset Leds*/
     void ClearLeds();
+
     /** Update Leds to set colors*/
     void UpdateLeds();
 

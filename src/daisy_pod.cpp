@@ -74,9 +74,8 @@ using namespace daisy;
 void DaisyPod::Init()
 {
     // Set Some numbers up for accessors.
-    sample_rate_   = SAMPLE_RATE; // TODO add configurable SR to libdaisy audio.
-    block_size_    = 48;
-    callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
+//    sample_rate_   = SAMPLE_RATE; // TODO add configurable SR to libdaisy audio.
+//    block_size_    = 48;
     // Initialize the hardware.
     seed.Configure();
     seed.Init();
@@ -85,7 +84,8 @@ void DaisyPod::Init()
     InitEncoder();
     InitLeds();
     InitKnobs();
-    SetAudioBlockSize(block_size_);
+    SetAudioBlockSize(48);
+    callback_rate_ = (AudioSampleRate() / static_cast<float>(AudioBlockSize()));
 }
 
 void DaisyPod::DelayMs(size_t del)
@@ -113,26 +113,35 @@ void DaisyPod::ChangeAudioCallback(AudioHandle::AudioCallback cb)
     seed.ChangeAudioCallback(cb);
 }
 
-void DaisyPod::SetAudioBlockSize(size_t size)
+void DaisyPod::StopAudio()
 {
-//    block_size_    = size;
-//    callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
-//    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
+    seed.StopAudio();
 }
 
-float DaisyPod::AudioSampleRate()
+void DaisyPod::SetAudioBlockSize(size_t size)
 {
-    return sample_rate_;
+    seed.SetAudioBlockSize(size);
+    callback_rate_ = seed.AudioSampleRate() / seed.AudioBlockSize();
 }
 
 size_t DaisyPod::AudioBlockSize()
 {
-    return block_size_;
+    return seed.AudioBlockSize();
+}
+
+void DaisyPod::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
+{
+    seed.SetAudioSampleRate(samplerate);
+}
+
+float DaisyPod::AudioSampleRate()
+{
+    return seed.AudioSampleRate();
 }
 
 float DaisyPod::AudioCallbackRate()
 {
-    return callback_rate_;
+    return seed.AudioCallbackRate();
 }
 
 void DaisyPod::StartAdc()

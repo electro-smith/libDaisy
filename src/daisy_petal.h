@@ -76,11 +76,6 @@ class DaisyPetal
      */
     void DelayMs(size_t del);
 
-    /**
-       Set size of audio blocks.
-       \param size Audio block size
-     */
-    void SetAudioBlockSize(size_t size);
 
     /** Starts the callback
     \cb Interleaved callback function
@@ -104,17 +99,31 @@ class DaisyPetal
     */
     void ChangeAudioCallback(AudioHandle::AudioCallback cb);
 
-    /** Start analog to digital conversion. */
-    void StartAdc();
+    /** Stops the audio if it is running. */
+    void StopAudio();
 
-    /** Device audio sample rate. */
+    /** Updates the Audio Sample Rate, and reinitializes.
+     ** Audio must be stopped for this to work.
+     */
+    void SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate);
+
+    /** Returns the audio sample rate in Hz as a floating point number.
+     */
     float AudioSampleRate();
 
-    /** Get audio block size */
+    /** Sets the number of samples processed per channel by the audio callback.
+       \param size Audio block size
+     */
+    void SetAudioBlockSize(size_t size);
+
+    /** Returns the number of samples per channel in a block of audio. */
     size_t AudioBlockSize();
 
-    /** Get callback rate */
-    float AudioCallbackRate();
+    /** Returns the rate in Hz that the Audio callback is called */
+    float AudioCallbackRate(); 
+
+    /** Start analog to digital conversion. */
+    void StartAdc();
 
     /** Call at the same frequency as controls are read for stable readings.*/
     void UpdateAnalogControls();
@@ -171,8 +180,6 @@ class DaisyPetal
 
     inline uint16_t* adc_ptr(const uint8_t chn) { return seed.adc.GetPtr(chn); }
 
-    float                     sample_rate_, callback_rate_;
-    size_t                    block_size_;
     LedDriverPca9685<2, true> led_driver_;
 };
 
