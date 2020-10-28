@@ -74,8 +74,6 @@ using namespace daisy;
 void DaisyPod::Init()
 {
     // Set Some numbers up for accessors.
-//    sample_rate_   = SAMPLE_RATE; // TODO add configurable SR to libdaisy audio.
-//    block_size_    = 48;
     // Initialize the hardware.
     seed.Configure();
     seed.Init();

@@ -120,7 +120,7 @@ class DaisyPetal
     size_t AudioBlockSize();
 
     /** Returns the rate in Hz that the Audio callback is called */
-    float AudioCallbackRate(); 
+    float AudioCallbackRate();
 
     /** Start analog to digital conversion. */
     void StartAdc();

@@ -127,7 +127,7 @@ class DaisyField
     size_t AudioBlockSize();
 
     /** Returns the rate in Hz that the Audio callback is called */
-    float AudioCallbackRate(); 
+    float AudioCallbackRate();
 
     /** Starts Transfering data from the ADC */
     void StartAdc() { seed.adc.Start(); }
