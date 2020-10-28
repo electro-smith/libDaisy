@@ -88,39 +88,52 @@ class DaisyField
     /** Starts the callback
     \cb Interleaved callback function
     */
-    void StartAudio(dsy_audio_callback cb);
+    void StartAudio(AudioHandle::InterleavingAudioCallback cb);
 
     /** Starts the callback
     \cb multichannel callback function
     */
-    void StartAudio(dsy_audio_mc_callback cb);
+    void StartAudio(AudioHandle::AudioCallback cb);
 
     /**
        Switch callback functions
        \param cb New interleaved callback function.
     */
-    void ChangeAudioCallback(dsy_audio_callback cb);
+    void ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb);
 
     /**
        Switch callback functions
        \param cb New multichannel callback function.
     */
-    void ChangeAudioCallback(dsy_audio_mc_callback cb);
+    void ChangeAudioCallback(AudioHandle::AudioCallback cb);
+
+    /** Stops the audio if it is running. */
+    void StopAudio();
+
+    /** Updates the Audio Sample Rate, and reinitializes.
+     ** Audio must be stopped for this to work.
+     */
+    void SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate);
+
+    /** Returns the audio sample rate in Hz as a floating point number.
+     */
+    float AudioSampleRate();
+
+    /** Sets the number of samples processed per channel by the audio callback.
+     */
+    void SetAudioBlockSize(size_t blocksize);
+
+    /** Returns the number of samples per channel in a block of audio. */
+    size_t AudioBlockSize();
+
+    /** Returns the rate in Hz that the Audio callback is called */
+    float AudioCallbackRate();
 
     /** Starts Transfering data from the ADC */
     void StartAdc() { seed.adc.Start(); }
 
     /** Turns on the built-in 12-bit DAC on the Daisy Seed */
     void StartDac() { dsy_dac_start(DSY_DAC_CHN_BOTH); }
-
-    /** Returns the samplerate of the audio engine. */
-    inline float SampleRate() const { return samplerate_; }
-
-    /** Returns the rate at which the audio callback is called. */
-    inline float BlockRate() const { return blockrate_; }
-
-    /** Returns the size of the audio buffer in frames .*/
-    inline size_t BlockSize() const { return blocksize_; }
 
     /** Processes the ADC inputs, updating their values */
     void ProcessAnalogControls()
@@ -210,8 +223,6 @@ class DaisyField
     LedDriverPca9685<2, true> led_driver_;
 
   private:
-    float              samplerate_, blockrate_;
-    size_t             blocksize_;
     Switch             sw_[SW_LAST];
     dsy_sr_4021_handle keyboard_sr_;
     AnalogControl      knob_[KNOB_LAST];

@@ -76,10 +76,7 @@ void DaisyField::Init()
 {
     seed.Configure();
     seed.Init();
-    samplerate_ = seed.AudioSampleRate();
-    blocksize_  = 48;
-    seed.SetAudioBlockSize(blocksize_);
-    blockrate_ = samplerate_ / (float)blocksize_;
+    seed.SetAudioBlockSize(48);
 
     // Switches
     uint8_t sw_pin[]  = {PIN_SW_1, PIN_SW_2};
@@ -92,7 +89,7 @@ void DaisyField::Init()
     for(size_t i = 0; i < SW_LAST; i++)
     {
         dsy_gpio_pin p = seed.GetPin(sw_pin[i]);
-        sw_[i].Init(p, blockrate_);
+        sw_[i].Init(p, AudioCallbackRate());
     }
 
     // ADCs
@@ -113,11 +110,11 @@ void DaisyField::Init()
     size_t pot_order[KNOB_LAST] = {0, 3, 1, 4, 2, 5, 6, 7};
     for(size_t i = 0; i < KNOB_LAST; i++)
     {
-        knob_[i].Init(seed.adc.GetMuxPtr(4, pot_order[i]), blockrate_);
+        knob_[i].Init(seed.adc.GetMuxPtr(4, pot_order[i]), AudioCallbackRate());
     }
     for(size_t i = 0; i < CV_LAST; i++)
     {
-        cv_[i].InitBipolarCv(seed.adc.GetPtr(i), blockrate_);
+        cv_[i].InitBipolarCv(seed.adc.GetPtr(i), AudioCallbackRate());
     }
 
     // Keyboard
@@ -154,24 +151,54 @@ void DaisyField::Init()
     dsy_tim_start();
 }
 
-void DaisyField::StartAudio(dsy_audio_callback cb)
+void DaisyField::StartAudio(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.StartAudio(cb);
 }
 
-void DaisyField::StartAudio(dsy_audio_mc_callback cb)
+void DaisyField::StartAudio(AudioHandle::AudioCallback cb)
 {
     seed.StartAudio(cb);
 }
 
-void DaisyField::ChangeAudioCallback(dsy_audio_callback cb)
+void DaisyField::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
 }
 
-void DaisyField::ChangeAudioCallback(dsy_audio_mc_callback cb)
+void DaisyField::ChangeAudioCallback(AudioHandle::AudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
+}
+
+void DaisyField::StopAudio()
+{
+    seed.StopAudio();
+}
+
+void DaisyField::SetAudioBlockSize(size_t size)
+{
+    seed.SetAudioBlockSize(size);
+}
+
+size_t DaisyField::AudioBlockSize()
+{
+    return seed.AudioBlockSize();
+}
+
+void DaisyField::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
+{
+    seed.SetAudioSampleRate(samplerate);
+}
+
+float DaisyField::AudioSampleRate()
+{
+    return seed.AudioSampleRate();
+}
+
+float DaisyField::AudioCallbackRate()
+{
+    return seed.AudioCallbackRate();
 }
 
 void DaisyField::VegasMode()

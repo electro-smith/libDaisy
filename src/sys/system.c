@@ -175,7 +175,7 @@ void SystemClock_Config()
     // PLL 3
     PeriphClkInitStruct.PLL3.PLL3M        = 6;
     PeriphClkInitStruct.PLL3.PLL3N        = 295;
-    PeriphClkInitStruct.PLL3.PLL3P        = 64; // 12.29Mhz
+    PeriphClkInitStruct.PLL3.PLL3P        = 16; // 49.xMhz
     PeriphClkInitStruct.PLL3.PLL3Q        = 4;
     PeriphClkInitStruct.PLL3.PLL3R        = 32; // 24.xMhz
     PeriphClkInitStruct.PLL3.PLL3RGE      = RCC_PLL3VCIRANGE_1;
@@ -216,7 +216,7 @@ static void MPU_Config()
     // Configure RAM D2 (SRAM1) as non cacheable
     MPU_InitStruct.Enable           = MPU_REGION_ENABLE;
     MPU_InitStruct.BaseAddress      = 0x30000000;
-    MPU_InitStruct.Size             = MPU_REGION_SIZE_16KB;
+    MPU_InitStruct.Size             = MPU_REGION_SIZE_32KB;
     MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
     MPU_InitStruct.IsBufferable     = MPU_ACCESS_NOT_BUFFERABLE;
     MPU_InitStruct.IsCacheable      = MPU_ACCESS_NOT_CACHEABLE;

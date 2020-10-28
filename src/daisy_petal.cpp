@@ -3,7 +3,8 @@
 using namespace daisy;
 
 #ifndef SAMPLE_RATE
-#define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
+//#define SAMPLE_RATE DSY_AUDIO_SAMPLE_RATE
+#define SAMPLE_RATE 48014.f
 #endif
 
 // Hardware related defines.
@@ -79,9 +80,6 @@ static LedDriverPca9685<2, true>::DmaBuffer DMA_BUFFER_MEM_SECTION
 void DaisyPetal::Init()
 {
     // Set Some numbers up for accessors.
-    sample_rate_   = SAMPLE_RATE; // TODO add configurable SR to libdaisy audio.
-    block_size_    = 48;
-    callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
     // Initialize the hardware.
     seed.Configure();
     seed.Init();
@@ -90,7 +88,7 @@ void DaisyPetal::Init()
     InitEncoder();
     InitLeds();
     InitAnalogControls();
-    SetAudioBlockSize(block_size_);
+    SetAudioBlockSize(48);
     seed.usb_handle.Init(UsbHandle::FS_BOTH);
 }
 
@@ -99,46 +97,54 @@ void DaisyPetal::DelayMs(size_t del)
     dsy_tim_delay_ms(del);
 }
 
-void DaisyPetal::StartAudio(dsy_audio_callback cb)
+void DaisyPetal::StartAudio(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.StartAudio(cb);
 }
 
-void DaisyPetal::StartAudio(dsy_audio_mc_callback cb)
+void DaisyPetal::StartAudio(AudioHandle::AudioCallback cb)
 {
     seed.StartAudio(cb);
 }
 
-void DaisyPetal::ChangeAudioCallback(dsy_audio_callback cb)
+void DaisyPetal::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
 }
 
-void DaisyPetal::ChangeAudioCallback(dsy_audio_mc_callback cb)
+void DaisyPetal::ChangeAudioCallback(AudioHandle::AudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
+}
+
+void DaisyPetal::StopAudio()
+{
+    seed.StopAudio();
 }
 
 void DaisyPetal::SetAudioBlockSize(size_t size)
 {
-    block_size_    = size;
-    callback_rate_ = (sample_rate_ / static_cast<float>(block_size_));
-    dsy_audio_set_blocksize(DSY_AUDIO_INTERNAL, block_size_);
-}
-
-float DaisyPetal::AudioSampleRate()
-{
-    return sample_rate_;
+    seed.SetAudioBlockSize(size);
 }
 
 size_t DaisyPetal::AudioBlockSize()
 {
-    return block_size_;
+    return seed.AudioBlockSize();
+}
+
+void DaisyPetal::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
+{
+    seed.SetAudioSampleRate(samplerate);
+}
+
+float DaisyPetal::AudioSampleRate()
+{
+    return seed.AudioSampleRate();
 }
 
 float DaisyPetal::AudioCallbackRate()
 {
-    return callback_rate_;
+    return seed.AudioCallbackRate();
 }
 
 void DaisyPetal::StartAdc()
@@ -261,7 +267,7 @@ void DaisyPetal::InitSwitches()
 
     for(size_t i = 0; i < SW_LAST; i++)
     {
-        switches[i].Init(seed.GetPin(pin_numbers[i]), callback_rate_);
+        switches[i].Init(seed.GetPin(pin_numbers[i]), AudioCallbackRate());
     }
 }
 
@@ -271,7 +277,7 @@ void DaisyPetal::InitEncoder()
     a     = seed.GetPin(ENC_A_PIN);
     b     = seed.GetPin(ENC_B_PIN);
     click = seed.GetPin(ENC_CLICK_PIN);
-    encoder.Init(a, b, click, callback_rate_);
+    encoder.Init(a, b, click, AudioCallbackRate());
 }
 
 void DaisyPetal::InitLeds()
@@ -306,7 +312,7 @@ void DaisyPetal::InitAnalogControls()
     // Make an array of pointers to the knob.
     for(int i = 0; i < KNOB_LAST; i++)
     {
-        knob[i].Init(seed.adc.GetPtr(i), callback_rate_);
+        knob[i].Init(seed.adc.GetPtr(i), AudioCallbackRate());
     }
-    expression.Init(seed.adc.GetPtr(KNOB_LAST), callback_rate_);
+    expression.Init(seed.adc.GetPtr(KNOB_LAST), AudioCallbackRate());
 }

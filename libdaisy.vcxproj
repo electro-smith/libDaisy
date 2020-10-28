@@ -14,7 +14,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{1B07A9D3-1E1B-488A-9817-4B13EECA191C}</ProjectGuid>
     <BSP_ID>com.sysprogs.arm.stm32</BSP_ID>
-    <BSP_VERSION>2020.06</BSP_VERSION>
+    <BSP_VERSION>2020.10</BSP_VERSION>
     <InPlaceBSPSubdir />
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -47,8 +47,9 @@
       <PreprocessorDefinitions>DEBUG=1;__FPU_PRESENT=1;STM32H750xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
       <Optimization>O0</Optimization>
       <AdditionalOptions />
-      <CLanguageStandard />
-      <CPPLanguageStandard />
+      <CLanguageStandard>GNU11</CLanguageStandard>
+      <CPPLanguageStandard>GNUPP14</CPPLanguageStandard>
+      <InlineFunctions>true</InlineFunctions>
     </ClCompile>
     <Link>
       <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
@@ -229,7 +230,7 @@
     <ClCompile Include="src\dev\sdram.c" />
     <ClCompile Include="src\dev\sr_4021.c" />
     <ClCompile Include="src\dev\sr_595.cpp" />
-    <ClCompile Include="src\hid\audio.c" />
+    <ClCompile Include="src\hid\audio.cpp" />
     <ClCompile Include="src\hid\ctrl.cpp" />
     <ClCompile Include="src\hid\encoder.cpp" />
     <ClCompile Include="src\hid\gatein.cpp" />
@@ -246,7 +247,7 @@
     <ClCompile Include="src\per\gpio.c" />
     <ClCompile Include="src\per\i2c.cpp" />
     <ClCompile Include="src\per\qspi.c" />
-    <ClCompile Include="src\per\sai.c" />
+    <ClCompile Include="src\per\sai.cpp" />
     <ClCompile Include="src\per\sdmmc.cpp" />
     <ClCompile Include="src\per\spi.cpp" />
     <ClCompile Include="src\per\tim.c" />

@@ -1,153 +1,96 @@
 #ifndef DSY_AUDIO_H
 #define DSY_AUDIO_H /**< & */
-#include <stddef.h>
-#include <stdint.h>
+
 #include "per/sai.h"
-//#include "per/i2c.h"
-#ifdef __cplusplus
-extern "C"
+
+namespace daisy
 {
-#endif
-
-
-/** Defines for generic maximums
-    While 'Audio Channels Max' is set to 2, this is per-SAI 
-    4x4 Audio I/O is possible using the dsy_audio_mc_callback
-    Hard-coded samplerate is calculated from original clock tree.  
-    The new clock tree has less than 0.01% error for all supported samplerates
-*/
-/** Max block size */
-#define DSY_AUDIO_BLOCK_SIZE_MAX 128
-/** Max number of audio channels */
-#define DSY_AUDIO_CHANNELS_MAX 2
-
-#ifndef DSY_AUDIO_SAMPLE_RATE
-#define DSY_AUDIO_SAMPLE_RATE 48014.0f /**< Default sample rate */
-#endif
-
-    /** @ingroup audio 
-    @{ 
-    */
-
-    /*
-      brief Audio Driver \n 
-    Configures Audio Device and provides callback for signal processing. \n 
-    Many of the hard-coded values here will change (increase), and/or \n 
-    be replaced by configurable options 
-    */
-
-    /** Internally, there are two separate 'audio blocks' that can
-      be configured together or separately
-  */
-    enum
+class AudioHandle
+{
+  public:
+    /** Manually configurable details about the Audio Engine */
+    /** TODO: Figure out how to get samplerate in here. */
+    struct Config
     {
-        DSY_AUDIO_INTERNAL, /**< & */
-        DSY_AUDIO_EXTERNAL, /**< & */
-        DSY_AUDIO_LAST,     /**< & */
+        size_t                        blocksize;
+        SaiHandle::Config::SampleRate samplerate;
     };
 
-
-    /** Simple config struct that holds peripheral drivers. */
-    typedef struct
+    enum class Result
     {
-        size_t          block_size; /**< & */
-        dsy_sai_handle* sai;        /**< & */
-        //dsy_i2c_handle* dev0_i2c;   /**< & */
-        //dsy_i2c_handle* dev1_i2c;   /**< & */
-    } dsy_audio_handle;
+        OK,
+        ERR,
+    };
 
-    /* typical example:
-       void AudioCallback(float *in, float *out, size_t size)
-       {
-           for (size_t i = 0; i < size; i+=2)
-       {
-           out[i] = in[i]; // Left
-           out[i+1] = in[i+1]; // Right
-       }
-       
-       }
-    */
+    /** Non-Interleaving Callback format. Both arrays arranged by float[chn][sample] */
+    typedef void (*AudioCallback)(float** in, float** out, size_t size);
 
-    /** These are user-defineable callbacks that are called when 
-    audio data is ready to be received/transmitted.
-    Function to define for using a single Stereo device for I/O
-    audio is packed as: { LEFT | RIGHT | LEFT | RIGHT }
-    */
-    typedef void (*dsy_audio_callback)(float*, float*, size_t);
-
-    /* typical example:
-    void AudioCallback(float **in, float **out, size_t size)
-    {
-    
-        for (size_t i = 0; i < size; i++)
-    {
-            for (size_t chn = 0; chn < num_channels; chn++)
-        {
-            out[chn] = in[chn];
-        }
-    }
-       
-    }
-    */
-
-    /** Defaults to 4 channels, and is fixed for now. \n
-    (still works for stereo, but will still fill buffers) \n
-    audio is packed as: \n
-    { LEFT | LEFT + 1 | . . . | LEFT + SIZE | RIGHT | RIGHT + 1 | . . . | RIGHT + SIZE  } \n
-    */
-    typedef void (*dsy_audio_mc_callback)(float**, float**, size_t);
-
-    /** Initializes the Audio Engine using configurations \n 
-    set to the sai_handle \n
-    i2c_handles can be set to NULL if not needed. \n
+    /** Non-Interleaving Callback format. 
+     ** audio is prepared as { L0, R0, L1, R1, . . . LN, RN }
      */
-    void dsy_audio_init(dsy_audio_handle* handle);
+    typedef void (*InterleavingAudioCallback)(float* in,
+                                              float* out,
+                                              size_t size);
 
-    /** Sets the user defined, interleaving callback to be called when audio data is ready. \n
-    intext is a specifier for DSY_AUDIO_INT/EXT (which audio peripheral to use). \n
-    When using this, each 'audio block' can have completely independent callbacks. \n
-    */
-    void dsy_audio_set_callback(uint8_t intext, dsy_audio_callback cb);
+    AudioHandle() : pimpl_(nullptr) {}
+    ~AudioHandle() {}
 
-    /** Sets the user defined, non-interleaving callback to be called when audio data is ready. \n
-    This will always use both DSY_AUDIO_INT and DSY_AUDIO_EXT blocks together. \n
-    To ensure clean audio you'll want to make sure the two SAIs are set to the same samplerate \n
-    */
-    void dsy_audio_set_mc_callback(dsy_audio_mc_callback cb);
+    AudioHandle(const AudioHandle& other) = default;
+    AudioHandle& operator=(const AudioHandle& other) = default;
 
-    /** Sets the number of samples (per-channel) to be handled in a single audio frame.
+    /** Initializes audio to run using a single SAI configured in Stereo I2S mode. */
+    Result Init(const Config& config, SaiHandle sai);
+
+    /** Initializes audio to run using two SAI, each configured in Stereo I2S mode. */
+    Result Init(const Config& config, SaiHandle sai1, SaiHandle sai2);
+
+    /** Returns the Global Configuration struct for the Audio */
+    const Config& GetConfig() const;
+
+    /** Returns the number of channels of audio.  
+     **
+     ** When using a single SAI this returns 2, when using two SAI it returns 4
+     ** If no SAI is initialized this returns 0
+     **
+     ** Eventually when we add non-standard I2S for each SAI this will be work differently
      */
-    void dsy_audio_set_blocksize(uint8_t intext, size_t blocksize);
+    size_t GetChannels() const;
 
-    /** Starts Audio Engine, callbacks will begin getting called. \n
-    When using with dsy_audio_mc_callback (for 4 channels), 
-    this function should be called for both audio blocks
-    */
-    void dsy_audio_start(uint8_t intext);
+    /** Returns the Samplerate as a float */
+    float GetSampleRate();
 
-    /** Stops transmitting/receiving audio on the specified audio block.
+    /** Sets the samplerate, and reinitializes the sai as needed. */
+    Result SetSampleRate(SaiHandle::Config::SampleRate samplerate);
+
+    /** Sets the block size after initialization, and updates the internal configuration struct.
+     ** Get BlockSize and other details via the GetConfig 
      */
-    void dsy_audio_stop(uint8_t intext);
-
-    //Only minimally tested with WM8731 codec.**
-    /** If the device supports hardware bypass, enter that mode. */
-    void dsy_audio_enter_bypass(uint8_t intext);
+    Result SetBlockSize(size_t size);
 
 
-    // Only minimally tested with WM8731 codec.
-    /** If the device supports hardware bypass, exit that mode. */
-    void dsy_audio_exit_bypass(uint8_t intext);
+    /** Starts the Audio using the non-interleaving callback. */
+    Result Start(AudioCallback callback);
 
-    /** A few useful stereo-interleaved callbacks \n
-    Passes the input to the output
-    */
-    void dsy_audio_passthru(float* in, float* out, size_t size);
+    /** Starts the Audio using the interleaving callback. 
+     ** For now only two channels are supported via this method. 
+     */
+    Result Start(InterleavingAudioCallback callback);
 
-    /** sets outputs to 0 without stopping the Audio Engine */
-    void dsy_audio_silence(float* in, float* out, size_t size);
+    /** Stop the Audio*/
+    Result Stop();
 
-#ifdef __cplusplus
-}
+    /** Immediatley changes the audio callback to the non-interleaving callback passed in. */
+    Result ChangeCallback(AudioCallback callback);
+
+    /** Immediatley changes the audio callback to the interleaving callback passed in. */
+    Result ChangeCallback(InterleavingAudioCallback callback);
+
+    class Impl;
+
+  private:
+    Impl* pimpl_;
+};
+
+} // namespace daisy
+
 #endif
-#endif
-/** @} */
