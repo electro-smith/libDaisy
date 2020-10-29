@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gateinput',['GateInput',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953',1,'daisy::DaisyPatch']]]
+  ['footswitchled',['FootswitchLed',['../classdaisy_1_1_daisy_petal.html#ad833e85c076a9fc4c3ad16cb8f09b06d',1,'daisy::DaisyPetal']]]
 ];

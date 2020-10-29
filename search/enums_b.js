@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['usbperiph',['UsbPeriph',['../class_usb_handle.html#a782f2982a91520188f2be5a80c9febb4',1,'UsbHandle::UsbPeriph()'],['../class_usb_handle.html#a782f2982a91520188f2be5a80c9febb4',1,'UsbHandle::UsbPeriph()']]]
+  ['type',['Type',['../classdaisy_1_1_switch.html#a944058682bae079439ddddd42302b483',1,'daisy::Switch']]]
 ];

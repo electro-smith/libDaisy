@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['l',['l',['../structcodec__frame__t.html#a12108058cdaeaccb43e7f978eee13918',1,'codec_frame_t']]],
-  ['led1',['led1',['../classdaisy_1_1_daisy_pod.html#a25507d3d34053599b816f5a87a55d632',1,'daisy::DaisyPod']]],
-  ['led2',['led2',['../classdaisy_1_1_daisy_pod.html#a957be8135f17db1516599602f72daf5c',1,'daisy::DaisyPod']]],
-  ['logblocknbr',['LogBlockNbr',['../struct_d_s_y___s_d___card_info_type_def.html#a83eb54ea440525359ef09e5751741037',1,'DSY_SD_CardInfoTypeDef']]],
-  ['logblocksize',['LogBlockSize',['../struct_d_s_y___s_d___card_info_type_def.html#aad9fe6b0ee0775a2eb950198b761b5ec',1,'DSY_SD_CardInfoTypeDef']]]
+  ['midi',['midi',['../classdaisy_1_1_daisy_patch.html#a3002495577219c839b2197a1d9439848',1,'daisy::DaisyPatch']]],
+  ['mode',['mode',['../structdsy__dac__handle.html#aa8573096053ad1eb282de7ff841b2113',1,'dsy_dac_handle::mode()'],['../structdsy__gpio.html#a12e4d73b334e9caedb135224bd288384',1,'dsy_gpio::mode()'],['../structdsy__qspi__handle.html#a74a03b270c1f60a37c254d18a38e6ca5',1,'dsy_qspi_handle::mode()']]],
+  ['mux_5fchannels_5f',['mux_channels_',['../structdaisy_1_1_adc_channel_config.html#a9e61599527b16d2a47c76f0e3fd8c45c',1,'daisy::AdcChannelConfig']]],
+  ['mux_5fpin_5f',['mux_pin_',['../structdaisy_1_1_adc_channel_config.html#ab617cb7700615026b926ff9675e8f90f',1,'daisy::AdcChannelConfig']]]
 ];

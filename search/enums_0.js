@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['ctrl',['Ctrl',['../classdaisy_1_1_daisy_patch.html#aefa3638dd587fe20c48bbdfba3cd72b3',1,'daisy::DaisyPatch']]],
-  ['curve',['Curve',['../classdaisy_1_1_parameter.html#a2fcb1b7095721f0de77594aabb9594da',1,'daisy::Parameter']]]
+  ['bitdepth',['BitDepth',['../structdaisy_1_1_sai_handle_1_1_config.html#aafe336101d7c50dd68e2611ccce7c808',1,'daisy::SaiHandle::Config']]]
 ];

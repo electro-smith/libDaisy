@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sa_5faudio_5fcallback',['sa_audio_callback',['../group__codec.html#ga1c515a2c7b8cccaff957aabcd1ea1467',1,'codec_wm8731_frame.h']]]
+  ['interleavingaudiocallback',['InterleavingAudioCallback',['../classdaisy_1_1_audio_handle.html#a25cb1ed797b0f5b6d79a26284454bb6f',1,'daisy::AudioHandle']]]
 ];

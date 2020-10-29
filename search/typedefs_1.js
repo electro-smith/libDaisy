@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['dmabuffer',['DmaBuffer',['../classdaisy_1_1_led_driver_pca9685.html#abc90ef63251f238d16cdd2c6e7a6ed39',1,'daisy::LedDriverPca9685']]],
-  ['dsy_5faudio_5fcallback',['dsy_audio_callback',['../group__audio.html#ga102410471d41f1fcc029a3e9ec811579',1,'audio.h']]],
-  ['dsy_5faudio_5fmc_5fcallback',['dsy_audio_mc_callback',['../group__audio.html#gabce1c5fc2c2db646faee810a6d6e27d1',1,'audio.h']]]
+  ['callbackfunctionptr',['CallbackFunctionPtr',['../classdaisy_1_1_i2_c_handle.html#a865f3f2c45b937c4084081f807e15d7b',1,'daisy::I2CHandle::CallbackFunctionPtr()'],['../classdaisy_1_1_sai_handle.html#ac7ca41a3568296357b71b6848d95c69c',1,'daisy::SaiHandle::CallbackFunctionPtr()']]],
+  ['cdc_5freceivecallback',['CDC_ReceiveCallback',['../group___u_s_b_d___c_d_c___i_f___exported___types.html#ga4f79760bb7f5e4ac925569e1b02dec63',1,'usbd_cdc_if.h']]]
 ];

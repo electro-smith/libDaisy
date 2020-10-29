@@ -1,21 +1,4 @@
 var searchData=
 [
-  ['sai',['sai',['../structdsy__audio__handle.html#af7d4fc190bc456c67b0742101711c815',1,'dsy_audio_handle']]],
-  ['sai1_5fpin_5fconfig',['sai1_pin_config',['../structdsy__sai__handle.html#a46d7202cbd2da930f073f0f16c656fb0',1,'dsy_sai_handle']]],
-  ['sai2_5fpin_5fconfig',['sai2_pin_config',['../structdsy__sai__handle.html#ad6ab4b2b747f0f86f8b4c7c60083985d',1,'dsy_sai_handle']]],
-  ['sai_5fhandle',['sai_handle',['../classdaisy_1_1_daisy_seed.html#a7e98c7767df72042ff7cfbb136ebf503',1,'daisy::DaisySeed']]],
-  ['samplerate',['samplerate',['../structdsy__sai__handle.html#a192250070ae6e51d6b3e01de54790b71',1,'dsy_sai_handle::samplerate()'],['../struct_w_a_v___format_type_def.html#ae8c4e494feaf378e05635d989f95b0b1',1,'WAV_FormatTypeDef::SampleRate()']]],
-  ['scl',['scl',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a168960729dc107c030c3a7cfe5c4b138',1,'daisy::I2CHandle::Config']]],
-  ['sda',['sda',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a8d0a82df1f49113e5e4e2aff071e16e3',1,'daisy::I2CHandle::Config']]],
-  ['sdram_5fhandle',['sdram_handle',['../classdaisy_1_1_daisy_seed.html#a03d712e565ea71ec3d7126d0bbab6220',1,'daisy::DaisySeed']]],
-  ['seed',['seed',['../classdaisy_1_1_daisy_patch.html#a4705ca24e5ebc4d8add7d83232162fd7',1,'daisy::DaisyPatch::seed()'],['../classdaisy_1_1_daisy_petal.html#a2ef75f14bf008985bf6635e9ce87106a',1,'daisy::DaisyPetal::seed()'],['../classdaisy_1_1_daisy_pod.html#a75907b96ea78262bf52dd7b565136f58',1,'daisy::DaisyPod::seed()']]],
-  ['speed',['speed',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a7795ab9b3b85bd2f51950b6985a31b97',1,'daisy::I2CHandle::Config::speed()'],['../structdaisy_1_1_sdmmc_handler_init.html#afee5b8e925f0cbb76bab2904620a71b7',1,'daisy::SdmmcHandlerInit::speed()']]],
-  ['state',['state',['../structdsy__sdram__handle.html#a052f782ca4905360ced7ebede5d29e3a',1,'dsy_sdram_handle']]],
-  ['states',['states',['../structdsy__sr__4021__handle.html#a0320ddfe5eafa904ffe6c7d3cec768b9',1,'dsy_sr_4021_handle']]],
-  ['subchunk1id',['SubChunk1ID',['../struct_w_a_v___format_type_def.html#a474c9112ff1341977e1f7d27857b64d3',1,'WAV_FormatTypeDef']]],
-  ['subchunk1size',['SubChunk1Size',['../struct_w_a_v___format_type_def.html#ae01d4cc44b15138a0d3c61b44b7aec41',1,'WAV_FormatTypeDef']]],
-  ['subchunk2id',['SubChunk2ID',['../struct_w_a_v___format_type_def.html#a5c3005998567669d67325318beaffac0',1,'WAV_FormatTypeDef']]],
-  ['subchunk2size',['SubCHunk2Size',['../struct_w_a_v___format_type_def.html#a807f0466f9d7cee763cf942f21224469',1,'WAV_FormatTypeDef']]],
-  ['switches',['switches',['../classdaisy_1_1_daisy_petal.html#a4c23c5086d0620b98c2d4a86fde53af2',1,'daisy::DaisyPetal']]],
-  ['sync_5fconfig',['sync_config',['../structdsy__sai__handle.html#a1f47a2b37cc1d7e7b965d3f9455be648',1,'dsy_sai_handle']]]
+  ['type',['type',['../structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91',1,'daisy::MidiEvent']]]
 ];

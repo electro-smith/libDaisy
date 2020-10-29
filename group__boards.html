@@ -77,8 +77,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
 <div class="title">BOARDS<div class="ingroups"><a class="el" href="group__libdaisy.html">LIBDAISY</a></div></div>  </div>
 </div><!--header-->
@@ -106,113 +105,9 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">This is the higher-level interface for the Daisy board. <br />
  All basic peripheral configuration/initialization is setup here.  <a href="classdaisy_1_1_daisy_seed.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga56923e56a9229dd76da5ca8c31e1cd4a"><td class="memItemLeft" align="right" valign="top">FORCE_INLINE float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__boards.html#ga56923e56a9229dd76da5ca8c31e1cd4a">s162f</a> (int16_t x)</td></tr>
-<tr class="separator:ga56923e56a9229dd76da5ca8c31e1cd4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga35fba5981e8833f5a89ebcfe4bf5c609"><td class="memItemLeft" align="right" valign="top">FORCE_INLINE int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__boards.html#ga35fba5981e8833f5a89ebcfe4bf5c609">f2s16</a> (float x)</td></tr>
-<tr class="separator:ga35fba5981e8833f5a89ebcfe4bf5c609"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf3c84ac6360476468f2ab11807c40fa0"><td class="memItemLeft" align="right" valign="top">FORCE_INLINE float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__boards.html#gaf3c84ac6360476468f2ab11807c40fa0">s242f</a> (int32_t x)</td></tr>
-<tr class="separator:gaf3c84ac6360476468f2ab11807c40fa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf05db280491381474925191c391cd94d"><td class="memItemLeft" align="right" valign="top">FORCE_INLINE int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__boards.html#gaf05db280491381474925191c391cd94d">f2s24</a> (float x)</td></tr>
-<tr class="separator:gaf05db280491381474925191c391cd94d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Daisy devices. Pod, seed, etc. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga35fba5981e8833f5a89ebcfe4bf5c609"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FORCE_INLINE int16_t f2s16 </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>x</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>&amp; </p>
-<p>&lt; close to 1.0f-LSB at 16 bit</p>
-<p>&lt; - (1 - LSB)</p>
-<p>&lt; close to 1.0f-LSB at 16 bit</p>
-<p>&lt; - (1 - LSB)</p>
-<p>&lt; close to 1.0f-LSB at 16 bit</p>
-<p>&lt; close to 1.0f-LSB at 16 bit</p>
-<p>&lt; (2 ** 15) - 1 </p>
-
-</div>
-</div>
-<a class="anchor" id="gaf05db280491381474925191c391cd94d"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FORCE_INLINE int32_t f2s24 </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>x</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>&amp; </p>
-<p>&lt; close to 1.0f-LSB at 16 bit</p>
-<p>&lt; - (1 - LSB)</p>
-<p>&lt; close to 1.0f-LSB at 16 bit</p>
-<p>&lt; - (1 - LSB)</p>
-<p>&lt; close to 1.0f-LSB at 16 bit</p>
-<p>&lt; close to 1.0f-LSB at 16 bit</p>
-<p>&lt; 2 ** 23 </p>
-
-</div>
-</div>
-<a class="anchor" id="ga56923e56a9229dd76da5ca8c31e1cd4a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FORCE_INLINE float s162f </td>
-          <td>(</td>
-          <td class="paramtype">int16_t&#160;</td>
-          <td class="paramname"><em>x</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Scales float by 1/(2 ^ 15) </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>Number to be scaled. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Scaled number. </dd></dl>
-<p>&lt; 1 / (2** 15) </p>
-
-</div>
-</div>
-<a class="anchor" id="gaf3c84ac6360476468f2ab11807c40fa0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">FORCE_INLINE float s242f </td>
-          <td>(</td>
-          <td class="paramtype">int32_t&#160;</td>
-          <td class="paramname"><em>x</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p># </p>
-<p>&lt; 2 ** 23</p>
-<p>&lt; 2 ** 23</p>
-<p>&lt; 1 / (2 ** 23) </p>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

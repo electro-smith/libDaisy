@@ -1,16 +1,13 @@
 var searchData=
 [
-  ['b_5fdirection',['b_direction',['../structdsy__sai__handle.html#ad3f08306633bc275cec105e4d409eded',1,'dsy_sai_handle']]],
-  ['bitdepth',['bitdepth',['../structdsy__dac__handle.html#abef82b9e9f042d39151a3b0854b005ba',1,'dsy_dac_handle::bitdepth()'],['../structdsy__sai__handle.html#a853a1049fcbf96324d2f9f1cb85c07fb',1,'dsy_sai_handle::bitdepth()'],['../structdaisy_1_1_sdmmc_handler_init.html#a1c0e454b79884b6b1342d7406cb106ef',1,'daisy::SdmmcHandlerInit::bitdepth()']]],
+  ['bitdepth',['bitdepth',['../structdsy__dac__handle.html#abef82b9e9f042d39151a3b0854b005ba',1,'dsy_dac_handle::bitdepth()'],['../structdaisy_1_1_sdmmc_handler_init.html#a1c0e454b79884b6b1342d7406cb106ef',1,'daisy::SdmmcHandlerInit::bitdepth()'],['../structdaisy_1_1_sai_handle_1_1_config.html#aafe336101d7c50dd68e2611ccce7c808',1,'daisy::SaiHandle::Config::BitDepth()']]],
   ['bitpersample',['BitPerSample',['../struct_w_a_v___format_type_def.html#a2a763477c7aecbf9e45446d13a44d162',1,'WAV_FormatTypeDef']]],
   ['block_5ferase_5f32k_5fcmd',['BLOCK_ERASE_32K_CMD',['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;flash_IS25LP080D.h']]],
   ['block_5ferase_5fcmd',['BLOCK_ERASE_CMD',['../group__flash.html#ga9b58e3d8eaefa240d9ccbac870fc1c2b',1,'BLOCK_ERASE_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga9b58e3d8eaefa240d9ccbac870fc1c2b',1,'BLOCK_ERASE_CMD():&#160;flash_IS25LP080D.h']]],
-  ['block_5fsize',['block_size',['../structdsy__audio__handle.html#a2c7161c106d61b80dc599dae5e09bee2',1,'dsy_audio_handle']]],
   ['blockalign',['BlockAlign',['../struct_w_a_v___format_type_def.html#ac255fb2e05945824a36614af89675228',1,'WAV_FormatTypeDef']]],
   ['blockingtransmit',['BlockingTransmit',['../classdaisy_1_1_spi_handle.html#a99adb49a6d7c8583d565dc450610af25',1,'daisy::SpiHandle']]],
   ['blocknbr',['BlockNbr',['../struct_d_s_y___s_d___card_info_type_def.html#a1955247be547523e0a16fd37c288b918',1,'DSY_SD_CardInfoTypeDef']]],
-  ['blockrate',['BlockRate',['../classdaisy_1_1_daisy_field.html#ad24bde9f1c654ee1400930274380ba7b',1,'daisy::DaisyField']]],
-  ['blocksize',['BlockSize',['../struct_d_s_y___s_d___card_info_type_def.html#a030b9e7d12a77aa526ef7fc86bcb01e0',1,'DSY_SD_CardInfoTypeDef::BlockSize()'],['../classdaisy_1_1_daisy_field.html#afb60b1c9a718de0657e6597ad18034f9',1,'daisy::DaisyField::BlockSize()']]],
+  ['blocksize',['BlockSize',['../struct_d_s_y___s_d___card_info_type_def.html#a030b9e7d12a77aa526ef7fc86bcb01e0',1,'DSY_SD_CardInfoTypeDef']]],
   ['blue',['Blue',['../classdaisy_1_1_color.html#a5192f53cce080bbce9cf082d0ab71040',1,'daisy::Color::Blue() const '],['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a7030ad36aea5814566cd1c9da26afe6d',1,'daisy::Color::BLUE()']]],
   ['boards',['BOARDS',['../group__boards.html',1,'']]],
   ['bsp_5fsd_5fabortcallback',['BSP_SD_AbortCallback',['../group__utility.html#ga0a395393d1522c9844c525f0dc61fe3e',1,'bsp_sd_diskio.h']]],

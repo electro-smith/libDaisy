@@ -119,9 +119,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 &#160;
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
-<li>SampleRate()
-: <a class="el" href="classdaisy_1_1_daisy_field.html#a5cc49ef02438c58607cd80db4228adcb">daisy::DaisyField</a>
-</li>
 <li>SendMessage()
 : <a class="el" href="classdaisy_1_1_midi_handler.html#a59e40ad2f2293880b6664e83e40c0a30">daisy::MidiHandler</a>
 </li>
@@ -137,10 +134,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="classdaisy_1_1_led_driver_pca9685.html#a257b001d8770d82457848fbc871909a5">daisy::LedDriverPca9685&lt; numDrivers, persistentBufferContents &gt;</a>
 </li>
 <li>SetAudioBlockSize()
-: <a class="el" href="classdaisy_1_1_daisy_patch.html#a3eb9d0267312bbe4997124afc9d75b89">daisy::DaisyPatch</a>
+: <a class="el" href="classdaisy_1_1_daisy_field.html#aa6f862d51378e4a41fb78d82bb02b57e">daisy::DaisyField</a>
+, <a class="el" href="classdaisy_1_1_daisy_patch.html#a3eb9d0267312bbe4997124afc9d75b89">daisy::DaisyPatch</a>
 , <a class="el" href="classdaisy_1_1_daisy_petal.html#a2356b5fdb0f87f28920c96828b2c0c93">daisy::DaisyPetal</a>
-, <a class="el" href="classdaisy_1_1_daisy_pod.html#ac05d6bd0d67760e875c2071652fa0ff3">daisy::DaisyPod</a>
+, <a class="el" href="classdaisy_1_1_daisy_pod.html#aaa42d4ffc25bb98bdc162d54fe49be0d">daisy::DaisyPod</a>
 , <a class="el" href="classdaisy_1_1_daisy_seed.html#a4209c18a3c181e8427ebc7639d4170b6">daisy::DaisySeed</a>
+</li>
+<li>SetAudioSampleRate()
+: <a class="el" href="classdaisy_1_1_daisy_field.html#a80ec5aea2976da341853f79f56ae05f2">daisy::DaisyField</a>
+, <a class="el" href="classdaisy_1_1_daisy_patch.html#a305c609998f54b22ff469a19d87120ac">daisy::DaisyPatch</a>
+, <a class="el" href="classdaisy_1_1_daisy_petal.html#aa1d796eeb7ac6358b6596a15c595d75f">daisy::DaisyPetal</a>
+, <a class="el" href="classdaisy_1_1_daisy_pod.html#a78bd9a9cbbb99bdcc5ab68199ff918e6">daisy::DaisyPod</a>
+, <a class="el" href="classdaisy_1_1_daisy_seed.html#a94fc5d21d3c856bf3cb404e40927ec60">daisy::DaisySeed</a>
+</li>
+<li>SetBlockSize()
+: <a class="el" href="classdaisy_1_1_audio_handle.html#a93bf9a68619280b2524d8a8894c4dff9">daisy::AudioHandle</a>
 </li>
 <li>SetColor()
 : <a class="el" href="classdaisy_1_1_rgb_led.html#afc530391dc068788952edbe9907df8e9">daisy::RgbLed</a>
@@ -173,11 +181,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>SetRingLed()
 : <a class="el" href="classdaisy_1_1_daisy_petal.html#ad92270ffe128bc678b78be2067d4fcfe">daisy::DaisyPetal</a>
 </li>
+<li>SetSampleRate()
+: <a class="el" href="classdaisy_1_1_audio_handle.html#a66f20f5f6f2d2b49a80a25678869a47a">daisy::AudioHandle</a>
+</li>
 <li>SetTestPoint()
 : <a class="el" href="classdaisy_1_1_daisy_seed.html#a213214b79bb612175f2e82241887d42e">daisy::DaisySeed</a>
 </li>
 <li>Start()
 : <a class="el" href="classdaisy_1_1_adc_handle.html#a6fddddc75eb2d4ba0365a68d4bac2bd3">daisy::AdcHandle</a>
+, <a class="el" href="classdaisy_1_1_audio_handle.html#a068984ea4ad72f6d0be070fb8ddd346e">daisy::AudioHandle</a>
 </li>
 <li>StartAdc()
 : <a class="el" href="classdaisy_1_1_daisy_field.html#a3704e1fa291d6f4dada8310c9b4df1d4">daisy::DaisyField</a>
@@ -186,14 +198,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="classdaisy_1_1_daisy_pod.html#ac98cbdd0e34ec2cb994ca012f05e6317">daisy::DaisyPod</a>
 </li>
 <li>StartAudio()
-: <a class="el" href="classdaisy_1_1_daisy_field.html#a4990b89fe74e74f336c65ed9b989daa0">daisy::DaisyField</a>
-, <a class="el" href="classdaisy_1_1_daisy_patch.html#a0187184a92724b936d7e7307565ade32">daisy::DaisyPatch</a>
-, <a class="el" href="classdaisy_1_1_daisy_petal.html#a812284f5f1480be909b9826a63ebd1c8">daisy::DaisyPetal</a>
-, <a class="el" href="classdaisy_1_1_daisy_pod.html#a765da8887de68b071367d6a88ac54cf2">daisy::DaisyPod</a>
-, <a class="el" href="classdaisy_1_1_daisy_seed.html#a3a0b0dd45b4b87808f7d67912d4b7422">daisy::DaisySeed</a>
+: <a class="el" href="classdaisy_1_1_daisy_field.html#aadde15ba09d4cd9cca94f5ad4726129f">daisy::DaisyField</a>
+, <a class="el" href="classdaisy_1_1_daisy_patch.html#ab5a3f2af944cf766d2e2108efcb8bb9c">daisy::DaisyPatch</a>
+, <a class="el" href="classdaisy_1_1_daisy_petal.html#a603af40d3fc2a5ca8bf0bb39a02ce995">daisy::DaisyPetal</a>
+, <a class="el" href="classdaisy_1_1_daisy_pod.html#a6acbf4fc35f15464540a812062f5cf8f">daisy::DaisyPod</a>
+, <a class="el" href="classdaisy_1_1_daisy_seed.html#a8ffb8115424a566cdb4461a19ffdaf2f">daisy::DaisySeed</a>
 </li>
 <li>StartDac()
 : <a class="el" href="classdaisy_1_1_daisy_field.html#a76e10ba692e77ee5d66e3e21bb8181be">daisy::DaisyField</a>
+</li>
+<li>StartDma()
+: <a class="el" href="classdaisy_1_1_sai_handle.html#a11626ecc438f4ba0933e93ae730b57ee">daisy::SaiHandle</a>
 </li>
 <li>StartReceive()
 : <a class="el" href="classdaisy_1_1_midi_handler.html#aec305ba283ba3efdc0e95c822e87040b">daisy::MidiHandler</a>
@@ -206,6 +221,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>Stop()
 : <a class="el" href="classdaisy_1_1_adc_handle.html#ab6a016e484c9b7389e6302521e778bc9">daisy::AdcHandle</a>
+, <a class="el" href="classdaisy_1_1_audio_handle.html#ae0592d95b7f211bb4837b5a0f51ca5c7">daisy::AudioHandle</a>
+</li>
+<li>StopAudio()
+: <a class="el" href="classdaisy_1_1_daisy_field.html#a33df0d48abfa4e92b11b460aec6663c5">daisy::DaisyField</a>
+, <a class="el" href="classdaisy_1_1_daisy_patch.html#a1f955cd08ba4228cb2cedbd953bc7094">daisy::DaisyPatch</a>
+, <a class="el" href="classdaisy_1_1_daisy_petal.html#aa5f7f3b1730d3d7cfd5e64f863463f42">daisy::DaisyPetal</a>
+, <a class="el" href="classdaisy_1_1_daisy_pod.html#ad1f745242c8248f186e6ae0931b3f4fa">daisy::DaisyPod</a>
+, <a class="el" href="classdaisy_1_1_daisy_seed.html#aed16a490a02c3ad2b3d10cb567957e4f">daisy::DaisySeed</a>
+</li>
+<li>StopDma()
+: <a class="el" href="classdaisy_1_1_sai_handle.html#a99de674d71df2db2e2ee445396c1e6cf">daisy::SaiHandle</a>
 </li>
 <li>Stream()
 : <a class="el" href="classdaisy_1_1_wav_player.html#a52be0ed680b908241ffc287f879c6c7a">daisy::WavPlayer</a>

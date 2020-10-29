@@ -1,10 +1,16 @@
 var searchData=
 [
-  ['f2s16',['f2s16',['../group__boards.html#ga35fba5981e8833f5a89ebcfe4bf5c609',1,'daisy.h']]],
-  ['f2s24',['f2s24',['../group__boards.html#gaf05db280491381474925191c391cd94d',1,'daisy.h']]],
+  ['f2s16',['f2s16',['../group__utility.html#ga35fba5981e8833f5a89ebcfe4bf5c609',1,'daisy_core.h']]],
+  ['f2s16_5fscale',['F2S16_SCALE',['../group__utility.html#ga3db781ba7b1bac5465157ba2bd213eaf',1,'daisy_core.h']]],
+  ['f2s24',['f2s24',['../group__utility.html#gaf05db280491381474925191c391cd94d',1,'daisy_core.h']]],
+  ['f2s24_5fscale',['F2S24_SCALE',['../group__utility.html#ga64d55ce1750d294941d921a889f2564f',1,'daisy_core.h']]],
+  ['f2s32',['f2s32',['../group__utility.html#ga8849e4a04b98172adeb6a7a61c1f99e4',1,'daisy_core.h']]],
+  ['f2s32_5fscale',['F2S32_SCALE',['../group__utility.html#ga111dbe1003eea060da6a6423171a65cd',1,'daisy_core.h']]],
   ['fallingedge',['FallingEdge',['../classdaisy_1_1_encoder.html#a303a46a2c9b238e211a5e4ecb0e761f3',1,'daisy::Encoder::FallingEdge()'],['../classdaisy_1_1_switch.html#a5cb85f31d690b394412348d8a656ef44',1,'daisy::Switch::FallingEdge()']]],
   ['fast_5fread_5fcmd',['FAST_READ_CMD',['../group__flash.html#gad86cd5806516fb265953d7131f4d09ad',1,'FAST_READ_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#gad86cd5806516fb265953d7131f4d09ad',1,'FAST_READ_CMD():&#160;flash_IS25LP080D.h']]],
   ['fast_5fread_5fdtr_5fcmd',['FAST_READ_DTR_CMD',['../group__flash.html#ga78e830179f6aee3be8ccc8bd5d2aff67',1,'FAST_READ_DTR_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga78e830179f6aee3be8ccc8bd5d2aff67',1,'FAST_READ_DTR_CMD():&#160;flash_IS25LP080D.h']]],
+  ['fbipmax',['FBIPMAX',['../group__utility.html#ga98b9b5163804dcaf5da13a2907a4c742',1,'daisy_core.h']]],
+  ['fbipmin',['FBIPMIN',['../group__utility.html#gaad07b6c4e51f6dea684e4a0a0fb68594',1,'daisy_core.h']]],
   ['feedback',['FEEDBACK',['../group__feedback.html',1,'']]],
   ['ff_5ffree',['ff_free',['../ffconf_8h.html#ac7b5118894bfc43cc0d19f7290a7be0c',1,'ffconf.h']]],
   ['ff_5fmalloc',['ff_malloc',['../ffconf_8h.html#a1eee011a3d69ab8a3d199b985fe2ad36',1,'ffconf.h']]],
