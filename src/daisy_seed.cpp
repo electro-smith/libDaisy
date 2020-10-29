@@ -113,6 +113,7 @@ void DaisySeed::Init()
     ConfigureAudio();
     dsy_tim_init();
     dsy_tim_start();
+    callback_rate_ = AudioSampleRate() / AudioBlockSize();
     // Due to the added 16kB+ of flash usage,
     // and the fact that certain breakouts use
     // both; USB won't be initialized by the
