@@ -2,6 +2,23 @@
 #include "per/gpio.h"
 #include "util/hal_map.h"
 
+static void start_clock_for_pin(const dsy_gpio *p)
+{
+    switch(p->pin.port)
+    {
+        case DSY_GPIOA: __HAL_RCC_GPIOA_CLK_ENABLE(); break;
+        case DSY_GPIOB: __HAL_RCC_GPIOB_CLK_ENABLE(); break;
+        case DSY_GPIOC: __HAL_RCC_GPIOC_CLK_ENABLE(); break;
+        case DSY_GPIOD: __HAL_RCC_GPIOD_CLK_ENABLE(); break;
+        case DSY_GPIOE: __HAL_RCC_GPIOE_CLK_ENABLE(); break;
+        case DSY_GPIOF: __HAL_RCC_GPIOF_CLK_ENABLE(); break;
+        case DSY_GPIOG: __HAL_RCC_GPIOG_CLK_ENABLE(); break;
+        case DSY_GPIOH: __HAL_RCC_GPIOH_CLK_ENABLE(); break;
+        case DSY_GPIOI: __HAL_RCC_GPIOI_CLK_ENABLE(); break;
+        default: break;
+    }
+}
+
 void dsy_gpio_init(const dsy_gpio *p)
 {
     GPIO_TypeDef *   port;
@@ -24,6 +41,7 @@ void dsy_gpio_init(const dsy_gpio *p)
     ginit.Speed = GPIO_SPEED_LOW;
     port        = dsy_hal_map_get_port(&p->pin);
     ginit.Pin   = dsy_hal_map_get_pin(&p->pin);
+    start_clock_for_pin(p);
     HAL_GPIO_Init(port, &ginit);
 }
 
