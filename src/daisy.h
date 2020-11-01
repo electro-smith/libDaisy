@@ -4,87 +4,40 @@
 #include <stdint.h>
 #include "daisy_core.h"
 
-
-#define FBIPMAX 0.999985f             /**< close to 1.0f-LSB at 16 bit */
-#define FBIPMIN (-FBIPMAX)            /**< - (1 - LSB) */
-#define S162F_SCALE 3.0517578125e-05f /**< 1 / (2** 15) */
-#define F2S16_SCALE 32767.0f          /**< (2 ** 15) - 1 */
-#define F2S24_SCALE 8388608.0f        /**< 2 ** 23 */
-#define S242F_SCALE 1.192092896e-07f  /**< 1 / (2 ** 23) */
-#define S24SIGN 0x800000              /**< 2 ** 23 */
-
 /** @addtogroup boards
     @{
 */
 
-/** 
-    Scales float by 1/(2 ^ 15)
-    \param x Number to be scaled.
-    \return Scaled number.
-*/
-FORCE_INLINE float s162f(int16_t x)
-{
-    return (float)x * S162F_SCALE;
-}
-
-/**
-   &
-*/
-FORCE_INLINE int16_t f2s16(float x)
-{
-    x = x <= FBIPMIN ? FBIPMIN : x;
-    x = x >= FBIPMAX ? FBIPMAX : x;
-    return (int32_t)(x * F2S16_SCALE);
-}
-
-/**
-#
- */
-FORCE_INLINE float s242f(int32_t x)
-{
-    x = (x ^ S24SIGN) - S24SIGN; //sign extend aka ((x<<8)>>8)
-    return (float)x * S242F_SCALE;
-}
-/**
-   &
- */
-FORCE_INLINE int32_t f2s24(float x)
-{
-    x = x <= FBIPMIN ? FBIPMIN : x;
-    x = x >= FBIPMAX ? FBIPMAX : x;
-    return (int32_t)(x * F2S24_SCALE);
-}
-
-
-#include "sys_system.h"
-#include "per_qspi.h"
-#include "per_dac.h"
-#include "per_gpio.h"
-#include "per_sai.h"
-#include "per_tim.h"
-#include "dev_leddriver.h"
-#include "dev_sdram.h"
-#include "dev_sr_4021.h"
-#include "hid_audio.h"
-#include "util_unique_id.h"
+#include "sys/system.h"
+#include "per/qspi.h"
+#include "per/dac.h"
+#include "per/gpio.h"
+#include "per/tim.h"
+#include "dev/leddriver.h"
+#include "dev/sdram.h"
+#include "dev/sr_4021.h"
+#include "hid/audio.h"
+#include "util/unique_id.h"
 #ifdef __cplusplus
-#include "per_i2c.h"
-#include "per_adc.h"
-#include "per_uart.h"
-#include "hid_midi.h"
-#include "hid_encoder.h"
-#include "hid_switch.h"
-#include "hid_ctrl.h"
-#include "hid_gatein.h"
-#include "hid_parameter.h"
-#include "hid_usb.h"
-#include "per_sdmmc.h"
-#include "per_spi.h"
-#include "hid_oled_display.h"
-#include "hid_wavplayer.h"
-#include "hid_led.h"
-#include "hid_rgb_led.h"
-#include "dev_sr_595.h"
+#include "per/i2c.h"
+#include "per/adc.h"
+#include "per/uart.h"
+#include "hid/midi.h"
+#include "hid/encoder.h"
+#include "hid/switch.h"
+#include "hid/ctrl.h"
+#include "hid/gatein.h"
+#include "hid/parameter.h"
+#include "hid/usb.h"
+#include "per/sai.h"
+#include "per/sdmmc.h"
+#include "per/spi.h"
+#include "hid/oled_display.h"
+#include "hid/wavplayer.h"
+#include "hid/led.h"
+#include "hid/rgb_led.h"
+#include "dev/sr_595.h"
+#include "util/scopedirqblocker.h"
 #endif
 #endif
 

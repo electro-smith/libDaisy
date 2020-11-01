@@ -43,20 +43,20 @@ int main(void)
 ```
 
 ## Getting Started
-- Browse the [reference documentation on the web](https://electro-smith.github.io/libDaisy) or in [pdf form](https://github.com/electro-smith/libDaisy/blob/master/doc/libdaisy_reference.pdf)
 - Check out our [Getting Started Wiki Page](https://github.com/electro-smith/DaisyWiki/wiki)
+- Browse the reference documentation [on the web](https://electro-smith.github.io/libDaisy) or in [pdf form](https://github.com/electro-smith/libDaisy/blob/master/doc/libdaisy_reference.pdf)
 - Make some sound!
 
 ## Project Overview
 
 Prefixes and their meanings:
 
-- sys - System level configuration (clocks, dma, etc.)
-- per - Peripheral level, internal to MCU (i2c, spi, etc.)
-- dev - External device support (external flash chips, DACs, codecs, etc.)
-- hid - User level interface elements (encoders, switches, audio, etc.)
-- util - library level elements used within the library (not included via daisy.h)
-- daisy - core API files (specific boards and platforms have extended user APIs that configure libDaisy more below).
+- **sys** - System level configuration (clocks, dma, etc.)
+- **per** - Peripheral level, internal to MCU (i2c, spi, etc.)
+- **dev** - External device support (external flash chips, DACs, codecs, etc.)
+- **hid** - User level interface elements (encoders, switches, audio, etc.)
+- **util** - library level elements used within the library (not included via daisy.h)
+- **daisy** - core API files (specific boards and platforms have extended user APIs that configure libDaisy more below).
 
 Also included is a core/ folder containing:
 
@@ -108,7 +108,7 @@ Here are some ways to get support and connect with other users and developers:
 
 - Make a [GitHub Issue](https://github.com/electro-smith/libdaisy/issues) 
 
-- Join the [Daisy Slack Workspace](https://es-daisy.slack.com/#/) - shoot us an email at hello(at)electro-smith(dot)com to receive an invitation
+- Join the [Daisy Slack Workspace](https://join.slack.com/t/es-daisy/shared_invite/zt-f9cfm1g4-DgdCok1h1Rj4fpX90~IOww)
 
 ## License
 libDaisy is licensed with the permissive MIT open source license. 

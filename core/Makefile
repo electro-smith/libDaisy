@@ -51,10 +51,13 @@ SYSTEM_FILES_DIR ?= \
 CPP_SOURCES ?= 
 
 C_SOURCES += \
-$(SYSTEM_FILES_DIR)/system_stm32h7xx.c
+$(LIBDAISY_DIR)/src/system_stm32h7xx.c \
+$(SYSTEM_FILES_DIR)/startup_stm32h750xx.c
 
-ASM_SOURCES += \
-$(SYSTEM_FILES_DIR)/startup_stm32h750xx.s
+#$(SYSTEM_FILES_DIR)/system_stm32h7xx.c
+
+#ASM_SOURCES += \
+#$(SYSTEM_FILES_DIR)/startup_stm32h750xx.s
 
 #######################################
 # binaries
@@ -105,6 +108,7 @@ C_DEFS +=  \
 -DUSE_HAL_DRIVER \
 -DSTM32H750xx \
 -DUSE_HAL_DRIVER \
+-DHSE_VALUE=16000000 \
 -DSTM32H750xx
 
 
@@ -114,22 +118,23 @@ AS_INCLUDES =
 C_INCLUDES ?= 
 
 C_INCLUDES += \
--I$(SYSTEM_FILES_DIR)/ \
 -I$(LIBDAISY_DIR) \
 -I$(LIBDAISY_DIR)/src/ \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/Include/ \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/Device/ST/STM32H7xx/Include \
 -I$(LIBDAISY_DIR)/Drivers/STM32H7xx_HAL_Driver/Inc/ \
+-I$(SYSTEM_FILES_DIR)/ \
 -I$(DAISYSP_DIR) \
 
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
-CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Wno-missing-attributes -fasm -fdata-sections -ffunction-sections
 
 ifeq ($(DEBUG), 1)
-CFLAGS += -g -gdwarf-2
+#CFLAGS += -g -gdwarf-2
+CFLAGS += -g -ggdb
 endif
 
 # Generate dependency information
@@ -143,7 +148,10 @@ CPPFLAGS += \
 -finline-functions-called-once \
 -fshort-enums \
 -fno-move-loop-invariants \
--fno-unwind-tables \
+-fno-unwind-tables 
+
+C_STANDARD = -std=gnu11
+CPP_STANDARD ?= -std=gnu++14
 
 #######################################
 # LDFLAGS
@@ -155,13 +163,15 @@ LDSCRIPT = $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
 
 LIBS += -ldaisy -lc -lm -lnosys
 LIBDIR = -L$(LIBDAISY_DIR)/build 
+#LIBDIR = -L./VisualGDB/Release
 
 ifdef DAISYSP_DIR
 LIBS += -ldaisysp
 LIBDIR += -L $(DAISYSP_DIR)/build
 endif
 
-LDFLAGS = $(MCU) --specs=nano.specs --specs=nosys.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
+LDFLAGS ?=
+LDFLAGS += $(MCU) --specs=nano.specs --specs=nosys.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
@@ -179,10 +189,10 @@ OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
-	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+	$(CC) -c $(CFLAGS) $(C_STANDARD) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
 
 $(BUILD_DIR)/%.o: %.cpp Makefile | $(BUILD_DIR)
-	$(CXX) -c $(CPPFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.cpp=.lst)) $< -o $@
+	$(CXX) -c $(CPPFLAGS) $(CPP_STANDARD) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.cpp=.lst)) $< -o $@
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
 	$(AS) -c $(CFLAGS) $< -o $@
