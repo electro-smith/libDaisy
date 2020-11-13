@@ -135,6 +135,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a66f20f5f6f2d2b49a80a25678869a47a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93bf9a68619280b2524d8a8894c4dff9"><td class="memItemLeft" align="right" valign="top">Result&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_audio_handle.html#a93bf9a68619280b2524d8a8894c4dff9">SetBlockSize</a> (size_t size)</td></tr>
 <tr class="separator:a93bf9a68619280b2524d8a8894c4dff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af958fe1518bf32d93cfc5278a1736789"><td class="memItemLeft" align="right" valign="top">Result&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_audio_handle.html#af958fe1518bf32d93cfc5278a1736789">SetPostGain</a> (float val)</td></tr>
+<tr class="separator:af958fe1518bf32d93cfc5278a1736789"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a068984ea4ad72f6d0be070fb8ddd346e"><td class="memItemLeft" align="right" valign="top">Result&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_audio_handle.html#a068984ea4ad72f6d0be070fb8ddd346e">Start</a> (<a class="el" href="classdaisy_1_1_audio_handle.html#a9e73ddc0043032aff043b09498e09528">AudioCallback</a> callback)</td></tr>
 <tr class="separator:a068984ea4ad72f6d0be070fb8ddd346e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d2bf9d2dd2256af4d77da403873b9fc"><td class="memItemLeft" align="right" valign="top">Result&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_audio_handle.html#a9d2bf9d2dd2256af4d77da403873b9fc">Start</a> (<a class="el" href="classdaisy_1_1_audio_handle.html#a25cb1ed797b0f5b6d79a26284454bb6f">InterleavingAudioCallback</a> callback)</td></tr>
@@ -332,6 +334,29 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Sets the block size after initialization, and updates the internal configuration struct. Get BlockSize and other details via the GetConfig </p>
+
+</div>
+</div>
+<a class="anchor" id="af958fe1518bf32d93cfc5278a1736789"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Result daisy::AudioHandle::SetPostGain </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Sets the amount of gain adjustment to perform before and after callback. useful if the hardware has additional headroom, and the nominal value shouldn't be 1.0</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">val</td><td>Gain adjustment amount. The hardware will clip at the reciprical of this value. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -18,6 +18,7 @@ var searchData=
   ['setled',['SetLed',['../classdaisy_1_1_daisy_seed.html#ac4501329b4a5a5cfb9e3cd6003fcda6f',1,'daisy::DaisySeed::SetLed()'],['../classdaisy_1_1_led_driver_pca9685.html#a7616848201aea05953403406ee89f272',1,'daisy::LedDriverPca9685::SetLed(int ledIndex, float brightness)'],['../classdaisy_1_1_led_driver_pca9685.html#a0d21f17e93238bbef75ee57ab557e7e9',1,'daisy::LedDriverPca9685::SetLed(int ledIndex, uint8_t brightness)']]],
   ['setledraw',['SetLedRaw',['../classdaisy_1_1_led_driver_pca9685.html#a0a7c0c80d76741fddd835e4d2b138f3a',1,'daisy::LedDriverPca9685']]],
   ['setlooping',['SetLooping',['../classdaisy_1_1_wav_player.html#a29d340360f073bd1767e51a06876eafe',1,'daisy::WavPlayer']]],
+  ['setpostgain',['SetPostGain',['../classdaisy_1_1_audio_handle.html#af958fe1518bf32d93cfc5278a1736789',1,'daisy::AudioHandle']]],
   ['setreceivecallback',['SetReceiveCallback',['../class_usb_handle.html#a52c22cce6616ab3948d7933bfc0e7d0b',1,'UsbHandle::SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev)'],['../class_usb_handle.html#a52c22cce6616ab3948d7933bfc0e7d0b',1,'UsbHandle::SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev)']]],
   ['setringled',['SetRingLed',['../classdaisy_1_1_daisy_petal.html#ad92270ffe128bc678b78be2067d4fcfe',1,'daisy::DaisyPetal']]],
   ['setsamplerate',['SetSampleRate',['../classdaisy_1_1_audio_handle.html#a66f20f5f6f2d2b49a80a25678869a47a',1,'daisy::AudioHandle']]],
