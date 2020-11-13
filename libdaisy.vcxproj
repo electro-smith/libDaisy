@@ -226,6 +226,7 @@
     <ClCompile Include="src\daisy_petal.cpp" />
     <ClCompile Include="src\daisy_pod.cpp" />
     <ClCompile Include="src\daisy_seed.cpp" />
+    <ClCompile Include="src\daisy_versio.cpp" />
     <ClCompile Include="src\dev\codec_ak4556.c" />
     <ClCompile Include="src\dev\sdram.c" />
     <ClCompile Include="src\dev\sr_4021.c" />
@@ -417,6 +418,7 @@
     <ClInclude Include="src\daisy_petal.h" />
     <ClInclude Include="src\daisy_pod.h" />
     <ClInclude Include="src\daisy_seed.h" />
+    <ClInclude Include="src\daisy_versio.h" />
     <ClInclude Include="src\dev\codec_ak4556.h" />
     <ClInclude Include="src\dev\flash_IS25LP064A.h" />
     <ClInclude Include="src\dev\flash_IS25LP080D.h" />
@@ -434,6 +436,7 @@
     <ClInclude Include="src\hid\parameter.h" />
     <ClInclude Include="src\hid\rgb_led.h" />
     <ClInclude Include="src\hid\switch.h" />
+    <ClInclude Include="src\hid\switch3.h" />
     <ClInclude Include="src\hid\usb.h" />
     <ClInclude Include="src\hid\wavplayer.h" />
     <ClInclude Include="src\per\adc.h" />

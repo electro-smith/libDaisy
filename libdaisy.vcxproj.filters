@@ -487,6 +487,9 @@
     <ClCompile Include="src\hid\audio.cpp">
       <Filter>hid</Filter>
     </ClCompile>
+    <ClCompile Include="src\daisy_versio.cpp">
+      <Filter>boards</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h">
@@ -1080,6 +1083,12 @@
       <Filter>boards</Filter>
     </ClInclude>
     <ClInclude Include="src\daisy_seed.h">
+      <Filter>boards</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\switch3.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_versio.h">
       <Filter>boards</Filter>
     </ClInclude>
   </ItemGroup>
