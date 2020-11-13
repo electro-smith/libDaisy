@@ -14,6 +14,7 @@ class AudioHandle
     {
         size_t                        blocksize;
         SaiHandle::Config::SampleRate samplerate;
+        float                         postgain;
     };
 
     enum class Result
@@ -67,6 +68,11 @@ class AudioHandle
      */
     Result SetBlockSize(size_t size);
 
+    /** Sets the amount of gain adjustment to perform before and after callback.
+     ** useful if the hardware has additional headroom, and the nominal value shouldn't be 1.0 
+     ** 
+     ** \param val Gain adjustment amount. The hardware will clip at the reciprical of this value. */
+    Result SetPostGain(float val);
 
     /** Starts the Audio using the non-interleaving callback. */
     Result Start(AudioCallback callback);
@@ -84,6 +90,7 @@ class AudioHandle
 
     /** Immediatley changes the audio callback to the interleaving callback passed in. */
     Result ChangeCallback(InterleavingAudioCallback callback);
+
 
     class Impl;
 
