@@ -256,7 +256,7 @@ void DaisySeed::ConfigureAudio()
 
     // Audio
     AudioHandle::Config audio_config;
-    audio_config.blocksize = 48;
+    audio_config.blocksize  = 48;
     audio_config.samplerate = SaiHandle::Config::SampleRate::SAI_48KHZ;
     audio_config.postgain   = 1.f;
     audio_handle.Init(audio_config, sai_1_handle);
