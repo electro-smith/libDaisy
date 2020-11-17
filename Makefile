@@ -32,6 +32,7 @@ daisy_pod \
 daisy_patch \
 daisy_petal \
 daisy_field \
+daisy_versio \
 dev/sr_595 \
 hid/ctrl \
 hid/encoder \
