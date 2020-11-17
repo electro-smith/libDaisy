@@ -10,7 +10,6 @@ class Switch3
     enum
     {
         POS_CENTER = 0,
-        POS_MIDDLE = 0,
         POS_LEFT   = 1,
         POS_UP     = 1,
         POS_RIGHT  = 2,
@@ -37,10 +36,10 @@ class Switch3
     int Read()
     {
         if(!dsy_gpio_read(&pina_gpio_))
-            return POS_INV;
+            return POS_UP;
         if(!dsy_gpio_read(&pinb_gpio_))
-            return POS_DN;
-        return POS_UP;
+            return POS_DOWN;
+        return POS_CENTER;
     }
 
   private:
