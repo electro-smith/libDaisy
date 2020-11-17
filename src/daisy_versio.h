@@ -104,7 +104,7 @@ class DaisyVersio
     /** Start analog to digital conversion.*/
     void StartAdc() { seed.adc.Start(); }
 
-	/** Stop converting ADCs */
+    /** Stop converting ADCs */
     void StopAdc() { seed.adc.Stop(); }
 
     /** Normalize ADC CV input. Call this once per main loop update to normalize CV input to range (0.0f, 1.0f) */
