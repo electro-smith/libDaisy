@@ -25,6 +25,7 @@
 #include "hid/midi.h"
 #include "hid/encoder.h"
 #include "hid/switch.h"
+#include "hid/switch3.h"
 #include "hid/ctrl.h"
 #include "hid/gatein.h"
 #include "hid/parameter.h"

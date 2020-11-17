@@ -1,6 +1,5 @@
 #pragma once
 #include "daisy_seed.h"
-#include "hid/switch3.h"
 
 namespace daisy
 {
