@@ -5,6 +5,7 @@ var searchData=
   ['daisypetal',['DaisyPetal',['../classdaisy_1_1_daisy_petal.html',1,'daisy']]],
   ['daisypod',['DaisyPod',['../classdaisy_1_1_daisy_pod.html',1,'daisy']]],
   ['daisyseed',['DaisySeed',['../classdaisy_1_1_daisy_seed.html',1,'daisy']]],
+  ['daisyversio',['DaisyVersio',['../classdaisy_1_1_daisy_versio.html',1,'daisy']]],
   ['dsy_5fdac_5fhandle',['dsy_dac_handle',['../structdsy__dac__handle.html',1,'']]],
   ['dsy_5fgpio',['dsy_gpio',['../structdsy__gpio.html',1,'']]],
   ['dsy_5fgpio_5fpin',['dsy_gpio_pin',['../structdsy__gpio__pin.html',1,'']]],

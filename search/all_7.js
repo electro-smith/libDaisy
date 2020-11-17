@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['gate',['Gate',['../classdaisy_1_1_daisy_versio.html#ac23598501407665871cd4819fbdb458a',1,'daisy::DaisyVersio']]],
   ['gate_5fin_5flast',['GATE_IN_LAST',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953ad276bd6100dc0a8ef5c4b9aa307f45cc',1,'daisy::DaisyPatch']]],
   ['gate_5finput',['gate_input',['../classdaisy_1_1_daisy_patch.html#aa2a65b214c0c247dd246428962ccd060',1,'daisy::DaisyPatch']]],
   ['gate_5foutput',['gate_output',['../classdaisy_1_1_daisy_patch.html#a91a7d7e5aae230d58794b63c78f2cfda',1,'daisy::DaisyPatch']]],
@@ -15,7 +16,7 @@ var searchData=
   ['getcurrentfile',['GetCurrentFile',['../classdaisy_1_1_wav_player.html#accca31d678bdaaa21b85a60a85f83b1a',1,'daisy::WavPlayer']]],
   ['getexpression',['GetExpression',['../classdaisy_1_1_daisy_petal.html#a603974a7c50f2761b83b557504f4fe18',1,'daisy::DaisyPetal']]],
   ['getfloat',['GetFloat',['../classdaisy_1_1_adc_handle.html#a6f80347c11028e4978ae97804a3bb1c1',1,'daisy::AdcHandle']]],
-  ['getknobvalue',['GetKnobValue',['../classdaisy_1_1_daisy_petal.html#a1e0156fca684721f0ae445b8e4c2ebd7',1,'daisy::DaisyPetal::GetKnobValue()'],['../classdaisy_1_1_daisy_pod.html#a8c4ae1af60b078bb71e6b86a3cf8cf5a',1,'daisy::DaisyPod::GetKnobValue()']]],
+  ['getknobvalue',['GetKnobValue',['../classdaisy_1_1_daisy_petal.html#a1e0156fca684721f0ae445b8e4c2ebd7',1,'daisy::DaisyPetal::GetKnobValue()'],['../classdaisy_1_1_daisy_pod.html#a8c4ae1af60b078bb71e6b86a3cf8cf5a',1,'daisy::DaisyPod::GetKnobValue()'],['../classdaisy_1_1_daisy_versio.html#a5f662a5029b088ae95df2b65007461d9',1,'daisy::DaisyVersio::GetKnobValue()']]],
   ['getlooping',['GetLooping',['../classdaisy_1_1_wav_player.html#a599fcc5e72d87c9888adacfc81f909e4',1,'daisy::WavPlayer']]],
   ['getmutablebuffer',['GetMutableBuffer',['../classdaisy_1_1_ring_buffer.html#afab0d33be904e8988fd9f9c35181b538',1,'daisy::RingBuffer']]],
   ['getmux',['GetMux',['../classdaisy_1_1_adc_handle.html#ae46d0554b71ac856a567a76a24b1bbaf',1,'daisy::AdcHandle']]],
