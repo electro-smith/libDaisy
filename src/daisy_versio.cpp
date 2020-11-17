@@ -62,26 +62,26 @@ void DaisyVersio::Init()
 
 
     // 3-position switches
-    for(size_t i = 0; i < SW_COUNT; i++)
+    for(size_t i = 0; i < SW_LAST; i++)
     {
         sw_[i].Init(seed.GetPin(toggle_pina[i]), seed.GetPin(toggle_pinb[i]));
     }
 
     // ADC
-    AdcChannelConfig adc_cfg[KNOB_COUNT];
-    for(size_t i = 0; i < KNOB_COUNT; i++)
+    AdcChannelConfig adc_cfg[KNOB_LAST];
+    for(size_t i = 0; i < KNOB_LAST; i++)
     {
         adc_cfg[i].InitSingle(seed.GetPin(adc_pin[i]));
     }
     seed.adc.Init(adc_cfg, 7);
 
-    for(size_t i = 0; i < KNOB_COUNT; i++)
+    for(size_t i = 0; i < KNOB_LAST; i++)
     {
-        knobs_[i].Init(seed.adc.GetPtr(i), blockrate_);
+        knobs_[i].Init(seed.adc.GetPtr(i), blockrate_, true);
     }
 
-    // RGB LEDs 
-    for(size_t i = 0; i < LED_COUNT; i++)
+    // RGB LEDs
+    for(size_t i = 0; i < LED_LAST; i++)
     {
         dsy_gpio_pin r = seed.GetPin(ledr_pin[i]);
         dsy_gpio_pin g = seed.GetPin(ledg_pin[i]);
@@ -107,15 +107,15 @@ void DaisyVersio::DelayMs(size_t del)
 
 void DaisyVersio::UpdateLeds()
 {
-    for(size_t i = 0; i < LED_COUNT; i++)
+    for(size_t i = 0; i < LED_LAST; i++)
     {
         leds[i].Update();
     }
 }
 
-void DaisyVersio::ProcessAdc()
+void DaisyVersio::ProcessAnalogControls()
 {
-    for(size_t i = 0; i < KNOB_COUNT; i++)
+    for(size_t i = 0; i < KNOB_LAST; i++)
     {
         knobs_[i].Process();
     }
@@ -126,11 +126,10 @@ float DaisyVersio::GetKnobValue(int idx)
     return knobs_[idx].Value();
 }
 
-
 void DaisyVersio::UpdateExample()
 {
     tap_.Debounce();
-    for(size_t i = 0; i < LED_COUNT - 1; i++)
+    for(size_t i = 0; i < LED_LAST - 1; i++)
         SetLed(i, 0, 0, 0);
 
     SetLed(

@@ -14,7 +14,6 @@ namespace daisy
 class DaisyVersio
 {
   public:
-    
     // ENUMS to help index 4 LEDs, 7 knobs/CV inputs, 2 3-position switches
     enum AV_LEDS
     {
@@ -22,7 +21,7 @@ class DaisyVersio
         LED_1,
         LED_2,
         LED_3,
-        LED_COUNT
+        LED_LAST
     };
 
     enum AV_KNOBS
@@ -34,22 +33,22 @@ class DaisyVersio
         KNOB_4,
         KNOB_5,
         KNOB_6,
-        KNOB_COUNT
+        KNOB_LAST
     };
 
     enum AV_TOGGLE3
     {
         SW_0,
         SW_1,
-        SW_COUNT
+        SW_LAST
     };
 
     DaisyVersio() {}
     ~DaisyVersio() {}
-    
+
     /**Initializes the Versio, and all of its hardware.*/
     void Init();
-    
+
     /** 
     Wait some ms before going on.
     \param del Delay time in ms.
@@ -65,18 +64,56 @@ class DaisyVersio
     \cb Non-interleaved callback function
     */
     void StartAudio(AudioHandle::AudioCallback cb);
-    
+
+    /**
+       Switch callback functions
+       \param cb New interleaved callback function.
+    */
+    void ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb);
+
+    /**
+       Switch callback functions
+       \param cb New non-interleaved callback function.
+    */
+    void ChangeAudioCallback(AudioHandle::AudioCallback cb);
+
+    /** Stops the audio if it is running. */
+    void StopAudio() { seed.StopAudio(); }
+
+    /** Sets the number of samples processed per channel by the audio callback.
+     */
+    void SetAudioBlockSize(size_t size) { seed.SetAudioBlockSize(size); }
+
+    /** Returns the number of samples per channel in a block of audio. */
+    size_t AudioBlockSize() { return seed.AudioBlockSize(); }
+
+    /** Updates the Audio Sample Rate, and reinitializes.
+     ** Audio must be stopped for this to work.
+     */
+    void SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
+    {
+        seed.SetAudioSampleRate(samplerate);
+    }
+
+    /** Returns the audio sample rate in Hz as a floating point number.
+     */
+    float AudioSampleRate() { return seed.AudioSampleRate(); }
+
+    /** Returns the rate in Hz that the Audio callback is called */
+    float AudioCallbackRate() { return seed.AudioCallbackRate(); }
+
     /** Start analog to digital conversion.*/
     void StartAdc() { seed.adc.Start(); }
 
-    float AudioSampleRate() { return seed.AudioSampleRate(); }
+	/** Stop converting ADCs */
+    void StopAdc() { seed.adc.Stop(); }
 
     /** Normalize ADC CV input. Call this once per main loop update to normalize CV input to range (0.0f, 1.0f) */
-    void ProcessAdc();
-    
+    void ProcessAnalogControls();
+
     /** Returns true if momentary switch is pressed */
     bool SwitchPressed() { return tap_.Pressed(); }
-    
+
     /** Returns true if gate in is HIGH */
     bool Gate() { return !gate_.State(); }
 
@@ -88,7 +125,7 @@ class DaisyVersio
 
     /** Get Knob Value, float from 0.0f to 1.0f */
     float GetKnobValue(int idx);
-    
+
     /** Update LED PWM state. Call this once per main loop update to correctly display led colors */
     void UpdateLeds();
 
@@ -98,16 +135,16 @@ class DaisyVersio
     void UpdateExample();
 
     DaisySeed seed;
-    RgbLed    leds[LED_COUNT];
+    RgbLed    leds[LED_LAST];
 
   private:
     float         samplerate_, blockrate_;
     size_t        blocksize_;
-    AnalogControl knobs_[KNOB_COUNT];
+    AnalogControl knobs_[KNOB_LAST];
     Switch        tap_;
     GateIn        gate_;
 
-    Switch3 sw_[SW_COUNT];
+    Switch3 sw_[SW_LAST];
 };
 
 } // namespace daisy
