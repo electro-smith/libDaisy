@@ -89,7 +89,7 @@ void DaisyPetal::Init()
     InitLeds();
     InitAnalogControls();
     SetAudioBlockSize(48);
-    seed.usb_handle.Init(UsbHandle::FS_BOTH);
+    //seed.usb_handle.Init(UsbHandle::FS_INTERNAL);
 }
 
 void DaisyPetal::DelayMs(size_t del)
