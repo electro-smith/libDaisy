@@ -84,6 +84,19 @@ class I2CHandle
                             uint16_t size,
                             uint32_t timeout);
 
+    /** Receives data and blocks until the reception is complete.
+     *  Use this for smaller transmissions of a few bytes.
+     * 
+     *  \param address      The slave device address.
+     *  \param data         A pointer to the data to be received.
+     *  \param size         The size of the data to be received, in bytes.
+     *  \param timeout      A timeout.
+     */
+    Result ReceiveBlocking(uint16_t address,
+                           uint8_t* data,
+                           uint16_t size,
+                           uint32_t timeout);
+
     /** A callback to be executed when a dma transfer is complete. */
     typedef void (*CallbackFunctionPtr)(void* context, Result result);
 
