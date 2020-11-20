@@ -34,6 +34,7 @@ daisy_petal \
 daisy_field \
 daisy_versio \
 dev/sr_595 \
+dev/codec_pcm3060 \
 hid/ctrl \
 hid/encoder \
 hid/gatein \

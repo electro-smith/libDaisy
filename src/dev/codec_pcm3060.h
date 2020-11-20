@@ -1,20 +1,26 @@
-#ifndef CODEC_PCM3060_H
-#define CODEC_PCM3060_H
-#include "per/i2c.h"
+#pragma once
+#ifndef DSY_CODEC_PCM3060_H
+#define DSY_CODEC_PCM3060_H
 
+namespace daisy
+{
+/**
+ * @brief Driver for the PCM3060 Codec.
+ * @addtogroup codec
+ */
+class Pcm3060
+{
+  public:
+    Pcm3060() {}
+    ~Pcm3060() {}
+    void Init(I2CHandle i2c);
 
-/** 
-    @brief Driver for the PCM3060 Codec.
-*/
+  private:
+    I2CHandle i2c_;
+    uint8_t   dev_addr_;
+    uint8_t   ReadRegister(uint8_t addr);
+    void      WriteRegister(uint8_t addr, uint8_t val);
+};
 
-/** @addtogroup codec
-    @{
-*/
-
-/** 
-    Resets the PCM060
-    \param *hi2c array of pins handling i2c?
-*/
-void codec_pcm3060_init(dsy_i2c_handle *hi2c);
+} // namespace daisy
 #endif
-/** @} */
