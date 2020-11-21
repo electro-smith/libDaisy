@@ -96,7 +96,11 @@ class DaisyPod
     void StopAdc() { seed.adc.Stop(); }
 
     /** Call at same rate as analog reads for smooth reading.*/
-    void UpdateAnalogControls(); /** */
+    void ProcessAnalogControls();
+
+    /** Does what it says */
+    void ProcessAllControls() { ProcessAnalogControls(); }
+
 
     /** & */
     float GetKnobValue(Knob k);

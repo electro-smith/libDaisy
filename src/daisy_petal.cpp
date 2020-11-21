@@ -152,7 +152,7 @@ void DaisyPetal::StartAdc()
     seed.adc.Start();
 }
 
-void DaisyPetal::UpdateAnalogControls()
+void DaisyPetal::ProcessAnalogControls()
 {
     for(size_t i = 0; i < KNOB_LAST; i++)
     {

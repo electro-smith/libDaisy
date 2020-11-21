@@ -148,7 +148,7 @@ class DaisyField
     }
 
     /** Debounces, the tactile switches and keyboard states */
-    void UpdateDigitalControls()
+    void ProcessDigitalControls()
     {
         // Switches
         for(size_t i = 0; i < SW_LAST; i++)
@@ -168,6 +168,12 @@ class DaisyField
         // Gate Input
         gate_in_trig_ = gate_in_.Trig();
     }
+	
+	/** Process Analog and Digital Controls */
+	void ProcessAllControls(){
+		ProcessAnalogControls();
+		ProcessDigitalControls();
+	}
 
     /** Sets the output of CV out 1 to a value between 0-4095 that corresponds to 0-5V */
     inline void SetCvOut1(uint16_t val) { dsy_dac_write(DSY_DAC_CHN1, val); }

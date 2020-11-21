@@ -89,7 +89,10 @@ class DaisyPatch
 
 
     /** Call at same rate as reading controls for good reads. */
-    void UpdateAnalogControls();
+    void ProcessAnalogControls();
+
+    /** Does what it says */
+    void ProcessAllControls() { ProcessAnalogControls(); }
 
     /**
        Get value for a particular control

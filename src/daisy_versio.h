@@ -110,6 +110,10 @@ class DaisyVersio
     /** Normalize ADC CV input. Call this once per main loop update to normalize CV input to range (0.0f, 1.0f) */
     void ProcessAnalogControls();
 
+    /** Does what it says */
+    void ProcessAllControls() { ProcessAnalogControls(); }
+
+
     /** Returns true if momentary switch is pressed */
     bool SwitchPressed() { return tap_.Pressed(); }
 

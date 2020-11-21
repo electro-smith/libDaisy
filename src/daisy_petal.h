@@ -129,7 +129,11 @@ class DaisyPetal
     void StopAdc() { seed.adc.Stop(); }
 
     /** Call at the same frequency as controls are read for stable readings.*/
-    void UpdateAnalogControls();
+    void ProcessAnalogControls();
+
+    /** Does what it says */
+    void ProcessAllControls() { ProcessAnalogControls(); }
+
 
     /** Get value per knob.
     \param k Which knob to get
