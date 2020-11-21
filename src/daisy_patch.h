@@ -91,7 +91,7 @@ class DaisyPatch
        Get value for a particular control
        \param k Which control to get
      */
-    float GetCtrlValue(Ctrl k);
+    float GetKnobValue(Ctrl k);
 
     /** Debounce analog controls. Call at same rate as reading controls.*/
     void DebounceControls();

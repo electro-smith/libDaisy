@@ -109,7 +109,7 @@ void DaisyPatch::UpdateAnalogControls()
         controls[i].Process();
     }
 }
-float DaisyPatch::GetCtrlValue(Ctrl k)
+float DaisyPatch::GetKnobValue(Ctrl k)
 {
     return (controls[k].Value());
 }
