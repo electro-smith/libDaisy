@@ -131,6 +131,9 @@ class DaisyField
 
     /** Starts Transfering data from the ADC */
     void StartAdc() { seed.adc.Start(); }
+	
+	/** Stops Transfering data from the ADC */
+    void StopAdc() { seed.adc.Stop(); }
 
     /** Turns on the built-in 12-bit DAC on the Daisy Seed */
     void StartDac() { dsy_dac_start(DSY_DAC_CHN_BOTH); }

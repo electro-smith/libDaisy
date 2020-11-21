@@ -91,6 +91,9 @@ class DaisyPod
        Start analog to digital conversion.
      */
     void StartAdc();
+	
+	/** Stops Transfering data from the ADC */
+    void StopAdc() { seed.adc.Stop(); }
 
     /** Call at same rate as analog reads for smooth reading.*/
     void UpdateAnalogControls(); /** */

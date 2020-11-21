@@ -124,6 +124,9 @@ class DaisyPetal
 
     /** Start analog to digital conversion. */
     void StartAdc();
+	
+	/** Stops Transfering data from the ADC */
+    void StopAdc() { seed.adc.Stop(); }
 
     /** Call at the same frequency as controls are read for stable readings.*/
     void UpdateAnalogControls();

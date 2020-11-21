@@ -98,10 +98,6 @@ float DaisyPatch::AudioCallbackRate()
     return seed.AudioCallbackRate();
 }
 
-void DaisyPatch::StartAdc()
-{
-    seed.adc.Start();
-}
 void DaisyPatch::UpdateAnalogControls()
 {
     for(size_t i = 0; i < CTRL_LAST; i++)
