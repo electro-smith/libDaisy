@@ -14,7 +14,7 @@ namespace daisy
     All basic peripheral configuration/initialization is setup here.
    @ingroup boards
 */
-class DaisySeed
+class DaisySeed: public Logger
 {
   public:
     DaisySeed() {}
