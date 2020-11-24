@@ -55,7 +55,7 @@ protected:
     static UsbHandle usb_handle_; 
 };
 
-UsbHandle LoggerImpl<LOGGER_INTERNAL>::usb_handle_;
+
 
 
 //  @brief Specialization for external USB port
@@ -80,7 +80,7 @@ protected:
     static UsbHandle usb_handle_; 
 };
 
-UsbHandle LoggerImpl<LOGGER_EXTERNAL>::usb_handle_;
+
 
 
 //  @brief Specialization for semihosting (stdout)

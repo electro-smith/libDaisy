@@ -1,8 +1,7 @@
 #pragma once
-#include <string.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <assert.h>
+#ifndef __DSY_LOGGER_H__
+#define __DSY_LOGGER_H__
+
 #include "logger_impl.h"
 
 namespace daisy
@@ -36,38 +35,11 @@ class Logger
 {
 public:
 
-    Logger()
-    {
-    }
-    static void Print(const char* format, ...)
-    {    
-        va_list va;
-        va_start(va, format);
-        tx_ptr_ += vsnprintf(tx_buff_ + tx_ptr_, sizeof(tx_buff_) - tx_ptr_, format, va);
-        va_end(va);
-
-        TransmitBuf();
-    }
-
-    static void PrintLine(const char* format, ...)
-    {    
-        va_list va;
-        va_start(va, format);
-        tx_ptr_ += vsnprintf(tx_buff_ + tx_ptr_, sizeof(tx_buff_) - tx_ptr_, format, va);
-        va_end(va);
-
-        AppendNewLine();
-
-        TransmitBuf();
-    }
-    
-    static void StartLog(bool wait_for_pc = false)
-    {
-        impl_.Init();
-        // if waiting for PC, use blocking transmission
-        pc_sync_ = wait_for_pc ? LOGGER_SYNC_IN : LOGGER_SYNC_OUT;
-        PrintLine("Daisy is online");
-    }
+    Logger()    
+    {}
+    static void Print(const char* format, ...);         // Print formatted string
+    static void PrintLine(const char* format, ...);     // Print formatted string appending line termination sequence
+    static void StartLog(bool wait_for_pc = false);     // Start the logging session. Block until remote terminal is ready if wait_for_pc is true
 
 protected:
     enum LoggerConsts
@@ -75,36 +47,18 @@ protected:
         LOGGER_SYNC_OUT = 0,
         LOGGER_SYNC_IN  = 2 // successfully transmit this many packets to consider being in sync and switch to blocking transfers
     };
+
+    // blocking wrapper for Transmit
     static void TransmitSync(const void* buffer, size_t bytes)
     {
         while(false == impl_.Transmit(buffer, bytes));
     }
+    
+    // transfer accumulated data
+    static void TransmitBuf();
 
-    static void TransmitBuf()
-    {
-        if (tx_ptr_ >= sizeof(tx_buff_)) // the buffer is full - treat as overflow
-        {
-            // indicate truncated string with an unlikely character sequence "$$"
-            tx_buff_[sizeof(tx_buff_) - 1] = '$';
-            tx_buff_[sizeof(tx_buff_) - 2] = '$';
-            tx_ptr_ = sizeof(tx_buff_);
-        }
-
-        if (pc_sync_ >= LOGGER_SYNC_IN)
-        {
-            TransmitSync(tx_buff_, tx_ptr_);
-            tx_ptr_ = 0;
-        }
-        else
-        {
-            if (true == impl_.Transmit(tx_buff_, tx_ptr_))
-            {
-                pc_sync_++;
-                tx_ptr_ = 0;
-            }
-            // do not reset tx_ptr_ otherwise to accumulate while buffer permits
-        }
-    }
+    // trim control characters and append clean newline sequence, if there's room in the buffer
+    static void AppendNewLine();
 
     // constexpr function equivalent of strlen(LOGGER_NEWLINE)
     static constexpr size_t NewLineSeqLength()
@@ -118,36 +72,14 @@ protected:
         return len;    
     }
 
-    // trim control characters and append clean newline sequence, if there's room in the buffer
-    static void AppendNewLine()
-    {
-        // trim existing control characters
-        while (tx_ptr_ > 0 && (tx_buff_[tx_ptr_-1] == '\n' || tx_buff_[tx_ptr_-1] == '\r'))
-        {
-            tx_ptr_--;
-        }
-        
-        // check if there's enough room for newline sequence
-        constexpr size_t eol = NewLineSeqLength();
-        if (tx_ptr_ + eol < sizeof(tx_buff_))
-        {
-            constexpr const char* nl = LOGGER_NEWLINE;
-            for (size_t i = 0; i < eol; i++)    // this loop will be optimized away by the compiler
-            {
-                tx_buff_[tx_ptr_++] = nl[i];
-            }
-        }
-        else    //trigger overflow indication
-        {
-            tx_ptr_ = sizeof(tx_buff_); 
-        }
-    }
-
+    // member variables
     static char     tx_buff_[LOGGER_BUFFER];
     static size_t   tx_ptr_;
     static size_t   pc_sync_;
     static LoggerImpl<dest> impl_;
 };
+
+// member variable definition (could switch to inline statics in C++17)
 
 template<LoggerDestination dest>
 char Logger<dest>::tx_buff_[LOGGER_BUFFER];   // this needs to remain in SRAM to support startup-time printouts
@@ -160,6 +92,9 @@ size_t Logger<dest>::tx_ptr_ = 0;
 
 template<LoggerDestination dest>
 LoggerImpl<dest> Logger<dest>::impl_;
+
+
+
 
 // Specialization for a muted log
 template <>
@@ -174,3 +109,5 @@ public:
 
 
 }   // namespace daisy
+
+#endif // __DSY_LOGGER_H__

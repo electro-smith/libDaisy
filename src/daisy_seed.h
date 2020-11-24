@@ -11,7 +11,10 @@ namespace daisy
 {
 /**
    @brief This is the higher-level interface for the Daisy board. \n 
-    All basic peripheral configuration/initialization is setup here.
+    All basic peripheral configuration/initialization is setup here. \n
+    Note: changing template parameter to LOGGER_NONE excluds USB support \n
+    and reduces executable size by ~20kB
+
    @ingroup boards
 */
 class DaisySeed: public Logger<LOGGER_INTERNAL>
