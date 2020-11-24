@@ -29,7 +29,7 @@ class Pcm3060
     ~Pcm3060() {}
 
     /** Initializes the PCM3060 in 24-bit MSB aligned I2S mode, and disables powersave 
-	 * \param i2c Initialized I2CHandle configured at 400kHz or less
+     * \param i2c Initialized I2CHandle configured at 400kHz or less
      */
     Result Init(I2CHandle i2c);
 

@@ -48,7 +48,7 @@ Pcm3060::Result Pcm3060::Init(I2CHandle i2c)
 {
     i2c_ = i2c;
 
-	// TODO: bit 1 can be set via hardware and should be configurable.
+    // TODO: bit 1 can be set via hardware and should be configurable.
     dev_addr_ = 0x8c;
 
     // Reset the codec (though by default we may not need to do this)
@@ -91,7 +91,7 @@ Pcm3060::Result Pcm3060::Init(I2CHandle i2c)
     if(WriteRegister(kAddrRegSysCtrl, sysreg) != Result::OK)
         return Result::ERR;
 
-	// Success
+    // Success
     return Result::OK;
 }
 

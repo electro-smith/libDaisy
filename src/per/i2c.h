@@ -169,4 +169,3 @@ extern "C"
 };
 
 } // namespace daisy
-
