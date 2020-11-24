@@ -2,10 +2,8 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include "hid/usb.h"
-#include "usbd_def.h"
-#include "sys/system.h"
 #include <assert.h>
+#include "logger_impl.h"
 
 namespace daisy
 {
@@ -33,14 +31,13 @@ namespace daisy
 //   @brief Interface for simple USB logging
 //   @author Alexander Petrov-Savchenko (axp@soft-amp.com)
 //   @date November 2020
+template <LoggerDestination dest = LOGGER_INTERNAL>
 class Logger
 {
 public:
+
     Logger()
     {
-        // this implementation relies on the fact that UsbHandle class has no member variables and can be shared
-        // assert this statement:
-        static_assert(1u == sizeof(usb_handle_));
     }
     static void Print(const char* format, ...)
     {    
@@ -64,53 +61,48 @@ public:
         TransmitBuf();
     }
     
-    static void StartLog(UsbHandle::UsbPeriph device = UsbHandle::FS_INTERNAL, bool wait_for_pc = false)
+    static void StartLog(bool wait_for_pc = false)
     {
-        usb_handle_.Init(device);
-        init_done_ = true;
+        impl_.Init();
+        // if waiting for PC, use blocking transmission
+        pc_sync_ = wait_for_pc ? LOGGER_SYNC_IN : LOGGER_SYNC_OUT;
         PrintLine("Daisy is online");
-
-        if (wait_for_pc)
-        {
-            while(false == pc_up_)
-            {        
-                dsy_system_delay(1000);
-                usb_handle_.SetReceiveCallback(UsbCallback, device);
-                PrintLine("press any key to start Daisy...");
-            }
-        }
     }
 
 protected:
-    static void UsbCallback(uint8_t* buf, uint32_t* len)
+    enum LoggerConsts
     {
-        if (false == pc_up_)
-        {
-            if (len && *len > 0)
-            {
-                pc_up_ = true;
-            }
-        }
+        LOGGER_SYNC_OUT = 0,
+        LOGGER_SYNC_IN  = 2 // successfully transmit this many packets to consider being in sync and switch to blocking transfers
+    };
+    static void TransmitSync(const void* buffer, size_t bytes)
+    {
+        while(false == impl_.Transmit(buffer, bytes));
     }
 
     static void TransmitBuf()
     {
-        if (init_done_)
+        if (tx_ptr_ >= sizeof(tx_buff_)) // the buffer is full - treat as overflow
         {
-            if (tx_ptr_ >= sizeof(tx_buff_)) // the buffer is full - treat as overflow
-            {
-                // indicate truncated string with an unlikely character sequence "$$"
-                tx_buff_[sizeof(tx_buff_) - 1] = '$';
-                tx_buff_[sizeof(tx_buff_) - 2] = '$';
-                tx_ptr_ = sizeof(tx_buff_);
-            }
+            // indicate truncated string with an unlikely character sequence "$$"
+            tx_buff_[sizeof(tx_buff_) - 1] = '$';
+            tx_buff_[sizeof(tx_buff_) - 2] = '$';
+            tx_ptr_ = sizeof(tx_buff_);
+        }
 
-            uint8_t res;            
-            do
-            {
-                res = usb_handle_.TransmitInternal((uint8_t*)tx_buff_, tx_ptr_);
-            } while(USBD_BUSY == res);
+        if (pc_sync_ >= LOGGER_SYNC_IN)
+        {
+            TransmitSync(tx_buff_, tx_ptr_);
             tx_ptr_ = 0;
+        }
+        else
+        {
+            if (true == impl_.Transmit(tx_buff_, tx_ptr_))
+            {
+                pc_sync_++;
+                tx_ptr_ = 0;
+            }
+            // do not reset tx_ptr_ otherwise to accumulate while buffer permits
         }
     }
 
@@ -151,13 +143,34 @@ protected:
         }
     }
 
-    static char rx_buff_[LOGGER_BUFFER]; // not really used currently, may be shrinked
-    static char tx_buff_[LOGGER_BUFFER];
-    static bool pc_up_; 
-    static bool init_done_;
-    static size_t tx_ptr_;
-
-    static UsbHandle usb_handle_; 
+    static char     tx_buff_[LOGGER_BUFFER];
+    static size_t   tx_ptr_;
+    static size_t   pc_sync_;
+    static LoggerImpl<dest> impl_;
 };
+
+template<LoggerDestination dest>
+char Logger<dest>::tx_buff_[LOGGER_BUFFER];   // this needs to remain in SRAM to support startup-time printouts
+
+template<LoggerDestination dest>
+size_t Logger<dest>::pc_sync_ = LOGGER_SYNC_OUT;    // start with non-blocking transfers to support startup-time printouts
+
+template<LoggerDestination dest>
+size_t Logger<dest>::tx_ptr_ = 0;
+
+template<LoggerDestination dest>
+LoggerImpl<dest> Logger<dest>::impl_;
+
+// Specialization for a muted log
+template <>
+class Logger<LOGGER_NONE>
+{
+public:
+    Logger() {}
+    static void Print(const char* format, ...)      {}
+    static void PrintLine(const char* format, ...)  {}
+    static void StartLog(bool wait_for_pc = false)  {}
+};
+
 
 }   // namespace daisy
