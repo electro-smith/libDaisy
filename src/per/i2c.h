@@ -125,6 +125,37 @@ class I2CHandle
                        CallbackFunctionPtr callback,
                        void*               callback_context);
 
+    /** Reads an amount of data from a specific memory address. 
+    *  
+    * \param address            The slave device address.
+    * \param mem_address        Pointer to data containing the address to read from device.
+    * \param mem_address_size   Size of the memory address in bytes.
+    * \param data               Pointer to buffer that will be filled with contents at mem_address
+    * \param data_size          Size of the data to be read in bytes.
+    */
+    Result ReadDataAtAddress(uint16_t address,
+                             uint16_t mem_address,
+                             uint16_t mem_address_size,
+                             uint8_t* data,
+                             uint16_t data_size,
+                             uint32_t timeout);
+
+    /** Writes an amount of data from a specific memory address. 
+    *  
+    * \param address            The slave device address.
+    * \param mem_address        Pointer to data containing the address to write to device.
+    * \param mem_address_size   Size of the memory address in bytes.
+    * \param data               Pointer to buffer that will be written to the mem_address
+    * \param data_size          Size of the data to be written in bytes.
+    */
+    Result WriteDataAtAddress(uint16_t address,
+                              uint16_t mem_address,
+                              uint16_t mem_address_size,
+                              uint8_t* data,
+                              uint16_t data_size,
+                              uint32_t timeout);
+
+
     class Impl; /**< & */
 
   private:
