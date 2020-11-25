@@ -98,6 +98,18 @@ float DaisyPatch::AudioCallbackRate()
     return seed.AudioCallbackRate();
 }
 
+void DaisyPatch::StartAdc() 
+{ 
+seed.adc.Start(); 
+}
+
+/** Stops Transfering data from the ADC */
+void DaisyPatch::StopAdc() 
+{ 
+seed.adc.Stop(); 
+}
+
+
 void DaisyPatch::ProcessAnalogControls()
 {
     for(size_t i = 0; i < CTRL_LAST; i++)

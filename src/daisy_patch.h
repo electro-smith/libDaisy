@@ -82,10 +82,10 @@ class DaisyPatch
     float AudioCallbackRate();
 
     /** Start analog to digital conversion.*/
-    void StartAdc() { seed.adc.Start(); }
+    void StartAdc();
 	
 	/** Stops Transfering data from the ADC */
-    void StopAdc() { seed.adc.Stop(); }
+    void StopAdc();
 
 
     /** Call at same rate as reading controls for good reads. */
