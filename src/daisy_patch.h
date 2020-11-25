@@ -92,7 +92,7 @@ class DaisyPatch
     void ProcessAnalogControls();
 
     /** Does what it says */
-    void ProcessAllControls() { ProcessAnalogControls(); }
+    inline void ProcessAllControls() { ProcessAnalogControls(); }
 
     /**
        Get value for a particular control

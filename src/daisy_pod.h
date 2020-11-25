@@ -99,7 +99,7 @@ class DaisyPod
     void ProcessAnalogControls();
 
     /** Does what it says */
-    void ProcessAllControls() { ProcessAnalogControls(); }
+    inline void ProcessAllControls() { ProcessAnalogControls(); }
 
 
     /** & */

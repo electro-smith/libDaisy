@@ -132,7 +132,7 @@ class DaisyPetal
     void ProcessAnalogControls();
 
     /** Does what it says */
-    void ProcessAllControls() { ProcessAnalogControls(); }
+    inline void ProcessAllControls() { ProcessAnalogControls(); }
 
 
     /** Get value per knob.

@@ -111,7 +111,7 @@ class DaisyVersio
     void ProcessAnalogControls();
 
     /** Does what it says */
-    void ProcessAllControls() { ProcessAnalogControls(); }
+    inline void ProcessAllControls() { ProcessAnalogControls(); }
 
 
     /** Returns true if momentary switch is pressed */
