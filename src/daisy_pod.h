@@ -93,7 +93,7 @@ class DaisyPod
     void StartAdc();
 	
 	/** Stops Transfering data from the ADC */
-    void StopAdc() { seed.adc.Stop(); }
+    void StopAdc();
 
     /** Call at same rate as analog reads for smooth reading.*/
     void ProcessAnalogControls();

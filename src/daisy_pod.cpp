@@ -145,6 +145,12 @@ void DaisyPod::StartAdc()
     seed.adc.Start();
 }
 
+void DaisyPod::StopAdc() 
+{ 
+seed.adc.Stop(); 
+}
+
+
 void DaisyPod::ProcessAnalogControls()
 {
     knob1.Process();
