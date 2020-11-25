@@ -34,7 +34,6 @@ void DaisyPatch::Init()
 {
     // Configure Seed first
     seed.Configure();
-    block_size_ = 48;
     seed.Init();
     InitAudio();
     InitDisplay();
