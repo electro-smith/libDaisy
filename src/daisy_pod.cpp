@@ -164,7 +164,7 @@ float DaisyPod::GetKnobValue(Knob k)
     return knobs[idx]->Value();
 }
 
-void DaisyPod::DebounceControls()
+void DaisyPod::ProcessDigitalControls()
 {
     encoder.Debounce();
     button1.Debounce();

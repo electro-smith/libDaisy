@@ -98,15 +98,17 @@ class DaisyPod
     /** Call at same rate as analog reads for smooth reading.*/
     void ProcessAnalogControls();
 
-    /** Does what it says */
-    inline void ProcessAllControls() { ProcessAnalogControls(); }
-
+	/** Process Analog and Digital Controls */
+    inline void ProcessAllControls(){
+		ProcessAnalogControls();
+		ProcessDigitalControls();
+	}
 
     /** & */
     float GetKnobValue(Knob k);
 
-    /** & */
-    void DebounceControls();
+    /** Process digital controls */
+    void ProcessDigitalControls();
 
     /** Reset Leds*/
     void ClearLeds();

@@ -91,8 +91,11 @@ class DaisyPatch
     /** Call at same rate as reading controls for good reads. */
     void ProcessAnalogControls();
 
-    /** Does what it says */
-    inline void ProcessAllControls() { ProcessAnalogControls(); }
+	/** Process Analog and Digital Controls */
+    inline void ProcessAllControls(){
+		ProcessAnalogControls();
+		ProcessDigitalControls();
+	}
 
     /**
        Get value for a particular control
@@ -100,8 +103,8 @@ class DaisyPatch
      */
     float GetKnobValue(Ctrl k);
 
-    /** Debounce analog controls. Call at same rate as reading controls.*/
-    void DebounceControls();
+    /**  Process the digital controls */
+    void ProcessDigitalControls();
 
     /**  Control the display */
     void DisplayControls(bool invert = true);

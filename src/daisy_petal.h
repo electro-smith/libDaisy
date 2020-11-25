@@ -131,8 +131,11 @@ class DaisyPetal
     /** Call at the same frequency as controls are read for stable readings.*/
     void ProcessAnalogControls();
 
-    /** Does what it says */
-    inline void ProcessAllControls() { ProcessAnalogControls(); }
+	/** Process Analog and Digital Controls */
+    inline void ProcessAllControls(){
+		ProcessAnalogControls();
+		ProcessDigitalControls();
+	}
 
 
     /** Get value per knob.
@@ -144,8 +147,8 @@ class DaisyPetal
     /** & */
     float GetExpression();
 
-    /** Debounce inputs.*/
-    void DebounceControls();
+    /** Process digital controls */
+    void ProcessDigitalControls();
 
     /** Turn all leds off */
     void ClearLeds();

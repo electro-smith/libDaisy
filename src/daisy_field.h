@@ -147,7 +147,7 @@ class DaisyField
     /** Processes the ADC inputs, updating their values */
     void ProcessAnalogControls();
 
-    /** Debounces, the tactile switches and keyboard states */
+    /** Process tactile switches and keyboard states */
     void ProcessDigitalControls();
 	
 	/** Process Analog and Digital Controls */

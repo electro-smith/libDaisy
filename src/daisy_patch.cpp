@@ -121,7 +121,7 @@ float DaisyPatch::GetKnobValue(Ctrl k)
     return (controls[k].Value());
 }
 
-void DaisyPatch::DebounceControls()
+void DaisyPatch::ProcessDigitalControls()
 {
     encoder.Debounce();
 }

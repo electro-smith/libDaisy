@@ -179,7 +179,7 @@ float DaisyPetal::GetExpression()
     return expression.Value();
 }
 
-void DaisyPetal::DebounceControls()
+void DaisyPetal::ProcessDigitalControls()
 {
     encoder.Debounce();
     for(size_t i = 0; i < SW_LAST; i++)
