@@ -55,7 +55,7 @@ void DaisyPatch::Init()
 
 void DaisyPatch::DelayMs(size_t del)
 {
-    dsy_system_delay(del);
+    seed.DelayMs(del);
 }
 
 void DaisyPatch::StartAudio(AudioHandle::AudioCallback cb)

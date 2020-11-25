@@ -87,7 +87,7 @@ void DaisyPod::Init()
 
 void DaisyPod::DelayMs(size_t del)
 {
-    dsy_tim_delay_ms(del);
+    seed.DelayMs(del);
 }
 
 void DaisyPod::StartAudio(AudioHandle::InterleavingAudioCallback cb)

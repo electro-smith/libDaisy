@@ -151,6 +151,11 @@ void DaisyField::Init()
     dsy_tim_start();
 }
 
+void DaisyField::DelayMs(size_t del)
+{
+    seed.DelayMs(del);
+}
+
 void DaisyField::StartAudio(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.StartAudio(cb);

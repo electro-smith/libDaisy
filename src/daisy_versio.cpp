@@ -102,7 +102,7 @@ void DaisyVersio::StartAudio(AudioHandle::AudioCallback cb)
 
 void DaisyVersio::DelayMs(size_t del)
 {
-    dsy_system_delay(del);
+    seed.DelayMs(del);
 }
 
 void DaisyVersio::UpdateLeds()

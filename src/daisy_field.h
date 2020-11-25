@@ -85,6 +85,12 @@ class DaisyField
     /**Initializes the Daisy Field, and all of its hardware.*/
     void Init();
 
+    /** 
+    Wait some ms before going on.
+    \param del Delay time in ms.
+    */
+    void DelayMs(size_t del);
+
     /** Starts the callback
     \cb Interleaved callback function
     */

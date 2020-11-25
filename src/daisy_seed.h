@@ -43,6 +43,12 @@ class DaisySeed
     for a specific application.
     */
     void Init();
+	
+	/** 
+    Wait some ms before going on.
+    \param del Delay time in ms.
+    */
+    void DelayMs(size_t del);
 
     /** 
     Returns the gpio_pin corresponding to the index 0-31.

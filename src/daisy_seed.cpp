@@ -132,6 +132,11 @@ dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
     return p;
 }
 
+void DaisySeed::DelayMs(size_t del)
+{
+    dsy_system_delay(del);
+}
+
 void DaisySeed::StartAudio(AudioHandle::InterleavingAudioCallback cb)
 {
     audio_handle.Start(cb);

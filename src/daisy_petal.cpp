@@ -94,7 +94,7 @@ void DaisyPetal::Init()
 
 void DaisyPetal::DelayMs(size_t del)
 {
-    dsy_tim_delay_ms(del);
+	seed.DelayMs(del);
 }
 
 void DaisyPetal::StartAudio(AudioHandle::InterleavingAudioCallback cb)
