@@ -115,6 +115,8 @@ class DaisySeed
     AdcHandle        adc;          /**< & */
     dsy_dac_handle   dac_handle;   /**< & */
     UsbHandle        usb_handle;   /**< & */
+    dsy_gpio led, testpoint;
+
 
   private:
     void ConfigureSdram();
@@ -123,7 +125,6 @@ class DaisySeed
     void ConfigureAdc();
     void ConfigureDac();
     //void     ConfigureI2c();
-    dsy_gpio led_, testpoint_;
     float    callback_rate_;
 };
 
