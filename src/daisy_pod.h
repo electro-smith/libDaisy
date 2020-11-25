@@ -131,8 +131,6 @@ class DaisyPod
     void   InitEncoder();
     void   InitLeds();
     void   InitKnobs();
-    float  sample_rate_;
-    size_t block_size_;
 };
 
 } // namespace daisy

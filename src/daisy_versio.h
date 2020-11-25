@@ -132,14 +132,10 @@ class DaisyVersio
 
     DaisySeed seed;
     RgbLed    leds[LED_LAST];
-    AnalogControl knobs_[KNOB_LAST];
-    Switch        tap_;
-    GateIn        gate_;
-    Switch3 sw_[SW_LAST];
-
-	private:
-    float         samplerate_, blockrate_;
-    size_t        blocksize_;
+    AnalogControl knobs[KNOB_LAST];
+    Switch        tap;
+    GateIn        gate;
+    Switch3 sw[SW_LAST];
 };
 
 } // namespace daisy
