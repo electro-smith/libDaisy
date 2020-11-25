@@ -209,31 +209,31 @@ float DaisyField::AudioCallbackRate()
 
 void DaisyField::StartAdc() 
 { 
-	seed.adc.Start(); 
+    seed.adc.Start(); 
 }
-	
+    
 void DaisyField::StopAdc() 
 { 
-	seed.adc.Stop(); 
+    seed.adc.Stop(); 
 }
 
 /** Turns on the built-in 12-bit DAC on the Daisy Seed */
 void DaisyField::StartDac() 
 { 
-	dsy_dac_start(DSY_DAC_CHN_BOTH); 
+    dsy_dac_start(DSY_DAC_CHN_BOTH); 
 }
 
 void DaisyField::ProcessAnalogControls()
 {
-	for(size_t i = 0; i < KNOB_LAST; i++)
-	    knob[i].Process();
+    for(size_t i = 0; i < KNOB_LAST; i++)
+        knob[i].Process();
     for(size_t i = 0; i < CV_LAST; i++)
         cv[i].Process();
 }
 
 void DaisyField::ProcessDigitalControls()
 {
-	// Switches
+    // Switches
     for(size_t i = 0; i < SW_LAST; i++)
         {
             sw[i].Debounce();
@@ -254,52 +254,52 @@ void DaisyField::ProcessDigitalControls()
 
  void DaisyField::SetCvOut1(uint16_t val) 
  { 
-	dsy_dac_write(DSY_DAC_CHN1, val); 
+    dsy_dac_write(DSY_DAC_CHN1, val); 
  }
 
  void DaisyField::SetCvOut2(uint16_t val) 
  { 
-	dsy_dac_write(DSY_DAC_CHN2, val); 
+    dsy_dac_write(DSY_DAC_CHN2, val); 
  }
 
  bool DaisyField::KeyboardState(size_t idx) const
 {
-	return keyboard_state_[idx] == 0x00;
+    return keyboard_state_[idx] == 0x00;
 }
 
  bool DaisyField::KeyboardRisingEdge(size_t idx) const
 {
-	return keyboard_state_[idx] == 0x80;
+    return keyboard_state_[idx] == 0x80;
 }
 
  bool DaisyField::KeyboardFallingEdge(size_t idx) const
 {
-	return keyboard_state_[idx] == 0x7F;
+    return keyboard_state_[idx] == 0x7F;
 }
 
  float DaisyField::GetKnobValue(size_t idx) const
 {
-	return knob[idx < KNOB_LAST ? idx : 0].Value();
+    return knob[idx < KNOB_LAST ? idx : 0].Value();
 }
 
  float DaisyField::GetCvValue(size_t idx) const
 {
-	return cv[idx < CV_LAST ? idx : 0].Value();
+    return cv[idx < CV_LAST ? idx : 0].Value();
 }
 
  Switch* DaisyField::GetSwitch(size_t idx)
 {
-	return &sw[idx < SW_LAST ? idx : 0];
+    return &sw[idx < SW_LAST ? idx : 0];
 }
 
  AnalogControl* DaisyField::GetKnob(size_t idx)
 {
-	return &knob[idx < KNOB_LAST ? idx : 0];
+    return &knob[idx < KNOB_LAST ? idx : 0];
 }
 
  AnalogControl* DaisyField::GetCv(size_t idx)
 {
-	return &cv[idx < CV_LAST ? idx : 0];
+    return &cv[idx < CV_LAST ? idx : 0];
 }
 
 

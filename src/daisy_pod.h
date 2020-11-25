@@ -91,18 +91,18 @@ class DaisyPod
        Start analog to digital conversion.
      */
     void StartAdc();
-	
-	/** Stops Transfering data from the ADC */
+    
+    /** Stops Transfering data from the ADC */
     void StopAdc();
 
     /** Call at same rate as analog reads for smooth reading.*/
     void ProcessAnalogControls();
 
-	/** Process Analog and Digital Controls */
+    /** Process Analog and Digital Controls */
     inline void ProcessAllControls(){
-		ProcessAnalogControls();
-		ProcessDigitalControls();
-	}
+        ProcessAnalogControls();
+        ProcessDigitalControls();
+    }
 
     /** & */
     float GetKnobValue(Knob k);

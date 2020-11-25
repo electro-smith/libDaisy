@@ -124,18 +124,18 @@ class DaisyPetal
 
     /** Start analog to digital conversion. */
     void StartAdc();
-	
-	/** Stops Transfering data from the ADC */
+    
+    /** Stops Transfering data from the ADC */
     void StopAdc();
 
     /** Call at the same frequency as controls are read for stable readings.*/
     void ProcessAnalogControls();
 
-	/** Process Analog and Digital Controls */
+    /** Process Analog and Digital Controls */
     inline void ProcessAllControls(){
-		ProcessAnalogControls();
-		ProcessDigitalControls();
-	}
+        ProcessAnalogControls();
+        ProcessDigitalControls();
+    }
 
 
     /** Get value per knob.

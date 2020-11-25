@@ -83,19 +83,19 @@ class DaisyPatch
 
     /** Start analog to digital conversion.*/
     void StartAdc();
-	
-	/** Stops Transfering data from the ADC */
+    
+    /** Stops Transfering data from the ADC */
     void StopAdc();
 
 
     /** Call at same rate as reading controls for good reads. */
     void ProcessAnalogControls();
 
-	/** Process Analog and Digital Controls */
+    /** Process Analog and Digital Controls */
     inline void ProcessAllControls(){
-		ProcessAnalogControls();
-		ProcessDigitalControls();
-	}
+        ProcessAnalogControls();
+        ProcessDigitalControls();
+    }
 
     /**
        Get value for a particular control

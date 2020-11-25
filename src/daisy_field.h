@@ -137,8 +137,8 @@ class DaisyField
 
     /** Starts Transfering data from the ADC */
     void StartAdc();
-	
-	/** Stops Transfering data from the ADC */
+    
+    /** Stops Transfering data from the ADC */
     void StopAdc();
 
     /** Turns on the built-in 12-bit DAC on the Daisy Seed */
@@ -149,12 +149,12 @@ class DaisyField
 
     /** Process tactile switches and keyboard states */
     void ProcessDigitalControls();
-	
-	/** Process Analog and Digital Controls */
+    
+    /** Process Analog and Digital Controls */
     inline void ProcessAllControls(){
-		ProcessAnalogControls();
-		ProcessDigitalControls();
-	}
+        ProcessAnalogControls();
+        ProcessDigitalControls();
+    }
 
     /** Sets the output of CV out 1 to a value between 0-4095 that corresponds to 0-5V */
     void SetCvOut1(uint16_t val);
@@ -162,46 +162,46 @@ class DaisyField
     /** Sets the output of CV out 2 to a value between 0-4095 that corresponds to 0-5V */
     void SetCvOut2(uint16_t val);
 
-	/** Returns true if the key has not been pressed recently
-		\param idx the key of interest
-	*/
+    /** Returns true if the key has not been pressed recently
+        \param idx the key of interest
+    */
     bool KeyboardState(size_t idx) const;
 
-	/** Returns true if the key has just been pressed
-		\param idx the key of interest
-	*/
+    /** Returns true if the key has just been pressed
+        \param idx the key of interest
+    */
     bool KeyboardRisingEdge(size_t idx) const; 
 
-	/** Returns true if the key has just been released
-		\param idx the key of interest
-	*/
+    /** Returns true if the key has just been released
+        \param idx the key of interest
+    */
     bool KeyboardFallingEdge(size_t idx) const;
 
-	/** Returns the knob's value
-		\param idx The knob of interest.
-	*/
+    /** Returns the knob's value
+        \param idx The knob of interest.
+    */
     float GetKnobValue(size_t idx) const;
-	 
-	/** Returns the CV input's value
-		\param idx The CV input of interest.
-	*/
+     
+    /** Returns the CV input's value
+        \param idx The CV input of interest.
+    */
     float GetCvValue(size_t idx) const;
-	 
-	/** Getter for switch objects
-		\param idx The switch of interest.
-	*/
+     
+    /** Getter for switch objects
+        \param idx The switch of interest.
+    */
     Switch* GetSwitch(size_t idx);
-	 
-	/** Getter for knob objects
-		\param idx The knob input of interest.
-	*/
+     
+    /** Getter for knob objects
+        \param idx The knob input of interest.
+    */
     AnalogControl* GetKnob(size_t idx);
-	 
-	/** Getter for CV objects.
-		\param idx The CV input of interest.
-	*/
+     
+    /** Getter for CV objects.
+        \param idx The CV input of interest.
+    */
     AnalogControl* GetCv(size_t idx);
-	 
+     
     /**Light show, cycling through all LEDs, and OLED
      **/
     void VegasMode();
@@ -214,7 +214,7 @@ class DaisyField
     Switch                    sw[SW_LAST];
     AnalogControl             knob[KNOB_LAST];
     AnalogControl             cv[CV_LAST];
-	
+    
   private:
     dsy_sr_4021_handle keyboard_sr_;
     uint8_t            keyboard_state_[16];

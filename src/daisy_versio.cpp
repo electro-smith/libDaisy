@@ -37,7 +37,7 @@ void DaisyVersio::Init()
     seed.Configure();
     seed.Init();
     seed.SetAudioBlockSize(48);
-	float blockrate_ = seed.AudioSampleRate() / (float)seed.AudioBlockSize();
+    float blockrate_ = seed.AudioSampleRate() / (float)seed.AudioBlockSize();
 
     // pin numbers
     uint8_t toggle_pina[] = {PIN_TOGGLE3_0A, PIN_TOGGLE3_1A};
@@ -108,42 +108,42 @@ void DaisyVersio::ChangeAudioCallback(AudioHandle::AudioCallback cb){
 
 void DaisyVersio::StopAudio() 
 { 
-	seed.StopAudio(); 
+    seed.StopAudio(); 
 }
 
 void DaisyVersio::SetAudioBlockSize(size_t size) 
 { 
-	seed.SetAudioBlockSize(size); 
+    seed.SetAudioBlockSize(size); 
 }
 
 size_t DaisyVersio::AudioBlockSize() 
 { 
-	return seed.AudioBlockSize(); 
+    return seed.AudioBlockSize(); 
 }
 
 void DaisyVersio::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
 {
-	seed.SetAudioSampleRate(samplerate);
+    seed.SetAudioSampleRate(samplerate);
 }
 
 float DaisyVersio::AudioSampleRate() 
 { 
-	return seed.AudioSampleRate(); 
+    return seed.AudioSampleRate(); 
 }
 
 float DaisyVersio::AudioCallbackRate() 
 { 
-	return seed.AudioCallbackRate(); 
+    return seed.AudioCallbackRate(); 
 }
 
 void DaisyVersio::StartAdc() 
 { 
-	seed.adc.Start(); 
+    seed.adc.Start(); 
 }
 
 void DaisyVersio::StopAdc() 
 { 
-	seed.adc.Stop(); 
+    seed.adc.Stop(); 
 }
 
 void DaisyVersio::ProcessAnalogControls()
@@ -156,17 +156,17 @@ void DaisyVersio::ProcessAnalogControls()
 
 bool DaisyVersio::SwitchPressed() 
 { 
-	return tap.Pressed(); 
+    return tap.Pressed(); 
 }
 
 bool DaisyVersio::Gate() 
 { 
-	return !gate.State(); 
+    return !gate.State(); 
 }
 
 void DaisyVersio::SetLed(size_t idx, float red, float green, float blue)
 {
-	leds[idx].Set(red, green, blue);
+    leds[idx].Set(red, green, blue);
 }
 
 void DaisyVersio::DelayMs(size_t del)

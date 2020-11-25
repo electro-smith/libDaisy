@@ -43,8 +43,8 @@ class DaisySeed
     for a specific application.
     */
     void Init();
-	
-	/** 
+    
+    /** 
     Wait some ms before going on.
     \param del Delay time in ms.
     */
