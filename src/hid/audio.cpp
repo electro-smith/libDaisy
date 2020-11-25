@@ -18,9 +18,9 @@ static const size_t kAudioMaxChannels   = 4;
 // 1k samples in, 1k samples out, 4 bytes per sample.
 // One buffer per 2 channels (Interleaved on hardware)
 static int32_t DMA_BUFFER_MEM_SECTION
-               dsy_audio_rx_buffer[kAudioMaxChannels / 2][kAudioMaxBufferSize];
+    dsy_audio_rx_buffer[kAudioMaxChannels / 2][kAudioMaxBufferSize];
 static int32_t DMA_BUFFER_MEM_SECTION
-               dsy_audio_tx_buffer[kAudioMaxChannels / 2][kAudioMaxBufferSize];
+    dsy_audio_tx_buffer[kAudioMaxChannels / 2][kAudioMaxBufferSize];
 
 // ================================================================
 // Private Implementation Definition
@@ -31,7 +31,7 @@ class AudioHandle::Impl
     // Interface
     AudioHandle::Result Init(const AudioHandle::Config config, SaiHandle sai);
     AudioHandle::Result
-                        Init(const AudioHandle::Config config, SaiHandle sai1, SaiHandle sai2);
+    Init(const AudioHandle::Config config, SaiHandle sai1, SaiHandle sai2);
     AudioHandle::Result Start(AudioHandle::AudioCallback callback);
     AudioHandle::Result Start(AudioHandle::InterleavingAudioCallback callback);
     AudioHandle::Result Stop();

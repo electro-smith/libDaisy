@@ -112,7 +112,7 @@ static const uint32_t dsy_adc_rank_map[] = {
 // Globals
 // DMA Buffers
 static uint16_t DMA_BUFFER_MEM_SECTION
-                adc1_mux_cache[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
+    adc1_mux_cache[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
 
 /** Buffer for ADC Input channels
  ** It is 2x the number of channels for double-buffered support
@@ -120,7 +120,7 @@ static uint16_t DMA_BUFFER_MEM_SECTION
  ** Also used to provide buffer for trash data during mux pin changes.
  ***/
 static uint16_t DMA_BUFFER_MEM_SECTION
-                adc1_dma_buffer[DSY_ADC_MAX_CHANNELS * 2];
+    adc1_dma_buffer[DSY_ADC_MAX_CHANNELS * 2];
 
 // Global ADC Struct
 struct dsy_adc
@@ -152,7 +152,7 @@ static int get_num_mux_pins_required(int num_mux_ch)
         return 0;
 }
 static void
-                      write_mux_value(uint8_t chn, uint8_t idx, uint8_t num_mux_pins_to_write);
+write_mux_value(uint8_t chn, uint8_t idx, uint8_t num_mux_pins_to_write);
 static const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin);
 
 static const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin)

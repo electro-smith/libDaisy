@@ -8,7 +8,7 @@ extern "C"
 #include <stdint.h>
 #include "daisy_core.h" // Added for dsy_gpio_pin typedef
 
-#define DSY_MEMORY_OK ((uint32_t)0x00)    /**< & */
+#define DSY_MEMORY_OK ((uint32_t)0x00) /**< & */
 #define DSY_MEMORY_ERROR ((uint32_t)0x01) /**< & */
 
 #define DSY_QSPI_TEXT       \

@@ -15,7 +15,7 @@ using namespace daisy;
 #define UART_RX_BUFF_SIZE 256
 
 typedef RingBuffer<uint8_t, UART_RX_BUFF_SIZE> UartRingBuffer;
-static UartRingBuffer DMA_BUFFER_MEM_SECTION uart_dma_fifo;
+static UartRingBuffer DMA_BUFFER_MEM_SECTION   uart_dma_fifo;
 
 static void Error_Handler()
 {

@@ -39,15 +39,15 @@ typedef struct
 
 } DSY_SD_CardInfoTypeDef;
 
-#define BSP_SD_CardInfo DSY_SD_CardInfoTypeDef   /**< & */
-#define MSD_OK ((uint8_t)0x00)                   /**< & */
-#define MSD_ERROR ((uint8_t)0x01)                /**< & */
+#define BSP_SD_CardInfo DSY_SD_CardInfoTypeDef /**< & */
+#define MSD_OK ((uint8_t)0x00) /**< & */
+#define MSD_ERROR ((uint8_t)0x01) /**< & */
 #define MSD_ERROR_SD_NOT_PRESENT ((uint8_t)0x02) /**< & */
-#define SD_TRANSFER_OK ((uint8_t)0x00)           /**< & */
-#define SD_TRANSFER_BUSY ((uint8_t)0x01)         /**< & */
-#define SD_PRESENT ((uint8_t)0x01)               /**< & */
-#define SD_NOT_PRESENT ((uint8_t)0x00)           /**< & */
-#define SD_DATATIMEOUT ((uint32_t)100000000)     /**< & */
+#define SD_TRANSFER_OK ((uint8_t)0x00) /**< & */
+#define SD_TRANSFER_BUSY ((uint8_t)0x01) /**< & */
+#define SD_PRESENT ((uint8_t)0x01) /**< & */
+#define SD_NOT_PRESENT ((uint8_t)0x00) /**< & */
+#define SD_DATATIMEOUT ((uint32_t)100000000) /**< & */
 
 // Functions internal for diskIO
 uint8_t BSP_SD_Init(void);     /**< \return card state, ERROR, etc.*/
