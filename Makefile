@@ -277,7 +277,7 @@ C_INCLUDES = \
 -I$(MODULE_DIR) \
 -I. 
 
-WARNINGS = -Wall -Wno-attributes -Wno-strict-aliasing -Wno-maybe-uninitialized #-Werror
+WARNINGS = -Wall -Wno-attributes -Wno-strict-aliasing -Wno-maybe-uninitialized -Wno-missing-attributes #-Werror
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_INCLUDES) $(AS_DEFS) -ggdb $(WARNINGS) $(OPT) -fdata-sections -ffunction-sections
