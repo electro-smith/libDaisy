@@ -152,6 +152,12 @@ void DaisyPetal::StartAdc()
     seed.adc.Start();
 }
 
+void DaisyPetal::StopAdc()  
+{ 
+seed.adc.Stop(); 
+}
+
+
 void DaisyPetal::ProcessAnalogControls()
 {
     for(size_t i = 0; i < KNOB_LAST; i++)

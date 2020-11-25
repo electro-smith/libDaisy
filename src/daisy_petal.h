@@ -126,7 +126,7 @@ class DaisyPetal
     void StartAdc();
 	
 	/** Stops Transfering data from the ADC */
-    void StopAdc() { seed.adc.Stop(); }
+    void StopAdc();
 
     /** Call at the same frequency as controls are read for stable readings.*/
     void ProcessAnalogControls();
