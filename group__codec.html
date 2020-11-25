@@ -102,8 +102,6 @@ Typedefs</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:ga6513036583fbd06c8a4af04c467e3af8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__codec.html#ga6513036583fbd06c8a4af04c467e3af8">codec_ak4556_init</a> (<a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> reset_pin)</td></tr>
 <tr class="separator:ga6513036583fbd06c8a4af04c467e3af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8423e8355c1c36d550ac940cd03c3d6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__codec.html#ga8423e8355c1c36d550ac940cd03c3d6e">codec_pcm3060_init</a> (dsy_i2c_handle *hi2c)</td></tr>
-<tr class="separator:ga8423e8355c1c36d550ac940cd03c3d6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaed42c2cc2914d7fe441e6718bb589743"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__codec.html#gaed42c2cc2914d7fe441e6718bb589743">codec_wm8731_init</a> (dsy_i2c_handle *hi2c, uint8_t mcu_is_master, int32_t sample_rate, uint8_t bitdepth)</td></tr>
 <tr class="separator:gaed42c2cc2914d7fe441e6718bb589743"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad7b5b5b7621de4fd1cff9a61365e03a7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__codec.html#gad7b5b5b7621de4fd1cff9a61365e03a7">codec_wm8731_enter_bypass</a> (dsy_i2c_handle *hi2c)</td></tr>
@@ -115,8 +113,10 @@ Functions</h2></td></tr>
 <p>Audio codecs. </p>
 <p>WM8731 Codec framework.</p>
 <p>Driver for the WM8731 Codec.</p>
-<p>Driver for the PCM3060 Codec.</p>
+<p>Driver for the TI PCM3060 Audio Codec.</p>
+<p>For now this is a limited interface that uses I2C to communicate with the PCM3060 The device can also be accessed with SPI, which is not yet supported.</p>
 <p>Driver for the AK4556 Stereo Codec.</p>
+<p>For now all registers are set to their defaults, and the Init function will perform a MRST and SRST before setting the format to 24bit LJ, and disabling power save for both the ADC and DAC. </p>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a class="anchor" id="ga1c515a2c7b8cccaff957aabcd1ea1467"></a>
 <div class="memitem">
@@ -148,28 +148,6 @@ Functions</h2></td></tr>
 <p>Resets the AK4556 </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">reset_pin</td><td>should be a <a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> that is connected to the RST pin of the AK4556 </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga8423e8355c1c36d550ac940cd03c3d6e"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void codec_pcm3060_init </td>
-          <td>(</td>
-          <td class="paramtype">dsy_i2c_handle *&#160;</td>
-          <td class="paramname"><em>hi2c</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Resets the PCM060 </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">*hi2c</td><td>array of pins handling i2c? </td></tr>
   </table>
   </dd>
 </dl>

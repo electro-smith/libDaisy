@@ -1,9 +1,10 @@
 var searchData=
 [
   ['page_5fprog_5fcmd',['PAGE_PROG_CMD',['../group__flash.html#ga69adbf63db6a1f1a286e4f77b95f7c25',1,'PAGE_PROG_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga69adbf63db6a1f1a286e4f77b95f7c25',1,'PAGE_PROG_CMD():&#160;flash_IS25LP080D.h'],['../group__flash.html#ga69adbf63db6a1f1a286e4f77b95f7c25',1,'PAGE_PROG_CMD():&#160;flash_IS25LP080D.h']]],
-  ['parameter',['Parameter',['../classdaisy_1_1_parameter.html#ac53e51f76edd3958bc201a8eda419afb',1,'daisy::Parameter']]],
   ['parameter',['Parameter',['../classdaisy_1_1_parameter.html',1,'daisy']]],
+  ['parameter',['Parameter',['../classdaisy_1_1_parameter.html#ac53e51f76edd3958bc201a8eda419afb',1,'daisy::Parameter']]],
   ['parse',['Parse',['../classdaisy_1_1_midi_handler.html#a6ad7f3e96e321775266f4e58d356c2a9',1,'daisy::MidiHandler']]],
+  ['pcm3060',['Pcm3060',['../classdaisy_1_1_pcm3060.html',1,'daisy']]],
   ['periph',['periph',['../structdaisy_1_1_i2_c_handle_1_1_config.html#aa56d0330fdf37d13b2fea52f02c8f616',1,'daisy::I2CHandle::Config']]],
   ['peripheral',['Peripheral',['../structdaisy_1_1_i2_c_handle_1_1_config.html#ad59ff761df0f73062c2e5602fb67e9d3',1,'daisy::I2CHandle::Config::Peripheral()'],['../structdaisy_1_1_sai_handle_1_1_config.html#a68789209ff997e6ca653db010594959b',1,'daisy::SaiHandle::Config::Peripheral()'],['../group__peripheral.html',1,'(Global Namespace)']]],
   ['pin',['pin',['../structdsy__gpio__pin.html#a1edd34504a6d4d701bde32ae664afebd',1,'dsy_gpio_pin::pin()'],['../structdsy__gpio.html#a92d61fa4d53b923b328e7e1ca8a67100',1,'dsy_gpio::pin()']]],

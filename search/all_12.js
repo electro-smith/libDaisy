@@ -58,7 +58,7 @@ var searchData=
   ['settestpoint',['SetTestPoint',['../classdaisy_1_1_daisy_seed.html#a213214b79bb612175f2e82241887d42e',1,'daisy::DaisySeed']]],
   ['shiftregister',['SHIFTREGISTER',['../group__shiftregister.html',1,'']]],
   ['shiftregister595',['ShiftRegister595',['../class_shift_register595.html',1,'']]],
-  ['speed',['speed',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a7795ab9b3b85bd2f51950b6985a31b97',1,'daisy::I2CHandle::Config::speed()'],['../structdaisy_1_1_sdmmc_handler_init.html#afee5b8e925f0cbb76bab2904620a71b7',1,'daisy::SdmmcHandlerInit::speed()'],['../structdaisy_1_1_i2_c_handle_1_1_config.html#a744f7d6297a06e87fe2e2014f05d469e',1,'daisy::I2CHandle::Config::Speed()']]],
+  ['speed',['Speed',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a744f7d6297a06e87fe2e2014f05d469e',1,'daisy::I2CHandle::Config::Speed()'],['../structdaisy_1_1_i2_c_handle_1_1_config.html#a7795ab9b3b85bd2f51950b6985a31b97',1,'daisy::I2CHandle::Config::speed()'],['../structdaisy_1_1_sdmmc_handler_init.html#afee5b8e925f0cbb76bab2904620a71b7',1,'daisy::SdmmcHandlerInit::speed()']]],
   ['spi_5fperiph_5f1',['SPI_PERIPH_1',['../group__serial.html#ggaf711442ff4ba0ed7d1e6f6bae7c574b6a067119d88d70ecdcb4f5017f9c28071c',1,'daisy']]],
   ['spi_5fperiph_5f3',['SPI_PERIPH_3',['../group__serial.html#ggaf711442ff4ba0ed7d1e6f6bae7c574b6abe36a904be436f0e99a6c60bcdc5db03',1,'daisy']]],
   ['spi_5fperiph_5f6',['SPI_PERIPH_6',['../group__serial.html#ggaf711442ff4ba0ed7d1e6f6bae7c574b6a73dc62e39838820d4779ed3cbfc421c0',1,'daisy']]],

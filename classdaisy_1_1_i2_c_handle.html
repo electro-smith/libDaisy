@@ -127,8 +127,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4b183cb21c4ab4c0c005e6d33eac059b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf279a20fe8338672cbfa7f3e0e720ae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae">TransmitBlocking</a> (uint16_t address, uint8_t *data, uint16_t size, uint32_t timeout)</td></tr>
 <tr class="separator:acf279a20fe8338672cbfa7f3e0e720ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5232996113cc203d72cb75e57b62fa9d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a5232996113cc203d72cb75e57b62fa9d">ReceiveBlocking</a> (uint16_t address, uint8_t *data, uint16_t size, uint32_t timeout)</td></tr>
+<tr class="separator:a5232996113cc203d72cb75e57b62fa9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2def35901e936c7c7c88aef8e1633f14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a2def35901e936c7c7c88aef8e1633f14">TransmitDma</a> (uint16_t address, uint8_t *data, uint16_t size, <a class="el" href="classdaisy_1_1_i2_c_handle.html#a865f3f2c45b937c4084081f807e15d7b">CallbackFunctionPtr</a> callback, void *callback_context)</td></tr>
 <tr class="separator:a2def35901e936c7c7c88aef8e1633f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a7a2bcf654a383c6032a86a13645ea3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a2a7a2bcf654a383c6032a86a13645ea3">ReadDataAtAddress</a> (uint16_t address, uint16_t mem_address, uint16_t mem_address_size, uint8_t *data, uint16_t data_size, uint32_t timeout)</td></tr>
+<tr class="separator:a2a7a2bcf654a383c6032a86a13645ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb04976cded8bfd1b1427ae15d9458ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_i2_c_handle.html#afb04976cded8bfd1b1427ae15d9458ef">WriteDataAtAddress</a> (uint16_t address, uint16_t mem_address, uint16_t mem_address_size, uint8_t *data, uint16_t data_size, uint32_t timeout)</td></tr>
+<tr class="separator:afb04976cded8bfd1b1427ae15d9458ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A handle for interacting with an I2C peripheral. This is a dumb gateway that internally points to one of the four I2C peripherals after it was initialised. It can then be copied and passed around. Use an <a class="el" href="classdaisy_1_1_i2_c_handle.html">I2CHandle</a> like this: </p><pre class="fragment">// setup the configuration
@@ -216,6 +222,115 @@ i2c.TransmitBlocking( ... );</pre> </div><h2 class="groupheader">Member Typedef 
       </table>
 </div><div class="memdoc">
 <p>Initializes an I2C peripheral. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2a7a2bcf654a383c6032a86a13645ea3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a> daisy::I2CHandle::ReadDataAtAddress </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>mem_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>mem_address_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>data_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reads an amount of data from a specific memory address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>The slave device address. </td></tr>
+    <tr><td class="paramname">mem_address</td><td>Pointer to data containing the address to read from device. </td></tr>
+    <tr><td class="paramname">mem_address_size</td><td>Size of the memory address in bytes. </td></tr>
+    <tr><td class="paramname">data</td><td>Pointer to buffer that will be filled with contents at mem_address </td></tr>
+    <tr><td class="paramname">data_size</td><td>Size of the data to be read in bytes. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a5232996113cc203d72cb75e57b62fa9d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a> daisy::I2CHandle::ReceiveBlocking </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Receives data and blocks until the reception is complete. Use this for smaller transmissions of a few bytes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>The slave device address. </td></tr>
+    <tr><td class="paramname">data</td><td>A pointer to the data to be received. </td></tr>
+    <tr><td class="paramname">size</td><td>The size of the data to be received, in bytes. </td></tr>
+    <tr><td class="paramname">timeout</td><td>A timeout. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -317,6 +432,67 @@ i2c.TransmitBlocking( ... );</pre> </div><h2 class="groupheader">Member Typedef 
     <tr><td class="paramname">size</td><td>The size of the data to be sent, in bytes. </td></tr>
     <tr><td class="paramname">callback</td><td>A callback to execute when the transfer finishes, or NULL. </td></tr>
     <tr><td class="paramname">callback_context</td><td>A pointer that will be passed back to you in the callback. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="afb04976cded8bfd1b1427ae15d9458ef"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a> daisy::I2CHandle::WriteDataAtAddress </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>mem_address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>mem_address_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>data_size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Writes an amount of data from a specific memory address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>The slave device address. </td></tr>
+    <tr><td class="paramname">mem_address</td><td>Pointer to data containing the address to write to device. </td></tr>
+    <tr><td class="paramname">mem_address_size</td><td>Size of the memory address in bytes. </td></tr>
+    <tr><td class="paramname">data</td><td>Pointer to buffer that will be written to the mem_address </td></tr>
+    <tr><td class="paramname">data_size</td><td>Size of the data to be written in bytes. </td></tr>
   </table>
   </dd>
 </dl>
