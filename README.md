@@ -1,6 +1,6 @@
 ![](https://github.com/electro-smith/libdaisy/blob/master/resources/assets/banner.png)
 
-[![Build Status](https://travis-ci.com/electro-smith/libDaisy.svg?branch=master)](https://travis-ci.com/electro-smith/libDaisy)
+[![Build Status](https://travis-ci.com/electro-smith/libDaisy.svg?branch=master)](https://travis-ci.com/electro-smith/libDaisy)    [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **libDaisy is a hardware abstraction library for the [Daisy Embedded Audio Platform.](https://www.electro-smith.com/daisy)** 
 
