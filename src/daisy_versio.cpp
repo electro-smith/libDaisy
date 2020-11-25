@@ -100,6 +100,77 @@ void DaisyVersio::StartAudio(AudioHandle::AudioCallback cb)
     seed.StartAudio(cb);
 }
 
+void DaisyVersio::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb){
+    seed.ChangeAudioCallback(cb);
+}
+
+void DaisyVersio::ChangeAudioCallback(AudioHandle::AudioCallback cb){
+    seed.ChangeAudioCallback(cb);
+}
+
+void DaisyVersio::StopAudio() 
+{ 
+	seed.StopAudio(); 
+}
+
+void DaisyVersio::SetAudioBlockSize(size_t size) 
+{ 
+	seed.SetAudioBlockSize(size); 
+}
+
+size_t DaisyVersio::AudioBlockSize() 
+{ 
+	return seed.AudioBlockSize(); 
+}
+
+void DaisyVersio::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
+{
+	seed.SetAudioSampleRate(samplerate);
+}
+
+float DaisyVersio::AudioSampleRate() 
+{ 
+	return seed.AudioSampleRate(); 
+}
+
+float DaisyVersio::AudioCallbackRate() 
+{ 
+	return seed.AudioCallbackRate(); 
+}
+
+void DaisyVersio::StartAdc() 
+{ 
+	seed.adc.Start(); 
+}
+
+void DaisyVersio::StopAdc() 
+{ 
+	seed.adc.Stop(); 
+}
+
+void DaisyVersio::ProcessAnalogControls()
+{
+    for(size_t i = 0; i < KNOB_LAST; i++)
+    {
+        knobs_[i].Process();
+    }
+}
+
+bool DaisyVersio::SwitchPressed() 
+{ 
+	return tap_.Pressed(); 
+}
+
+bool DaisyVersio::Gate() 
+{ 
+	return !gate_.State(); 
+}
+
+void DaisyVersio::SetLed(size_t idx, float red, float green, float blue)
+{
+	leds[idx].Set(red, green, blue);
+}
+
 void DaisyVersio::DelayMs(size_t del)
 {
     seed.DelayMs(del);
@@ -110,14 +181,6 @@ void DaisyVersio::UpdateLeds()
     for(size_t i = 0; i < LED_LAST; i++)
     {
         leds[i].Update();
-    }
-}
-
-void DaisyVersio::ProcessAnalogControls()
-{
-    for(size_t i = 0; i < KNOB_LAST; i++)
-    {
-        knobs_[i].Process();
     }
 }
 
