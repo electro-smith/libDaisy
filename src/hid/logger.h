@@ -6,108 +6,159 @@
 
 namespace daisy
 {
-// Logger configuration
-#define LOGGER_NEWLINE "\r\n"   // newline character sequence
-#define LOGGER_BUFFER  128       // in bytes (may be reduced for testing or increased for real apps)
+    /** @addtogroup external 
+    @{ 
+*/
 
-// Helper macros for string concatenation and macro expansion
-#define PPCAT_NX(A, B) A ## B
-#define PPCAT(A, B) PPCAT_NX(A, B) 
+/** Logger configuration
+ */ 
+#define LOGGER_NEWLINE "\r\n"   /**< custom newline character sequence */
+#define LOGGER_BUFFER  128      /**< size in bytes (may be reduced for testing or increased for real apps) */
 
-#define STRINGIZE_NX(A) #A
-#define STRINGIZE(A) STRINGIZE_NX(A)
+/** Helper macros for string concatenation and macro expansion
+ * @{
+ */
+#define PPCAT_NX(A, B) A ## B           /**< non-expanding concatenation */
+#define PPCAT(A, B) PPCAT_NX(A, B)      /**< concatenate tokens */
 
-// Floating point output formatting
+#define STRINGIZE_NX(A) #A              /**< non-expanding stringize  */
+#define STRINGIZE(A) STRINGIZE_NX(A)    /**< make a string */
+/*
+ * @}
+ */
+
+/** Floating point output formatting string. Include in your printf-style format string
+ *  example: printf("float value = " FLT_FMT(3) " continue like that", FLT_VAR(3, x));
+ */
 #define FLT_FMT(_n) STRINGIZE(PPCAT(PPCAT(%c%d.%0, _n), d))
+
+/** Floating point output variable preprocessing 
+ * Note: uses truncation instead of rounding -> the last digit may be off
+ */ 
 #define FLT_VAR(_n, _x) (_x < 0 ? '-': ' '), (int)(abs(_x)), (int)(((abs(_x)) - (int)(abs(_x))) * pow(10, (_n)))
 
-// Shorthand for 10^-3 fractions
-#define FLT_FMT3 FLT_FMT(3)
-#define FLT_VAR3(_x) FLT_VAR(3, _x)
+/** Shorthand for 10^-3 fraction, output equivalent to %.3f
+ */ 
+#define FLT_FMT3        FLT_FMT(3)
+/** Shorthand for 10^-3 fraction
+ */ 
+#define FLT_VAR3(_x)    FLT_VAR(3, _x)
 
 
-
-//   @brief Interface for simple USB logging
-//   @author Alexander Petrov-Savchenko (axp@soft-amp.com)
-//   @date November 2020
+/**   @brief Interface for simple USB logging
+ *    @author Alexander Petrov-Savchenko (axp@soft-amp.com)
+ *    @date November 2020
+ */
 template <LoggerDestination dest = LOGGER_INTERNAL>
 class Logger
 {
 public:
+    /** Object constructor
+     */ 
+    Logger() {}
 
-    Logger()    
-    {}
-    static void Print(const char* format, ...);         // Print formatted string
-    static void PrintLine(const char* format, ...);     // Print formatted string appending line termination sequence
-    static void StartLog(bool wait_for_pc = false);     // Start the logging session. Block until remote terminal is ready if wait_for_pc is true
+    /** Print formatted string
+     */ 
+    static void Print(const char* format, ...);
+
+    /** Print formatted string appending line termination sequence
+     */
+    static void PrintLine(const char* format, ...);
+
+    /**  Start the logging session. 
+     * \param wait_for_pc block until remote terminal is ready
+     */ 
+    static void StartLog(bool wait_for_pc = false);
+
+    /** Variadic argument variant of Print()
+     */ 
+    static void PrintV(const char* format, va_list va);
+
+    /** Variadic argument variant of PrintLine()
+     */ 
+    static void PrintLineV(const char* format, va_list va);
 
 protected:
+    /** Internal constants
+     */ 
     enum LoggerConsts
     {
         LOGGER_SYNC_OUT = 0,
-        LOGGER_SYNC_IN  = 2 // successfully transmit this many packets to consider being in sync and switch to blocking transfers
+        LOGGER_SYNC_IN  = 2 /**< successfully transmit this many packets to consider being in sync and switch to blocking transfers */
     };
 
-    // blocking wrapper for Transmit
+    /** Blocking wrapper for Transmit()
+     */ 
     static void TransmitSync(const void* buffer, size_t bytes)
     {
         while(false == impl_.Transmit(buffer, bytes));
     }
     
-    // transfer accumulated data
+    /** Transfer accumulated data
+     */ 
     static void TransmitBuf();
 
-    // trim control characters and append clean newline sequence, if there's room in the buffer
+    /** Trim control characters and append clean newline sequence, if there's room in the buffer
+     */ 
     static void AppendNewLine();
 
-    // constexpr function equivalent of strlen(LOGGER_NEWLINE)
+    /** Constexpr function equivalent of strlen(LOGGER_NEWLINE)
+     */ 
     static constexpr size_t NewLineSeqLength()
     {
-        size_t len = 0;
-        constexpr const char* nl = LOGGER_NEWLINE;
-        while (nl[len] != '\0')
+        size_t                len = 0;
+        constexpr const char* nl  = LOGGER_NEWLINE;
+        while(nl[len] != '\0')
         {
             len++;
         }
         return len;    
     }
 
-    // member variables
-    static char     tx_buff_[LOGGER_BUFFER];
-    static size_t   tx_ptr_;
-    static size_t   pc_sync_;
-    static LoggerImpl<dest> impl_;
+    /** member variables
+     */
+
+    static char             tx_buff_[LOGGER_BUFFER];    /**< buffer for log data */
+    static size_t           tx_ptr_;                    /**< current position in the buffer */
+    static size_t           pc_sync_;                   /**< terminal synchronization state */
+    static LoggerImpl<dest> impl_;                      /**< underlying trasnfer implementation */
 };
 
-// member variable definition (could switch to inline statics in C++17)
+/** member variable definition (could switch to inline statics in C++17)
+ */
 
-template<LoggerDestination dest>
-char Logger<dest>::tx_buff_[LOGGER_BUFFER];   // this needs to remain in SRAM to support startup-time printouts
+/** this needs to remain in SRAM to support startup-time printouts
+ */
+template <LoggerDestination dest>
+char Logger<dest>::tx_buff_[LOGGER_BUFFER]; 
 
-template<LoggerDestination dest>
-size_t Logger<dest>::pc_sync_ = LOGGER_SYNC_OUT;    // start with non-blocking transfers to support startup-time printouts
+/** start with non-blocking transfers to support startup-time printouts
+ */ 
+template <LoggerDestination dest>
+size_t Logger<dest>::pc_sync_= LOGGER_SYNC_OUT;
 
-template<LoggerDestination dest>
+template <LoggerDestination dest>
 size_t Logger<dest>::tx_ptr_ = 0;
 
-template<LoggerDestination dest>
+template <LoggerDestination dest>
 LoggerImpl<dest> Logger<dest>::impl_;
 
 
-
-
-// Specialization for a muted log
+/** Specialization for a muted log
+ */ 
 template <>
 class Logger<LOGGER_NONE>
 {
 public:
-    Logger() {}
-    static void Print(const char* format, ...)      {}
-    static void PrintLine(const char* format, ...)  {}
-    static void StartLog(bool wait_for_pc = false)  {}
+    Logger() {}                                                 /**< Constructor */
+    static void Print(const char* format, ...) {}               /**< Print formatted string  */ 
+    static void PrintLine(const char* format, ...) {}           /**< Print formatted string appending line termination sequence */
+    static void StartLog(bool wait_for_pc = false) {}           /**< Start the logging session. * Block until remote terminal is ready if wait_for_pc is true */ 
+    static void PrintV(const char* format, va_list va) {}       /**< Variadic argument variant of Print() */ 
+    static void PrintLineV(const char* format, va_list va) {}   /**< Variadic argument variant of PrintLine() */ 
 };
 
-
-}   // namespace daisy
+/** @} */
+} // namespace daisy
 
 #endif // __DSY_LOGGER_H__

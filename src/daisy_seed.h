@@ -15,7 +15,7 @@ namespace daisy
 
    @ingroup boards
 */
-class DaisySeed: public Logger<LOGGER_INTERNAL>
+class DaisySeed
 {
   public:
     DaisySeed() {}
@@ -102,6 +102,30 @@ class DaisySeed: public Logger<LOGGER_INTERNAL>
      */
     void SetTestPoint(bool state);
 
+    /** Print formatted debug log message
+     */
+    template <typename... VA>
+    static void Print(const char* format, VA... va)
+    {
+        Log::Print(format, va...);
+    }
+
+    /** Print formatted debug log message with automatic line termination
+    */
+    template <typename... VA>
+    static void PrintLine(const char* format, VA... va)
+    {
+        Log::PrintLine(format, va...);
+    }
+
+    /** Start the logging session. Optionally wait for terminal connection before proceeding.
+    */
+    static void StartLog(bool wait_for_pc = false)
+    {
+        Log::StartLog(wait_for_pc);
+    }
+
+
     // While the library is still in heavy development, most of the
     // configuration handles will remain public.
     dsy_sdram_handle sdram_handle; /**< & */
@@ -112,6 +136,11 @@ class DaisySeed: public Logger<LOGGER_INTERNAL>
     UsbHandle        usb_handle;   /**< & */
 
   private:
+    /** Local shorthand for debug log destination
+    */
+    using Log = Logger<LOGGER_INTERNAL>;
+
+
     void ConfigureSdram();
     void ConfigureQspi();
     void ConfigureAudio();

@@ -7,14 +7,12 @@
 #include "sys/system.h"
 #include <assert.h>
 
-//  @brief Logging I/O underlying implementation
-//  @author Alexander Petrov-Savchenko (axp@soft-amp.com)
-//  @date November 2020
-
 
 namespace daisy
 {
 
+/** Enumeration of destination ports for debug logging
+ */ 
 enum LoggerDestination
 {
     LOGGER_NONE,     /**< mute logging */
@@ -23,72 +21,98 @@ enum LoggerDestination
     LOGGER_SEMIHOST, /**< stdout */
 };
 
-//  @brief Default implementation (mute)
+/** @brief Logging I/O underlying implementation
+ *  @author Alexander Petrov-Savchenko (axp@soft-amp.com)
+ *  @date November 2020
+ */ 
 template <LoggerDestination dest>
 class LoggerImpl
 {
-public:
-    static void Init()  {}
-    static bool Transmit(const void* buffer, size_t bytes)    {return true;   }    
+  public:
+    /** Initialize logging destination
+     */ 
+    static void Init() {}
+
+    /** Transmit a block of data
+     */ 
+    static bool Transmit(const void* buffer, size_t bytes) { return true; }
 };
 
 
-//  @brief Specialization for internal USB port
+/**  @brief Specialization for internal USB port
+ */ 
 template <>
 class LoggerImpl<LOGGER_INTERNAL>
 {
-public:
+  public:
+    /** Initialize logging destination
+    */ 
     static void Init()
     {
-        // this implementation relies on the fact that UsbHandle class has no member variables and can be shared
-        // assert this statement:
+        /** this implementation relies on the fact that UsbHandle class has no member variables and can be shared
+         * assert this statement:
+         */ 
         static_assert(1u == sizeof(usb_handle_));
         usb_handle_.Init(UsbHandle::FS_INTERNAL);
     }
 
+    /** Transmit a block of data
+     */ 
     static bool Transmit(const void* buffer, size_t bytes)
     {
         return USBD_OK == usb_handle_.TransmitInternal((uint8_t*)buffer, bytes);
-    }    
+    }
 
-protected:
-    static UsbHandle usb_handle_; 
+  protected:
+    /** USB Handle for CDC transfers 
+     */ 
+    static UsbHandle usb_handle_;
 };
 
 
-
-
-//  @brief Specialization for external USB port
+/**  @brief Specialization for external USB port
+ */ 
 template <>
 class LoggerImpl<LOGGER_EXTERNAL>
 {
-public:
+  public:
+    /** Initialize logging destination
+     */ 
     static void Init()
     {
-        // this implementation relies on the fact that UsbHandle class has no member variables and can be shared.
-        // assert this statement:
+        /** this implementation relies on the fact that UsbHandle class has no member variables and can be shared.
+         * assert this statement:
+         */ 
         static_assert(1u == sizeof(usb_handle_));
         usb_handle_.Init(UsbHandle::FS_EXTERNAL);
     }
 
+    /** Transmit a block of data
+     */ 
     static bool Transmit(const void* buffer, size_t bytes)
     {
         return USBD_OK == usb_handle_.TransmitExternal((uint8_t*)buffer, bytes);
-    }    
+    }
 
-protected:
-    static UsbHandle usb_handle_; 
+  protected:
+    /** USB Handle for CDC transfers 
+     */ 
+    static UsbHandle usb_handle_;
 };
 
 
-
-
-//  @brief Specialization for semihosting (stdout)
+/**  @brief Specialization for semihosting (stdout)
+ */ 
 template <>
 class LoggerImpl<LOGGER_SEMIHOST>
 {
-public:
-    static void Init()  {}
+  public:
+    /** Initialize logging destination
+     */ 
+    static void Init() {}
+    
+    /** Transmit a block of data
+     */ 
     static bool Transmit(const void* buffer, size_t bytes)
     {
         write(STDOUT_FILENO, buffer, bytes);
@@ -97,6 +121,6 @@ public:
 };
 
 
-}   // namespace daisy
+} /* namespace daisy */
 
 #endif //__DSY_LOGGER_IMPL_H
