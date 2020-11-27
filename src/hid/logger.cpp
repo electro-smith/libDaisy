@@ -17,7 +17,8 @@ void Logger<dest>::Print(const char* format, ...)
 template <LoggerDestination dest>
 void Logger<dest>::PrintV(const char* format, va_list va)
 {
-    tx_ptr_ += vsnprintf(tx_buff_ + tx_ptr_, sizeof(tx_buff_) - tx_ptr_, format, va);
+    tx_ptr_ += vsnprintf(
+        tx_buff_ + tx_ptr_, sizeof(tx_buff_) - tx_ptr_, format, va);
 
     TransmitBuf();
 }
@@ -34,8 +35,8 @@ void Logger<dest>::PrintLine(const char* format, ...)
 template <LoggerDestination dest>
 void Logger<dest>::PrintLineV(const char* format, va_list va)
 {
-    tx_ptr_ += vsnprintf(tx_buff_ + tx_ptr_, sizeof(tx_buff_) - tx_ptr_, 
-                        format, va);
+    tx_ptr_ += vsnprintf(
+        tx_buff_ + tx_ptr_, sizeof(tx_buff_) - tx_ptr_, format, va);
 
     AppendNewLine();
 
@@ -55,11 +56,12 @@ template <LoggerDestination dest>
 void Logger<dest>::TransmitBuf()
 {
     /** if the buffer is full - treat as overflow */
-    if(tx_ptr_ >= sizeof(tx_buff_)) 
+    if(tx_ptr_ >= sizeof(tx_buff_))
     {
         /** indicate truncation with an unlikely character sequence "$$" */
         tx_buff_[sizeof(tx_buff_) - 1] = '$';
         tx_buff_[sizeof(tx_buff_) - 2] = '$';
+
         tx_ptr_ = sizeof(tx_buff_);
     }
 
@@ -85,8 +87,8 @@ template <LoggerDestination dest>
 void Logger<dest>::AppendNewLine()
 {
     /*  trim existing control characters */
-    while(tx_ptr_ > 0 && 
-        (tx_buff_[tx_ptr_ - 1] == '\n' || tx_buff_[tx_ptr_ - 1] == '\r'))
+    while(tx_ptr_ > 0
+          && (tx_buff_[tx_ptr_ - 1] == '\n' || tx_buff_[tx_ptr_ - 1] == '\r'))
     {
         tx_ptr_--;
     }
@@ -97,7 +99,7 @@ void Logger<dest>::AppendNewLine()
     {
         /* this loop will be optimized away by the compiler */
         constexpr const char* nl = LOGGER_NEWLINE;
-        for(size_t i = 0; i < eol; i++) 
+        for(size_t i = 0; i < eol; i++)
         {
             tx_buff_[tx_ptr_++] = nl[i];
         }

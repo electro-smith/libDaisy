@@ -10,7 +10,6 @@
 
 namespace daisy
 {
-
 /** Enumeration of destination ports for debug logging
  */
 enum LoggerDestination
@@ -110,7 +109,7 @@ class LoggerImpl<LOGGER_SEMIHOST>
     /** Initialize logging destination
      */
     static void Init() {}
-    
+
     /** Transmit a block of data
      */
     static bool Transmit(const void* buffer, size_t bytes)

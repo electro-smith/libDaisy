@@ -13,14 +13,14 @@ namespace daisy
 /** Logger configuration
  */
 #define LOGGER_NEWLINE "\r\n" /**< custom newline character sequence */
-#define LOGGER_BUFFER  128    /**< size in bytes */
+#define LOGGER_BUFFER 128 /**< size in bytes */
 
 /** Helper macros for string concatenation and macro expansion
  * @{
  */
-#define PPCAT_NX(A, B) A ## B        /**< non-expanding concatenation */
-#define PPCAT(A, B) PPCAT_NX(A, B)   /**< concatenate tokens */
-#define STRINGIZE_NX(A) #A           /**< non-expanding stringize  */
+#define PPCAT_NX(A, B) A##B /**< non-expanding concatenation */
+#define PPCAT(A, B) PPCAT_NX(A, B) /**< concatenate tokens */
+#define STRINGIZE_NX(A) #A /**< non-expanding stringize  */
 #define STRINGIZE(A) STRINGIZE_NX(A) /**< make a string */
 /*
  * @}
@@ -29,14 +29,14 @@ namespace daisy
 /** Floating point output formatting string. Include in your printf-style format string
  *  example: printf("float value = " FLT_FMT(3) " continue like that", FLT_VAR(3, x));
  */
-#define FLT_FMT(_n) STRINGIZE(PPCAT(PPCAT(%c%d.%0, _n), d))
+#define FLT_FMT(_n) STRINGIZE(PPCAT(PPCAT(%c%d.%0, _n), d)) //
 
 /** Floating point output variable preprocessing 
  * Note: uses truncation instead of rounding -> the last digit may be off
  */
-#define FLT_VAR(_n, _x)                  \
-    (_x < 0 ? '-': ' '), (int)(abs(_x)), \
-    (int)(((abs(_x)) - (int)(abs(_x))) * pow(10, (_n)))
+#define FLT_VAR(_n, _x)                   \
+    (_x < 0 ? '-' : ' '), (int)(abs(_x)), \
+        (int)(((abs(_x)) - (int)(abs(_x))) * pow(10, (_n)))
 
 /** Shorthand for 10^-3 fraction, output equivalent to %.3f
  */
@@ -53,7 +53,7 @@ namespace daisy
 template <LoggerDestination dest = LOGGER_INTERNAL>
 class Logger
 {
-public:
+  public:
     /** Object constructor
      */
     Logger() {}
@@ -79,7 +79,7 @@ public:
      */
     static void PrintLineV(const char* format, va_list va);
 
-protected:
+  protected:
     /** Internal constants
      */
     enum LoggerConsts
@@ -93,10 +93,9 @@ protected:
      */
     static void TransmitSync(const void* buffer, size_t bytes)
     {
-        while(false == impl_.Transmit(buffer, bytes))
-        {}
+        while(false == impl_.Transmit(buffer, bytes)) {}
     }
-    
+
     /** Transfer accumulated data
      */
     static void TransmitBuf();
@@ -122,9 +121,9 @@ protected:
      */
 
     static char             tx_buff_[LOGGER_BUFFER]; /**< buffer for log data */
-    static size_t           tx_ptr_;    /**< current position in the buffer */
-    static size_t           pc_sync_;   /**< terminal synchronization state */
-    static LoggerImpl<dest> impl_;      /**< underlying trasnfer implementation */
+    static size_t           tx_ptr_;  /**< current position in the buffer */
+    static size_t           pc_sync_; /**< terminal synchronization state */
+    static LoggerImpl<dest> impl_;    /**< underlying trasnfer implementation */
 };
 
 /** member variable definition (could switch to inline statics in C++17)
@@ -133,12 +132,12 @@ protected:
 /** this needs to remain in SRAM to support startup-time printouts
  */
 template <LoggerDestination dest>
-char Logger<dest>::tx_buff_[LOGGER_BUFFER]; 
+char Logger<dest>::tx_buff_[LOGGER_BUFFER];
 
 /** start with non-blocking transfers to support startup-time printouts
  */
 template <LoggerDestination dest>
-size_t Logger<dest>::pc_sync_= LOGGER_SYNC_OUT;
+size_t Logger<dest>::pc_sync_ = LOGGER_SYNC_OUT;
 
 template <LoggerDestination dest>
 size_t Logger<dest>::tx_ptr_ = 0;
@@ -152,13 +151,13 @@ LoggerImpl<dest> Logger<dest>::impl_;
 template <>
 class Logger<LOGGER_NONE>
 {
-public:
-    Logger() {}                                                 /**<  */
-    static void Print(const char* format, ...) {}               /**<  */ 
-    static void PrintLine(const char* format, ...) {}           /**<  */
-    static void StartLog(bool wait_for_pc = false) {}           /**<  */ 
-    static void PrintV(const char* format, va_list va) {}       /**<  */ 
-    static void PrintLineV(const char* format, va_list va) {}   /**<  */ 
+  public:
+    Logger() {}                                               /**<  */
+    static void Print(const char* format, ...) {}             /**<  */
+    static void PrintLine(const char* format, ...) {}         /**<  */
+    static void StartLog(bool wait_for_pc = false) {}         /**<  */
+    static void PrintV(const char* format, va_list va) {}     /**<  */
+    static void PrintLineV(const char* format, va_list va) {} /**<  */
 };
 
 /** @} */
