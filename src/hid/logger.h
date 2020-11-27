@@ -13,14 +13,14 @@ namespace daisy
 /** Logger configuration
  */
 #define LOGGER_NEWLINE "\r\n" /**< custom newline character sequence */
-#define LOGGER_BUFFER 128 /**< size in bytes */
+#define LOGGER_BUFFER 128     /**< size in bytes */
 
 /** Helper macros for string concatenation and macro expansion
  * @{
  */
-#define PPCAT_NX(A, B) A##B /**< non-expanding concatenation */
-#define PPCAT(A, B) PPCAT_NX(A, B) /**< concatenate tokens */
-#define STRINGIZE_NX(A) #A /**< non-expanding stringize  */
+#define PPCAT_NX(A, B) A##B          /**< non-expanding concatenation */
+#define PPCAT(A, B) PPCAT_NX(A, B)   /**< concatenate tokens */
+#define STRINGIZE_NX(A) #A           /**< non-expanding stringize  */
 #define STRINGIZE(A) STRINGIZE_NX(A) /**< make a string */
 /*
  * @}
@@ -29,7 +29,9 @@ namespace daisy
 /** Floating point output formatting string. Include in your printf-style format string
  *  example: printf("float value = " FLT_FMT(3) " continue like that", FLT_VAR(3, x));
  */
-#define FLT_FMT(_n) STRINGIZE(PPCAT(PPCAT(%c%d.%0, _n), d)) //
+// clang-format off
+#define FLT_FMT(_n) STRINGIZE(PPCAT(PPCAT(%c%d.%0, _n), d)) 
+// clang-format on
 
 /** Floating point output variable preprocessing 
  * Note: uses truncation instead of rounding -> the last digit may be off
