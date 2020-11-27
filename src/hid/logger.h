@@ -30,7 +30,7 @@ namespace daisy
  *  example: printf("float value = " FLT_FMT(3) " continue like that", FLT_VAR(3, x));
  */
 // clang-format off
-#define FLT_FMT(_n) STRINGIZE(PPCAT(PPCAT(%c%d.%0, _n), d)) 
+#define FLT_FMT(_n) STRINGIZE(PPCAT(PPCAT(%c%d.%0, _n), d))
 // clang-format on
 
 /** Floating point output variable preprocessing 
