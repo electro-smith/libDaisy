@@ -154,7 +154,7 @@ void DaisyPetal::StartAdc()
 
 void DaisyPetal::StopAdc()  
 { 
-seed.adc.Stop(); 
+    seed.adc.Stop(); 
 }
 
 

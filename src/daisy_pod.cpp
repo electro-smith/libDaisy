@@ -147,7 +147,7 @@ void DaisyPod::StartAdc()
 
 void DaisyPod::StopAdc() 
 { 
-seed.adc.Stop(); 
+    seed.adc.Stop(); 
 }
 
 
