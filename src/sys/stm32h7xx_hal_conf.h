@@ -99,12 +99,12 @@ extern "C"
 #if !defined(HSE_VALUE)
 #define HSE_VALUE \
     ((uint32_t)16000000) /*!< Value of the External oscillator in Hz */
-#endif /* HSE_VALUE */
+#endif                   /* HSE_VALUE */
 
 #if !defined(HSE_STARTUP_TIMEOUT)
 #define HSE_STARTUP_TIMEOUT \
     ((uint32_t)100) /*!< Time out for HSE start up, in ms */
-#endif /* HSE_STARTUP_TIMEOUT */
+#endif              /* HSE_STARTUP_TIMEOUT */
 
 /**
   * @brief Internal  oscillator (CSI) default value.
@@ -113,7 +113,7 @@ extern "C"
 #if !defined(CSI_VALUE)
 #define CSI_VALUE \
     ((uint32_t)4000000) /*!< Value of the Internal oscillator in Hz*/
-#endif /* CSI_VALUE */
+#endif                  /* CSI_VALUE */
 
 /**
   * @brief Internal High Speed oscillator (HSI) value.
@@ -123,7 +123,7 @@ extern "C"
 #if !defined(HSI_VALUE)
 #define HSI_VALUE \
     ((uint32_t)64000000) /*!< Value of the Internal oscillator in Hz*/
-#endif /* HSI_VALUE */
+#endif                   /* HSI_VALUE */
 
 /**
   * @brief External Low Speed oscillator (LSE) value.
@@ -132,13 +132,13 @@ extern "C"
 #if !defined(LSE_VALUE)
 #define LSE_VALUE \
     ((uint32_t)32768) /*!< Value of the External oscillator in Hz*/
-#endif /* LSE_VALUE */
+#endif                /* LSE_VALUE */
 
 
 #if !defined(LSE_STARTUP_TIMEOUT)
 #define LSE_STARTUP_TIMEOUT \
     ((uint32_t)5000) /*!< Time out for LSE start up, in ms */
-#endif /* LSE_STARTUP_TIMEOUT */
+#endif               /* LSE_STARTUP_TIMEOUT */
 
 #if !defined(LSI_VALUE)
 #define LSI_VALUE ((uint32_t)32000) /*!< LSI Typical Value in Hz*/
@@ -153,7 +153,7 @@ extern "C"
   */
 #if !defined(EXTERNAL_CLOCK_VALUE)
 #define EXTERNAL_CLOCK_VALUE 12288000U /*!< Value of the External clock in Hz*/
-#endif /* EXTERNAL_CLOCK_VALUE */
+#endif                                 /* EXTERNAL_CLOCK_VALUE */
 
 /* Tip: To avoid modifying this file each time you need to use different HSE,
    ===  you can define the HSE value in your toolchain compiler preprocessor. */
@@ -162,7 +162,7 @@ extern "C"
 /**
   * @brief This is the HAL system configuration section
   */
-#define VDD_VALUE ((uint32_t)3300) /*!< Value of VDD in mv */
+#define VDD_VALUE ((uint32_t)3300)         /*!< Value of VDD in mv */
 #define TICK_INT_PRIORITY ((uint32_t)0x0F) /*!< tick interrupt priority */
 #define USE_RTOS 0
 #define USE_SD_TRANSCEIVER 0U /*!< use uSD Transceiver */
