@@ -43,7 +43,7 @@ class DaisySeed
     for a specific application.
     */
     void Init();
-    
+
     /** 
     Wait some ms before going on.
     \param del Delay time in ms.
@@ -115,7 +115,7 @@ class DaisySeed
     AdcHandle        adc;          /**< & */
     dsy_dac_handle   dac_handle;   /**< & */
     UsbHandle        usb_handle;   /**< & */
-    dsy_gpio led, testpoint;
+    dsy_gpio         led, testpoint;
 
 
   private:
@@ -125,7 +125,7 @@ class DaisySeed
     void ConfigureAdc();
     void ConfigureDac();
     //void     ConfigureI2c();
-    float    callback_rate_;
+    float callback_rate_;
 };
 
 } // namespace daisy

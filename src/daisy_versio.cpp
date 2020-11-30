@@ -98,27 +98,29 @@ void DaisyVersio::StartAudio(AudioHandle::AudioCallback cb)
     seed.StartAudio(cb);
 }
 
-void DaisyVersio::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb){
+void DaisyVersio::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
+{
     seed.ChangeAudioCallback(cb);
 }
 
-void DaisyVersio::ChangeAudioCallback(AudioHandle::AudioCallback cb){
+void DaisyVersio::ChangeAudioCallback(AudioHandle::AudioCallback cb)
+{
     seed.ChangeAudioCallback(cb);
 }
 
-void DaisyVersio::StopAudio() 
-{ 
-    seed.StopAudio(); 
+void DaisyVersio::StopAudio()
+{
+    seed.StopAudio();
 }
 
-void DaisyVersio::SetAudioBlockSize(size_t size) 
-{ 
-    seed.SetAudioBlockSize(size); 
+void DaisyVersio::SetAudioBlockSize(size_t size)
+{
+    seed.SetAudioBlockSize(size);
 }
 
-size_t DaisyVersio::AudioBlockSize() 
-{ 
-    return seed.AudioBlockSize(); 
+size_t DaisyVersio::AudioBlockSize()
+{
+    return seed.AudioBlockSize();
 }
 
 void DaisyVersio::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
@@ -126,24 +128,24 @@ void DaisyVersio::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
     seed.SetAudioSampleRate(samplerate);
 }
 
-float DaisyVersio::AudioSampleRate() 
-{ 
-    return seed.AudioSampleRate(); 
+float DaisyVersio::AudioSampleRate()
+{
+    return seed.AudioSampleRate();
 }
 
-float DaisyVersio::AudioCallbackRate() 
-{ 
-    return seed.AudioCallbackRate(); 
+float DaisyVersio::AudioCallbackRate()
+{
+    return seed.AudioCallbackRate();
 }
 
-void DaisyVersio::StartAdc() 
-{ 
-    seed.adc.Start(); 
+void DaisyVersio::StartAdc()
+{
+    seed.adc.Start();
 }
 
-void DaisyVersio::StopAdc() 
-{ 
-    seed.adc.Stop(); 
+void DaisyVersio::StopAdc()
+{
+    seed.adc.Stop();
 }
 
 void DaisyVersio::ProcessAnalogControls()
@@ -154,14 +156,14 @@ void DaisyVersio::ProcessAnalogControls()
     }
 }
 
-bool DaisyVersio::SwitchPressed() 
-{ 
-    return tap.Pressed(); 
+bool DaisyVersio::SwitchPressed()
+{
+    return tap.Pressed();
 }
 
-bool DaisyVersio::Gate() 
-{ 
-    return !gate.State(); 
+bool DaisyVersio::Gate()
+{
+    return !gate.State();
 }
 
 void DaisyVersio::SetLed(size_t idx, float red, float green, float blue)
@@ -193,10 +195,8 @@ void DaisyVersio::UpdateExample()
     for(size_t i = 0; i < LED_LAST - 1; i++)
         SetLed(i, 0, 0, 0);
 
-    SetLed(
-        sw[0].Read(), knobs[0].Value(), knobs[1].Value(), knobs[2].Value());
-    SetLed(
-        sw[1].Read(), knobs[3].Value(), knobs[4].Value(), knobs[5].Value());
+    SetLed(sw[0].Read(), knobs[0].Value(), knobs[1].Value(), knobs[2].Value());
+    SetLed(sw[1].Read(), knobs[3].Value(), knobs[4].Value(), knobs[5].Value());
 
     SetLed(3, Gate(), SwitchPressed(), knobs[6].Value());
 }

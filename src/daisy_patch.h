@@ -83,7 +83,7 @@ class DaisyPatch
 
     /** Start analog to digital conversion.*/
     void StartAdc();
-    
+
     /** Stops Transfering data from the ADC */
     void StopAdc();
 
@@ -92,7 +92,8 @@ class DaisyPatch
     void ProcessAnalogControls();
 
     /** Process Analog and Digital Controls */
-    inline void ProcessAllControls(){
+    inline void ProcessAllControls()
+    {
         ProcessAnalogControls();
         ProcessDigitalControls();
     }

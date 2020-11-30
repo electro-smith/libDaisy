@@ -91,7 +91,7 @@ class DaisyPod
        Start analog to digital conversion.
      */
     void StartAdc();
-    
+
     /** Stops Transfering data from the ADC */
     void StopAdc();
 
@@ -99,7 +99,8 @@ class DaisyPod
     void ProcessAnalogControls();
 
     /** Process Analog and Digital Controls */
-    inline void ProcessAllControls(){
+    inline void ProcessAllControls()
+    {
         ProcessAnalogControls();
         ProcessDigitalControls();
     }
@@ -129,10 +130,10 @@ class DaisyPod
         led2;                  /**< & */
 
   private:
-    void   InitButtons();
-    void   InitEncoder();
-    void   InitLeds();
-    void   InitKnobs();
+    void InitButtons();
+    void InitEncoder();
+    void InitLeds();
+    void InitKnobs();
 };
 
 } // namespace daisy

@@ -137,7 +137,7 @@ class DaisyField
 
     /** Starts Transfering data from the ADC */
     void StartAdc();
-    
+
     /** Stops Transfering data from the ADC */
     void StopAdc();
 
@@ -149,9 +149,10 @@ class DaisyField
 
     /** Process tactile switches and keyboard states */
     void ProcessDigitalControls();
-    
+
     /** Process Analog and Digital Controls */
-    inline void ProcessAllControls(){
+    inline void ProcessAllControls()
+    {
         ProcessAnalogControls();
         ProcessDigitalControls();
     }
@@ -170,7 +171,7 @@ class DaisyField
     /** Returns true if the key has just been pressed
         \param idx the key of interest
     */
-    bool KeyboardRisingEdge(size_t idx) const; 
+    bool KeyboardRisingEdge(size_t idx) const;
 
     /** Returns true if the key has just been released
         \param idx the key of interest
@@ -181,27 +182,27 @@ class DaisyField
         \param idx The knob of interest.
     */
     float GetKnobValue(size_t idx) const;
-     
+
     /** Returns the CV input's value
         \param idx The CV input of interest.
     */
     float GetCvValue(size_t idx) const;
-     
+
     /** Getter for switch objects
         \param idx The switch of interest.
     */
     Switch* GetSwitch(size_t idx);
-     
+
     /** Getter for knob objects
         \param idx The knob input of interest.
     */
     AnalogControl* GetKnob(size_t idx);
-     
+
     /** Getter for CV objects.
         \param idx The CV input of interest.
     */
     AnalogControl* GetCv(size_t idx);
-     
+
     /**Light show, cycling through all LEDs, and OLED
      **/
     void VegasMode();
@@ -214,7 +215,7 @@ class DaisyField
     Switch                    sw[SW_LAST];
     AnalogControl             knob[KNOB_LAST];
     AnalogControl             cv[CV_LAST];
-    
+
   private:
     dsy_sr_4021_handle keyboard_sr_;
     uint8_t            keyboard_state_[16];

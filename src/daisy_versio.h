@@ -97,7 +97,7 @@ class DaisyVersio
 
     /** Returns the rate in Hz that the Audio callback is called */
     float AudioCallbackRate();
-    
+
     /** Start analog to digital conversion.*/
     void StartAdc();
 
@@ -109,16 +109,16 @@ class DaisyVersio
 
     /** Does what it says */
     inline void ProcessAllControls() { ProcessAnalogControls(); }
-    
+
     /** Returns true if momentary switch is pressed */
     bool SwitchPressed();
-    
+
     /** Returns true if gate in is HIGH */
     bool Gate();
-    
+
     /** Set an LED (idx < 4) to a color */
     void SetLed(size_t idx, float red, float green, float blue);
-    
+
     /** Get Knob Value, float from 0.0f to 1.0f */
     float GetKnobValue(int idx);
 
@@ -130,12 +130,12 @@ class DaisyVersio
      **/
     void UpdateExample();
 
-    DaisySeed seed;
-    RgbLed    leds[LED_LAST];
+    DaisySeed     seed;
+    RgbLed        leds[LED_LAST];
     AnalogControl knobs[KNOB_LAST];
     Switch        tap;
     GateIn        gate;
-    Switch3 sw[SW_LAST];
+    Switch3       sw[SW_LAST];
 };
 
 } // namespace daisy
