@@ -49,7 +49,11 @@ void Logger<dest>::StartLog(bool wait_for_pc)
     impl_.Init();
     /* if waiting for PC, use blocking transmission */
     pc_sync_ = wait_for_pc ? LOGGER_SYNC_IN : LOGGER_SYNC_OUT;
+    /** transmit something to stall the UART until a terminal is connected
+     * at least two separate calls are required
+     */ 
     PrintLine("Daisy is online");
+    PrintLine("===============");
 }
 
 template <LoggerDestination dest>
