@@ -363,15 +363,9 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
 
 void AdcHandle::Start()
 {
-    size_t rx_size;
     HAL_ADCEx_Calibration_Start(
         &adc.hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED);
-
-    // When using the mux we use the HalfCplt callback to fill data, and the pins change
-    // while converting the 'second half' of data (which just gets trashed for now).
-    // This does affect the ADC read speed so we only do this when the mux is used.
-    rx_size = adc.mux_used ? adc.channels * 2 : adc.channels;
-    HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, rx_size);
+    HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 
 void AdcHandle::Stop()
@@ -433,15 +427,42 @@ write_mux_value(uint8_t chn, uint8_t idx, uint8_t num_mux_pins_to_write)
     }
 }
 
+static void adc_init_dma1()
+{
+    adc.hdma_adc1.Instance                 = DMA1_Stream2;
+    adc.hdma_adc1.Init.Request             = DMA_REQUEST_ADC1;
+    adc.hdma_adc1.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+    adc.hdma_adc1.Init.PeriphInc           = DMA_PINC_DISABLE;
+    adc.hdma_adc1.Init.MemInc              = DMA_MINC_ENABLE;
+    adc.hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
+    adc.hdma_adc1.Init.MemDataAlignment    = DMA_MDATAALIGN_HALFWORD;
+    if(adc.mux_used)
+        adc.hdma_adc1.Init.Mode = DMA_NORMAL;
+    else
+        adc.hdma_adc1.Init.Mode = DMA_CIRCULAR;
+    adc.hdma_adc1.Init.Priority = DMA_PRIORITY_MEDIUM;
+    adc.hdma_adc1.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
+    if(HAL_DMA_Init(&adc.hdma_adc1) != HAL_OK)
+    {
+        Error_Handler();
+    }
+
+    __HAL_LINKDMA(&adc.hadc1, DMA_Handle, adc.hdma_adc1);
+}
+
+// Handle Externally Multiplexed Pins
+// This is called from the CpltCallback, only when at least one multiplexor is used.
+// When this is the case the DMA is also configured in normal mode instead of circular.
+//
+// This allows the DMA to stop while the GPIO switch, and then once that is done
+// the DMA Transfer is started again. This prevents issues with data being read to the wrong channels
+//
+// We could set up everything to run from a timer and provide a few microseconds
+// to adjust pins before resuming reading, but that won't work with how everything
+// is set up right now.
 static void adc_internal_callback()
 {
-    // Handle Externally Multiplexed Pins
-    // This is called from the HalfCpltCallback. The data from the second half will
-    // be trash because the mux pins are being changed during conversion.
-    //
-    // We could set up everything to run from a timer and provide a few microseconds
-    // to adjust pins before resuming reading, but that won't work with how everything
-    // is set up right now.
+    HAL_ADC_Stop_DMA(&adc.hadc1);
     for(uint16_t i = 0; i < adc.channels; i++)
     {
         const uint8_t chn              = i;
@@ -459,6 +480,9 @@ static void adc_internal_callback()
                 chn, adc.mux_index[chn], adc.num_mux_pins_required[chn]);
         }
     }
+    // Restart DMA
+    adc_init_dma1();
+    HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 
 
@@ -469,26 +493,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
     {
         // ADC1 clock enable
         __HAL_RCC_ADC12_CLK_ENABLE();
-
-        // GPIO Init has already happened. . .
-        // ADC1 DMA Init
-        // ADC1 Init
-        adc.hdma_adc1.Instance                 = DMA1_Stream2;
-        adc.hdma_adc1.Init.Request             = DMA_REQUEST_ADC1;
-        adc.hdma_adc1.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-        adc.hdma_adc1.Init.PeriphInc           = DMA_PINC_DISABLE;
-        adc.hdma_adc1.Init.MemInc              = DMA_MINC_ENABLE;
-        adc.hdma_adc1.Init.PeriphDataAlignment = DMA_PDATAALIGN_HALFWORD;
-        adc.hdma_adc1.Init.MemDataAlignment    = DMA_MDATAALIGN_HALFWORD;
-        adc.hdma_adc1.Init.Mode                = DMA_CIRCULAR;
-        adc.hdma_adc1.Init.Priority            = DMA_PRIORITY_LOW;
-        adc.hdma_adc1.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-        if(HAL_DMA_Init(&adc.hdma_adc1) != HAL_OK)
-        {
-            Error_Handler();
-        }
-
-        __HAL_LINKDMA(adcHandle, DMA_Handle, adc.hdma_adc1);
+        adc_init_dma1();
     }
 }
 
@@ -513,9 +518,9 @@ extern "C"
 {
     void DMA1_Stream2_IRQHandler(void) { HAL_DMA_IRQHandler(&adc.hdma_adc1); }
 
-    void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc)
+    void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     {
-        if(hadc->Instance == ADC1)
+        if(hadc->Instance == ADC1 && adc.mux_used)
         {
             adc_internal_callback();
         }
