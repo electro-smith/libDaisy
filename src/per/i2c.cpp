@@ -23,6 +23,25 @@ class I2CHandle::Impl
                                   I2CHandle::CallbackFunctionPtr callback,
                                   void* callback_context);
 
+    I2CHandle::Result ReceiveBlocking(uint16_t address,
+                                      uint8_t* data,
+                                      uint16_t size,
+                                      uint32_t timeout);
+
+    I2CHandle::Result ReadDataAtAddress(uint16_t address,
+                                        uint16_t mem_address,
+                                        uint16_t mem_address_size,
+                                        uint8_t* data,
+                                        uint16_t data_size,
+                                        uint32_t timeout);
+
+    I2CHandle::Result WriteDataAtAddress(uint16_t address,
+                                         uint16_t mem_address,
+                                         uint16_t mem_address_size,
+                                         uint8_t* data,
+                                         uint16_t data_size,
+                                         uint32_t timeout);
+
     // =========================================================
     // scheduling and global functions
     struct DmaJob
@@ -258,6 +277,67 @@ I2CHandle::Impl::TransmitDma(uint16_t                       address,
         // start transmission right away
         return StartDmaTransfer(
             address, data, size, callback, callback_context);
+}
+
+I2CHandle::Result I2CHandle::Impl::ReceiveBlocking(uint16_t address,
+                                                   uint8_t* data,
+                                                   uint16_t size,
+                                                   uint32_t timeout)
+{
+    // wait for previous transfer to be finished
+    while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
+
+    if(HAL_I2C_Master_Receive(
+           &i2c_hal_handle_, address << 1, data, size, timeout)
+       != HAL_OK)
+        return I2CHandle::Result::ERR;
+    return I2CHandle::Result::OK;
+}
+
+I2CHandle::Result I2CHandle::Impl::ReadDataAtAddress(uint16_t address,
+                                                     uint16_t mem_address,
+                                                     uint16_t mem_address_size,
+                                                     uint8_t* data,
+                                                     uint16_t data_size,
+                                                     uint32_t timeout)
+{
+    // wait for previous transfer to be finished
+    while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
+    if(HAL_I2C_Mem_Read(&i2c_hal_handle_,
+                        address,
+                        mem_address,
+                        mem_address_size,
+                        data,
+                        data_size,
+                        timeout)
+       != HAL_OK)
+    {
+        return I2CHandle::Result::ERR;
+    }
+    return I2CHandle::Result::OK;
+}
+
+I2CHandle::Result I2CHandle::Impl::WriteDataAtAddress(uint16_t address,
+                                                      uint16_t mem_address,
+                                                      uint16_t mem_address_size,
+                                                      uint8_t* data,
+                                                      uint16_t data_size,
+                                                      uint32_t timeout)
+{
+    // wait for previous transfer to be finished
+    while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
+    if(HAL_I2C_Mem_Write(&i2c_hal_handle_,
+                         address,
+                         mem_address,
+                         mem_address_size,
+                         data,
+                         data_size,
+                         timeout)
+       != HAL_OK)
+    {
+        return I2CHandle::Result::ERR;
+    }
+    return I2CHandle::Result::OK;
 }
 
 I2CHandle::Result
@@ -519,6 +599,14 @@ I2CHandle::Result I2CHandle::TransmitBlocking(uint16_t address,
     return pimpl_->TransmitBlocking(address, data, size, timeout);
 }
 
+I2CHandle::Result I2CHandle::ReceiveBlocking(uint16_t address,
+                                             uint8_t* data,
+                                             uint16_t size,
+                                             uint32_t timeout)
+{
+    return pimpl_->ReceiveBlocking(address, data, size, timeout);
+}
+
 I2CHandle::Result
 I2CHandle::TransmitDma(uint16_t                       address,
                        uint8_t*                       data,
@@ -527,6 +615,29 @@ I2CHandle::TransmitDma(uint16_t                       address,
                        void*                          callback_context)
 {
     return pimpl_->TransmitDma(address, data, size, callback, callback_context);
+}
+
+
+I2CHandle::Result I2CHandle::ReadDataAtAddress(uint16_t address,
+                                               uint16_t mem_address,
+                                               uint16_t mem_address_size,
+                                               uint8_t* data,
+                                               uint16_t data_size,
+                                               uint32_t timeout)
+{
+    return pimpl_->ReadDataAtAddress(
+        address, mem_address, mem_address_size, data, data_size, timeout);
+}
+
+I2CHandle::Result I2CHandle::WriteDataAtAddress(uint16_t address,
+                                                uint16_t mem_address,
+                                                uint16_t mem_address_size,
+                                                uint8_t* data,
+                                                uint16_t data_size,
+                                                uint32_t timeout)
+{
+    return pimpl_->WriteDataAtAddress(
+        address, mem_address, mem_address_size, data, data_size, timeout);
 }
 
 } // namespace daisy

@@ -34,6 +34,7 @@ daisy_petal \
 daisy_field \
 daisy_versio \
 dev/sr_595 \
+dev/codec_pcm3060 \
 hid/ctrl \
 hid/encoder \
 hid/gatein \
@@ -278,7 +279,7 @@ C_INCLUDES = \
 -I$(MODULE_DIR) \
 -I. 
 
-WARNINGS = -Wall -Wno-attributes -Wno-strict-aliasing -Wno-maybe-uninitialized #-Werror
+WARNINGS = -Wall -Wno-attributes -Wno-strict-aliasing -Wno-maybe-uninitialized -Wno-missing-attributes #-Werror
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_INCLUDES) $(AS_DEFS) -ggdb $(WARNINGS) $(OPT) -fdata-sections -ffunction-sections
