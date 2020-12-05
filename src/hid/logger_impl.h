@@ -2,10 +2,10 @@
 #ifndef __DSY_LOGGER_IMPL_H
 #define __DSY_LOGGER_IMPL_H
 #include <unistd.h>
+#include <cassert>
 #include "hid/usb.h"
 #include "usbd_def.h"
 #include "sys/system.h"
-#include <assert.h>
 
 
 namespace daisy

@@ -1,7 +1,7 @@
-#include <string.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include <assert.h>
+#include <cstring>
+#include <cstdarg>
+#include <cstdio>
+#include <cassert>
 #include "logger.h"
 
 namespace daisy

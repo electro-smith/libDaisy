@@ -2,6 +2,9 @@
 #ifndef __DSY_LOGGER_H__
 #define __DSY_LOGGER_H__
 
+#include <cmath>
+#include <cstdarg>
+#include <cstdio>
 #include "logger_impl.h"
 
 namespace daisy
