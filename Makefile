@@ -46,6 +46,7 @@ hid/rgb_led \
 hid/switch \
 hid/usb \
 hid/wavplayer \
+hid/logger \
 per/adc \
 per/i2c \
 per/spi \

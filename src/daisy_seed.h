@@ -11,7 +11,8 @@ namespace daisy
 {
 /**
    @brief This is the higher-level interface for the Daisy board. \n 
-    All basic peripheral configuration/initialization is setup here.
+    All basic peripheral configuration/initialization is setup here. \n
+
    @ingroup boards
 */
 class DaisySeed
@@ -101,6 +102,30 @@ class DaisySeed
      */
     void SetTestPoint(bool state);
 
+    /** Print formatted debug log message
+     */
+    template <typename... VA>
+    static void Print(const char* format, VA... va)
+    {
+        Log::Print(format, va...);
+    }
+
+    /** Print formatted debug log message with automatic line termination
+    */
+    template <typename... VA>
+    static void PrintLine(const char* format, VA... va)
+    {
+        Log::PrintLine(format, va...);
+    }
+
+    /** Start the logging session. Optionally wait for terminal connection before proceeding.
+    */
+    static void StartLog(bool wait_for_pc = false)
+    {
+        Log::StartLog(wait_for_pc);
+    }
+
+
     // While the library is still in heavy development, most of the
     // configuration handles will remain public.
     dsy_sdram_handle sdram_handle; /**< & */
@@ -111,6 +136,11 @@ class DaisySeed
     UsbHandle        usb_handle;   /**< & */
 
   private:
+    /** Local shorthand for debug log destination
+    */
+    using Log = Logger<LOGGER_INTERNAL>;
+
+
     void ConfigureSdram();
     void ConfigureQspi();
     void ConfigureAudio();

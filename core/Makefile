@@ -120,9 +120,11 @@ C_INCLUDES ?=
 C_INCLUDES += \
 -I$(LIBDAISY_DIR) \
 -I$(LIBDAISY_DIR)/src/ \
+-I$(LIBDAISY_DIR)/src/usbd \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/Include/ \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/Device/ST/STM32H7xx/Include \
 -I$(LIBDAISY_DIR)/Drivers/STM32H7xx_HAL_Driver/Inc/ \
+-I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc \
 -I$(SYSTEM_FILES_DIR)/ \
 -I$(DAISYSP_DIR) \
 

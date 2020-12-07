@@ -30,6 +30,7 @@
 #include "hid/gatein.h"
 #include "hid/parameter.h"
 #include "hid/usb.h"
+#include "hid/logger.h"
 #include "per/sai.h"
 #include "per/sdmmc.h"
 #include "per/spi.h"
