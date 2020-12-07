@@ -241,26 +241,45 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     }
     // Set Config Pointer and data for use in MspInit
     adc.channels = num_channels;
+    adc.mux_used
+        = false; // set false, and let any pin using it override this setting.
     for(size_t i = 0; i < num_channels_; i++)
     {
         adc.pin_cfg[i]      = cfg[i];
         adc.dma_buffer[i]   = 0;
         adc.mux_channels[i] = cfg[i].mux_channels_;
+        if(cfg[i].mux_channels_ > 0)
+            adc.mux_used = true;
     }
-    adc.hadc1.Instance                      = ADC1;
-    adc.hadc1.Init.ClockPrescaler           = ADC_CLOCK_ASYNC_DIV2;
-    adc.hadc1.Init.Resolution               = ADC_RESOLUTION_16B;
-    adc.hadc1.Init.ScanConvMode             = ADC_SCAN_ENABLE;
-    adc.hadc1.Init.EOCSelection             = ADC_EOC_SEQ_CONV;
-    adc.hadc1.Init.LowPowerAutoWait         = DISABLE;
-    adc.hadc1.Init.ContinuousConvMode       = ENABLE;
-    adc.hadc1.Init.NbrOfConversion          = adc.channels;
-    adc.hadc1.Init.DiscontinuousConvMode    = DISABLE;
-    adc.hadc1.Init.ExternalTrigConv         = ADC_SOFTWARE_START;
-    adc.hadc1.Init.ExternalTrigConvEdge     = ADC_EXTERNALTRIGCONVEDGE_NONE;
-    adc.hadc1.Init.ConversionDataManagement = ADC_CONVERSIONDATA_DMA_CIRCULAR;
-    adc.hadc1.Init.Overrun                  = ADC_OVR_DATA_PRESERVED;
-    adc.hadc1.Init.LeftBitShift             = ADC_LEFTBITSHIFT_NONE;
+    adc.hadc1.Instance                  = ADC1;
+    adc.hadc1.Init.ClockPrescaler       = ADC_CLOCK_ASYNC_DIV2;
+    adc.hadc1.Init.Resolution           = ADC_RESOLUTION_16B;
+    adc.hadc1.Init.ScanConvMode         = ADC_SCAN_ENABLE;
+    adc.hadc1.Init.EOCSelection         = ADC_EOC_SEQ_CONV;
+    adc.hadc1.Init.LowPowerAutoWait     = DISABLE;
+    adc.hadc1.Init.NbrOfConversion      = adc.channels;
+    adc.hadc1.Init.ExternalTrigConv     = ADC_SOFTWARE_START;
+    adc.hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+
+    // Set ConversionDataManagement, and (Dis)Continuous based on whether
+    // the callback needs to be used, or if the ADC can run in circular
+    if(!adc.mux_used)
+    {
+        adc.hadc1.Init.ContinuousConvMode    = ENABLE;
+        adc.hadc1.Init.DiscontinuousConvMode = DISABLE;
+        adc.hadc1.Init.ConversionDataManagement
+            = ADC_CONVERSIONDATA_DMA_CIRCULAR;
+    }
+    else
+    {
+        adc.hadc1.Init.ContinuousConvMode    = DISABLE;
+        adc.hadc1.Init.DiscontinuousConvMode = ENABLE;
+        adc.hadc1.Init.ConversionDataManagement
+            = ADC_CONVERSIONDATA_DMA_ONESHOT;
+    }
+
+    adc.hadc1.Init.Overrun      = ADC_OVR_DATA_PRESERVED;
+    adc.hadc1.Init.LeftBitShift = ADC_LEFTBITSHIFT_NONE;
     // Handle Oversampling
     if(oversampling_)
     {
@@ -332,8 +351,6 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     sConfig.SingleDiff   = ADC_SINGLE_ENDED;
     sConfig.OffsetNumber = ADC_OFFSET_NONE;
     sConfig.Offset       = 0;
-    adc.mux_used
-        = false; // set false, and let any pin using it override this setting.
     for(uint8_t i = 0; i < adc.channels; i++)
     {
         const auto& cfg = adc.pin_cfg[i];
@@ -346,7 +363,6 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
             = get_num_mux_pins_required(cfg.mux_channels_);
         if(cfg.mux_channels_ > 0)
         {
-            adc.mux_used = true;
             for(int j = 0; j < adc.num_mux_pins_required[i]; j++)
                 dsy_gpio_init(&cfg.mux_pin_[j]);
         }
@@ -440,14 +456,14 @@ static void adc_init_dma1()
         adc.hdma_adc1.Init.Mode = DMA_NORMAL;
     else
         adc.hdma_adc1.Init.Mode = DMA_CIRCULAR;
-    adc.hdma_adc1.Init.Priority = DMA_PRIORITY_MEDIUM;
+    adc.hdma_adc1.Init.Priority = DMA_PRIORITY_LOW;
     adc.hdma_adc1.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
     if(HAL_DMA_Init(&adc.hdma_adc1) != HAL_OK)
     {
         Error_Handler();
     }
 
-    __HAL_LINKDMA(&adc.hadc1, DMA_Handle, adc.hdma_adc1);
+    //__HAL_LINKDMA(&adc.hadc1, DMA_Handle, adc.hdma_adc1);
 }
 
 // Handle Externally Multiplexed Pins
@@ -462,7 +478,6 @@ static void adc_init_dma1()
 // is set up right now.
 static void adc_internal_callback()
 {
-    HAL_ADC_Stop_DMA(&adc.hadc1);
     for(uint16_t i = 0; i < adc.channels; i++)
     {
         const uint8_t chn              = i;
@@ -494,6 +509,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* adcHandle)
         // ADC1 clock enable
         __HAL_RCC_ADC12_CLK_ENABLE();
         adc_init_dma1();
+        __HAL_LINKDMA(&adc.hadc1, DMA_Handle, adc.hdma_adc1);
     }
 }
 
@@ -523,6 +539,28 @@ extern "C"
         if(hadc->Instance == ADC1 && adc.mux_used)
         {
             adc_internal_callback();
+        }
+    }
+
+    /*
+     * For some reason the flags for injected conversions were getting set.
+     * When I went to implement a simple callback to clear them it stopped happening
+     * So I guess this doesn't need to be here..
+     */
+    void HAL_Injected_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+    {
+#if DEBUG
+        asm("bkpt 255");
+#endif
+    }
+
+    void HAL_ADC_ErrorCallback(ADC_HandleTypeDef* hadc)
+    {
+        if(hadc->Instance == ADC1)
+        {
+#if DEBUG
+            asm("bkpt 255");
+#endif
         }
     }
 }
