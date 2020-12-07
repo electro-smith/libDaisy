@@ -1,16 +1,7 @@
 var searchData=
 [
-  ['samplerate',['SampleRate',['../struct_w_a_v___format_type_def.html#ae8c4e494feaf378e05635d989f95b0b1',1,'WAV_FormatTypeDef']]],
-  ['scl',['scl',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a168960729dc107c030c3a7cfe5c4b138',1,'daisy::I2CHandle::Config']]],
-  ['sda',['sda',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a8d0a82df1f49113e5e4e2aff071e16e3',1,'daisy::I2CHandle::Config']]],
-  ['sdram_5fhandle',['sdram_handle',['../classdaisy_1_1_daisy_seed.html#a03d712e565ea71ec3d7126d0bbab6220',1,'daisy::DaisySeed']]],
-  ['seed',['seed',['../classdaisy_1_1_daisy_patch.html#a4705ca24e5ebc4d8add7d83232162fd7',1,'daisy::DaisyPatch::seed()'],['../classdaisy_1_1_daisy_petal.html#a2ef75f14bf008985bf6635e9ce87106a',1,'daisy::DaisyPetal::seed()'],['../classdaisy_1_1_daisy_pod.html#a75907b96ea78262bf52dd7b565136f58',1,'daisy::DaisyPod::seed()']]],
-  ['speed',['speed',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a7795ab9b3b85bd2f51950b6985a31b97',1,'daisy::I2CHandle::Config::speed()'],['../structdaisy_1_1_sdmmc_handler_init.html#afee5b8e925f0cbb76bab2904620a71b7',1,'daisy::SdmmcHandlerInit::speed()']]],
-  ['state',['state',['../structdsy__sdram__handle.html#a052f782ca4905360ced7ebede5d29e3a',1,'dsy_sdram_handle']]],
-  ['states',['states',['../structdsy__sr__4021__handle.html#a0320ddfe5eafa904ffe6c7d3cec768b9',1,'dsy_sr_4021_handle']]],
-  ['subchunk1id',['SubChunk1ID',['../struct_w_a_v___format_type_def.html#a474c9112ff1341977e1f7d27857b64d3',1,'WAV_FormatTypeDef']]],
-  ['subchunk1size',['SubChunk1Size',['../struct_w_a_v___format_type_def.html#ae01d4cc44b15138a0d3c61b44b7aec41',1,'WAV_FormatTypeDef']]],
-  ['subchunk2id',['SubChunk2ID',['../struct_w_a_v___format_type_def.html#a5c3005998567669d67325318beaffac0',1,'WAV_FormatTypeDef']]],
-  ['subchunk2size',['SubCHunk2Size',['../struct_w_a_v___format_type_def.html#a807f0466f9d7cee763cf942f21224469',1,'WAV_FormatTypeDef']]],
-  ['switches',['switches',['../classdaisy_1_1_daisy_petal.html#a4c23c5086d0620b98c2d4a86fde53af2',1,'daisy::DaisyPetal']]]
+  ['r',['r',['../structcodec__frame__t.html#af2cb35aeb7028aed988bb028c9ec15cd',1,'codec_frame_t']]],
+  ['raw_5fdata',['raw_data',['../structdaisy_1_1_wav_file_info.html#ad1e3c8f4c720cbbdfbdf26b5a2ea2903',1,'daisy::WavFileInfo']]],
+  ['relcardadd',['RelCardAdd',['../struct_d_s_y___s_d___card_info_type_def.html#a5c530fb4ff9a3032125d75a44e9b0a0a',1,'DSY_SD_CardInfoTypeDef']]],
+  ['ring_5fled',['ring_led',['../classdaisy_1_1_daisy_petal.html#a24abaac2327c0057f99b5d5a4f15bd5a',1,'daisy::DaisyPetal']]]
 ];

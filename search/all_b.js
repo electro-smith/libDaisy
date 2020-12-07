@@ -40,5 +40,21 @@ var searchData=
   ['listen',['Listen',['../classdaisy_1_1_midi_handler.html#ac2ca9597f4c77060935dc69dec399c35',1,'daisy::MidiHandler']]],
   ['logarithmic',['LOGARITHMIC',['../classdaisy_1_1_parameter.html#a2fcb1b7095721f0de77594aabb9594daaab531abbd03c5a2fc2290daa5a1f39c0',1,'daisy::Parameter']]],
   ['logblocknbr',['LogBlockNbr',['../struct_d_s_y___s_d___card_info_type_def.html#a83eb54ea440525359ef09e5751741037',1,'DSY_SD_CardInfoTypeDef']]],
-  ['logblocksize',['LogBlockSize',['../struct_d_s_y___s_d___card_info_type_def.html#aad9fe6b0ee0775a2eb950198b761b5ec',1,'DSY_SD_CardInfoTypeDef']]]
+  ['logblocksize',['LogBlockSize',['../struct_d_s_y___s_d___card_info_type_def.html#aad9fe6b0ee0775a2eb950198b761b5ec',1,'DSY_SD_CardInfoTypeDef']]],
+  ['logger',['Logger',['../classdaisy_1_1_logger.html',1,'daisy']]],
+  ['logger',['Logger',['../group__external.html#ga6189e1a0ce4afd0cd9b4440e03e3e6ec',1,'daisy::Logger']]],
+  ['logger_3c_20logger_5fnone_20_3e',['Logger&lt; LOGGER_NONE &gt;',['../classdaisy_1_1_logger_3_01_l_o_g_g_e_r___n_o_n_e_01_4.html',1,'daisy']]],
+  ['logger_5fbuffer',['LOGGER_BUFFER',['../group__external.html#ga47cadc034f5b4deefe0624c1103af935',1,'logger.h']]],
+  ['logger_5fexternal',['LOGGER_EXTERNAL',['../namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a514faa079167bd6603fdc2f5fdbc9e31',1,'daisy']]],
+  ['logger_5finternal',['LOGGER_INTERNAL',['../namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a00331b25c8a9c6e3210b61e137eab738',1,'daisy']]],
+  ['logger_5fnewline',['LOGGER_NEWLINE',['../group__external.html#ga46e54be278e44eab5725a9c5d0927f0d',1,'logger.h']]],
+  ['logger_5fnone',['LOGGER_NONE',['../namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9abe26e3f70c7a279f12261780a9dbc7d6',1,'daisy']]],
+  ['logger_5fsemihost',['LOGGER_SEMIHOST',['../namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a6e8f437322ea4b40e3e85b1f61bfba70',1,'daisy']]],
+  ['logger_5fsync_5fin',['LOGGER_SYNC_IN',['../group__external.html#ggaa6626e0cc32e5d8a4259168bc05fc8bbacc5d5d5e161116c4482618987fec92b6',1,'daisy::Logger']]],
+  ['loggerconsts',['LoggerConsts',['../group__external.html#gaa6626e0cc32e5d8a4259168bc05fc8bb',1,'daisy::Logger']]],
+  ['loggerdestination',['LoggerDestination',['../namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9',1,'daisy']]],
+  ['loggerimpl',['LoggerImpl',['../classdaisy_1_1_logger_impl.html',1,'daisy']]],
+  ['loggerimpl_3c_20logger_5fexternal_20_3e',['LoggerImpl&lt; LOGGER_EXTERNAL &gt;',['../classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___e_x_t_e_r_n_a_l_01_4.html',1,'daisy']]],
+  ['loggerimpl_3c_20logger_5finternal_20_3e',['LoggerImpl&lt; LOGGER_INTERNAL &gt;',['../classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___i_n_t_e_r_n_a_l_01_4.html',1,'daisy']]],
+  ['loggerimpl_3c_20logger_5fsemihost_20_3e',['LoggerImpl&lt; LOGGER_SEMIHOST &gt;',['../classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___s_e_m_i_h_o_s_t_01_4.html',1,'daisy']]]
 ];

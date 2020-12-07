@@ -6,6 +6,7 @@ var searchData=
   ['updatedigitalcontrols',['UpdateDigitalControls',['../classdaisy_1_1_daisy_field.html#a717928516898bb366cbb711d5163c706',1,'daisy::DaisyField']]],
   ['updateleds',['UpdateLeds',['../classdaisy_1_1_daisy_petal.html#ab224cad4e33c800d36ab90184859b006',1,'daisy::DaisyPetal::UpdateLeds()'],['../classdaisy_1_1_daisy_pod.html#a77da50cfdca4810687adde08a4913135',1,'daisy::DaisyPod::UpdateLeds()'],['../classdaisy_1_1_daisy_versio.html#ad25ccf6c7994e35b95d8912a63f00e72',1,'daisy::DaisyVersio::UpdateLeds()']]],
   ['usb_5fhandle',['usb_handle',['../classdaisy_1_1_daisy_seed.html#aca07ac3af9281104c5e8006024b23ae8',1,'daisy::DaisySeed']]],
+  ['usb_5fhandle_5f',['usb_handle_',['../classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___i_n_t_e_r_n_a_l_01_4.html#aa72b7704835630d0a4b8c8e46fae8ee6',1,'daisy::LoggerImpl&lt; LOGGER_INTERNAL &gt;::usb_handle_()'],['../classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___e_x_t_e_r_n_a_l_01_4.html#aa83a8c57053eb33a321aa7273a95d1e4',1,'daisy::LoggerImpl&lt; LOGGER_EXTERNAL &gt;::usb_handle_()']]],
   ['usb_5fsiz_5fstring_5fserial',['USB_SIZ_STRING_SERIAL',['../group___u_s_b_d___d_e_s_c___exported___constants.html#ga76287dc6e5f3cf4566406bd9b2eb7a2f',1,'usbd_desc.h']]],
   ['usbd_5fcdc_5fif',['USBD_CDC_IF',['../group___u_s_b_d___c_d_c___i_f.html',1,'']]],
   ['usbd_5fcdc_5fif_2eh',['usbd_cdc_if.h',['../usbd__cdc__if_8h.html',1,'']]],

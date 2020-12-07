@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['periph',['periph',['../structdaisy_1_1_i2_c_handle_1_1_config.html#aa56d0330fdf37d13b2fea52f02c8f616',1,'daisy::I2CHandle::Config']]],
-  ['pin',['pin',['../structdsy__gpio__pin.html#a1edd34504a6d4d701bde32ae664afebd',1,'dsy_gpio_pin::pin()'],['../structdsy__gpio.html#a92d61fa4d53b923b328e7e1ca8a67100',1,'dsy_gpio::pin()']]],
-  ['pin_5f',['pin_',['../structdaisy_1_1_adc_channel_config.html#aaa26b95be3383f04543b4525ab04389a',1,'daisy::AdcChannelConfig']]],
-  ['pin_5fconfig',['pin_config',['../structdsy__sdram__handle.html#a8f4d548fed45826d2600699877e75c19',1,'dsy_sdram_handle::pin_config()'],['../structdsy__sr__4021__handle.html#a81d60b2613dea4fe8e8518bf038ad5f6',1,'dsy_sr_4021_handle::pin_config()'],['../structdsy__dac__handle.html#a3e2818d6be8c6b993bccba8401edf8b3',1,'dsy_dac_handle::pin_config()'],['../structdaisy_1_1_i2_c_handle_1_1_config.html#a5499df685d75f801fa1222895306233d',1,'daisy::I2CHandle::Config::pin_config()'],['../structdsy__qspi__handle.html#ad73f408ea07209c351c098c3f6e362e4',1,'dsy_qspi_handle::pin_config()']]],
-  ['port',['port',['../structdsy__gpio__pin.html#a1f18b0d77c637dde2a3febf5edf31237',1,'dsy_gpio_pin']]],
-  ['pull',['pull',['../structdsy__gpio.html#af15905326174d62efafda5775d2aea8a',1,'dsy_gpio']]]
+  ['name',['name',['../structdaisy_1_1_wav_file_info.html#ac1ed8afd18796f33e4eb163f56fcf154',1,'daisy::WavFileInfo']]],
+  ['nbrchannels',['NbrChannels',['../struct_w_a_v___format_type_def.html#a2a27c3c466e9ac1fa2966291cfdb2989',1,'WAV_FormatTypeDef']]],
+  ['note',['note',['../structdaisy_1_1_note_on_event.html#ab457a7574235f856d5e2d16ae51b3a20',1,'daisy::NoteOnEvent']]],
+  ['num_5fdaisychained',['num_daisychained',['../structdsy__sr__4021__handle.html#ad00b14dda18d899db6bcfe2c50b7b63e',1,'dsy_sr_4021_handle']]],
+  ['num_5fparallel',['num_parallel',['../structdsy__sr__4021__handle.html#a04038bcce260f2a1448f6bbf60738fef',1,'dsy_sr_4021_handle']]]
 ];

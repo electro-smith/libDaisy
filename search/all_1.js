@@ -7,6 +7,7 @@ var searchData=
   ['analog_5fdigital_5fconversion',['ANALOG_DIGITAL_CONVERSION',['../group__analog__digital__conversion.html',1,'']]],
   ['analogcontrol',['AnalogControl',['../classdaisy_1_1_analog_control.html',1,'daisy']]],
   ['analogcontrol',['AnalogControl',['../classdaisy_1_1_analog_control.html#a1030730b53fe183361b282c277fd0d57',1,'daisy::AnalogControl']]],
+  ['appendnewline',['AppendNewLine',['../group__external.html#ga4a2e08e7060bbe28c4b34d24d42f7ece',1,'daisy::Logger']]],
   ['ascontrolchange',['AsControlChange',['../structdaisy_1_1_midi_event.html#a95ed496b1b526f640376d5819131d064',1,'daisy::MidiEvent']]],
   ['asnoteon',['AsNoteOn',['../structdaisy_1_1_midi_event.html#af7ea0405629907b3a10acdc50c1ce7ec',1,'daisy::MidiEvent']]],
   ['audio',['AUDIO',['../group__audio.html',1,'']]],

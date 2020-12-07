@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bitdepth',['bitdepth',['../structdsy__dac__handle.html#abef82b9e9f042d39151a3b0854b005ba',1,'dsy_dac_handle::bitdepth()'],['../structdaisy_1_1_sdmmc_handler_init.html#a1c0e454b79884b6b1342d7406cb106ef',1,'daisy::SdmmcHandlerInit::bitdepth()'],['../structdaisy_1_1_sai_handle_1_1_config.html#aafe336101d7c50dd68e2611ccce7c808',1,'daisy::SaiHandle::Config::BitDepth()']]],
+  ['bitdepth',['BitDepth',['../structdaisy_1_1_sai_handle_1_1_config.html#aafe336101d7c50dd68e2611ccce7c808',1,'daisy::SaiHandle::Config::BitDepth()'],['../structdsy__dac__handle.html#abef82b9e9f042d39151a3b0854b005ba',1,'dsy_dac_handle::bitdepth()'],['../structdaisy_1_1_sdmmc_handler_init.html#a1c0e454b79884b6b1342d7406cb106ef',1,'daisy::SdmmcHandlerInit::bitdepth()']]],
   ['bitpersample',['BitPerSample',['../struct_w_a_v___format_type_def.html#a2a763477c7aecbf9e45446d13a44d162',1,'WAV_FormatTypeDef']]],
   ['block_5ferase_5f32k_5fcmd',['BLOCK_ERASE_32K_CMD',['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;flash_IS25LP080D.h']]],
   ['block_5ferase_5fcmd',['BLOCK_ERASE_CMD',['../group__flash.html#ga9b58e3d8eaefa240d9ccbac870fc1c2b',1,'BLOCK_ERASE_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga9b58e3d8eaefa240d9ccbac870fc1c2b',1,'BLOCK_ERASE_CMD():&#160;flash_IS25LP080D.h']]],

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['usb_5fhandle',['usb_handle',['../classdaisy_1_1_daisy_seed.html#aca07ac3af9281104c5e8006024b23ae8',1,'daisy::DaisySeed']]],
-  ['usbd_5finterface_5ffops_5ffs',['USBD_Interface_fops_FS',['../group___u_s_b_d___c_d_c___i_f___exported___variables.html#ga99394ed19b774f171df96c2848c411ed',1,'usbd_cdc_if.h']]],
-  ['usbd_5finterface_5ffops_5fhs',['USBD_Interface_fops_HS',['../group___u_s_b_d___c_d_c___i_f___exported___variables.html#ga54c4abfdfb31c4abdb087abdbbeb65d6',1,'usbd_cdc_if.h']]]
+  ['tx_5fbuff_5f',['tx_buff_',['../group__external.html#gab254d9ed55afc936ae351128a3209484',1,'daisy::Logger']]],
+  ['tx_5fptr_5f',['tx_ptr_',['../group__external.html#ga00faf12f737b89347c2a9f7af123b25f',1,'daisy::Logger']]],
+  ['type',['type',['../structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91',1,'daisy::MidiEvent']]]
 ];
