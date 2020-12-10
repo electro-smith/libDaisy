@@ -166,6 +166,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a33ff3c1fc69dfc391cdf202ee2f332cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa164af66eba7f3e5577d53ca5cd53b71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_versio.html#aa164af66eba7f3e5577d53ca5cd53b71">ProcessAnalogControls</a> ()</td></tr>
 <tr class="separator:aa164af66eba7f3e5577d53ca5cd53b71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac680c7da2f51a209b95b3b559b2d9310"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_versio.html#ac680c7da2f51a209b95b3b559b2d9310">ProcessAllControls</a> ()</td></tr>
+<tr class="separator:ac680c7da2f51a209b95b3b559b2d9310"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c1972b50f762a75aec4bcc5baa99bb7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_versio.html#a2c1972b50f762a75aec4bcc5baa99bb7">SwitchPressed</a> ()</td></tr>
 <tr class="separator:a2c1972b50f762a75aec4bcc5baa99bb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac23598501407665871cd4819fbdb458a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_versio.html#ac23598501407665871cd4819fbdb458a">Gate</a> ()</td></tr>
@@ -188,6 +190,18 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ac70b2e95ff30a0567892577277a01b02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac70b2e95ff30a0567892577277a01b02"></a>
 <a class="el" href="classdaisy_1_1_rgb_led.html">RgbLed</a>&#160;</td><td class="memItemRight" valign="bottom"><b>leds</b> [LED_LAST]</td></tr>
 <tr class="separator:ac70b2e95ff30a0567892577277a01b02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04fcf008e5f506d818a0f52dc9a63c52"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04fcf008e5f506d818a0f52dc9a63c52"></a>
+<a class="el" href="classdaisy_1_1_analog_control.html">AnalogControl</a>&#160;</td><td class="memItemRight" valign="bottom"><b>knobs</b> [KNOB_LAST]</td></tr>
+<tr class="separator:a04fcf008e5f506d818a0f52dc9a63c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79d471972f35f43ae892357457715e6f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79d471972f35f43ae892357457715e6f"></a>
+<a class="el" href="classdaisy_1_1_switch.html">Switch</a>&#160;</td><td class="memItemRight" valign="bottom"><b>tap</b></td></tr>
+<tr class="separator:a79d471972f35f43ae892357457715e6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab35b4fd55a051a19cd49834b8c215978"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab35b4fd55a051a19cd49834b8c215978"></a>
+<a class="el" href="classdaisy_1_1_gate_in.html">GateIn</a>&#160;</td><td class="memItemRight" valign="bottom"><b>gate</b></td></tr>
+<tr class="separator:ab35b4fd55a051a19cd49834b8c215978"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa40cf7681aed764ecf3529b3573f0a25"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa40cf7681aed764ecf3529b3573f0a25"></a>
+<a class="el" href="classdaisy_1_1_switch3.html">Switch3</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sw</b> [SW_LAST]</td></tr>
+<tr class="separator:aa40cf7681aed764ecf3529b3573f0a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class that handles initializing all of the hardware specific to the Desmodus Versio hardware. <br />
@@ -198,9 +212,6 @@ Public Attributes</h2></td></tr>
 <a class="anchor" id="a1e35b58309ebae48f069b30e9c5e0117"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">size_t daisy::DaisyVersio::AudioBlockSize </td>
@@ -209,11 +220,6 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Returns the number of samples per channel in a block of audio. </p>
 
@@ -222,9 +228,6 @@ Public Attributes</h2></td></tr>
 <a class="anchor" id="a7be793497341298618481fac85c96f04"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">float daisy::DaisyVersio::AudioCallbackRate </td>
@@ -233,11 +236,6 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Returns the rate in Hz that the Audio callback is called </p>
 
@@ -246,9 +244,6 @@ Public Attributes</h2></td></tr>
 <a class="anchor" id="acb58ac0c618ca8ce5a2ccfa6c1a72d18"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">float daisy::DaisyVersio::AudioSampleRate </td>
@@ -257,11 +252,6 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Returns the audio sample rate in Hz as a floating point number. </p>
 
@@ -336,9 +326,6 @@ Public Attributes</h2></td></tr>
 <a class="anchor" id="ac23598501407665871cd4819fbdb458a"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool daisy::DaisyVersio::Gate </td>
@@ -347,11 +334,6 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Returns true if gate in is HIGH </p>
 
@@ -390,6 +372,30 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="ac680c7da2f51a209b95b3b559b2d9310"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyVersio::ProcessAllControls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Does what it says </p>
+
+</div>
+</div>
 <a class="anchor" id="aa164af66eba7f3e5577d53ca5cd53b71"></a>
 <div class="memitem">
 <div class="memproto">
@@ -409,9 +415,6 @@ Public Attributes</h2></td></tr>
 <a class="anchor" id="af7c9ee88f95151cf6a1ce7caa77e09ca"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void daisy::DaisyVersio::SetAudioBlockSize </td>
@@ -421,11 +424,6 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Sets the number of samples processed per channel by the audio callback. </p>
 
@@ -434,9 +432,6 @@ Public Attributes</h2></td></tr>
 <a class="anchor" id="ae0612be43ce8620e9df2cbe7fa9c018e"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void daisy::DaisyVersio::SetAudioSampleRate </td>
@@ -446,11 +441,6 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Updates the Audio Sample Rate, and reinitializes. Audio must be stopped for this to work. </p>
 
@@ -459,9 +449,6 @@ Public Attributes</h2></td></tr>
 <a class="anchor" id="a1ebe1bea805a13bcc366de005c14a27c"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void daisy::DaisyVersio::SetLed </td>
@@ -493,11 +480,6 @@ Public Attributes</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Set an LED (idx &lt; 4) to a color </p>
 
@@ -506,9 +488,6 @@ Public Attributes</h2></td></tr>
 <a class="anchor" id="a2e0fb36f0915cb10ed1e04af68b99b7c"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void daisy::DaisyVersio::StartAdc </td>
@@ -517,11 +496,6 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Start analog to digital conversion. </p>
 
@@ -564,9 +538,6 @@ Public Attributes</h2></td></tr>
 <a class="anchor" id="a33ff3c1fc69dfc391cdf202ee2f332cb"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void daisy::DaisyVersio::StopAdc </td>
@@ -575,11 +546,6 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Stop converting ADCs </p>
 
@@ -588,9 +554,6 @@ Public Attributes</h2></td></tr>
 <a class="anchor" id="a2f9891f4d072f8492c1feb794880c4ed"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void daisy::DaisyVersio::StopAudio </td>
@@ -599,11 +562,6 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Stops the audio if it is running. </p>
 
@@ -612,9 +570,6 @@ Public Attributes</h2></td></tr>
 <a class="anchor" id="a2c1972b50f762a75aec4bcc5baa99bb7"></a>
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool daisy::DaisyVersio::SwitchPressed </td>
@@ -623,11 +578,6 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <p>Returns true if momentary switch is pressed </p>
 

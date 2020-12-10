@@ -149,12 +149,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a52112189562e5160b0d7e7157bbbac8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef89b7d3492d87652af2207f315e6c6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_patch.html#aef89b7d3492d87652af2207f315e6c6d">StartAdc</a> ()</td></tr>
 <tr class="separator:aef89b7d3492d87652af2207f315e6c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2ad525616e3ae3a336e8cff2fec9ab0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_patch.html#ae2ad525616e3ae3a336e8cff2fec9ab0">UpdateAnalogControls</a> ()</td></tr>
-<tr class="separator:ae2ad525616e3ae3a336e8cff2fec9ab0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5a66e6d84d61ab81aa821e3c46e10c4"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_patch.html#ae5a66e6d84d61ab81aa821e3c46e10c4">GetCtrlValue</a> (<a class="el" href="classdaisy_1_1_daisy_patch.html#aefa3638dd587fe20c48bbdfba3cd72b3">Ctrl</a> k)</td></tr>
-<tr class="separator:ae5a66e6d84d61ab81aa821e3c46e10c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a046a2f43d0ac7faa527707f2c7b7df07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_patch.html#a046a2f43d0ac7faa527707f2c7b7df07">DebounceControls</a> ()</td></tr>
-<tr class="separator:a046a2f43d0ac7faa527707f2c7b7df07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66aa03d67e904654fe1935bda7799010"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_patch.html#a66aa03d67e904654fe1935bda7799010">StopAdc</a> ()</td></tr>
+<tr class="separator:a66aa03d67e904654fe1935bda7799010"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fc2a9821f4dfebfc995d895003d9e80"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_patch.html#a5fc2a9821f4dfebfc995d895003d9e80">ProcessAnalogControls</a> ()</td></tr>
+<tr class="separator:a5fc2a9821f4dfebfc995d895003d9e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e42c5a45ba048a2453fe9d3d37a22a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_patch.html#a2e42c5a45ba048a2453fe9d3d37a22a8">ProcessAllControls</a> ()</td></tr>
+<tr class="separator:a2e42c5a45ba048a2453fe9d3d37a22a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e1fc433ce10bc0f3df3bd23d20ea587"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_patch.html#a3e1fc433ce10bc0f3df3bd23d20ea587">GetKnobValue</a> (<a class="el" href="classdaisy_1_1_daisy_patch.html#aefa3638dd587fe20c48bbdfba3cd72b3">Ctrl</a> k)</td></tr>
+<tr class="separator:a3e1fc433ce10bc0f3df3bd23d20ea587"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6b41b5b87cd3239962b5166e96aeed4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_patch.html#ad6b41b5b87cd3239962b5166e96aeed4">ProcessDigitalControls</a> ()</td></tr>
+<tr class="separator:ad6b41b5b87cd3239962b5166e96aeed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92c7dc12ffda2fff994a19935cd251e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_patch.html#a92c7dc12ffda2fff994a19935cd251e1">DisplayControls</a> (bool invert=true)</td></tr>
 <tr class="separator:a92c7dc12ffda2fff994a19935cd251e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -332,22 +336,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a046a2f43d0ac7faa527707f2c7b7df07"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::DaisyPatch::DebounceControls </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Debounce analog controls. Call at same rate as reading controls. </p>
-
-</div>
-</div>
 <a class="anchor" id="ad1d37ebfcfe6e45f7a4e334ea8409c5a"></a>
 <div class="memitem">
 <div class="memproto">
@@ -387,12 +375,12 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ae5a66e6d84d61ab81aa821e3c46e10c4"></a>
+<a class="anchor" id="a3e1fc433ce10bc0f3df3bd23d20ea587"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">float daisy::DaisyPatch::GetCtrlValue </td>
+          <td class="memname">float daisy::DaisyPatch::GetKnobValue </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classdaisy_1_1_daisy_patch.html#aefa3638dd587fe20c48bbdfba3cd72b3">Ctrl</a>&#160;</td>
           <td class="paramname"><em>k</em></td><td>)</td>
@@ -422,6 +410,62 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Initializes the daisy seed, and patch hardware. </p>
+
+</div>
+</div>
+<a class="anchor" id="a2e42c5a45ba048a2453fe9d3d37a22a8"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPatch::ProcessAllControls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Process Analog and Digital Controls </p>
+
+</div>
+</div>
+<a class="anchor" id="a5fc2a9821f4dfebfc995d895003d9e80"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPatch::ProcessAnalogControls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Call at same rate as reading controls for good reads. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad6b41b5b87cd3239962b5166e96aeed4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPatch::ProcessDigitalControls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Process the digital controls </p>
 
 </div>
 </div>
@@ -497,6 +541,22 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a66aa03d67e904654fe1935bda7799010"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPatch::StopAdc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops Transfering data from the ADC </p>
+
+</div>
+</div>
 <a class="anchor" id="a1f955cd08ba4228cb2cedbd953bc7094"></a>
 <div class="memitem">
 <div class="memproto">
@@ -510,22 +570,6 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Stops the audio </p>
-
-</div>
-</div>
-<a class="anchor" id="ae2ad525616e3ae3a336e8cff2fec9ab0"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::DaisyPatch::UpdateAnalogControls </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Call at same rate as reading controls for good reads. </p>
 
 </div>
 </div>

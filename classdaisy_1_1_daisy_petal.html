@@ -187,14 +187,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a95096d84d6d978bfb72b3ec9c791af76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa622a3f66ecb66b1980afd8ed223a60b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_petal.html#aa622a3f66ecb66b1980afd8ed223a60b">StartAdc</a> ()</td></tr>
 <tr class="separator:aa622a3f66ecb66b1980afd8ed223a60b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac79b389c66164768a964725189deb12f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_petal.html#ac79b389c66164768a964725189deb12f">UpdateAnalogControls</a> ()</td></tr>
-<tr class="separator:ac79b389c66164768a964725189deb12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6991d127bdc7dfa96d8a1ee168050746"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_petal.html#a6991d127bdc7dfa96d8a1ee168050746">StopAdc</a> ()</td></tr>
+<tr class="separator:a6991d127bdc7dfa96d8a1ee168050746"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac555e9b0982b43b48fc199f331fdebed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_petal.html#ac555e9b0982b43b48fc199f331fdebed">ProcessAnalogControls</a> ()</td></tr>
+<tr class="separator:ac555e9b0982b43b48fc199f331fdebed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad9315aa1fd67e420fdde543aafdc026d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_petal.html#ad9315aa1fd67e420fdde543aafdc026d">ProcessAllControls</a> ()</td></tr>
+<tr class="separator:ad9315aa1fd67e420fdde543aafdc026d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e0156fca684721f0ae445b8e4c2ebd7"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_petal.html#a1e0156fca684721f0ae445b8e4c2ebd7">GetKnobValue</a> (<a class="el" href="classdaisy_1_1_daisy_petal.html#a0273fd343346e74767bb5fc7bd290d64">Knob</a> k)</td></tr>
 <tr class="separator:a1e0156fca684721f0ae445b8e4c2ebd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a603974a7c50f2761b83b557504f4fe18"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_petal.html#a603974a7c50f2761b83b557504f4fe18">GetExpression</a> ()</td></tr>
 <tr class="separator:a603974a7c50f2761b83b557504f4fe18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb215401101f03ccfbc07736b11c5dbc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_petal.html#abb215401101f03ccfbc07736b11c5dbc">DebounceControls</a> ()</td></tr>
-<tr class="separator:abb215401101f03ccfbc07736b11c5dbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2edfc53a363c12e756b22f478c9682d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_petal.html#aa2edfc53a363c12e756b22f478c9682d">ProcessDigitalControls</a> ()</td></tr>
+<tr class="separator:aa2edfc53a363c12e756b22f478c9682d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8588251c1467e19448ee5c6d9cd8d721"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_petal.html#a8588251c1467e19448ee5c6d9cd8d721">ClearLeds</a> ()</td></tr>
 <tr class="separator:a8588251c1467e19448ee5c6d9cd8d721"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab224cad4e33c800d36ab90184859b006"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_petal.html#ab224cad4e33c800d36ab90184859b006">UpdateLeds</a> ()</td></tr>
@@ -529,22 +533,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="abb215401101f03ccfbc07736b11c5dbc"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::DaisyPetal::DebounceControls </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Debounce inputs. </p>
-
-</div>
-</div>
 <a class="anchor" id="a927afd75574f8fdd509e23a38c176ed9"></a>
 <div class="memitem">
 <div class="memproto">
@@ -619,6 +607,62 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Initialize daisy petal </p>
+
+</div>
+</div>
+<a class="anchor" id="ad9315aa1fd67e420fdde543aafdc026d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPetal::ProcessAllControls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Process Analog and Digital Controls </p>
+
+</div>
+</div>
+<a class="anchor" id="ac555e9b0982b43b48fc199f331fdebed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPetal::ProcessAnalogControls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Call at the same frequency as controls are read for stable readings. </p>
+
+</div>
+</div>
+<a class="anchor" id="aa2edfc53a363c12e756b22f478c9682d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPetal::ProcessDigitalControls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Process digital controls </p>
 
 </div>
 </div>
@@ -791,6 +835,22 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a6991d127bdc7dfa96d8a1ee168050746"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPetal::StopAdc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops Transfering data from the ADC </p>
+
+</div>
+</div>
 <a class="anchor" id="aa5f7f3b1730d3d7cfd5e64f863463f42"></a>
 <div class="memitem">
 <div class="memproto">
@@ -804,22 +864,6 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Stops the audio if it is running. </p>
-
-</div>
-</div>
-<a class="anchor" id="ac79b389c66164768a964725189deb12f"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::DaisyPetal::UpdateAnalogControls </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Call at the same frequency as controls are read for stable readings. </p>
 
 </div>
 </div>

@@ -144,12 +144,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa31d4e642c9b46a23927cd3cc2d8cec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac98cbdd0e34ec2cb994ca012f05e6317"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#ac98cbdd0e34ec2cb994ca012f05e6317">StartAdc</a> ()</td></tr>
 <tr class="separator:ac98cbdd0e34ec2cb994ca012f05e6317"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c20c15231d0ef1477a9bf3a7868d4d9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a2c20c15231d0ef1477a9bf3a7868d4d9">UpdateAnalogControls</a> ()</td></tr>
-<tr class="separator:a2c20c15231d0ef1477a9bf3a7868d4d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75a0c9b9647257856bcbad57fb9f91b4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a75a0c9b9647257856bcbad57fb9f91b4">StopAdc</a> ()</td></tr>
+<tr class="separator:a75a0c9b9647257856bcbad57fb9f91b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a362fb5374ca7c065aa337d894cbc091e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a362fb5374ca7c065aa337d894cbc091e">ProcessAnalogControls</a> ()</td></tr>
+<tr class="separator:a362fb5374ca7c065aa337d894cbc091e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abedf7cb7cb5ee4ac84f94264500bd941"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#abedf7cb7cb5ee4ac84f94264500bd941">ProcessAllControls</a> ()</td></tr>
+<tr class="separator:abedf7cb7cb5ee4ac84f94264500bd941"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c4ae1af60b078bb71e6b86a3cf8cf5a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a8c4ae1af60b078bb71e6b86a3cf8cf5a">GetKnobValue</a> (<a class="el" href="classdaisy_1_1_daisy_pod.html#a43462bcc3a3d5167a383a5eda489878f">Knob</a> k)</td></tr>
 <tr class="separator:a8c4ae1af60b078bb71e6b86a3cf8cf5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a409568a59ac47f55ca1d199b48f86cbd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a409568a59ac47f55ca1d199b48f86cbd">DebounceControls</a> ()</td></tr>
-<tr class="separator:a409568a59ac47f55ca1d199b48f86cbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57e59a27fe8b81ec02c0b7f349f92f13"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a57e59a27fe8b81ec02c0b7f349f92f13">ProcessDigitalControls</a> ()</td></tr>
+<tr class="separator:a57e59a27fe8b81ec02c0b7f349f92f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bc2e391f7e1a29f04151f82003d88da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a9bc2e391f7e1a29f04151f82003d88da">ClearLeds</a> ()</td></tr>
 <tr class="separator:a9bc2e391f7e1a29f04151f82003d88da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77da50cfdca4810687adde08a4913135"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_pod.html#a77da50cfdca4810687adde08a4913135">UpdateLeds</a> ()</td></tr>
@@ -335,22 +339,6 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a409568a59ac47f55ca1d199b48f86cbd"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::DaisyPod::DebounceControls </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>&amp; </p>
-
-</div>
-</div>
 <a class="anchor" id="ac6a34858e9341fafa30d8cec8619a96f"></a>
 <div class="memitem">
 <div class="memproto">
@@ -403,6 +391,62 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Init related stuff. </p>
+
+</div>
+</div>
+<a class="anchor" id="abedf7cb7cb5ee4ac84f94264500bd941"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPod::ProcessAllControls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Process Analog and Digital Controls </p>
+
+</div>
+</div>
+<a class="anchor" id="a362fb5374ca7c065aa337d894cbc091e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPod::ProcessAnalogControls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Call at same rate as analog reads for smooth reading. </p>
+
+</div>
+</div>
+<a class="anchor" id="a57e59a27fe8b81ec02c0b7f349f92f13"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPod::ProcessDigitalControls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Process digital controls </p>
 
 </div>
 </div>
@@ -490,6 +534,22 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a75a0c9b9647257856bcbad57fb9f91b4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisyPod::StopAdc </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops Transfering data from the ADC </p>
+
+</div>
+</div>
 <a class="anchor" id="ad1f745242c8248f186e6ae0931b3f4fa"></a>
 <div class="memitem">
 <div class="memproto">
@@ -503,22 +563,6 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Stops the audio if it is running. </p>
-
-</div>
-</div>
-<a class="anchor" id="a2c20c15231d0ef1477a9bf3a7868d4d9"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::DaisyPod::UpdateAnalogControls </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Call at same rate as analog reads for smooth reading. </p>
 
 </div>
 </div>

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['newlineseqlength',['NewLineSeqLength',['../group__external.html#ga6c13b3def848fae05847d744338a6540',1,'daisy::Logger']]]
+  ['listen',['Listen',['../classdaisy_1_1_midi_handler.html#ac2ca9597f4c77060935dc69dec399c35',1,'daisy::MidiHandler']]],
+  ['logger',['Logger',['../group__external.html#ga6189e1a0ce4afd0cd9b4440e03e3e6ec',1,'daisy::Logger']]]
 ];

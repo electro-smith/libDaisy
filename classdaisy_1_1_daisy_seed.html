@@ -110,6 +110,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a756338e5ffbd605a56930d1e634d30e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7b122b78cb745b1e1bedfca9de8b2ad4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_seed.html#a7b122b78cb745b1e1bedfca9de8b2ad4">Init</a> ()</td></tr>
 <tr class="separator:a7b122b78cb745b1e1bedfca9de8b2ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1cf2d8617a21e7cfba8d61f9c2551daf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_seed.html#a1cf2d8617a21e7cfba8d61f9c2551daf">DelayMs</a> (size_t del)</td></tr>
+<tr class="separator:a1cf2d8617a21e7cfba8d61f9c2551daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0b123a4bc00a936e3d78ca2ab4aa2773"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_seed.html#a0b123a4bc00a936e3d78ca2ab4aa2773">GetPin</a> (uint8_t pin_idx)</td></tr>
 <tr class="separator:a0b123a4bc00a936e3d78ca2ab4aa2773"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8ffb8115424a566cdb4461a19ffdaf2f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_seed.html#a8ffb8115424a566cdb4461a19ffdaf2f">StartAudio</a> (<a class="el" href="classdaisy_1_1_audio_handle.html#a25cb1ed797b0f5b6d79a26284454bb6f">AudioHandle::InterleavingAudioCallback</a> cb)</td></tr>
@@ -162,6 +164,12 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a7e515e9523bffb657cab3b2617fd3063"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca07ac3af9281104c5e8006024b23ae8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_usb_handle.html">UsbHandle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_seed.html#aca07ac3af9281104c5e8006024b23ae8">usb_handle</a></td></tr>
 <tr class="separator:aca07ac3af9281104c5e8006024b23ae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3ce4c98a819d4aac03659b61697a685"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3ce4c98a819d4aac03659b61697a685"></a>
+<a class="el" href="structdsy__gpio.html">dsy_gpio</a>&#160;</td><td class="memItemRight" valign="bottom"><b>led</b></td></tr>
+<tr class="separator:ab3ce4c98a819d4aac03659b61697a685"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a0b62a728a7d5ce159f7b61c0ee1915"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4a0b62a728a7d5ce159f7b61c0ee1915"></a>
+<a class="el" href="structdsy__gpio.html">dsy_gpio</a>&#160;</td><td class="memItemRight" valign="bottom"><b>testpoint</b></td></tr>
+<tr class="separator:a4a0b62a728a7d5ce159f7b61c0ee1915"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This is the higher-level interface for the Daisy board. <br />
@@ -263,6 +271,28 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Configures the settings for all internal peripherals, but does not initialize them. This allows for modification of the configuration handles prior to initialization.&amp; </p>
+
+</div>
+</div>
+<a class="anchor" id="a1cf2d8617a21e7cfba8d61f9c2551daf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::DaisySeed::DelayMs </td>
+          <td>(</td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>del</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Wait some ms before going on. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">del</td><td>Delay time in ms. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
