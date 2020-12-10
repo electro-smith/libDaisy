@@ -85,6 +85,12 @@ class DaisyField
     /**Initializes the Daisy Field, and all of its hardware.*/
     void Init();
 
+    /** 
+    Wait some ms before going on.
+    \param del Delay time in ms.
+    */
+    void DelayMs(size_t del);
+
     /** Starts the callback
     \cb Interleaved callback function
     */
@@ -94,6 +100,9 @@ class DaisyField
     \cb multichannel callback function
     */
     void StartAudio(AudioHandle::AudioCallback cb);
+
+    /** Stops the audio if it is running. */
+    void StopAudio();
 
     /**
        Switch callback functions
@@ -106,9 +115,6 @@ class DaisyField
        \param cb New multichannel callback function.
     */
     void ChangeAudioCallback(AudioHandle::AudioCallback cb);
-
-    /** Stops the audio if it is running. */
-    void StopAudio();
 
     /** Updates the Audio Sample Rate, and reinitializes.
      ** Audio must be stopped for this to work.
@@ -130,87 +136,72 @@ class DaisyField
     float AudioCallbackRate();
 
     /** Starts Transfering data from the ADC */
-    void StartAdc() { seed.adc.Start(); }
+    void StartAdc();
+
+    /** Stops Transfering data from the ADC */
+    void StopAdc();
 
     /** Turns on the built-in 12-bit DAC on the Daisy Seed */
-    void StartDac() { dsy_dac_start(DSY_DAC_CHN_BOTH); }
+    void StartDac();
 
     /** Processes the ADC inputs, updating their values */
-    void ProcessAnalogControls()
-    {
-        for(size_t i = 0; i < KNOB_LAST; i++)
-            knob_[i].Process();
-        for(size_t i = 0; i < CV_LAST; i++)
-            cv_[i].Process();
-    }
+    void ProcessAnalogControls();
 
-    /** Debounces, the tactile switches and keyboard states */
-    void UpdateDigitalControls()
+    /** Process tactile switches and keyboard states */
+    void ProcessDigitalControls();
+
+    /** Process Analog and Digital Controls */
+    inline void ProcessAllControls()
     {
-        // Switches
-        for(size_t i = 0; i < SW_LAST; i++)
-        {
-            sw_[i].Debounce();
-        }
-        // Keyboard SM
-        dsy_sr_4021_update(&keyboard_sr_);
-        for(size_t i = 0; i < 16; i++)
-        {
-            uint8_t keyidx, keyoffset;
-            keyoffset               = i > 7 ? 8 : 0;
-            keyidx                  = (7 - (i % 8)) + keyoffset;
-            keyboard_state_[keyidx] = dsy_sr_4021_state(&keyboard_sr_, i)
-                                      | (keyboard_state_[keyidx] << 1);
-        }
-        // Gate Input
-        gate_in_trig_ = gate_in_.Trig();
+        ProcessAnalogControls();
+        ProcessDigitalControls();
     }
 
     /** Sets the output of CV out 1 to a value between 0-4095 that corresponds to 0-5V */
-    inline void SetCvOut1(uint16_t val) { dsy_dac_write(DSY_DAC_CHN1, val); }
+    void SetCvOut1(uint16_t val);
 
-    /** Sets the output of CV out 1 to a value between 0-4095 that corresponds to 0-5V */
-    inline void SetCvOut2(uint16_t val) { dsy_dac_write(DSY_DAC_CHN2, val); }
+    /** Sets the output of CV out 2 to a value between 0-4095 that corresponds to 0-5V */
+    void SetCvOut2(uint16_t val);
 
-    inline bool KeyboardState(size_t idx) const
-    {
-        return keyboard_state_[idx] == 0x00;
-    }
+    /** Returns true if the key has not been pressed recently
+        \param idx the key of interest
+    */
+    bool KeyboardState(size_t idx) const;
 
-    inline bool KeyboardRisingEdge(size_t idx) const
-    {
-        return keyboard_state_[idx] == 0x80;
-    }
+    /** Returns true if the key has just been pressed
+        \param idx the key of interest
+    */
+    bool KeyboardRisingEdge(size_t idx) const;
 
-    inline bool KeyboardFallingEdge(size_t idx) const
-    {
-        return keyboard_state_[idx] == 0x7F;
-    }
+    /** Returns true if the key has just been released
+        \param idx the key of interest
+    */
+    bool KeyboardFallingEdge(size_t idx) const;
 
-    inline float GetKnobValue(size_t idx) const
-    {
-        return knob_[idx < KNOB_LAST ? idx : 0].Value();
-    }
+    /** Returns the knob's value
+        \param idx The knob of interest.
+    */
+    float GetKnobValue(size_t idx) const;
 
-    inline float GetCvValue(size_t idx) const
-    {
-        return cv_[idx < CV_LAST ? idx : 0].Value();
-    }
+    /** Returns the CV input's value
+        \param idx The CV input of interest.
+    */
+    float GetCvValue(size_t idx) const;
 
-    inline Switch* GetSwitch(size_t idx)
-    {
-        return &sw_[idx < SW_LAST ? idx : 0];
-    }
+    /** Getter for switch objects
+        \param idx The switch of interest.
+    */
+    Switch* GetSwitch(size_t idx);
 
-    inline AnalogControl* GetKnob(size_t idx)
-    {
-        return &knob_[idx < KNOB_LAST ? idx : 0];
-    }
+    /** Getter for knob objects
+        \param idx The knob input of interest.
+    */
+    AnalogControl* GetKnob(size_t idx);
 
-    inline AnalogControl* GetCv(size_t idx)
-    {
-        return &cv_[idx < CV_LAST ? idx : 0];
-    }
+    /** Getter for CV objects.
+        \param idx The CV input of interest.
+    */
+    AnalogControl* GetCv(size_t idx);
 
     /**Light show, cycling through all LEDs, and OLED
      **/
@@ -218,15 +209,15 @@ class DaisyField
 
     DaisySeed                 seed;
     OledDisplay               display;
-    dsy_gpio                  gate_out_;
-    GateIn                    gate_in_;
-    LedDriverPca9685<2, true> led_driver_;
+    dsy_gpio                  gate_out;
+    GateIn                    gate_in;
+    LedDriverPca9685<2, true> led_driver;
+    Switch                    sw[SW_LAST];
+    AnalogControl             knob[KNOB_LAST];
+    AnalogControl             cv[CV_LAST];
 
   private:
-    Switch             sw_[SW_LAST];
     dsy_sr_4021_handle keyboard_sr_;
-    AnalogControl      knob_[KNOB_LAST];
-    AnalogControl      cv_[CV_LAST];
     uint8_t            keyboard_state_[16];
     uint32_t           last_led_update_; // for vegas mode
     bool               gate_in_trig_;    // True when triggered.

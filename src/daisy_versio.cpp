@@ -36,10 +36,8 @@ void DaisyVersio::Init()
     // seed init
     seed.Configure();
     seed.Init();
-    samplerate_ = seed.AudioSampleRate();
-    blocksize_  = 48;
-    seed.SetAudioBlockSize(blocksize_);
-    blockrate_ = samplerate_ / (float)blocksize_;
+    seed.SetAudioBlockSize(48);
+    float blockrate_ = seed.AudioSampleRate() / (float)seed.AudioBlockSize();
 
     // pin numbers
     uint8_t toggle_pina[] = {PIN_TOGGLE3_0A, PIN_TOGGLE3_1A};
@@ -56,15 +54,15 @@ void DaisyVersio::Init()
                          PIN_ADC_CV6};
 
     // gate in and momentary switch
-    tap_.Init(seed.GetPin(PIN_SW), blockrate_);
-    dsy_gpio_pin gate_gpio_ = seed.GetPin(PIN_TRIG_IN);
-    gate_.Init(&gate_gpio_);
+    tap.Init(seed.GetPin(PIN_SW), blockrate_);
+    dsy_gpio_pin gate_gpio = seed.GetPin(PIN_TRIG_IN);
+    gate.Init(&gate_gpio);
 
 
     // 3-position switches
     for(size_t i = 0; i < SW_LAST; i++)
     {
-        sw_[i].Init(seed.GetPin(toggle_pina[i]), seed.GetPin(toggle_pinb[i]));
+        sw[i].Init(seed.GetPin(toggle_pina[i]), seed.GetPin(toggle_pinb[i]));
     }
 
     // ADC
@@ -77,7 +75,7 @@ void DaisyVersio::Init()
 
     for(size_t i = 0; i < KNOB_LAST; i++)
     {
-        knobs_[i].Init(seed.adc.GetPtr(i), blockrate_, true);
+        knobs[i].Init(seed.adc.GetPtr(i), blockrate_, true);
     }
 
     // RGB LEDs
@@ -100,9 +98,82 @@ void DaisyVersio::StartAudio(AudioHandle::AudioCallback cb)
     seed.StartAudio(cb);
 }
 
+void DaisyVersio::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
+{
+    seed.ChangeAudioCallback(cb);
+}
+
+void DaisyVersio::ChangeAudioCallback(AudioHandle::AudioCallback cb)
+{
+    seed.ChangeAudioCallback(cb);
+}
+
+void DaisyVersio::StopAudio()
+{
+    seed.StopAudio();
+}
+
+void DaisyVersio::SetAudioBlockSize(size_t size)
+{
+    seed.SetAudioBlockSize(size);
+}
+
+size_t DaisyVersio::AudioBlockSize()
+{
+    return seed.AudioBlockSize();
+}
+
+void DaisyVersio::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
+{
+    seed.SetAudioSampleRate(samplerate);
+}
+
+float DaisyVersio::AudioSampleRate()
+{
+    return seed.AudioSampleRate();
+}
+
+float DaisyVersio::AudioCallbackRate()
+{
+    return seed.AudioCallbackRate();
+}
+
+void DaisyVersio::StartAdc()
+{
+    seed.adc.Start();
+}
+
+void DaisyVersio::StopAdc()
+{
+    seed.adc.Stop();
+}
+
+void DaisyVersio::ProcessAnalogControls()
+{
+    for(size_t i = 0; i < KNOB_LAST; i++)
+    {
+        knobs[i].Process();
+    }
+}
+
+bool DaisyVersio::SwitchPressed()
+{
+    return tap.Pressed();
+}
+
+bool DaisyVersio::Gate()
+{
+    return !gate.State();
+}
+
+void DaisyVersio::SetLed(size_t idx, float red, float green, float blue)
+{
+    leds[idx].Set(red, green, blue);
+}
+
 void DaisyVersio::DelayMs(size_t del)
 {
-    dsy_system_delay(del);
+    seed.DelayMs(del);
 }
 
 void DaisyVersio::UpdateLeds()
@@ -113,29 +184,19 @@ void DaisyVersio::UpdateLeds()
     }
 }
 
-void DaisyVersio::ProcessAnalogControls()
-{
-    for(size_t i = 0; i < KNOB_LAST; i++)
-    {
-        knobs_[i].Process();
-    }
-}
-
 float DaisyVersio::GetKnobValue(int idx)
 {
-    return knobs_[idx].Value();
+    return knobs[idx].Value();
 }
 
 void DaisyVersio::UpdateExample()
 {
-    tap_.Debounce();
+    tap.Debounce();
     for(size_t i = 0; i < LED_LAST - 1; i++)
         SetLed(i, 0, 0, 0);
 
-    SetLed(
-        sw_[0].Read(), knobs_[0].Value(), knobs_[1].Value(), knobs_[2].Value());
-    SetLed(
-        sw_[1].Read(), knobs_[3].Value(), knobs_[4].Value(), knobs_[5].Value());
+    SetLed(sw[0].Read(), knobs[0].Value(), knobs[1].Value(), knobs[2].Value());
+    SetLed(sw[1].Read(), knobs[3].Value(), knobs[4].Value(), knobs[5].Value());
 
-    SetLed(3, Gate(), SwitchPressed(), knobs_[6].Value());
+    SetLed(3, Gate(), SwitchPressed(), knobs[6].Value());
 }

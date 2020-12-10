@@ -89,7 +89,7 @@ void DaisyField::Init()
     for(size_t i = 0; i < SW_LAST; i++)
     {
         dsy_gpio_pin p = seed.GetPin(sw_pin[i]);
-        sw_[i].Init(p, AudioCallbackRate());
+        sw[i].Init(p, AudioCallbackRate());
     }
 
     // ADCs
@@ -110,11 +110,11 @@ void DaisyField::Init()
     size_t pot_order[KNOB_LAST] = {0, 3, 1, 4, 2, 5, 6, 7};
     for(size_t i = 0; i < KNOB_LAST; i++)
     {
-        knob_[i].Init(seed.adc.GetMuxPtr(4, pot_order[i]), AudioCallbackRate());
+        knob[i].Init(seed.adc.GetMuxPtr(4, pot_order[i]), AudioCallbackRate());
     }
     for(size_t i = 0; i < CV_LAST; i++)
     {
-        cv_[i].InitBipolarCv(seed.adc.GetPtr(i), AudioCallbackRate());
+        cv[i].InitBipolarCv(seed.adc.GetPtr(i), AudioCallbackRate());
     }
 
     // Keyboard
@@ -136,19 +136,24 @@ void DaisyField::Init()
     uint8_t   addr[2] = {0x00, 0x02};
     I2CHandle i2c;
     i2c.Init(field_led_i2c_config);
-    led_driver_.Init(i2c, addr, field_led_dma_buffer_a, field_led_dma_buffer_b);
+    led_driver.Init(i2c, addr, field_led_dma_buffer_a, field_led_dma_buffer_b);
 
     // Gate In
     dsy_gpio_pin gate_in_pin;
     gate_in_pin = seed.GetPin(PIN_GATE_IN);
-    gate_in_.Init(&gate_in_pin);
+    gate_in.Init(&gate_in_pin);
     // Gate Out
-    gate_out_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    gate_out_.pull = DSY_GPIO_NOPULL;
-    gate_out_.pin  = seed.GetPin(PIN_GATE_OUT);
-    dsy_gpio_init(&gate_out_);
+    gate_out.mode = DSY_GPIO_MODE_OUTPUT_PP;
+    gate_out.pull = DSY_GPIO_NOPULL;
+    gate_out.pin  = seed.GetPin(PIN_GATE_OUT);
+    dsy_gpio_init(&gate_out);
     dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
     dsy_tim_start();
+}
+
+void DaisyField::DelayMs(size_t del)
+{
+    seed.DelayMs(del);
 }
 
 void DaisyField::StartAudio(AudioHandle::InterleavingAudioCallback cb)
@@ -161,6 +166,11 @@ void DaisyField::StartAudio(AudioHandle::AudioCallback cb)
     seed.StartAudio(cb);
 }
 
+void DaisyField::StopAudio()
+{
+    seed.StopAudio();
+}
+
 void DaisyField::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
@@ -169,21 +179,6 @@ void DaisyField::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
 void DaisyField::ChangeAudioCallback(AudioHandle::AudioCallback cb)
 {
     seed.ChangeAudioCallback(cb);
-}
-
-void DaisyField::StopAudio()
-{
-    seed.StopAudio();
-}
-
-void DaisyField::SetAudioBlockSize(size_t size)
-{
-    seed.SetAudioBlockSize(size);
-}
-
-size_t DaisyField::AudioBlockSize()
-{
-    return seed.AudioBlockSize();
 }
 
 void DaisyField::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
@@ -196,10 +191,117 @@ float DaisyField::AudioSampleRate()
     return seed.AudioSampleRate();
 }
 
+void DaisyField::SetAudioBlockSize(size_t size)
+{
+    seed.SetAudioBlockSize(size);
+}
+
+size_t DaisyField::AudioBlockSize()
+{
+    return seed.AudioBlockSize();
+}
+
 float DaisyField::AudioCallbackRate()
 {
     return seed.AudioCallbackRate();
 }
+
+
+void DaisyField::StartAdc()
+{
+    seed.adc.Start();
+}
+
+void DaisyField::StopAdc()
+{
+    seed.adc.Stop();
+}
+
+/** Turns on the built-in 12-bit DAC on the Daisy Seed */
+void DaisyField::StartDac()
+{
+    dsy_dac_start(DSY_DAC_CHN_BOTH);
+}
+
+void DaisyField::ProcessAnalogControls()
+{
+    for(size_t i = 0; i < KNOB_LAST; i++)
+        knob[i].Process();
+    for(size_t i = 0; i < CV_LAST; i++)
+        cv[i].Process();
+}
+
+void DaisyField::ProcessDigitalControls()
+{
+    // Switches
+    for(size_t i = 0; i < SW_LAST; i++)
+    {
+        sw[i].Debounce();
+        // Keyboard SM
+    }
+    dsy_sr_4021_update(&keyboard_sr_);
+    for(size_t i = 0; i < 16; i++)
+    {
+        uint8_t keyidx, keyoffset;
+        keyoffset               = i > 7 ? 8 : 0;
+        keyidx                  = (7 - (i % 8)) + keyoffset;
+        keyboard_state_[keyidx] = dsy_sr_4021_state(&keyboard_sr_, i)
+                                  | (keyboard_state_[keyidx] << 1);
+    }
+    // Gate Input
+    gate_in_trig_ = gate_in.Trig();
+}
+
+void DaisyField::SetCvOut1(uint16_t val)
+{
+    dsy_dac_write(DSY_DAC_CHN1, val);
+}
+
+void DaisyField::SetCvOut2(uint16_t val)
+{
+    dsy_dac_write(DSY_DAC_CHN2, val);
+}
+
+bool DaisyField::KeyboardState(size_t idx) const
+{
+    return keyboard_state_[idx] == 0x00;
+}
+
+bool DaisyField::KeyboardRisingEdge(size_t idx) const
+{
+    return keyboard_state_[idx] == 0x80;
+}
+
+bool DaisyField::KeyboardFallingEdge(size_t idx) const
+{
+    return keyboard_state_[idx] == 0x7F;
+}
+
+float DaisyField::GetKnobValue(size_t idx) const
+{
+    return knob[idx < KNOB_LAST ? idx : 0].Value();
+}
+
+float DaisyField::GetCvValue(size_t idx) const
+{
+    return cv[idx < CV_LAST ? idx : 0].Value();
+}
+
+Switch* DaisyField::GetSwitch(size_t idx)
+{
+    return &sw[idx < SW_LAST ? idx : 0];
+}
+
+AnalogControl* DaisyField::GetKnob(size_t idx)
+{
+    return &knob[idx < KNOB_LAST ? idx : 0];
+}
+
+AnalogControl* DaisyField::GetCv(size_t idx)
+{
+    return &cv[idx < CV_LAST ? idx : 0];
+}
+
 
 void DaisyField::VegasMode()
 {
@@ -239,12 +341,12 @@ void DaisyField::VegasMode()
         // Clear
         for(size_t i = 0; i < LED_LAST; i++)
         {
-            led_driver_.SetLed(i, 0.0f);
+            led_driver.SetLed(i, 0.0f);
         }
         // Knob LEDs dance in order
-        led_driver_.SetLed(led_grp_a[idx], key_bright);
-        led_driver_.SetLed(led_grp_b[idx], 1.0f - key_bright);
-        led_driver_.SetLed(led_grp_c[idx], key_bright);
+        led_driver.SetLed(led_grp_a[idx], key_bright);
+        led_driver.SetLed(led_grp_b[idx], 1.0f - key_bright);
+        led_driver.SetLed(led_grp_c[idx], key_bright);
         // OLED moves a bar across the screen
         uint32_t bar_x = (now >> 4) % SSD1309_WIDTH;
         display.Fill(false);
@@ -254,6 +356,6 @@ void DaisyField::VegasMode()
         }
 
         display.Update();
-        led_driver_.SwapBuffersAndTransmit();
+        led_driver.SwapBuffersAndTransmit();
     }
 }

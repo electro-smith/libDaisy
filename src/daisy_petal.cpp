@@ -94,7 +94,7 @@ void DaisyPetal::Init()
 
 void DaisyPetal::DelayMs(size_t del)
 {
-    dsy_tim_delay_ms(del);
+    seed.DelayMs(del);
 }
 
 void DaisyPetal::StartAudio(AudioHandle::InterleavingAudioCallback cb)
@@ -152,7 +152,13 @@ void DaisyPetal::StartAdc()
     seed.adc.Start();
 }
 
-void DaisyPetal::UpdateAnalogControls()
+void DaisyPetal::StopAdc()
+{
+    seed.adc.Stop();
+}
+
+
+void DaisyPetal::ProcessAnalogControls()
 {
     for(size_t i = 0; i < KNOB_LAST; i++)
     {
@@ -173,7 +179,7 @@ float DaisyPetal::GetExpression()
     return expression.Value();
 }
 
-void DaisyPetal::DebounceControls()
+void DaisyPetal::ProcessDigitalControls()
 {
     encoder.Debounce();
     for(size_t i = 0; i < SW_LAST; i++)

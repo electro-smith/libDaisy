@@ -34,7 +34,6 @@ void DaisyPatch::Init()
 {
     // Configure Seed first
     seed.Configure();
-    block_size_ = 48;
     seed.Init();
     InitAudio();
     InitDisplay();
@@ -55,7 +54,7 @@ void DaisyPatch::Init()
 
 void DaisyPatch::DelayMs(size_t del)
 {
-    dsy_system_delay(del);
+    seed.DelayMs(del);
 }
 
 void DaisyPatch::StartAudio(AudioHandle::AudioCallback cb)
@@ -102,19 +101,27 @@ void DaisyPatch::StartAdc()
 {
     seed.adc.Start();
 }
-void DaisyPatch::UpdateAnalogControls()
+
+/** Stops Transfering data from the ADC */
+void DaisyPatch::StopAdc()
+{
+    seed.adc.Stop();
+}
+
+
+void DaisyPatch::ProcessAnalogControls()
 {
     for(size_t i = 0; i < CTRL_LAST; i++)
     {
         controls[i].Process();
     }
 }
-float DaisyPatch::GetCtrlValue(Ctrl k)
+float DaisyPatch::GetKnobValue(Ctrl k)
 {
     return (controls[k].Value());
 }
 
-void DaisyPatch::DebounceControls()
+void DaisyPatch::ProcessDigitalControls()
 {
     encoder.Debounce();
 }
@@ -140,7 +147,7 @@ void DaisyPatch::DisplayControls(bool invert)
             size_t dest;
             curx = (barspacing * i + 1) + (barwidth * i);
             cury = SSD1309_HEIGHT;
-            v    = GetCtrlValue(static_cast<DaisyPatch::Ctrl>(i));
+            v    = GetKnobValue(static_cast<DaisyPatch::Ctrl>(i));
             dest = (v * SSD1309_HEIGHT);
             for(size_t j = dest; j > 0; j--)
             {

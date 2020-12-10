@@ -46,6 +46,12 @@ class DaisySeed
     void Init();
 
     /** 
+    Wait some ms before going on.
+    \param del Delay time in ms.
+    */
+    void DelayMs(size_t del);
+
+    /** 
     Returns the gpio_pin corresponding to the index 0-31.
     For the given GPIO on the Daisy Seed (labeled 1-32 in docs).
     */
@@ -134,6 +140,8 @@ class DaisySeed
     AdcHandle        adc;          /**< & */
     dsy_dac_handle   dac_handle;   /**< & */
     UsbHandle        usb_handle;   /**< & */
+    dsy_gpio         led, testpoint;
+
 
   private:
     /** Local shorthand for debug log destination
@@ -147,8 +155,7 @@ class DaisySeed
     void ConfigureAdc();
     void ConfigureDac();
     //void     ConfigureI2c();
-    dsy_gpio led_, testpoint_;
-    float    callback_rate_;
+    float callback_rate_;
 };
 
 } // namespace daisy

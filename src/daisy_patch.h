@@ -84,17 +84,28 @@ class DaisyPatch
     /** Start analog to digital conversion.*/
     void StartAdc();
 
+    /** Stops Transfering data from the ADC */
+    void StopAdc();
+
+
     /** Call at same rate as reading controls for good reads. */
-    void UpdateAnalogControls();
+    void ProcessAnalogControls();
+
+    /** Process Analog and Digital Controls */
+    inline void ProcessAllControls()
+    {
+        ProcessAnalogControls();
+        ProcessDigitalControls();
+    }
 
     /**
        Get value for a particular control
        \param k Which control to get
      */
-    float GetCtrlValue(Ctrl k);
+    float GetKnobValue(Ctrl k);
 
-    /** Debounce analog controls. Call at same rate as reading controls.*/
-    void DebounceControls();
+    /**  Process the digital controls */
+    void ProcessDigitalControls();
 
     /**  Control the display */
     void DisplayControls(bool invert = true);
@@ -122,7 +133,6 @@ class DaisyPatch
     void InitEncoder();
     void InitGates();
 
-    size_t   block_size_;
     dsy_gpio ak4556_reset_pin_;
     uint32_t screen_update_last_, screen_update_period_;
 };

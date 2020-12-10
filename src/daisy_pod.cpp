@@ -87,7 +87,7 @@ void DaisyPod::Init()
 
 void DaisyPod::DelayMs(size_t del)
 {
-    dsy_tim_delay_ms(del);
+    seed.DelayMs(del);
 }
 
 void DaisyPod::StartAudio(AudioHandle::InterleavingAudioCallback cb)
@@ -145,7 +145,13 @@ void DaisyPod::StartAdc()
     seed.adc.Start();
 }
 
-void DaisyPod::UpdateAnalogControls()
+void DaisyPod::StopAdc()
+{
+    seed.adc.Stop();
+}
+
+
+void DaisyPod::ProcessAnalogControls()
 {
     knob1.Process();
     knob2.Process();
@@ -158,7 +164,7 @@ float DaisyPod::GetKnobValue(Knob k)
     return knobs[idx]->Value();
 }
 
-void DaisyPod::DebounceControls()
+void DaisyPod::ProcessDigitalControls()
 {
     encoder.Debounce();
     button1.Debounce();

@@ -95,12 +95,12 @@ void DaisySeed::Configure()
     ConfigureQspi();
     ConfigureDac();
     // Configure the built-in GPIOs.
-    led_.pin.port       = SEED_LED_PORT;
-    led_.pin.pin        = SEED_LED_PIN;
-    led_.mode           = DSY_GPIO_MODE_OUTPUT_PP;
-    testpoint_.pin.port = SEED_TEST_POINT_PORT;
-    testpoint_.pin.pin  = SEED_TEST_POINT_PIN;
-    testpoint_.mode     = DSY_GPIO_MODE_OUTPUT_PP;
+    led.pin.port       = SEED_LED_PORT;
+    led.pin.pin        = SEED_LED_PIN;
+    led.mode           = DSY_GPIO_MODE_OUTPUT_PP;
+    testpoint.pin.port = SEED_TEST_POINT_PORT;
+    testpoint.pin.pin  = SEED_TEST_POINT_PIN;
+    testpoint.mode     = DSY_GPIO_MODE_OUTPUT_PP;
 }
 
 void DaisySeed::Init()
@@ -108,8 +108,8 @@ void DaisySeed::Init()
     dsy_system_init();
     dsy_sdram_init(&sdram_handle);
     dsy_qspi_init(&qspi_handle);
-    dsy_gpio_init(&led_);
-    dsy_gpio_init(&testpoint_);
+    dsy_gpio_init(&led);
+    dsy_gpio_init(&testpoint);
     ConfigureAudio();
     dsy_tim_init();
     dsy_tim_start();
@@ -130,6 +130,11 @@ dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
     p = {seed_ports[pin_idx], seed_pins[pin_idx]};
 #endif
     return p;
+}
+
+void DaisySeed::DelayMs(size_t del)
+{
+    dsy_system_delay(del);
 }
 
 void DaisySeed::StartAudio(AudioHandle::InterleavingAudioCallback cb)
@@ -186,12 +191,12 @@ float DaisySeed::AudioCallbackRate() const
 
 void DaisySeed::SetLed(bool state)
 {
-    dsy_gpio_write(&led_, state);
+    dsy_gpio_write(&led, state);
 }
 
 void DaisySeed::SetTestPoint(bool state)
 {
-    dsy_gpio_write(&testpoint_, state);
+    dsy_gpio_write(&testpoint, state);
 }
 
 // Private Implementation

@@ -125,8 +125,19 @@ class DaisyPetal
     /** Start analog to digital conversion. */
     void StartAdc();
 
+    /** Stops Transfering data from the ADC */
+    void StopAdc();
+
     /** Call at the same frequency as controls are read for stable readings.*/
-    void UpdateAnalogControls();
+    void ProcessAnalogControls();
+
+    /** Process Analog and Digital Controls */
+    inline void ProcessAllControls()
+    {
+        ProcessAnalogControls();
+        ProcessDigitalControls();
+    }
+
 
     /** Get value per knob.
     \param k Which knob to get
@@ -137,8 +148,8 @@ class DaisyPetal
     /** & */
     float GetExpression();
 
-    /** Debounce inputs.*/
-    void DebounceControls();
+    /** Process digital controls */
+    void ProcessDigitalControls();
 
     /** Turn all leds off */
     void ClearLeds();

@@ -77,50 +77,47 @@ class DaisyVersio
     void ChangeAudioCallback(AudioHandle::AudioCallback cb);
 
     /** Stops the audio if it is running. */
-    void StopAudio() { seed.StopAudio(); }
+    void StopAudio();
 
     /** Sets the number of samples processed per channel by the audio callback.
      */
-    void SetAudioBlockSize(size_t size) { seed.SetAudioBlockSize(size); }
+    void SetAudioBlockSize(size_t size);
 
     /** Returns the number of samples per channel in a block of audio. */
-    size_t AudioBlockSize() { return seed.AudioBlockSize(); }
+    size_t AudioBlockSize();
 
     /** Updates the Audio Sample Rate, and reinitializes.
      ** Audio must be stopped for this to work.
      */
-    void SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
-    {
-        seed.SetAudioSampleRate(samplerate);
-    }
+    void SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate);
 
     /** Returns the audio sample rate in Hz as a floating point number.
      */
-    float AudioSampleRate() { return seed.AudioSampleRate(); }
+    float AudioSampleRate();
 
     /** Returns the rate in Hz that the Audio callback is called */
-    float AudioCallbackRate() { return seed.AudioCallbackRate(); }
+    float AudioCallbackRate();
 
     /** Start analog to digital conversion.*/
-    void StartAdc() { seed.adc.Start(); }
+    void StartAdc();
 
     /** Stop converting ADCs */
-    void StopAdc() { seed.adc.Stop(); }
+    void StopAdc();
 
     /** Normalize ADC CV input. Call this once per main loop update to normalize CV input to range (0.0f, 1.0f) */
     void ProcessAnalogControls();
 
+    /** Does what it says */
+    inline void ProcessAllControls() { ProcessAnalogControls(); }
+
     /** Returns true if momentary switch is pressed */
-    bool SwitchPressed() { return tap_.Pressed(); }
+    bool SwitchPressed();
 
     /** Returns true if gate in is HIGH */
-    bool Gate() { return !gate_.State(); }
+    bool Gate();
 
     /** Set an LED (idx < 4) to a color */
-    void SetLed(size_t idx, float red, float green, float blue)
-    {
-        leds[idx].Set(red, green, blue);
-    }
+    void SetLed(size_t idx, float red, float green, float blue);
 
     /** Get Knob Value, float from 0.0f to 1.0f */
     float GetKnobValue(int idx);
@@ -133,17 +130,12 @@ class DaisyVersio
      **/
     void UpdateExample();
 
-    DaisySeed seed;
-    RgbLed    leds[LED_LAST];
-
-  private:
-    float         samplerate_, blockrate_;
-    size_t        blocksize_;
-    AnalogControl knobs_[KNOB_LAST];
-    Switch        tap_;
-    GateIn        gate_;
-
-    Switch3 sw_[SW_LAST];
+    DaisySeed     seed;
+    RgbLed        leds[LED_LAST];
+    AnalogControl knobs[KNOB_LAST];
+    Switch        tap;
+    GateIn        gate;
+    Switch3       sw[SW_LAST];
 };
 
 } // namespace daisy

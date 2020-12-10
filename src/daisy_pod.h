@@ -92,14 +92,24 @@ class DaisyPod
      */
     void StartAdc();
 
+    /** Stops Transfering data from the ADC */
+    void StopAdc();
+
     /** Call at same rate as analog reads for smooth reading.*/
-    void UpdateAnalogControls(); /** */
+    void ProcessAnalogControls();
+
+    /** Process Analog and Digital Controls */
+    inline void ProcessAllControls()
+    {
+        ProcessAnalogControls();
+        ProcessDigitalControls();
+    }
 
     /** & */
     float GetKnobValue(Knob k);
 
-    /** & */
-    void DebounceControls();
+    /** Process digital controls */
+    void ProcessDigitalControls();
 
     /** Reset Leds*/
     void ClearLeds();
@@ -120,12 +130,10 @@ class DaisyPod
         led2;                  /**< & */
 
   private:
-    void   InitButtons();
-    void   InitEncoder();
-    void   InitLeds();
-    void   InitKnobs();
-    float  sample_rate_;
-    size_t block_size_;
+    void InitButtons();
+    void InitEncoder();
+    void InitLeds();
+    void InitKnobs();
 };
 
 } // namespace daisy
