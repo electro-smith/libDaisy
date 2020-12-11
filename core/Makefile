@@ -249,7 +249,7 @@ program:
 #######################################
 
 program-dfu:
-	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d 0483:df11
+	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
 
 #######################################
 # dependencies
