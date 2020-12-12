@@ -27,9 +27,6 @@ using namespace daisy;
 #define PIN_CTRL_3 21
 #define PIN_CTRL_4 18
 
-//const float kAudioSampleRate = DSY_AUDIO_SAMPLE_RATE;
-const float kAudioSampleRate = 48014.f;
-
 void DaisyPatch::Init()
 {
     // Configure Seed first
@@ -79,7 +76,7 @@ void DaisyPatch::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
 
 float DaisyPatch::AudioSampleRate()
 {
-    return kAudioSampleRate;
+    return seed.AudioSampleRate();
 }
 
 void DaisyPatch::SetAudioBlockSize(size_t size)
