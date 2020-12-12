@@ -37,7 +37,7 @@ cache enabled.
 #define F2S24_SCALE 8388608.0f        /**< 2 ** 23 */
 #define S242F_SCALE 1.192092896e-07f  /**< 1 / (2 ** 23) */
 #define S24SIGN 0x800000              /**< 2 ** 23 */
-#define S322F_SCALE 4.6566129e-10     /**< 1 / (2** 31) */
+#define S322F_SCALE 4.6566129e-10f    /**< 1 / (2** 31) */
 #define F2S32_SCALE 2147483647.f      /**< (2 ** 31) - 1 */
 
 /** 
