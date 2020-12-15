@@ -493,6 +493,7 @@
     <ClCompile Include="src\dev\codec_pcm3060.cpp">
       <Filter>dev</Filter>
     </ClCompile>
+    <ClCompile Include="src\hid\logger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h">
@@ -1097,6 +1098,8 @@
     <ClInclude Include="src\dev\codec_pcm3060.h">
       <Filter>dev</Filter>
     </ClInclude>
+    <ClInclude Include="src\hid\logger.h" />
+    <ClInclude Include="src\hid\logger_impl.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="stm32.props" />
