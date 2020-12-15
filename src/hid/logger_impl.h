@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <cassert>
 #include "hid/usb.h"
-#include "usbd_def.h"
 #include "sys/system.h"
 
 
@@ -59,7 +58,8 @@ class LoggerImpl<LOGGER_INTERNAL>
      */
     static bool Transmit(const void* buffer, size_t bytes)
     {
-        return USBD_OK == usb_handle_.TransmitInternal((uint8_t*)buffer, bytes);
+        return UsbHandle::Result::OK
+               == usb_handle_.TransmitInternal((uint8_t*)buffer, bytes);
     }
 
   protected:
@@ -90,7 +90,8 @@ class LoggerImpl<LOGGER_EXTERNAL>
      */
     static bool Transmit(const void* buffer, size_t bytes)
     {
-        return USBD_OK == usb_handle_.TransmitExternal((uint8_t*)buffer, bytes);
+        return UsbHandle::Result::OK
+               == usb_handle_.TransmitExternal((uint8_t*)buffer, bytes);
     }
 
   protected:

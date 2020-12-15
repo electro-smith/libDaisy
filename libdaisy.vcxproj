@@ -237,6 +237,7 @@
     <ClCompile Include="src\hid\encoder.cpp" />
     <ClCompile Include="src\hid\gatein.cpp" />
     <ClCompile Include="src\hid\led.cpp" />
+    <ClCompile Include="src\hid\logger.cpp" />
     <ClCompile Include="src\hid\midi.cpp" />
     <ClCompile Include="src\hid\oled_display.cpp" />
     <ClCompile Include="src\hid\parameter.cpp" />
@@ -433,6 +434,8 @@
     <ClInclude Include="src\hid\encoder.h" />
     <ClInclude Include="src\hid\gatein.h" />
     <ClInclude Include="src\hid\led.h" />
+    <ClInclude Include="src\hid\logger.h" />
+    <ClInclude Include="src\hid\logger_impl.h" />
     <ClInclude Include="src\hid\midi.h" />
     <ClInclude Include="src\hid\oled_display.h" />
     <ClInclude Include="src\hid\parameter.h" />
