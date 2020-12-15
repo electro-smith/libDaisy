@@ -18,7 +18,6 @@ namespace daisy
 class UsbHandle
 {
   public:
-
     /** Return values for USBHandle Functions */
     enum class Result
     {

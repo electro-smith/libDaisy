@@ -58,7 +58,8 @@ class LoggerImpl<LOGGER_INTERNAL>
      */
     static bool Transmit(const void* buffer, size_t bytes)
     {
-        return UsbHandle::Result::OK == usb_handle_.TransmitInternal((uint8_t*)buffer, bytes);
+        return UsbHandle::Result::OK
+               == usb_handle_.TransmitInternal((uint8_t*)buffer, bytes);
     }
 
   protected:
@@ -89,7 +90,8 @@ class LoggerImpl<LOGGER_EXTERNAL>
      */
     static bool Transmit(const void* buffer, size_t bytes)
     {
-        return UsbHandle::Result::OK == usb_handle_.TransmitExternal((uint8_t*)buffer, bytes);
+        return UsbHandle::Result::OK
+               == usb_handle_.TransmitExternal((uint8_t*)buffer, bytes);
     }
 
   protected:
