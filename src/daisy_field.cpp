@@ -72,10 +72,10 @@ static LedDriverPca9685<2, true>::DmaBuffer DMA_BUFFER_MEM_SECTION
     field_led_dma_buffer_a,
     field_led_dma_buffer_b;
 
-void DaisyField::Init()
+void DaisyField::Init(bool boost)
 {
     seed.Configure();
-    seed.Init();
+    seed.Init(boost);
     seed.SetAudioBlockSize(48);
 
     // Switches

@@ -19,4 +19,3 @@ void Ak4556::Init(dsy_gpio_pin reset_pin)
 }
 
 } // namespace daisy
-

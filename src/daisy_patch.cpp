@@ -27,11 +27,11 @@ using namespace daisy;
 #define PIN_CTRL_3 21
 #define PIN_CTRL_4 18
 
-void DaisyPatch::Init()
+void DaisyPatch::Init(bool boost)
 {
     // Configure Seed first
     seed.Configure();
-    seed.Init();
+    seed.Init(boost);
     InitAudio();
     InitDisplay();
     InitCvOutputs();

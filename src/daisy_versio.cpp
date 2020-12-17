@@ -31,11 +31,11 @@ using namespace daisy;
 #define PIN_ADC_CV6 19
 
 
-void DaisyVersio::Init()
+void DaisyVersio::Init(bool boost)
 {
     // seed init
     seed.Configure();
-    seed.Init();
+    seed.Init(boost);
     seed.SetAudioBlockSize(48);
     float blockrate_ = seed.AudioSampleRate() / (float)seed.AudioBlockSize();
 

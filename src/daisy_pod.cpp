@@ -71,12 +71,12 @@
 
 using namespace daisy;
 
-void DaisyPod::Init()
+void DaisyPod::Init(bool boost)
 {
     // Set Some numbers up for accessors.
     // Initialize the hardware.
     seed.Configure();
-    seed.Init();
+    seed.Init(boost);
     dsy_tim_start();
     InitButtons();
     InitEncoder();
