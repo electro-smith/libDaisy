@@ -103,9 +103,13 @@ void DaisySeed::Configure()
     testpoint.mode     = DSY_GPIO_MODE_OUTPUT_PP;
 }
 
-void DaisySeed::Init()
+void DaisySeed::Init(bool boost)
 {
-    dsy_system_init();
+    //dsy_system_init();
+    System::Config syscfg;
+    boost ? syscfg.Boost() : syscfg.Defaults();
+    system.Init(syscfg);
+
     dsy_sdram_init(&sdram_handle);
     dsy_qspi_init(&qspi_handle);
     dsy_gpio_init(&led);
@@ -134,7 +138,7 @@ dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
 
 void DaisySeed::DelayMs(size_t del)
 {
-    dsy_system_delay(del);
+    system.Delay(del);
 }
 
 void DaisySeed::StartAudio(AudioHandle::InterleavingAudioCallback cb)
@@ -257,7 +261,8 @@ void DaisySeed::ConfigureAudio()
     // Device Init
     dsy_gpio_pin codec_reset_pin;
     codec_reset_pin = {DSY_GPIOB, 11};
-    codec_ak4556_init(codec_reset_pin);
+    //codec_ak4556_init(codec_reset_pin);
+    Ak4556::Init(codec_reset_pin);
 
     // Audio
     AudioHandle::Config audio_config;

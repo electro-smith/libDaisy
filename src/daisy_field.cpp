@@ -306,7 +306,7 @@ AnalogControl* DaisyField::GetCv(size_t idx)
 void DaisyField::VegasMode()
 {
     uint32_t now;
-    now = dsy_system_getnow();
+    now = seed.system.GetNow();
     size_t idx;
     float  key_bright;
     // Cycle all 16 LEDs on keyboard SM in opposite pattern or something
