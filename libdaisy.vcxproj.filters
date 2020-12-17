@@ -355,9 +355,6 @@
     <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
       <Filter>Middleware_USB</Filter>
     </ClCompile>
-    <ClCompile Include="src\sys\system.c">
-      <Filter>sys</Filter>
-    </ClCompile>
     <ClCompile Include="src\sys\fatfs.c">
       <Filter>sys</Filter>
     </ClCompile>
@@ -423,9 +420,6 @@
     </ClCompile>
     <ClCompile Include="src\hid\wavplayer.cpp">
       <Filter>hid</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev\codec_ak4556.c">
-      <Filter>dev</Filter>
     </ClCompile>
     <ClCompile Include="src\dev\sr_4021.c">
       <Filter>dev</Filter>
@@ -493,7 +487,15 @@
     <ClCompile Include="src\dev\codec_pcm3060.cpp">
       <Filter>dev</Filter>
     </ClCompile>
-    <ClCompile Include="src\hid\logger.cpp" />
+    <ClCompile Include="src\sys\system.cpp">
+      <Filter>sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\logger.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev\codec_ak4556.cpp">
+      <Filter>dev</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h">
@@ -1098,8 +1100,12 @@
     <ClInclude Include="src\dev\codec_pcm3060.h">
       <Filter>dev</Filter>
     </ClInclude>
-    <ClInclude Include="src\hid\logger.h" />
-    <ClInclude Include="src\hid\logger_impl.h" />
+    <ClInclude Include="src\hid\logger.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\logger_impl.h">
+      <Filter>hid</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="stm32.props" />
