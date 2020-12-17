@@ -17,8 +17,8 @@ extern "C"
     {                         \
         *(vu32*)(addr) = val; \
     } while(0)
-#define GET_REG(addr) (*(vu32*)(addr))
 
+#define GET_REG(addr) (*(vu32*)(addr))
 #define RCC_CR RCC
 #define RCC_CFGR (RCC + 0x04)
 #define RCC_CIR (RCC + 0x08)
@@ -59,8 +59,8 @@ __attribute__((always_inline)) static inline void __JUMPTOQSPI()
 typedef void (*EntryPoint)(void);
 
 // Static Function Declaration
-static void SystemClock_Config();
-static void MPU_Config();
+//static void SystemClock_Config();
+//static void MPU_Config();
 static void Error_Handler(void);
 
 // System Level C functions and IRQ Handlers
@@ -215,16 +215,15 @@ void System::ConfigureClocks()
     PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
     PeriphClkInitStruct.PLL2.PLL2FRACN  = 0;
     // PLL 3
-    PeriphClkInitStruct.PLL3.PLL3M        = 6;
-    PeriphClkInitStruct.PLL3.PLL3N        = 295;
-    PeriphClkInitStruct.PLL3.PLL3P        = 16; // 49.xMhz
-    PeriphClkInitStruct.PLL3.PLL3Q        = 4;
-    PeriphClkInitStruct.PLL3.PLL3R        = 32; // 24.xMhz
-    PeriphClkInitStruct.PLL3.PLL3RGE      = RCC_PLL3VCIRANGE_1;
-    PeriphClkInitStruct.PLL3.PLL3VCOSEL   = RCC_PLL3VCOWIDE;
-    PeriphClkInitStruct.PLL3.PLL3FRACN    = 0;
-    PeriphClkInitStruct.FmcClockSelection = RCC_FMCCLKSOURCE_PLL2;
-    //PeriphClkInitStruct.QspiClockSelection = RCC_QSPICLKSOURCE_PLL2;
+    PeriphClkInitStruct.PLL3.PLL3M           = 6;
+    PeriphClkInitStruct.PLL3.PLL3N           = 295;
+    PeriphClkInitStruct.PLL3.PLL3P           = 16; // 49.xMhz
+    PeriphClkInitStruct.PLL3.PLL3Q           = 4;
+    PeriphClkInitStruct.PLL3.PLL3R           = 32; // 24.xMhz
+    PeriphClkInitStruct.PLL3.PLL3RGE         = RCC_PLL3VCIRANGE_1;
+    PeriphClkInitStruct.PLL3.PLL3VCOSEL      = RCC_PLL3VCOWIDE;
+    PeriphClkInitStruct.PLL3.PLL3FRACN       = 0;
+    PeriphClkInitStruct.FmcClockSelection    = RCC_FMCCLKSOURCE_PLL2;
     PeriphClkInitStruct.QspiClockSelection   = RCC_QSPICLKSOURCE_D1HCLK;
     PeriphClkInitStruct.SdmmcClockSelection  = RCC_SDMMCCLKSOURCE_PLL;
     PeriphClkInitStruct.Sai1ClockSelection   = RCC_SAI1CLKSOURCE_PLL3;
@@ -232,16 +231,11 @@ void System::ConfigureClocks()
     PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL2;
     PeriphClkInitStruct.Usart234578ClockSelection
         = RCC_USART234578CLKSOURCE_D2PCLK1;
-    //PeriphClkInitStruct.Usart16ClockSelection = RCC_USART16CLKSOURCE_D2PCLK2;
-    //PeriphClkInitStruct.Usart16ClockSelection = RCC_USART16CLKSOURCE_PLL2;
     PeriphClkInitStruct.Usart16ClockSelection = RCC_USART16CLKSOURCE_D2PCLK2;
-    //PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C123CLKSOURCE_PLL3;
-    PeriphClkInitStruct.I2c123ClockSelection = RCC_I2C123CLKSOURCE_D2PCLK1;
-    PeriphClkInitStruct.I2c4ClockSelection   = RCC_I2C4CLKSOURCE_PLL3;
-    //PeriphClkInitStruct.I2c4ClockSelection = RCC_I2C4CLKSOURCE_D3PCLK1;
-    PeriphClkInitStruct.UsbClockSelection = RCC_USBCLKSOURCE_HSI48;
-    //PeriphClkInitStruct.AdcClockSelection = RCC_ADCCLKSOURCE_PLL3;
-    PeriphClkInitStruct.AdcClockSelection = RCC_ADCCLKSOURCE_PLL3;
+    PeriphClkInitStruct.I2c123ClockSelection  = RCC_I2C123CLKSOURCE_D2PCLK1;
+    PeriphClkInitStruct.I2c4ClockSelection    = RCC_I2C4CLKSOURCE_PLL3;
+    PeriphClkInitStruct.UsbClockSelection     = RCC_USBCLKSOURCE_HSI48;
+    PeriphClkInitStruct.AdcClockSelection     = RCC_ADCCLKSOURCE_PLL3;
     if(HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
     {
         Error_Handler();
@@ -281,6 +275,25 @@ void System::ConfigureMpu()
     HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
 }
 
+uint32_t System::GetSysClkFreq()
+{
+    return HAL_RCC_GetSysClockFreq();
+}
+
+uint32_t System::GetHClkFreq()
+{
+    return HAL_RCC_GetHCLKFreq();
+}
+
+uint32_t System::GetPClk1Freq()
+{
+    return HAL_RCC_GetPCLK1Freq();
+}
+
+uint32_t System::GetPClk2Freq()
+{
+    return HAL_RCC_GetPCLK2Freq();
+}
 
 
 } // namespace daisy
@@ -330,19 +343,19 @@ static void Error_Handler()
 //    RCC_ClkInitTypeDef       RCC_ClkInitStruct   = {0};
 //    RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 //
-//    /** Supply configuration update enable 
+//    /** Supply configuration update enable
 //  */
 //    HAL_PWREx_ConfigSupply(PWR_LDO_SUPPLY);
-//    /** Configure the main internal regulator output voltage 
+//    /** Configure the main internal regulator output voltage
 //  */
 //    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 //    //    __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE0);
 //
 //    while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
-//    /** Macro to configure the PLL clock source 
+//    /** Macro to configure the PLL clock source
 //  */
 //    __HAL_RCC_PLL_PLLSOURCE_CONFIG(RCC_PLLSOURCE_HSE);
-//    /** Initializes the CPU, AHB and APB busses clocks 
+//    /** Initializes the CPU, AHB and APB busses clocks
 //  */
 //    RCC_OscInitStruct.OscillatorType
 //        = RCC_OSCILLATORTYPE_HSI48 | RCC_OSCILLATORTYPE_HSE;
@@ -363,7 +376,7 @@ static void Error_Handler()
 //    {
 //        Error_Handler();
 //    }
-//    /** Initializes the CPU, AHB and APB busses clocks 
+//    /** Initializes the CPU, AHB and APB busses clocks
 //  */
 //    RCC_ClkInitStruct.ClockType
 //        = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1
@@ -427,7 +440,7 @@ static void Error_Handler()
 //    {
 //        Error_Handler();
 //    }
-//    /** Enable USB Voltage detector 
+//    /** Enable USB Voltage detector
 //  */
 //    HAL_PWREx_EnableUSBVoltageDetector();
 //}
@@ -459,17 +472,16 @@ static void Error_Handler()
 //    MPU_InitStruct.BaseAddress  = 0xC0000000;
 //    HAL_MPU_ConfigRegion(&MPU_InitStruct);
 //
-//    //	uint32_t enable_bit = (1 << 0);
-//    //	uint32_t privdefena = (1 << 2);
-//    //	uint32_t rasr_enable = (1 << 0);
+//    //    uint32_t enable_bit = (1 << 0);
+//    //    uint32_t privdefena = (1 << 2);
+//    //    uint32_t rasr_enable = (1 << 0);
 //
 //
-//    //	MPU->CTRL = enable_bit | privdefena;
-//    //	MPU->RNR  = 0x00;
-//    //	MPU->RBAR = 0x30000000;
-//    //	MPU->RASR = rasr_enable;
+//    //    MPU->CTRL = enable_bit | privdefena;
+//    //    MPU->RNR  = 0x00;
+//    //    MPU->RBAR = 0x30000000;
+//    //    MPU->RASR = rasr_enable;
 //
 //
 //    HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
 //}
-
