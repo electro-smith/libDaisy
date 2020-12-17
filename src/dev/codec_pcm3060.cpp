@@ -60,7 +60,8 @@ Pcm3060::Result Pcm3060::Init(I2CHandle i2c)
     sysreg &= ~(kMrstBitMask);
     if(WriteRegister(kAddrRegSysCtrl, sysreg) != Result::OK)
         return Result::ERR;
-    dsy_system_delay(4);
+    //dsy_system_delay(4);
+    System::Delay(4);
 
     // SRST
     if(ReadRegister(kAddrRegSysCtrl, &sysreg) != Result::OK)
@@ -68,7 +69,7 @@ Pcm3060::Result Pcm3060::Init(I2CHandle i2c)
     sysreg &= ~(kSrstBitMask);
     if(WriteRegister(kAddrRegSysCtrl, sysreg) != Result::OK)
         return Result::ERR;
-    dsy_system_delay(4);
+    System::Delay(4);
 
     // ADC/DAC Format set to 24-bit LJ
     uint8_t dac_ctrl, adc_ctrl;

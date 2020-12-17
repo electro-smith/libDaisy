@@ -39,7 +39,7 @@ void MidiHandler::StartReceive()
 void MidiHandler::Listen()
 {
     uint32_t now;
-    now = dsy_system_getnow();
+    now = System::GetNow();
     if(in_mode_ & INPUT_MODE_UART1)
     {
         while(uart_.Readable())
