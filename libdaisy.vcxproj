@@ -230,7 +230,6 @@
     <ClCompile Include="src\dev\codec_ak4556.cpp" />
     <ClCompile Include="src\dev\codec_pcm3060.cpp" />
     <ClCompile Include="src\dev\sdram.c" />
-    <ClCompile Include="src\dev\sr_4021.c" />
     <ClCompile Include="src\dev\sr_595.cpp" />
     <ClCompile Include="src\hid\audio.cpp" />
     <ClCompile Include="src\hid\ctrl.cpp" />

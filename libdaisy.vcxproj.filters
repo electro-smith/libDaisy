@@ -385,9 +385,6 @@
     <ClCompile Include="src\per\spi.cpp">
       <Filter>per</Filter>
     </ClCompile>
-    <ClCompile Include="src\per\tim.c">
-      <Filter>per</Filter>
-    </ClCompile>
     <ClCompile Include="src\per\uart.cpp">
       <Filter>per</Filter>
     </ClCompile>
@@ -420,12 +417,6 @@
     </ClCompile>
     <ClCompile Include="src\hid\wavplayer.cpp">
       <Filter>hid</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev\sr_4021.c">
-      <Filter>dev</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev\sr_595.cpp">
-      <Filter>dev</Filter>
     </ClCompile>
     <ClCompile Include="src\dev\sdram.c">
       <Filter>dev</Filter>
@@ -494,6 +485,10 @@
       <Filter>hid</Filter>
     </ClCompile>
     <ClCompile Include="src\dev\codec_ak4556.cpp">
+      <Filter>dev</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\tim.cpp" />
+    <ClCompile Include="src\dev\sr_595.cpp">
       <Filter>dev</Filter>
     </ClCompile>
   </ItemGroup>

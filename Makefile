@@ -12,7 +12,6 @@ per/gpio \
 per/qspi \
 per/sai \
 per/sdmmc \
-dev/sr_4021 \
 util/bsp_sd_diskio \
 util/hal_map \
 util/oled_fonts \
