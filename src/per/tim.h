@@ -2,7 +2,6 @@
 #ifndef DSY_TIM_H
 #define DSY_TIM_H
 
-#ifdef __cplusplus
 #include <cstdint>
 
 namespace daisy
@@ -16,7 +15,14 @@ namespace daisy
  ** It is configured to be at the maximum frequency: typically 200MHz or 240MHz (boost) 
  ** for measuring/delaying for very short periods. 
  **
+ ** The GetUs/GetMs functions are available for convenience (and backwards compatibility),
+ ** but to avoid wrapping errors on math when doing time-delta calculations, using ticks is 
+ ** recommended. The data can be converted to the final time-base after getting the difference in ticks.
+ ** (Using GetFreq() can be used for these time-base calculations).
+ **
  ** TODO:
+ ** - Fix issues with realtime getters, and wrapping of the timer(s).
+ **     - This very noticeable with default settings for the 16-bit counters.
  ** - Dispatch periodic callback(s)
  ** - Other General purpose timers
  ** - Non-internal clock sources
@@ -119,13 +125,6 @@ class TimerHandle
      ***/
     uint32_t GetUs();
 
-    /** Returns the ticks scaled as nanoseconds 
-     **
-     ** Use care when using for measurements and ensure that 
-     ** the TIM period can handle the maximum desired measurement.
-     ***/
-    uint32_t GetNs();
-
     /** Stay within this function for del ticks */
     void DelayTick(uint32_t del);
 
@@ -134,9 +133,6 @@ class TimerHandle
 
     /** Stay within this function for del microseconds */
     void DelayUs(uint32_t del);
-
-    /** Stay within this function for del nanoseconds */
-    void DelayNs(uint32_t del);
 
     class Impl;
 
@@ -147,61 +143,3 @@ class TimerHandle
 } // namespace daisy
 
 #endif
-
-#if 0
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-#include <stdint.h>
-
-    /** @addtogroup other
-    @{
-    */
-
-
-    /** General purpose timer for delays and general timing. */
-
-    /** initializes the TIM2 peripheral with maximum counter autoreload, and no prescalers. */
-    void dsy_tim_init();
-
-    /** Starts the timer ticking. */
-    void dsy_tim_start();
-
-    /** These functions are specific to the actual clock ticks at the timer frequency which is currently fixed at 200MHz
-        \return a number 0x00000000-0xffffffff of the current tick
-    */
-    uint32_t dsy_tim_get_tick();
-
-    /** 
-    blocking delay of cnt timer ticks. 
-    \param cnt Number of ticks
-     */
-    void dsy_tim_delay_tick(uint32_t cnt);
-
-    /** These functions are converted to use milliseconds as their time base.
-    \return the number of milliseconds through the timer period.
-    */
-    uint32_t dsy_tim_get_ms();
-
-    /** blocking delay of cnt milliseconds.
-    \param cnt Delay time in ms
-    */
-    void dsy_tim_delay_ms(uint32_t cnt);
-
-    /** These functions are converted to use microseconds as their time base.
-    \return the number of microseconds through the timer period.
-    */
-    uint32_t dsy_tim_get_us();
-
-    /** blocking delay of cnt microseconds. 
-    \param cnt Delay time in us
-     */
-    void dsy_tim_delay_us(uint32_t cnt);
-#ifdef __cplusplus
-}
-#endif
-#endif
-#endif
-/** @} */

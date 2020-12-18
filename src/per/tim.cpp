@@ -123,15 +123,15 @@ TimerHandle::Result TimerHandle::Impl::Stop()
                : TimerHandle::Result::ERR;
 }
 
-#warning "Not yet implemented"
 TimerHandle::Result TimerHandle::Impl::SetPeriod(uint32_t ticks)
 {
+    tim_hal_handle_.Instance->ARR = ticks;
     return Result::OK;
 }
 
-#warning "Not yet implemented"
 TimerHandle::Result TimerHandle::Impl::SetPrescaler(uint32_t val)
 {
+    tim_hal_handle_.Instance->PSC = val;
     return Result::OK;
 }
 
@@ -141,8 +141,8 @@ uint32_t TimerHandle::Impl::GetFreq()
     // there is a switchable 1/2/4 prescalar available
     // that is not yet implemented.
     // Once it is, it should be taken into account here as well.
-    uint32_t clkfreq_hz = System::GetPClk1Freq() * 2;
-    uint32_t hz         = clkfreq_hz / (tim_hal_handle_.Init.Prescaler + 1);
+    uint32_t clkfreq_hz = (System::GetPClk1Freq() * 2);
+    uint32_t hz         = clkfreq_hz / (tim_hal_handle_.Instance->PSC + 1);
     return hz;
 }
 
@@ -168,13 +168,11 @@ void TimerHandle::Impl::DelayTick(uint32_t del)
 
 void TimerHandle::Impl::DelayMs(uint32_t del)
 {
-#warning "This is incorrect"
     DelayTick(del * (GetFreq() / 100000000));
 }
 
 void TimerHandle::Impl::DelayUs(uint32_t del)
 {
-#warning "This is incorrect"
     DelayTick(del * (GetFreq() / 1000000));
 }
 
@@ -187,6 +185,18 @@ extern "C"
         {
             __HAL_RCC_TIM2_CLK_ENABLE();
         }
+        else if(tim_baseHandle->Instance == TIM3)
+        {
+            __HAL_RCC_TIM3_CLK_ENABLE();
+        }
+        else if(tim_baseHandle->Instance == TIM4)
+        {
+            __HAL_RCC_TIM4_CLK_ENABLE();
+        }
+        else if(tim_baseHandle->Instance == TIM5)
+        {
+            __HAL_RCC_TIM5_CLK_ENABLE();
+        }
     }
 
     void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
@@ -194,6 +204,18 @@ extern "C"
         if(tim_baseHandle->Instance == TIM2)
         {
             __HAL_RCC_TIM2_CLK_DISABLE();
+        }
+        else if(tim_baseHandle->Instance == TIM3)
+        {
+            __HAL_RCC_TIM3_CLK_DISABLE();
+        }
+        else if(tim_baseHandle->Instance == TIM4)
+        {
+            __HAL_RCC_TIM4_CLK_DISABLE();
+        }
+        else if(tim_baseHandle->Instance == TIM5)
+        {
+            __HAL_RCC_TIM5_CLK_DISABLE();
         }
     }
 }
