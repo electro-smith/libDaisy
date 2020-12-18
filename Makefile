@@ -12,7 +12,6 @@ per/gpio \
 per/qspi \
 per/sai \
 per/sdmmc \
-per/tim \
 dev/sr_4021 \
 util/bsp_sd_diskio \
 util/hal_map \
@@ -50,6 +49,7 @@ hid/logger \
 per/adc \
 per/i2c \
 per/spi \
+per/tim \
 per/uart \
 util/color
 

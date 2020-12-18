@@ -253,7 +253,7 @@
     <ClCompile Include="src\per\sai.cpp" />
     <ClCompile Include="src\per\sdmmc.cpp" />
     <ClCompile Include="src\per\spi.cpp" />
-    <ClCompile Include="src\per\tim.c" />
+    <ClCompile Include="src\per\tim.cpp" />
     <ClCompile Include="src\per\uart.cpp" />
     <ClCompile Include="src\sys\dma.c" />
     <ClCompile Include="src\sys\fatfs.c" />
