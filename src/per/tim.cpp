@@ -143,10 +143,10 @@ TimerHandle::Result TimerHandle::Impl::SetPrescaler(uint32_t val)
 
 uint32_t TimerHandle::Impl::GetFreq()
 {
-	// TIM ticks run at 2x PClk
-	// there is a switchable 1/2/4 prescalar available
+    // TIM ticks run at 2x PClk
+    // there is a switchable 1/2/4 prescalar available
     // that is not yet implemented.
-	// Once it is, it should be taken into account here as well.
+    // Once it is, it should be taken into account here as well.
     uint32_t clkfreq_hz = System::GetPClk1Freq() * 2;
     uint32_t hz         = clkfreq_hz / (tim_hal_handle_.Init.Prescaler + 1);
     return hz;
@@ -174,13 +174,13 @@ void TimerHandle::Impl::DelayTick(uint32_t del)
 
 void TimerHandle::Impl::DelayMs(uint32_t del)
 {
-    #warning "This is incorrect"
+#warning "This is incorrect"
     DelayTick(del * (GetFreq() / 100000000));
 }
 
 void TimerHandle::Impl::DelayUs(uint32_t del)
 {
-    #warning "This is incorrect"
+#warning "This is incorrect"
     DelayTick(del * (GetFreq() / 1000000));
 }
 
