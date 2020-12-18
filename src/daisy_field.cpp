@@ -63,10 +63,7 @@
 
 using namespace daisy;
 
-static constexpr I2CHandle::Config field_led_i2c_config
-    = {I2CHandle::Config::Peripheral::I2C_1,
-       {{DSY_GPIOB, 8}, {DSY_GPIOB, 9}},
-       I2CHandle::Config::Speed::I2C_1MHZ};
+static constexpr I2CHandle::Config field_led_i2c_config = {I2CHandle::Config::Peripheral::I2C_1,{{DSY_GPIOB, 8}, {DSY_GPIOB, 9}},I2CHandle::Config::Speed::I2C_1MHZ};
 
 static LedDriverPca9685<2, true>::DmaBuffer DMA_BUFFER_MEM_SECTION
     field_led_dma_buffer_a,
@@ -118,12 +115,11 @@ void DaisyField::Init(bool boost)
     }
 
     // Keyboard
-    keyboard_sr_.pin_config[DSY_SR_4021_PIN_CS]   = seed.GetPin(PIN_CD4021_CS);
-    keyboard_sr_.pin_config[DSY_SR_4021_PIN_CLK]  = seed.GetPin(PIN_CD4021_CLK);
-    keyboard_sr_.pin_config[DSY_SR_4021_PIN_DATA] = seed.GetPin(PIN_CD4021_D1);
-    keyboard_sr_.num_daisychained                 = 2;
-    keyboard_sr_.num_parallel                     = 1;
-    dsy_sr_4021_init(&keyboard_sr_);
+    ShiftRegister4021<2>::Config keyboard_cfg;
+    keyboard_cfg.clk     = seed.GetPin(PIN_CD4021_CLK);
+    keyboard_cfg.latch   = seed.GetPin(PIN_CD4021_CS);
+    keyboard_cfg.data[0] = seed.GetPin(PIN_CD4021_D1);
+    keyboard_sr_.Init(keyboard_cfg);
 
     // OLED
     dsy_gpio_pin oled_pins[OledDisplay::NUM_PINS];
@@ -238,14 +234,15 @@ void DaisyField::ProcessDigitalControls()
         sw[i].Debounce();
         // Keyboard SM
     }
-    dsy_sr_4021_update(&keyboard_sr_);
+    //dsy_sr_4021_update(&keyboard_sr_);
+    keyboard_sr_.Update();
     for(size_t i = 0; i < 16; i++)
     {
         uint8_t keyidx, keyoffset;
-        keyoffset               = i > 7 ? 8 : 0;
-        keyidx                  = (7 - (i % 8)) + keyoffset;
-        keyboard_state_[keyidx] = dsy_sr_4021_state(&keyboard_sr_, i)
-                                  | (keyboard_state_[keyidx] << 1);
+        keyoffset = i > 7 ? 8 : 0;
+        keyidx    = (7 - (i % 8)) + keyoffset;
+        keyboard_state_[keyidx]
+            = keyboard_sr_.State(i) | (keyboard_state_[keyidx] << 1);
     }
     // Gate Input
     gate_in_trig_ = gate_in.Trig();
