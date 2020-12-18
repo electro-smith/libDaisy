@@ -83,6 +83,10 @@ extern "C"
 
 namespace daisy
 {
+
+// Define static tim_
+TimerHandle System::tim_;
+
 void System::Init()
 {
     System::Config cfg;
@@ -105,6 +109,14 @@ void System::Init(const System::Config& config)
         SCB_EnableDCache();
     if(config.use_icache)
         SCB_EnableICache();
+
+    // Configure and start highspeed timer.
+    // TIM 2 counter UP (defaults to fastest tick/longest period).
+    TimerHandle::Config timcfg;
+    timcfg.periph = TimerHandle::Config::Peripheral::TIM_2;
+    timcfg.dir    = TimerHandle::Config::CounterDir::UP;
+    tim_.Init(timcfg);
+    tim_.Start();
 }
 
 void System::JumpToQspi()
@@ -118,10 +130,31 @@ uint32_t System::GetNow()
     return HAL_GetTick();
 }
 
+uint32_t System::GetUs()
+{
+    return tim_.GetUs();
+}
+
+uint32_t System::GetTick()
+{
+    return tim_.GetTick();
+}
+
 void System::Delay(uint32_t delay_ms)
 {
     HAL_Delay(delay_ms);
 }
+
+void System::DelayUs(uint32_t delay_us)
+{
+    tim_.DelayUs(delay_us);
+}
+
+void System::DelayTicks(uint32_t delay_ticks)
+{
+    tim_.DelayTick(delay_ticks);
+}
+
 
 void System::ConfigureClocks()
 {

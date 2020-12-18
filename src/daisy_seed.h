@@ -140,7 +140,6 @@ class DaisySeed
     AdcHandle        adc;          /**< & */
     dsy_dac_handle   dac_handle;   /**< & */
     UsbHandle        usb_handle;   /**< & */
-    TimerHandle      tim2;         /**< Timer for submillisecond measurements */
     dsy_gpio         led, testpoint;
     System           system;
 

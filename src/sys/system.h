@@ -2,6 +2,7 @@
 #define DSY_SYSTEM_H
 
 #include <cstdint>
+#include "per/tim.h"
 
 namespace daisy
 {
@@ -76,10 +77,28 @@ class System
     */
     static uint32_t GetNow();
 
+    /** \return a uint32_t of microseconds within the internal timer. */
+    static uint32_t GetUs();
+
+    /** \return a uint32_t of ticks at (PCLk1 * 2)Hz 
+     ** Useful for measuring the number of CPU ticks 
+     ** something is taking.
+     ** */ 
+    static uint32_t GetTick();
+
     /** Blocking Delay that uses the SysTick (1ms callback) to wait.
      ** \param delay_ms Time to delay in ms
      */
     static void Delay(uint32_t delay_ms);
+
+    /** Blocking Delay using internal timer to wait 
+     ** \param delay_us Time to ddelay in microseconds */
+    static void DelayUs(uint32_t delay_us);
+
+    
+    /** Blocking Delay using internal timer to wait 
+     ** \param delay_ticks Time to ddelay in microseconds */
+    static void DelayTicks(uint32_t delay_ticks);
 
     /** Returns the Frequency of the system clock in Hz 
      ** This is the primary system clock that is used to generate
@@ -108,7 +127,6 @@ class System
      ** */
     static uint32_t GetPClk2Freq();
 
-
     /**
      ** Returns a const reference to the Systems Configuration struct
      */
@@ -118,6 +136,10 @@ class System
     void   ConfigureClocks();
     void   ConfigureMpu();
     Config cfg_;
+
+    /** One TimerHandle to rule them all
+     ** Maybe this whole class should be static.. */
+    static TimerHandle tim_;
 };
 
 } // namespace daisy
