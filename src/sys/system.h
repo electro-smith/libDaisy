@@ -83,7 +83,7 @@ class System
     /** \return a uint32_t of ticks at (PCLk1 * 2)Hz 
      ** Useful for measuring the number of CPU ticks 
      ** something is taking.
-     ** */ 
+     ** */
     static uint32_t GetTick();
 
     /** Blocking Delay that uses the SysTick (1ms callback) to wait.
@@ -95,7 +95,7 @@ class System
      ** \param delay_us Time to ddelay in microseconds */
     static void DelayUs(uint32_t delay_us);
 
-    
+
     /** Blocking Delay using internal timer to wait 
      ** \param delay_ticks Time to ddelay in microseconds */
     static void DelayTicks(uint32_t delay_ticks);
@@ -106,7 +106,7 @@ class System
     static uint32_t GetSysClkFreq();
 
     /** Returns the frequency of the HCLK (AHB) clock. This is derived
-     ** from the System clock, and used to clock the CPU, memory, and 
+     ** from the System clock, and used to clock the CPU, memory, and
      ** peripherals mapped on the AHB, and APB Bus.
      ** */
     static uint32_t GetHClkFreq();

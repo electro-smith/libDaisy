@@ -106,12 +106,6 @@ TimerHandle::Result TimerHandle::Impl::Init(const TimerHandle::Config& config)
         Error_Handler();
     }
 
-    // Figure out freq of tick
-    // (based on clocksource_freq / (prescaler+1))
-    // For TIM2-5 they are all on APB1 clock
-    uint32_t clkfreq_hz = System::GetPClk1Freq();
-    uint32_t tim_hz     = clkfreq_hz / (tim_hal_handle_.Init.Prescaler + 1);
-
     return TimerHandle::Result::OK;
 }
 

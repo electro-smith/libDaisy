@@ -83,7 +83,6 @@ extern "C"
 
 namespace daisy
 {
-
 // Define static tim_
 TimerHandle System::tim_;
 
