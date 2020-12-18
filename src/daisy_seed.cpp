@@ -115,8 +115,15 @@ void DaisySeed::Init(bool boost)
     dsy_gpio_init(&led);
     dsy_gpio_init(&testpoint);
     ConfigureAudio();
-    dsy_tim_init();
-    dsy_tim_start();
+
+    // Configure and start highspeed timer.
+    // TIM 2 counter UP (defaults to fastest tick/longest period).
+    TimerHandle::Config timcfg;
+    timcfg.periph = TimerHandle::Config::Peripheral::TIM_2;
+    timcfg.dir    = TimerHandle::Config::CounterDir::UP;
+    tim2.Init(timcfg);
+    tim2.Start();
+
     callback_rate_ = AudioSampleRate() / AudioBlockSize();
     // Due to the added 16kB+ of flash usage,
     // and the fact that certain breakouts use

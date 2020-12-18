@@ -83,7 +83,6 @@ void DaisyPetal::Init(bool boost)
     // Initialize the hardware.
     seed.Configure();
     seed.Init(boost);
-    dsy_tim_start();
     InitSwitches();
     InitEncoder();
     InitLeds();

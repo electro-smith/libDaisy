@@ -142,6 +142,7 @@ class DaisySeed
     UsbHandle        usb_handle;   /**< & */
     dsy_gpio         led, testpoint;
     System           system;
+    TimerHandle      tim2;/**< Timer for submillisecond measurements */
 
   private:
     /** Local shorthand for debug log destination

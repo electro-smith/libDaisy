@@ -77,7 +77,6 @@ void DaisyPod::Init(bool boost)
     // Initialize the hardware.
     seed.Configure();
     seed.Init(boost);
-    dsy_tim_start();
     InitButtons();
     InitEncoder();
     InitLeds();

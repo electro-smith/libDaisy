@@ -148,7 +148,6 @@ void DaisyField::Init(bool boost)
     gate_out.pin  = seed.GetPin(PIN_GATE_OUT);
     dsy_gpio_init(&gate_out);
     dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
-    dsy_tim_start();
 }
 
 void DaisyField::DelayMs(size_t del)
