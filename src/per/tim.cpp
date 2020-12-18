@@ -282,6 +282,8 @@ void TimerHandle::DelayUs(uint32_t del)
 // Delete from here down when everything is retested and works.
 //////////////////////////////////////////////////////////////////
 
+#if 0
+
 enum
 {
     SCALE_MS,
@@ -372,3 +374,4 @@ static void sthal_tim_init()
         //    Error_Handler();
     }
 }
+#endif
