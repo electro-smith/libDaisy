@@ -7,7 +7,6 @@ var searchData=
   ['seed',['seed',['../classdaisy_1_1_daisy_patch.html#a4705ca24e5ebc4d8add7d83232162fd7',1,'daisy::DaisyPatch::seed()'],['../classdaisy_1_1_daisy_petal.html#a2ef75f14bf008985bf6635e9ce87106a',1,'daisy::DaisyPetal::seed()'],['../classdaisy_1_1_daisy_pod.html#a75907b96ea78262bf52dd7b565136f58',1,'daisy::DaisyPod::seed()']]],
   ['speed',['speed',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a7795ab9b3b85bd2f51950b6985a31b97',1,'daisy::I2CHandle::Config::speed()'],['../structdaisy_1_1_sdmmc_handler_init.html#afee5b8e925f0cbb76bab2904620a71b7',1,'daisy::SdmmcHandlerInit::speed()']]],
   ['state',['state',['../structdsy__sdram__handle.html#a052f782ca4905360ced7ebede5d29e3a',1,'dsy_sdram_handle']]],
-  ['states',['states',['../structdsy__sr__4021__handle.html#a0320ddfe5eafa904ffe6c7d3cec768b9',1,'dsy_sr_4021_handle']]],
   ['subchunk1id',['SubChunk1ID',['../struct_w_a_v___format_type_def.html#a474c9112ff1341977e1f7d27857b64d3',1,'WAV_FormatTypeDef']]],
   ['subchunk1size',['SubChunk1Size',['../struct_w_a_v___format_type_def.html#ae01d4cc44b15138a0d3c61b44b7aec41',1,'WAV_FormatTypeDef']]],
   ['subchunk2id',['SubChunk2ID',['../struct_w_a_v___format_type_def.html#a5c3005998567669d67325318beaffac0',1,'WAV_FormatTypeDef']]],

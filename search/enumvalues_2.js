@@ -49,10 +49,5 @@ var searchData=
   ['dsy_5fsdram_5fpin_5fsdnwe',['DSY_SDRAM_PIN_SDNWE',['../group__sdram.html#ggae5b02cd39e08c80faa1c81edacf38303a87f571cbd1cf0777e7de144d7651a680',1,'sdram.h']]],
   ['dsy_5fsdram_5fstate_5fdisable',['DSY_SDRAM_STATE_DISABLE',['../group__sdram.html#ggaa4b8e04989b35adf4cd19ae52235a03eaa4ca92105c7397ebefb60e71529dc62e',1,'sdram.h']]],
   ['dsy_5fsdram_5fstate_5fenable',['DSY_SDRAM_STATE_ENABLE',['../group__sdram.html#ggaa4b8e04989b35adf4cd19ae52235a03ea696c408d3a11356286dcaf3f237151a8',1,'sdram.h']]],
-  ['dsy_5fsdram_5fstate_5flast',['DSY_SDRAM_STATE_LAST',['../group__sdram.html#ggaa4b8e04989b35adf4cd19ae52235a03ea2b14c0d1e048dfb7631a7b5033f8f30b',1,'sdram.h']]],
-  ['dsy_5fsr_5f4021_5fpin_5fclk',['DSY_SR_4021_PIN_CLK',['../group__shiftregister.html#gga61dadd085c1777f559549e05962b2c9eaef8d6ee3f8f110d2f5e48ff1ddd79616',1,'sr_4021.h']]],
-  ['dsy_5fsr_5f4021_5fpin_5fcs',['DSY_SR_4021_PIN_CS',['../group__shiftregister.html#gga61dadd085c1777f559549e05962b2c9ea4a5734a8cf506d4a620f4753707ad7f9',1,'sr_4021.h']]],
-  ['dsy_5fsr_5f4021_5fpin_5fdata',['DSY_SR_4021_PIN_DATA',['../group__shiftregister.html#gga61dadd085c1777f559549e05962b2c9ea4e8b1b60a66c2c692fe2e37b80dde052',1,'sr_4021.h']]],
-  ['dsy_5fsr_5f4021_5fpin_5fdata2',['DSY_SR_4021_PIN_DATA2',['../group__shiftregister.html#gga61dadd085c1777f559549e05962b2c9eacf1e122716d615ec56f9b3cf4592466d',1,'sr_4021.h']]],
-  ['dsy_5fsr_5f4021_5fpin_5flast',['DSY_SR_4021_PIN_LAST',['../group__shiftregister.html#gga61dadd085c1777f559549e05962b2c9ea2d2cf4c1df5a6a5c78237f7632350f5d',1,'sr_4021.h']]]
+  ['dsy_5fsdram_5fstate_5flast',['DSY_SDRAM_STATE_LAST',['../group__sdram.html#ggaa4b8e04989b35adf4cd19ae52235a03ea2b14c0d1e048dfb7631a7b5033f8f30b',1,'sdram.h']]]
 ];

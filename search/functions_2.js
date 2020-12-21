@@ -2,6 +2,7 @@ var searchData=
 [
   ['blockingtransmit',['BlockingTransmit',['../classdaisy_1_1_spi_handle.html#a99adb49a6d7c8583d565dc450610af25',1,'daisy::SpiHandle']]],
   ['blue',['Blue',['../classdaisy_1_1_color.html#a5192f53cce080bbce9cf082d0ab71040',1,'daisy::Color']]],
+  ['boost',['Boost',['../structdaisy_1_1_system_1_1_config.html#abba756da586d15e0a603a661721c86d6',1,'daisy::System::Config']]],
   ['bsp_5fsd_5fabortcallback',['BSP_SD_AbortCallback',['../group__utility.html#ga0a395393d1522c9844c525f0dc61fe3e',1,'bsp_sd_diskio.h']]],
   ['bsp_5fsd_5ferase',['BSP_SD_Erase',['../group__utility.html#gaffac80d97e56403e94031344d356ea67',1,'bsp_sd_diskio.h']]],
   ['bsp_5fsd_5fgetcardinfo',['BSP_SD_GetCardInfo',['../group__utility.html#ga8d8655b2e25c2da93fcb1cd9a493bdd4',1,'bsp_sd_diskio.h']]],

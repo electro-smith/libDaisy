@@ -11,6 +11,5 @@ var searchData=
   ['dsy_5fgpio_5fpin',['dsy_gpio_pin',['../structdsy__gpio__pin.html',1,'']]],
   ['dsy_5fqspi_5fhandle',['dsy_qspi_handle',['../structdsy__qspi__handle.html',1,'']]],
   ['dsy_5fsd_5fcardinfotypedef',['DSY_SD_CardInfoTypeDef',['../struct_d_s_y___s_d___card_info_type_def.html',1,'']]],
-  ['dsy_5fsdram_5fhandle',['dsy_sdram_handle',['../structdsy__sdram__handle.html',1,'']]],
-  ['dsy_5fsr_5f4021_5fhandle',['dsy_sr_4021_handle',['../structdsy__sr__4021__handle.html',1,'']]]
+  ['dsy_5fsdram_5fhandle',['dsy_sdram_handle',['../structdsy__sdram__handle.html',1,'']]]
 ];

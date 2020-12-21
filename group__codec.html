@@ -100,8 +100,6 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga6513036583fbd06c8a4af04c467e3af8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__codec.html#ga6513036583fbd06c8a4af04c467e3af8">codec_ak4556_init</a> (<a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> reset_pin)</td></tr>
-<tr class="separator:ga6513036583fbd06c8a4af04c467e3af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaed42c2cc2914d7fe441e6718bb589743"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__codec.html#gaed42c2cc2914d7fe441e6718bb589743">codec_wm8731_init</a> (dsy_i2c_handle *hi2c, uint8_t mcu_is_master, int32_t sample_rate, uint8_t bitdepth)</td></tr>
 <tr class="separator:gaed42c2cc2914d7fe441e6718bb589743"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad7b5b5b7621de4fd1cff9a61365e03a7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__codec.html#gad7b5b5b7621de4fd1cff9a61365e03a7">codec_wm8731_enter_bypass</a> (dsy_i2c_handle *hi2c)</td></tr>
@@ -115,7 +113,9 @@ Functions</h2></td></tr>
 <p>Driver for the WM8731 Codec.</p>
 <p>Driver for the TI PCM3060 Audio Codec.</p>
 <p>For now this is a limited interface that uses I2C to communicate with the PCM3060 The device can also be accessed with SPI, which is not yet supported.</p>
-<p>Driver for the AK4556 Stereo Codec.</p>
+<p><a class="el" href="classdaisy_1_1_ak4556.html">Ak4556</a> Codec support.</p>
+<dl class="section author"><dt>Author</dt><dd>shensley</dd></dl>
+<p>I don't see any real reason to have this be more than a function, but in case we want to add other functions down the road I wrapped the function in a class.</p>
 <p>For now all registers are set to their defaults, and the Init function will perform a MRST and SRST before setting the format to 24bit LJ, and disabling power save for both the ADC and DAC. </p>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a class="anchor" id="ga1c515a2c7b8cccaff957aabcd1ea1467"></a>
@@ -132,28 +132,6 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="ga6513036583fbd06c8a4af04c467e3af8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void codec_ak4556_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a>&#160;</td>
-          <td class="paramname"><em>reset_pin</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Resets the AK4556 </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">reset_pin</td><td>should be a <a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> that is connected to the RST pin of the AK4556 </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a class="anchor" id="gad7b5b5b7621de4fd1cff9a61365e03a7"></a>
 <div class="memitem">
 <div class="memproto">

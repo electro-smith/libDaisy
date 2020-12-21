@@ -94,20 +94,11 @@ Functions</h2></td></tr>
 <tr class="separator:ga925b1db78b1a6747c0eb2862d70040c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0f0b7eae521c107641f2a43b6a9a3fae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system.html#ga0f0b7eae521c107641f2a43b6a9a3fae">dsy_dma_invalidate_cache_for_buffer</a> (uint8_t *buffer, size_t size)</td></tr>
 <tr class="separator:ga0f0b7eae521c107641f2a43b6a9a3fae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f716c6e9bab13116849c2145cc3d35a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system.html#ga0f716c6e9bab13116849c2145cc3d35a">dsy_system_init</a> ()</td></tr>
-<tr class="separator:ga0f716c6e9bab13116849c2145cc3d35a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga53510a60ba936014b5cd77b23b61ccc8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system.html#ga53510a60ba936014b5cd77b23b61ccc8">dsy_system_jumpto</a> (uint32_t addr)</td></tr>
-<tr class="separator:ga53510a60ba936014b5cd77b23b61ccc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga48cb2251c3a25e8de3d971677922ba50"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system.html#ga48cb2251c3a25e8de3d971677922ba50">dsy_system_jumptoqspi</a> ()</td></tr>
-<tr class="separator:ga48cb2251c3a25e8de3d971677922ba50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga432c530c865525bea449446f08e31de4"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system.html#ga432c530c865525bea449446f08e31de4">dsy_system_getnow</a> ()</td></tr>
-<tr class="separator:ga432c530c865525bea449446f08e31de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabb7496cd6dea55f0fee6e3eb707bac52"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__system.html#gabb7496cd6dea55f0fee6e3eb707bac52">dsy_system_delay</a> (uint32_t delay_ms)</td></tr>
-<tr class="separator:gabb7496cd6dea55f0fee6e3eb707bac52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Deals with system. DMA, clocks, etc. </p>
-<p>Low level System Configuration </p>
+<p>A handle for interacting with the Core <a class="el" href="classdaisy_1_1_system.html">System</a>. This includes the Clock tree, MPU, global DMA initialization, cache handling, and any other necessary global initiailzation</p>
+<dl class="section author"><dt>Author</dt><dd>shensley </dd></dl>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="ga925b1db78b1a6747c0eb2862d70040c8"></a>
 <div class="memitem">
@@ -177,100 +168,6 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>DMA transfers require the buffers to be excluded from the cache because the DMA reads / writes directly to the SRAM whereas the processor itself accesses the cache. Otherwise the DMA will access whatever is in the SRAM at the time which may not be in sync with the data in the cache - resulting in wrong data transmitted / received. You can place buffers in the D2 memory domain, in a section that has the cache disabled like this: uint8_t DMA_BUFFER_MEM_SECTION my_buffer[100]; If this is not possible for some reason, call this function to invalidate the cache (read SRAM contents to cache if required) after reading data from peripherals via the DMA. </p>
-
-</div>
-</div>
-<a class="anchor" id="gabb7496cd6dea55f0fee6e3eb707bac52"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void dsy_system_delay </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>delay_ms</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Blocking Delay that uses the SysTick (1ms callback) to wait. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">delay_ms</td><td>Time to delay in ms </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga432c530c865525bea449446f08e31de4"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint32_t dsy_system_getnow </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>a uint32_t value of milliseconds since the SysTick started <br />
- Note! This is a HAL_GetTick() </dd></dl>
-
-</div>
-</div>
-<a class="anchor" id="ga0f716c6e9bab13116849c2145cc3d35a"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void dsy_system_init </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initializes Clock tree, MPU, and internal memories voltage regulators. This function <em>must</em> be called at the beginning of any program using libdaisy Higher level daisy_ files call this through the DaisySeed object. </p>
-
-</div>
-</div>
-<a class="anchor" id="ga53510a60ba936014b5cd77b23b61ccc8"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void dsy_system_jumpto </td>
-          <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>addr</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Jump to an address within the internal memory <br />
- This may not work correctly, and may not be very useful with the single sector of memory on the stm32h750** </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">addr</td><td>Address to jump to </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a class="anchor" id="ga48cb2251c3a25e8de3d971677922ba50"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void dsy_system_jumptoqspi </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Jumps to the first address of the external flash chip (0x90000000) If there is no code there, the chip will likely fall through to the while() loop TODO: Documentation/Loader for using external flash coming soon. </p>
 
 </div>
 </div>

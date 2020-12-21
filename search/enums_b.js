@@ -8,5 +8,6 @@ var searchData=
   ['spiperiph',['SpiPeriph',['../group__serial.html#gaf711442ff4ba0ed7d1e6f6bae7c574b6',1,'daisy']]],
   ['spipin',['SpiPin',['../group__serial.html#gab9d0e8af9fe3d0320cdf38af4ec31a1a',1,'daisy']]],
   ['sw',['Sw',['../classdaisy_1_1_daisy_petal.html#a2651bb58e6ae33c0bd4bc770df3c7911',1,'daisy::DaisyPetal::Sw()'],['../classdaisy_1_1_daisy_pod.html#a148bfabd288f0b4d20a26b1d0e3bdeeb',1,'daisy::DaisyPod::Sw()']]],
-  ['sync',['Sync',['../structdaisy_1_1_sai_handle_1_1_config.html#a269af182475979f6845fb06ffa3c4055',1,'daisy::SaiHandle::Config']]]
+  ['sync',['Sync',['../structdaisy_1_1_sai_handle_1_1_config.html#a269af182475979f6845fb06ffa3c4055',1,'daisy::SaiHandle::Config']]],
+  ['sysclkfreq',['SysClkFreq',['../structdaisy_1_1_system_1_1_config.html#a100d6b1e0b41cf2bf17ecffe28fabfa7',1,'daisy::System::Config']]]
 ];
