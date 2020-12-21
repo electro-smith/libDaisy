@@ -163,9 +163,9 @@ void OledDisplay::Init(dsy_gpio_pin* pin_cfg)
 void OledDisplay::Reset()
 {
     dsy_gpio_write(&pin_reset, 0);
-    dsy_system_delay(10);
+    System::Delay(10);
     dsy_gpio_write(&pin_reset, 1);
-    dsy_system_delay(10);
+    System::Delay(10);
 }
 
 void OledDisplay::Fill(bool on)

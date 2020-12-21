@@ -2,30 +2,29 @@
 #ifndef DSY_CODEC_AK4556_H
 #define DSY_CODEC_AK4556_H
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
 #include "daisy_core.h"
 
-    /** 
-    @brief Driver for the AK4556 Stereo Codec
-*/
+namespace daisy
+{
+/** @brief Ak4556 Codec support 
+ ** @author shensley
+ ** @addtogroup codec
+ ** 
+ ** I don't see any real reason to have this be more than a function, but in case we want
+ ** to add other functions down the road I wrapped the function in a class.
+ ***/
+class Ak4556
+{
+  public:
+    Ak4556() {}
+    ~Ak4556() {}
 
-    /** @addtogroup codec
-    @{
-*/
+    /** Initialization function for Ak4556 
+     ** Can be called statically:
+     ** Ak4556::Init(pin); 
+     ** */
+    static void Init(dsy_gpio_pin reset_pin);
+};
+} // namespace daisy
 
-    /** 
-    Resets the AK4556
-    \param reset_pin should be a dsy_gpio_pin that is connected to the RST pin of the AK4556
-*/
-    void codec_ak4556_init(dsy_gpio_pin reset_pin);
-
-#ifdef __cplusplus
-}
 #endif
-
-#endif
-/** @} */

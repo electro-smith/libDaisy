@@ -1,4 +1,5 @@
 #include "per/i2c.h"
+#include "sys/system.h"
 extern "C"
 {
 #include "util/hal_map.h"
@@ -196,21 +197,36 @@ I2CHandle::Result I2CHandle::Impl::Init(const I2CHandle::Config& config)
 
     // Set Generic Parameters
     // Configure Speed
-    // TODO: make this dependent on the current I2C clock speed set in sys
+    // TODO: Make this check the actual I2C clock source instead of it
+    //      "knowing" that it's the PCLK1
     switch(config_.speed)
     {
         case I2CHandle::Config::Speed::I2C_100KHZ:
-            i2c_hal_handle_.Init.Timing = 0x30E0628A;
+            if(System::GetPClk1Freq() == 120000000)
+                // Measured at 100kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x6090435F;
+            else
+                // Measured at 100kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x30E0628A;
             break;
         case I2CHandle::Config::Speed::I2C_400KHZ:
-            i2c_hal_handle_.Init.Timing = 0x20D01132;
+            if(System::GetPClk1Freq() == 120000000)
+                // Measured at 400kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x30B00F2D;
+            else
+                // Measured at 400kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x20D01132;
             break;
         case I2CHandle::Config::Speed::I2C_1MHZ:
-            i2c_hal_handle_.Init.Timing = 0x1080091A;
+            if(System::GetPClk1Freq() == 120000000)
+                // Measured at 837kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x10A00B20;
+            else
+                // Measured at 862kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x1080091A;
             break;
         default: break;
     }
-    //    i2c_hal_handle_.Init.Timing = 0x00C0EAFF;
     i2c_hal_handle_.Init.OwnAddress1      = 0;
     i2c_hal_handle_.Init.AddressingMode   = I2C_ADDRESSINGMODE_7BIT;
     i2c_hal_handle_.Init.DualAddressMode  = I2C_DUALADDRESS_DISABLE;

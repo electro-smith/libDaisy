@@ -27,11 +27,11 @@ using namespace daisy;
 #define PIN_CTRL_3 21
 #define PIN_CTRL_4 18
 
-void DaisyPatch::Init()
+void DaisyPatch::Init(bool boost)
 {
     // Configure Seed first
     seed.Configure();
-    seed.Init();
+    seed.Init(boost);
     InitAudio();
     InitDisplay();
     InitCvOutputs();
@@ -46,7 +46,7 @@ void DaisyPatch::Init()
     dsy_gpio_write(&ak4556_reset_pin_, 1);
     // Set Screen update vars
     screen_update_period_ = 17; // roughly 60Hz
-    screen_update_last_   = dsy_system_getnow();
+    screen_update_last_   = seed.system.GetNow();
 }
 
 void DaisyPatch::DelayMs(size_t del)
@@ -129,7 +129,7 @@ void DaisyPatch::DisplayControls(bool invert)
     bool on, off;
     on  = invert ? false : true;
     off = invert ? true : false;
-    if(dsy_system_getnow() - screen_update_last_ > screen_update_period_)
+    if(seed.system.GetNow() - screen_update_last_ > screen_update_period_)
     {
         // Graph Knobs
         size_t barwidth, barspacing;
@@ -199,7 +199,8 @@ void DaisyPatch::InitAudio()
     // Reset Pin for AK4556
     // Built-in AK4556 was reset during Seed Init
     dsy_gpio_pin codec_reset_pin = seed.GetPin(29);
-    codec_ak4556_init(codec_reset_pin);
+    //codec_ak4556_init(codec_reset_pin);
+    Ak4556::Init(codec_reset_pin);
 
     // Reinit Audio for _both_ codecs...
     AudioHandle::Config cfg;

@@ -36,7 +36,7 @@ class DaisyPod
     ~DaisyPod() {}
 
     /** Init related stuff. */
-    void Init();
+    void Init(bool boost = false);
 
     /** Wait for a bit
     \param del Time to wait in ms.

@@ -40,7 +40,7 @@ class DaisyPatch
     ~DaisyPatch() {}
 
     /** Initializes the daisy seed, and patch hardware.*/
-    void Init();
+    void Init(bool boost = false);
 
     /** 
     Wait some ms before going on.

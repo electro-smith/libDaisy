@@ -68,7 +68,7 @@ class DaisyPetal
     ~DaisyPetal() {}
 
     /** Initialize daisy petal */
-    void Init();
+    void Init(bool boost = false);
 
     /**
        Wait before moving on.

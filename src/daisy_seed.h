@@ -43,7 +43,7 @@ class DaisySeed
     can be initialized using their specific initializers within libdaisy
     for a specific application.
     */
-    void Init();
+    void Init(bool boost = false);
 
     /** 
     Wait some ms before going on.
@@ -141,7 +141,7 @@ class DaisySeed
     dsy_dac_handle   dac_handle;   /**< & */
     UsbHandle        usb_handle;   /**< & */
     dsy_gpio         led, testpoint;
-
+    System           system;
 
   private:
     /** Local shorthand for debug log destination

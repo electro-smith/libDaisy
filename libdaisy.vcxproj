@@ -227,10 +227,9 @@
     <ClCompile Include="src\daisy_pod.cpp" />
     <ClCompile Include="src\daisy_seed.cpp" />
     <ClCompile Include="src\daisy_versio.cpp" />
-    <ClCompile Include="src\dev\codec_ak4556.c" />
+    <ClCompile Include="src\dev\codec_ak4556.cpp" />
     <ClCompile Include="src\dev\codec_pcm3060.cpp" />
     <ClCompile Include="src\dev\sdram.c" />
-    <ClCompile Include="src\dev\sr_4021.c" />
     <ClCompile Include="src\dev\sr_595.cpp" />
     <ClCompile Include="src\hid\audio.cpp" />
     <ClCompile Include="src\hid\ctrl.cpp" />
@@ -253,11 +252,11 @@
     <ClCompile Include="src\per\sai.cpp" />
     <ClCompile Include="src\per\sdmmc.cpp" />
     <ClCompile Include="src\per\spi.cpp" />
-    <ClCompile Include="src\per\tim.c" />
+    <ClCompile Include="src\per\tim.cpp" />
     <ClCompile Include="src\per\uart.cpp" />
     <ClCompile Include="src\sys\dma.c" />
     <ClCompile Include="src\sys\fatfs.c" />
-    <ClCompile Include="src\sys\system.c" />
+    <ClCompile Include="src\sys\system.cpp" />
     <ClCompile Include="src\sys\system_stm32h7xx.c" />
     <ClCompile Include="src\usbd\usbd_cdc_if.c" />
     <ClCompile Include="src\usbd\usbd_conf.c" />

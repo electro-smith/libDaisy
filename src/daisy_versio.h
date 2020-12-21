@@ -46,7 +46,7 @@ class DaisyVersio
     ~DaisyVersio() {}
 
     /**Initializes the Versio, and all of its hardware.*/
-    void Init();
+    void Init(bool boost = false);
 
     /** 
     Wait some ms before going on.

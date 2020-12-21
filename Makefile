@@ -3,19 +3,15 @@ TARGET = libdaisy
 MODULE_DIR=src
 
 C_MODULES = \
-dev/codec_ak4556 \
 sys/dma \
 hid/audio \
 dev/sdram \
 sys/fatfs \
-sys/system \
 per/dac \
 per/gpio \
 per/qspi \
 per/sai \
 per/sdmmc \
-per/tim \
-dev/sr_4021 \
 util/bsp_sd_diskio \
 util/hal_map \
 util/oled_fonts \
@@ -33,7 +29,9 @@ daisy_patch \
 daisy_petal \
 daisy_field \
 daisy_versio \
+sys/system \
 dev/sr_595 \
+dev/codec_ak4556 \
 dev/codec_pcm3060 \
 hid/ctrl \
 hid/encoder \
@@ -50,6 +48,7 @@ hid/logger \
 per/adc \
 per/i2c \
 per/spi \
+per/tim \
 per/uart \
 util/color
 

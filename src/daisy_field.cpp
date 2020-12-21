@@ -72,10 +72,10 @@ static LedDriverPca9685<2, true>::DmaBuffer DMA_BUFFER_MEM_SECTION
     field_led_dma_buffer_a,
     field_led_dma_buffer_b;
 
-void DaisyField::Init()
+void DaisyField::Init(bool boost)
 {
     seed.Configure();
-    seed.Init();
+    seed.Init(boost);
     seed.SetAudioBlockSize(48);
 
     // Switches
@@ -118,12 +118,11 @@ void DaisyField::Init()
     }
 
     // Keyboard
-    keyboard_sr_.pin_config[DSY_SR_4021_PIN_CS]   = seed.GetPin(PIN_CD4021_CS);
-    keyboard_sr_.pin_config[DSY_SR_4021_PIN_CLK]  = seed.GetPin(PIN_CD4021_CLK);
-    keyboard_sr_.pin_config[DSY_SR_4021_PIN_DATA] = seed.GetPin(PIN_CD4021_D1);
-    keyboard_sr_.num_daisychained                 = 2;
-    keyboard_sr_.num_parallel                     = 1;
-    dsy_sr_4021_init(&keyboard_sr_);
+    ShiftRegister4021<2>::Config keyboard_cfg;
+    keyboard_cfg.clk     = seed.GetPin(PIN_CD4021_CLK);
+    keyboard_cfg.latch   = seed.GetPin(PIN_CD4021_CS);
+    keyboard_cfg.data[0] = seed.GetPin(PIN_CD4021_D1);
+    keyboard_sr_.Init(keyboard_cfg);
 
     // OLED
     dsy_gpio_pin oled_pins[OledDisplay::NUM_PINS];
@@ -148,7 +147,6 @@ void DaisyField::Init()
     gate_out.pin  = seed.GetPin(PIN_GATE_OUT);
     dsy_gpio_init(&gate_out);
     dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
-    dsy_tim_start();
 }
 
 void DaisyField::DelayMs(size_t del)
@@ -239,14 +237,15 @@ void DaisyField::ProcessDigitalControls()
         sw[i].Debounce();
         // Keyboard SM
     }
-    dsy_sr_4021_update(&keyboard_sr_);
+    //dsy_sr_4021_update(&keyboard_sr_);
+    keyboard_sr_.Update();
     for(size_t i = 0; i < 16; i++)
     {
         uint8_t keyidx, keyoffset;
-        keyoffset               = i > 7 ? 8 : 0;
-        keyidx                  = (7 - (i % 8)) + keyoffset;
-        keyboard_state_[keyidx] = dsy_sr_4021_state(&keyboard_sr_, i)
-                                  | (keyboard_state_[keyidx] << 1);
+        keyoffset = i > 7 ? 8 : 0;
+        keyidx    = (7 - (i % 8)) + keyoffset;
+        keyboard_state_[keyidx]
+            = keyboard_sr_.State(i) | (keyboard_state_[keyidx] << 1);
     }
     // Gate Input
     gate_in_trig_ = gate_in.Trig();
@@ -306,7 +305,7 @@ AnalogControl* DaisyField::GetCv(size_t idx)
 void DaisyField::VegasMode()
 {
     uint32_t now;
-    now = dsy_system_getnow();
+    now = seed.system.GetNow();
     size_t idx;
     float  key_bright;
     // Cycle all 16 LEDs on keyboard SM in opposite pattern or something

@@ -233,16 +233,16 @@ class LedDriverPca9685
             buffer[0] = PCA9685_MODE1;
             buffer[1] = 0x00;
             i2c_.TransmitBlocking(address, buffer, 2, 1);
-            dsy_tim_delay_ms(20);
+            System::Delay(20);
             buffer[0] = PCA9685_MODE1;
             buffer[1] = 0x00;
             i2c_.TransmitBlocking(address, buffer, 2, 1);
-            dsy_tim_delay_ms(20);
+            System::Delay(20);
             buffer[0] = PCA9685_MODE1;
             // auto increment on
             buffer[1] = 0b00100000;
             i2c_.TransmitBlocking(address, buffer, 2, 1);
-            dsy_tim_delay_ms(20);
+            System::Delay(20);
             buffer[0] = PCA9685_MODE2;
             // OE-high = high Impedance
             // Push-Pull outputs
