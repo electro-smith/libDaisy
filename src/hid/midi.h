@@ -68,7 +68,7 @@ struct MidiEvent
         return m;
     }
 
-    /** Returns the data within the MidiEvent as a NoteOnEvent struct.*/
+    /** Returns the data within the MidiEvent as a ControlChangeEvent struct.*/
     ControlChangeEvent AsControlChange()
     {
         ControlChangeEvent m;
