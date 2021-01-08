@@ -1,44 +1,14 @@
 // WM8371 Codec support.
+#include "sys/system.h"
 #include "dev/codec_wm8731.h"
-#include "util/hal_map.h"
+//#include "util/hal_map.h"
 
-typedef struct
+namespace daisy
 {
-    uint8_t            mcu_is_master, bitdepth;
-    int32_t            sample_rate;
-    size_t             block_size;
-    size_t             stride;
-    I2C_HandleTypeDef *i2c;
-} dsy_wm8731_handle_t;
-
 #define W8731_ADDR_0 0x1A
 #define W8731_ADDR_1 0x1B
 #define W8731_NUM_REGS 10
 #define CODEC_ADDRESS (W8731_ADDR_0 << 1)
-
-#define WAIT_LONG(x)                           \
-    {                                          \
-        uint32_t timeout = CODEC_LONG_TIMEOUT; \
-        while(x)                               \
-        {                                      \
-            if((timeout--) == 0)               \
-                return 0;                      \
-        }                                      \
-    }
-
-#define WAIT(x)                           \
-    {                                     \
-        uint32_t timeout = CODEC_TIMEOUT; \
-        while(x)                          \
-        {                                 \
-            if((timeout--) == 0)          \
-                return 0;                 \
-        }                                 \
-    }
-
-static uint8_t codec_write_control_register(uint8_t address, uint16_t data);
-static uint8_t
-init_codec(uint8_t mcu_is_master, int32_t sample_rate, uint8_t bitdepth);
 
 enum CodecRegister
 {
@@ -53,6 +23,18 @@ enum CodecRegister
     CODEC_REG_SAMPLE_RATE          = 0x08,
     CODEC_REG_ACTIVE               = 0x09,
     CODEC_REG_RESET                = 0x0f,
+};
+
+enum CodecAnalogSettings
+{
+    CODEC_ANALOG_MICBOOST  = 0x01,
+    CODEC_ANALOG_MUTEMIC   = 0x02,
+    CODEC_ANALOG_INSEL     = 0x04,
+    CODEC_ANALOG_BYPASS    = 0x08,
+    CODEC_ANALOG_DACSEL    = 0x10,
+    CODEC_ANALOG_SIDETONE  = 0x20,
+    CODEC_ANALOG_SIDEATT_0 = 0x40,
+    CODEC_ANALOG_SIDEATT_1 = 0x80,
 };
 
 enum CodecSettings
@@ -104,17 +86,149 @@ enum CodecSettings
     CODEC_RATE_44K_44K = 0x08 << 2,
 };
 
-enum CodecAnalogSettings
+Wm8731::Result Wm8731::Init(const Wm8731::Config &config, I2CHandle i2c)
 {
-    CODEC_ANALOG_MICBOOST  = 0x01,
-    CODEC_ANALOG_MUTEMIC   = 0x02,
-    CODEC_ANALOG_INSEL     = 0x04,
-    CODEC_ANALOG_BYPASS    = 0x08,
-    CODEC_ANALOG_DACSEL    = 0x10,
-    CODEC_ANALOG_SIDETONE  = 0x20,
-    CODEC_ANALOG_SIDEATT_0 = 0x40,
-    CODEC_ANALOG_SIDEATT_1 = 0x80,
-};
+    i2c_ = i2c;
+    cfg_ = config;
+
+    // Determine dev_address
+    // I2C Driver knows to shift the address
+    dev_addr_ = cfg_.csb_pin_state ? W8731_ADDR_1 : W8731_ADDR_0;
+
+    Result res;
+    // Reset
+    res = WriteControlRegister(CODEC_REG_RESET, 0);
+    if(res != Result::OK)
+        return Result::ERR;
+    // Set Line Inputs to 0DB
+    res = WriteControlRegister(CODEC_REG_LEFT_LINE_IN, CODEC_INPUT_0_DB);
+    if(res != Result::OK)
+        return Result::ERR;
+    res = WriteControlRegister(CODEC_REG_RIGHT_LINE_IN, CODEC_INPUT_0_DB);
+    if(res != Result::OK)
+        return Result::ERR;
+    // Set Headphone To Mute (and disable?)
+    res = WriteControlRegister(CODEC_REG_LEFT_HEADPHONES_OUT,
+                               CODEC_HEADPHONES_MUTE);
+    if(res != Result::OK)
+        return Result::ERR;
+    res = WriteControlRegister(CODEC_REG_RIGHT_HEADPHONES_OUT,
+                               CODEC_HEADPHONES_MUTE);
+    if(res != Result::OK)
+        return Result::ERR;
+
+    // Analog and Digital Routing
+    res = WriteControlRegister(CODEC_REG_ANALOGUE_ROUTING,
+                               CODEC_MIC_MUTE | CODEC_ADC_LINE
+                                   | CODEC_OUTPUT_DAC_ENABLE);
+    if(res != Result::OK)
+        return Result::ERR;
+
+    res = WriteControlRegister(CODEC_REG_DIGITAL_ROUTING,
+                               CODEC_DEEMPHASIS_NONE);
+    if(res != Result::OK)
+        return Result::ERR;
+
+    // Configure power management
+    uint8_t power_down_reg
+        = CODEC_POWER_DOWN_MIC | CODEC_POWER_DOWN_CLOCK_OUTPUT;
+    if(cfg_.mcu_is_master)
+        power_down_reg |= CODEC_POWER_DOWN_OSCILLATOR;
+    res = WriteControlRegister(CODEC_REG_POWER_MANAGEMENT, power_down_reg);
+    if(res != Result::OK)
+        return Result::ERR;
+
+    // Digital Format
+    uint8_t format_byte;
+    format_byte
+        = static_cast<uint8_t>(cfg_.fmt) | static_cast<uint8_t>(cfg_.wl);
+    format_byte
+        |= cfg_.mcu_is_master ? CODEC_FORMAT_SLAVE : CODEC_FORMAT_MASTER;
+    if(cfg_.lr_swap)
+        format_byte |= CODEC_FORMAT_LR_SWAP;
+    res = WriteControlRegister(CODEC_REG_DIGITAL_FORMAT, format_byte);
+    if(res != Result::OK)
+        return Result::ERR;
+
+    // samplerate
+    // TODO: add support for other samplerates
+    res = WriteControlRegister(CODEC_REG_SAMPLE_RATE, CODEC_RATE_48K_48K);
+    if(res != Result::OK)
+        return Result::ERR;
+
+    res = WriteControlRegister(CODEC_REG_ACTIVE, 0x00);
+    if(res != Result::OK)
+        return Result::ERR;
+
+    // Enable
+    res = WriteControlRegister(CODEC_REG_ACTIVE, 0x01);
+    if(res != Result::OK)
+        return Result::ERR;
+
+    return Result::OK;
+}
+
+Wm8731::Result Wm8731::WriteControlRegister(uint8_t address, uint16_t data)
+{
+    //    if(i2c_.WriteDataAtAddress(dev_addr_, address, 1, &data, 1, 250)
+    //       != I2CHandle::Result::OK)
+    //    {
+    //        return Result::ERR;
+    //    }
+    uint8_t byte_1 = ((address << 1) & 0xfe) | ((data >> 8) & 0x01);
+    //uint8_t byte_1  = ((address) | ((data >> 8) & 0x01));
+    //    uint8_t byte_1  = address;
+    uint8_t byte_2  = data & 0xff;
+    uint8_t buff[2] = {byte_1, byte_2};
+    if(i2c_.TransmitBlocking(dev_addr_, buff, 2, 250) != I2CHandle::Result::OK)
+    {
+        return Result::ERR;
+    }
+    System::Delay(10);
+    return Result::OK;
+}
+
+} // namespace daisy
+
+/** Old stuff */
+
+#if 0
+
+typedef struct
+{
+    uint8_t            mcu_is_master, bitdepth;
+    int32_t            sample_rate;
+    size_t             block_size;
+    size_t             stride;
+    I2C_HandleTypeDef *i2c;
+} dsy_wm8731_handle_t;
+
+
+#define WAIT_LONG(x)                           \
+    {                                          \
+        uint32_t timeout = CODEC_LONG_TIMEOUT; \
+        while(x)                               \
+        {                                      \
+            if((timeout--) == 0)               \
+                return 0;                      \
+        }                                      \
+    }
+
+#define WAIT(x)                           \
+    {                                     \
+        uint32_t timeout = CODEC_TIMEOUT; \
+        while(x)                          \
+        {                                 \
+            if((timeout--) == 0)          \
+                return 0;                 \
+        }                                 \
+    }
+
+static uint8_t codec_write_control_register(uint8_t address, uint16_t data);
+static uint8_t
+init_codec(uint8_t mcu_is_master, int32_t sample_rate, uint8_t bitdepth);
+
+
 // BEGIN SHENSLEY PORT
 dsy_wm8731_handle_t codec_handle;
 uint8_t             codec_wm8731_init(dsy_i2c_handle *hi2c,
@@ -264,9 +378,11 @@ uint8_t codec_write_control_register(uint8_t address, uint16_t data)
     return 1;
 }
 
+#endif
+
 //uint8_t sa_codec_start(dsy_wm8731_handle_t* c, size_t block_size)
 //{
-//	return 0;
+//    return 0;
 //}
 
 //static int setup_the_codec(dsy_wm8731_handle_t *c, size_t block_size)
@@ -295,7 +411,7 @@ uint8_t codec_write_control_register(uint8_t address, uint16_t data)
 //  c->block_size = block_size;
 //  stride = 1;
 //  c->stride = stride;
-//	//c->stride = 3;
+//    //c->stride = 3;
 //
 //  size_t buffer_size = 2 * stride * block_size * 2;
 //
@@ -331,10 +447,10 @@ uint8_t codec_write_control_register(uint8_t address, uint16_t data)
 //  //c->stride = 8;
 //  if (c->process) {
 //    offset *= c->block_size * c->stride * 2;
-//	  //offset = 0;
+//      //offset = 0;
 //
-//	  short* in = &c->rx_dma_buffer[offset];
-//	  short* out = &c->tx_dma_buffer[offset];
+//      short* in = &c->rx_dma_buffer[offset];
+//      short* out = &c->tx_dma_buffer[offset];
 //    /*
 //    if (c->stride) {
 //      // Undo the padding from the WM8731.

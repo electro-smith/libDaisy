@@ -40,6 +40,7 @@
 #include "hid/rgb_led.h"
 #include "dev/sr_595.h"
 #include "dev/codec_pcm3060.h"
+#include "dev/codec_wm8731.h"
 #include "util/scopedirqblocker.h"
 #endif
 #endif
