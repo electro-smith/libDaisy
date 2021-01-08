@@ -51,10 +51,7 @@ SYSTEM_FILES_DIR ?= \
 CPP_SOURCES ?= 
 
 C_SOURCES += \
-$(LIBDAISY_DIR)/src/system_stm32h7xx.c \
 $(SYSTEM_FILES_DIR)/startup_stm32h750xx.c
-
-#$(SYSTEM_FILES_DIR)/system_stm32h7xx.c
 
 #ASM_SOURCES += \
 #$(SYSTEM_FILES_DIR)/startup_stm32h750xx.s
