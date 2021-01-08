@@ -1,11 +1,12 @@
-/** 
-  *  stm32h7xx_hal_conf_template.h
+/**
+  ******************************************************************************
+  * @file    stm32h7xx_hal_conf_template.h
   * @author  MCD Application Team
   * @brief   HAL configuration template file.
   *          This file should be copied to the application folder and renamed
   *          to stm32h7xx_hal_conf.h.
   ******************************************************************************
-  * \attention
+  * @attention
   *
   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
   * All rights reserved.</center></h2>
@@ -30,7 +31,7 @@ extern "C"
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
-/* &######################### Module Selection &############################# */
+/* ########################## Module Selection ############################## */
 /**
   * @brief This is the list of modules to be used in the HAL driver
   */
@@ -90,7 +91,7 @@ extern "C"
 #define HAL_USART_MODULE_ENABLED
 #define HAL_WWDG_MODULE_ENABLED
 
-/* &######################### Oscillator Values adaptation &###################*/
+/* ########################## Oscillator Values adaptation ####################*/
 /**
   * @brief Adjust the value of External High Speed oscillator (HSE) used in your application.
   *        This value is used by the RCC HAL module to compute the system frequency
@@ -103,8 +104,8 @@ extern "C"
 
 #if !defined(HSE_STARTUP_TIMEOUT)
 #define HSE_STARTUP_TIMEOUT \
-    ((uint32_t)100) /*!< Time out for HSE start up, in ms */
-#endif              /* HSE_STARTUP_TIMEOUT */
+    ((uint32_t)5000) /*!< Time out for HSE start up, in ms */
+#endif               /* HSE_STARTUP_TIMEOUT */
 
 /**
   * @brief Internal  oscillator (CSI) default value.
@@ -158,7 +159,7 @@ extern "C"
 /* Tip: To avoid modifying this file each time you need to use different HSE,
    ===  you can define the HSE value in your toolchain compiler preprocessor. */
 
-/* &########################## System Configuration &######################## */
+/* ########################### System Configuration ######################### */
 /**
   * @brief This is the HAL system configuration section
   */
@@ -240,7 +241,7 @@ extern "C"
 #define USE_HAL_WWDG_REGISTER_CALLBACKS \
     0U /* WWDG register callback disabled    */
 
-/* &########################## Ethernet Configuration &######################## */
+/* ########################### Ethernet Configuration ######################### */
 #define ETH_TX_DESC_CNT 4 /* number of Ethernet Tx DMA descriptors */
 #define ETH_RX_DESC_CNT 4 /* number of Ethernet Rx DMA descriptors */
 
@@ -251,7 +252,7 @@ extern "C"
 #define ETH_MAC_ADDR4 ((uint8_t)0x00)
 #define ETH_MAC_ADDR5 ((uint8_t)0x00)
 
-    /* &######################### Assert Selection &############################# */
+    /* ########################## Assert Selection ############################## */
     /**
   * @brief Uncomment the line below to expanse the "assert_param" macro in the
   *        HAL drivers code
