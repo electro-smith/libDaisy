@@ -28,13 +28,13 @@
 
 **libDaisy is a hardware abstraction library for the [Daisy Embedded Audio Platform.](https://www.electro-smith.com/daisy)**
 
-It  provides easy access to things such as GPIO, MIDI, USB communication, and more.
+It provides easy access to things such as GPIO, MIDI, USB communication, and more.
 
 ## Features
 
 - Configurable Audio Callback
 
-- MIDI Drivers 
+- MIDI Drivers
 
 - USB Communication (Audio, MIDI, Serial, etc.)
 
