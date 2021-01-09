@@ -1,22 +1,47 @@
-![](https://github.com/electro-smith/libdaisy/blob/master/resources/assets/banner.png)
+<!-- Banner -->
+<p align="center">
+    <a href=https://electrosmith.com/daisy>
+        <img src=https://raw.githubusercontent.com/electro-smith/libdaisy/master/resources/assets/banner.png>
+    </a>
+</p>
+<!-- Non-CI Badges -->
+<p align="center">
+    <a href="https://opensource.org/licenses/MIT">
+      <img src="https://img.shields.io/badge/license-MIT-yellow">
+    </a>
+    <a href="https://join.slack.com/t/es-daisy/shared_invite/zt-f9cfm1g4-DgdCok1h1Rj4fpX90~IOww">
+        <img src="https://img.shields.io/badge/join-us%20on%20slack-gray.svg?longCache=true&logo=slack&colorB=purple">
+    </a>
+    <a href="https://electro-smith.github.io/DaisySP/index.html">
+        <img src="https://img.shields.io/badge/documentation-online-blue">
+    </a>
+    <a href="https://forum.electro-smith.com/">
+        <img src="https://img.shields.io/badge/chat-daisy%20forum-orange">
+    </a>
+</p>
+<!--CI Badges-->
+<p align="center">
+    <img src="https://github.com/electro-smith/libdaisy/workflows/Build/badge.svg">
+    <img src="https://github.com/electro-smith/libdaisy/workflows/Style/badge.svg">
+    <img src="https://github.com/electro-smith/libdaisy/workflows/Documentation/badge.svg">
+</p>
 
-[![Build Status](https://travis-ci.com/electro-smith/libDaisy.svg?branch=master)](https://travis-ci.com/electro-smith/libDaisy)    [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+**libDaisy is a hardware abstraction library for the [Daisy Embedded Audio Platform.](https://www.electro-smith.com/daisy)**
 
-**libDaisy is a hardware abstraction library for the [Daisy Embedded Audio Platform.](https://www.electro-smith.com/daisy)** 
-
-It  provides easy access to things such as GPIO, MIDI, USB communication, and more.
+It provides easy access to things such as GPIO, MIDI, USB communication, and more.
 
 ## Features
 
 - Configurable Audio Callback
 
-- MIDI Drivers 
+- MIDI Drivers
 
 - USB Communication (Audio, MIDI, Serial, etc.)
 
 - Peripheral Device Drivers (SPI, I2S, I2C, etc.)
 
 ## Code Example
+
 ```c++
 int main(void)
 {
@@ -43,6 +68,7 @@ int main(void)
 ```
 
 ## Getting Started
+
 - Check out our [Getting Started Wiki Page](https://github.com/electro-smith/DaisyWiki/wiki)
 - Browse the reference documentation [on the web](https://electro-smith.github.io/libDaisy) or in [pdf form](https://github.com/electro-smith/libDaisy/blob/master/doc/libdaisy_reference.pdf)
 - Make some sound!
@@ -81,6 +107,7 @@ Additional configuration files, with more specific hardware access are provided 
 Several other pairs of files exist for each of the supported hardware platforms that work with Daisy Seed.
 
 These are:
+
 - daisy_field
 - daisy_patch
 - daisy_petal
@@ -93,8 +120,9 @@ This allows a user to jump right in without needing a complete understanding of 
 ## Contributing
 
 Here are some ways that you can get involved:
+
 - Proof read the documentation and suggest improvements
-- Test existing functionality and make [issues](https://github.com/electro-smith/libdaisy/issues) 
+- Test existing functionality and make [issues](https://github.com/electro-smith/libdaisy/issues)
 - Add new functionality to the library. See issues labeled "feature"
 - Fix problems with existing codebase. See issues labeled "bug" and/or "polish"
 
@@ -106,14 +134,15 @@ Here are some ways to get support and connect with other users and developers:
 
 - Join the [Daisy Forum](https://forum.electro-smith.com/)
 
-- Make a [GitHub Issue](https://github.com/electro-smith/libdaisy/issues) 
+- Make a [GitHub Issue](https://github.com/electro-smith/libdaisy/issues)
 
 - Join the [Daisy Slack Workspace](https://join.slack.com/t/es-daisy/shared_invite/zt-f9cfm1g4-DgdCok1h1Rj4fpX90~IOww)
 
 ## License
-libDaisy is licensed with the permissive MIT open source license. 
 
-This allows for modification and reuse in both commercial and personal projects. 
-It does not provide a warranty of any kind. 
+libDaisy is licensed with the permissive MIT open source license.
 
-For the full license, read the [LICENSE](https://github.com/electro-smith/libdaisy/blob/master/LICENSE) file in the root directory. 
+This allows for modification and reuse in both commercial and personal projects.
+It does not provide a warranty of any kind.
+
+For the full license, read the [LICENSE](https://github.com/electro-smith/libdaisy/blob/master/LICENSE) file in the root directory.
