@@ -453,11 +453,10 @@
     <ClInclude Include="src\per\spi.h" />
     <ClInclude Include="src\per\tim.h" />
     <ClInclude Include="src\per\uart.h" />
-    <ClInclude Include="src\stm32h7xx_hal_conf.h" />
+    <ClInclude Include="src\sys\stm32h7xx_hal_conf.h" />
     <ClInclude Include="src\sys\dma.h" />
     <ClInclude Include="src\sys\fatfs.h" />
     <ClInclude Include="src\sys\ffconf.h" />
-    <ClInclude Include="src\sys\stm32h7xx_hal_conf.h" />
     <ClInclude Include="src\sys\system.h" />
     <ClInclude Include="src\usbd\usbd_cdc_if.h" />
     <ClInclude Include="src\usbd\usbd_conf.h" />
