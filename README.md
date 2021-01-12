@@ -5,7 +5,7 @@
     </a>
 </p>
 <h1 align="center">libDaisy</h1>
-<h2 align="center" >Hardware Abstraction Library for the Daisy Audio Platform </h2>
+<h3 align="center" >Hardware Abstraction Library for the Daisy Audio Platform </h3>
 <br>
 <!--CI Badges-->
 <p align="center">
