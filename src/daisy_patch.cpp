@@ -134,8 +134,9 @@ void DaisyPatch::DisplayControls(bool invert)
         // Graph Knobs
         size_t barwidth, barspacing;
         size_t curx, cury;
-        barwidth   = 15;
-        barspacing = 20;
+        screen_update_last_ = seed.system.GetNow();
+        barwidth            = 15;
+        barspacing          = 20;
         display.Fill(off);
         // Bars for all four knobs.
         for(size_t i = 0; i < DaisyPatch::CTRL_LAST; i++)
