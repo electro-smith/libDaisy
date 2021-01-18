@@ -33,6 +33,7 @@ sys/system \
 dev/sr_595 \
 dev/codec_ak4556 \
 dev/codec_pcm3060 \
+dev/codec_wm8731 \
 hid/ctrl \
 hid/encoder \
 hid/gatein \
