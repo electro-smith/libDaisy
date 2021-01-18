@@ -169,7 +169,7 @@ Wm8731::Result Wm8731::Init(const Wm8731::Config &config, I2CHandle i2c)
 
 Wm8731::Result Wm8731::WriteControlRegister(uint8_t address, uint16_t data)
 {
-    uint8_t byte_1 = ((address << 1) & 0xfe) | ((data >> 8) & 0x01);
+    uint8_t byte_1  = ((address << 1) & 0xfe) | ((data >> 8) & 0x01);
     uint8_t byte_2  = data & 0xff;
     uint8_t buff[2] = {byte_1, byte_2};
     if(i2c_.TransmitBlocking(dev_addr_, buff, 2, 250) != I2CHandle::Result::OK)
