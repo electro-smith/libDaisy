@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['daisy_937',['daisy',['../namespacedaisy.html',1,'']]]
+  ['daisy_936',['daisy',['../namespacedaisy.html',1,'']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bitdepth_54',['BitDepth',['../structdaisy_1_1_sai_handle_1_1_config.html#aafe336101d7c50dd68e2611ccce7c808',1,'daisy::SaiHandle::Config::BitDepth()'],['../structdsy__dac__handle.html#abef82b9e9f042d39151a3b0854b005ba',1,'dsy_dac_handle::bitdepth()'],['../structdaisy_1_1_sdmmc_handler_init.html#a1c0e454b79884b6b1342d7406cb106ef',1,'daisy::SdmmcHandlerInit::bitdepth()']]],
+  ['bitdepth_54',['bitdepth',['../structdsy__dac__handle.html#abef82b9e9f042d39151a3b0854b005ba',1,'dsy_dac_handle::bitdepth()'],['../structdaisy_1_1_sdmmc_handler_init.html#a1c0e454b79884b6b1342d7406cb106ef',1,'daisy::SdmmcHandlerInit::bitdepth()'],['../structdaisy_1_1_sai_handle_1_1_config.html#aafe336101d7c50dd68e2611ccce7c808',1,'daisy::SaiHandle::Config::BitDepth()']]],
   ['bitpersample_55',['BitPerSample',['../struct_w_a_v___format_type_def.html#a2a763477c7aecbf9e45446d13a44d162',1,'WAV_FormatTypeDef']]],
   ['block_5ferase_5f32k_5fcmd_56',['BLOCK_ERASE_32K_CMD',['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;flash_IS25LP080D.h']]],
   ['block_5ferase_5fcmd_57',['BLOCK_ERASE_CMD',['../group__flash.html#ga9b58e3d8eaefa240d9ccbac870fc1c2b',1,'BLOCK_ERASE_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga9b58e3d8eaefa240d9ccbac870fc1c2b',1,'BLOCK_ERASE_CMD():&#160;flash_IS25LP080D.h']]],
@@ -8,7 +8,7 @@ var searchData=
   ['blockingtransmit_59',['BlockingTransmit',['../classdaisy_1_1_spi_handle.html#a99adb49a6d7c8583d565dc450610af25',1,'daisy::SpiHandle']]],
   ['blocknbr_60',['BlockNbr',['../struct_d_s_y___s_d___card_info_type_def.html#a1955247be547523e0a16fd37c288b918',1,'DSY_SD_CardInfoTypeDef']]],
   ['blocksize_61',['BlockSize',['../struct_d_s_y___s_d___card_info_type_def.html#a030b9e7d12a77aa526ef7fc86bcb01e0',1,'DSY_SD_CardInfoTypeDef']]],
-  ['blue_62',['Blue',['../classdaisy_1_1_color.html#a9270f936191af9fcd59dad58a8ab0387',1,'daisy::Color::Blue() const'],['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a7030ad36aea5814566cd1c9da26afe6d',1,'daisy::Color::BLUE()']]],
+  ['blue_62',['BLUE',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a7030ad36aea5814566cd1c9da26afe6d',1,'daisy::Color::BLUE()'],['../classdaisy_1_1_color.html#a9270f936191af9fcd59dad58a8ab0387',1,'daisy::Color::Blue() const']]],
   ['boards_63',['BOARDS',['../group__boards.html',1,'']]],
   ['boost_64',['Boost',['../structdaisy_1_1_system_1_1_config.html#abba756da586d15e0a603a661721c86d6',1,'daisy::System::Config']]],
   ['bsp_5fsd_5fabortcallback_65',['BSP_SD_AbortCallback',['../group__utility.html#ga0a395393d1522c9844c525f0dc61fe3e',1,'bsp_sd_diskio.h']]],

@@ -61,161 +61,20 @@ $(function() {
 </div>
 
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
-<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">CODEC<div class="ingroups"><a class="el" href="group__libdaisy.html">LIBDAISY</a> &raquo; <a class="el" href="group__device.html">DEVICE</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>Audio codecs.  
-<a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcodec__frame__t.html">codec_frame_t</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ga1c515a2c7b8cccaff957aabcd1ea1467"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__codec.html#ga1c515a2c7b8cccaff957aabcd1ea1467">sa_audio_callback</a>) (<a class="el" href="structcodec__frame__t.html">codec_frame_t</a> *, <a class="el" href="structcodec__frame__t.html">codec_frame_t</a> *, size_t)</td></tr>
-<tr class="separator:ga1c515a2c7b8cccaff957aabcd1ea1467"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gaed42c2cc2914d7fe441e6718bb589743"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__codec.html#gaed42c2cc2914d7fe441e6718bb589743">codec_wm8731_init</a> (dsy_i2c_handle *hi2c, uint8_t mcu_is_master, int32_t sample_rate, uint8_t bitdepth)</td></tr>
-<tr class="separator:gaed42c2cc2914d7fe441e6718bb589743"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad7b5b5b7621de4fd1cff9a61365e03a7"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__codec.html#gad7b5b5b7621de4fd1cff9a61365e03a7">codec_wm8731_enter_bypass</a> (dsy_i2c_handle *hi2c)</td></tr>
-<tr class="separator:gad7b5b5b7621de4fd1cff9a61365e03a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga057b990b91531d6ea06749636bffe221"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__codec.html#ga057b990b91531d6ea06749636bffe221">codec_wm8731_exit_bypass</a> (dsy_i2c_handle *hi2c)</td></tr>
-<tr class="separator:ga057b990b91531d6ea06749636bffe221"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+</p>
 <p>Audio codecs. </p>
-<p>WM8731 Codec framework.</p>
-<p>Driver for the WM8731 Codec.</p>
 <p>Driver for the TI PCM3060 Audio Codec.</p>
 <p><a class="el" href="classdaisy_1_1_ak4556.html">Ak4556</a> Codec support.</p>
 <dl class="section author"><dt>Author</dt><dd>shensley</dd></dl>
 <p>I don't see any real reason to have this be more than a function, but in case we want to add other functions down the road I wrapped the function in a class.</p>
 <p>For now this is a limited interface that uses I2C to communicate with the PCM3060 The device can also be accessed with SPI, which is not yet supported.</p>
 <p>For now all registers are set to their defaults, and the Init function will perform a MRST and SRST before setting the format to 24bit LJ, and disabling power save for both the ADC and DAC. </p>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="ga1c515a2c7b8cccaff957aabcd1ea1467"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga1c515a2c7b8cccaff957aabcd1ea1467">&#9670;&nbsp;</a></span>sa_audio_callback</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef void(* sa_audio_callback) (<a class="el" href="structcodec__frame__t.html">codec_frame_t</a> *, <a class="el" href="structcodec__frame__t.html">codec_frame_t</a> *, size_t)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>&amp; </p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="gad7b5b5b7621de4fd1cff9a61365e03a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gad7b5b5b7621de4fd1cff9a61365e03a7">&#9670;&nbsp;</a></span>codec_wm8731_enter_bypass()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t codec_wm8731_enter_bypass </td>
-          <td>(</td>
-          <td class="paramtype">dsy_i2c_handle *&#160;</td>
-          <td class="paramname"><em>hi2c</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Put codec into bypass mode </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">*hi2c</td><td>pins handling i2c </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ga057b990b91531d6ea06749636bffe221"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga057b990b91531d6ea06749636bffe221">&#9670;&nbsp;</a></span>codec_wm8731_exit_bypass()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t codec_wm8731_exit_bypass </td>
-          <td>(</td>
-          <td class="paramtype">dsy_i2c_handle *&#160;</td>
-          <td class="paramname"><em>hi2c</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Take codec out of bypass mode </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">*hi2c</td><td>pins handling i2c </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="gaed42c2cc2914d7fe441e6718bb589743"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaed42c2cc2914d7fe441e6718bb589743">&#9670;&nbsp;</a></span>codec_wm8731_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t codec_wm8731_init </td>
-          <td>(</td>
-          <td class="paramtype">dsy_i2c_handle *&#160;</td>
-          <td class="paramname"><em>hi2c</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>mcu_is_master</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int32_t&#160;</td>
-          <td class="paramname"><em>sample_rate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>bitdepth</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Resets the WM8731 </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">*hi2c</td><td>array of pins handling i2c? </td></tr>
-    <tr><td class="paramname">mcu_is_master</td><td>&amp; </td></tr>
-    <tr><td class="paramname">sample_rate</td><td>Sample rate to run codec at </td></tr>
-    <tr><td class="paramname">bitdepth</td><td>Bit depth to run codec at </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

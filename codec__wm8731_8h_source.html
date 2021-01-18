@@ -69,26 +69,87 @@ $(function() {
 <div class="title">codec_wm8731.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef SA_DRIVERS_CODEC_H_</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define SA_DRIVERS_CODEC_H_</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;stddef.h&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;per/sai.h&quot;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;per/i2c.h&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="group__codec.html#gaed42c2cc2914d7fe441e6718bb589743">   23</a></span>&#160;uint8_t <a class="code" href="group__codec.html#gaed42c2cc2914d7fe441e6718bb589743">codec_wm8731_init</a>(dsy_i2c_handle *hi2c,</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;                          uint8_t         mcu_is_master,</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;                          int32_t         sample_rate,</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;                          uint8_t         bitdepth);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="group__codec.html#gad7b5b5b7621de4fd1cff9a61365e03a7">   32</a></span>&#160;uint8_t <a class="code" href="group__codec.html#gad7b5b5b7621de4fd1cff9a61365e03a7">codec_wm8731_enter_bypass</a>(dsy_i2c_handle *hi2c);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="group__codec.html#ga057b990b91531d6ea06749636bffe221">   38</a></span>&#160;uint8_t <a class="code" href="group__codec.html#ga057b990b91531d6ea06749636bffe221">codec_wm8731_exit_bypass</a>(dsy_i2c_handle *hi2c);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="agroup__codec_html_ga057b990b91531d6ea06749636bffe221"><div class="ttname"><a href="group__codec.html#ga057b990b91531d6ea06749636bffe221">codec_wm8731_exit_bypass</a></div><div class="ttdeci">uint8_t codec_wm8731_exit_bypass(dsy_i2c_handle *hi2c)</div></div>
-<div class="ttc" id="agroup__codec_html_gad7b5b5b7621de4fd1cff9a61365e03a7"><div class="ttname"><a href="group__codec.html#gad7b5b5b7621de4fd1cff9a61365e03a7">codec_wm8731_enter_bypass</a></div><div class="ttdeci">uint8_t codec_wm8731_enter_bypass(dsy_i2c_handle *hi2c)</div></div>
-<div class="ttc" id="agroup__codec_html_gaed42c2cc2914d7fe441e6718bb589743"><div class="ttname"><a href="group__codec.html#gaed42c2cc2914d7fe441e6718bb589743">codec_wm8731_init</a></div><div class="ttdeci">uint8_t codec_wm8731_init(dsy_i2c_handle *hi2c, uint8_t mcu_is_master, int32_t sample_rate, uint8_t bitdepth)</div></div>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef DSY_CODEC_WM8731_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define DSY_CODEC_WM8731_H</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;per/i2c.h&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacedaisy.html">daisy</a></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;{</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="classdaisy_1_1_wm8731.html">   33</a></span>&#160;<span class="keyword">class </span><a class="code" href="classdaisy_1_1_wm8731.html">Wm8731</a></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classdaisy_1_1_wm8731.html#acee74b7ae4c637c45d33afcb91da7988">   37</a></span>&#160;    <span class="keyword">enum class</span> <a class="code" href="classdaisy_1_1_wm8731.html#acee74b7ae4c637c45d33afcb91da7988">Result</a></div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    {</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        OK,</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        ERR,</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    };</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="structdaisy_1_1_wm8731_1_1_config.html">   46</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structdaisy_1_1_wm8731_1_1_config.html">Config</a></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    {</div>
+<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="structdaisy_1_1_wm8731_1_1_config.html#acb5156a1681bb52dcc37418690629104">   49</a></span>&#160;        <span class="keyword">enum class</span> <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html#acb5156a1681bb52dcc37418690629104">Format</a></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        {</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            MSB_FIRST_RJ = 0x00,</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            MSB_FIRST_LJ = 0x01,</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            I2S          = 0x02,</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;            DSP          = 0x03,</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        };</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structdaisy_1_1_wm8731_1_1_config.html#acad7ca8ac2aec44154cb3c175a07ed90">   61</a></span>&#160;        <span class="keyword">enum class</span> <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html#acad7ca8ac2aec44154cb3c175a07ed90">WordLength</a></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            BITS_16 = (0x00 &lt;&lt; 2),</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            BITS_20 = (0x01 &lt;&lt; 2),</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            BITS_24 = (0x02 &lt;&lt; 2),</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            BITS_32 = (0x03 &lt;&lt; 2),</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        };</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
+<div class="line"><a name="l00070"></a><span class="lineno"><a class="line" href="structdaisy_1_1_wm8731_1_1_config.html#a34027e7604b8cfc9649d4eb972665f99">   70</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html#a34027e7604b8cfc9649d4eb972665f99">mcu_is_master</a>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="structdaisy_1_1_wm8731_1_1_config.html#ab4f7715d2649dc0e73aad513a9ac9326">   73</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html#ab4f7715d2649dc0e73aad513a9ac9326">lr_swap</a>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structdaisy_1_1_wm8731_1_1_config.html#a6b83d4a8f2c0fc7a247d6071df07834b">   78</a></span>&#160;        <span class="keywordtype">bool</span> <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html#a6b83d4a8f2c0fc7a247d6071df07834b">csb_pin_state</a>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;        <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html#acb5156a1681bb52dcc37418690629104">Format</a>     fmt;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html#acad7ca8ac2aec44154cb3c175a07ed90">WordLength</a> wl;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="structdaisy_1_1_wm8731_1_1_config.html#a37915e9bbce58b19d2ae1c7ebb9c2aa3">   89</a></span>&#160;        <span class="keywordtype">void</span> <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html#a37915e9bbce58b19d2ae1c7ebb9c2aa3">Defaults</a>()</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        {</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;            <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html#a34027e7604b8cfc9649d4eb972665f99">mcu_is_master</a> = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;            <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html#ab4f7715d2649dc0e73aad513a9ac9326">lr_swap</a>       = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;            <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html#a6b83d4a8f2c0fc7a247d6071df07834b">csb_pin_state</a> = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;            fmt           = Format::MSB_FIRST_LJ;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;            wl            = WordLength::BITS_24;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;        }</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    };</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <a class="code" href="classdaisy_1_1_wm8731.html">Wm8731</a>() {}</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    ~Wm8731() {}</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00103"></a><span class="lineno"><a class="line" href="classdaisy_1_1_wm8731.html#a42f8e6070918905a6aa317ed3fb20627">  103</a></span>&#160;    <a class="code" href="classdaisy_1_1_wm8731.html#acee74b7ae4c637c45d33afcb91da7988">Result</a> <a class="code" href="classdaisy_1_1_wm8731.html#a42f8e6070918905a6aa317ed3fb20627">Init</a>(<span class="keyword">const</span> <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html">Config</a> &amp;config, <a class="code" href="classdaisy_1_1_i2_c_handle.html">I2CHandle</a> i2c);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160; </div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="classdaisy_1_1_i2_c_handle.html">I2CHandle</a> i2c_;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <a class="code" href="structdaisy_1_1_wm8731_1_1_config.html">Config</a>    cfg_;</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <a class="code" href="classdaisy_1_1_wm8731.html#acee74b7ae4c637c45d33afcb91da7988">Result</a>    WriteControlRegister(uint8_t addr, uint16_t data);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    uint8_t   dev_addr_;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;};</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160; </div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;} <span class="comment">// namespace daisy</span></div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html">daisy::I2CHandle</a></div><div class="ttdef"><b>Definition:</b> i2c.h:24</div></div>
+<div class="ttc" id="aclassdaisy_1_1_wm8731_html"><div class="ttname"><a href="classdaisy_1_1_wm8731.html">daisy::Wm8731</a></div><div class="ttdef"><b>Definition:</b> codec_wm8731.h:34</div></div>
+<div class="ttc" id="aclassdaisy_1_1_wm8731_html_a42f8e6070918905a6aa317ed3fb20627"><div class="ttname"><a href="classdaisy_1_1_wm8731.html#a42f8e6070918905a6aa317ed3fb20627">daisy::Wm8731::Init</a></div><div class="ttdeci">Result Init(const Config &amp;config, I2CHandle i2c)</div></div>
+<div class="ttc" id="aclassdaisy_1_1_wm8731_html_acee74b7ae4c637c45d33afcb91da7988"><div class="ttname"><a href="classdaisy_1_1_wm8731.html#acee74b7ae4c637c45d33afcb91da7988">daisy::Wm8731::Result</a></div><div class="ttdeci">Result</div><div class="ttdef"><b>Definition:</b> codec_wm8731.h:38</div></div>
+<div class="ttc" id="anamespacedaisy_html"><div class="ttname"><a href="namespacedaisy.html">daisy</a></div><div class="ttdoc">Hardware defines and helpers for daisy field platform.</div><div class="ttdef"><b>Definition:</b> daisy_field.h:10</div></div>
+<div class="ttc" id="astructdaisy_1_1_wm8731_1_1_config_html"><div class="ttname"><a href="structdaisy_1_1_wm8731_1_1_config.html">daisy::Wm8731::Config</a></div><div class="ttdef"><b>Definition:</b> codec_wm8731.h:47</div></div>
+<div class="ttc" id="astructdaisy_1_1_wm8731_1_1_config_html_a34027e7604b8cfc9649d4eb972665f99"><div class="ttname"><a href="structdaisy_1_1_wm8731_1_1_config.html#a34027e7604b8cfc9649d4eb972665f99">daisy::Wm8731::Config::mcu_is_master</a></div><div class="ttdeci">bool mcu_is_master</div><div class="ttdef"><b>Definition:</b> codec_wm8731.h:70</div></div>
+<div class="ttc" id="astructdaisy_1_1_wm8731_1_1_config_html_a37915e9bbce58b19d2ae1c7ebb9c2aa3"><div class="ttname"><a href="structdaisy_1_1_wm8731_1_1_config.html#a37915e9bbce58b19d2ae1c7ebb9c2aa3">daisy::Wm8731::Config::Defaults</a></div><div class="ttdeci">void Defaults()</div><div class="ttdef"><b>Definition:</b> codec_wm8731.h:89</div></div>
+<div class="ttc" id="astructdaisy_1_1_wm8731_1_1_config_html_a6b83d4a8f2c0fc7a247d6071df07834b"><div class="ttname"><a href="structdaisy_1_1_wm8731_1_1_config.html#a6b83d4a8f2c0fc7a247d6071df07834b">daisy::Wm8731::Config::csb_pin_state</a></div><div class="ttdeci">bool csb_pin_state</div><div class="ttdef"><b>Definition:</b> codec_wm8731.h:78</div></div>
+<div class="ttc" id="astructdaisy_1_1_wm8731_1_1_config_html_ab4f7715d2649dc0e73aad513a9ac9326"><div class="ttname"><a href="structdaisy_1_1_wm8731_1_1_config.html#ab4f7715d2649dc0e73aad513a9ac9326">daisy::Wm8731::Config::lr_swap</a></div><div class="ttdeci">bool lr_swap</div><div class="ttdef"><b>Definition:</b> codec_wm8731.h:73</div></div>
+<div class="ttc" id="astructdaisy_1_1_wm8731_1_1_config_html_acad7ca8ac2aec44154cb3c175a07ed90"><div class="ttname"><a href="structdaisy_1_1_wm8731_1_1_config.html#acad7ca8ac2aec44154cb3c175a07ed90">daisy::Wm8731::Config::WordLength</a></div><div class="ttdeci">WordLength</div><div class="ttdef"><b>Definition:</b> codec_wm8731.h:62</div></div>
+<div class="ttc" id="astructdaisy_1_1_wm8731_1_1_config_html_acb5156a1681bb52dcc37418690629104"><div class="ttname"><a href="structdaisy_1_1_wm8731_1_1_config.html#acb5156a1681bb52dcc37418690629104">daisy::Wm8731::Config::Format</a></div><div class="ttdeci">Format</div><div class="ttdef"><b>Definition:</b> codec_wm8731.h:50</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
