@@ -7,7 +7,6 @@ sys/dma \
 hid/audio \
 dev/sdram \
 sys/fatfs \
-per/dac \
 per/gpio \
 per/qspi \
 per/sai \
@@ -47,6 +46,7 @@ hid/usb \
 hid/wavplayer \
 hid/logger \
 per/adc \
+per/dac \
 per/i2c \
 per/spi \
 per/tim \
