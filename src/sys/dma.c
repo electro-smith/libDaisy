@@ -10,6 +10,7 @@ extern "C"
     {
         // DMA controller clock enable
         __HAL_RCC_DMA1_CLK_ENABLE();
+        __HAL_RCC_DMA2_CLK_ENABLE();
 
         // DMA interrupt init
         // DMA1_Stream0_IRQn interrupt configuration
@@ -33,6 +34,12 @@ extern "C"
         // DMA1_Stream6_IRQn interrupt configuration for I2C
         HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 0, 0);
         HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);
+        // DMA2_Stream0_IRQn, interrupt configuration for DAC Ch1
+        HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
+        // DMA2_Stream1_IRQn, interrupt configuration for DAC Ch2
+        HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
     }
 
     void dsy_dma_clear_cache_for_buffer(uint8_t* buffer, size_t size)

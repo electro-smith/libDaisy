@@ -197,6 +197,10 @@ extern "C"
         {
             __HAL_RCC_TIM5_CLK_ENABLE();
         }
+        else if(tim_baseHandle->Instance == TIM6)
+        {
+            __HAL_RCC_TIM6_CLK_ENABLE();
+        }
     }
 
     void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
@@ -216,6 +220,10 @@ extern "C"
         else if(tim_baseHandle->Instance == TIM5)
         {
             __HAL_RCC_TIM5_CLK_DISABLE();
+        }
+        else if(tim_baseHandle->Instance == TIM6)
+        {
+            __HAL_RCC_TIM6_CLK_DISABLE();
         }
     }
 }
