@@ -138,7 +138,7 @@ class DaisySeed
     dsy_qspi_handle  qspi_handle;  /**< & */
     AudioHandle      audio_handle; /**< & */
     AdcHandle        adc;          /**< & */
-    dsy_dac_handle   dac_handle;   /**< & */
+    DacHandle        dac;
     UsbHandle        usb_handle;   /**< & */
     dsy_gpio         led, testpoint;
     System           system;

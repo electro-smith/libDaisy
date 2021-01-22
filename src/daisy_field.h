@@ -142,6 +142,8 @@ class DaisyField
     void StopAdc();
 
     /** Turns on the built-in 12-bit DAC on the Daisy Seed */
+    /** **This is now deprecated and does nothing.** 
+     ** The polling use of the DACs now handles starting the tranmission.  */
     void StartDac();
 
     /** Processes the ADC inputs, updating their values */
