@@ -125,12 +125,10 @@ static uint16_t DMA_BUFFER_MEM_SECTION
     adc1_dma_buffer[DSY_ADC_MAX_CHANNELS * 2 * averaging];
 
 // Stable output buffer
-static uint16_t DMA_BUFFER_MEM_SECTION
-    adc1_out_buffer[DSY_ADC_MAX_CHANNELS];
+static uint16_t DMA_BUFFER_MEM_SECTION adc1_out_buffer[DSY_ADC_MAX_CHANNELS];
 
 // Used for averaging
-static uint32_t DMA_BUFFER_MEM_SECTION
-    adc1_sum_buffer[DSY_ADC_MAX_CHANNELS];
+static uint32_t DMA_BUFFER_MEM_SECTION adc1_sum_buffer[DSY_ADC_MAX_CHANNELS];
 
 // Global ADC Struct
 struct dsy_adc
@@ -393,9 +391,12 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
 
 void AdcHandle::Start()
 {
-    while (HAL_ADCEx_Calibration_Start(
-        &adc.hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED) != HAL_OK);
-    HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels * averaging);
+    while(HAL_ADCEx_Calibration_Start(
+              &adc.hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED)
+          != HAL_OK)
+        ;
+    HAL_ADC_Start_DMA(
+        &adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels * averaging);
 }
 
 void AdcHandle::Stop()
@@ -515,7 +516,8 @@ static void adc_internal_callback()
     }
     // Restart DMA
     adc_init_dma1();
-    HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels * averaging);
+    HAL_ADC_Start_DMA(
+        &adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels * averaging);
 }
 
 
@@ -563,11 +565,15 @@ extern "C"
             else
             {
                 int numVals = (adc.channels * averaging) / 2;
-                for (int i = 0; i < numVals; ++i) {
-                    adc.sum_buffer[i % adc.channels] += adc.dma_buffer[i + numVals];
+                for(int i = 0; i < numVals; ++i)
+                {
+                    adc.sum_buffer[i % adc.channels]
+                        += adc.dma_buffer[i + numVals];
                 }
-                for (int c = 0; c < adc.channels; ++c) {
-                    adc.out_buffer[c] = (uint16_t)(adc.sum_buffer[c] / averaging);
+                for(int c = 0; c < adc.channels; ++c)
+                {
+                    adc.out_buffer[c]
+                        = (uint16_t)(adc.sum_buffer[c] / averaging);
                     adc.sum_buffer[c] = 0;
                 }
             }
@@ -581,7 +587,8 @@ extern "C"
             if(!adc.mux_used)
             {
                 int numVals = (adc.channels * averaging) / 2;
-                for (int i = 0; i < numVals; ++i) {
+                for(int i = 0; i < numVals; ++i)
+                {
                     adc.sum_buffer[i % adc.channels] += adc.dma_buffer[i];
                 }
             }
