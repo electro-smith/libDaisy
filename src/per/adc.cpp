@@ -565,10 +565,10 @@ extern "C"
             else
             {
                 int numVals = (adc.channels * averaging) / 2;
-                for(int i = 0; i < numVals; ++i)
+                for(int i = numVals; i < adc.channels * averaging; ++i)
                 {
                     adc.sum_buffer[i % adc.channels]
-                        += adc.dma_buffer[i + numVals];
+                        += adc.dma_buffer[i];
                 }
                 for(int c = 0; c < adc.channels; ++c)
                 {
