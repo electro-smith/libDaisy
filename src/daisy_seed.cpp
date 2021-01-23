@@ -95,24 +95,27 @@ void DaisySeed::Configure()
     ConfigureQspi();
     ConfigureDac();
     // Configure the built-in GPIOs.
-    led_.pin.port       = SEED_LED_PORT;
-    led_.pin.pin        = SEED_LED_PIN;
-    led_.mode           = DSY_GPIO_MODE_OUTPUT_PP;
-    testpoint_.pin.port = SEED_TEST_POINT_PORT;
-    testpoint_.pin.pin  = SEED_TEST_POINT_PIN;
-    testpoint_.mode     = DSY_GPIO_MODE_OUTPUT_PP;
+    led.pin.port       = SEED_LED_PORT;
+    led.pin.pin        = SEED_LED_PIN;
+    led.mode           = DSY_GPIO_MODE_OUTPUT_PP;
+    testpoint.pin.port = SEED_TEST_POINT_PORT;
+    testpoint.pin.pin  = SEED_TEST_POINT_PIN;
+    testpoint.mode     = DSY_GPIO_MODE_OUTPUT_PP;
 }
 
-void DaisySeed::Init()
+void DaisySeed::Init(bool boost)
 {
-    dsy_system_init();
+    //dsy_system_init();
+    System::Config syscfg;
+    boost ? syscfg.Boost() : syscfg.Defaults();
+    system.Init(syscfg);
+
     dsy_sdram_init(&sdram_handle);
     dsy_qspi_init(&qspi_handle);
-    dsy_gpio_init(&led_);
-    dsy_gpio_init(&testpoint_);
+    dsy_gpio_init(&led);
+    dsy_gpio_init(&testpoint);
     ConfigureAudio();
-    dsy_tim_init();
-    dsy_tim_start();
+
     callback_rate_ = AudioSampleRate() / AudioBlockSize();
     // Due to the added 16kB+ of flash usage,
     // and the fact that certain breakouts use
@@ -130,6 +133,11 @@ dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
     p = {seed_ports[pin_idx], seed_pins[pin_idx]};
 #endif
     return p;
+}
+
+void DaisySeed::DelayMs(size_t del)
+{
+    system.Delay(del);
 }
 
 void DaisySeed::StartAudio(AudioHandle::InterleavingAudioCallback cb)
@@ -186,12 +194,12 @@ float DaisySeed::AudioCallbackRate() const
 
 void DaisySeed::SetLed(bool state)
 {
-    dsy_gpio_write(&led_, state);
+    dsy_gpio_write(&led, state);
 }
 
 void DaisySeed::SetTestPoint(bool state)
 {
-    dsy_gpio_write(&testpoint_, state);
+    dsy_gpio_write(&testpoint, state);
 }
 
 // Private Implementation
@@ -252,11 +260,14 @@ void DaisySeed::ConfigureAudio()
     // Device Init
     dsy_gpio_pin codec_reset_pin;
     codec_reset_pin = {DSY_GPIOB, 11};
-    codec_ak4556_init(codec_reset_pin);
+    //codec_ak4556_init(codec_reset_pin);
+    Ak4556::Init(codec_reset_pin);
 
     // Audio
     AudioHandle::Config audio_config;
-    audio_config.blocksize = 48;
+    audio_config.blocksize  = 48;
+    audio_config.samplerate = SaiHandle::Config::SampleRate::SAI_48KHZ;
+    audio_config.postgain   = 1.f;
     audio_handle.Init(audio_config, sai_1_handle);
 }
 void DaisySeed::ConfigureDac()

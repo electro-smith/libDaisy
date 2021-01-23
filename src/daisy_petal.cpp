@@ -77,24 +77,23 @@ static LedDriverPca9685<2, true>::DmaBuffer DMA_BUFFER_MEM_SECTION
     petal_led_dma_buffer_a,
     petal_led_dma_buffer_b;
 
-void DaisyPetal::Init()
+void DaisyPetal::Init(bool boost)
 {
     // Set Some numbers up for accessors.
     // Initialize the hardware.
     seed.Configure();
-    seed.Init();
-    dsy_tim_start();
+    seed.Init(boost);
     InitSwitches();
     InitEncoder();
     InitLeds();
     InitAnalogControls();
     SetAudioBlockSize(48);
-    seed.usb_handle.Init(UsbHandle::FS_BOTH);
+    //seed.usb_handle.Init(UsbHandle::FS_INTERNAL);
 }
 
 void DaisyPetal::DelayMs(size_t del)
 {
-    dsy_tim_delay_ms(del);
+    seed.DelayMs(del);
 }
 
 void DaisyPetal::StartAudio(AudioHandle::InterleavingAudioCallback cb)
@@ -152,7 +151,13 @@ void DaisyPetal::StartAdc()
     seed.adc.Start();
 }
 
-void DaisyPetal::UpdateAnalogControls()
+void DaisyPetal::StopAdc()
+{
+    seed.adc.Stop();
+}
+
+
+void DaisyPetal::ProcessAnalogControls()
 {
     for(size_t i = 0; i < KNOB_LAST; i++)
     {
@@ -173,7 +178,7 @@ float DaisyPetal::GetExpression()
     return expression.Value();
 }
 
-void DaisyPetal::DebounceControls()
+void DaisyPetal::ProcessDigitalControls()
 {
     encoder.Debounce();
     for(size_t i = 0; i < SW_LAST; i++)

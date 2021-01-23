@@ -11,7 +11,8 @@ namespace daisy
 {
 /**
    @brief This is the higher-level interface for the Daisy board. \n 
-    All basic peripheral configuration/initialization is setup here.
+    All basic peripheral configuration/initialization is setup here. \n
+
    @ingroup boards
 */
 class DaisySeed
@@ -42,7 +43,13 @@ class DaisySeed
     can be initialized using their specific initializers within libdaisy
     for a specific application.
     */
-    void Init();
+    void Init(bool boost = false);
+
+    /** 
+    Wait some ms before going on.
+    \param del Delay time in ms.
+    */
+    void DelayMs(size_t del);
 
     /** 
     Returns the gpio_pin corresponding to the index 0-31.
@@ -101,6 +108,30 @@ class DaisySeed
      */
     void SetTestPoint(bool state);
 
+    /** Print formatted debug log message
+     */
+    template <typename... VA>
+    static void Print(const char* format, VA... va)
+    {
+        Log::Print(format, va...);
+    }
+
+    /** Print formatted debug log message with automatic line termination
+    */
+    template <typename... VA>
+    static void PrintLine(const char* format, VA... va)
+    {
+        Log::PrintLine(format, va...);
+    }
+
+    /** Start the logging session. Optionally wait for terminal connection before proceeding.
+    */
+    static void StartLog(bool wait_for_pc = false)
+    {
+        Log::StartLog(wait_for_pc);
+    }
+
+
     // While the library is still in heavy development, most of the
     // configuration handles will remain public.
     dsy_sdram_handle sdram_handle; /**< & */
@@ -109,16 +140,22 @@ class DaisySeed
     AdcHandle        adc;          /**< & */
     dsy_dac_handle   dac_handle;   /**< & */
     UsbHandle        usb_handle;   /**< & */
+    dsy_gpio         led, testpoint;
+    System           system;
 
   private:
+    /** Local shorthand for debug log destination
+    */
+    using Log = Logger<LOGGER_INTERNAL>;
+
+
     void ConfigureSdram();
     void ConfigureQspi();
     void ConfigureAudio();
     void ConfigureAdc();
     void ConfigureDac();
     //void     ConfigureI2c();
-    dsy_gpio led_, testpoint_;
-    float    callback_rate_;
+    float callback_rate_;
 };
 
 } // namespace daisy

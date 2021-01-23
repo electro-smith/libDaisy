@@ -18,6 +18,13 @@ namespace daisy
 class UsbHandle
 {
   public:
+    /** Return values for USBHandle Functions */
+    enum class Result
+    {
+        OK,
+        ERR,
+    };
+
     /** Specified which of the two USB Peripherals to initialize. */
     enum UsbPeriph
     {
@@ -25,6 +32,7 @@ class UsbHandle
         FS_EXTERNAL, /**< FS External D+ pin is Pin 38 (GPIO32). FS External D- pin is Pin 37 (GPIO31) */
         FS_BOTH,     /**< Both */
     };
+
 
     /** Function called upon reception of a buffer */
     typedef void (*ReceiveCallback)(uint8_t* buff, uint32_t* len);
@@ -42,13 +50,13 @@ class UsbHandle
     \param buff Buffer to transmit
     \param size Buffer size
      */
-    uint8_t TransmitInternal(uint8_t* buff, size_t size);
+    Result TransmitInternal(uint8_t* buff, size_t size);
     /** Transmits a buffer of 'size' bytes from a USB port connected to the
     external USB Pins of the daisy seed.
     \param buff Buffer to transmit
     \param size Buffer size
     */
-    uint8_t TransmitExternal(uint8_t* buff, size_t size);
+    Result TransmitExternal(uint8_t* buff, size_t size);
 
     /** sets the callback to be called upon reception of new data
     \param cb Function to serve as callback

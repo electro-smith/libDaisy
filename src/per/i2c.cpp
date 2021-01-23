@@ -1,4 +1,5 @@
 #include "per/i2c.h"
+#include "sys/system.h"
 extern "C"
 {
 #include "util/hal_map.h"
@@ -22,6 +23,25 @@ class I2CHandle::Impl
                                   uint16_t                       size,
                                   I2CHandle::CallbackFunctionPtr callback,
                                   void* callback_context);
+
+    I2CHandle::Result ReceiveBlocking(uint16_t address,
+                                      uint8_t* data,
+                                      uint16_t size,
+                                      uint32_t timeout);
+
+    I2CHandle::Result ReadDataAtAddress(uint16_t address,
+                                        uint16_t mem_address,
+                                        uint16_t mem_address_size,
+                                        uint8_t* data,
+                                        uint16_t data_size,
+                                        uint32_t timeout);
+
+    I2CHandle::Result WriteDataAtAddress(uint16_t address,
+                                         uint16_t mem_address,
+                                         uint16_t mem_address_size,
+                                         uint8_t* data,
+                                         uint16_t data_size,
+                                         uint32_t timeout);
 
     // =========================================================
     // scheduling and global functions
@@ -177,21 +197,36 @@ I2CHandle::Result I2CHandle::Impl::Init(const I2CHandle::Config& config)
 
     // Set Generic Parameters
     // Configure Speed
-    // TODO: make this dependent on the current I2C clock speed set in sys
+    // TODO: Make this check the actual I2C clock source instead of it
+    //      "knowing" that it's the PCLK1
     switch(config_.speed)
     {
         case I2CHandle::Config::Speed::I2C_100KHZ:
-            i2c_hal_handle_.Init.Timing = 0x30E0628A;
+            if(System::GetPClk1Freq() == 120000000)
+                // Measured at 100kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x6090435F;
+            else
+                // Measured at 100kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x30E0628A;
             break;
         case I2CHandle::Config::Speed::I2C_400KHZ:
-            i2c_hal_handle_.Init.Timing = 0x20D01132;
+            if(System::GetPClk1Freq() == 120000000)
+                // Measured at 400kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x30B00F2D;
+            else
+                // Measured at 400kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x20D01132;
             break;
         case I2CHandle::Config::Speed::I2C_1MHZ:
-            i2c_hal_handle_.Init.Timing = 0x1080091A;
+            if(System::GetPClk1Freq() == 120000000)
+                // Measured at 837kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x10A00B20;
+            else
+                // Measured at 862kHz w/ 4k7 pullup
+                i2c_hal_handle_.Init.Timing = 0x1080091A;
             break;
         default: break;
     }
-    //    i2c_hal_handle_.Init.Timing = 0x00C0EAFF;
     i2c_hal_handle_.Init.OwnAddress1      = 0;
     i2c_hal_handle_.Init.AddressingMode   = I2C_ADDRESSINGMODE_7BIT;
     i2c_hal_handle_.Init.DualAddressMode  = I2C_DUALADDRESS_DISABLE;
@@ -258,6 +293,67 @@ I2CHandle::Impl::TransmitDma(uint16_t                       address,
         // start transmission right away
         return StartDmaTransfer(
             address, data, size, callback, callback_context);
+}
+
+I2CHandle::Result I2CHandle::Impl::ReceiveBlocking(uint16_t address,
+                                                   uint8_t* data,
+                                                   uint16_t size,
+                                                   uint32_t timeout)
+{
+    // wait for previous transfer to be finished
+    while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
+
+    if(HAL_I2C_Master_Receive(
+           &i2c_hal_handle_, address << 1, data, size, timeout)
+       != HAL_OK)
+        return I2CHandle::Result::ERR;
+    return I2CHandle::Result::OK;
+}
+
+I2CHandle::Result I2CHandle::Impl::ReadDataAtAddress(uint16_t address,
+                                                     uint16_t mem_address,
+                                                     uint16_t mem_address_size,
+                                                     uint8_t* data,
+                                                     uint16_t data_size,
+                                                     uint32_t timeout)
+{
+    // wait for previous transfer to be finished
+    while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
+    if(HAL_I2C_Mem_Read(&i2c_hal_handle_,
+                        address,
+                        mem_address,
+                        mem_address_size,
+                        data,
+                        data_size,
+                        timeout)
+       != HAL_OK)
+    {
+        return I2CHandle::Result::ERR;
+    }
+    return I2CHandle::Result::OK;
+}
+
+I2CHandle::Result I2CHandle::Impl::WriteDataAtAddress(uint16_t address,
+                                                      uint16_t mem_address,
+                                                      uint16_t mem_address_size,
+                                                      uint8_t* data,
+                                                      uint16_t data_size,
+                                                      uint32_t timeout)
+{
+    // wait for previous transfer to be finished
+    while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
+    if(HAL_I2C_Mem_Write(&i2c_hal_handle_,
+                         address,
+                         mem_address,
+                         mem_address_size,
+                         data,
+                         data_size,
+                         timeout)
+       != HAL_OK)
+    {
+        return I2CHandle::Result::ERR;
+    }
+    return I2CHandle::Result::OK;
 }
 
 I2CHandle::Result
@@ -519,6 +615,14 @@ I2CHandle::Result I2CHandle::TransmitBlocking(uint16_t address,
     return pimpl_->TransmitBlocking(address, data, size, timeout);
 }
 
+I2CHandle::Result I2CHandle::ReceiveBlocking(uint16_t address,
+                                             uint8_t* data,
+                                             uint16_t size,
+                                             uint32_t timeout)
+{
+    return pimpl_->ReceiveBlocking(address, data, size, timeout);
+}
+
 I2CHandle::Result
 I2CHandle::TransmitDma(uint16_t                       address,
                        uint8_t*                       data,
@@ -527,6 +631,29 @@ I2CHandle::TransmitDma(uint16_t                       address,
                        void*                          callback_context)
 {
     return pimpl_->TransmitDma(address, data, size, callback, callback_context);
+}
+
+
+I2CHandle::Result I2CHandle::ReadDataAtAddress(uint16_t address,
+                                               uint16_t mem_address,
+                                               uint16_t mem_address_size,
+                                               uint8_t* data,
+                                               uint16_t data_size,
+                                               uint32_t timeout)
+{
+    return pimpl_->ReadDataAtAddress(
+        address, mem_address, mem_address_size, data, data_size, timeout);
+}
+
+I2CHandle::Result I2CHandle::WriteDataAtAddress(uint16_t address,
+                                                uint16_t mem_address,
+                                                uint16_t mem_address_size,
+                                                uint8_t* data,
+                                                uint16_t data_size,
+                                                uint32_t timeout)
+{
+    return pimpl_->WriteDataAtAddress(
+        address, mem_address, mem_address_size, data, data_size, timeout);
 }
 
 } // namespace daisy

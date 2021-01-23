@@ -3,19 +3,15 @@ TARGET = libdaisy
 MODULE_DIR=src
 
 C_MODULES = \
-dev/codec_ak4556 \
 sys/dma \
 hid/audio \
 dev/sdram \
 sys/fatfs \
-sys/system \
 per/dac \
 per/gpio \
 per/qspi \
 per/sai \
 per/sdmmc \
-per/tim \
-dev/sr_4021 \
 util/bsp_sd_diskio \
 util/hal_map \
 util/oled_fonts \
@@ -32,7 +28,12 @@ daisy_pod \
 daisy_patch \
 daisy_petal \
 daisy_field \
+daisy_versio \
+sys/system \
 dev/sr_595 \
+dev/codec_ak4556 \
+dev/codec_pcm3060 \
+dev/codec_wm8731 \
 hid/ctrl \
 hid/encoder \
 hid/gatein \
@@ -44,9 +45,11 @@ hid/rgb_led \
 hid/switch \
 hid/usb \
 hid/wavplayer \
+hid/logger \
 per/adc \
 per/i2c \
 per/spi \
+per/tim \
 per/uart \
 util/color
 
@@ -276,7 +279,7 @@ C_INCLUDES = \
 -I$(MODULE_DIR) \
 -I. 
 
-WARNINGS = -Wall -Wno-attributes -Wno-strict-aliasing -Wno-maybe-uninitialized #-Werror
+WARNINGS = -Wall -Wno-attributes -Wno-strict-aliasing -Wno-maybe-uninitialized -Wno-missing-attributes #-Werror
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_INCLUDES) $(AS_DEFS) -ggdb $(WARNINGS) $(OPT) -fdata-sections -ffunction-sections

@@ -27,15 +27,11 @@ using namespace daisy;
 #define PIN_CTRL_3 21
 #define PIN_CTRL_4 18
 
-//const float kAudioSampleRate = DSY_AUDIO_SAMPLE_RATE;
-const float kAudioSampleRate = 48014.f;
-
-void DaisyPatch::Init()
+void DaisyPatch::Init(bool boost)
 {
     // Configure Seed first
     seed.Configure();
-    block_size_ = 48;
-    seed.Init();
+    seed.Init(boost);
     InitAudio();
     InitDisplay();
     InitCvOutputs();
@@ -50,12 +46,12 @@ void DaisyPatch::Init()
     dsy_gpio_write(&ak4556_reset_pin_, 1);
     // Set Screen update vars
     screen_update_period_ = 17; // roughly 60Hz
-    screen_update_last_   = dsy_system_getnow();
+    screen_update_last_   = seed.system.GetNow();
 }
 
 void DaisyPatch::DelayMs(size_t del)
 {
-    dsy_system_delay(del);
+    seed.DelayMs(del);
 }
 
 void DaisyPatch::StartAudio(AudioHandle::AudioCallback cb)
@@ -80,7 +76,7 @@ void DaisyPatch::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
 
 float DaisyPatch::AudioSampleRate()
 {
-    return kAudioSampleRate;
+    return seed.AudioSampleRate();
 }
 
 void DaisyPatch::SetAudioBlockSize(size_t size)
@@ -102,19 +98,27 @@ void DaisyPatch::StartAdc()
 {
     seed.adc.Start();
 }
-void DaisyPatch::UpdateAnalogControls()
+
+/** Stops Transfering data from the ADC */
+void DaisyPatch::StopAdc()
+{
+    seed.adc.Stop();
+}
+
+
+void DaisyPatch::ProcessAnalogControls()
 {
     for(size_t i = 0; i < CTRL_LAST; i++)
     {
         controls[i].Process();
     }
 }
-float DaisyPatch::GetCtrlValue(Ctrl k)
+float DaisyPatch::GetKnobValue(Ctrl k)
 {
     return (controls[k].Value());
 }
 
-void DaisyPatch::DebounceControls()
+void DaisyPatch::ProcessDigitalControls()
 {
     encoder.Debounce();
 }
@@ -125,13 +129,14 @@ void DaisyPatch::DisplayControls(bool invert)
     bool on, off;
     on  = invert ? false : true;
     off = invert ? true : false;
-    if(dsy_system_getnow() - screen_update_last_ > screen_update_period_)
+    if(seed.system.GetNow() - screen_update_last_ > screen_update_period_)
     {
         // Graph Knobs
         size_t barwidth, barspacing;
         size_t curx, cury;
-        barwidth   = 15;
-        barspacing = 20;
+        screen_update_last_ = seed.system.GetNow();
+        barwidth            = 15;
+        barspacing          = 20;
         display.Fill(off);
         // Bars for all four knobs.
         for(size_t i = 0; i < DaisyPatch::CTRL_LAST; i++)
@@ -140,7 +145,7 @@ void DaisyPatch::DisplayControls(bool invert)
             size_t dest;
             curx = (barspacing * i + 1) + (barwidth * i);
             cury = SSD1309_HEIGHT;
-            v    = GetCtrlValue(static_cast<DaisyPatch::Ctrl>(i));
+            v    = GetKnobValue(static_cast<DaisyPatch::Ctrl>(i));
             dest = (v * SSD1309_HEIGHT);
             for(size_t j = dest; j > 0; j--)
             {
@@ -195,11 +200,14 @@ void DaisyPatch::InitAudio()
     // Reset Pin for AK4556
     // Built-in AK4556 was reset during Seed Init
     dsy_gpio_pin codec_reset_pin = seed.GetPin(29);
-    codec_ak4556_init(codec_reset_pin);
+    //codec_ak4556_init(codec_reset_pin);
+    Ak4556::Init(codec_reset_pin);
 
     // Reinit Audio for _both_ codecs...
     AudioHandle::Config cfg;
-    cfg.blocksize = 48;
+    cfg.blocksize  = 48;
+    cfg.samplerate = SaiHandle::Config::SampleRate::SAI_48KHZ;
+    cfg.postgain   = 0.5f;
     seed.audio_handle.Init(cfg, sai_handle[0], sai_handle[1]);
 }
 

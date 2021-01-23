@@ -355,9 +355,6 @@
     <ClCompile Include="Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
       <Filter>Middleware_USB</Filter>
     </ClCompile>
-    <ClCompile Include="src\sys\system.c">
-      <Filter>sys</Filter>
-    </ClCompile>
     <ClCompile Include="src\sys\fatfs.c">
       <Filter>sys</Filter>
     </ClCompile>
@@ -386,9 +383,6 @@
       <Filter>per</Filter>
     </ClCompile>
     <ClCompile Include="src\per\spi.cpp">
-      <Filter>per</Filter>
-    </ClCompile>
-    <ClCompile Include="src\per\tim.c">
       <Filter>per</Filter>
     </ClCompile>
     <ClCompile Include="src\per\uart.cpp">
@@ -423,15 +417,6 @@
     </ClCompile>
     <ClCompile Include="src\hid\wavplayer.cpp">
       <Filter>hid</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev\codec_ak4556.c">
-      <Filter>dev</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev\sr_4021.c">
-      <Filter>dev</Filter>
-    </ClCompile>
-    <ClCompile Include="src\dev\sr_595.cpp">
-      <Filter>dev</Filter>
     </ClCompile>
     <ClCompile Include="src\dev\sdram.c">
       <Filter>dev</Filter>
@@ -486,6 +471,28 @@
     </ClCompile>
     <ClCompile Include="src\hid\audio.cpp">
       <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\daisy_versio.cpp">
+      <Filter>boards</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev\codec_pcm3060.cpp">
+      <Filter>dev</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sys\system.cpp">
+      <Filter>sys</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hid\logger.cpp">
+      <Filter>hid</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev\codec_ak4556.cpp">
+      <Filter>dev</Filter>
+    </ClCompile>
+    <ClCompile Include="src\per\tim.cpp" />
+    <ClCompile Include="src\dev\sr_595.cpp">
+      <Filter>dev</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dev\codec_wm8731.cpp">
+      <Filter>dev</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1081,6 +1088,24 @@
     </ClInclude>
     <ClInclude Include="src\daisy_seed.h">
       <Filter>boards</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\switch3.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_versio.h">
+      <Filter>boards</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev\codec_pcm3060.h">
+      <Filter>dev</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\logger.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hid\logger_impl.h">
+      <Filter>hid</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dev\codec_wm8731.h">
+      <Filter>dev</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
