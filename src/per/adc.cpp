@@ -119,8 +119,7 @@ static uint16_t DMA_BUFFER_MEM_SECTION
  **
  ** Also used to provide buffer for trash data during mux pin changes.
  ***/
-static uint16_t DMA_BUFFER_MEM_SECTION
-    adc1_dma_buffer[DSY_ADC_MAX_CHANNELS];
+static uint16_t DMA_BUFFER_MEM_SECTION adc1_dma_buffer[DSY_ADC_MAX_CHANNELS];
 
 // Stable output buffer
 static uint16_t DMA_BUFFER_MEM_SECTION adc1_out_buffer[DSY_ADC_MAX_CHANNELS];
@@ -137,8 +136,8 @@ struct dsy_adc
     // dma buffer ptrs
     uint16_t* dma_buffer;
     uint16_t* out_buffer;
-    uint16_t threshold;
-    float smoothing;
+    uint16_t  threshold;
+    float     smoothing;
     uint16_t (*mux_cache)[DSY_ADC_MAX_MUX_CHANNELS];
     ADC_HandleTypeDef hadc1;
     DMA_HandleTypeDef hdma_adc1;
@@ -391,8 +390,7 @@ void AdcHandle::Start(float smoothing)
           != HAL_OK)
         ;
     adc.threshold = (uint16_t)(DSY_ADC_MAX_RESOLUTION * smoothing);
-    HAL_ADC_Start_DMA(
-        &adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
+    HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 
 void AdcHandle::Stop()
@@ -508,8 +506,7 @@ static void adc_internal_callback()
     }
     // Restart DMA
     adc_init_dma1();
-    HAL_ADC_Start_DMA(
-        &adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
+    HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 
 
@@ -551,21 +548,17 @@ extern "C"
         if(hadc->Instance == ADC1)
         {
             if(adc.mux_used)
-            {
                 adc_internal_callback();
-            }
             else
-            {
                 for(int c = 0; c < adc.channels; ++c)
                 {
                     int delta = adc.dma_buffer[c] - adc.out_buffer[c];
-                    if (abs(delta) > adc.threshold) {
+                    if(abs(delta) > adc.threshold)
                         adc.out_buffer[c] = adc.dma_buffer[c];
-                    } else {
-                        adc.out_buffer[c] = (uint16_t)(adc.out_buffer[c] + delta * adc.smoothing);
-                    }
+                    else
+                        adc.out_buffer[c] = (uint16_t)(adc.out_buffer[c]
+                                                       + delta * adc.smoothing);
                 }
-            }
         }
     }
 
