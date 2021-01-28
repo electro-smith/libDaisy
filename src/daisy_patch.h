@@ -84,6 +84,14 @@ class DaisyPatch
     /** Start analog to digital conversion.*/
     void StartAdc();
 
+    /** Start analog to digital conversion with exponential moving
+    average smoothing applied. Experimentation will be required to
+    choose the value appropriate for the application.
+    \param smoothing  sets the amount of smoothing to apply. Values
+    will typically be in the range 0.01 to 0.1
+    */
+    void StartAdc(float smoothing);
+
     /** Stops Transfering data from the ADC */
     void StopAdc();
 

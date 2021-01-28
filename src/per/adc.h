@@ -93,7 +93,7 @@ class AdcHandle
     Init(AdcChannelConfig *cfg, size_t num_channels, OverSampling ovs = OVS_32);
 
     /** Starts reading from the ADC */
-    void Start();
+    void Start(float smoothing = 1.0f);
 
     /** Stops reading from the ADC */
     void Stop();

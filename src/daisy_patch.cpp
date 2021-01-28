@@ -99,6 +99,11 @@ void DaisyPatch::StartAdc()
     seed.adc.Start();
 }
 
+void DaisyPatch::StartAdc(float smoothing)
+{
+    seed.adc.Start(smoothing);
+}
+
 /** Stops Transfering data from the ADC */
 void DaisyPatch::StopAdc()
 {

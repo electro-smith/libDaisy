@@ -114,21 +114,16 @@ static const uint32_t dsy_adc_rank_map[] = {
 static uint16_t DMA_BUFFER_MEM_SECTION
     adc1_mux_cache[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
 
-static const uint16_t averaging = 128;
-
 /** Buffer for ADC Input channels
  ** It is 2x the number of channels for double-buffered support
  **
  ** Also used to provide buffer for trash data during mux pin changes.
  ***/
 static uint16_t DMA_BUFFER_MEM_SECTION
-    adc1_dma_buffer[DSY_ADC_MAX_CHANNELS * 2 * averaging];
+    adc1_dma_buffer[DSY_ADC_MAX_CHANNELS];
 
 // Stable output buffer
 static uint16_t DMA_BUFFER_MEM_SECTION adc1_out_buffer[DSY_ADC_MAX_CHANNELS];
-
-// Used for averaging
-static uint32_t DMA_BUFFER_MEM_SECTION adc1_sum_buffer[DSY_ADC_MAX_CHANNELS];
 
 // Global ADC Struct
 struct dsy_adc
@@ -142,7 +137,8 @@ struct dsy_adc
     // dma buffer ptrs
     uint16_t* dma_buffer;
     uint16_t* out_buffer;
-    uint32_t* sum_buffer;
+    uint16_t threshold;
+    float smoothing;
     uint16_t (*mux_cache)[DSY_ADC_MAX_MUX_CHANNELS];
     ADC_HandleTypeDef hadc1;
     DMA_HandleTypeDef hdma_adc1;
@@ -242,7 +238,6 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     num_channels_  = num_channels;
     adc.dma_buffer = adc1_dma_buffer;
     adc.out_buffer = adc1_out_buffer;
-    adc.sum_buffer = adc1_sum_buffer;
     adc.mux_cache  = &adc1_mux_cache[0];
     // Clear Buffers
     for(size_t i = 0; i < DSY_ADC_MAX_CHANNELS; i++)
@@ -389,14 +384,15 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     }
 }
 
-void AdcHandle::Start()
+void AdcHandle::Start(float smoothing)
 {
     while(HAL_ADCEx_Calibration_Start(
               &adc.hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED)
           != HAL_OK)
         ;
+    adc.threshold = (uint16_t)(DSY_ADC_MAX_RESOLUTION * smoothing);
     HAL_ADC_Start_DMA(
-        &adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels * averaging);
+        &adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 
 void AdcHandle::Stop()
@@ -471,12 +467,8 @@ static void adc_init_dma1()
         adc.hdma_adc1.Init.Mode = DMA_NORMAL;
     else
         adc.hdma_adc1.Init.Mode = DMA_CIRCULAR;
-    adc.hdma_adc1.Init.Priority = DMA_PRIORITY_LOW;
+    adc.hdma_adc1.Init.Priority = DMA_PRIORITY_HIGH;
     adc.hdma_adc1.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
-    if(!adc.mux_used)
-    {
-        adc.hdma_adc1.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_HALFFULL;
-    }
     if(HAL_DMA_Init(&adc.hdma_adc1) != HAL_OK)
     {
         Error_Handler();
@@ -517,7 +509,7 @@ static void adc_internal_callback()
     // Restart DMA
     adc_init_dma1();
     HAL_ADC_Start_DMA(
-        &adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels * averaging);
+        &adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 
 
@@ -564,31 +556,14 @@ extern "C"
             }
             else
             {
-                int numVals = (adc.channels * averaging) / 2;
-                for(int i = numVals; i < adc.channels * averaging; ++i)
-                {
-                    adc.sum_buffer[i % adc.channels] += adc.dma_buffer[i];
-                }
                 for(int c = 0; c < adc.channels; ++c)
                 {
-                    adc.out_buffer[c]
-                        = (uint16_t)(adc.sum_buffer[c] / averaging);
-                    adc.sum_buffer[c] = 0;
-                }
-            }
-        }
-    }
-
-    void HAL_ADC_ConvHalfCpltCallback(ADC_HandleTypeDef* hadc)
-    {
-        if(hadc->Instance == ADC1)
-        {
-            if(!adc.mux_used)
-            {
-                int numVals = (adc.channels * averaging) / 2;
-                for(int i = 0; i < numVals; ++i)
-                {
-                    adc.sum_buffer[i % adc.channels] += adc.dma_buffer[i];
+                    int delta = adc.dma_buffer[c] - adc.out_buffer[c];
+                    if (abs(delta) > adc.threshold) {
+                        adc.out_buffer[c] = adc.dma_buffer[c];
+                    } else {
+                        adc.out_buffer[c] = (uint16_t)(adc.out_buffer[c] + delta * adc.smoothing);
+                    }
                 }
             }
         }
