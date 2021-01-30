@@ -123,6 +123,7 @@ void DaisySeed::Init(bool boost)
     // SEED file.
     //usb_handle.Init(UsbHandle::FS_INTERNAL);
 }
+
 dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
 {
     dsy_gpio_pin p;

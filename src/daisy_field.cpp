@@ -69,7 +69,7 @@ static constexpr I2CHandle::Config field_led_i2c_config
        I2CHandle::Config::Speed::I2C_1MHZ};
 
 static LedDriverPca9685<2, true>::DmaBuffer DMA_BUFFER_MEM_SECTION
-                                            field_led_dma_buffer_a,
+    field_led_dma_buffer_a,
     field_led_dma_buffer_b;
 
 void DaisyField::Init(bool boost)
@@ -149,10 +149,10 @@ void DaisyField::Init(bool boost)
 
 
     DacHandle::Config cfg;
-    cfg.bitdepth   = DacHandle::Config::BitDepth::BITS_12;
-    cfg.buff_state = DacHandle::Config::BufferState::ENABLED;
-    cfg.mode       = DacHandle::Config::Mode::POLLING;
-    cfg.chn        = DacHandle::Config::Channel::BOTH;
+    cfg.bitdepth   = DacHandle::BitDepth::BITS_12;
+    cfg.buff_state = DacHandle::BufferState::ENABLED;
+    cfg.mode       = DacHandle::Mode::POLLING;
+    cfg.chn        = DacHandle::Channel::BOTH;
     seed.dac.Init(cfg);
 }
 
@@ -260,12 +260,12 @@ void DaisyField::ProcessDigitalControls()
 
 void DaisyField::SetCvOut1(uint16_t val)
 {
-    seed.dac.WriteValue(DacHandle::Config::Channel::ONE, val);
+    seed.dac.WriteValue(DacHandle::Channel::ONE, val);
 }
 
 void DaisyField::SetCvOut2(uint16_t val)
 {
-    seed.dac.WriteValue(DacHandle::Config::Channel::TWO, val);
+    seed.dac.WriteValue(DacHandle::Channel::TWO, val);
 }
 
 bool DaisyField::KeyboardState(size_t idx) const

@@ -23,7 +23,7 @@ class DacHandle::Impl
                             size_t                 size,
                             DacHandle::DacCallback cb);
     DacHandle::Result Stop();
-    DacHandle::Result WriteValue(DacHandle::Config::Channel chn, uint16_t val);
+    DacHandle::Result WriteValue(DacHandle::Channel chn, uint16_t val);
 
 
     // Init Hardware (called from MspInit, etc.)
@@ -31,18 +31,16 @@ class DacHandle::Impl
     void DeInitPins();
     void InitDma();
 
-    void InternalCalllback(Config::Channel chn, size_t offset_state);
+    void InternalCalllback(Channel chn, size_t offset_state);
 
     inline bool ChannelOneActive() const
     {
-        return config_.chn == Config::Channel::BOTH
-               || config_.chn == Config::Channel::ONE;
+        return config_.chn == Channel::BOTH || config_.chn == Channel::ONE;
     }
 
     inline bool ChannelTwoActive() const
     {
-        return config_.chn == Config::Channel::BOTH
-               || config_.chn == Config::Channel::TWO;
+        return config_.chn == Channel::BOTH || config_.chn == Channel::TWO;
     }
 
     DAC_HandleTypeDef hal_dac_; /**< ST HAL DAC Handle*/
@@ -54,7 +52,7 @@ class DacHandle::Impl
     DacHandle::Config      config_; /**< Config Struct for initialization */
     size_t                 buff_size_;
     uint16_t *             buff_[2];
-    DacHandle::DacCallback callback_[2];
+    DacHandle::DacCallback callback_;
 };
 
 // ================================================================
@@ -89,28 +87,28 @@ DacHandle::Result DacHandle::Impl::Init(const DacHandle::Config &config)
     hal_dac_.Instance = DAC1;
     HAL_DAC_Init(&hal_dac_);
 
-    // Configure global stuff.
+    // Not using S-H mode for now.
     dac_config.DAC_SampleAndHold = DAC_SAMPLEANDHOLD_DISABLE;
 
-    dac_config.DAC_Trigger = config_.mode == Config::Mode ::POLLING
+    // Configure Trig source for DAC
+    dac_config.DAC_Trigger = config_.mode == Mode ::POLLING
                                  ? DAC_TRIGGER_SOFTWARE
                                  : DAC_TRIGGER_T6_TRGO;
 
-    if(config_.mode == Config::Mode::DMA)
+    // Configure TIM6 for DMA Mode
+    if(config_.mode == Mode::DMA)
     {
         uint32_t                tim_base_freq, target_freq, period;
         TIM_MasterConfigTypeDef tim_master_config = {0};
-        // Configure TIM6 for DMA Mode
-        hal_tim_.Instance           = TIM6;
-        hal_tim_.Init.CounterMode   = TIM_COUNTERMODE_UP;
-        hal_tim_.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-        // we don't anticipate modulating DAC samplerate in real time.
+        hal_tim_.Instance                         = TIM6;
+        hal_tim_.Init.CounterMode                 = TIM_COUNTERMODE_UP;
+        hal_tim_.Init.ClockDivision               = TIM_CLOCKDIVISION_DIV1;
         hal_tim_.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
         // 16-bit values that can be used to reach target frequency.
         // Base tim freq is PClk2 * 2 (200/240MHz depending on system configuration).
         tim_base_freq = System::
-            GetPClk2Freq(); // 200MHz (or 240MHz) depending on CPU Freq.
+            GetPClk2Freq(); // 100MHz (or 120MHz) depending on CPU Freq.
         target_freq = config_.target_samplerate == 0
                           ? 48000
                           : config_.target_samplerate;
@@ -127,10 +125,9 @@ DacHandle::Result DacHandle::Impl::Init(const DacHandle::Config &config)
             return Result::ERR;
     }
 
-    dac_config.DAC_OutputBuffer
-        = config_.buff_state == Config::BufferState::ENABLED
-              ? DAC_OUTPUTBUFFER_ENABLE
-              : DAC_OUTPUTBUFFER_DISABLE;
+    dac_config.DAC_OutputBuffer = config_.buff_state == BufferState::ENABLED
+                                      ? DAC_OUTPUTBUFFER_ENABLE
+                                      : DAC_OUTPUTBUFFER_DISABLE;
 
     dac_config.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
     dac_config.DAC_UserTrimming            = DAC_TRIMMING_FACTORY;
@@ -159,25 +156,15 @@ DacHandle::Result DacHandle::Impl::Init(const DacHandle::Config &config)
 DacHandle::Result
 DacHandle::Impl::Start(uint16_t *buffer, size_t size, DacHandle::DacCallback cb)
 {
-    if(config_.mode != Config::Mode::DMA)
+    if(config_.mode != Mode::DMA || config_.chn == Channel::BOTH)
         return Result::ERR;
-    callback_[0] = cb;
-    buff_[0]     = buffer;
-    buff_size_   = size;
-    if(config_.chn == Config::Channel::BOTH)
-    {
-        // This mode with a single buffer _should_ just mirror the output but tthat'll require setting up a few things
-        // in the callback I think
-    }
-    else
-    {
-        uint32_t bd = config_.bitdepth == Config::BitDepth::BITS_8
-                          ? DAC_ALIGN_8B_R
-                          : DAC_ALIGN_12B_R;
-        uint32_t chn = config_.chn == Config::Channel::ONE ? DAC_CHANNEL_1
-                                                           : DAC_CHANNEL_2;
-        HAL_DAC_Start_DMA(&hal_dac_, chn, (uint32_t *)buff_[0], size, bd);
-    }
+    callback_   = cb;
+    buff_[0]    = buffer;
+    buff_size_  = size;
+    uint32_t bd = config_.bitdepth == BitDepth::BITS_8 ? DAC_ALIGN_8B_R
+                                                       : DAC_ALIGN_12B_R;
+    uint32_t chn = config_.chn == Channel::ONE ? DAC_CHANNEL_1 : DAC_CHANNEL_2;
+    HAL_DAC_Start_DMA(&hal_dac_, chn, (uint32_t *)buff_[0], size, bd);
     HAL_TIM_Base_Start(&hal_tim_);
     return Result::OK;
 }
@@ -189,28 +176,31 @@ DacHandle::Result DacHandle::Impl::Start(uint16_t *             buffer_1,
                                          size_t                 size,
                                          DacHandle::DacCallback cb)
 {
+    uint32_t bd;
+
     // Fail if not DMA and not BOTH channels
-    if(config_.mode != Config::Mode::DMA
-       && config_.chn != Config::Channel::BOTH)
+    if(config_.mode != Mode::DMA && config_.chn != Channel::BOTH)
         return Result::ERR;
 
-    callback_[0] = cb;
-    buff_[0]     = buffer_1;
-    buff_[1]     = buffer_2;
+    // Set Up Buffers and Sizes
+    callback_  = cb;
+    buff_[0]   = buffer_1;
+    buff_[1]   = buffer_2;
+    buff_size_ = size;
+    bd         = config_.bitdepth == BitDepth::BITS_8 ? DAC_ALIGN_8B_R
+                                              : DAC_ALIGN_12B_R;
 
-    uint32_t bd = config_.bitdepth == Config::BitDepth::BITS_8
-                      ? DAC_ALIGN_8B_R
-                      : DAC_ALIGN_12B_R;
-
+    // Start the DACs and then start the time source.
     HAL_DAC_Start_DMA(&hal_dac_, DAC_CHANNEL_1, (uint32_t *)buff_[0], size, bd);
     HAL_DAC_Start_DMA(&hal_dac_, DAC_CHANNEL_2, (uint32_t *)buff_[1], size, bd);
+    HAL_TIM_Base_Start(&hal_tim_);
 
     return Result::OK;
 }
 
 DacHandle::Result DacHandle::Impl::Stop()
 {
-    if(config_.mode != Config::Mode::DMA)
+    if(config_.mode != Mode::DMA)
         return Result::ERR;
     if(ChannelOneActive())
         HAL_DAC_Stop_DMA(&hal_dac_, DAC_CHANNEL_1);
@@ -219,24 +209,23 @@ DacHandle::Result DacHandle::Impl::Stop()
     return Result::OK;
 }
 
-DacHandle::Result DacHandle::Impl::WriteValue(DacHandle::Config::Channel chn,
-                                              uint16_t                   val)
+DacHandle::Result DacHandle::Impl::WriteValue(DacHandle::Channel chn,
+                                              uint16_t           val)
 {
     // This shouldn't do anything if the DAC is setup for DMA
-    if(config_.mode != Config::Mode::POLLING)
+    if(config_.mode != Mode::POLLING)
         return Result::ERR;
 
     // Set Value, bitdepth
-    uint32_t bd = config_.bitdepth == Config::BitDepth::BITS_8
-                      ? DAC_ALIGN_8B_R
-                      : DAC_ALIGN_12B_R;
+    uint32_t bd = config_.bitdepth == BitDepth::BITS_8 ? DAC_ALIGN_8B_R
+                                                       : DAC_ALIGN_12B_R;
 
-    if(chn == Config::Channel::ONE || chn == Config::Channel::BOTH)
+    if(chn == Channel::ONE || chn == Channel::BOTH)
     {
         HAL_DAC_SetValue(&hal_dac_, DAC_CHANNEL_1, bd, val);
         HAL_DAC_Start(&hal_dac_, DAC_CHANNEL_1);
     }
-    if(chn == Config::Channel::TWO || chn == Config::Channel::BOTH)
+    if(chn == Channel::TWO || chn == Channel::BOTH)
     {
         HAL_DAC_SetValue(&hal_dac_, DAC_CHANNEL_2, bd, val);
         HAL_DAC_Start(&hal_dac_, DAC_CHANNEL_2);
@@ -269,7 +258,7 @@ void DacHandle::Impl::InitDma()
 {
     // TODO:
     // Add DMA Init for DMA2_Stream0 and DMA2_Stream1 to sys/dma init
-    if(config_.mode == Config::Mode::DMA)
+    if(config_.mode == Mode::DMA)
     {
         // Initialize the DMA for the selected channel(s)
         DMA_HandleTypeDef *hdma;
@@ -332,17 +321,31 @@ void DacHandle::Impl::DeInitPins()
     }
 }
 
-void DacHandle::Impl::InternalCalllback(DacHandle::Config::Channel channel,
-                                        size_t                     offset_state)
+void DacHandle::Impl::InternalCalllback(DacHandle::Channel channel,
+                                        size_t             offset_state)
 {
-    uint16_t  offset = offset_state ? buff_size_ / 2 : 0;
-    int32_t   chn    = channel == DacHandle::Config::Channel::TWO ? 1 : 0;
-    uint16_t *buff   = buff_[chn] + offset;
-    // Not set up for both channels yet.
-    uint16_t *buffers[1];
-    buffers[chn] = buff;
-    if(callback_[chn] != nullptr)
-        (callback_[chn])(buffers, buff_size_ / 2);
+    uint16_t offset = offset_state ? buff_size_ / 2 : 0;
+    if(config_.chn == Channel::BOTH && buff_[1] != nullptr
+       && channel != Channel::TWO)
+    {
+        // Both channels as long as second buffer is not null.
+        // We ignore IRQs from the second DAC channel since
+        // both were started at the same time.
+        uint16_t *buffers[2];
+        buffers[0] = buff_[0] + offset;
+        buffers[1] = buff_[1] + offset;
+        if(callback_ != nullptr)
+            (callback_)(buffers, buff_size_ / 2);
+    }
+    else if(config_.chn != Channel::BOTH)
+    {
+        int32_t   chn  = channel == Channel::TWO ? 1 : 0;
+        uint16_t *buff = buff_[chn] + offset;
+        uint16_t *buffers[1];
+        buffers[chn] = buff;
+        if(callback_ != nullptr)
+            (callback_)(buffers, buff_size_ / 2);
+    }
 }
 
 // ======================================================================
@@ -404,23 +407,32 @@ extern "C" void TIM6_DAC_IRQHandler(void)
 
 extern "C" void HAL_DAC_ConvCpltCallbackCh1(DAC_HandleTypeDef *hdac)
 {
-    dac_handle.InternalCalllback(DacHandle::Config::Channel::ONE, 1);
+    dac_handle.InternalCalllback(DacHandle::Channel::ONE, 1);
 }
 
 extern "C" void HAL_DAC_ConvHalfCpltCallbackCh1(DAC_HandleTypeDef *hdac)
 {
-    dac_handle.InternalCalllback(DacHandle::Config::Channel::ONE, 0);
+    dac_handle.InternalCalllback(DacHandle::Channel::ONE, 0);
 }
 
-extern "C" void HAL_DAC_ConvCpltCallbackCh2(DAC_HandleTypeDef *hdac)
+extern "C" void HAL_DACEx_ConvHalfCpltCallbackCh2(DAC_HandleTypeDef *hdac)
 {
-    dac_handle.InternalCalllback(DacHandle::Config::Channel::TWO, 1);
+    dac_handle.InternalCalllback(DacHandle::Channel::TWO, 0);
+}
+extern "C" void HAL_DACEx_ConvCpltCallbackCh2(DAC_HandleTypeDef *hdac)
+{
+    dac_handle.InternalCalllback(DacHandle::Channel::TWO, 1);
 }
 
-extern "C" void HAL_DAC_ConvHalfCpltCallbackCh2(DAC_HandleTypeDef *hdac)
-{
-    dac_handle.InternalCalllback(DacHandle::Config::Channel::TWO, 0);
-}
+//extern "C" void HAL_DAC_ConvCpltCallbackCh2(DAC_HandleTypeDef *hdac)
+//{
+//    dac_handle.InternalCalllback(DacHandle::Channel::TWO, 1);
+//}
+//
+//extern "C" void HAL_DAC_ConvHalfCpltCallbackCh2(DAC_HandleTypeDef *hdac)
+//{
+//    dac_handle.InternalCalllback(DacHandle::Channel::TWO, 0);
+//}
 
 
 // ================================================================
@@ -457,8 +469,7 @@ DacHandle::Result DacHandle::Stop()
     return pimpl_->Stop();
 }
 
-DacHandle::Result DacHandle::WriteValue(DacHandle::Config::Channel chn,
-                                        uint16_t                   val)
+DacHandle::Result DacHandle::WriteValue(DacHandle::Channel chn, uint16_t val)
 {
     return pimpl_->WriteValue(chn, val);
 }
