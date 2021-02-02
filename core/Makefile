@@ -124,6 +124,15 @@ C_INCLUDES += \
 -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc \
 -I$(SYSTEM_FILES_DIR)/ \
 -I$(DAISYSP_DIR) \
+-I$(DAISYSP_DIR)/modules/Control \
+-I$(DAISYSP_DIR)/modules/Drums \
+-I$(DAISYSP_DIR)/modules/Dynamics \
+-I$(DAISYSP_DIR)/modules/Effects \
+-I$(DAISYSP_DIR)/modules/Filters \
+-I$(DAISYSP_DIR)/modules/Noise \
+-I$(DAISYSP_DIR)/modules/PhysicalModeling \
+-I$(DAISYSP_DIR)/modules/Synthesis \
+-I$(DAISYSP_DIR)/modules/Utility \
 
 
 # compile gcc flags
