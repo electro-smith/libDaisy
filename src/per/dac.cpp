@@ -342,7 +342,7 @@ void DacHandle::Impl::InternalCalllback(DacHandle::Channel channel,
         int32_t   chn  = channel == Channel::TWO ? 1 : 0;
         uint16_t *buff = buff_[chn] + offset;
         uint16_t *buffers[1];
-        buffers[chn] = buff;
+        buffers[0] = buff;
         if(callback_ != nullptr)
             (callback_)(buffers, buff_size_ / 2);
     }
@@ -373,9 +373,6 @@ extern "C" void HAL_DAC_MspInit(DAC_HandleTypeDef *hdac)
 
 extern "C" void HAL_DAC_MspDeInit(DAC_HandleTypeDef *hdac)
 {
-    GPIO_TypeDef *port;
-    uint16_t      pin;
-    dsy_gpio_pin *p;
     if(hdac->Instance == DAC1)
     {
         __HAL_RCC_DAC12_CLK_DISABLE();
