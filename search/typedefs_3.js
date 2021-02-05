@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['interleavingaudiocallback_1275',['InterleavingAudioCallback',['../classdaisy_1_1_audio_handle.html#a25cb1ed797b0f5b6d79a26284454bb6f',1,'daisy::AudioHandle']]]
+  ['interleavingaudiocallback_1263',['InterleavingAudioCallback',['../classdaisy_1_1_audio_handle.html#a25cb1ed797b0f5b6d79a26284454bb6f',1,'daisy::AudioHandle']]]
 ];

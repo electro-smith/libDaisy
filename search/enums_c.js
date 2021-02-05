@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['type_1321',['Type',['../classdaisy_1_1_switch.html#a944058682bae079439ddddd42302b483',1,'daisy::Switch']]]
+  ['type_1309',['Type',['../classdaisy_1_1_switch.html#a944058682bae079439ddddd42302b483',1,'daisy::Switch']]]
 ];
