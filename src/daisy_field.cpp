@@ -146,7 +146,14 @@ void DaisyField::Init(bool boost)
     gate_out.pull = DSY_GPIO_NOPULL;
     gate_out.pin  = seed.GetPin(PIN_GATE_OUT);
     dsy_gpio_init(&gate_out);
-    dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
+
+
+    DacHandle::Config cfg;
+    cfg.bitdepth   = DacHandle::BitDepth::BITS_12;
+    cfg.buff_state = DacHandle::BufferState::ENABLED;
+    cfg.mode       = DacHandle::Mode::POLLING;
+    cfg.chn        = DacHandle::Channel::BOTH;
+    seed.dac.Init(cfg);
 }
 
 void DaisyField::DelayMs(size_t del)
@@ -218,7 +225,7 @@ void DaisyField::StopAdc()
 /** Turns on the built-in 12-bit DAC on the Daisy Seed */
 void DaisyField::StartDac()
 {
-    dsy_dac_start(DSY_DAC_CHN_BOTH);
+    //dsy_dac_start(DSY_DAC_CHN_BOTH);
 }
 
 void DaisyField::ProcessAnalogControls()
@@ -253,12 +260,12 @@ void DaisyField::ProcessDigitalControls()
 
 void DaisyField::SetCvOut1(uint16_t val)
 {
-    dsy_dac_write(DSY_DAC_CHN1, val);
+    seed.dac.WriteValue(DacHandle::Channel::ONE, val);
 }
 
 void DaisyField::SetCvOut2(uint16_t val)
 {
-    dsy_dac_write(DSY_DAC_CHN2, val);
+    seed.dac.WriteValue(DacHandle::Channel::TWO, val);
 }
 
 bool DaisyField::KeyboardState(size_t idx) const

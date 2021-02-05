@@ -247,9 +247,16 @@ void DaisyPatch::InitMidi()
 
 void DaisyPatch::InitCvOutputs()
 {
-    dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
-    dsy_dac_write(DSY_DAC_CHN1, 0);
-    dsy_dac_write(DSY_DAC_CHN2, 0);
+    //    dsy_dac_init(&seed.dac_handle, DSY_DAC_CHN_BOTH);
+    //    dsy_dac_write(DSY_DAC_CHN1, 0);
+    //    dsy_dac_write(DSY_DAC_CHN2, 0);
+    DacHandle::Config cfg;
+    cfg.bitdepth   = DacHandle::BitDepth::BITS_12;
+    cfg.buff_state = DacHandle::BufferState::ENABLED;
+    cfg.mode       = DacHandle::Mode::POLLING;
+    cfg.chn        = DacHandle::Channel::BOTH;
+    seed.dac.Init(cfg);
+    seed.dac.WriteValue(DacHandle::Channel::BOTH, 0);
 }
 
 void DaisyPatch::InitEncoder()
