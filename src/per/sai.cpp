@@ -412,7 +412,11 @@ extern "C" void HAL_SAI_MspInit(SAI_HandleTypeDef* hsai)
     // We could add a layer of separate config for them.
     if(hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B)
     {
+        // Since this isn't using the daisy gpio yet, we need to manually start the necessary pclks
+        // these aren't all used on all hardware, but they cover existing hardware so far.
+        __HAL_RCC_GPIOA_CLK_ENABLE();
         __HAL_RCC_GPIOE_CLK_ENABLE();
+        __HAL_RCC_GPIOG_CLK_ENABLE();
         __HAL_RCC_SAI1_CLK_ENABLE();
         sai_handles[0].InitPins();
         __HAL_RCC_DMA1_CLK_ENABLE();
