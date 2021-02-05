@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['reverse_5fiterator_913',['reverse_iterator',['../classbasic__string_3_01char_01_4_1_1reverse__iterator.html',1,'std::basic_string&lt; char &gt;::reverse_iterator'],['../classbasic__string_3_01char16__t_01_4_1_1reverse__iterator.html',1,'std::basic_string&lt; char16_t &gt;::reverse_iterator'],['../classbasic__string_3_01char32__t_01_4_1_1reverse__iterator.html',1,'std::basic_string&lt; char32_t &gt;::reverse_iterator'],['../classbasic__string_3_01char8__t_01_4_1_1reverse__iterator.html',1,'std::basic_string&lt; char8_t &gt;::reverse_iterator'],['../classbasic__string_3_01wchar__t_01_4_1_1reverse__iterator.html',1,'std::basic_string&lt; wchar_t &gt;::reverse_iterator'],['../classbasic__string__view_3_01char_01_4_1_1reverse__iterator.html',1,'std::basic_string_view&lt; char &gt;::reverse_iterator'],['../classbasic__string__view_3_01char16__t_01_4_1_1reverse__iterator.html',1,'std::basic_string_view&lt; char16_t &gt;::reverse_iterator'],['../classbasic__string__view_3_01char32__t_01_4_1_1reverse__iterator.html',1,'std::basic_string_view&lt; char32_t &gt;::reverse_iterator'],['../classbasic__string__view_3_01char8__t_01_4_1_1reverse__iterator.html',1,'std::basic_string_view&lt; char8_t &gt;::reverse_iterator'],['../classbasic__string__view_3_01wchar__t_01_4_1_1reverse__iterator.html',1,'std::basic_string_view&lt; wchar_t &gt;::reverse_iterator']]],
-  ['rgbled_914',['RgbLed',['../classdaisy_1_1_rgb_led.html',1,'daisy']]],
-  ['ringbuffer_915',['RingBuffer',['../classdaisy_1_1_ring_buffer.html',1,'daisy']]],
-  ['ringbuffer_3c_20daisy_3a_3amidievent_2c_20256_20_3e_916',['RingBuffer&lt; daisy::MidiEvent, 256 &gt;',['../classdaisy_1_1_ring_buffer.html',1,'daisy']]],
-  ['ringbuffer_3c_20t_2c_200_20_3e_917',['RingBuffer&lt; T, 0 &gt;',['../classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html',1,'daisy']]]
+  ['rgbled_925',['RgbLed',['../classdaisy_1_1_rgb_led.html',1,'daisy']]],
+  ['ringbuffer_926',['RingBuffer',['../classdaisy_1_1_ring_buffer.html',1,'daisy']]],
+  ['ringbuffer_3c_20daisy_3a_3amidievent_2c_20256_20_3e_927',['RingBuffer&lt; daisy::MidiEvent, 256 &gt;',['../classdaisy_1_1_ring_buffer.html',1,'daisy']]],
+  ['ringbuffer_3c_20t_2c_200_20_3e_928',['RingBuffer&lt; T, 0 &gt;',['../classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html',1,'daisy']]]
 ];
