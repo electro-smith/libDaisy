@@ -554,7 +554,8 @@ extern "C"
                 {
                     int delta = adc.dma_buffer[c] - adc.out_buffer[c];
                     if(abs(delta) > adc.threshold)
-                        adc.out_buffer[c] = (adc.out_buffer[c] + adc.dma_buffer[c]) / 2;
+                        adc.out_buffer[c]
+                            = (adc.out_buffer[c] + adc.dma_buffer[c]) / 2;
                     else
                         adc.out_buffer[c] = (uint16_t)(adc.out_buffer[c]
                                                        + delta * adc.smoothing);
