@@ -115,14 +115,15 @@ static uint16_t DMA_BUFFER_MEM_SECTION
     adc1_mux_cache[DSY_ADC_MAX_CHANNELS][DSY_ADC_MAX_MUX_CHANNELS];
 
 /** Buffer for ADC Input channels
- ** It is 2x the number of channels for double-buffered support
- **
  ** Also used to provide buffer for trash data during mux pin changes.
  ***/
 static uint16_t DMA_BUFFER_MEM_SECTION adc1_dma_buffer[DSY_ADC_MAX_CHANNELS];
 
 // Stable output buffer
-static uint16_t DMA_BUFFER_MEM_SECTION adc1_out_buffer[DSY_ADC_MAX_CHANNELS];
+static float DMA_BUFFER_MEM_SECTION adc1_out_buffer[DSY_ADC_MAX_CHANNELS];
+
+// Filter coefficients
+static float    DMA_BUFFER_MEM_SECTION adc1_filterCoeff[DSY_ADC_MAX_CHANNELS];
 
 // Global ADC Struct
 struct dsy_adc
@@ -135,9 +136,8 @@ struct dsy_adc
     uint16_t mux_index[DSY_ADC_MAX_CHANNELS]; // 0->mux_channels per ADC channel
     // dma buffer ptrs
     uint16_t* dma_buffer;
-    uint16_t* out_buffer;
-    uint16_t  threshold;
-    float     smoothing;
+    float*    out_buffer;
+    float*    filterCoeff;
     uint16_t (*mux_cache)[DSY_ADC_MAX_MUX_CHANNELS];
     ADC_HandleTypeDef hadc1;
     DMA_HandleTypeDef hdma_adc1;
@@ -237,11 +237,14 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     num_channels_  = num_channels;
     adc.dma_buffer = adc1_dma_buffer;
     adc.out_buffer = adc1_out_buffer;
+    adc.filterCoeff = adc1_filterCoeff;
     adc.mux_cache  = &adc1_mux_cache[0];
     // Clear Buffers
     for(size_t i = 0; i < DSY_ADC_MAX_CHANNELS; i++)
     {
         adc.dma_buffer[i]   = 0;
+        adc.out_buffer[i]   = 0.0f;
+        adc.filterCoeff[i]  = 1.0f; // Default to no filtering
         adc.mux_channels[i] = 0; // set to 0 mux first.
         adc.mux_index[i]    = 0;
     }
@@ -252,7 +255,6 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     for(size_t i = 0; i < num_channels_; i++)
     {
         adc.pin_cfg[i]      = cfg[i];
-        adc.dma_buffer[i]   = 0;
         adc.mux_channels[i] = cfg[i].mux_channels_;
         if(cfg[i].mux_channels_ > 0)
             adc.mux_used = true;
@@ -383,13 +385,12 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     }
 }
 
-void AdcHandle::Start(float smoothing)
+void AdcHandle::Start()
 {
     while(HAL_ADCEx_Calibration_Start(
               &adc.hadc1, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED)
           != HAL_OK)
         ;
-    adc.threshold = (uint16_t)(DSY_ADC_MAX_RESOLUTION * smoothing);
     HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
 }
 
@@ -402,17 +403,23 @@ void AdcHandle::Stop()
 
 uint16_t AdcHandle::Get(uint8_t chn) const
 {
-    return adc.out_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0];
+    return (uint16_t)adc.out_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0];
 }
 uint16_t* AdcHandle::GetPtr(uint8_t chn) const
 {
-    return &adc.out_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0];
+    return &adc.dma_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0];
 }
 
 float AdcHandle::GetFloat(uint8_t chn) const
 {
-    return (float)adc.out_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0]
+    return adc.out_buffer[chn < DSY_ADC_MAX_CHANNELS ? chn : 0]
            / DSY_ADC_MAX_RESOLUTION;
+}
+
+void AdcHandle::ConfigureFilter(uint8_t chn, float coeff)
+{
+    if(chn < DSY_ADC_MAX_CHANNELS)
+        adc.filterCoeff[chn] = coeff;
 }
 
 uint16_t AdcHandle::GetMux(uint8_t chn, uint8_t idx) const
@@ -465,7 +472,7 @@ static void adc_init_dma1()
         adc.hdma_adc1.Init.Mode = DMA_NORMAL;
     else
         adc.hdma_adc1.Init.Mode = DMA_CIRCULAR;
-    adc.hdma_adc1.Init.Priority = DMA_PRIORITY_HIGH;
+    adc.hdma_adc1.Init.Priority = DMA_PRIORITY_VERY_HIGH;
     adc.hdma_adc1.Init.FIFOMode = DMA_FIFOMODE_DISABLE;
     if(HAL_DMA_Init(&adc.hdma_adc1) != HAL_OK)
     {
@@ -487,15 +494,14 @@ static void adc_init_dma1()
 // is set up right now.
 static void adc_internal_callback()
 {
-    for(uint16_t i = 0; i < adc.channels; i++)
+    for(uint16_t chn = 0; chn < adc.channels; chn++)
     {
-        const uint8_t chn              = i;
-        const uint8_t current_position = adc.mux_index[i];
+        const auto value = adc.dma_buffer[chn];
         if(adc.mux_channels[chn] > 0)
         {
+            const uint8_t current_position = adc.mux_index[chn];
             // Capture current value to mux_cache
-            const auto value                   = adc.dma_buffer[i];
-            adc.mux_cache[i][current_position] = value;
+            adc.mux_cache[chn][current_position] = value;
             // Update Mux Position, and write GPIO
             adc.mux_index[chn] += 1;
             if(adc.mux_index[chn] >= adc.mux_channels[chn])
@@ -503,10 +509,18 @@ static void adc_internal_callback()
             write_mux_value(
                 chn, adc.mux_index[chn], adc.num_mux_pins_required[chn]);
         }
+        else
+        {
+            float delta = (float)value - adc.out_buffer[chn];
+            adc.out_buffer[chn] += delta * adc.filterCoeff[chn];
+        }
     }
-    // Restart DMA
-    adc_init_dma1();
-    HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
+    if(adc.mux_used)
+    {
+        // Restart DMA
+        adc_init_dma1();
+        HAL_ADC_Start_DMA(&adc.hadc1, (uint32_t*)adc.dma_buffer, adc.channels);
+    }
 }
 
 
@@ -546,21 +560,7 @@ extern "C"
     void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
     {
         if(hadc->Instance == ADC1)
-        {
-            if(adc.mux_used)
-                adc_internal_callback();
-            else
-                for(int c = 0; c < adc.channels; ++c)
-                {
-                    int delta = adc.dma_buffer[c] - adc.out_buffer[c];
-                    if(abs(delta) > adc.threshold)
-                        adc.out_buffer[c]
-                            = (adc.out_buffer[c] + adc.dma_buffer[c]) / 2;
-                    else
-                        adc.out_buffer[c] = (uint16_t)(adc.out_buffer[c]
-                                                       + delta * adc.smoothing);
-                }
-        }
+            adc_internal_callback();
     }
 
     /*

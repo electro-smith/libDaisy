@@ -93,7 +93,7 @@ class AdcHandle
     Init(AdcChannelConfig *cfg, size_t num_channels, OverSampling ovs = OVS_32);
 
     /** Starts reading from the ADC */
-    void Start(float smoothing = 1.0f);
+    void Start();
 
     /** Stops reading from the ADC */
     void Stop();
@@ -118,6 +118,13 @@ class AdcHandle
     \return Floating point converted value
     */
     float GetFloat(uint8_t chn) const;
+
+    /**
+    Single channel filter configuration
+    \param chn channel to configure
+    \param coeff filter coefficient (good values are in range 0.01 to 0.1)
+    */
+    void ConfigureFilter(uint8_t chn, float coeff);
 
     /**
        Getters for multiplexed inputs on a single channel (up to 8 per ADC input). 

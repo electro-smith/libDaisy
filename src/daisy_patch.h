@@ -85,12 +85,12 @@ class DaisyPatch
     void StartAdc();
 
     /** Start analog to digital conversion with exponential moving
-    average smoothing applied. Experimentation will be required to
-    choose the value appropriate for the application.
-    \param smoothing  sets the amount of smoothing to apply. Values
-    will typically be in the range 0.01 to 0.1
+    average filtering applied. Experimentation will be required to
+    choose the coefficient value appropriate for the application.
+    \param filterCoeff  sets the filter coefficient for all controls
+    good values to try are in the range 0.01 to 0.1
     */
-    void StartAdc(float smoothing);
+    void StartAdc(float filterCoeff);
 
     /** Stops Transfering data from the ADC */
     void StopAdc();

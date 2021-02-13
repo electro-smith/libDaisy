@@ -99,9 +99,11 @@ void DaisyPatch::StartAdc()
     seed.adc.Start();
 }
 
-void DaisyPatch::StartAdc(float smoothing)
+void DaisyPatch::StartAdc(float filterCoeff)
 {
-    seed.adc.Start(smoothing);
+    for(size_t i = 0; i < CTRL_LAST; i++)
+        seed.adc.ConfigureFilter(i, filterCoeff);
+    seed.adc.Start();
 }
 
 /** Stops Transfering data from the ADC */
