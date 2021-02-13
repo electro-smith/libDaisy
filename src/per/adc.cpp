@@ -123,7 +123,7 @@ static uint16_t DMA_BUFFER_MEM_SECTION adc1_dma_buffer[DSY_ADC_MAX_CHANNELS];
 static float DMA_BUFFER_MEM_SECTION adc1_out_buffer[DSY_ADC_MAX_CHANNELS];
 
 // Filter coefficients
-static float    DMA_BUFFER_MEM_SECTION adc1_filterCoeff[DSY_ADC_MAX_CHANNELS];
+static float DMA_BUFFER_MEM_SECTION adc1_filterCoeff[DSY_ADC_MAX_CHANNELS];
 
 // Global ADC Struct
 struct dsy_adc
@@ -234,18 +234,18 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     // Generic Init
     oversampling_ = ovs;
     // Set DMA buffers
-    num_channels_  = num_channels;
-    adc.dma_buffer = adc1_dma_buffer;
-    adc.out_buffer = adc1_out_buffer;
+    num_channels_   = num_channels;
+    adc.dma_buffer  = adc1_dma_buffer;
+    adc.out_buffer  = adc1_out_buffer;
     adc.filterCoeff = adc1_filterCoeff;
-    adc.mux_cache  = &adc1_mux_cache[0];
+    adc.mux_cache   = &adc1_mux_cache[0];
     // Clear Buffers
     for(size_t i = 0; i < DSY_ADC_MAX_CHANNELS; i++)
     {
         adc.dma_buffer[i]   = 0;
         adc.out_buffer[i]   = 0.0f;
         adc.filterCoeff[i]  = 1.0f; // Default to no filtering
-        adc.mux_channels[i] = 0; // set to 0 mux first.
+        adc.mux_channels[i] = 0;    // set to 0 mux first.
         adc.mux_index[i]    = 0;
     }
     // Set Config Pointer and data for use in MspInit
