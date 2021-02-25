@@ -53,6 +53,10 @@ CPP_SOURCES ?=
 C_SOURCES += \
 $(SYSTEM_FILES_DIR)/startup_stm32h750xx.c
 
+# Expose platform configuration to all compilation units (CMSIS DSP components)
+C_INCLUDES += -include stm32h7xx.h
+
+
 #ASM_SOURCES += \
 #$(SYSTEM_FILES_DIR)/startup_stm32h750xx.s
 
@@ -104,10 +108,14 @@ C_DEFS ?=
 C_DEFS +=  \
 -DUSE_HAL_DRIVER \
 -DSTM32H750xx \
--DUSE_HAL_DRIVER \
 -DHSE_VALUE=16000000 \
--DSTM32H750xx
 
+# imported from libdaisy internal makefile
+C_DEFS +=  \
+-DCORE_CM7  \
+-DSTM32H750IB \
+-DARM_MATH_CM7 \
+-DUSE_FULL_LL_DRIVER 
 
 # AS includes
 AS_INCLUDES =
@@ -117,8 +125,10 @@ C_INCLUDES ?=
 C_INCLUDES += \
 -I$(LIBDAISY_DIR) \
 -I$(LIBDAISY_DIR)/src/ \
+-I$(LIBDAISY_DIR)/src/sys \
 -I$(LIBDAISY_DIR)/src/usbd \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/Include/ \
+-I$(LIBDAISY_DIR)/Drivers/CMSIS/DSP/Include \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/Device/ST/STM32H7xx/Include \
 -I$(LIBDAISY_DIR)/Drivers/STM32H7xx_HAL_Driver/Inc/ \
 -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc \
