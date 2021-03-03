@@ -50,7 +50,7 @@ class LoggerImpl<LOGGER_INTERNAL>
         /** this implementation relies on the fact that UsbHandle class has no member variables and can be shared
          * assert this statement:
          */
-        static_assert(1u == sizeof(usb_handle_));
+        static_assert(1u == sizeof(usb_handle_), "UsbHandle is not static");
         usb_handle_.Init(UsbHandle::FS_INTERNAL);
     }
 
@@ -82,7 +82,7 @@ class LoggerImpl<LOGGER_EXTERNAL>
         /** this implementation relies on the fact that UsbHandle class has no member variables and can be shared.
          * assert this statement:
          */
-        static_assert(1u == sizeof(usb_handle_));
+        static_assert(1u == sizeof(usb_handle_), "UsbHandle is not static");
         usb_handle_.Init(UsbHandle::FS_EXTERNAL);
     }
 
