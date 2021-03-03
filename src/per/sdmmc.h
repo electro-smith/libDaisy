@@ -64,6 +64,14 @@ class SdmmcHandler
         BusWidth width;
         bool
             clock_powersave; /**< When true, the clock will stop between transfers to save power. */
+
+        /** Configures settings to their default settings */
+        void Defaults()
+        {
+            speed           = Speed::FAST;
+            width           = BusWidth::BITS_4;
+            clock_powersave = false;
+        }
     };
 
     SdmmcHandler() {}
