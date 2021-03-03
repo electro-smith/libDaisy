@@ -15,8 +15,8 @@ SdmmcHandler::Result SdmmcHandler::Init(const Config& cfg)
     hsd1.Init.ClockPowerSave = cfg.clock_powersave
                                    ? SDMMC_CLOCK_POWER_SAVE_ENABLE
                                    : SDMMC_CLOCK_POWER_SAVE_DISABLE;
-    hsd1.Init.BusWide = cfg.width == BusWidth::BITS_1 ? SDMMC_BUS_WIDE_1B
-                                                            : SDMMC_BUS_WIDE_4B;
+    hsd1.Init.BusWide
+        = cfg.width == BusWidth::BITS_1 ? SDMMC_BUS_WIDE_1B : SDMMC_BUS_WIDE_4B;
     hsd1.Init.HardwareFlowControl = SDMMC_HARDWARE_FLOW_CONTROL_DISABLE;
 
     switch(cfg.speed)
