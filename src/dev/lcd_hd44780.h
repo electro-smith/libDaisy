@@ -17,6 +17,8 @@
    @date March 2021
 */
 
+namespace daisy
+{
 class LcdHD44780
 {
   public:
@@ -72,6 +74,7 @@ class LcdHD44780
     void Write(uint8_t, uint8_t);
 };
 
+} // namespace daisy
 
 #endif
 /** @} */
