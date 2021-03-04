@@ -44,7 +44,7 @@ var searchData=
   ['setblocksize_710',['SetBlockSize',['../classdaisy_1_1_audio_handle.html#a93bf9a68619280b2524d8a8894c4dff9',1,'daisy::AudioHandle']]],
   ['setcoeff_711',['SetCoeff',['../classdaisy_1_1_analog_control.html#a2ace581abd8f0c5e35c0013e01f37f1c',1,'daisy::AnalogControl']]],
   ['setcolor_712',['SetColor',['../classdaisy_1_1_rgb_led.html#afc530391dc068788952edbe9907df8e9',1,'daisy::RgbLed']]],
-  ['setcursor_713',['SetCursor',['../classdaisy_1_1_oled_display.html#a6464c4429950b9d3ebe3ceedc9edb606',1,'daisy::OledDisplay::SetCursor()'],['../class_lcd_h_d44780.html#abdfdce11ad389cb953800baa98ab3144',1,'LcdHD44780::SetCursor()']]],
+  ['setcursor_713',['SetCursor',['../classdaisy_1_1_oled_display.html#a6464c4429950b9d3ebe3ceedc9edb606',1,'daisy::OledDisplay::SetCursor()'],['../classdaisy_1_1_lcd_h_d44780.html#aff797aa8b9cfe432c61c286b897b1914',1,'daisy::LcdHD44780::SetCursor()']]],
   ['setcvout1_714',['SetCvOut1',['../classdaisy_1_1_daisy_field.html#a7fd7e5cfdc8c8880748b9e3e4143902f',1,'daisy::DaisyField']]],
   ['setcvout2_715',['SetCvOut2',['../classdaisy_1_1_daisy_field.html#a47532828ea5e88f30782a21d4b4296e1',1,'daisy::DaisyField']]],
   ['setfootswitchled_716',['SetFootswitchLed',['../classdaisy_1_1_daisy_petal.html#a562d597f10b98d36bf1c37314a317d8c',1,'daisy::DaisyPetal']]],

@@ -3,7 +3,7 @@ var searchData=
   ['last_462',['LAST',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a59fb8f2d16bd5cd2cc0e5ca7fe7def92',1,'daisy::Color::LAST()'],['../classdaisy_1_1_parameter.html#a2fcb1b7095721f0de77594aabb9594daafd1a0bfdbd74a9f915abd72694b57621',1,'daisy::Parameter::LAST()']]],
   ['latch_463',['latch',['../structdaisy_1_1_shift_register4021_1_1_config.html#a2a05cd559028325fc59ae9108672d045',1,'daisy::ShiftRegister4021::Config']]],
   ['lcd_464',['Lcd',['../group__lcd.html',1,'']]],
-  ['lcdhd44780_465',['LcdHD44780',['../class_lcd_h_d44780.html',1,'']]],
+  ['lcdhd44780_465',['LcdHD44780',['../classdaisy_1_1_lcd_h_d44780.html',1,'daisy']]],
   ['led_466',['Led',['../classdaisy_1_1_led.html',1,'daisy']]],
   ['led_467',['LED',['../group__led.html',1,'']]],
   ['led1_468',['led1',['../classdaisy_1_1_daisy_pod.html#a25507d3d34053599b816f5a87a55d632',1,'daisy::DaisyPod']]],
