@@ -44,9 +44,8 @@ Based on: HD44780-Stm32HAL by Olivier Van den Eede (https://github.com/4ilo/HD44
 #define LCD_COMMAND_REG 0
 
 
-using namespace daisy;
-
-
+namespace daisy
+{
 // Init LCD
 
 void LcdHD44780::Init(const Config& config)
@@ -184,3 +183,5 @@ void LcdHD44780::Write(uint8_t data, uint8_t len)
     System::Delay(1);
     dsy_gpio_write(&lcd_pin_en, 0);
 }
+
+} // namespace daisy
