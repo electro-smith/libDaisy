@@ -224,7 +224,6 @@ DRESULT SD_write(BYTE lun, const BYTE *buff, DWORD sector, UINT count)
        == MSD_OK)
     {
         /* Wait that writing process is completed or a timeout occurs */
-        //WriteStatus = 1; /**< This seems like a _real_ bad thing to do. */
         timeout = HAL_GetTick();
         while((WriteStatus == 0) && ((HAL_GetTick() - timeout) < SD_TIMEOUT)) {}
         /* incase of a timeout return error */
