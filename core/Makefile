@@ -138,6 +138,20 @@ ifdef DAISYSP_DIR
 C_INCLUDES += -I$(DAISYSP_DIR)/Source
 endif
 
+# Include FATFS files
+# This does not include the additional option files
+# for Japanese, Simplified/Traditional Chinese, or Korean
+# since they would add an additional 480kB or so of flash
+FATFS_DIR ?= $(LIBDAISY_DIR)/Middlewares/Third_Party/FatFs/src
+FATFS_SOURCES ?=
+FATFS_SOURCES += \
+	$(FATFS_DIR)/diskio.c \
+	$(FATFS_DIR)/ff.c \
+	$(FATFS_DIR)/ff_gen_drv.c \
+	$(FATFS_DIR)/option/ccsbcs.c
+
+C_SOURCES += $(FATFS_SOURCES)
+C_INCLUDES += -I$(FATFS_DIR)
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
