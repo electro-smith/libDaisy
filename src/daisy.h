@@ -42,6 +42,8 @@
 #include "dev/codec_pcm3060.h"
 #include "dev/codec_wm8731.h"
 #include "util/scopedirqblocker.h"
+#include "util/WaveTableLoader.h"
+#include "util/WavWriter.h"
 #endif
 #endif
 
