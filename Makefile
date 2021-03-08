@@ -51,7 +51,8 @@ per/i2c \
 per/spi \
 per/tim \
 per/uart \
-util/color
+util/color \
+util/WaveTableLoader \
 
 ######################################
 # building variables
