@@ -282,6 +282,7 @@
     <ClCompile Include="src\util\oled_fonts.c" />
     <ClCompile Include="src\util\sd_diskio.c" />
     <ClCompile Include="src\util\unique_id.c" />
+    <ClCompile Include="src\util\WaveTableLoader.cpp" />
     <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h750xx.h" />
     <ClInclude Include="Drivers\CMSIS\Include\cmsis_armcc.h" />
     <ClInclude Include="Drivers\CMSIS\Include\cmsis_armclang.h" />
@@ -485,6 +486,8 @@
     <ClInclude Include="src\util\scopedirqblocker.h" />
     <ClInclude Include="src\util\sd_diskio.h" />
     <ClInclude Include="src\util\unique_id.h" />
+    <ClInclude Include="src\util\WaveTableLoader.h" />
+    <ClInclude Include="src\util\WavWriter.h" />
     <ClInclude Include="src\util\wav_format.h" />
     <None Include="stm32.props" />
     <None Include="libdaisy-Debug.vgdbsettings" />
