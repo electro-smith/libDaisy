@@ -64,7 +64,8 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">daisy Namespace Reference</div>  </div>
 </div><!--header-->
@@ -180,8 +181,6 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_sai_handle.html">SaiHandle</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_sdmmc_handler_init.html">SdmmcHandlerInit</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_sdmmc_handler.html">SdmmcHandler</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html">SpiHandle</a></td></tr>
@@ -199,6 +198,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html">RingBuffer&lt; T, 0 &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_scoped_irq_blocker.html">ScopedIrqBlocker</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_w_a_v___format_type_def.html">WAV_FormatTypeDef</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wave_table_loader.html">WaveTableLoader</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_writer.html">WavWriter</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -222,17 +227,6 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:gaaf09bb687034c8776ca0c68ed3ed4179"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga06f91f8f9f006800c4b0cde1a650664b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__other.html#ga06f91f8f9f006800c4b0cde1a650664b">SdmmcMode</a> { <a class="el" href="group__other.html#gga06f91f8f9f006800c4b0cde1a650664bad93c38034d1f663e9b68a300cc8b5f92">SDMMC_MODE_FATFS</a>
- }</td></tr>
-<tr class="separator:ga06f91f8f9f006800c4b0cde1a650664b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5df1c73d4f0fdbf01d987cef4c3b165e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__other.html#ga5df1c73d4f0fdbf01d987cef4c3b165e">SdmmcBitWidth</a> { <a class="el" href="group__other.html#gga5df1c73d4f0fdbf01d987cef4c3b165ea9596216644119b1f6b258bfe544c0c52">SDMMC_BITS_1</a>
-, <a class="el" href="group__other.html#gga5df1c73d4f0fdbf01d987cef4c3b165ead4d95dcec91eaaee67d8689c7c427e95">SDMMC_BITS_4</a>
- }</td></tr>
-<tr class="separator:ga5df1c73d4f0fdbf01d987cef4c3b165e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4d107ebcf4d77d94b63c90fdba9cf93"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__other.html#gaa4d107ebcf4d77d94b63c90fdba9cf93">SdmmcSpeed</a> { <a class="el" href="group__other.html#ggaa4d107ebcf4d77d94b63c90fdba9cf93aafb16f32e18bb0e2c8a11bfe45929772">SDMMC_SPEED_400KHZ</a>
-, <a class="el" href="group__other.html#ggaa4d107ebcf4d77d94b63c90fdba9cf93af8f80563f4b781a5fbd80356256b5358">SDMMC_SPEED_12MHZ</a>
- }</td></tr>
-<tr class="separator:gaa4d107ebcf4d77d94b63c90fdba9cf93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf711442ff4ba0ed7d1e6f6bae7c574b6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__serial.html#gaf711442ff4ba0ed7d1e6f6bae7c574b6">SpiPeriph</a> { <a class="el" href="group__serial.html#ggaf711442ff4ba0ed7d1e6f6bae7c574b6a067119d88d70ecdcb4f5017f9c28071c">SPI_PERIPH_1</a>
 , <a class="el" href="group__serial.html#ggaf711442ff4ba0ed7d1e6f6bae7c574b6abe36a904be436f0e99a6c60bcdc5db03">SPI_PERIPH_3</a>
 , <a class="el" href="group__serial.html#ggaf711442ff4ba0ed7d1e6f6bae7c574b6a73dc62e39838820d4779ed3cbfc421c0">SPI_PERIPH_6</a>
@@ -244,11 +238,32 @@ Enumerations</h2></td></tr>
 , <a class="el" href="group__serial.html#ggab9d0e8af9fe3d0320cdf38af4ec31a1aaf95730671f55a42b4d7012faea2f27c7">SPI_PIN_MISO</a>
  }</td></tr>
 <tr class="separator:gab9d0e8af9fe3d0320cdf38af4ec31a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4aa183da4cc8c253afebd7ae0713f81"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81">WavFileFormatCode</a> { <br />
+&#160;&#160;<b>WAVE_FORMAT_PCM</b> = 0x0001
+, <b>WAVE_FORMAT_IEEE_FLOAT</b> = 0x0003
+, <b>WAVE_FORMAT_ALAW</b> = 0x0006
+, <b>WAVE_FORMAT_ULAW</b> = 0x0007
+, <br />
+&#160;&#160;<b>WAVE_FORMAT_EXTENSIBLE</b> = 0xFFFE
+<br />
+ }</td></tr>
+<tr class="separator:ac4aa183da4cc8c253afebd7ae0713f81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ae0b19c7433a9a4943496c1223cd410b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#ae0b19c7433a9a4943496c1223cd410b2">dsy_i2c_global_init</a> ()</td></tr>
 <tr class="separator:ae0b19c7433a9a4943496c1223cd410b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a03ef559c136c02da542e9b3a263d3759"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a03ef559c136c02da542e9b3a263d3759">kWavFileChunkId</a> = 0x46464952</td></tr>
+<tr class="separator:a03ef559c136c02da542e9b3a263d3759"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a2662c77bff81dea52ab4438b22492a"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a4a2662c77bff81dea52ab4438b22492a">kWavFileWaveId</a> = 0x45564157</td></tr>
+<tr class="separator:a4a2662c77bff81dea52ab4438b22492a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefff3cc0abb51c01a9fcb7d17b6fbabe"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#aefff3cc0abb51c01a9fcb7d17b6fbabe">kWavFileSubChunk1Id</a> = 0x20746d66</td></tr>
+<tr class="separator:aefff3cc0abb51c01a9fcb7d17b6fbabe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21a161c10bbde49cdd811a48236d8a73"><td class="memItemLeft" align="right" valign="top">const uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a21a161c10bbde49cdd811a48236d8a73">kWavFileSubChunk2Id</a> = 0x61746164</td></tr>
+<tr class="separator:a21a161c10bbde49cdd811a48236d8a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Hardware defines and helpers for daisy field platform. </p>
@@ -283,6 +298,27 @@ Example product: <a href="https://www.adafruit.com/product/181">https://www.adaf
 
 </div>
 </div>
+<a id="ac4aa183da4cc8c253afebd7ae0713f81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4aa183da4cc8c253afebd7ae0713f81">&#9670;&nbsp;</a></span>WavFileFormatCode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81">daisy::WavFileFormatCode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Standard Format codes for the waveform data.</p>
+<p>According to spec, extensible should be used whenever:</p><ul>
+<li>PCM data has more than 16 bits/sample</li>
+<li>The number of channels is more than 2</li>
+<li>The actual number of bits/sample is not equal to the container size</li>
+<li>The mapping from channels to speakers needs to be specified. </li>
+</ul>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ae0b19c7433a9a4943496c1223cd410b2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae0b19c7433a9a4943496c1223cd410b2">&#9670;&nbsp;</a></span>dsy_i2c_global_init()</h2>
@@ -299,6 +335,67 @@ Example product: <a href="https://www.adafruit.com/product/181">https://www.adaf
       </table>
 </div><div class="memdoc">
 <p>internal. Used for global init. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a03ef559c136c02da542e9b3a263d3759"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03ef559c136c02da542e9b3a263d3759">&#9670;&nbsp;</a></span>kWavFileChunkId</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint32_t daisy::kWavFileChunkId = 0x46464952</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constants for In-Header IDs "RIFF" </p>
+
+</div>
+</div>
+<a id="aefff3cc0abb51c01a9fcb7d17b6fbabe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefff3cc0abb51c01a9fcb7d17b6fbabe">&#9670;&nbsp;</a></span>kWavFileSubChunk1Id</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint32_t daisy::kWavFileSubChunk1Id = 0x20746d66</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>"fmt " </p>
+
+</div>
+</div>
+<a id="a21a161c10bbde49cdd811a48236d8a73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21a161c10bbde49cdd811a48236d8a73">&#9670;&nbsp;</a></span>kWavFileSubChunk2Id</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint32_t daisy::kWavFileSubChunk2Id = 0x61746164</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>"data" </p>
+
+</div>
+</div>
+<a id="a4a2662c77bff81dea52ab4438b22492a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a2662c77bff81dea52ab4438b22492a">&#9670;&nbsp;</a></span>kWavFileWaveId</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint32_t daisy::kWavFileWaveId = 0x45564157</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>"WAVE" </p>
 
 </div>
 </div>

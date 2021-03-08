@@ -66,6 +66,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classdaisy_1_1_sdmmc_handler-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -75,29 +77,147 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="sdmmc_8h_source.html">sdmmc.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_sdmmc_handler_1_1_config.html">Config</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ad3aa247c4e2a3e8da344a64673768970"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_sdmmc_handler.html#ad3aa247c4e2a3e8da344a64673768970">Result</a> { <b>OK</b>
+, <b>ERROR</b>
+ }</td></tr>
+<tr class="separator:ad3aa247c4e2a3e8da344a64673768970"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a146e7b69e3d0c1a0c0fae316040d799b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799b">BusWidth</a> { <a class="el" href="classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799ba08670704a035571395ac7232b1bd887b">BITS_1</a>
+, <a class="el" href="classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799bae5692a4697cba5753db569f838c5b47d">BITS_4</a>
+ }</td></tr>
+<tr class="separator:a146e7b69e3d0c1a0c0fae316040d799b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78a654b5e915c05224fb64f0dfbe6bce"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_sdmmc_handler.html#a78a654b5e915c05224fb64f0dfbe6bce">Speed</a> { <br />
+&#160;&#160;<a class="el" href="classdaisy_1_1_sdmmc_handler.html#a78a654b5e915c05224fb64f0dfbe6bcea0e3066cbbd284dce8b76e7c4620d6d75">SLOW</a>
+, <a class="el" href="classdaisy_1_1_sdmmc_handler.html#a78a654b5e915c05224fb64f0dfbe6bceae8299a925bcf4edf54ee86581f4df53d">MEDIUM_SLOW</a>
+, <a class="el" href="classdaisy_1_1_sdmmc_handler.html#a78a654b5e915c05224fb64f0dfbe6bcea94e94133f4bdc1794c6b647b8ea134d0">STANDARD</a>
+, <a class="el" href="classdaisy_1_1_sdmmc_handler.html#a78a654b5e915c05224fb64f0dfbe6bceadca6e617f6fb54033deb311e7e7c93cc">FAST</a>
+, <br />
+&#160;&#160;<a class="el" href="classdaisy_1_1_sdmmc_handler.html#a78a654b5e915c05224fb64f0dfbe6bcead3f84081b6b3a6c3f66b20414b6a7238">VERY_FAST</a>
+<br />
+ }</td></tr>
+<tr class="separator:a78a654b5e915c05224fb64f0dfbe6bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a64c804e0bab704e971660d605839555c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_sdmmc_handler.html#a64c804e0bab704e971660d605839555c">Init</a> ()</td></tr>
-<tr class="separator:a64c804e0bab704e971660d605839555c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5df27501002b728908d18bcc279cb6df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_sdmmc_handler.html#ad3aa247c4e2a3e8da344a64673768970">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_sdmmc_handler.html#a5df27501002b728908d18bcc279cb6df">Init</a> (const <a class="el" href="structdaisy_1_1_sdmmc_handler_1_1_config.html">Config</a> &amp;cfg)</td></tr>
+<tr class="separator:a5df27501002b728908d18bcc279cb6df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Configuration for interfacing with SD cards. Currently only supports operation using FatFS filesystem </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a64c804e0bab704e971660d605839555c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64c804e0bab704e971660d605839555c">&#9670;&nbsp;</a></span>Init()</h2>
+<div class="textblock"><p>Configuration for interfacing with SD cards. Currently only supports operation using FatFS filesystem</p>
+<p>Only SDMMC1 is supported at this time.</p>
+<p>Pins are fixed to the following: PC12 - SDMMC1 CK PD2 - SDMMC1 CMD PC8 - SDMMC1 D0 PC9 - SDMMC1 D1 (optional) PC10 - SDMMC1 D2 (optional) PC11 - SDMMC1 D3 (optional) </p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a146e7b69e3d0c1a0c0fae316040d799b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a146e7b69e3d0c1a0c0fae316040d799b">&#9670;&nbsp;</a></span>BusWidth</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799b">daisy::SdmmcHandler::BusWidth</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sets whether 4-bit mode or 1-bit mode is used for the SDMMC </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a146e7b69e3d0c1a0c0fae316040d799ba08670704a035571395ac7232b1bd887b"></a>BITS_1&#160;</td><td class="fielddoc"><p>Only 1 bit of data per clock is transferred </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a146e7b69e3d0c1a0c0fae316040d799bae5692a4697cba5753db569f838c5b47d"></a>BITS_4&#160;</td><td class="fielddoc"><p>4-bits of parallel data for each clock pulse </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ad3aa247c4e2a3e8da344a64673768970"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3aa247c4e2a3e8da344a64673768970">&#9670;&nbsp;</a></span>Result</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classdaisy_1_1_sdmmc_handler.html#ad3aa247c4e2a3e8da344a64673768970">daisy::SdmmcHandler::Result</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return values for the <a class="el" href="classdaisy_1_1_sdmmc_handler.html">SdmmcHandler</a> class </p>
+
+</div>
+</div>
+<a id="a78a654b5e915c05224fb64f0dfbe6bce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78a654b5e915c05224fb64f0dfbe6bce">&#9670;&nbsp;</a></span>Speed</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classdaisy_1_1_sdmmc_handler.html#a78a654b5e915c05224fb64f0dfbe6bce">daisy::SdmmcHandler::Speed</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sets the desired clock speed of the SD card bus. <br  />
+ Initialization is always done at or below 400kHz, and then the user speed is set. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a78a654b5e915c05224fb64f0dfbe6bcea0e3066cbbd284dce8b76e7c4620d6d75"></a>SLOW&#160;</td><td class="fielddoc"><p>400kHz, initialization performed at this rate, before moving to user value </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a78a654b5e915c05224fb64f0dfbe6bceae8299a925bcf4edf54ee86581f4df53d"></a>MEDIUM_SLOW&#160;</td><td class="fielddoc"><p>12.5MHz - half of standard rate </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a78a654b5e915c05224fb64f0dfbe6bcea94e94133f4bdc1794c6b647b8ea134d0"></a>STANDARD&#160;</td><td class="fielddoc"><p>25MHz - DS (Default Speed for SDMMC) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a78a654b5e915c05224fb64f0dfbe6bceadca6e617f6fb54033deb311e7e7c93cc"></a>FAST&#160;</td><td class="fielddoc"><p>50MHz - HS (High Speed signaling) </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a78a654b5e915c05224fb64f0dfbe6bcead3f84081b6b3a6c3f66b20414b6a7238"></a>VERY_FAST&#160;</td><td class="fielddoc"><p>100MHz - SDR50 Overclocked rate for maximum transfer rates </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5df27501002b728908d18bcc279cb6df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5df27501002b728908d18bcc279cb6df">&#9670;&nbsp;</a></span>Init()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::SdmmcHandler::Init </td>
+          <td class="memname"><a class="el" href="classdaisy_1_1_sdmmc_handler.html#ad3aa247c4e2a3e8da344a64673768970">Result</a> daisy::SdmmcHandler::Init </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structdaisy_1_1_sdmmc_handler_1_1_config.html">Config</a> &amp;&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Initializes the SD Card Interface For now all settings are fixed (See todo at top of section) </p>
+<p>Configures the SDMMC Peripheral with the user defined settings. Initialization does not happen immediatly and will be called by the filesystem (i.e. FatFS). </p>
 
 </div>
 </div>

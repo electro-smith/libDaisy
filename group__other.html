@@ -77,8 +77,6 @@ $(function() {
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdsy__gpio.html">dsy_gpio</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_sdmmc_handler_init.html">daisy::SdmmcHandlerInit</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_sdmmc_handler.html">daisy::SdmmcHandler</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -99,17 +97,6 @@ Enumerations</h2></td></tr>
 , <a class="el" href="group__other.html#ggad8a85223f8dbcdf2c2cfc9302b3451b8a49672a9c2d459cc04ea589a1abb75869">DSY_GPIO_PULLDOWN</a>
  }</td></tr>
 <tr class="separator:gad8a85223f8dbcdf2c2cfc9302b3451b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga06f91f8f9f006800c4b0cde1a650664b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__other.html#ga06f91f8f9f006800c4b0cde1a650664b">daisy::SdmmcMode</a> { <a class="el" href="group__other.html#gga06f91f8f9f006800c4b0cde1a650664bad93c38034d1f663e9b68a300cc8b5f92">daisy::SDMMC_MODE_FATFS</a>
- }</td></tr>
-<tr class="separator:ga06f91f8f9f006800c4b0cde1a650664b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5df1c73d4f0fdbf01d987cef4c3b165e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__other.html#ga5df1c73d4f0fdbf01d987cef4c3b165e">daisy::SdmmcBitWidth</a> { <a class="el" href="group__other.html#gga5df1c73d4f0fdbf01d987cef4c3b165ea9596216644119b1f6b258bfe544c0c52">daisy::SDMMC_BITS_1</a>
-, <a class="el" href="group__other.html#gga5df1c73d4f0fdbf01d987cef4c3b165ead4d95dcec91eaaee67d8689c7c427e95">daisy::SDMMC_BITS_4</a>
- }</td></tr>
-<tr class="separator:ga5df1c73d4f0fdbf01d987cef4c3b165e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4d107ebcf4d77d94b63c90fdba9cf93"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__other.html#gaa4d107ebcf4d77d94b63c90fdba9cf93">daisy::SdmmcSpeed</a> { <a class="el" href="group__other.html#ggaa4d107ebcf4d77d94b63c90fdba9cf93aafb16f32e18bb0e2c8a11bfe45929772">daisy::SDMMC_SPEED_400KHZ</a>
-, <a class="el" href="group__other.html#ggaa4d107ebcf4d77d94b63c90fdba9cf93af8f80563f4b781a5fbd80356256b5358">daisy::SDMMC_SPEED_12MHZ</a>
- }</td></tr>
-<tr class="separator:gaa4d107ebcf4d77d94b63c90fdba9cf93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -173,68 +160,6 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="ggad8a85223f8dbcdf2c2cfc9302b3451b8a6b1d919b0c83ad8baa21569215da91fd"></a>DSY_GPIO_PULLUP&#160;</td><td class="fielddoc"><p>&amp; </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ggad8a85223f8dbcdf2c2cfc9302b3451b8a49672a9c2d459cc04ea589a1abb75869"></a>DSY_GPIO_PULLDOWN&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ga5df1c73d4f0fdbf01d987cef4c3b165e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga5df1c73d4f0fdbf01d987cef4c3b165e">&#9670;&nbsp;</a></span>SdmmcBitWidth</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group__other.html#ga5df1c73d4f0fdbf01d987cef4c3b165e">daisy::SdmmcBitWidth</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sets whether 4-bit mode or 1-bit mode is used for the SDMMC </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5df1c73d4f0fdbf01d987cef4c3b165ea9596216644119b1f6b258bfe544c0c52"></a>SDMMC_BITS_1&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga5df1c73d4f0fdbf01d987cef4c3b165ead4d95dcec91eaaee67d8689c7c427e95"></a>SDMMC_BITS_4&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="ga06f91f8f9f006800c4b0cde1a650664b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga06f91f8f9f006800c4b0cde1a650664b">&#9670;&nbsp;</a></span>SdmmcMode</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group__other.html#ga06f91f8f9f006800c4b0cde1a650664b">daisy::SdmmcMode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Operating Mode. Currently only FatFS is supported. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga06f91f8f9f006800c4b0cde1a650664bad93c38034d1f663e9b68a300cc8b5f92"></a>SDMMC_MODE_FATFS&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="gaa4d107ebcf4d77d94b63c90fdba9cf93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa4d107ebcf4d77d94b63c90fdba9cf93">&#9670;&nbsp;</a></span>SdmmcSpeed</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group__other.html#gaa4d107ebcf4d77d94b63c90fdba9cf93">daisy::SdmmcSpeed</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Sets the desired clock speed of the SD card bus. <br  />
- Initialization is always done at or below 400kHz, and then the user speed is set. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa4d107ebcf4d77d94b63c90fdba9cf93aafb16f32e18bb0e2c8a11bfe45929772"></a>SDMMC_SPEED_400KHZ&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaa4d107ebcf4d77d94b63c90fdba9cf93af8f80563f4b781a5fbd80356256b5358"></a>SDMMC_SPEED_12MHZ&#160;</td><td class="fielddoc"><p>&amp; </p>
 </td></tr>
 </table>
 

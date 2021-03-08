@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['bitdepth_54',['BitDepth',['../structdaisy_1_1_sai_handle_1_1_config.html#aafe336101d7c50dd68e2611ccce7c808',1,'daisy::SaiHandle::Config']]],
-  ['bitdepth_55',['bitdepth',['../structdaisy_1_1_sdmmc_handler_init.html#a1c0e454b79884b6b1342d7406cb106ef',1,'daisy::SdmmcHandlerInit']]],
-  ['bitdepth_56',['BitDepth',['../classdaisy_1_1_dac_handle.html#a0c969b1aa7f8549756e6309b3922e902',1,'daisy::DacHandle']]],
-  ['bitpersample_57',['BitPerSample',['../struct_w_a_v___format_type_def.html#a2a763477c7aecbf9e45446d13a44d162',1,'WAV_FormatTypeDef']]],
-  ['block_5ferase_5f32k_5fcmd_58',['BLOCK_ERASE_32K_CMD',['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;flash_IS25LP080D.h']]],
+  ['bitdepth_54',['BitDepth',['../structdaisy_1_1_sai_handle_1_1_config.html#aafe336101d7c50dd68e2611ccce7c808',1,'daisy::SaiHandle::Config::BitDepth()'],['../classdaisy_1_1_dac_handle.html#a0c969b1aa7f8549756e6309b3922e902',1,'daisy::DacHandle::BitDepth()']]],
+  ['bitpersample_55',['BitPerSample',['../structdaisy_1_1_w_a_v___format_type_def.html#ad504435ae2f2f6767f43b131e2ffd9b5',1,'daisy::WAV_FormatTypeDef']]],
+  ['bits_5f1_56',['BITS_1',['../classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799ba08670704a035571395ac7232b1bd887b',1,'daisy::SdmmcHandler']]],
+  ['bits_5f4_57',['BITS_4',['../classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799bae5692a4697cba5753db569f838c5b47d',1,'daisy::SdmmcHandler']]],
+  ['block_5ferase_5f32k_5fcmd_58',['BLOCK_ERASE_32K_CMD',['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;flash_IS25LP080D.h'],['../group__flash.html#ga04fd60926b738c3e978ee46725b3b341',1,'BLOCK_ERASE_32K_CMD():&#160;flash_IS25LP064A.h']]],
   ['block_5ferase_5fcmd_59',['BLOCK_ERASE_CMD',['../group__flash.html#ga9b58e3d8eaefa240d9ccbac870fc1c2b',1,'BLOCK_ERASE_CMD():&#160;flash_IS25LP080D.h'],['../group__flash.html#ga9b58e3d8eaefa240d9ccbac870fc1c2b',1,'BLOCK_ERASE_CMD():&#160;flash_IS25LP064A.h']]],
-  ['blockalign_60',['BlockAlign',['../struct_w_a_v___format_type_def.html#ac255fb2e05945824a36614af89675228',1,'WAV_FormatTypeDef']]],
+  ['blockalign_60',['BlockAlign',['../structdaisy_1_1_w_a_v___format_type_def.html#a088662aadfb9d39a43eea4450611711d',1,'daisy::WAV_FormatTypeDef']]],
   ['blockingtransmit_61',['BlockingTransmit',['../classdaisy_1_1_spi_handle.html#a99adb49a6d7c8583d565dc450610af25',1,'daisy::SpiHandle']]],
   ['blocknbr_62',['BlockNbr',['../struct_d_s_y___s_d___card_info_type_def.html#a1955247be547523e0a16fd37c288b918',1,'DSY_SD_CardInfoTypeDef']]],
   ['blocksize_63',['BlockSize',['../struct_d_s_y___s_d___card_info_type_def.html#a030b9e7d12a77aa526ef7fc86bcb01e0',1,'DSY_SD_CardInfoTypeDef']]],
@@ -28,11 +28,12 @@ var searchData=
   ['bsp_5fsd_5fwriteblocks_79',['BSP_SD_WriteBlocks',['../group__utility.html#gad8f41626181da956e81e713682de3fd5',1,'bsp_sd_diskio.h']]],
   ['bsp_5fsd_5fwriteblocks_5fdma_80',['BSP_SD_WriteBlocks_DMA',['../group__utility.html#ga2f57e8a4a23c9ea770b9f9da5eab8e8f',1,'bsp_sd_diskio.h']]],
   ['bsp_5fsd_5fwritecpltcallback_81',['BSP_SD_WriteCpltCallback',['../group__utility.html#gafc4f1ecdf361e0c0808803167f31d61b',1,'bsp_sd_diskio.h']]],
-  ['bufferstate_82',['BufferState',['../classdaisy_1_1_dac_handle.html#a30248a4615012854c7271b510ba7803c',1,'daisy::DacHandle']]],
-  ['button1_83',['button1',['../classdaisy_1_1_daisy_pod.html#a9e2edc159de61e03b99fa5cf0d91f79e',1,'daisy::DaisyPod']]],
-  ['button2_84',['button2',['../classdaisy_1_1_daisy_pod.html#ac4a6df2ec7c2675f769d231e036231b9',1,'daisy::DaisyPod']]],
-  ['button_5f2_85',['BUTTON_2',['../classdaisy_1_1_daisy_pod.html#a148bfabd288f0b4d20a26b1d0e3bdeeba8cfd4599497b987ade8a31200ffc941f',1,'daisy::DaisyPod']]],
-  ['button_5flast_86',['BUTTON_LAST',['../classdaisy_1_1_daisy_pod.html#a148bfabd288f0b4d20a26b1d0e3bdeeba6c27f3526d6d8495c0718eb217e0bbe5',1,'daisy::DaisyPod']]],
-  ['buttons_87',['buttons',['../classdaisy_1_1_daisy_pod.html#adc40296adf43258c9ac99bcf45a3554e',1,'daisy::DaisyPod']]],
-  ['byterate_88',['ByteRate',['../struct_w_a_v___format_type_def.html#a4c85ef95a29301be6fb0778c7f06b12e',1,'WAV_FormatTypeDef']]]
+  ['bufferstate_82',['BufferState',['../classdaisy_1_1_wav_writer.html#a17e4799ade3a78bfb8cab25ac90f04eb',1,'daisy::WavWriter::BufferState()'],['../classdaisy_1_1_dac_handle.html#a30248a4615012854c7271b510ba7803c',1,'daisy::DacHandle::BufferState()']]],
+  ['buswidth_83',['BusWidth',['../classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799b',1,'daisy::SdmmcHandler']]],
+  ['button1_84',['button1',['../classdaisy_1_1_daisy_pod.html#a9e2edc159de61e03b99fa5cf0d91f79e',1,'daisy::DaisyPod']]],
+  ['button2_85',['button2',['../classdaisy_1_1_daisy_pod.html#ac4a6df2ec7c2675f769d231e036231b9',1,'daisy::DaisyPod']]],
+  ['button_5f2_86',['BUTTON_2',['../classdaisy_1_1_daisy_pod.html#a148bfabd288f0b4d20a26b1d0e3bdeeba8cfd4599497b987ade8a31200ffc941f',1,'daisy::DaisyPod']]],
+  ['button_5flast_87',['BUTTON_LAST',['../classdaisy_1_1_daisy_pod.html#a148bfabd288f0b4d20a26b1d0e3bdeeba6c27f3526d6d8495c0718eb217e0bbe5',1,'daisy::DaisyPod']]],
+  ['buttons_88',['buttons',['../classdaisy_1_1_daisy_pod.html#adc40296adf43258c9ac99bcf45a3554e',1,'daisy::DaisyPod']]],
+  ['byterate_89',['ByteRate',['../structdaisy_1_1_w_a_v___format_type_def.html#a62021d1850a14721086b0cb35a75ff1e',1,'daisy::WAV_FormatTypeDef']]]
 ];
