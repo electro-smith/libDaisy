@@ -7,7 +7,6 @@ sys/dma \
 hid/audio \
 dev/sdram \
 sys/fatfs \
-per/dac \
 per/gpio \
 per/qspi \
 per/sai \
@@ -34,6 +33,7 @@ dev/sr_595 \
 dev/codec_ak4556 \
 dev/codec_pcm3060 \
 dev/codec_wm8731 \
+dev/lcd_hd44780 \
 hid/ctrl \
 hid/encoder \
 hid/gatein \
@@ -47,11 +47,13 @@ hid/usb \
 hid/wavplayer \
 hid/logger \
 per/adc \
+per/dac \
 per/i2c \
 per/spi \
 per/tim \
 per/uart \
-util/color
+util/color \
+util/WaveTableLoader \
 
 ######################################
 # building variables

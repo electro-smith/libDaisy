@@ -41,7 +41,10 @@
 #include "dev/sr_595.h"
 #include "dev/codec_pcm3060.h"
 #include "dev/codec_wm8731.h"
+#include "dev/lcd_hd44780.h"
 #include "util/scopedirqblocker.h"
+#include "util/WaveTableLoader.h"
+#include "util/WavWriter.h"
 #endif
 #endif
 

@@ -1,33 +1,64 @@
+/**
+  ******************************************************************************
+  * @file    sd_diskio_dma_template.c
+  * @author  MCD Application Team
+  * @brief   SD DMA Disk I/O driver.
+  ******************************************************************************
+  * @attention
+  *
+  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.</center></h2>
+  *
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                             www.st.com/SLA0044
+  *
+  ******************************************************************************
+  */
+
+/* Includes ------------------------------------------------------------------*/
 #include "ff_gen_drv.h"
 #include "util/sd_diskio.h"
+#include "stm32h7xx_hal.h"
+
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
-/* use the default SD timout as defined in the platform BSP driver*/
-#if defined(SDMMC_DATATIMEOUT)
-#define SD_TIMEOUT SDMMC_DATATIMEOUT
-#elif defined(SD_DATATIMEOUT)
-#define SD_TIMEOUT SD_DATATIMEOUT
-#else
+/*
+ * the following Timeout is useful to give the control back to the applications
+ * in case of errors in either BSP_SD_ReadCpltCallback() or BSP_SD_WriteCpltCallback()
+ * the value by default is as defined in the BSP platform driver otherwise 30 secs
+ */
+
 #define SD_TIMEOUT 30 * 1000
-#endif
 
 #define SD_DEFAULT_BLOCK_SIZE 512
 
 /*
- * Depending on the use case, the SD card initialization could be done at the
- * application level: if it is the case define the flag below to disable
- * the BSP_SD_Init() call in the SD_Initialize() and add a call to 
- * BSP_SD_Init() elsewhere in the application.
+ * Depending on the usecase, the SD card initialization could be done at the
+ * application level, if it is the case define the flag below to disable
+ * the BSP_SD_Init() call in the SD_Initialize().
  */
-/* USER CODE BEGIN disableSDInit */
+
 /* #define DISABLE_SD_INIT */
-/* USER CODE END disableSDInit */
+
+/*
+ * when using cachable memory region, it may be needed to maintain the cache
+ * validity. Enable the define below to activate a cache maintenance at each
+ * read and write operation.
+ * Notice: This is applicable only for cortex M7 based platform.
+ */
+
+#define ENABLE_SD_DMA_CACHE_MAINTENANCE 1
+
 
 /* Private variables ---------------------------------------------------------*/
 /* Disk status */
 static volatile DSTATUS Stat = STA_NOINIT;
-
+//static volatile  UINT  WriteStatus = 0, ReadStatus = 0;
+static uint32_t WriteStatus = 0;
+static uint32_t ReadStatus  = 0;
 /* Private function prototypes -----------------------------------------------*/
 static DSTATUS SD_CheckStatus(BYTE lun);
 DSTATUS        SD_initialize(BYTE);
@@ -53,10 +84,6 @@ const Diskio_drvTypeDef SD_Driver = {
 #endif /* _USE_IOCTL == 1 */
 };
 
-/* USER CODE BEGIN beforeFunctionSection */
-/* can be used to modify / undefine following code or add new code */
-/* USER CODE END beforeFunctionSection */
-
 /* Private functions ---------------------------------------------------------*/
 static DSTATUS SD_CheckStatus(BYTE lun)
 {
@@ -77,7 +104,6 @@ static DSTATUS SD_CheckStatus(BYTE lun)
   */
 DSTATUS SD_initialize(BYTE lun)
 {
-    Stat = STA_NOINIT;
 #if !defined(DISABLE_SD_INIT)
 
     if(BSP_SD_Init() == MSD_OK)
@@ -101,9 +127,6 @@ DSTATUS SD_status(BYTE lun)
     return SD_CheckStatus(lun);
 }
 
-/* USER CODE BEGIN beforeReadSection */
-/* can be used to modify previous code / undefine following code / add new code */
-/* USER CODE END beforeReadSection */
 /**
   * @brief  Reads Sector(s)
   * @param  lun : not used
@@ -115,22 +138,55 @@ DSTATUS SD_status(BYTE lun)
 DRESULT SD_read(BYTE lun, BYTE *buff, DWORD sector, UINT count)
 {
     DRESULT res = RES_ERROR;
-
-    if(BSP_SD_ReadBlocks(
-           (uint32_t *)buff, (uint32_t)(sector), count, SD_TIMEOUT)
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, 1);
+    ReadStatus = 0;
+    uint32_t timeout;
+#if(ENABLE_SD_DMA_CACHE_MAINTENANCE == 1)
+    uint32_t alignedAddr;
+    alignedAddr = (uint32_t)buff & ~0x1F;
+    SCB_CleanDCache_by_Addr((uint32_t *)alignedAddr,
+                            count * BLOCKSIZE + ((uint32_t)buff - alignedAddr));
+#endif
+    if(BSP_SD_ReadBlocks_DMA((uint32_t *)buff, (uint32_t)(sector), count)
        == MSD_OK)
     {
-        /* wait until the read operation is finished */
-        while(BSP_SD_GetCardState() != MSD_OK) {}
-        res = RES_OK;
+        /* Wait that the reading process is completed or a timeout occurs */
+        timeout = HAL_GetTick();
+        while((ReadStatus == 0) && ((HAL_GetTick() - timeout) < SD_TIMEOUT)) {}
+        /* incase of a timeout return error */
+        if(ReadStatus == 0)
+        {
+            res = RES_ERROR;
+        }
+        else
+        {
+            ReadStatus = 0;
+            timeout    = HAL_GetTick();
+
+            while((HAL_GetTick() - timeout) < SD_TIMEOUT)
+            {
+                if(BSP_SD_GetCardState() == SD_TRANSFER_OK)
+                {
+                    res = RES_OK;
+#if(ENABLE_SD_DMA_CACHE_MAINTENANCE == 1)
+                    /*
+               the SCB_InvalidateDCache_by_Addr() requires a 32-Byte aligned address,
+               adjust the address and the D-Cache size to invalidate accordingly.
+             */
+                    SCB_InvalidateDCache_by_Addr(
+                        (uint32_t *)alignedAddr,
+                        count * BLOCKSIZE + ((uint32_t)buff - alignedAddr));
+#endif
+                    break;
+                }
+            }
+        }
     }
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, 0);
 
     return res;
 }
 
-/* USER CODE BEGIN beforeWriteSection */
-/* can be used to modify previous code / undefine following code / add new code */
-/* USER CODE END beforeWriteSection */
 /**
   * @brief  Writes Sector(s)
   * @param  lun : not used
@@ -143,23 +199,58 @@ DRESULT SD_read(BYTE lun, BYTE *buff, DWORD sector, UINT count)
 DRESULT SD_write(BYTE lun, const BYTE *buff, DWORD sector, UINT count)
 {
     DRESULT res = RES_ERROR;
+    WriteStatus = 0;
+    uint32_t timeout;
+#if(ENABLE_SD_DMA_CACHE_MAINTENANCE == 1)
+    uint32_t alignedAddr;
+#endif
+    /*
+  * since the MPU is configured as write-through, see main.c file, there isn't any need
+  * to maintain the cache as its content is always coherent with the memory.
+  * If needed, check the file "Middlewares/Third_Party/FatFs/src/drivers/sd_diskio_dma_template.c"
+  * to see how the cache is maintained during the write operations.
+  */
+#if(ENABLE_SD_DMA_CACHE_MAINTENANCE == 1)
 
-    if(BSP_SD_WriteBlocks(
-           (uint32_t *)buff, (uint32_t)(sector), count, SD_TIMEOUT)
+    /*
+    the SCB_CleanDCache_by_Addr() requires a 32-Byte aligned address
+    adjust the address and the D-Cache size to clean accordingly.
+    */
+    alignedAddr = (uint32_t)buff & ~0x1F;
+    SCB_CleanDCache_by_Addr((uint32_t *)alignedAddr,
+                            count * BLOCKSIZE + ((uint32_t)buff - alignedAddr));
+#endif
+    if(BSP_SD_WriteBlocks_DMA((uint32_t *)buff, (uint32_t)(sector), count)
        == MSD_OK)
     {
-        /* wait until the Write operation is finished */
-        while(BSP_SD_GetCardState() != MSD_OK) {}
-        res = RES_OK;
+        /* Wait that writing process is completed or a timeout occurs */
+        timeout = HAL_GetTick();
+        while((WriteStatus == 0) && ((HAL_GetTick() - timeout) < SD_TIMEOUT)) {}
+        /* incase of a timeout return error */
+        if(WriteStatus == 0)
+        {
+            res = RES_ERROR;
+        }
+        else
+        {
+            WriteStatus = 0;
+            timeout     = HAL_GetTick();
+
+            while((HAL_GetTick() - timeout) < SD_TIMEOUT)
+            {
+                if(BSP_SD_GetCardState() == SD_TRANSFER_OK)
+                {
+                    res = RES_OK;
+                    break;
+                }
+            }
+        }
     }
 
     return res;
 }
 #endif /* _USE_WRITE == 1 */
 
-/* USER CODE BEGIN beforeIoctlSection */
-/* can be used to modify previous code / undefine following code / add new code */
-/* USER CODE END beforeIoctlSection */
 /**
   * @brief  I/O control operation
   * @param  lun : not used
@@ -208,3 +299,31 @@ DRESULT SD_ioctl(BYTE lun, BYTE cmd, void *buff)
     return res;
 }
 #endif /* _USE_IOCTL == 1 */
+
+
+/**
+  * @brief Tx Transfer completed callbacks
+  * @param hsd: SD handle
+  * @retval None
+  */
+
+void BSP_SD_WriteCpltCallback(void)
+{
+    WriteStatus = 1;
+}
+
+/**
+  * @brief Rx Transfer completed callbacks
+  * @param hsd: SD handle
+  * @retval None
+  */
+
+void BSP_SD_ReadCpltCallback(void)
+{
+    ReadStatus = 1;
+    //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, 1);
+}
+
+// Interrupts -- Not sure these belong here or elsewhere yet.
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

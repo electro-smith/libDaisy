@@ -93,7 +93,7 @@ void DaisySeed::Configure()
     // Configure internal peripherals
     ConfigureSdram();
     ConfigureQspi();
-    ConfigureDac();
+    //ConfigureDac();
     // Configure the built-in GPIOs.
     led.pin.port       = SEED_LED_PORT;
     led.pin.pin        = SEED_LED_PIN;
@@ -123,6 +123,7 @@ void DaisySeed::Init(bool boost)
     // SEED file.
     //usb_handle.Init(UsbHandle::FS_INTERNAL);
 }
+
 dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
 {
     dsy_gpio_pin p;
@@ -272,12 +273,15 @@ void DaisySeed::ConfigureAudio()
 }
 void DaisySeed::ConfigureDac()
 {
-    dsy_gpio_pin *pin_group;
-    dac_handle.mode         = DSY_DAC_MODE_POLLING;
-    dac_handle.bitdepth     = DSY_DAC_BITS_12;
-    pin_group               = dac_handle.pin_config;
-    pin_group[DSY_DAC_CHN1] = dsy_pin(DSY_GPIOA, 4);
-    pin_group[DSY_DAC_CHN2] = dsy_pin(DSY_GPIOA, 5);
+    // This would be the equivalent initialization as previously existed.
+    // However, not all platforms have the DAC, and many use those pins
+    // for other things.
+    //    DacHandle::Config cfg;
+    //    cfg.bitdepth   = DacHandle::Config::BitDepth::BITS_12;
+    //    cfg.buff_state = DacHandle::Config::BufferState::ENABLED;
+    //    cfg.mode       = DacHandle::Config::Mode::POLLING;
+    //    cfg.chn        = DacHandle::Config::Channel::BOTH;
+    //    dac.Init(cfg);
 }
 /*void DaisySeed::ConfigureI2c()
 {

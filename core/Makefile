@@ -53,6 +53,10 @@ CPP_SOURCES ?=
 C_SOURCES += \
 $(SYSTEM_FILES_DIR)/startup_stm32h750xx.c
 
+# Expose platform configuration to all compilation units (CMSIS DSP components)
+C_INCLUDES += -include stm32h7xx.h
+
+
 #ASM_SOURCES += \
 #$(SYSTEM_FILES_DIR)/startup_stm32h750xx.s
 
@@ -104,10 +108,14 @@ C_DEFS ?=
 C_DEFS +=  \
 -DUSE_HAL_DRIVER \
 -DSTM32H750xx \
--DUSE_HAL_DRIVER \
 -DHSE_VALUE=16000000 \
--DSTM32H750xx
 
+# imported from libdaisy internal makefile
+C_DEFS +=  \
+-DCORE_CM7  \
+-DSTM32H750IB \
+-DARM_MATH_CM7 \
+-DUSE_FULL_LL_DRIVER 
 
 # AS includes
 AS_INCLUDES =
@@ -117,14 +125,33 @@ C_INCLUDES ?=
 C_INCLUDES += \
 -I$(LIBDAISY_DIR) \
 -I$(LIBDAISY_DIR)/src/ \
+-I$(LIBDAISY_DIR)/src/sys \
 -I$(LIBDAISY_DIR)/src/usbd \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/Include/ \
+-I$(LIBDAISY_DIR)/Drivers/CMSIS/DSP/Include \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/Device/ST/STM32H7xx/Include \
 -I$(LIBDAISY_DIR)/Drivers/STM32H7xx_HAL_Driver/Inc/ \
 -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc \
--I$(SYSTEM_FILES_DIR)/ \
--I$(DAISYSP_DIR) \
+-I$(SYSTEM_FILES_DIR)/
 
+ifdef DAISYSP_DIR
+C_INCLUDES += -I$(DAISYSP_DIR)/Source
+endif
+
+# Include FATFS files
+# This does not include the additional option files
+# for Japanese, Simplified/Traditional Chinese, or Korean
+# since they would add an additional 480kB or so of flash
+FATFS_DIR ?= $(LIBDAISY_DIR)/Middlewares/Third_Party/FatFs/src
+FATFS_SOURCES ?=
+FATFS_SOURCES += \
+	$(FATFS_DIR)/diskio.c \
+	$(FATFS_DIR)/ff.c \
+	$(FATFS_DIR)/ff_gen_drv.c \
+	$(FATFS_DIR)/option/ccsbcs.c
+
+C_SOURCES += $(FATFS_SOURCES)
+C_INCLUDES += -I$(FATFS_DIR)
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
