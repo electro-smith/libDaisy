@@ -367,9 +367,6 @@
     <ClCompile Include="src\per\adc.cpp">
       <Filter>per</Filter>
     </ClCompile>
-    <ClCompile Include="src\per\dac.c">
-      <Filter>per</Filter>
-    </ClCompile>
     <ClCompile Include="src\per\gpio.c">
       <Filter>per</Filter>
     </ClCompile>
@@ -494,6 +491,12 @@
     <ClCompile Include="src\dev\codec_wm8731.cpp">
       <Filter>dev</Filter>
     </ClCompile>
+    <ClCompile Include="src\per\dac.cpp">
+      <Filter>per</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\WaveTableLoader.cpp">
+      <Filter>util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h">
@@ -512,9 +515,6 @@
       <Filter>HAL</Filter>
     </ClInclude>
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_comp.h">
-      <Filter>HAL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stm32h7xx_hal_conf.h">
       <Filter>HAL</Filter>
     </ClInclude>
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_conf_template.h">
@@ -1106,6 +1106,12 @@
     </ClInclude>
     <ClInclude Include="src\dev\codec_wm8731.h">
       <Filter>dev</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\WaveTableLoader.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\util\WavWriter.h">
+      <Filter>util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

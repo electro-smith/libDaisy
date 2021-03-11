@@ -5,9 +5,17 @@
       <Configuration>Debug</Configuration>
       <Platform>VisualGDB</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|VisualGDB">
       <Configuration>Release</Configuration>
       <Platform>VisualGDB</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -23,6 +31,12 @@
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <MCUPropertyListFile>$(ProjectDir)stm32.props</MCUPropertyListFile>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -246,7 +260,7 @@
     <ClCompile Include="src\hid\usb.cpp" />
     <ClCompile Include="src\hid\wavplayer.cpp" />
     <ClCompile Include="src\per\adc.cpp" />
-    <ClCompile Include="src\per\dac.c" />
+    <ClCompile Include="src\per\dac.cpp" />
     <ClCompile Include="src\per\gpio.c" />
     <ClCompile Include="src\per\i2c.cpp" />
     <ClCompile Include="src\per\qspi.c" />
@@ -268,6 +282,7 @@
     <ClCompile Include="src\util\oled_fonts.c" />
     <ClCompile Include="src\util\sd_diskio.c" />
     <ClCompile Include="src\util\unique_id.c" />
+    <ClCompile Include="src\util\WaveTableLoader.cpp" />
     <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h750xx.h" />
     <ClInclude Include="Drivers\CMSIS\Include\cmsis_armcc.h" />
     <ClInclude Include="Drivers\CMSIS\Include\cmsis_armclang.h" />
@@ -471,6 +486,8 @@
     <ClInclude Include="src\util\scopedirqblocker.h" />
     <ClInclude Include="src\util\sd_diskio.h" />
     <ClInclude Include="src\util\unique_id.h" />
+    <ClInclude Include="src\util\WaveTableLoader.h" />
+    <ClInclude Include="src\util\WavWriter.h" />
     <ClInclude Include="src\util\wav_format.h" />
     <None Include="stm32.props" />
     <None Include="libdaisy-Debug.vgdbsettings" />

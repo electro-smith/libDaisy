@@ -116,16 +116,15 @@ LLVM/
 *.user
 .ipynb_checkpoints/
 transcode report.txt
-/examples/verb/build
-/examples/bypass/build
-/examples/template/build
-/examples/ledplay/build
 /examples/*/build
 /example_projects/*/build
 /build
-/examples/*/build
 /doc/*.md
 /core/build
 /doc/html
 /doc/latex
 #*
+.visualgdb
+VisualGDBCache
+vs/*.log
+

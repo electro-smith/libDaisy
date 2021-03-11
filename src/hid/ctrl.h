@@ -55,6 +55,17 @@ class AnalogControl
     /** Returns the current stored value, without reprocessing */
     inline float Value() const { return val_; }
 
+    /** Directly set the Coefficient of the one pole smoothing filter. 
+     ***/
+    inline void SetCoeff(float val) { coeff_ = val; }
+
+    /** Returns the raw unsigned 16-bit value from the ADC */
+    inline uint16_t GetRawValue() { return *raw_; }
+
+    /** Returns a normalized float value representing the current ADC value. */
+    inline float GetRawFloat() { return (float)(*raw_) / 65535.f; }
+
+
   private:
     uint16_t *raw_;
     float     coeff_, samplerate_, val_;
