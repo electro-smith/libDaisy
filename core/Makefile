@@ -174,7 +174,8 @@ CPPFLAGS += \
 -finline-functions-called-once \
 -fshort-enums \
 -fno-move-loop-invariants \
--fno-unwind-tables 
+-fno-unwind-tables \
+-Wno-register
 
 C_STANDARD = -std=gnu11
 CPP_STANDARD ?= -std=gnu++14
