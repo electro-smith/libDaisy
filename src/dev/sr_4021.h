@@ -104,7 +104,7 @@ class ShiftRegister4021
      ** See above for the layout of data when using multiple 
      ** devices in series or parallel.
      ***/
-    inline const bool State(int index) const { return states_[index]; }
+    inline bool State(int index) const { return states_[index]; }
 
     inline const Config& GetConfig() const { return config_; }
 
