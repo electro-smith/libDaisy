@@ -256,7 +256,7 @@ MCU = -mthumb $(FLOAT-ABI) $(FPU) $(CPU)
 AS_DEFS = 
 
 # C defines
-C_DEFS =  \
+C_DEFS +=  \
 -DCORE_CM7  \
 -DSTM32H750xx \
 -DSTM32H750IB \
@@ -287,7 +287,7 @@ CPP_WARNINGS += -Wno-register
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_INCLUDES) $(AS_DEFS) -ggdb $(WARNINGS) $(OPT) -fdata-sections -ffunction-sections
 
-CFLAGS = $(MCU) $(C_INCLUDES) $(C_DEFS) -ggdb $(WARNINGS) $(OPT) -fasm -fdata-sections -ffunction-sections
+CFLAGS += $(MCU) $(C_INCLUDES) $(C_DEFS) -ggdb $(WARNINGS) $(OPT) -fasm -fdata-sections -ffunction-sections
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -ggdb
