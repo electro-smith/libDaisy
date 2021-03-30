@@ -150,7 +150,9 @@ FATFS_SOURCES += \
 	$(FATFS_DIR)/ff_gen_drv.c \
 	$(FATFS_DIR)/option/ccsbcs.c
 
+ifeq ($(USE_FATFS),1)
 C_SOURCES += $(FATFS_SOURCES)
+endif
 C_INCLUDES += -I$(FATFS_DIR)
 
 # compile gcc flags
