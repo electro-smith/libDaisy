@@ -78,7 +78,7 @@ var searchData=
   ['startlog_758',['StartLog',['../classdaisy_1_1_daisy_seed.html#a1dc5e257b31624e4a7fc95a642479228',1,'daisy::DaisySeed::StartLog()'],['../group__external.html#ga71a09a4fec04899145840441af05a07b',1,'daisy::Logger::StartLog()']]],
   ['startreceive_759',['StartReceive',['../classdaisy_1_1_midi_handler.html#aec305ba283ba3efdc0e95c822e87040b',1,'daisy::MidiHandler']]],
   ['startrx_760',['StartRx',['../classdaisy_1_1_uart_handler.html#ae6e0590380805e55cd349fdb6ceffdbf',1,'daisy::UartHandler']]],
-  ['state_761',['State',['../classdaisy_1_1_shift_register4021.html#a001f6bfff35eff1bfa30e6eb43264329',1,'daisy::ShiftRegister4021::State()'],['../classdaisy_1_1_gate_in.html#a08f75c6621307249de3107df96cfab2d',1,'daisy::GateIn::State()']]],
+  ['state_761',['State',['../classdaisy_1_1_shift_register4021.html#a6fd476472092be0ba51b6a7e1435b411',1,'daisy::ShiftRegister4021::State()'],['../classdaisy_1_1_gate_in.html#a08f75c6621307249de3107df96cfab2d',1,'daisy::GateIn::State()']]],
   ['state_762',['state',['../structdsy__sdram__handle.html#a052f782ca4905360ced7ebede5d29e3a',1,'dsy_sdram_handle']]],
   ['stm32_5fusb_5fotg_5fdevice_5flibrary_763',['STM32_USB_OTG_DEVICE_LIBRARY',['../group___s_t_m32___u_s_b___o_t_g___d_e_v_i_c_e___l_i_b_r_a_r_y.html',1,'']]],
   ['stop_764',['Stop',['../classdaisy_1_1_audio_handle.html#ae0592d95b7f211bb4837b5a0f51ca5c7',1,'daisy::AudioHandle::Stop()'],['../classdaisy_1_1_adc_handle.html#ab6a016e484c9b7389e6302521e778bc9',1,'daisy::AdcHandle::Stop()'],['../classdaisy_1_1_dac_handle.html#ab0dcfed9ca249820670d45a75a49aaa0',1,'daisy::DacHandle::Stop()'],['../classdaisy_1_1_timer_handle.html#a371b05e9ff969c35e6daf2b8c1fa1d0e',1,'daisy::TimerHandle::Stop()']]],

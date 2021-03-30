@@ -8,5 +8,5 @@ var searchData=
   ['initmux_1093',['InitMux',['../structdaisy_1_1_adc_channel_config.html#ae8d9aafe3ca60ee3e657272fd7810fd4',1,'daisy::AdcChannelConfig']]],
   ['initsingle_1094',['InitSingle',['../structdaisy_1_1_adc_channel_config.html#a53cd44a415eef197bc2f575f91d6d6af',1,'daisy::AdcChannelConfig']]],
   ['isempty_1095',['isEmpty',['../classdaisy_1_1_ring_buffer.html#a36c20746c8c375782ddfb113d3ff96aa',1,'daisy::RingBuffer']]],
-  ['isrecording_1096',['IsRecording',['../classdaisy_1_1_wav_writer.html#af6cf35b9e2593b8d732504417d771ffa',1,'daisy::WavWriter']]]
+  ['isrecording_1096',['IsRecording',['../classdaisy_1_1_wav_writer.html#a245c0a0bda80385bc3c293f301c468de',1,'daisy::WavWriter']]]
 ];

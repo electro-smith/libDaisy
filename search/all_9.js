@@ -89,5 +89,5 @@ var searchData=
   ['is25lp080d_5fvcr_5fwrap_448',['IS25LP080D_VCR_WRAP',['../group__flash.html#ga18d1eb584a16a8dbf577822d18f08a7c',1,'flash_IS25LP080D.h']]],
   ['is25lp080d_5fvcr_5fxip_449',['IS25LP080D_VCR_XIP',['../group__flash.html#gaa2371656f25790f0cc317fbeb5a07fd5',1,'flash_IS25LP080D.h']]],
   ['isempty_450',['isEmpty',['../classdaisy_1_1_ring_buffer.html#a36c20746c8c375782ddfb113d3ff96aa',1,'daisy::RingBuffer']]],
-  ['isrecording_451',['IsRecording',['../classdaisy_1_1_wav_writer.html#af6cf35b9e2593b8d732504417d771ffa',1,'daisy::WavWriter']]]
+  ['isrecording_451',['IsRecording',['../classdaisy_1_1_wav_writer.html#a245c0a0bda80385bc3c293f301c468de',1,'daisy::WavWriter']]]
 ];
