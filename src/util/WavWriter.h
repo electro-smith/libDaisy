@@ -166,7 +166,7 @@ class WavWriter
     }
 
     /** Returns whether recording is currently active or not. */
-    inline const bool IsRecording() const { return recording_; }
+    inline bool IsRecording() const { return recording_; }
 
     /** Returns the current length in samples of the recording. */
     inline uint32_t GetLengthSamps() { return num_samps_; }
