@@ -20,7 +20,9 @@ static UartRingBuffer DMA_BUFFER_MEM_SECTION   uart_dma_fifo;
 static void Error_Handler()
 {
     asm("bkpt 255");
+	while(1){ }
 }
+
 
 // Uses HAL so these things have to be local to this file only
 struct uart_handle
@@ -37,7 +39,35 @@ struct uart_handle
 };
 static uart_handle uhandle;
 
-void UartHandler::Init()
+class UartHandler::Impl
+{
+    public:
+        void Init();
+
+        int PollReceive(uint8_t *buff, size_t size, uint32_t timeout);
+
+        int StartRx();
+
+        bool RxActive();
+
+        int FlushRx();
+
+        int PollTx(uint8_t *buff, size_t size);
+
+        uint8_t PopRx();
+
+        size_t Readable();
+
+        int CheckError();
+};
+
+// ================================================================
+// Global references for the availabel UartHandler::Impl(s)
+// ================================================================
+
+static UartHandler::Impl uart_handles[1];
+
+void UartHandler::Impl::Init()
 {
     uhandle.huart1.Instance                    = USART1;
     uhandle.huart1.Init.BaudRate               = 31250;
@@ -80,12 +110,12 @@ void UartHandler::Init()
 #endif
 }
 
-int UartHandler::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
+int UartHandler::Impl::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
 {
     return HAL_UART_Receive(&uhandle.huart1, (uint8_t*)buff, size, timeout);
 }
 
-int UartHandler::StartRx()
+int UartHandler::Impl::StartRx()
 {
     int status = 0;
     // Now start Rx
@@ -98,12 +128,12 @@ int UartHandler::StartRx()
     return status;
 }
 
-bool UartHandler::RxActive()
+bool UartHandler::Impl::RxActive()
 {
     return uhandle.rx_active;
 }
 
-int UartHandler::FlushRx()
+int UartHandler::Impl::FlushRx()
 {
     int status = 0;
 #ifdef UART_RX_DOUBLE_BUFFER
@@ -114,17 +144,17 @@ int UartHandler::FlushRx()
     return status;
 }
 
-int UartHandler::PollTx(uint8_t* buff, size_t size)
+int UartHandler::Impl::PollTx(uint8_t* buff, size_t size)
 {
     return HAL_UART_Transmit(&uhandle.huart1, (uint8_t*)buff, size, 10);
 }
 
-int UartHandler::CheckError()
+int UartHandler::Impl::CheckError()
 {
     return HAL_UART_GetError(&uhandle.huart1);
 }
 
-uint8_t UartHandler::PopRx()
+uint8_t UartHandler::Impl::PopRx()
 {
 #ifdef UART_RX_DOUBLE_BUFFER
     return uhandle.queue_rx.Read();
@@ -133,7 +163,7 @@ uint8_t UartHandler::PopRx()
 #endif
 }
 
-size_t UartHandler::Readable()
+size_t UartHandler::Impl::Readable()
 {
 #ifdef UART_RX_DOUBLE_BUFFER
     return uhandle.queue_rx.readable();
@@ -317,4 +347,45 @@ extern "C"
     {
         HAL_DMA_IRQHandler(&uhandle.hdma_usart1_rx);
     }
+}
+
+// ======================================================================
+// UartHandler > UartHandlePimpl
+// ======================================================================
+
+void UartHandler::Init(){
+    pimpl_ = &uart_handles[0];
+    return pimpl_->Init();
+}
+
+int UartHandler::PollReceive(uint8_t *buff, size_t size, uint32_t timeout){
+    return pimpl_->PollReceive(buff, size, timeout);
+}
+
+int UartHandler::StartRx(){
+    return pimpl_->StartRx();
+}
+
+bool UartHandler::RxActive(){
+    return pimpl_->RxActive();
+}
+
+int UartHandler::FlushRx(){
+    return pimpl_->FlushRx();
+}
+
+int UartHandler::PollTx(uint8_t *buff, size_t size){
+    return pimpl_->PollTx(buff, size);
+}
+
+uint8_t UartHandler::PopRx(){
+    return pimpl_->PopRx();
+}
+
+size_t UartHandler::Readable(){
+    return pimpl_->Readable();
+}
+
+int UartHandler::CheckError(){
+    return pimpl_->CheckError();
 }

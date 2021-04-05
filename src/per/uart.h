@@ -28,15 +28,16 @@ namespace daisy
     */
 class UartHandler
 {
-  public:
-    UartHandler() {}
-    ~UartHandler() {}
-
-    /** Initializes the UART Peripheral */
+  public:	
+    UartHandler() : pimpl_(nullptr) {}
+    UartHandler(const UartHandler& other) = default;
+    UartHandler& operator=(const UartHandler& other) = default;
+    
+  	/** Initializes the UART Peripheral */
     void Init();
 
     /** Reads the amount of bytes in blocking mode with a 10ms timeout.
-        \param *buff Buffer  to read to
+    \param *buff Buffer  to read to
     \param size Buff size
     \param timeout How long to timeout for (10ms?)
     \return Data received
@@ -81,7 +82,11 @@ class UartHandler
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
 
+	class Impl; /**< & */
+
   private:
+  
+  Impl* pimpl_;
 };
 
 /** @} */
