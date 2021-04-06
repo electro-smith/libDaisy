@@ -29,12 +29,55 @@ namespace daisy
 class UartHandler
 {
   public:	
+    struct Config{
+      enum class Peripheral{
+        USART_1,
+        USART_2,
+        USART_3,
+        UART_4,
+        UART_5,
+        USART_6,
+        UART_7,
+        UART_8,
+        LPUART_1,
+      };
+
+      enum class StopBits{
+        STOP_BITS_0_5,
+        STOP_BITS_1,
+        STOP_BITS_1_5,
+        STOP_BITS_2,
+      };
+
+      enum class Parity{
+        PARITY_NONE,
+        PARITY_EVEN,
+        PARITY_ODD,
+      };
+
+      enum class Mode{
+        MODE_RX,
+        MODE_TX,
+        MODE_TX_RX,
+      };
+
+      Peripheral periph;
+      StopBits stopbits;
+      Parity parity;
+      Mode mode;
+      uint32_t baudrate;
+    };
+
+
     UartHandler() : pimpl_(nullptr) {}
     UartHandler(const UartHandler& other) = default;
     UartHandler& operator=(const UartHandler& other) = default;
     
   	/** Initializes the UART Peripheral */
-    void Init();
+    void Init(const Config& config);
+
+    /** Returns the current config. */
+    const Config& GetConfig() const;
 
     /** Reads the amount of bytes in blocking mode with a 10ms timeout.
     \param *buff Buffer  to read to

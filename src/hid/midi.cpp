@@ -22,7 +22,16 @@ void MidiHandler::Init(MidiInputMode in_mode, MidiOutputMode out_mode)
 {
     in_mode_  = in_mode;
     out_mode_ = out_mode;
-    uart_.Init();
+
+    UartHandler::Config config;
+    config.baudrate = 31250;
+    config.periph = UartHandler::Config::Peripheral::USART_1;
+    config.stopbits = UartHandler::Config::StopBits::STOP_BITS_1;
+    config.parity = UartHandler::Config::Parity::PARITY_NONE;
+    config.mode = UartHandler::Config::Mode::MODE_TX_RX;
+    uart_.Init(config);
+    
+    
     event_q_.Init();
     incoming_message_.type = MessageLast;
     pstate_                = ParserEmpty;

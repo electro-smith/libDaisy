@@ -42,8 +42,10 @@ static uart_handle uhandle;
 class UartHandler::Impl
 {
     public:
-        void Init();
+        void Init(const UartHandler::Config& config);
 
+        const UartHandler::Config& GetConfig() const { return config_; }
+ 
         int PollReceive(uint8_t *buff, size_t size, uint32_t timeout);
 
         int StartRx();
@@ -59,27 +61,50 @@ class UartHandler::Impl
         size_t Readable();
 
         int CheckError();
+
+    UartHandler::Config config_;
 };
+
 
 // ================================================================
 // Global references for the availabel UartHandler::Impl(s)
 // ================================================================
 
-static UartHandler::Impl uart_handles[1];
+static UartHandler::Impl uart_handles[9];
 
-void UartHandler::Impl::Init()
+void UartHandler::Impl::Init(const UartHandler::Config& config)
 {
-    uhandle.huart1.Instance                    = USART1;
-    uhandle.huart1.Init.BaudRate               = 31250;
+    config_ = config;
+
+    const int uartIdx = int(config_.periph);
+    if(uartIdx >= 9){ /*error*/ }
+    constexpr USART_TypeDef* instances[9]
+        = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1}; // map HAL instances
+
+    const int parityIdx = int(config_.parity);
+    if (parityIdx >= 3){ /*error*/ }
+    constexpr uint32_t parity_[3] = {UART_PARITY_NONE, UART_PARITY_EVEN, UART_PARITY_ODD};
+
+    const int stopbitsIdx = int(config_.stopbits);
+    if (stopbitsIdx >= 4){ /*error*/ }
+    constexpr uint32_t stop_bits_[4] = {UART_STOPBITS_0_5, UART_STOPBITS_1, UART_STOPBITS_1_5, UART_STOPBITS_2};
+
+    const int modeIdx = int(config_.mode);
+    if(modeIdx >= 3) { /*error*/  }
+    constexpr uint32_t mode_[3] = {UART_MODE_RX, UART_MODE_TX, UART_MODE_TX_RX};
+
+    uhandle.huart1.Instance                    = instances[uartIdx];
+    uhandle.huart1.Init.BaudRate               = config.baudrate;
     uhandle.huart1.Init.WordLength             = UART_WORDLENGTH_8B;
-    uhandle.huart1.Init.StopBits               = UART_STOPBITS_1;
-    uhandle.huart1.Init.Parity                 = UART_PARITY_NONE;
-    uhandle.huart1.Init.Mode                   = UART_MODE_TX_RX;
+    uhandle.huart1.Init.StopBits               = stop_bits_[stopbitsIdx];
+    uhandle.huart1.Init.Parity                 = parity_[parityIdx];
+    uhandle.huart1.Init.Mode                   = mode_[modeIdx];
     uhandle.huart1.Init.HwFlowCtl              = UART_HWCONTROL_NONE;
     uhandle.huart1.Init.OverSampling           = UART_OVERSAMPLING_16;
     uhandle.huart1.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
     uhandle.huart1.Init.ClockPrescaler         = UART_PRESCALER_DIV1;
     uhandle.huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+
     if(HAL_UART_Init(&uhandle.huart1) != HAL_OK)
     {
         Error_Handler();
@@ -353,9 +378,13 @@ extern "C"
 // UartHandler > UartHandlePimpl
 // ======================================================================
 
-void UartHandler::Init(){
-    pimpl_ = &uart_handles[0];
-    return pimpl_->Init();
+void UartHandler::Init(const Config& config){
+    pimpl_ = &uart_handles[int(config.periph)];
+    return pimpl_->Init(config);
+}
+
+const UartHandler::Config& UartHandler::GetConfig() const{
+    return pimpl_->GetConfig();
 }
 
 int UartHandler::PollReceive(uint8_t *buff, size_t size, uint32_t timeout){
