@@ -422,27 +422,29 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     }
 }
 
+
 // HAL Interrupts.
-//extern "C"
-//{
-    void USART1_IRQHandler(UartHandler::Impl* handle)
+extern "C"
+{
+    void USART1_IRQHandler()
     {
-        HAL_UART_IRQHandler(&handle->huart1);
+        HAL_UART_IRQHandler(&uart_handles[0].huart1);
         //        if(__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE))
         //        {
-        if((handle->huart1.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
+        if((uart_handles[0].huart1.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
         {
-            HAL_UART_RxCpltCallback(&handle->huart1);
+            HAL_UART_RxCpltCallback(&uart_handles[0].huart1);
             //__HAL_UART_CLEAR_IDLEFLAG(&huart1);
-            handle->huart1.Instance->ICR = UART_FLAG_IDLE;
+            uart_handles[0].huart1.Instance->ICR = UART_FLAG_IDLE;
         }
     }
 
-    void DMA1_Stream5_IRQHandler(UartHandler::Impl* handle)
+    void DMA1_Stream5_IRQHandler()
     {
-        HAL_DMA_IRQHandler(&handle->hdma_usart1_rx);
+        HAL_DMA_IRQHandler(&uart_handles[0].hdma_usart1_rx);
     }
-//}
+
+}
 
 // ======================================================================
 // UartHandler > UartHandlePimpl
