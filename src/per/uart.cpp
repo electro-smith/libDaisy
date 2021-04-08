@@ -74,6 +74,19 @@ class UartHandler::Impl
 
 static UartHandler::Impl uart_handles[9];
 
+UartHandler::Impl* MapInstanceToHandle(USART_TypeDef* instance){
+    constexpr USART_TypeDef* instances[9]
+        = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1}; // map HAL instances
+    for(int i = 0; i < 9; i++){
+        if(instance == instances[i]){
+            return &uart_handles[i];
+        }
+    }
+
+    /* error */
+    return NULL;
+}
+
 void UartHandler::Impl::Init(const UartHandler::Config& config)
 {
     config_ = config;
@@ -125,6 +138,7 @@ void UartHandler::Impl::Init(const UartHandler::Config& config)
     {
         Error_Handler();
     }
+
     // Internal bits
     dma_fifo_rx = &uart_dma_fifo;
     dma_fifo_rx->Init();
@@ -132,9 +146,9 @@ void UartHandler::Impl::Init(const UartHandler::Config& config)
     // Buffer that gets copied
     rx_active = false;
     tx_active = false;
-#ifdef UART_RX_DOUBLE_BUFFER
-    queue_rx.Init();
-#endif
+    #ifdef UART_RX_DOUBLE_BUFFER
+        queue_rx.Init();
+    #endif
 }
 
 int UartHandler::Impl::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
@@ -268,26 +282,26 @@ void UartHandler::Impl::DeInitPins()
 }
 
 // Callbacks
-static void UARTRxComplete(UartHandler::Impl impl)
+static void UARTRxComplete(UartHandler::Impl* impl)
 {
     size_t len, cur_pos;
     //get current write pointer
-    cur_pos = (impl.rx_size
-               - ((DMA_Stream_TypeDef*)impl.huart1.hdmarx->Instance)->NDTR)
-              & (impl.rx_size - 1);
+    cur_pos = (impl->rx_size
+               - ((DMA_Stream_TypeDef*)impl->huart1.hdmarx->Instance)->NDTR)
+              & (impl->rx_size - 1);
     //calculate how far the DMA write pointer has moved
-    len = (cur_pos - impl.rx_last_pos + impl.rx_size) % impl.rx_size;
+    len = (cur_pos - impl->rx_last_pos + impl->rx_size) % impl->rx_size;
     //check message size
-    if(len <= impl.rx_size)
+    if(len <= impl->rx_size)
     {
-        impl.dma_fifo_rx->Advance(len);
-        impl.rx_last_pos = cur_pos;
+        impl->dma_fifo_rx->Advance(len);
+        impl->rx_last_pos = cur_pos;
 #ifdef UART_RX_DOUBLE_BUFFER
         // Copy to queue fifo we don't want to use primary fifo to avoid
         // changes to the buffer while its being processed
         uint8_t processbuf[256];
-        impl.dma_fifo_rx->ImmediateRead(processbuf, len);
-        impl.queue_rx.Overwrite(processbuf, len);
+        impl->dma_fifo_rx->ImmediateRead(processbuf, len);
+        impl->queue_rx.Overwrite(processbuf, len);
 #endif
     }
     else
@@ -298,13 +312,13 @@ static void UARTRxComplete(UartHandler::Impl impl)
 }
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
-    if(huart->Instance == USART1) //??
-    {
+    //if(huart->Instance == USART1) //??
+    //{
         if(__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))
         {
-            UARTRxComplete(uart_handles[(int)(huart->Instance)]);
+            UARTRxComplete(MapInstanceToHandle(huart->Instance));
         }
-    }
+    //}
 }
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
@@ -320,7 +334,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
         default: break;
     }
     // Mark rx as deactivated
-    uart_handles[(int)(huart->Instance)].rx_active = false;
+    MapInstanceToHandle(huart->Instance)->rx_active = false;
 }
 void HAL_UART_AbortCpltCallback(UART_HandleTypeDef* huart)
 {
@@ -350,7 +364,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
         uart_handles[0].InitPins();
     }
 
-    UartHandler::Impl* handle = &uart_handles[(int)(uartHandle->Instance)];
+    UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
 
     /* USART1 DMA Init */
     /* USART1_RX Init */
@@ -411,22 +425,22 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 // HAL Interrupts.
 //extern "C"
 //{
-    void USART1_IRQHandler(UartHandler::Impl handle)
+    void USART1_IRQHandler(UartHandler::Impl* handle)
     {
-        HAL_UART_IRQHandler(&handle.huart1);
+        HAL_UART_IRQHandler(&handle->huart1);
         //        if(__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE))
         //        {
-        if((handle.huart1.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
+        if((handle->huart1.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
         {
-            HAL_UART_RxCpltCallback(&handle.huart1);
+            HAL_UART_RxCpltCallback(&handle->huart1);
             //__HAL_UART_CLEAR_IDLEFLAG(&huart1);
-            handle.huart1.Instance->ICR = UART_FLAG_IDLE;
+            handle->huart1.Instance->ICR = UART_FLAG_IDLE;
         }
     }
 
-    void DMA1_Stream5_IRQHandler(UartHandler::Impl handle)
+    void DMA1_Stream5_IRQHandler(UartHandler::Impl* handle)
     {
-        HAL_DMA_IRQHandler(&handle.hdma_usart1_rx);
+        HAL_DMA_IRQHandler(&handle->hdma_usart1_rx);
     }
 //}
 
