@@ -1,6 +1,10 @@
 #include <stm32h7xx_hal.h>
 #include "per/uart.h"
 #include "util/ringbuffer.h"
+extern "C"
+{
+#include "util/hal_map.h"
+}
 
 using namespace daisy;
 
@@ -61,6 +65,10 @@ class UartHandler::Impl
         size_t Readable();
 
         int CheckError();
+
+        void InitPins();
+
+        void DeInitPins();
 
     UartHandler::Config config_;
 };
@@ -197,6 +205,74 @@ size_t UartHandler::Impl::Readable()
 #endif
 }
 
+typedef struct{
+    dsy_gpio_pin tx;
+    dsy_gpio_pin rx;
+    uint8_t alt;
+} pin_pair;
+
+//[u(s)art][valid pins]
+//this is a stupid way to do this
+pin_pair valid_pins[9][2] = {
+        { {{DSY_GPIOB, 6}, {DSY_GPIOB, 7}, GPIO_AF7_USART1}, {{DSY_GPIOB, 14}, {DSY_GPIOB, 15}, GPIO_AF4_USART1} }, //USART1
+        { {{DSY_GPIOA, 2}, {DSY_GPIOA, 3}, GPIO_AF7_USART2},  {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //USART2
+        { {{DSY_GPIOC, 10}, {DSY_GPIOC, 11}, GPIO_AF7_USART3}, {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //USART3
+        { {{DSY_GPIOB, 9}, {DSY_GPIOB, 8}, GPIO_AF8_UART4}, {{DSY_GPIOC, 10}, {DSY_GPIOC, 11}, GPIO_AF8_UART4} }, //UART4
+        { {{DSY_GPIOB, 6}, {DSY_GPIOB, 5}, GPIO_AF14_UART5}, {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //UART5
+        { {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0}, {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //USART6
+        { {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0}, {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //UART7
+        { {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0},{{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //UART8
+        { {{DSY_GPIOB, 6}, {DSY_GPIOB, 7}, GPIO_AF8_LPUART}, {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} } }; //LPUART1
+
+void UartHandler::Impl::InitPins()
+{
+    GPIO_InitTypeDef GPIO_InitStruct;
+
+    GPIO_InitStruct.Mode  = GPIO_MODE_AF_OD;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;    
+
+    //check pins
+    //this too is stupid
+    if(config_.pin_config.tx.port == valid_pins[int(config_.periph)][0].tx.port &&
+       config_.pin_config.tx.pin == valid_pins[int(config_.periph)][0].tx.pin &&
+       config_.pin_config.rx.port == valid_pins[int(config_.periph)][0].rx.port &&
+       config_.pin_config.rx.pin == valid_pins[int(config_.periph)][0].rx.pin
+    ){
+         GPIO_InitStruct.Alternate = valid_pins[int(config_.periph)][0].alt;
+    }
+    else if(config_.pin_config.tx.port == valid_pins[int(config_.periph)][1].tx.port &&
+            config_.pin_config.tx.pin == valid_pins[int(config_.periph)][1].tx.pin &&
+            config_.pin_config.rx.port == valid_pins[int(config_.periph)][1].rx.port &&
+            config_.pin_config.rx.pin == valid_pins[int(config_.periph)][1].rx.pin
+    ){
+         GPIO_InitStruct.Alternate = valid_pins[int(config_.periph)][1].alt;        
+    }
+    else {
+        /* error */
+    }
+            
+    GPIO_TypeDef*    port;
+    port                = dsy_hal_map_get_port(&config_.pin_config.tx);
+    GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.tx);
+    HAL_GPIO_Init(port, &GPIO_InitStruct);
+    port                = dsy_hal_map_get_port(&config_.pin_config.rx);
+    GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.rx);
+    HAL_GPIO_Init(port, &GPIO_InitStruct);
+}
+
+void UartHandler::Impl::DeInitPins()
+{
+    GPIO_TypeDef* port;
+    uint16_t      pin;
+    port = dsy_hal_map_get_port(&config_.pin_config.tx);
+    pin  = dsy_hal_map_get_pin(&config_.pin_config.tx);
+    HAL_GPIO_DeInit(port, pin);
+    port = dsy_hal_map_get_port(&config_.pin_config.rx);
+    pin  = dsy_hal_map_get_pin(&config_.pin_config.rx);
+    HAL_GPIO_DeInit(port, pin);
+}
+
 // Callbacks
 static void UARTRxComplete(void)
 {
@@ -270,61 +346,45 @@ void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
 //void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
 //void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);
 
-
 // HAL Interface functions
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
     if(uartHandle->Instance == USART1)
     {
-        /* USER CODE BEGIN USART1_MspInit 0 */
-
-        /* USER CODE END USART1_MspInit 0 */
-        /* USART1 clock enable */
         __HAL_RCC_USART1_CLK_ENABLE();
-
         __HAL_RCC_GPIOB_CLK_ENABLE();
-        /**USART1 GPIO Configuration    
-    PB7     ------> USART1_RX
-    PB6     ------> USART1_TX 
-    */
-        GPIO_InitStruct.Pin       = GPIO_PIN_7 | GPIO_PIN_6;
-        GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
-        GPIO_InitStruct.Pull      = GPIO_NOPULL;
-        GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_LOW;
-        GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
-        HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-        /* USART1 DMA Init */
-        /* USART1_RX Init */
-        uhandle.hdma_usart1_rx.Instance                 = DMA1_Stream5;
-        uhandle.hdma_usart1_rx.Init.Request             = DMA_REQUEST_USART1_RX;
-        uhandle.hdma_usart1_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-        uhandle.hdma_usart1_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
-        uhandle.hdma_usart1_rx.Init.MemInc              = DMA_MINC_ENABLE;
-        uhandle.hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-        uhandle.hdma_usart1_rx.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-        uhandle.hdma_usart1_rx.Init.Mode                = DMA_CIRCULAR;
-        uhandle.hdma_usart1_rx.Init.Priority            = DMA_PRIORITY_LOW;
-        uhandle.hdma_usart1_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-        if(HAL_DMA_Init(&uhandle.hdma_usart1_rx) != HAL_OK)
-        {
-            Error_Handler();
-        }
-
-        __HAL_LINKDMA(uartHandle, hdmarx, uhandle.hdma_usart1_rx);
-
-        /* USART1 interrupt Init */
-        HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
-        HAL_NVIC_EnableIRQ(USART1_IRQn);
-        /* USER CODE BEGIN USART1_MspInit 1 */
-        __HAL_UART_ENABLE_IT(&uhandle.huart1, UART_IT_IDLE);
-        // Disable HalfTransfer Interrupt
-        ((DMA_Stream_TypeDef*)uhandle.hdma_usart1_rx.Instance)->CR
-            &= ~(DMA_SxCR_HTIE);
-
-        /* USER CODE END USART1_MspInit 1 */
+        uart_handles[0].InitPins();
     }
+
+    /* USART1 DMA Init */
+    /* USART1_RX Init */
+    uhandle.hdma_usart1_rx.Instance                 = DMA1_Stream5;
+    uhandle.hdma_usart1_rx.Init.Request             = DMA_REQUEST_USART1_RX;
+    uhandle.hdma_usart1_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+    uhandle.hdma_usart1_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
+    uhandle.hdma_usart1_rx.Init.MemInc              = DMA_MINC_ENABLE;
+    uhandle.hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    uhandle.hdma_usart1_rx.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+    uhandle.hdma_usart1_rx.Init.Mode                = DMA_CIRCULAR;
+    uhandle.hdma_usart1_rx.Init.Priority            = DMA_PRIORITY_LOW;
+    uhandle.hdma_usart1_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    if(HAL_DMA_Init(&uhandle.hdma_usart1_rx) != HAL_OK)
+    {
+        Error_Handler();
+    }
+
+    __HAL_LINKDMA(uartHandle, hdmarx, uhandle.hdma_usart1_rx);
+
+    /* USART1 interrupt Init */
+    HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(USART1_IRQn);
+    /* USER CODE BEGIN USART1_MspInit 1 */
+    __HAL_UART_ENABLE_IT(&uhandle.huart1, UART_IT_IDLE);
+    // Disable HalfTransfer Interrupt
+    ((DMA_Stream_TypeDef*)uhandle.hdma_usart1_rx.Instance)->CR
+        &= ~(DMA_SxCR_HTIE);
+
+    /* USER CODE END USART1_MspInit 1 */   
 }
 
 void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)

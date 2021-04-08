@@ -61,6 +61,12 @@ class UartHandler
         MODE_TX_RX,
       };
 
+      struct
+      {
+          dsy_gpio_pin tx; /**< & */
+          dsy_gpio_pin rx; /**< & */
+      } pin_config;         /**< & */
+
       Peripheral periph;
       StopBits stopbits;
       Parity parity;
