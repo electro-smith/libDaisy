@@ -54,6 +54,9 @@ class UartHandler::Impl
 
         void DeInitPins();
 
+    GPIO_TypeDef* port;
+    USART_TypeDef* periph;
+
     UART_HandleTypeDef huart1;
     DMA_HandleTypeDef  hdma_usart1_rx;
     bool               receiving;
@@ -95,6 +98,7 @@ void UartHandler::Impl::Init(const UartHandler::Config& config)
     if(uartIdx >= 9){ /*error*/ }
     constexpr USART_TypeDef* instances[9]
         = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1}; // map HAL instances
+    periph = instances[uartIdx];
 
     const int parityIdx = int(config_.parity);
     if (parityIdx >= 3){ /*error*/ }
@@ -108,7 +112,7 @@ void UartHandler::Impl::Init(const UartHandler::Config& config)
     if(modeIdx >= 3) { /*error*/  }
     constexpr uint32_t mode_[3] = {UART_MODE_RX, UART_MODE_TX, UART_MODE_TX_RX};
 
-    huart1.Instance                    = instances[uartIdx];
+    huart1.Instance                    = periph;
     huart1.Init.BaudRate               = config.baudrate;
     huart1.Init.WordLength             = UART_WORDLENGTH_8B;
     huart1.Init.StopBits               = stop_bits_[stopbitsIdx];
@@ -259,8 +263,7 @@ void UartHandler::Impl::InitPins()
     else {
         /* error */
     }
-            
-    GPIO_TypeDef*    port;
+
     port                = dsy_hal_map_get_port(&config_.pin_config.tx);
     GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.tx);
     HAL_GPIO_Init(port, &GPIO_InitStruct);
@@ -271,7 +274,6 @@ void UartHandler::Impl::InitPins()
 
 void UartHandler::Impl::DeInitPins()
 {
-    GPIO_TypeDef* port;
     uint16_t      pin;
     port = dsy_hal_map_get_port(&config_.pin_config.tx);
     pin  = dsy_hal_map_get_pin(&config_.pin_config.tx);
@@ -312,13 +314,10 @@ static void UARTRxComplete(UartHandler::Impl* impl)
 }
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
-    //if(huart->Instance == USART1) //??
-    //{
-        if(__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))
-        {
-            UARTRxComplete(MapInstanceToHandle(huart->Instance));
-        }
-    //}
+    if(__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))
+    {
+        UARTRxComplete(MapInstanceToHandle(huart->Instance));
+    }
 }
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
@@ -354,17 +353,70 @@ void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
 //void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
 //void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);
 
+//gotta expand the macros to put them in an arr
+void GPIOA_CLK_ENABLE() { __HAL_RCC_GPIOA_CLK_ENABLE(); }
+void GPIOB_CLK_ENABLE() { __HAL_RCC_GPIOB_CLK_ENABLE(); }
+void GPIOC_CLK_ENABLE() { __HAL_RCC_GPIOC_CLK_ENABLE(); }
+void GPIOD_CLK_ENABLE() { __HAL_RCC_GPIOD_CLK_ENABLE(); }
+void GPIOE_CLK_ENABLE() { __HAL_RCC_GPIOE_CLK_ENABLE(); }
+void GPIOF_CLK_ENABLE() { __HAL_RCC_GPIOF_CLK_ENABLE(); }
+void GPIOG_CLK_ENABLE() { __HAL_RCC_GPIOG_CLK_ENABLE(); }
+void GPIOH_CLK_ENABLE() { __HAL_RCC_GPIOH_CLK_ENABLE(); }
+void GPIOI_CLK_ENABLE() { __HAL_RCC_GPIOI_CLK_ENABLE(); }
+void GPIOJ_CLK_ENABLE() { __HAL_RCC_GPIOJ_CLK_ENABLE(); }
+void GPIOK_CLK_ENABLE() { __HAL_RCC_GPIOK_CLK_ENABLE(); }
+
+typedef void (*VoidFunc) (void);
+
+void GpioClockEnable(GPIO_TypeDef* port){
+    VoidFunc func_p[] = {GPIOA_CLK_ENABLE, GPIOB_CLK_ENABLE, GPIOC_CLK_ENABLE,
+                        GPIOD_CLK_ENABLE, GPIOE_CLK_ENABLE, GPIOF_CLK_ENABLE,
+                        GPIOG_CLK_ENABLE, GPIOH_CLK_ENABLE, GPIOI_CLK_ENABLE,
+                        GPIOJ_CLK_ENABLE, GPIOK_CLK_ENABLE};
+
+    GPIO_TypeDef* ports[] = {GPIOA, GPIOB, GPIOC, GPIOD, GPIOE, GPIOF, GPIOG,
+                            GPIOH, GPIOI, GPIOJ, GPIOK};
+
+    for(int i = 0; i < 11; i++){
+        if(port == ports[i]){
+            func_p[i]();
+            return;
+        }
+    }
+}
+
+//more silly macro expansion
+void USART1_CLK_ENABLE(){ __HAL_RCC_USART1_CLK_ENABLE(); };
+void USART2_CLK_ENABLE(){ __HAL_RCC_USART2_CLK_ENABLE(); };
+void USART3_CLK_ENABLE(){ __HAL_RCC_USART3_CLK_ENABLE(); };
+void UART4_CLK_ENABLE(){ __HAL_RCC_UART4_CLK_ENABLE(); };
+void UART5_CLK_ENABLE(){ __HAL_RCC_UART5_CLK_ENABLE(); };
+void USART6_CLK_ENABLE(){ __HAL_RCC_USART6_CLK_ENABLE(); };
+void UART7_CLK_ENABLE(){ __HAL_RCC_UART7_CLK_ENABLE(); };
+void UART8_CLK_ENABLE(){ __HAL_RCC_UART8_CLK_ENABLE(); };
+void LPUART1_CLK_ENABLE(){ __HAL_RCC_LPUART1_CLK_ENABLE(); };
+
+void UartClockEnable(USART_TypeDef* periph){
+    VoidFunc func_p[] = {USART1_CLK_ENABLE, USART2_CLK_ENABLE, USART3_CLK_ENABLE, 
+                        UART4_CLK_ENABLE, UART5_CLK_ENABLE, USART6_CLK_ENABLE, 
+                        UART7_CLK_ENABLE, UART8_CLK_ENABLE, LPUART1_CLK_ENABLE};
+    USART_TypeDef* periphs[] = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1};
+
+    for(int i = 0; i < 9; i++){
+        if(periph == periphs[i]){
+            func_p[i]();
+            return;
+        }
+    }
+}
+
 // HAL Interface functions
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
-    if(uartHandle->Instance == USART1)
-    {
-        __HAL_RCC_USART1_CLK_ENABLE();
-        __HAL_RCC_GPIOB_CLK_ENABLE();
-        uart_handles[0].InitPins();
-    }
-
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
+    GpioClockEnable(handle->port);
+    UartClockEnable(handle->periph);
+    handle->InitPins();
 
     /* USART1 DMA Init */
     /* USART1_RX Init */
@@ -441,6 +493,9 @@ extern "C"
 
     void DMA1_Stream5_IRQHandler()
     {
+        //TODO for now USART1 is the only one working with DMA
+        //in the future we want to keep track of who connects to which DMA
+        //stream, then refer to that info here
         HAL_DMA_IRQHandler(&uart_handles[0].hdma_usart1_rx);
     }
 
