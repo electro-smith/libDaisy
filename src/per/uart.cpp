@@ -56,6 +56,7 @@ class UartHandler::Impl
 
     GPIO_TypeDef* port;
     USART_TypeDef* periph;
+    uint16_t tx, rx;
 
     UART_HandleTypeDef huart1;
     DMA_HandleTypeDef  hdma_usart1_rx;
@@ -266,9 +267,11 @@ void UartHandler::Impl::InitPins()
 
     port                = dsy_hal_map_get_port(&config_.pin_config.tx);
     GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.tx);
+    tx = GPIO_InitStruct.Pin;
     HAL_GPIO_Init(port, &GPIO_InitStruct);
     port                = dsy_hal_map_get_port(&config_.pin_config.rx);
     GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.rx);
+    rx = GPIO_InitStruct.Pin;
     HAL_GPIO_Init(port, &GPIO_InitStruct);
 }
 
@@ -449,29 +452,40 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     /* USER CODE END USART1_MspInit 1 */   
 }
 
+//even sillier macro expansion
+void USART1_CLK_DISABLE(){ __HAL_RCC_USART1_CLK_DISABLE(); };
+void USART2_CLK_DISABLE(){ __HAL_RCC_USART2_CLK_DISABLE(); };
+void USART3_CLK_DISABLE(){ __HAL_RCC_USART3_CLK_DISABLE(); };
+void UART4_CLK_DISABLE(){ __HAL_RCC_UART4_CLK_DISABLE(); };
+void UART5_CLK_DISABLE(){ __HAL_RCC_UART5_CLK_DISABLE(); };
+void USART6_CLK_DISABLE(){ __HAL_RCC_USART6_CLK_DISABLE(); };
+void UART7_CLK_DISABLE(){ __HAL_RCC_UART7_CLK_DISABLE(); };
+void UART8_CLK_DISABLE(){ __HAL_RCC_UART8_CLK_DISABLE(); };
+void LPUART1_CLK_DISABLE(){ __HAL_RCC_LPUART1_CLK_DISABLE(); };
+
+
+void UartClockDisable(USART_TypeDef* periph){
+    VoidFunc func_p[] = {USART1_CLK_DISABLE, USART2_CLK_DISABLE, USART3_CLK_DISABLE, 
+                        UART4_CLK_DISABLE, UART5_CLK_DISABLE, USART6_CLK_DISABLE, 
+                        UART7_CLK_DISABLE, UART8_CLK_DISABLE, LPUART1_CLK_DISABLE};
+    USART_TypeDef* periphs[] = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1};
+
+    for(int i = 0; i < 9; i++){
+        if(periph == periphs[i]){
+            func_p[i]();
+            return;
+        }
+    }
+}
+
 void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 {
-    if(uartHandle->Instance == USART1)
-    {
-        /* USER CODE BEGIN USART1_MspDeInit 0 */
+    UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
 
-        /* USER CODE END USART1_MspDeInit 0 */
-        /* Peripheral clock disable */
-        __HAL_RCC_USART1_CLK_DISABLE();
-
-        /**USART1 GPIO Configuration    
-    PB7     ------> USART1_RX
-    PB6     ------> USART1_TX 
-    */
-        HAL_GPIO_DeInit(GPIOB, GPIO_PIN_7 | GPIO_PIN_6);
-
-        /* USART1 DMA DeInit */
-        HAL_DMA_DeInit(uartHandle->hdmarx);
-        HAL_NVIC_DisableIRQ(USART1_IRQn);
-        /* USER CODE BEGIN USART1_MspDeInit 1 */
-
-        /* USER CODE END USART1_MspDeInit 1 */
-    }
+    UartClockDisable(uartHandle->Instance);
+    HAL_GPIO_DeInit(handle->port, handle->tx | handle->rx);
+    HAL_DMA_DeInit(uartHandle->hdmarx);
+    HAL_NVIC_DisableIRQ(USART1_IRQn);
 }
 
 
