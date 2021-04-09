@@ -30,19 +30,19 @@ static void Error_Handler()
 class UartHandler::Impl
 {
     public:
-        void Init(const UartHandler::Config& config);
+        UartHandler::Result Init(const UartHandler::Config& config);
 
         const UartHandler::Config& GetConfig() const { return config_; }
  
         int PollReceive(uint8_t *buff, size_t size, uint32_t timeout);
 
-        int StartRx();
+        UartHandler::Result StartRx();
 
         bool RxActive();
 
-        int FlushRx();
+        UartHandler::Result FlushRx();
 
-        int PollTx(uint8_t *buff, size_t size);
+        UartHandler::Result PollTx(uint8_t *buff, size_t size);
 
         uint8_t PopRx();
 
@@ -50,9 +50,9 @@ class UartHandler::Impl
 
         int CheckError();
 
-        void InitPins();
+        UartHandler::Result InitPins();
 
-        void DeInitPins();
+        UartHandler::Result DeInitPins();
 
     GPIO_TypeDef* port;
     USART_TypeDef* periph;
@@ -91,26 +91,26 @@ UartHandler::Impl* MapInstanceToHandle(USART_TypeDef* instance){
     return NULL;
 }
 
-void UartHandler::Impl::Init(const UartHandler::Config& config)
+UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
 {
     config_ = config;
 
     const int uartIdx = int(config_.periph);
-    if(uartIdx >= 9){ /*error*/ }
+    if(uartIdx >= 9){ return Result::ERR; }
     constexpr USART_TypeDef* instances[9]
         = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1}; // map HAL instances
     periph = instances[uartIdx];
 
     const int parityIdx = int(config_.parity);
-    if (parityIdx >= 3){ /*error*/ }
+    if (parityIdx >= 3){ return Result::ERR; }
     constexpr uint32_t parity_[3] = {UART_PARITY_NONE, UART_PARITY_EVEN, UART_PARITY_ODD};
 
     const int stopbitsIdx = int(config_.stopbits);
-    if (stopbitsIdx >= 4){ /*error*/ }
+    if (stopbitsIdx >= 4){ return Result::ERR; }
     constexpr uint32_t stop_bits_[4] = {UART_STOPBITS_0_5, UART_STOPBITS_1, UART_STOPBITS_1_5, UART_STOPBITS_2};
 
     const int modeIdx = int(config_.mode);
-    if(modeIdx >= 3) { /*error*/  }
+    if(modeIdx >= 3) { return Result::ERR;  }
     constexpr uint32_t mode_[3] = {UART_MODE_RX, UART_MODE_TX, UART_MODE_TX_RX};
 
     huart1.Instance                    = periph;
@@ -127,21 +127,21 @@ void UartHandler::Impl::Init(const UartHandler::Config& config)
 
     if(HAL_UART_Init(&huart1) != HAL_OK)
     {
-        Error_Handler();
+        return Result::ERR;
     }
     if(HAL_UARTEx_SetTxFifoThreshold(&huart1, UART_TXFIFO_THRESHOLD_1_8)
        != HAL_OK)
     {
-        Error_Handler();
+        return Result::ERR;        
     }
     if(HAL_UARTEx_SetRxFifoThreshold(&huart1, UART_RXFIFO_THRESHOLD_1_8)
        != HAL_OK)
     {
-        Error_Handler();
+        return Result::ERR;        
     }
     if(HAL_UARTEx_DisableFifoMode(&huart1) != HAL_OK)
     {
-        Error_Handler();
+        return Result::ERR;
     }
 
     // Internal bits
@@ -154,6 +154,8 @@ void UartHandler::Impl::Init(const UartHandler::Config& config)
     #ifdef UART_RX_DOUBLE_BUFFER
         queue_rx.Init();
     #endif
+
+    return Result::OK;
 }
 
 int UartHandler::Impl::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
@@ -161,7 +163,7 @@ int UartHandler::Impl::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
     return HAL_UART_Receive(&huart1, (uint8_t*)buff, size, timeout);
 }
 
-int UartHandler::Impl::StartRx()
+UartHandler::Result UartHandler::Impl::StartRx()
 {
     int status = 0;
     // Now start Rx
@@ -171,7 +173,7 @@ int UartHandler::Impl::StartRx()
         rx_size);
     if(status == 0)
         rx_active = true;
-    return status;
+    return rx_active ? Result::OK : Result::ERR;
 }
 
 bool UartHandler::Impl::RxActive()
@@ -179,20 +181,22 @@ bool UartHandler::Impl::RxActive()
     return rx_active;
 }
 
-int UartHandler::Impl::FlushRx()
+//this originally had a useless status var hanging about
+//I don't think we can actually error check this...
+UartHandler::Result UartHandler::Impl::FlushRx()
 {
-    int status = 0;
-#ifdef UART_RX_DOUBLE_BUFFER
-    queue_rx.Flush();
-#else
-    dma_fifo_rx->Flush();
-#endif
-    return status;
+    #ifdef UART_RX_DOUBLE_BUFFER
+        queue_rx.Flush();
+    #else
+        dma_fifo_rx->Flush();
+    #endif
+    return Result::OK;
 }
 
-int UartHandler::Impl::PollTx(uint8_t* buff, size_t size)
+UartHandler::Result UartHandler::Impl::PollTx(uint8_t* buff, size_t size)
 {
-    return HAL_UART_Transmit(&huart1, (uint8_t*)buff, size, 10);
+    HAL_StatusTypeDef status = HAL_UART_Transmit(&huart1, (uint8_t*)buff, size, 10);
+    return (status == HAL_OK ? Result::OK : Result::ERR);
 }
 
 int UartHandler::Impl::CheckError()
@@ -237,7 +241,7 @@ pin_pair valid_pins[9][2] = {
         { {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0},{{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //UART8
         { {{DSY_GPIOB, 6}, {DSY_GPIOB, 7}, GPIO_AF8_LPUART}, {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} } }; //LPUART1
 
-void UartHandler::Impl::InitPins()
+UartHandler::Result UartHandler::Impl::InitPins()
 {
     GPIO_InitTypeDef GPIO_InitStruct;
 
@@ -262,7 +266,7 @@ void UartHandler::Impl::InitPins()
          GPIO_InitStruct.Alternate = valid_pins[int(config_.periph)][1].alt;        
     }
     else {
-        /* error */
+        return Result::ERR;
     }
 
     port                = dsy_hal_map_get_port(&config_.pin_config.tx);
@@ -273,9 +277,11 @@ void UartHandler::Impl::InitPins()
     GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.rx);
     rx = GPIO_InitStruct.Pin;
     HAL_GPIO_Init(port, &GPIO_InitStruct);
+
+    return Result::OK;
 }
 
-void UartHandler::Impl::DeInitPins()
+UartHandler::Result UartHandler::Impl::DeInitPins()
 {
     uint16_t      pin;
     port = dsy_hal_map_get_port(&config_.pin_config.tx);
@@ -284,6 +290,8 @@ void UartHandler::Impl::DeInitPins()
     port = dsy_hal_map_get_port(&config_.pin_config.rx);
     pin  = dsy_hal_map_get_pin(&config_.pin_config.rx);
     HAL_GPIO_DeInit(port, pin);
+
+    return Result::OK;
 }
 
 // Callbacks
@@ -419,7 +427,10 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
     GpioClockEnable(handle->port);
     UartClockEnable(handle->periph);
-    handle->InitPins();
+    
+    if (handle->InitPins() == UartHandler::Result::ERR){
+        Error_Handler();
+    }
 
     /* USART1 DMA Init */
     /* USART1_RX Init */
@@ -519,7 +530,7 @@ extern "C"
 // UartHandler > UartHandlePimpl
 // ======================================================================
 
-void UartHandler::Init(const Config& config){
+UartHandler::Result UartHandler::Init(const Config& config){
     pimpl_ = &uart_handles[int(config.periph)];
     return pimpl_->Init(config);
 }
@@ -532,7 +543,7 @@ int UartHandler::PollReceive(uint8_t *buff, size_t size, uint32_t timeout){
     return pimpl_->PollReceive(buff, size, timeout);
 }
 
-int UartHandler::StartRx(){
+UartHandler::Result UartHandler::StartRx(){
     return pimpl_->StartRx();
 }
 
@@ -540,11 +551,11 @@ bool UartHandler::RxActive(){
     return pimpl_->RxActive();
 }
 
-int UartHandler::FlushRx(){
+UartHandler::Result UartHandler::FlushRx(){
     return pimpl_->FlushRx();
 }
 
-int UartHandler::PollTx(uint8_t *buff, size_t size){
+UartHandler::Result UartHandler::PollTx(uint8_t *buff, size_t size){
     return pimpl_->PollTx(buff, size);
 }
 

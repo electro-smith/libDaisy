@@ -78,9 +78,16 @@ class UartHandler
     UartHandler() : pimpl_(nullptr) {}
     UartHandler(const UartHandler& other) = default;
     UartHandler& operator=(const UartHandler& other) = default;
-    
+
+     /** Return values for Uart functions. */
+    enum class Result
+    {
+        OK, /**< & */
+        ERR /**< & */
+    };
+
   	/** Initializes the UART Peripheral */
-    void Init(const Config& config);
+    Result Init(const Config& config);
 
     /** Returns the current config. */
     const Config& GetConfig() const;
@@ -101,7 +108,7 @@ class UartHandler
     anytime there is 1 byte-period without incoming data
     \return OK or ERROR
     */
-    int StartRx();
+    Result StartRx();
 
     /** \return whether Rx DMA is listening or not. */
     bool RxActive();
@@ -109,14 +116,14 @@ class UartHandler
     /** Flushes the Receive Queue
     \return OK or ERROR
     */
-    int FlushRx();
+    Result FlushRx();
 
     /** Sends an amount of data in blocking mode.
     \param *buff Buffer of data to send
     \param size Buffer size
     \return OK or ERROR
      */
-    int PollTx(uint8_t *buff, size_t size);
+    Result PollTx(uint8_t *buff, size_t size);
 
     /** Pops the oldest byte from the FIFO. 
     \return Popped byte
