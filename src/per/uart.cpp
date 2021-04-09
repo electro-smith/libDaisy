@@ -421,6 +421,22 @@ void UartClockEnable(USART_TypeDef* periph){
     }
 }
 
+void EnableNvic(USART_TypeDef* periph){
+    IRQn_Type types[] = {USART1_IRQn, USART2_IRQn, USART3_IRQn,
+                         UART4_IRQn, UART5_IRQn, USART6_IRQn,
+                         UART7_IRQn, UART8_IRQn, LPUART1_IRQn};
+    
+    USART_TypeDef* periphs[] = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1};
+
+    for(int i = 0; i < 9; i++){
+        if(periphs[i] == periph){
+            HAL_NVIC_SetPriority(types[i], 0, 0);
+            HAL_NVIC_EnableIRQ(types[i]);
+            return;
+        }
+    }
+}
+
 // HAL Interface functions
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
@@ -434,26 +450,29 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 
     /* USART1 DMA Init */
     /* USART1_RX Init */
-    handle->hdma_usart1_rx.Instance                 = DMA1_Stream5;
-    handle->hdma_usart1_rx.Init.Request             = DMA_REQUEST_USART1_RX;
-    handle->hdma_usart1_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-    handle->hdma_usart1_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
-    handle->hdma_usart1_rx.Init.MemInc              = DMA_MINC_ENABLE;
-    handle->hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    handle->hdma_usart1_rx.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-    handle->hdma_usart1_rx.Init.Mode                = DMA_CIRCULAR;
-    handle->hdma_usart1_rx.Init.Priority            = DMA_PRIORITY_LOW;
-    handle->hdma_usart1_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-    if(HAL_DMA_Init(&handle->hdma_usart1_rx) != HAL_OK)
-    {
-        Error_Handler();
+    //usart1 uses dma by default for now
+    if(handle->periph == USART1){
+        handle->hdma_usart1_rx.Instance                 = DMA1_Stream5;
+        handle->hdma_usart1_rx.Init.Request             = DMA_REQUEST_USART1_RX;
+        handle->hdma_usart1_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+        handle->hdma_usart1_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
+        handle->hdma_usart1_rx.Init.MemInc              = DMA_MINC_ENABLE;
+        handle->hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+        handle->hdma_usart1_rx.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+        handle->hdma_usart1_rx.Init.Mode                = DMA_CIRCULAR;
+        handle->hdma_usart1_rx.Init.Priority            = DMA_PRIORITY_LOW;
+        handle->hdma_usart1_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+        if(HAL_DMA_Init(&handle->hdma_usart1_rx) != HAL_OK)
+        {
+            Error_Handler();
+        }
+
+        __HAL_LINKDMA(uartHandle, hdmarx, handle->hdma_usart1_rx);
     }
 
-    __HAL_LINKDMA(uartHandle, hdmarx, handle->hdma_usart1_rx);
+    /* interrupt Init */
+    EnableNvic(handle->periph);
 
-    /* USART1 interrupt Init */
-    HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(USART1_IRQn);
     /* USER CODE BEGIN USART1_MspInit 1 */
     __HAL_UART_ENABLE_IT(&handle->huart1, UART_IT_IDLE);
     // Disable HalfTransfer Interrupt
@@ -474,7 +493,6 @@ void UART7_CLK_DISABLE(){ __HAL_RCC_UART7_CLK_DISABLE(); };
 void UART8_CLK_DISABLE(){ __HAL_RCC_UART8_CLK_DISABLE(); };
 void LPUART1_CLK_DISABLE(){ __HAL_RCC_LPUART1_CLK_DISABLE(); };
 
-
 void UartClockDisable(USART_TypeDef* periph){
     VoidFunc func_p[] = {USART1_CLK_DISABLE, USART2_CLK_DISABLE, USART3_CLK_DISABLE, 
                         UART4_CLK_DISABLE, UART5_CLK_DISABLE, USART6_CLK_DISABLE, 
@@ -489,6 +507,22 @@ void UartClockDisable(USART_TypeDef* periph){
     }
 }
 
+void DisableIrq (USART_TypeDef* periph){
+    IRQn_Type types[] = {USART1_IRQn, USART2_IRQn, USART3_IRQn,
+                         UART4_IRQn, UART5_IRQn, USART6_IRQn,
+                         UART7_IRQn, UART8_IRQn, LPUART1_IRQn};
+    
+    USART_TypeDef* periphs[] = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1};
+
+    for(int i = 0; i < 9; i++){
+        if(periphs[i] == periph){
+            HAL_NVIC_DisableIRQ(types[i]);
+            return;
+        }
+    }
+}
+
+
 void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 {
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
@@ -496,7 +530,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     UartClockDisable(uartHandle->Instance);
     HAL_GPIO_DeInit(handle->port, handle->tx | handle->rx);
     HAL_DMA_DeInit(uartHandle->hdmarx);
-    HAL_NVIC_DisableIRQ(USART1_IRQn);
+    DisableIrq(uartHandle->Instance);
 }
 
 
