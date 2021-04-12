@@ -223,23 +223,67 @@ size_t UartHandler::Impl::Readable()
 }
 
 typedef struct{
-    dsy_gpio_pin tx;
-    dsy_gpio_pin rx;
+    dsy_gpio_pin pin;
     uint8_t alt;
-} pin_pair;
+} pin_alt;
 
-//[u(s)art][valid pins]
-//this is a stupid way to do this
-pin_pair valid_pins[9][2] = {
-        { {{DSY_GPIOB, 6}, {DSY_GPIOB, 7}, GPIO_AF7_USART1}, {{DSY_GPIOB, 14}, {DSY_GPIOB, 15}, GPIO_AF4_USART1} }, //USART1
-        { {{DSY_GPIOA, 2}, {DSY_GPIOA, 3}, GPIO_AF7_USART2},  {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //USART2
-        { {{DSY_GPIOC, 10}, {DSY_GPIOC, 11}, GPIO_AF7_USART3}, {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //USART3
-        { {{DSY_GPIOB, 9}, {DSY_GPIOB, 8}, GPIO_AF8_UART4}, {{DSY_GPIOC, 10}, {DSY_GPIOC, 11}, GPIO_AF8_UART4} }, //UART4
-        { {{DSY_GPIOB, 6}, {DSY_GPIOB, 5}, GPIO_AF14_UART5}, {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //UART5
-        { {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0}, {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //USART6
-        { {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0}, {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //UART7
-        { {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0},{{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} }, //UART8
-        { {{DSY_GPIOB, 6}, {DSY_GPIOB, 7}, GPIO_AF8_LPUART}, {{(dsy_gpio_port)(-1), 0}, {(dsy_gpio_port)(-1), 0}, 0} } }; //LPUART1
+pin_alt pins_none = {{DSY_GPIOX, 0}, 255};
+
+//valid pins per periph, and the alt they're on
+pin_alt usart1_pins_tx[] = { {{DSY_GPIOB, 6}, GPIO_AF7_USART1}, {{DSY_GPIOB, 14}, GPIO_AF4_USART1}, pins_none };
+pin_alt usart1_pins_rx[] = { {{DSY_GPIOB, 7}, GPIO_AF7_USART1}, {{DSY_GPIOB, 15}, GPIO_AF4_USART1}, pins_none };
+
+pin_alt usart2_pins_tx[] = { {{DSY_GPIOA, 2}, GPIO_AF7_USART2}, pins_none, pins_none };
+pin_alt usart2_pins_rx[] = { {{DSY_GPIOA, 3}, GPIO_AF7_USART2}, pins_none, pins_none };
+
+pin_alt usart3_pins_tx[] = { {{DSY_GPIOC, 10}, GPIO_AF7_USART3}, pins_none, pins_none };
+pin_alt usart3_pins_rx[] = { {{DSY_GPIOC, 11}, GPIO_AF7_USART3}, pins_none, pins_none };
+
+pin_alt uart4_pins_tx[] = { {{DSY_GPIOB, 9}, GPIO_AF8_UART4}, {{DSY_GPIOC, 10}, GPIO_AF8_UART4}, pins_none };
+pin_alt uart4_pins_rx[] = { {{DSY_GPIOB, 8}, GPIO_AF8_UART4}, {{DSY_GPIOC, 11}, GPIO_AF8_UART4}, pins_none };
+
+pin_alt uart5_pins_tx[] = { {{DSY_GPIOC, 12}, GPIO_AF8_UART5 }, {{DSY_GPIOB, 6}, GPIO_AF14_UART5}, pins_none };
+pin_alt uart5_pins_rx[] = { {{DSY_GPIOB, 12}, GPIO_AF14_UART5}, {{DSY_GPIOD, 2}, GPIO_AF8_UART5}, {{DSY_GPIOB, 5}, GPIO_AF14_UART5} };
+
+pin_alt usart6_pins_tx[] = { pins_none, pins_none, pins_none };
+pin_alt usart6_pins_rx[] = { {{DSY_GPIOG, 9}, GPIO_AF7_USART6}, pins_none, pins_none };
+
+pin_alt uart7_pins_tx[] = { {{DSY_GPIOB, 4}, GPIO_AF11_UART7 }, pins_none, pins_none };
+pin_alt uart7_pins_rx[] = { pins_none, pins_none, pins_none };
+
+pin_alt uart8_pins_tx[] = { pins_none, pins_none, pins_none };
+pin_alt uart8_pins_rx[] = { pins_none, pins_none, pins_none };
+
+pin_alt lpuart1_pins_tx[] = { {{DSY_GPIOC, 6}, GPIO_AF8_LPUART}, pins_none, pins_none };
+pin_alt lpuart1_pins_rx[] = { {{DSY_GPIOC, 7}, GPIO_AF8_LPUART}, pins_none, pins_none };
+
+//an array to hold everything
+pin_alt* pins_periphs[] = {
+                            usart1_pins_tx, usart1_pins_rx, usart2_pins_tx, usart2_pins_rx, 
+                            usart3_pins_tx, usart3_pins_rx,  uart4_pins_tx, uart4_pins_rx, 
+                            uart5_pins_tx, uart5_pins_rx,  usart6_pins_tx, usart6_pins_rx, 
+                            uart7_pins_tx, uart7_pins_rx,  uart8_pins_tx, uart8_pins_rx, 
+                            lpuart1_pins_tx, lpuart1_pins_rx };
+
+bool gpiopin_equal(dsy_gpio_pin a, dsy_gpio_pin b){
+    return a.port == b.port && a.pin == b.pin;
+}
+
+UartHandler::Result checkPinMatch(GPIO_InitTypeDef* init, dsy_gpio_pin pin, int p_num){
+    for(int i = 0; i < 3; i++){
+        if(gpiopin_equal(pins_periphs[p_num][i].pin, pins_none.pin)) { 
+            /* skip */
+        }
+
+        else if(gpiopin_equal(pins_periphs[p_num][i].pin, pin))
+        {
+            init->Alternate = pins_periphs[p_num][i].alt;
+            return UartHandler::Result::OK;
+        }
+    }
+
+    return UartHandler::Result::ERR;
+}
 
 UartHandler::Result UartHandler::Impl::InitPins()
 {
@@ -249,30 +293,24 @@ UartHandler::Result UartHandler::Impl::InitPins()
     GPIO_InitStruct.Pull  = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;    
 
-    //check pins
-    //this too is stupid
-    if(config_.pin_config.tx.port == valid_pins[int(config_.periph)][0].tx.port &&
-       config_.pin_config.tx.pin == valid_pins[int(config_.periph)][0].tx.pin &&
-       config_.pin_config.rx.port == valid_pins[int(config_.periph)][0].rx.port &&
-       config_.pin_config.rx.pin == valid_pins[int(config_.periph)][0].rx.pin
-    ){
-         GPIO_InitStruct.Alternate = valid_pins[int(config_.periph)][0].alt;
-    }
-    else if(config_.pin_config.tx.port == valid_pins[int(config_.periph)][1].tx.port &&
-            config_.pin_config.tx.pin == valid_pins[int(config_.periph)][1].tx.pin &&
-            config_.pin_config.rx.port == valid_pins[int(config_.periph)][1].rx.port &&
-            config_.pin_config.rx.pin == valid_pins[int(config_.periph)][1].rx.pin
-    ){
-         GPIO_InitStruct.Alternate = valid_pins[int(config_.periph)][1].alt;        
-    }
-    else {
+    //check tx against periph
+    int per_num = 2 * (int)(config_.periph);
+    if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.tx, per_num) == Result::ERR){
         return Result::ERR;
     }
 
+    //setup tx pin
     port                = dsy_hal_map_get_port(&config_.pin_config.tx);
     GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.tx);
     tx = GPIO_InitStruct.Pin;
     HAL_GPIO_Init(port, &GPIO_InitStruct);
+
+    //check rx against periph
+    if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.rx, per_num + 1) == Result::ERR){
+        return Result::ERR;
+    }
+
+    //setup rx pin
     port                = dsy_hal_map_get_port(&config_.pin_config.rx);
     GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.rx);
     rx = GPIO_InitStruct.Pin;
