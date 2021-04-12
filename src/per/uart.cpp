@@ -533,21 +533,56 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     DisableIrq(uartHandle->Instance);
 }
 
+void UART_IRQHandler(UartHandler::Impl* handle){
+    HAL_UART_IRQHandler(&handle->huart1);
+    //        if(__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE))
+    //        {
+    if((handle->huart1.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
+    {
+        HAL_UART_RxCpltCallback(&handle->huart1);
+        //__HAL_UART_CLEAR_IDLEFLAG(&huart1);
+        handle->huart1.Instance->ICR = UART_FLAG_IDLE;
+    }
+}
 
 // HAL Interrupts.
 extern "C"
 {
-    void USART1_IRQHandler()
+    void USART1_IRQHandler() 
     {
-        HAL_UART_IRQHandler(&uart_handles[0].huart1);
-        //        if(__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE))
-        //        {
-        if((uart_handles[0].huart1.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
-        {
-            HAL_UART_RxCpltCallback(&uart_handles[0].huart1);
-            //__HAL_UART_CLEAR_IDLEFLAG(&huart1);
-            uart_handles[0].huart1.Instance->ICR = UART_FLAG_IDLE;
-        }
+        UART_IRQHandler(&uart_handles[0]);
+    }
+    void USART2_IRQHandler() 
+    {
+        UART_IRQHandler(&uart_handles[1]);
+    }
+    void USART3_IRQHandler() 
+    {
+        UART_IRQHandler(&uart_handles[2]);
+    }
+    void UART4_IRQHandler() 
+    {
+        UART_IRQHandler(&uart_handles[3]);
+    }
+    void UART5_IRQHandler() 
+    {
+        UART_IRQHandler(&uart_handles[4]);
+    }
+    void USART6_IRQHandler() 
+    {
+        UART_IRQHandler(&uart_handles[5]);
+    }
+    void UART7_IRQHandler() 
+    {
+        UART_IRQHandler(&uart_handles[6]);
+    }
+    void UART8_IRQHandler() 
+    {
+        UART_IRQHandler(&uart_handles[7]);
+    }
+    void LPUART1_IRQHandler() 
+    {
+        UART_IRQHandler(&uart_handles[8]);
     }
 
     void DMA1_Stream5_IRQHandler()
