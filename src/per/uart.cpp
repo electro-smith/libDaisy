@@ -293,28 +293,34 @@ UartHandler::Result UartHandler::Impl::InitPins()
     GPIO_InitStruct.Pull  = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;    
 
-    //check tx against periph
     int per_num = 2 * (int)(config_.periph);
-    if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.tx, per_num) == Result::ERR){
-        return Result::ERR;
+
+    if(config_.pin_config.tx.port != DSY_GPIOX){
+        //check tx against periph
+        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.tx, per_num) == Result::ERR){
+            return Result::ERR;
+        }
+
+        //setup tx pin
+        port                = dsy_hal_map_get_port(&config_.pin_config.tx);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.tx);
+        tx = GPIO_InitStruct.Pin;
+        HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    //setup tx pin
-    port                = dsy_hal_map_get_port(&config_.pin_config.tx);
-    GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.tx);
-    tx = GPIO_InitStruct.Pin;
-    HAL_GPIO_Init(port, &GPIO_InitStruct);
+    if(config_.pin_config.rx.port != DSY_GPIOX){
 
-    //check rx against periph
-    if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.rx, per_num + 1) == Result::ERR){
-        return Result::ERR;
+        //check rx against periph
+        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.rx, per_num + 1) == Result::ERR){
+            return Result::ERR;
+        }
+
+        //setup rx pin
+        port                = dsy_hal_map_get_port(&config_.pin_config.rx);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.rx);
+        rx = GPIO_InitStruct.Pin;
+        HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
-
-    //setup rx pin
-    port                = dsy_hal_map_get_port(&config_.pin_config.rx);
-    GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.rx);
-    rx = GPIO_InitStruct.Pin;
-    HAL_GPIO_Init(port, &GPIO_InitStruct);
 
     return Result::OK;
 }
