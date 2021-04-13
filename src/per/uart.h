@@ -28,50 +28,55 @@ namespace daisy
     */
 class UartHandler
 {
-  public:	
-    struct Config{
-      enum class Peripheral{
-        USART_1,
-        USART_2,
-        USART_3,
-        UART_4,
-        UART_5,
-        USART_6,
-        UART_7,
-        UART_8,
-        LPUART_1,
-      };
+  public:
+    struct Config
+    {
+        enum class Peripheral
+        {
+            USART_1,
+            USART_2,
+            USART_3,
+            UART_4,
+            UART_5,
+            USART_6,
+            UART_7,
+            UART_8,
+            LPUART_1,
+        };
 
-      enum class StopBits{
-        STOP_BITS_0_5,
-        STOP_BITS_1,
-        STOP_BITS_1_5,
-        STOP_BITS_2,
-      };
+        enum class StopBits
+        {
+            STOP_BITS_0_5,
+            STOP_BITS_1,
+            STOP_BITS_1_5,
+            STOP_BITS_2,
+        };
 
-      enum class Parity{
-        PARITY_NONE,
-        PARITY_EVEN,
-        PARITY_ODD,
-      };
+        enum class Parity
+        {
+            PARITY_NONE,
+            PARITY_EVEN,
+            PARITY_ODD,
+        };
 
-      enum class Mode{
-        MODE_RX,
-        MODE_TX,
-        MODE_TX_RX,
-      };
+        enum class Mode
+        {
+            MODE_RX,
+            MODE_TX,
+            MODE_TX_RX,
+        };
 
-      struct
-      {
-          dsy_gpio_pin tx; /**< & */
-          dsy_gpio_pin rx; /**< & */
-      } pin_config;         /**< & */
+        struct
+        {
+            dsy_gpio_pin tx; /**< & */
+            dsy_gpio_pin rx; /**< & */
+        } pin_config;        /**< & */
 
-      Peripheral periph;
-      StopBits stopbits;
-      Parity parity;
-      Mode mode;
-      uint32_t baudrate;
+        Peripheral periph;
+        StopBits   stopbits;
+        Parity     parity;
+        Mode       mode;
+        uint32_t   baudrate;
     };
 
 
@@ -79,14 +84,14 @@ class UartHandler
     UartHandler(const UartHandler& other) = default;
     UartHandler& operator=(const UartHandler& other) = default;
 
-     /** Return values for Uart functions. */
+    /** Return values for Uart functions. */
     enum class Result
     {
         OK, /**< & */
         ERR /**< & */
     };
 
-  	/** Initializes the UART Peripheral */
+    /** Initializes the UART Peripheral */
     Result Init(const Config& config);
 
     /** Returns the current config. */
@@ -98,7 +103,7 @@ class UartHandler
     \param timeout How long to timeout for (10ms?)
     \return Data received
      */
-    int PollReceive(uint8_t *buff, size_t size, uint32_t timeout);
+    int PollReceive(uint8_t* buff, size_t size, uint32_t timeout);
 
     /** Starts a DMA Receive callback to fill a buffer of specified size.
     Data is populated into a FIFO queue, and can be queried with the
@@ -123,7 +128,7 @@ class UartHandler
     \param size Buffer size
     \return OK or ERROR
      */
-    Result PollTx(uint8_t *buff, size_t size);
+    Result PollTx(uint8_t* buff, size_t size);
 
     /** Pops the oldest byte from the FIFO. 
     \return Popped byte
@@ -138,11 +143,10 @@ class UartHandler
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
 
-	class Impl; /**< & */
+    class Impl; /**< & */
 
   private:
-  
-  Impl* pimpl_;
+    Impl* pimpl_;
 };
 
 /** @} */
