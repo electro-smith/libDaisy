@@ -483,39 +483,6 @@ void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
 //void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
 //void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);
 
-void UartClockEnable(UartHandler::Config::Peripheral periph)
-{
-    switch(periph)
-    {
-        case UartHandler::Config::Peripheral::USART_1:
-            __HAL_RCC_USART1_CLK_ENABLE();
-            return;
-        case UartHandler::Config::Peripheral::USART_2:
-            __HAL_RCC_USART2_CLK_ENABLE();
-            return;
-        case UartHandler::Config::Peripheral::USART_3:
-            __HAL_RCC_USART3_CLK_ENABLE();
-            return;
-        case UartHandler::Config::Peripheral::UART_4:
-            __HAL_RCC_UART4_CLK_ENABLE();
-            return;
-        case UartHandler::Config::Peripheral::UART_5:
-            __HAL_RCC_UART5_CLK_ENABLE();
-            return;
-        case UartHandler::Config::Peripheral::USART_6:
-            __HAL_RCC_USART6_CLK_ENABLE();
-            return;
-        case UartHandler::Config::Peripheral::UART_7:
-            __HAL_RCC_UART7_CLK_ENABLE();
-            return;
-        case UartHandler::Config::Peripheral::UART_8:
-            __HAL_RCC_UART8_CLK_ENABLE();
-            return;
-        case UartHandler::Config::Peripheral::LPUART_1:
-            __HAL_RCC_LPUART1_CLK_ENABLE();
-            return;
-    }
-}
 
 void EnableNvic(USART_TypeDef* periph)
 {
@@ -549,7 +516,38 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
     dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.rx.port);
     dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.tx.port);
-    UartClockEnable(handle->config_.periph);
+
+    //enable the clock for our periph
+    switch(handle->config_.periph)
+    {
+        case UartHandler::Config::Peripheral::USART_1:
+            __HAL_RCC_USART1_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_2:
+            __HAL_RCC_USART2_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_3:
+            __HAL_RCC_USART3_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_4:
+            __HAL_RCC_UART4_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_5:
+            __HAL_RCC_UART5_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_6:
+            __HAL_RCC_USART6_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_7:
+            __HAL_RCC_UART7_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_8:
+            __HAL_RCC_UART8_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::LPUART_1:
+            __HAL_RCC_LPUART1_CLK_ENABLE();
+            break;
+    }
 
     if(handle->InitPins() == UartHandler::Result::ERR)
     {
@@ -590,39 +588,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     /* USER CODE END USART1_MspInit 1 */
 }
 
-void UartClockDisable(UartHandler::Config::Peripheral periph)
-{
-    switch(periph)
-    {
-        case UartHandler::Config::Peripheral::USART_1:
-            __HAL_RCC_USART1_CLK_DISABLE();
-            return;
-        case UartHandler::Config::Peripheral::USART_2:
-            __HAL_RCC_USART2_CLK_DISABLE();
-            return;
-        case UartHandler::Config::Peripheral::USART_3:
-            __HAL_RCC_USART3_CLK_DISABLE();
-            return;
-        case UartHandler::Config::Peripheral::UART_4:
-            __HAL_RCC_UART4_CLK_DISABLE();
-            return;
-        case UartHandler::Config::Peripheral::UART_5:
-            __HAL_RCC_UART5_CLK_DISABLE();
-            return;
-        case UartHandler::Config::Peripheral::USART_6:
-            __HAL_RCC_USART6_CLK_DISABLE();
-            return;
-        case UartHandler::Config::Peripheral::UART_7:
-            __HAL_RCC_UART7_CLK_DISABLE();
-            return;
-        case UartHandler::Config::Peripheral::UART_8:
-            __HAL_RCC_UART8_CLK_DISABLE();
-            return;
-        case UartHandler::Config::Peripheral::LPUART_1:
-            __HAL_RCC_LPUART1_CLK_DISABLE();
-            return;
-    }
-}
 
 void DisableIrq(USART_TypeDef* periph)
 {
@@ -654,7 +619,37 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 {
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
 
-    UartClockDisable(handle->config_.periph);
+    //disable the clock for our periph
+    switch(handle->config_.periph)
+    {
+        case UartHandler::Config::Peripheral::USART_1:
+            __HAL_RCC_USART1_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_2:
+            __HAL_RCC_USART2_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_3:
+            __HAL_RCC_USART3_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_4:
+            __HAL_RCC_UART4_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_5:
+            __HAL_RCC_UART5_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_6:
+            __HAL_RCC_USART6_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_7:
+            __HAL_RCC_UART7_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_8:
+            __HAL_RCC_UART8_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::LPUART_1:
+            __HAL_RCC_LPUART1_CLK_DISABLE();
+            break;
+    }
 
     GPIO_TypeDef* port = dsy_hal_map_get_port(&handle->config_.pin_config.tx);
     uint16_t      pin  = dsy_hal_map_get_pin(&handle->config_.pin_config.tx);
