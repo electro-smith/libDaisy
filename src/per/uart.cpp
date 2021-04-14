@@ -105,59 +105,63 @@ UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
 {
     config_ = config;
 
-    const int uartIdx = int(config_.periph);
-    if(uartIdx >= 9)
+    switch(config_.periph)
     {
-        return Result::ERR;
+        case Config::Peripheral::USART_1: periph = USART1; break;
+        case Config::Peripheral::USART_2: periph = USART2; break;
+        case Config::Peripheral::USART_3: periph = USART3; break;
+        case Config::Peripheral::UART_4: periph = UART4; break;
+        case Config::Peripheral::UART_5: periph = UART5; break;
+        case Config::Peripheral::USART_6: periph = USART6; break;
+        case Config::Peripheral::UART_7: periph = UART7; break;
+        case Config::Peripheral::UART_8: periph = UART8; break;
+        case Config::Peripheral::LPUART_1: periph = LPUART1; break;
+        default: return Result::ERR;
     }
-    constexpr USART_TypeDef* instances[9] = {USART1,
-                                             USART2,
-                                             USART3,
-                                             UART4,
-                                             UART5,
-                                             USART6,
-                                             UART7,
-                                             UART8,
-                                             LPUART1}; // map HAL instances
-    periph                                = instances[uartIdx];
 
-    const int parityIdx = int(config_.parity);
-    if(parityIdx >= 3)
+    uint32_t parity;
+    switch(config_.parity)
     {
-        return Result::ERR;
+        case Config::Parity::NONE: parity = UART_PARITY_NONE; break;
+        case Config::Parity::EVEN: parity = UART_PARITY_EVEN; break;
+        case Config::Parity::ODD: parity = UART_PARITY_ODD; break;
+        default: return Result::ERR;
     }
-    constexpr uint32_t parity_[3]
-        = {UART_PARITY_NONE, UART_PARITY_EVEN, UART_PARITY_ODD};
 
-    const int stopbitsIdx = int(config_.stopbits);
-    if(stopbitsIdx >= 4)
+    uint32_t stop_bits;
+    switch(config_.stopbits)
     {
-        return Result::ERR;
+        case Config::StopBits::BITS_0_5: stop_bits = UART_STOPBITS_0_5; break;
+        case Config::StopBits::BITS_1: stop_bits = UART_STOPBITS_1; break;
+        case Config::StopBits::BITS_1_5: stop_bits = UART_STOPBITS_1_5; break;
+        case Config::StopBits::BITS_2: stop_bits = UART_STOPBITS_2; break;
+        default: return Result::ERR;
     }
-    constexpr uint32_t stop_bits_[4] = {
-        UART_STOPBITS_0_5, UART_STOPBITS_1, UART_STOPBITS_1_5, UART_STOPBITS_2};
 
-    const int modeIdx = int(config_.mode);
-    if(modeIdx >= 3)
+    uint32_t mode;
+    switch(config_.mode)
     {
-        return Result::ERR;
+        case Config::Mode::RX: mode = UART_MODE_RX; break;
+        case Config::Mode::TX: mode = UART_MODE_TX; break;
+        case Config::Mode::TX_RX: mode = UART_MODE_TX_RX; break;
+        default: return Result::ERR;
     }
-    constexpr uint32_t mode_[3] = {UART_MODE_RX, UART_MODE_TX, UART_MODE_TX_RX};
 
-    const int lenIdx = int(config_.wordlength);
-    if(lenIdx >= 3)
+    uint32_t wordlen;
+    switch(config_.wordlength)
     {
-        return Result::ERR;
+        case Config::WordLength::BITS_7: wordlen = UART_WORDLENGTH_7B; break;
+        case Config::WordLength::BITS_8: wordlen = UART_WORDLENGTH_8B; break;
+        case Config::WordLength::BITS_9: wordlen = UART_WORDLENGTH_9B; break;
+        default: return Result::ERR;
     }
-    constexpr uint32_t lengths_[3]
-        = {UART_WORDLENGTH_7B, UART_WORDLENGTH_8B, UART_WORDLENGTH_9B};
 
     huart1.Instance                    = periph;
     huart1.Init.BaudRate               = config.baudrate;
-    huart1.Init.WordLength             = lengths_[lenIdx];
-    huart1.Init.StopBits               = stop_bits_[stopbitsIdx];
-    huart1.Init.Parity                 = parity_[parityIdx];
-    huart1.Init.Mode                   = mode_[modeIdx];
+    huart1.Init.WordLength             = wordlen;
+    huart1.Init.StopBits               = stop_bits;
+    huart1.Init.Parity                 = parity;
+    huart1.Init.Mode                   = mode;
     huart1.Init.HwFlowCtl              = UART_HWCONTROL_NONE;
     huart1.Init.OverSampling           = UART_OVERSAMPLING_16;
     huart1.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
