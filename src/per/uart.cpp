@@ -58,8 +58,8 @@ class UartHandler::Impl
     USART_TypeDef* periph;
     uint16_t       tx, rx;
 
-    UART_HandleTypeDef huart1;
-    DMA_HandleTypeDef  hdma_usart1_rx;
+    UART_HandleTypeDef huart;
+    DMA_HandleTypeDef  hdma_rx;
     bool               receiving;
     size_t             rx_size, rx_last_pos;
     UartRingBuffer*    dma_fifo_rx;
@@ -156,33 +156,33 @@ UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
         default: return Result::ERR;
     }
 
-    huart1.Instance                    = periph;
-    huart1.Init.BaudRate               = config.baudrate;
-    huart1.Init.WordLength             = wordlen;
-    huart1.Init.StopBits               = stop_bits;
-    huart1.Init.Parity                 = parity;
-    huart1.Init.Mode                   = mode;
-    huart1.Init.HwFlowCtl              = UART_HWCONTROL_NONE;
-    huart1.Init.OverSampling           = UART_OVERSAMPLING_16;
-    huart1.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
-    huart1.Init.ClockPrescaler         = UART_PRESCALER_DIV1;
-    huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+    huart.Instance                    = periph;
+    huart.Init.BaudRate               = config.baudrate;
+    huart.Init.WordLength             = wordlen;
+    huart.Init.StopBits               = stop_bits;
+    huart.Init.Parity                 = parity;
+    huart.Init.Mode                   = mode;
+    huart.Init.HwFlowCtl              = UART_HWCONTROL_NONE;
+    huart.Init.OverSampling           = UART_OVERSAMPLING_16;
+    huart.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
+    huart.Init.ClockPrescaler         = UART_PRESCALER_DIV1;
+    huart.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
 
-    if(HAL_UART_Init(&huart1) != HAL_OK)
+    if(HAL_UART_Init(&huart) != HAL_OK)
     {
         return Result::ERR;
     }
-    if(HAL_UARTEx_SetTxFifoThreshold(&huart1, UART_TXFIFO_THRESHOLD_1_8)
+    if(HAL_UARTEx_SetTxFifoThreshold(&huart, UART_TXFIFO_THRESHOLD_1_8)
        != HAL_OK)
     {
         return Result::ERR;
     }
-    if(HAL_UARTEx_SetRxFifoThreshold(&huart1, UART_RXFIFO_THRESHOLD_1_8)
+    if(HAL_UARTEx_SetRxFifoThreshold(&huart, UART_RXFIFO_THRESHOLD_1_8)
        != HAL_OK)
     {
         return Result::ERR;
     }
-    if(HAL_UARTEx_DisableFifoMode(&huart1) != HAL_OK)
+    if(HAL_UARTEx_DisableFifoMode(&huart) != HAL_OK)
     {
         return Result::ERR;
     }
@@ -203,7 +203,7 @@ UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
 
 int UartHandler::Impl::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
 {
-    return HAL_UART_Receive(&huart1, (uint8_t*)buff, size, timeout);
+    return HAL_UART_Receive(&huart, (uint8_t*)buff, size, timeout);
 }
 
 UartHandler::Result UartHandler::Impl::StartRx()
@@ -211,7 +211,7 @@ UartHandler::Result UartHandler::Impl::StartRx()
     int status = 0;
     // Now start Rx
     status = HAL_UART_Receive_DMA(
-        &huart1, (uint8_t*)dma_fifo_rx->GetMutableBuffer(), rx_size);
+        &huart, (uint8_t*)dma_fifo_rx->GetMutableBuffer(), rx_size);
     if(status == 0)
         rx_active = true;
     return rx_active ? Result::OK : Result::ERR;
@@ -237,13 +237,13 @@ UartHandler::Result UartHandler::Impl::FlushRx()
 UartHandler::Result UartHandler::Impl::PollTx(uint8_t* buff, size_t size)
 {
     HAL_StatusTypeDef status
-        = HAL_UART_Transmit(&huart1, (uint8_t*)buff, size, 10);
+        = HAL_UART_Transmit(&huart, (uint8_t*)buff, size, 10);
     return (status == HAL_OK ? Result::OK : Result::ERR);
 }
 
 int UartHandler::Impl::CheckError()
 {
-    return HAL_UART_GetError(&huart1);
+    return HAL_UART_GetError(&huart);
 }
 
 uint8_t UartHandler::Impl::PopRx()
@@ -429,7 +429,7 @@ static void UARTRxComplete(UartHandler::Impl* impl)
     size_t len, cur_pos;
     //get current write pointer
     cur_pos = (impl->rx_size
-               - ((DMA_Stream_TypeDef*)impl->huart1.hdmarx->Instance)->NDTR)
+               - ((DMA_Stream_TypeDef*)impl->huart.hdmarx->Instance)->NDTR)
               & (impl->rx_size - 1);
     //calculate how far the DMA write pointer has moved
     len = (cur_pos - impl->rx_last_pos + impl->rx_size) % impl->rx_size;
@@ -682,32 +682,31 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     //usart1 uses dma by default for now
     if(handle->periph == USART1)
     {
-        handle->hdma_usart1_rx.Instance                 = DMA1_Stream5;
-        handle->hdma_usart1_rx.Init.Request             = DMA_REQUEST_USART1_RX;
-        handle->hdma_usart1_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-        handle->hdma_usart1_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
-        handle->hdma_usart1_rx.Init.MemInc              = DMA_MINC_ENABLE;
-        handle->hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-        handle->hdma_usart1_rx.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-        handle->hdma_usart1_rx.Init.Mode                = DMA_CIRCULAR;
-        handle->hdma_usart1_rx.Init.Priority            = DMA_PRIORITY_LOW;
-        handle->hdma_usart1_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-        if(HAL_DMA_Init(&handle->hdma_usart1_rx) != HAL_OK)
+        handle->hdma_rx.Instance                 = DMA1_Stream5;
+        handle->hdma_rx.Init.Request             = DMA_REQUEST_USART1_RX;
+        handle->hdma_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+        handle->hdma_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
+        handle->hdma_rx.Init.MemInc              = DMA_MINC_ENABLE;
+        handle->hdma_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+        handle->hdma_rx.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+        handle->hdma_rx.Init.Mode                = DMA_CIRCULAR;
+        handle->hdma_rx.Init.Priority            = DMA_PRIORITY_LOW;
+        handle->hdma_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+        if(HAL_DMA_Init(&handle->hdma_rx) != HAL_OK)
         {
             Error_Handler();
         }
 
-        __HAL_LINKDMA(uartHandle, hdmarx, handle->hdma_usart1_rx);
+        __HAL_LINKDMA(uartHandle, hdmarx, handle->hdma_rx);
     }
 
     /* interrupt Init */
     EnableNvic(handle->periph);
 
     /* USER CODE BEGIN USART1_MspInit 1 */
-    __HAL_UART_ENABLE_IT(&handle->huart1, UART_IT_IDLE);
+    __HAL_UART_ENABLE_IT(&handle->huart, UART_IT_IDLE);
     // Disable HalfTransfer Interrupt
-    ((DMA_Stream_TypeDef*)handle->hdma_usart1_rx.Instance)->CR
-        &= ~(DMA_SxCR_HTIE);
+    ((DMA_Stream_TypeDef*)handle->hdma_rx.Instance)->CR &= ~(DMA_SxCR_HTIE);
 
     /* USER CODE END USART1_MspInit 1 */
 }
@@ -812,14 +811,14 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 
 void UART_IRQHandler(UartHandler::Impl* handle)
 {
-    HAL_UART_IRQHandler(&handle->huart1);
-    //        if(__HAL_UART_GET_FLAG(&huart1, UART_FLAG_IDLE))
+    HAL_UART_IRQHandler(&handle->huart);
+    //        if(__HAL_UART_GET_FLAG(&huart, UART_FLAG_IDLE))
     //        {
-    if((handle->huart1.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
+    if((handle->huart.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
     {
-        HAL_UART_RxCpltCallback(&handle->huart1);
-        //__HAL_UART_CLEAR_IDLEFLAG(&huart1);
-        handle->huart1.Instance->ICR = UART_FLAG_IDLE;
+        HAL_UART_RxCpltCallback(&handle->huart);
+        //__HAL_UART_CLEAR_IDLEFLAG(&huart);
+        handle->huart.Instance->ICR = UART_FLAG_IDLE;
     }
 }
 
@@ -841,7 +840,7 @@ extern "C"
         //TODO for now USART1 is the only one working with DMA
         //in the future we want to keep track of who connects to which DMA
         //stream, then refer to that info here
-        HAL_DMA_IRQHandler(&uart_handles[0].hdma_usart1_rx);
+        HAL_DMA_IRQHandler(&uart_handles[0].hdma_rx);
     }
 }
 
