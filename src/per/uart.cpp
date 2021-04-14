@@ -337,22 +337,17 @@ pin_alt* pins_periphs[] = {usart1_pins_tx,
                            lpuart1_pins_tx,
                            lpuart1_pins_rx};
 
-bool gpiopin_equal(dsy_gpio_pin a, dsy_gpio_pin b)
-{
-    return a.port == b.port && a.pin == b.pin;
-}
-
 UartHandler::Result
 checkPinMatch(GPIO_InitTypeDef* init, dsy_gpio_pin pin, int p_num)
 {
     for(int i = 0; i < 3; i++)
     {
-        if(gpiopin_equal(pins_periphs[p_num][i].pin, pins_none.pin))
+        if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pins_none.pin))
         {
             /* skip */
         }
 
-        else if(gpiopin_equal(pins_periphs[p_num][i].pin, pin))
+        else if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pin))
         {
             init->Alternate = pins_periphs[p_num][i].alt;
             return UartHandler::Result::OK;
