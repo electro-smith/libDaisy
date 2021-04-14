@@ -483,33 +483,6 @@ void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
 //void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
 //void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);
 
-
-void EnableNvic(USART_TypeDef* periph)
-{
-    IRQn_Type types[] = {USART1_IRQn,
-                         USART2_IRQn,
-                         USART3_IRQn,
-                         UART4_IRQn,
-                         UART5_IRQn,
-                         USART6_IRQn,
-                         UART7_IRQn,
-                         UART8_IRQn,
-                         LPUART1_IRQn};
-
-    USART_TypeDef* periphs[]
-        = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1};
-
-    for(int i = 0; i < 9; i++)
-    {
-        if(periphs[i] == periph)
-        {
-            HAL_NVIC_SetPriority(types[i], 0, 0);
-            HAL_NVIC_EnableIRQ(types[i]);
-            return;
-        }
-    }
-}
-
 // HAL Interface functions
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
@@ -577,20 +550,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
         __HAL_LINKDMA(uartHandle, hdmarx, handle->hdma_rx_);
     }
 
-    /* interrupt Init */
-    EnableNvic(handle->huart_.Instance);
-
-    /* USER CODE BEGIN USART1_MspInit 1 */
-    __HAL_UART_ENABLE_IT(&handle->huart_, UART_IT_IDLE);
-    // Disable HalfTransfer Interrupt
-    ((DMA_Stream_TypeDef*)handle->hdma_rx_.Instance)->CR &= ~(DMA_SxCR_HTIE);
-
-    /* USER CODE END USART1_MspInit 1 */
-}
-
-
-void DisableIrq(USART_TypeDef* periph)
-{
     IRQn_Type types[] = {USART1_IRQn,
                          USART2_IRQn,
                          USART3_IRQn,
@@ -601,19 +560,16 @@ void DisableIrq(USART_TypeDef* periph)
                          UART8_IRQn,
                          LPUART1_IRQn};
 
-    USART_TypeDef* periphs[]
-        = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1};
+    HAL_NVIC_SetPriority(types[(int)handle->config_.periph], 0, 0);
+    HAL_NVIC_EnableIRQ(types[(int)handle->config_.periph]);
 
-    for(int i = 0; i < 9; i++)
-    {
-        if(periphs[i] == periph)
-        {
-            HAL_NVIC_DisableIRQ(types[i]);
-            return;
-        }
-    }
+    /* USER CODE BEGIN USART1_MspInit 1 */
+    __HAL_UART_ENABLE_IT(&handle->huart_, UART_IT_IDLE);
+    // Disable HalfTransfer Interrupt
+    ((DMA_Stream_TypeDef*)handle->hdma_rx_.Instance)->CR &= ~(DMA_SxCR_HTIE);
+
+    /* USER CODE END USART1_MspInit 1 */
 }
-
 
 void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 {
@@ -660,7 +616,19 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     HAL_GPIO_DeInit(port, pin);
 
     HAL_DMA_DeInit(uartHandle->hdmarx);
-    DisableIrq(uartHandle->Instance);
+
+    IRQn_Type types[] = {USART1_IRQn,
+                         USART2_IRQn,
+                         USART3_IRQn,
+                         UART4_IRQn,
+                         UART5_IRQn,
+                         USART6_IRQn,
+                         UART7_IRQn,
+                         UART8_IRQn,
+                         LPUART1_IRQn};
+
+
+    HAL_NVIC_DisableIRQ(types[(int)handle->config_.periph]);
 }
 
 void UART_IRQHandler(UartHandler::Impl* handle)
