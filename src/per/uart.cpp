@@ -54,6 +54,8 @@ class UartHandler::Impl
 
     UartHandler::Result DeInitPins();
 
+    void UARTRxComplete();
+
     UART_HandleTypeDef huart_;
     DMA_HandleTypeDef  hdma_rx_;
     bool               receiving_;
@@ -414,26 +416,25 @@ UartHandler::Result UartHandler::Impl::DeInitPins()
 }
 
 // Callbacks
-static void UARTRxComplete(UartHandler::Impl* impl)
+void UartHandler::Impl::UARTRxComplete()
 {
     size_t len, cur_pos;
     //get current write pointer
-    cur_pos = (impl->rx_size_
-               - ((DMA_Stream_TypeDef*)impl->huart_.hdmarx->Instance)->NDTR)
-              & (impl->rx_size_ - 1);
+    cur_pos = (rx_size_ - ((DMA_Stream_TypeDef*)huart_.hdmarx->Instance)->NDTR)
+              & (rx_size_ - 1);
     //calculate how far the DMA write pointer has moved
-    len = (cur_pos - impl->rx_last_pos_ + impl->rx_size_) % impl->rx_size_;
+    len = (cur_pos - rx_last_pos_ + rx_size_) % rx_size_;
     //check message size
-    if(len <= impl->rx_size_)
+    if(len <= rx_size_)
     {
-        impl->dma_fifo_rx_->Advance(len);
-        impl->rx_last_pos_ = cur_pos;
+        dma_fifo_rx_->Advance(len);
+        rx_last_pos_ = cur_pos;
 #ifdef UART_RX_DOUBLE_BUFFER
         // Copy to queue fifo we don't want to use primary fifo to avoid
         // changes to the buffer while its being processed
         uint8_t processbuf[256];
-        impl->dma_fifo_rx_->ImmediateRead(processbuf, len);
-        impl->queue_rx_.Overwrite(processbuf, len);
+        dma_fifo_rx_->ImmediateRead(processbuf, len);
+        queue_rx_.Overwrite(processbuf, len);
 #endif
     }
     else
@@ -444,9 +445,10 @@ static void UARTRxComplete(UartHandler::Impl* impl)
 }
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
+    UartHandler::Impl* handle = MapInstanceToHandle(huart->Instance);
     if(__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))
     {
-        UARTRxComplete(MapInstanceToHandle(huart->Instance));
+        handle->UARTRxComplete();
     }
 }
 
