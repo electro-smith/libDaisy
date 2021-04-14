@@ -483,65 +483,37 @@ void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
 //void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
 //void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);
 
-//more silly macro expansion
-void USART1_CLK_ENABLE()
+void UartClockEnable(UartHandler::Config::Peripheral periph)
 {
-    __HAL_RCC_USART1_CLK_ENABLE();
-};
-void USART2_CLK_ENABLE()
-{
-    __HAL_RCC_USART2_CLK_ENABLE();
-};
-void USART3_CLK_ENABLE()
-{
-    __HAL_RCC_USART3_CLK_ENABLE();
-};
-void UART4_CLK_ENABLE()
-{
-    __HAL_RCC_UART4_CLK_ENABLE();
-};
-void UART5_CLK_ENABLE()
-{
-    __HAL_RCC_UART5_CLK_ENABLE();
-};
-void USART6_CLK_ENABLE()
-{
-    __HAL_RCC_USART6_CLK_ENABLE();
-};
-void UART7_CLK_ENABLE()
-{
-    __HAL_RCC_UART7_CLK_ENABLE();
-};
-void UART8_CLK_ENABLE()
-{
-    __HAL_RCC_UART8_CLK_ENABLE();
-};
-void LPUART1_CLK_ENABLE()
-{
-    __HAL_RCC_LPUART1_CLK_ENABLE();
-};
-
-void UartClockEnable(USART_TypeDef* periph)
-{
-    VoidFunc       func_p[] = {USART1_CLK_ENABLE,
-                         USART2_CLK_ENABLE,
-                         USART3_CLK_ENABLE,
-                         UART4_CLK_ENABLE,
-                         UART5_CLK_ENABLE,
-                         USART6_CLK_ENABLE,
-                         UART7_CLK_ENABLE,
-                         UART8_CLK_ENABLE,
-                         LPUART1_CLK_ENABLE};
-    USART_TypeDef* periphs[]
-        = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1};
-
-    for(int i = 0; i < 9; i++)
+    switch(periph)
     {
-        if(periph == periphs[i])
-        {
-            func_p[i]();
+        case UartHandler::Config::Peripheral::USART_1:
+            __HAL_RCC_USART1_CLK_ENABLE();
             return;
-        }
+        case UartHandler::Config::Peripheral::USART_2:
+            __HAL_RCC_USART2_CLK_ENABLE();
+            return;
+        case UartHandler::Config::Peripheral::USART_3:
+            __HAL_RCC_USART3_CLK_ENABLE();
+            return;
+        case UartHandler::Config::Peripheral::UART_4:
+            __HAL_RCC_UART4_CLK_ENABLE();
+            return;
+        case UartHandler::Config::Peripheral::UART_5:
+            __HAL_RCC_UART5_CLK_ENABLE();
+            return;
+        case UartHandler::Config::Peripheral::USART_6:
+            __HAL_RCC_USART6_CLK_ENABLE();
+            return;
+        case UartHandler::Config::Peripheral::UART_7:
+            __HAL_RCC_UART7_CLK_ENABLE();
+            return;
+        case UartHandler::Config::Peripheral::UART_8:
+            __HAL_RCC_UART8_CLK_ENABLE();
+            return;
+        case UartHandler::Config::Peripheral::LPUART_1:
+            __HAL_RCC_LPUART1_CLK_ENABLE();
+            return;
     }
 }
 
@@ -575,9 +547,9 @@ void EnableNvic(USART_TypeDef* periph)
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
-    GpioClockEnable(dsy_hal_map_get_port(&handle->config_.pin_config.rx));
-    GpioClockEnable(dsy_hal_map_get_port(&handle->config_.pin_config.tx));
-    UartClockEnable(handle->huart_.Instance);
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.rx.port);
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.tx.port);
+    UartClockEnable(handle->config_.periph);
 
     if(handle->InitPins() == UartHandler::Result::ERR)
     {
@@ -618,65 +590,37 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     /* USER CODE END USART1_MspInit 1 */
 }
 
-//even sillier macro expansion
-void USART1_CLK_DISABLE()
+void UartClockDisable(UartHandler::Config::Peripheral periph)
 {
-    __HAL_RCC_USART1_CLK_DISABLE();
-};
-void USART2_CLK_DISABLE()
-{
-    __HAL_RCC_USART2_CLK_DISABLE();
-};
-void USART3_CLK_DISABLE()
-{
-    __HAL_RCC_USART3_CLK_DISABLE();
-};
-void UART4_CLK_DISABLE()
-{
-    __HAL_RCC_UART4_CLK_DISABLE();
-};
-void UART5_CLK_DISABLE()
-{
-    __HAL_RCC_UART5_CLK_DISABLE();
-};
-void USART6_CLK_DISABLE()
-{
-    __HAL_RCC_USART6_CLK_DISABLE();
-};
-void UART7_CLK_DISABLE()
-{
-    __HAL_RCC_UART7_CLK_DISABLE();
-};
-void UART8_CLK_DISABLE()
-{
-    __HAL_RCC_UART8_CLK_DISABLE();
-};
-void LPUART1_CLK_DISABLE()
-{
-    __HAL_RCC_LPUART1_CLK_DISABLE();
-};
-
-void UartClockDisable(USART_TypeDef* periph)
-{
-    VoidFunc       func_p[] = {USART1_CLK_DISABLE,
-                         USART2_CLK_DISABLE,
-                         USART3_CLK_DISABLE,
-                         UART4_CLK_DISABLE,
-                         UART5_CLK_DISABLE,
-                         USART6_CLK_DISABLE,
-                         UART7_CLK_DISABLE,
-                         UART8_CLK_DISABLE,
-                         LPUART1_CLK_DISABLE};
-    USART_TypeDef* periphs[]
-        = {USART1, USART2, USART3, UART4, UART5, USART6, UART7, UART8, LPUART1};
-
-    for(int i = 0; i < 9; i++)
+    switch(periph)
     {
-        if(periph == periphs[i])
-        {
-            func_p[i]();
+        case UartHandler::Config::Peripheral::USART_1:
+            __HAL_RCC_USART1_CLK_DISABLE();
             return;
-        }
+        case UartHandler::Config::Peripheral::USART_2:
+            __HAL_RCC_USART2_CLK_DISABLE();
+            return;
+        case UartHandler::Config::Peripheral::USART_3:
+            __HAL_RCC_USART3_CLK_DISABLE();
+            return;
+        case UartHandler::Config::Peripheral::UART_4:
+            __HAL_RCC_UART4_CLK_DISABLE();
+            return;
+        case UartHandler::Config::Peripheral::UART_5:
+            __HAL_RCC_UART5_CLK_DISABLE();
+            return;
+        case UartHandler::Config::Peripheral::USART_6:
+            __HAL_RCC_USART6_CLK_DISABLE();
+            return;
+        case UartHandler::Config::Peripheral::UART_7:
+            __HAL_RCC_UART7_CLK_DISABLE();
+            return;
+        case UartHandler::Config::Peripheral::UART_8:
+            __HAL_RCC_UART8_CLK_DISABLE();
+            return;
+        case UartHandler::Config::Peripheral::LPUART_1:
+            __HAL_RCC_LPUART1_CLK_DISABLE();
+            return;
     }
 }
 
@@ -710,7 +654,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 {
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
 
-    UartClockDisable(uartHandle->Instance);
+    UartClockDisable(handle->config_.periph);
 
     GPIO_TypeDef* port = dsy_hal_map_get_port(&handle->config_.pin_config.tx);
     uint16_t      pin  = dsy_hal_map_get_pin(&handle->config_.pin_config.tx);

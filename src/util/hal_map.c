@@ -52,51 +52,22 @@ uint16_t dsy_hal_map_get_pin(const dsy_gpio_pin* p)
     return (uint16_t)gpio_hal_pin_map[p->pin];
 }
 
-void GpioClockEnable(GPIO_TypeDef* port)
+void dsy_hal_map_gpio_clk_enable(dsy_gpio_port port)
 {
-    if(port == GPIOA)
+    switch(port)
     {
-        __HAL_RXX_GPIOA_CLK_ENABLE();
-    }
-    else if(port == GPIOB)
-    {
-        __HAL_RXX_GPIOB_CLK_ENABLE();
-    }
-    else if(port == GPIOC)
-    {
-        __HAL_RXX_GPIOC_CLK_ENABLE();
-    }
-    else if(port == GPIOD)
-    {
-        __HAL_RXX_GPIOD_CLK_ENABLE();
-    }
-    else if(port == GPIOE)
-    {
-        __HAL_RXX_GPIOE_CLK_ENABLE();
-    }
-    else if(port == GPIOF)
-    {
-        __HAL_RXX_GPIOF_CLK_ENABLE();
-    }
-    else if(port == GPIOG)
-    {
-        __HAL_RXX_GPIOG_CLK_ENABLE();
-    }
-    else if(port == GPIOH)
-    {
-        __HAL_RXX_GPIOH_CLK_ENABLE();
-    }
-    else if(port == GPIOI)
-    {
-        __HAL_RXX_GPIOI_CLK_ENABLE();
-    }
-    else if(port == GPIOJ)
-    {
-        __HAL_RXX_GPIOJ_CLK_ENABLE();
-    }
-    else if(port == GPIOK)
-    {
-        __HAL_RXX_GPIOK_CLK_ENABLE();
+        case DSY_GPIOA: __HAL_RCC_GPIOA_CLK_ENABLE(); return;
+        case DSY_GPIOB: __HAL_RCC_GPIOB_CLK_ENABLE(); return;
+        case DSY_GPIOC: __HAL_RCC_GPIOC_CLK_ENABLE(); return;
+        case DSY_GPIOD: __HAL_RCC_GPIOD_CLK_ENABLE(); return;
+        case DSY_GPIOE: __HAL_RCC_GPIOE_CLK_ENABLE(); return;
+        case DSY_GPIOF: __HAL_RCC_GPIOF_CLK_ENABLE(); return;
+        case DSY_GPIOG: __HAL_RCC_GPIOG_CLK_ENABLE(); return;
+        case DSY_GPIOH: __HAL_RCC_GPIOH_CLK_ENABLE(); return;
+        case DSY_GPIOI: __HAL_RCC_GPIOI_CLK_ENABLE(); return;
+        case DSY_GPIOJ: __HAL_RCC_GPIOJ_CLK_ENABLE(); return;
+        case DSY_GPIOK: __HAL_RCC_GPIOK_CLK_ENABLE(); return;
+        default: return;
     }
 }
 
