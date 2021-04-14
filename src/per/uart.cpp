@@ -144,9 +144,17 @@ UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
     }
     constexpr uint32_t mode_[3] = {UART_MODE_RX, UART_MODE_TX, UART_MODE_TX_RX};
 
+    const int lenIdx = int(config_.wordlength);
+    if(lenIdx >= 3)
+    {
+        return Result::ERR;
+    }
+    constexpr uint32_t lengths_[3]
+        = {UART_WORDLENGTH_7B, UART_WORDLENGTH_8B, UART_WORDLENGTH_9B};
+
     huart1.Instance                    = periph;
     huart1.Init.BaudRate               = config.baudrate;
-    huart1.Init.WordLength             = UART_WORDLENGTH_8B;
+    huart1.Init.WordLength             = lengths_[lenIdx];
     huart1.Init.StopBits               = stop_bits_[stopbitsIdx];
     huart1.Init.Parity                 = parity_[parityIdx];
     huart1.Init.Mode                   = mode_[modeIdx];

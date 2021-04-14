@@ -66,6 +66,13 @@ class UartHandler
             TX_RX,
         };
 
+        enum class WordLength
+        {
+            BITS_7,
+            BITS_8,
+            BITS_9,
+        };
+
         struct
         {
             dsy_gpio_pin tx; /**< & */
@@ -76,6 +83,7 @@ class UartHandler
         StopBits   stopbits;
         Parity     parity;
         Mode       mode;
+        WordLength wordlength;
         uint32_t   baudrate;
     };
 
