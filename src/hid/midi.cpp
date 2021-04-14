@@ -26,9 +26,9 @@ void MidiHandler::Init(MidiInputMode in_mode, MidiOutputMode out_mode)
     UartHandler::Config config;
     config.baudrate      = 31250;
     config.periph        = UartHandler::Config::Peripheral::USART_1;
-    config.stopbits      = UartHandler::Config::StopBits::STOP_BITS_1;
-    config.parity        = UartHandler::Config::Parity::PARITY_NONE;
-    config.mode          = UartHandler::Config::Mode::MODE_TX_RX;
+    config.stopbits      = UartHandler::Config::StopBits::BITS_1;
+    config.parity        = UartHandler::Config::Parity::NONE;
+    config.mode          = UartHandler::Config::Mode::TX_RX;
     config.pin_config.rx = {DSY_GPIOB, 7};
     config.pin_config.tx = {DSY_GPIOB, 6};
     uart_.Init(config);

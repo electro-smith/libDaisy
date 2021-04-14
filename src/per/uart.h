@@ -46,24 +46,24 @@ class UartHandler
 
         enum class StopBits
         {
-            STOP_BITS_0_5,
-            STOP_BITS_1,
-            STOP_BITS_1_5,
-            STOP_BITS_2,
+            BITS_0_5,
+            BITS_1,
+            BITS_1_5,
+            BITS_2,
         };
 
         enum class Parity
         {
-            PARITY_NONE,
-            PARITY_EVEN,
-            PARITY_ODD,
+            NONE,
+            EVEN,
+            ODD,
         };
 
         enum class Mode
         {
-            MODE_RX,
-            MODE_TX,
-            MODE_TX_RX,
+            RX,
+            TX,
+            TX_RX,
         };
 
         struct
