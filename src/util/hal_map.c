@@ -52,4 +52,52 @@ uint16_t dsy_hal_map_get_pin(const dsy_gpio_pin* p)
     return (uint16_t)gpio_hal_pin_map[p->pin];
 }
 
+void GpioClockEnable(GPIO_TypeDef* port)
+{
+    if(port == GPIOA)
+    {
+        __HAL_RXX_GPIOA_CLK_ENABLE();
+    }
+    else if(port == GPIOB)
+    {
+        __HAL_RXX_GPIOB_CLK_ENABLE();
+    }
+    else if(port == GPIOC)
+    {
+        __HAL_RXX_GPIOC_CLK_ENABLE();
+    }
+    else if(port == GPIOD)
+    {
+        __HAL_RXX_GPIOD_CLK_ENABLE();
+    }
+    else if(port == GPIOE)
+    {
+        __HAL_RXX_GPIOE_CLK_ENABLE();
+    }
+    else if(port == GPIOF)
+    {
+        __HAL_RXX_GPIOF_CLK_ENABLE();
+    }
+    else if(port == GPIOG)
+    {
+        __HAL_RXX_GPIOG_CLK_ENABLE();
+    }
+    else if(port == GPIOH)
+    {
+        __HAL_RXX_GPIOH_CLK_ENABLE();
+    }
+    else if(port == GPIOI)
+    {
+        __HAL_RXX_GPIOI_CLK_ENABLE();
+    }
+    else if(port == GPIOJ)
+    {
+        __HAL_RXX_GPIOJ_CLK_ENABLE();
+    }
+    else if(port == GPIOK)
+    {
+        __HAL_RXX_GPIOK_CLK_ENABLE();
+    }
+}
+
 // ADC FUNCTIONS
