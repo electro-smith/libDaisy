@@ -54,10 +54,6 @@ class UartHandler::Impl
 
     UartHandler::Result DeInitPins();
 
-    GPIO_TypeDef*  port;
-    USART_TypeDef* periph;
-    uint16_t       tx, rx;
-
     UART_HandleTypeDef huart_;
     DMA_HandleTypeDef  hdma_rx_;
     bool               receiving_;
@@ -105,6 +101,7 @@ UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
 {
     config_ = config;
 
+    USART_TypeDef* periph;
     switch(config_.periph)
     {
         case Config::Peripheral::USART_1: periph = USART1; break;
@@ -385,9 +382,8 @@ UartHandler::Result UartHandler::Impl::InitPins()
         }
 
         //setup tx pin
-        port                = dsy_hal_map_get_port(&config_.pin_config.tx);
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.tx);
         GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.tx);
-        tx                  = GPIO_InitStruct.Pin;
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
@@ -401,9 +397,8 @@ UartHandler::Result UartHandler::Impl::InitPins()
         }
 
         //setup rx pin
-        port                = dsy_hal_map_get_port(&config_.pin_config.rx);
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.rx);
         GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.rx);
-        rx                  = GPIO_InitStruct.Pin;
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
@@ -412,10 +407,10 @@ UartHandler::Result UartHandler::Impl::InitPins()
 
 UartHandler::Result UartHandler::Impl::DeInitPins()
 {
-    uint16_t pin;
-    port = dsy_hal_map_get_port(&config_.pin_config.tx);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.tx);
+    GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin_config.tx);
+    uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin_config.tx);
     HAL_GPIO_DeInit(port, pin);
+
     port = dsy_hal_map_get_port(&config_.pin_config.rx);
     pin  = dsy_hal_map_get_pin(&config_.pin_config.rx);
     HAL_GPIO_DeInit(port, pin);
@@ -669,8 +664,9 @@ void EnableNvic(USART_TypeDef* periph)
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
-    GpioClockEnable(handle->port);
-    UartClockEnable(handle->periph);
+    GpioClockEnable(dsy_hal_map_get_port(&handle->config_.pin_config.rx));
+    GpioClockEnable(dsy_hal_map_get_port(&handle->config_.pin_config.tx));
+    UartClockEnable(handle->huart_.Instance);
 
     if(handle->InitPins() == UartHandler::Result::ERR)
     {
@@ -680,7 +676,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     /* USART1 DMA Init */
     /* USART1_RX Init */
     //usart1 uses dma by default for now
-    if(handle->periph == USART1)
+    if(handle->huart_.Instance == USART1)
     {
         handle->hdma_rx_.Instance                 = DMA1_Stream5;
         handle->hdma_rx_.Init.Request             = DMA_REQUEST_USART1_RX;
@@ -701,7 +697,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     }
 
     /* interrupt Init */
-    EnableNvic(handle->periph);
+    EnableNvic(handle->huart_.Instance);
 
     /* USER CODE BEGIN USART1_MspInit 1 */
     __HAL_UART_ENABLE_IT(&handle->huart_, UART_IT_IDLE);
@@ -804,7 +800,15 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
 
     UartClockDisable(uartHandle->Instance);
-    HAL_GPIO_DeInit(handle->port, handle->tx | handle->rx);
+
+    GPIO_TypeDef* port = dsy_hal_map_get_port(&handle->config_.pin_config.tx);
+    uint16_t      pin  = dsy_hal_map_get_pin(&handle->config_.pin_config.tx);
+    HAL_GPIO_DeInit(port, pin);
+
+    port = dsy_hal_map_get_port(&handle->config_.pin_config.rx);
+    pin  = dsy_hal_map_get_pin(&handle->config_.pin_config.rx);
+    HAL_GPIO_DeInit(port, pin);
+
     HAL_DMA_DeInit(uartHandle->hdmarx);
     DisableIrq(uartHandle->Instance);
 }
