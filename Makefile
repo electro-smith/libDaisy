@@ -281,7 +281,8 @@ C_INCLUDES = \
 -I$(MODULE_DIR) \
 -I. 
 
-WARNINGS += -Wall -Wno-attributes -Wno-strict-aliasing -Wno-maybe-uninitialized -Wno-missing-attributes #-Werror
+# suppressions for warnings introduced by HAL/FatFS
+WARNINGS += -Wall -Wno-attributes -Wno-strict-aliasing -Wno-maybe-uninitialized -Wno-missing-attributes -Wno-stringop-overflow #-Werror
 CPP_WARNINGS += -Wno-register
 
 # compile gcc flags
