@@ -552,17 +552,18 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
         __HAL_LINKDMA(uartHandle, hdmarx, handle->hdma_rx_);
 
         // Disable HalfTransfer Interrupt
-        ((DMA_Stream_TypeDef*)handle->hdma_rx_.Instance)->CR &= ~(DMA_SxCR_HTIE);
+        ((DMA_Stream_TypeDef*)handle->hdma_rx_.Instance)->CR
+            &= ~(DMA_SxCR_HTIE);
 
         IRQn_Type types[] = {USART1_IRQn,
-                            USART2_IRQn,
-                            USART3_IRQn,
-                            UART4_IRQn,
-                            UART5_IRQn,
-                            USART6_IRQn,
-                            UART7_IRQn,
-                            UART8_IRQn,
-                            LPUART1_IRQn};
+                             USART2_IRQn,
+                             USART3_IRQn,
+                             UART4_IRQn,
+                             UART5_IRQn,
+                             USART6_IRQn,
+                             UART7_IRQn,
+                             UART8_IRQn,
+                             LPUART1_IRQn};
 
         HAL_NVIC_SetPriority(types[(int)handle->config_.periph], 0, 0);
         HAL_NVIC_EnableIRQ(types[(int)handle->config_.periph]);
