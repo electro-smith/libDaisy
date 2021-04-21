@@ -315,9 +315,9 @@ pin_alt uart8_pins_tx[] = {pins_none, pins_none, pins_none};
 pin_alt uart8_pins_rx[] = {pins_none, pins_none, pins_none};
 
 pin_alt lpuart1_pins_tx[]
-    = {{{DSY_GPIOC, 6}, GPIO_AF8_LPUART}, pins_none, pins_none};
+    = {{{DSY_GPIOB, 6}, GPIO_AF8_LPUART}, pins_none, pins_none};
 pin_alt lpuart1_pins_rx[]
-    = {{{DSY_GPIOC, 7}, GPIO_AF8_LPUART}, pins_none, pins_none};
+    = {{{DSY_GPIOB, 7}, GPIO_AF8_LPUART}, pins_none, pins_none};
 
 //an array to hold everything
 pin_alt* pins_periphs[] = {usart1_pins_tx,
