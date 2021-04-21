@@ -363,7 +363,7 @@ UartHandler::Result UartHandler::Impl::InitPins()
 {
     GPIO_InitTypeDef GPIO_InitStruct;
 
-    GPIO_InitStruct.Mode  = GPIO_MODE_AF_OD;
+    GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull  = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 
@@ -550,27 +550,26 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
         }
 
         __HAL_LINKDMA(uartHandle, hdmarx, handle->hdma_rx_);
+
+        // Disable HalfTransfer Interrupt
+        ((DMA_Stream_TypeDef*)handle->hdma_rx_.Instance)->CR &= ~(DMA_SxCR_HTIE);
+
+        IRQn_Type types[] = {USART1_IRQn,
+                            USART2_IRQn,
+                            USART3_IRQn,
+                            UART4_IRQn,
+                            UART5_IRQn,
+                            USART6_IRQn,
+                            UART7_IRQn,
+                            UART8_IRQn,
+                            LPUART1_IRQn};
+
+        HAL_NVIC_SetPriority(types[(int)handle->config_.periph], 0, 0);
+        HAL_NVIC_EnableIRQ(types[(int)handle->config_.periph]);
     }
-
-    IRQn_Type types[] = {USART1_IRQn,
-                         USART2_IRQn,
-                         USART3_IRQn,
-                         UART4_IRQn,
-                         UART5_IRQn,
-                         USART6_IRQn,
-                         UART7_IRQn,
-                         UART8_IRQn,
-                         LPUART1_IRQn};
-
-    HAL_NVIC_SetPriority(types[(int)handle->config_.periph], 0, 0);
-    HAL_NVIC_EnableIRQ(types[(int)handle->config_.periph]);
 
     /* USER CODE BEGIN USART1_MspInit 1 */
     __HAL_UART_ENABLE_IT(&handle->huart_, UART_IT_IDLE);
-    // Disable HalfTransfer Interrupt
-    ((DMA_Stream_TypeDef*)handle->hdma_rx_.Instance)->CR &= ~(DMA_SxCR_HTIE);
-
-    /* USER CODE END USART1_MspInit 1 */
 }
 
 void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
