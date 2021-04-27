@@ -40,10 +40,6 @@ void DaisyPatch::Init(bool boost)
     InitDisplay();
     InitMidi();
     InitControls();
-    // Reset AK4556
-    dsy_gpio_write(&ak4556_reset_pin_, 0);
-    DelayMs(10);
-    dsy_gpio_write(&ak4556_reset_pin_, 1);
     // Set Screen update vars
     screen_update_period_ = 17; // roughly 60Hz
     screen_update_last_   = seed.system.GetNow();
@@ -199,8 +195,7 @@ void DaisyPatch::InitAudio()
 
     // Reset Pin for AK4556
     // Built-in AK4556 was reset during Seed Init
-    dsy_gpio_pin codec_reset_pin = seed.GetPin(29);
-    //codec_ak4556_init(codec_reset_pin);
+    dsy_gpio_pin codec_reset_pin = seed.GetPin(PIN_AK4556_RESET);
     Ak4556::Init(codec_reset_pin);
 
     // Reinit Audio for _both_ codecs...

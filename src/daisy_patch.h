@@ -133,7 +133,6 @@ class DaisyPatch
     void InitEncoder();
     void InitGates();
 
-    dsy_gpio ak4556_reset_pin_;
     uint32_t screen_update_last_, screen_update_period_;
 };
 
