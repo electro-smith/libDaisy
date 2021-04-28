@@ -2,6 +2,7 @@
 #ifndef DSY_PATCH_BSP_H
 #define DSY_PATCH_BSP_H
 #include "daisy_seed.h"
+#include "dev/oled_ssd130x.h"
 
 namespace daisy
 {
@@ -118,7 +119,7 @@ class DaisyPatch
     AnalogControl controls[CTRL_LAST];      /**< Array of controls*/
     GateIn        gate_input[GATE_IN_LAST]; /**< Gate inputs  */
     MidiHandler   midi;                     /**< Handles midi*/
-    OledDisplay   display;                  /**< & */
+    OledDisplay<SSD130xDriver<SSD130xSPITransport>> display;                  /**< & */
 
     // TODO: Add class for Gate output
     dsy_gpio gate_output; /**< &  */

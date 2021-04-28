@@ -2,6 +2,7 @@
 #ifndef DSY_FIELD_BSP_H
 #define DSY_FIELD_BSP_H /**< & */
 #include "daisy_seed.h"
+#include "dev/oled_ssd130x.h"
 
 /**
    @brief Hardware defines and helpers for daisy field platform.
@@ -210,7 +211,7 @@ class DaisyField
     void VegasMode();
 
     DaisySeed                 seed;
-    OledDisplay               display;
+    OledDisplay<SSD130xDriver<SSD130xSPITransport>> display;
     dsy_gpio                  gate_out;
     GateIn                    gate_in;
     LedDriverPca9685<2, true> led_driver;

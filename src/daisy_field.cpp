@@ -125,10 +125,16 @@ void DaisyField::Init(bool boost)
     keyboard_sr_.Init(keyboard_cfg);
 
     // OLED
-    dsy_gpio_pin oled_pins[OledDisplay::NUM_PINS];
-    oled_pins[OledDisplay::DATA_COMMAND] = seed.GetPin(PIN_OLED_CMD);
-    oled_pins[OledDisplay::RESET]        = {DSY_GPIOX, 0}; // Not a real pin...
-    display.Init(oled_pins);
+    dsy_gpio_pin oled_pins[SSD130xSPITransport::NUM_PINS];
+    oled_pins[SSD130xSPITransport::DATA_COMMAND] = seed.GetPin(PIN_OLED_CMD);
+    oled_pins[SSD130xSPITransport::RESET]        = {DSY_GPIOX, 0}; // Not a real pin...
+    SSD130xSPITransport display_transport;
+    display_transport.Init(oled_pins);
+    SSD130xDriver<SSD130xSPITransport> display_driver;
+    display_driver.Init(display_transport);
+    display.Init(display_driver);
+
+
 
     // LEDs
     // 2x PCA9685 addresses 0x00, and 0x02
@@ -354,9 +360,9 @@ void DaisyField::VegasMode()
         led_driver.SetLed(led_grp_b[idx], 1.0f - key_bright);
         led_driver.SetLed(led_grp_c[idx], key_bright);
         // OLED moves a bar across the screen
-        uint32_t bar_x = (now >> 4) % SSD1309_WIDTH;
+        uint32_t bar_x = (now >> 4) % display.Width();
         display.Fill(false);
-        for(size_t i = 0; i < SSD1309_HEIGHT; i++)
+        for(size_t i = 0; i < display.Height(); i++)
         {
             display.DrawPixel(bar_x, i, true);
         }
