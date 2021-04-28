@@ -66,6 +66,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classdaisy_1_1_uart_handler-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -75,20 +77,40 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="uart_8h_source.html">uart.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_uart_handler_1_1_config.html">Config</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ac45c7ac82e6f0328b4e7b03fd12e7237"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> { <a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237ae0aa021e21dddbd6d8cecec71e9cf564">OK</a>
+, <a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237acd22bad976363fdd1bfbf6759fede482">ERR</a>
+ }</td></tr>
+<tr class="separator:ac45c7ac82e6f0328b4e7b03fd12e7237"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abe1b41b60b230b27b0a62d2a0c1c0f67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#abe1b41b60b230b27b0a62d2a0c1c0f67">Init</a> ()</td></tr>
-<tr class="separator:abe1b41b60b230b27b0a62d2a0c1c0f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a673f1aa44d7ebc875078623e7a49becd"><td class="memItemLeft" align="right" valign="top"><a id="a673f1aa44d7ebc875078623e7a49becd"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>UartHandler</b> (const <a class="el" href="classdaisy_1_1_uart_handler.html">UartHandler</a> &amp;other)=default</td></tr>
+<tr class="separator:a673f1aa44d7ebc875078623e7a49becd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b5e2c7db8d720e5bd9e84f8e09bc765"><td class="memItemLeft" align="right" valign="top"><a id="a1b5e2c7db8d720e5bd9e84f8e09bc765"></a>
+<a class="el" href="classdaisy_1_1_uart_handler.html">UartHandler</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classdaisy_1_1_uart_handler.html">UartHandler</a> &amp;other)=default</td></tr>
+<tr class="separator:a1b5e2c7db8d720e5bd9e84f8e09bc765"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa25c871d2fb9d382ef779ba92b4d2ada"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#aa25c871d2fb9d382ef779ba92b4d2ada">Init</a> (const <a class="el" href="structdaisy_1_1_uart_handler_1_1_config.html">Config</a> &amp;config)</td></tr>
+<tr class="separator:aa25c871d2fb9d382ef779ba92b4d2ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad984db785058ee2fed0d0b086e519630"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structdaisy_1_1_uart_handler_1_1_config.html">Config</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ad984db785058ee2fed0d0b086e519630">GetConfig</a> () const</td></tr>
+<tr class="separator:ad984db785058ee2fed0d0b086e519630"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9641f3808cf70559d3d988f5ae8e254c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a9641f3808cf70559d3d988f5ae8e254c">PollReceive</a> (uint8_t *buff, size_t size, uint32_t timeout)</td></tr>
 <tr class="separator:a9641f3808cf70559d3d988f5ae8e254c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6e0590380805e55cd349fdb6ceffdbf"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ae6e0590380805e55cd349fdb6ceffdbf">StartRx</a> ()</td></tr>
-<tr class="separator:ae6e0590380805e55cd349fdb6ceffdbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24098e17a8be0b1b2a229f1959c941db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a24098e17a8be0b1b2a229f1959c941db">StartRx</a> ()</td></tr>
+<tr class="separator:a24098e17a8be0b1b2a229f1959c941db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeeb804c58c2ccf574142b2a030d2d83b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#aeeb804c58c2ccf574142b2a030d2d83b">RxActive</a> ()</td></tr>
 <tr class="separator:aeeb804c58c2ccf574142b2a030d2d83b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7c66d512b976542a71d10666c415aa3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#aa7c66d512b976542a71d10666c415aa3">FlushRx</a> ()</td></tr>
-<tr class="separator:aa7c66d512b976542a71d10666c415aa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9c0739a29ccf7506a86e7ac9953e0a6f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a9c0739a29ccf7506a86e7ac9953e0a6f">PollTx</a> (uint8_t *buff, size_t size)</td></tr>
-<tr class="separator:a9c0739a29ccf7506a86e7ac9953e0a6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8282a20746be60a208cde90a8eea1529"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a8282a20746be60a208cde90a8eea1529">FlushRx</a> ()</td></tr>
+<tr class="separator:a8282a20746be60a208cde90a8eea1529"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9505926532bf44f70216b52d45db549a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a9505926532bf44f70216b52d45db549a">PollTx</a> (uint8_t *buff, size_t size)</td></tr>
+<tr class="separator:a9505926532bf44f70216b52d45db549a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae28345bdf7d66aa891bbde3cf8c68057"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ae28345bdf7d66aa891bbde3cf8c68057">PopRx</a> ()</td></tr>
 <tr class="separator:ae28345bdf7d66aa891bbde3cf8c68057"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b8cad10b4f9a9520d2248c567babcc1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a4b8cad10b4f9a9520d2248c567babcc1">Readable</a> ()</td></tr>
@@ -99,7 +121,37 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Uart Peripheral </p><dl class="section author"><dt>Author</dt><dd>shensley </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>March 2020 </dd></dl>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="ac45c7ac82e6f0328b4e7b03fd12e7237"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac45c7ac82e6f0328b4e7b03fd12e7237">&#9670;&nbsp;</a></span>Result</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">daisy::UartHandler::Result</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return values for Uart functions. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac45c7ac82e6f0328b4e7b03fd12e7237ae0aa021e21dddbd6d8cecec71e9cf564"></a>OK&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ac45c7ac82e6f0328b4e7b03fd12e7237acd22bad976363fdd1bfbf6759fede482"></a>ERR&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="ada2266b23e77dde305b229b7814604fe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ada2266b23e77dde305b229b7814604fe">&#9670;&nbsp;</a></span>CheckError()</h2>
 
@@ -118,14 +170,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa7c66d512b976542a71d10666c415aa3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7c66d512b976542a71d10666c415aa3">&#9670;&nbsp;</a></span>FlushRx()</h2>
+<a id="a8282a20746be60a208cde90a8eea1529"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8282a20746be60a208cde90a8eea1529">&#9670;&nbsp;</a></span>FlushRx()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int daisy::UartHandler::FlushRx </td>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::FlushRx </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -136,16 +188,35 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abe1b41b60b230b27b0a62d2a0c1c0f67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe1b41b60b230b27b0a62d2a0c1c0f67">&#9670;&nbsp;</a></span>Init()</h2>
+<a id="ad984db785058ee2fed0d0b086e519630"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad984db785058ee2fed0d0b086e519630">&#9670;&nbsp;</a></span>GetConfig()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::UartHandler::Init </td>
+          <td class="memname">const <a class="el" href="structdaisy_1_1_uart_handler_1_1_config.html">Config</a>&amp; daisy::UartHandler::GetConfig </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the current config. </p>
+
+</div>
+</div>
+<a id="aa25c871d2fb9d382ef779ba92b4d2ada"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa25c871d2fb9d382ef779ba92b4d2ada">&#9670;&nbsp;</a></span>Init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::Init </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structdaisy_1_1_uart_handler_1_1_config.html">Config</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -197,14 +268,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9c0739a29ccf7506a86e7ac9953e0a6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c0739a29ccf7506a86e7ac9953e0a6f">&#9670;&nbsp;</a></span>PollTx()</h2>
+<a id="a9505926532bf44f70216b52d45db549a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9505926532bf44f70216b52d45db549a">&#9670;&nbsp;</a></span>PollTx()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int daisy::UartHandler::PollTx </td>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::PollTx </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>buff</em>, </td>
@@ -287,14 +358,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae6e0590380805e55cd349fdb6ceffdbf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6e0590380805e55cd349fdb6ceffdbf">&#9670;&nbsp;</a></span>StartRx()</h2>
+<a id="a24098e17a8be0b1b2a229f1959c941db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24098e17a8be0b1b2a229f1959c941db">&#9670;&nbsp;</a></span>StartRx()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int daisy::UartHandler::StartRx </td>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::StartRx </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>

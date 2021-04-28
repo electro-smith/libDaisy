@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['encoder_919',['Encoder',['../classdaisy_1_1_encoder.html',1,'daisy']]]
+  ['encoder_922',['Encoder',['../classdaisy_1_1_encoder.html',1,'daisy']]]
 ];
