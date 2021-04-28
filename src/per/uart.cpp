@@ -1,6 +1,10 @@
 #include <stm32h7xx_hal.h>
 #include "per/uart.h"
 #include "util/ringbuffer.h"
+extern "C"
+{
+#include "util/hal_map.h"
+}
 
 using namespace daisy;
 
@@ -20,149 +24,417 @@ static UartRingBuffer DMA_BUFFER_MEM_SECTION   uart_dma_fifo;
 static void Error_Handler()
 {
     asm("bkpt 255");
+    while(1) {}
 }
 
-// Uses HAL so these things have to be local to this file only
-struct uart_handle
+class UartHandler::Impl
 {
-    UART_HandleTypeDef huart1;
-    DMA_HandleTypeDef  hdma_usart1_rx;
-    bool               receiving;
-    size_t             rx_size, rx_last_pos;
-    UartRingBuffer*    dma_fifo_rx;
-    bool               rx_active, tx_active;
+  public:
+    UartHandler::Result Init(const UartHandler::Config& config);
+
+    const UartHandler::Config& GetConfig() const { return config_; }
+
+    int PollReceive(uint8_t* buff, size_t size, uint32_t timeout);
+
+    UartHandler::Result StartRx();
+
+    bool RxActive();
+
+    UartHandler::Result FlushRx();
+
+    UartHandler::Result PollTx(uint8_t* buff, size_t size);
+
+    uint8_t PopRx();
+
+    size_t Readable();
+
+    int CheckError();
+
+    UartHandler::Result InitPins();
+
+    UartHandler::Result DeInitPins();
+
+    void UARTRxComplete();
+
+    UART_HandleTypeDef huart_;
+    DMA_HandleTypeDef  hdma_rx_;
+    bool               receiving_;
+    size_t             rx_size_, rx_last_pos_;
+    UartRingBuffer*    dma_fifo_rx_;
+    bool               rx_active_, tx_active_;
 #ifdef UART_RX_DOUBLE_BUFFER
-    UartRingBuffer queue_rx;
+    UartRingBuffer queue_rx_;
 #endif
+
+    UartHandler::Config config_;
 };
-static uart_handle uhandle;
 
-void UartHandler::Init()
+
+// ================================================================
+// Global references for the availabel UartHandler::Impl(s)
+// ================================================================
+
+static UartHandler::Impl uart_handles[9];
+
+UartHandler::Impl* MapInstanceToHandle(USART_TypeDef* instance)
 {
-    uhandle.huart1.Instance                    = USART1;
-    uhandle.huart1.Init.BaudRate               = 31250;
-    uhandle.huart1.Init.WordLength             = UART_WORDLENGTH_8B;
-    uhandle.huart1.Init.StopBits               = UART_STOPBITS_1;
-    uhandle.huart1.Init.Parity                 = UART_PARITY_NONE;
-    uhandle.huart1.Init.Mode                   = UART_MODE_TX_RX;
-    uhandle.huart1.Init.HwFlowCtl              = UART_HWCONTROL_NONE;
-    uhandle.huart1.Init.OverSampling           = UART_OVERSAMPLING_16;
-    uhandle.huart1.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
-    uhandle.huart1.Init.ClockPrescaler         = UART_PRESCALER_DIV1;
-    uhandle.huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
-    if(HAL_UART_Init(&uhandle.huart1) != HAL_OK)
+    constexpr USART_TypeDef* instances[9] = {USART1,
+                                             USART2,
+                                             USART3,
+                                             UART4,
+                                             UART5,
+                                             USART6,
+                                             UART7,
+                                             UART8,
+                                             LPUART1}; // map HAL instances
+    for(int i = 0; i < 9; i++)
     {
-        Error_Handler();
+        if(instance == instances[i])
+        {
+            return &uart_handles[i];
+        }
     }
-    if(HAL_UARTEx_SetTxFifoThreshold(&uhandle.huart1, UART_TXFIFO_THRESHOLD_1_8)
+
+    /* error */
+    return NULL;
+}
+
+UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
+{
+    config_ = config;
+
+    USART_TypeDef* periph;
+    switch(config_.periph)
+    {
+        case Config::Peripheral::USART_1: periph = USART1; break;
+        case Config::Peripheral::USART_2: periph = USART2; break;
+        case Config::Peripheral::USART_3: periph = USART3; break;
+        case Config::Peripheral::UART_4: periph = UART4; break;
+        case Config::Peripheral::UART_5: periph = UART5; break;
+        case Config::Peripheral::USART_6: periph = USART6; break;
+        case Config::Peripheral::UART_7: periph = UART7; break;
+        case Config::Peripheral::UART_8: periph = UART8; break;
+        case Config::Peripheral::LPUART_1: periph = LPUART1; break;
+        default: return Result::ERR;
+    }
+
+    uint32_t parity;
+    switch(config_.parity)
+    {
+        case Config::Parity::NONE: parity = UART_PARITY_NONE; break;
+        case Config::Parity::EVEN: parity = UART_PARITY_EVEN; break;
+        case Config::Parity::ODD: parity = UART_PARITY_ODD; break;
+        default: return Result::ERR;
+    }
+
+    uint32_t stop_bits;
+    switch(config_.stopbits)
+    {
+        case Config::StopBits::BITS_0_5: stop_bits = UART_STOPBITS_0_5; break;
+        case Config::StopBits::BITS_1: stop_bits = UART_STOPBITS_1; break;
+        case Config::StopBits::BITS_1_5: stop_bits = UART_STOPBITS_1_5; break;
+        case Config::StopBits::BITS_2: stop_bits = UART_STOPBITS_2; break;
+        default: return Result::ERR;
+    }
+
+    uint32_t mode;
+    switch(config_.mode)
+    {
+        case Config::Mode::RX: mode = UART_MODE_RX; break;
+        case Config::Mode::TX: mode = UART_MODE_TX; break;
+        case Config::Mode::TX_RX: mode = UART_MODE_TX_RX; break;
+        default: return Result::ERR;
+    }
+
+    uint32_t wordlen;
+    switch(config_.wordlength)
+    {
+        case Config::WordLength::BITS_7: wordlen = UART_WORDLENGTH_7B; break;
+        case Config::WordLength::BITS_8: wordlen = UART_WORDLENGTH_8B; break;
+        case Config::WordLength::BITS_9: wordlen = UART_WORDLENGTH_9B; break;
+        default: return Result::ERR;
+    }
+
+    huart_.Instance                    = periph;
+    huart_.Init.BaudRate               = config.baudrate;
+    huart_.Init.WordLength             = wordlen;
+    huart_.Init.StopBits               = stop_bits;
+    huart_.Init.Parity                 = parity;
+    huart_.Init.Mode                   = mode;
+    huart_.Init.HwFlowCtl              = UART_HWCONTROL_NONE;
+    huart_.Init.OverSampling           = UART_OVERSAMPLING_16;
+    huart_.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
+    huart_.Init.ClockPrescaler         = UART_PRESCALER_DIV1;
+    huart_.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+
+    if(HAL_UART_Init(&huart_) != HAL_OK)
+    {
+        return Result::ERR;
+    }
+    if(HAL_UARTEx_SetTxFifoThreshold(&huart_, UART_TXFIFO_THRESHOLD_1_8)
        != HAL_OK)
     {
-        Error_Handler();
+        return Result::ERR;
     }
-    if(HAL_UARTEx_SetRxFifoThreshold(&uhandle.huart1, UART_RXFIFO_THRESHOLD_1_8)
+    if(HAL_UARTEx_SetRxFifoThreshold(&huart_, UART_RXFIFO_THRESHOLD_1_8)
        != HAL_OK)
     {
-        Error_Handler();
+        return Result::ERR;
     }
-    if(HAL_UARTEx_DisableFifoMode(&uhandle.huart1) != HAL_OK)
+    if(HAL_UARTEx_DisableFifoMode(&huart_) != HAL_OK)
     {
-        Error_Handler();
+        return Result::ERR;
     }
+
     // Internal bits
-    uhandle.dma_fifo_rx = &uart_dma_fifo;
-    uhandle.dma_fifo_rx->Init();
-    uhandle.rx_size = UART_RX_BUFF_SIZE;
+    dma_fifo_rx_ = &uart_dma_fifo;
+    dma_fifo_rx_->Init();
+    rx_size_ = UART_RX_BUFF_SIZE;
     // Buffer that gets copied
-    uhandle.rx_active = false;
-    uhandle.tx_active = false;
+    rx_active_ = false;
+    tx_active_ = false;
 #ifdef UART_RX_DOUBLE_BUFFER
-    uhandle.queue_rx.Init();
+    queue_rx_.Init();
 #endif
+
+    return Result::OK;
 }
 
-int UartHandler::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
+int UartHandler::Impl::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
 {
-    return HAL_UART_Receive(&uhandle.huart1, (uint8_t*)buff, size, timeout);
+    return HAL_UART_Receive(&huart_, (uint8_t*)buff, size, timeout);
 }
 
-int UartHandler::StartRx()
+UartHandler::Result UartHandler::Impl::StartRx()
 {
     int status = 0;
     // Now start Rx
     status = HAL_UART_Receive_DMA(
-        &uhandle.huart1,
-        (uint8_t*)uhandle.dma_fifo_rx->GetMutableBuffer(),
-        uhandle.rx_size);
+        &huart_, (uint8_t*)dma_fifo_rx_->GetMutableBuffer(), rx_size_);
     if(status == 0)
-        uhandle.rx_active = true;
-    return status;
+        rx_active_ = true;
+    return rx_active_ ? Result::OK : Result::ERR;
 }
 
-bool UartHandler::RxActive()
+bool UartHandler::Impl::RxActive()
 {
-    return uhandle.rx_active;
+    return rx_active_;
 }
 
-int UartHandler::FlushRx()
-{
-    int status = 0;
-#ifdef UART_RX_DOUBLE_BUFFER
-    uhandle.queue_rx.Flush();
-#else
-    uhandle.dma_fifo_rx->Flush();
-#endif
-    return status;
-}
-
-int UartHandler::PollTx(uint8_t* buff, size_t size)
-{
-    return HAL_UART_Transmit(&uhandle.huart1, (uint8_t*)buff, size, 10);
-}
-
-int UartHandler::CheckError()
-{
-    return HAL_UART_GetError(&uhandle.huart1);
-}
-
-uint8_t UartHandler::PopRx()
+//this originally had a useless status var hanging about
+//I don't think we can actually error check this...
+UartHandler::Result UartHandler::Impl::FlushRx()
 {
 #ifdef UART_RX_DOUBLE_BUFFER
-    return uhandle.queue_rx.Read();
+    queue_rx_.Flush();
 #else
-    return uhandle.dma_fifo_rx->Read();
+    dma_fifo_rx_->Flush();
+#endif
+    return Result::OK;
+}
+
+UartHandler::Result UartHandler::Impl::PollTx(uint8_t* buff, size_t size)
+{
+    HAL_StatusTypeDef status
+        = HAL_UART_Transmit(&huart_, (uint8_t*)buff, size, 10);
+    return (status == HAL_OK ? Result::OK : Result::ERR);
+}
+
+int UartHandler::Impl::CheckError()
+{
+    return HAL_UART_GetError(&huart_);
+}
+
+uint8_t UartHandler::Impl::PopRx()
+{
+#ifdef UART_RX_DOUBLE_BUFFER
+    return queue_rx_.Read();
+#else
+    return dma_fifo_rx_->Read();
 #endif
 }
 
-size_t UartHandler::Readable()
+size_t UartHandler::Impl::Readable()
 {
 #ifdef UART_RX_DOUBLE_BUFFER
-    return uhandle.queue_rx.readable();
+    return queue_rx_.readable();
 #else
-    return uhandle.dma_fifo_rx->readable();
+    return dma_fifo_rx_->readable();
 #endif
+}
+
+typedef struct
+{
+    dsy_gpio_pin pin;
+    uint8_t      alt;
+} pin_alt;
+
+pin_alt pins_none = {{DSY_GPIOX, 0}, 255};
+
+//valid pins per periph, and the alt they're on
+pin_alt usart1_pins_tx[] = {{{DSY_GPIOB, 6}, GPIO_AF7_USART1},
+                            {{DSY_GPIOB, 14}, GPIO_AF4_USART1},
+                            pins_none};
+pin_alt usart1_pins_rx[] = {{{DSY_GPIOB, 7}, GPIO_AF7_USART1},
+                            {{DSY_GPIOB, 15}, GPIO_AF4_USART1},
+                            pins_none};
+
+pin_alt usart2_pins_tx[]
+    = {{{DSY_GPIOA, 2}, GPIO_AF7_USART2}, pins_none, pins_none};
+pin_alt usart2_pins_rx[]
+    = {{{DSY_GPIOA, 3}, GPIO_AF7_USART2}, pins_none, pins_none};
+
+pin_alt usart3_pins_tx[]
+    = {{{DSY_GPIOC, 10}, GPIO_AF7_USART3}, pins_none, pins_none};
+pin_alt usart3_pins_rx[]
+    = {{{DSY_GPIOC, 11}, GPIO_AF7_USART3}, pins_none, pins_none};
+
+pin_alt uart4_pins_tx[] = {{{DSY_GPIOB, 9}, GPIO_AF8_UART4},
+                           {{DSY_GPIOC, 10}, GPIO_AF8_UART4},
+                           pins_none};
+pin_alt uart4_pins_rx[] = {{{DSY_GPIOB, 8}, GPIO_AF8_UART4},
+                           {{DSY_GPIOC, 11}, GPIO_AF8_UART4},
+                           pins_none};
+
+pin_alt uart5_pins_tx[] = {{{DSY_GPIOC, 12}, GPIO_AF8_UART5},
+                           {{DSY_GPIOB, 6}, GPIO_AF14_UART5},
+                           pins_none};
+pin_alt uart5_pins_rx[] = {{{DSY_GPIOB, 12}, GPIO_AF14_UART5},
+                           {{DSY_GPIOD, 2}, GPIO_AF8_UART5},
+                           {{DSY_GPIOB, 5}, GPIO_AF14_UART5}};
+
+pin_alt usart6_pins_tx[] = {pins_none, pins_none, pins_none};
+pin_alt usart6_pins_rx[]
+    = {{{DSY_GPIOG, 9}, GPIO_AF7_USART6}, pins_none, pins_none};
+
+pin_alt uart7_pins_tx[]
+    = {{{DSY_GPIOB, 4}, GPIO_AF11_UART7}, pins_none, pins_none};
+pin_alt uart7_pins_rx[] = {pins_none, pins_none, pins_none};
+
+pin_alt uart8_pins_tx[] = {pins_none, pins_none, pins_none};
+pin_alt uart8_pins_rx[] = {pins_none, pins_none, pins_none};
+
+pin_alt lpuart1_pins_tx[]
+    = {{{DSY_GPIOB, 6}, GPIO_AF8_LPUART}, pins_none, pins_none};
+pin_alt lpuart1_pins_rx[]
+    = {{{DSY_GPIOB, 7}, GPIO_AF8_LPUART}, pins_none, pins_none};
+
+//an array to hold everything
+pin_alt* pins_periphs[] = {usart1_pins_tx,
+                           usart1_pins_rx,
+                           usart2_pins_tx,
+                           usart2_pins_rx,
+                           usart3_pins_tx,
+                           usart3_pins_rx,
+                           uart4_pins_tx,
+                           uart4_pins_rx,
+                           uart5_pins_tx,
+                           uart5_pins_rx,
+                           usart6_pins_tx,
+                           usart6_pins_rx,
+                           uart7_pins_tx,
+                           uart7_pins_rx,
+                           uart8_pins_tx,
+                           uart8_pins_rx,
+                           lpuart1_pins_tx,
+                           lpuart1_pins_rx};
+
+UartHandler::Result
+checkPinMatch(GPIO_InitTypeDef* init, dsy_gpio_pin pin, int p_num)
+{
+    for(int i = 0; i < 3; i++)
+    {
+        if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pins_none.pin))
+        {
+            /* skip */
+        }
+
+        else if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pin))
+        {
+            init->Alternate = pins_periphs[p_num][i].alt;
+            return UartHandler::Result::OK;
+        }
+    }
+
+    return UartHandler::Result::ERR;
+}
+
+UartHandler::Result UartHandler::Impl::InitPins()
+{
+    GPIO_InitTypeDef GPIO_InitStruct;
+
+    GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+
+    int per_num = 2 * (int)(config_.periph);
+
+    if(config_.pin_config.tx.port != DSY_GPIOX)
+    {
+        //check tx against periph
+        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.tx, per_num)
+           == Result::ERR)
+        {
+            return Result::ERR;
+        }
+
+        //setup tx pin
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.tx);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.tx);
+        HAL_GPIO_Init(port, &GPIO_InitStruct);
+    }
+
+    if(config_.pin_config.rx.port != DSY_GPIOX)
+    {
+        //check rx against periph
+        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.rx, per_num + 1)
+           == Result::ERR)
+        {
+            return Result::ERR;
+        }
+
+        //setup rx pin
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.rx);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.rx);
+        HAL_GPIO_Init(port, &GPIO_InitStruct);
+    }
+
+    return Result::OK;
+}
+
+UartHandler::Result UartHandler::Impl::DeInitPins()
+{
+    GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin_config.tx);
+    uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin_config.tx);
+    HAL_GPIO_DeInit(port, pin);
+
+    port = dsy_hal_map_get_port(&config_.pin_config.rx);
+    pin  = dsy_hal_map_get_pin(&config_.pin_config.rx);
+    HAL_GPIO_DeInit(port, pin);
+
+    return Result::OK;
 }
 
 // Callbacks
-static void UARTRxComplete(void)
+void UartHandler::Impl::UARTRxComplete()
 {
     size_t len, cur_pos;
     //get current write pointer
-    cur_pos = (uhandle.rx_size
-               - ((DMA_Stream_TypeDef*)uhandle.huart1.hdmarx->Instance)->NDTR)
-              & (uhandle.rx_size - 1);
+    cur_pos = (rx_size_ - ((DMA_Stream_TypeDef*)huart_.hdmarx->Instance)->NDTR)
+              & (rx_size_ - 1);
     //calculate how far the DMA write pointer has moved
-    len = (cur_pos - uhandle.rx_last_pos + uhandle.rx_size) % uhandle.rx_size;
+    len = (cur_pos - rx_last_pos_ + rx_size_) % rx_size_;
     //check message size
-    if(len <= uhandle.rx_size)
+    if(len <= rx_size_)
     {
-        uhandle.dma_fifo_rx->Advance(len);
-        uhandle.rx_last_pos = cur_pos;
+        dma_fifo_rx_->Advance(len);
+        rx_last_pos_ = cur_pos;
 #ifdef UART_RX_DOUBLE_BUFFER
         // Copy to queue fifo we don't want to use primary fifo to avoid
         // changes to the buffer while its being processed
         uint8_t processbuf[256];
-        uhandle.dma_fifo_rx->ImmediateRead(processbuf, len);
-        uhandle.queue_rx.Overwrite(processbuf, len);
+        dma_fifo_rx_->ImmediateRead(processbuf, len);
+        queue_rx_.Overwrite(processbuf, len);
 #endif
     }
     else
@@ -173,12 +445,10 @@ static void UARTRxComplete(void)
 }
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
-    if(huart->Instance == USART1)
+    UartHandler::Impl* handle = MapInstanceToHandle(huart->Instance);
+    if(__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))
     {
-        if(__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))
-        {
-            UARTRxComplete();
-        }
+        handle->UARTRxComplete();
     }
 }
 
@@ -195,7 +465,7 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
         default: break;
     }
     // Mark rx as deactivated
-    uhandle.rx_active = false;
+    MapInstanceToHandle(huart->Instance)->rx_active_ = false;
 }
 void HAL_UART_AbortCpltCallback(UART_HandleTypeDef* huart)
 {
@@ -215,106 +485,240 @@ void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
 //void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
 //void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);
 
-
 // HAL Interface functions
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
-    if(uartHandle->Instance == USART1)
+    UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.rx.port);
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.tx.port);
+
+    //enable the clock for our periph
+    switch(handle->config_.periph)
     {
-        /* USER CODE BEGIN USART1_MspInit 0 */
+        case UartHandler::Config::Peripheral::USART_1:
+            __HAL_RCC_USART1_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_2:
+            __HAL_RCC_USART2_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_3:
+            __HAL_RCC_USART3_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_4:
+            __HAL_RCC_UART4_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_5:
+            __HAL_RCC_UART5_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_6:
+            __HAL_RCC_USART6_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_7:
+            __HAL_RCC_UART7_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_8:
+            __HAL_RCC_UART8_CLK_ENABLE();
+            break;
+        case UartHandler::Config::Peripheral::LPUART_1:
+            __HAL_RCC_LPUART1_CLK_ENABLE();
+            break;
+    }
 
-        /* USER CODE END USART1_MspInit 0 */
-        /* USART1 clock enable */
-        __HAL_RCC_USART1_CLK_ENABLE();
+    if(handle->InitPins() == UartHandler::Result::ERR)
+    {
+        Error_Handler();
+    }
 
-        __HAL_RCC_GPIOB_CLK_ENABLE();
-        /**USART1 GPIO Configuration    
-    PB7     ------> USART1_RX
-    PB6     ------> USART1_TX 
-    */
-        GPIO_InitStruct.Pin       = GPIO_PIN_7 | GPIO_PIN_6;
-        GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
-        GPIO_InitStruct.Pull      = GPIO_NOPULL;
-        GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_LOW;
-        GPIO_InitStruct.Alternate = GPIO_AF7_USART1;
-        HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-        /* USART1 DMA Init */
-        /* USART1_RX Init */
-        uhandle.hdma_usart1_rx.Instance                 = DMA1_Stream5;
-        uhandle.hdma_usart1_rx.Init.Request             = DMA_REQUEST_USART1_RX;
-        uhandle.hdma_usart1_rx.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-        uhandle.hdma_usart1_rx.Init.PeriphInc           = DMA_PINC_DISABLE;
-        uhandle.hdma_usart1_rx.Init.MemInc              = DMA_MINC_ENABLE;
-        uhandle.hdma_usart1_rx.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-        uhandle.hdma_usart1_rx.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-        uhandle.hdma_usart1_rx.Init.Mode                = DMA_CIRCULAR;
-        uhandle.hdma_usart1_rx.Init.Priority            = DMA_PRIORITY_LOW;
-        uhandle.hdma_usart1_rx.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-        if(HAL_DMA_Init(&uhandle.hdma_usart1_rx) != HAL_OK)
+    /* USART1 DMA Init */
+    /* USART1_RX Init */
+    //usart1 uses dma by default for now
+    if(handle->huart_.Instance == USART1)
+    {
+        handle->hdma_rx_.Instance                 = DMA1_Stream5;
+        handle->hdma_rx_.Init.Request             = DMA_REQUEST_USART1_RX;
+        handle->hdma_rx_.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+        handle->hdma_rx_.Init.PeriphInc           = DMA_PINC_DISABLE;
+        handle->hdma_rx_.Init.MemInc              = DMA_MINC_ENABLE;
+        handle->hdma_rx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+        handle->hdma_rx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+        handle->hdma_rx_.Init.Mode                = DMA_CIRCULAR;
+        handle->hdma_rx_.Init.Priority            = DMA_PRIORITY_LOW;
+        handle->hdma_rx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+        if(HAL_DMA_Init(&handle->hdma_rx_) != HAL_OK)
         {
             Error_Handler();
         }
 
-        __HAL_LINKDMA(uartHandle, hdmarx, uhandle.hdma_usart1_rx);
+        __HAL_LINKDMA(uartHandle, hdmarx, handle->hdma_rx_);
 
-        /* USART1 interrupt Init */
-        HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
-        HAL_NVIC_EnableIRQ(USART1_IRQn);
-        /* USER CODE BEGIN USART1_MspInit 1 */
-        __HAL_UART_ENABLE_IT(&uhandle.huart1, UART_IT_IDLE);
         // Disable HalfTransfer Interrupt
-        ((DMA_Stream_TypeDef*)uhandle.hdma_usart1_rx.Instance)->CR
+        ((DMA_Stream_TypeDef*)handle->hdma_rx_.Instance)->CR
             &= ~(DMA_SxCR_HTIE);
 
-        /* USER CODE END USART1_MspInit 1 */
+        IRQn_Type types[] = {USART1_IRQn,
+                             USART2_IRQn,
+                             USART3_IRQn,
+                             UART4_IRQn,
+                             UART5_IRQn,
+                             USART6_IRQn,
+                             UART7_IRQn,
+                             UART8_IRQn,
+                             LPUART1_IRQn};
+
+        HAL_NVIC_SetPriority(types[(int)handle->config_.periph], 0, 0);
+        HAL_NVIC_EnableIRQ(types[(int)handle->config_.periph]);
     }
+
+    /* USER CODE BEGIN USART1_MspInit 1 */
+    __HAL_UART_ENABLE_IT(&handle->huart_, UART_IT_IDLE);
 }
 
 void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 {
-    if(uartHandle->Instance == USART1)
+    UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
+
+    //disable the clock for our periph
+    switch(handle->config_.periph)
     {
-        /* USER CODE BEGIN USART1_MspDeInit 0 */
+        case UartHandler::Config::Peripheral::USART_1:
+            __HAL_RCC_USART1_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_2:
+            __HAL_RCC_USART2_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_3:
+            __HAL_RCC_USART3_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_4:
+            __HAL_RCC_UART4_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_5:
+            __HAL_RCC_UART5_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::USART_6:
+            __HAL_RCC_USART6_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_7:
+            __HAL_RCC_UART7_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::UART_8:
+            __HAL_RCC_UART8_CLK_DISABLE();
+            break;
+        case UartHandler::Config::Peripheral::LPUART_1:
+            __HAL_RCC_LPUART1_CLK_DISABLE();
+            break;
+    }
 
-        /* USER CODE END USART1_MspDeInit 0 */
-        /* Peripheral clock disable */
-        __HAL_RCC_USART1_CLK_DISABLE();
+    GPIO_TypeDef* port = dsy_hal_map_get_port(&handle->config_.pin_config.tx);
+    uint16_t      pin  = dsy_hal_map_get_pin(&handle->config_.pin_config.tx);
+    HAL_GPIO_DeInit(port, pin);
 
-        /**USART1 GPIO Configuration    
-    PB7     ------> USART1_RX
-    PB6     ------> USART1_TX 
-    */
-        HAL_GPIO_DeInit(GPIOB, GPIO_PIN_7 | GPIO_PIN_6);
+    port = dsy_hal_map_get_port(&handle->config_.pin_config.rx);
+    pin  = dsy_hal_map_get_pin(&handle->config_.pin_config.rx);
+    HAL_GPIO_DeInit(port, pin);
 
-        /* USART1 DMA DeInit */
-        HAL_DMA_DeInit(uartHandle->hdmarx);
-        HAL_NVIC_DisableIRQ(USART1_IRQn);
-        /* USER CODE BEGIN USART1_MspDeInit 1 */
+    HAL_DMA_DeInit(uartHandle->hdmarx);
 
-        /* USER CODE END USART1_MspDeInit 1 */
+    IRQn_Type types[] = {USART1_IRQn,
+                         USART2_IRQn,
+                         USART3_IRQn,
+                         UART4_IRQn,
+                         UART5_IRQn,
+                         USART6_IRQn,
+                         UART7_IRQn,
+                         UART8_IRQn,
+                         LPUART1_IRQn};
+
+
+    HAL_NVIC_DisableIRQ(types[(int)handle->config_.periph]);
+}
+
+void UART_IRQHandler(UartHandler::Impl* handle)
+{
+    HAL_UART_IRQHandler(&handle->huart_);
+    //        if(__HAL_UART_GET_FLAG(&huart, UART_FLAG_IDLE))
+    //        {
+    if((handle->huart_.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
+    {
+        HAL_UART_RxCpltCallback(&handle->huart_);
+        //__HAL_UART_CLEAR_IDLEFLAG(&huart);
+        handle->huart_.Instance->ICR = UART_FLAG_IDLE;
     }
 }
 
 // HAL Interrupts.
 extern "C"
 {
-    void USART1_IRQHandler()
-    {
-        HAL_UART_IRQHandler(&uhandle.huart1);
-        //        if(__HAL_UART_GET_FLAG(&uhandle.huart1, UART_FLAG_IDLE))
-        //        {
-        if((uhandle.huart1.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
-        {
-            HAL_UART_RxCpltCallback(&uhandle.huart1);
-            //__HAL_UART_CLEAR_IDLEFLAG(&uhandle.huart1);
-            uhandle.huart1.Instance->ICR = UART_FLAG_IDLE;
-        }
-    }
+    void USART1_IRQHandler() { UART_IRQHandler(&uart_handles[0]); }
+    void USART2_IRQHandler() { UART_IRQHandler(&uart_handles[1]); }
+    void USART3_IRQHandler() { UART_IRQHandler(&uart_handles[2]); }
+    void UART4_IRQHandler() { UART_IRQHandler(&uart_handles[3]); }
+    void UART5_IRQHandler() { UART_IRQHandler(&uart_handles[4]); }
+    void USART6_IRQHandler() { UART_IRQHandler(&uart_handles[5]); }
+    void UART7_IRQHandler() { UART_IRQHandler(&uart_handles[6]); }
+    void UART8_IRQHandler() { UART_IRQHandler(&uart_handles[7]); }
+    void LPUART1_IRQHandler() { UART_IRQHandler(&uart_handles[8]); }
 
     void DMA1_Stream5_IRQHandler()
     {
-        HAL_DMA_IRQHandler(&uhandle.hdma_usart1_rx);
+        //TODO for now USART1 is the only one working with DMA
+        //in the future we want to keep track of who connects to which DMA
+        //stream, then refer to that info here
+        HAL_DMA_IRQHandler(&uart_handles[0].hdma_rx_);
     }
+}
+
+// ======================================================================
+// UartHandler > UartHandlePimpl
+// ======================================================================
+
+UartHandler::Result UartHandler::Init(const Config& config)
+{
+    pimpl_ = &uart_handles[int(config.periph)];
+    return pimpl_->Init(config);
+}
+
+const UartHandler::Config& UartHandler::GetConfig() const
+{
+    return pimpl_->GetConfig();
+}
+
+int UartHandler::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
+{
+    return pimpl_->PollReceive(buff, size, timeout);
+}
+
+UartHandler::Result UartHandler::StartRx()
+{
+    return pimpl_->StartRx();
+}
+
+bool UartHandler::RxActive()
+{
+    return pimpl_->RxActive();
+}
+
+UartHandler::Result UartHandler::FlushRx()
+{
+    return pimpl_->FlushRx();
+}
+
+UartHandler::Result UartHandler::PollTx(uint8_t* buff, size_t size)
+{
+    return pimpl_->PollTx(buff, size);
+}
+
+uint8_t UartHandler::PopRx()
+{
+    return pimpl_->PopRx();
+}
+
+size_t UartHandler::Readable()
+{
+    return pimpl_->Readable();
+}
+
+int UartHandler::CheckError()
+{
+    return pimpl_->CheckError();
 }
