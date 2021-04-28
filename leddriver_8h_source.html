@@ -302,8 +302,8 @@ $(function() {
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <a class="code" href="structdsy__gpio__pin.html">dsy_gpio_pin</a>           oe_pin_;</div>
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;    <a class="code" href="structdsy__gpio.html">dsy_gpio</a>               oe_pin_gpio_;</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    <span class="comment">// index of the dirver that is currently updated.</span></div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    int8_t         current_driver_idx_;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keyword">const</span> uint16_t gamma_table_[256] = {</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;    <span class="keyword">volatile</span> int8_t current_driver_idx_;</div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keyword">const</span> uint16_t  gamma_table_[256] = {</div>
 <div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;        2,    2,    2,    2,    2,    2,    2,    3,    3,    4,    4,    5,</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        5,    6,    7,    8,    8,    9,    10,   11,   12,   13,   15,   16,</div>
