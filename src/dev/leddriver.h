@@ -276,8 +276,8 @@ class LedDriverPca9685
     dsy_gpio_pin           oe_pin_;
     dsy_gpio               oe_pin_gpio_;
     // index of the dirver that is currently updated.
-    int8_t         current_driver_idx_;
-    const uint16_t gamma_table_[256] = {
+    volatile int8_t current_driver_idx_;
+    const uint16_t  gamma_table_[256] = {
         0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         2,    2,    2,    2,    2,    2,    2,    3,    3,    4,    4,    5,
         5,    6,    7,    8,    8,    9,    10,   11,   12,   13,   15,   16,
