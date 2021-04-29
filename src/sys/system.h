@@ -100,6 +100,10 @@ class System
      ** \param delay_ticks Time to ddelay in microseconds */
     static void DelayTicks(uint32_t delay_ticks);
 
+    /** Triggers a reset of the seed and starts in bootloarder
+     ** mode to allow firmware update. */
+    static void ResetToBootloader();
+
     /** Returns the Frequency of the system clock in Hz 
      ** This is the primary system clock that is used to generate
      ** AXI Peripheral, APB, and AHB clocks. */
