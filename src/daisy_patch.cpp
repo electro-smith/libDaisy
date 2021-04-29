@@ -233,15 +233,20 @@ void DaisyPatch::InitControls()
 
 void DaisyPatch::InitDisplay()
 {
-    dsy_gpio_pin pincfg[SSD130xSPITransport::NUM_PINS];
-    pincfg[SSD130xSPITransport::DATA_COMMAND] = seed.GetPin(PIN_OLED_DC);
-    pincfg[SSD130xSPITransport::RESET]        = seed.GetPin(PIN_OLED_RESET);
+    SSD130x4WireSpiTransport display_transport;
+    SSD130x4WireSpiTransport::Config display_transport_config;
+    display_transport_config.pin_config.dc = seed.GetPin(PIN_OLED_DC);
+    display_transport_config.pin_config.reset = seed.GetPin(PIN_OLED_RESET);
+    display_transport.Init(display_transport_config);
 
-    SSD130xSPITransport display_transport;
-    display_transport.Init(pincfg);
-    SSD130xDriver<SSD130xSPITransport> display_driver;
-    display_driver.Init(display_transport);
-    display.Init(display_driver);
+    SSD130xDriver<128, 64, SSD130x4WireSpiTransport> display_driver;
+    SSD130xDriver<128, 64, SSD130x4WireSpiTransport>::Config display_driver_config; 
+    display_driver_config.transport = display_transport;
+    display_driver.Init(display_driver_config);
+
+    OledDisplay<SSD130xDriver<128, 64, SSD130x4WireSpiTransport>>::Config display_config;
+    display_config.driver = display_driver;
+    display.Init(display_config);
 }
 
 void DaisyPatch::InitMidi()

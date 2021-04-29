@@ -119,7 +119,7 @@ class DaisyPatch
     AnalogControl controls[CTRL_LAST];      /**< Array of controls*/
     GateIn        gate_input[GATE_IN_LAST]; /**< Gate inputs  */
     MidiHandler   midi;                     /**< Handles midi*/
-    OledDisplay<SSD130xDriver<SSD130xSPITransport>> display;                  /**< & */
+    OledDisplay<SSD130xDriver<128, 64, SSD130x4WireSpiTransport>> display;                  /**< & */
 
     // TODO: Add class for Gate output
     dsy_gpio gate_output; /**< &  */

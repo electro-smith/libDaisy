@@ -15,10 +15,23 @@ namespace daisy
 class SSD130xI2CTransport
 {
   public:
-    void Init(const I2CHandle::Config& i2c_conf, uint8_t i2c_address = 0x3C)
+    struct Config
     {
-        i2c_address_ = i2c_address;
-        i2c_.Init(i2c_conf);
+        I2CHandle::Config i2c_config;
+        uint8_t           i2c_address;
+        void              Defaults()
+        {
+            i2c_config.periph         = I2CHandle::Config::Peripheral::I2C_1;
+            i2c_config.speed          = I2CHandle::Config::Speed::I2C_1MHZ;
+            i2c_config.pin_config.scl = {DSY_GPIOB, 8};
+            i2c_config.pin_config.sda = {DSY_GPIOB, 9};
+            i2c_address               = 0x3C;
+        }
+    };
+    void Init(const Config& config)
+    {
+        i2c_address_ = config.i2c_address;
+        i2c_.Init(config.i2c_config);
     };
     void SendCommand(uint8_t cmd)
     {
@@ -43,23 +56,30 @@ class SSD130xI2CTransport
 /**
  * 4 Wire SPI Transport for SSD1306 / SSD1309 OLED display devices
  */
-class SSD130xSPITransport
+class SSD130x4WireSpiTransport
 {
   public:
-    enum Pins
+    struct Config
     {
-        DATA_COMMAND, /**< Data command pin. */
-        RESET,        /**< Reset pin */
-        NUM_PINS,     /**< Num pins */
+        struct
+        {
+            dsy_gpio_pin dc;    /**< & */
+            dsy_gpio_pin reset; /**< & */
+        } pin_config;
+        void Defaults()
+        {
+            pin_config.dc    = {DSY_GPIOB, 4};
+            pin_config.reset = {DSY_GPIOB, 15};
+        }
     };
-    void Init(dsy_gpio_pin* pin_cfg)
+    void Init(const Config& config)
     {
         // Initialize both GPIO
         pin_dc_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_dc_.pin  = pin_cfg[DATA_COMMAND];
+        pin_dc_.pin  = config.pin_config.dc;
         dsy_gpio_init(&pin_dc_);
         pin_reset_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_reset_.pin  = pin_cfg[RESET];
+        pin_reset_.pin  = config.pin_config.reset;
         dsy_gpio_init(&pin_reset_);
         // Initialize SPI
         spi_.Init();
@@ -92,82 +112,29 @@ class SSD130xSPITransport
 /**
  * A driver implementation for the SSD1306/SSD1309
  */
-template <typename Transport>
+template <size_t width, size_t height, typename Transport>
 class SSD130xDriver
 {
   public:
-    enum PixelDimensions
+    struct Config
     {
-        W128_H64,
-        W128_H32,
-        W96_H16,
-        W64_H48,
-        W64_H32
+        Transport transport;
     };
 
-    void Init(const Transport& transport, PixelDimensions dimensions = W128_H64)
+    void Init(const Config& config)
     {
-        transport_ = transport;
+        transport_ = config.transport;
 
-        switch(dimensions)
-        {
-            case W128_H64:
-                width_  = 128;
-                height_ = 64;
-                break;
-            case W128_H32:
-                width_  = 128;
-                height_ = 32;
-                break;
-            case W96_H16:
-                width_  = 96;
-                height_ = 16;
-                break;
-            case W64_H48:
-                width_  = 64;
-                height_ = 48;
-                break;
-            case W64_H32:
-                width_  = 64;
-                height_ = 32;
-                break;
-            default:
-                width_  = 128;
-                height_ = 64;
-                break;
-        }
-
+        // Init routine...
 
         // Display Off
         transport_.SendCommand(0xaE);
         // Dimension dependent commands...
-        switch(dimensions)
+        switch(height)
         {
-            case W128_H64:
+            case 16:
                 // Display Clock Divide Ratio
                 transport_.SendCommand(0xD5);
-                transport_.SendCommand(0x80);
-                // Multiplex Ratio
-                transport_.SendCommand(0xA8);
-                transport_.SendCommand(0x3F);
-                // COM Pins
-                transport_.SendCommand(0xDA);
-                transport_.SendCommand(0x12);
-                break;
-            case W128_H32:
-                // Display Clock Divide Ratio
-                transport_.SendCommand(0xD5);
-                transport_.SendCommand(0x80);
-                // Multiplex Ratio
-                transport_.SendCommand(0xA8);
-                transport_.SendCommand(0x1F);
-                // COM Pins
-                transport_.SendCommand(0xDA);
-                transport_.SendCommand(0x02);
-                break;
-            case W96_H16:
-                // Display Clock Divide Ratio
-                transport_.SendCommand(0xd5);
                 transport_.SendCommand(0x60);
                 // Multiplex Ratio
                 transport_.SendCommand(0xA8);
@@ -176,7 +143,26 @@ class SSD130xDriver
                 transport_.SendCommand(0xDA);
                 transport_.SendCommand(0x02);
                 break;
-            case W64_H48:
+            case 32:
+                // Display Clock Divide Ratio
+                transport_.SendCommand(0xD5);
+                transport_.SendCommand(0x80);
+                // Multiplex Ratio
+                transport_.SendCommand(0xA8);
+                transport_.SendCommand(0x1F);
+                // COM Pins
+                transport_.SendCommand(0xDA);
+                if(width == 64)
+                {
+                    transport_.SendCommand(0x12);
+                }
+                else
+                {
+                    transport_.SendCommand(0x02);
+                }
+
+                break;
+            case 48:
                 // Display Clock Divide Ratio
                 transport_.SendCommand(0xD5);
                 transport_.SendCommand(0x80);
@@ -187,13 +173,13 @@ class SSD130xDriver
                 transport_.SendCommand(0xDA);
                 transport_.SendCommand(0x12);
                 break;
-            case W64_H32:
+            default: // 128
                 // Display Clock Divide Ratio
                 transport_.SendCommand(0xD5);
                 transport_.SendCommand(0x80);
                 // Multiplex Ratio
                 transport_.SendCommand(0xA8);
-                transport_.SendCommand(0x1F);
+                transport_.SendCommand(0x3F);
                 // COM Pins
                 transport_.SendCommand(0xDA);
                 transport_.SendCommand(0x12);
@@ -231,10 +217,10 @@ class SSD130xDriver
         transport_.SendCommand(0xAF); //--turn on oled panel
     };
 
-    uint16_t Width() { return width_; };
-    uint16_t Height() { return height_; };
-    uint16_t CurrentX() { return current_x_; };
-    uint16_t CurrentY() { return current_y_; };
+    size_t Width() { return width; };
+    size_t Height() { return height; };
+    size_t CurrentX() { return current_x_; };
+    size_t CurrentY() { return current_y_; };
 
     void SetCursor(uint8_t x, uint8_t y)
     {
@@ -244,12 +230,12 @@ class SSD130xDriver
 
     void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on)
     {
-        if(x >= width_ || y >= height_)
+        if(x >= width || y >= height)
             return;
         if(on)
-            buffer_[x + (y / 8) * width_] |= (1 << (y % 8));
+            buffer_[x + (y / 8) * width] |= (1 << (y % 8));
         else
-            buffer_[x + (y / 8) * width_] &= ~(1 << (y % 8));
+            buffer_[x + (y / 8) * width] &= ~(1 << (y % 8));
     }
 
     void Fill(bool on)
@@ -267,31 +253,26 @@ class SSD130xDriver
     {
         uint8_t i;
         uint8_t high_column_addr;
-        switch(height_)
+        switch(height)
         {
             case 32: high_column_addr = 0x12; break;
 
             default: high_column_addr = 0x10; break;
         }
-        for(i = 0; i < (height_ / 8); i++)
+        for(i = 0; i < (height / 8); i++)
         {
             transport_.SendCommand(0xB0 + i);
             transport_.SendCommand(0x00);
             transport_.SendCommand(high_column_addr);
-            transport_.SendData(&buffer_[width_ * i], width_);
+            transport_.SendData(&buffer_[width * i], width);
         }
     };
 
   private:
-    PixelDimensions dimensions_;
-    uint16_t        width_;
-    uint16_t        height_;
     uint16_t        current_x_;
     uint16_t        current_y_;
     Transport       transport_;
-    // Create a display buffer according to the largest possible display dimensions.
-    // TODO - is there a way to statically initialize this dependent on display dimensions?
-    uint8_t buffer_[128 * 64 / 8];
+    uint8_t         buffer_[width * height / 8];
 };
 
 }; // namespace daisy

@@ -21,11 +21,12 @@ class OledDisplay
     OledDisplay() {}
     ~OledDisplay() {}
 
-    /** 
-     * 
-    \param driver the driver to use
-    */
-    void Init(const DisplayDriver& driver) { driver_ = driver; }
+    struct Config
+    {
+        DisplayDriver driver;
+    };
+
+    void Init(const Config& config) { driver_ = config.driver; }
 
     uint16_t Height() { return driver_.Height(); }
     uint16_t Width() { return driver_.Width(); }
@@ -272,8 +273,8 @@ class OledDisplay
             return 0;
 
         // Check remaining space on current line
-        if(driver_.Width < (driver_.CurrentX + font.FontWidth)
-           || driver_.Height < (driver_.CurrentY + font.FontHeight))
+        if(driver_.Width() < (driver_.CurrentX() + font.FontWidth)
+           || driver_.Height() < (driver_.CurrentY() + font.FontHeight))
         {
             // Not enough space on current line
             return 0;
@@ -287,18 +288,18 @@ class OledDisplay
             {
                 if((b << j) & 0x8000)
                 {
-                    DrawPixel(driver_.CurrentX + j, (driver_.CurrentY + i), on);
+                    DrawPixel(driver_.CurrentX() + j, (driver_.CurrentY() + i), on);
                 }
                 else
                 {
                     DrawPixel(
-                        driver_.CurrentX + j, (driver_.CurrentY + i), !on);
+                        driver_.CurrentX() + j, (driver_.CurrentY() + i), !on);
                 }
             }
         }
 
         // The current space is now taken
-        driver_.CurrentX += font.FontWidth;
+        driver_.SetCursor(driver_.CurrentX() + font.FontWidth, driver_.CurrentY());
 
         // Return written char for validation
         return ch;
