@@ -43,6 +43,7 @@
 #include "dev/codec_pcm3060.h"
 #include "dev/codec_wm8731.h"
 #include "dev/lcd_hd44780.h"
+#include "ui/UiEventQueue.h"
 #include "util/scopedirqblocker.h"
 #include "util/CpuLoadMeter.h"
 #include "util/FIFO.h"
@@ -128,6 +129,12 @@
     @{ 
     */
 /** @} END BOARDS */
+
+/** @defgroup ui UI
+        @brief UI system. UI event queue, event readers, etc.
+    @{ 
+    */
+/** @} END UI */
 
 /** @defgroup utility UTILITY
         @brief General utilities. Ringbuffers, LED colors, OLED stuff, etc.
