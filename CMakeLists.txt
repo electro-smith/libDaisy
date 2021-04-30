@@ -57,21 +57,7 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/per/uart.cpp
     ${MODULE_DIR}/util/color.cpp
     ${MODULE_DIR}/util/WaveTableLoader.cpp
-    )
-target_link_libraries(${TARGET} PUBLIC
-    STM_HAL
-    )
 
-target_include_directories(${TARGET} PUBLIC
-    ${MODULE_DIR}
-    )
-
-set_target_properties(${TARGET} PROPERTIES PUBLIC
-  CXX_STANDARD 14 
-  CXX_STANDARD_REQUIRED
-  )
-
-add_library(STM_HAL STATIC
     Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c
     Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_adc.c
     Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_adc_ex.c
@@ -182,7 +168,7 @@ add_library(STM_HAL STATIC
     Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_tim.c
     Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_usart.c
     Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_usb.c
-    Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_utils.c 
+    Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_utils.c
 
     Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c
     Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c
@@ -190,20 +176,12 @@ add_library(STM_HAL STATIC
     Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c
     Middlewares/Third_Party/FatFs/src/diskio.c
     Middlewares/Third_Party/FatFs/src/ff.c
-    Middlewares/Third_Party/FatFs/src/ff_gen_drv.c 
+    Middlewares/Third_Party/FatFs/src/ff_gen_drv.c
     core/startup_stm32h750xx.c
     )
 
-set_target_properties(STM_HAL PROPERTIES PUBLIC
-  C_STANDARD 11 
-  C_STANDARD_REQUIRED
-  )
-
-  target_compile_options(STM_HAL
-      PRIVATE
--Wall -Wno-attributes -Wno-strict-aliasing -Wno-maybe-uninitialized -Wno-missing-attributes -Wno-stringop-overflow
-      )
-target_include_directories(STM_HAL PUBLIC
+target_include_directories(${TARGET} PUBLIC
+    ${MODULE_DIR}
     Drivers/CMSIS/Include
     Drivers/CMSIS/Device/ST/STM32H7xx/Include
     Drivers/STM32H7xx_HAL_Driver/Inc
@@ -216,7 +194,25 @@ target_include_directories(STM_HAL PUBLIC
     src/usbd
     )
 
-target_compile_definitions(STM_HAL PUBLIC
+set_target_properties(${TARGET} PROPERTIES
+  CXX_STANDARD 14
+  CXX_STANDARD_REQUIRED
+  C_STANDARD 11
+  C_STANDARD_REQUIRED
+  )
+
+  target_compile_options(${TARGET}
+      PUBLIC
+      -Wall
+      -Wno-attributes
+      -Wno-strict-aliasing
+      -Wno-maybe-uninitialized
+      -Wno-missing-attributes
+      -Wno-stringop-overflow
+      $<$<COMPILE_LANGUAGE:CXX>:-Wno-register>
+      )
+
+  target_compile_definitions(${TARGET} PUBLIC
     CORE_CM7
     STM32H750xx
     STM32H750IB
@@ -224,5 +220,5 @@ target_compile_definitions(STM_HAL PUBLIC
     flash_layout
     HSE_VALUE=16000000
     USE_HAL_DRIVER
-    USE_FULL_LL_DRIVER 
+    USE_FULL_LL_DRIVER
     )
