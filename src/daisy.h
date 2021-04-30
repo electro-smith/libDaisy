@@ -45,6 +45,7 @@
 #include "dev/lcd_hd44780.h"
 #include "ui/ButtonMonitor.h"
 #include "ui/PotMonitor.h"
+#include "ui/UI.h"
 #include "ui/UiEventQueue.h"
 #include "util/scopedirqblocker.h"
 #include "util/CpuLoadMeter.h"
