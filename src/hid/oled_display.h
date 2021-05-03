@@ -23,10 +23,10 @@ class OledDisplay
 
     struct Config
     {
-        DisplayDriver driver;
+        typename DisplayDriver::Config driver_config;
     };
 
-    void Init(const Config& config) { driver_ = config.driver; }
+    void Init(Config config) { driver_.Init(config.driver_config); }
 
     uint16_t Height() { return driver_.Height(); }
     uint16_t Width() { return driver_.Width(); }
@@ -288,7 +288,8 @@ class OledDisplay
             {
                 if((b << j) & 0x8000)
                 {
-                    DrawPixel(driver_.CurrentX() + j, (driver_.CurrentY() + i), on);
+                    DrawPixel(
+                        driver_.CurrentX() + j, (driver_.CurrentY() + i), on);
                 }
                 else
                 {
@@ -299,7 +300,8 @@ class OledDisplay
         }
 
         // The current space is now taken
-        driver_.SetCursor(driver_.CurrentX() + font.FontWidth, driver_.CurrentY());
+        driver_.SetCursor(driver_.CurrentX() + font.FontWidth,
+                          driver_.CurrentY());
 
         // Return written char for validation
         return ch;
@@ -353,6 +355,7 @@ class OledDisplay
     void SendData(uint8_t* buff, size_t size) { driver_.SendData(buff, size); };
 };
 /** @} */
+
 } // namespace daisy
 
 #endif

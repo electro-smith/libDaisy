@@ -211,7 +211,7 @@ class DaisyField
     void VegasMode();
 
     DaisySeed                 seed;
-    OledDisplay<SSD130xDriver<128, 64, SSD130x4WireSpiTransport>> display;
+    OledDisplay<SSD130x4WireSpi128x64Driver> display;
     dsy_gpio                  gate_out;
     GateIn                    gate_in;
     LedDriverPca9685<2, true> led_driver;

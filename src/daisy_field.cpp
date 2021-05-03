@@ -125,18 +125,11 @@ void DaisyField::Init(bool boost)
     keyboard_sr_.Init(keyboard_cfg);
 
     // OLED
-    SSD130x4WireSpiTransport display_transport;
-    SSD130x4WireSpiTransport::Config display_transport_config;
-        display_transport_config.pin_config.dc = seed.GetPin(PIN_OLED_CMD);
-    display_transport_config.pin_config.reset = {DSY_GPIOX, 0};// Not a real pin...
-    display_transport.Init(display_transport_config);
+    OledDisplay<SSD130x4WireSpi128x64Driver>::Config display_config;
 
-    SSD130xDriver<128, 64, SSD130x4WireSpiTransport> display_driver;
-    SSD130xDriver<128, 64, SSD130x4WireSpiTransport>::Config display_driver_config; 
-    display_driver_config.transport = display_transport;
-    display_driver.Init(display_driver_config);
-    OledDisplay<SSD130xDriver<128, 64, SSD130x4WireSpiTransport>>::Config display_config;
-    display_config.driver = display_driver;
+    display_config.driver_config.transport_config.pin_config.dc = seed.GetPin(PIN_OLED_CMD);
+    display_config.driver_config.transport_config.pin_config.reset = {DSY_GPIOX, 0};// Not a real pin...
+
     display.Init(display_config);
 
     // LEDs
