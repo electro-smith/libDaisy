@@ -5,4 +5,4 @@
 STARTDIR='./src/**'
 find $STARTDIR -iname '*.h' -type f -exec sed -i 's/\t/    /g' {} +
 find $STARTDIR -iname '*.cpp' -type f -exec sed -i 's/\t/    /g' {} +
-clang-format -i $STARTDIR/*.cpp $STARTDIR/*.c $STARTDIR/*.h
+clang-format  --verbose -i $STARTDIR.cpp $STARTDIR.c $STARTDIR.h $STARTDIR/*.cpp $STARTDIR/*.c $STARTDIR/*.h
