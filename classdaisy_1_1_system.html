@@ -105,6 +105,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a74cb8753b9a5b8c36be56bf92378dd39"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93151b0dbf6dafd33550c472418a4b29"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_system.html#a93151b0dbf6dafd33550c472418a4b29">DelayTicks</a> (uint32_t delay_ticks)</td></tr>
 <tr class="separator:a93151b0dbf6dafd33550c472418a4b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7e0bb7a214d85ceaa2264f2d00afd5a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_system.html#ae7e0bb7a214d85ceaa2264f2d00afd5a">ResetToBootloader</a> ()</td></tr>
+<tr class="separator:ae7e0bb7a214d85ceaa2264f2d00afd5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45903b01f0649d2fcf6b8f2c51484618"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_system.html#a45903b01f0649d2fcf6b8f2c51484618">GetSysClkFreq</a> ()</td></tr>
 <tr class="separator:a45903b01f0649d2fcf6b8f2c51484618"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71e6876c84c1ede73337383227b708dd"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_system.html#a71e6876c84c1ede73337383227b708dd">GetHClkFreq</a> ()</td></tr>
@@ -473,6 +475,32 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Jumps to the first address of the external flash chip (0x90000000) If there is no code there, the chip will likely fall through to the while() loop TODO: Documentation/Loader for using external flash coming soon. </p>
+
+</div>
+</div>
+<a id="ae7e0bb7a214d85ceaa2264f2d00afd5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7e0bb7a214d85ceaa2264f2d00afd5a">&#9670;&nbsp;</a></span>ResetToBootloader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void daisy::System::ResetToBootloader </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Triggers a reset of the seed and starts in bootloarder mode to allow firmware update. </p>
 
 </div>
 </div>
