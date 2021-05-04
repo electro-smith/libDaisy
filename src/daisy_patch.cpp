@@ -140,9 +140,9 @@ void DaisyPatch::DisplayControls(bool invert)
             float  v;
             size_t dest;
             curx = (barspacing * i + 1) + (barwidth * i);
-            cury = SSD1309_HEIGHT;
+            cury = display.Height();
             v    = GetKnobValue(static_cast<DaisyPatch::Ctrl>(i));
-            dest = (v * SSD1309_HEIGHT);
+            dest = (v * display.Height());
             for(size_t j = dest; j > 0; j--)
             {
                 for(size_t k = 0; k < barwidth; k++)
@@ -228,10 +228,14 @@ void DaisyPatch::InitControls()
 
 void DaisyPatch::InitDisplay()
 {
-    dsy_gpio_pin pincfg[OledDisplay::NUM_PINS];
-    pincfg[OledDisplay::DATA_COMMAND] = seed.GetPin(PIN_OLED_DC);
-    pincfg[OledDisplay::RESET]        = seed.GetPin(PIN_OLED_RESET);
-    display.Init(pincfg);
+    OledDisplay<SSD130x4WireSpi128x64Driver>::Config display_config;
+
+    display_config.driver_config.transport_config.pin_config.dc
+        = seed.GetPin(PIN_OLED_DC);
+    display_config.driver_config.transport_config.pin_config.reset
+        = seed.GetPin(PIN_OLED_RESET);
+
+    display.Init(display_config);
 }
 
 void DaisyPatch::InitMidi()
