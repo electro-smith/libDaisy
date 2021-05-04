@@ -45,6 +45,11 @@ class Led
     */
     void Update();
 
+    /** Set the rate at which you'll update the leds without reiniting the led
+     *  \param sample_rate New update rate in hz.
+    */
+    inline void SetSampleRate(float sample_rate) { samplerate_ = sample_rate; }
+
   private:
     size_t   pwm_cnt_, pwm_thresh_;
     float    bright_;
