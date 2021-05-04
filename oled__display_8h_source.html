@@ -73,106 +73,307 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef DSY_OLED_DISPLAY_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define DSY_OLED_DISPLAY_H </span></div>
 <div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;cmath&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdlib.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;util/oled_fonts.h&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;daisy_core.h&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#ifndef SSD1309_HEIGHT</span></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#define SSD1309_HEIGHT 64 </span></div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#ifndef SSD1309_WIDTH</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define SSD1309_WIDTH 128 </span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacedaisy.html">daisy</a></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;util/oled_fonts.h&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;daisy_core.h&quot;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#ifndef deg2rad</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#define deg2rad(deg) ((deg)*3.141592 / 180.0)</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespacedaisy.html">daisy</a></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;{</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">template</span> &lt;<span class="keyword">typename</span> DisplayDriver&gt;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html">   18</a></span>&#160;<span class="keyword">class </span><a class="code" href="classdaisy_1_1_oled_display.html">OledDisplay</a></div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html">   31</a></span>&#160;<span class="keyword">class </span><a class="code" href="classdaisy_1_1_oled_display.html">OledDisplay</a></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;{</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cf">   35</a></span>&#160;    <span class="keyword">enum</span> <a class="code" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cf">Pins</a></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    {</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfa20eda4c5e12f21698459f2db74c383fb">   37</a></span>&#160;        <a class="code" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfa20eda4c5e12f21698459f2db74c383fb">DATA_COMMAND</a>, </div>
-<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfa67697d8ab522b9fb584155f838179a4d">   38</a></span>&#160;        <a class="code" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfa67697d8ab522b9fb584155f838179a4d">RESET</a>,        </div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfaaa81b094c752fe9ddfe072d54003ee1f">   39</a></span>&#160;        <a class="code" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfaaa81b094c752fe9ddfe072d54003ee1f">NUM_PINS</a>,     </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    };</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="classdaisy_1_1_oled_display.html">OledDisplay</a>() {}</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    ~OledDisplay() {}</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="comment">// TODO:</span></div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="comment">/* - add I2C Support.</span></div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="comment">    - add configuration for specific spi/i2c peripherals (currently only uses SPI1, w/ hardware controlled chip select.</span></div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">    - re-add support for SSD1306 displays</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="comment">    */</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a3db22d3503032fa5f1326009731668e8">   54</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a3db22d3503032fa5f1326009731668e8">Init</a>(<a class="code" href="structdsy__gpio__pin.html">dsy_gpio_pin</a>* pin_cfg);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#ae0170fddb3afb9b8b008a69ad2578737">   60</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#ae0170fddb3afb9b8b008a69ad2578737">Fill</a>(<span class="keywordtype">bool</span> on);</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#abdcdfa55bb878b1effa00c5f2939b729">   68</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#abdcdfa55bb878b1effa00c5f2939b729">DrawPixel</a>(uint_fast8_t x, uint_fast8_t y, <span class="keywordtype">bool</span> on);</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a55a315b53197709b55986c4340d08655">   78</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a55a315b53197709b55986c4340d08655">DrawLine</a>(uint_fast8_t x1,</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                  uint_fast8_t y1,</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                  uint_fast8_t x2,</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                  uint_fast8_t y2,</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                  <span class="keywordtype">bool</span>         on);</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#aec040120d275ea3ce3c8b6d8aa44bcca">   92</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#aec040120d275ea3ce3c8b6d8aa44bcca">DrawRect</a>(uint_fast8_t x1,</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;                  uint_fast8_t y1,</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                  uint_fast8_t x2,</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;                  uint_fast8_t y2,</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;                  <span class="keywordtype">bool</span>         on,</div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;                  <span class="keywordtype">bool</span>         fill = <span class="keyword">false</span>);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
-<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a9d418dcbc7da0b73c49f46c3ce76facb">  108</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a9d418dcbc7da0b73c49f46c3ce76facb">DrawArc</a>(uint_fast8_t x,</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                 uint_fast8_t y,</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;                 uint_fast8_t radius,</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                 int_fast16_t start_angle,</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                 int_fast16_t sweep,</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                 <span class="keywordtype">bool</span>         on);</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    <span class="keywordtype">void</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#ab81401878762f8a279f654a858f5a491">  123</a></span>&#160;    <a class="code" href="classdaisy_1_1_oled_display.html#ab81401878762f8a279f654a858f5a491">DrawCircle</a>(uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, <span class="keywordtype">bool</span> on)</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    {</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <a class="code" href="classdaisy_1_1_oled_display.html#a9d418dcbc7da0b73c49f46c3ce76facb">DrawArc</a>(x, y, radius, 0, 360, on);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    };</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="classdaisy_1_1_oled_display.html">OledDisplay</a>() {}</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    ~<a class="code" href="classdaisy_1_1_oled_display.html">OledDisplay</a>() {}</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="structdaisy_1_1_oled_display_1_1_config.html">   24</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structdaisy_1_1_oled_display_1_1_config.html">Config</a></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">typename</span> DisplayDriver::Config driver_config;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    };</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keywordtype">void</span> Init(<a class="code" href="structdaisy_1_1_oled_display_1_1_config.html">Config</a> config) { driver_.Init(config.driver_config); }</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    uint16_t Height() { <span class="keywordflow">return</span> driver_.Height(); }</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    uint16_t Width() { <span class="keywordflow">return</span> driver_.Width(); }</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    uint16_t CurrentX() { <span class="keywordflow">return</span> driver_.CurrentX(); };</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    uint16_t CurrentY() { <span class="keywordflow">return</span> driver_.CurrentY(); };</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a78ac384a3c8e6c834ba1541942c4ad79">   40</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a78ac384a3c8e6c834ba1541942c4ad79">Fill</a>(<span class="keywordtype">bool</span> on) { driver_.Fill(on); }</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">   48</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">DrawPixel</a>(uint_fast8_t x, uint_fast8_t y, <span class="keywordtype">bool</span> on)</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    {</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        driver_.DrawPixel(x, y, on);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a50abdc9c06e2d0a4e5367b6c95e763c3">   61</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a50abdc9c06e2d0a4e5367b6c95e763c3">DrawLine</a>(uint_fast8_t x1,</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                  uint_fast8_t y1,</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                  uint_fast8_t x2,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                  uint_fast8_t y2,</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                  <span class="keywordtype">bool</span>         on)</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    {</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        int_fast16_t deltaX = abs((int_fast16_t)x2 - (int_fast16_t)x1);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        int_fast16_t deltaY = abs((int_fast16_t)y2 - (int_fast16_t)y1);</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        int_fast16_t signX  = ((x1 &lt; x2) ? 1 : -1);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;        int_fast16_t signY  = ((y1 &lt; y2) ? 1 : -1);</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        int_fast16_t error  = deltaX - deltaY;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        int_fast16_t error2;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">DrawPixel</a>(x2, y2, on);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keywordflow">while</span>((x1 != x2) || (y1 != y2))</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;        {</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            <a class="code" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">DrawPixel</a>(x1, y1, on);</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            error2 = error * 2;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;            <span class="keywordflow">if</span>(error2 &gt; -deltaY)</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                error -= deltaY;</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                x1 += signX;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordflow">if</span>(error2 &lt; deltaX)</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;                error += deltaX;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;                y1 += signY;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;            }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;        }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00101"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a442fc996376ea13fa93cdaa7981b0c67">  101</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a442fc996376ea13fa93cdaa7981b0c67">DrawRect</a>(uint_fast8_t x1,</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;                  uint_fast8_t y1,</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;                  uint_fast8_t x2,</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;                  uint_fast8_t y2,</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;                  <span class="keywordtype">bool</span>         on,</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;                  <span class="keywordtype">bool</span>         fill = <span class="keyword">false</span>)</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    {</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="keywordflow">if</span>(fill)</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        {</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <span class="keywordflow">for</span>(uint_fast8_t x = x1; x &lt;= x2; x++)</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;            {</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                <span class="keywordflow">for</span>(uint_fast8_t y = y1; y &lt;= y2; y++)</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;                {</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;                    <a class="code" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">DrawPixel</a>(x, y, on);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;                }</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            }</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        }</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            <a class="code" href="classdaisy_1_1_oled_display.html#a50abdc9c06e2d0a4e5367b6c95e763c3">DrawLine</a>(x1, y1, x2, y1, on);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;            <a class="code" href="classdaisy_1_1_oled_display.html#a50abdc9c06e2d0a4e5367b6c95e763c3">DrawLine</a>(x2, y1, x2, y2, on);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            <a class="code" href="classdaisy_1_1_oled_display.html#a50abdc9c06e2d0a4e5367b6c95e763c3">DrawLine</a>(x2, y2, x1, y2, on);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            <a class="code" href="classdaisy_1_1_oled_display.html#a50abdc9c06e2d0a4e5367b6c95e763c3">DrawLine</a>(x1, y2, x1, y1, on);</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        }</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    }</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160; </div>
-<div class="line"><a name="l00136"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#aeca27f2d60a0aeff4b79b88977d20779">  136</a></span>&#160;    <span class="keywordtype">char</span> <a class="code" href="classdaisy_1_1_oled_display.html#aeca27f2d60a0aeff4b79b88977d20779">WriteChar</a>(<span class="keywordtype">char</span> ch, <a class="code" href="struct_font_def.html">FontDef</a> font, <span class="keywordtype">bool</span> on);</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00147"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a574063322b9c94766b7c8cc6d4cbbab3">  147</a></span>&#160;    <span class="keywordtype">char</span> <a class="code" href="classdaisy_1_1_oled_display.html#a574063322b9c94766b7c8cc6d4cbbab3">WriteString</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* str, <a class="code" href="struct_font_def.html">FontDef</a> font, <span class="keywordtype">bool</span> on);</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160; </div>
-<div class="line"><a name="l00154"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a6464c4429950b9d3ebe3ceedc9edb606">  154</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a6464c4429950b9d3ebe3ceedc9edb606">SetCursor</a>(uint8_t x, uint8_t y);</div>
+<div class="line"><a name="l00137"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a50d59d6390968a764796271c344cc4cd">  137</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a50d59d6390968a764796271c344cc4cd">DrawArc</a>(uint_fast8_t x,</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;                 uint_fast8_t y,</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;                 uint_fast8_t radius,</div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;                 int_fast16_t start_angle,</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;                 int_fast16_t sweep,</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;                 <span class="keywordtype">bool</span>         on)</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;    {</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;        <span class="comment">// Values to calculate the circle</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        int_fast16_t t_x, t_y, err, e2;</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;        <span class="comment">// Temporary values to speed up comparisons</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordtype">float</span> t_sxy, t_syx, t_sxny, t_synx;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;        <span class="keywordtype">float</span> t_exy, t_eyx, t_exny, t_eynx;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;        <span class="keywordtype">float</span> start_angle_rad, end_angle_rad;</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;        <span class="keywordtype">float</span> start_x, start_y, end_x, end_y;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160; </div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;        <span class="keywordtype">bool</span> d1, d2, d3, d4;</div>
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
-<div class="line"><a name="l00160"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a41b556a03d7b340a7d64cc09600b6ddf">  160</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a41b556a03d7b340a7d64cc09600b6ddf">Update</a>();</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordtype">void</span> Reset();</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordtype">void</span> SendCommand(uint8_t <span class="keywordtype">byte</span>);</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordtype">void</span> SendData(uint8_t* buff, <span class="keywordtype">size_t</span> size);</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;};</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;} <span class="comment">// namespace daisy</span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html"><div class="ttname"><a href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a></div><div class="ttdef"><b>Definition:</b> oled_display.h:32</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a3db22d3503032fa5f1326009731668e8"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a3db22d3503032fa5f1326009731668e8">daisy::OledDisplay::Init</a></div><div class="ttdeci">void Init(dsy_gpio_pin *pin_cfg)</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a41b556a03d7b340a7d64cc09600b6ddf"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a41b556a03d7b340a7d64cc09600b6ddf">daisy::OledDisplay::Update</a></div><div class="ttdeci">void Update()</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a55a315b53197709b55986c4340d08655"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a55a315b53197709b55986c4340d08655">daisy::OledDisplay::DrawLine</a></div><div class="ttdeci">void DrawLine(uint_fast8_t x1, uint_fast8_t y1, uint_fast8_t x2, uint_fast8_t y2, bool on)</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a574063322b9c94766b7c8cc6d4cbbab3"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a574063322b9c94766b7c8cc6d4cbbab3">daisy::OledDisplay::WriteString</a></div><div class="ttdeci">char WriteString(const char *str, FontDef font, bool on)</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a6464c4429950b9d3ebe3ceedc9edb606"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a6464c4429950b9d3ebe3ceedc9edb606">daisy::OledDisplay::SetCursor</a></div><div class="ttdeci">void SetCursor(uint8_t x, uint8_t y)</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a9d418dcbc7da0b73c49f46c3ce76facb"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a9d418dcbc7da0b73c49f46c3ce76facb">daisy::OledDisplay::DrawArc</a></div><div class="ttdeci">void DrawArc(uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, int_fast16_t start_angle, int_fast16_t sweep, bool on)</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_ab81401878762f8a279f654a858f5a491"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#ab81401878762f8a279f654a858f5a491">daisy::OledDisplay::DrawCircle</a></div><div class="ttdeci">void DrawCircle(uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, bool on)</div><div class="ttdef"><b>Definition:</b> oled_display.h:123</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_abdcdfa55bb878b1effa00c5f2939b729"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#abdcdfa55bb878b1effa00c5f2939b729">daisy::OledDisplay::DrawPixel</a></div><div class="ttdeci">void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on)</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_ac1e198fa97a58fbe1ff24a06c621c2cf"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cf">daisy::OledDisplay::Pins</a></div><div class="ttdeci">Pins</div><div class="ttdef"><b>Definition:</b> oled_display.h:36</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_ac1e198fa97a58fbe1ff24a06c621c2cfa20eda4c5e12f21698459f2db74c383fb"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfa20eda4c5e12f21698459f2db74c383fb">daisy::OledDisplay::DATA_COMMAND</a></div><div class="ttdeci">@ DATA_COMMAND</div><div class="ttdef"><b>Definition:</b> oled_display.h:37</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_ac1e198fa97a58fbe1ff24a06c621c2cfa67697d8ab522b9fb584155f838179a4d"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfa67697d8ab522b9fb584155f838179a4d">daisy::OledDisplay::RESET</a></div><div class="ttdeci">@ RESET</div><div class="ttdef"><b>Definition:</b> oled_display.h:38</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_ac1e198fa97a58fbe1ff24a06c621c2cfaaa81b094c752fe9ddfe072d54003ee1f"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfaaa81b094c752fe9ddfe072d54003ee1f">daisy::OledDisplay::NUM_PINS</a></div><div class="ttdeci">@ NUM_PINS</div><div class="ttdef"><b>Definition:</b> oled_display.h:39</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_ae0170fddb3afb9b8b008a69ad2578737"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#ae0170fddb3afb9b8b008a69ad2578737">daisy::OledDisplay::Fill</a></div><div class="ttdeci">void Fill(bool on)</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_aec040120d275ea3ce3c8b6d8aa44bcca"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#aec040120d275ea3ce3c8b6d8aa44bcca">daisy::OledDisplay::DrawRect</a></div><div class="ttdeci">void DrawRect(uint_fast8_t x1, uint_fast8_t y1, uint_fast8_t x2, uint_fast8_t y2, bool on, bool fill=false)</div></div>
-<div class="ttc" id="aclassdaisy_1_1_oled_display_html_aeca27f2d60a0aeff4b79b88977d20779"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#aeca27f2d60a0aeff4b79b88977d20779">daisy::OledDisplay::WriteChar</a></div><div class="ttdeci">char WriteChar(char ch, FontDef font, bool on)</div></div>
-<div class="ttc" id="anamespacedaisy_html"><div class="ttname"><a href="namespacedaisy.html">daisy</a></div><div class="ttdoc">Hardware defines and helpers for daisy field platform.</div><div class="ttdef"><b>Definition:</b> daisy_field.h:10</div></div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        d1 = d2 = d3 = d4 = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160; </div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        <span class="keywordtype">bool</span> circle = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        <span class="keywordflow">if</span>(sweep &lt; 0)</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;        {</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;            start_angle += sweep;</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;            sweep = -sweep;</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;        }</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160; </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;        start_angle_rad = deg2rad(start_angle);</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;        end_angle_rad   = deg2rad(start_angle + sweep);</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160; </div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        start_x = cos(start_angle_rad) * radius;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        start_y = -sin(start_angle_rad) * radius;</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        end_x   = cos(end_angle_rad) * radius;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        end_y   = -sin(end_angle_rad) * radius;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160; </div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        <span class="comment">// Check if start and endpoint are very near</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        <span class="keywordflow">if</span>((end_x - start_x) * (end_x - start_x)</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;               + (end_y - start_y) * (end_y - start_y)</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;           &lt; 2.0f)</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;        {</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;            <span class="keywordflow">if</span>(sweep &gt; 180)</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;                circle = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;            <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;                <span class="comment">// Nothing to draw</span></div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;                <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        }</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        t_x = -radius;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;        t_y = 0;</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;        err = 2 - 2 * radius;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160; </div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;        <span class="keywordflow">do</span></div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;        {</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            <span class="keywordflow">if</span>(!circle)</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;            {</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                t_sxy  = start_x * t_y;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;                t_syx  = start_y * t_x;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;                t_sxny = start_x * -t_y;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                t_synx = start_y * -t_x;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;                t_exy  = end_x * t_y;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;                t_eyx  = end_y * t_x;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;                t_exny = end_x * -t_y;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;                t_eynx = end_y * -t_x;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160; </div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;                <span class="keywordflow">if</span>(sweep &gt; 180)</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;                {</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;                    d1 = (t_sxy - t_synx &lt; 0 || t_exy - t_eynx &gt; 0);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;                    d2 = (t_sxy - t_syx &lt; 0 || t_exy - t_eyx &gt; 0);</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;                    d3 = (t_sxny - t_syx &lt; 0 || t_exny - t_eyx &gt; 0);</div>
+<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;                    d4 = (t_sxny - t_synx &lt; 0 || t_exny - t_eynx &gt; 0);</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                }</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                {</div>
+<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;                    d1 = (t_sxy - t_synx &lt; 0 &amp;&amp; t_exy - t_eynx &gt; 0);</div>
+<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;                    d2 = (t_sxy - t_syx &lt; 0 &amp;&amp; t_exy - t_eyx &gt; 0);</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;                    d3 = (t_sxny - t_syx &lt; 0 &amp;&amp; t_exny - t_eyx &gt; 0);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;                    d4 = (t_sxny - t_synx &lt; 0 &amp;&amp; t_exny - t_eynx &gt; 0);</div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;                }</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;            }</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160; </div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;            <span class="keywordflow">if</span>(d1)</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;                <a class="code" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">DrawPixel</a>(x - t_x, y + t_y, on);</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;            <span class="keywordflow">if</span>(d2)</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;                <a class="code" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">DrawPixel</a>(x + t_x, y + t_y, on);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;            <span class="keywordflow">if</span>(d3)</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;                <a class="code" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">DrawPixel</a>(x + t_x, y - t_y, on);</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;            <span class="keywordflow">if</span>(d4)</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;                <a class="code" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">DrawPixel</a>(x - t_x, y - t_y, on);</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            e2 = err;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;            <span class="keywordflow">if</span>(e2 &lt;= t_y)</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            {</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;                t_y++;</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;                err = err + (t_y * 2 + 1);</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;                <span class="keywordflow">if</span>(-t_x == t_y &amp;&amp; e2 &lt;= t_x)</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;                {</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;                    e2 = 0;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;                }</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            }</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            <span class="keywordflow">if</span>(e2 &gt; t_x)</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;            {</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;                t_x++;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;                err = err + (t_x * 2 + 1);</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;            }</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        } <span class="keywordflow">while</span>(t_x &lt;= 0);</div>
+<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;    }</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160; </div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordtype">void</span></div>
+<div class="line"><a name="l00254"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a0af277cb8bcacba830c0d5a586059a77">  254</a></span>&#160;    <a class="code" href="classdaisy_1_1_oled_display.html#a0af277cb8bcacba830c0d5a586059a77">DrawCircle</a>(uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, <span class="keywordtype">bool</span> on)</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;    {</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        <a class="code" href="classdaisy_1_1_oled_display.html#a50d59d6390968a764796271c344cc4cd">DrawArc</a>(x, y, radius, 0, 360, on);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    };</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160; </div>
+<div class="line"><a name="l00267"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#ae4ef9fecce1ddf20ab303c52bfb2c383">  267</a></span>&#160;    <span class="keywordtype">char</span> <a class="code" href="classdaisy_1_1_oled_display.html#ae4ef9fecce1ddf20ab303c52bfb2c383">WriteChar</a>(<span class="keywordtype">char</span> ch, <a class="code" href="struct_font_def.html">FontDef</a> font, <span class="keywordtype">bool</span> on)</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;    {</div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;        uint32_t i, b, j;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;        <span class="comment">// Check if character is valid</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;        <span class="keywordflow">if</span>(ch &lt; 32 || ch &gt; 126)</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160; </div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;        <span class="comment">// Check remaining space on current line</span></div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;        <span class="keywordflow">if</span>(driver_.Width() &lt; (driver_.CurrentX() + font.<a class="code" href="struct_font_def.html#a9e22d0bdbc21eadba6155f31d742f85f">FontWidth</a>)</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;           || driver_.Height() &lt; (driver_.CurrentY() + font.<a class="code" href="struct_font_def.html#a4e3e31a3a441bc010a432564e5da887d">FontHeight</a>))</div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;        {</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;            <span class="comment">// Not enough space on current line</span></div>
+<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;            <span class="keywordflow">return</span> 0;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;        }</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160; </div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;        <span class="comment">// Use the font to write</span></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;        <span class="keywordflow">for</span>(i = 0; i &lt; font.<a class="code" href="struct_font_def.html#a4e3e31a3a441bc010a432564e5da887d">FontHeight</a>; i++)</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;        {</div>
+<div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;            b = font.<a class="code" href="struct_font_def.html#a864722845b4def15a6c53bdc4e94a24a">data</a>[(ch - 32) * font.<a class="code" href="struct_font_def.html#a4e3e31a3a441bc010a432564e5da887d">FontHeight</a> + i];</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;            <span class="keywordflow">for</span>(j = 0; j &lt; font.<a class="code" href="struct_font_def.html#a9e22d0bdbc21eadba6155f31d742f85f">FontWidth</a>; j++)</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;            {</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;                <span class="keywordflow">if</span>((b &lt;&lt; j) &amp; 0x8000)</div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;                {</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;                    <a class="code" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">DrawPixel</a>(</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;                        driver_.CurrentX() + j, (driver_.CurrentY() + i), on);</div>
+<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;                }</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;                {</div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;                    <a class="code" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">DrawPixel</a>(</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;                        driver_.CurrentX() + j, (driver_.CurrentY() + i), !on);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;                }</div>
+<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;            }</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;        }</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;        <span class="comment">// The current space is now taken</span></div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;        driver_.SetCursor(driver_.CurrentX() + font.<a class="code" href="struct_font_def.html#a9e22d0bdbc21eadba6155f31d742f85f">FontWidth</a>,</div>
+<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;                          driver_.CurrentY());</div>
+<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160; </div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;        <span class="comment">// Return written char for validation</span></div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;        <span class="keywordflow">return</span> ch;</div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    }</div>
+<div class="line"><a name="l00318"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#af7ce16385976344372394d634f926de2">  318</a></span>&#160;    <span class="keywordtype">char</span> <a class="code" href="classdaisy_1_1_oled_display.html#af7ce16385976344372394d634f926de2">WriteString</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* str, <a class="code" href="struct_font_def.html">FontDef</a> font, <span class="keywordtype">bool</span> on)</div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;    {</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;        <span class="comment">// Write until null-byte</span></div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;        <span class="keywordflow">while</span>(*str)</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;        {</div>
+<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;            <span class="keywordflow">if</span>(<a class="code" href="classdaisy_1_1_oled_display.html#ae4ef9fecce1ddf20ab303c52bfb2c383">WriteChar</a>(*str, font, on) != *str)</div>
+<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;            {</div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;                <span class="comment">// Char could not be written</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160;                <span class="keywordflow">return</span> *str;</div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;            }</div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160; </div>
+<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;            <span class="comment">// Next char</span></div>
+<div class="line"><a name="l00330"></a><span class="lineno">  330</span>&#160;            str++;</div>
+<div class="line"><a name="l00331"></a><span class="lineno">  331</span>&#160;        }</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160; </div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;        <span class="comment">// Everything ok</span></div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;        <span class="keywordflow">return</span> *str;</div>
+<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;    }</div>
+<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
+<div class="line"><a name="l00342"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a8719e472a97bd7bbcce5d91ab2381948">  342</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a8719e472a97bd7bbcce5d91ab2381948">SetCursor</a>(uint8_t x, uint8_t y) { driver_.SetCursor(x, y); }</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160; </div>
+<div class="line"><a name="l00348"></a><span class="lineno"><a class="line" href="classdaisy_1_1_oled_display.html#a60331920c46d733ce30adc0a0dca2c06">  348</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_oled_display.html#a60331920c46d733ce30adc0a0dca2c06">Update</a>() { driver_.Update(); }</div>
+<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160; </div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    DisplayDriver driver_;</div>
+<div class="line"><a name="l00352"></a><span class="lineno">  352</span>&#160; </div>
+<div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;    <span class="keywordtype">void</span> Reset() { driver_.Reset(); };</div>
+<div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;    <span class="keywordtype">void</span> SendCommand(uint8_t cmd) { driver_.SendCommand(cmd); };</div>
+<div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;    <span class="keywordtype">void</span> SendData(uint8_t* buff, <span class="keywordtype">size_t</span> size) { driver_.SendData(buff, size); };</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;};</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;} <span class="comment">// namespace daisy</span></div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160; </div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassdaisy_1_1_oled_display_html"><div class="ttname"><a href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a></div><div class="ttdef"><b>Definition:</b> oled_display.h:19</div></div>
+<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a0af277cb8bcacba830c0d5a586059a77"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a0af277cb8bcacba830c0d5a586059a77">daisy::OledDisplay::DrawCircle</a></div><div class="ttdeci">void DrawCircle(uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, bool on)</div><div class="ttdef"><b>Definition:</b> oled_display.h:254</div></div>
+<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a2393f47b5d28256b792241c78e14d96d"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">daisy::OledDisplay::DrawPixel</a></div><div class="ttdeci">void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on)</div><div class="ttdef"><b>Definition:</b> oled_display.h:48</div></div>
+<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a442fc996376ea13fa93cdaa7981b0c67"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a442fc996376ea13fa93cdaa7981b0c67">daisy::OledDisplay::DrawRect</a></div><div class="ttdeci">void DrawRect(uint_fast8_t x1, uint_fast8_t y1, uint_fast8_t x2, uint_fast8_t y2, bool on, bool fill=false)</div><div class="ttdef"><b>Definition:</b> oled_display.h:101</div></div>
+<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a50abdc9c06e2d0a4e5367b6c95e763c3"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a50abdc9c06e2d0a4e5367b6c95e763c3">daisy::OledDisplay::DrawLine</a></div><div class="ttdeci">void DrawLine(uint_fast8_t x1, uint_fast8_t y1, uint_fast8_t x2, uint_fast8_t y2, bool on)</div><div class="ttdef"><b>Definition:</b> oled_display.h:61</div></div>
+<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a50d59d6390968a764796271c344cc4cd"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a50d59d6390968a764796271c344cc4cd">daisy::OledDisplay::DrawArc</a></div><div class="ttdeci">void DrawArc(uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, int_fast16_t start_angle, int_fast16_t sweep, bool on)</div><div class="ttdef"><b>Definition:</b> oled_display.h:137</div></div>
+<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a60331920c46d733ce30adc0a0dca2c06"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a60331920c46d733ce30adc0a0dca2c06">daisy::OledDisplay::Update</a></div><div class="ttdeci">void Update()</div><div class="ttdef"><b>Definition:</b> oled_display.h:348</div></div>
+<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a78ac384a3c8e6c834ba1541942c4ad79"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a78ac384a3c8e6c834ba1541942c4ad79">daisy::OledDisplay::Fill</a></div><div class="ttdeci">void Fill(bool on)</div><div class="ttdef"><b>Definition:</b> oled_display.h:40</div></div>
+<div class="ttc" id="aclassdaisy_1_1_oled_display_html_a8719e472a97bd7bbcce5d91ab2381948"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#a8719e472a97bd7bbcce5d91ab2381948">daisy::OledDisplay::SetCursor</a></div><div class="ttdeci">void SetCursor(uint8_t x, uint8_t y)</div><div class="ttdef"><b>Definition:</b> oled_display.h:342</div></div>
+<div class="ttc" id="aclassdaisy_1_1_oled_display_html_ae4ef9fecce1ddf20ab303c52bfb2c383"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#ae4ef9fecce1ddf20ab303c52bfb2c383">daisy::OledDisplay::WriteChar</a></div><div class="ttdeci">char WriteChar(char ch, FontDef font, bool on)</div><div class="ttdef"><b>Definition:</b> oled_display.h:267</div></div>
+<div class="ttc" id="aclassdaisy_1_1_oled_display_html_af7ce16385976344372394d634f926de2"><div class="ttname"><a href="classdaisy_1_1_oled_display.html#af7ce16385976344372394d634f926de2">daisy::OledDisplay::WriteString</a></div><div class="ttdeci">char WriteString(const char *str, FontDef font, bool on)</div><div class="ttdef"><b>Definition:</b> oled_display.h:318</div></div>
+<div class="ttc" id="anamespacedaisy_html"><div class="ttname"><a href="namespacedaisy.html">daisy</a></div><div class="ttdoc">Hardware defines and helpers for daisy field platform.</div><div class="ttdef"><b>Definition:</b> daisy_field.h:11</div></div>
 <div class="ttc" id="astruct_font_def_html"><div class="ttname"><a href="struct_font_def.html">FontDef</a></div><div class="ttdef"><b>Definition:</b> oled_fonts.h:17</div></div>
-<div class="ttc" id="astructdsy__gpio__pin_html"><div class="ttname"><a href="structdsy__gpio__pin.html">dsy_gpio_pin</a></div><div class="ttdef"><b>Definition:</b> daisy_core.h:132</div></div>
+<div class="ttc" id="astruct_font_def_html_a4e3e31a3a441bc010a432564e5da887d"><div class="ttname"><a href="struct_font_def.html#a4e3e31a3a441bc010a432564e5da887d">FontDef::FontHeight</a></div><div class="ttdeci">uint8_t FontHeight</div><div class="ttdef"><b>Definition:</b> oled_fonts.h:19</div></div>
+<div class="ttc" id="astruct_font_def_html_a864722845b4def15a6c53bdc4e94a24a"><div class="ttname"><a href="struct_font_def.html#a864722845b4def15a6c53bdc4e94a24a">FontDef::data</a></div><div class="ttdeci">const uint16_t * data</div><div class="ttdef"><b>Definition:</b> oled_fonts.h:20</div></div>
+<div class="ttc" id="astruct_font_def_html_a9e22d0bdbc21eadba6155f31d742f85f"><div class="ttname"><a href="struct_font_def.html#a9e22d0bdbc21eadba6155f31d742f85f">FontDef::FontWidth</a></div><div class="ttdeci">const uint8_t FontWidth</div><div class="ttdef"><b>Definition:</b> oled_fonts.h:18</div></div>
+<div class="ttc" id="astructdaisy_1_1_oled_display_1_1_config_html"><div class="ttname"><a href="structdaisy_1_1_oled_display_1_1_config.html">daisy::OledDisplay::Config</a></div><div class="ttdef"><b>Definition:</b> oled_display.h:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

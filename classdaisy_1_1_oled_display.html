@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libDaisy: daisy::OledDisplay Class Reference</title>
+<title>libDaisy: daisy::OledDisplay&lt; DisplayDriver &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,84 +66,78 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classdaisy_1_1_oled_display-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">daisy::OledDisplay Class Reference<div class="ingroups"><a class="el" href="group__libdaisy.html">LIBDAISY</a> &raquo; <a class="el" href="group__human__interface.html">HUMAN_INTERFACE</a> &raquo; <a class="el" href="group__feedback.html">FEEDBACK</a></div></div>  </div>
+<div class="title">daisy::OledDisplay&lt; DisplayDriver &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="oled__display_8h_source.html">oled_display.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:ac1e198fa97a58fbe1ff24a06c621c2cf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cf">Pins</a> { <a class="el" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfa20eda4c5e12f21698459f2db74c383fb">DATA_COMMAND</a>
-, <a class="el" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfa67697d8ab522b9fb584155f838179a4d">RESET</a>
-, <a class="el" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfaaa81b094c752fe9ddfe072d54003ee1f">NUM_PINS</a>
- }</td></tr>
-<tr class="separator:ac1e198fa97a58fbe1ff24a06c621c2cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_oled_display_1_1_config.html">Config</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3db22d3503032fa5f1326009731668e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a3db22d3503032fa5f1326009731668e8">Init</a> (<a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> *pin_cfg)</td></tr>
-<tr class="separator:a3db22d3503032fa5f1326009731668e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0170fddb3afb9b8b008a69ad2578737"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#ae0170fddb3afb9b8b008a69ad2578737">Fill</a> (bool on)</td></tr>
-<tr class="separator:ae0170fddb3afb9b8b008a69ad2578737"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abdcdfa55bb878b1effa00c5f2939b729"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#abdcdfa55bb878b1effa00c5f2939b729">DrawPixel</a> (uint_fast8_t x, uint_fast8_t y, bool on)</td></tr>
-<tr class="separator:abdcdfa55bb878b1effa00c5f2939b729"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55a315b53197709b55986c4340d08655"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a55a315b53197709b55986c4340d08655">DrawLine</a> (uint_fast8_t x1, uint_fast8_t y1, uint_fast8_t x2, uint_fast8_t y2, bool on)</td></tr>
-<tr class="separator:a55a315b53197709b55986c4340d08655"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec040120d275ea3ce3c8b6d8aa44bcca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#aec040120d275ea3ce3c8b6d8aa44bcca">DrawRect</a> (uint_fast8_t x1, uint_fast8_t y1, uint_fast8_t x2, uint_fast8_t y2, bool on, bool fill=false)</td></tr>
-<tr class="separator:aec040120d275ea3ce3c8b6d8aa44bcca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d418dcbc7da0b73c49f46c3ce76facb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a9d418dcbc7da0b73c49f46c3ce76facb">DrawArc</a> (uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, int_fast16_t start_angle, int_fast16_t sweep, bool on)</td></tr>
-<tr class="separator:a9d418dcbc7da0b73c49f46c3ce76facb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab81401878762f8a279f654a858f5a491"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#ab81401878762f8a279f654a858f5a491">DrawCircle</a> (uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, bool on)</td></tr>
-<tr class="separator:ab81401878762f8a279f654a858f5a491"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeca27f2d60a0aeff4b79b88977d20779"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#aeca27f2d60a0aeff4b79b88977d20779">WriteChar</a> (char ch, <a class="el" href="struct_font_def.html">FontDef</a> font, bool on)</td></tr>
-<tr class="separator:aeca27f2d60a0aeff4b79b88977d20779"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a574063322b9c94766b7c8cc6d4cbbab3"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a574063322b9c94766b7c8cc6d4cbbab3">WriteString</a> (const char *str, <a class="el" href="struct_font_def.html">FontDef</a> font, bool on)</td></tr>
-<tr class="separator:a574063322b9c94766b7c8cc6d4cbbab3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6464c4429950b9d3ebe3ceedc9edb606"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a6464c4429950b9d3ebe3ceedc9edb606">SetCursor</a> (uint8_t x, uint8_t y)</td></tr>
-<tr class="separator:a6464c4429950b9d3ebe3ceedc9edb606"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41b556a03d7b340a7d64cc09600b6ddf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a41b556a03d7b340a7d64cc09600b6ddf">Update</a> ()</td></tr>
-<tr class="separator:a41b556a03d7b340a7d64cc09600b6ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20febfc6699586dcde5fff70f81b6d6c"><td class="memItemLeft" align="right" valign="top"><a id="a20febfc6699586dcde5fff70f81b6d6c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Init</b> (<a class="el" href="structdaisy_1_1_oled_display_1_1_config.html">Config</a> config)</td></tr>
+<tr class="separator:a20febfc6699586dcde5fff70f81b6d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acae01e6ab323fe4f80e6aa717739a739"><td class="memItemLeft" align="right" valign="top"><a id="acae01e6ab323fe4f80e6aa717739a739"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>Height</b> ()</td></tr>
+<tr class="separator:acae01e6ab323fe4f80e6aa717739a739"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44dc02b1ac3319ed4a4b63fc1b386f87"><td class="memItemLeft" align="right" valign="top"><a id="a44dc02b1ac3319ed4a4b63fc1b386f87"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>Width</b> ()</td></tr>
+<tr class="separator:a44dc02b1ac3319ed4a4b63fc1b386f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a904e95a2a62776ffae14a9601c8b36b6"><td class="memItemLeft" align="right" valign="top"><a id="a904e95a2a62776ffae14a9601c8b36b6"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentX</b> ()</td></tr>
+<tr class="separator:a904e95a2a62776ffae14a9601c8b36b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa01372197164277d9b981c3ae8ca88f7"><td class="memItemLeft" align="right" valign="top"><a id="aa01372197164277d9b981c3ae8ca88f7"></a>
+uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentY</b> ()</td></tr>
+<tr class="separator:aa01372197164277d9b981c3ae8ca88f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78ac384a3c8e6c834ba1541942c4ad79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a78ac384a3c8e6c834ba1541942c4ad79">Fill</a> (bool on)</td></tr>
+<tr class="separator:a78ac384a3c8e6c834ba1541942c4ad79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2393f47b5d28256b792241c78e14d96d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a2393f47b5d28256b792241c78e14d96d">DrawPixel</a> (uint_fast8_t x, uint_fast8_t y, bool on)</td></tr>
+<tr class="separator:a2393f47b5d28256b792241c78e14d96d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50abdc9c06e2d0a4e5367b6c95e763c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a50abdc9c06e2d0a4e5367b6c95e763c3">DrawLine</a> (uint_fast8_t x1, uint_fast8_t y1, uint_fast8_t x2, uint_fast8_t y2, bool on)</td></tr>
+<tr class="separator:a50abdc9c06e2d0a4e5367b6c95e763c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a442fc996376ea13fa93cdaa7981b0c67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a442fc996376ea13fa93cdaa7981b0c67">DrawRect</a> (uint_fast8_t x1, uint_fast8_t y1, uint_fast8_t x2, uint_fast8_t y2, bool on, bool fill=false)</td></tr>
+<tr class="separator:a442fc996376ea13fa93cdaa7981b0c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50d59d6390968a764796271c344cc4cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a50d59d6390968a764796271c344cc4cd">DrawArc</a> (uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, int_fast16_t start_angle, int_fast16_t sweep, bool on)</td></tr>
+<tr class="separator:a50d59d6390968a764796271c344cc4cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0af277cb8bcacba830c0d5a586059a77"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a0af277cb8bcacba830c0d5a586059a77">DrawCircle</a> (uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, bool on)</td></tr>
+<tr class="separator:a0af277cb8bcacba830c0d5a586059a77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4ef9fecce1ddf20ab303c52bfb2c383"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#ae4ef9fecce1ddf20ab303c52bfb2c383">WriteChar</a> (char ch, <a class="el" href="struct_font_def.html">FontDef</a> font, bool on)</td></tr>
+<tr class="separator:ae4ef9fecce1ddf20ab303c52bfb2c383"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7ce16385976344372394d634f926de2"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#af7ce16385976344372394d634f926de2">WriteString</a> (const char *str, <a class="el" href="struct_font_def.html">FontDef</a> font, bool on)</td></tr>
+<tr class="separator:af7ce16385976344372394d634f926de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8719e472a97bd7bbcce5d91ab2381948"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a8719e472a97bd7bbcce5d91ab2381948">SetCursor</a> (uint8_t x, uint8_t y)</td></tr>
+<tr class="separator:a8719e472a97bd7bbcce5d91ab2381948"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60331920c46d733ce30adc0a0dca2c06"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_oled_display.html#a60331920c46d733ce30adc0a0dca2c06">Update</a> ()</td></tr>
+<tr class="separator:a60331920c46d733ce30adc0a0dca2c06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Human Interface Driver for using an OLED Display (SSD1309) For all <code>bool on</code> arguments: true is on, false is off. Credit to Aleksander Alekseev (github.com/afiskon/stm32-ssd1306) on github for a great starting point. adapted for SSD1309 and H7 by shensley, 2020 </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a id="ac1e198fa97a58fbe1ff24a06c621c2cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1e198fa97a58fbe1ff24a06c621c2cf">&#9670;&nbsp;</a></span>Pins</h2>
+<div class="textblock"><h3>template&lt;typename DisplayDriver&gt;<br />
+class daisy::OledDisplay&lt; DisplayDriver &gt;</h3>
+
+<p>This class is for drawing to a monochrome OLED display. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a50d59d6390968a764796271c344cc4cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50d59d6390968a764796271c344cc4cd">&#9670;&nbsp;</a></span>DrawArc()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename DisplayDriver &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cf">daisy::OledDisplay::Pins</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>GPIO Pins that need to be used independent of peripheral used. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac1e198fa97a58fbe1ff24a06c621c2cfa20eda4c5e12f21698459f2db74c383fb"></a>DATA_COMMAND&#160;</td><td class="fielddoc"><p>Data command pin. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ac1e198fa97a58fbe1ff24a06c621c2cfa67697d8ab522b9fb584155f838179a4d"></a>RESET&#160;</td><td class="fielddoc"><p>Reset pin </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ac1e198fa97a58fbe1ff24a06c621c2cfaaa81b094c752fe9ddfe072d54003ee1f"></a>NUM_PINS&#160;</td><td class="fielddoc"><p>Num pins </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a9d418dcbc7da0b73c49f46c3ce76facb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d418dcbc7da0b73c49f46c3ce76facb">&#9670;&nbsp;</a></span>DrawArc()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::OledDisplay::DrawArc </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a>&lt; DisplayDriver &gt;::DrawArc </td>
           <td>(</td>
           <td class="paramtype">uint_fast8_t&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -184,6 +178,11 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Draws an arc around the specified coordinate </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -199,17 +198,19 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab81401878762f8a279f654a858f5a491"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab81401878762f8a279f654a858f5a491">&#9670;&nbsp;</a></span>DrawCircle()</h2>
+<a id="a0af277cb8bcacba830c0d5a586059a77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0af277cb8bcacba830c0d5a586059a77">&#9670;&nbsp;</a></span>DrawCircle()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename DisplayDriver &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::OledDisplay::DrawCircle </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a>&lt; DisplayDriver &gt;::DrawCircle </td>
           <td>(</td>
           <td class="paramtype">uint_fast8_t&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -256,14 +257,19 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a55a315b53197709b55986c4340d08655"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55a315b53197709b55986c4340d08655">&#9670;&nbsp;</a></span>DrawLine()</h2>
+<a id="a50abdc9c06e2d0a4e5367b6c95e763c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50abdc9c06e2d0a4e5367b6c95e763c3">&#9670;&nbsp;</a></span>DrawLine()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename DisplayDriver &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::OledDisplay::DrawLine </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a>&lt; DisplayDriver &gt;::DrawLine </td>
           <td>(</td>
           <td class="paramtype">uint_fast8_t&#160;</td>
           <td class="paramname"><em>x1</em>, </td>
@@ -298,6 +304,11 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Draws a line from (x1, y1) to (y1, y2) </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -312,14 +323,19 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="abdcdfa55bb878b1effa00c5f2939b729"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abdcdfa55bb878b1effa00c5f2939b729">&#9670;&nbsp;</a></span>DrawPixel()</h2>
+<a id="a2393f47b5d28256b792241c78e14d96d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2393f47b5d28256b792241c78e14d96d">&#9670;&nbsp;</a></span>DrawPixel()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename DisplayDriver &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::OledDisplay::DrawPixel </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a>&lt; DisplayDriver &gt;::DrawPixel </td>
           <td>(</td>
           <td class="paramtype">uint_fast8_t&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -342,6 +358,11 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Sets the pixel at the specified coordinate to be on/off. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -354,14 +375,19 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aec040120d275ea3ce3c8b6d8aa44bcca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec040120d275ea3ce3c8b6d8aa44bcca">&#9670;&nbsp;</a></span>DrawRect()</h2>
+<a id="a442fc996376ea13fa93cdaa7981b0c67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a442fc996376ea13fa93cdaa7981b0c67">&#9670;&nbsp;</a></span>DrawRect()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename DisplayDriver &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::OledDisplay::DrawRect </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a>&lt; DisplayDriver &gt;::DrawRect </td>
           <td>(</td>
           <td class="paramtype">uint_fast8_t&#160;</td>
           <td class="paramname"><em>x1</em>, </td>
@@ -402,6 +428,11 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Draws a rectangle based on two coordinates. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -416,20 +447,30 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae0170fddb3afb9b8b008a69ad2578737"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0170fddb3afb9b8b008a69ad2578737">&#9670;&nbsp;</a></span>Fill()</h2>
+<a id="a78ac384a3c8e6c834ba1541942c4ad79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78ac384a3c8e6c834ba1541942c4ad79">&#9670;&nbsp;</a></span>Fill()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename DisplayDriver &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::OledDisplay::Fill </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a>&lt; DisplayDriver &gt;::Fill </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>on</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Fills the entire display with either on/off. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -440,38 +481,19 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3db22d3503032fa5f1326009731668e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3db22d3503032fa5f1326009731668e8">&#9670;&nbsp;</a></span>Init()</h2>
+<a id="a8719e472a97bd7bbcce5d91ab2381948"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8719e472a97bd7bbcce5d91ab2381948">&#9670;&nbsp;</a></span>SetCursor()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename DisplayDriver &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::OledDisplay::Init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> *&#160;</td>
-          <td class="paramname"><em>pin_cfg</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Takes an argument for the pin cfg </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pin_cfg</td><td>should be a pointer to an array of <a class="el" href="classdaisy_1_1_oled_display.html#ac1e198fa97a58fbe1ff24a06c621c2cfaaa81b094c752fe9ddfe072d54003ee1f">OledDisplay::NUM_PINS</a> dsy_gpio_pins </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a6464c4429950b9d3ebe3ceedc9edb606"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6464c4429950b9d3ebe3ceedc9edb606">&#9670;&nbsp;</a></span>SetCursor()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::OledDisplay::SetCursor </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a>&lt; DisplayDriver &gt;::SetCursor </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>x</em>, </td>
@@ -488,6 +510,11 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Moves the 'Cursor' position used for WriteChar, and WriteStr to the specified coordinate. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -499,32 +526,47 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a41b556a03d7b340a7d64cc09600b6ddf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41b556a03d7b340a7d64cc09600b6ddf">&#9670;&nbsp;</a></span>Update()</h2>
+<a id="a60331920c46d733ce30adc0a0dca2c06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60331920c46d733ce30adc0a0dca2c06">&#9670;&nbsp;</a></span>Update()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename DisplayDriver &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::OledDisplay::Update </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a>&lt; DisplayDriver &gt;::Update </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Writes the current display buffer to the OLED device using SPI or I2C depending on how the object was initialized. </p>
 
 </div>
 </div>
-<a id="aeca27f2d60a0aeff4b79b88977d20779"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeca27f2d60a0aeff4b79b88977d20779">&#9670;&nbsp;</a></span>WriteChar()</h2>
+<a id="ae4ef9fecce1ddf20ab303c52bfb2c383"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4ef9fecce1ddf20ab303c52bfb2c383">&#9670;&nbsp;</a></span>WriteChar()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename DisplayDriver &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">char daisy::OledDisplay::WriteChar </td>
+          <td class="memname">char <a class="el" href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a>&lt; DisplayDriver &gt;::WriteChar </td>
           <td>(</td>
           <td class="paramtype">char&#160;</td>
           <td class="paramname"><em>ch</em>, </td>
@@ -547,6 +589,11 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Writes the character with the specific <a class="el" href="struct_font_def.html">FontDef</a> to the display buffer at the current Cursor position. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -560,14 +607,19 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a574063322b9c94766b7c8cc6d4cbbab3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a574063322b9c94766b7c8cc6d4cbbab3">&#9670;&nbsp;</a></span>WriteString()</h2>
+<a id="af7ce16385976344372394d634f926de2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7ce16385976344372394d634f926de2">&#9670;&nbsp;</a></span>WriteString()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename DisplayDriver &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">char daisy::OledDisplay::WriteString </td>
+          <td class="memname">char <a class="el" href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a>&lt; DisplayDriver &gt;::WriteString </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>str</em>, </td>
@@ -590,6 +642,11 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Similar to WriteChar, except it will handle an entire String. Wrapping does not happen automatically, so the width of the string must be kept within the dimensions of the screen. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
