@@ -1,6 +1,7 @@
 #include <stm32h7xx_hal.h>
 #include "sys/system.h"
 #include "sys/dma.h"
+#include "per/gpio.h"
 
 // global init functions for peripheral drivers.
 // These don't really need to be extern "C" anymore..
@@ -154,6 +155,27 @@ void System::DelayTicks(uint32_t delay_ticks)
     tim_.DelayTick(delay_ticks);
 }
 
+void System::ResetToBootloader()
+{
+    // Initialize Boot Pin
+    dsy_gpio_pin bootpin = {DSY_GPIOG, 3};
+    dsy_gpio     pin;
+    pin.mode = DSY_GPIO_MODE_OUTPUT_PP;
+    pin.pin  = bootpin;
+    dsy_gpio_init(&pin);
+
+    // Pull Pin HIGH
+    dsy_gpio_write(&pin, 1);
+
+    // wait a few ms for cap to charge
+    HAL_Delay(10);
+
+    // disable interupts
+    RCC->CIER = 0x00000000;
+
+    // Software Reset
+    HAL_NVIC_SystemReset();
+}
 
 void System::ConfigureClocks()
 {
