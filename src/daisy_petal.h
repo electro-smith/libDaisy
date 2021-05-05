@@ -184,6 +184,7 @@ class DaisyPetal
     Led    footswitch_led[4]; /**< & */
 
   private:
+    void SetHidUpdateRates();
     void InitSwitches();
     void InitEncoder();
     void InitLeds();
