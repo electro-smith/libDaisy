@@ -125,6 +125,7 @@ class DaisyPatch
 
 
   private:
+    void SetHidUpdateRates();
     void InitAudio();
     void InitControls();
     void InitDisplay();
