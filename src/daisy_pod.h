@@ -130,6 +130,7 @@ class DaisyPod
         led2;                  /**< & */
 
   private:
+    void SetHidUpdateRates();
     void InitButtons();
     void InitEncoder();
     void InitLeds();
