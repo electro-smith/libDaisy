@@ -68,7 +68,7 @@ class AnalogControl
     /** Set a new sample rate after the ctrl has been initialized
      *  \param sample_rate New update rate for the switch in hz
     */
-    inline void SetSampleRate(float sample_rate) { samplerate_ = sample_rate; }
+    void SetSampleRate(float sample_rate);
 
   private:
     uint16_t *raw_;
@@ -76,6 +76,8 @@ class AnalogControl
     float     scale_, offset_;
     bool      flip_;
     bool      invert_;
+    bool      is_bipolar_;
+    float     slew_seconds_;
 };
 } // namespace daisy
 #endif
