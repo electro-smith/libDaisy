@@ -128,3 +128,6 @@ transcode report.txt
 VisualGDBCache
 vs/*.log
 
+tests/libDaisy_gtest
+tests/build/bin/
+
