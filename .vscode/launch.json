@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Tests Locally",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/tests/build/bin/libDaisy_gtest",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/tests/build/bin",
+            "environment": [],
+            "externalConsole": false,
+            "logging": {
+                "engineLogging": false
+            },
+            "preLaunchTask": "build-libDaisy-tests",
+            "osx": {
+                "MIMode": "lldb",
+            },
+            "windows": {
+                "MIMode": "gdb",
+            }
+        }
+    ]
+}

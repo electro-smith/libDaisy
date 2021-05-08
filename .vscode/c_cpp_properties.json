@@ -1,0 +1,69 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "~/dev/gcc-arm-none-eabi-9-2020-q2-update/include",
+                "${workspaceRoot}/src",
+                "${workspaceRoot}/tests/googletest/googletest/include",
+                "${workspaceRoot}/src/sys",
+                "${workspaceRoot}/src/usbd",
+                "${workspaceRoot}/Drivers/CMSIS/Include",
+                "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32H7xx/Include",
+                "${workspaceRoot}/Drivers/STM32H7xx_HAL_Driver/Inc",
+                "${workspaceRoot}/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
+                "${workspaceRoot}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc",
+                "${workspaceRoot}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc",
+                "${workspaceRoot}/Middlewares/Third_Party/FatFs/src"
+            ],
+            "defines": [
+                "DEBUG=1",
+                "STM32H750xx"
+            ],
+            "intelliSenseMode": "gcc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceRoot}"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            },
+            "compilerPath": "~/dev/gcc-arm-none-eabi-9-2020-q2-update/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "gnu++14"
+        },
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:\\Program Files (x86)\\GNU Arm Embedded Toolchain\\9 2020-q2-update\\arm-none-eabi\\include",
+                "${workspaceRoot}/tests/googletest/googletest/include",
+                "${workspaceRoot}/src",
+                "${workspaceRoot}/src/sys",
+                "${workspaceRoot}/src/usbd",
+                "${workspaceRoot}/Drivers/CMSIS/Include",
+                "${workspaceRoot}/Drivers/CMSIS/Device/ST/STM32H7xx/Include",
+                "${workspaceRoot}/Drivers/STM32H7xx_HAL_Driver/Inc",
+                "${workspaceRoot}/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
+                "${workspaceRoot}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc",
+                "${workspaceRoot}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc",
+                "${workspaceRoot}/Middlewares/Third_Party/FatFs/src"
+            ],
+            "defines": [
+                "DEBUG=1",
+                "STM32H750xx"
+            ],
+            "intelliSenseMode": "gcc-x64",
+            "browse": {
+                "path": [
+                    "${workspaceRoot}"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            },
+            "compilerPath": "C:\\Program Files (x86)\\GNU Arm Embedded Toolchain\\9 2020-q2-update\\bin\\arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "gnu++14"
+        }
+    ],
+    "version": 4
+}
