@@ -217,16 +217,8 @@ class SSD130xDriver
         transport_.SendCommand(0xAF); //--turn on oled panel
     };
 
-    size_t Width() { return width; };
-    size_t Height() { return height; };
-    size_t CurrentX() { return current_x_; };
-    size_t CurrentY() { return current_y_; };
-
-    void SetCursor(uint8_t x, uint8_t y)
-    {
-        current_x_ = x;
-        current_y_ = y;
-    }
+    size_t Width() const { return width; };
+    size_t Height() const { return height; };
 
     void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on)
     {
@@ -269,8 +261,6 @@ class SSD130xDriver
     };
 
   private:
-    uint16_t  current_x_;
-    uint16_t  current_y_;
     Transport transport_;
     uint8_t   buffer_[width * height / 8];
 };

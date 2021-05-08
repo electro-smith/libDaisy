@@ -1,6 +1,6 @@
 #pragma once
-#ifndef DSY_OLED_DISPLAY_H
-#define DSY_OLED_DISPLAY_H /**< Macro */
+#ifndef DSY_DISPLAY_H
+#define DSY_DISPLAY_H /**< Macro */
 #include <cmath>
 #include "util/oled_fonts.h"
 #include "daisy_core.h"
@@ -12,32 +12,26 @@
 namespace daisy
 {
 /** 
- * This class is for drawing to a monochrome OLED display. 
+ * This interface is  used as a base class for all types of 1bit-per-pixel
+ * graphics displays.
 */
-template <typename DisplayDriver>
-class OledDisplay
+class OneBitGraphicsDisplay
 {
   public:
-    OledDisplay() {}
-    ~OledDisplay() {}
+    OneBitGraphicsDisplay() {}
+    virtual ~OneBitGraphicsDisplay() {}
 
-    struct Config
-    {
-        typename DisplayDriver::Config driver_config;
-    };
+    virtual uint16_t Height() const = 0;
+    virtual uint16_t Width() const  = 0;
 
-    void Init(Config config) { driver_.Init(config.driver_config); }
-
-    uint16_t Height() { return driver_.Height(); }
-    uint16_t Width() { return driver_.Width(); }
-    uint16_t CurrentX() { return driver_.CurrentX(); };
-    uint16_t CurrentY() { return driver_.CurrentY(); };
+    size_t CurrentX() { return currentX_; };
+    size_t CurrentY() { return currentY_; };
 
     /** 
     Fills the entire display with either on/off.
     \param on Sets on or off.
     */
-    void Fill(bool on) { driver_.Fill(on); }
+    virtual void Fill(bool on) = 0;
 
     /**
     Sets the pixel at the specified coordinate to be on/off.
@@ -45,10 +39,7 @@ class OledDisplay
     \param y   y coordinate
     \param on  on or off
     */
-    void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on)
-    {
-        driver_.DrawPixel(x, y, on);
-    }
+    virtual void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on) = 0;
 
     /**
     Draws a line from (x1, y1) to (y1, y2)
@@ -58,11 +49,11 @@ class OledDisplay
     \param y2  y Coordinate of the ending point
     \param on  on or off
     */
-    void DrawLine(uint_fast8_t x1,
-                  uint_fast8_t y1,
-                  uint_fast8_t x2,
-                  uint_fast8_t y2,
-                  bool         on)
+    virtual void DrawLine(uint_fast8_t x1,
+                          uint_fast8_t y1,
+                          uint_fast8_t x2,
+                          uint_fast8_t y2,
+                          bool         on)
     {
         int_fast16_t deltaX = abs((int_fast16_t)x2 - (int_fast16_t)x1);
         int_fast16_t deltaY = abs((int_fast16_t)y2 - (int_fast16_t)y1);
@@ -98,12 +89,12 @@ class OledDisplay
     \param y2 y Coordinate of the second point
     \param on on or off
     */
-    void DrawRect(uint_fast8_t x1,
-                  uint_fast8_t y1,
-                  uint_fast8_t x2,
-                  uint_fast8_t y2,
-                  bool         on,
-                  bool         fill = false)
+    virtual void DrawRect(uint_fast8_t x1,
+                          uint_fast8_t y1,
+                          uint_fast8_t x2,
+                          uint_fast8_t y2,
+                          bool         on,
+                          bool         fill = false)
     {
         if(fill)
         {
@@ -134,12 +125,12 @@ class OledDisplay
     \param sweep       total angle of the arc
     \param on  on or off
     */
-    void DrawArc(uint_fast8_t x,
-                 uint_fast8_t y,
-                 uint_fast8_t radius,
-                 int_fast16_t start_angle,
-                 int_fast16_t sweep,
-                 bool         on)
+    virtual void DrawArc(uint_fast8_t x,
+                         uint_fast8_t y,
+                         uint_fast8_t radius,
+                         int_fast16_t start_angle,
+                         int_fast16_t sweep,
+                         bool         on)
     {
         // Values to calculate the circle
         int_fast16_t t_x, t_y, err, e2;
@@ -250,7 +241,7 @@ class OledDisplay
     \param radius      radius of the circle
     \param on  on or off
     */
-    void
+    virtual void
     DrawCircle(uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, bool on)
     {
         DrawArc(x, y, radius, 0, 360, on);
@@ -264,7 +255,7 @@ class OledDisplay
     \param on    on or off
     \return &
     */
-    char WriteChar(char ch, FontDef font, bool on)
+    virtual char WriteChar(char ch, FontDef font, bool on)
     {
         uint32_t i, b, j;
 
@@ -273,8 +264,8 @@ class OledDisplay
             return 0;
 
         // Check remaining space on current line
-        if(driver_.Width() < (driver_.CurrentX() + font.FontWidth)
-           || driver_.Height() < (driver_.CurrentY() + font.FontHeight))
+        if(Width() < (currentX_ + font.FontWidth)
+           || Height() < (currentY_ + font.FontHeight))
         {
             // Not enough space on current line
             return 0;
@@ -288,20 +279,17 @@ class OledDisplay
             {
                 if((b << j) & 0x8000)
                 {
-                    DrawPixel(
-                        driver_.CurrentX() + j, (driver_.CurrentY() + i), on);
+                    DrawPixel(currentX_ + j, (currentY_ + i), on);
                 }
                 else
                 {
-                    DrawPixel(
-                        driver_.CurrentX() + j, (driver_.CurrentY() + i), !on);
+                    DrawPixel(currentX_ + j, (currentY_ + i), !on);
                 }
             }
         }
 
         // The current space is now taken
-        driver_.SetCursor(driver_.CurrentX() + font.FontWidth,
-                          driver_.CurrentY());
+        SetCursor(currentX_ + font.FontWidth, currentY_);
 
         // Return written char for validation
         return ch;
@@ -315,7 +303,7 @@ class OledDisplay
     \param on  on or off
     \return &
     */
-    char WriteString(const char* str, FontDef font, bool on)
+    virtual char WriteString(const char* str, FontDef font, bool on)
     {
         // Write until null-byte
         while(*str)
@@ -339,20 +327,21 @@ class OledDisplay
     \param x x pos
     \param y y pos
     */
-    void SetCursor(uint8_t x, uint8_t y) { driver_.SetCursor(x, y); }
+    void SetCursor(uint16_t x, uint16_t y)
+    {
+        currentX_ = (x >= Width()) ? Width() - 1 : x;
+        currentY_ = (y >= Height()) ? Height() - 1 : y;
+    }
 
     /** 
     Writes the current display buffer to the OLED device using SPI or I2C depending on 
     how the object was initialized.
     */
-    void Update() { driver_.Update(); }
+    virtual void Update() = 0;
 
   private:
-    DisplayDriver driver_;
-
-    void Reset() { driver_.Reset(); };
-    void SendCommand(uint8_t cmd) { driver_.SendCommand(cmd); };
-    void SendData(uint8_t* buff, size_t size) { driver_.SendData(buff, size); };
+    uint16_t currentX_;
+    uint16_t currentY_;
 };
 /** @} */
 
