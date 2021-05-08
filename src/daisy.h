@@ -36,6 +36,7 @@
 #include "per/spi.h"
 #include "hid/disp/display.h"
 #include "hid/disp/oled_display.h"
+#include "hid/disp/graphics_common.h"
 #include "hid/wavplayer.h"
 #include "hid/led.h"
 #include "hid/rgb_led.h"
