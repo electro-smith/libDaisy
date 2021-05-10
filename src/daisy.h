@@ -46,6 +46,7 @@
 #include "util/scopedirqblocker.h"
 #include "util/CpuLoadMeter.h"
 #include "util/FixedCapStr.h"
+#include "util/MappedValue.h"
 #include "util/WaveTableLoader.h"
 #include "util/WavWriter.h"
 #endif
