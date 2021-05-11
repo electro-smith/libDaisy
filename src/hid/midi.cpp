@@ -22,7 +22,18 @@ void MidiHandler::Init(MidiInputMode in_mode, MidiOutputMode out_mode)
 {
     in_mode_  = in_mode;
     out_mode_ = out_mode;
-    uart_.Init();
+
+    UartHandler::Config config;
+    config.baudrate      = 31250;
+    config.periph        = UartHandler::Config::Peripheral::USART_1;
+    config.stopbits      = UartHandler::Config::StopBits::BITS_1;
+    config.parity        = UartHandler::Config::Parity::NONE;
+    config.mode          = UartHandler::Config::Mode::TX_RX;
+    config.wordlength    = UartHandler::Config::WordLength::BITS_8;
+    config.pin_config.rx = {DSY_GPIOB, 7};
+    config.pin_config.tx = {DSY_GPIOB, 6};
+    uart_.Init(config);
+
     event_q_.Init();
     incoming_message_.type = MessageLast;
     pstate_                = ParserEmpty;
@@ -94,7 +105,15 @@ void MidiHandler::Parse(uint8_t byte)
             if((byte & kStatusByteMask) == 0)
             {
                 incoming_message_.data[0] = byte & kDataByteMask;
-                pstate_                   = ParserHasData0;
+                if(incoming_message_.type == ChannelPressure)
+                {
+                    pstate_ = ParserEmpty;
+                    event_q_.Write(incoming_message_);
+                }
+                else
+                {
+                    pstate_ = ParserHasData0;
+                }
             }
             else
             {

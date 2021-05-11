@@ -48,6 +48,14 @@ struct ControlChangeEvent
     uint8_t control_number; /**< & */
     uint8_t value;          /**< & */
 };
+/** Struct containing pitch bend value for a given channel.
+Can be made from MidiEvent
+*/
+struct PitchBendEvent
+{
+    int     channel; /**< & */
+    int16_t value;   /**< & */
+};
 
 /** Simple MidiEvent with message type, channel, and data[2] members.
 */
@@ -75,6 +83,15 @@ struct MidiEvent
         m.channel        = channel;
         m.control_number = data[0];
         m.value          = data[1];
+        return m;
+    }
+
+    /** Returns the data within the MidiEvent as a PitchBendEvent struct.*/
+    PitchBendEvent AsPitchBend()
+    {
+        PitchBendEvent m;
+        m.channel = channel;
+        m.value   = ((uint16_t)data[1] << 7) + data[0] - 8192;
         return m;
     }
 };

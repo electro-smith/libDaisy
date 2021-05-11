@@ -2,6 +2,7 @@
 #ifndef DSY_PATCH_BSP_H
 #define DSY_PATCH_BSP_H
 #include "daisy_seed.h"
+#include "dev/oled_ssd130x.h"
 
 namespace daisy
 {
@@ -113,12 +114,12 @@ class DaisyPatch
     /* These are exposed for the user to access and manipulate directly
        Helper functions above provide easier access to much of what they are capable of.
     */
-    DaisySeed     seed;                     /**< Seed object */
-    Encoder       encoder;                  /**< Encoder object */
-    AnalogControl controls[CTRL_LAST];      /**< Array of controls*/
-    GateIn        gate_input[GATE_IN_LAST]; /**< Gate inputs  */
-    MidiHandler   midi;                     /**< Handles midi*/
-    OledDisplay   display;                  /**< & */
+    DaisySeed     seed;                               /**< Seed object */
+    Encoder       encoder;                            /**< Encoder object */
+    AnalogControl controls[CTRL_LAST];                /**< Array of controls*/
+    GateIn        gate_input[GATE_IN_LAST];           /**< Gate inputs  */
+    MidiHandler   midi;                               /**< Handles midi*/
+    OledDisplay<SSD130x4WireSpi128x64Driver> display; /**< & */
 
     // TODO: Add class for Gate output
     dsy_gpio gate_output; /**< &  */
@@ -133,7 +134,6 @@ class DaisyPatch
     void InitEncoder();
     void InitGates();
 
-    dsy_gpio ak4556_reset_pin_;
     uint32_t screen_update_last_, screen_update_period_;
 };
 

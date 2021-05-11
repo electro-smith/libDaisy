@@ -29,19 +29,89 @@ namespace daisy
 class UartHandler
 {
   public:
-    UartHandler() {}
-    ~UartHandler() {}
+    struct Config
+    {
+        enum class Peripheral
+        {
+            USART_1,
+            USART_2,
+            USART_3,
+            UART_4,
+            UART_5,
+            USART_6,
+            UART_7,
+            UART_8,
+            LPUART_1,
+        };
+
+        enum class StopBits
+        {
+            BITS_0_5,
+            BITS_1,
+            BITS_1_5,
+            BITS_2,
+        };
+
+        enum class Parity
+        {
+            NONE,
+            EVEN,
+            ODD,
+        };
+
+        enum class Mode
+        {
+            RX,
+            TX,
+            TX_RX,
+        };
+
+        enum class WordLength
+        {
+            BITS_7,
+            BITS_8,
+            BITS_9,
+        };
+
+        struct
+        {
+            dsy_gpio_pin tx; /**< & */
+            dsy_gpio_pin rx; /**< & */
+        } pin_config;        /**< & */
+
+        Peripheral periph;
+        StopBits   stopbits;
+        Parity     parity;
+        Mode       mode;
+        WordLength wordlength;
+        uint32_t   baudrate;
+    };
+
+
+    UartHandler() : pimpl_(nullptr) {}
+    UartHandler(const UartHandler& other) = default;
+    UartHandler& operator=(const UartHandler& other) = default;
+
+    /** Return values for Uart functions. */
+    enum class Result
+    {
+        OK, /**< & */
+        ERR /**< & */
+    };
 
     /** Initializes the UART Peripheral */
-    void Init();
+    Result Init(const Config& config);
+
+    /** Returns the current config. */
+    const Config& GetConfig() const;
 
     /** Reads the amount of bytes in blocking mode with a 10ms timeout.
-        \param *buff Buffer  to read to
+    \param *buff Buffer  to read to
     \param size Buff size
     \param timeout How long to timeout for (10ms?)
     \return Data received
      */
-    int PollReceive(uint8_t *buff, size_t size, uint32_t timeout);
+    int PollReceive(uint8_t* buff, size_t size, uint32_t timeout);
 
     /** Starts a DMA Receive callback to fill a buffer of specified size.
     Data is populated into a FIFO queue, and can be queried with the
@@ -51,7 +121,7 @@ class UartHandler
     anytime there is 1 byte-period without incoming data
     \return OK or ERROR
     */
-    int StartRx();
+    Result StartRx();
 
     /** \return whether Rx DMA is listening or not. */
     bool RxActive();
@@ -59,14 +129,14 @@ class UartHandler
     /** Flushes the Receive Queue
     \return OK or ERROR
     */
-    int FlushRx();
+    Result FlushRx();
 
     /** Sends an amount of data in blocking mode.
     \param *buff Buffer of data to send
     \param size Buffer size
     \return OK or ERROR
      */
-    int PollTx(uint8_t *buff, size_t size);
+    Result PollTx(uint8_t* buff, size_t size);
 
     /** Pops the oldest byte from the FIFO. 
     \return Popped byte
@@ -81,7 +151,10 @@ class UartHandler
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
 
+    class Impl; /**< & */
+
   private:
+    Impl* pimpl_;
 };
 
 /** @} */

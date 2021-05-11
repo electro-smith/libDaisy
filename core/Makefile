@@ -150,18 +150,20 @@ FATFS_SOURCES += \
 	$(FATFS_DIR)/ff_gen_drv.c \
 	$(FATFS_DIR)/option/ccsbcs.c
 
+ifeq ($(USE_FATFS),1)
 C_SOURCES += $(FATFS_SOURCES)
+endif
 C_INCLUDES += -I$(FATFS_DIR)
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
-CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Wno-missing-attributes -fasm -fdata-sections -ffunction-sections
+CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Wno-missing-attributes -fasm -fdata-sections -ffunction-sections -Wno-stringop-overflow
 
 ifeq ($(DEBUG), 1)
 #CFLAGS += -g -gdwarf-2
-CFLAGS += -g -ggdb
 endif
+CFLAGS += -g -ggdb
 
 # Generate dependency information
 CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
@@ -174,7 +176,8 @@ CPPFLAGS += \
 -finline-functions-called-once \
 -fshort-enums \
 -fno-move-loop-invariants \
--fno-unwind-tables 
+-fno-unwind-tables \
+-Wno-register
 
 C_STANDARD = -std=gnu11
 CPP_STANDARD ?= -std=gnu++14

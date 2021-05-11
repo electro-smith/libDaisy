@@ -40,10 +40,6 @@ void DaisyPatch::Init(bool boost)
     InitDisplay();
     InitMidi();
     InitControls();
-    // Reset AK4556
-    dsy_gpio_write(&ak4556_reset_pin_, 0);
-    DelayMs(10);
-    dsy_gpio_write(&ak4556_reset_pin_, 1);
     // Set Screen update vars
     screen_update_period_ = 17; // roughly 60Hz
     screen_update_last_   = seed.system.GetNow();
@@ -144,9 +140,9 @@ void DaisyPatch::DisplayControls(bool invert)
             float  v;
             size_t dest;
             curx = (barspacing * i + 1) + (barwidth * i);
-            cury = SSD1309_HEIGHT;
+            cury = display.Height();
             v    = GetKnobValue(static_cast<DaisyPatch::Ctrl>(i));
-            dest = (v * SSD1309_HEIGHT);
+            dest = (v * display.Height());
             for(size_t j = dest; j > 0; j--)
             {
                 for(size_t k = 0; k < barwidth; k++)
@@ -199,8 +195,7 @@ void DaisyPatch::InitAudio()
 
     // Reset Pin for AK4556
     // Built-in AK4556 was reset during Seed Init
-    dsy_gpio_pin codec_reset_pin = seed.GetPin(29);
-    //codec_ak4556_init(codec_reset_pin);
+    dsy_gpio_pin codec_reset_pin = seed.GetPin(PIN_AK4556_RESET);
     Ak4556::Init(codec_reset_pin);
 
     // Reinit Audio for _both_ codecs...
@@ -233,10 +228,14 @@ void DaisyPatch::InitControls()
 
 void DaisyPatch::InitDisplay()
 {
-    dsy_gpio_pin pincfg[OledDisplay::NUM_PINS];
-    pincfg[OledDisplay::DATA_COMMAND] = seed.GetPin(PIN_OLED_DC);
-    pincfg[OledDisplay::RESET]        = seed.GetPin(PIN_OLED_RESET);
-    display.Init(pincfg);
+    OledDisplay<SSD130x4WireSpi128x64Driver>::Config display_config;
+
+    display_config.driver_config.transport_config.pin_config.dc
+        = seed.GetPin(PIN_OLED_DC);
+    display_config.driver_config.transport_config.pin_config.reset
+        = seed.GetPin(PIN_OLED_RESET);
+
+    display.Init(display_config);
 }
 
 void DaisyPatch::InitMidi()
