@@ -18,6 +18,7 @@ class I2CHandle::Impl
                                        uint8_t* data,
                                        uint16_t size,
                                        uint32_t timeout);
+                                       
     I2CHandle::Result TransmitDma(uint16_t                       address,
                                   uint8_t*                       data,
                                   uint16_t                       size,
