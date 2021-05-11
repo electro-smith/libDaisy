@@ -60,8 +60,8 @@ class I2CHandle
             dsy_gpio_pin sda; /**< & */
         } pin_config;         /**< & */
 
-        Speed speed;            /**< & */
-        Mode mode;              /**< & */
+        Speed speed; /**< & */
+        Mode  mode;  /**< & */
         // 0x10 is chosen as a default to avoid conflicts with reserved addresses
         uint8_t address = 0x10; /**< & */
     };
@@ -163,10 +163,10 @@ class I2CHandle
      *  \param callback_context A pointer that will be passed back to you in the callback.      
      */
     Result ReceiveDma(uint16_t            address,
-                       uint8_t*            data,
-                       uint16_t            size,
-                       CallbackFunctionPtr callback,
-                       void*               callback_context);
+                      uint8_t*            data,
+                      uint16_t            size,
+                      CallbackFunctionPtr callback,
+                      void*               callback_context);
 
     /** Reads an amount of data from a specific memory address. 
     *   This method will return an error if the I2C peripheral is in slave mode. 

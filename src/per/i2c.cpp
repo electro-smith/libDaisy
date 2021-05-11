@@ -58,7 +58,7 @@ class I2CHandle::Impl
         uint16_t                       size             = 0;
         I2CHandle::CallbackFunctionPtr callback         = nullptr;
         void*                          callback_context = nullptr;
-        I2CHandle::Direction           direction        = I2CHandle::Direction::TRANSMIT;
+        I2CHandle::Direction direction = I2CHandle::Direction::TRANSMIT;
 
         bool IsValidJob() const { return data != nullptr; }
         void Invalidate() { data = nullptr; }
@@ -82,11 +82,12 @@ class I2CHandle::Impl
     DMA_HandleTypeDef i2c_dma_tc_handle_;
     I2C_HandleTypeDef i2c_hal_handle_;
 
-    I2CHandle::Result StartDmaTransmission(uint16_t                       address,
-                                           uint8_t*                       data,
-                                           uint16_t                       size,
-                                           I2CHandle::CallbackFunctionPtr callback,
-                                           void* callback_context);
+    I2CHandle::Result
+    StartDmaTransmission(uint16_t                       address,
+                         uint8_t*                       data,
+                         uint16_t                       size,
+                         I2CHandle::CallbackFunctionPtr callback,
+                         void*                          callback_context);
 
     I2CHandle::Result StartDmaReception(uint16_t                       address,
                                         uint8_t*                       data,
@@ -178,22 +179,24 @@ void I2CHandle::Impl::DmaTransferFinished(I2C_HandleTypeDef* hal_i2c_handle,
         if(IsDmaTransferQueuedFor(per))
         {
             I2CHandle::Result result;
-            if (queued_dma_transfers_[per].direction == I2CHandle::Direction::TRANSMIT)
+            if(queued_dma_transfers_[per].direction
+               == I2CHandle::Direction::TRANSMIT)
             {
                 result = i2c_handles[per].StartDmaTransmission(
-                   queued_dma_transfers_[per].slave_address,
-                   queued_dma_transfers_[per].data,
-                   queued_dma_transfers_[per].size,
-                   queued_dma_transfers_[per].callback,
-                   queued_dma_transfers_[per].callback_context);
+                    queued_dma_transfers_[per].slave_address,
+                    queued_dma_transfers_[per].data,
+                    queued_dma_transfers_[per].size,
+                    queued_dma_transfers_[per].callback,
+                    queued_dma_transfers_[per].callback_context);
             }
-            else{
+            else
+            {
                 result = i2c_handles[per].StartDmaReception(
-                   queued_dma_transfers_[per].slave_address,
-                   queued_dma_transfers_[per].data,
-                   queued_dma_transfers_[per].size,
-                   queued_dma_transfers_[per].callback,
-                   queued_dma_transfers_[per].callback_context);
+                    queued_dma_transfers_[per].slave_address,
+                    queued_dma_transfers_[per].data,
+                    queued_dma_transfers_[per].size,
+                    queued_dma_transfers_[per].callback,
+                    queued_dma_transfers_[per].callback_context);
             }
             if(result == I2CHandle::Result::OK)
             {
@@ -214,14 +217,12 @@ I2CHandle::Result I2CHandle::Impl::Init(const I2CHandle::Config& config)
 
     if(i2cIdx >= 4)
         return I2CHandle::Result::ERR;
-    if (config.mode != I2CHandle::Config::Mode::I2C_MASTER && 
-        config.mode != I2CHandle::Config::Mode::I2C_SLAVE) 
+    if(config.mode != I2CHandle::Config::Mode::I2C_MASTER
+       && config.mode != I2CHandle::Config::Mode::I2C_SLAVE)
         return I2CHandle::Result::ERR;
     // Ensuring address is valid and not using reserved addresses
-    if (config.mode == I2CHandle::Config::Mode::I2C_SLAVE &&
-        (config.address > 127 ||
-        config.address < 16 ||
-        config.address > 119))
+    if(config.mode == I2CHandle::Config::Mode::I2C_SLAVE
+       && (config.address > 127 || config.address < 16 || config.address > 119))
         return I2CHandle::Result::ERR;
 
     config_ = config;
@@ -292,21 +293,18 @@ I2CHandle::Result I2CHandle::Impl::TransmitBlocking(uint16_t address,
     while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
 
     HAL_StatusTypeDef status;
-    if (config_.mode == I2CHandle::Config::Mode::I2C_MASTER) 
+    if(config_.mode == I2CHandle::Config::Mode::I2C_MASTER)
     {
         status = HAL_I2C_Master_Transmit(
-           &i2c_hal_handle_, address << 1, data, size, timeout
-        );
-    } 
-    else 
-    {
-        status = HAL_I2C_Slave_Transmit(
-           &i2c_hal_handle_, data, size, timeout
-        );
+            &i2c_hal_handle_, address << 1, data, size, timeout);
     }
-    if (status != HAL_OK)
+    else
+    {
+        status = HAL_I2C_Slave_Transmit(&i2c_hal_handle_, data, size, timeout);
+    }
+    if(status != HAL_OK)
         return I2CHandle::Result::ERR;
-    
+
     return I2CHandle::Result::OK;
 }
 
@@ -357,19 +355,16 @@ I2CHandle::Result I2CHandle::Impl::ReceiveBlocking(uint16_t address,
     while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
 
     HAL_StatusTypeDef status;
-    if (config_.mode == I2CHandle::Config::Mode::I2C_MASTER) 
+    if(config_.mode == I2CHandle::Config::Mode::I2C_MASTER)
     {
         status = HAL_I2C_Master_Receive(
-            &i2c_hal_handle_, address << 1, data, size, timeout
-        );
+            &i2c_hal_handle_, address << 1, data, size, timeout);
     }
     else
     {
-        status = HAL_I2C_Slave_Receive(
-            &i2c_hal_handle_, data, size, timeout
-        );
+        status = HAL_I2C_Slave_Receive(&i2c_hal_handle_, data, size, timeout);
     }
-    if (status != HAL_OK)
+    if(status != HAL_OK)
         return I2CHandle::Result::ERR;
 
     return I2CHandle::Result::OK;
@@ -408,7 +403,7 @@ I2CHandle::Impl::ReceiveDma(uint16_t                       address,
         return I2CHandle::Result::OK;
     }
     else
-        // start transmission right away
+        // start reception right away
         return StartDmaReception(
             address, data, size, callback, callback_context);
 }
@@ -421,7 +416,7 @@ I2CHandle::Result I2CHandle::Impl::ReadDataAtAddress(uint16_t address,
                                                      uint32_t timeout)
 {
     // Only master devices can make requests
-    if (config_.mode != I2CHandle::Config::Mode::I2C_MASTER)
+    if(config_.mode != I2CHandle::Config::Mode::I2C_MASTER)
         return I2CHandle::Result::ERR;
 
     // wait for previous transfer to be finished
@@ -448,9 +443,9 @@ I2CHandle::Result I2CHandle::Impl::WriteDataAtAddress(uint16_t address,
                                                       uint32_t timeout)
 {
     // Only master devices can make requests
-    if (config_.mode != I2CHandle::Config::Mode::I2C_MASTER)
+    if(config_.mode != I2CHandle::Config::Mode::I2C_MASTER)
         return I2CHandle::Result::ERR;
-    
+
     // wait for previous transfer to be finished
     while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
     if(HAL_I2C_Mem_Write(&i2c_hal_handle_,
@@ -522,15 +517,16 @@ I2CHandle::Impl::StartDmaTransmission(uint16_t                       address,
     next_callback_context_ = callback_context;
 
     HAL_StatusTypeDef status;
-    if (config_.mode == I2CHandle::Config::Mode::I2C_MASTER) 
+    if(config_.mode == I2CHandle::Config::Mode::I2C_MASTER)
     {
-        status = HAL_I2C_Master_Transmit_DMA(&i2c_hal_handle_, address << 1, data, size);
+        status = HAL_I2C_Master_Transmit_DMA(
+            &i2c_hal_handle_, address << 1, data, size);
     }
-    else 
+    else
     {
         status = HAL_I2C_Slave_Transmit_DMA(&i2c_hal_handle_, data, size);
     }
-    
+
     if(status != HAL_OK)
     {
         dma_active_peripheral_ = -1;
@@ -548,10 +544,6 @@ I2CHandle::Impl::StartDmaReception(uint16_t                       address,
                                    I2CHandle::CallbackFunctionPtr callback,
                                    void* callback_context)
 {
-    // this could be called from both the scheduler ISR
-    // and from user code via dsy_i2c_transmit_dma()
-    // TODO: Add some sort of locking mechanism.
-
     // wait for previous transfer to be finished
     while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
 
@@ -596,15 +588,16 @@ I2CHandle::Impl::StartDmaReception(uint16_t                       address,
     next_callback_context_ = callback_context;
 
     HAL_StatusTypeDef status;
-    if (config_.mode == I2CHandle::Config::Mode::I2C_MASTER) 
+    if(config_.mode == I2CHandle::Config::Mode::I2C_MASTER)
     {
-        status = HAL_I2C_Master_Receive_DMA(&i2c_hal_handle_, address << 1, data, size);
+        status = HAL_I2C_Master_Receive_DMA(
+            &i2c_hal_handle_, address << 1, data, size);
     }
-    else 
+    else
     {
         status = HAL_I2C_Slave_Receive_DMA(&i2c_hal_handle_, data, size);
     }
-    
+
     if(status != HAL_OK)
     {
         dma_active_peripheral_ = -1;
@@ -843,12 +836,11 @@ I2CHandle::TransmitDma(uint16_t                       address,
     return pimpl_->TransmitDma(address, data, size, callback, callback_context);
 }
 
-I2CHandle::Result
-I2CHandle::ReceiveDma(uint16_t                       address,
-                      uint8_t*                       data,
-                      uint16_t                       size,
-                      I2CHandle::CallbackFunctionPtr callback,
-                      void*                          callback_context)
+I2CHandle::Result I2CHandle::ReceiveDma(uint16_t                       address,
+                                        uint8_t*                       data,
+                                        uint16_t                       size,
+                                        I2CHandle::CallbackFunctionPtr callback,
+                                        void* callback_context)
 {
     return pimpl_->ReceiveDma(address, data, size, callback, callback_context);
 }
