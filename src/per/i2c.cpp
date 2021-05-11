@@ -781,6 +781,21 @@ extern "C" void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef* i2c_handle)
     I2CHandle::Impl::DmaTransferFinished(i2c_handle, I2CHandle::Result::OK);
 }
 
+extern "C" void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef* i2c_handle)
+{
+    I2CHandle::Impl::DmaTransferFinished(i2c_handle, I2CHandle::Result::OK);
+}
+
+extern "C" void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef* i2c_handle)
+{
+    I2CHandle::Impl::DmaTransferFinished(i2c_handle, I2CHandle::Result::OK);
+}
+
+extern "C" void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef* i2c_handle)
+{
+    I2CHandle::Impl::DmaTransferFinished(i2c_handle, I2CHandle::Result::OK);
+}
+
 extern "C" void HAL_I2C_ErrorCallback(I2C_HandleTypeDef* i2c_handle)
 {
     I2CHandle::Impl::DmaTransferFinished(i2c_handle, I2CHandle::Result::ERR);
