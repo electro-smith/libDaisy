@@ -126,7 +126,7 @@ class I2CHandle
      *  the buffer, before initiating the dma transfer by calling 
      *  `dsy_dma_clear_cache_for_buffer(buffer, size);`
      * 
-     *  A single DMA is shared across I2C, I2C2 and I2C3. I2C4 has no DMA support (yet).
+     *  A single DMA is shared across I2C1, I2C2 and I2C3. I2C4 has no DMA support (yet).
      *  If the DMA is busy with another transfer, the job will be queued and executed later.
      *  If there is a job waiting to be executed for this I2C peripheral, this function
      *  will block until the queue is free and the job can be queued.

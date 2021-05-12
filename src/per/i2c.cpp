@@ -18,7 +18,7 @@ class I2CHandle::Impl
                                        uint8_t* data,
                                        uint16_t size,
                                        uint32_t timeout);
-                                       
+
     I2CHandle::Result TransmitDma(uint16_t                       address,
                                   uint8_t*                       data,
                                   uint16_t                       size,
@@ -146,14 +146,14 @@ void I2CHandle::Impl::QueueDmaTransfer(size_t i2c_peripheral_idx,
     while(IsDmaTransferQueuedFor(i2c_peripheral_idx)) {};
 
     // queue the job
-    // TODO: Add ScopedIrqBlocker here
+    ScopedIrqBlocker block;
     queued_dma_transfers_[i2c_peripheral_idx] = job;
 }
 
 void I2CHandle::Impl::DmaTransferFinished(I2C_HandleTypeDef* hal_i2c_handle,
                                           I2CHandle::Result  result)
 {
-    // TODO: Add ScopedIrqBlocker
+    ScopedIrqBlocker block;
 
     // on an error, reinit the peripheral to clear any flags
     if(result != I2CHandle::Result::OK)
@@ -362,9 +362,8 @@ I2CHandle::Result I2CHandle::Impl::ReceiveBlocking(uint16_t address,
             &i2c_hal_handle_, address << 1, data, size, timeout);
     }
     else
-    {
         status = HAL_I2C_Slave_Receive(&i2c_hal_handle_, data, size, timeout);
-    }
+
     if(status != HAL_OK)
         return I2CHandle::Result::ERR;
 
@@ -511,8 +510,9 @@ I2CHandle::Impl::StartDmaTransmission(uint16_t                       address,
 
     __HAL_LINKDMA(&i2c_hal_handle_, hdmatx, i2c_dma_tc_handle_);
 
-    // start the transfer
-    // TODO: Add ScopedIrqBlocker
+    // start the transfer and block irq until return
+    ScopedIrqBlocker block;
+
     dma_active_peripheral_ = int(config_.periph);
     next_callback_         = callback;
     next_callback_context_ = callback_context;
@@ -582,8 +582,9 @@ I2CHandle::Impl::StartDmaReception(uint16_t                       address,
 
     __HAL_LINKDMA(&i2c_hal_handle_, hdmarx, i2c_dma_tc_handle_);
 
-    // start the transfer
-    // TODO: Add ScopedIrqBlocker
+    // start the transfer and block irq until return
+    ScopedIrqBlocker block;
+
     dma_active_peripheral_ = int(config_.periph);
     next_callback_         = callback;
     next_callback_context_ = callback_context;
@@ -745,7 +746,7 @@ extern "C" void dsy_i2c_global_init()
 // private functions of the I2CHandle objects...
 void halI2CDmaStreamCallback(void)
 {
-    // TODO: add ScopedIrqBlocker
+    ScopedIrqBlocker block;
     if(I2CHandle::Impl::dma_active_peripheral_ >= 0)
         HAL_DMA_IRQHandler(&i2c_handles[I2CHandle::Impl::dma_active_peripheral_]
                                 .i2c_dma_tc_handle_);
