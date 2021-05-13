@@ -87,6 +87,7 @@ Prefixes and their meanings:
 - **per** - Peripheral level, internal to MCU (i2c, spi, etc.)
 - **dev** - External device support (external flash chips, DACs, codecs, etc.)
 - **hid** - User level interface elements (encoders, switches, audio, etc.)
+- **ui** - User interface building blocks like menu systems, event queues, etc.
 - **util** - library level elements used within the library (not included via daisy.h)
 - **daisy** - core API files (specific boards and platforms have extended user APIs that configure libDaisy more below).
 
