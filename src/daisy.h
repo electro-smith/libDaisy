@@ -49,6 +49,7 @@
 #include "ui/UI.h"
 #include "ui/UiEventQueue.h"
 #include "ui/AbstractMenu.h"
+#include "ui/FullScreenItemMenu.h"
 #include "util/scopedirqblocker.h"
 #include "util/CpuLoadMeter.h"
 #include "util/FIFO.h"

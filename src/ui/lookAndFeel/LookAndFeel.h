@@ -2,6 +2,7 @@
 #include <cmath>
 #include "hid/disp/graphics_common.h"
 #include "hid/disp/display.h"
+#include "FullScreenItemMenuLookAndFeelMethods.h"
 
 namespace daisy
 {
@@ -11,7 +12,7 @@ namespace daisy
  *  To create your custom looking UI, inherit from this class and overwrite the member functions 
  *  as needed. Then assign an object of your new class to a UI or to individual UiPages.
  */
-class OneBitGraphicsLookAndFeel
+class OneBitGraphicsLookAndFeel : public FullScreenItemMenuLookAndFeelMethods
 {
   public:
     virtual ~OneBitGraphicsLookAndFeel() {}

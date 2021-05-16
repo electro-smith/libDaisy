@@ -50,8 +50,10 @@ per/i2c \
 per/spi \
 per/tim \
 per/uart \
+ui/lookAndFeel/FullScreenItemMenuLookAndFeelMethods \
 ui/UI \
 ui/AbstractMenu \
+ui/FullScreenItemMenu \
 util/color \
 util/MappedValue \
 util/WaveTableLoader \
