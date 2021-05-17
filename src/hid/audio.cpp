@@ -387,7 +387,7 @@ void AudioHandle::Impl::InternalCallback(int32_t* in, int32_t* out, size_t size)
                 break;
             default: break;
         }
-        cb((const float**)fin, (float**)fout, size / 2);
+        cb((InputBuffer)fin, (OutputBuffer)fout, size / 2);
         // Reinterleave and scale
         switch(bd)
         {

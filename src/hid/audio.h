@@ -23,15 +23,22 @@ class AudioHandle
         ERR,
     };
 
+    typedef const float* const* InputBuffer;
+    typedef float*              OutputBuffer;
+
     /** Non-Interleaving Callback format. Both arrays arranged by float[chn][sample] */
-    typedef void (*AudioCallback)(const float** in, float** out, size_t size);
+    typedef void (*AudioCallback)(InputBuffer  in,
+                                  OutputBuffer out,
+                                  size_t       size);
+
+    typedef const float* InterleavingInputBuffer;
 
     /** Non-Interleaving Callback format. 
      ** audio is prepared as { L0, R0, L1, R1, . . . LN, RN }
      */
-    typedef void (*InterleavingAudioCallback)(const float* in,
-                                              float*       out,
-                                              size_t       size);
+    typedef void (*InterleavingAudioCallback)(InterleavingInputBuffer in,
+                                              OutputBuffer            out,
+                                              size_t                  size);
 
     AudioHandle() : pimpl_(nullptr) {}
     ~AudioHandle() {}
