@@ -45,19 +45,30 @@ class SpiHandle
       Peripheral periph;
     };
 
-    SpiHandle() {}
-    ~SpiHandle() {}
+    SpiHandle() : pimpl_(nullptr) {}
+    SpiHandle(const SpiHandle& other) = default;
+    SpiHandle& operator=(const SpiHandle& other) = default;
+
+    /** Return values for Uart functions. */
+    enum class Result
+    {
+        OK, /**< & */
+        ERR /**< & */
+    };
 
     /** Initializes handler */
-    void Init();
+    Result Init(const Config& config);
 
     /** Blocking transmit 
     \param *buff input buffer
     \param size  buffer size
     */
-    void BlockingTransmit(uint8_t *buff, size_t size);
+    Result BlockingTransmit(uint8_t *buff, size_t size);
+
+    class Impl; /**< SPI implementation */
 
   private:
+    Impl* pimpl_;
 };
 
 

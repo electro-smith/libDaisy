@@ -15,7 +15,21 @@ static void Error_Handler()
     asm("bkpt 255");
 }
 
-void SpiHandle::Init()
+class SpiHandle::Impl
+{
+    public:
+        Result Init(const Config& config);
+        
+        Result BlockingTransmit(uint8_t *buff, size_t size);
+};
+
+// ================================================================
+// Global references for the availabel UartHandler::Impl(s)
+// ================================================================
+
+static SpiHandle::Impl spi_handles[6];
+
+SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
 {
     hspi1.Instance               = SPI1;
     hspi1.Init.Mode              = SPI_MODE_MASTER;
@@ -45,11 +59,14 @@ void SpiHandle::Init()
     {
         Error_Handler();
     }
+
+    return SpiHandle::Result::OK;
 }
 
-void SpiHandle::BlockingTransmit(uint8_t* buff, size_t size)
+SpiHandle::Result SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size)
 {
     HAL_SPI_Transmit(&hspi1, buff, size, 100);
+    return SpiHandle::Result::OK;
 }
 
 void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
@@ -131,3 +148,16 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
         /* USER CODE END SPI1_MspDeInit 1 */
     }
 }
+
+// ======================================================================
+// SpiHandler > SpiHandlePimpl
+// ======================================================================
+
+    SpiHandle::Result SpiHandle::Init(const Config& config){
+        pimpl_ = &spi_handles[int(config.periph)];
+        return pimpl_->Init(config);
+    }
+
+    SpiHandle::Result SpiHandle::BlockingTransmit(uint8_t *buff, size_t size){
+        return pimpl_->BlockingTransmit(buff, size);
+    }
