@@ -8,8 +8,6 @@
 
 using namespace daisy;
 
-static SPI_HandleTypeDef hspi1;
-
 static void Error_Handler()
 {
     asm("bkpt 255");
@@ -21,43 +19,125 @@ class SpiHandle::Impl
         Result Init(const Config& config);
         
         Result BlockingTransmit(uint8_t *buff, size_t size);
+
+        SpiHandle::Config config_;
+        SPI_HandleTypeDef hspi_;
 };
 
 // ================================================================
 // Global references for the availabel UartHandler::Impl(s)
 // ================================================================
 
-static SpiHandle::Impl spi_handles[6];
+static SpiHandle::Impl spi_handles [6];
 
 SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
 {
-    hspi1.Instance               = SPI1;
-    hspi1.Init.Mode              = SPI_MODE_MASTER;
-    hspi1.Init.Direction         = SPI_DIRECTION_2LINES_TXONLY;
-    hspi1.Init.DataSize          = SPI_DATASIZE_8BIT;
-    hspi1.Init.CLKPolarity       = SPI_POLARITY_LOW;
-    hspi1.Init.CLKPhase          = SPI_PHASE_1EDGE;
-    hspi1.Init.NSS               = SPI_NSS_HARD_OUTPUT;
-    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
-    hspi1.Init.FirstBit          = SPI_FIRSTBIT_MSB;
-    hspi1.Init.TIMode            = SPI_TIMODE_DISABLE;
-    hspi1.Init.CRCCalculation    = SPI_CRCCALCULATION_DISABLE;
-    hspi1.Init.CRCPolynomial     = 0x0;
-    hspi1.Init.NSSPMode          = SPI_NSS_PULSE_ENABLE;
-    hspi1.Init.NSSPolarity       = SPI_NSS_POLARITY_LOW;
-    hspi1.Init.FifoThreshold     = SPI_FIFO_THRESHOLD_01DATA;
-    hspi1.Init.TxCRCInitializationPattern
+    config_ = config;
+    
+    SPI_TypeDef* periph;
+    switch(config_.periph)
+    {
+        case Config::Peripheral::SPI_1: periph = SPI1; break;
+        case Config::Peripheral::SPI_2: periph = SPI2; break;
+        case Config::Peripheral::SPI_3: periph = SPI3; break;
+        case Config::Peripheral::SPI_4: periph = SPI4; break;
+        case Config::Peripheral::SPI_5: periph = SPI5; break;
+        case Config::Peripheral::SPI_6: periph = SPI6; break;
+        default: return Result::ERR;
+    }
+
+    uint32_t mode;
+    switch(config_.mode)
+    {
+        case Config::Mode::MODE_MASTER: mode = SPI_MODE_MASTER; break;
+        case Config::Mode::MODE_SLAVE: mode = SPI_MODE_SLAVE; break;
+        default: return Result::ERR;
+    }
+
+    uint32_t direction;
+    switch(config_.direction)
+    {
+        case Config::Direction::TWO_LINES: direction = SPI_DIRECTION_2LINES; break;
+        case Config::Direction::TWO_LINES_TX_ONLY: direction = SPI_DIRECTION_2LINES_TXONLY; break;
+        case Config::Direction::TWO_LINES_RX_ONLY: direction = SPI_DIRECTION_2LINES_RXONLY; break;
+        case Config::Direction::ONE_LINE: direction = SPI_DIRECTION_1LINE; break;
+        default: return Result::ERR;
+    }
+
+    // for some reason a datasize of 30 is encoded as 29
+    // ie SPI_DATASIZE_5BIT == 4, etc.
+    // we might also consider going the enum route for this one, but it'll be LONG
+    uint32_t datasize = config_.datasize - 1;
+    if(datasize < 3 || datasize > 31){
+        return Result::ERR;
+    }
+
+    uint32_t clock_polarity;
+    switch(config_.clock_polarity)
+    {        
+        case Config::ClockPolarity::LOW: clock_polarity = SPI_POLARITY_LOW; break;
+        case Config::ClockPolarity::HIGH: clock_polarity = SPI_POLARITY_HIGH; break;
+        default: return Result::ERR;
+    }
+
+    uint32_t clock_phase;
+    switch(config_.clock_phase)
+    {  
+        case Config::ClockPhase::ONE_EDGE: clock_phase = SPI_PHASE_1EDGE; break;
+        case Config::ClockPhase::TWO_EDGE: clock_phase = SPI_PHASE_2EDGE; break;
+        default: return Result::ERR;
+    }
+
+    uint32_t nss;
+    switch(config_.nss)
+    {  
+        case Config::NSS::SOFT: clock_phase = SPI_NSS_SOFT; break;
+        case Config::NSS::HARD_INPUT: clock_phase = SPI_NSS_HARD_INPUT; break;
+        case Config::NSS::HARD_OUTPUT: clock_phase = SPI_NSS_HARD_OUTPUT; break;
+        default: return Result::ERR;
+    }
+
+    uint32_t baud_prescaler;
+    switch(config_.baud_prescaler){
+        case Config::BaudPrescaler::BAUDRATEPRESCALER_2: baud_prescaler = SPI_BAUDRATEPRESCALER_2; break;
+        case Config::BaudPrescaler::BAUDRATEPRESCALER_4: baud_prescaler = SPI_BAUDRATEPRESCALER_4; break;
+        case Config::BaudPrescaler::BAUDRATEPRESCALER_8: baud_prescaler = SPI_BAUDRATEPRESCALER_8; break;
+        case Config::BaudPrescaler::BAUDRATEPRESCALER_16: baud_prescaler = SPI_BAUDRATEPRESCALER_16; break;
+        case Config::BaudPrescaler::BAUDRATEPRESCALER_32: baud_prescaler = SPI_BAUDRATEPRESCALER_32; break;
+        case Config::BaudPrescaler::BAUDRATEPRESCALER_64: baud_prescaler = SPI_BAUDRATEPRESCALER_64; break;
+        case Config::BaudPrescaler::BAUDRATEPRESCALER_128: baud_prescaler = SPI_BAUDRATEPRESCALER_128; break;
+        case Config::BaudPrescaler::BAUDRATEPRESCALER_256: baud_prescaler = SPI_BAUDRATEPRESCALER_256; break;
+        default: return Result::ERR;
+    }
+
+    hspi_.Instance               = periph;
+    hspi_.Init.Mode              = mode;
+    hspi_.Init.Direction         = direction;
+    hspi_.Init.DataSize          = datasize;
+    hspi_.Init.CLKPolarity       = clock_polarity;
+    hspi_.Init.CLKPhase          = clock_phase;
+    hspi_.Init.NSS               = nss;
+    hspi_.Init.BaudRatePrescaler = baud_prescaler;
+    hspi_.Init.FirstBit          = SPI_FIRSTBIT_MSB;
+    hspi_.Init.TIMode            = SPI_TIMODE_DISABLE;
+    hspi_.Init.CRCCalculation    = SPI_CRCCALCULATION_DISABLE;
+    hspi_.Init.CRCPolynomial     = 0x0;
+    hspi_.Init.NSSPMode          = SPI_NSS_PULSE_ENABLE;
+    hspi_.Init.NSSPolarity       = SPI_NSS_POLARITY_LOW;
+    hspi_.Init.FifoThreshold     = SPI_FIFO_THRESHOLD_01DATA;
+    hspi_.Init.TxCRCInitializationPattern
         = SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
-    hspi1.Init.RxCRCInitializationPattern
+    hspi_.Init.RxCRCInitializationPattern
         = SPI_CRC_INITIALIZATION_ALL_ZERO_PATTERN;
-    hspi1.Init.MasterSSIdleness        = SPI_MASTER_SS_IDLENESS_00CYCLE;
-    hspi1.Init.MasterInterDataIdleness = SPI_MASTER_INTERDATA_IDLENESS_00CYCLE;
-    hspi1.Init.MasterReceiverAutoSusp  = SPI_MASTER_RX_AUTOSUSP_DISABLE;
-    hspi1.Init.MasterKeepIOState       = SPI_MASTER_KEEP_IO_STATE_DISABLE;
-    hspi1.Init.IOSwap                  = SPI_IO_SWAP_DISABLE;
-    if(HAL_SPI_Init(&hspi1) != HAL_OK)
+    hspi_.Init.MasterSSIdleness        = SPI_MASTER_SS_IDLENESS_00CYCLE;
+    hspi_.Init.MasterInterDataIdleness = SPI_MASTER_INTERDATA_IDLENESS_00CYCLE;
+    hspi_.Init.MasterReceiverAutoSusp  = SPI_MASTER_RX_AUTOSUSP_DISABLE;
+    hspi_.Init.MasterKeepIOState       = SPI_MASTER_KEEP_IO_STATE_DISABLE;
+    hspi_.Init.IOSwap                  = SPI_IO_SWAP_DISABLE;
+    if(HAL_SPI_Init(&hspi_) != HAL_OK)
     {
         Error_Handler();
+        return SpiHandle::Result::ERR;
     }
 
     return SpiHandle::Result::OK;
@@ -65,7 +145,7 @@ SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
 
 SpiHandle::Result SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size)
 {
-    HAL_SPI_Transmit(&hspi1, buff, size, 100);
+    HAL_SPI_Transmit(&hspi_, buff, size, 100);
     return SpiHandle::Result::OK;
 }
 
