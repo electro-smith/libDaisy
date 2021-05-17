@@ -24,7 +24,7 @@ class AudioHandle
     };
 
     typedef const float* const* InputBuffer;
-    typedef float*              OutputBuffer;
+    typedef float**             OutputBuffer;
 
     /** Non-Interleaving Callback format. Both arrays arranged by float[chn][sample] */
     typedef void (*AudioCallback)(InputBuffer  in,
@@ -32,13 +32,14 @@ class AudioHandle
                                   size_t       size);
 
     typedef const float* InterleavingInputBuffer;
+    typedef float*       InterleavingOutputBuffer;
 
     /** Non-Interleaving Callback format. 
      ** audio is prepared as { L0, R0, L1, R1, . . . LN, RN }
      */
-    typedef void (*InterleavingAudioCallback)(InterleavingInputBuffer in,
-                                              OutputBuffer            out,
-                                              size_t                  size);
+    typedef void (*InterleavingAudioCallback)(InterleavingInputBuffer  in,
+                                              InterleavingOutputBuffer out,
+                                              size_t                   size);
 
     AudioHandle() : pimpl_(nullptr) {}
     ~AudioHandle() {}
