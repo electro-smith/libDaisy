@@ -18,14 +18,6 @@ namespace daisy
 @{
 */
 
-/** SPI peripheral enum */
-enum SpiPeriph
-{
-    SPI_PERIPH_1, /**< SPI peripheral 1 */
-    SPI_PERIPH_3, /**< SPI peripheral 3 */
-    SPI_PERIPH_6, /**< SPI peripheral 3 */
-};
-
 /** SPI pins */
 enum SpiPin
 {
@@ -39,6 +31,20 @@ enum SpiPin
 class SpiHandle
 {
   public:
+    struct Config{
+      enum class Peripheral
+      {
+          SPI_PERIPH_1,
+          SPI_PERIPH_2,
+          SPI_PERIPH_3,
+          SPI_PERIPH_4,
+          SPI_PERIPH_5,
+          SPI_PERIPH_6,
+      };
+
+      Peripheral periph;
+    };
+
     SpiHandle() {}
     ~SpiHandle() {}
 
