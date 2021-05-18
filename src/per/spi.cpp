@@ -365,6 +365,9 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
               && config_.direction == Config::Direction::TWO_LINES_RX_ONLY)
           || (!is_master && config_.direction == Config::Direction::TWO_LINES);
 
+    // nss = soft -> ss pin is unused for master and slave
+    bool enable_ss = config_.nss != Config::NSS::SOFT;
+
     if(config_.pin_config.sclk.port != DSY_GPIOX)
     {
         //check sclk against periph
@@ -410,8 +413,7 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.nss.port != DSY_GPIOX
-       && config_.nss != Config::NSS::SOFT)
+    if(config_.pin_config.nss.port != DSY_GPIOX && enable_ss)
     {
         //check nss against periph
         if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.nss, per_num + 3)
