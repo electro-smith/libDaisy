@@ -49,8 +49,8 @@ SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
     uint32_t mode;
     switch(config_.mode)
     {
-        case Config::Mode::MODE_MASTER: mode = SPI_MODE_MASTER; break;
-        case Config::Mode::MODE_SLAVE: mode = SPI_MODE_SLAVE; break;
+        case Config::Mode::MASTER: mode = SPI_MODE_MASTER; break;
+        case Config::Mode::SLAVE: mode = SPI_MODE_SLAVE; break;
         default: return Result::ERR;
     }
 
