@@ -20,6 +20,9 @@ class SpiHandle::Impl
 
     Result BlockingTransmit(uint8_t* buff, size_t size);
 
+    Result InitPins();
+    Result DeInitPins();
+
     SpiHandle::Config config_;
     SPI_HandleTypeDef hspi_;
 };
@@ -297,6 +300,120 @@ pin_alt* pins_periphs[] = {
     spi6_pins_sclk, spi6_pins_miso, spi6_pins_mosi, spi6_pins_nss,
 };
 
+SpiHandle::Result
+checkPinMatch(GPIO_InitTypeDef* init, dsy_gpio_pin pin, int p_num)
+{
+    for(int i = 0; i < 3; i++)
+    {
+        if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pins_none.pin))
+        {
+            /* skip */
+        }
+
+        else if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pin))
+        {
+            init->Alternate = pins_periphs[p_num][i].alt;
+            return SpiHandle::Result::OK;
+        }
+    }
+
+    return SpiHandle::Result::ERR;
+}
+
+SpiHandle::Result SpiHandle::Impl::InitPins()
+{
+    GPIO_InitTypeDef GPIO_InitStruct;
+
+    GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+
+    int per_num = 4 * (int)(config_.periph);
+
+    if(config_.pin_config.sclk.port != DSY_GPIOX)
+    {
+        //check sclk against periph
+        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.sclk, per_num)
+           == Result::ERR)
+        {
+            return Result::ERR;
+        }
+
+        //setup sclk pin
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.sclk);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.sclk);
+        HAL_GPIO_Init(port, &GPIO_InitStruct);
+    }
+
+    if(config_.pin_config.miso.port != DSY_GPIOX)
+    {
+        //check miso against periph
+        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.miso, per_num + 1)
+           == Result::ERR)
+        {
+            return Result::ERR;
+        }
+
+        //setup miso pin
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.miso);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.miso);
+        HAL_GPIO_Init(port, &GPIO_InitStruct);
+    }
+
+    if(config_.pin_config.mosi.port != DSY_GPIOX)
+    {
+        //check mosi against periph
+        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.mosi, per_num + 2)
+           == Result::ERR)
+        {
+            return Result::ERR;
+        }
+
+        //setup mosi pin
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.mosi);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.mosi);
+        HAL_GPIO_Init(port, &GPIO_InitStruct);
+    }
+
+    if(config_.pin_config.nss.port != DSY_GPIOX)
+    {
+        //check nss against periph
+        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.nss, per_num + 3)
+           == Result::ERR)
+        {
+            return Result::ERR;
+        }
+
+        //setup nss pin
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.nss);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.nss);
+        HAL_GPIO_Init(port, &GPIO_InitStruct);
+    }
+
+    return Result::OK;
+}
+
+SpiHandle::Result SpiHandle::Impl::DeInitPins()
+{
+    GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin_config.sclk);
+    uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin_config.sclk);
+    HAL_GPIO_DeInit(port, pin);
+
+    port = dsy_hal_map_get_port(&config_.pin_config.miso);
+    pin  = dsy_hal_map_get_pin(&config_.pin_config.miso);
+    HAL_GPIO_DeInit(port, pin);
+
+    port = dsy_hal_map_get_port(&config_.pin_config.mosi);
+    pin  = dsy_hal_map_get_pin(&config_.pin_config.mosi);
+    HAL_GPIO_DeInit(port, pin);
+
+    port = dsy_hal_map_get_port(&config_.pin_config.nss);
+    pin  = dsy_hal_map_get_pin(&config_.pin_config.nss);
+    HAL_GPIO_DeInit(port, pin);
+
+    return Result::OK;
+}
+
 void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
 {
     SpiHandle::Impl* handle = MapInstanceToHandle(spiHandle->Instance);
@@ -330,48 +447,30 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
             break;
     }
 
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
-    if(spiHandle->Instance == SPI1)
+    if(handle->InitPins() == SpiHandle::Result::ERR)
     {
-        /**SPI1 GPIO Configuration    
-    PB5     ------> SPI1_MOSI
-    PB4 (NJTRST)     ------> SPI1_MISO
-    PG11     ------> SPI1_SCK
-    PG10     ------> SPI1_NSS 
-    */
-        //        GPIO_InitStruct.Pin       = GPIO_PIN_5 | GPIO_PIN_4;
-        switch(spiHandle->Init.Direction)
-        {
-            case SPI_DIRECTION_2LINES_TXONLY:
-                GPIO_InitStruct.Pin = GPIO_PIN_5;
-                break;
-            case SPI_DIRECTION_2LINES_RXONLY:
-                GPIO_InitStruct.Pin = GPIO_PIN_4;
-                break;
-            default: GPIO_InitStruct.Pin = GPIO_PIN_4 | GPIO_PIN_5; break;
-        }
-        GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
-        GPIO_InitStruct.Pull      = GPIO_NOPULL;
-        GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_LOW;
-        GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
-        HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-        // Sck and CS
-        GPIO_InitStruct.Pin = GPIO_PIN_11;
-        if(spiHandle->Init.NSS != SPI_NSS_SOFT)
-        {
-            GPIO_InitStruct.Pin |= GPIO_PIN_10;
-        }
-        GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
-        GPIO_InitStruct.Pull      = GPIO_NOPULL;
-        GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_LOW;
-        GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
-        HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
-
-        /* USER CODE BEGIN SPI1_MspInit 1 */
-
-        /* USER CODE END SPI1_MspInit 1 */
+        Error_Handler();
     }
+
+    //     if(spiHandle->Instance == SPI1)
+    //     {
+    //         switch(spiHandle->Init.Direction)
+    //         {
+    //             case SPI_DIRECTION_2LINES_TXONLY:
+    //                 GPIO_InitStruct.Pin = GPIO_PIN_5;
+    //                 break;
+    //             case SPI_DIRECTION_2LINES_RXONLY:
+    //                 GPIO_InitStruct.Pin = GPIO_PIN_4;
+    //                 break;
+    //             default: GPIO_InitStruct.Pin = GPIO_PIN_4 | GPIO_PIN_5; break;
+    //         }
+    //         // Sck and CS
+    //         GPIO_InitStruct.Pin = GPIO_PIN_11;
+    //         if(spiHandle->Init.NSS != SPI_NSS_SOFT)
+    //         {
+    //             GPIO_InitStruct.Pin |= GPIO_PIN_10;
+    //         }
+    //     }
 }
 
 void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
@@ -401,21 +500,9 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
             break;
     }
 
-    if(spiHandle->Instance == SPI1)
+    if(handle->DeInitPins() == SpiHandle::Result::ERR)
     {
-        /**SPI1 GPIO Configuration    
-    PB5     ------> SPI1_MOSI
-    PB4 (NJTRST)     ------> SPI1_MISO
-    PG11     ------> SPI1_SCK
-    PG10     ------> SPI1_NSS 
-    */
-        HAL_GPIO_DeInit(GPIOB, GPIO_PIN_5 | GPIO_PIN_4);
-
-        HAL_GPIO_DeInit(GPIOG, GPIO_PIN_11 | GPIO_PIN_10);
-
-        /* USER CODE BEGIN SPI1_MspDeInit 1 */
-
-        /* USER CODE END SPI1_MspDeInit 1 */
+        Error_Handler();
     }
 }
 
