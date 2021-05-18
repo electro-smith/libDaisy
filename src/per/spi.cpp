@@ -320,6 +320,23 @@ checkPinMatch(GPIO_InitTypeDef* init, dsy_gpio_pin pin, int p_num)
     return SpiHandle::Result::ERR;
 }
 
+// here's how the directions work:
+
+// full duplex == two_line
+// (master) mosi -> mosi (slave)
+// (master) miso <- miso (slave)
+
+// half duplex == one_line
+// (master) mosi <--> miso (slave)
+
+// simplex tx == two_line_tx
+// (master) mosi ->     (or)
+// (slave)  miso ->
+
+// simplex rx == two_line_rx
+// (master) miso <-     (or)
+// (slave)  mosi <-
+
 SpiHandle::Result SpiHandle::Impl::InitPins()
 {
     GPIO_InitTypeDef GPIO_InitStruct;
@@ -329,6 +346,24 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
 
     int per_num = 4 * (int)(config_.periph);
+
+    bool is_master = config_.mode == Config::Mode::MASTER;
+
+    //  slave all except 2linerx, master 2line and 2linerx
+    bool enable_miso
+        = (!is_master
+           && config_.direction != Config::Direction::TWO_LINES_RX_ONLY)
+          || (is_master
+              && config_.direction == Config::Direction::TWO_LINES_RX_ONLY)
+          || (is_master && config_.direction == Config::Direction::TWO_LINES);
+
+    //  master all except 2linerx, slave 2linerx and 2line
+    bool enable_mosi
+        = (is_master
+           && config_.direction != Config::Direction::TWO_LINES_RX_ONLY)
+          || (!is_master
+              && config_.direction == Config::Direction::TWO_LINES_RX_ONLY)
+          || (!is_master && config_.direction == Config::Direction::TWO_LINES);
 
     if(config_.pin_config.sclk.port != DSY_GPIOX)
     {
@@ -345,7 +380,7 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.miso.port != DSY_GPIOX)
+    if(config_.pin_config.miso.port != DSY_GPIOX && enable_miso)
     {
         //check miso against periph
         if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.miso, per_num + 1)
@@ -360,7 +395,7 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.mosi.port != DSY_GPIOX)
+    if(config_.pin_config.mosi.port != DSY_GPIOX && enable_mosi)
     {
         //check mosi against periph
         if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.mosi, per_num + 2)
@@ -375,7 +410,8 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.nss.port != DSY_GPIOX)
+    if(config_.pin_config.nss.port != DSY_GPIOX
+       && config_.nss != Config::NSS::SOFT)
     {
         //check nss against periph
         if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.nss, per_num + 3)
@@ -451,26 +487,6 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     {
         Error_Handler();
     }
-
-    //     if(spiHandle->Instance == SPI1)
-    //     {
-    //         switch(spiHandle->Init.Direction)
-    //         {
-    //             case SPI_DIRECTION_2LINES_TXONLY:
-    //                 GPIO_InitStruct.Pin = GPIO_PIN_5;
-    //                 break;
-    //             case SPI_DIRECTION_2LINES_RXONLY:
-    //                 GPIO_InitStruct.Pin = GPIO_PIN_4;
-    //                 break;
-    //             default: GPIO_InitStruct.Pin = GPIO_PIN_4 | GPIO_PIN_5; break;
-    //         }
-    //         // Sck and CS
-    //         GPIO_InitStruct.Pin = GPIO_PIN_11;
-    //         if(spiHandle->Init.NSS != SPI_NSS_SOFT)
-    //         {
-    //             GPIO_InitStruct.Pin |= GPIO_PIN_10;
-    //         }
-    //     }
 }
 
 void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
