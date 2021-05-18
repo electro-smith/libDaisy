@@ -175,7 +175,10 @@ SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
 
 SpiHandle::Result SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size)
 {
-    HAL_SPI_Transmit(&hspi_, buff, size, 100);
+    if(HAL_SPI_Transmit(&hspi_, buff, size, 100) != HAL_OK)
+    {
+        return SpiHandle::Result::ERR;
+    }
     return SpiHandle::Result::OK;
 }
 
