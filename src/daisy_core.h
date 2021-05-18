@@ -32,8 +32,8 @@ cache enabled.
 
 #define FBIPMAX 0.999985f             /**< close to 1.0f-LSB at 16 bit */
 #define FBIPMIN (-FBIPMAX)            /**< - (1 - LSB) */
-#define S82F_SCALE 0.00390625f        /**< 1 / (2**8) */
-#define F2S8_SCALE 255.0f             /**< (2 ** 8) - 1 */
+#define S82F_SCALE 0.0078125f        /**< 1 / (2**7) */
+#define F2S8_SCALE 127.0f             /**< (2 ** 7) - 1 */
 #define S162F_SCALE 3.0517578125e-05f /**< 1 / (2** 15) */
 #define F2S16_SCALE 32767.0f          /**< (2 ** 15) - 1 */
 #define F2S24_SCALE 8388608.0f        /**< 2 ** 23 */
