@@ -30,6 +30,23 @@ class SpiHandle::Impl
 
 static SpiHandle::Impl spi_handles[6];
 
+SpiHandle::Impl* MapInstanceToHandle(SPI_TypeDef* instance)
+{
+    // map HAL instances
+    constexpr SPI_TypeDef* instances[6] = {SPI1, SPI2, SPI3, SPI4, SPI5, SPI6};
+
+    for(int i = 0; i < 6; i++)
+    {
+        if(instance == instances[i])
+        {
+            return &spi_handles[i];
+        }
+    }
+
+    /* error */
+    return NULL;
+}
+
 SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
 {
     config_ = config;
@@ -184,6 +201,10 @@ SpiHandle::Result SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size)
 
 void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
 {
+    SpiHandle::Impl* handle = MapInstanceToHandle(spiHandle->Instance);
+    // dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.rx.port);
+    // dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.tx.port);
+
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     if(spiHandle->Instance == SPI1)
     {
@@ -238,6 +259,8 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
 
 void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
 {
+    SpiHandle::Impl* handle = MapInstanceToHandle(spiHandle->Instance);
+
     if(spiHandle->Instance == SPI1)
     {
         /* USER CODE BEGIN SPI1_MspDeInit 0 */
