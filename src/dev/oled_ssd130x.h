@@ -83,14 +83,15 @@ class SSD130x4WireSpiTransport
         dsy_gpio_init(&pin_reset_);
         // Initialize SPI
         SpiHandle::Config spi_config;
-        spi_config.periph = SpiHandle::Config::Peripheral::SPI_1;
-        spi_config.mode = SpiHandle::Config::Mode::MASTER;
+        spi_config.periph    = SpiHandle::Config::Peripheral::SPI_1;
+        spi_config.mode      = SpiHandle::Config::Mode::MASTER;
         spi_config.direction = SpiHandle::Config::Direction::TWO_LINES_TX_ONLY;
-        spi_config.datasize = 8;
+        spi_config.datasize  = 8;
         spi_config.clock_polarity = SpiHandle::Config::ClockPolarity::LOW;
-        spi_config.clock_phase = SpiHandle::Config::ClockPhase::ONE_EDGE;
-        spi_config.nss = SpiHandle::Config::NSS::HARD_OUTPUT;
-        spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::BAUDRATEPRESCALER_8;
+        spi_config.clock_phase    = SpiHandle::Config::ClockPhase::ONE_EDGE;
+        spi_config.nss            = SpiHandle::Config::NSS::HARD_OUTPUT;
+        spi_config.baud_prescaler
+            = SpiHandle::Config::BaudPrescaler::BAUDRATEPRESCALER_8;
         spi_.Init(spi_config);
 
         // Reset and Configure OLED.
