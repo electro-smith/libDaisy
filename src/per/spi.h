@@ -88,6 +88,14 @@ class SpiHandle
             BAUDRATEPRESCALER_256,
         };
 
+        struct
+        {
+            dsy_gpio_pin sclk; /**< & */
+            dsy_gpio_pin miso; /**< & */
+            dsy_gpio_pin mosi; /**< & */
+            dsy_gpio_pin nss;  /**< & */
+        } pin_config;
+
         Peripheral    periph;
         Mode          mode;
         Direction     direction;

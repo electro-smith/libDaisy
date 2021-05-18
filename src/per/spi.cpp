@@ -199,23 +199,140 @@ SpiHandle::Result SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size)
     return SpiHandle::Result::OK;
 }
 
+typedef struct
+{
+    dsy_gpio_pin pin;
+    uint8_t      alt;
+} pin_alt;
+
+pin_alt pins_none = {{DSY_GPIOX, 0}, 255};
+
+//this is a bit long...
+/* ============== spi1 ============== */
+pin_alt spi1_pins_sclk[] = {{{DSY_GPIOG, 11}, GPIO_AF5_SPI1},
+                            {{DSY_GPIOA, 5}, GPIO_AF5_SPI1},
+                            pins_none};
+
+pin_alt spi1_pins_miso[] = {{{DSY_GPIOB, 4}, GPIO_AF5_SPI1},
+                            {{DSY_GPIOA, 6}, GPIO_AF5_SPI1},
+                            {{DSY_GPIOG, 9}, GPIO_AF5_SPI1}};
+
+pin_alt spi1_pins_mosi[] = {{{DSY_GPIOB, 5}, GPIO_AF5_SPI1},
+                            {{DSY_GPIOA, 7}, GPIO_AF5_SPI1},
+                            pins_none};
+
+pin_alt spi1_pins_nss[] = {{{DSY_GPIOG, 10}, GPIO_AF5_SPI1},
+                           {{DSY_GPIOA, 4}, GPIO_AF5_SPI1},
+                           pins_none};
+
+/* ============== spi2 ============== */
+pin_alt spi2_pins_sclk[] = {pins_none, pins_none, pins_none};
+
+pin_alt spi2_pins_miso[]
+    = {{{DSY_GPIOB, 14}, GPIO_AF5_SPI2}, pins_none, pins_none};
+
+pin_alt spi2_pins_mosi[] = {{{DSY_GPIOC, 1}, GPIO_AF5_SPI2},
+                            {{DSY_GPIOB, 15}, GPIO_AF5_SPI2},
+                            pins_none};
+
+pin_alt spi2_pins_nss[] = {{{DSY_GPIOB, 12}, GPIO_AF5_SPI2},
+                           {{DSY_GPIOB, 4}, GPIO_AF7_SPI2},
+                           {{DSY_GPIOB, 9}, GPIO_AF5_SPI2}};
+
+/* ============== spi3 ============== */
+pin_alt spi3_pins_sclk[]
+    = {{{DSY_GPIOC, 10}, GPIO_AF6_SPI3}, pins_none, pins_none};
+
+pin_alt spi3_pins_miso[] = {{{DSY_GPIOC, 11}, GPIO_AF6_SPI3},
+                            {{DSY_GPIOB, 4}, GPIO_AF6_SPI3},
+                            pins_none};
+
+pin_alt spi3_pins_mosi[] = {{{DSY_GPIOC, 12}, GPIO_AF6_SPI3},
+                            {{DSY_GPIOB, 5}, GPIO_AF7_SPI3},
+                            pins_none};
+
+pin_alt spi3_pins_nss[]
+    = {{{DSY_GPIOA, 4}, GPIO_AF6_SPI3}, pins_none, pins_none};
+
+/* ============== spi4 ============== */
+pin_alt spi4_pins_sclk[] = {pins_none, pins_none, pins_none};
+
+pin_alt spi4_pins_miso[] = {pins_none, pins_none, pins_none};
+
+pin_alt spi4_pins_mosi[] = {pins_none, pins_none, pins_none};
+
+pin_alt spi4_pins_nss[] = {pins_none, pins_none, pins_none};
+
+/* ============== spi5 ============== */
+pin_alt spi5_pins_sclk[] = {pins_none, pins_none, pins_none};
+
+pin_alt spi5_pins_miso[] = {pins_none, pins_none, pins_none};
+
+pin_alt spi5_pins_mosi[] = {pins_none, pins_none, pins_none};
+
+pin_alt spi5_pins_nss[] = {pins_none, pins_none, pins_none};
+
+/* ============== spi6 ============== */
+pin_alt spi6_pins_sclk[]
+    = {{{DSY_GPIOA, 5}, GPIO_AF8_SPI6}, pins_none, pins_none};
+
+pin_alt spi6_pins_miso[] = {{{DSY_GPIOB, 4}, GPIO_AF8_SPI6},
+                            {{DSY_GPIOA, 6}, GPIO_AF8_SPI6},
+                            pins_none};
+
+pin_alt spi6_pins_mosi[] = {{{DSY_GPIOB, 5}, GPIO_AF8_SPI6},
+                            {{DSY_GPIOA, 7}, GPIO_AF8_SPI6},
+                            pins_none};
+
+pin_alt spi6_pins_nss[]
+    = {{{DSY_GPIOA, 4}, GPIO_AF8_SPI6}, pins_none, pins_none};
+
+//an array to hold everything
+pin_alt* pins_periphs[] = {
+    spi1_pins_sclk, spi1_pins_miso, spi1_pins_mosi, spi1_pins_nss,
+    spi2_pins_sclk, spi2_pins_miso, spi2_pins_mosi, spi2_pins_nss,
+    spi3_pins_sclk, spi3_pins_miso, spi3_pins_mosi, spi3_pins_nss,
+    spi4_pins_sclk, spi4_pins_miso, spi4_pins_mosi, spi4_pins_nss,
+    spi5_pins_sclk, spi5_pins_miso, spi5_pins_mosi, spi5_pins_nss,
+    spi6_pins_sclk, spi6_pins_miso, spi6_pins_mosi, spi6_pins_nss,
+};
+
 void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
 {
     SpiHandle::Impl* handle = MapInstanceToHandle(spiHandle->Instance);
-    // dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.rx.port);
-    // dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.tx.port);
+
+    //enable clock on all 4 pins
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.sclk.port);
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.miso.port);
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.mosi.port);
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.nss.port);
+
+    //enable clock for our peripheral
+    switch(handle->config_.periph)
+    {
+        case SpiHandle::Config::Peripheral::SPI_1:
+            __HAL_RCC_SPI1_CLK_ENABLE();
+            break;
+        case SpiHandle::Config::Peripheral::SPI_2:
+            __HAL_RCC_SPI2_CLK_ENABLE();
+            break;
+        case SpiHandle::Config::Peripheral::SPI_3:
+            __HAL_RCC_SPI3_CLK_ENABLE();
+            break;
+        case SpiHandle::Config::Peripheral::SPI_4:
+            __HAL_RCC_SPI4_CLK_ENABLE();
+            break;
+        case SpiHandle::Config::Peripheral::SPI_5:
+            __HAL_RCC_SPI5_CLK_ENABLE();
+            break;
+        case SpiHandle::Config::Peripheral::SPI_6:
+            __HAL_RCC_SPI6_CLK_ENABLE();
+            break;
+    }
 
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     if(spiHandle->Instance == SPI1)
     {
-        /* USER CODE BEGIN SPI1_MspInit 0 */
-
-        /* USER CODE END SPI1_MspInit 0 */
-        /* SPI1 clock enable */
-        __HAL_RCC_SPI1_CLK_ENABLE();
-
-        __HAL_RCC_GPIOB_CLK_ENABLE();
-        __HAL_RCC_GPIOG_CLK_ENABLE();
         /**SPI1 GPIO Configuration    
     PB5     ------> SPI1_MOSI
     PB4 (NJTRST)     ------> SPI1_MISO
@@ -261,14 +378,31 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
 {
     SpiHandle::Impl* handle = MapInstanceToHandle(spiHandle->Instance);
 
+    //disable clock for our peripheral
+    switch(handle->config_.periph)
+    {
+        case SpiHandle::Config::Peripheral::SPI_1:
+            __HAL_RCC_SPI1_CLK_DISABLE();
+            break;
+        case SpiHandle::Config::Peripheral::SPI_2:
+            __HAL_RCC_SPI2_CLK_DISABLE();
+            break;
+        case SpiHandle::Config::Peripheral::SPI_3:
+            __HAL_RCC_SPI3_CLK_DISABLE();
+            break;
+        case SpiHandle::Config::Peripheral::SPI_4:
+            __HAL_RCC_SPI4_CLK_DISABLE();
+            break;
+        case SpiHandle::Config::Peripheral::SPI_5:
+            __HAL_RCC_SPI5_CLK_DISABLE();
+            break;
+        case SpiHandle::Config::Peripheral::SPI_6:
+            __HAL_RCC_SPI6_CLK_DISABLE();
+            break;
+    }
+
     if(spiHandle->Instance == SPI1)
     {
-        /* USER CODE BEGIN SPI1_MspDeInit 0 */
-
-        /* USER CODE END SPI1_MspDeInit 0 */
-        /* Peripheral clock disable */
-        __HAL_RCC_SPI1_CLK_DISABLE();
-
         /**SPI1 GPIO Configuration    
     PB5     ------> SPI1_MOSI
     PB4 (NJTRST)     ------> SPI1_MISO
