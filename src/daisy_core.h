@@ -32,7 +32,9 @@ cache enabled.
 
 #define FBIPMAX 0.999985f             /**< close to 1.0f-LSB at 16 bit */
 #define FBIPMIN (-FBIPMAX)            /**< - (1 - LSB) */
-#define S82F_SCALE 0.0078125f        /**< 1 / (2**7) */
+#define U82F_SCALE 0.00390625f        /**< 1 / (2**8) */
+#define F2U8_SCALE 255.0f             /**< (2 ** 8) - 1 */
+#define S82F_SCALE 0.0078125f         /**< 1 / (2**7) */
 #define F2S8_SCALE 127.0f             /**< (2 ** 7) - 1 */
 #define S162F_SCALE 3.0517578125e-05f /**< 1 / (2** 15) */
 #define F2S16_SCALE 32767.0f          /**< (2 ** 15) - 1 */
@@ -51,6 +53,27 @@ FORCE_INLINE float cube(float x)
 {
     return (x * x) * x;
 }
+
+/** 
+    Converts unsigned 8-bit to float
+    \param x Number to be scaled.
+    \return Scaled number.
+*/
+FORCE_INLINE float u82f(uint8_t x)
+{
+    return (float)x * U82F_SCALE;
+}
+
+/**
+    Converts float to unsigned 8-bit
+*/
+FORCE_INLINE uint8_t f2u8(float x)
+{
+    x = x <= 0.f ? x * -1.f : x; //flip sign
+    x = x >= FBIPMAX ? FBIPMAX : x;
+    return (uint32_t)(x * F2U8_SCALE);
+}
+
 
 /** 
     Converts Signed 8-bit to float
