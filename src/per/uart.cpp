@@ -609,13 +609,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
             break;
     }
 
-    GPIO_TypeDef* port = dsy_hal_map_get_port(&handle->config_.pin_config.tx);
-    uint16_t      pin  = dsy_hal_map_get_pin(&handle->config_.pin_config.tx);
-    HAL_GPIO_DeInit(port, pin);
-
-    port = dsy_hal_map_get_port(&handle->config_.pin_config.rx);
-    pin  = dsy_hal_map_get_pin(&handle->config_.pin_config.rx);
-    HAL_GPIO_DeInit(port, pin);
+    handle->DeInitPins();
 
     HAL_DMA_DeInit(uartHandle->hdmarx);
 
