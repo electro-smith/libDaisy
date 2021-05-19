@@ -22,6 +22,7 @@ class SpiHandle::Impl
     Result Init(const Config& config);
 
     Result BlockingTransmit(uint8_t* buff, size_t size);
+    Result PollReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
 
     Result InitPins();
     Result DeInitPins();
@@ -203,6 +204,16 @@ SpiHandle::Result SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size)
         return SpiHandle::Result::ERR;
     }
     return SpiHandle::Result::OK;
+}
+
+SpiHandle::Result
+SpiHandle::Impl::PollReceive(uint8_t* buffer, uint16_t size, uint32_t timeout)
+{
+    if(HAL_SPI_Receive(&hspi_, buffer, size, timeout) != HAL_OK)
+    {
+        return Result::ERR;
+    }
+    return Result::OK;
 }
 
 typedef struct
