@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['uarthandler_978',['UartHandler',['../classdaisy_1_1_uart_handler.html',1,'daisy']]],
-  ['usbhandle_979',['UsbHandle',['../class_usb_handle.html',1,'']]]
+  ['uarthandler_985',['UartHandler',['../classdaisy_1_1_uart_handler.html',1,'daisy']]],
+  ['usbhandle_986',['UsbHandle',['../class_usb_handle.html',1,'']]]
 ];

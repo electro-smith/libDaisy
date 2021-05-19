@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['adc_1234',['adc',['../classdaisy_1_1_daisy_seed.html#a62f0206b9421868f6afba7b81e0b26f2',1,'daisy::DaisySeed']]],
-  ['audio_5fhandle_1235',['audio_handle',['../classdaisy_1_1_daisy_seed.html#a5ac99b65a49c695171b965b8cd2349d5',1,'daisy::DaisySeed']]],
-  ['audioformat_1236',['AudioFormat',['../structdaisy_1_1_w_a_v___format_type_def.html#aeb09ec4e4df16bd903f5d31af5a18681',1,'daisy::WAV_FormatTypeDef']]]
+  ['adc_1241',['adc',['../classdaisy_1_1_daisy_seed.html#a62f0206b9421868f6afba7b81e0b26f2',1,'daisy::DaisySeed']]],
+  ['audio_5fhandle_1242',['audio_handle',['../classdaisy_1_1_daisy_seed.html#a5ac99b65a49c695171b965b8cd2349d5',1,'daisy::DaisySeed']]],
+  ['audioformat_1243',['AudioFormat',['../structdaisy_1_1_w_a_v___format_type_def.html#aeb09ec4e4df16bd903f5d31af5a18681',1,'daisy::WAV_FormatTypeDef']]]
 ];
