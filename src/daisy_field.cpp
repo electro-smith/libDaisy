@@ -190,9 +190,27 @@ void DaisyField::ChangeAudioCallback(AudioHandle::AudioCallback cb)
     seed.ChangeAudioCallback(cb);
 }
 
+void DaisyField::SetHidUpdateRates()
+{
+    //set the hids to the new update rate
+    for(size_t i = 0; i < SW_LAST; i++)
+    {
+        sw[i].SetUpdateRate(AudioCallbackRate());
+    }
+    for(size_t i = 0; i < KNOB_LAST; i++)
+    {
+        knob[i].SetSampleRate(AudioCallbackRate());
+    }
+    for(size_t i = 0; i < CV_LAST; i++)
+    {
+        cv[i].SetSampleRate(AudioCallbackRate());
+    }
+}
+
 void DaisyField::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
 {
     seed.SetAudioSampleRate(samplerate);
+    SetHidUpdateRates();
 }
 
 float DaisyField::AudioSampleRate()
@@ -203,6 +221,7 @@ float DaisyField::AudioSampleRate()
 void DaisyField::SetAudioBlockSize(size_t size)
 {
     seed.SetAudioBlockSize(size);
+    SetHidUpdateRates();
 }
 
 size_t DaisyField::AudioBlockSize()

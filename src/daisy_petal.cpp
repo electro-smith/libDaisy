@@ -96,6 +96,25 @@ void DaisyPetal::DelayMs(size_t del)
     seed.DelayMs(del);
 }
 
+void DaisyPetal::SetHidUpdateRates()
+{
+    for(size_t i = 0; i < KNOB_LAST; i++)
+    {
+        knob[i].SetSampleRate(AudioCallbackRate());
+    }
+    for(size_t i = 0; i < SW_LAST; i++)
+    {
+        switches[i].SetUpdateRate(AudioCallbackRate());
+    }
+    for(size_t i = 0; i < FOOTSWITCH_LED_LAST; i++)
+    {
+        footswitch_led[i].SetSampleRate(AudioCallbackRate());
+    }
+    expression.SetSampleRate(AudioCallbackRate());
+    encoder.SetUpdateRate(AudioCallbackRate());
+}
+
+
 void DaisyPetal::StartAudio(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.StartAudio(cb);
@@ -124,6 +143,7 @@ void DaisyPetal::StopAudio()
 void DaisyPetal::SetAudioBlockSize(size_t size)
 {
     seed.SetAudioBlockSize(size);
+    SetHidUpdateRates();
 }
 
 size_t DaisyPetal::AudioBlockSize()
@@ -134,6 +154,7 @@ size_t DaisyPetal::AudioBlockSize()
 void DaisyPetal::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
 {
     seed.SetAudioSampleRate(samplerate);
+    SetHidUpdateRates();
 }
 
 float DaisyPetal::AudioSampleRate()

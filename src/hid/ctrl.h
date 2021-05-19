@@ -65,6 +65,10 @@ class AnalogControl
     /** Returns a normalized float value representing the current ADC value. */
     inline float GetRawFloat() { return (float)(*raw_) / 65535.f; }
 
+    /** Set a new sample rate after the ctrl has been initialized
+     *  \param sample_rate New update rate for the switch in hz
+    */
+    void SetSampleRate(float sample_rate);
 
   private:
     uint16_t *raw_;
@@ -72,6 +76,8 @@ class AnalogControl
     float     scale_, offset_;
     bool      flip_;
     bool      invert_;
+    bool      is_bipolar_;
+    float     slew_seconds_;
 };
 } // namespace daisy
 #endif

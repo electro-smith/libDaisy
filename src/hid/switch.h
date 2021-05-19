@@ -86,6 +86,14 @@ class Switch
         return Pressed() ? time_held_ * 1000.0f : 0;
     }
 
+    /** Call this with the new update rate if you change the block size or sample rate after init'ing the switch
+     * \param update_rate the rate at which the Debounce() function will be called. (used for timing).
+    */
+    inline void SetUpdateRate(float update_rate)
+    {
+        time_per_update_ = 1.0f / update_rate;
+    }
+
   private:
     Type     t_;
     dsy_gpio hw_gpio_;

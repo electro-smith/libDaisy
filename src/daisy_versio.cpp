@@ -88,6 +88,16 @@ void DaisyVersio::Init(bool boost)
     }
 }
 
+void DaisyVersio::SetHidUpdateRates()
+{
+    for(size_t i = 0; i < KNOB_LAST; i++)
+    {
+        knobs[i].SetSampleRate(AudioCallbackRate());
+    }
+    tap.SetUpdateRate(AudioCallbackRate());
+}
+
+
 void DaisyVersio::StartAudio(AudioHandle::InterleavingAudioCallback cb)
 {
     seed.StartAudio(cb);
@@ -116,6 +126,7 @@ void DaisyVersio::StopAudio()
 void DaisyVersio::SetAudioBlockSize(size_t size)
 {
     seed.SetAudioBlockSize(size);
+    SetHidUpdateRates();
 }
 
 size_t DaisyVersio::AudioBlockSize()
@@ -126,6 +137,7 @@ size_t DaisyVersio::AudioBlockSize()
 void DaisyVersio::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
 {
     seed.SetAudioSampleRate(samplerate);
+    SetHidUpdateRates();
 }
 
 float DaisyVersio::AudioSampleRate()

@@ -50,6 +50,15 @@ void DaisyPatch::DelayMs(size_t del)
     seed.DelayMs(del);
 }
 
+void DaisyPatch::SetHidUpdateRates()
+{
+    for(size_t i = 0; i < CTRL_LAST; i++)
+    {
+        controls[i].SetSampleRate(AudioCallbackRate());
+    }
+    encoder.SetUpdateRate(AudioCallbackRate());
+}
+
 void DaisyPatch::StartAudio(AudioHandle::AudioCallback cb)
 {
     seed.StartAudio(cb);
@@ -68,6 +77,7 @@ void DaisyPatch::StopAudio()
 void DaisyPatch::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
 {
     seed.SetAudioSampleRate(samplerate);
+    SetHidUpdateRates();
 }
 
 float DaisyPatch::AudioSampleRate()
@@ -78,6 +88,7 @@ float DaisyPatch::AudioSampleRate()
 void DaisyPatch::SetAudioBlockSize(size_t size)
 {
     seed.SetAudioBlockSize(size);
+    SetHidUpdateRates();
 }
 
 size_t DaisyPatch::AudioBlockSize()

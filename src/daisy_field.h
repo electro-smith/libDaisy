@@ -220,6 +220,9 @@ class DaisyField
     AnalogControl                            cv[CV_LAST];
 
   private:
+    /** Set all the HID callback rates any time a new callback rate is established */
+    void SetHidUpdateRates();
+
     ShiftRegister4021<2> keyboard_sr_; /**< Two 4021s daisy-chained. */
     uint8_t              keyboard_state_[16];
     uint32_t             last_led_update_; // for vegas mode

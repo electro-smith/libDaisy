@@ -52,6 +52,14 @@ be made at the same rate as the debounce function is being called.
 */
     inline float TimeHeldMs() const { return sw_.TimeHeldMs(); }
 
+    /** Call this with the new update rate if you change the block size or sample rate after init'ing the switch
+     * \param update_rate the rate at which the Debounce() function will be called. (used for timing).
+    */
+    inline void SetUpdateRate(float update_rate)
+    {
+        sw_.SetUpdateRate(update_rate);
+    }
+
   private:
     Switch   sw_;
     dsy_gpio hw_a_, hw_b_;
