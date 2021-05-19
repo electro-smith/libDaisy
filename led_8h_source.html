@@ -94,20 +94,23 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="classdaisy_1_1_led.html#aeec57ceddd9f685c50446321ba6e1492">   46</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_led.html#aeec57ceddd9f685c50446321ba6e1492">Update</a>();</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">size_t</span>   pwm_cnt_, pwm_thresh_;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">float</span>    bright_;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <span class="keywordtype">float</span>    pwm_;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordtype">float</span>    samplerate_;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">bool</span>     invert_, on_, off_;</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <a class="code" href="structdsy__gpio.html">dsy_gpio</a> hw_pin_;</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;};</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;} <span class="comment">// namespace daisy</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classdaisy_1_1_led.html#a55c8e1df70930f21270f4c28df6320fb">   51</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_led.html#a55c8e1df70930f21270f4c28df6320fb">SetSampleRate</a>(<span class="keywordtype">float</span> sample_rate) { samplerate_ = sample_rate; }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">size_t</span>   pwm_cnt_, pwm_thresh_;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">float</span>    bright_;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">float</span>    pwm_;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">float</span>    samplerate_;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">bool</span>     invert_, on_, off_;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <a class="code" href="structdsy__gpio.html">dsy_gpio</a> hw_pin_;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;};</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;} <span class="comment">// namespace daisy</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassdaisy_1_1_led_html"><div class="ttname"><a href="classdaisy_1_1_led.html">daisy::Led</a></div><div class="ttdoc">LED Class providing simple Software PWM ability, etc   Eventually this will work with hardware PWM,...</div><div class="ttdef"><b>Definition:</b> led.h:22</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_html_a0af3ce433660d9f21e94368d5d84fe6e"><div class="ttname"><a href="classdaisy_1_1_led.html#a0af3ce433660d9f21e94368d5d84fe6e">daisy::Led::Init</a></div><div class="ttdeci">void Init(dsy_gpio_pin pin, bool invert, float samplerate=1000.0f)</div></div>
+<div class="ttc" id="aclassdaisy_1_1_led_html_a55c8e1df70930f21270f4c28df6320fb"><div class="ttname"><a href="classdaisy_1_1_led.html#a55c8e1df70930f21270f4c28df6320fb">daisy::Led::SetSampleRate</a></div><div class="ttdeci">void SetSampleRate(float sample_rate)</div><div class="ttdef"><b>Definition:</b> led.h:51</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_html_a7394c869bc8b34d94c183c2b7fb16bc7"><div class="ttname"><a href="classdaisy_1_1_led.html#a7394c869bc8b34d94c183c2b7fb16bc7">daisy::Led::Set</a></div><div class="ttdeci">void Set(float val)</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_html_aeec57ceddd9f685c50446321ba6e1492"><div class="ttname"><a href="classdaisy_1_1_led.html#aeec57ceddd9f685c50446321ba6e1492">daisy::Led::Update</a></div><div class="ttdeci">void Update()</div></div>
 <div class="ttc" id="anamespacedaisy_html"><div class="ttname"><a href="namespacedaisy.html">daisy</a></div><div class="ttdoc">Hardware defines and helpers for daisy field platform.</div><div class="ttdef"><b>Definition:</b> daisy_field.h:11</div></div>

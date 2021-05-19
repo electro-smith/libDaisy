@@ -110,6 +110,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a77496bb98f169ba613821e2f1b7fc243"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a648bd3fc767286b3efd56daa7f15ace6"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_switch.html#a648bd3fc767286b3efd56daa7f15ace6">TimeHeldMs</a> () const</td></tr>
 <tr class="separator:a648bd3fc767286b3efd56daa7f15ace6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b690946462b81edba1feace3625bc64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_switch.html#a9b690946462b81edba1feace3625bc64">SetUpdateRate</a> (float update_rate)</td></tr>
+<tr class="separator:a9b690946462b81edba1feace3625bc64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generic Class for handling momentary/latching switches <br  />
@@ -392,6 +394,38 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>true if a button was just pressed. </dd></dl>
+
+</div>
+</div>
+<a id="a9b690946462b81edba1feace3625bc64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b690946462b81edba1feace3625bc64">&#9670;&nbsp;</a></span>SetUpdateRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::Switch::SetUpdateRate </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>update_rate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Call this with the new update rate if you change the block size or sample rate after init'ing the switch </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">update_rate</td><td>the rate at which the <a class="el" href="classdaisy_1_1_switch.html#a564849b2de31395dda3cb464a65c5a24">Debounce()</a> function will be called. (used for timing). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

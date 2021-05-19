@@ -101,22 +101,26 @@ $(function() {
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
 <div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classdaisy_1_1_analog_control.html#a33c39b4db77b62c46fb5093cc19b8380">   66</a></span>&#160;    <span class="keyword">inline</span> <span class="keywordtype">float</span> <a class="code" href="classdaisy_1_1_analog_control.html#a33c39b4db77b62c46fb5093cc19b8380">GetRawFloat</a>() { <span class="keywordflow">return</span> (<span class="keywordtype">float</span>)(*raw_) / 65535.f; }</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160; </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    uint16_t *raw_;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">float</span>     coeff_, samplerate_, val_;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">float</span>     scale_, offset_;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    <span class="keywordtype">bool</span>      flip_;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">bool</span>      invert_;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;};</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;} <span class="comment">// namespace daisy</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="classdaisy_1_1_analog_control.html#a4cbdf8afb5e284bd9e12bca004a10fab">   71</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_analog_control.html#a4cbdf8afb5e284bd9e12bca004a10fab">SetSampleRate</a>(<span class="keywordtype">float</span> sample_rate);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    uint16_t *raw_;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keywordtype">float</span>     coeff_, samplerate_, val_;</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    <span class="keywordtype">float</span>     scale_, offset_;</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">bool</span>      flip_;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <span class="keywordtype">bool</span>      invert_;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keywordtype">bool</span>      is_bipolar_;</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">float</span>     slew_seconds_;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;};</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;} <span class="comment">// namespace daisy</span></div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html"><div class="ttname"><a href="classdaisy_1_1_analog_control.html">daisy::AnalogControl</a></div><div class="ttdoc">Hardware Interface for control inputs   Primarily designed for ADC input controls such as   potentiom...</div><div class="ttdef"><b>Definition:</b> ctrl.h:18</div></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html_a099ff147f24ae2220921d22729a66020"><div class="ttname"><a href="classdaisy_1_1_analog_control.html#a099ff147f24ae2220921d22729a66020">daisy::AnalogControl::Value</a></div><div class="ttdeci">float Value() const</div><div class="ttdef"><b>Definition:</b> ctrl.h:56</div></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html_a1030730b53fe183361b282c277fd0d57"><div class="ttname"><a href="classdaisy_1_1_analog_control.html#a1030730b53fe183361b282c277fd0d57">daisy::AnalogControl::AnalogControl</a></div><div class="ttdeci">AnalogControl()</div><div class="ttdef"><b>Definition:</b> ctrl.h:21</div></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html_a2ace581abd8f0c5e35c0013e01f37f1c"><div class="ttname"><a href="classdaisy_1_1_analog_control.html#a2ace581abd8f0c5e35c0013e01f37f1c">daisy::AnalogControl::SetCoeff</a></div><div class="ttdeci">void SetCoeff(float val)</div><div class="ttdef"><b>Definition:</b> ctrl.h:60</div></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html_a33c39b4db77b62c46fb5093cc19b8380"><div class="ttname"><a href="classdaisy_1_1_analog_control.html#a33c39b4db77b62c46fb5093cc19b8380">daisy::AnalogControl::GetRawFloat</a></div><div class="ttdeci">float GetRawFloat()</div><div class="ttdef"><b>Definition:</b> ctrl.h:66</div></div>
+<div class="ttc" id="aclassdaisy_1_1_analog_control_html_a4cbdf8afb5e284bd9e12bca004a10fab"><div class="ttname"><a href="classdaisy_1_1_analog_control.html#a4cbdf8afb5e284bd9e12bca004a10fab">daisy::AnalogControl::SetSampleRate</a></div><div class="ttdeci">void SetSampleRate(float sample_rate)</div></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html_a516499f0788d7405024eff550386a59e"><div class="ttname"><a href="classdaisy_1_1_analog_control.html#a516499f0788d7405024eff550386a59e">daisy::AnalogControl::Init</a></div><div class="ttdeci">void Init(uint16_t *adcptr, float sr, bool flip=false, bool invert=false, float slew_seconds=0.002f)</div></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html_a7109593bfc106dd8ef35aba4434b8321"><div class="ttname"><a href="classdaisy_1_1_analog_control.html#a7109593bfc106dd8ef35aba4434b8321">daisy::AnalogControl::Process</a></div><div class="ttdeci">float Process()</div></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html_a76ae5fabf5f3345ced9a6f9c5280d721"><div class="ttname"><a href="classdaisy_1_1_analog_control.html#a76ae5fabf5f3345ced9a6f9c5280d721">daisy::AnalogControl::GetRawValue</a></div><div class="ttdeci">uint16_t GetRawValue()</div><div class="ttdef"><b>Definition:</b> ctrl.h:63</div></div>

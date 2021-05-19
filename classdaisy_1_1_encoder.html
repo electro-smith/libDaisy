@@ -95,6 +95,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7c3a633c4e578dac0bdf5829b9bed99f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f2e112fa7ab67140344af05f83172ab"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_encoder.html#a5f2e112fa7ab67140344af05f83172ab">TimeHeldMs</a> () const</td></tr>
 <tr class="separator:a5f2e112fa7ab67140344af05f83172ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa613736d374d8a751ecb3b804b11e29d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_encoder.html#aa613736d374d8a751ecb3b804b11e29d">SetUpdateRate</a> (float update_rate)</td></tr>
+<tr class="separator:aa613736d374d8a751ecb3b804b11e29d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generic Class for handling Quadrature Encoders <br  />
@@ -262,6 +264,38 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Returns true if the encoder was just pressed. </p>
+
+</div>
+</div>
+<a id="aa613736d374d8a751ecb3b804b11e29d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa613736d374d8a751ecb3b804b11e29d">&#9670;&nbsp;</a></span>SetUpdateRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::Encoder::SetUpdateRate </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>update_rate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Call this with the new update rate if you change the block size or sample rate after init'ing the switch </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">update_rate</td><td>the rate at which the <a class="el" href="classdaisy_1_1_encoder.html#a5bed96517dbffee1fb16255ec9faa7e7">Debounce()</a> function will be called. (used for timing). </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

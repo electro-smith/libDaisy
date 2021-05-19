@@ -87,6 +87,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7394c869bc8b34d94c183c2b7fb16bc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeec57ceddd9f685c50446321ba6e1492"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_led.html#aeec57ceddd9f685c50446321ba6e1492">Update</a> ()</td></tr>
 <tr class="separator:aeec57ceddd9f685c50446321ba6e1492"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55c8e1df70930f21270f4c28df6320fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_led.html#a55c8e1df70930f21270f4c28df6320fb">SetSampleRate</a> (float sample_rate)</td></tr>
+<tr class="separator:a55c8e1df70930f21270f4c28df6320fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>LED Class providing simple Software PWM ability, etc <br  />
@@ -154,6 +156,38 @@ Public Member Functions</h2></td></tr>
 <p>Sets the brightness of the <a class="el" href="classdaisy_1_1_led.html" title="LED Class providing simple Software PWM ability, etc   Eventually this will work with hardware PWM,...">Led</a>. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">val</td><td>will be cubed for gamma correction, and then quantized to 8-bit values for Software PWM 8-bit is for more flexible update rate options, as 12-bit or more would require faster update rates. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a55c8e1df70930f21270f4c28df6320fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55c8e1df70930f21270f4c28df6320fb">&#9670;&nbsp;</a></span>SetSampleRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::Led::SetSampleRate </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>sample_rate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set the rate at which you'll update the leds without reiniting the led </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sample_rate</td><td>New update rate in hz. </td></tr>
   </table>
   </dd>
 </dl>

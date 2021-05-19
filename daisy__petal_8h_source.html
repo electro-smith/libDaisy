@@ -188,19 +188,20 @@ $(function() {
 <div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="classdaisy_1_1_daisy_petal.html#a24abaac2327c0057f99b5d5a4f15bd5a">  183</a></span>&#160;    <a class="code" href="classdaisy_1_1_rgb_led.html">RgbLed</a> <a class="code" href="classdaisy_1_1_daisy_petal.html#a24abaac2327c0057f99b5d5a4f15bd5a">ring_led</a>[8];       </div>
 <div class="line"><a name="l00184"></a><span class="lineno"><a class="line" href="classdaisy_1_1_daisy_petal.html#a0adb82d937f3b214214aa2370b12f75e">  184</a></span>&#160;    <a class="code" href="classdaisy_1_1_led.html">Led</a>    <a class="code" href="classdaisy_1_1_daisy_petal.html#a0adb82d937f3b214214aa2370b12f75e">footswitch_led</a>[4]; </div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keywordtype">void</span> InitSwitches();</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordtype">void</span> InitEncoder();</div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordtype">void</span> InitLeds();</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordtype">void</span> InitAnalogControls();</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160; </div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;    <span class="keyword">inline</span> uint16_t* adc_ptr(<span class="keyword">const</span> uint8_t chn) { <span class="keywordflow">return</span> <a class="code" href="classdaisy_1_1_daisy_petal.html#a2ef75f14bf008985bf6635e9ce87106a">seed</a>.<a class="code" href="classdaisy_1_1_daisy_seed.html#a62f0206b9421868f6afba7b81e0b26f2">adc</a>.<a class="code" href="classdaisy_1_1_adc_handle.html#a762128b8ae68f78359eb6149fc867eed">GetPtr</a>(chn); }</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160; </div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <a class="code" href="classdaisy_1_1_led_driver_pca9685.html">LedDriverPca9685&lt;2, true&gt;</a> led_driver_;</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;};</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160; </div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;} <span class="comment">// namespace daisy</span></div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;    <span class="keywordtype">void</span> SetHidUpdateRates();</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;    <span class="keywordtype">void</span> InitSwitches();</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;    <span class="keywordtype">void</span> InitEncoder();</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    <span class="keywordtype">void</span> InitLeds();</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;    <span class="keywordtype">void</span> InitAnalogControls();</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keyword">inline</span> uint16_t* adc_ptr(<span class="keyword">const</span> uint8_t chn) { <span class="keywordflow">return</span> <a class="code" href="classdaisy_1_1_daisy_petal.html#a2ef75f14bf008985bf6635e9ce87106a">seed</a>.<a class="code" href="classdaisy_1_1_daisy_seed.html#a62f0206b9421868f6afba7b81e0b26f2">adc</a>.<a class="code" href="classdaisy_1_1_adc_handle.html#a762128b8ae68f78359eb6149fc867eed">GetPtr</a>(chn); }</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160; </div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;    <a class="code" href="classdaisy_1_1_led_driver_pca9685.html">LedDriverPca9685&lt;2, true&gt;</a> led_driver_;</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;};</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160; </div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;} <span class="comment">// namespace daisy</span></div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160; </div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassdaisy_1_1_adc_handle_html_a762128b8ae68f78359eb6149fc867eed"><div class="ttname"><a href="classdaisy_1_1_adc_handle.html#a762128b8ae68f78359eb6149fc867eed">daisy::AdcHandle::GetPtr</a></div><div class="ttdeci">uint16_t * GetPtr(uint8_t chn) const</div></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html"><div class="ttname"><a href="classdaisy_1_1_analog_control.html">daisy::AnalogControl</a></div><div class="ttdoc">Hardware Interface for control inputs   Primarily designed for ADC input controls such as   potentiom...</div><div class="ttdef"><b>Definition:</b> ctrl.h:18</div></div>
 <div class="ttc" id="aclassdaisy_1_1_audio_handle_html_a25cb1ed797b0f5b6d79a26284454bb6f"><div class="ttname"><a href="classdaisy_1_1_audio_handle.html#a25cb1ed797b0f5b6d79a26284454bb6f">daisy::AudioHandle::InterleavingAudioCallback</a></div><div class="ttdeci">void(* InterleavingAudioCallback)(float *in, float *out, size_t size)</div><div class="ttdef"><b>Definition:</b> audio.h:32</div></div>

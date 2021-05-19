@@ -215,15 +215,17 @@ $(function() {
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <a class="code" href="classdaisy_1_1_analog_control.html">AnalogControl</a>                            cv[<a class="code" href="classdaisy_1_1_daisy_field.html#a81c3bfd2fdf29ccc15bdd81355f1e3d0ab3858c1a0f81cae5e7e1a48097110213">CV_LAST</a>];</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
 <div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <a class="code" href="classdaisy_1_1_shift_register4021.html">ShiftRegister4021&lt;2&gt;</a> keyboard_sr_; </div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    uint8_t              keyboard_state_[16];</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    uint32_t             last_led_update_; <span class="comment">// for vegas mode</span></div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keywordtype">bool</span>                 gate_in_trig_;    <span class="comment">// True when triggered.</span></div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;};</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160; </div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;} <span class="comment">// namespace daisy</span></div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="keywordtype">void</span> SetHidUpdateRates();</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <a class="code" href="classdaisy_1_1_shift_register4021.html">ShiftRegister4021&lt;2&gt;</a> keyboard_sr_; </div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    uint8_t              keyboard_state_[16];</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    uint32_t             last_led_update_; <span class="comment">// for vegas mode</span></div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordtype">bool</span>                 gate_in_trig_;    <span class="comment">// True when triggered.</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;};</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;} <span class="comment">// namespace daisy</span></div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html"><div class="ttname"><a href="classdaisy_1_1_analog_control.html">daisy::AnalogControl</a></div><div class="ttdoc">Hardware Interface for control inputs   Primarily designed for ADC input controls such as   potentiom...</div><div class="ttdef"><b>Definition:</b> ctrl.h:18</div></div>
 <div class="ttc" id="aclassdaisy_1_1_audio_handle_html_a25cb1ed797b0f5b6d79a26284454bb6f"><div class="ttname"><a href="classdaisy_1_1_audio_handle.html#a25cb1ed797b0f5b6d79a26284454bb6f">daisy::AudioHandle::InterleavingAudioCallback</a></div><div class="ttdeci">void(* InterleavingAudioCallback)(float *in, float *out, size_t size)</div><div class="ttdef"><b>Definition:</b> audio.h:32</div></div>
 <div class="ttc" id="aclassdaisy_1_1_audio_handle_html_a9e73ddc0043032aff043b09498e09528"><div class="ttname"><a href="classdaisy_1_1_audio_handle.html#a9e73ddc0043032aff043b09498e09528">daisy::AudioHandle::AudioCallback</a></div><div class="ttdeci">void(* AudioCallback)(float **in, float **out, size_t size)</div><div class="ttdef"><b>Definition:</b> audio.h:27</div></div>
