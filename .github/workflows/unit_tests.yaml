@@ -1,0 +1,44 @@
+name: Unit Tests
+on:
+  # run for all pull requests
+  # Run for all commits on feature branches
+  push:
+    paths:
+    - 'src/**'
+    - 'tests/**'
+    - '.github/workflows/**'
+  pull_request:
+    paths:
+    - 'src/**'
+    - 'tests/**'
+    - '.github/workflows/**'
+jobs:  
+  ###############################################################################
+  # builds the automated tests with clang; runs tests and exports results
+  googleTest:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Build
+      run: |
+        cd tests
+        make release
+    
+    - name: Run Tests
+      run: |
+        cd tests/build/bin
+        ./libDaisy_gtest --gtest_output=xml:gtestresults.xml
+    
+    - name: Publish Test Results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: always()
+      with:
+        files: tests/build/bin/**/*.xml
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+
+
