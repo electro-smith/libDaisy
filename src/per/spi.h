@@ -126,6 +126,15 @@ class SpiHandle
     */
     Result BlockingTransmit(uint8_t* buff, size_t size);
 
+    /** Polling Receive
+    \param *buff input buffer
+    \param size  buffer size
+    \param timeout How long to timeout for
+    \return Whether the receive was successful or not
+    */
+    Result PollReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
+
+
     class Impl; /**< SPI implementation */
 
   private:

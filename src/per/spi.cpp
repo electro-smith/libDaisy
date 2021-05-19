@@ -555,3 +555,9 @@ SpiHandle::Result SpiHandle::BlockingTransmit(uint8_t* buff, size_t size)
 {
     return pimpl_->BlockingTransmit(buff, size);
 }
+
+SpiHandle::Result
+SpiHandle::PollReceive(uint8_t* buffer, uint16_t size, uint32_t timeout)
+{
+    return pimpl_->PollReceive(buffer, size, timeout);
+}
