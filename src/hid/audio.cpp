@@ -51,10 +51,10 @@ class AudioHandle::Impl
 
     AudioHandle::Result SetBlockSize(size_t size)
     {
-        config_.blocksize
-            = size <= kAudioMaxBufferSize ? size : kAudioMaxBufferSize;
-        return size <= kAudioMaxBufferSize ? AudioHandle::Result::OK
-                                           : AudioHandle::Result::ERR;
+        size_t maxSize    = kAudioMaxBufferSize / 4;
+        config_.blocksize = size <= maxSize ? size : maxSize;
+        return size <= maxSize ? AudioHandle::Result::OK
+                               : AudioHandle::Result::ERR;
     }
 
     float GetSampleRate() { return sai1_.GetSampleRate(); }
