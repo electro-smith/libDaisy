@@ -88,6 +88,10 @@ Public Types</h2></td></tr>
 , <a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16acd22bad976363fdd1bfbf6759fede482">ERR</a>
  }</td></tr>
 <tr class="separator:a4896eede457dea6ed2ed68d9b06e8e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f815f7a77948286f0fa0065a1f7c54c"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54c">Direction</a> { <a class="el" href="classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54ca02d786cd0f7318c2533125f8b591abc5">TRANSMIT</a>
+, <a class="el" href="classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54ca42ddaaef1ffd16ad35901150add8f8f2">RECEIVE</a>
+ }</td></tr>
+<tr class="separator:a8f815f7a77948286f0fa0065a1f7c54c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a865f3f2c45b937c4084081f807e15d7b"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a865f3f2c45b937c4084081f807e15d7b">CallbackFunctionPtr</a>) (void *context, <a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a> result)</td></tr>
 <tr class="separator:a865f3f2c45b937c4084081f807e15d7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -109,6 +113,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5232996113cc203d72cb75e57b62fa9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2def35901e936c7c7c88aef8e1633f14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a2def35901e936c7c7c88aef8e1633f14">TransmitDma</a> (uint16_t address, uint8_t *data, uint16_t size, <a class="el" href="classdaisy_1_1_i2_c_handle.html#a865f3f2c45b937c4084081f807e15d7b">CallbackFunctionPtr</a> callback, void *callback_context)</td></tr>
 <tr class="separator:a2def35901e936c7c7c88aef8e1633f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6f3fdb091285a40a34ca2ebf09a94a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_i2_c_handle.html#ad6f3fdb091285a40a34ca2ebf09a94a8">ReceiveDma</a> (uint16_t address, uint8_t *data, uint16_t size, <a class="el" href="classdaisy_1_1_i2_c_handle.html#a865f3f2c45b937c4084081f807e15d7b">CallbackFunctionPtr</a> callback, void *callback_context)</td></tr>
+<tr class="separator:ad6f3fdb091285a40a34ca2ebf09a94a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a7a2bcf654a383c6032a86a13645ea3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a2a7a2bcf654a383c6032a86a13645ea3">ReadDataAtAddress</a> (uint16_t address, uint16_t mem_address, uint16_t mem_address_size, uint8_t *data, uint16_t data_size, uint32_t timeout)</td></tr>
 <tr class="separator:a2a7a2bcf654a383c6032a86a13645ea3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afb04976cded8bfd1b1427ae15d9458ef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_i2_c_handle.html#afb04976cded8bfd1b1427ae15d9458ef">WriteDataAtAddress</a> (uint16_t address, uint16_t mem_address, uint16_t mem_address_size, uint8_t *data, uint16_t data_size, uint32_t timeout)</td></tr>
@@ -117,8 +123,9 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A handle for interacting with an I2C peripheral. This is a dumb gateway that internally points to one of the four I2C peripherals after it was initialised. It can then be copied and passed around. Use an <a class="el" href="classdaisy_1_1_i2_c_handle.html">I2CHandle</a> like this: </p><pre class="fragment">// setup the configuration
 I2CHandle::Config i2c_conf;
-i2c_conf.periph = I2CHandle::Config::Peripheral::I2C1;
+i2c_conf.periph = I2CHandle::Config::Peripheral::I2C_1;
 i2c_conf.speed  = I2CHandle::Config::Speed::I2C_400KHZ;
+i2c_conf.mode   = I2CHandle::Config::Mode::Master;
 i2c_conf.pin_config.scl  = {DSY_GPIOB, 8};
 i2c_conf.pin_config.sda  = {DSY_GPIOB, 9};
 // initialise the peripheral
@@ -143,6 +150,34 @@ i2c.TransmitBlocking( ... );
 </div>
 </div>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a8f815f7a77948286f0fa0065a1f7c54c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f815f7a77948286f0fa0065a1f7c54c">&#9670;&nbsp;</a></span>Direction</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54c">daisy::I2CHandle::Direction</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8f815f7a77948286f0fa0065a1f7c54ca02d786cd0f7318c2533125f8b591abc5"></a>TRANSMIT&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a8f815f7a77948286f0fa0065a1f7c54ca42ddaaef1ffd16ad35901150add8f8f2"></a>RECEIVE&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="a4896eede457dea6ed2ed68d9b06e8e16"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4896eede457dea6ed2ed68d9b06e8e16">&#9670;&nbsp;</a></span>Result</h2>
 
@@ -259,7 +294,7 @@ i2c.TransmitBlocking( ... );
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Reads an amount of data from a specific memory address.</p>
+<p>Reads an amount of data from a specific memory address. This method will return an error if the I2C peripheral is in slave mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>The slave device address. </td></tr>
@@ -313,10 +348,69 @@ i2c.TransmitBlocking( ... );
 <p>Receives data and blocks until the reception is complete. Use this for smaller transmissions of a few bytes.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">address</td><td>The slave device address. </td></tr>
+    <tr><td class="paramname">address</td><td>The slave device address. Unused in slave mode. </td></tr>
     <tr><td class="paramname">data</td><td>A pointer to the data to be received. </td></tr>
     <tr><td class="paramname">size</td><td>The size of the data to be received, in bytes. </td></tr>
     <tr><td class="paramname">timeout</td><td>A timeout. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad6f3fdb091285a40a34ca2ebf09a94a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6f3fdb091285a40a34ca2ebf09a94a8">&#9670;&nbsp;</a></span>ReceiveDma()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">Result</a> daisy::I2CHandle::ReceiveDma </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classdaisy_1_1_i2_c_handle.html#a865f3f2c45b937c4084081f807e15d7b">CallbackFunctionPtr</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>callback_context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Receives data with a DMA and returns immediately. Use this for larger transmissions. The pointer to data must be located in the D2 memory domain by adding the <code>DMA_BUFFER_MEM_SECTION</code> attribute like this: uint8_t DMA_BUFFER_MEM_SECTION my_buffer[100]; If that is not possible for some reason, you MUST clear the cachelines spanning the size of the buffer, before initiating the dma transfer by calling <code>dsy_dma_clear_cache_for_buffer(buffer, size);</code></p>
+<p>A single DMA is shared across I2C, I2C2 and I2C3. I2C4 has no DMA support (yet). If the DMA is busy with another transfer, the job will be queued and executed later. If there is a job waiting to be executed for this I2C peripheral, this function will block until the queue is free and the job can be queued.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">address</td><td>The slave device address. Unused in slave mode. </td></tr>
+    <tr><td class="paramname">data</td><td>A pointer to the data buffer. </td></tr>
+    <tr><td class="paramname">size</td><td>The size of the data to be received, in bytes. </td></tr>
+    <tr><td class="paramname">callback</td><td>A callback to execute when the transfer finishes, or NULL. </td></tr>
+    <tr><td class="paramname">callback_context</td><td>A pointer that will be passed back to you in the callback. <br  />
+ </td></tr>
   </table>
   </dd>
 </dl>
@@ -363,7 +457,7 @@ i2c.TransmitBlocking( ... );
 <p>Transmits data and blocks until the transmission is complete. Use this for smaller transmissions of a few bytes.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">address</td><td>The slave device address. </td></tr>
+    <tr><td class="paramname">address</td><td>The slave device address. Unused in slave mode. </td></tr>
     <tr><td class="paramname">data</td><td>A pointer to the data to be sent. </td></tr>
     <tr><td class="paramname">size</td><td>The size of the data to be sent, in bytes. </td></tr>
     <tr><td class="paramname">timeout</td><td>A timeout. </td></tr>
@@ -417,10 +511,10 @@ i2c.TransmitBlocking( ... );
       </table>
 </div><div class="memdoc">
 <p>Transmits data with a DMA and returns immediately. Use this for larger transmissions. The pointer to data must be located in the D2 memory domain by adding the <code>DMA_BUFFER_MEM_SECTION</code> attribute like this: uint8_t DMA_BUFFER_MEM_SECTION my_buffer[100]; If that is not possible for some reason, you MUST clear the cachelines spanning the size of the buffer, before initiating the dma transfer by calling <code>dsy_dma_clear_cache_for_buffer(buffer, size);</code></p>
-<p>A single DMA is shared across I2C, I2C2 and I2C3. I2C4 has no DMA support (yet). If the DMA is busy with another transfer, the job will be queued and executed later. If there is a job waiting to be executed for this I2C peripheral, this function will block until the queue is free and the job can be queued.</p>
+<p>A single DMA is shared across I2C1, I2C2 and I2C3. I2C4 has no DMA support (yet). If the DMA is busy with another transfer, the job will be queued and executed later. If there is a job waiting to be executed for this I2C peripheral, this function will block until the queue is free and the job can be queued.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">address</td><td>The slave device address. </td></tr>
+    <tr><td class="paramname">address</td><td>The slave device address. Unused in slave mode. </td></tr>
     <tr><td class="paramname">data</td><td>A pointer to the data to be sent. </td></tr>
     <tr><td class="paramname">size</td><td>The size of the data to be sent, in bytes. </td></tr>
     <tr><td class="paramname">callback</td><td>A callback to execute when the transfer finishes, or NULL. </td></tr>
@@ -481,7 +575,7 @@ i2c.TransmitBlocking( ... );
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Writes an amount of data from a specific memory address.</p>
+<p>Writes an amount of data from a specific memory address. This method will return an error if the I2C peripheral is in slave mode.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>The slave device address. </td></tr>
