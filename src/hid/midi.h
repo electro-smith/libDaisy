@@ -33,6 +33,17 @@ enum MidiMessageType
 /** Struct containing note, and velocity data for a given channel.
 Can be made from MidiEvent
 */
+struct NoteOffEvent
+{
+    int     channel;  /**< & */
+    uint8_t note;     /**< & */
+    uint8_t velocity; /**< & */
+};
+
+
+/** Struct containing note, and velocity data for a given channel.
+Can be made from MidiEvent
+*/
 struct NoteOnEvent
 {
     int     channel;  /**< & */
@@ -65,6 +76,15 @@ struct MidiEvent
     MidiMessageType type;    /**< & */
     int             channel; /**< & */
     uint8_t         data[2]; /**< & */
+
+    /** Returns the data within the MidiEvent as a NoteOffEvent struct */
+    NoteOffEvent AsNoteOff(){
+        NoteOffEvent m;
+        m.channel  = channel;
+        m.note     = data[0];
+        m.velocity = data[1];
+        return m;
+    }
 
     /** Returns the data within the MidiEvent as a NoteOnEvent struct */
     NoteOnEvent AsNoteOn()
