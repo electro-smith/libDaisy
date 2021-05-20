@@ -32,8 +32,8 @@ cache enabled.
 
 #define FBIPMAX 0.999985f             /**< close to 1.0f-LSB at 16 bit */
 #define FBIPMIN (-FBIPMAX)            /**< - (1 - LSB) */
-#define U82F_SCALE 0.00390625f        /**< 1 / (2**8) */
-#define F2U8_SCALE 255.0f             /**< (2 ** 8) - 1 */
+#define U82F_SCALE 0.0078740f         /**< 1 / 127 */
+#define F2U8_SCALE 127.0f             /**< 128 - 1 */
 #define S82F_SCALE 0.0078125f         /**< 1 / (2**7) */
 #define F2S8_SCALE 127.0f             /**< (2 ** 7) - 1 */
 #define S162F_SCALE 3.0517578125e-05f /**< 1 / (2** 15) */
@@ -61,7 +61,7 @@ FORCE_INLINE float cube(float x)
 */
 FORCE_INLINE float u82f(uint8_t x)
 {
-    return (float)x * U82F_SCALE;
+    return ((float)x - 127.f) * U82F_SCALE;
 }
 
 /**
@@ -69,9 +69,9 @@ FORCE_INLINE float u82f(uint8_t x)
 */
 FORCE_INLINE uint8_t f2u8(float x)
 {
-    x = x <= 0.f ? x * -1.f : x; //flip sign
+    x = x <= FBIPMIN ? FBIPMIN : x;
     x = x >= FBIPMAX ? FBIPMAX : x;
-    return (uint32_t)(x * F2U8_SCALE);
+    return (uint8_t)((x * F2U8_SCALE) + F2U8_SCALE);
 }
 
 
