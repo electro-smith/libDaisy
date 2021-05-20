@@ -110,7 +110,7 @@ class SpiHandle
     SpiHandle(const SpiHandle& other) = default;
     SpiHandle& operator=(const SpiHandle& other) = default;
 
-    /** Return values for Uart functions. */
+    /** Return values for Spi functions. */
     enum class Result
     {
         OK, /**< & */
@@ -119,6 +119,9 @@ class SpiHandle
 
     /** Initializes handler */
     Result Init(const Config& config);
+
+    /** Returns the current config. */
+    const Config& GetConfig() const;
 
     /** Blocking transmit 
     \param *buff input buffer
@@ -134,6 +137,8 @@ class SpiHandle
     */
     Result PollReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
 
+    /** \return the result of HAL_SPI_GetError() to the user. */
+    int CheckError();
 
     class Impl; /**< SPI implementation */
 

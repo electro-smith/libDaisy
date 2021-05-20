@@ -21,6 +21,9 @@ class SpiHandle::Impl
   public:
     Result Init(const Config& config);
 
+    const SpiHandle::Config& GetConfig() const { return config_; }
+    int                      CheckError();
+
     Result BlockingTransmit(uint8_t* buff, size_t size);
     Result PollReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
 
@@ -32,7 +35,7 @@ class SpiHandle::Impl
 };
 
 // ================================================================
-// Global references for the availabel UartHandler::Impl(s)
+// Global references for the availabel SpiHandle::Impl(s)
 // ================================================================
 
 static SpiHandle::Impl spi_handles[6];
@@ -196,6 +199,12 @@ SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
 
     return SpiHandle::Result::OK;
 }
+
+int SpiHandle::Impl::CheckError()
+{
+    return HAL_SPI_GetError(&hspi_);
+}
+
 
 SpiHandle::Result SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size)
 {
@@ -550,6 +559,17 @@ SpiHandle::Result SpiHandle::Init(const Config& config)
     pimpl_ = &spi_handles[int(config.periph)];
     return pimpl_->Init(config);
 }
+
+const SpiHandle::Config& SpiHandle::GetConfig() const
+{
+    return pimpl_->GetConfig();
+}
+
+int SpiHandle::CheckError()
+{
+    return pimpl_->CheckError();
+}
+
 
 SpiHandle::Result SpiHandle::BlockingTransmit(uint8_t* buff, size_t size)
 {
