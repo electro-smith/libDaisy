@@ -12,7 +12,7 @@
 namespace daisy
 {
 /** 
- * This interface is  used as a base class for all types of 1bit-per-pixel
+ * This interface is used as a base class for all types of 1bit-per-pixel
  * graphics displays.
 */
 class OneBitGraphicsDisplay
@@ -54,32 +54,7 @@ class OneBitGraphicsDisplay
                           uint_fast8_t x2,
                           uint_fast8_t y2,
                           bool         on)
-    {
-        int_fast16_t deltaX = abs((int_fast16_t)x2 - (int_fast16_t)x1);
-        int_fast16_t deltaY = abs((int_fast16_t)y2 - (int_fast16_t)y1);
-        int_fast16_t signX  = ((x1 < x2) ? 1 : -1);
-        int_fast16_t signY  = ((y1 < y2) ? 1 : -1);
-        int_fast16_t error  = deltaX - deltaY;
-        int_fast16_t error2;
-
-        DrawPixel(x2, y2, on);
-        while((x1 != x2) || (y1 != y2))
-        {
-            DrawPixel(x1, y1, on);
-            error2 = error * 2;
-            if(error2 > -deltaY)
-            {
-                error -= deltaY;
-                x1 += signX;
-            }
-
-            if(error2 < deltaX)
-            {
-                error += deltaX;
-                y1 += signY;
-            }
-        }
-    }
+        = 0;
 
     /**
     Draws a rectangle based on two coordinates.
@@ -95,26 +70,7 @@ class OneBitGraphicsDisplay
                           uint_fast8_t y2,
                           bool         on,
                           bool         fill = false)
-    {
-        if(fill)
-        {
-            for(uint_fast8_t x = x1; x <= x2; x++)
-            {
-                for(uint_fast8_t y = y1; y <= y2; y++)
-                {
-                    DrawPixel(x, y, on);
-                }
-            }
-        }
-        else
-        {
-            DrawLine(x1, y1, x2, y1, on);
-            DrawLine(x2, y1, x2, y2, on);
-            DrawLine(x2, y2, x1, y2, on);
-            DrawLine(x1, y2, x1, y1, on);
-        }
-    }
-
+        = 0;
 
     /**
     Draws an arc around the specified coordinate
@@ -131,6 +87,165 @@ class OneBitGraphicsDisplay
                          int_fast16_t start_angle,
                          int_fast16_t sweep,
                          bool         on)
+        = 0;
+
+    /**
+    Draws a circle around the specified coordinate
+    \param x           x Coordinate of the center of the circle
+    \param y           y Coordinate of the center of the circle
+    \param radius      radius of the circle
+    \param on  on or off
+    */
+    void
+    DrawCircle(uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, bool on)
+    {
+        DrawArc(x, y, radius, 0, 360, on);
+    };
+
+    /** 
+    Writes the character with the specific FontDef
+    to the display buffer at the current Cursor position.
+    \param ch character to be written
+    \param font font to be written in
+    \param on    on or off
+    \return &
+    */
+    virtual char WriteChar(char ch, FontDef font, bool on) = 0;
+
+    /** 
+    Similar to WriteChar, except it will handle an entire String.
+    Wrapping does not happen automatically, so the width
+    of the string must be kept within the dimensions of the screen.
+    \param str string to be written
+    \param font font to use
+    \param on  on or off
+    \return &
+    */
+    virtual char WriteString(const char* str, FontDef font, bool on) = 0;
+
+    /** 
+    Moves the 'Cursor' position used for WriteChar, and WriteStr to the specified coordinate.
+    \param x x pos
+    \param y y pos
+    */
+    void SetCursor(uint16_t x, uint16_t y)
+    {
+        currentX_ = (x >= Width()) ? Width() - 1 : x;
+        currentY_ = (y >= Height()) ? Height() - 1 : y;
+    }
+
+    /** 
+    Writes the current display buffer to the OLED device using SPI or I2C depending on 
+    how the object was initialized.
+    */
+    virtual void Update() = 0;
+
+  protected:
+    uint16_t currentX_;
+    uint16_t currentY_;
+};
+
+/** This class is intended as a intermediary class for your actual implementation of the OneBitGraphicsDisplay
+ *  interface. It uses the CRTP design pattern where the template argument is the child class. It provides 
+ *  implementations for most of the functions, except DrawPixel(), Update() and Fill(), which you'll have
+ *  to provide in your child class.
+ *  The main goal of this class is to provide common drawing functions without relying on massive amounts of 
+ *  virtual function calls that would result in a performance loss. To achieve this, any drawing function that
+ *  is implemented here and internally calls other drawing functions (e.g. DrawRect() which internally calls
+ *  DrawPixel() and DrawLine()) makes these calls via the qualified name of these functions to explicitly 
+ *  suppress the virtual dispatch mechanism like this:
+ * 
+ *      ChildType::DrawPixel(...); // no virtual function call; direct call into the child class function
+ *  
+ *  To create a custom OneBitGraphicsDisplay implementation, you can 
+ *  A) inherit from OneBitGraphicsDisplay directly and provide all the drawing functions yourself
+ *  B) Inherit from OneBitGraphicsDisplayImpl and only provide DrawPixel(), Fill() and Update()
+ *     like this:
+ *  
+ *      class MyDisplayClass : public OneBitGraphicsDisplayImpl<MyDisplayClass> 
+ *      {
+ *      public:
+ *          void Fill() override { ... };
+ *          void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on) override { ... };
+ *          void Update() override { ... }
+ *      };
+ *  
+ */
+template <class ChildType>
+class OneBitGraphicsDisplayImpl : public OneBitGraphicsDisplay
+{
+  public:
+    OneBitGraphicsDisplayImpl() {}
+    virtual ~OneBitGraphicsDisplayImpl() {}
+
+    void DrawLine(uint_fast8_t x1,
+                  uint_fast8_t y1,
+                  uint_fast8_t x2,
+                  uint_fast8_t y2,
+                  bool         on) override
+    {
+        int_fast16_t deltaX = abs((int_fast16_t)x2 - (int_fast16_t)x1);
+        int_fast16_t deltaY = abs((int_fast16_t)y2 - (int_fast16_t)y1);
+        int_fast16_t signX  = ((x1 < x2) ? 1 : -1);
+        int_fast16_t signY  = ((y1 < y2) ? 1 : -1);
+        int_fast16_t error  = deltaX - deltaY;
+        int_fast16_t error2;
+
+        // If we write "ChildType::DrawPixel(x2, y2, on);", we end up with
+        // all sorts of weird compiler errors when the Child class is a template
+        // class. The only way around this is to use this very verbose syntax:
+        ((ChildType*)(this))->ChildType::DrawPixel(x2, y2, on);
+
+        while((x1 != x2) || (y1 != y2))
+        {
+            ((ChildType*)(this))->ChildType::DrawPixel(x1, y1, on);
+            error2 = error * 2;
+            if(error2 > -deltaY)
+            {
+                error -= deltaY;
+                x1 += signX;
+            }
+
+            if(error2 < deltaX)
+            {
+                error += deltaX;
+                y1 += signY;
+            }
+        }
+    }
+
+    void DrawRect(uint_fast8_t x1,
+                  uint_fast8_t y1,
+                  uint_fast8_t x2,
+                  uint_fast8_t y2,
+                  bool         on,
+                  bool         fill = false) override
+    {
+        if(fill)
+        {
+            for(uint_fast8_t x = x1; x <= x2; x++)
+            {
+                for(uint_fast8_t y = y1; y <= y2; y++)
+                {
+                    ((ChildType*)(this))->ChildType::DrawPixel(x, y, on);
+                }
+            }
+        }
+        else
+        {
+            ((ChildType*)(this))->ChildType::DrawLine(x1, y1, x2, y1, on);
+            ((ChildType*)(this))->ChildType::DrawLine(x2, y1, x2, y2, on);
+            ((ChildType*)(this))->ChildType::DrawLine(x2, y2, x1, y2, on);
+            ((ChildType*)(this))->ChildType::DrawLine(x1, y2, x1, y1, on);
+        }
+    }
+
+    void DrawArc(uint_fast8_t x,
+                 uint_fast8_t y,
+                 uint_fast8_t radius,
+                 int_fast16_t start_angle,
+                 int_fast16_t sweep,
+                 bool         on) override
     {
         // Values to calculate the circle
         int_fast16_t t_x, t_y, err, e2;
@@ -208,13 +323,17 @@ class OneBitGraphicsDisplay
             }
 
             if(d1)
-                DrawPixel(x - t_x, y + t_y, on);
+                ((ChildType*)(this))
+                    ->ChildType::DrawPixel(x - t_x, y + t_y, on);
             if(d2)
-                DrawPixel(x + t_x, y + t_y, on);
+                ((ChildType*)(this))
+                    ->ChildType::DrawPixel(x + t_x, y + t_y, on);
             if(d3)
-                DrawPixel(x + t_x, y - t_y, on);
+                ((ChildType*)(this))
+                    ->ChildType::DrawPixel(x + t_x, y - t_y, on);
             if(d4)
-                DrawPixel(x - t_x, y - t_y, on);
+                ((ChildType*)(this))
+                    ->ChildType::DrawPixel(x - t_x, y - t_y, on);
 
             e2 = err;
             if(e2 <= t_y)
@@ -234,28 +353,7 @@ class OneBitGraphicsDisplay
         } while(t_x <= 0);
     }
 
-    /**
-    Draws a circle around the specified coordinate
-    \param x           x Coordinate of the center of the circle
-    \param y           y Coordinate of the center of the circle
-    \param radius      radius of the circle
-    \param on  on or off
-    */
-    virtual void
-    DrawCircle(uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, bool on)
-    {
-        DrawArc(x, y, radius, 0, 360, on);
-    };
-
-    /** 
-    Writes the character with the specific FontDef
-    to the display buffer at the current Cursor position.
-    \param ch character to be written
-    \param font font to be written in
-    \param on    on or off
-    \return &
-    */
-    virtual char WriteChar(char ch, FontDef font, bool on)
+    char WriteChar(char ch, FontDef font, bool on) override
     {
         uint32_t i, b, j;
 
@@ -279,11 +377,15 @@ class OneBitGraphicsDisplay
             {
                 if((b << j) & 0x8000)
                 {
-                    DrawPixel(currentX_ + j, (currentY_ + i), on);
+                    ((ChildType*)(this))
+                        ->ChildType::DrawPixel(
+                            currentX_ + j, (currentY_ + i), on);
                 }
                 else
                 {
-                    DrawPixel(currentX_ + j, (currentY_ + i), !on);
+                    ((ChildType*)(this))
+                        ->ChildType::DrawPixel(
+                            currentX_ + j, (currentY_ + i), !on);
                 }
             }
         }
@@ -294,21 +396,14 @@ class OneBitGraphicsDisplay
         // Return written char for validation
         return ch;
     }
-    /** 
-    Similar to WriteChar, except it will handle an entire String.
-    Wrapping does not happen automatically, so the width
-    of the string must be kept within the dimensions of the screen.
-    \param str string to be written
-    \param font font to use
-    \param on  on or off
-    \return &
-    */
-    virtual char WriteString(const char* str, FontDef font, bool on)
+
+    char WriteString(const char* str, FontDef font, bool on) override
     {
         // Write until null-byte
         while(*str)
         {
-            if(WriteChar(*str, font, on) != *str)
+            if(((ChildType*)(this))->ChildType::WriteChar(*str, font, on)
+               != *str)
             {
                 // Char could not be written
                 return *str;
@@ -321,27 +416,6 @@ class OneBitGraphicsDisplay
         // Everything ok
         return *str;
     }
-
-    /** 
-    Moves the 'Cursor' position used for WriteChar, and WriteStr to the specified coordinate.
-    \param x x pos
-    \param y y pos
-    */
-    void SetCursor(uint16_t x, uint16_t y)
-    {
-        currentX_ = (x >= Width()) ? Width() - 1 : x;
-        currentY_ = (y >= Height()) ? Height() - 1 : y;
-    }
-
-    /** 
-    Writes the current display buffer to the OLED device using SPI or I2C depending on 
-    how the object was initialized.
-    */
-    virtual void Update() = 0;
-
-  private:
-    uint16_t currentX_;
-    uint16_t currentY_;
 };
 /** @} */
 

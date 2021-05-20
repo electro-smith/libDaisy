@@ -10,7 +10,7 @@ namespace daisy
  * This class is for drawing to a monochrome OLED display. 
 */
 template <typename DisplayDriver>
-class OledDisplay : public OneBitGraphicsDisplay
+class OledDisplay : public OneBitGraphicsDisplayImpl<OledDisplay<DisplayDriver>>
 {
   public:
     OledDisplay() {}
