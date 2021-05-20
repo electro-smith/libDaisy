@@ -1,5 +1,6 @@
 #include "per/i2c.h"
 #include "sys/system.h"
+#include "util/scopedirqblocker.h"
 extern "C"
 {
 #include "util/hal_map.h"
@@ -18,6 +19,7 @@ class I2CHandle::Impl
                                        uint8_t* data,
                                        uint16_t size,
                                        uint32_t timeout);
+
     I2CHandle::Result TransmitDma(uint16_t                       address,
                                   uint8_t*                       data,
                                   uint16_t                       size,
@@ -28,6 +30,12 @@ class I2CHandle::Impl
                                       uint8_t* data,
                                       uint16_t size,
                                       uint32_t timeout);
+
+    I2CHandle::Result ReceiveDma(uint16_t                       address,
+                                 uint8_t*                       data,
+                                 uint16_t                       size,
+                                 I2CHandle::CallbackFunctionPtr callback,
+                                 void* callback_context);
 
     I2CHandle::Result ReadDataAtAddress(uint16_t address,
                                         uint16_t mem_address,
@@ -47,11 +55,12 @@ class I2CHandle::Impl
     // scheduling and global functions
     struct DmaJob
     {
-        uint16_t                       slave_address    = 0;
+        uint16_t                       slave_address    = 0x10;
         uint8_t*                       data             = nullptr;
         uint16_t                       size             = 0;
         I2CHandle::CallbackFunctionPtr callback         = nullptr;
         void*                          callback_context = nullptr;
+        I2CHandle::Direction direction = I2CHandle::Direction::TRANSMIT;
 
         bool IsValidJob() const { return data != nullptr; }
         void Invalidate() { data = nullptr; }
@@ -72,14 +81,21 @@ class I2CHandle::Impl
     // =========================================================
     // pivate functions and member variables
     I2CHandle::Config config_;
-    DMA_HandleTypeDef i2c_dma_tx_handle_;
+    DMA_HandleTypeDef i2c_dma_tc_handle_;
     I2C_HandleTypeDef i2c_hal_handle_;
 
-    I2CHandle::Result StartDmaTransfer(uint16_t                       address,
-                                       uint8_t*                       data,
-                                       uint16_t                       size,
-                                       I2CHandle::CallbackFunctionPtr callback,
-                                       void* callback_context);
+    I2CHandle::Result
+    StartDmaTransmission(uint16_t                       address,
+                         uint8_t*                       data,
+                         uint16_t                       size,
+                         I2CHandle::CallbackFunctionPtr callback,
+                         void*                          callback_context);
+
+    I2CHandle::Result StartDmaReception(uint16_t                       address,
+                                        uint8_t*                       data,
+                                        uint16_t                       size,
+                                        I2CHandle::CallbackFunctionPtr callback,
+                                        void* callback_context);
 
     void InitPins();
     void DeinitPins();
@@ -131,14 +147,14 @@ void I2CHandle::Impl::QueueDmaTransfer(size_t i2c_peripheral_idx,
     while(IsDmaTransferQueuedFor(i2c_peripheral_idx)) {};
 
     // queue the job
-    // TODO: Add ScopedIrqBlocker here
+    ScopedIrqBlocker block;
     queued_dma_transfers_[i2c_peripheral_idx] = job;
 }
 
 void I2CHandle::Impl::DmaTransferFinished(I2C_HandleTypeDef* hal_i2c_handle,
                                           I2CHandle::Result  result)
 {
-    // TODO: Add ScopedIrqBlocker
+    ScopedIrqBlocker block;
 
     // on an error, reinit the peripheral to clear any flags
     if(result != I2CHandle::Result::OK)
@@ -164,13 +180,27 @@ void I2CHandle::Impl::DmaTransferFinished(I2C_HandleTypeDef* hal_i2c_handle,
     for(int per = 0; per < kNumI2CWithDma; per++)
         if(IsDmaTransferQueuedFor(per))
         {
-            if(i2c_handles[per].StartDmaTransfer(
-                   queued_dma_transfers_[per].slave_address,
-                   queued_dma_transfers_[per].data,
-                   queued_dma_transfers_[per].size,
-                   queued_dma_transfers_[per].callback,
-                   queued_dma_transfers_[per].callback_context)
-               == I2CHandle::Result::OK)
+            I2CHandle::Result result;
+            if(queued_dma_transfers_[per].direction
+               == I2CHandle::Direction::TRANSMIT)
+            {
+                result = i2c_handles[per].StartDmaTransmission(
+                    queued_dma_transfers_[per].slave_address,
+                    queued_dma_transfers_[per].data,
+                    queued_dma_transfers_[per].size,
+                    queued_dma_transfers_[per].callback,
+                    queued_dma_transfers_[per].callback_context);
+            }
+            else
+            {
+                result = i2c_handles[per].StartDmaReception(
+                    queued_dma_transfers_[per].slave_address,
+                    queued_dma_transfers_[per].data,
+                    queued_dma_transfers_[per].size,
+                    queued_dma_transfers_[per].callback,
+                    queued_dma_transfers_[per].callback_context);
+            }
+            if(result == I2CHandle::Result::OK)
             {
                 // remove the job from the queue
                 queued_dma_transfers_[per].Invalidate();
@@ -188,6 +218,13 @@ I2CHandle::Result I2CHandle::Impl::Init(const I2CHandle::Config& config)
     const int i2cIdx = int(config.periph);
 
     if(i2cIdx >= 4)
+        return I2CHandle::Result::ERR;
+    if(config.mode != I2CHandle::Config::Mode::I2C_MASTER
+       && config.mode != I2CHandle::Config::Mode::I2C_SLAVE)
+        return I2CHandle::Result::ERR;
+    // Ensuring address is valid and not using reserved addresses
+    if(config.mode == I2CHandle::Config::Mode::I2C_SLAVE
+       && (config.address > 127 || config.address < 16 || config.address > 119))
         return I2CHandle::Result::ERR;
 
     config_ = config;
@@ -227,7 +264,11 @@ I2CHandle::Result I2CHandle::Impl::Init(const I2CHandle::Config& config)
             break;
         default: break;
     }
-    i2c_hal_handle_.Init.OwnAddress1      = 0;
+
+    // HAL expects the address to be represented in its I2C
+    // format, i.e. shifted to the left by one, since bit 0
+    // indicated whether the transmission is a read or write
+    i2c_hal_handle_.Init.OwnAddress1      = config.address << 1;
     i2c_hal_handle_.Init.AddressingMode   = I2C_ADDRESSINGMODE_7BIT;
     i2c_hal_handle_.Init.DualAddressMode  = I2C_DUALADDRESS_DISABLE;
     i2c_hal_handle_.Init.OwnAddress2      = 0;
@@ -253,10 +294,19 @@ I2CHandle::Result I2CHandle::Impl::TransmitBlocking(uint16_t address,
     // wait for previous transfer to be finished
     while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
 
-    if(HAL_I2C_Master_Transmit(
-           &i2c_hal_handle_, address << 1, data, size, timeout)
-       != HAL_OK)
+    HAL_StatusTypeDef status;
+    if(config_.mode == I2CHandle::Config::Mode::I2C_MASTER)
+    {
+        status = HAL_I2C_Master_Transmit(
+            &i2c_hal_handle_, address << 1, data, size, timeout);
+    }
+    else
+    {
+        status = HAL_I2C_Slave_Transmit(&i2c_hal_handle_, data, size, timeout);
+    }
+    if(status != HAL_OK)
         return I2CHandle::Result::ERR;
+
     return I2CHandle::Result::OK;
 }
 
@@ -273,6 +323,8 @@ I2CHandle::Impl::TransmitDma(uint16_t                       address,
 
     const int i2cIdx = int(config_.periph);
 
+    I2CHandle::Direction direction = I2CHandle::Direction::TRANSMIT;
+
     // if dma is currently running - queue a job
     if(IsDmaActive())
     {
@@ -280,6 +332,7 @@ I2CHandle::Impl::TransmitDma(uint16_t                       address,
         job.slave_address    = address;
         job.data             = data;
         job.size             = size;
+        job.direction        = direction;
         job.callback         = callback;
         job.callback_context = callback_context;
         // queue a job (blocks until the queue position is free)
@@ -291,7 +344,7 @@ I2CHandle::Impl::TransmitDma(uint16_t                       address,
     }
     else
         // start transmission right away
-        return StartDmaTransfer(
+        return StartDmaTransmission(
             address, data, size, callback, callback_context);
 }
 
@@ -303,11 +356,57 @@ I2CHandle::Result I2CHandle::Impl::ReceiveBlocking(uint16_t address,
     // wait for previous transfer to be finished
     while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
 
-    if(HAL_I2C_Master_Receive(
-           &i2c_hal_handle_, address << 1, data, size, timeout)
-       != HAL_OK)
+    HAL_StatusTypeDef status;
+    if(config_.mode == I2CHandle::Config::Mode::I2C_MASTER)
+    {
+        status = HAL_I2C_Master_Receive(
+            &i2c_hal_handle_, address << 1, data, size, timeout);
+    }
+    else
+        status = HAL_I2C_Slave_Receive(&i2c_hal_handle_, data, size, timeout);
+
+    if(status != HAL_OK)
         return I2CHandle::Result::ERR;
+
     return I2CHandle::Result::OK;
+}
+
+I2CHandle::Result
+I2CHandle::Impl::ReceiveDma(uint16_t                       address,
+                            uint8_t*                       data,
+                            uint16_t                       size,
+                            I2CHandle::CallbackFunctionPtr callback,
+                            void*                          callback_context)
+{
+    // I2C4 has no DMA yet.
+    if(config_.periph == I2CHandle::Config::Peripheral::I2C_4)
+        return I2CHandle::Result::ERR;
+
+    const int i2cIdx = int(config_.periph);
+
+    I2CHandle::Direction direction = I2CHandle::Direction::RECEIVE;
+
+    // if dma is currently running - queue a job
+    if(IsDmaActive())
+    {
+        DmaJob job;
+        job.slave_address    = address;
+        job.data             = data;
+        job.size             = size;
+        job.direction        = direction;
+        job.callback         = callback;
+        job.callback_context = callback_context;
+        // queue a job (blocks until the queue position is free)
+        QueueDmaTransfer(i2cIdx, job);
+        // TODO: the user can't tell if he got returned "OK"
+        // because the transfer was executed or because it was queued...
+        // should we change that?
+        return I2CHandle::Result::OK;
+    }
+    else
+        // start reception right away
+        return StartDmaReception(
+            address, data, size, callback, callback_context);
 }
 
 I2CHandle::Result I2CHandle::Impl::ReadDataAtAddress(uint16_t address,
@@ -317,6 +416,10 @@ I2CHandle::Result I2CHandle::Impl::ReadDataAtAddress(uint16_t address,
                                                      uint16_t data_size,
                                                      uint32_t timeout)
 {
+    // Only master devices can make requests
+    if(config_.mode != I2CHandle::Config::Mode::I2C_MASTER)
+        return I2CHandle::Result::ERR;
+
     // wait for previous transfer to be finished
     while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
     if(HAL_I2C_Mem_Read(&i2c_hal_handle_,
@@ -340,6 +443,10 @@ I2CHandle::Result I2CHandle::Impl::WriteDataAtAddress(uint16_t address,
                                                       uint16_t data_size,
                                                       uint32_t timeout)
 {
+    // Only master devices can make requests
+    if(config_.mode != I2CHandle::Config::Mode::I2C_MASTER)
+        return I2CHandle::Result::ERR;
+
     // wait for previous transfer to be finished
     while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
     if(HAL_I2C_Mem_Write(&i2c_hal_handle_,
@@ -357,11 +464,11 @@ I2CHandle::Result I2CHandle::Impl::WriteDataAtAddress(uint16_t address,
 }
 
 I2CHandle::Result
-I2CHandle::Impl::StartDmaTransfer(uint16_t                       address,
-                                  uint8_t*                       data,
-                                  uint16_t                       size,
-                                  I2CHandle::CallbackFunctionPtr callback,
-                                  void* callback_context)
+I2CHandle::Impl::StartDmaTransmission(uint16_t                       address,
+                                      uint8_t*                       data,
+                                      uint16_t                       size,
+                                      I2CHandle::CallbackFunctionPtr callback,
+                                      void* callback_context)
 {
     // this could be called from both the scheduler ISR
     // and from user code via dsy_i2c_transmit_dma()
@@ -371,46 +478,130 @@ I2CHandle::Impl::StartDmaTransfer(uint16_t                       address,
     while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
 
     // reinit the DMA
-    i2c_dma_tx_handle_.Instance = DMA1_Stream6;
+    i2c_dma_tc_handle_.Instance = DMA1_Stream6;
     switch(config_.periph)
     {
         case I2CHandle::Config::Peripheral::I2C_1:
-            i2c_dma_tx_handle_.Init.Request = DMA_REQUEST_I2C1_TX;
+            i2c_dma_tc_handle_.Init.Request = DMA_REQUEST_I2C1_TX;
             break;
         case I2CHandle::Config::Peripheral::I2C_2:
-            i2c_dma_tx_handle_.Init.Request = DMA_REQUEST_I2C2_TX;
+            i2c_dma_tc_handle_.Init.Request = DMA_REQUEST_I2C2_TX;
             break;
         case I2CHandle::Config::Peripheral::I2C_3:
-            i2c_dma_tx_handle_.Init.Request = DMA_REQUEST_I2C3_TX;
+            i2c_dma_tc_handle_.Init.Request = DMA_REQUEST_I2C3_TX;
             break;
         // I2C4 has no DMA yet. TODO
         default: return I2CHandle::Result::ERR;
     }
-    i2c_dma_tx_handle_.Init.Direction           = DMA_MEMORY_TO_PERIPH;
-    i2c_dma_tx_handle_.Init.PeriphInc           = DMA_PINC_DISABLE;
-    i2c_dma_tx_handle_.Init.MemInc              = DMA_MINC_ENABLE;
-    i2c_dma_tx_handle_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-    i2c_dma_tx_handle_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-    i2c_dma_tx_handle_.Init.Mode                = DMA_NORMAL;
-    i2c_dma_tx_handle_.Init.Priority            = DMA_PRIORITY_LOW;
-    i2c_dma_tx_handle_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-    i2c_dma_tx_handle_.Init.MemBurst            = DMA_MBURST_SINGLE;
-    i2c_dma_tx_handle_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
+    i2c_dma_tc_handle_.Init.Direction           = DMA_MEMORY_TO_PERIPH;
+    i2c_dma_tc_handle_.Init.PeriphInc           = DMA_PINC_DISABLE;
+    i2c_dma_tc_handle_.Init.MemInc              = DMA_MINC_ENABLE;
+    i2c_dma_tc_handle_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    i2c_dma_tc_handle_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+    i2c_dma_tc_handle_.Init.Mode                = DMA_NORMAL;
+    i2c_dma_tc_handle_.Init.Priority            = DMA_PRIORITY_LOW;
+    i2c_dma_tc_handle_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    i2c_dma_tc_handle_.Init.MemBurst            = DMA_MBURST_SINGLE;
+    i2c_dma_tc_handle_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
 
-    if(HAL_DMA_Init(&i2c_dma_tx_handle_) != HAL_OK)
+    if(HAL_DMA_Init(&i2c_dma_tc_handle_) != HAL_OK)
     {
         Error_Handler();
     }
 
-    __HAL_LINKDMA(&i2c_hal_handle_, hdmatx, i2c_dma_tx_handle_);
+    __HAL_LINKDMA(&i2c_hal_handle_, hdmatx, i2c_dma_tc_handle_);
 
-    // start the transfer
-    // TODO: Add ScopedIrqBlocker
+    // start the transfer and block irq until return
+    ScopedIrqBlocker block;
+
     dma_active_peripheral_ = int(config_.periph);
     next_callback_         = callback;
     next_callback_context_ = callback_context;
-    if(HAL_I2C_Master_Transmit_DMA(&i2c_hal_handle_, address << 1, data, size)
-       != HAL_OK)
+
+    HAL_StatusTypeDef status;
+    if(config_.mode == I2CHandle::Config::Mode::I2C_MASTER)
+    {
+        status = HAL_I2C_Master_Transmit_DMA(
+            &i2c_hal_handle_, address << 1, data, size);
+    }
+    else
+    {
+        status = HAL_I2C_Slave_Transmit_DMA(&i2c_hal_handle_, data, size);
+    }
+
+    if(status != HAL_OK)
+    {
+        dma_active_peripheral_ = -1;
+        next_callback_         = NULL;
+        next_callback_context_ = NULL;
+        return I2CHandle::Result::ERR;
+    }
+    return I2CHandle::Result::OK;
+}
+
+I2CHandle::Result
+I2CHandle::Impl::StartDmaReception(uint16_t                       address,
+                                   uint8_t*                       data,
+                                   uint16_t                       size,
+                                   I2CHandle::CallbackFunctionPtr callback,
+                                   void* callback_context)
+{
+    // wait for previous transfer to be finished
+    while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
+
+    // reinit the DMA
+    i2c_dma_tc_handle_.Instance = DMA1_Stream6;
+    switch(config_.periph)
+    {
+        case I2CHandle::Config::Peripheral::I2C_1:
+            i2c_dma_tc_handle_.Init.Request = DMA_REQUEST_I2C1_RX;
+            break;
+        case I2CHandle::Config::Peripheral::I2C_2:
+            i2c_dma_tc_handle_.Init.Request = DMA_REQUEST_I2C2_RX;
+            break;
+        case I2CHandle::Config::Peripheral::I2C_3:
+            i2c_dma_tc_handle_.Init.Request = DMA_REQUEST_I2C3_RX;
+            break;
+        // I2C4 has no DMA yet. TODO
+        default: return I2CHandle::Result::ERR;
+    }
+    i2c_dma_tc_handle_.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+    i2c_dma_tc_handle_.Init.PeriphInc           = DMA_PINC_DISABLE;
+    i2c_dma_tc_handle_.Init.MemInc              = DMA_MINC_ENABLE;
+    i2c_dma_tc_handle_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    i2c_dma_tc_handle_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+    i2c_dma_tc_handle_.Init.Mode                = DMA_NORMAL;
+    i2c_dma_tc_handle_.Init.Priority            = DMA_PRIORITY_LOW;
+    i2c_dma_tc_handle_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    i2c_dma_tc_handle_.Init.MemBurst            = DMA_MBURST_SINGLE;
+    i2c_dma_tc_handle_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
+
+    if(HAL_DMA_Init(&i2c_dma_tc_handle_) != HAL_OK)
+    {
+        Error_Handler();
+    }
+
+    __HAL_LINKDMA(&i2c_hal_handle_, hdmarx, i2c_dma_tc_handle_);
+
+    // start the transfer and block irq until return
+    ScopedIrqBlocker block;
+
+    dma_active_peripheral_ = int(config_.periph);
+    next_callback_         = callback;
+    next_callback_context_ = callback_context;
+
+    HAL_StatusTypeDef status;
+    if(config_.mode == I2CHandle::Config::Mode::I2C_MASTER)
+    {
+        status = HAL_I2C_Master_Receive_DMA(
+            &i2c_hal_handle_, address << 1, data, size);
+    }
+    else
+    {
+        status = HAL_I2C_Slave_Receive_DMA(&i2c_hal_handle_, data, size);
+    }
+
+    if(status != HAL_OK)
     {
         dma_active_peripheral_ = -1;
         next_callback_         = NULL;
@@ -556,10 +747,10 @@ extern "C" void dsy_i2c_global_init()
 // private functions of the I2CHandle objects...
 void halI2CDmaStreamCallback(void)
 {
-    // TODO: add ScopedIrqBlocker
+    ScopedIrqBlocker block;
     if(I2CHandle::Impl::dma_active_peripheral_ >= 0)
         HAL_DMA_IRQHandler(&i2c_handles[I2CHandle::Impl::dma_active_peripheral_]
-                                .i2c_dma_tx_handle_);
+                                .i2c_dma_tc_handle_);
 }
 extern "C" void DMA1_Stream6_IRQHandler(void)
 {
@@ -582,6 +773,21 @@ extern "C" void I2C3_EV_IRQHandler()
 }
 
 extern "C" void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef* i2c_handle)
+{
+    I2CHandle::Impl::DmaTransferFinished(i2c_handle, I2CHandle::Result::OK);
+}
+
+extern "C" void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef* i2c_handle)
+{
+    I2CHandle::Impl::DmaTransferFinished(i2c_handle, I2CHandle::Result::OK);
+}
+
+extern "C" void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef* i2c_handle)
+{
+    I2CHandle::Impl::DmaTransferFinished(i2c_handle, I2CHandle::Result::OK);
+}
+
+extern "C" void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef* i2c_handle)
 {
     I2CHandle::Impl::DmaTransferFinished(i2c_handle, I2CHandle::Result::OK);
 }
@@ -631,6 +837,15 @@ I2CHandle::TransmitDma(uint16_t                       address,
                        void*                          callback_context)
 {
     return pimpl_->TransmitDma(address, data, size, callback, callback_context);
+}
+
+I2CHandle::Result I2CHandle::ReceiveDma(uint16_t                       address,
+                                        uint8_t*                       data,
+                                        uint16_t                       size,
+                                        I2CHandle::CallbackFunctionPtr callback,
+                                        void* callback_context)
+{
+    return pimpl_->ReceiveDma(address, data, size, callback, callback_context);
 }
 
 
