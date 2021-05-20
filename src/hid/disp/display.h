@@ -148,6 +148,22 @@ class OneBitGraphicsDisplay
     virtual char WriteString(const char* str, FontDef font, bool on) = 0;
 
     /** 
+    Similar to WriteString but justified within a bounding box.
+    \param str          string to be written
+    \param font         font to use
+    \param boundingBox  the bounding box to draw the text in
+    \param alignment    the alignment to use
+    \param on           on or off
+    \return The rectangle that was drawn to
+    */
+    virtual Rectangle WriteStringAligned(const char*    str,
+                                         const FontDef& font,
+                                         Rectangle      boundingBox,
+                                         Alignment      alignment,
+                                         bool           on)
+        = 0;
+
+    /** 
     Moves the 'Cursor' position used for WriteChar, and WriteStr to the specified coordinate.
     \param x x pos
     \param y y pos
@@ -439,6 +455,34 @@ class OneBitGraphicsDisplayImpl : public OneBitGraphicsDisplay
 
         // Everything ok
         return *str;
+    }
+
+    Rectangle WriteStringAligned(const char*    str,
+                                 const FontDef& font,
+                                 Rectangle      boundingBox,
+                                 Alignment      alignment,
+                                 bool           on) override
+    {
+        const auto alignedRect
+            = GetTextRect(str, font).AlignedWithin(boundingBox, alignment);
+        SetCursor(alignedRect.GetX(), alignedRect.GetY());
+        ((ChildType*)(this))->ChildType::WriteString(str, font, on);
+        return alignedRect;
+    }
+
+  private:
+    uint32_t strlen(const char* string)
+    {
+        uint32_t result = 0;
+        while(*string++ != '\0')
+            result++;
+        return result;
+    }
+
+    Rectangle GetTextRect(const char* text, const FontDef& font)
+    {
+        const auto numChars = strlen(text);
+        return {int16_t(numChars * font.FontWidth), font.FontHeight};
     }
 };
 
