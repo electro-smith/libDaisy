@@ -53,8 +53,9 @@ struct NoteOnEvent
 /** Struct containing note, and pressure data for a given channel.
 Can be made from MidiEvent
 */
-struct PolyphonicKeyPressureEvent{
-    int channel;
+struct PolyphonicKeyPressureEvent
+{
+    int     channel;
     uint8_t note;
     uint8_t pressure;
 };
@@ -66,6 +67,22 @@ struct ControlChangeEvent
     int     channel;        /**< & */
     uint8_t control_number; /**< & */
     uint8_t value;          /**< & */
+};
+/** Struct containing new program number, for a given channel.
+Can be made from MidiEvent
+*/
+struct ProgramChangeEvent
+{
+    int     channel; /**< & */
+    uint8_t program; /**< & */
+};
+/** Struct containing pressure (aftertouch), for a given channel.
+Can be made from MidiEvent
+*/
+struct ChannelPressureEvent
+{
+    int     channel;  /**< & */
+    uint8_t pressure; /**< & */
 };
 /** Struct containing pitch bend value for a given channel.
 Can be made from MidiEvent
@@ -86,7 +103,8 @@ struct MidiEvent
     uint8_t         data[2]; /**< & */
 
     /** Returns the data within the MidiEvent as a NoteOffEvent struct */
-    NoteOffEvent AsNoteOff(){
+    NoteOffEvent AsNoteOff()
+    {
         NoteOffEvent m;
         m.channel  = channel;
         m.note     = data[0];
@@ -104,8 +122,8 @@ struct MidiEvent
         return m;
     }
 
-    /** Returns the data within the MidiEvent as a NoteOnEvent struct */
-    PolyphonicKeyPressureEvent AsPolyphonicKeyPressureEvent()
+    /** Returns the data within the MidiEvent as a PolyphonicKeyPressureEvent struct */
+    PolyphonicKeyPressureEvent AsPolyphonicKeyPressure()
     {
         PolyphonicKeyPressureEvent m;
         m.channel  = channel;
@@ -121,6 +139,24 @@ struct MidiEvent
         m.channel        = channel;
         m.control_number = data[0];
         m.value          = data[1];
+        return m;
+    }
+
+    /** Returns the data within the MidiEvent as a ProgramChangeEvent struct.*/
+    ProgramChangeEvent AsProgramChange()
+    {
+        ProgramChangeEvent m;
+        m.channel = channel;
+        m.program = data[0];
+        return m;
+    }
+
+    /** Returns the data within the MidiEvent as a ProgramChangeEvent struct.*/
+    ChannelPressureEvent AsChannelPressure()
+    {
+        ChannelPressureEvent m;
+        m.channel  = channel;
+        m.pressure = data[0];
         return m;
     }
 
