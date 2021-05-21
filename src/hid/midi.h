@@ -50,6 +50,14 @@ struct NoteOnEvent
     uint8_t note;     /**< & */
     uint8_t velocity; /**< & */
 };
+/** Struct containing note, and pressure data for a given channel.
+Can be made from MidiEvent
+*/
+struct PolyphonicKeyPressureEvent{
+    int channel;
+    uint8_t note;
+    uint8_t pressure;
+};
 /** Struct containing control number, and value for a given channel.
 Can be made from MidiEvent
 */
@@ -93,6 +101,16 @@ struct MidiEvent
         m.channel  = channel;
         m.note     = data[0];
         m.velocity = data[1];
+        return m;
+    }
+
+    /** Returns the data within the MidiEvent as a NoteOnEvent struct */
+    PolyphonicKeyPressureEvent AsPolyphonicKeyPressureEvent()
+    {
+        PolyphonicKeyPressureEvent m;
+        m.channel  = channel;
+        m.note     = data[0];
+        m.pressure = data[1];
         return m;
     }
 
