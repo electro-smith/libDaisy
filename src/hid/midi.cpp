@@ -105,8 +105,10 @@ void MidiHandler::Parse(uint8_t byte)
             if((byte & kStatusByteMask) == 0)
             {
                 incoming_message_.data[0] = byte & kDataByteMask;
-                if(incoming_message_.type == ChannelPressure)
+                if(incoming_message_.type == ChannelPressure
+                   || incoming_message_.type == ProgramChange)
                 {
+                    //these are just one data byte, so we short circuit back to start
                     pstate_ = ParserEmpty;
                     event_q_.Write(incoming_message_);
                 }
