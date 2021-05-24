@@ -29,31 +29,34 @@ enum MidiMessageType
     ProgramChange,         /**< & */
     ChannelPressure,       /**< & */
     PitchBend,             /**< & */
-    SystemCommon, /**< & */
-    SystemRealTime, /**< & */
+    SystemCommon,          /**< & */
+    SystemRealTime,        /**< & */
     MessageLast,           /**< & */
 };
 
-enum SystemCommonType{
-    SystemExclusive, /**< & */
-    MTCQuarterFrame, /**< & */
+enum SystemCommonType
+{
+    SystemExclusive,     /**< & */
+    MTCQuarterFrame,     /**< & */
     SongPositionPointer, /**< & */
-    SongSelect, /**< & */
-    Undefined0, /**< & */
-    Undefined1, /**< & */
-    TuneRequest, /**< & */
-    SysExEnd, /**< & */
-    SystemCommonLast, /**< & */
+    SongSelect,          /**< & */
+    Undefined0,          /**< & */
+    Undefined1,          /**< & */
+    TuneRequest,         /**< & */
+    SysExEnd,            /**< & */
+    SystemCommonLast,    /**< & */
 };
 
-enum SystemRealTimeType{
-    TimingClock, /**< & */   // system real time
-    Start, /**< & */
-    Continue, /**< & */
-    Stop, /**< & */
-    ActiveSensing, /**< & */
-    Reset, /**< & */
-    Reserved, /**< & */
+enum SystemRealTimeType
+{
+    TimingClock,
+    /**< & */           // system real time
+    Start,              /**< & */
+    Continue,           /**< & */
+    Stop,               /**< & */
+    ActiveSensing,      /**< & */
+    Reset,              /**< & */
+    Reserved,           /**< & */
     SystemRealTimeLast, /**< & */
 };
 
@@ -124,7 +127,7 @@ Can be made from MidiEvent
 */
 struct SystemExclusiveEvent
 {
-    int length;
+    int     length;
     uint8_t data[SYSEX_BUFFER_LEN]; /**< & */
 };
 /** Struct containing QuarterFrame data.
@@ -133,7 +136,7 @@ Can be made from MidiEvent
 struct MTCQuarterFrameEvent
 {
     uint8_t message_type; /**< & */
-    uint8_t value; /**< & */
+    uint8_t value;        /**< & */
 };
 /** Struct containing song position data.
 Can be made from MidiEvent
@@ -156,12 +159,12 @@ struct SongSelectEvent
 struct MidiEvent
 {
     // Newer ish.
-    MidiMessageType type;    /**< & */
-    int             channel; /**< & */
-    uint8_t         data[2]; /**< & */
-    uint8_t         sysex_data[SYSEX_BUFFER_LEN]; /**< & */
-    uint8_t sysex_message_len;
-    SystemCommonType sc_type;
+    MidiMessageType    type;                         /**< & */
+    int                channel;                      /**< & */
+    uint8_t            data[2];                      /**< & */
+    uint8_t            sysex_data[SYSEX_BUFFER_LEN]; /**< & */
+    uint8_t            sysex_message_len;
+    SystemCommonType   sc_type;
     SystemRealTimeType srt_type;
 
     /** Returns the data within the MidiEvent as a NoteOffEvent struct */
@@ -230,29 +233,35 @@ struct MidiEvent
         m.value   = ((uint16_t)data[1] << 7) + (data[0] - 8192);
         return m;
     }
-    SystemExclusiveEvent AsSystemExclusive(){
+    SystemExclusiveEvent AsSystemExclusive()
+    {
         SystemExclusiveEvent m;
         m.length = sysex_message_len;
-        for(int i = 0; i < SYSEX_BUFFER_LEN; i++){
+        for(int i = 0; i < SYSEX_BUFFER_LEN; i++)
+        {
             m.data[i] = 0;
-            if(i < m.length){
+            if(i < m.length)
+            {
                 m.data[i] = sysex_data[i];
             }
         }
         return m;
     }
-    MTCQuarterFrameEvent AsMTCQuarterFrame(){
+    MTCQuarterFrameEvent AsMTCQuarterFrame()
+    {
         MTCQuarterFrameEvent m;
         m.message_type = (data[0] & 0x70) >> 4;
-        m.value = data[0] & 0x0f;
+        m.value        = data[0] & 0x0f;
         return m;
     }
-    SongPositionPointerEvent AsSongPositionPointer(){
+    SongPositionPointerEvent AsSongPositionPointer()
+    {
         SongPositionPointerEvent m;
         m.position = ((uint16_t)data[1] << 7) + (data[0] - 8192);
         return m;
     }
-    SongSelectEvent AsSongSelect(){
+    SongSelectEvent AsSongSelect()
+    {
         SongSelectEvent m;
         m.song = data[0];
         return m;
@@ -325,7 +334,7 @@ class MidiHandler
     /** SendMessage
     Send raw bytes as message
     */
-    void SendMessage(uint8_t *bytes, size_t size);
+    void SendMessage(uint8_t* bytes, size_t size);
 
 
   private:

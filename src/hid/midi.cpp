@@ -4,12 +4,12 @@
 using namespace daisy;
 
 // Masks to check for message type, and byte content
-const uint8_t kStatusByteMask   = 0x80;
-const uint8_t kMessageMask      = 0x70;
-const uint8_t kDataByteMask     = 0x7F;
-const uint8_t kSystemCommonMask = 0xF0;
-const uint8_t kChannelMask      = 0x0F;
-const uint8_t kRealTimeMask     = 0xF8;
+const uint8_t kStatusByteMask     = 0x80;
+const uint8_t kMessageMask        = 0x70;
+const uint8_t kDataByteMask       = 0x7F;
+const uint8_t kSystemCommonMask   = 0xF0;
+const uint8_t kChannelMask        = 0x0F;
+const uint8_t kRealTimeMask       = 0xF8;
 const uint8_t kSystemRealTimeMask = 0x07;
 
 // Currently only setting this up to handle 3-byte messages (i.e. Notes, CCs, Pitchbend).
@@ -91,27 +91,35 @@ void MidiHandler::Parse(uint8_t byte)
                     pstate_ = ParserHasStatus;
                     // Mark this status byte as running_status
                     running_status_ = incoming_message_.type;
-                                        
-                    if(running_status_ == SystemCommon){
+
+                    if(running_status_ == SystemCommon)
+                    {
                         //system real time = 1111 1xxx
-                        if((byte & 8) > 0){
-                            incoming_message_.type = SystemRealTime;   
-                            incoming_message_.srt_type = static_cast<SystemRealTimeType>(byte & kSystemRealTimeMask);
-                            
+                        if((byte & 8) > 0)
+                        {
+                            incoming_message_.type = SystemRealTime;
+                            incoming_message_.srt_type
+                                = static_cast<SystemRealTimeType>(
+                                    byte & kSystemRealTimeMask);
+
                             //short circuit to start
                             event_q_.Write(incoming_message_);
                             pstate_ = ParserEmpty;
                         }
                         //system common
-                        else{
-                            incoming_message_.sc_type =  static_cast<SystemCommonType>(byte & 0x0f);                            
+                        else
+                        {
+                            incoming_message_.sc_type
+                                = static_cast<SystemCommonType>(byte & 0x0f);
                             //sysex
-                            if(incoming_message_.sc_type == SystemExclusive){
+                            if(incoming_message_.sc_type == SystemExclusive)
+                            {
                                 pstate_ = ParserSysEx;
                                 incoming_message_.sysex_message_len = 0;
-                            }   
-                            //short circuit                         
-                            else if (incoming_message_.sc_type > SongSelect){
+                            }
+                            //short circuit
+                            else if(incoming_message_.sc_type > SongSelect)
+                            {
                                 event_q_.Write(incoming_message_);
                                 pstate_ = ParserEmpty;
                             }
@@ -165,12 +173,17 @@ void MidiHandler::Parse(uint8_t byte)
             break;
         case ParserSysEx:
             // end of sysex
-            if(byte == 0xf7 || incoming_message_.sysex_message_len >= SYSEX_BUFFER_LEN){
+            if(byte == 0xf7
+               || incoming_message_.sysex_message_len >= SYSEX_BUFFER_LEN)
+            {
                 pstate_ = ParserEmpty;
                 event_q_.Write(incoming_message_);
             }
-            else{
-                incoming_message_.sysex_data[incoming_message_.sysex_message_len] = byte;
+            else
+            {
+                incoming_message_
+                    .sysex_data[incoming_message_.sysex_message_len]
+                    = byte;
                 incoming_message_.sysex_message_len++;
             }
             break;
