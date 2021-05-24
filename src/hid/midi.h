@@ -26,6 +26,8 @@ enum MidiMessageType
     ProgramChange,         /**< & */
     ChannelPressure,       /**< & */
     PitchBend,             /**< & */
+    SystemCommon,          /**< Mostly SysEx */
+    SystemRealTime,        /**< & */
     MessageLast,
     /**< & */ // maybe change name to MessageUnsupported
 };

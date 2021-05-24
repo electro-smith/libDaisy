@@ -90,6 +90,11 @@ void MidiHandler::Parse(uint8_t byte)
                     pstate_ = ParserHasStatus;
                     // Mark this status byte as running_status
                     running_status_ = incoming_message_.type;
+                    
+                    //system real time is indicated with a fifth bit (kinda)
+                    if(running_status_ == SystemCommon && (byte & (1 << 3))){
+                        running_status_ = SystemRealTime;
+                    }
                 }
                 // Else we'll keep waiting for a valid incoming status byte
             }
