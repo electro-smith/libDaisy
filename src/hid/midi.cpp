@@ -85,6 +85,7 @@ void MidiHandler::Parse(uint8_t byte)
                 incoming_message_.channel = byte & kChannelMask;
                 incoming_message_.type
                     = static_cast<MidiMessageType>((byte & kMessageMask) >> 4);
+
                 // Validate, and move on.
                 if(incoming_message_.type < MessageLast)
                 {
@@ -94,8 +95,9 @@ void MidiHandler::Parse(uint8_t byte)
 
                     if(running_status_ == SystemCommon)
                     {
+                        incoming_message_.channel = 0;
                         //system real time = 1111 1xxx
-                        if((byte & 8) > 0)
+                        if((byte & 0x08) > 0)
                         {
                             incoming_message_.type = SystemRealTime;
                             incoming_message_.srt_type
@@ -110,7 +112,7 @@ void MidiHandler::Parse(uint8_t byte)
                         else
                         {
                             incoming_message_.sc_type
-                                = static_cast<SystemCommonType>(byte & 0x0f);
+                                = static_cast<SystemCommonType>(byte & 0x07);
                             //sysex
                             if(incoming_message_.sc_type == SystemExclusive)
                             {

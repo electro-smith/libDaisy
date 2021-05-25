@@ -40,8 +40,8 @@ enum SystemCommonType
     MTCQuarterFrame,     /**< & */
     SongPositionPointer, /**< & */
     SongSelect,          /**< & */
-    Undefined0,          /**< & */
-    Undefined1,          /**< & */
+    SCUndefined0,        /**< & */
+    SCUndefined1,        /**< & */
     TuneRequest,         /**< & */
     SysExEnd,            /**< & */
     SystemCommonLast,    /**< & */
@@ -49,14 +49,14 @@ enum SystemCommonType
 
 enum SystemRealTimeType
 {
-    TimingClock,
-    /**< & */           // system real time
+    TimingClock,        /**< & */
+    SRTUndefined0,      /**< & */
     Start,              /**< & */
     Continue,           /**< & */
     Stop,               /**< & */
+    SRTUndefined1,      /**< & */
     ActiveSensing,      /**< & */
     Reset,              /**< & */
-    Reserved,           /**< & */
     SystemRealTimeLast, /**< & */
 };
 
@@ -335,7 +335,6 @@ class MidiHandler
     Send raw bytes as message
     */
     void SendMessage(uint8_t* bytes, size_t size);
-
 
   private:
     enum ParserState
