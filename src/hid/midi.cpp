@@ -155,6 +155,15 @@ void MidiHandler::Parse(uint8_t byte)
                 {
                     pstate_ = ParserHasData0;
                 }
+
+                //ChannelModeMessages (reserved Control Changes)
+                if(incoming_message_.type == ControlChange
+                   && incoming_message_.data[0] > 119)
+                {
+                    incoming_message_.type    = ChannelMode;
+                    incoming_message_.cm_type = static_cast<ChannelModeType>(
+                        incoming_message_.data[0] - 119);
+                }
             }
             else
             {

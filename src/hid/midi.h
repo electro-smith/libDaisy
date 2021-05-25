@@ -31,6 +31,7 @@ enum MidiMessageType
     PitchBend,             /**< & */
     SystemCommon,          /**< & */
     SystemRealTime,        /**< & */
+    ChannelMode,           /**< & */
     MessageLast,           /**< & */
 };
 
@@ -58,6 +59,19 @@ enum SystemRealTimeType
     ActiveSensing,      /**< & */
     Reset,              /**< & */
     SystemRealTimeLast, /**< & */
+};
+
+enum ChannelModeType
+{
+    AllSoundOff,         /**< & */
+    ResetAllControllers, /**< & */
+    LocalControl,        /**< & */
+    AllNotesOff,         /**< & */
+    OmniModeOff,         /**< & */
+    OmniModeOn,          /**< & */
+    MonoModeOn,          /**< & */
+    PolyModeOn,          /**< & */
+    ChannelModeLast,     /**< & */
 };
 
 /** Struct containing note, and velocity data for a given channel.
@@ -166,6 +180,7 @@ struct MidiEvent
     uint8_t            sysex_message_len;
     SystemCommonType   sc_type;
     SystemRealTimeType srt_type;
+    ChannelModeType    cm_type;
 
     /** Returns the data within the MidiEvent as a NoteOffEvent struct */
     NoteOffEvent AsNoteOff()
