@@ -162,7 +162,7 @@ void MidiHandler::Parse(uint8_t byte)
                 {
                     incoming_message_.type    = ChannelMode;
                     incoming_message_.cm_type = static_cast<ChannelModeType>(
-                        incoming_message_.data[0] - 119);
+                        incoming_message_.data[0] - 120);
                 }
             }
             else
