@@ -166,6 +166,66 @@ struct SongSelectEvent
 {
     uint8_t song; /**< & */
 };
+/** Struct containing sound off data.
+Can be made from MidiEvent
+*/
+struct AllSoundOffEvent
+{
+    int channel; /**< & */
+}
+/** Struct containing ResetAllControllersEvent data.
+Can be made from MidiEvent
+*/
+struct ResetAllControllersEvent
+{
+    int     channel; /**< & */
+    uint8_t value;   /**< & */
+}
+/** Struct containing LocalControlEvent data.
+Can be made from MidiEvent
+*/
+struct LocalControlEvent
+{
+    int  channel;           /**< & */
+    bool local_control_off; /**< & */
+    bool local_control_on;  /**< & */
+}
+/** Struct containing AllNotesOffEvent data.
+Can be made from MidiEvent
+*/
+struct AllNotesOffEvent
+{
+    int channel; /**< & */
+}
+/** Struct containing OmniModeOffEvent data. 
+ * Can be made from MidiEvent
+*/
+struct OmniModeOffEvent
+{
+    int channel; /**< & */
+}
+/** Struct containing OmniModeOnEvent data.
+Can be made from MidiEvent
+*/
+struct OmniModeOnEvent
+{
+    int channel; /**< & */
+}
+/** Struct containing MonoModeOnEvent data.
+Can be made from MidiEvent
+*/
+struct MonoModeOnEvent
+{
+    int     channel;      /**< & */
+    uint8_t num_channels; /**< & */
+}
+/** Struct containing PolyModeOnEvent data.
+Can be made from MidiEvent
+*/
+struct PolyModeOnEvent
+{
+    int channel; /**< & */
+}
 
 
 /** Simple MidiEvent with message type, channel, and data[2] members.
