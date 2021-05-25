@@ -172,7 +172,7 @@ Can be made from MidiEvent
 struct AllSoundOffEvent
 {
     int channel; /**< & */
-}
+};
 /** Struct containing ResetAllControllersEvent data.
 Can be made from MidiEvent
 */
@@ -180,7 +180,7 @@ struct ResetAllControllersEvent
 {
     int     channel; /**< & */
     uint8_t value;   /**< & */
-}
+};
 /** Struct containing LocalControlEvent data.
 Can be made from MidiEvent
 */
@@ -189,28 +189,28 @@ struct LocalControlEvent
     int  channel;           /**< & */
     bool local_control_off; /**< & */
     bool local_control_on;  /**< & */
-}
+};
 /** Struct containing AllNotesOffEvent data.
 Can be made from MidiEvent
 */
 struct AllNotesOffEvent
 {
     int channel; /**< & */
-}
+};
 /** Struct containing OmniModeOffEvent data. 
  * Can be made from MidiEvent
 */
 struct OmniModeOffEvent
 {
     int channel; /**< & */
-}
+};
 /** Struct containing OmniModeOnEvent data.
 Can be made from MidiEvent
 */
 struct OmniModeOnEvent
 {
     int channel; /**< & */
-}
+};
 /** Struct containing MonoModeOnEvent data.
 Can be made from MidiEvent
 */
@@ -218,14 +218,14 @@ struct MonoModeOnEvent
 {
     int     channel;      /**< & */
     uint8_t num_channels; /**< & */
-}
+};
 /** Struct containing PolyModeOnEvent data.
 Can be made from MidiEvent
 */
 struct PolyModeOnEvent
 {
     int channel; /**< & */
-}
+};
 
 
 /** Simple MidiEvent with message type, channel, and data[2] members.
@@ -339,6 +339,58 @@ struct MidiEvent
     {
         SongSelectEvent m;
         m.song = data[0];
+        return m;
+    }
+    AllSoundOffEvent AsAllSoundOff()
+    {
+        AllSoundOffEvent m;
+        m.channel = channel;
+        return m;
+    }
+    ResetAllControllersEvent AsResetAllControllers()
+    {
+        ResetAllControllersEvent m;
+        m.channel = channel;
+        m.value   = data[1];
+        return m;
+    }
+    LocalControlEvent AsLocalControl()
+    {
+        LocalControlEvent m;
+        m.channel           = channel;
+        m.local_control_off = data[1] == 0;
+        m.local_control_on  = data[1] == 127;
+        return m;
+    }
+    AllNotesOffEvent AsAllNotesOff()
+    {
+        AllNotesOffEvent m;
+        m.channel = channel;
+        return m;
+    }
+    OmniModeOffEvent AsOmniModeOff()
+    {
+        OmniModeOffEvent m;
+        m.channel = channel;
+        return m;
+    }
+    OmniModeOnEvent AsOmniModeOn()
+    {
+        OmniModeOnEvent m;
+        m.channel = channel;
+        return m;
+    }
+    MonoModeOnEvent AsMonoModeOn()
+    {
+        MonoModeOnEvent m;
+        m.channel      = channel;
+        m.num_channels = data[1];
+        return m;
+    }
+    PolyModeOnEvent AsPolyModeOn()
+    {
+        PolyModeOnEvent m;
+        m.channel = channel;
         return m;
     }
 };
