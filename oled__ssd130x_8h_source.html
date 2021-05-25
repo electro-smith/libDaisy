@@ -278,98 +278,88 @@ $(function() {
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;        transport_.SendCommand(0xAF); <span class="comment">//--turn on oled panel</span></div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    };</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160; </div>
-<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keywordtype">size_t</span> Width() { <span class="keywordflow">return</span> width; };</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordtype">size_t</span> Height() { <span class="keywordflow">return</span> height; };</div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;    <span class="keywordtype">size_t</span> CurrentX() { <span class="keywordflow">return</span> current_x_; };</div>
-<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordtype">size_t</span> CurrentY() { <span class="keywordflow">return</span> current_y_; };</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordtype">void</span> SetCursor(uint8_t x, uint8_t y)</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    {</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        current_x_ = x;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        current_y_ = y;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    }</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160; </div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordtype">void</span> DrawPixel(uint_fast8_t x, uint_fast8_t y, <span class="keywordtype">bool</span> on)</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;    {</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;        <span class="keywordflow">if</span>(x &gt;= width || y &gt;= height)</div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;            <span class="keywordflow">return</span>;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        <span class="keywordflow">if</span>(on)</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;            buffer_[x + (y / 8) * width] |= (1 &lt;&lt; (y % 8));</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;        <span class="keywordflow">else</span></div>
-<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;            buffer_[x + (y / 8) * width] &amp;= ~(1 &lt;&lt; (y % 8));</div>
-<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    }</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keywordtype">size_t</span> Width()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> width; };</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <span class="keywordtype">size_t</span> Height()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> height; };</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;    <span class="keywordtype">void</span> DrawPixel(uint_fast8_t x, uint_fast8_t y, <span class="keywordtype">bool</span> on)</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    {</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;        <span class="keywordflow">if</span>(x &gt;= width || y &gt;= height)</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;            <span class="keywordflow">return</span>;</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        <span class="keywordflow">if</span>(on)</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;            buffer_[x + (y / 8) * width] |= (1 &lt;&lt; (y % 8));</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;            buffer_[x + (y / 8) * width] &amp;= ~(1 &lt;&lt; (y % 8));</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    }</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160; </div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;    <span class="keywordtype">void</span> Fill(<span class="keywordtype">bool</span> on)</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    {</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;        <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i = 0; i &lt; <span class="keyword">sizeof</span>(buffer_); i++)</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;        {</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;            buffer_[i] = on ? 0xff : 0x00;</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;        }</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    };</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160; </div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;    <span class="keywordtype">void</span> Fill(<span class="keywordtype">bool</span> on)</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;    {</div>
-<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;        <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i = 0; i &lt; <span class="keyword">sizeof</span>(buffer_); i++)</div>
-<div class="line"><a name="l00244"></a><span class="lineno">  244</span>&#160;        {</div>
-<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;            buffer_[i] = on ? 0xff : 0x00;</div>
-<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        }</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    };</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160; </div>
-<div class="line"><a name="l00252"></a><span class="lineno"><a class="line" href="classdaisy_1_1_s_s_d130x_driver.html#a016333b71cda3956f8a47680b7ef6bf7">  252</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html#a016333b71cda3956f8a47680b7ef6bf7">Update</a>()</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    {</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        uint8_t i;</div>
-<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        uint8_t high_column_addr;</div>
-<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;        <span class="keywordflow">switch</span>(height)</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;        {</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            <span class="keywordflow">case</span> 32: high_column_addr = 0x12; <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160; </div>
-<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;            <span class="keywordflow">default</span>: high_column_addr = 0x10; <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;        }</div>
-<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;        <span class="keywordflow">for</span>(i = 0; i &lt; (height / 8); i++)</div>
-<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;        {</div>
-<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;            transport_.SendCommand(0xB0 + i);</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;            transport_.SendCommand(0x00);</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;            transport_.SendCommand(high_column_addr);</div>
-<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;            transport_.SendData(&amp;buffer_[width * i], width);</div>
-<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;        }</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;    };</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    uint16_t  current_x_;</div>
-<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    uint16_t  current_y_;</div>
-<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    Transport transport_;</div>
-<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    uint8_t   buffer_[width * height / 8];</div>
-<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;};</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160; </div>
-<div class="line"><a name="l00281"></a><span class="lineno"><a class="line" href="namespacedaisy.html#aee317551f4e4af6b26f81739b7ba2f42">  281</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130x4WireSpi128x64Driver</a></div>
-<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;128, 64, SSD130x4WireSpiTransport&gt;</a>;</div>
-<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160; </div>
-<div class="line"><a name="l00287"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a11d2079f8e664f71755233a82ed3403a">  287</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130x4WireSpi128x32Driver</a></div>
-<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;128, 32, SSD130x4WireSpiTransport&gt;</a>;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160; </div>
-<div class="line"><a name="l00293"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a2be114c48c7ff1abd849a43db7f9c240">  293</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130x4WireSpi98x16Driver</a></div>
-<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;98, 16, SSD130x4WireSpiTransport&gt;</a>;</div>
-<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160; </div>
-<div class="line"><a name="l00299"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a41d79b1f2587e288132f776d2fe96ae1">  299</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130x4WireSpi64x48Driver</a></div>
-<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;64, 48, SSD130x4WireSpiTransport&gt;</a>;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160; </div>
-<div class="line"><a name="l00305"></a><span class="lineno"><a class="line" href="namespacedaisy.html#af93a87691f811767ffd06cc43679041f">  305</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130x4WireSpi64x32Driver</a></div>
-<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;64, 32, SSD130x4WireSpiTransport&gt;</a>;</div>
-<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160; </div>
-<div class="line"><a name="l00311"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a4af84459e74f4102d36054751f93e570">  311</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130xI2c128x64Driver</a></div>
-<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;128, 64, SSD130xI2CTransport&gt;</a>;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160; </div>
-<div class="line"><a name="l00317"></a><span class="lineno"><a class="line" href="namespacedaisy.html#ae5cc467ccb27e227a81ca126dada30fb">  317</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130xI2c128x32Driver</a></div>
-<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;128, 32, SSD130xI2CTransport&gt;</a>;</div>
+<div class="line"><a name="l00244"></a><span class="lineno"><a class="line" href="classdaisy_1_1_s_s_d130x_driver.html#a016333b71cda3956f8a47680b7ef6bf7">  244</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html#a016333b71cda3956f8a47680b7ef6bf7">Update</a>()</div>
+<div class="line"><a name="l00245"></a><span class="lineno">  245</span>&#160;    {</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;        uint8_t i;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;        uint8_t high_column_addr;</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;        <span class="keywordflow">switch</span>(height)</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;        {</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;            <span class="keywordflow">case</span> 32: high_column_addr = 0x12; <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160; </div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;            <span class="keywordflow">default</span>: high_column_addr = 0x10; <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;        }</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;        <span class="keywordflow">for</span>(i = 0; i &lt; (height / 8); i++)</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;        {</div>
+<div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;            transport_.SendCommand(0xB0 + i);</div>
+<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;            transport_.SendCommand(0x00);</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;            transport_.SendCommand(high_column_addr);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;            transport_.SendData(&amp;buffer_[width * i], width);</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;        }</div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;    };</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;    Transport transport_;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    uint8_t   buffer_[width * height / 8];</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;};</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno"><a class="line" href="namespacedaisy.html#aee317551f4e4af6b26f81739b7ba2f42">  271</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130x4WireSpi128x64Driver</a></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;128, 64, SSD130x4WireSpiTransport&gt;</a>;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160; </div>
+<div class="line"><a name="l00277"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a11d2079f8e664f71755233a82ed3403a">  277</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130x4WireSpi128x32Driver</a></div>
+<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;128, 32, SSD130x4WireSpiTransport&gt;</a>;</div>
+<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160; </div>
+<div class="line"><a name="l00283"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a2be114c48c7ff1abd849a43db7f9c240">  283</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130x4WireSpi98x16Driver</a></div>
+<div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;98, 16, SSD130x4WireSpiTransport&gt;</a>;</div>
+<div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160; </div>
+<div class="line"><a name="l00289"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a41d79b1f2587e288132f776d2fe96ae1">  289</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130x4WireSpi64x48Driver</a></div>
+<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;64, 48, SSD130x4WireSpiTransport&gt;</a>;</div>
+<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160; </div>
+<div class="line"><a name="l00295"></a><span class="lineno"><a class="line" href="namespacedaisy.html#af93a87691f811767ffd06cc43679041f">  295</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130x4WireSpi64x32Driver</a></div>
+<div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;64, 32, SSD130x4WireSpiTransport&gt;</a>;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160; </div>
+<div class="line"><a name="l00301"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a4af84459e74f4102d36054751f93e570">  301</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130xI2c128x64Driver</a></div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;128, 64, SSD130xI2CTransport&gt;</a>;</div>
+<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160; </div>
+<div class="line"><a name="l00307"></a><span class="lineno"><a class="line" href="namespacedaisy.html#ae5cc467ccb27e227a81ca126dada30fb">  307</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130xI2c128x32Driver</a></div>
+<div class="line"><a name="l00308"></a><span class="lineno">  308</span>&#160;    = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;128, 32, SSD130xI2CTransport&gt;</a>;</div>
+<div class="line"><a name="l00309"></a><span class="lineno">  309</span>&#160; </div>
+<div class="line"><a name="l00313"></a><span class="lineno"><a class="line" href="namespacedaisy.html#acd406732d55384b504529db2e83602b6">  313</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130xI2c98x16Driver</a> = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;98, 16, SSD130xI2CTransport&gt;</a>;</div>
+<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160; </div>
+<div class="line"><a name="l00318"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a76096dc3b21d044b66782f18906fe46d">  318</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130xI2c64x48Driver</a> = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;64, 48, SSD130xI2CTransport&gt;</a>;</div>
 <div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160; </div>
-<div class="line"><a name="l00323"></a><span class="lineno"><a class="line" href="namespacedaisy.html#acd406732d55384b504529db2e83602b6">  323</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130xI2c98x16Driver</a> = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;98, 16, SSD130xI2CTransport&gt;</a>;</div>
+<div class="line"><a name="l00323"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a8aa6a733725c92ec32701dacc75092fe">  323</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130xI2c64x32Driver</a> = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;64, 32, SSD130xI2CTransport&gt;</a>;</div>
 <div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160; </div>
-<div class="line"><a name="l00328"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a76096dc3b21d044b66782f18906fe46d">  328</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130xI2c64x48Driver</a> = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;64, 48, SSD130xI2CTransport&gt;</a>;</div>
-<div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160; </div>
-<div class="line"><a name="l00333"></a><span class="lineno"><a class="line" href="namespacedaisy.html#a8aa6a733725c92ec32701dacc75092fe">  333</a></span>&#160;<span class="keyword">using</span> <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">SSD130xI2c64x32Driver</a> = <a class="code" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver&lt;64, 32, SSD130xI2CTransport&gt;</a>;</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160; </div>
-<div class="line"><a name="l00335"></a><span class="lineno">  335</span>&#160;}; <span class="comment">// namespace daisy</span></div>
-<div class="line"><a name="l00336"></a><span class="lineno">  336</span>&#160; </div>
-<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160; </div>
-<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;}; <span class="comment">// namespace daisy</span></div>
+<div class="line"><a name="l00326"></a><span class="lineno">  326</span>&#160; </div>
+<div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160; </div>
+<div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html">daisy::I2CHandle</a></div><div class="ttdef"><b>Definition:</b> i2c.h:25</div></div>
 <div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html_a3010881bcac1d32f6f974edc9bbc6c0d"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html#a3010881bcac1d32f6f974edc9bbc6c0d">daisy::I2CHandle::Init</a></div><div class="ttdeci">Result Init(const Config &amp;config)</div></div>
 <div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html_acf279a20fe8338672cbfa7f3e0e720ae"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae">daisy::I2CHandle::TransmitBlocking</a></div><div class="ttdeci">Result TransmitBlocking(uint16_t address, uint8_t *data, uint16_t size, uint32_t timeout)</div></div>
 <div class="ttc" id="aclassdaisy_1_1_s_s_d130x4_wire_spi_transport_html"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x4_wire_spi_transport.html">daisy::SSD130x4WireSpiTransport</a></div><div class="ttdef"><b>Definition:</b> oled_ssd130x.h:60</div></div>
 <div class="ttc" id="aclassdaisy_1_1_s_s_d130x_driver_html"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver</a></div><div class="ttdef"><b>Definition:</b> oled_ssd130x.h:117</div></div>
-<div class="ttc" id="aclassdaisy_1_1_s_s_d130x_driver_html_a016333b71cda3956f8a47680b7ef6bf7"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_driver.html#a016333b71cda3956f8a47680b7ef6bf7">daisy::SSD130xDriver::Update</a></div><div class="ttdeci">void Update()</div><div class="ttdef"><b>Definition:</b> oled_ssd130x.h:252</div></div>
+<div class="ttc" id="aclassdaisy_1_1_s_s_d130x_driver_html_a016333b71cda3956f8a47680b7ef6bf7"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_driver.html#a016333b71cda3956f8a47680b7ef6bf7">daisy::SSD130xDriver::Update</a></div><div class="ttdeci">void Update()</div><div class="ttdef"><b>Definition:</b> oled_ssd130x.h:244</div></div>
 <div class="ttc" id="aclassdaisy_1_1_s_s_d130x_i2_c_transport_html"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_i2_c_transport.html">daisy::SSD130xI2CTransport</a></div><div class="ttdef"><b>Definition:</b> oled_ssd130x.h:16</div></div>
 <div class="ttc" id="aclassdaisy_1_1_spi_handle_html_a567b2e40b20e11acfc3c1029ca9777bf"><div class="ttname"><a href="classdaisy_1_1_spi_handle.html#a567b2e40b20e11acfc3c1029ca9777bf">daisy::SpiHandle::Init</a></div><div class="ttdeci">void Init()</div></div>
 <div class="ttc" id="aclassdaisy_1_1_spi_handle_html_a99adb49a6d7c8583d565dc450610af25"><div class="ttname"><a href="classdaisy_1_1_spi_handle.html#a99adb49a6d7c8583d565dc450610af25">daisy::SpiHandle::BlockingTransmit</a></div><div class="ttdeci">void BlockingTransmit(uint8_t *buff, size_t size)</div></div>
