@@ -61,7 +61,7 @@ class GPIO
     /** 
     Reads the state of the gpio pin
     \return 1 if the pin is HIGH, and 0 if the pin is LOW */
-    uint8_t Read();
+    bool Read();
 
     /** 
     Writes the state to the gpio pin

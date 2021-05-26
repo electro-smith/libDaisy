@@ -44,7 +44,7 @@ void GPIO::DeInit()
     HAL_GPIO_DeInit(port, pin);
 }
 
-uint8_t GPIO::Read()
+bool GPIO::Read()
 {
     GPIO_TypeDef *port = dsy_hal_map_get_port(config_.pin);
     uint16_t      pin  = dsy_hal_map_get_pin(config_.pin);
