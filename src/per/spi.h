@@ -17,15 +17,6 @@ namespace daisy
 @{
 */
 
-/** SPI pins */
-enum SpiPin
-{
-    SPI_PIN_CS,   /**< CS pin */
-    SPI_PIN_SCK,  /**< SCK pin */
-    SPI_PIN_MOSI, /**< MOSI pin */
-    SPI_PIN_MISO, /**< MISO pin */
-};
-
 /**  Handler for serial peripheral interface */
 class SpiHandle
 {
