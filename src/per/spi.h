@@ -6,7 +6,6 @@
 
 /* TODO:
 - Add documentation
-- Add configuration
 - Add reception
 - Add IT
 - Add DMA
