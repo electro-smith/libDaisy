@@ -117,7 +117,7 @@ class SpiHandle
     \param *buff input buffer
     \param size  buffer size
     */
-    Result BlockingTransmit(uint8_t* buff, size_t size);
+    Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout = 100);
 
     /** Polling Receive
     \param *buff input buffer

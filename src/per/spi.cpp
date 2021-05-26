@@ -24,7 +24,7 @@ class SpiHandle::Impl
     const SpiHandle::Config& GetConfig() const { return config_; }
     int                      CheckError();
 
-    Result BlockingTransmit(uint8_t* buff, size_t size);
+    Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout);
     Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
 
     Result InitPins();
@@ -206,9 +206,10 @@ int SpiHandle::Impl::CheckError()
 }
 
 
-SpiHandle::Result SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size)
+SpiHandle::Result
+SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout)
 {
-    if(HAL_SPI_Transmit(&hspi_, buff, size, 100) != HAL_OK)
+    if(HAL_SPI_Transmit(&hspi_, buff, size, timeout) != HAL_OK)
     {
         return SpiHandle::Result::ERR;
     }
@@ -572,9 +573,10 @@ int SpiHandle::CheckError()
 }
 
 
-SpiHandle::Result SpiHandle::BlockingTransmit(uint8_t* buff, size_t size)
+SpiHandle::Result
+SpiHandle::BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout)
 {
-    return pimpl_->BlockingTransmit(buff, size);
+    return pimpl_->BlockingTransmit(buff, size, timeout);
 }
 
 SpiHandle::Result
