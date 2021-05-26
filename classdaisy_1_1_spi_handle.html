@@ -66,6 +66,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classdaisy_1_1_spi_handle-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -75,24 +77,121 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="spi_8h_source.html">spi.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_spi_handle_1_1_config.html">Config</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:acee8aad7e8008a2dbdfc8f260712bab7"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a> { <a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7ae0aa021e21dddbd6d8cecec71e9cf564">OK</a>
+, <a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7acd22bad976363fdd1bfbf6759fede482">ERR</a>
+ }</td></tr>
+<tr class="separator:acee8aad7e8008a2dbdfc8f260712bab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a567b2e40b20e11acfc3c1029ca9777bf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a567b2e40b20e11acfc3c1029ca9777bf">Init</a> ()</td></tr>
-<tr class="separator:a567b2e40b20e11acfc3c1029ca9777bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99adb49a6d7c8583d565dc450610af25"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a99adb49a6d7c8583d565dc450610af25">BlockingTransmit</a> (uint8_t *buff, size_t size)</td></tr>
-<tr class="separator:a99adb49a6d7c8583d565dc450610af25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a389021fcd8c1ffa264c2568d5ad4f17f"><td class="memItemLeft" align="right" valign="top"><a id="a389021fcd8c1ffa264c2568d5ad4f17f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SpiHandle</b> (const <a class="el" href="classdaisy_1_1_spi_handle.html">SpiHandle</a> &amp;other)=default</td></tr>
+<tr class="separator:a389021fcd8c1ffa264c2568d5ad4f17f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a54d3234eb32887d09ba54d07e8245a"><td class="memItemLeft" align="right" valign="top"><a id="a4a54d3234eb32887d09ba54d07e8245a"></a>
+<a class="el" href="classdaisy_1_1_spi_handle.html">SpiHandle</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (const <a class="el" href="classdaisy_1_1_spi_handle.html">SpiHandle</a> &amp;other)=default</td></tr>
+<tr class="separator:a4a54d3234eb32887d09ba54d07e8245a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9bec410bfc0d743be479be9856560c71"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a9bec410bfc0d743be479be9856560c71">Init</a> (const <a class="el" href="structdaisy_1_1_spi_handle_1_1_config.html">Config</a> &amp;config)</td></tr>
+<tr class="separator:a9bec410bfc0d743be479be9856560c71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82118104d86ce37000f17808dfa4ab1a"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structdaisy_1_1_spi_handle_1_1_config.html">Config</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a82118104d86ce37000f17808dfa4ab1a">GetConfig</a> () const</td></tr>
+<tr class="separator:a82118104d86ce37000f17808dfa4ab1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89ccde60807d2681bc96425c0600c82d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a89ccde60807d2681bc96425c0600c82d">BlockingTransmit</a> (uint8_t *buff, size_t size, uint32_t timeout=100)</td></tr>
+<tr class="separator:a89ccde60807d2681bc96425c0600c82d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91106fe656c12d5b7be7858bcb2c6d16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a91106fe656c12d5b7be7858bcb2c6d16">BlockingReceive</a> (uint8_t *buffer, uint16_t size, uint32_t timeout)</td></tr>
+<tr class="separator:a91106fe656c12d5b7be7858bcb2c6d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a903118263e0604c4ba351c972d005386"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a903118263e0604c4ba351c972d005386">CheckError</a> ()</td></tr>
+<tr class="separator:a903118263e0604c4ba351c972d005386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handler for serial peripheral interface </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a99adb49a6d7c8583d565dc450610af25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99adb49a6d7c8583d565dc450610af25">&#9670;&nbsp;</a></span>BlockingTransmit()</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="acee8aad7e8008a2dbdfc8f260712bab7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acee8aad7e8008a2dbdfc8f260712bab7">&#9670;&nbsp;</a></span>Result</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">daisy::SpiHandle::Result</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return values for Spi functions. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="acee8aad7e8008a2dbdfc8f260712bab7ae0aa021e21dddbd6d8cecec71e9cf564"></a>OK&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acee8aad7e8008a2dbdfc8f260712bab7acd22bad976363fdd1bfbf6759fede482"></a>ERR&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a91106fe656c12d5b7be7858bcb2c6d16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91106fe656c12d5b7be7858bcb2c6d16">&#9670;&nbsp;</a></span>BlockingReceive()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::SpiHandle::BlockingTransmit </td>
+          <td class="memname"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a> daisy::SpiHandle::BlockingReceive </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Polling Receive </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">*buff</td><td>input buffer </td></tr>
+    <tr><td class="paramname">size</td><td>buffer size </td></tr>
+    <tr><td class="paramname">timeout</td><td>How long to timeout for </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the receive was successful or not </dd></dl>
+
+</div>
+</div>
+<a id="a89ccde60807d2681bc96425c0600c82d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89ccde60807d2681bc96425c0600c82d">&#9670;&nbsp;</a></span>BlockingTransmit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a> daisy::SpiHandle::BlockingTransmit </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>buff</em>, </td>
@@ -101,7 +200,13 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>size</em>&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>100</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -120,16 +225,53 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a567b2e40b20e11acfc3c1029ca9777bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a567b2e40b20e11acfc3c1029ca9777bf">&#9670;&nbsp;</a></span>Init()</h2>
+<a id="a903118263e0604c4ba351c972d005386"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a903118263e0604c4ba351c972d005386">&#9670;&nbsp;</a></span>CheckError()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::SpiHandle::Init </td>
+          <td class="memname">int daisy::SpiHandle::CheckError </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>the result of HAL_SPI_GetError() to the user. </dd></dl>
+
+</div>
+</div>
+<a id="a82118104d86ce37000f17808dfa4ab1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82118104d86ce37000f17808dfa4ab1a">&#9670;&nbsp;</a></span>GetConfig()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="structdaisy_1_1_spi_handle_1_1_config.html">Config</a>&amp; daisy::SpiHandle::GetConfig </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the current config. </p>
+
+</div>
+</div>
+<a id="a9bec410bfc0d743be479be9856560c71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bec410bfc0d743be479be9856560c71">&#9670;&nbsp;</a></span>Init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a> daisy::SpiHandle::Init </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structdaisy_1_1_spi_handle_1_1_config.html">Config</a> &amp;&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
