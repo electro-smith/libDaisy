@@ -68,14 +68,14 @@ class SpiHandle
 
         enum class BaudPrescaler
         {
-            BAUDRATEPRESCALER_2,
-            BAUDRATEPRESCALER_4,
-            BAUDRATEPRESCALER_8,
-            BAUDRATEPRESCALER_16,
-            BAUDRATEPRESCALER_32,
-            BAUDRATEPRESCALER_64,
-            BAUDRATEPRESCALER_128,
-            BAUDRATEPRESCALER_256,
+            PS_2,
+            PS_4,
+            PS_8,
+            PS_16,
+            PS_32,
+            PS_64,
+            PS_128,
+            PS_256,
         };
 
         struct

@@ -140,28 +140,28 @@ SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
     uint32_t baud_prescaler;
     switch(config_.baud_prescaler)
     {
-        case Config::BaudPrescaler::BAUDRATEPRESCALER_2:
+        case Config::BaudPrescaler::PS_2:
             baud_prescaler = SPI_BAUDRATEPRESCALER_2;
             break;
-        case Config::BaudPrescaler::BAUDRATEPRESCALER_4:
+        case Config::BaudPrescaler::PS_4:
             baud_prescaler = SPI_BAUDRATEPRESCALER_4;
             break;
-        case Config::BaudPrescaler::BAUDRATEPRESCALER_8:
+        case Config::BaudPrescaler::PS_8:
             baud_prescaler = SPI_BAUDRATEPRESCALER_8;
             break;
-        case Config::BaudPrescaler::BAUDRATEPRESCALER_16:
+        case Config::BaudPrescaler::PS_16:
             baud_prescaler = SPI_BAUDRATEPRESCALER_16;
             break;
-        case Config::BaudPrescaler::BAUDRATEPRESCALER_32:
+        case Config::BaudPrescaler::PS_32:
             baud_prescaler = SPI_BAUDRATEPRESCALER_32;
             break;
-        case Config::BaudPrescaler::BAUDRATEPRESCALER_64:
+        case Config::BaudPrescaler::PS_64:
             baud_prescaler = SPI_BAUDRATEPRESCALER_64;
             break;
-        case Config::BaudPrescaler::BAUDRATEPRESCALER_128:
+        case Config::BaudPrescaler::PS_128:
             baud_prescaler = SPI_BAUDRATEPRESCALER_128;
             break;
-        case Config::BaudPrescaler::BAUDRATEPRESCALER_256:
+        case Config::BaudPrescaler::PS_256:
             baud_prescaler = SPI_BAUDRATEPRESCALER_256;
             break;
         default: return Result::ERR;
