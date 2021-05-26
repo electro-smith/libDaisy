@@ -6,7 +6,6 @@
 
 /* TODO:
 - Add documentation
-- Add configuration
 - Add reception
 - Add IT
 - Add DMA
@@ -18,40 +17,123 @@ namespace daisy
 @{
 */
 
-/** SPI peripheral enum */
-enum SpiPeriph
-{
-    SPI_PERIPH_1, /**< SPI peripheral 1 */
-    SPI_PERIPH_3, /**< SPI peripheral 3 */
-    SPI_PERIPH_6, /**< SPI peripheral 3 */
-};
-
-/** SPI pins */
-enum SpiPin
-{
-    SPI_PIN_CS,   /**< CS pin */
-    SPI_PIN_SCK,  /**< SCK pin */
-    SPI_PIN_MOSI, /**< MOSI pin */
-    SPI_PIN_MISO, /**< MISO pin */
-};
-
 /**  Handler for serial peripheral interface */
 class SpiHandle
 {
   public:
-    SpiHandle() {}
-    ~SpiHandle() {}
+    struct Config
+    {
+        enum class Peripheral
+        {
+            SPI_1,
+            SPI_2,
+            SPI_3,
+            SPI_4,
+            SPI_5,
+            SPI_6,
+        };
+
+        enum class Mode
+        {
+            MASTER,
+            SLAVE,
+        };
+
+        enum class Direction
+        {
+            TWO_LINES,
+            TWO_LINES_TX_ONLY,
+            TWO_LINES_RX_ONLY,
+            ONE_LINE,
+        };
+
+        enum class ClockPolarity
+        {
+            LOW,
+            HIGH,
+        };
+
+        enum class ClockPhase
+        {
+            ONE_EDGE,
+            TWO_EDGE,
+        };
+
+        enum class NSS
+        {
+            SOFT,
+            HARD_INPUT,
+            HARD_OUTPUT,
+        };
+
+        enum class BaudPrescaler
+        {
+            PS_2,
+            PS_4,
+            PS_8,
+            PS_16,
+            PS_32,
+            PS_64,
+            PS_128,
+            PS_256,
+        };
+
+        struct
+        {
+            dsy_gpio_pin sclk; /**< & */
+            dsy_gpio_pin miso; /**< & */
+            dsy_gpio_pin mosi; /**< & */
+            dsy_gpio_pin nss;  /**< & */
+        } pin_config;
+
+        Peripheral    periph;
+        Mode          mode;
+        Direction     direction;
+        unsigned long datasize;
+        ClockPolarity clock_polarity;
+        ClockPhase    clock_phase;
+        NSS           nss;
+        BaudPrescaler baud_prescaler;
+    };
+
+    SpiHandle() : pimpl_(nullptr) {}
+    SpiHandle(const SpiHandle& other) = default;
+    SpiHandle& operator=(const SpiHandle& other) = default;
+
+    /** Return values for Spi functions. */
+    enum class Result
+    {
+        OK, /**< & */
+        ERR /**< & */
+    };
 
     /** Initializes handler */
-    void Init();
+    Result Init(const Config& config);
+
+    /** Returns the current config. */
+    const Config& GetConfig() const;
 
     /** Blocking transmit 
     \param *buff input buffer
     \param size  buffer size
     */
-    void BlockingTransmit(uint8_t *buff, size_t size);
+    Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout = 100);
+
+    /** Polling Receive
+    \param *buff input buffer
+    \param size  buffer size
+    \param timeout How long to timeout for
+    \return Whether the receive was successful or not
+    */
+    Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
+
+    /** \return the result of HAL_SPI_GetError() to the user. */
+    int CheckError();
+
+    class Impl; /**< SPI implementation */
 
   private:
+    Impl* pimpl_;
 };
 
 
