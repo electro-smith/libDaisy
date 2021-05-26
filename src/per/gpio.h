@@ -2,42 +2,63 @@
 #ifndef DSY_GPIO_H
 #define DSY_GPIO_H
 #include "daisy_core.h"
-#ifdef __cplusplus
-extern "C"
+
+namespace daisy
 {
-#endif
 
-    /** General Purpose IO driver */
+/** General Purpose IO driver */
+class GpioHandle{
+    public:
 
-    /** @addtogroup other
-    @{
-    */
+    struct Config{
+        /** Which port the GPIO is on */
+        typedef enum
+        {
+            DSY_GPIOA, /**< & */
+            DSY_GPIOB, /**< & */
+            DSY_GPIOC, /**< & */
+            DSY_GPIOD, /**< & */
+            DSY_GPIOE, /**< & */
+            DSY_GPIOF, /**< & */
+            DSY_GPIOG, /**< & */
+            DSY_GPIOH, /**< & */
+            DSY_GPIOI, /**< & */
+            DSY_GPIOJ, /**< & */
+            DSY_GPIOK, /**< & */
+            DSY_GPIOX, /** This is a non-existant port for unsupported bits of hardware. */
+            DSY_GPIO_LAST, /** Final enum member */
+        } dsy_gpio_port;
 
-    /** Sets the mode of the GPIO */
-    typedef enum
-    {
-        DSY_GPIO_MODE_INPUT,     /**< & */
-        DSY_GPIO_MODE_OUTPUT_PP, /**< Push-Pull */
-        DSY_GPIO_MODE_OUTPUT_OD, /**< Open-Drain */
-        DSY_GPIO_MODE_ANALOG,    /**< & */
-        DSY_GPIO_MODE_LAST,      /**< & */
-    } dsy_gpio_mode;
+        /** Sets the mode of the GPIO */
+        typedef enum
+        {
+            DSY_GPIO_MODE_INPUT,     /**< & */
+            DSY_GPIO_MODE_OUTPUT_PP, /**< Push-Pull */
+            DSY_GPIO_MODE_OUTPUT_OD, /**< Open-Drain */
+            DSY_GPIO_MODE_ANALOG,    /**< & */
+            DSY_GPIO_MODE_LAST,      /**< & */
+        } dsy_gpio_mode;
 
-    /** Configures whether an internal Pull up or Pull down resistor is used */
-    typedef enum
-    {
-        DSY_GPIO_NOPULL,   /**< & */
-        DSY_GPIO_PULLUP,   /**< & */
-        DSY_GPIO_PULLDOWN, /**< & */
-    } dsy_gpio_pull;
+        /** Configures whether an internal Pull up or Pull down resistor is used */
+        typedef enum
+        {
+            DSY_GPIO_NOPULL,   /**< & */
+            DSY_GPIO_PULLUP,   /**< & */
+            DSY_GPIO_PULLDOWN, /**< & */
+        } dsy_gpio_pull;
 
-    /** Struct for holding the pin, and configuration */
-    typedef struct
-    {
-        dsy_gpio_pin  pin;  /**< & */
+        uint8_t pin; /**< 0 - 15 */
+        dsy_gpio_port  port;  /**< & */
         dsy_gpio_mode mode; /**< & */
-        dsy_gpio_pull pull; /**< & */
-    } dsy_gpio;
+        dsy_gpio_pull pull; /**< & */    
+    };
+
+    /** Return Values for the DacHandle class */
+    enum class Result
+    {
+        OK,
+        ERR,
+    };
 
     /** Initializes the gpio with the settings configured. 
     \param *p Pin pointer
@@ -68,9 +89,7 @@ extern "C"
      */
     void dsy_gpio_toggle(const dsy_gpio *p);
 
-#ifdef __cplusplus
+    private:
+        Config config_;
 }
-#endif
-
-#endif
-/** @} */
+} // namespace daisy
