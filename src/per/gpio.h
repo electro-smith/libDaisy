@@ -5,6 +5,50 @@
 
 namespace daisy
 {
+class Pin
+{
+  public:
+    /** Enums and a simple struct for defining a hardware pin on the MCU
+        These correlate with the stm32 datasheet, and are used to configure
+        the hardware.
+        */
+    enum class Port
+    {
+        DSY_GPIOA, /**< & */
+        DSY_GPIOB, /**< & */
+        DSY_GPIOC, /**< & */
+        DSY_GPIOD, /**< & */
+        DSY_GPIOE, /**< & */
+        DSY_GPIOF, /**< & */
+        DSY_GPIOG, /**< & */
+        DSY_GPIOH, /**< & */
+        DSY_GPIOI, /**< & */
+        DSY_GPIOJ, /**< & */
+        DSY_GPIOK, /**< & */
+        DSY_GPIOX, /** This is a non-existant port for unsupported bits of hardware. */
+        DSY_GPIO_LAST, /** Final enum member */
+    };
+
+    /** Initialize the class 
+         * \param port GPIO port to use
+         * \param pin pin to use, 0-15
+        */
+    void Init(Port port, uint8_t pin);
+
+    //allow equality operator to be used, replaces pin_cmp
+    bool operator==(Pin &rhs)
+    {
+        return (rhs.GetPin() == pin_) && (rhs.GetPort() == port_);
+    }
+
+    inline Port    GetPort() { return port_; }
+    inline uint8_t GetPin() { return pin_; }
+
+  private:
+    Port    port_;
+    uint8_t pin_;
+};
+
 /** General Purpose IO driver */
 class GPIO
 {
@@ -43,10 +87,10 @@ class GPIO
             speed = Speed::LOW;
         }
 
-        Mode         mode; /**< & */
-        Pull         pull; /**< & */
-        Speed        speed;
-        dsy_gpio_pin pin; /**< & */
+        Mode  mode; /**< & */
+        Pull  pull; /**< & */
+        Speed speed;
+        Pin   pin;
     };
 
     /** Initializes the gpio with the settings configured. 
@@ -75,7 +119,7 @@ class GPIO
     void Toggle();
 
   private:
-    Config config_;
+    Pin pin_;
 };
 
 } // namespace daisy

@@ -43,18 +43,18 @@ const static uint16_t gpio_hal_pin_map[16] = {
 
 // GPIO FUNCTIONS
 
-GPIO_TypeDef* dsy_hal_map_get_port(const dsy_gpio_pin* p)
+GPIO_TypeDef* dsy_hal_map_get_port(const Pin pin)
 {
-    return (GPIO_TypeDef*)gpio_hal_port_map[p->port];
+    return (GPIO_TypeDef*)gpio_hal_port_map[pin.GetPort()];
 }
-uint16_t dsy_hal_map_get_pin(const dsy_gpio_pin* p)
+uint16_t dsy_hal_map_get_pin(const Pin pin)
 {
-    return (uint16_t)gpio_hal_pin_map[p->pin];
+    return (uint16_t)gpio_hal_pin_map[pin.GetPin()];
 }
 
-void dsy_hal_map_gpio_clk_enable(dsy_gpio_port port)
+void dsy_hal_map_gpio_clk_enable(const Pin pin)
 {
-    switch(port)
+    switch(pin.GetPort())
     {
         case DSY_GPIOA: __HAL_RCC_GPIOA_CLK_ENABLE(); return;
         case DSY_GPIOB: __HAL_RCC_GPIOB_CLK_ENABLE(); return;
