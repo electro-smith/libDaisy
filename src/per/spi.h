@@ -125,7 +125,7 @@ class SpiHandle
     \param timeout How long to timeout for
     \return Whether the receive was successful or not
     */
-    Result PollReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
+    Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
 
     /** \return the result of HAL_SPI_GetError() to the user. */
     int CheckError();

@@ -25,7 +25,7 @@ class SpiHandle::Impl
     int                      CheckError();
 
     Result BlockingTransmit(uint8_t* buff, size_t size);
-    Result PollReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
+    Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
 
     Result InitPins();
     Result DeInitPins();
@@ -215,8 +215,9 @@ SpiHandle::Result SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size)
     return SpiHandle::Result::OK;
 }
 
-SpiHandle::Result
-SpiHandle::Impl::PollReceive(uint8_t* buffer, uint16_t size, uint32_t timeout)
+SpiHandle::Result SpiHandle::Impl::BlockingReceive(uint8_t* buffer,
+                                                   uint16_t size,
+                                                   uint32_t timeout)
 {
     if(HAL_SPI_Receive(&hspi_, buffer, size, timeout) != HAL_OK)
     {
@@ -577,7 +578,7 @@ SpiHandle::Result SpiHandle::BlockingTransmit(uint8_t* buff, size_t size)
 }
 
 SpiHandle::Result
-SpiHandle::PollReceive(uint8_t* buffer, uint16_t size, uint32_t timeout)
+SpiHandle::BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout)
 {
-    return pimpl_->PollReceive(buffer, size, timeout);
+    return pimpl_->BlockingReceive(buffer, size, timeout);
 }
