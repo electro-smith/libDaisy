@@ -17,6 +17,25 @@ namespace daisy
     @{ 
 */
 
+class MidiUartTransport
+{
+  public:
+    MidiUartTransport() {}
+    ~MidiUartTransport() {}
+
+    inline void    Init(UartHandler::Config config) { uart_.Init(config); }
+    inline void    StartRx() { uart_.StartRx(); }
+    inline size_t  Readable() { return uart_.Readable(); }
+    inline uint8_t Rx() { return uart_.PopRx(); }
+    inline bool    RxActive() { return uart_.RxActive(); }
+    inline void    FlushRx() { uart_.FlushRx(); }
+    inline void    Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
+
+  private:
+    UartHandler uart_;
+};
+
+
 /** 
     @brief Simple MIDI Handler \n 
     Parses bytes from an input into valid MidiEvents. \n 
@@ -24,36 +43,23 @@ namespace daisy
     @author shensley
     @date March 2020
 */
+template <typename Transport>
 class MidiHandler
 {
   public:
     MidiHandler() {}
     ~MidiHandler() {}
-    /** Input and Output can be configured separately
-    Multiple Input modes can be selected by OR'ing the values.
-    */
-    enum MidiInputMode
-    {
-        INPUT_MODE_NONE    = 0x00, /**< & */
-        INPUT_MODE_UART1   = 0x01, /**< & */
-        INPUT_MODE_USB_INT = 0x02, /**< & */
-        INPUT_MODE_USB_EXT = 0x04, /**< & */
-    };
-    /** Output mode */
-    enum MidiOutputMode
-    {
-        OUTPUT_MODE_NONE    = 0x00, /**< & */
-        OUTPUT_MODE_UART1   = 0x01, /**< & */
-        OUTPUT_MODE_USB_INT = 0x02, /**< & */
-        OUTPUT_MODE_USB_EXT = 0x04, /**< & */
-    };
 
+    struct Config
+    {
+        typename Transport::Config transport_config;
+    };
 
     /** Initializes the MidiHandler 
     \param in_mode Input mode
     \param out_mode Output mode
      */
-    void Init(MidiInputMode in_mode, MidiOutputMode out_mode);
+    void Init(Config config);
 
     /** Starts listening on the selected input mode(s). MidiEvent Queue will begin to fill, and can be checked with */
     void StartReceive();
@@ -93,18 +99,19 @@ class MidiHandler
         ParserHasData0,
         ParserSysEx,
     };
-    MidiInputMode              in_mode_;
-    MidiOutputMode             out_mode_;
     UartHandler                uart_;
     ParserState                pstate_;
     MidiEvent                  incoming_message_;
     RingBuffer<MidiEvent, 256> event_q_;
     uint32_t                   last_read_; // time of last byte
     MidiMessageType            running_status_;
+    Config                     config_;
 
     void ClearSysExBuffer(MidiEvent* event);
 };
 
 /** @} */
+
+using MidiUartHandler = MidiHandler<MidiUartTransport>;
 } // namespace daisy
 #endif

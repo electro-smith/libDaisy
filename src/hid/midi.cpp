@@ -19,21 +19,11 @@ const uint8_t kSystemRealTimeMask = 0x07;
 // TODO:
 // - provide an input interface so USB or UART data can be passed in.
 //     this could even bue as simple as a buffer/new flag.
-void MidiHandler::Init(MidiInputMode in_mode, MidiOutputMode out_mode)
+void MidiHandler::Init(MidiHandler::Config config)
 {
-    in_mode_  = in_mode;
-    out_mode_ = out_mode;
+    config_ = config;
 
-    UartHandler::Config config;
-    config.baudrate      = 31250;
-    config.periph        = UartHandler::Config::Peripheral::USART_1;
-    config.stopbits      = UartHandler::Config::StopBits::BITS_1;
-    config.parity        = UartHandler::Config::Parity::NONE;
-    config.mode          = UartHandler::Config::Mode::TX_RX;
-    config.wordlength    = UartHandler::Config::WordLength::BITS_8;
-    config.pin_config.rx = {DSY_GPIOB, 7};
-    config.pin_config.tx = {DSY_GPIOB, 6};
-    uart_.Init(config);
+    Transport.Init(config_.transport_config);
 
     event_q_.Init();
     incoming_message_.type = MessageLast;
@@ -42,34 +32,29 @@ void MidiHandler::Init(MidiInputMode in_mode, MidiOutputMode out_mode)
 
 void MidiHandler::StartReceive()
 {
-    if(in_mode_ & INPUT_MODE_UART1)
-    {
-        uart_.StartRx();
-    }
+    Transport.StartRx();
 }
 
 void MidiHandler::Listen()
 {
     uint32_t now;
     now = System::GetNow();
-    if(in_mode_ & INPUT_MODE_UART1)
+    while(Transport.Readable())
     {
-        while(uart_.Readable())
-        {
-            last_read_ = now;
-            Parse(uart_.PopRx());
-        }
-
-        // In case of UART Error, (particularly
-        //  overrun error), UART disables itself.
-        // Flush the buff, and restart.
-        if(!uart_.RxActive())
-        {
-            pstate_ = ParserEmpty;
-            uart_.FlushRx();
-            StartReceive();
-        }
+        last_read_ = now;
+        Parse(Transport.Rx());
     }
+
+    // In case of UART Error, (particularly
+    //  overrun error), UART disables itself.
+    // Flush the buff, and restart.
+    if(!Transport.RxActive())
+    {
+        pstate_ = ParserEmpty;
+        Transport.FlushRx();
+        StartReceive();
+    }
+}
 }
 
 
@@ -204,8 +189,5 @@ void MidiHandler::Parse(uint8_t byte)
 
 void MidiHandler::SendMessage(uint8_t *bytes, size_t size)
 {
-    if(out_mode_ == OUTPUT_MODE_UART1)
-    {
-        uart_.PollTx(bytes, size);
-    }
+    Transport.Tx(bytes, size);
 }
