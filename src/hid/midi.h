@@ -216,8 +216,8 @@ class MidiTestTransport
         0x40,
         0x40, // Song Position Pointer, value 8256
         0xf2,
-        0x77,
-        0x77, // Song Position Pointer, value 16383
+        0x7f,
+        0x7f, // Song Position Pointer, value 16383
 
         0xf3,
         0x00, // Song Select, value 0

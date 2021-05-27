@@ -313,7 +313,7 @@ struct MidiEvent
     SongPositionPointerEvent AsSongPositionPointer()
     {
         SongPositionPointerEvent m;
-        m.position = ((uint16_t)data[1] << 7) + (data[0] - 8192);
+        m.position = ((uint16_t)data[1] << 7) | data[0];
         return m;
     }
     SongSelectEvent AsSongSelect()
