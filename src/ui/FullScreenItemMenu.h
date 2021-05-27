@@ -58,5 +58,65 @@ class FullScreenItemMenu : public AbstractMenu
 
   private:
     uint16_t canvasIdToDrawTo_ = UI::invalidCanvasId;
+
+    //////////////////////////////////////////////////////////////////////
+    // Drawing routines
+    //////////////////////////////////////////////////////////////////////
+    virtual int  GetTopRowHeight(int displayHeight) const;
+    virtual void DrawTextItem(OneBitGraphicsDisplay& display,
+                              bool                   isVertical,
+                              uint16_t               selectedItemIdx,
+                              uint16_t               numItems,
+                              const char*            itemText) const;
+    virtual void DrawCheckboxItem(OneBitGraphicsDisplay& display,
+                                  bool                   isVertical,
+                                  uint16_t               selectedItemIdx,
+                                  uint16_t               numItems,
+                                  const char*            itemText,
+                                  const bool& isCheckboxTicked) const;
+    virtual void DrawValueItem(OneBitGraphicsDisplay& display,
+                               bool                   isVertical,
+                               uint16_t               selectedItemIdx,
+                               uint16_t               numItems,
+                               const char*            itemText,
+                               const MappedValue&     value,
+                               bool                   isEditing) const;
+    virtual void DrawOpenUiPageItem(OneBitGraphicsDisplay& display,
+                                    bool                   isVertical,
+                                    uint16_t               selectedItemIdx,
+                                    uint16_t               numItems,
+                                    const char*            itemText) const;
+
+    virtual void      DrawCloseMenuItem(OneBitGraphicsDisplay& display,
+                                        bool                   isVertical,
+                                        uint16_t               selectedItemIdx,
+                                        uint16_t               numItems,
+                                        const char*            itemText) const;
+    virtual void      DrawTopRow(OneBitGraphicsDisplay& display,
+                                 bool                   isVertical,
+                                 int                    currentIndex,
+                                 int                    numItemsTotal,
+                                 const char*            text,
+                                 Rectangle              rect,
+                                 bool                   isSelected) const;
+    virtual Rectangle DrawUDArrowsAndGetRemRect(OneBitGraphicsDisplay& display,
+                                                Rectangle topRowRect,
+                                                bool      upAvailable,
+                                                bool      downAvailable) const;
+    virtual Rectangle DrawLRArrowsAndGetRemRect(OneBitGraphicsDisplay& display,
+                                                Rectangle topRowRect,
+                                                bool      leftAvailable,
+                                                bool      rightAvailable) const;
+
+    virtual void    DrawValueText(OneBitGraphicsDisplay& display,
+                                  bool                   isVertical,
+                                  const char*            text,
+                                  Rectangle              rect,
+                                  bool                   isBeingEdited) const;
+    virtual FontDef GetValueFont(const char*      textToDraw,
+                                 const Rectangle& availableSpace) const;
+
+    virtual FontDef GetNameFont(const char*      textToDraw,
+                                const Rectangle& availableSpace) const;
 };
 } // namespace daisy
