@@ -81,6 +81,7 @@ void DaisyPod::Init(bool boost)
     InitEncoder();
     InitLeds();
     InitKnobs();
+    InitMidi();
     SetAudioBlockSize(48);
 }
 
