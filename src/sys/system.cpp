@@ -360,6 +360,11 @@ uint32_t System::GetPClk1Freq()
     return HAL_RCC_GetPCLK1Freq();
 }
 
+uint32_t System::GetTickFreq()
+{
+    return HAL_RCC_GetPCLK1Freq() * 2;
+}
+
 uint32_t System::GetPClk2Freq()
 {
     return HAL_RCC_GetPCLK2Freq();
