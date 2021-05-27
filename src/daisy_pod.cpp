@@ -260,3 +260,9 @@ void DaisyPod::InitKnobs()
         knobs[i]->Init(seed.adc.GetPtr(i), seed.AudioCallbackRate());
     }
 }
+void DaisyPod::InitMidi()
+{
+    MidiHandler<MidiUartTransport>::Config midi_config;
+    midi_config.transport_config.Default();
+    midi.Init(midi_config);
+}
