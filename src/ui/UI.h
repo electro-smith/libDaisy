@@ -65,7 +65,7 @@ class OneBitGraphicsLookAndFeel;
 class UiPage
 {
   public:
-    UiPage() : parent_(nullptr), lookAndFeel_(nullptr) {}
+    UiPage() : parent_(nullptr) {}
 
     virtual ~UiPage() {}
 
@@ -315,19 +315,6 @@ class UiPage
      */
     virtual void Draw(const UiCanvasDescriptor& canvas) = 0;
 
-    /** Changes the OneBitGraphicsLookAndFeel that should be used for this UiPage.
-     *  Pass nullptr to use the OneBitGraphicsLookAndFeel of the parent UI.
-     */
-    void SetOneBitGraphicsLookAndFeel(OneBitGraphicsLookAndFeel* lookAndFeel);
-
-    /** Returns the OneBitGraphicsLookAndFeel that should be used by this UiPage. 
-     *  If this UiPage has a unique LookAndFeel assigned to it, this function will
-     *  return that. Otherwise it will return the LookAndFeel of the UI it's currently
-     *  displayed on. If it's not actually displayed on a UI either, this will return
-     *  a default implementation.
-    */
-    const OneBitGraphicsLookAndFeel& GetOneBitGraphicsLookAndFeel() const;
-
     /** Returns a reference to the parent UI object, or nullptr if not added to any UI at the moment. */
     UI* GetParentUI() { return parent_; }
     /** Returns a reference to the parent UI object, or nullptr if not added to any UI at the moment. */
@@ -335,8 +322,7 @@ class UiPage
 
   private:
     friend class UI;
-    UI*                        parent_;
-    OneBitGraphicsLookAndFeel* lookAndFeel_;
+    UI* parent_;
 };
 
 /** @brief A generic UI system
@@ -445,22 +431,6 @@ class UI
         return specialControlIds_;
     }
 
-    /** Changes the OneBitGraphicsLookAndFeel that should be used on this UI.
-     *  Pass nullptr to reset this to a default implementation.
-     *  Please note that individual UiPages may have a unique
-     *  OneBitGraphicsLookAndFeel assigned to them.
-     */
-    void SetOneBitGraphicsLookAndFeel(OneBitGraphicsLookAndFeel* lookAndFeel);
-
-    /** Returns the OneBitGraphicsLookAndFeel that's currently in use.
-     *  Please note that individual UiPages may have a unique
-     *  OneBitGraphicsLookAndFeel assigned to them.
-     */
-    const OneBitGraphicsLookAndFeel& GetOneBitGraphicsLookAndFeel() const
-    {
-        return *lookAndFeel_;
-    }
-
   private:
     bool                                       isMuted_;
     bool                                       queueEvents_;
@@ -472,7 +442,6 @@ class UI
     UiEventQueue*     eventQueue_;
     SpecialControlIds specialControlIds_;
     uint16_t          primaryOneBitGraphicsDisplayId_ = invalidCanvasId;
-    OneBitGraphicsLookAndFeel* lookAndFeel_           = nullptr;
 
     // internal
     void RemovePage(UiPage* page);
@@ -486,6 +455,3 @@ class UI
 };
 
 } // namespace daisy
-
-// included down here so that UI and UiPage are fully defined before we include this
-#include "ui/lookAndFeel/LookAndFeel.h"

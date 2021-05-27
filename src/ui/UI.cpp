@@ -3,28 +3,10 @@
 
 namespace daisy
 {
-OneBitGraphicsLookAndFeel defaultLookAndFeel;
-
 void UiPage::Close()
 {
     if(parent_ != nullptr)
         parent_->ClosePage(*this);
-}
-
-void UiPage::SetOneBitGraphicsLookAndFeel(
-    OneBitGraphicsLookAndFeel* lookAndFeel)
-{
-    lookAndFeel_ = lookAndFeel;
-}
-
-const OneBitGraphicsLookAndFeel& UiPage::GetOneBitGraphicsLookAndFeel() const
-{
-    if(lookAndFeel_)
-        return *lookAndFeel_;
-    else if(parent_)
-        return parent_->GetOneBitGraphicsLookAndFeel();
-    else
-        return defaultLookAndFeel;
 }
 
 // =========================================================================
@@ -44,7 +26,6 @@ void UI::Init(UiEventQueue&                             inputQueue,
     specialControlIds_              = specialControlIds;
     canvases_                       = decltype(canvases_)(canvases);
     primaryOneBitGraphicsDisplayId_ = primaryOneBitGraphicsDisplayId;
-    lookAndFeel_                    = &defaultLookAndFeel;
 
     for(int i = 0; i < kMaxNumCanvases; i++)
         lastUpdateTimes_[i] = 0;
@@ -346,14 +327,6 @@ void UI::ForwardToButtonHandler(const uint16_t buttonID,
                 break;
         }
     }
-}
-
-void UI::SetOneBitGraphicsLookAndFeel(OneBitGraphicsLookAndFeel* lookAndFeel)
-{
-    if(lookAndFeel)
-        lookAndFeel_ = lookAndFeel;
-    else
-        lookAndFeel_ = &defaultLookAndFeel;
 }
 
 } // namespace daisy
