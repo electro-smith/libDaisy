@@ -368,7 +368,7 @@ class MidiHandler
                         {
                             incoming_message_.channel = 0;
                             //system real time = 1111 1xxx
-                            if((byte & 0x08) > 0)
+                            if(byte & 0x08)
                             {
                                 incoming_message_.type = SystemRealTime;
                                 running_status_        = SystemRealTime;
