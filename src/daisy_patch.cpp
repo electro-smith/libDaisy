@@ -251,9 +251,7 @@ void DaisyPatch::InitDisplay()
 
 void DaisyPatch::InitMidi()
 {
-    MidiHandler<MidiUartTransport>::Config midi_config;
-    // midi_config.transport_config.Default();
-
+    MidiUartHandler::Config midi_config;
     midi.Init(midi_config);
 }
 

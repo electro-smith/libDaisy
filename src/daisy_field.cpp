@@ -152,8 +152,7 @@ void DaisyField::Init(bool boost)
     dsy_gpio_init(&gate_out);
 
     //midi
-    MidiHandler<MidiUartTransport>::Config midi_config;
-    midi_config.transport_config.Default();
+    MidiUartHandler::Config midi_config;
     midi.Init(midi_config);
 
     DacHandle::Config cfg;

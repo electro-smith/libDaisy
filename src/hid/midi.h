@@ -23,30 +23,45 @@ class MidiUartTransport
     MidiUartTransport() {}
     ~MidiUartTransport() {}
 
-    inline void    Init(UartHandler::Config config) { uart_.Init(config); }
+    struct Config
+    {
+        UartHandler::Config::Peripheral periph;
+        dsy_gpio_pin                    rx;
+        dsy_gpio_pin                    tx;
+
+        Config()
+        {
+            periph = UartHandler::Config::Peripheral::USART_1;
+            rx     = {DSY_GPIOB, 7};
+            tx     = {DSY_GPIOB, 6};
+        }
+    };
+
+    inline void Init(Config config)
+    {
+        UartHandler::Config uart_config;
+
+        //defaults
+        uart_config.baudrate   = 31250;
+        uart_config.stopbits   = UartHandler::Config::StopBits::BITS_1;
+        uart_config.parity     = UartHandler::Config::Parity::NONE;
+        uart_config.mode       = UartHandler::Config::Mode::TX_RX;
+        uart_config.wordlength = UartHandler::Config::WordLength::BITS_8;
+
+        //user settings
+        uart_config.periph        = config.periph;
+        uart_config.pin_config.rx = config.rx;
+        uart_config.pin_config.tx = config.tx;
+
+        uart_.Init(uart_config);
+    }
+
     inline void    StartRx() { uart_.StartRx(); }
     inline size_t  Readable() { return uart_.Readable(); }
     inline uint8_t Rx() { return uart_.PopRx(); }
     inline bool    RxActive() { return uart_.RxActive(); }
     inline void    FlushRx() { uart_.FlushRx(); }
     inline void    Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
-
-    struct Config
-    {
-        UartHandler::Config periph_config;
-
-        void Default()
-        {
-            periph_config.baudrate   = 31250;
-            periph_config.periph     = UartHandler::Config::Peripheral::USART_1;
-            periph_config.stopbits   = UartHandler::Config::StopBits::BITS_1;
-            periph_config.parity     = UartHandler::Config::Parity::NONE;
-            periph_config.mode       = UartHandler::Config::Mode::TX_RX;
-            periph_config.wordlength = UartHandler::Config::WordLength::BITS_8;
-            periph_config.pin_config.rx = {DSY_GPIOB, 7};
-            periph_config.pin_config.tx = {DSY_GPIOB, 6};
-        }
-    };
 
   private:
     UartHandler uart_;
@@ -66,7 +81,11 @@ class MidiTestTransport
     inline void   FlushRx() {}
     inline void   Tx(uint8_t* buff, size_t size) {}
 
-    inline void Init(int fake_config) { msg_idx_ = 0; }
+    struct Config
+    {
+    };
+
+    inline void Init(Config config) { msg_idx_ = 0; }
 
     inline uint8_t Rx()
     {
@@ -74,12 +93,6 @@ class MidiTestTransport
         msg_idx_++;
         return ret;
     }
-
-
-    struct Config
-    {
-        int periph_config; //does nothing
-    };
 
   private:
     int msg_idx_;
@@ -287,7 +300,7 @@ class MidiHandler
     {
         config_ = config;
 
-        transport_.Init(config_.transport_config.periph_config);
+        transport_.Init(config_.transport_config);
 
         event_q_.Init();
         incoming_message_.type = MessageLast;
