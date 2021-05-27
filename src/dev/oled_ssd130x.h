@@ -82,7 +82,22 @@ class SSD130x4WireSpiTransport
         pin_reset_.pin  = config.pin_config.reset;
         dsy_gpio_init(&pin_reset_);
         // Initialize SPI
-        spi_.Init();
+        SpiHandle::Config spi_config;
+        spi_config.periph    = SpiHandle::Config::Peripheral::SPI_1;
+        spi_config.mode      = SpiHandle::Config::Mode::MASTER;
+        spi_config.direction = SpiHandle::Config::Direction::TWO_LINES_TX_ONLY;
+        spi_config.datasize  = 8;
+        spi_config.clock_polarity = SpiHandle::Config::ClockPolarity::LOW;
+        spi_config.clock_phase    = SpiHandle::Config::ClockPhase::ONE_EDGE;
+        spi_config.nss            = SpiHandle::Config::NSS::HARD_OUTPUT;
+        spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_8;
+
+        spi_config.pin_config.sclk = {DSY_GPIOG, 11};
+        spi_config.pin_config.miso = {DSY_GPIOX, 0};
+        spi_config.pin_config.mosi = {DSY_GPIOB, 5};
+        spi_config.pin_config.nss  = {DSY_GPIOG, 10};
+
+        spi_.Init(spi_config);
 
         // Reset and Configure OLED.
         dsy_gpio_write(&pin_reset_, 0);
@@ -217,16 +232,8 @@ class SSD130xDriver
         transport_.SendCommand(0xAF); //--turn on oled panel
     };
 
-    size_t Width() { return width; };
-    size_t Height() { return height; };
-    size_t CurrentX() { return current_x_; };
-    size_t CurrentY() { return current_y_; };
-
-    void SetCursor(uint8_t x, uint8_t y)
-    {
-        current_x_ = x;
-        current_y_ = y;
-    }
+    size_t Width() const { return width; };
+    size_t Height() const { return height; };
 
     void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on)
     {
@@ -269,8 +276,6 @@ class SSD130xDriver
     };
 
   private:
-    uint16_t  current_x_;
-    uint16_t  current_y_;
     Transport transport_;
     uint8_t   buffer_[width * height / 8];
 };
