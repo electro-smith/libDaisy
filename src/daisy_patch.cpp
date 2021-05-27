@@ -251,8 +251,10 @@ void DaisyPatch::InitDisplay()
 
 void DaisyPatch::InitMidi()
 {
-    midi.Init(MidiHandler::MidiInputMode::INPUT_MODE_UART1,
-              MidiHandler::MidiOutputMode::OUTPUT_MODE_UART1);
+    MidiHandler<MidiUartTransport>::Config midi_config;
+    // midi_config.transport_config.Default();
+
+    midi.Init(midi_config);
 }
 
 void DaisyPatch::InitCvOutputs()
