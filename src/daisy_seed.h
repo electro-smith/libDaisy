@@ -140,7 +140,7 @@ class DaisySeed
     AdcHandle        adc;          /**< & */
     DacHandle        dac;
     UsbHandle        usb_handle; /**< & */
-    dsy_gpio         led, testpoint;
+    GPIO             led, testpoint;
     System           system;
 
   private:

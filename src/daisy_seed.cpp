@@ -7,50 +7,50 @@ extern "C"
 
 using namespace daisy;
 
-#define SEED_LED_PORT DSY_GPIOC
+#define SEED_LED_PORT Pin::Port::DSY_GPIOC
 #define SEED_LED_PIN 7
 
-#define SEED_TEST_POINT_PORT DSY_GPIOG
+#define SEED_TEST_POINT_PORT Pin::Port::DSY_GPIOG
 #define SEED_TEST_POINT_PIN 14
 
 #ifndef SEED_REV2
-const dsy_gpio_pin seedgpio[31] = {
+const Pin::pin_port seedgpio[31] = {
     // GPIO 1-8
     //{DSY_GPIOA, 8}, // removed on Rev4
-    {DSY_GPIOB, 12},
-    {DSY_GPIOC, 11},
-    {DSY_GPIOC, 10},
-    {DSY_GPIOC, 9},
-    {DSY_GPIOC, 8},
-    {DSY_GPIOD, 2},
-    {DSY_GPIOC, 12},
+    {Pin::Port::DSY_GPIOB, 12},
+    {Pin::Port::DSY_GPIOC, 11},
+    {Pin::Port::DSY_GPIOC, 10},
+    {Pin::Port::DSY_GPIOC, 9},
+    {Pin::Port::DSY_GPIOC, 8},
+    {Pin::Port::DSY_GPIOD, 2},
+    {Pin::Port::DSY_GPIOC, 12},
     // GPIO 9-16
-    {DSY_GPIOG, 10},
-    {DSY_GPIOG, 11},
-    {DSY_GPIOB, 4},
-    {DSY_GPIOB, 5},
-    {DSY_GPIOB, 8},
-    {DSY_GPIOB, 9},
-    {DSY_GPIOB, 6},
-    {DSY_GPIOB, 7},
+    {Pin::Port::DSY_GPIOG, 10},
+    {Pin::Port::DSY_GPIOG, 11},
+    {Pin::Port::DSY_GPIOB, 4},
+    {Pin::Port::DSY_GPIOB, 5},
+    {Pin::Port::DSY_GPIOB, 8},
+    {Pin::Port::DSY_GPIOB, 9},
+    {Pin::Port::DSY_GPIOB, 6},
+    {Pin::Port::DSY_GPIOB, 7},
     // GPIO 17-24
-    {DSY_GPIOC, 0},
-    {DSY_GPIOA, 3},
-    {DSY_GPIOB, 1},
-    {DSY_GPIOA, 7},
-    {DSY_GPIOA, 6},
-    {DSY_GPIOC, 1},
-    {DSY_GPIOC, 4},
-    {DSY_GPIOA, 5},
+    {Pin::Port::DSY_GPIOC, 0},
+    {Pin::Port::DSY_GPIOA, 3},
+    {Pin::Port::DSY_GPIOB, 1},
+    {Pin::Port::DSY_GPIOA, 7},
+    {Pin::Port::DSY_GPIOA, 6},
+    {Pin::Port::DSY_GPIOC, 1},
+    {Pin::Port::DSY_GPIOC, 4},
+    {Pin::Port::DSY_GPIOA, 5},
     // GPIO 17-24
-    {DSY_GPIOA, 4},
-    {DSY_GPIOA, 1},
-    {DSY_GPIOA, 0},
-    {DSY_GPIOD, 11},
-    {DSY_GPIOG, 9},
-    {DSY_GPIOA, 2},
-    {DSY_GPIOB, 14},
-    {DSY_GPIOB, 15},
+    {Pin::Port::DSY_GPIOA, 4},
+    {Pin::Port::DSY_GPIOA, 1},
+    {Pin::Port::DSY_GPIOA, 0},
+    {Pin::Port::DSY_GPIOD, 11},
+    {Pin::Port::DSY_GPIOG, 9},
+    {Pin::Port::DSY_GPIOA, 2},
+    {Pin::Port::DSY_GPIOB, 14},
+    {Pin::Port::DSY_GPIOB, 15},
 };
 #else
 const dsy_gpio_port seed_ports[32] = {
@@ -94,13 +94,17 @@ void DaisySeed::Configure()
     ConfigureSdram();
     ConfigureQspi();
     //ConfigureDac();
+
     // Configure the built-in GPIOs.
-    led.pin.port       = SEED_LED_PORT;
-    led.pin.pin        = SEED_LED_PIN;
-    led.mode           = DSY_GPIO_MODE_OUTPUT_PP;
-    testpoint.pin.port = SEED_TEST_POINT_PORT;
-    testpoint.pin.pin  = SEED_TEST_POINT_PIN;
-    testpoint.mode     = DSY_GPIO_MODE_OUTPUT_PP;
+    GPIO::Config gpio_config;
+    gpio_config.mode     = GPIO::Config::Mode : OUTPUT_PP;
+    gpio_config.pin.port = SEED_LED_PORT;
+    gpio_config.pin.pin  = SEED_LED_PIN;
+    led.Init(gpio_config);
+
+    gpio_config.pin  = SEED_TEST_POINT_PIN;
+    gpio_config.port = SEED_TEST_POINT_PORT;
+    testpoint.Init(gpio_config);
 }
 
 void DaisySeed::Init(bool boost)
@@ -112,8 +116,6 @@ void DaisySeed::Init(bool boost)
 
     dsy_sdram_init(&sdram_handle);
     dsy_qspi_init(&qspi_handle);
-    dsy_gpio_init(&led);
-    dsy_gpio_init(&testpoint);
     ConfigureAudio();
 
     callback_rate_ = AudioSampleRate() / AudioBlockSize();
@@ -124,9 +126,9 @@ void DaisySeed::Init(bool boost)
     //usb_handle.Init(UsbHandle::FS_INTERNAL);
 }
 
-dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
+Pin::pin_port DaisySeed::GetPin(uint8_t pin_idx)
 {
-    dsy_gpio_pin p;
+    pin_port p;
     pin_idx = pin_idx < 32 ? pin_idx : 0;
 #ifndef SEED_REV2
     p = seedgpio[pin_idx];
@@ -195,12 +197,12 @@ float DaisySeed::AudioCallbackRate() const
 
 void DaisySeed::SetLed(bool state)
 {
-    dsy_gpio_write(&led, state);
+    led.Write(state);
 }
 
 void DaisySeed::SetTestPoint(bool state)
 {
-    dsy_gpio_write(&testpoint, state);
+    testpoint.Write(state);
 }
 
 // Private Implementation
