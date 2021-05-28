@@ -86,8 +86,9 @@ class GPIO
             HIGH,   /**< & */
         };
 
-        void Default()
+        Config()
         {
+            //default setup is input
             mode  = Mode::INPUT;
             pull  = Pull::NOPULL;
             speed = Speed::LOW;
