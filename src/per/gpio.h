@@ -8,6 +8,9 @@ namespace daisy
 class Pin
 {
   public:
+    Pin() {}
+    ~Pin() {}
+
     /** Enums and a simple struct for defining a hardware pin on the MCU
         These correlate with the stm32 datasheet, and are used to configure
         the hardware.
@@ -53,6 +56,9 @@ class Pin
 class GPIO
 {
   public:
+    GPIO() {}
+    ~GPIO() {}
+
     struct Config
     {
         /** Sets the mode of the GPIO */
