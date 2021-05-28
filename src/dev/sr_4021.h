@@ -57,17 +57,17 @@ class ShiftRegister4021
         GPIO::Config gpio_config;
         gpio_config.mode = GPIO::Config::Mode::OUTPUT_PP;
         gpio_config.pull = GPIO::Config::Pull::NOPULL;
-        
-        gpio_config.pin  = cfg.clk;
+
+        gpio_config.pin = cfg.clk;
         clk_.Init(gpio_config);
 
-        gpio_config.pin  = cfg.latch;
+        gpio_config.pin = cfg.latch;
         latch_.Init(gpio_config);
 
         gpio_config.mode = GPIO::Config::Mode::INPUT;
         for(size_t i = 0; i < num_parallel; i++)
         {
-            gpio_config.pin  = cfg.data[i];
+            gpio_config.pin = cfg.data[i];
             data_[i].Init(gpio_config);
         }
 
@@ -115,9 +115,9 @@ class ShiftRegister4021
     static constexpr int kTotalStates = 8 * num_daisychained * num_parallel;
     Config               config_;
     bool                 states_[kTotalStates];
-    GPIO             clk_;
-    GPIO             latch_;
-    GPIO             data_[num_parallel];
+    GPIO                 clk_;
+    GPIO                 latch_;
+    GPIO                 data_[num_parallel];
 };
 
 } // namespace daisy
