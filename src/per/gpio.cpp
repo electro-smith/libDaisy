@@ -6,7 +6,12 @@ void Pin::Init(Pin::Port port, uint8_t pin)
 {
     port_ = port;
     pin_  = pin;
-    pin_  = pin_ > 15 ? 15 : pin_; // clamp at 15
+}
+
+void Pin::Init(Pin::pin_port pp)
+{
+    pp.pin_ = pp.pin_ > 15 ? 15 : pp.pin_; // clamp at 15
+    Init(pp.port, pp.pin);
 }
 
 void GPIO::Init(Config config)

@@ -5,9 +5,8 @@
 
 namespace daisy
 {
-class Pin
+struct Pin
 {
-  public:
     Pin() {}
     ~Pin() {}
 
@@ -32,11 +31,15 @@ class Pin
         DSY_GPIO_LAST, /** Final enum member */
     };
 
-    /** Initialize the class 
-         * \param port GPIO port to use
-         * \param pin pin to use, 0-15
-        */
-    void Init(Port port, uint8_t pin);
+    /** helps replace the old dsy_gpio_pin */
+    typedef struct
+    {
+        Port    port;
+        uint8_t pin;
+    } pin_port;
+
+    /** Helps with backwards compatability */
+    void Init(pin_port pp);
 
     //allow equality operator to be used, replaces pin_cmp
     bool operator==(Pin &rhs)
@@ -44,12 +47,8 @@ class Pin
         return (rhs.GetPin() == pin_) && (rhs.GetPort() == port_);
     }
 
-    inline Port    GetPort() { return port_; }
-    inline uint8_t GetPin() { return pin_; }
-
-  private:
-    Port    port_;
-    uint8_t pin_;
+    Port    port;
+    uint8_t pin;
 };
 
 /** General Purpose IO driver */
