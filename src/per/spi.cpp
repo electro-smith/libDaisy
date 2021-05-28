@@ -131,9 +131,9 @@ SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
     uint32_t nss;
     switch(config_.nss)
     {
-        case Config::NSS::SOFT: clock_phase = SPI_NSS_SOFT; break;
-        case Config::NSS::HARD_INPUT: clock_phase = SPI_NSS_HARD_INPUT; break;
-        case Config::NSS::HARD_OUTPUT: clock_phase = SPI_NSS_HARD_OUTPUT; break;
+        case Config::NSS::SOFT: nss = SPI_NSS_SOFT; break;
+        case Config::NSS::HARD_INPUT: nss = SPI_NSS_HARD_INPUT; break;
+        case Config::NSS::HARD_OUTPUT: nss = SPI_NSS_HARD_OUTPUT; break;
         default: return Result::ERR;
     }
 
