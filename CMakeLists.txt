@@ -42,7 +42,6 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/hid/gatein.cpp
     ${MODULE_DIR}/hid/led.cpp
     ${MODULE_DIR}/hid/midi.cpp
-    ${MODULE_DIR}/hid/oled_display.cpp
     ${MODULE_DIR}/hid/parameter.cpp
     ${MODULE_DIR}/hid/rgb_led.cpp
     ${MODULE_DIR}/hid/switch.cpp
@@ -212,13 +211,13 @@ set_target_properties(${TARGET} PROPERTIES
       $<$<COMPILE_LANGUAGE:CXX>:-Wno-register>
       )
 
-  target_compile_definitions(${TARGET} PUBLIC
-    CORE_CM7
-    STM32H750xx
-    STM32H750IB
-    ARM_MATH_CM7
-    flash_layout
-    HSE_VALUE=16000000
-    USE_HAL_DRIVER
-    USE_FULL_LL_DRIVER
-    )
+    #  target_compile_definitions(${TARGET} PUBLIC
+    #    CORE_CM7
+    #    STM32H750xx
+    #    STM32H750IB
+    #    ARM_MATH_CM7
+    #    flash_layout
+    #    HSE_VALUE=16000000
+    #    USE_HAL_DRIVER
+    #    USE_FULL_LL_DRIVER
+    #    )

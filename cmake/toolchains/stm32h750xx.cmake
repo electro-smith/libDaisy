@@ -33,6 +33,17 @@ set(CMAKE_C_FLAGS   "${OBJECT_GEN_FLAGS} -std=gnu99 " CACHE INTERNAL "C Compiler
 set(CMAKE_CXX_FLAGS "${OBJECT_GEN_FLAGS} " CACHE INTERNAL "C++ Compiler options")
 set(CMAKE_ASM_FLAGS "${OBJECT_GEN_FLAGS} -x assembler-with-cpp " CACHE INTERNAL "ASM Compiler options")
 
+add_compile_definitions(
+        CORE_CM7
+        STM32H750xx
+        STM32H750IB
+        ARM_MATH_CM7
+        flash_layout
+        HSE_VALUE=16000000
+        USE_HAL_DRIVER
+        USE_FULL_LL_DRIVER
+)
+
 
 # -Wl,--gc-sections     Perform the dead code elimination.
 # --specs=nano.specs    Link with newlib-nano.
