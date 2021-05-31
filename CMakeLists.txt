@@ -200,24 +200,13 @@ set_target_properties(${TARGET} PROPERTIES
   C_STANDARD_REQUIRED
   )
 
-  target_compile_options(${TARGET}
-      PUBLIC
-      -Wall
-      -Wno-attributes
-      -Wno-strict-aliasing
-      -Wno-maybe-uninitialized
-      -Wno-missing-attributes
-      -Wno-stringop-overflow
-      $<$<COMPILE_LANGUAGE:CXX>:-Wno-register>
-      )
-
-    #  target_compile_definitions(${TARGET} PUBLIC
-    #    CORE_CM7
-    #    STM32H750xx
-    #    STM32H750IB
-    #    ARM_MATH_CM7
-    #    flash_layout
-    #    HSE_VALUE=16000000
-    #    USE_HAL_DRIVER
-    #    USE_FULL_LL_DRIVER
-    #    )
+target_compile_options(${TARGET}
+  PUBLIC
+  -Wall
+  -Wno-attributes
+  -Wno-strict-aliasing
+  -Wno-maybe-uninitialized
+  -Wno-missing-attributes
+  -Wno-stringop-overflow
+  $<$<COMPILE_LANGUAGE:CXX>:-Wno-register>
+  )
