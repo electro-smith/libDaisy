@@ -199,14 +199,3 @@ set_target_properties(${TARGET} PROPERTIES
   C_STANDARD 11
   C_STANDARD_REQUIRED
   )
-
-target_compile_options(${TARGET}
-  PUBLIC
-  -Wall
-  -Wno-attributes
-  -Wno-strict-aliasing
-  -Wno-maybe-uninitialized
-  -Wno-missing-attributes
-  -Wno-stringop-overflow
-  $<$<COMPILE_LANGUAGE:CXX>:-Wno-register -Wno-volatile>
-  )
