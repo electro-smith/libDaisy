@@ -1,6 +1,6 @@
 add_subdirectory(${LIBDAISY_DIR} libdaisy)
-if (${DAISY_SP_DIR})
-  add_subdirectory(${DAISY_SP_DIR} DaisySP)
+if (${DAISYSP_DIR})
+  add_subdirectory(${DAISYSP_DIR} DaisySP)
   set(DAISYSP_LIB DaisySP)
 endif()
 
