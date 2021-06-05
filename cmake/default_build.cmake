@@ -1,5 +1,8 @@
 add_subdirectory(${LIBDAISY_DIR} libdaisy)
-add_subdirectory(${DAISY_SP_DIR} DaisySP)
+if (${DAISY_SP_DIR})
+  add_subdirectory(${DAISY_SP_DIR} DaisySP)
+  set(DAISYSP_LIB DaisySP)
+endif()
 
 set(LINKER_SCRIPT ${LIBDAISY_DIR}/core/STM32H750IB_flash.lds)
 
@@ -8,7 +11,7 @@ add_executable(${FIRMWARE_NAME} ${FIRMWARE_SOURCES})
 target_link_libraries(${FIRMWARE_NAME}
   PRIVATE
   daisy
-  DaisySP
+  ${DAISYSP_LIB}
   )
 
 set_target_properties(${FIRMWARE_NAME} PROPERTIES

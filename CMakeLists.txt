@@ -208,5 +208,5 @@ target_compile_options(${TARGET}
   -Wno-maybe-uninitialized
   -Wno-missing-attributes
   -Wno-stringop-overflow
-  $<$<COMPILE_LANGUAGE:CXX>:-Wno-register>
+  $<$<COMPILE_LANGUAGE:CXX>:-Wno-register -Wno-volatile>
   )
