@@ -191,7 +191,7 @@ LDSCRIPT = $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
 # libraries
 
 LIBS += -ldaisy -lc -lm -lnosys
-LIBDIR = -L$(LIBDAISY_DIR)/build 
+LIBDIR += -L$(LIBDAISY_DIR)/build
 #LIBDIR = -L./VisualGDB/Release
 
 ifdef DAISYSP_DIR
