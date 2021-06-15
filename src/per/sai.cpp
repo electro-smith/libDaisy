@@ -341,8 +341,8 @@ void SaiHandle::Impl::InitPins()
                            &config_.pin_config.sa,
                            &config_.pin_config.sb};
     // Special Case checks
-    dsy_gpio_pin sck_af_pin = {DSY_GPIOA, 2};
-    is_master               = (config_.a_sync == Config::Sync::MASTER
+    Pin sck_af_pin = {DSY_GPIOA, 2};
+    is_master      = (config_.a_sync == Config::Sync::MASTER
                  || config_.b_sync == Config::Sync::MASTER);
     // Generics
     GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
@@ -351,7 +351,7 @@ void SaiHandle::Impl::InitPins()
     for(size_t i = 0; i < 5; i++)
     {
         // Skip MCLK if not master.
-        if(dsy_pin_cmp(&config_.pin_config.mclk, cfg[i]) && !is_master)
+        if((&config_.pin_config.mclk == cfg[i]) && !is_master)
             continue;
 
         // Special case for SAI2-sck (should add a map for Alternate Functions at some point..)
@@ -361,9 +361,8 @@ void SaiHandle::Impl::InitPins()
                 GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
                 break;
             case Config::Peripheral::SAI_2:
-                GPIO_InitStruct.Alternate = dsy_pin_cmp(cfg[i], &sck_af_pin)
-                                                ? GPIO_AF8_SAI2
-                                                : GPIO_AF10_SAI2;
+                GPIO_InitStruct.Alternate
+                    = cfg[i] == &sck_af_pin ? GPIO_AF8_SAI2 : GPIO_AF10_SAI2;
                 break;
             default: break;
         }
