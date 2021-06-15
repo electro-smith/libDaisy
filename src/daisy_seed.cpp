@@ -14,43 +14,82 @@ using namespace daisy;
 #define SEED_TEST_POINT_PIN 14
 
 #ifndef SEED_REV2
-const Pin::pin_port seedgpio[31] = {
+const Pin::Port seedgpio_port[31] = {
     // GPIO 1-8
     //{DSY_GPIOA, 8}, // removed on Rev4
-    {Pin::Port::DSY_GPIOB, 12},
-    {Pin::Port::DSY_GPIOC, 11},
-    {Pin::Port::DSY_GPIOC, 10},
-    {Pin::Port::DSY_GPIOC, 9},
-    {Pin::Port::DSY_GPIOC, 8},
-    {Pin::Port::DSY_GPIOD, 2},
-    {Pin::Port::DSY_GPIOC, 12},
+    Pin::Port::DSY_GPIOB,
+    Pin::Port::DSY_GPIOC,
+    Pin::Port::DSY_GPIO,
+    Pin::Port::DSY_GPIO,
+    Pin::Port::DSY_GPIOC,
+    Pin::Port::DSY_GPIOD,
+    Pin::Port::DSY_GPIOC,
     // GPIO 9-16
-    {Pin::Port::DSY_GPIOG, 10},
-    {Pin::Port::DSY_GPIOG, 11},
-    {Pin::Port::DSY_GPIOB, 4},
-    {Pin::Port::DSY_GPIOB, 5},
-    {Pin::Port::DSY_GPIOB, 8},
-    {Pin::Port::DSY_GPIOB, 9},
-    {Pin::Port::DSY_GPIOB, 6},
-    {Pin::Port::DSY_GPIOB, 7},
+    {Pin::Port::DSY_GPIOG,
+     Pin::Port::DSY_GPIOG,
+     Pin::Port::DSY_GPIOB,
+     Pin::Port::DSY_GPIOB,
+     Pin::Port::DSY_GPIOB,
+     Pin::Port::DSY_GPIOB,
+     Pin::Port::DSY_GPIOB,
+     Pin::Port::DSY_GPIOB,
+     // GPIO 17-24
+     {
+         Pin::Port::DSY_GPIOC,
+         Pin::Port::DSY_GPIOA,
+         Pin::Port::DSY_GPIOB,
+         Pin::Port::DSY_GPIOA,
+         Pin::Port::DSY_GPIOA,
+         Pin::Port::DSY_GPIOC,
+         Pin::Port::DSY_GPIOC,
+         Pin::Port::DSY_GPIOA,
+         // GPIO 17-24
+         Pin::Port::DSY_GPIOA,
+         Pin::Port::DSY_GPIOA,
+         Pin::Port::DSY_GPIOA,
+         Pin::Port::DSY_GPIOD,
+         Pin::Port::DSY_GPIOG,
+         Pin::Port::DSY_GPIOA,
+         Pin::Port::DSY_GPIOB,
+         Pin::Port::DSY_GPIOB,
+     };
+const uint8_t seedgpio_pin[31] = {
+    // GPIO 1-8
+    //{DSY_GPIOA, 8}, // removed on Rev4
+    12,
+    11,
+    10,
+    9,
+    8,
+    2,
+    12,
+    // GPIO 9-16
+    10,
+    11,
+    4,
+    5,
+    8,
+    9,
+    6,
+    7,
     // GPIO 17-24
-    {Pin::Port::DSY_GPIOC, 0},
-    {Pin::Port::DSY_GPIOA, 3},
-    {Pin::Port::DSY_GPIOB, 1},
-    {Pin::Port::DSY_GPIOA, 7},
-    {Pin::Port::DSY_GPIOA, 6},
-    {Pin::Port::DSY_GPIOC, 1},
-    {Pin::Port::DSY_GPIOC, 4},
-    {Pin::Port::DSY_GPIOA, 5},
+    0,
+    3,
+    1,
+    7,
+    6,
+    1,
+    4,
+    5,
     // GPIO 17-24
-    {Pin::Port::DSY_GPIOA, 4},
-    {Pin::Port::DSY_GPIOA, 1},
-    {Pin::Port::DSY_GPIOA, 0},
-    {Pin::Port::DSY_GPIOD, 11},
-    {Pin::Port::DSY_GPIOG, 9},
-    {Pin::Port::DSY_GPIOA, 2},
-    {Pin::Port::DSY_GPIOB, 14},
-    {Pin::Port::DSY_GPIOB, 15},
+    4,
+    1,
+    0,
+    11,
+    9,
+    2,
+    14,
+    15,
 };
 #else
 const dsy_gpio_port seed_ports[32] = {
@@ -126,12 +165,13 @@ void DaisySeed::Init(bool boost)
     //usb_handle.Init(UsbHandle::FS_INTERNAL);
 }
 
-Pin::pin_port DaisySeed::GetPin(uint8_t pin_idx)
+Pin DaisySeed::GetPin(uint8_t pin_idx)
 {
-    pin_port p;
+    Pin p;
     pin_idx = pin_idx < 32 ? pin_idx : 0;
 #ifndef SEED_REV2
-    p = seedgpio[pin_idx];
+    p.port = seedgpio_port[pin_idx];
+    p.pin  = seedgpio_pin[pin_idx];
 #else
     p = {seed_ports[pin_idx], seed_pins[pin_idx]};
 #endif

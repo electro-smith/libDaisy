@@ -31,16 +31,6 @@ struct Pin
         DSY_GPIO_LAST, /** Final enum member */
     };
 
-    /** helps replace the old dsy_gpio_pin */
-    typedef struct
-    {
-        Port    port;
-        uint8_t pin;
-    } pin_port;
-
-    /** Helps with backwards compatability */
-    void Init(pin_port pp);
-
     //allow equality operator to be used, replaces pin_cmp
     bool operator==(Pin &rhs) { return (rhs.pin == pin) && (rhs.port == port); }
 
