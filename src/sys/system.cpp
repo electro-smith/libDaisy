@@ -1,3 +1,4 @@
+#ifndef UNIT_TEST // for unit tests, a dummy implementation is provided below
 #include <stm32h7xx_hal.h>
 #include "sys/system.h"
 #include "sys/dma.h"
@@ -360,6 +361,11 @@ uint32_t System::GetPClk1Freq()
     return HAL_RCC_GetPCLK1Freq();
 }
 
+uint32_t System::GetTickFreq()
+{
+    return HAL_RCC_GetPCLK1Freq() * 2;
+}
+
 uint32_t System::GetPClk2Freq()
 {
     return HAL_RCC_GetPCLK2Freq();
@@ -555,3 +561,10 @@ static void Error_Handler()
 //
 //    HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
 //}
+#else // ifndef UNIT_TEST
+
+#include "system.h"
+// this is part of the dummy version used in unit tests
+TestIsolator<daisy::System::SystemState> daisy::System::testIsolator_;
+
+#endif

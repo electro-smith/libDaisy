@@ -1,6 +1,8 @@
 #ifndef DSY_SYSTEM_H
 #define DSY_SYSTEM_H
 
+#ifndef UNIT_TEST // for unit tests, a dummy implementation is provided below
+
 #include <cstdint>
 #include "per/tim.h"
 
@@ -104,6 +106,9 @@ class System
      ** mode to allow firmware update. */
     static void ResetToBootloader();
 
+    /** Returns the tick rate in Hz with which GetTick() is incremented. */
+    static uint32_t GetTickFreq();
+
     /** Returns the Frequency of the system clock in Hz 
      ** This is the primary system clock that is used to generate
      ** AXI Peripheral, APB, and AHB clocks. */
@@ -145,7 +150,71 @@ class System
      ** Maybe this whole class should be static.. */
     static TimerHandle tim_;
 };
+} // namespace daisy
+
+#else // ifndef UNIT_TEST
+
+#include <cstdint>
+#include "../tests/TestIsolator.h"
+namespace daisy
+{
+/** This is a dummy implementation for use in unit tests.
+ *  In your test, you can set the current system time to
+ *  control the "flow of time" :-)
+ *  Only the time-related functions are added here. If
+ *  your tests need some of the other functions, feel
+ *  free to add them here as well.
+ * 
+ *  To decouple tests that are running in parallel, each
+ *  test can independently modify the current time.
+ */
+class System
+{
+  public:
+    static uint32_t GetNow()
+    {
+        return testIsolator_.GetStateForCurrentTest()->currentUs_ / 1000;
+    }
+    static uint32_t GetUs()
+    {
+        return testIsolator_.GetStateForCurrentTest()->currentUs_;
+    }
+    static uint32_t GetTick()
+    {
+        return testIsolator_.GetStateForCurrentTest()->currentTick_;
+    }
+    static uint32_t GetTickFreq()
+    {
+        return testIsolator_.GetStateForCurrentTest()->tickFreqHz_;
+    }
+
+    /** Sets the current "tick" value for the test that's currently running. */
+    static void SetTickForUnitTest(uint32_t tick)
+    {
+        testIsolator_.GetStateForCurrentTest()->currentTick_ = tick;
+    }
+    /** Sets the current microsecond value for the test that's currently running. */
+    static void SetUsForUnitTest(uint32_t us)
+    {
+        testIsolator_.GetStateForCurrentTest()->currentUs_ = us;
+    }
+    /** Sets the tick frequency for the test that's currently running. */
+    static void SetTickFreqForUnitTest(uint32_t freqInHz)
+    {
+        testIsolator_.GetStateForCurrentTest()->tickFreqHz_ = freqInHz;
+    }
+
+  private:
+    struct SystemState
+    {
+        uint32_t currentTick_ = 0;
+        uint32_t currentUs_   = 0;
+        uint32_t tickFreqHz_  = 0;
+    };
+    static TestIsolator<SystemState> testIsolator_;
+};
 
 } // namespace daisy
 
+#endif // ifndef UNIT_TEST
 #endif
