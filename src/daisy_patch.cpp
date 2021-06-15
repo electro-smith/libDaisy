@@ -286,9 +286,9 @@ void DaisyPatch::InitGates()
     dsy_gpio_init(&gate_output);
 
     // Gate Inputs
-    dsy_gpio_pin pin;
+    Pin pin;
     pin = seed.GetPin(PIN_GATE_IN_1);
-    gate_input[GATE_IN_1].Init(&pin);
+    gate_input[GATE_IN_1].Init(pin);
     pin = seed.GetPin(PIN_GATE_IN_2);
-    gate_input[GATE_IN_2].Init(&pin);
+    gate_input[GATE_IN_2].Init(pin);
 }

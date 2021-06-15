@@ -55,8 +55,8 @@ void DaisyVersio::Init(bool boost)
 
     // gate in and momentary switch
     tap.Init(seed.GetPin(PIN_SW), blockrate_);
-    dsy_gpio_pin gate_gpio = seed.GetPin(PIN_TRIG_IN);
-    gate.Init(&gate_gpio);
+    Pin gate_gpio = seed.GetPin(PIN_TRIG_IN);
+    gate.Init(gate_gpio);
 
 
     // 3-position switches

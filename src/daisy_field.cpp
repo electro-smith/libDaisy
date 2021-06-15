@@ -136,18 +136,18 @@ void DaisyField::Init(bool boost)
 
     I2CHandle::Config field_led_i2c_config;
     field_led_i2c_config.periph = I2CHandle::Config::Peripheral::I2C_1;
-    field_led_i2c_config.pin_config.scl.pin = 8;
+    field_led_i2c_config.pin_config.scl.pin  = 8;
     field_led_i2c_config.pin_config.scl.port = DSY_GPIOB;
-    field_led_i2c_config.pin_config.sda.pin = 9;
+    field_led_i2c_config.pin_config.sda.pin  = 9;
     field_led_i2c_config.pin_config.sda.port = DSY_GPIOB;
     field_led_i2c_config.speed = I2CHandle::Config::Speed::I2C_1MHZ;
-    field_led_i2c_config.mode = I2CHandle::Config::Mode::MASTER;
-    
+    field_led_i2c_config.mode  = I2CHandle::Config::Mode::MASTER;
+
     i2c.Init(field_led_i2c_config);
     led_driver.Init(i2c, addr, field_led_dma_buffer_a, field_led_dma_buffer_b);
 
     // Gate In
-    dsy_gpio_pin gate_in_pin;
+    Pin gate_in_pin;
     gate_in_pin = seed.GetPin(PIN_GATE_IN);
     gate_in.Init(&gate_in_pin);
     // Gate Out
