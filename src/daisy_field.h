@@ -218,10 +218,12 @@ class DaisyField
     Switch                                   sw[SW_LAST];
     AnalogControl                            knob[KNOB_LAST];
     AnalogControl                            cv[CV_LAST];
+    MidiUartHandler                          midi;
 
   private:
     /** Set all the HID callback rates any time a new callback rate is established */
     void SetHidUpdateRates();
+    void InitMidi();
 
     ShiftRegister4021<2> keyboard_sr_; /**< Two 4021s daisy-chained. */
     uint8_t              keyboard_state_[16];

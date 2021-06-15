@@ -81,6 +81,7 @@ void DaisyPod::Init(bool boost)
     InitEncoder();
     InitLeds();
     InitKnobs();
+    InitMidi();
     SetAudioBlockSize(48);
 }
 
@@ -259,4 +260,9 @@ void DaisyPod::InitKnobs()
     {
         knobs[i]->Init(seed.adc.GetPtr(i), seed.AudioCallbackRate());
     }
+}
+void DaisyPod::InitMidi()
+{
+    MidiUartHandler::Config midi_config;
+    midi.Init(midi_config);
 }

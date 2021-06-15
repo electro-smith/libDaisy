@@ -38,7 +38,6 @@ hid/ctrl \
 hid/encoder \
 hid/gatein \
 hid/led \
-hid/midi \
 hid/parameter \
 hid/rgb_led \
 hid/switch \
