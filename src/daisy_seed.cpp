@@ -136,13 +136,11 @@ void DaisySeed::Configure()
 
     // Configure the built-in GPIOs.
     GPIO::Config gpio_config;
-    gpio_config.mode     = GPIO::Config::Mode : OUTPUT_PP;
-    gpio_config.pin.port = SEED_LED_PORT;
-    gpio_config.pin.pin  = SEED_LED_PIN;
+    gpio_config.mode = GPIO::Config::Mode::OUTPUT_PP;
+    gpio_config.pin.Init(SEED_LED_PORT, SEED_LED_PIN);
     led.Init(gpio_config);
 
-    gpio_config.pin  = SEED_TEST_POINT_PIN;
-    gpio_config.port = SEED_TEST_POINT_PORT;
+    gpio_config.pin.Init(SEED_TEST_POINT_PORT, SEED_TEST_POINT_PIN);
     testpoint.Init(gpio_config);
 }
 
@@ -170,8 +168,7 @@ Pin DaisySeed::GetPin(uint8_t pin_idx)
     Pin p;
     pin_idx = pin_idx < 32 ? pin_idx : 0;
 #ifndef SEED_REV2
-    p.port = seedgpio_port[pin_idx];
-    p.pin  = seedgpio_pin[pin_idx];
+    p.Init(seedgpio_port[pin_idx], seedgpio_pin[pin_idx]);
 #else
     p = {seed_ports[pin_idx], seed_pins[pin_idx]};
 #endif
@@ -284,25 +281,25 @@ void DaisySeed::ConfigureAudio()
     // SAI1 -- Peripheral
     // Configure
     SaiHandle::Config sai_config;
-    sai_config.periph          = SaiHandle::Config::Peripheral::SAI_1;
-    sai_config.sr              = SaiHandle::Config::SampleRate::SAI_48KHZ;
-    sai_config.bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
-    sai_config.a_sync          = SaiHandle::Config::Sync::MASTER;
-    sai_config.b_sync          = SaiHandle::Config::Sync::SLAVE;
-    sai_config.a_dir           = SaiHandle::Config::Direction::TRANSMIT;
-    sai_config.b_dir           = SaiHandle::Config::Direction::RECEIVE;
-    sai_config.pin_config.fs   = {DSY_GPIOE, 4};
-    sai_config.pin_config.mclk = {DSY_GPIOE, 2};
-    sai_config.pin_config.sck  = {DSY_GPIOE, 5};
-    sai_config.pin_config.sa   = {DSY_GPIOE, 6};
-    sai_config.pin_config.sb   = {DSY_GPIOE, 3};
+    sai_config.periph    = SaiHandle::Config::Peripheral::SAI_1;
+    sai_config.sr        = SaiHandle::Config::SampleRate::SAI_48KHZ;
+    sai_config.bit_depth = SaiHandle::Config::BitDepth::SAI_24BIT;
+    sai_config.a_sync    = SaiHandle::Config::Sync::MASTER;
+    sai_config.b_sync    = SaiHandle::Config::Sync::SLAVE;
+    sai_config.a_dir     = SaiHandle::Config::Direction::TRANSMIT;
+    sai_config.b_dir     = SaiHandle::Config::Direction::RECEIVE;
+    sai_config.pin_config.fs.Init(DSY_GPIOE, 4);
+    sai_config.pin_config.mclk.Init(DSY_GPIOE, 2);
+    sai_config.pin_config.sck.Init(DSY_GPIOE, 5);
+    sai_config.pin_config.sa.Init(DSY_GPIOE, 6);
+    sai_config.pin_config.sb.Init(DSY_GPIOE, 3);
     // Then Initialize
     SaiHandle sai_1_handle;
     sai_1_handle.Init(sai_config);
 
     // Device Init
-    dsy_gpio_pin codec_reset_pin;
-    codec_reset_pin = {DSY_GPIOB, 11};
+    Pin codec_reset_pin;
+    codec_reset_pin.Init(DSY_GPIOB, 11);
     //codec_ak4556_init(codec_reset_pin);
     Ak4556::Init(codec_reset_pin);
 

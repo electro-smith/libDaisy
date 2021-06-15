@@ -34,6 +34,12 @@ struct Pin
     //allow equality operator to be used, replaces pin_cmp
     bool operator==(Pin &rhs) { return (rhs.pin == pin) && (rhs.port == port); }
 
+    void Init(Port port, uint8_t init_pin)
+    {
+        port = init_port;
+        pin  = init_pin;
+    }
+
     Port    port;
     uint8_t pin;
 };
