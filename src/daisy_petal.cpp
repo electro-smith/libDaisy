@@ -31,11 +31,6 @@ using namespace daisy;
 #define PIN_KNOB_5 18
 #define PIN_KNOB_6 21
 
-static constexpr I2CHandle::Config petal_led_i2c_config
-    = {I2CHandle::Config::Peripheral::I2C_1,
-       {{DSY_GPIOB, 8}, {DSY_GPIOB, 9}},
-       I2CHandle::Config::Speed::I2C_1MHZ};
-
 enum LedOrder
 {
     LED_RING_1_R,
@@ -313,6 +308,17 @@ void DaisyPetal::InitLeds()
     // Need to figure out how we want to handle that.
     uint8_t   addr[2] = {0x00, 0x01};
     I2CHandle i2c;
+
+    I2CHandle::Config petal_led_i2c_config;
+    petal_led_i2c_config.periph = I2CHandle::Config::Peripheral::I2C_1;
+    petal_led_i2c_config.pin_config.scl.pin = 8;
+    petal_led_i2c_config.pin_config.scl.port = DSY_GPIOB;
+    petal_led_i2c_config.pin_config.sda.pin = 9;
+    petal_led_i2c_config.pin_config.sda.port = DSY_GPIOB;
+    petal_led_i2c_config.speed = I2CHandle::Config::Speed::I2C_1MHZ;
+    petal_led_i2c_config.mode = I2CHandle::Config::Mode::MASTER;
+
+
     i2c.Init(petal_led_i2c_config);
     led_driver_.Init(i2c, addr, petal_led_dma_buffer_a, petal_led_dma_buffer_b);
     ClearLeds();

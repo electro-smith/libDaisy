@@ -63,11 +63,6 @@
 
 using namespace daisy;
 
-static constexpr I2CHandle::Config field_led_i2c_config
-    = {I2CHandle::Config::Peripheral::I2C_1,
-       {{DSY_GPIOB, 8}, {DSY_GPIOB, 9}},
-       I2CHandle::Config::Speed::I2C_1MHZ};
-
 static LedDriverPca9685<2, true>::DmaBuffer DMA_BUFFER_MEM_SECTION
     field_led_dma_buffer_a,
     field_led_dma_buffer_b;
@@ -138,6 +133,16 @@ void DaisyField::Init(bool boost)
     // 2x PCA9685 addresses 0x00, and 0x02
     uint8_t   addr[2] = {0x00, 0x02};
     I2CHandle i2c;
+
+    I2CHandle::Config field_led_i2c_config;
+    field_led_i2c_config.periph = I2CHandle::Config::Peripheral::I2C_1;
+    field_led_i2c_config.pin_config.scl.pin = 8;
+    field_led_i2c_config.pin_config.scl.port = DSY_GPIOB;
+    field_led_i2c_config.pin_config.sda.pin = 9;
+    field_led_i2c_config.pin_config.sda.port = DSY_GPIOB;
+    field_led_i2c_config.speed = I2CHandle::Config::Speed::I2C_1MHZ;
+    field_led_i2c_config.mode = I2CHandle::Config::Mode::MASTER;
+    
     i2c.Init(field_led_i2c_config);
     led_driver.Init(i2c, addr, field_led_dma_buffer_a, field_led_dma_buffer_b);
 
