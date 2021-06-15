@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libDaisy: daisy::MidiHandler Class Reference</title>
+<title>libDaisy: daisy::MidiHandler&lt; Transport &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,11 +66,11 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-types">Public Types</a> &#124;
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classdaisy_1_1_midi_handler-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">daisy::MidiHandler Class Reference<div class="ingroups"><a class="el" href="group__libdaisy.html">LIBDAISY</a> &raquo; <a class="el" href="group__human__interface.html">HUMAN_INTERFACE</a> &raquo; <a class="el" href="group__external.html">EXTERNAL</a></div></div>  </div>
+<div class="title">daisy::MidiHandler&lt; Transport &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__libdaisy.html">LIBDAISY</a> &raquo; <a class="el" href="group__human__interface.html">HUMAN_INTERFACE</a> &raquo; <a class="el" href="group__external.html">EXTERNAL</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -81,107 +81,51 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="midi_8h_source.html">midi.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:acc2df91e9c18571da6edecaec4fbc7fe"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#acc2df91e9c18571da6edecaec4fbc7fe">MidiInputMode</a> { <a class="el" href="classdaisy_1_1_midi_handler.html#acc2df91e9c18571da6edecaec4fbc7fea32cd9417eb3265497ba90fa3be6f9dfc">INPUT_MODE_NONE</a> = 0x00
-, <a class="el" href="classdaisy_1_1_midi_handler.html#acc2df91e9c18571da6edecaec4fbc7feab8ede8098956a405f213f8014c25bf81">INPUT_MODE_UART1</a> = 0x01
-, <a class="el" href="classdaisy_1_1_midi_handler.html#acc2df91e9c18571da6edecaec4fbc7fea0b1d605cc2619bf5032c5cc6b78277ef">INPUT_MODE_USB_INT</a> = 0x02
-, <a class="el" href="classdaisy_1_1_midi_handler.html#acc2df91e9c18571da6edecaec4fbc7fea82cc8668120499b8a52bec1112cab819">INPUT_MODE_USB_EXT</a> = 0x04
- }</td></tr>
-<tr class="separator:acc2df91e9c18571da6edecaec4fbc7fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bb8e841f287ba5fecfa2cead766a40c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a2bb8e841f287ba5fecfa2cead766a40c">MidiOutputMode</a> { <a class="el" href="classdaisy_1_1_midi_handler.html#a2bb8e841f287ba5fecfa2cead766a40caae5f9f77fd089a64af1bf3a3a6c7882f">OUTPUT_MODE_NONE</a> = 0x00
-, <a class="el" href="classdaisy_1_1_midi_handler.html#a2bb8e841f287ba5fecfa2cead766a40ca7bda13e50dc111b5a6651e2fbf1e89b9">OUTPUT_MODE_UART1</a> = 0x01
-, <a class="el" href="classdaisy_1_1_midi_handler.html#a2bb8e841f287ba5fecfa2cead766a40ca4c4b1465c85361e476189e08f3923ce8">OUTPUT_MODE_USB_INT</a> = 0x02
-, <a class="el" href="classdaisy_1_1_midi_handler.html#a2bb8e841f287ba5fecfa2cead766a40ca1823039084f8c92e8f046c1d80dfd628">OUTPUT_MODE_USB_EXT</a> = 0x04
- }</td></tr>
-<tr class="separator:a2bb8e841f287ba5fecfa2cead766a40c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_handler_1_1_config.html">Config</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1279f2e3e67adb676a0fe550a9c22221"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a1279f2e3e67adb676a0fe550a9c22221">Init</a> (<a class="el" href="classdaisy_1_1_midi_handler.html#acc2df91e9c18571da6edecaec4fbc7fe">MidiInputMode</a> in_mode, <a class="el" href="classdaisy_1_1_midi_handler.html#a2bb8e841f287ba5fecfa2cead766a40c">MidiOutputMode</a> out_mode)</td></tr>
-<tr class="separator:a1279f2e3e67adb676a0fe550a9c22221"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec305ba283ba3efdc0e95c822e87040b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#aec305ba283ba3efdc0e95c822e87040b">StartReceive</a> ()</td></tr>
-<tr class="separator:aec305ba283ba3efdc0e95c822e87040b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2ca9597f4c77060935dc69dec399c35"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#ac2ca9597f4c77060935dc69dec399c35">Listen</a> ()</td></tr>
-<tr class="separator:ac2ca9597f4c77060935dc69dec399c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ad7f3e96e321775266f4e58d356c2a9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a6ad7f3e96e321775266f4e58d356c2a9">Parse</a> (uint8_t byte)</td></tr>
-<tr class="separator:a6ad7f3e96e321775266f4e58d356c2a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c0750453834eae67cf1c1ae6544d5bb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a8c0750453834eae67cf1c1ae6544d5bb">HasEvents</a> () const</td></tr>
-<tr class="separator:a8c0750453834eae67cf1c1ae6544d5bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d88de50782d9b561b1862e3dd5ca566"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a1d88de50782d9b561b1862e3dd5ca566">PopEvent</a> ()</td></tr>
-<tr class="separator:a1d88de50782d9b561b1862e3dd5ca566"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59e40ad2f2293880b6664e83e40c0a30"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a59e40ad2f2293880b6664e83e40c0a30">SendMessage</a> (uint8_t *bytes, size_t size)</td></tr>
-<tr class="separator:a59e40ad2f2293880b6664e83e40c0a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae449f82ffeae9ef7f71d725349fdffef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#ae449f82ffeae9ef7f71d725349fdffef">Init</a> (<a class="el" href="structdaisy_1_1_midi_handler_1_1_config.html">Config</a> config)</td></tr>
+<tr class="separator:ae449f82ffeae9ef7f71d725349fdffef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28d650f767ca99afaa79e39664fcb4c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a28d650f767ca99afaa79e39664fcb4c2">StartReceive</a> ()</td></tr>
+<tr class="separator:a28d650f767ca99afaa79e39664fcb4c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5aa3eaac93ee7d2856ece8ab0bdc8813"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a5aa3eaac93ee7d2856ece8ab0bdc8813">Listen</a> ()</td></tr>
+<tr class="separator:a5aa3eaac93ee7d2856ece8ab0bdc8813"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96d78e2e460ba9dc17a9ad5be71e99bb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a96d78e2e460ba9dc17a9ad5be71e99bb">HasEvents</a> () const</td></tr>
+<tr class="separator:a96d78e2e460ba9dc17a9ad5be71e99bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4460bf8f45842bc2e2f74b9afad31cef"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_midi_event.html">MidiEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a4460bf8f45842bc2e2f74b9afad31cef">PopEvent</a> ()</td></tr>
+<tr class="separator:a4460bf8f45842bc2e2f74b9afad31cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c15df4ad7996a8c3fff22a5e679cc54"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a5c15df4ad7996a8c3fff22a5e679cc54">SendMessage</a> (uint8_t *bytes, size_t size)</td></tr>
+<tr class="separator:a5c15df4ad7996a8c3fff22a5e679cc54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dbf957100cc91a0c28c04340b218e32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html#a8dbf957100cc91a0c28c04340b218e32">Parse</a> (uint8_t byte)</td></tr>
+<tr class="separator:a8dbf957100cc91a0c28c04340b218e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Simple MIDI Handler <br  />
+<div class="textblock"><h3>template&lt;typename Transport&gt;<br />
+class daisy::MidiHandler&lt; Transport &gt;</h3>
+
+<p>Simple MIDI Handler <br  />
  Parses bytes from an input into valid MidiEvents. <br  />
  The MidiEvents fill a FIFO queue that the user can pop messages from. </p>
 <dl class="section author"><dt>Author</dt><dd>shensley </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>March 2020 </dd></dl>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a id="acc2df91e9c18571da6edecaec4fbc7fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc2df91e9c18571da6edecaec4fbc7fe">&#9670;&nbsp;</a></span>MidiInputMode</h2>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a96d78e2e460ba9dc17a9ad5be71e99bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96d78e2e460ba9dc17a9ad5be71e99bb">&#9670;&nbsp;</a></span>HasEvents()</h2>
 
 <div class="memitem">
 <div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="classdaisy_1_1_midi_handler.html#acc2df91e9c18571da6edecaec4fbc7fe">daisy::MidiHandler::MidiInputMode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Input and Output can be configured separately Multiple Input modes can be selected by OR'ing the values. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="acc2df91e9c18571da6edecaec4fbc7fea32cd9417eb3265497ba90fa3be6f9dfc"></a>INPUT_MODE_NONE&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="acc2df91e9c18571da6edecaec4fbc7feab8ede8098956a405f213f8014c25bf81"></a>INPUT_MODE_UART1&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="acc2df91e9c18571da6edecaec4fbc7fea0b1d605cc2619bf5032c5cc6b78277ef"></a>INPUT_MODE_USB_INT&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="acc2df91e9c18571da6edecaec4fbc7fea82cc8668120499b8a52bec1112cab819"></a>INPUT_MODE_USB_EXT&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="a2bb8e841f287ba5fecfa2cead766a40c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2bb8e841f287ba5fecfa2cead766a40c">&#9670;&nbsp;</a></span>MidiOutputMode</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="classdaisy_1_1_midi_handler.html#a2bb8e841f287ba5fecfa2cead766a40c">daisy::MidiHandler::MidiOutputMode</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Output mode </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a2bb8e841f287ba5fecfa2cead766a40caae5f9f77fd089a64af1bf3a3a6c7882f"></a>OUTPUT_MODE_NONE&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a2bb8e841f287ba5fecfa2cead766a40ca7bda13e50dc111b5a6651e2fbf1e89b9"></a>OUTPUT_MODE_UART1&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a2bb8e841f287ba5fecfa2cead766a40ca4c4b1465c85361e476189e08f3923ce8"></a>OUTPUT_MODE_USB_INT&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a2bb8e841f287ba5fecfa2cead766a40ca1823039084f8c92e8f046c1d80dfd628"></a>OUTPUT_MODE_USB_EXT&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a8c0750453834eae67cf1c1ae6544d5bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c0750453834eae67cf1c1ae6544d5bb">&#9670;&nbsp;</a></span>HasEvents()</h2>
-
-<div class="memitem">
-<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Transport &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool daisy::MidiHandler::HasEvents </td>
+          <td class="memname">bool <a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler</a>&lt; Transport &gt;::HasEvents </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -197,30 +141,30 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1279f2e3e67adb676a0fe550a9c22221"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1279f2e3e67adb676a0fe550a9c22221">&#9670;&nbsp;</a></span>Init()</h2>
+<a id="ae449f82ffeae9ef7f71d725349fdffef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae449f82ffeae9ef7f71d725349fdffef">&#9670;&nbsp;</a></span>Init()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Transport &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::MidiHandler::Init </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler</a>&lt; Transport &gt;::Init </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classdaisy_1_1_midi_handler.html#acc2df91e9c18571da6edecaec4fbc7fe">MidiInputMode</a>&#160;</td>
-          <td class="paramname"><em>in_mode</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype"><a class="el" href="structdaisy_1_1_midi_handler_1_1_config.html">Config</a>&#160;</td>
+          <td class="paramname"><em>config</em></td><td>)</td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classdaisy_1_1_midi_handler.html#a2bb8e841f287ba5fecfa2cead766a40c">MidiOutputMode</a>&#160;</td>
-          <td class="paramname"><em>out_mode</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>Initializes the <a class="el" href="classdaisy_1_1_midi_handler.html" title="Simple MIDI Handler   Parses bytes from an input into valid MidiEvents.   The MidiEvents fill a FIFO ...">MidiHandler</a> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -232,59 +176,19 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac2ca9597f4c77060935dc69dec399c35"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2ca9597f4c77060935dc69dec399c35">&#9670;&nbsp;</a></span>Listen()</h2>
+<a id="a5aa3eaac93ee7d2856ece8ab0bdc8813"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5aa3eaac93ee7d2856ece8ab0bdc8813">&#9670;&nbsp;</a></span>Listen()</h2>
 
 <div class="memitem">
 <div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::MidiHandler::Listen </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Start listening </p>
-
-</div>
-</div>
-<a id="a6ad7f3e96e321775266f4e58d356c2a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ad7f3e96e321775266f4e58d356c2a9">&#9670;&nbsp;</a></span>Parse()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::MidiHandler::Parse </td>
-          <td>(</td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>byte</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Feed in bytes to state machine from a queue. Populates internal FIFO queue with MIDI Messages For example with uart: midi.Parse(uart.PopRx()); </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">byte</td><td>&amp; </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a1d88de50782d9b561b1862e3dd5ca566"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d88de50782d9b561b1862e3dd5ca566">&#9670;&nbsp;</a></span>PopEvent()</h2>
-
-<div class="memitem">
-<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Transport &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a> daisy::MidiHandler::PopEvent </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler</a>&lt; Transport &gt;::Listen </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -296,18 +200,85 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Pops the oldest unhandled <a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a> from the internal queue </p><dl class="section return"><dt>Returns</dt><dd>The event to be handled </dd></dl>
+<p>Start listening </p>
 
 </div>
 </div>
-<a id="a59e40ad2f2293880b6664e83e40c0a30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59e40ad2f2293880b6664e83e40c0a30">&#9670;&nbsp;</a></span>SendMessage()</h2>
+<a id="a8dbf957100cc91a0c28c04340b218e32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8dbf957100cc91a0c28c04340b218e32">&#9670;&nbsp;</a></span>Parse()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Transport &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::MidiHandler::SendMessage </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler</a>&lt; Transport &gt;::Parse </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>byte</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Feed in bytes to state machine from a queue. Populates internal FIFO queue with MIDI Messages For example with uart: midi.Parse(uart.PopRx()); </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">byte</td><td>&amp; </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4460bf8f45842bc2e2f74b9afad31cef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4460bf8f45842bc2e2f74b9afad31cef">&#9670;&nbsp;</a></span>PopEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Transport &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_midi_event.html">MidiEvent</a> <a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler</a>&lt; Transport &gt;::PopEvent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Pops the oldest unhandled <a class="el" href="struct_midi_event.html">MidiEvent</a> from the internal queue </p><dl class="section return"><dt>Returns</dt><dd>The event to be handled </dd></dl>
+
+</div>
+</div>
+<a id="a5c15df4ad7996a8c3fff22a5e679cc54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c15df4ad7996a8c3fff22a5e679cc54">&#9670;&nbsp;</a></span>SendMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Transport &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler</a>&lt; Transport &gt;::SendMessage </td>
           <td>(</td>
           <td class="paramtype">uint8_t *&#160;</td>
           <td class="paramname"><em>bytes</em>, </td>
@@ -324,26 +295,41 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <p>SendMessage Send raw bytes as message </p>
 
 </div>
 </div>
-<a id="aec305ba283ba3efdc0e95c822e87040b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec305ba283ba3efdc0e95c822e87040b">&#9670;&nbsp;</a></span>StartReceive()</h2>
+<a id="a28d650f767ca99afaa79e39664fcb4c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28d650f767ca99afaa79e39664fcb4c2">&#9670;&nbsp;</a></span>StartReceive()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Transport &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::MidiHandler::StartReceive </td>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler</a>&lt; Transport &gt;::StartReceive </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Starts listening on the selected input mode(s). <a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a> Queue will begin to fill, and can be checked with </p>
+<p>Starts listening on the selected input mode(s). <a class="el" href="struct_midi_event.html">MidiEvent</a> Queue will begin to fill, and can be checked with </p>
 
 </div>
 </div>

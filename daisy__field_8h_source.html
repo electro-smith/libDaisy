@@ -213,19 +213,21 @@ $(function() {
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <a class="code" href="classdaisy_1_1_switch.html">Switch</a>                                   sw[<a class="code" href="classdaisy_1_1_daisy_field.html#a418e1e43655501188c4e740e90e98beca865113e9e584259b98c17d98e2bb88ad">SW_LAST</a>];</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;    <a class="code" href="classdaisy_1_1_analog_control.html">AnalogControl</a>                            knob[<a class="code" href="classdaisy_1_1_daisy_field.html#a495b406b72ef5c20317a685cf2ec1c79a8ca3ec9018e930851657f2fd1fd5c175">KNOB_LAST</a>];</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <a class="code" href="classdaisy_1_1_analog_control.html">AnalogControl</a>                            cv[<a class="code" href="classdaisy_1_1_daisy_field.html#a81c3bfd2fdf29ccc15bdd81355f1e3d0ab3858c1a0f81cae5e7e1a48097110213">CV_LAST</a>];</div>
-<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160; </div>
-<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="keywordtype">void</span> SetHidUpdateRates();</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160; </div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <a class="code" href="classdaisy_1_1_shift_register4021.html">ShiftRegister4021&lt;2&gt;</a> keyboard_sr_; </div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;    uint8_t              keyboard_state_[16];</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    uint32_t             last_led_update_; <span class="comment">// for vegas mode</span></div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    <span class="keywordtype">bool</span>                 gate_in_trig_;    <span class="comment">// True when triggered.</span></div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;};</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160; </div>
-<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;} <span class="comment">// namespace daisy</span></div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160; </div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;    <a class="code" href="classdaisy_1_1_midi_handler.html">MidiUartHandler</a>                          midi;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160; </div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;    <span class="keywordtype">void</span> SetHidUpdateRates();</div>
+<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;    <span class="keywordtype">void</span> InitMidi();</div>
+<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160; </div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <a class="code" href="classdaisy_1_1_shift_register4021.html">ShiftRegister4021&lt;2&gt;</a> keyboard_sr_; </div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    uint8_t              keyboard_state_[16];</div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    uint32_t             last_led_update_; <span class="comment">// for vegas mode</span></div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;    <span class="keywordtype">bool</span>                 gate_in_trig_;    <span class="comment">// True when triggered.</span></div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;};</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160; </div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;} <span class="comment">// namespace daisy</span></div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160; </div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html"><div class="ttname"><a href="classdaisy_1_1_analog_control.html">daisy::AnalogControl</a></div><div class="ttdoc">Hardware Interface for control inputs   Primarily designed for ADC input controls such as   potentiom...</div><div class="ttdef"><b>Definition:</b> ctrl.h:18</div></div>
 <div class="ttc" id="aclassdaisy_1_1_audio_handle_html_a10a5b51605fba6bb19ab3f05394da38f"><div class="ttname"><a href="classdaisy_1_1_audio_handle.html#a10a5b51605fba6bb19ab3f05394da38f">daisy::AudioHandle::AudioCallback</a></div><div class="ttdeci">void(* AudioCallback)(InputBuffer in, OutputBuffer out, size_t size)</div><div class="ttdef"><b>Definition:</b> audio.h:40</div></div>
 <div class="ttc" id="aclassdaisy_1_1_audio_handle_html_a125528dd20d6657e53ab78341cbdbb91"><div class="ttname"><a href="classdaisy_1_1_audio_handle.html#a125528dd20d6657e53ab78341cbdbb91">daisy::AudioHandle::InterleavingAudioCallback</a></div><div class="ttdeci">void(* InterleavingAudioCallback)(InterleavingInputBuffer in, InterleavingOutputBuffer out, size_t size)</div><div class="ttdef"><b>Definition:</b> audio.h:58</div></div>
@@ -305,6 +307,7 @@ $(function() {
 <div class="ttc" id="aclassdaisy_1_1_daisy_seed_html"><div class="ttname"><a href="classdaisy_1_1_daisy_seed.html">daisy::DaisySeed</a></div><div class="ttdoc">This is the higher-level interface for the Daisy board.   All basic peripheral configuration/initiali...</div><div class="ttdef"><b>Definition:</b> daisy_seed.h:19</div></div>
 <div class="ttc" id="aclassdaisy_1_1_gate_in_html"><div class="ttname"><a href="classdaisy_1_1_gate_in.html">daisy::GateIn</a></div><div class="ttdoc">Generic Class for handling gate inputs through GPIO.</div><div class="ttdef"><b>Definition:</b> gatein.h:16</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html">daisy::LedDriverPca9685&lt; 2, true &gt;</a></div></div>
+<div class="ttc" id="aclassdaisy_1_1_midi_handler_html"><div class="ttname"><a href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler&lt; MidiUartTransport &gt;</a></div></div>
 <div class="ttc" id="aclassdaisy_1_1_oled_display_html"><div class="ttname"><a href="classdaisy_1_1_oled_display.html">daisy::OledDisplay</a></div><div class="ttdef"><b>Definition:</b> oled_display.h:14</div></div>
 <div class="ttc" id="aclassdaisy_1_1_shift_register4021_html"><div class="ttname"><a href="classdaisy_1_1_shift_register4021.html">daisy::ShiftRegister4021&lt; 2 &gt;</a></div></div>
 <div class="ttc" id="aclassdaisy_1_1_switch_html"><div class="ttname"><a href="classdaisy_1_1_switch.html">daisy::Switch</a></div><div class="ttdef"><b>Definition:</b> switch.h:17</div></div>

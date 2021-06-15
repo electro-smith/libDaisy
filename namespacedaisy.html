@@ -159,13 +159,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___s_e_m_i_h_o_s_t_01_4.html">LoggerImpl&lt; LOGGER_SEMIHOST &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization for semihosting (stdout)  <a href="classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___s_e_m_i_h_o_s_t_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_note_on_event.html">NoteOnEvent</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_control_change_event.html">ControlChangeEvent</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_pitch_bend_event.html">PitchBendEvent</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_uart_transport.html">MidiUartTransport</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html">MidiHandler</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple MIDI Handler <br  />
@@ -247,6 +241,9 @@ Typedefs</h2></td></tr>
 <tr class="separator:a76096dc3b21d044b66782f18906fe46d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8aa6a733725c92ec32701dacc75092fe"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a8aa6a733725c92ec32701dacc75092fe">SSD130xI2c64x32Driver</a> = <a class="el" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver</a>&lt; 64, 32, <a class="el" href="classdaisy_1_1_s_s_d130x_i2_c_transport.html">SSD130xI2CTransport</a> &gt;</td></tr>
 <tr class="separator:a8aa6a733725c92ec32701dacc75092fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa674dd8cc356904785b384ed493b201"><td class="memItemLeft" align="right" valign="top"><a id="aaa674dd8cc356904785b384ed493b201"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>MidiUartHandler</b> = <a class="el" href="classdaisy_1_1_midi_handler.html">MidiHandler</a>&lt; <a class="el" href="classdaisy_1_1_midi_uart_transport.html">MidiUartTransport</a> &gt;</td></tr>
+<tr class="separator:aaa674dd8cc356904785b384ed493b201"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -256,19 +253,6 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a6e8f437322ea4b40e3e85b1f61bfba70">LOGGER_SEMIHOST</a>
  }</td></tr>
 <tr class="separator:a1c3b206bedb5432fc7b46e4f1cbce8f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf09bb687034c8776ca0c68ed3ed4179"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__external.html#gaaf09bb687034c8776ca0c68ed3ed4179">MidiMessageType</a> { <br />
-&#160;&#160;<a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a1b12be0cc7d773bce8e9a29a6bb6f503">NoteOff</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a9a64652b06f5ea678d94472ecd77d3ee">NoteOn</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a1df3c32711e2b5d1c02c5e548b7d4f7b">PolyphonicKeyPressure</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a0b1ada1624d07a8111c54257702313df">ControlChange</a>
-, <br />
-&#160;&#160;<a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a27e60326355eedaf215c23c4527ce627">ProgramChange</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a7c94d1043d8e491a9ccb6c45df7867a4">ChannelPressure</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a4f812cde2a6d2b270ec408514516443d">PitchBend</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a462782a09a7554ea61fcf5a901b745e1">MessageLast</a>
-<br />
- }</td></tr>
-<tr class="separator:gaaf09bb687034c8776ca0c68ed3ed4179"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4aa183da4cc8c253afebd7ae0713f81"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81">WavFileFormatCode</a> { <br />
 &#160;&#160;<b>WAVE_FORMAT_PCM</b> = 0x0001
 , <b>WAVE_FORMAT_IEEE_FLOAT</b> = 0x0003

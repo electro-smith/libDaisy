@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libDaisy: daisy::NoteOnEvent Struct Reference</title>
+<title>libDaisy: PitchBendEvent Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -59,42 +59,36 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacedaisy.html">daisy</a></li><li class="navelem"><a class="el" href="structdaisy_1_1_note_on_event.html">NoteOnEvent</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structdaisy_1_1_note_on_event-members.html">List of all members</a>  </div>
+<a href="struct_pitch_bend_event-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">daisy::NoteOnEvent Struct Reference<div class="ingroups"><a class="el" href="group__libdaisy.html">LIBDAISY</a> &raquo; <a class="el" href="group__human__interface.html">HUMAN_INTERFACE</a> &raquo; <a class="el" href="group__external.html">EXTERNAL</a></div></div>  </div>
+<div class="title">PitchBendEvent Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="midi_8h_source.html">midi.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_midi_event_8h_source.html">MidiEvent.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a5ca9bb0235042964923ce1ebdf0c7321"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_note_on_event.html#a5ca9bb0235042964923ce1ebdf0c7321">channel</a></td></tr>
-<tr class="separator:a5ca9bb0235042964923ce1ebdf0c7321"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab457a7574235f856d5e2d16ae51b3a20"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_note_on_event.html#ab457a7574235f856d5e2d16ae51b3a20">note</a></td></tr>
-<tr class="separator:ab457a7574235f856d5e2d16ae51b3a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35cf35e69cd28f75c11d4cc0f8245988"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_note_on_event.html#a35cf35e69cd28f75c11d4cc0f8245988">velocity</a></td></tr>
-<tr class="separator:a35cf35e69cd28f75c11d4cc0f8245988"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ee6acb2615350ecaa37ed0866eeb4be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_pitch_bend_event.html#a4ee6acb2615350ecaa37ed0866eeb4be">channel</a></td></tr>
+<tr class="separator:a4ee6acb2615350ecaa37ed0866eeb4be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7477afbac9a2dc861da466f22a7c27f"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_pitch_bend_event.html#ae7477afbac9a2dc861da466f22a7c27f">value</a></td></tr>
+<tr class="separator:ae7477afbac9a2dc861da466f22a7c27f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct containing note, and velocity data for a given channel. Can be made from <a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a> </p>
+<div class="textblock"><p>Struct containing pitch bend value for a given channel. Can be made from <a class="el" href="struct_midi_event.html">MidiEvent</a> </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="a5ca9bb0235042964923ce1ebdf0c7321"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ca9bb0235042964923ce1ebdf0c7321">&#9670;&nbsp;</a></span>channel</h2>
+<a id="a4ee6acb2615350ecaa37ed0866eeb4be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ee6acb2615350ecaa37ed0866eeb4be">&#9670;&nbsp;</a></span>channel</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int daisy::NoteOnEvent::channel</td>
+          <td class="memname">int PitchBendEvent::channel</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -102,29 +96,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ab457a7574235f856d5e2d16ae51b3a20"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab457a7574235f856d5e2d16ae51b3a20">&#9670;&nbsp;</a></span>note</h2>
+<a id="ae7477afbac9a2dc861da466f22a7c27f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7477afbac9a2dc861da466f22a7c27f">&#9670;&nbsp;</a></span>value</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t daisy::NoteOnEvent::note</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>&amp; </p>
-
-</div>
-</div>
-<a id="a35cf35e69cd28f75c11d4cc0f8245988"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35cf35e69cd28f75c11d4cc0f8245988">&#9670;&nbsp;</a></span>velocity</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t daisy::NoteOnEvent::velocity</td>
+          <td class="memname">int16_t PitchBendEvent::value</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -133,7 +112,7 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/hid/<a class="el" href="midi_8h_source.html">midi.h</a></li>
+<li>src/hid/<a class="el" href="_midi_event_8h_source.html">MidiEvent.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

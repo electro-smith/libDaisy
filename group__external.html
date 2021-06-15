@@ -82,15 +82,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_logger_3_01_l_o_g_g_e_r___n_o_n_e_01_4.html">daisy::Logger&lt; LOGGER_NONE &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_note_on_event.html">daisy::NoteOnEvent</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_uart_transport.html">daisy::MidiUartTransport</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_control_change_event.html">daisy::ControlChangeEvent</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_pitch_bend_event.html">daisy::PitchBendEvent</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_event.html">daisy::MidiEvent</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler&lt; Transport &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple MIDI Handler <br  />
  Parses bytes from an input into valid MidiEvents. <br  />
  The MidiEvents fill a FIFO queue that the user can pop messages from.  <a href="classdaisy_1_1_midi_handler.html#details">More...</a><br /></td></tr>
@@ -109,19 +103,6 @@ Enumerations</h2></td></tr>
 , <a class="el" href="group__external.html#ggaa6626e0cc32e5d8a4259168bc05fc8bbacc5d5d5e161116c4482618987fec92b6">daisy::Logger&lt; dest &gt;::LOGGER_SYNC_IN</a> = 2
  }</td></tr>
 <tr class="separator:gaa6626e0cc32e5d8a4259168bc05fc8bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaf09bb687034c8776ca0c68ed3ed4179"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__external.html#gaaf09bb687034c8776ca0c68ed3ed4179">daisy::MidiMessageType</a> { <br />
-&#160;&#160;<a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a1b12be0cc7d773bce8e9a29a6bb6f503">daisy::NoteOff</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a9a64652b06f5ea678d94472ecd77d3ee">daisy::NoteOn</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a1df3c32711e2b5d1c02c5e548b7d4f7b">daisy::PolyphonicKeyPressure</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a0b1ada1624d07a8111c54257702313df">daisy::ControlChange</a>
-, <br />
-&#160;&#160;<a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a27e60326355eedaf215c23c4527ce627">daisy::ProgramChange</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a7c94d1043d8e491a9ccb6c45df7867a4">daisy::ChannelPressure</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a4f812cde2a6d2b270ec408514516443d">daisy::PitchBend</a>
-, <a class="el" href="group__external.html#ggaaf09bb687034c8776ca0c68ed3ed4179a462782a09a7554ea61fcf5a901b745e1">daisy::MessageLast</a>
-<br />
- }</td></tr>
-<tr class="separator:gaaf09bb687034c8776ca0c68ed3ed4179"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -424,40 +405,6 @@ template&lt;LoggerDestination dest = LOGGER_INTERNAL&gt; </div>
 <p>Internal constants </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa6626e0cc32e5d8a4259168bc05fc8bbacc5d5d5e161116c4482618987fec92b6"></a>LOGGER_SYNC_IN&#160;</td><td class="fielddoc"><p>successfully transmit this many packets before switching to blocking transfers </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="gaaf09bb687034c8776ca0c68ed3ed4179"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaaf09bb687034c8776ca0c68ed3ed4179">&#9670;&nbsp;</a></span>MidiMessageType</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group__external.html#gaaf09bb687034c8776ca0c68ed3ed4179">daisy::MidiMessageType</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Parsed from the Status Byte, these are the common Midi Messages that can be handled. <br  />
-At this time only 3-byte messages are correctly parsed into MidiEvents. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaaf09bb687034c8776ca0c68ed3ed4179a1b12be0cc7d773bce8e9a29a6bb6f503"></a>NoteOff&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaaf09bb687034c8776ca0c68ed3ed4179a9a64652b06f5ea678d94472ecd77d3ee"></a>NoteOn&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaaf09bb687034c8776ca0c68ed3ed4179a1df3c32711e2b5d1c02c5e548b7d4f7b"></a>PolyphonicKeyPressure&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaaf09bb687034c8776ca0c68ed3ed4179a0b1ada1624d07a8111c54257702313df"></a>ControlChange&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaaf09bb687034c8776ca0c68ed3ed4179a27e60326355eedaf215c23c4527ce627"></a>ProgramChange&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaaf09bb687034c8776ca0c68ed3ed4179a7c94d1043d8e491a9ccb6c45df7867a4"></a>ChannelPressure&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaaf09bb687034c8776ca0c68ed3ed4179a4f812cde2a6d2b270ec408514516443d"></a>PitchBend&#160;</td><td class="fielddoc"><p>&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaaf09bb687034c8776ca0c68ed3ed4179a462782a09a7554ea61fcf5a901b745e1"></a>MessageLast&#160;</td><td class="fielddoc"><p>&amp; </p>
 </td></tr>
 </table>
 

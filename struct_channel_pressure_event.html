@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libDaisy: daisy::ControlChangeEvent Struct Reference</title>
+<title>libDaisy: ChannelPressureEvent Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -59,42 +59,36 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacedaisy.html">daisy</a></li><li class="navelem"><a class="el" href="structdaisy_1_1_control_change_event.html">ControlChangeEvent</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structdaisy_1_1_control_change_event-members.html">List of all members</a>  </div>
+<a href="struct_channel_pressure_event-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">daisy::ControlChangeEvent Struct Reference<div class="ingroups"><a class="el" href="group__libdaisy.html">LIBDAISY</a> &raquo; <a class="el" href="group__human__interface.html">HUMAN_INTERFACE</a> &raquo; <a class="el" href="group__external.html">EXTERNAL</a></div></div>  </div>
+<div class="title">ChannelPressureEvent Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;<a class="el" href="midi_8h_source.html">midi.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_midi_event_8h_source.html">MidiEvent.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ac9ef96a432ca77995006465140aa0e9e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_control_change_event.html#ac9ef96a432ca77995006465140aa0e9e">channel</a></td></tr>
-<tr class="separator:ac9ef96a432ca77995006465140aa0e9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac69453ad29a6c7737dd0ca7608f145e3"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_control_change_event.html#ac69453ad29a6c7737dd0ca7608f145e3">control_number</a></td></tr>
-<tr class="separator:ac69453ad29a6c7737dd0ca7608f145e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a226c1cdfa6e61d2126e77aea3a9e7d3f"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_control_change_event.html#a226c1cdfa6e61d2126e77aea3a9e7d3f">value</a></td></tr>
-<tr class="separator:a226c1cdfa6e61d2126e77aea3a9e7d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6dfad628ae91f2260ade87489bb7316"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_channel_pressure_event.html#af6dfad628ae91f2260ade87489bb7316">channel</a></td></tr>
+<tr class="separator:af6dfad628ae91f2260ade87489bb7316"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8dbb465dae8be3687ecfc4d42168f4c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_channel_pressure_event.html#ab8dbb465dae8be3687ecfc4d42168f4c">pressure</a></td></tr>
+<tr class="separator:ab8dbb465dae8be3687ecfc4d42168f4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct containing control number, and value for a given channel. Can be made from <a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a> </p>
+<div class="textblock"><p>Struct containing pressure (aftertouch), for a given channel. Can be made from <a class="el" href="struct_midi_event.html">MidiEvent</a> </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="ac9ef96a432ca77995006465140aa0e9e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9ef96a432ca77995006465140aa0e9e">&#9670;&nbsp;</a></span>channel</h2>
+<a id="af6dfad628ae91f2260ade87489bb7316"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6dfad628ae91f2260ade87489bb7316">&#9670;&nbsp;</a></span>channel</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int daisy::ControlChangeEvent::channel</td>
+          <td class="memname">int ChannelPressureEvent::channel</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -102,29 +96,14 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac69453ad29a6c7737dd0ca7608f145e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac69453ad29a6c7737dd0ca7608f145e3">&#9670;&nbsp;</a></span>control_number</h2>
+<a id="ab8dbb465dae8be3687ecfc4d42168f4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8dbb465dae8be3687ecfc4d42168f4c">&#9670;&nbsp;</a></span>pressure</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t daisy::ControlChangeEvent::control_number</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>&amp; </p>
-
-</div>
-</div>
-<a id="a226c1cdfa6e61d2126e77aea3a9e7d3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a226c1cdfa6e61d2126e77aea3a9e7d3f">&#9670;&nbsp;</a></span>value</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t daisy::ControlChangeEvent::value</td>
+          <td class="memname">uint8_t ChannelPressureEvent::pressure</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -133,7 +112,7 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/hid/<a class="el" href="midi_8h_source.html">midi.h</a></li>
+<li>src/hid/<a class="el" href="_midi_event_8h_source.html">MidiEvent.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
