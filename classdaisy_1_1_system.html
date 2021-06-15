@@ -107,6 +107,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a93151b0dbf6dafd33550c472418a4b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7e0bb7a214d85ceaa2264f2d00afd5a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_system.html#ae7e0bb7a214d85ceaa2264f2d00afd5a">ResetToBootloader</a> ()</td></tr>
 <tr class="separator:ae7e0bb7a214d85ceaa2264f2d00afd5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f66b23c64c258326e754168eca26847"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_system.html#a6f66b23c64c258326e754168eca26847">GetTickFreq</a> ()</td></tr>
+<tr class="separator:a6f66b23c64c258326e754168eca26847"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45903b01f0649d2fcf6b8f2c51484618"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_system.html#a45903b01f0649d2fcf6b8f2c51484618">GetSysClkFreq</a> ()</td></tr>
 <tr class="separator:a45903b01f0649d2fcf6b8f2c51484618"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71e6876c84c1ede73337383227b708dd"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_system.html#a71e6876c84c1ede73337383227b708dd">GetHClkFreq</a> ()</td></tr>
@@ -394,6 +396,32 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>a uint32_t of ticks at (PCLk1 * 2)Hz Useful for measuring the number of CPU ticks something is taking. </dd></dl>
+
+</div>
+</div>
+<a id="a6f66b23c64c258326e754168eca26847"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f66b23c64c258326e754168eca26847">&#9670;&nbsp;</a></span>GetTickFreq()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static uint32_t daisy::System::GetTickFreq </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the tick rate in Hz with which <a class="el" href="classdaisy_1_1_system.html#a43b51c5144a81671f7f7a9df47978995">GetTick()</a> is incremented. </p>
 
 </div>
 </div>

@@ -241,6 +241,9 @@ Variables</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>General utilities. Ringbuffers, LED colors, OLED stuff, etc. </p>
 <p>A safe and convenient statically allocated string with constexpr powers.</p>
+<p>CPU load metering.</p>
+<dl class="section author"><dt>Author</dt><dd>jelliesen</dd></dl>
+<p>To measure the CPU load of your audio processing, create a <a class="el" href="classdaisy_1_1_cpu_load_meter.html">CpuLoadMeter</a> and initialize it with your block size and sample rate. Then at the beginning of the audio callback, call <code>OnBlockStart()</code>, and at the end of the audio callback, call <code>OnBlockEnd()</code>. You can then read out the minimum, maximum and average CPU load.</p>
 <dl class="section author"><dt>Author</dt><dd>jelliesen</dd></dl>
 <p>This string class is statically allocated. All of its functions can be evaluated at compile time through the power of constexpr. </p>
 <h2 class="groupheader">Macro Definition Documentation</h2>
