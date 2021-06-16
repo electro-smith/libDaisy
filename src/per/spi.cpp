@@ -30,14 +30,22 @@ class SpiHandle::Impl
     Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout);
     Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
     Result DmaTransmit(uint8_t* buff, size_t size);
+    Result DmaReceive(uint8_t* buff, size_t size);
 
     Result InitPins();
     Result DeInitPins();
 
-    Result InitDma();
+    Result SetDmaPeripheral();
+    Result InitDma(uint8_t direction);
 
     uint8_t GetDmaFlag() { return dma_flag; }
-    void    SetDmaFlag(uint8_t flag) { dma_flag = flag; }
+    void    SetDmaFlag(uint8_t f) { dma_flag = f; }
+
+    enum
+    {
+        DMA_RX,
+        DMA_TX,
+    };
 
     SpiHandle::Config config_;
     SPI_HandleTypeDef hspi_;
@@ -210,21 +218,52 @@ SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
     return SpiHandle::Result::OK;
 }
 
-SpiHandle::Result SpiHandle::Impl::InitDma()
+SpiHandle::Result SpiHandle::Impl::SetDmaPeripheral()
 {
-    hdma_spi_.Instance       = DMA1_Stream7;
-    hdma_spi_.Init.Request   = DMA_REQUEST_SPI1_TX;
-    hdma_spi_.Init.Direction = DMA_MEMORY_TO_PERIPH;
-    hdma_spi_.Init.PeriphInc = DMA_PINC_DISABLE;
-    hdma_spi_.Init.MemInc    = DMA_MINC_ENABLE;
+    switch(config_.periph)
+    {
+        case SpiHandle::Config::Peripheral::SPI_1:
+            hdma_spi_.Init.Request = DMA_REQUEST_SPI1_TX;
+            break;
+        case SpiHandle::Config::Peripheral::SPI_2:
+            hdma_spi_.Init.Request = DMA_REQUEST_SPI2_TX;
+            break;
+        case SpiHandle::Config::Peripheral::SPI_3:
+            hdma_spi_.Init.Request = DMA_REQUEST_SPI3_TX;
+            break;
+        case SpiHandle::Config::Peripheral::SPI_4:
+            hdma_spi_.Init.Request = DMA_REQUEST_SPI4_TX;
+            break;
+        case SpiHandle::Config::Peripheral::SPI_5:
+            hdma_spi_.Init.Request = DMA_REQUEST_SPI5_TX;
+            break;
+        // DMA_REQUEST_SPI6_TX is not available?
+        default: return SpiHandle::Result::ERR;
+    }
+    return SpiHandle::Result::OK;
+}
+
+SpiHandle::Result SpiHandle::Impl::InitDma(uint8_t direction)
+{
+    hdma_spi_.Instance                 = DMA1_Stream7;
+    hdma_spi_.Init.PeriphInc           = DMA_PINC_DISABLE;
+    hdma_spi_.Init.MemInc              = DMA_MINC_ENABLE;
     hdma_spi_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
     hdma_spi_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-    hdma_spi_.Init.Mode = DMA_NORMAL;
-    hdma_spi_.Init.Priority = DMA_PRIORITY_VERY_HIGH;
-    hdma_spi_.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
-    hdma_spi_.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
-    hdma_spi_.Init.MemBurst    = DMA_MBURST_SINGLE;
-    hdma_spi_.Init.PeriphBurst = DMA_PBURST_SINGLE;
+    hdma_spi_.Init.Mode                = DMA_NORMAL;
+    hdma_spi_.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
+    hdma_spi_.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
+    hdma_spi_.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+    hdma_spi_.Init.MemBurst            = DMA_MBURST_SINGLE;
+    hdma_spi_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
+    SetDmaPeripheral();
+
+    switch(direction)
+    {
+        case DMA_RX: hdma_spi_.Init.Direction = DMA_PERIPH_TO_MEMORY; break;
+        case DMA_TX: hdma_spi_.Init.Direction = DMA_MEMORY_TO_PERIPH; break;
+        default: return SpiHandle::Result::ERR;
+    }
 
     if(HAL_DMA_Init(&hdma_spi_) != HAL_OK)
     {
@@ -232,15 +271,12 @@ SpiHandle::Result SpiHandle::Impl::InitDma()
         return SpiHandle::Result::ERR;
     }
 
-    __HAL_LINKDMA(&hspi_, hdmatx, hdma_spi_);
-
-    /* SPI1 interrupt Init */
-    HAL_NVIC_SetPriority(SPI1_IRQn, 1, 0);
-    HAL_NVIC_EnableIRQ(SPI1_IRQn);
-
-    // DMA1_Stream7_IRQn interrupt configuration for SPI
-    HAL_NVIC_SetPriority(DMA1_Stream7_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(DMA1_Stream7_IRQn);
+    switch(direction)
+    {
+        case DMA_RX: __HAL_LINKDMA(&hspi_, hdmarx, hdma_spi_); break;
+        case DMA_TX: __HAL_LINKDMA(&hspi_, hdmatx, hdma_spi_); break;
+        default: return SpiHandle::Result::ERR;
+    }
 
     return SpiHandle::Result::OK;
 }
@@ -264,8 +300,22 @@ SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout)
 
 SpiHandle::Result SpiHandle::Impl::DmaTransmit(uint8_t* buff, size_t size)
 {
-    HAL_StatusTypeDef res = HAL_SPI_Transmit_DMA(&hspi_, buff, size);
-    if(res != HAL_OK)
+    InitDma(DMA_TX);
+
+    while(HAL_SPI_GetState(&hspi_) != HAL_SPI_STATE_READY) {};
+
+    if(HAL_SPI_Transmit_DMA(&hspi_, buff, size) != HAL_OK)
+    {
+        return SpiHandle::Result::ERR;
+    }
+    return SpiHandle::Result::OK;
+}
+
+SpiHandle::Result SpiHandle::Impl::DmaReceive(uint8_t* buff, size_t size)
+{
+    InitDma(DMA_RX);
+
+    if(HAL_SPI_Receive_DMA(&hspi_, buff, size) != HAL_OK)
     {
         return SpiHandle::Result::ERR;
     }
@@ -559,33 +609,49 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     switch(handle->config_.periph)
     {
         case SpiHandle::Config::Peripheral::SPI_1:
+        {
             __HAL_RCC_SPI1_CLK_ENABLE();
-            break;
+            HAL_NVIC_SetPriority(SPI1_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(SPI1_IRQn);
+        }
+        break;
         case SpiHandle::Config::Peripheral::SPI_2:
+        {
             __HAL_RCC_SPI2_CLK_ENABLE();
-            break;
+            HAL_NVIC_SetPriority(SPI2_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(SPI2_IRQn);
+        }
+        break;
         case SpiHandle::Config::Peripheral::SPI_3:
+        {
             __HAL_RCC_SPI3_CLK_ENABLE();
-            break;
+            HAL_NVIC_SetPriority(SPI3_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(SPI3_IRQn);
+        }
+        break;
         case SpiHandle::Config::Peripheral::SPI_4:
+        {
             __HAL_RCC_SPI4_CLK_ENABLE();
-            break;
+            HAL_NVIC_SetPriority(SPI4_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(SPI4_IRQn);
+        }
+        break;
         case SpiHandle::Config::Peripheral::SPI_5:
+        {
             __HAL_RCC_SPI5_CLK_ENABLE();
-            break;
+            HAL_NVIC_SetPriority(SPI5_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(SPI5_IRQn);
+        }
+        break;
         case SpiHandle::Config::Peripheral::SPI_6:
             __HAL_RCC_SPI6_CLK_ENABLE();
             break;
     }
 
+
     if(handle->InitPins() == SpiHandle::Result::ERR)
     {
         Error_Handler();
-    }
-
-    if(handle->config_.periph == SpiHandle::Config::Peripheral::SPI_1)
-    {
-        handle->InitDma();
     }
 }
 
@@ -686,8 +752,7 @@ uint8_t SpiHandle::GetDmaFlag()
 {
     return pimpl_->GetDmaFlag();
 }
-
-void SpiHandle::SetDmaFlag(uint8_t flag)
+void SpiHandle::SetDmaFlag(uint8_t f)
 {
-    pimpl_->SetDmaFlag(flag);
+    pimpl_->SetDmaFlag(f);
 }
