@@ -127,6 +127,23 @@ class SpiHandle
     */
     Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
 
+    /** DMA-based transmit 
+    \param *buff input buffer
+    \param size  buffer size
+    \return Whether the transmit was successful or not
+    */
+    Result DmaTransmit(uint8_t* buff, size_t size);
+
+    /** State of DMA transmit
+    \return 1 when finished, 0 otherwise
+    */
+    uint8_t GetDmaFlag();
+
+    /** Update DMA transmit flag
+    \param flag flag to set
+    */
+    void    SetDmaFlag(uint8_t flag);
+
     /** \return the result of HAL_SPI_GetError() to the user. */
     int CheckError();
 

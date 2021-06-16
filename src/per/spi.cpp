@@ -18,6 +18,9 @@ static void Error_Handler()
 
 class SpiHandle::Impl
 {
+  private:
+    uint8_t dma_flag = 0;
+
   public:
     Result Init(const Config& config);
 
@@ -26,12 +29,19 @@ class SpiHandle::Impl
 
     Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout);
     Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
+    Result DmaTransmit(uint8_t* buff, size_t size);
 
     Result InitPins();
     Result DeInitPins();
 
+    Result InitDma();
+
+    uint8_t GetDmaFlag() { return dma_flag; }
+    void    SetDmaFlag(uint8_t flag) { dma_flag = flag; }
+
     SpiHandle::Config config_;
     SPI_HandleTypeDef hspi_;
+    DMA_HandleTypeDef hdma_spi_;
 };
 
 // ================================================================
@@ -200,6 +210,41 @@ SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
     return SpiHandle::Result::OK;
 }
 
+SpiHandle::Result SpiHandle::Impl::InitDma()
+{
+    hdma_spi_.Instance       = DMA1_Stream7;
+    hdma_spi_.Init.Request   = DMA_REQUEST_SPI1_TX;
+    hdma_spi_.Init.Direction = DMA_MEMORY_TO_PERIPH;
+    hdma_spi_.Init.PeriphInc = DMA_PINC_DISABLE;
+    hdma_spi_.Init.MemInc    = DMA_MINC_ENABLE;
+    hdma_spi_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_spi_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+    hdma_spi_.Init.Mode = DMA_NORMAL;
+    hdma_spi_.Init.Priority = DMA_PRIORITY_VERY_HIGH;
+    hdma_spi_.Init.FIFOMode = DMA_FIFOMODE_ENABLE;
+    hdma_spi_.Init.FIFOThreshold = DMA_FIFO_THRESHOLD_FULL;
+    hdma_spi_.Init.MemBurst    = DMA_MBURST_SINGLE;
+    hdma_spi_.Init.PeriphBurst = DMA_PBURST_SINGLE;
+
+    if(HAL_DMA_Init(&hdma_spi_) != HAL_OK)
+    {
+        Error_Handler();
+        return SpiHandle::Result::ERR;
+    }
+
+    __HAL_LINKDMA(&hspi_, hdmatx, hdma_spi_);
+
+    /* SPI1 interrupt Init */
+    HAL_NVIC_SetPriority(SPI1_IRQn, 1, 0);
+    HAL_NVIC_EnableIRQ(SPI1_IRQn);
+
+    // DMA1_Stream7_IRQn interrupt configuration for SPI
+    HAL_NVIC_SetPriority(DMA1_Stream7_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(DMA1_Stream7_IRQn);
+
+    return SpiHandle::Result::OK;
+}
+
 int SpiHandle::Impl::CheckError()
 {
     return HAL_SPI_GetError(&hspi_);
@@ -210,6 +255,17 @@ SpiHandle::Result
 SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout)
 {
     if(HAL_SPI_Transmit(&hspi_, buff, size, timeout) != HAL_OK)
+    {
+        return SpiHandle::Result::ERR;
+    }
+    return SpiHandle::Result::OK;
+}
+
+
+SpiHandle::Result SpiHandle::Impl::DmaTransmit(uint8_t* buff, size_t size)
+{
+    HAL_StatusTypeDef res = HAL_SPI_Transmit_DMA(&hspi_, buff, size);
+    if(res != HAL_OK)
     {
         return SpiHandle::Result::ERR;
     }
@@ -526,6 +582,11 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     {
         Error_Handler();
     }
+
+    if(handle->config_.periph == SpiHandle::Config::Peripheral::SPI_1)
+    {
+        handle->InitDma();
+    }
 }
 
 void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
@@ -561,6 +622,28 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
     }
 }
 
+extern "C" void SPI1_IRQHandler(void)
+{
+    HAL_SPI_IRQHandler(&spi_handles[0].hspi_);
+}
+
+extern "C" void DMA1_Stream7_IRQHandler(void)
+{
+    HAL_DMA_IRQHandler(&spi_handles[0].hdma_spi_);
+}
+
+
+extern "C" void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef* hspi)
+{
+    SpiHandle::Impl* handle = MapInstanceToHandle(hspi->Instance);
+
+    if(handle->config_.periph == SpiHandle::Config::Peripheral::SPI_1)
+    {
+        // set a flag that DMA transmition is finished
+        handle->SetDmaFlag(1);
+    }
+}
+
 // ======================================================================
 // SpiHandler > SpiHandlePimpl
 // ======================================================================
@@ -592,4 +675,19 @@ SpiHandle::Result
 SpiHandle::BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout)
 {
     return pimpl_->BlockingReceive(buffer, size, timeout);
+}
+
+SpiHandle::Result SpiHandle::DmaTransmit(uint8_t* buff, size_t size)
+{
+    return pimpl_->DmaTransmit(buff, size);
+}
+
+uint8_t SpiHandle::GetDmaFlag()
+{
+    return pimpl_->GetDmaFlag();
+}
+
+void SpiHandle::SetDmaFlag(uint8_t flag)
+{
+    pimpl_->SetDmaFlag(flag);
 }
