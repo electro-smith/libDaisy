@@ -25,19 +25,13 @@ class SpiHandle::Impl
     uint8_t dma_flag = 0;
 
   public:
-    enum
-    {
-        DMA_RX,
-        DMA_TX,
-    };
-
     struct SpiDmaJob
     {
         uint8_t*                       data             = nullptr;
         uint16_t                       size             = 0;
         SpiHandle::CallbackFunctionPtr callback         = nullptr;
         void*                          callback_context = nullptr;
-        uint8_t                        direction        = DMA_TX;
+        SpiHandle::DmaDirection        direction = SpiHandle::DmaDirection::TX;
 
         bool IsValidJob() const { return data != nullptr; }
         void Invalidate() { data = nullptr; }
@@ -74,7 +68,7 @@ class SpiHandle::Impl
     static bool IsDmaTransferQueuedFor(size_t spi_idx);
 
     Result SetDmaPeripheral();
-    Result InitDma(uint8_t direction);
+    Result InitDma(SpiHandle::DmaDirection direction);
 
     uint8_t GetDmaFlag() { return dma_flag; }
     void    SetDmaFlag(uint8_t f) { dma_flag = f; }
@@ -286,7 +280,7 @@ SpiHandle::Result SpiHandle::Impl::SetDmaPeripheral()
     return SpiHandle::Result::OK;
 }
 
-SpiHandle::Result SpiHandle::Impl::InitDma(uint8_t direction)
+SpiHandle::Result SpiHandle::Impl::InitDma(SpiHandle::DmaDirection direction)
 {
     hdma_spi_.Instance                 = DMA1_Stream7;
     hdma_spi_.Init.PeriphInc           = DMA_PINC_DISABLE;
@@ -303,8 +297,12 @@ SpiHandle::Result SpiHandle::Impl::InitDma(uint8_t direction)
 
     switch(direction)
     {
-        case DMA_RX: hdma_spi_.Init.Direction = DMA_PERIPH_TO_MEMORY; break;
-        case DMA_TX: hdma_spi_.Init.Direction = DMA_MEMORY_TO_PERIPH; break;
+        case SpiHandle::DmaDirection::RX:
+            hdma_spi_.Init.Direction = DMA_PERIPH_TO_MEMORY;
+            break;
+        case SpiHandle::DmaDirection::TX:
+            hdma_spi_.Init.Direction = DMA_MEMORY_TO_PERIPH;
+            break;
         default: return SpiHandle::Result::ERR;
     }
 
@@ -316,8 +314,12 @@ SpiHandle::Result SpiHandle::Impl::InitDma(uint8_t direction)
 
     switch(direction)
     {
-        case DMA_RX: __HAL_LINKDMA(&hspi_, hdmarx, hdma_spi_); break;
-        case DMA_TX: __HAL_LINKDMA(&hspi_, hdmatx, hdma_spi_); break;
+        case SpiHandle::DmaDirection::RX:
+            __HAL_LINKDMA(&hspi_, hdmarx, hdma_spi_);
+            break;
+        case SpiHandle::DmaDirection::TX:
+            __HAL_LINKDMA(&hspi_, hdmatx, hdma_spi_);
+            break;
         default: return SpiHandle::Result::ERR;
     }
 
@@ -344,17 +346,19 @@ void SpiHandle::Impl::DmaTransferFinished(SPI_HandleTypeDef* hspi,
         next_callback_ = nullptr;
         // make the callback
         callback(next_callback_context_, result);
-        // the callback could have started a new transmission right away...
-        if(IsDmaBusy())
-            return;
     }
+
+    // the callback could have started a new transmission right away...
+    if(IsDmaBusy())
+        return;
 
     // dma is still idle. Check if another SPI peripheral waits for a job.
     for(int per = 0; per < kNumSpiWithDma; per++)
         if(IsDmaTransferQueuedFor(per))
         {
             SpiHandle::Result result;
-            if(queued_dma_transfers_[per].direction == DMA_TX)
+            if(queued_dma_transfers_[per].direction
+               == SpiHandle::DmaDirection::TX)
             {
                 result = spi_handles[per].StartDmaTx(
                     queued_dma_transfers_[per].data,
@@ -429,13 +433,12 @@ SpiHandle::Impl::DmaTransmit(uint8_t*                       buff,
                              void*                          callback_context)
 {
     // if dma is currently running - queue a job
-    // if(false)
     if(IsDmaBusy())
     {
         SpiDmaJob job;
         job.data             = buff;
         job.size             = size;
-        job.direction        = DMA_TX;
+        job.direction        = SpiHandle::DmaDirection::TX;
         job.callback         = callback;
         job.callback_context = callback_context;
 
@@ -458,7 +461,7 @@ SpiHandle::Impl::StartDmaTx(uint8_t*                       buff,
                             SpiHandle::CallbackFunctionPtr callback,
                             void*                          callback_context)
 {
-    InitDma(DMA_TX);
+    InitDma(SpiHandle::DmaDirection::TX);
 
     while(HAL_SPI_GetState(&hspi_) != HAL_SPI_STATE_READY) {};
 
@@ -484,7 +487,7 @@ SpiHandle::Impl::DmaReceive(uint8_t*                       buff,
                             SpiHandle::CallbackFunctionPtr callback,
                             void*                          callback_context)
 {
-    InitDma(DMA_RX);
+    InitDma(SpiHandle::DmaDirection::RX);
 
     if(HAL_SPI_Receive_DMA(&hspi_, buff, size) != HAL_OK)
     {

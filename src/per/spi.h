@@ -107,6 +107,12 @@ class SpiHandle
         ERR /**< & */
     };
 
+    enum class DmaDirection
+    {
+        RX, /**< & */
+        TX, /**< & */
+    };
+
     /** Initializes handler */
     Result Init(const Config& config);
 
