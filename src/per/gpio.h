@@ -7,7 +7,7 @@ namespace daisy
 {
 struct Pin
 {
-    Pin() {}
+    Pin() { Init(Port::DSY_GPIOX, 0); }
     ~Pin() {}
 
     /** Enums and a simple struct for defining a hardware pin on the MCU

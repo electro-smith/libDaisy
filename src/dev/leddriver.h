@@ -64,7 +64,7 @@ class LedDriverPca9685
               const uint8_t (&addresses)[numDrivers],
               DmaBuffer dma_buffer_a,
               DmaBuffer dma_buffer_b,
-              Pin       oe_pin)
+              Pin       oe_pin = Pin())
     {
         i2c_             = i2c;
         draw_buffer_     = dma_buffer_a;
@@ -76,27 +76,6 @@ class LedDriverPca9685
 
         InitializeBuffers();
         InitializeDrivers();
-    }
-
-
-    /** Initialises the driver. Overload the init with oe_pin, since we can't use default with the pin class.
-     * \param i2c           The I2C peripheral to use.
-     * \param addresses     An array of addresses for each of the driver chips.
-     * \param dma_buffer_a  The first buffer for the DMA. This must be placed in 
-     *                      D2 memory by adding the DMA_BUFFER_MEM_SECTION attribute
-     *                      like this: `LedDriverPca9685<2>::DmaBuffer DMA_BUFFER_MEM_SECTION bufferA;`
-     * \param dma_buffer_b  The second buffer for the DMA. This must be placed in 
-     *                      D2 memory by adding the DMA_BUFFER_MEM_SECTION attribute
-     *                      like this: `LedDriverPca9685<2>::DmaBuffer DMA_BUFFER_MEM_SECTION bufferB;`
-    */
-    void Init(I2CHandle i2c,
-              const uint8_t (&addresses)[numDrivers],
-              DmaBuffer dma_buffer_a,
-              DmaBuffer dma_buffer_b)
-    {
-        Pin pin;
-        pin.Init(Pin::Port::DSY_GPIOX, 0);
-        Init(i2c, addresses, dma_buffer_a, dma_buffer_b, pin);
     }
 
     /** Returns the number of leds available from this driver. */
