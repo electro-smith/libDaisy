@@ -27,8 +27,7 @@ class Encoder
 in Hertz.
 */
     //
-    void
-    Init(dsy_gpio_pin a, dsy_gpio_pin b, dsy_gpio_pin click, float update_rate);
+    void Init(Pin a, Pin b, Pin click, float update_rate);
     /** Called at update_rate to debounce and handle timing for the switch.
 */
     //
@@ -61,10 +60,10 @@ be made at the same rate as the debounce function is being called.
     }
 
   private:
-    Switch   sw_;
-    dsy_gpio hw_a_, hw_b_;
-    uint8_t  a_, b_;
-    int32_t  inc_;
+    Switch  sw_;
+    GPIO    hw_a_, hw_b_;
+    uint8_t a_, b_;
+    int32_t inc_;
 };
 } // namespace daisy
 #endif
