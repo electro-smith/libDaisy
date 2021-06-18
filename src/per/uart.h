@@ -75,9 +75,9 @@ class UartHandler
 
         struct
         {
-            dsy_gpio_pin tx; /**< & */
-            dsy_gpio_pin rx; /**< & */
-        } pin_config;        /**< & */
+            Pin tx;   /**< & */
+            Pin rx;   /**< & */
+        } pin_config; /**< & */
 
         Peripheral periph;
         StopBits   stopbits;
