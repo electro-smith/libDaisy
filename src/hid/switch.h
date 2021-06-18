@@ -48,15 +48,14 @@ class Switch
     \param pol switch polarity -- Default: POLARITY_INVERTED
     \param pu switch pull up/down -- Default: PULL_UP
     */
-    void
-    Init(dsy_gpio_pin pin, float update_rate, Type t, Polarity pol, Pull pu);
+    void Init(Pin pin, float update_rate, Type t, Polarity pol, Pull pu);
 
     /**
        Simplified Init.
        \param pin port/pin object to tell the switch which hardware pin to use.
        \param update_rate the rate at which the Debounce() function will be called. (used for timing).
     */
-    void Init(dsy_gpio_pin pin, float update_rate);
+    void Init(Pin pin, float update_rate);
 
     /** 
     Called at update_rate to debounce and handle timing for the switch.
@@ -77,7 +76,7 @@ class Switch
     /** \return true if the button is held down, without debouncing */
     inline bool RawState()
     {
-        return flip_ ? !dsy_gpio_read(&hw_gpio_) : dsy_gpio_read(&hw_gpio_);
+        return flip_ ? !hw_gpio_.Read() : hw_gpio_.Read();
     }
 
     /** \return the time in milliseconds that the button has been held (or toggle has been on) */
@@ -95,11 +94,11 @@ class Switch
     }
 
   private:
-    Type     t_;
-    dsy_gpio hw_gpio_;
-    uint8_t  state_;
-    bool     flip_;
-    float    time_per_update_, time_held_;
+    Type    t_;
+    GPIO    hw_gpio_;
+    uint8_t state_;
+    bool    flip_;
+    float   time_per_update_, time_held_;
 };
 
 } // namespace daisy
