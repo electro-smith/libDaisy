@@ -53,6 +53,7 @@ class DacHandle::Impl
     size_t                 buff_size_;
     uint16_t *             buff_[2];
     DacHandle::DacCallback callback_;
+    GPIO                   d1, d2;
 };
 
 // ================================================================
@@ -238,19 +239,20 @@ void DacHandle::Impl::InitPins()
     if(ChannelOneActive())
     {
         // Init PA4 as Analog
-        dsy_gpio d1;
-        d1.pin  = {DSY_GPIOA, 4};
-        d1.mode = DSY_GPIO_MODE_ANALOG;
-        dsy_gpio_init(&d1);
+        GPIO::Config gpio_conf;
+        gpio_conf.pin.Init(Pin::Port::DSY_GPIOA, 4);
+        gpio_conf.mode = GPIO::Config::Mode::ANALOG;
+        d1.Init(gpio_conf);
     }
 
     if(ChannelTwoActive())
     {
         // Init PA5 as Analog
-        dsy_gpio d2;
-        d2.pin  = {DSY_GPIOA, 5};
-        d2.mode = DSY_GPIO_MODE_ANALOG;
-        dsy_gpio_init(&d2);
+        GPIO::Config gpio_conf;
+
+        gpio_conf.pin.Init(Pin::Port::DSY_GPIOA, 5);
+        gpio_conf.mode = GPIO::Config::Mode::ANALOG;
+        d2.Init(gpio_conf);
     }
 }
 
@@ -309,15 +311,11 @@ void DacHandle::Impl::DeInitPins()
 {
     if(ChannelOneActive())
     {
-        dsy_gpio d1;
-        d1.pin = {DSY_GPIOA, 4};
-        dsy_gpio_deinit(&d1);
+        d1.DeInit();
     }
     if(ChannelTwoActive())
     {
-        dsy_gpio d2;
-        d2.pin = {DSY_GPIOA, 5};
-        dsy_gpio_deinit(&d2);
+        d2.DeInit();
     }
 }
 
