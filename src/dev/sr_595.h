@@ -39,7 +39,7 @@ class ShiftRegister595
      * \param pin_cfg is an array of dsy_gpio_pin corresponding the the Pins enum above.
      * \param num_daisy_chained (default = 1) is the number of 595 devices daisy chained together.
      */
-    void Init(dsy_gpio_pin *pin_cfg, size_t num_daisy_chained = 1);
+    void Init(daisy::Pin pin_cfg, size_t num_daisy_chained = 1);
 
     /** Sets the state of the specified output.
         \param idx The index starts with QA on the first device and ends with QH on the last device.
@@ -52,9 +52,9 @@ class ShiftRegister595
     void Write();
 
   private:
-    dsy_gpio pin_[NUM_PINS];
-    uint8_t  state_[kMaxSr595DaisyChain];
-    size_t   num_devices_;
+    daisy::GPIO pin_[NUM_PINS];
+    uint8_t     state_[kMaxSr595DaisyChain];
+    size_t      num_devices_;
 };
 
 #endif
