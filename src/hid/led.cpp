@@ -5,13 +5,14 @@ using namespace daisy;
 
 #define RESOLUTION_MAX (65535)
 
-void Led::Init(dsy_gpio_pin pin, bool invert, float samplerate)
+void Led::Init(Pin pin, bool invert, float samplerate)
 {
     // Init hardware LED
     // Simple OUTPUT GPIO for now.
-    hw_pin_.pin  = pin;
-    hw_pin_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    dsy_gpio_init(&hw_pin_);
+    GPIO::Config gpio_conf;
+    gpio_conf.pin  = pin;
+    gpio_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
+    hw_pin_.Init(gpio_conf);
     // Set internal stuff.
     bright_  = 0.0f;
     pwm_cnt_ = 0;
@@ -41,7 +42,7 @@ void Led::Update()
     pwm_ += 120.f / samplerate_;
     if(pwm_ > 1.f)
         pwm_ -= 1.f;
-    dsy_gpio_write(&hw_pin_, bright_ > pwm_ ? on_ : off_);
+    hw_pin_.Write(bright_ > pwm_ ? on_ : off_);
 
     // Once we have a slower timer set up:
     // Right now its too fast.
