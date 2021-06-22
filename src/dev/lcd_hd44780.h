@@ -27,9 +27,9 @@ class LcdHD44780
 
     struct Config
     {
-        bool         cursor_on;
-        bool         cursor_blink;
-        dsy_gpio_pin rs, en, d4, d5, d6, d7;
+        bool cursor_on;
+        bool cursor_blink;
+        Pin  rs, en, d4, d5, d6, d7;
     };
 
     /** 
@@ -63,11 +63,11 @@ class LcdHD44780
     void Clear();
 
   private:
-    bool     cursor_on;
-    bool     cursor_blink;
-    dsy_gpio lcd_pin_rs;
-    dsy_gpio lcd_pin_en;
-    dsy_gpio lcd_data_pin[4]; // D4-D7
+    bool cursor_on;
+    bool cursor_blink;
+    GPIO lcd_pin_rs;
+    GPIO lcd_pin_en;
+    GPIO lcd_data_pin[4]; // D4-D7
 
     void WriteData(uint8_t);
     void WriteCommand(uint8_t);
