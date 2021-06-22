@@ -24,8 +24,8 @@ class SSD130xI2CTransport
             i2c_config.periph = I2CHandle::Config::Peripheral::I2C_1;
             i2c_config.speed  = I2CHandle::Config::Speed::I2C_1MHZ;
 
-            i2c_config.pin_config.scl.Init(DSY_GPIOB, 8);
-            i2c_config.pin_config.sda.Init(DSY_GPIOB, 9);
+            i2c_config.pin_config.scl.Init(Pin::Port::DSY_GPIOB, 8);
+            i2c_config.pin_config.sda.Init(Pin::Port::DSY_GPIOB, 9);
             i2c_address = 0x3C;
         }
     };
@@ -64,49 +64,50 @@ class SSD130x4WireSpiTransport
     {
         struct
         {
-            dsy_gpio_pin dc;    /**< & */
-            dsy_gpio_pin reset; /**< & */
+            Pin dc;    /**< & */
+            Pin reset; /**< & */
         } pin_config;
         void Defaults()
         {
-            pin_config.dc    = {DSY_GPIOB, 4};
-            pin_config.reset = {DSY_GPIOB, 15};
+            pin_config.dc.Init(Pin::Port::DSY_GPIOB, 4);
+            pin_config.reset.Init(Pin::Port::DSY_GPIOB, 15);
         }
     };
     void Init(const Config& config)
     {
         // Initialize both GPIO
-        pin_dc_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_dc_.pin  = config.pin_config.dc;
-        dsy_gpio_init(&pin_dc_);
-        pin_reset_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_reset_.pin  = config.pin_config.reset;
-        dsy_gpio_init(&pin_reset_);
+        GPIO::Config gpio_conf;
+        gpio_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
+        gpio_conf.pin  = config.pin_config.dc;
+        pin_dc_.Init(gpio_conf);
+
+        gpio_conf.pin  = config.pin_config.reset;
+        pin_reset_.Init(gpio_conf);
         // Initialize SPI
         spi_.Init();
 
         // Reset and Configure OLED.
-        dsy_gpio_write(&pin_reset_, 0);
+        pin_reset_.Write(0);
         System::Delay(10);
-        dsy_gpio_write(&pin_reset_, 1);
+        pin_reset_.Write(1);
         System::Delay(10);
     };
     void SendCommand(uint8_t cmd)
     {
-        dsy_gpio_write(&pin_dc_, 0);
+        pin_dc_.Write(0);
         spi_.BlockingTransmit(&cmd, 1);
     };
 
     void SendData(uint8_t* buff, size_t size)
     {
-        dsy_gpio_write(&pin_dc_, 1);
+        pin_dc_.Write(1);
         spi_.BlockingTransmit(buff, size);
     };
 
   private:
     SpiHandle spi_;
-    dsy_gpio  pin_reset_;
-    dsy_gpio  pin_dc_;
+    GPIO  pin_reset_;
+    GPIO  pin_dc_;
 };
 
 
