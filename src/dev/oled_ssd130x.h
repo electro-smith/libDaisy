@@ -81,7 +81,7 @@ class SSD130x4WireSpiTransport
         gpio_conf.pin  = config.pin_config.dc;
         pin_dc_.Init(gpio_conf);
 
-        gpio_conf.pin  = config.pin_config.reset;
+        gpio_conf.pin = config.pin_config.reset;
         pin_reset_.Init(gpio_conf);
         // Initialize SPI
         spi_.Init();
@@ -106,8 +106,8 @@ class SSD130x4WireSpiTransport
 
   private:
     SpiHandle spi_;
-    GPIO  pin_reset_;
-    GPIO  pin_dc_;
+    GPIO      pin_reset_;
+    GPIO      pin_dc_;
 };
 
 
