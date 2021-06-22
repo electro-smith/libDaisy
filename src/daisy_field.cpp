@@ -147,12 +147,13 @@ void DaisyField::Init(bool boost)
     // Gate In
     Pin gate_in_pin;
     gate_in_pin = seed.GetPin(PIN_GATE_IN);
-    gate_in.Init(&gate_in_pin);
+    gate_in.Init(gate_in_pin);
+
     // Gate Out
-    gate_out.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    gate_out.pull = DSY_GPIO_NOPULL;
-    gate_out.pin  = seed.GetPin(PIN_GATE_OUT);
-    dsy_gpio_init(&gate_out);
+    GPIO::Config gpio_conf;
+    gpio_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
+    gpio_conf.pin  = seed.GetPin(PIN_GATE_OUT);
+    gate_out.Init(gpio_conf);
 
 
     DacHandle::Config cfg;
