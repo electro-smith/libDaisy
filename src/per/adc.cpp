@@ -100,20 +100,20 @@ static const uint32_t adc_channel_from_pin(Pin* pin)
     // For now just a rough switch case for all ADC_CHANNEL values
     Pin adcpins[DSY_ADC_MAX_CHANNELS];
 
-    adcpins[0].Init(DSY_GPIOA, 6);
-    adcpins[1].Init(DSY_GPIOC, 4);
-    adcpins[2].Init(DSY_GPIOB, 1);
-    adcpins[3].Init(DSY_GPIOA, 7);
-    adcpins[4].Init(DSY_GPIOC, 5);
-    adcpins[5].Init(DSY_GPIOB, 0);
-    adcpins[6].Init(DSY_GPIOC, 0);
-    adcpins[7].Init(DSY_GPIOC, 1);
-    adcpins[8].Init(DSY_GPIOA, 2);
-    adcpins[9].Init(DSY_GPIOA, 3);
-    adcpins[10].Init(DSY_GPIOA, 0);
-    adcpins[11].Init(DSY_GPIOA, 1);
-    adcpins[12].Init(DSY_GPIOA, 4);
-    adcpins[13].Init(DSY_GPIOA, 5);
+    adcpins[0].Init(Pin::Port::DSY_GPIOA, 6);
+    adcpins[1].Init(Pin::Port::DSY_GPIOC, 4);
+    adcpins[2].Init(Pin::Port::DSY_GPIOB, 1);
+    adcpins[3].Init(Pin::Port::DSY_GPIOA, 7);
+    adcpins[4].Init(Pin::Port::DSY_GPIOC, 5);
+    adcpins[5].Init(Pin::Port::DSY_GPIOB, 0);
+    adcpins[6].Init(Pin::Port::DSY_GPIOC, 0);
+    adcpins[7].Init(Pin::Port::DSY_GPIOC, 1);
+    adcpins[8].Init(Pin::Port::DSY_GPIOA, 2);
+    adcpins[9].Init(Pin::Port::DSY_GPIOA, 3);
+    adcpins[10].Init(Pin::Port::DSY_GPIOA, 0);
+    adcpins[11].Init(Pin::Port::DSY_GPIOA, 1);
+    adcpins[12].Init(Pin::Port::DSY_GPIOA, 4);
+    adcpins[13].Init(Pin::Port::DSY_GPIOA, 5);
 
     for(size_t i = 0; i < DSY_ADC_MAX_CHANNELS; i++)
     {
@@ -132,7 +132,7 @@ void AdcChannelConfig::InitSingle(Pin pin)
 {
     pin_config_.pin  = pin;
     mux_channels_    = 0;
-    pin_config_.mode = DSY_GPIO_MODE_ANALOG;
+    pin_config_.mode = GPIO::Config::Mode::ANALOG;
 }
 void AdcChannelConfig::InitMux(Pin    adc_pin,
                                size_t mux_channels,
@@ -143,7 +143,7 @@ void AdcChannelConfig::InitMux(Pin    adc_pin,
     size_t pins_to_init;
     // Init ADC Pin
     pin_config_.pin  = adc_pin;
-    pin_config_.mode = DSY_GPIO_MODE_ANALOG;
+    pin_config_.mode = GPIO::Config::Mode::ANALOG;
     // Init Muxes
     mux_pin_config_[0].pin = mux_0;
     mux_pin_config_[1].pin = mux_1;
@@ -152,7 +152,7 @@ void AdcChannelConfig::InitMux(Pin    adc_pin,
     pins_to_init           = get_num_mux_pins_required(mux_channels_);
     for(size_t i = 0; i < pins_to_init; i++)
     {
-        mux_pin_config_[i].mode = DSY_GPIO_MODE_OUTPUT_PP;
+        mux_pin_config_[i].mode = GPIO::Config::Mode::OUTPUT_PP;
     }
 }
 
@@ -456,9 +456,9 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
         // deinit pins
         for(size_t i = 0; i < adc.channels; i++)
         {
-            dsy_gpio_deinit(&adc.pin_cfg[i].pin_);
+            adc.pin_cfg[i].pin_.DeInit();
             for(size_t muxCh = 0; muxCh < adc.num_mux_pins_required[i]; muxCh++)
-                dsy_gpio_deinit(&adc.pin_cfg[i].mux_pin_[muxCh]);
+                adc.pin_cfg[i].mux_pin_[muxCh].DeInit();
         }
         HAL_DMA_DeInit(adcHandle->DMA_Handle);
     }
