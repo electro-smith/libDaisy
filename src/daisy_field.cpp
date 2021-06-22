@@ -83,7 +83,7 @@ void DaisyField::Init(bool boost)
 
     for(size_t i = 0; i < SW_LAST; i++)
     {
-        dsy_gpio_pin p = seed.GetPin(sw_pin[i]);
+        Pin p = seed.GetPin(sw_pin[i]);
         sw[i].Init(p, AudioCallbackRate());
     }
 
@@ -124,10 +124,10 @@ void DaisyField::Init(bool boost)
 
     display_config.driver_config.transport_config.pin_config.dc
         = seed.GetPin(PIN_OLED_CMD);
-    display_config.driver_config.transport_config.pin_config.reset
-        = {DSY_GPIOX, 0}; // Not a real pin...
 
-    display.Init(display_config);
+    display_config.driver_config.transport_config.pin_config.reset.Init(
+        Pin::Port::DSY_GPIOX, 0);
+
 
     // LEDs
     // 2x PCA9685 addresses 0x00, and 0x02
