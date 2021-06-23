@@ -17,5 +17,5 @@ TEST(util_MidiHandler, a_stateAfterInit){
     MidiHandler<MidiTestTransport>::Config conf;
     
     midi.Init(conf);
-
+    EXPECT_TRUE(true);
 }
