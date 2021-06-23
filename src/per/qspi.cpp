@@ -1,4 +1,4 @@
-#include "per/qspi_cpp.h"
+#include "per/qspi.h"
 #include "stm32h7xx_hal.h"
 #include "dev/flash_IS25LP080D.h"
 #include "dev/flash_IS25LP064A.h"
