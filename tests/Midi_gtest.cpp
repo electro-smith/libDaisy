@@ -53,6 +53,28 @@ class MidiTest : public ::testing::Test
         event = midi.PopEvent();
     }
 
+    //help testing
+    void Test(uint8_t evType,
+              uint8_t chkType,
+              uint8_t chn,
+              bool    twoData,
+              uint8_t d0,
+              uint8_t d1)
+    {
+        //test eventtype == expected type
+        EXPECT_EQ(evType, chkType);
+
+        //test channel
+        EXPECT_EQ(event.channel, chn);
+
+        //test data
+        EXPECT_EQ(event.data[0], d0);
+        if(twoData)
+        {
+            EXPECT_EQ(event.data[1], d1);
+        }
+    }
+
     MidiHandler<MidiTestTransport> midi;
     MidiEvent                      event;
 };
@@ -71,25 +93,13 @@ TEST_F(MidiTest, channelVoice)
                 {
                     uint8_t msgs[]
                         = {(uint8_t)(0x80 + (type << 4) + chn), d0, d1};
+
                     bool sendThree = type != 4 && type != 5;
                     ParseAndPop(msgs, 2 + sendThree);
 
-                    //ChannelMode msgs are special case
-                    if(type == 3 && d0 > 119)
-                    {
-                        EXPECT_EQ((uint8_t)event.type, (uint8_t)ChannelMode);
-                    }
-                    else
-                    {
-                        EXPECT_EQ((uint8_t)event.type, type);
-                    }
-
-                    EXPECT_EQ(event.channel, chn);
-                    EXPECT_EQ(event.data[0], d0);
-                    if(sendThree)
-                    {
-                        EXPECT_EQ(event.data[1], d1);
-                    }
+                    uint8_t chkType
+                        = (type == 3 && d0 > 119) ? (uint8_t)ChannelMode : type;
+                    Test((uint8_t)event.type, chkType, chn, sendThree, d0, d1);
                 }
             }
         }
@@ -99,7 +109,7 @@ TEST_F(MidiTest, channelVoice)
 //Channel Mode Messages
 TEST_F(MidiTest, channelMode)
 {
-    //All messages (misses some cases)
+    //All messages
     for(uint8_t type = 120; type < 128; type++)
     {
         uint8_t msg[] = {0x80 + (3 << 4), type, 0};
@@ -110,16 +120,14 @@ TEST_F(MidiTest, channelMode)
     //LocalControlOn
     uint8_t msg[] = {0x80 + (3 << 4), 122, 127};
     ParseAndPop(msg, 3);
-    EXPECT_EQ((uint8_t)event.cm_type, (uint8_t)LocalControl);
-    EXPECT_EQ((uint8_t)event.data[1], 127);
+    Test((uint8_t)event.cm_type, (uint8_t)LocalControl, 0, true, 122, 127);
 
     //MonoModeOn
     for(uint8_t data = 0; data < 128; data++)
     {
         uint8_t msg[] = {0x80 + (3 << 4), 126, data};
         ParseAndPop(msg, 3);
-        EXPECT_EQ((uint8_t)event.cm_type, (uint8_t)MonoModeOn);
-        EXPECT_EQ(event.data[1], data);
+        Test((uint8_t)event.cm_type, (uint8_t)MonoModeOn, 0, true, 126, data);
     }
 }
 
@@ -135,13 +143,7 @@ TEST_F(MidiTest, systemCommon)
             {
                 uint8_t msg[] = {uint8_t((0x0f << 4) + type), d0, d1};
                 ParseAndPop(msg, 2 + (type == 2));
-
-                EXPECT_EQ((uint8_t)event.sc_type, type);
-                EXPECT_EQ(event.data[0], d0);
-                if(type == 2)
-                {
-                    EXPECT_EQ(event.data[1], d1);
-                }
+                Test((uint8_t)event.sc_type, type, 0, type == 2, d0, d1);
             }
         }
     }
