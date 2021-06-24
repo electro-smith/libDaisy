@@ -156,3 +156,14 @@ TEST_F(MidiTest, systemCommon)
         EXPECT_EQ((uint8_t)event.sc_type, type);
     }
 }
+
+// System Real Time Messages
+TEST_F(MidiTest, systemRealTime)
+{
+    for(uint8_t type = 0; type < 8; type++)
+    {
+        uint8_t msg[] = {uint8_t(0xf8 + type), 0, 0};
+        ParseAndPop(msg, 1);
+        EXPECT_EQ((uint8_t)event.srt_type, type);
+    }
+}
