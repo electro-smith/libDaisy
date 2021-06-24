@@ -10,6 +10,7 @@
 #include "per/uart.h"
 #include "util/ringbuffer.h"
 #include "hid/MidiEvent.h"
+#include "sys/system.h"
 
 namespace daisy
 {
