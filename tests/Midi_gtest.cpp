@@ -43,7 +43,18 @@ class MidiTest : public ::testing::Test
         midi.Init(conf);
     }
 
+    //help with parsing messages
+    void ParseAndPop(uint8_t* msgs, uint8_t size)
+    {
+        for(uint8_t i = 0; i < size; i++)
+        {
+            midi.Parse(msgs[i]);
+        }
+        event = midi.PopEvent();
+    }
+
     MidiHandler<MidiTestTransport> midi;
+    MidiEvent                      event;
 };
 
 //Channel Voice messages
@@ -58,16 +69,12 @@ TEST_F(MidiTest, channelVoice)
             {
                 for(uint8_t d1 = 0; d1 < 128; d1++)
                 {
-                    midi.Parse(0x80 + (type << 4) + chn);
-                    midi.Parse(d0);
+                    uint8_t msgs[]
+                        = {(uint8_t)(0x80 + (type << 4) + chn), d0, d1};
+                    bool sendThree = type != 4 && type != 5;
+                    ParseAndPop(msgs, 2 + sendThree);
 
-                    if(type != 4 && type != 5)
-                    { //4 and 5 are just one data byte
-                        midi.Parse(d1);
-                    }
-
-                    MidiEvent event = midi.PopEvent();
-
+                    //ChannelMode msgs are special case
                     if(type == 3 && d0 > 119)
                     {
                         EXPECT_EQ((uint8_t)event.type, (uint8_t)ChannelMode);
@@ -79,9 +86,8 @@ TEST_F(MidiTest, channelVoice)
 
                     EXPECT_EQ(event.channel, chn);
                     EXPECT_EQ(event.data[0], d0);
-
-                    if(type != 4 && type != 5)
-                    { //4 and 5 are just one data byte
+                    if(sendThree)
+                    {
                         EXPECT_EQ(event.data[1], d1);
                     }
                 }
@@ -96,31 +102,22 @@ TEST_F(MidiTest, channelMode)
     //All messages (misses some cases)
     for(uint8_t type = 120; type < 128; type++)
     {
-        midi.Parse(0x80 + (3 << 4));
-        midi.Parse(type);
-        midi.Parse(0);
-
-        MidiEvent event = midi.PopEvent();
+        uint8_t msg[] = {0x80 + (3 << 4), type, 0};
+        ParseAndPop(msg, 3);
         EXPECT_EQ((uint8_t)event.cm_type, type - 120);
     }
 
     //LocalControlOn
-    midi.Parse(0x80 + (3 << 4));
-    midi.Parse(122);
-    midi.Parse(127);
-
-    MidiEvent event = midi.PopEvent();
+    uint8_t msg[] = {0x80 + (3 << 4), 122, 127};
+    ParseAndPop(msg, 3);
     EXPECT_EQ((uint8_t)event.cm_type, (uint8_t)LocalControl);
     EXPECT_EQ((uint8_t)event.data[1], 127);
 
     //MonoModeOn
     for(uint8_t data = 0; data < 128; data++)
     {
-        midi.Parse(0x80 + (3 << 4));
-        midi.Parse(126);
-        midi.Parse(data);
-
-        MidiEvent event = midi.PopEvent();
+        uint8_t msg[] = {0x80 + (3 << 4), 126, data};
+        ParseAndPop(msg, 3);
         EXPECT_EQ((uint8_t)event.cm_type, (uint8_t)MonoModeOn);
         EXPECT_EQ(event.data[1], data);
     }
