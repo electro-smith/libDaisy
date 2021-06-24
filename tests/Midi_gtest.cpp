@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "hid/midi.h"
+#include "sys/system.h"
 
 //get rid of compiler errors over unused args in stubs
 #define UNUSED(x) (void)x
