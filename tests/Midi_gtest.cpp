@@ -28,20 +28,48 @@ class MidiTestTransport{
     private:
 };
 
-TEST(util_MidiHandler, a_stateAfterInit){
-    MidiHandler<MidiTestTransport> midi;
-    MidiHandler<MidiTestTransport>::Config handler_conf;
-    midi.Init(handler_conf);
-    
-    midi.Parse(0x80);
-    midi.Parse(0x00);
-    midi.Parse(0x00);
+class MidiTest : public ::testing::Test {
+    protected:
+        void SetUp() {
+            MidiHandler<MidiTestTransport>::Config conf;
+            midi.Init(conf);
+        }
 
-    MidiEvent event = midi.PopEvent();
-    EXPECT_TRUE(event.type == NoteOff);
+        MidiHandler<MidiTestTransport> midi;
+};
 
-    NoteOffEvent no_event = event.AsNoteOff();
-    EXPECT_EQ(no_event.channel, 0);
-    EXPECT_EQ(no_event.note, 0);
-    EXPECT_EQ(no_event.velocity, 0);
-}    
+//Channel Voice messages
+//for now I'm not using asNoteOff, etc. easier to just test on the raw MidiEvent
+TEST_F(MidiTest, channelVoice){    
+
+    for(uint8_t type = 0; type < 7; type++){
+        for (uint8_t chn = 0; chn < 16; chn++){
+            for (uint8_t d0 = 0; d0 < 128; d0++){
+                for (uint8_t d1 = 0; d1 < 128; d1++){
+                    midi.Parse(0x80 + (type << 4) + chn);
+                    midi.Parse(d0);
+
+                    if(type != 4 && type != 5){ //4 and 5 are just one data byte
+                        midi.Parse(d1);
+                    }
+
+                    MidiEvent event = midi.PopEvent();
+                    
+                    if(type == 3 && d0 > 119){
+                        EXPECT_EQ((uint8_t)event.type, (uint8_t)ChannelMode);
+                    }
+                    else{
+                        EXPECT_EQ((uint8_t)event.type, type);
+                    }
+
+                    EXPECT_EQ(event.channel, chn);
+                    EXPECT_EQ(event.data[0], d0);
+
+                    if(type != 4 && type != 5){ //4 and 5 are just one data byte
+                        EXPECT_EQ(event.data[1], d1);
+                    }                                      
+                }
+            }
+        }
+    }    
+}
