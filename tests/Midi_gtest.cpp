@@ -122,3 +122,35 @@ TEST_F(MidiTest, channelMode)
         EXPECT_EQ(event.data[1], data);
     }
 }
+
+//System Common Messages (no sysex)
+TEST_F(MidiTest, systemCommon)
+{
+    //types 1-3
+    for(uint8_t type = 1; type < 4; type++)
+    {
+        for(uint8_t d0 = 0; d0 < 128; d0++)
+        {
+            for(uint8_t d1 = 0; d1 < 128; d1++)
+            {
+                uint8_t msg[] = {uint8_t((0x0f << 4) + type), d0, d1};
+                ParseAndPop(msg, 2 + (type == 2));
+
+                EXPECT_EQ((uint8_t)event.sc_type, type);
+                EXPECT_EQ(event.data[0], d0);
+                if(type == 2)
+                {
+                    EXPECT_EQ(event.data[1], d1);
+                }
+            }
+        }
+    }
+
+    //types 4-7
+    for(uint8_t type = 4; type < 8; type++)
+    {
+        uint8_t msg[] = {uint8_t((0x0f << 4) + type)};
+        ParseAndPop(msg, 1);
+        EXPECT_EQ((uint8_t)event.sc_type, type);
+    }
+}
