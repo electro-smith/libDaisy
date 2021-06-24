@@ -4,7 +4,6 @@
 
 //get rid of compiler errors over unused args in stubs
 #define UNUSED(x) (void)x
-#define MAX_MESSAGES 3000
 
 using namespace daisy;
 
@@ -88,5 +87,41 @@ TEST_F(MidiTest, channelVoice)
                 }
             }
         }
+    }
+}
+
+//Channel Mode Messages
+TEST_F(MidiTest, channelMode)
+{
+    //All messages (misses some cases)
+    for(uint8_t type = 120; type < 128; type++)
+    {
+        midi.Parse(0x80 + (3 << 4));
+        midi.Parse(type);
+        midi.Parse(0);
+
+        MidiEvent event = midi.PopEvent();
+        EXPECT_EQ((uint8_t)event.cm_type, type - 120);
+    }
+
+    //LocalControlOn
+    midi.Parse(0x80 + (3 << 4));
+    midi.Parse(122);
+    midi.Parse(127);
+
+    MidiEvent event = midi.PopEvent();
+    EXPECT_EQ((uint8_t)event.cm_type, (uint8_t)LocalControl);
+    EXPECT_EQ((uint8_t)event.data[1], 127);
+
+    //MonoModeOn
+    for(uint8_t data = 0; data < 128; data++)
+    {
+        midi.Parse(0x80 + (3 << 4));
+        midi.Parse(126);
+        midi.Parse(data);
+
+        MidiEvent event = midi.PopEvent();
+        EXPECT_EQ((uint8_t)event.cm_type, (uint8_t)MonoModeOn);
+        EXPECT_EQ(event.data[1], data);
     }
 }
