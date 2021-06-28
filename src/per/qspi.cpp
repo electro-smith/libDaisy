@@ -39,6 +39,8 @@ class QSPIHandle::Impl
 
     QSPI_HandleTypeDef* GetHalHandle();
 
+    size_t GetNumPins() { return pin_count_; }
+
   private:
     QSPIHandle::Result ResetMemory();
 
@@ -59,7 +61,16 @@ class QSPIHandle::Impl
 
     QSPIHandle::Config config_;
     QSPI_HandleTypeDef halqspi_;
-    // uint8_t board;
+
+    static constexpr size_t pin_count_
+        = sizeof(QSPIHandle::Config::pin_config) / sizeof(dsy_gpio_pin);
+    // Data structure for easy hal initialization
+    dsy_gpio_pin* pin_config_arr_[pin_count_] = {&config_.pin_config.io0,
+                                                 &config_.pin_config.io1,
+                                                 &config_.pin_config.io2,
+                                                 &config_.pin_config.io3,
+                                                 &config_.pin_config.clk,
+                                                 &config_.pin_config.ncs};
 };
 
 
@@ -750,14 +761,14 @@ uint8_t QSPIHandle::Impl::GetStatusRegister()
 
 uint32_t QSPIHandle::Impl::GetPin(size_t pin)
 {
-    dsy_gpio_pin* p = &config_.pin_config[pin];
+    dsy_gpio_pin* p = pin_config_arr_[pin];
     return dsy_hal_map_get_pin(p);
 }
 
 
 GPIO_TypeDef* QSPIHandle::Impl::GetPort(size_t pin)
 {
-    dsy_gpio_pin* p = &config_.pin_config[pin];
+    dsy_gpio_pin* p = pin_config_arr_[pin];
     return dsy_hal_map_get_port(p);
 }
 
@@ -827,14 +838,14 @@ extern "C" void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
         __HAL_RCC_GPIOE_CLK_ENABLE();
         __HAL_RCC_GPIOB_CLK_ENABLE();
         // Seems the same for all pin outs so far.
-        uint8_t       af_config[QSPIHandle::Pin::PIN_LAST] = {GPIO_AF10_QUADSPI,
-                                                        GPIO_AF10_QUADSPI,
-                                                        GPIO_AF9_QUADSPI,
-                                                        GPIO_AF9_QUADSPI,
-                                                        GPIO_AF9_QUADSPI,
-                                                        GPIO_AF10_QUADSPI};
+        uint8_t       af_config[qspi_impl.GetNumPins()] = {GPIO_AF10_QUADSPI,
+                                                     GPIO_AF10_QUADSPI,
+                                                     GPIO_AF9_QUADSPI,
+                                                     GPIO_AF9_QUADSPI,
+                                                     GPIO_AF9_QUADSPI,
+                                                     GPIO_AF10_QUADSPI};
         GPIO_TypeDef* port;
-        for(uint8_t i = 0; i < QSPIHandle::Pin::PIN_LAST; i++)
+        for(uint8_t i = 0; i < qspi_impl.GetNumPins(); i++)
         {
             //            port                = (GPIO_TypeDef*)gpio_hal_port_map[qspi_handle.dsy_hqspi->pin_config[i].port];
             //            GPIO_InitStruct.Pin = gpio_hal_pin_map[qspi_handle.dsy_hqspi->pin_config[i].pin];
@@ -860,7 +871,7 @@ extern "C" void HAL_QSPI_MspDeInit(QSPI_HandleTypeDef* qspiHandle)
         __HAL_RCC_QSPI_CLK_DISABLE();
         GPIO_TypeDef* port;
         uint16_t      pin;
-        for(uint8_t i = 0; i < QSPIHandle::Pin::PIN_LAST; i++)
+        for(uint8_t i = 0; i < qspi_impl.GetNumPins(); i++)
         {
             //            port = (GPIO_TypeDef *)
             //                gpio_hal_port_map[qspi_handle.dsy_hqspi->pin_config[i].port];

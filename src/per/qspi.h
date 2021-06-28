@@ -28,19 +28,6 @@ namespace daisy
 class QSPIHandle
 {
   public:
-    //SCK,  CE# (active low)
-    /** List of Pins used in QSPI (passed in during Init) */
-    enum Pin
-    {
-        IO0,      /**< & */
-        IO1,      /**< & */
-        IO2,      /**< & */
-        IO3,      /**< & */
-        CLK,      /**< & */
-        NCS,      /**< & */
-        PIN_LAST, /**< & */
-    };
-
     enum Result
     {
         OK = 0,
@@ -73,9 +60,19 @@ class QSPIHandle
             DEVICE_LAST, /**< & */
         };
 
-        dsy_gpio_pin pin_config[Pin::PIN_LAST];
-        Mode         mode;
-        Device       device;
+        //SCK,  CE# (active low)
+        struct
+        {
+            dsy_gpio_pin io0; /**< & */
+            dsy_gpio_pin io1; /**< & */
+            dsy_gpio_pin io2; /**< & */
+            dsy_gpio_pin io3; /**< & */
+            dsy_gpio_pin clk; /**< & */
+            dsy_gpio_pin ncs; /**< & */
+        } pin_config;
+
+        Mode   mode;
+        Device device;
     };
 
     /** 

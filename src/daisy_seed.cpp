@@ -215,18 +215,15 @@ void DaisySeed::ConfigureSdram()
 }
 void DaisySeed::ConfigureQspi()
 {
-    dsy_gpio_pin *pin_group;
-
     qspi_config.device = QSPIHandle::Config::Device::IS25LP064A;
     qspi_config.mode   = QSPIHandle::Config::Mode::DSY_MEMORY_MAPPED;
-    pin_group          = qspi_config.pin_config;
 
-    pin_group[QSPIHandle::Pin::IO0] = dsy_pin(DSY_GPIOF, 8);
-    pin_group[QSPIHandle::Pin::IO1] = dsy_pin(DSY_GPIOF, 9);
-    pin_group[QSPIHandle::Pin::IO2] = dsy_pin(DSY_GPIOF, 7);
-    pin_group[QSPIHandle::Pin::IO3] = dsy_pin(DSY_GPIOF, 6);
-    pin_group[QSPIHandle::Pin::CLK] = dsy_pin(DSY_GPIOF, 10);
-    pin_group[QSPIHandle::Pin::NCS] = dsy_pin(DSY_GPIOG, 6);
+    qspi_config.pin_config.io0 = dsy_pin(DSY_GPIOF, 8);
+    qspi_config.pin_config.io1 = dsy_pin(DSY_GPIOF, 9);
+    qspi_config.pin_config.io2 = dsy_pin(DSY_GPIOF, 7);
+    qspi_config.pin_config.io3 = dsy_pin(DSY_GPIOF, 6);
+    qspi_config.pin_config.clk = dsy_pin(DSY_GPIOF, 10);
+    qspi_config.pin_config.ncs = dsy_pin(DSY_GPIOG, 6);
 }
 void DaisySeed::ConfigureAudio()
 {
