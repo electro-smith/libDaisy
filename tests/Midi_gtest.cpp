@@ -44,12 +44,26 @@ class MidiTest : public ::testing::Test
     }
 
     //help with parsing messages
-    void ParseAndPop(uint8_t* msgs, uint8_t size)
+    void Parse(uint8_t* msgs, int size)
     {
-        for(uint8_t i = 0; i < size; i++)
+        for(int i = 0; i < size; i++)
         {
             midi.Parse(msgs[i]);
         }
+    }
+
+    //help with parsing messages
+    void ParseAndPop(uint8_t* msgs, int size)
+    {
+        Parse(msgs, size);
+        event = midi.PopEvent();
+    }
+
+    //help with parsing sysex messages
+    void ParseAndPopSysex(uint8_t* msgs, int size){
+        midi.Parse(0xf0); //sysex
+        Parse(msgs, size);
+        midi.Parse(0xf7);//end of sysex
         event = midi.PopEvent();
     }
 
@@ -72,6 +86,18 @@ class MidiTest : public ::testing::Test
         if(twoData)
         {
             EXPECT_EQ(event.data[1], d1);
+        }
+    }
+
+    //help test sysex
+    void TestSysex(uint8_t* msgs, int size){
+        EXPECT_EQ((uint8_t)event.type, (uint8_t)SystemCommon);        
+        EXPECT_EQ((uint8_t)event.sc_type, (uint8_t)SystemExclusive);
+
+        EXPECT_EQ(event.sysex_message_len, size);
+
+        for(int i = 0; i < size; i++){
+            EXPECT_EQ(event.sysex_data[i], msgs[i]);
         }
     }
 
@@ -107,6 +133,7 @@ TEST_F(MidiTest, channelVoice)
 }
 
 //Channel Mode Messages
+// also doesn't totally test channels (for now)
 TEST_F(MidiTest, channelMode)
 {
     //All messages
@@ -166,4 +193,15 @@ TEST_F(MidiTest, systemRealTime)
         ParseAndPop(msg, 1);
         EXPECT_EQ((uint8_t)event.srt_type, type);
     }
+}
+
+// sysex
+TEST_F(MidiTest, systemExclusive)
+{
+    uint8_t msgs[6];
+    for(int i = 0; i < 6; i++){
+        msgs[i] = (uint8_t)i;
+    }
+    ParseAndPopSysex(msgs, 6);
+    TestSysex(msgs, 6);
 }
