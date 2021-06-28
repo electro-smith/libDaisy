@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['gateinput_1470',['GateInput',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953',1,'daisy::DaisyPatch']]]
+  ['footswitchled_1738',['FootswitchLed',['../classdaisy_1_1_daisy_petal.html#ad833e85c076a9fc4c3ad16cb8f09b06d',1,'daisy::DaisyPetal']]],
+  ['format_1739',['Format',['../structdaisy_1_1_wm8731_1_1_config.html#acb5156a1681bb52dcc37418690629104',1,'daisy::Wm8731::Config']]]
 ];

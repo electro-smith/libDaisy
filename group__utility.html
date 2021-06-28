@@ -240,12 +240,17 @@ Variables</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>General utilities. Ringbuffers, LED colors, OLED stuff, etc. </p>
+<p>A <code><a class="el" href="classdaisy_1_1_mapped_value.html">MappedValue</a></code> that maps an list of strings linearly.</p>
+<p>A <code><a class="el" href="classdaisy_1_1_mapped_value.html">MappedValue</a></code> that maps an int value linearly.</p>
+<p>A <code><a class="el" href="classdaisy_1_1_mapped_value.html">MappedValue</a></code> that maps a float value using various mapping functions.</p>
+<p>Abstract base class for a value that is mapped to a 0..1 normalized range.</p>
 <p>A safe and convenient statically allocated string with constexpr powers.</p>
 <p>CPU load metering.</p>
 <dl class="section author"><dt>Author</dt><dd>jelliesen</dd></dl>
 <p>To measure the CPU load of your audio processing, create a <a class="el" href="classdaisy_1_1_cpu_load_meter.html">CpuLoadMeter</a> and initialize it with your block size and sample rate. Then at the beginning of the audio callback, call <code>OnBlockStart()</code>, and at the end of the audio callback, call <code>OnBlockEnd()</code>. You can then read out the minimum, maximum and average CPU load.</p>
 <dl class="section author"><dt>Author</dt><dd>jelliesen</dd></dl>
-<p>This string class is statically allocated. All of its functions can be evaluated at compile time through the power of constexpr. </p>
+<p>This string class is statically allocated. All of its functions can be evaluated at compile time through the power of constexpr.</p>
+<dl class="section author"><dt>Author</dt><dd>jelliesen </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="gaa27bc16108f37dbef348fe7e2644da4d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaa27bc16108f37dbef348fe7e2644da4d">&#9670;&nbsp;</a></span>BSP_SD_CardInfo</h2>

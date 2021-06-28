@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['loggerconsts_1472',['LoggerConsts',['../group__external.html#gaa6626e0cc32e5d8a4259168bc05fc8bb',1,'daisy::Logger']]],
-  ['loggerdestination_1473',['LoggerDestination',['../namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9',1,'daisy']]]
+  ['itemtype_1741',['ItemType',['../classdaisy_1_1_abstract_menu.html#a48039035e616d6ecf42cc15561544fad',1,'daisy::AbstractMenu']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['oversampling_1476',['OverSampling',['../classdaisy_1_1_adc_handle.html#ad8bb144ed73f891cec1d10122f0ba541',1,'daisy::AdcHandle']]]
+  ['loggerconsts_1743',['LoggerConsts',['../group__external.html#gaa6626e0cc32e5d8a4259168bc05fc8bb',1,'daisy::Logger']]],
+  ['loggerdestination_1744',['LoggerDestination',['../namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9',1,'daisy']]]
 ];

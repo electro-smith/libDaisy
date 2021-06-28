@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['bitdepth_1452',['BitDepth',['../classdaisy_1_1_dac_handle.html#a0c969b1aa7f8549756e6309b3922e902',1,'daisy::DacHandle::BitDepth()'],['../structdaisy_1_1_sai_handle_1_1_config.html#aafe336101d7c50dd68e2611ccce7c808',1,'daisy::SaiHandle::Config::BitDepth()']]],
-  ['bufferstate_1453',['BufferState',['../classdaisy_1_1_dac_handle.html#a30248a4615012854c7271b510ba7803c',1,'daisy::DacHandle::BufferState()'],['../classdaisy_1_1_wav_writer.html#a17e4799ade3a78bfb8cab25ac90f04eb',1,'daisy::WavWriter::BufferState()']]],
-  ['buswidth_1454',['BusWidth',['../classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799b',1,'daisy::SdmmcHandler']]]
+  ['alignment_1720',['Alignment',['../namespacedaisy.html#a9697449f10c05aa93ee32b36020ea387',1,'daisy']]],
+  ['arrowbuttontype_1721',['ArrowButtonType',['../namespacedaisy.html#ac734c565c1dc55cbf6b74ea942f40c1c',1,'daisy']]]
 ];

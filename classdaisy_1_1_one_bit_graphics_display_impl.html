@@ -96,6 +96,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3db8f23c875296a365c17dfd90acc50e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a15c2cea37d85cdba228913546cb659bc"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_one_bit_graphics_display_impl.html#a15c2cea37d85cdba228913546cb659bc">WriteString</a> (const char *str, <a class="el" href="struct_font_def.html">FontDef</a> font, bool on) override</td></tr>
 <tr class="separator:a15c2cea37d85cdba228913546cb659bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ae092d4883df211d4a2ebfeee571a69"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_rectangle.html">Rectangle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_one_bit_graphics_display_impl.html#a9ae092d4883df211d4a2ebfeee571a69">WriteStringAligned</a> (const char *str, const <a class="el" href="struct_font_def.html">FontDef</a> &amp;font, <a class="el" href="classdaisy_1_1_rectangle.html">Rectangle</a> boundingBox, <a class="el" href="namespacedaisy.html#a9697449f10c05aa93ee32b36020ea387">Alignment</a> alignment, bool on) override</td></tr>
+<tr class="separator:a9ae092d4883df211d4a2ebfeee571a69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classdaisy_1_1_one_bit_graphics_display"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classdaisy_1_1_one_bit_graphics_display')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classdaisy_1_1_one_bit_graphics_display.html">daisy::OneBitGraphicsDisplay</a></td></tr>
 <tr class="memitem:ab4ad45effd7f8901fae690a8a6aff596 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memItemLeft" align="right" valign="top"><a id="ab4ad45effd7f8901fae690a8a6aff596"></a>
 virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>Height</b> () const =0</td></tr>
@@ -103,6 +105,9 @@ virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>Height</b
 <tr class="memitem:a6a8d21de6d8a49b80681cf84476b39b9 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memItemLeft" align="right" valign="top"><a id="a6a8d21de6d8a49b80681cf84476b39b9"></a>
 virtual uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>Width</b> () const =0</td></tr>
 <tr class="separator:a6a8d21de6d8a49b80681cf84476b39b9 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dd6d08da06bb36a05032f5148681d2f inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memItemLeft" align="right" valign="top"><a id="a7dd6d08da06bb36a05032f5148681d2f"></a>
+<a class="el" href="classdaisy_1_1_rectangle.html">Rectangle</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetBounds</b> () const</td></tr>
+<tr class="separator:a7dd6d08da06bb36a05032f5148681d2f inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab877f769f2d9b9f70027beccd9173f50 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memItemLeft" align="right" valign="top"><a id="ab877f769f2d9b9f70027beccd9173f50"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentX</b> ()</td></tr>
 <tr class="separator:ab877f769f2d9b9f70027beccd9173f50 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -113,6 +118,8 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentY</b> ()</td
 <tr class="separator:a0d2a8bb3bebc78ea794180803cbf7089 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f639b7391b31f023ac1c81e4e0dc7d0 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_one_bit_graphics_display.html#a5f639b7391b31f023ac1c81e4e0dc7d0">DrawPixel</a> (uint_fast8_t x, uint_fast8_t y, bool on)=0</td></tr>
 <tr class="separator:a5f639b7391b31f023ac1c81e4e0dc7d0 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a787b511df887ba3fa5f466fddd3d1fc2 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_one_bit_graphics_display.html#a787b511df887ba3fa5f466fddd3d1fc2">DrawRect</a> (const <a class="el" href="classdaisy_1_1_rectangle.html">Rectangle</a> &amp;rect, bool on, bool fill=false)</td></tr>
+<tr class="separator:a787b511df887ba3fa5f466fddd3d1fc2 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa0a3190d8bd5aba8d796b3bc8d929f8 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_one_bit_graphics_display.html#afa0a3190d8bd5aba8d796b3bc8d929f8">DrawCircle</a> (uint_fast8_t x, uint_fast8_t y, uint_fast8_t radius, bool on)</td></tr>
 <tr class="separator:afa0a3190d8bd5aba8d796b3bc8d929f8 inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae261bd2a57f39c379cab0465bddfa9fa inherit pub_methods_classdaisy_1_1_one_bit_graphics_display"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_one_bit_graphics_display.html#ae261bd2a57f39c379cab0465bddfa9fa">SetCursor</a> (uint16_t x, uint16_t y)</td></tr>
@@ -347,6 +354,7 @@ template&lt;class ChildType &gt; </div>
     <tr><td class="paramname">x2</td><td>x Coordinate of the second point </td></tr>
     <tr><td class="paramname">y2</td><td>y Coordinate of the second point </td></tr>
     <tr><td class="paramname">on</td><td>on or off </td></tr>
+    <tr><td class="paramname">fill</td><td>fill the rectangle or draw only the outline </td></tr>
   </table>
   </dd>
 </dl>
@@ -462,6 +470,75 @@ template&lt;class ChildType &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd>&amp; </dd></dl>
 
 <p>Implements <a class="el" href="classdaisy_1_1_one_bit_graphics_display.html#ab07692b7570fea7b3241afaba70899c8">daisy::OneBitGraphicsDisplay</a>.</p>
+
+</div>
+</div>
+<a id="a9ae092d4883df211d4a2ebfeee571a69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ae092d4883df211d4a2ebfeee571a69">&#9670;&nbsp;</a></span>WriteStringAligned()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class ChildType &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_rectangle.html">Rectangle</a> <a class="el" href="classdaisy_1_1_one_bit_graphics_display_impl.html">daisy::OneBitGraphicsDisplayImpl</a>&lt; ChildType &gt;::WriteStringAligned </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_font_def.html">FontDef</a> &amp;&#160;</td>
+          <td class="paramname"><em>font</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classdaisy_1_1_rectangle.html">Rectangle</a>&#160;</td>
+          <td class="paramname"><em>boundingBox</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacedaisy.html#a9697449f10c05aa93ee32b36020ea387">Alignment</a>&#160;</td>
+          <td class="paramname"><em>alignment</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>on</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Similar to WriteString but justified within a bounding box. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>string to be written </td></tr>
+    <tr><td class="paramname">font</td><td>font to use </td></tr>
+    <tr><td class="paramname">boundingBox</td><td>the bounding box to draw the text in </td></tr>
+    <tr><td class="paramname">alignment</td><td>the alignment to use </td></tr>
+    <tr><td class="paramname">on</td><td>on or off </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The rectangle that was drawn to </dd></dl>
+
+<p>Implements <a class="el" href="classdaisy_1_1_one_bit_graphics_display.html#ac042a3a3cdd4377169db5d108b72e58e">daisy::OneBitGraphicsDisplay</a>.</p>
 
 </div>
 </div>

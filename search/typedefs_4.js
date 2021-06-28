@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['outputbuffer_1440',['OutputBuffer',['../classdaisy_1_1_audio_handle.html#aa0728b1916a1a1c569e601f27224a3a1',1,'daisy::AudioHandle']]]
+  ['inputbuffer_1704',['InputBuffer',['../classdaisy_1_1_audio_handle.html#ac7317ab5e51e18172be03af8bfb194f6',1,'daisy::AudioHandle']]],
+  ['interleavingaudiocallback_1705',['InterleavingAudioCallback',['../classdaisy_1_1_audio_handle.html#a125528dd20d6657e53ab78341cbdbb91',1,'daisy::AudioHandle']]],
+  ['interleavinginputbuffer_1706',['InterleavingInputBuffer',['../classdaisy_1_1_audio_handle.html#a4e0f74f2093de2f0762d51ca915af01d',1,'daisy::AudioHandle']]],
+  ['interleavingoutputbuffer_1707',['InterleavingOutputBuffer',['../classdaisy_1_1_audio_handle.html#a2d737450dbb443fc13f12134a46b43e4',1,'daisy::AudioHandle']]]
 ];
