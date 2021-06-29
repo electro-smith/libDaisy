@@ -3,7 +3,7 @@
 #define DSY_MIDI_H
 
 // TODO: make this adjustable
-#define SYSEX_BUFFER_LEN 100
+#define SYSEX_BUFFER_LEN 128
 
 #include <stdint.h>
 #include <stdlib.h>
