@@ -198,10 +198,25 @@ TEST_F(MidiTest, systemRealTime)
 // sysex
 TEST_F(MidiTest, systemExclusive)
 {
-    uint8_t msgs[6];
-    for(int i = 0; i < 6; i++){
+    uint8_t msgs[110];
+    for(int i = 0; i < 110; i++){
         msgs[i] = (uint8_t)i;
     }
+
     ParseAndPopSysex(msgs, 6);
     TestSysex(msgs, 6);
+
+    ParseAndPopSysex(msgs, 100);
+    TestSysex(msgs, 100);
+
+    //max len is 100, let's go past that
+    //the default behavior is to just cut the message off there, maybe that should be changed
+    ParseAndPopSysex(msgs, 110);
+    TestSysex(msgs,100);
+
+    //queue should be empty
+    while(midi.HasEvents()){
+        ADD_FAILURE();
+        midi.PopEvent();
+    }
 }

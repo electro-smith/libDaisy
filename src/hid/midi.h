@@ -267,13 +267,12 @@ class MidiHandler
                 break;
             case ParserSysEx:
                 // end of sysex
-                if(byte == 0xf7
-                   || incoming_message_.sysex_message_len >= SYSEX_BUFFER_LEN)
+                if(byte == 0xf7)
                 {
                     pstate_ = ParserEmpty;
                     event_q_.Write(incoming_message_);
                 }
-                else
+                else if(incoming_message_.sysex_message_len < SYSEX_BUFFER_LEN)
                 {
                     incoming_message_
                         .sysex_data[incoming_message_.sysex_message_len]
