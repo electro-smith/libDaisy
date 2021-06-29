@@ -785,7 +785,7 @@ static uint8_t  USBD_CDC_EP0_RxReady (USBD_HandleTypeDef *pdev)
   */
 static uint8_t  *USBD_CDC_GetFSCfgDesc (uint16_t *length)
 {
-  switch (USBD_MODE)
+  switch (usbd_mode)
   {
     default:
     case USBD_MODE_CDC:
@@ -810,7 +810,7 @@ static uint8_t  *USBD_CDC_GetFSCfgDesc (uint16_t *length)
   */
 static uint8_t  *USBD_CDC_GetHSCfgDesc (uint16_t *length)
 {
-  switch (USBD_MODE)
+  switch (usbd_mode)
   {
     default:
     case USBD_MODE_CDC:
@@ -835,7 +835,7 @@ static uint8_t  *USBD_CDC_GetHSCfgDesc (uint16_t *length)
   */
 static uint8_t  *USBD_CDC_GetOtherSpeedCfgDesc (uint16_t *length)
 {
-  switch (USBD_MODE)
+  switch (usbd_mode)
   {
     default:
     case USBD_MODE_CDC:

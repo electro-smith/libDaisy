@@ -144,7 +144,7 @@ extern USBD_ClassTypeDef  USBD_CDC;
 
 #define USBD_MODE_CDC  0
 #define USBD_MODE_MIDI 1
-extern uint8_t USBD_MODE = USBD_MODE_CDC;
+extern uint8_t usbd_mode;
 
 /**
   * @}

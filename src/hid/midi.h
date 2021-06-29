@@ -315,6 +315,6 @@ class MidiHandler
 /** @} */
 
 using MidiUartHandler = MidiHandler<MidiUartTransport>;
-using MidiUsbHandler = MidiHandler<MidiUsbTransport>;
+using MidiUsbHandler  = MidiHandler<MidiUsbTransport>;
 } // namespace daisy
 #endif

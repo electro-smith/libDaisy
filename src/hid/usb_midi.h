@@ -8,36 +8,33 @@
 
 namespace daisy
 {
+class MidiUsbTransport
+{
+  public:
+    // MidiUsbTransport() {}
+    ~MidiUsbTransport() {}
 
-class MidiUsbTransport {
+    struct Config
+    {
+    };
 
-    public:
-        // MidiUsbTransport() {}
-        ~MidiUsbTransport() {}
+    void Init(Config config);
 
-        struct Config {
+    void    StartRx();
+    size_t  Readable();
+    uint8_t Rx();
+    bool    RxActive();
+    void    FlushRx();
+    void    Tx(uint8_t* buffer, size_t size);
 
-        };
+    class Impl;
 
-        void Init(Config config);
+    MidiUsbTransport() : pimpl_(nullptr) {}
+    MidiUsbTransport(const MidiUsbTransport& other) = default;
+    MidiUsbTransport& operator=(const MidiUsbTransport& other) = default;
 
-        void    StartRx();
-        size_t  Readable();
-        uint8_t Rx();
-        bool    RxActive();
-        void    FlushRx();
-        void    Tx(uint8_t* buffer, size_t size);
-
-        class Impl;
-
-        MidiUsbTransport() : pimpl_(nullptr) {}
-        MidiUsbTransport(const MidiUsbTransport& other) = default;
-        MidiUsbTransport& operator=(const MidiUsbTransport& other) = default;
-
-    private:
-
-        Impl* pimpl_;
-
+  private:
+    Impl* pimpl_;
 };
 
 } // namespace daisy
