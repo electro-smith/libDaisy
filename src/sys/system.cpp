@@ -157,15 +157,14 @@ void System::DelayTicks(uint32_t delay_ticks)
 
 void System::ResetToBootloader()
 {
-    // Initialize Boot Pin
-    dsy_gpio_pin bootpin = {DSY_GPIOG, 3};
-    dsy_gpio     pin;
-    pin.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    pin.pin  = bootpin;
-    dsy_gpio_init(&pin);
+    GPIO         pin;
+    GPIO::Config gpio_conf;
 
-    // Pull Pin HIGH
-    dsy_gpio_write(&pin, 1);
+    gpio_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
+    gpio_conf.pin.Init(Pin::Port::DSY_GPIOG, 3);
+    pin.Init(gpio_conf);
+
+    pin.Write(1);
 
     // wait a few ms for cap to charge
     HAL_Delay(10);
