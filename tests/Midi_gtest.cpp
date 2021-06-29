@@ -60,10 +60,11 @@ class MidiTest : public ::testing::Test
     }
 
     //help with parsing sysex messages
-    void ParseAndPopSysex(uint8_t* msgs, int size){
+    void ParseAndPopSysex(uint8_t* msgs, int size)
+    {
         midi.Parse(0xf0); //sysex
         Parse(msgs, size);
-        midi.Parse(0xf7);//end of sysex
+        midi.Parse(0xf7); //end of sysex
         event = midi.PopEvent();
     }
 
@@ -90,13 +91,15 @@ class MidiTest : public ::testing::Test
     }
 
     //help test sysex
-    void TestSysex(uint8_t* msgs, int size){
-        EXPECT_EQ((uint8_t)event.type, (uint8_t)SystemCommon);        
+    void TestSysex(uint8_t* msgs, int size)
+    {
+        EXPECT_EQ((uint8_t)event.type, (uint8_t)SystemCommon);
         EXPECT_EQ((uint8_t)event.sc_type, (uint8_t)SystemExclusive);
 
         EXPECT_EQ(event.sysex_message_len, size);
 
-        for(int i = 0; i < size; i++){
+        for(int i = 0; i < size; i++)
+        {
             EXPECT_EQ(event.sysex_data[i], msgs[i]);
         }
     }
@@ -199,7 +202,8 @@ TEST_F(MidiTest, systemRealTime)
 TEST_F(MidiTest, systemExclusive)
 {
     uint8_t msgs[135];
-    for(int i = 0; i < 135; i++){
+    for(int i = 0; i < 135; i++)
+    {
         msgs[i] = (uint8_t)i;
     }
 
@@ -211,10 +215,11 @@ TEST_F(MidiTest, systemExclusive)
 
     //max len is 128, let's go past that
     ParseAndPopSysex(msgs, 135);
-    TestSysex(msgs,128);
+    TestSysex(msgs, 128);
 
     //queue should be empty
-    while(midi.HasEvents()){
+    while(midi.HasEvents())
+    {
         ADD_FAILURE();
         midi.PopEvent();
     }
