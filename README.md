@@ -9,10 +9,13 @@
 <br>
 <!--CI Badges-->
 <p align="center">
-    <a href="https://github.com/electro-smith/libDaisy/actions?query=workflow%3ABuild">
+    <a href="https://github.com/electro-smith/libDaisy/actions/workflows/build.yml">
       <img src="https://github.com/electro-smith/libDaisy/workflows/Build/badge.svg">
     </a>
-    <a href="https://github.com/electro-smith/libDaisy/actions?query=workflow%3AStyle">
+    <a href="https://github.com/electro-smith/libDaisy/actions/workflows/unit_tests.yaml">
+      <img src="https://github.com/electro-smith/libDaisy/workflows/Unit%20Tests/badge.svg">
+    </a>
+    <a href="https://github.com/electro-smith/libDaisy/actions/workflows/style.yml">
       <img src="https://github.com/electro-smith/libDaisy/workflows/Style/badge.svg">
     </a>
     <a href="https://electro-smith.github.io/libDaisy/index.html">
