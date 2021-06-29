@@ -88,6 +88,8 @@ class MidiTest : public ::testing::Test
         {
             EXPECT_EQ(event.data[1], d1);
         }
+
+        TestEmptyQueue();
     }
 
     //help test sysex
@@ -101,6 +103,18 @@ class MidiTest : public ::testing::Test
         for(int i = 0; i < size; i++)
         {
             EXPECT_EQ(event.sysex_data[i], msgs[i]);
+        }
+
+        TestEmptyQueue();
+    }
+
+    //test for empty queue
+    void TestEmptyQueue()
+    {
+        while(midi.HasEvents())
+        {
+            ADD_FAILURE() << "Queue not empty";
+            midi.PopEvent();
         }
     }
 
@@ -216,11 +230,38 @@ TEST_F(MidiTest, systemExclusive)
     //max len is 128, let's go past that
     ParseAndPopSysex(msgs, 135);
     TestSysex(msgs, 128);
+}
 
-    //queue should be empty
-    while(midi.HasEvents())
+//Running Status
+TEST_F(MidiTest, runningStatus)
+{
+    //NoteOn with status bit
+    uint8_t msgs[] = {0x90, 0x10, 0x0f};
+    ParseAndPop(msgs, 3);
+    uint8_t chkType = (uint8_t)NoteOn;
+    Test((uint8_t)event.type, chkType, 0, true, 0x10, 0x0f);
+
+    //running status
+    for(uint8_t i = 0; i < 20; i++)
     {
-        ADD_FAILURE();
-        midi.PopEvent();
+        msgs[0] = msgs[1] = i;
+        ParseAndPop(msgs, 2);
+        Test((uint8_t)event.type, chkType, 0, true, i, i);
+    }
+
+    //Again, with Control Change, channel 3
+    msgs[0] = 0xB3;
+    msgs[1] = 0x10;
+    msgs[2] = 0x0f;
+    ParseAndPop(msgs, 3);
+    chkType = (uint8_t)ControlChange;
+    Test((uint8_t)event.type, chkType, 3, true, 0x10, 0x0f);
+
+    //running status
+    for(uint8_t i = 0; i < 20; i++)
+    {
+        msgs[0] = msgs[1] = i;
+        ParseAndPop(msgs, 2);
+        Test((uint8_t)event.type, chkType, 3, true, i, i);
     }
 }
