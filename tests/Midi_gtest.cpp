@@ -265,3 +265,24 @@ TEST_F(MidiTest, runningStatus)
         Test((uint8_t)event.type, chkType, 3, true, i, i);
     }
 }
+
+//Bad data
+TEST_F(MidiTest, badData)
+{
+    //multiple msgs with status bytes in a row
+    for(uint8_t i = 0; i < 20; i++)
+    {
+        uint8_t msg = i | 0x80;
+        Parse(&msg, 1);
+    }
+    TestEmptyQueue();
+
+    //Too short NoteOn
+    uint8_t msgs[] = {0x90, 0x00};
+    for(uint8_t i = 0; i < 20; i++)
+    {
+        msgs[1] = i;
+        Parse(msgs, 2);
+    }
+    TestEmptyQueue();
+}
