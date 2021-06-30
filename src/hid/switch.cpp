@@ -24,7 +24,7 @@ void Switch::Init(Pin pin, float update_rate, Type t, Polarity pol, Pull pu)
 
     hw_gpio_.Init(gpio_conf);
 }
-void Switch::Init(dsy_gpio_pin pin, float update_rate)
+void Switch::Init(Pin pin, float update_rate)
 {
     Init(pin, update_rate, TYPE_MOMENTARY, POLARITY_INVERTED, PULL_UP);
 }

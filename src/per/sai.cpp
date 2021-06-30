@@ -335,14 +335,15 @@ void SaiHandle::Impl::InitPins()
     bool             is_master;
     GPIO_InitTypeDef GPIO_InitStruct;
     GPIO_TypeDef*    port;
-    dsy_gpio_pin*    cfg[] = {&config_.pin_config.fs,
-                           &config_.pin_config.mclk,
-                           &config_.pin_config.sck,
-                           &config_.pin_config.sa,
-                           &config_.pin_config.sb};
+    Pin*             cfg[] = {&config_.pin_config.fs,
+                  &config_.pin_config.mclk,
+                  &config_.pin_config.sck,
+                  &config_.pin_config.sa,
+                  &config_.pin_config.sb};
     // Special Case checks
-    Pin sck_af_pin = {DSY_GPIOA, 2};
-    is_master      = (config_.a_sync == Config::Sync::MASTER
+    Pin sck_af_pin;
+    sck_af_pin.Init(Pin::Port::DSY_GPIOA, 2);
+    is_master = (config_.a_sync == Config::Sync::MASTER
                  || config_.b_sync == Config::Sync::MASTER);
     // Generics
     GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
