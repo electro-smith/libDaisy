@@ -2,10 +2,14 @@
 #ifndef DSY_MIDI_H
 #define DSY_MIDI_H
 
+// TODO: make this adjustable
+#define SYSEX_BUFFER_LEN 100
+
 #include <stdint.h>
 #include <stdlib.h>
 #include "per/uart.h"
 #include "util/ringbuffer.h"
+#include "hid/MidiEvent.h"
 
 namespace daisy
 {
@@ -13,87 +17,54 @@ namespace daisy
     @{ 
 */
 
+class MidiUartTransport
+{
+  public:
+    MidiUartTransport() {}
+    ~MidiUartTransport() {}
 
-/** Parsed from the Status Byte, these are the common Midi Messages that can be handled. \n
-At this time only 3-byte messages are correctly parsed into MidiEvents.
-*/
-enum MidiMessageType
-{
-    NoteOff,               /**< & */
-    NoteOn,                /**< & */
-    PolyphonicKeyPressure, /**< & */
-    ControlChange,         /**< & */
-    ProgramChange,         /**< & */
-    ChannelPressure,       /**< & */
-    PitchBend,             /**< & */
-    MessageLast,
-    /**< & */ // maybe change name to MessageUnsupported
-};
-
-/** Struct containing note, and velocity data for a given channel.
-Can be made from MidiEvent
-*/
-struct NoteOnEvent
-{
-    int     channel;  /**< & */
-    uint8_t note;     /**< & */
-    uint8_t velocity; /**< & */
-};
-/** Struct containing control number, and value for a given channel.
-Can be made from MidiEvent
-*/
-struct ControlChangeEvent
-{
-    int     channel;        /**< & */
-    uint8_t control_number; /**< & */
-    uint8_t value;          /**< & */
-};
-/** Struct containing pitch bend value for a given channel.
-Can be made from MidiEvent
-*/
-struct PitchBendEvent
-{
-    int     channel; /**< & */
-    int16_t value;   /**< & */
-};
-
-/** Simple MidiEvent with message type, channel, and data[2] members.
-*/
-struct MidiEvent
-{
-    // Newer ish.
-    MidiMessageType type;    /**< & */
-    int             channel; /**< & */
-    uint8_t         data[2]; /**< & */
-
-    /** Returns the data within the MidiEvent as a NoteOnEvent struct */
-    NoteOnEvent AsNoteOn()
+    struct Config
     {
-        NoteOnEvent m;
-        m.channel  = channel;
-        m.note     = data[0];
-        m.velocity = data[1];
-        return m;
+        UartHandler::Config::Peripheral periph;
+        dsy_gpio_pin                    rx;
+        dsy_gpio_pin                    tx;
+
+        Config()
+        {
+            periph = UartHandler::Config::Peripheral::USART_1;
+            rx     = {DSY_GPIOB, 7};
+            tx     = {DSY_GPIOB, 6};
+        }
+    };
+
+    inline void Init(Config config)
+    {
+        UartHandler::Config uart_config;
+
+        //defaults
+        uart_config.baudrate   = 31250;
+        uart_config.stopbits   = UartHandler::Config::StopBits::BITS_1;
+        uart_config.parity     = UartHandler::Config::Parity::NONE;
+        uart_config.mode       = UartHandler::Config::Mode::TX_RX;
+        uart_config.wordlength = UartHandler::Config::WordLength::BITS_8;
+
+        //user settings
+        uart_config.periph        = config.periph;
+        uart_config.pin_config.rx = config.rx;
+        uart_config.pin_config.tx = config.tx;
+
+        uart_.Init(uart_config);
     }
 
-    /** Returns the data within the MidiEvent as a ControlChangeEvent struct.*/
-    ControlChangeEvent AsControlChange()
-    {
-        ControlChangeEvent m;
-        m.channel        = channel;
-        m.control_number = data[0];
-        m.value          = data[1];
-        return m;
-    }
+    inline void    StartRx() { uart_.StartRx(); }
+    inline size_t  Readable() { return uart_.Readable(); }
+    inline uint8_t Rx() { return uart_.PopRx(); }
+    inline bool    RxActive() { return uart_.RxActive(); }
+    inline void    FlushRx() { uart_.FlushRx(); }
+    inline void    Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
 
-    /** Returns the data within the MidiEvent as a PitchBendEvent struct.*/
-    PitchBendEvent AsPitchBend()
-    {
-        PitchBendEvent m;
-        m.channel = channel;
-        m.value   = ((uint16_t)data[1] << 7) + data[0] - 8192;
-        return m;
-    }
+  private:
+    UartHandler uart_;
 };
 
 /** 
@@ -103,50 +74,57 @@ struct MidiEvent
     @author shensley
     @date March 2020
 */
+template <typename Transport>
 class MidiHandler
 {
   public:
     MidiHandler() {}
     ~MidiHandler() {}
-    /** Input and Output can be configured separately
-    Multiple Input modes can be selected by OR'ing the values.
-    */
-    enum MidiInputMode
-    {
-        INPUT_MODE_NONE    = 0x00, /**< & */
-        INPUT_MODE_UART1   = 0x01, /**< & */
-        INPUT_MODE_USB_INT = 0x02, /**< & */
-        INPUT_MODE_USB_EXT = 0x04, /**< & */
-    };
-    /** Output mode */
-    enum MidiOutputMode
-    {
-        OUTPUT_MODE_NONE    = 0x00, /**< & */
-        OUTPUT_MODE_UART1   = 0x01, /**< & */
-        OUTPUT_MODE_USB_INT = 0x02, /**< & */
-        OUTPUT_MODE_USB_EXT = 0x04, /**< & */
-    };
 
+    struct Config
+    {
+        typename Transport::Config transport_config;
+    };
 
     /** Initializes the MidiHandler 
     \param in_mode Input mode
     \param out_mode Output mode
      */
-    void Init(MidiInputMode in_mode, MidiOutputMode out_mode);
+    void Init(Config config)
+    {
+        config_ = config;
+
+        transport_.Init(config_.transport_config);
+
+        event_q_.Init();
+        incoming_message_.type = MessageLast;
+        pstate_                = ParserEmpty;
+    }
 
     /** Starts listening on the selected input mode(s). MidiEvent Queue will begin to fill, and can be checked with */
-    void StartReceive();
+    void StartReceive() { transport_.StartRx(); }
 
     /** Start listening */
-    void Listen();
+    void Listen()
+    {
+        uint32_t now;
+        now = System::GetNow();
+        while(transport_.Readable())
+        {
+            last_read_ = now;
+            Parse(transport_.Rx());
+        }
 
-    /** Feed in bytes to state machine from a queue.
-    Populates internal FIFO queue with MIDI Messages
-    For example with uart:
-    midi.Parse(uart.PopRx());
-    \param byte &
-    */
-    void Parse(uint8_t byte);
+        // In case of UART Error, (particularly
+        //  overrun error), UART disables itself.
+        // Flush the buff, and restart.
+        if(!transport_.RxActive())
+        {
+            pstate_ = ParserEmpty;
+            transport_.FlushRx();
+            StartReceive();
+        }
+    }
 
     /** Checks if there are unhandled messages in the queue 
     \return True if there are events to be handled, else false.
@@ -162,8 +140,149 @@ class MidiHandler
     /** SendMessage
     Send raw bytes as message
     */
-    void SendMessage(uint8_t *bytes, size_t size);
+    void SendMessage(uint8_t* bytes, size_t size)
+    {
+        transport_.Tx(bytes, size);
+    }
 
+    /** Feed in bytes to state machine from a queue.
+    Populates internal FIFO queue with MIDI Messages
+    For example with uart:
+    midi.Parse(uart.PopRx());
+    \param byte &
+    */
+    void Parse(uint8_t byte)
+    {
+        switch(pstate_)
+        {
+            case ParserEmpty:
+                // check byte for valid Status Byte
+                if(byte & kStatusByteMask)
+                {
+                    // Get MessageType, and Channel
+                    incoming_message_.channel = byte & kChannelMask;
+                    incoming_message_.type    = static_cast<MidiMessageType>(
+                        (byte & kMessageMask) >> 4);
+
+                    // Validate, and move on.
+                    if(incoming_message_.type < MessageLast)
+                    {
+                        pstate_ = ParserHasStatus;
+                        // Mark this status byte as running_status
+                        running_status_ = incoming_message_.type;
+
+                        if(running_status_ == SystemCommon)
+                        {
+                            incoming_message_.channel = 0;
+                            //system real time = 1111 1xxx
+                            if(byte & 0x08)
+                            {
+                                incoming_message_.type = SystemRealTime;
+                                running_status_        = SystemRealTime;
+                                incoming_message_.srt_type
+                                    = static_cast<SystemRealTimeType>(
+                                        byte & kSystemRealTimeMask);
+
+                                //short circuit to start
+                                pstate_ = ParserEmpty;
+                                event_q_.Write(incoming_message_);
+                            }
+                            //system common
+                            else
+                            {
+                                incoming_message_.sc_type
+                                    = static_cast<SystemCommonType>(byte
+                                                                    & 0x07);
+                                //sysex
+                                if(incoming_message_.sc_type == SystemExclusive)
+                                {
+                                    pstate_ = ParserSysEx;
+                                    incoming_message_.sysex_message_len = 0;
+                                }
+                                //short circuit
+                                else if(incoming_message_.sc_type > SongSelect)
+                                {
+                                    pstate_ = ParserEmpty;
+                                    event_q_.Write(incoming_message_);
+                                }
+                            }
+                        }
+                    }
+                    // Else we'll keep waiting for a valid incoming status byte
+                }
+                else
+                {
+                    // Handle as running status
+                    incoming_message_.type    = running_status_;
+                    incoming_message_.data[0] = byte & kDataByteMask;
+                    pstate_                   = ParserHasData0;
+                }
+                break;
+            case ParserHasStatus:
+                if((byte & kStatusByteMask) == 0)
+                {
+                    incoming_message_.data[0] = byte & kDataByteMask;
+                    if(running_status_ == ChannelPressure
+                       || running_status_ == ProgramChange
+                       || incoming_message_.sc_type == MTCQuarterFrame
+                       || incoming_message_.sc_type == SongSelect)
+                    {
+                        //these are just one data byte, so we short circuit back to start
+                        pstate_ = ParserEmpty;
+                        event_q_.Write(incoming_message_);
+                    }
+                    else
+                    {
+                        pstate_ = ParserHasData0;
+                    }
+
+                    //ChannelModeMessages (reserved Control Changes)
+                    if(running_status_ == ControlChange
+                       && incoming_message_.data[0] > 119)
+                    {
+                        incoming_message_.type = ChannelMode;
+                        running_status_        = ChannelMode;
+                        incoming_message_.cm_type
+                            = static_cast<ChannelModeType>(
+                                incoming_message_.data[0] - 120);
+                    }
+                }
+                else
+                {
+                    // invalid message go back to start ;p
+                    pstate_ = ParserEmpty;
+                }
+                break;
+            case ParserHasData0:
+                if((byte & kStatusByteMask) == 0)
+                {
+                    incoming_message_.data[1] = byte & kDataByteMask;
+                    // At this point the message is valid, and we can add this MidiEvent to the queue
+                    event_q_.Write(incoming_message_);
+                }
+                // Regardless, of whether the data was valid or not we go back to empty
+                // because either the message is queued for handling or its not.
+                pstate_ = ParserEmpty;
+                break;
+            case ParserSysEx:
+                // end of sysex
+                if(byte == 0xf7
+                   || incoming_message_.sysex_message_len >= SYSEX_BUFFER_LEN)
+                {
+                    pstate_ = ParserEmpty;
+                    event_q_.Write(incoming_message_);
+                }
+                else
+                {
+                    incoming_message_
+                        .sysex_data[incoming_message_.sysex_message_len]
+                        = byte;
+                    incoming_message_.sysex_message_len++;
+                }
+                break;
+            default: break;
+        }
+    }
 
   private:
     enum ParserState
@@ -171,17 +290,29 @@ class MidiHandler
         ParserEmpty,
         ParserHasStatus,
         ParserHasData0,
+        ParserSysEx,
     };
-    MidiInputMode              in_mode_;
-    MidiOutputMode             out_mode_;
     UartHandler                uart_;
     ParserState                pstate_;
     MidiEvent                  incoming_message_;
     RingBuffer<MidiEvent, 256> event_q_;
     uint32_t                   last_read_; // time of last byte
     MidiMessageType            running_status_;
+    Config                     config_;
+    Transport                  transport_;
+
+    // Masks to check for message type, and byte content
+    const uint8_t kStatusByteMask     = 0x80;
+    const uint8_t kMessageMask        = 0x70;
+    const uint8_t kDataByteMask       = 0x7F;
+    const uint8_t kSystemCommonMask   = 0xF0;
+    const uint8_t kChannelMask        = 0x0F;
+    const uint8_t kRealTimeMask       = 0xF8;
+    const uint8_t kSystemRealTimeMask = 0x07;
 };
 
 /** @} */
+
+using MidiUartHandler = MidiHandler<MidiUartTransport>;
 } // namespace daisy
 #endif

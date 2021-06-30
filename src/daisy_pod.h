@@ -128,6 +128,7 @@ class DaisyPod
         *buttons[BUTTON_LAST]; /**< & */
     RgbLed led1,               /**< & */
         led2;                  /**< & */
+    MidiUartHandler midi;
 
   private:
     void SetHidUpdateRates();
@@ -135,6 +136,7 @@ class DaisyPod
     void InitEncoder();
     void InitLeds();
     void InitKnobs();
+    void InitMidi();
 };
 
 } // namespace daisy

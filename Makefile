@@ -38,8 +38,6 @@ hid/ctrl \
 hid/encoder \
 hid/gatein \
 hid/led \
-hid/midi \
-hid/oled_display \
 hid/parameter \
 hid/rgb_led \
 hid/switch \
@@ -52,7 +50,11 @@ per/i2c \
 per/spi \
 per/tim \
 per/uart \
+ui/UI \
+ui/AbstractMenu \
+ui/FullScreenItemMenu \
 util/color \
+util/MappedValue \
 util/WaveTableLoader \
 
 ######################################

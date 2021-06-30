@@ -155,6 +155,9 @@ void DaisyField::Init(bool boost)
     gpio_conf.pin  = seed.GetPin(PIN_GATE_OUT);
     gate_out.Init(gpio_conf);
 
+    //midi
+    MidiUartHandler::Config midi_config;
+    midi.Init(midi_config);
 
     DacHandle::Config cfg;
     cfg.bitdepth   = DacHandle::BitDepth::BITS_12;
