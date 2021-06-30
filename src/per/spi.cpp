@@ -229,28 +229,31 @@ SpiHandle::Result SpiHandle::Impl::BlockingReceive(uint8_t* buffer,
 
 typedef struct
 {
-    dsy_gpio_pin pin;
-    uint8_t      alt;
+    Pin::Port port;
+    uint8_t   pin;
+    uint8_t   alt;
 } pin_alt_spi;
 
-static pin_alt_spi pins_none_spi = {{DSY_GPIOX, 0}, 255};
+static pin_alt_spi pins_none_spi = {Pin::Port::DSY_GPIOX, 0, 255};
 
 //this is a bit long...
 /* ============== spi1 ============== */
-static pin_alt_spi spi1_pins_sclk[] = {{{DSY_GPIOG, 11}, GPIO_AF5_SPI1},
-                                       {{DSY_GPIOA, 5}, GPIO_AF5_SPI1},
+static pin_alt_spi spi1_pins_sclk[]
+    = {{Pin::Port::DSY_GPIOG, 11, GPIO_AF5_SPI1},
+       {Pin::Port::DSY_GPIOA, 5, GPIO_AF5_SPI1},
+       pins_none_spi};
+
+static pin_alt_spi spi1_pins_miso[]
+    = {{Pin::Port::DSY_GPIOB, 4, GPIO_AF5_SPI1},
+       {Pin::Port::DSY_GPIOA, 6, GPIO_AF5_SPI1},
+       {Pin::Port::DSY_GPIOG, 9, GPIO_AF5_SPI1}};
+
+static pin_alt_spi spi1_pins_mosi[] = {{Pin::Port::DSY_GPIOB, 5, GPIO_AF5_SPI1},
+                                       {Pin::Port::DSY_GPIOA, 7, GPIO_AF5_SPI1},
                                        pins_none_spi};
 
-static pin_alt_spi spi1_pins_miso[] = {{{DSY_GPIOB, 4}, GPIO_AF5_SPI1},
-                                       {{DSY_GPIOA, 6}, GPIO_AF5_SPI1},
-                                       {{DSY_GPIOG, 9}, GPIO_AF5_SPI1}};
-
-static pin_alt_spi spi1_pins_mosi[] = {{{DSY_GPIOB, 5}, GPIO_AF5_SPI1},
-                                       {{DSY_GPIOA, 7}, GPIO_AF5_SPI1},
-                                       pins_none_spi};
-
-static pin_alt_spi spi1_pins_nss[] = {{{DSY_GPIOG, 10}, GPIO_AF5_SPI1},
-                                      {{DSY_GPIOA, 4}, GPIO_AF5_SPI1},
+static pin_alt_spi spi1_pins_nss[] = {{Pin::Port::DSY_GPIOG, 10, GPIO_AF5_SPI1},
+                                      {Pin::Port::DSY_GPIOA, 4, GPIO_AF5_SPI1},
                                       pins_none_spi};
 
 /* ============== spi2 ============== */
@@ -258,30 +261,33 @@ static pin_alt_spi spi2_pins_sclk[]
     = {pins_none_spi, pins_none_spi, pins_none_spi};
 
 static pin_alt_spi spi2_pins_miso[]
-    = {{{DSY_GPIOB, 14}, GPIO_AF5_SPI2}, pins_none_spi, pins_none_spi};
+    = {{Pin::Port::DSY_GPIOB, 14, GPIO_AF5_SPI2}, pins_none_spi, pins_none_spi};
 
-static pin_alt_spi spi2_pins_mosi[] = {{{DSY_GPIOC, 1}, GPIO_AF5_SPI2},
-                                       {{DSY_GPIOB, 15}, GPIO_AF5_SPI2},
-                                       pins_none_spi};
+static pin_alt_spi spi2_pins_mosi[]
+    = {{Pin::Port::DSY_GPIOC, 1, GPIO_AF5_SPI2},
+       {Pin::Port::DSY_GPIOB, 15, GPIO_AF5_SPI2},
+       pins_none_spi};
 
-static pin_alt_spi spi2_pins_nss[] = {{{DSY_GPIOB, 12}, GPIO_AF5_SPI2},
-                                      {{DSY_GPIOB, 4}, GPIO_AF7_SPI2},
-                                      {{DSY_GPIOB, 9}, GPIO_AF5_SPI2}};
+static pin_alt_spi spi2_pins_nss[] = {{Pin::Port::DSY_GPIOB, 12, GPIO_AF5_SPI2},
+                                      {Pin::Port::DSY_GPIOB, 4, GPIO_AF7_SPI2},
+                                      {Pin::Port::DSY_GPIOB, 9, GPIO_AF5_SPI2}};
 
 /* ============== spi3 ============== */
 static pin_alt_spi spi3_pins_sclk[]
-    = {{{DSY_GPIOC, 10}, GPIO_AF6_SPI3}, pins_none_spi, pins_none_spi};
+    = {{Pin::Port::DSY_GPIOC, 10, GPIO_AF6_SPI3}, pins_none_spi, pins_none_spi};
 
-static pin_alt_spi spi3_pins_miso[] = {{{DSY_GPIOC, 11}, GPIO_AF6_SPI3},
-                                       {{DSY_GPIOB, 4}, GPIO_AF6_SPI3},
-                                       pins_none_spi};
+static pin_alt_spi spi3_pins_miso[]
+    = {{Pin::Port::DSY_GPIOC, 11, GPIO_AF6_SPI3},
+       {Pin::Port::DSY_GPIOB, 4, GPIO_AF6_SPI3},
+       pins_none_spi};
 
-static pin_alt_spi spi3_pins_mosi[] = {{{DSY_GPIOC, 12}, GPIO_AF6_SPI3},
-                                       {{DSY_GPIOB, 5}, GPIO_AF7_SPI3},
-                                       pins_none_spi};
+static pin_alt_spi spi3_pins_mosi[]
+    = {{Pin::Port::DSY_GPIOC, 12, GPIO_AF6_SPI3},
+       {Pin::Port::DSY_GPIOB, 5, GPIO_AF7_SPI3},
+       pins_none_spi};
 
 static pin_alt_spi spi3_pins_nss[]
-    = {{{DSY_GPIOA, 4}, GPIO_AF6_SPI3}, pins_none_spi, pins_none_spi};
+    = {{Pin::Port::DSY_GPIOA, 4, GPIO_AF6_SPI3}, pins_none_spi, pins_none_spi};
 
 /* ============== spi4 ============== */
 static pin_alt_spi spi4_pins_sclk[]
@@ -311,18 +317,18 @@ static pin_alt_spi spi5_pins_nss[]
 
 /* ============== spi6 ============== */
 static pin_alt_spi spi6_pins_sclk[]
-    = {{{DSY_GPIOA, 5}, GPIO_AF8_SPI6}, pins_none_spi, pins_none_spi};
+    = {{Pin::Port::DSY_GPIOA, 5, GPIO_AF8_SPI6}, pins_none_spi, pins_none_spi};
 
-static pin_alt_spi spi6_pins_miso[] = {{{DSY_GPIOB, 4}, GPIO_AF8_SPI6},
-                                       {{DSY_GPIOA, 6}, GPIO_AF8_SPI6},
+static pin_alt_spi spi6_pins_miso[] = {{Pin::Port::DSY_GPIOB, 4, GPIO_AF8_SPI6},
+                                       {Pin::Port::DSY_GPIOA, 6, GPIO_AF8_SPI6},
                                        pins_none_spi};
 
-static pin_alt_spi spi6_pins_mosi[] = {{{DSY_GPIOB, 5}, GPIO_AF8_SPI6},
-                                       {{DSY_GPIOA, 7}, GPIO_AF8_SPI6},
+static pin_alt_spi spi6_pins_mosi[] = {{Pin::Port::DSY_GPIOB, 5, GPIO_AF8_SPI6},
+                                       {Pin::Port::DSY_GPIOA, 7, GPIO_AF8_SPI6},
                                        pins_none_spi};
 
 static pin_alt_spi spi6_pins_nss[]
-    = {{{DSY_GPIOA, 4}, GPIO_AF8_SPI6}, pins_none_spi, pins_none_spi};
+    = {{Pin::Port::DSY_GPIOA, 4, GPIO_AF8_SPI6}, pins_none_spi, pins_none_spi};
 
 //an array to hold everything
 static pin_alt_spi* pins_periphs_spi[] = {
@@ -334,17 +340,23 @@ static pin_alt_spi* pins_periphs_spi[] = {
     spi6_pins_sclk, spi6_pins_miso, spi6_pins_mosi, spi6_pins_nss,
 };
 
-SpiHandle::Result
-checkPinMatchSpi(GPIO_InitTypeDef* init, dsy_gpio_pin pin, int p_num)
+SpiHandle::Result checkPinMatchSpi(GPIO_InitTypeDef* init, Pin pin, int p_num)
 {
     for(int i = 0; i < 3; i++)
     {
-        if(dsy_pin_cmp(&pins_periphs_spi[p_num][i].pin, &pins_none_spi.pin))
+        Pin tmp_pin;
+        tmp_pin.Init(pins_periphs_spi[p_num][i].port,
+                     pins_periphs_spi[p_num][i].pin);
+
+        Pin none_pin;
+        none_pin.Init(pins_none_spi.port, pins_none_spi.pin);
+
+        if(tmp_pin == none_pin)
         {
             /* skip */
         }
 
-        else if(dsy_pin_cmp(&pins_periphs_spi[p_num][i].pin, &pin))
+        else if(tmp_pin == pin)
         {
             init->Alternate = pins_periphs_spi[p_num][i].alt;
             return SpiHandle::Result::OK;
@@ -402,7 +414,7 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
     // nss = soft -> ss pin is unused for master and slave
     bool enable_ss = config_.nss != Config::NSS::SOFT;
 
-    if(config_.pin_config.sclk.port != DSY_GPIOX)
+    if(config_.pin_config.sclk.port != Pin::Port::DSY_GPIOX)
     {
         //check sclk against periph
         if(checkPinMatchSpi(&GPIO_InitStruct, config_.pin_config.sclk, per_num)
@@ -417,7 +429,7 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.miso.port != DSY_GPIOX && enable_miso)
+    if(config_.pin_config.miso.port != Pin::Port::DSY_GPIOX && enable_miso)
     {
         //check miso against periph
         if(checkPinMatchSpi(
@@ -433,7 +445,7 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.mosi.port != DSY_GPIOX && enable_mosi)
+    if(config_.pin_config.mosi.port != Pin::Port::DSY_GPIOX && enable_mosi)
     {
         //check mosi against periph
         if(checkPinMatchSpi(
@@ -449,7 +461,7 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.nss.port != DSY_GPIOX && enable_ss)
+    if(config_.pin_config.nss.port != Pin::Port::DSY_GPIOX && enable_ss)
     {
         //check nss against periph
         if(checkPinMatchSpi(
