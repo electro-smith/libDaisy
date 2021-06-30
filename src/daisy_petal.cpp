@@ -294,7 +294,7 @@ void DaisyPetal::InitSwitches()
 
 void DaisyPetal::InitEncoder()
 {
-    dsy_gpio_pin a, b, click;
+    Pin a, b, click;
     a     = seed.GetPin(ENC_A_PIN);
     b     = seed.GetPin(ENC_B_PIN);
     click = seed.GetPin(ENC_CLICK_PIN);

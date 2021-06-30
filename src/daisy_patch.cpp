@@ -206,7 +206,7 @@ void DaisyPatch::InitAudio()
 
     // Reset Pin for AK4556
     // Built-in AK4556 was reset during Seed Init
-    dsy_gpio_pin codec_reset_pin = seed.GetPin(PIN_AK4556_RESET);
+    Pin codec_reset_pin = seed.GetPin(PIN_AK4556_RESET);
     Ak4556::Init(codec_reset_pin);
 
     // Reinit Audio for _both_ codecs...
@@ -280,10 +280,11 @@ void DaisyPatch::InitEncoder()
 void DaisyPatch::InitGates()
 {
     // Gate Output
-    gate_output.pin  = seed.GetPin(PIN_GATE_OUT);
-    gate_output.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    gate_output.pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&gate_output);
+    GPIO::Config gpio_conf;
+    gpio_conf.pin  = seed.GetPin(PIN_GATE_OUT);
+    gpio_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
+    gpio_conf.pull = GPIO::Config::Pull::NOPULL;
+    gate_output.Init(gpio_conf);
 
     // Gate Inputs
     Pin pin;

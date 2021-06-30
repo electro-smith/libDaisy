@@ -217,7 +217,7 @@ void DaisyPod::InitButtons()
 
 void DaisyPod::InitEncoder()
 {
-    dsy_gpio_pin a, b, click;
+    Pin a, b, click;
     a     = seed.GetPin(ENC_A_PIN);
     b     = seed.GetPin(ENC_B_PIN);
     click = seed.GetPin(ENC_CLICK_PIN);
@@ -228,7 +228,7 @@ void DaisyPod::InitLeds()
 {
     // LEDs are just going to be on/off for now.
     // TODO: Add PWM support
-    dsy_gpio_pin rpin, gpin, bpin;
+    Pin rpin, gpin, bpin;
 
     rpin = seed.GetPin(LED_1_R_PIN);
     gpin = seed.GetPin(LED_1_G_PIN);

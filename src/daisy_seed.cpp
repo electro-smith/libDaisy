@@ -19,40 +19,39 @@ const Pin::Port seedgpio_port[31] = {
     //{DSY_GPIOA, 8}, // removed on Rev4
     Pin::Port::DSY_GPIOB,
     Pin::Port::DSY_GPIOC,
-    Pin::Port::DSY_GPIO,
-    Pin::Port::DSY_GPIO,
+    Pin::Port::DSY_GPIOC,
+    Pin::Port::DSY_GPIOC,
     Pin::Port::DSY_GPIOC,
     Pin::Port::DSY_GPIOD,
     Pin::Port::DSY_GPIOC,
     // GPIO 9-16
-    {Pin::Port::DSY_GPIOG,
-     Pin::Port::DSY_GPIOG,
-     Pin::Port::DSY_GPIOB,
-     Pin::Port::DSY_GPIOB,
-     Pin::Port::DSY_GPIOB,
-     Pin::Port::DSY_GPIOB,
-     Pin::Port::DSY_GPIOB,
-     Pin::Port::DSY_GPIOB,
-     // GPIO 17-24
-     {
-         Pin::Port::DSY_GPIOC,
-         Pin::Port::DSY_GPIOA,
-         Pin::Port::DSY_GPIOB,
-         Pin::Port::DSY_GPIOA,
-         Pin::Port::DSY_GPIOA,
-         Pin::Port::DSY_GPIOC,
-         Pin::Port::DSY_GPIOC,
-         Pin::Port::DSY_GPIOA,
-         // GPIO 17-24
-         Pin::Port::DSY_GPIOA,
-         Pin::Port::DSY_GPIOA,
-         Pin::Port::DSY_GPIOA,
-         Pin::Port::DSY_GPIOD,
-         Pin::Port::DSY_GPIOG,
-         Pin::Port::DSY_GPIOA,
-         Pin::Port::DSY_GPIOB,
-         Pin::Port::DSY_GPIOB,
-     };
+    Pin::Port::DSY_GPIOG,
+    Pin::Port::DSY_GPIOG,
+    Pin::Port::DSY_GPIOB,
+    Pin::Port::DSY_GPIOB,
+    Pin::Port::DSY_GPIOB,
+    Pin::Port::DSY_GPIOB,
+    Pin::Port::DSY_GPIOB,
+    Pin::Port::DSY_GPIOB,
+    // GPIO 17-24
+    Pin::Port::DSY_GPIOC,
+    Pin::Port::DSY_GPIOA,
+    Pin::Port::DSY_GPIOB,
+    Pin::Port::DSY_GPIOA,
+    Pin::Port::DSY_GPIOA,
+    Pin::Port::DSY_GPIOC,
+    Pin::Port::DSY_GPIOC,
+    Pin::Port::DSY_GPIOA,
+    // GPIO 17-24
+    Pin::Port::DSY_GPIOA,
+    Pin::Port::DSY_GPIOA,
+    Pin::Port::DSY_GPIOA,
+    Pin::Port::DSY_GPIOD,
+    Pin::Port::DSY_GPIOG,
+    Pin::Port::DSY_GPIOA,
+    Pin::Port::DSY_GPIOB,
+    Pin::Port::DSY_GPIOB,
+};
 const uint8_t seedgpio_pin[31] = {
     // GPIO 1-8
     //{DSY_GPIOA, 8}, // removed on Rev4
@@ -246,25 +245,25 @@ void DaisySeed::SetTestPoint(bool state)
 
 void DaisySeed::ConfigureSdram()
 {
-    dsy_gpio_pin *pin_group;
-    sdram_handle.state             = DSY_SDRAM_STATE_ENABLE;
-    pin_group                      = sdram_handle.pin_config;
-    pin_group[DSY_SDRAM_PIN_SDNWE] = dsy_pin(DSY_GPIOH, 5);
+    Pin *pin_group;
+    sdram_handle.state = DSY_SDRAM_STATE_ENABLE;
+    pin_group          = sdram_handle.pin_config;
+    pin_group[DSY_SDRAM_PIN_SDNWE].Init(Pin::Port::DSY_GPIOH, 5);
 }
 void DaisySeed::ConfigureQspi()
 {
-    dsy_gpio_pin *pin_group;
+    Pin *pin_group;
     qspi_handle.device = DSY_QSPI_DEVICE_IS25LP064A;
     qspi_handle.mode   = DSY_QSPI_MODE_DSY_MEMORY_MAPPED;
     pin_group          = qspi_handle.pin_config;
 
 
-    pin_group[DSY_QSPI_PIN_IO0] = dsy_pin(DSY_GPIOF, 8);
-    pin_group[DSY_QSPI_PIN_IO1] = dsy_pin(DSY_GPIOF, 9);
-    pin_group[DSY_QSPI_PIN_IO2] = dsy_pin(DSY_GPIOF, 7);
-    pin_group[DSY_QSPI_PIN_IO3] = dsy_pin(DSY_GPIOF, 6);
-    pin_group[DSY_QSPI_PIN_CLK] = dsy_pin(DSY_GPIOF, 10);
-    pin_group[DSY_QSPI_PIN_NCS] = dsy_pin(DSY_GPIOG, 6);
+    pin_group[DSY_QSPI_PIN_IO0].Init(Pin::Port::DSY_GPIOF, 8);
+    pin_group[DSY_QSPI_PIN_IO1].Init(Pin::Port::DSY_GPIOF, 9);
+    pin_group[DSY_QSPI_PIN_IO2].Init(Pin::Port::DSY_GPIOF, 7);
+    pin_group[DSY_QSPI_PIN_IO3].Init(Pin::Port::DSY_GPIOF, 6);
+    pin_group[DSY_QSPI_PIN_CLK].Init(Pin::Port::DSY_GPIOF, 10);
+    pin_group[DSY_QSPI_PIN_NCS].Init(Pin::Port::DSY_GPIOG, 6);
 }
 void DaisySeed::ConfigureAudio()
 {
@@ -288,18 +287,18 @@ void DaisySeed::ConfigureAudio()
     sai_config.b_sync    = SaiHandle::Config::Sync::SLAVE;
     sai_config.a_dir     = SaiHandle::Config::Direction::TRANSMIT;
     sai_config.b_dir     = SaiHandle::Config::Direction::RECEIVE;
-    sai_config.pin_config.fs.Init(DSY_GPIOE, 4);
-    sai_config.pin_config.mclk.Init(DSY_GPIOE, 2);
-    sai_config.pin_config.sck.Init(DSY_GPIOE, 5);
-    sai_config.pin_config.sa.Init(DSY_GPIOE, 6);
-    sai_config.pin_config.sb.Init(DSY_GPIOE, 3);
+    sai_config.pin_config.fs.Init(Pin::Port::DSY_GPIOE, 4);
+    sai_config.pin_config.mclk.Init(Pin::Port::DSY_GPIOE, 2);
+    sai_config.pin_config.sck.Init(Pin::Port::DSY_GPIOE, 5);
+    sai_config.pin_config.sa.Init(Pin::Port::DSY_GPIOE, 6);
+    sai_config.pin_config.sb.Init(Pin::Port::DSY_GPIOE, 3);
     // Then Initialize
     SaiHandle sai_1_handle;
     sai_1_handle.Init(sai_config);
 
     // Device Init
     Pin codec_reset_pin;
-    codec_reset_pin.Init(DSY_GPIOB, 11);
+    codec_reset_pin.Init(Pin::Port::DSY_GPIOB, 11);
     //codec_ak4556_init(codec_reset_pin);
     Ak4556::Init(codec_reset_pin);
 

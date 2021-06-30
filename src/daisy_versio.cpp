@@ -81,9 +81,9 @@ void DaisyVersio::Init(bool boost)
     // RGB LEDs
     for(size_t i = 0; i < LED_LAST; i++)
     {
-        dsy_gpio_pin r = seed.GetPin(ledr_pin[i]);
-        dsy_gpio_pin g = seed.GetPin(ledg_pin[i]);
-        dsy_gpio_pin b = seed.GetPin(ledb_pin[i]);
+        Pin r = seed.GetPin(ledr_pin[i]);
+        Pin g = seed.GetPin(ledg_pin[i]);
+        Pin b = seed.GetPin(ledb_pin[i]);
         leds[i].Init(r, g, b, true);
     }
 }

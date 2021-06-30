@@ -119,7 +119,7 @@ extern "C"
     typedef struct
     {
         dsy_sdram_state state;                          /**< & */
-        dsy_gpio_pin    pin_config[DSY_SDRAM_PIN_LAST]; /**< & */
+        Pin             pin_config[DSY_SDRAM_PIN_LAST]; /**< & */
     } dsy_sdram_handle;
 
     /** Initializes the SDRAM peripheral */
