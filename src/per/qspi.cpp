@@ -63,14 +63,14 @@ class QSPIHandle::Impl
     QSPI_HandleTypeDef halqspi_;
 
     static constexpr size_t pin_count_
-        = sizeof(QSPIHandle::Config::pin_config) / sizeof(dsy_gpio_pin);
+        = sizeof(QSPIHandle::Config::pin_config) / sizeof(Pin);
     // Data structure for easy hal initialization
-    dsy_gpio_pin* pin_config_arr_[pin_count_] = {&config_.pin_config.io0,
-                                                 &config_.pin_config.io1,
-                                                 &config_.pin_config.io2,
-                                                 &config_.pin_config.io3,
-                                                 &config_.pin_config.clk,
-                                                 &config_.pin_config.ncs};
+    Pin* pin_config_arr_[pin_count_] = {&config_.pin_config.io0,
+                                        &config_.pin_config.io1,
+                                        &config_.pin_config.io2,
+                                        &config_.pin_config.io3,
+                                        &config_.pin_config.clk,
+                                        &config_.pin_config.ncs};
 };
 
 
@@ -761,15 +761,13 @@ uint8_t QSPIHandle::Impl::GetStatusRegister()
 
 uint32_t QSPIHandle::Impl::GetPin(size_t pin)
 {
-    dsy_gpio_pin* p = pin_config_arr_[pin];
-    return dsy_hal_map_get_pin(p);
+    return dsy_hal_map_get_pin(*pin_config_arr_[pin]);
 }
 
 
 GPIO_TypeDef* QSPIHandle::Impl::GetPort(size_t pin)
 {
-    dsy_gpio_pin* p = pin_config_arr_[pin];
-    return dsy_hal_map_get_port(p);
+    return dsy_hal_map_get_port(*pin_config_arr_[pin]);
 }
 
 
