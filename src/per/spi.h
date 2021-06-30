@@ -107,11 +107,21 @@ class SpiHandle
         ERR /**< & */
     };
 
+    enum class DmaDirection
+    {
+        RX, /**< & */
+        TX, /**< & */
+    };
+
     /** Initializes handler */
     Result Init(const Config& config);
 
     /** Returns the current config. */
     const Config& GetConfig() const;
+
+    /** A callback to be executed when a dma transfer is complete. */
+    typedef void (*CallbackFunctionPtr)(void* context, Result result);
+
 
     /** Blocking transmit 
     \param *buff input buffer
@@ -126,6 +136,28 @@ class SpiHandle
     \return Whether the receive was successful or not
     */
     Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
+
+    /** DMA-based transmit 
+    \param *buff input buffer
+    \param size  buffer size
+    \param callback     A callback to execute when the transfer finishes, or NULL.
+    \param callback_context A pointer that will be passed back to you in the callback.    
+    \return Whether the transmit was successful or not
+    */
+    Result DmaTransmit(uint8_t*            buff,
+                       size_t              size,
+                       CallbackFunctionPtr callback,
+                       void*               callback_context);
+
+    /** State of DMA transmit
+    \return 1 when finished, 0 otherwise
+    */
+    uint8_t GetDmaFlag();
+
+    /** Update DMA transmit flag
+    \param flag flag to set
+    */
+    void SetDmaFlag(uint8_t flag);
 
     /** \return the result of HAL_SPI_GetError() to the user. */
     int CheckError();
