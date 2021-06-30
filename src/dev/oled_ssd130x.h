@@ -21,12 +21,12 @@ class SSD130xI2CTransport
         uint8_t           i2c_address;
         void              Defaults()
         {
-            i2c_config.periph         = I2CHandle::Config::Peripheral::I2C_1;
-            i2c_config.speed          = I2CHandle::Config::Speed::I2C_1MHZ;
-            i2c_config.mode           = I2CHandle::Config::Mode::I2C_MASTER;
+            i2c_config.periph = I2CHandle::Config::Peripheral::I2C_1;
+            i2c_config.speed  = I2CHandle::Config::Speed::I2C_1MHZ;
+            i2c_config.mode   = I2CHandle::Config::Mode::I2C_MASTER;
             i2c_config.pin_config.scl.Init(Pin::Port::DSY_GPIOB, 8);
             i2c_config.pin_config.sda.Init(Pin::Port::DSY_GPIOB, 9);
-            i2c_address               = 0x3C;
+            i2c_address = 0x3C;
         }
     };
     void Init(const Config& config)
