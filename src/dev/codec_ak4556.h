@@ -23,7 +23,7 @@ class Ak4556
      ** Can be called statically:
      ** Ak4556::Init(pin); 
      ** */
-    static void Init(dsy_gpio_pin reset_pin);
+    static void Init(Pin reset_pin);
 };
 } // namespace daisy
 

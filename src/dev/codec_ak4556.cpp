@@ -4,18 +4,20 @@
 
 namespace daisy
 {
-void Ak4556::Init(dsy_gpio_pin reset_pin)
+void Ak4556::Init(Pin reset_pin)
 {
-    dsy_gpio reset;
-    reset.pin  = reset_pin;
-    reset.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    reset.pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&reset);
-    dsy_gpio_write(&reset, 1);
+    GPIO         reset;
+    GPIO::Config gpio_conf;
+
+    gpio_conf.pin  = reset_pin;
+    gpio_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
+    gpio_conf.pull = GPIO::Config::Pull::NOPULL;
+    reset.Init(gpio_conf);
+    reset.Write(1);
     System::Delay(1);
-    dsy_gpio_write(&reset, 0);
+    reset.Write(0);
     System::Delay(1);
-    dsy_gpio_write(&reset, 1);
+    reset.Write(1);
 }
 
 } // namespace daisy
