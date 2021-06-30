@@ -94,10 +94,10 @@ class SSD130x4WireSpiTransport
         spi_config.nss            = SpiHandle::Config::NSS::HARD_OUTPUT;
         spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_8;
 
-        spi_config.pin_config.sclk = {DSY_GPIOG, 11};
-        spi_config.pin_config.miso = {DSY_GPIOX, 0};
-        spi_config.pin_config.mosi = {DSY_GPIOB, 5};
-        spi_config.pin_config.nss  = {DSY_GPIOG, 10};
+        spi_config.pin_config.sclk.Init(Pin::Port::DSY_GPIOG, 11);
+        spi_config.pin_config.miso.Init(Pin::Port::DSY_GPIOX, 0);
+        spi_config.pin_config.mosi.Init(Pin::Port::DSY_GPIOB, 5);
+        spi_config.pin_config.nss.Init(Pin::Port::DSY_GPIOG, 10);
 
         spi_.Init(spi_config);
 
