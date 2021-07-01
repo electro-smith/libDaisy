@@ -308,9 +308,9 @@ static void HAL_FMC_MspInit(void)
         //		port = (GPIO_TypeDef*)gpio_hal_port_map[dsy_sdram.dsy_hsdram->pin_config[i].port];
         //		GPIO_InitStruct.Pin
         //			= gpio_hal_pin_map[dsy_sdram.dsy_hsdram->pin_config[i].pin];
-        port = dsy_hal_map_get_port(&dsy_sdram.config.pin_config[i]);
+        port = dsy_hal_map_get_port(dsy_sdram.config.pin_config[i]);
         GPIO_InitStruct.Pin
-            = dsy_hal_map_get_pin(&dsy_sdram.config.pin_config[i]);
+            = dsy_hal_map_get_pin(dsy_sdram.config.pin_config[i]);
         GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull      = GPIO_NOPULL;
         GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;

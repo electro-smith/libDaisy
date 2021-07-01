@@ -32,8 +32,7 @@ void Switch::Init(Pin pin, float update_rate)
 void Switch::Debounce()
 {
     // shift over, and introduce new state.
-    state_ = (state_ << 1)
-             | (flip_ ? !hw_gpio_.Read() : hw_gpio_.Read();
+    state_ = (state_ << 1) | (flip_ ? !hw_gpio_.Read() : hw_gpio_.Read());
     // Reset time held on any edge.
     if(state_ == 0x7f || state_ == 0x80)
         time_held_ = 0;

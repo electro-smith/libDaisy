@@ -1,10 +1,11 @@
 #include <algorithm>
 #include "dev/sr_595.h"
-void ShiftRegister595::Init(daisy::Pin *pin_cfg, size_t num_daisy_chained)
+
+void ShiftRegister595::Init(daisy::Pin* pin_cfg, size_t num_daisy_chained)
 {
     // Initialize Pins as outputs
     daisy::GPIO::Config gpio_conf;
-    gpio_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
+    gpio_conf.mode = daisy::GPIO::Config::Mode::OUTPUT_PP;
 
     for(size_t i = 0; i < NUM_PINS; i++)
     {
