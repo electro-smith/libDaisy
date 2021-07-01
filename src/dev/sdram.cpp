@@ -1,6 +1,5 @@
 #include <stm32h7xx_hal.h>
 #include "dev/sdram.h"
-#include "util/hal_map.h"
 //#include "libdaisy.h"
 
 // TODO:
@@ -37,33 +36,31 @@ typedef struct
 {
     uint8_t             board;
     SDRAM_HandleTypeDef hsdram;
-    dsy_sdram_handle *  dsy_hsdram;
+    SdramHandle::Config config;
 } dsy_sdram_t;
 
 static dsy_sdram_t dsy_sdram;
 
-static uint8_t sdram_periph_init();
-static uint8_t sdram_device_init();
-
-uint8_t dsy_sdram_init(dsy_sdram_handle *dsy_hsdram)
+SdramHandle::Result SdramHandle::Init(Config config)
 {
     //dsy_sdram.board = board;
-    dsy_sdram.dsy_hsdram = dsy_hsdram;
-    if(dsy_sdram.dsy_hsdram->state == DSY_SDRAM_STATE_ENABLE)
+    dsy_sdram.config = config;
+
+    if(config.state == State::ENABLE)
     {
-        if(sdram_periph_init() != DSY_SDRAM_OK)
+        if(PeriphInit() != Result::OK)
         {
-            return DSY_SDRAM_ERR;
+            return Result::ERR;
         }
-        if(sdram_device_init() != DSY_SDRAM_OK)
+        if(DeviceInit() != Result::OK)
         {
-            return DSY_SDRAM_ERR;
+            return Result::OK;
         }
     }
-    return DSY_SDRAM_OK;
+    return Result::OK;
 }
 
-static uint8_t sdram_periph_init()
+SdramHandle::Result SdramHandle::PeriphInit()
 {
     FMC_SDRAM_TimingTypeDef SdramTiming = {0};
     dsy_sdram.hsdram.Instance           = FMC_SDRAM_DEVICE;
@@ -97,12 +94,12 @@ static uint8_t sdram_periph_init()
     if(HAL_SDRAM_Init(&dsy_sdram.hsdram, &SdramTiming) != HAL_OK)
     {
         //Error_Handler();
-        return DSY_SDRAM_ERR;
+        return Result::ERR;
     }
-    return DSY_SDRAM_OK;
+    return Result::OK;
 }
-// For now this is
-static uint8_t sdram_device_init()
+
+SdramHandle::Result SdramHandle::DeviceInit()
 {
     FMC_SDRAM_CommandTypeDef Command;
 
@@ -154,7 +151,7 @@ static uint8_t sdram_device_init()
 
     //HAL_SDRAM_ProgramRefreshRate(hsdram, 0x56A - 20);
     HAL_SDRAM_ProgramRefreshRate(&dsy_sdram.hsdram, 0x81A - 20);
-    return DSY_SDRAM_OK;
+    return Result::OK;
 }
 
 static uint32_t FMC_Initialized = 0;
@@ -304,14 +301,14 @@ static void HAL_FMC_MspInit(void)
 
     // Init for any pins that can be configured
     GPIO_TypeDef *port;
-    for(uint8_t i = 0; i < DSY_SDRAM_PIN_LAST; i++)
+    for(uint8_t i = 0; i < (int)SdramHandle::Pin::LAST; i++)
     {
         //		port = (GPIO_TypeDef*)gpio_hal_port_map[dsy_sdram.dsy_hsdram->pin_config[i].port];
         //		GPIO_InitStruct.Pin
         //			= gpio_hal_pin_map[dsy_sdram.dsy_hsdram->pin_config[i].pin];
-        port = dsy_hal_map_get_port(&dsy_sdram.dsy_hsdram->pin_config[i]);
+        port = dsy_hal_map_get_port(&dsy_sdram.config.pin_config[i]);
         GPIO_InitStruct.Pin
-            = dsy_hal_map_get_pin(&dsy_sdram.dsy_hsdram->pin_config[i]);
+            = dsy_hal_map_get_pin(&dsy_sdram.config.pin_config[i]);
         GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull      = GPIO_NOPULL;
         GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;

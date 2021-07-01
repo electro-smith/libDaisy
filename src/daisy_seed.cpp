@@ -151,8 +151,7 @@ void DaisySeed::Init(bool boost)
     system.Init(syscfg);
 
     qspi.Init(qspi_config);
-
-    dsy_sdram_init(&sdram_handle);
+    sdram_handle.Init(sdram_config);
     ConfigureAudio();
 
     callback_rate_ = AudioSampleRate() / AudioBlockSize();
@@ -246,10 +245,8 @@ void DaisySeed::SetTestPoint(bool state)
 
 void DaisySeed::ConfigureSdram()
 {
-    Pin *pin_group;
-    sdram_handle.state = DSY_SDRAM_STATE_ENABLE;
-    pin_group          = sdram_handle.pin_config;
-    pin_group[DSY_SDRAM_PIN_SDNWE].Init(Pin::Port::DSY_GPIOH, 5);
+    sdram_config.state = SdramHandle::State::ENABLE;
+    sdram_config.pin_config[SdramHandle::Pin::SDNWE].Init(Pin::Port::DSY_GPIOH, 5);
 }
 void DaisySeed::ConfigureQspi()
 {

@@ -5,9 +5,7 @@ MODULE_DIR=src
 C_MODULES = \
 sys/dma \
 hid/audio \
-dev/sdram \
 sys/fatfs \
-per/gpio \
 per/sai \
 per/sdmmc \
 util/bsp_sd_diskio \
@@ -33,6 +31,7 @@ dev/codec_ak4556 \
 dev/codec_pcm3060 \
 dev/codec_wm8731 \
 dev/lcd_hd44780 \
+dev/sdram \
 hid/ctrl \
 hid/encoder \
 hid/gatein \
@@ -45,6 +44,7 @@ hid/wavplayer \
 hid/logger \
 per/adc \
 per/dac \
+per/gpio \
 per/i2c \
 per/qspi \
 per/spi \

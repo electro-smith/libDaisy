@@ -55,19 +55,16 @@ SECTIONS
 */
 #ifndef RAM_AS4C16M16SA_H
 #define RAM_AS4C16M16SA_H /**< & */
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 #include <stdint.h>
 #include "daisy_core.h"
+#include "util/hal_map.h"
 
-    /** @addtogroup sdram
+/** @addtogroup sdram
     @{
     */
 
 
-    /*
+/*
     As mentioned above, this does not currently initialize correctly (startup
     code needs to be modified to init SDRAM, and fill
     The variables placed here will also need to fit inside of the flash in order to initialize.
@@ -84,19 +81,22 @@ extern "C"
 */
 #define DSY_SDRAM_BSS __attribute__((section(".sdram_bss")))
 
-    enum
+class SdramHandle
+{
+  public:
+    enum class Result
     {
-        DSY_SDRAM_OK,  /**< & */
-        DSY_SDRAM_ERR, /**< & */
+        OK,  /**< & */
+        ERR, /**< & */
     };
 
     /** Determines whether chip is initialized, and activated. */
-    typedef enum
+    enum class State
     {
-        DSY_SDRAM_STATE_ENABLE,  /**< & */
-        DSY_SDRAM_STATE_DISABLE, /**< & */
-        DSY_SDRAM_STATE_LAST,    /**< & */
-    } dsy_sdram_state;
+        ENABLE,  /**< & */
+        DISABLE, /**< & */
+        LAST,    /**< & */
+    };
 
 
     /*
@@ -108,26 +108,26 @@ extern "C"
   */
 
     /** This is PH5 on Daisy*/
-    typedef enum
+    enum class Pin
     {
-        DSY_SDRAM_PIN_SDNWE, /**< & */
-        DSY_SDRAM_PIN_LAST,  /**< & */
-    } dsy_sdram_pin;
+        SDNWE, /**< & */
+        LAST,  /**< & */
+    };
 
 
     /** Configuration struct for passing to initialization */
-    typedef struct
+    struct Config
     {
-        dsy_sdram_state state;                          /**< & */
+        State        state;                      /**< & */
         Pin             pin_config[DSY_SDRAM_PIN_LAST]; /**< & */
-    } dsy_sdram_handle;
+    };
 
     /** Initializes the SDRAM peripheral */
-    uint8_t dsy_sdram_init(dsy_sdram_handle *dsy_hsdram);
+    Result Init(Config config);
 
-#ifdef __cplusplus
-}
-#endif
-
+  private:
+    Result PeriphInit();
+    Result DeviceInit();
+};
 #endif
 /** @} */
