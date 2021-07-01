@@ -31,6 +31,7 @@ void GPIO::Init(Config config)
     }
 
     ginit.Pin          = dsy_hal_map_get_pin(pin_);
+    ginit.Alternate    = config.alternate;
     GPIO_TypeDef *port = dsy_hal_map_get_port(pin_);
 
     dsy_hal_map_gpio_clk_enable(pin_);

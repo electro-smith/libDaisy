@@ -81,15 +81,17 @@ class GPIO
         Config()
         {
             //default setup is input
-            mode  = Mode::INPUT;
-            pull  = Pull::NOPULL;
-            speed = Speed::LOW;
+            mode      = Mode::INPUT;
+            pull      = Pull::NOPULL;
+            speed     = Speed::LOW;
+            alternate = 0;
         }
 
-        Mode  mode; /**< & */
-        Pull  pull; /**< & */
-        Speed speed;
-        Pin   pin;
+        Mode     mode; /**< & */
+        Pull     pull; /**< & */
+        Speed    speed;
+        Pin      pin;
+        uint32_t alternate;
     };
 
     /** Initializes the gpio with the settings configured. 
@@ -120,6 +122,5 @@ class GPIO
   private:
     Pin pin_;
 };
-
 } // namespace daisy
 #endif
