@@ -311,10 +311,10 @@ void DaisyPetal::InitLeds()
 
     I2CHandle::Config petal_led_i2c_config;
     petal_led_i2c_config.periph = I2CHandle::Config::Peripheral::I2C_1;
-    petal_led_i2c_config.pin_config.scl.Init(DSY_GPIOB, 8);
-    petal_led_i2c_config.pin_config.sda.pin.Init(DSY_GPIOB, 9);
+    petal_led_i2c_config.pin_config.scl.Init(Pin::Port::DSY_GPIOB, 8);
+    petal_led_i2c_config.pin_config.sda.Init(Pin::Port::DSY_GPIOB, 9);
     petal_led_i2c_config.speed = I2CHandle::Config::Speed::I2C_1MHZ;
-    petal_led_i2c_config.mode  = I2CHandle::Config::Mode::MASTER;
+    petal_led_i2c_config.mode  = I2CHandle::Config::Mode::I2C_MASTER;
 
 
     i2c.Init(petal_led_i2c_config);

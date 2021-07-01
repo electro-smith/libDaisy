@@ -3,6 +3,7 @@
 #define DSY_CODEC_AK4556_H
 
 #include "daisy_core.h"
+#include "per/gpio.h"
 
 namespace daisy
 {

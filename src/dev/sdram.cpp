@@ -32,6 +32,8 @@
 #define SDRAM_MODEREG_WRITEBURST_MODE_SINGLE ((1 << 9))
 #define SDRAM_MODEREG_WRITEBURST_MODE_PROG_BURST ((0 << 9))
 
+using namespace daisy;
+
 typedef struct
 {
     uint8_t             board;

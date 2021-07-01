@@ -173,18 +173,18 @@ void DaisyPatch::InitAudio()
     // Handle Seed Audio as-is and then
     SaiHandle::Config sai_config[2];
     // Internal Codec
-    sai_config[0].periph          = SaiHandle::Config::Peripheral::SAI_1;
-    sai_config[0].sr              = SaiHandle::Config::SampleRate::SAI_48KHZ;
-    sai_config[0].bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
-    sai_config[0].a_sync          = SaiHandle::Config::Sync::MASTER;
-    sai_config[0].b_sync          = SaiHandle::Config::Sync::SLAVE;
-    sai_config[0].a_dir           = SaiHandle::Config::Direction::TRANSMIT;
-    sai_config[0].b_dir           = SaiHandle::Config::Direction::RECEIVE;
-    sai_config[0].pin_config.fs   = {DSY_GPIOE, 4};
-    sai_config[0].pin_config.mclk = {DSY_GPIOE, 2};
-    sai_config[0].pin_config.sck  = {DSY_GPIOE, 5};
-    sai_config[0].pin_config.sa   = {DSY_GPIOE, 6};
-    sai_config[0].pin_config.sb   = {DSY_GPIOE, 3};
+    sai_config[0].periph    = SaiHandle::Config::Peripheral::SAI_1;
+    sai_config[0].sr        = SaiHandle::Config::SampleRate::SAI_48KHZ;
+    sai_config[0].bit_depth = SaiHandle::Config::BitDepth::SAI_24BIT;
+    sai_config[0].a_sync    = SaiHandle::Config::Sync::MASTER;
+    sai_config[0].b_sync    = SaiHandle::Config::Sync::SLAVE;
+    sai_config[0].a_dir     = SaiHandle::Config::Direction::TRANSMIT;
+    sai_config[0].b_dir     = SaiHandle::Config::Direction::RECEIVE;
+    sai_config[0].pin_config.fs.Init(Pin::Port::DSY_GPIOE, 4);
+    sai_config[0].pin_config.mclk.Init(Pin::Port::DSY_GPIOE, 2);
+    sai_config[0].pin_config.sck.Init(Pin::Port::DSY_GPIOE, 5);
+    sai_config[0].pin_config.sa.Init(Pin::Port::DSY_GPIOE, 6);
+    sai_config[0].pin_config.sb.Init(Pin::Port::DSY_GPIOE, 3);
 
     // External Codec
     sai_config[1].periph          = SaiHandle::Config::Peripheral::SAI_2;

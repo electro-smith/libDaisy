@@ -1,11 +1,14 @@
 #include "daisy_core.h"
 
 #include "stm32h7xx_hal.h"
+#include "util/hal_map.h"
 
 // Maps Daisy interface to STM32 HAL --
 // I'd like to get all of this stuff tucked away somewhere inbetween the HAL, and User level
 // So that I can start to slowly replace HAL stuff over time.
 // Also I don't like that this throws a warning for every library file that doesn't use it...
+
+using namespace daisy;
 
 const static GPIO_TypeDef* gpio_hal_port_map[DSY_GPIO_LAST] = {
     GPIOA,

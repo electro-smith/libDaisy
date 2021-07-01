@@ -1,5 +1,6 @@
 #pragma once
 #include "daisy_core.h"
+#include "per/gpio.h"
 
 namespace daisy
 {

@@ -54,7 +54,7 @@ void LcdHD44780::Init(const Config& config)
     GPIO::Config gpio_conf;
 
     gpio_conf.pin  = config.rs;
-    gpio_conf.mode = DSY_GPIO_MODE_OUTPUT_PP;
+    gpio_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
     lcd_pin_rs.Init(gpio_conf);
 
     gpio_conf.pin = config.en;
