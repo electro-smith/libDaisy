@@ -117,7 +117,7 @@ static const uint32_t adc_channel_from_pin(Pin* pin)
 
     for(size_t i = 0; i < DSY_ADC_MAX_CHANNELS; i++)
     {
-        if(adcpins[i] == pin)
+        if(adcpins[i] == *pin)
             return dsy_adc_channel_map[i];
     }
     return 0; // we should check what zero actually means in this context.
@@ -291,10 +291,10 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     sConfig.Offset       = 0;
     for(uint8_t i = 0; i < adc.channels; i++)
     {
-        const auto& cfg = adc.pin_cfg[i];
+        auto& cfg = adc.pin_cfg[i];
 
         // init ADC pin
-        cfg.pin_.Init(cfg.pin_config_);
+        cfg.pin.Init(cfg.pin_config_);
 
         // init mux pins (if any)
         adc.num_mux_pins_required[i]
@@ -373,7 +373,7 @@ write_mux_value(uint8_t chn, uint8_t idx, uint8_t num_mux_pins_to_write)
     }
     if(num_mux_pins_to_write > 2)
     {
-        p2 = &adc.pin_cfg[chn].mux_pin_[2].Write((idx & 0x04) > 0);
+        adc.pin_cfg[chn].mux_pin_[2].Write((idx & 0x04) > 0);
     }
 }
 
@@ -456,7 +456,7 @@ void HAL_ADC_MspDeInit(ADC_HandleTypeDef* adcHandle)
         // deinit pins
         for(size_t i = 0; i < adc.channels; i++)
         {
-            adc.pin_cfg[i].pin_.DeInit();
+            adc.pin_cfg[i].pin.DeInit();
             for(size_t muxCh = 0; muxCh < adc.num_mux_pins_required[i]; muxCh++)
                 adc.pin_cfg[i].mux_pin_[muxCh].DeInit();
         }
