@@ -57,7 +57,10 @@ SECTIONS
 #define RAM_AS4C16M16SA_H /**< & */
 #include <stdint.h>
 #include "daisy_core.h"
-
+extern "C"
+{
+#include "util/hal_map.h"
+}
 
 /** @addtogroup sdram
     @{

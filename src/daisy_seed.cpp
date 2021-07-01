@@ -110,6 +110,7 @@ void DaisySeed::Init(bool boost)
     boost ? syscfg.Boost() : syscfg.Defaults();
     system.Init(syscfg);
 
+    sdram_handle.Init(sdram_config);
     dsy_qspi_init(&qspi_handle);
     dsy_gpio_init(&led);
     dsy_gpio_init(&testpoint);
@@ -206,14 +207,9 @@ void DaisySeed::SetTestPoint(bool state)
 
 void DaisySeed::ConfigureSdram()
 {
-    dsy_gpio_pin *      pin_group;
-    SdramHandle::Config conf;
-
-    conf.state                              = SdramHandle::State::ENABLE;
-    pin_group                               = conf.pin_config;
-    pin_group[(int)SdramHandle::Pin::SDNWE] = dsy_pin(DSY_GPIOH, 5);
-
-    sdram_handle.Init(conf);
+    sdram_config.state = SdramHandle::State::ENABLE;
+    sdram_config.pin_config[(int)SdramHandle::Pin::SDNWE]
+        = dsy_pin(DSY_GPIOH, 5);
 }
 void DaisySeed::ConfigureQspi()
 {
