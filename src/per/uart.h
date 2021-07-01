@@ -13,6 +13,7 @@ TODO
 #ifndef DSY_UART_H
 #define DSY_UART_H /**< macro */
 #include "daisy_core.h"
+#include "per/gpio.h"
 
 
 namespace daisy

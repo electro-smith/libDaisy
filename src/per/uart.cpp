@@ -338,22 +338,24 @@ pin_alt* pins_periphs[] = {usart1_pins_tx,
                            lpuart1_pins_tx,
                            lpuart1_pins_rx};
 
-UartHandler::Result checkPinMatch(GPIO_InitTypeDef* init, Pin pin, int p_num)
+UartHandler::Result checkPinMatch(GPIO::Config init, Pin pin, int p_num)
 {
     for(int i = 0; i < 3; i++)
     {
         Pin temp_pin;
         temp_pin.Init(pins_periphs[p_num][i].port, pins_periphs[p_num][i].pin);
 
+        Pin empty_pin;
+
         // Pin() defaults to GPIOX, 0
-        if(temp_pin == Pin())
+        if(temp_pin == empty_pin)
         {
             /* skip */
         }
 
         else if(temp_pin == pin)
         {
-            init->Alternate = pins_periphs[p_num][i].alt;
+            init.alternate = pins_periphs[p_num][i].alt;
             return UartHandler::Result::OK;
         }
     }
@@ -371,7 +373,7 @@ UartHandler::Result UartHandler::Impl::InitPins()
     if(config_.pin_config.tx.port != Pin::Port::DSY_GPIOX)
     {
         //check tx against periph
-        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.tx, per_num)
+        if(checkPinMatch(gpio_conf, config_.pin_config.tx, per_num)
            == Result::ERR)
         {
             return Result::ERR;
@@ -385,7 +387,7 @@ UartHandler::Result UartHandler::Impl::InitPins()
     if(config_.pin_config.rx.port != Pin::Port::DSY_GPIOX)
     {
         //check rx against periph
-        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.rx, per_num + 1)
+        if(checkPinMatch(gpio_conf, config_.pin_config.rx, per_num + 1)
            == Result::ERR)
         {
             return Result::ERR;
