@@ -10,7 +10,7 @@
 
 using namespace daisy;
 
-const static GPIO_TypeDef* gpio_hal_port_map[DSY_GPIO_LAST] = {
+const static GPIO_TypeDef* gpio_hal_port_map[12] = {
     GPIOA,
     GPIOB,
     GPIOC,
@@ -48,28 +48,28 @@ const static uint16_t gpio_hal_pin_map[16] = {
 
 GPIO_TypeDef* dsy_hal_map_get_port(const Pin pin)
 {
-    return (GPIO_TypeDef*)gpio_hal_port_map[pin.GetPort()];
+    return (GPIO_TypeDef*)gpio_hal_port_map[(int)pin.port];
 }
 uint16_t dsy_hal_map_get_pin(const Pin pin)
 {
-    return (uint16_t)gpio_hal_pin_map[pin.GetPin()];
+    return (uint16_t)gpio_hal_pin_map[pin.pin];
 }
 
 void dsy_hal_map_gpio_clk_enable(const Pin pin)
 {
-    switch(pin.GetPort())
+    switch(pin.port)
     {
-        case DSY_GPIOA: __HAL_RCC_GPIOA_CLK_ENABLE(); return;
-        case DSY_GPIOB: __HAL_RCC_GPIOB_CLK_ENABLE(); return;
-        case DSY_GPIOC: __HAL_RCC_GPIOC_CLK_ENABLE(); return;
-        case DSY_GPIOD: __HAL_RCC_GPIOD_CLK_ENABLE(); return;
-        case DSY_GPIOE: __HAL_RCC_GPIOE_CLK_ENABLE(); return;
-        case DSY_GPIOF: __HAL_RCC_GPIOF_CLK_ENABLE(); return;
-        case DSY_GPIOG: __HAL_RCC_GPIOG_CLK_ENABLE(); return;
-        case DSY_GPIOH: __HAL_RCC_GPIOH_CLK_ENABLE(); return;
-        case DSY_GPIOI: __HAL_RCC_GPIOI_CLK_ENABLE(); return;
-        case DSY_GPIOJ: __HAL_RCC_GPIOJ_CLK_ENABLE(); return;
-        case DSY_GPIOK: __HAL_RCC_GPIOK_CLK_ENABLE(); return;
+        case Pin::Port::DSY_GPIOA: __HAL_RCC_GPIOA_CLK_ENABLE(); return;
+        case Pin::Port::DSY_GPIOB: __HAL_RCC_GPIOB_CLK_ENABLE(); return;
+        case Pin::Port::DSY_GPIOC: __HAL_RCC_GPIOC_CLK_ENABLE(); return;
+        case Pin::Port::DSY_GPIOD: __HAL_RCC_GPIOD_CLK_ENABLE(); return;
+        case Pin::Port::DSY_GPIOE: __HAL_RCC_GPIOE_CLK_ENABLE(); return;
+        case Pin::Port::DSY_GPIOF: __HAL_RCC_GPIOF_CLK_ENABLE(); return;
+        case Pin::Port::DSY_GPIOG: __HAL_RCC_GPIOG_CLK_ENABLE(); return;
+        case Pin::Port::DSY_GPIOH: __HAL_RCC_GPIOH_CLK_ENABLE(); return;
+        case Pin::Port::DSY_GPIOI: __HAL_RCC_GPIOI_CLK_ENABLE(); return;
+        case Pin::Port::DSY_GPIOJ: __HAL_RCC_GPIOJ_CLK_ENABLE(); return;
+        case Pin::Port::DSY_GPIOK: __HAL_RCC_GPIOK_CLK_ENABLE(); return;
         default: return;
     }
 }
