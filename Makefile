@@ -4,12 +4,8 @@ MODULE_DIR=src
 
 C_MODULES = \
 sys/dma \
-hid/audio \
 sys/fatfs \
-per/sai \
-per/sdmmc \
 util/bsp_sd_diskio \
-util/hal_map \
 util/oled_fonts \
 util/sd_diskio \
 util/unique_id \
@@ -32,6 +28,7 @@ dev/codec_pcm3060 \
 dev/codec_wm8731 \
 dev/lcd_hd44780 \
 dev/sdram \
+hid/audio \
 hid/ctrl \
 hid/encoder \
 hid/gatein \
@@ -50,10 +47,13 @@ per/qspi \
 per/spi \
 per/tim \
 per/uart \
+per/sai \
+per/sdmmc \
 ui/UI \
 ui/AbstractMenu \
 ui/FullScreenItemMenu \
 util/color \
+util/hal_map \
 util/MappedValue \
 util/WaveTableLoader \
 

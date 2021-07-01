@@ -1,9 +1,6 @@
 #include "per/sai.h"
 #include "daisy_core.h"
-extern "C"
-{
 #include "util/hal_map.h"
-}
 
 namespace daisy
 {

@@ -1,8 +1,5 @@
 #include "per/spi.h"
-extern "C"
-{
 #include "util/hal_map.h"
-}
 
 // TODO
 // - fix up rest of lib so that we can add a spi_handle map to the hal map

@@ -58,6 +58,7 @@ SECTIONS
 #include <stdint.h>
 #include "daisy_core.h"
 #include "util/hal_map.h"
+#include "per/gpio.h"
 
 /** @addtogroup sdram
     @{
@@ -81,6 +82,8 @@ SECTIONS
 */
 #define DSY_SDRAM_BSS __attribute__((section(".sdram_bss")))
 
+namespace daisy
+{
 class SdramHandle
 {
   public:
@@ -108,7 +111,7 @@ class SdramHandle
   */
 
     /** This is PH5 on Daisy*/
-    enum class Pin
+    enum class SdramPin
     {
         SDNWE, /**< & */
         LAST,  /**< & */
@@ -118,8 +121,8 @@ class SdramHandle
     /** Configuration struct for passing to initialization */
     struct Config
     {
-        State        state;                      /**< & */
-        Pin             pin_config[DSY_SDRAM_PIN_LAST]; /**< & */
+        State state;                           /**< & */
+        Pin   pin_config[(int)SdramPin::LAST]; /**< & */
     };
 
     /** Initializes the SDRAM peripheral */
@@ -129,5 +132,6 @@ class SdramHandle
     Result PeriphInit();
     Result DeviceInit();
 };
+} //namespace daisy
 #endif
 /** @} */

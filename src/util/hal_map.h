@@ -9,7 +9,8 @@
     @{
 */
 
-
+namespace daisy
+{
 /** global structs, and helper functions for interfacing with the stm32 HAL library
     while it remains a dependancy.
     This file should only be included from source files (c/cpp)
@@ -30,6 +31,6 @@ uint16_t dsy_hal_map_get_pin(const Pin pin);
 /** \param  port port clock to enable
 */
 void dsy_hal_map_gpio_clk_enable(const Pin pin);
-
+} //namespace daisy
 #endif
 /** @} */

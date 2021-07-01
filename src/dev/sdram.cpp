@@ -301,7 +301,7 @@ static void HAL_FMC_MspInit(void)
 
     // Init for any pins that can be configured
     GPIO_TypeDef *port;
-    for(uint8_t i = 0; i < (int)SdramHandle::Pin::LAST; i++)
+    for(uint8_t i = 0; i < (int)SdramHandle::SdramPin::LAST; i++)
     {
         //		port = (GPIO_TypeDef*)gpio_hal_port_map[dsy_sdram.dsy_hsdram->pin_config[i].port];
         //		GPIO_InitStruct.Pin
