@@ -421,8 +421,8 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         }
 
         //setup sclk pin
-        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.sclk);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.sclk);
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(config_.pin_config.sclk);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(config_.pin_config.sclk);
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
@@ -437,8 +437,8 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         }
 
         //setup miso pin
-        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.miso);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.miso);
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(config_.pin_config.miso);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(config_.pin_config.miso);
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
@@ -453,8 +453,8 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         }
 
         //setup mosi pin
-        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.mosi);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.mosi);
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(config_.pin_config.mosi);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(config_.pin_config.mosi);
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
@@ -469,8 +469,8 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         }
 
         //setup nss pin
-        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.nss);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.nss);
+        GPIO_TypeDef* port  = dsy_hal_map_get_port(config_.pin_config.nss);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(config_.pin_config.nss);
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
@@ -479,20 +479,20 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
 
 SpiHandle::Result SpiHandle::Impl::DeInitPins()
 {
-    GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin_config.sclk);
-    uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin_config.sclk);
+    GPIO_TypeDef* port = dsy_hal_map_get_port(config_.pin_config.sclk);
+    uint16_t      pin  = dsy_hal_map_get_pin(config_.pin_config.sclk);
     HAL_GPIO_DeInit(port, pin);
 
-    port = dsy_hal_map_get_port(&config_.pin_config.miso);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.miso);
+    port = dsy_hal_map_get_port(config_.pin_config.miso);
+    pin  = dsy_hal_map_get_pin(config_.pin_config.miso);
     HAL_GPIO_DeInit(port, pin);
 
-    port = dsy_hal_map_get_port(&config_.pin_config.mosi);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.mosi);
+    port = dsy_hal_map_get_port(config_.pin_config.mosi);
+    pin  = dsy_hal_map_get_pin(config_.pin_config.mosi);
     HAL_GPIO_DeInit(port, pin);
 
-    port = dsy_hal_map_get_port(&config_.pin_config.nss);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.nss);
+    port = dsy_hal_map_get_port(config_.pin_config.nss);
+    pin  = dsy_hal_map_get_pin(config_.pin_config.nss);
     HAL_GPIO_DeInit(port, pin);
 
     return Result::OK;
@@ -503,10 +503,10 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     SpiHandle::Impl* handle = MapInstanceToHandle(spiHandle->Instance);
 
     //enable clock on all 4 pins
-    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.sclk.port);
-    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.miso.port);
-    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.mosi.port);
-    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.nss.port);
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.sclk);
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.miso);
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.mosi);
+    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.nss);
 
     //enable clock for our peripheral
     switch(handle->config_.periph)

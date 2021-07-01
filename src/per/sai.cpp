@@ -365,8 +365,8 @@ void SaiHandle::Impl::InitPins()
             default: break;
         }
 
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(cfg[i]);
-        port                = dsy_hal_map_get_port(cfg[i]);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(*cfg[i]);
+        port                = dsy_hal_map_get_port(*cfg[i]);
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 }
@@ -380,21 +380,21 @@ void SaiHandle::Impl::DeinitPins()
                  || config_.b_sync == Config::Sync::MASTER);
     if(is_master)
     {
-        port = dsy_hal_map_get_port(&config_.pin_config.mclk);
-        pin  = dsy_hal_map_get_pin(&config_.pin_config.mclk);
+        port = dsy_hal_map_get_port(config_.pin_config.mclk);
+        pin  = dsy_hal_map_get_pin(config_.pin_config.mclk);
         HAL_GPIO_DeInit(port, pin);
     }
-    port = dsy_hal_map_get_port(&config_.pin_config.fs);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.fs);
+    port = dsy_hal_map_get_port(config_.pin_config.fs);
+    pin  = dsy_hal_map_get_pin(config_.pin_config.fs);
     HAL_GPIO_DeInit(port, pin);
-    port = dsy_hal_map_get_port(&config_.pin_config.sck);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.sck);
+    port = dsy_hal_map_get_port(config_.pin_config.sck);
+    pin  = dsy_hal_map_get_pin(config_.pin_config.sck);
     HAL_GPIO_DeInit(port, pin);
-    port = dsy_hal_map_get_port(&config_.pin_config.sa);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.sa);
+    port = dsy_hal_map_get_port(config_.pin_config.sa);
+    pin  = dsy_hal_map_get_pin(config_.pin_config.sa);
     HAL_GPIO_DeInit(port, pin);
-    port = dsy_hal_map_get_port(&config_.pin_config.sb);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.sb);
+    port = dsy_hal_map_get_port(config_.pin_config.sb);
+    pin  = dsy_hal_map_get_pin(config_.pin_config.sb);
     HAL_GPIO_DeInit(port, pin);
 }
 
