@@ -102,27 +102,11 @@ class SdramHandle
     };
 
 
-    /*
-      For now this is the only supported pinswap
-      The Chipselect/bank could likely be changed, but we haven't had any
-      hardware that does that yet.
-      Pins that have functions that cannot be moved to another pin will
-      be hardcoded into the driver.
-  */
-
-    /** This is PH5 on Daisy*/
-    enum class Pin
-    {
-        SDNWE, /**< & */
-        LAST,  /**< & */
-    };
-
-
     /** Configuration struct for passing to initialization */
     struct Config
     {
-        State        state;                      /**< & */
-        dsy_gpio_pin pin_config[(int)Pin::LAST]; /**< & */
+        State        state; /**< & */
+        dsy_gpio_pin sdnwe;
     };
 
     /** Initializes the SDRAM peripheral */

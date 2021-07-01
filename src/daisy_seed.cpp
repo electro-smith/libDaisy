@@ -208,8 +208,7 @@ void DaisySeed::SetTestPoint(bool state)
 void DaisySeed::ConfigureSdram()
 {
     sdram_config.state = SdramHandle::State::ENABLE;
-    sdram_config.pin_config[(int)SdramHandle::Pin::SDNWE]
-        = dsy_pin(DSY_GPIOH, 5);
+    sdram_config.sdnwe = dsy_pin(DSY_GPIOH, 5);
 }
 void DaisySeed::ConfigureQspi()
 {
