@@ -2,17 +2,7 @@
 #include "per/gpio.h"
 #include "util/hal_map.h"
 
-void Pin::Init(Pin::Port port, uint8_t pin)
-{
-    port_ = port;
-    pin_  = pin;
-}
-
-void Pin::Init(Pin::pin_port pp)
-{
-    pp.pin_ = pp.pin_ > 15 ? 15 : pp.pin_; // clamp at 15
-    Init(pp.port, pp.pin);
-}
+using namespace daisy;
 
 void GPIO::Init(Config config)
 {
@@ -72,7 +62,7 @@ void GPIO::Write(uint8_t state)
     return HAL_GPIO_WritePin(port, pin, (GPIO_PinState)(state > 0 ? 1 : 0));
 }
 
-void Toggle()
+void GPIO::Toggle()
 {
     GPIO_TypeDef *port = dsy_hal_map_get_port(pin_);
     uint16_t      pin  = dsy_hal_map_get_pin(pin_);
