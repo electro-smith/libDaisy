@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <stddef.h>
 #include <initializer_list>
 
 namespace daisy
@@ -25,7 +26,10 @@ class Stack
         buffer_head_ = 0;
         if(!other.IsEmpty())
         {
-            for(int i = 0; i < int(other.GetNumElements()); i++)
+            const auto numCopy = (other.GetNumElements() < bufferSize_)
+                                     ? other.GetNumElements()
+                                     : bufferSize_;
+            for(size_t i = 0; i < numCopy; i++)
                 buffer_[i] = other[i];
             buffer_head_ = other.GetNumElements();
         }
@@ -139,6 +143,33 @@ class Stack
         buffer_[idx] = item;
         buffer_head_++;
         return true;
+    }
+
+    /** Returns true if the buffer contains an element equal to the provided value */
+    bool Contains(const T& element)
+    {
+        int idx = buffer_head_ - 1;
+        while(idx >= 0)
+        {
+            if(buffer_[idx] == element)
+                return true;
+            idx--;
+        }
+        return false;
+    }
+    
+    /** Returns the number of elements in the buffer that are equal to the provided value */
+    size_t CountEqualTo(const T& element)
+    {
+        size_t result = 0;
+        int idx = buffer_head_ - 1;
+        while(idx >= 0)
+        {
+            if(buffer_[idx] == element)
+                result++;
+            idx--;
+        }
+        return result;
     }
 
     /** returns true, if the buffer is empty */
