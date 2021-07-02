@@ -8,22 +8,27 @@ namespace daisy
 {
 /** A simple FILO (stack) buffer with a fixed size (usefull when allocation
     on the heap is not an option */
-template <typename T, uint32_t kBufferSize>
-class Stack
+template <typename T>
+class StackBase
 {
-  public:
-    Stack() : buffer_head_(0) {}
+  protected:
+    StackBase(T* buffer, size_t bufferSize)
+    : buffer_(buffer), bufferSize_(bufferSize), bufferHead_(0)
+    {
+    }
 
-    Stack(std::initializer_list<T> valuesToAdd) : buffer_head_(0)
+    StackBase(T*                       buffer,
+              size_t                   bufferSize,
+              std::initializer_list<T> valuesToAdd)
+    : buffer_(buffer), bufferSize_(bufferSize), bufferHead_(0)
     {
         PushBack(valuesToAdd);
     }
 
-    Stack(const Stack<T, kBufferSize>& other) { *this = other; }
-
-    Stack<T, kBufferSize>& operator=(const Stack<T, kBufferSize>& other)
+  public:
+    StackBase<T>& operator=(const StackBase<T>& other)
     {
-        buffer_head_ = 0;
+        bufferHead_ = 0;
         if(!other.IsEmpty())
         {
             const auto numCopy = (other.GetNumElements() < bufferSize_)
@@ -31,12 +36,12 @@ class Stack
                                      : bufferSize_;
             for(size_t i = 0; i < numCopy; i++)
                 buffer_[i] = other[i];
-            buffer_head_ = other.GetNumElements();
+            bufferHead_ = other.GetNumElements();
         }
         return *this;
     }
 
-    ~Stack() {}
+    ~StackBase() {}
 
     /** Adds an element to the back of the buffer, returning true on
         success */
@@ -44,7 +49,7 @@ class Stack
     {
         if(!IsFull())
         {
-            buffer_[buffer_head_++] = elementToAdd;
+            buffer_[bufferHead_++] = elementToAdd;
             return true;
         }
         return false;
@@ -72,12 +77,12 @@ class Stack
             return T();
         else
         {
-            return buffer_[--buffer_head_];
+            return buffer_[--bufferHead_];
         }
     }
 
     /** clears the buffer */
-    void Clear() { buffer_head_ = 0; }
+    void Clear() { bufferHead_ = 0; }
 
     /** returns an element at the given index without checking for the
         index to be within range. */
@@ -89,14 +94,14 @@ class Stack
     /** removes a single element from the buffer and returns true if successfull */
     bool Remove(uint32_t idx)
     {
-        if(idx >= buffer_head_)
+        if(idx >= bufferHead_)
             return false;
 
-        for(uint32_t i = idx; i < buffer_head_ - 1; i++)
+        for(uint32_t i = idx; i < bufferHead_ - 1; i++)
         {
             buffer_[i] = buffer_[i + 1];
         }
-        buffer_head_--;
+        bufferHead_--;
         return true;
     }
 
@@ -106,7 +111,7 @@ class Stack
     int RemoveAllEqualTo(const T& element)
     {
         int numRemoved = 0;
-        int idx        = buffer_head_ - 1;
+        int idx        = bufferHead_ - 1;
         while(idx >= 0)
         {
             if(buffer_[idx] == element)
@@ -114,7 +119,7 @@ class Stack
                 numRemoved++;
                 Remove(idx);
                 // was that the last element?
-                if(decltype(buffer_head_)(idx) == buffer_head_)
+                if(decltype(bufferHead_)(idx) == bufferHead_)
                     idx--;
             }
             else
@@ -126,29 +131,29 @@ class Stack
     /** adds a single element to the buffer and returns true if successfull */
     bool Insert(uint32_t idx, const T& item)
     {
-        if(buffer_head_ >= kBufferSize)
+        if(bufferHead_ >= bufferSize_)
             return false;
-        if(idx > buffer_head_)
+        if(idx > bufferHead_)
             return false;
-        if(idx == buffer_head_)
+        if(idx == bufferHead_)
         {
-            buffer_[buffer_head_++] = item;
+            buffer_[bufferHead_++] = item;
             return true;
         }
 
-        for(uint32_t i = buffer_head_ - 1; i >= idx; i--)
+        for(uint32_t i = bufferHead_ - 1; i >= idx; i--)
         {
             buffer_[i + 1] = buffer_[i];
         }
         buffer_[idx] = item;
-        buffer_head_++;
+        bufferHead_++;
         return true;
     }
 
     /** Returns true if the buffer contains an element equal to the provided value */
     bool Contains(const T& element)
     {
-        int idx = buffer_head_ - 1;
+        int idx = bufferHead_ - 1;
         while(idx >= 0)
         {
             if(buffer_[idx] == element)
@@ -157,12 +162,12 @@ class Stack
         }
         return false;
     }
-    
+
     /** Returns the number of elements in the buffer that are equal to the provided value */
     size_t CountEqualTo(const T& element)
     {
         size_t result = 0;
-        int idx = buffer_head_ - 1;
+        int    idx    = bufferHead_ - 1;
         while(idx >= 0)
         {
             if(buffer_[idx] == element)
@@ -173,20 +178,50 @@ class Stack
     }
 
     /** returns true, if the buffer is empty */
-    bool IsEmpty() const { return buffer_head_ == 0; }
+    bool IsEmpty() const { return bufferHead_ == 0; }
 
     /** returns true, if the buffer is Full */
-    bool IsFull() const { return buffer_head_ == kBufferSize; }
+    bool IsFull() const { return bufferHead_ == bufferSize_; }
 
     /** returns the number of elements in the buffer */
-    uint32_t GetNumElements() const { return buffer_head_; }
+    size_t GetNumElements() const { return bufferHead_; }
 
     /** returns the total capacity */
-    uint32_t GetCapacity() const { return kBufferSize; }
+    size_t GetCapacity() const { return bufferSize_; }
 
   private:
-    T        buffer_[kBufferSize];
-    uint32_t buffer_head_;
+    T*           buffer_;
+    const size_t bufferSize_;
+    size_t       bufferHead_;
+};
+
+template <typename T, size_t capacity>
+class Stack : public StackBase<T>
+{
+  public:
+    Stack() : StackBase<T>(buffer_, capacity) {}
+
+    Stack(std::initializer_list<T> valuesToAdd)
+    : StackBase<T>(buffer_, capacity, valuesToAdd)
+    {
+    }
+
+    template <size_t otherCapacity>
+    Stack(const Stack<T, otherCapacity>& other)
+    : StackBase<T>(buffer_, capacity)
+    {
+        *this = other;
+    }
+
+    template <size_t otherCapacity>
+    Stack<T, capacity>& operator=(const Stack<T, otherCapacity>& other)
+    {
+        StackBase<T>::operator=(other);
+        return *this;
+    }
+
+  private:
+    T buffer_[capacity];
 };
 
 } // namespace daisy

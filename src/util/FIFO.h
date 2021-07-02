@@ -7,30 +7,38 @@
 namespace daisy
 {
 /** A simple FIFO ring buffer with a fixed size. */
-template <typename T, size_t capacity>
-class FIFO
+template <typename T>
+class FIFOBase
 {
+  protected:
+    FIFOBase(T* buffer, size_t bufferSize)
+    : buffer_(buffer), bufferSize_(bufferSize), bufferIn_(0), bufferOut_(0)
+    {
+    }
+
+    FIFOBase(T* buffer, size_t bufferSize, std::initializer_list<T> valuesToAdd)
+    : buffer_(buffer), bufferSize_(bufferSize), bufferIn_(0), bufferOut_(0)
+    {
+        PushBack(valuesToAdd);
+    }
+
   public:
-    FIFO() : bufferIn_(0), bufferOut_(0) {}
-
-    FIFO(const FIFO<T, capacity>& other) { *this = other; }
-
-    FIFO<T, capacity>& operator=(const FIFO<T, capacity>& other)
+    FIFOBase<T>& operator=(const FIFOBase<T>& other)
     {
         bufferIn_ = bufferOut_ = 0;
         if(!other.IsEmpty())
         {
             int readPtr = other.bufferOut_;
-            while(readPtr != other.bufferIn_)
+            while((readPtr != other.bufferIn_) && (bufferIn_ < bufferSize_))
             {
                 buffer_[bufferIn_++] = other.buffer_[readPtr++];
-                if(readPtr >= kBufferSize)
-                    readPtr -= kBufferSize;
+                if(readPtr >= other.bufferSize_)
+                    readPtr -= other.bufferSize_;
             }
         }
         return *this;
     }
-    ~FIFO() {}
+    ~FIFOBase() {}
 
     void Clear() { bufferIn_ = bufferOut_ = 0; }
 
@@ -41,8 +49,8 @@ class FIFO
         if(!IsFull())
         {
             buffer_[bufferIn_++] = elementToAdd;
-            if(bufferIn_ >= kBufferSize)
-                bufferIn_ -= kBufferSize;
+            if(bufferIn_ >= bufferSize_)
+                bufferIn_ -= bufferSize_;
             return true;
         }
         return false;
@@ -71,7 +79,7 @@ class FIFO
             return buffer_[0];
         int idx = bufferIn_ - 1;
         if(idx < 0)
-            idx += kBufferSize;
+            idx += bufferSize_;
         return buffer_[idx];
     }
 
@@ -83,7 +91,7 @@ class FIFO
             return buffer_[0];
         int idx = bufferIn_ - 1;
         if(idx < 0)
-            idx += kBufferSize;
+            idx += bufferSize_;
         return buffer_[idx];
     }
 
@@ -96,8 +104,8 @@ class FIFO
         {
             const auto result = buffer_[bufferOut_];
             bufferOut_++;
-            if(bufferOut_ >= kBufferSize)
-                bufferOut_ -= kBufferSize;
+            if(bufferOut_ >= bufferSize_)
+                bufferOut_ -= bufferSize_;
             return result;
         }
     }
@@ -129,8 +137,8 @@ class FIFO
             if(buffer_[idx] == element)
                 return true;
             idx++;
-            if(idx >= kBufferSize)
-                idx -= kBufferSize;
+            if(idx >= bufferSize_)
+                idx -= bufferSize_;
         }
         return false;
     }
@@ -145,8 +153,8 @@ class FIFO
             if(buffer_[idx] == element)
                 result++;
             idx++;
-            if(idx >= kBufferSize)
-                idx -= kBufferSize;
+            if(idx >= bufferSize_)
+                idx -= bufferSize_;
         }
         return result;
     }
@@ -155,14 +163,14 @@ class FIFO
     bool IsEmpty() const { return bufferIn_ == bufferOut_; }
 
     /** returns true, if the buffer is Full */
-    bool IsFull() const { return GetNumElements() == kBufferSize - 1; }
+    bool IsFull() const { return GetNumElements() == bufferSize_ - 1; }
 
     /** returns the number of elements in the buffer */
     size_t GetNumElements() const
     {
         int32_t numElements = bufferIn_ - bufferOut_;
         if(numElements < 0)
-            numElements += kBufferSize;
+            numElements += bufferSize_;
         return size_t(numElements);
     }
 
@@ -196,26 +204,26 @@ class FIFO
             return false;
 
         size_t index = bufferOut_ + idx;
-        if(index >= kBufferSize)
-            index -= kBufferSize;
+        if(index >= bufferSize_)
+            index -= bufferSize_;
         size_t nextIndex = index + 1;
-        if(nextIndex >= kBufferSize)
-            nextIndex -= kBufferSize;
+        if(nextIndex >= bufferSize_)
+            nextIndex -= bufferSize_;
 
         while(nextIndex != bufferIn_)
         {
             buffer_[index] = buffer_[nextIndex];
             index++;
             nextIndex++;
-            if(index >= kBufferSize)
-                index -= kBufferSize;
-            if(nextIndex >= kBufferSize)
-                nextIndex -= kBufferSize;
+            if(index >= bufferSize_)
+                index -= bufferSize_;
+            if(nextIndex >= bufferSize_)
+                nextIndex -= bufferSize_;
         }
 
         int32_t nextBufferIn = int32_t(bufferIn_) - 1;
         if(nextBufferIn < 0)
-            nextBufferIn += kBufferSize;
+            nextBufferIn += bufferSize_;
         bufferIn_ = size_t(nextBufferIn);
 
         return true;
@@ -247,40 +255,68 @@ class FIFO
     /** returns the element "idx" positions behind the first element */
     T& operator[](size_t idx)
     {
-        if(idx >= GetNumElements()) // TODO: optimize!
-        {
-            default_ = T();
-            return default_;
-        }
+        if(idx >= GetNumElements())
+            // invalid, but better not pass a temporary T() object as a reference...
+            return buffer_[0];
+
         size_t index = bufferOut_ + idx;
-        if(index >= kBufferSize)
-            index -= kBufferSize;
+        if(index >= bufferSize_)
+            index -= bufferSize_;
         return buffer_[index];
     }
 
     /** returns the element "idx" positions behind the first element */
     const T& operator[](size_t idx) const
     {
-        if(idx >= GetNumElements()) // TODO: optimize!
-        {
-            default_ = T();
-            return default_;
-        }
+        if(idx >= GetNumElements())
+            // invalid, but better not pass a temporary T() object as a reference...
+            return buffer_[0];
+
         size_t index = bufferOut_ + idx;
-        if(index >= kBufferSize)
-            index -= kBufferSize;
+        if(index >= bufferSize_)
+            index -= bufferSize_;
         return buffer_[index];
     }
 
     /** returns the total capacity */
-    uint32_t GetCapacity() const { return kBufferSize - 1; }
+    size_t GetCapacity() const { return bufferSize_ - 1; }
 
   private:
-    static constexpr auto kBufferSize = capacity + 1;
-    T                     default_;
-    T                     buffer_[kBufferSize];
-    uint32_t              bufferIn_;
-    uint32_t              bufferOut_;
+    FIFOBase(const FIFOBase<T>& other) {} // non copyable
+
+  private:
+    T*           buffer_;
+    const size_t bufferSize_;
+    size_t       bufferIn_;
+    size_t       bufferOut_;
+};
+
+template <typename T, size_t capacity>
+class FIFO : public FIFOBase<T>
+{
+  public:
+    FIFO() : FIFOBase<T>(buffer_, capacity + 1) {}
+
+    FIFO(std::initializer_list<T> valuesToAdd)
+    : FIFOBase<T>(buffer_, capacity, valuesToAdd)
+    {
+    }
+
+    template <size_t otherCapacity>
+    FIFO(const FIFO<T, otherCapacity>& other)
+    {
+        *this = other;
+    }
+
+    template <size_t otherCapacity>
+    FIFO<T, capacity>& operator=(const FIFO<T, otherCapacity>& other)
+    {
+        FIFOBase<T>::operator=(other);
+        return *this;
+    }
+
+  private:
+    T buffer_[capacity + 1];
 };
 
 } // namespace daisy
