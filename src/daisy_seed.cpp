@@ -91,7 +91,6 @@ const dsy_gpio_pin seedgpio[32] = {
 void DaisySeed::Configure()
 {
     // Configure internal peripherals
-    ConfigureSdram();
     ConfigureQspi();
     //ConfigureDac();
     // Configure the built-in GPIOs.
@@ -110,7 +109,7 @@ void DaisySeed::Init(bool boost)
     boost ? syscfg.Boost() : syscfg.Defaults();
     system.Init(syscfg);
 
-    sdram_handle.Init(sdram_config);
+    sdram_handle.Init();
     dsy_qspi_init(&qspi_handle);
     dsy_gpio_init(&led);
     dsy_gpio_init(&testpoint);
@@ -205,11 +204,6 @@ void DaisySeed::SetTestPoint(bool state)
 
 // Private Implementation
 
-void DaisySeed::ConfigureSdram()
-{
-    sdram_config.state = SdramHandle::State::ENABLE;
-    sdram_config.sdnwe = dsy_pin(DSY_GPIOH, 5);
-}
 void DaisySeed::ConfigureQspi()
 {
     dsy_gpio_pin *pin_group;

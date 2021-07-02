@@ -93,24 +93,8 @@ class SdramHandle
         ERR, /**< & */
     };
 
-    /** Determines whether chip is initialized, and activated. */
-    enum class State
-    {
-        ENABLE,  /**< & */
-        DISABLE, /**< & */
-        LAST,    /**< & */
-    };
-
-
-    /** Configuration struct for passing to initialization */
-    struct Config
-    {
-        State        state; /**< & */
-        dsy_gpio_pin sdnwe;
-    };
-
     /** Initializes the SDRAM peripheral */
-    Result Init(Config config);
+    Result Init();
 
   private:
     Result PeriphInit();
