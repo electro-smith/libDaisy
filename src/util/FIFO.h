@@ -6,7 +6,7 @@
 
 namespace daisy
 {
-/** A simple FIFO ring buffer with a fixed size. */
+/** Capacity-independent base class for FIFO. Use FIFO instead. */
 template <typename T>
 class FIFOBase
 {
@@ -23,6 +23,7 @@ class FIFOBase
     }
 
   public:
+    /** Copies all elements from another FIFO */
     FIFOBase<T>& operator=(const FIFOBase<T>& other)
     {
         bufferIn_ = bufferOut_ = 0;
@@ -40,6 +41,7 @@ class FIFOBase
     }
     ~FIFOBase() {}
 
+    /** Removes all elements from the FIFO */
     void Clear() { bufferIn_ = bufferOut_ = 0; }
 
     /** Adds an element to the back of the buffer, returning true on
@@ -291,23 +293,28 @@ class FIFOBase
     size_t       bufferOut_;
 };
 
+/** A simple FIFO ring buffer with a fixed size. */
 template <typename T, size_t capacity>
 class FIFO : public FIFOBase<T>
 {
   public:
+    /** Creates an empty FIFO */
     FIFO() : FIFOBase<T>(buffer_, capacity + 1) {}
 
-    FIFO(std::initializer_list<T> valuesToAdd)
+    /** Creates a FIFO and adds a list of values*/
+    explicit FIFO(std::initializer_list<T> valuesToAdd)
     : FIFOBase<T>(buffer_, capacity, valuesToAdd)
     {
     }
 
+    /** Creates a FIFO and copies all values from another FIFO */
     template <size_t otherCapacity>
     FIFO(const FIFO<T, otherCapacity>& other)
     {
         *this = other;
     }
 
+    /** Copies all values from another FIFO */
     template <size_t otherCapacity>
     FIFO<T, capacity>& operator=(const FIFO<T, otherCapacity>& other)
     {

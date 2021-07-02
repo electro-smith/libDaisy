@@ -6,8 +6,7 @@
 
 namespace daisy
 {
-/** A simple FILO (stack) buffer with a fixed size (usefull when allocation
-    on the heap is not an option */
+/** Capacity-independent base class for Stack. Use Stack instead. */
 template <typename T>
 class StackBase
 {
@@ -26,6 +25,7 @@ class StackBase
     }
 
   public:
+    /** Copies all elements from another Stack */
     StackBase<T>& operator=(const StackBase<T>& other)
     {
         bufferHead_ = 0;
@@ -195,17 +195,22 @@ class StackBase
     size_t       bufferHead_;
 };
 
+/** A simple FILO (stack) buffer with a fixed size (usefull when allocation
+    on the heap is not an option */
 template <typename T, size_t capacity>
 class Stack : public StackBase<T>
 {
   public:
+    /** Creates an empty Stack */
     Stack() : StackBase<T>(buffer_, capacity) {}
 
-    Stack(std::initializer_list<T> valuesToAdd)
+    /** Creates a Stack and adds a list of values*/
+    explicit Stack(std::initializer_list<T> valuesToAdd)
     : StackBase<T>(buffer_, capacity, valuesToAdd)
     {
     }
 
+    /** Creates a Stack and copies all values from another Stack */
     template <size_t otherCapacity>
     Stack(const Stack<T, otherCapacity>& other)
     : StackBase<T>(buffer_, capacity)
@@ -213,6 +218,7 @@ class Stack : public StackBase<T>
         *this = other;
     }
 
+    /** Copies all values from another Stack */
     template <size_t otherCapacity>
     Stack<T, capacity>& operator=(const Stack<T, otherCapacity>& other)
     {

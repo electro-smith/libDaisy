@@ -138,9 +138,9 @@ TEST_F(util_FIFO, g_removeByValue)
     EXPECT_EQ(fifo_[1], 1);
     EXPECT_EQ(fifo_[2], 2);
 
-    // remove all values "2" => one item removed
+    // remove all values "1" => two items removed
     EXPECT_EQ(fifo_.RemoveAllEqualTo(1), 2u);
-    // remove all values "2" => no items removed
+    // remove all values "1" => no items removed
     EXPECT_EQ(fifo_.RemoveAllEqualTo(1), 0u);
 
     // values are correct
