@@ -12,6 +12,7 @@
 
 * midi: SysEx messages that overflow stop reading data until rx sysexstop. Previously overflowed sysex would cause junk messages.
 * midi: NoteOns of velocity 0 cause NoteOffs.
+* usb-serial: fix RX callback function being overwritten
 
 ### Other
 
