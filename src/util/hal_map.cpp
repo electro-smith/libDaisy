@@ -8,8 +8,8 @@
 // So that I can start to slowly replace HAL stuff over time.
 // Also I don't like that this throws a warning for every library file that doesn't use it...
 
-using namespace daisy;
-
+namespace daisy
+{
 const static GPIO_TypeDef* gpio_hal_port_map[12] = {
     GPIOA,
     GPIOB,
@@ -73,5 +73,6 @@ void dsy_hal_map_gpio_clk_enable(const Pin pin)
         default: return;
     }
 }
+} // namespace daisy
 
 // ADC FUNCTIONS
