@@ -51,7 +51,7 @@ SdramHandle::Result SdramHandle::Init()
     }
     if(DeviceInit() != Result::OK)
     {
-        return Result::OK;
+        return Result::ERR;
     }
     return Result::OK;
 }
