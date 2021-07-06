@@ -1,6 +1,9 @@
 #include <stm32h7xx_hal.h>
 #include "dev/sdram.h"
-//#include "libdaisy.h"
+extern "C"
+{
+#include "util/hal_map.h"
+}
 
 // TODO:
 // - Consider alternative to libdaisy.h inclusion for board specific details.
