@@ -53,23 +53,24 @@ class MidiTest : public ::testing::Test
     }
 
     //help with parsing messages
-    void ParseAndPop(uint8_t* msgs, int size)
+    MidiEvent ParseAndPop(uint8_t* msgs, int size)
     {
         Parse(msgs, size);
-        event = midi.PopEvent();
+        return midi.PopEvent();
     }
 
     //help with parsing sysex messages
-    void ParseAndPopSysex(uint8_t* msgs, int size)
+    MidiEvent ParseAndPopSysex(uint8_t* msgs, int size)
     {
         midi.Parse(0xf0); //sysex
         Parse(msgs, size);
         midi.Parse(0xf7); //end of sysex
-        event = midi.PopEvent();
+        return midi.PopEvent();
     }
 
     //help testing
-    void Test(uint8_t evType,
+    void Test(MidiEvent event,
+              uint8_t evType,
               uint8_t chkType,
               uint8_t chn,
               bool    twoData,
@@ -93,7 +94,7 @@ class MidiTest : public ::testing::Test
     }
 
     //help test sysex
-    void TestSysex(uint8_t* msgs, int size)
+    void TestSysex(MidiEvent event, uint8_t* msgs, int size)
     {
         EXPECT_EQ((uint8_t)event.type, (uint8_t)SystemCommon);
         EXPECT_EQ((uint8_t)event.sc_type, (uint8_t)SystemExclusive);
@@ -119,7 +120,6 @@ class MidiTest : public ::testing::Test
     }
 
     MidiHandler<MidiTestTransport> midi;
-    MidiEvent                      event;
 };
 
 //Channel Voice messages
@@ -138,11 +138,11 @@ TEST_F(MidiTest, channelVoice)
                         = {(uint8_t)(0x80 + (type << 4) + chn), d0, d1};
 
                     bool sendThree = type != 4 && type != 5;
-                    ParseAndPop(msgs, 2 + sendThree);
+                    MidiEvent event = ParseAndPop(msgs, 2 + sendThree);
 
                     uint8_t chkType
                         = (type == 3 && d0 > 119) ? (uint8_t)ChannelMode : type;
-                    Test((uint8_t)event.type, chkType, chn, sendThree, d0, d1);
+                    Test(event, (uint8_t)event.type, chkType, chn, sendThree, d0, d1);
                 }
             }
         }
@@ -157,21 +157,21 @@ TEST_F(MidiTest, channelMode)
     for(uint8_t type = 120; type < 128; type++)
     {
         uint8_t msg[] = {0x80 + (3 << 4), type, 0};
-        ParseAndPop(msg, 3);
+        MidiEvent event = ParseAndPop(msg, 3);
         EXPECT_EQ((uint8_t)event.cm_type, type - 120);
     }
 
     //LocalControlOn
     uint8_t msg[] = {0x80 + (3 << 4), 122, 127};
-    ParseAndPop(msg, 3);
-    Test((uint8_t)event.cm_type, (uint8_t)LocalControl, 0, true, 122, 127);
+    MidiEvent event = ParseAndPop(msg, 3);
+    Test(event, (uint8_t)event.cm_type, (uint8_t)LocalControl, 0, true, 122, 127);
 
     //MonoModeOn
     for(uint8_t data = 0; data < 128; data++)
     {
         uint8_t msg[] = {0x80 + (3 << 4), 126, data};
-        ParseAndPop(msg, 3);
-        Test((uint8_t)event.cm_type, (uint8_t)MonoModeOn, 0, true, 126, data);
+        MidiEvent event = ParseAndPop(msg, 3);
+        Test(event,(uint8_t)event.cm_type, (uint8_t)MonoModeOn, 0, true, 126, data);
     }
 }
 
@@ -186,8 +186,8 @@ TEST_F(MidiTest, systemCommon)
             for(uint8_t d1 = 0; d1 < 128; d1++)
             {
                 uint8_t msg[] = {uint8_t((0x0f << 4) + type), d0, d1};
-                ParseAndPop(msg, 2 + (type == 2));
-                Test((uint8_t)event.sc_type, type, 0, type == 2, d0, d1);
+                MidiEvent event = ParseAndPop(msg, 2 + (type == 2));
+                Test(event,(uint8_t)event.sc_type, type, 0, type == 2, d0, d1);
             }
         }
     }
@@ -196,7 +196,7 @@ TEST_F(MidiTest, systemCommon)
     for(uint8_t type = 4; type < 8; type++)
     {
         uint8_t msg[] = {uint8_t((0x0f << 4) + type)};
-        ParseAndPop(msg, 1);
+        MidiEvent event = ParseAndPop(msg, 1);
         EXPECT_EQ((uint8_t)event.sc_type, type);
     }
 }
@@ -207,7 +207,7 @@ TEST_F(MidiTest, systemRealTime)
     for(uint8_t type = 0; type < 8; type++)
     {
         uint8_t msg[] = {uint8_t(0xf8 + type), 0, 0};
-        ParseAndPop(msg, 1);
+        MidiEvent event = ParseAndPop(msg, 1);
         EXPECT_EQ((uint8_t)event.srt_type, type);
     }
 }
@@ -221,15 +221,15 @@ TEST_F(MidiTest, systemExclusive)
         msgs[i] = (uint8_t)i;
     }
 
-    ParseAndPopSysex(msgs, 6);
-    TestSysex(msgs, 6);
+    MidiEvent event = ParseAndPopSysex(msgs, 6);
+    TestSysex(event, msgs, 6);
 
-    ParseAndPopSysex(msgs, 128);
-    TestSysex(msgs, 128);
+    event = ParseAndPopSysex(msgs, 128);
+    TestSysex(event, msgs, 128);
 
     //max len is 128, let's go past that
-    ParseAndPopSysex(msgs, 135);
-    TestSysex(msgs, 128);
+    event = ParseAndPopSysex(msgs, 135);
+    TestSysex(event, msgs, 128);
 }
 
 //Running Status
@@ -237,32 +237,32 @@ TEST_F(MidiTest, runningStatus)
 {
     //NoteOn with status bit
     uint8_t msgs[] = {0x90, 0x10, 0x0f};
-    ParseAndPop(msgs, 3);
+    MidiEvent event = ParseAndPop(msgs, 3);
     uint8_t chkType = (uint8_t)NoteOn;
-    Test((uint8_t)event.type, chkType, 0, true, 0x10, 0x0f);
+    Test(event, (uint8_t)event.type, chkType, 0, true, 0x10, 0x0f);
 
     //running status
     for(uint8_t i = 0; i < 20; i++)
     {
         msgs[0] = msgs[1] = i;
-        ParseAndPop(msgs, 2);
-        Test((uint8_t)event.type, chkType, 0, true, i, i);
+        MidiEvent event = ParseAndPop(msgs, 2);
+        Test(event,(uint8_t)event.type, chkType, 0, true, i, i);
     }
 
     //Again, with Control Change, channel 3
     msgs[0] = 0xB3;
     msgs[1] = 0x10;
     msgs[2] = 0x0f;
-    ParseAndPop(msgs, 3);
+    event = ParseAndPop(msgs, 3);
     chkType = (uint8_t)ControlChange;
-    Test((uint8_t)event.type, chkType, 3, true, 0x10, 0x0f);
+    Test(event,(uint8_t)event.type, chkType, 3, true, 0x10, 0x0f);
 
     //running status
     for(uint8_t i = 0; i < 20; i++)
     {
         msgs[0] = msgs[1] = i;
-        ParseAndPop(msgs, 2);
-        Test((uint8_t)event.type, chkType, 3, true, i, i);
+        MidiEvent event = ParseAndPop(msgs, 2);
+        Test(event,(uint8_t)event.type, chkType, 3, true, i, i);
     }
 }
 
