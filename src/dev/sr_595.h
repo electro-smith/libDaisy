@@ -31,15 +31,22 @@ class ShiftRegister595
         PIN_DATA,  /** DATA corresponds to Pin 14 "SER" */
         NUM_PINS, /** _SRCLR_ is not added here, but is tied to 3v3 on test hardware. */
     };
+
+    struct Config
+    {
+        daisy::Pin latch;
+        daisy::Pin clk;
+        daisy::Pin data;
+    };
     ShiftRegister595() {}
     ~ShiftRegister595() {}
 
     /** 
     Initializes the GPIO, and data for the ShiftRegister
-     * \param pin_cfg is an array of dsy_gpio_pin corresponding the the Pins enum above.
+     * \param cfg is the Config struct. Includes a Pin for latch, clk, and data.
      * \param num_daisy_chained (default = 1) is the number of 595 devices daisy chained together.
      */
-    void Init(daisy::Pin* pin_cfg, size_t num_daisy_chained = 1);
+    void Init(Config cfg, size_t num_daisy_chained = 1);
 
     /** Sets the state of the specified output.
         \param idx The index starts with QA on the first device and ends with QH on the last device.

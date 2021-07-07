@@ -1,17 +1,21 @@
 #include <algorithm>
 #include "dev/sr_595.h"
 
-void ShiftRegister595::Init(daisy::Pin* pin_cfg, size_t num_daisy_chained)
+void ShiftRegister595::Init(Config cfg, size_t num_daisy_chained)
 {
     // Initialize Pins as outputs
     daisy::GPIO::Config gpio_conf;
     gpio_conf.mode = daisy::GPIO::Config::Mode::OUTPUT_PP;
 
-    for(size_t i = 0; i < NUM_PINS; i++)
-    {
-        gpio_conf.pin = pin_cfg[i];
-        pin_[i].Init(gpio_conf);
-    }
+    gpio_conf.pin = cfg.latch;
+    pin_[PIN_LATCH].Init(gpio_conf);
+
+    gpio_conf.pin = cfg.clk;
+    pin_[PIN_CLK].Init(gpio_conf);
+
+    gpio_conf.pin = cfg.data;
+    pin_[PIN_DATA].Init(gpio_conf);
+
     std::fill(state_, state_ + kMaxSr595DaisyChain, 0x00);
     num_devices_ = num_daisy_chained;
     // Set to 1 device if out of range.
