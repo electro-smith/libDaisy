@@ -21,12 +21,12 @@ class SSD130xI2CTransport
         uint8_t           i2c_address;
         void              Defaults()
         {
-            i2c_config.periph = I2CHandle::Config::Peripheral::I2C_1;
-            i2c_config.speed  = I2CHandle::Config::Speed::I2C_1MHZ;
-            i2c_config.mode   = I2CHandle::Config::Mode::I2C_MASTER;
-            i2c_config.pin_config.scl.Init(Pin::Port::DSY_GPIOB, 8);
-            i2c_config.pin_config.sda.Init(Pin::Port::DSY_GPIOB, 9);
-            i2c_address = 0x3C;
+            i2c_config.periph         = I2CHandle::Config::Peripheral::I2C_1;
+            i2c_config.speed          = I2CHandle::Config::Speed::I2C_1MHZ;
+            i2c_config.mode           = I2CHandle::Config::Mode::I2C_MASTER;
+            i2c_config.pin_config.scl = {Port::DSY_GPIOB, 8};
+            i2c_config.pin_config.sda = {Port::DSY_GPIOB, 9};
+            i2c_address               = 0x3C;
         }
     };
     void Init(const Config& config)
@@ -69,8 +69,8 @@ class SSD130x4WireSpiTransport
         } pin_config;
         void Defaults()
         {
-            pin_config.dc.Init(Pin::Port::DSY_GPIOB, 4);
-            pin_config.reset.Init(Pin::Port::DSY_GPIOB, 15);
+            pin_config.dc    = {Port::DSY_GPIOB, 4};
+            pin_config.reset = {Port::DSY_GPIOB, 15};
         }
     };
     void Init(const Config& config)
@@ -94,10 +94,10 @@ class SSD130x4WireSpiTransport
         spi_config.nss            = SpiHandle::Config::NSS::HARD_OUTPUT;
         spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_8;
 
-        spi_config.pin_config.sclk.Init(Pin::Port::DSY_GPIOG, 11);
-        spi_config.pin_config.miso.Init(Pin::Port::DSY_GPIOX, 0);
-        spi_config.pin_config.mosi.Init(Pin::Port::DSY_GPIOB, 5);
-        spi_config.pin_config.nss.Init(Pin::Port::DSY_GPIOG, 10);
+        spi_config.pin_config.sclk = {Port::DSY_GPIOG, 11};
+        spi_config.pin_config.miso = {Port::DSY_GPIOX, 0};
+        spi_config.pin_config.mosi = {Port::DSY_GPIOB, 5};
+        spi_config.pin_config.nss  = {Port::DSY_GPIOG, 10};
 
         spi_.Init(spi_config);
 

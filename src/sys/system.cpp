@@ -162,7 +162,7 @@ void System::ResetToBootloader()
     GPIO::Config gpio_conf;
 
     gpio_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
-    gpio_conf.pin.Init(Pin::Port::DSY_GPIOG, 3);
+    gpio_conf.pin  = {Port::DSY_GPIOG, 3};
     pin.Init(gpio_conf);
 
     pin.Write(1);

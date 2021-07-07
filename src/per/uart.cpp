@@ -263,60 +263,59 @@ size_t UartHandler::Impl::Readable()
 
 typedef struct
 {
-    Pin::Port port;
-    uint8_t   pin;
-    uint8_t   alt;
+    Pin     pin;
+    uint8_t alt;
 } pin_alt;
 
-pin_alt pins_none = {Pin::Port::DSY_GPIOX, 0, 255};
+pin_alt pins_none = {{Port::DSY_GPIOX, 0}, 255};
 
 //valid pins per periph, and the alt they're on
-pin_alt usart1_pins_tx[] = {{Pin::Port::DSY_GPIOB, 6, GPIO_AF7_USART1},
-                            {Pin::Port::DSY_GPIOB, 14, GPIO_AF4_USART1},
+pin_alt usart1_pins_tx[] = {{{Port::DSY_GPIOB, 6}, GPIO_AF7_USART1},
+                            {{Port::DSY_GPIOB, 14}, GPIO_AF4_USART1},
                             pins_none};
-pin_alt usart1_pins_rx[] = {{Pin::Port::DSY_GPIOB, 7, GPIO_AF7_USART1},
-                            {Pin::Port::DSY_GPIOB, 15, GPIO_AF4_USART1},
+pin_alt usart1_pins_rx[] = {{{Port::DSY_GPIOB, 7}, GPIO_AF7_USART1},
+                            {{Port::DSY_GPIOB, 15}, GPIO_AF4_USART1},
                             pins_none};
 
 pin_alt usart2_pins_tx[]
-    = {{Pin::Port::DSY_GPIOA, 2, GPIO_AF7_USART2}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOA, 2}, GPIO_AF7_USART2}, pins_none, pins_none};
 pin_alt usart2_pins_rx[]
-    = {{Pin::Port::DSY_GPIOA, 3, GPIO_AF7_USART2}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOA, 3}, GPIO_AF7_USART2}, pins_none, pins_none};
 
 pin_alt usart3_pins_tx[]
-    = {{Pin::Port::DSY_GPIOC, 10, GPIO_AF7_USART3}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOC, 10}, GPIO_AF7_USART3}, pins_none, pins_none};
 pin_alt usart3_pins_rx[]
-    = {{Pin::Port::DSY_GPIOC, 11, GPIO_AF7_USART3}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOC, 11}, GPIO_AF7_USART3}, pins_none, pins_none};
 
-pin_alt uart4_pins_tx[] = {{Pin::Port::DSY_GPIOB, 9, GPIO_AF8_UART4},
-                           {Pin::Port::DSY_GPIOC, 10, GPIO_AF8_UART4},
+pin_alt uart4_pins_tx[] = {{{Port::DSY_GPIOB, 9}, GPIO_AF8_UART4},
+                           {{Port::DSY_GPIOC, 10}, GPIO_AF8_UART4},
                            pins_none};
-pin_alt uart4_pins_rx[] = {{Pin::Port::DSY_GPIOB, 8, GPIO_AF8_UART4},
-                           {Pin::Port::DSY_GPIOC, 11, GPIO_AF8_UART4},
+pin_alt uart4_pins_rx[] = {{{Port::DSY_GPIOB, 8}, GPIO_AF8_UART4},
+                           {{Port::DSY_GPIOC, 11}, GPIO_AF8_UART4},
                            pins_none};
 
-pin_alt uart5_pins_tx[] = {{Pin::Port::DSY_GPIOC, 12, GPIO_AF8_UART5},
-                           {Pin::Port::DSY_GPIOB, 6, GPIO_AF14_UART5},
+pin_alt uart5_pins_tx[] = {{{Port::DSY_GPIOC, 12}, GPIO_AF8_UART5},
+                           {{Port::DSY_GPIOB, 6}, GPIO_AF14_UART5},
                            pins_none};
-pin_alt uart5_pins_rx[] = {{Pin::Port::DSY_GPIOB, 12, GPIO_AF14_UART5},
-                           {Pin::Port::DSY_GPIOD, 2, GPIO_AF8_UART5},
-                           {Pin::Port::DSY_GPIOB, 5, GPIO_AF14_UART5}};
+pin_alt uart5_pins_rx[] = {{{Port::DSY_GPIOB, 12}, GPIO_AF14_UART5},
+                           {{Port::DSY_GPIOD, 2}, GPIO_AF8_UART5},
+                           {{Port::DSY_GPIOB, 5}, GPIO_AF14_UART5}};
 
 pin_alt usart6_pins_tx[] = {pins_none, pins_none, pins_none};
 pin_alt usart6_pins_rx[]
-    = {{Pin::Port::DSY_GPIOG, 9, GPIO_AF7_USART6}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOG, 9}, GPIO_AF7_USART6}, pins_none, pins_none};
 
 pin_alt uart7_pins_tx[]
-    = {{Pin::Port::DSY_GPIOB, 4, GPIO_AF11_UART7}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOB, 4}, GPIO_AF11_UART7}, pins_none, pins_none};
 pin_alt uart7_pins_rx[] = {pins_none, pins_none, pins_none};
 
 pin_alt uart8_pins_tx[] = {pins_none, pins_none, pins_none};
 pin_alt uart8_pins_rx[] = {pins_none, pins_none, pins_none};
 
 pin_alt lpuart1_pins_tx[]
-    = {{Pin::Port::DSY_GPIOB, 6, GPIO_AF8_LPUART}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOB, 6}, GPIO_AF8_LPUART}, pins_none, pins_none};
 pin_alt lpuart1_pins_rx[]
-    = {{Pin::Port::DSY_GPIOB, 7, GPIO_AF8_LPUART}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOB, 7}, GPIO_AF8_LPUART}, pins_none, pins_none};
 
 //an array to hold everything
 pin_alt* pins_periphs[] = {usart1_pins_tx,
@@ -342,18 +341,15 @@ UartHandler::Result checkPinMatch(GPIO::Config init, Pin pin, int p_num)
 {
     for(int i = 0; i < 3; i++)
     {
-        Pin temp_pin;
-        temp_pin.Init(pins_periphs[p_num][i].port, pins_periphs[p_num][i].pin);
-
         Pin empty_pin;
 
         // Pin() defaults to GPIOX, 0
-        if(temp_pin == empty_pin)
+        if(pins_periphs[p_num][i].pin == empty_pin)
         {
             /* skip */
         }
 
-        else if(temp_pin == pin)
+        else if(pins_periphs[p_num][i].pin == pin)
         {
             init.alternate = pins_periphs[p_num][i].alt;
             return UartHandler::Result::OK;
@@ -370,7 +366,7 @@ UartHandler::Result UartHandler::Impl::InitPins()
 
     int per_num = 2 * (int)(config_.periph);
 
-    if(config_.pin_config.tx.port != Pin::Port::DSY_GPIOX)
+    if(config_.pin_config.tx.port != Port::DSY_GPIOX)
     {
         //check tx against periph
         if(checkPinMatch(gpio_conf, config_.pin_config.tx, per_num)
@@ -384,7 +380,7 @@ UartHandler::Result UartHandler::Impl::InitPins()
         tx.Init(gpio_conf);
     }
 
-    if(config_.pin_config.rx.port != Pin::Port::DSY_GPIOX)
+    if(config_.pin_config.rx.port != Port::DSY_GPIOX)
     {
         //check rx against periph
         if(checkPinMatch(gpio_conf, config_.pin_config.rx, per_num + 1)

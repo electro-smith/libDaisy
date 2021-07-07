@@ -7,96 +7,61 @@ extern "C"
 
 using namespace daisy;
 
-#define SEED_LED_PORT Pin::Port::DSY_GPIOC
+#define SEED_LED_PORT Port::DSY_GPIOC
 #define SEED_LED_PIN 7
 
-#define SEED_TEST_POINT_PORT Pin::Port::DSY_GPIOG
+#define SEED_TEST_POINT_PORT Port::DSY_GPIOG
 #define SEED_TEST_POINT_PIN 14
 
 #ifndef SEED_REV2
-const Pin::Port seedgpio_port[31] = {
+const Pin seedgpio[31] = {
     // GPIO 1-8
     //{DSY_GPIOA, 8}, // removed on Rev4
-    Pin::Port::DSY_GPIOB,
-    Pin::Port::DSY_GPIOC,
-    Pin::Port::DSY_GPIOC,
-    Pin::Port::DSY_GPIOC,
-    Pin::Port::DSY_GPIOC,
-    Pin::Port::DSY_GPIOD,
-    Pin::Port::DSY_GPIOC,
+    {Port::DSY_GPIOB, 12},
+    {Port::DSY_GPIOC, 11},
+    {Port::DSY_GPIOC, 10},
+    {Port::DSY_GPIOC, 9},
+    {Port::DSY_GPIOC, 8},
+    {Port::DSY_GPIOD, 2},
+    {Port::DSY_GPIOC, 12},
     // GPIO 9-16
-    Pin::Port::DSY_GPIOG,
-    Pin::Port::DSY_GPIOG,
-    Pin::Port::DSY_GPIOB,
-    Pin::Port::DSY_GPIOB,
-    Pin::Port::DSY_GPIOB,
-    Pin::Port::DSY_GPIOB,
-    Pin::Port::DSY_GPIOB,
-    Pin::Port::DSY_GPIOB,
+    {Port::DSY_GPIOG, 10},
+    {Port::DSY_GPIOG, 11},
+    {Port::DSY_GPIOB, 4},
+    {Port::DSY_GPIOB, 5},
+    {Port::DSY_GPIOB, 8},
+    {Port::DSY_GPIOB, 9},
+    {Port::DSY_GPIOB, 6},
+    {Port::DSY_GPIOB, 7},
     // GPIO 17-24
-    Pin::Port::DSY_GPIOC,
-    Pin::Port::DSY_GPIOA,
-    Pin::Port::DSY_GPIOB,
-    Pin::Port::DSY_GPIOA,
-    Pin::Port::DSY_GPIOA,
-    Pin::Port::DSY_GPIOC,
-    Pin::Port::DSY_GPIOC,
-    Pin::Port::DSY_GPIOA,
+    {Port::DSY_GPIOC, 0},
+    {Port::DSY_GPIOA, 3},
+    {Port::DSY_GPIOB, 1},
+    {Port::DSY_GPIOA, 7},
+    {Port::DSY_GPIOA, 6},
+    {Port::DSY_GPIOC, 1},
+    {Port::DSY_GPIOC, 4},
+    {Port::DSY_GPIOA, 5},
     // GPIO 17-24
-    Pin::Port::DSY_GPIOA,
-    Pin::Port::DSY_GPIOA,
-    Pin::Port::DSY_GPIOA,
-    Pin::Port::DSY_GPIOD,
-    Pin::Port::DSY_GPIOG,
-    Pin::Port::DSY_GPIOA,
-    Pin::Port::DSY_GPIOB,
-    Pin::Port::DSY_GPIOB,
-};
-const uint8_t seedgpio_pin[31] = {
-    // GPIO 1-8
-    //{DSY_GPIOA, 8}, // removed on Rev4
-    12,
-    11,
-    10,
-    9,
-    8,
-    2,
-    12,
-    // GPIO 9-16
-    10,
-    11,
-    4,
-    5,
-    8,
-    9,
-    6,
-    7,
-    // GPIO 17-24
-    0,
-    3,
-    1,
-    7,
-    6,
-    1,
-    4,
-    5,
-    // GPIO 17-24
-    4,
-    1,
-    0,
-    11,
-    9,
-    2,
-    14,
-    15,
+    {Port::DSY_GPIOA, 4},
+    {Port::DSY_GPIOA, 1},
+    {Port::DSY_GPIOA, 0},
+    {Port::DSY_GPIOD, 11},
+    {Port::DSY_GPIOG, 9},
+    {Port::DSY_GPIOA, 2},
+    {Port::DSY_GPIOB, 14},
+    {Port::DSY_GPIOB, 15},
 };
 #else
 const dsy_gpio_port seed_ports[32] = {
-    DSY_GPIOA, DSY_GPIOB, DSY_GPIOC, DSY_GPIOC, DSY_GPIOC, DSY_GPIOC, DSY_GPIOD,
-    DSY_GPIOC, DSY_GPIOG, DSY_GPIOG, DSY_GPIOB, DSY_GPIOB, DSY_GPIOB, DSY_GPIOB,
-    DSY_GPIOB, DSY_GPIOB, DSY_GPIOC, DSY_GPIOA, DSY_GPIOA, DSY_GPIOB, DSY_GPIOA,
-    DSY_GPIOA, DSY_GPIOC, DSY_GPIOC, DSY_GPIOA, DSY_GPIOA, DSY_GPIOA, DSY_GPIOD,
-    DSY_GPIOG, DSY_GPIOA, DSY_GPIOB, DSY_GPIOB,
+    Port::DSY_GPIOA, Port::DSY_GPIOB, Port::DSY_GPIOC, Port::DSY_GPIOC,
+    Port::DSY_GPIOC, Port::DSY_GPIOC, Port::DSY_GPIOD, Port::DSY_GPIOC,
+    Port::DSY_GPIOG, Port::DSY_GPIOG, Port::DSY_GPIOB, Port::DSY_GPIOB,
+    Port::DSY_GPIOB, Port::DSY_GPIOB, Port::DSY_GPIOB, Port::DSY_GPIOB,
+    Port::DSY_GPIOC, Port::DSY_GPIOA, Port::DSY_GPIOA, Port::DSY_GPIOB,
+    Port::DSY_GPIOA, Port::DSY_GPIOA, Port::DSY_GPIOC, Port::DSY_GPIOC,
+    Port::DSY_GPIOA, Port::DSY_GPIOA, Port::DSY_GPIOA, Port::DSY_GPIOD,
+    Port::DSY_GPIOG, Port::DSY_GPIOA, Port::DSY_GPIOB, Port::DSY_GPIOB,
 };
 
 const uint8_t seed_pins[32] = {
@@ -136,10 +101,10 @@ void DaisySeed::Configure()
     // Configure the built-in GPIOs.
     GPIO::Config gpio_config;
     gpio_config.mode = GPIO::Config::Mode::OUTPUT_PP;
-    gpio_config.pin.Init(SEED_LED_PORT, SEED_LED_PIN);
+    gpio_config.pin  = {SEED_LED_PORT, SEED_LED_PIN};
     led.Init(gpio_config);
 
-    gpio_config.pin.Init(SEED_TEST_POINT_PORT, SEED_TEST_POINT_PIN);
+    gpio_config.pin = {SEED_TEST_POINT_PORT, SEED_TEST_POINT_PIN};
     testpoint.Init(gpio_config);
 }
 
@@ -167,7 +132,7 @@ Pin DaisySeed::GetPin(uint8_t pin_idx)
     Pin p;
     pin_idx = pin_idx < 32 ? pin_idx : 0;
 #ifndef SEED_REV2
-    p.Init(seedgpio_port[pin_idx], seedgpio_pin[pin_idx]);
+    p = seedgpio[pin_idx];
 #else
     p = {seed_ports[pin_idx], seed_pins[pin_idx]};
 #endif
@@ -246,20 +211,20 @@ void DaisySeed::SetTestPoint(bool state)
 void DaisySeed::ConfigureSdram()
 {
     sdram_config.state = SdramHandle::State::ENABLE;
-    sdram_config.pin_config[(int)SdramHandle::SdramPin::SDNWE].Init(
-        Pin::Port::DSY_GPIOH, 5);
+    sdram_config.pin_config[(int)SdramHandle::SdramPin::SDNWE]
+        = {Port::DSY_GPIOH, 5};
 }
 void DaisySeed::ConfigureQspi()
 {
     qspi_config.device = QSPIHandle::Config::Device::IS25LP064A;
     qspi_config.mode   = QSPIHandle::Config::Mode::DSY_MEMORY_MAPPED;
 
-    qspi_config.pin_config.io0.Init(Pin::Port::DSY_GPIOF, 8);
-    qspi_config.pin_config.io1.Init(Pin::Port::DSY_GPIOF, 9);
-    qspi_config.pin_config.io2.Init(Pin::Port::DSY_GPIOF, 7);
-    qspi_config.pin_config.io3.Init(Pin::Port::DSY_GPIOF, 6);
-    qspi_config.pin_config.clk.Init(Pin::Port::DSY_GPIOF, 10);
-    qspi_config.pin_config.ncs.Init(Pin::Port::DSY_GPIOG, 6);
+    qspi_config.pin_config.io0 = {Port::DSY_GPIOF, 8};
+    qspi_config.pin_config.io1 = {Port::DSY_GPIOF, 9};
+    qspi_config.pin_config.io2 = {Port::DSY_GPIOF, 7};
+    qspi_config.pin_config.io3 = {Port::DSY_GPIOF, 6};
+    qspi_config.pin_config.clk = {Port::DSY_GPIOF, 10};
+    qspi_config.pin_config.ncs = {Port::DSY_GPIOG, 6};
 }
 void DaisySeed::ConfigureAudio()
 {
@@ -276,25 +241,25 @@ void DaisySeed::ConfigureAudio()
     // SAI1 -- Peripheral
     // Configure
     SaiHandle::Config sai_config;
-    sai_config.periph    = SaiHandle::Config::Peripheral::SAI_1;
-    sai_config.sr        = SaiHandle::Config::SampleRate::SAI_48KHZ;
-    sai_config.bit_depth = SaiHandle::Config::BitDepth::SAI_24BIT;
-    sai_config.a_sync    = SaiHandle::Config::Sync::MASTER;
-    sai_config.b_sync    = SaiHandle::Config::Sync::SLAVE;
-    sai_config.a_dir     = SaiHandle::Config::Direction::TRANSMIT;
-    sai_config.b_dir     = SaiHandle::Config::Direction::RECEIVE;
-    sai_config.pin_config.fs.Init(Pin::Port::DSY_GPIOE, 4);
-    sai_config.pin_config.mclk.Init(Pin::Port::DSY_GPIOE, 2);
-    sai_config.pin_config.sck.Init(Pin::Port::DSY_GPIOE, 5);
-    sai_config.pin_config.sa.Init(Pin::Port::DSY_GPIOE, 6);
-    sai_config.pin_config.sb.Init(Pin::Port::DSY_GPIOE, 3);
+    sai_config.periph          = SaiHandle::Config::Peripheral::SAI_1;
+    sai_config.sr              = SaiHandle::Config::SampleRate::SAI_48KHZ;
+    sai_config.bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
+    sai_config.a_sync          = SaiHandle::Config::Sync::MASTER;
+    sai_config.b_sync          = SaiHandle::Config::Sync::SLAVE;
+    sai_config.a_dir           = SaiHandle::Config::Direction::TRANSMIT;
+    sai_config.b_dir           = SaiHandle::Config::Direction::RECEIVE;
+    sai_config.pin_config.fs   = {Port::DSY_GPIOE, 4};
+    sai_config.pin_config.mclk = {Port::DSY_GPIOE, 2};
+    sai_config.pin_config.sck  = {Port::DSY_GPIOE, 5};
+    sai_config.pin_config.sa   = {Port::DSY_GPIOE, 6};
+    sai_config.pin_config.sb   = {Port::DSY_GPIOE, 3};
     // Then Initialize
     SaiHandle sai_1_handle;
     sai_1_handle.Init(sai_config);
 
     // Device Init
     Pin codec_reset_pin;
-    codec_reset_pin.Init(Pin::Port::DSY_GPIOB, 11);
+    codec_reset_pin = {Port::DSY_GPIOB, 11};
     //codec_ak4556_init(codec_reset_pin);
     Ak4556::Init(codec_reset_pin);
 

@@ -236,7 +236,7 @@ void DacHandle::Impl::InitPins()
     {
         // Init PA4 as Analog
         GPIO::Config gpio_conf;
-        gpio_conf.pin.Init(Pin::Port::DSY_GPIOA, 4);
+        gpio_conf.pin  = {Port::DSY_GPIOA, 4};
         gpio_conf.mode = GPIO::Config::Mode::ANALOG;
         d1.Init(gpio_conf);
     }
@@ -246,7 +246,7 @@ void DacHandle::Impl::InitPins()
         // Init PA5 as Analog
         GPIO::Config gpio_conf;
 
-        gpio_conf.pin.Init(Pin::Port::DSY_GPIOA, 5);
+        gpio_conf.pin  = {Port::DSY_GPIOA, 5};
         gpio_conf.mode = GPIO::Config::Mode::ANALOG;
         d2.Init(gpio_conf);
     }

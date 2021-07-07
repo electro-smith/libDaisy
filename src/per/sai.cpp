@@ -339,8 +339,8 @@ void SaiHandle::Impl::InitPins()
                   &config_.pin_config.sb};
     // Special Case checks
     Pin sck_af_pin;
-    sck_af_pin.Init(Pin::Port::DSY_GPIOA, 2);
-    is_master = (config_.a_sync == Config::Sync::MASTER
+    sck_af_pin = {Port::DSY_GPIOA, 2};
+    is_master  = (config_.a_sync == Config::Sync::MASTER
                  || config_.b_sync == Config::Sync::MASTER);
     // Generics
     GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;

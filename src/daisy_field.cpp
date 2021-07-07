@@ -125,21 +125,17 @@ void DaisyField::Init(bool boost)
     display_config.driver_config.transport_config.pin_config.dc
         = seed.GetPin(PIN_OLED_CMD);
 
-    display_config.driver_config.transport_config.pin_config.reset.Init(
-        Pin::Port::DSY_GPIOX, 0);
-
-
     // LEDs
     // 2x PCA9685 addresses 0x00, and 0x02
     uint8_t   addr[2] = {0x00, 0x02};
     I2CHandle i2c;
 
     I2CHandle::Config field_led_i2c_config;
-    field_led_i2c_config.periph = I2CHandle::Config::Peripheral::I2C_1;
-    field_led_i2c_config.pin_config.scl.Init(Pin::Port::DSY_GPIOB, 8);
-    field_led_i2c_config.pin_config.sda.Init(Pin::Port::DSY_GPIOB, 9);
-    field_led_i2c_config.speed = I2CHandle::Config::Speed::I2C_1MHZ;
-    field_led_i2c_config.mode  = I2CHandle::Config::Mode::I2C_MASTER;
+    field_led_i2c_config.periph         = I2CHandle::Config::Peripheral::I2C_1;
+    field_led_i2c_config.pin_config.scl = {Port::DSY_GPIOB, 8};
+    field_led_i2c_config.pin_config.sda = {Port::DSY_GPIOB, 9};
+    field_led_i2c_config.speed          = I2CHandle::Config::Speed::I2C_1MHZ;
+    field_led_i2c_config.mode           = I2CHandle::Config::Mode::I2C_MASTER;
 
     i2c.Init(field_led_i2c_config);
     led_driver.Init(i2c, addr, field_led_dma_buffer_a, field_led_dma_buffer_b);

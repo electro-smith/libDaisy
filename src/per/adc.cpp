@@ -100,20 +100,20 @@ static const uint32_t adc_channel_from_pin(Pin* pin)
     // For now just a rough switch case for all ADC_CHANNEL values
     Pin adcpins[DSY_ADC_MAX_CHANNELS];
 
-    adcpins[0].Init(Pin::Port::DSY_GPIOA, 6);
-    adcpins[1].Init(Pin::Port::DSY_GPIOC, 4);
-    adcpins[2].Init(Pin::Port::DSY_GPIOB, 1);
-    adcpins[3].Init(Pin::Port::DSY_GPIOA, 7);
-    adcpins[4].Init(Pin::Port::DSY_GPIOC, 5);
-    adcpins[5].Init(Pin::Port::DSY_GPIOB, 0);
-    adcpins[6].Init(Pin::Port::DSY_GPIOC, 0);
-    adcpins[7].Init(Pin::Port::DSY_GPIOC, 1);
-    adcpins[8].Init(Pin::Port::DSY_GPIOA, 2);
-    adcpins[9].Init(Pin::Port::DSY_GPIOA, 3);
-    adcpins[10].Init(Pin::Port::DSY_GPIOA, 0);
-    adcpins[11].Init(Pin::Port::DSY_GPIOA, 1);
-    adcpins[12].Init(Pin::Port::DSY_GPIOA, 4);
-    adcpins[13].Init(Pin::Port::DSY_GPIOA, 5);
+    adcpins[0]  = {Port::DSY_GPIOA, 6};
+    adcpins[1]  = {Port::DSY_GPIOC, 4};
+    adcpins[2]  = {Port::DSY_GPIOB, 1};
+    adcpins[3]  = {Port::DSY_GPIOA, 7};
+    adcpins[4]  = {Port::DSY_GPIOC, 5};
+    adcpins[5]  = {Port::DSY_GPIOB, 0};
+    adcpins[6]  = {Port::DSY_GPIOC, 0};
+    adcpins[7]  = {Port::DSY_GPIOC, 1};
+    adcpins[8]  = {Port::DSY_GPIOA, 2};
+    adcpins[9]  = {Port::DSY_GPIOA, 3};
+    adcpins[10] = {Port::DSY_GPIOA, 0};
+    adcpins[11] = {Port::DSY_GPIOA, 1};
+    adcpins[12] = {Port::DSY_GPIOA, 4};
+    adcpins[13] = {Port::DSY_GPIOA, 5};
 
     for(size_t i = 0; i < DSY_ADC_MAX_CHANNELS; i++)
     {
