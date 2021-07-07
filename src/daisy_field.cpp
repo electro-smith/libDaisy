@@ -141,8 +141,7 @@ void DaisyField::Init(bool boost)
     led_driver.Init(i2c, addr, field_led_dma_buffer_a, field_led_dma_buffer_b);
 
     // Gate In
-    Pin gate_in_pin;
-    gate_in_pin = seed.GetPin(PIN_GATE_IN);
+    Pin gate_in_pin = seed.GetPin(PIN_GATE_IN);
     gate_in.Init(gate_in_pin);
 
     // Gate Out
