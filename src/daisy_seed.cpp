@@ -91,13 +91,6 @@ const dsy_gpio_pin seedgpio[32] = {
 
 // Public Initialization
 
-void DaisySeed::Configure()
-{
-    // Configure internal peripherals
-    ConfigureQspi();
-    //ConfigureDac();
-}
-
 void DaisySeed::Init(bool boost)
 {
     //dsy_system_init();
@@ -105,19 +98,9 @@ void DaisySeed::Init(bool boost)
     boost ? syscfg.Boost() : syscfg.Defaults();
     system.Init(syscfg);
 
-    // Init the built-in GPIOs.
-    GPIO::Config gpio_config;
-    gpio_config.mode = GPIO::Config::Mode::OUTPUT_PP;
-    gpio_config.pin  = {SEED_LED_PORT, SEED_LED_PIN};
-    led.Init(gpio_config);
-
-    gpio_config.pin = {SEED_TEST_POINT_PORT, SEED_TEST_POINT_PIN};
-    testpoint.Init(gpio_config);
-
-    qspi.Init(qspi_config);
-
+    ConfigureGpio();
+    ConfigureQspi();
     sdram_handle.Init();
-
     ConfigureAudio();
 
     callback_rate_ = AudioSampleRate() / AudioBlockSize();
@@ -211,6 +194,7 @@ void DaisySeed::SetTestPoint(bool state)
 
 void DaisySeed::ConfigureQspi()
 {
+    QSPIHandle::Config qspi_config;
     qspi_config.device = QSPIHandle::Config::Device::IS25LP064A;
     qspi_config.mode   = QSPIHandle::Config::Mode::DSY_MEMORY_MAPPED;
 
@@ -220,6 +204,18 @@ void DaisySeed::ConfigureQspi()
     qspi_config.pin_config.io3 = {Port::DSY_GPIOF, 6};
     qspi_config.pin_config.clk = {Port::DSY_GPIOF, 10};
     qspi_config.pin_config.ncs = {Port::DSY_GPIOG, 6};
+
+    qspi.Init(qspi_config);
+}
+void DaisySeed::ConfigureGpio()
+{
+    GPIO::Config gpio_config;
+    gpio_config.mode = GPIO::Config::Mode::OUTPUT_PP;
+    gpio_config.pin  = {SEED_LED_PORT, SEED_LED_PIN};
+    led.Init(gpio_config);
+
+    gpio_config.pin = {SEED_TEST_POINT_PORT, SEED_TEST_POINT_PIN};
+    testpoint.Init(gpio_config);
 }
 void DaisySeed::ConfigureAudio()
 {
