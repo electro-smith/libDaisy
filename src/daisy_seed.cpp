@@ -97,15 +97,6 @@ void DaisySeed::Configure()
     ConfigureSdram();
     ConfigureQspi();
     //ConfigureDac();
-
-    // Configure the built-in GPIOs.
-    GPIO::Config gpio_config;
-    gpio_config.mode = GPIO::Config::Mode::OUTPUT_PP;
-    gpio_config.pin  = {SEED_LED_PORT, SEED_LED_PIN};
-    led.Init(gpio_config);
-
-    gpio_config.pin = {SEED_TEST_POINT_PORT, SEED_TEST_POINT_PIN};
-    testpoint.Init(gpio_config);
 }
 
 void DaisySeed::Init(bool boost)
@@ -114,6 +105,15 @@ void DaisySeed::Init(bool boost)
     System::Config syscfg;
     boost ? syscfg.Boost() : syscfg.Defaults();
     system.Init(syscfg);
+
+    // Init the built-in GPIOs.
+    GPIO::Config gpio_config;
+    gpio_config.mode = GPIO::Config::Mode::OUTPUT_PP;
+    gpio_config.pin  = {SEED_LED_PORT, SEED_LED_PIN};
+    led.Init(gpio_config);
+
+    gpio_config.pin = {SEED_TEST_POINT_PORT, SEED_TEST_POINT_PIN};
+    testpoint.Init(gpio_config);
 
     qspi.Init(qspi_config);
     sdram_handle.Init(sdram_config);
