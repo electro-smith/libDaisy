@@ -55,12 +55,12 @@ bool GPIO::Read()
     return HAL_GPIO_ReadPin(port, pin);
 }
 
-void GPIO::Write(uint8_t state)
+void GPIO::Write(bool state)
 {
     GPIO_TypeDef *port = dsy_hal_map_get_port(pin_);
     uint16_t      pin  = dsy_hal_map_get_pin(pin_);
 
-    return HAL_GPIO_WritePin(port, pin, (GPIO_PinState)(state > 0 ? 1 : 0));
+    return HAL_GPIO_WritePin(port, pin, (GPIO_PinState)state);
 }
 
 void GPIO::Toggle()

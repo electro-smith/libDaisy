@@ -100,7 +100,7 @@ class GPIO
     Pin will be set to 3v3 when state is 1, and 0V when state is 0
     \param state State to write
     */
-    void Write(uint8_t state);
+    void Write(bool state);
 
     /** Toggles the state of the pin so that it is not at the same state as it was previously.
      */
