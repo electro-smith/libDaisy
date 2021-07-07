@@ -94,7 +94,6 @@ const dsy_gpio_pin seedgpio[32] = {
 void DaisySeed::Configure()
 {
     // Configure internal peripherals
-    ConfigureSdram();
     ConfigureQspi();
     //ConfigureDac();
 }
@@ -116,7 +115,9 @@ void DaisySeed::Init(bool boost)
     testpoint.Init(gpio_config);
 
     qspi.Init(qspi_config);
-    sdram_handle.Init(sdram_config);
+
+    sdram_handle.Init();
+
     ConfigureAudio();
 
     callback_rate_ = AudioSampleRate() / AudioBlockSize();
@@ -208,12 +209,6 @@ void DaisySeed::SetTestPoint(bool state)
 
 // Private Implementation
 
-void DaisySeed::ConfigureSdram()
-{
-    sdram_config.state = SdramHandle::State::ENABLE;
-    sdram_config.pin_config[(int)SdramHandle::SdramPin::SDNWE]
-        = {Port::DSY_GPIOH, 5};
-}
 void DaisySeed::ConfigureQspi()
 {
     qspi_config.device = QSPIHandle::Config::Device::IS25LP064A;

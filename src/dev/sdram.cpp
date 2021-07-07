@@ -40,26 +40,19 @@ typedef struct
 {
     uint8_t             board;
     SDRAM_HandleTypeDef hsdram;
-    SdramHandle::Config config;
 } dsy_sdram_t;
 
 static dsy_sdram_t dsy_sdram;
 
-SdramHandle::Result SdramHandle::Init(Config config)
+SdramHandle::Result SdramHandle::Init()
 {
-    //dsy_sdram.board = board;
-    dsy_sdram.config = config;
-
-    if(config.state == State::ENABLE)
+    if(PeriphInit() != Result::OK)
     {
-        if(PeriphInit() != Result::OK)
-        {
-            return Result::ERR;
-        }
-        if(DeviceInit() != Result::OK)
-        {
-            return Result::OK;
-        }
+        return Result::ERR;
+    }
+    if(DeviceInit() != Result::OK)
+    {
+        return Result::ERR;
     }
     return Result::OK;
 }
@@ -305,20 +298,13 @@ static void HAL_FMC_MspInit(void)
 
     // Init for any pins that can be configured
     GPIO_TypeDef *port;
-    for(uint8_t i = 0; i < (int)SdramHandle::SdramPin::LAST; i++)
-    {
-        //		port = (GPIO_TypeDef*)gpio_hal_port_map[dsy_sdram.dsy_hsdram->pin_config[i].port];
-        //		GPIO_InitStruct.Pin
-        //			= gpio_hal_pin_map[dsy_sdram.dsy_hsdram->pin_config[i].pin];
-        port = dsy_hal_map_get_port(dsy_sdram.config.pin_config[i]);
-        GPIO_InitStruct.Pin
-            = dsy_hal_map_get_pin(dsy_sdram.config.pin_config[i]);
-        GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
-        GPIO_InitStruct.Pull      = GPIO_NOPULL;
-        GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
-        GPIO_InitStruct.Alternate = GPIO_AF12_FMC; // They all seem to use this
-        HAL_GPIO_Init(port, &GPIO_InitStruct);
-    }
+    port                      = GPIOH;
+    GPIO_InitStruct.Pin       = GPIO_PIN_5;
+    GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull      = GPIO_NOPULL;
+    GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF12_FMC; // They all seem to use this
+    HAL_GPIO_Init(port, &GPIO_InitStruct);
 
     // This pin can change between boards (SDNWE)
     //	switch(dsy_sdram.board)

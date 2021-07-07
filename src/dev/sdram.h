@@ -57,7 +57,6 @@ SECTIONS
 #define RAM_AS4C16M16SA_H /**< & */
 #include <stdint.h>
 #include "daisy_core.h"
-#include "per/gpio.h"
 
 /** @addtogroup sdram
     @{
@@ -92,40 +91,8 @@ class SdramHandle
         ERR, /**< & */
     };
 
-    /** Determines whether chip is initialized, and activated. */
-    enum class State
-    {
-        ENABLE,  /**< & */
-        DISABLE, /**< & */
-        LAST,    /**< & */
-    };
-
-
-    /*
-      For now this is the only supported pinswap
-      The Chipselect/bank could likely be changed, but we haven't had any
-      hardware that does that yet.
-      Pins that have functions that cannot be moved to another pin will
-      be hardcoded into the driver.
-  */
-
-    /** This is PH5 on Daisy*/
-    enum class SdramPin
-    {
-        SDNWE, /**< & */
-        LAST,  /**< & */
-    };
-
-
-    /** Configuration struct for passing to initialization */
-    struct Config
-    {
-        State state;                           /**< & */
-        Pin   pin_config[(int)SdramPin::LAST]; /**< & */
-    };
-
     /** Initializes the SDRAM peripheral */
-    Result Init(Config config);
+    Result Init();
 
   private:
     Result PeriphInit();

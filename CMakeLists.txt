@@ -9,7 +9,6 @@ set(MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 add_library(${TARGET} STATIC
     ${MODULE_DIR}/sys/dma.c
     ${MODULE_DIR}/hid/audio.cpp
-    ${MODULE_DIR}/dev/sdram.c
     ${MODULE_DIR}/sys/fatfs.c
     ${MODULE_DIR}/per/gpio.c
     ${MODULE_DIR}/per/sai.cpp
@@ -51,10 +50,12 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/per/dac.cpp
     ${MODULE_DIR}/per/i2c.cpp
     ${MODULE_DIR}/per/qspi.cpp
+    ${MODULE_DIR}/dev/sdram.cpp
     ${MODULE_DIR}/per/spi.cpp
     ${MODULE_DIR}/per/tim.cpp
     ${MODULE_DIR}/per/uart.cpp
     ${MODULE_DIR}/util/color.cpp
+    ${MODULE_DIR}/util/hal_map.cpp
     ${MODULE_DIR}/util/WaveTableLoader.cpp
 
     Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c
