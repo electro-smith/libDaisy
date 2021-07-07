@@ -90,7 +90,7 @@ class MidiTest : public ::testing::Test
             EXPECT_EQ(event.data[1], d1);
         }
 
-        TestEmptyQueue();
+        EXPECT_FALSE(midi.HasEvents());
     }
 
     //help test sysex
@@ -106,17 +106,7 @@ class MidiTest : public ::testing::Test
             EXPECT_EQ(event.sysex_data[i], msgs[i]);
         }
 
-        TestEmptyQueue();
-    }
-
-    //test for empty queue
-    void TestEmptyQueue()
-    {
-        while(midi.HasEvents())
-        {
-            ADD_FAILURE() << "Queue not empty";
-            midi.PopEvent();
-        }
+        EXPECT_FALSE(midi.HasEvents());
     }
 
     MidiHandler<MidiTestTransport> midi;
@@ -275,7 +265,7 @@ TEST_F(MidiTest, badData)
         uint8_t msg = i | 0x80;
         Parse(&msg, 1);
     }
-    TestEmptyQueue();
+    EXPECT_FALSE(midi.HasEvents());
 
     //Too short NoteOn
     uint8_t msgs[] = {0x90, 0x00};
@@ -284,5 +274,5 @@ TEST_F(MidiTest, badData)
         msgs[1] = i;
         Parse(msgs, 2);
     }
-    TestEmptyQueue();
+    EXPECT_FALSE(midi.HasEvents());
 }
