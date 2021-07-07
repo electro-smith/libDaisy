@@ -6,8 +6,6 @@ using namespace daisy;
 
 void GPIO::Init(Config config)
 {
-    pin_ = config.pin;
-
     GPIO_InitTypeDef ginit;
     switch(config.mode)
     {
@@ -30,9 +28,12 @@ void GPIO::Init(Config config)
         case Config::Speed::HIGH: ginit.Speed = GPIO_SPEED_HIGH; break;
     }
 
-    ginit.Pin          = dsy_hal_map_get_pin(pin_);
+    mapped_pin_  = dsy_hal_map_get_pin(config.pin);
+    mapped_port_ = dsy_hal_map_get_port(config.pin);
+
+    ginit.Pin          = mapped_pin_;
     ginit.Alternate    = config.alternate;
-    GPIO_TypeDef *port = dsy_hal_map_get_port(pin_);
+    GPIO_TypeDef *port = (GPIO_TypeDef *)mapped_port_;
 
     dsy_hal_map_gpio_clk_enable(pin_);
 
@@ -41,32 +42,21 @@ void GPIO::Init(Config config)
 
 void GPIO::DeInit()
 {
-    GPIO_TypeDef *port = dsy_hal_map_get_port(pin_);
-    uint16_t      pin  = dsy_hal_map_get_pin(pin_);
-
-    HAL_GPIO_DeInit(port, pin);
+    HAL_GPIO_DeInit((GPIO_TypeDef *)mapped_port_, mapped_pin_);
 }
 
 bool GPIO::Read()
 {
-    GPIO_TypeDef *port = dsy_hal_map_get_port(pin_);
-    uint16_t      pin  = dsy_hal_map_get_pin(pin_);
-
-    return HAL_GPIO_ReadPin(port, pin);
+    return HAL_GPIO_ReadPin((GPIO_TypeDef *)mapped_port_, mapped_pin_);
 }
 
 void GPIO::Write(bool state)
 {
-    GPIO_TypeDef *port = dsy_hal_map_get_port(pin_);
-    uint16_t      pin  = dsy_hal_map_get_pin(pin_);
-
-    return HAL_GPIO_WritePin(port, pin, (GPIO_PinState)state);
+    return HAL_GPIO_WritePin(
+        (GPIO_TypeDef *)mapped_port_, mapped_pin_, (GPIO_PinState)state);
 }
 
 void GPIO::Toggle()
 {
-    GPIO_TypeDef *port = dsy_hal_map_get_port(pin_);
-    uint16_t      pin  = dsy_hal_map_get_pin(pin_);
-
-    HAL_GPIO_TogglePin(port, pin);
+    HAL_GPIO_TogglePin((GPIO_TypeDef *)mapped_port_, mapped_pin_);
 }

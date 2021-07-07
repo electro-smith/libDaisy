@@ -28,7 +28,7 @@ struct Pin
     uint8_t pin  = 0;
 
     //allow equality operator to be used, replaces pin_cmp
-    bool operator==(Pin &rhs) { return (rhs.pin == pin) && (rhs.port == port); }
+    bool operator==(Pin& rhs) { return (rhs.pin == pin) && (rhs.port == port); }
 };
 
 /** General Purpose IO driver */
@@ -107,7 +107,9 @@ class GPIO
     void Toggle();
 
   private:
-    Pin pin_;
+    Pin      pin_;
+    void*    mapped_port_;
+    uint16_t mapped_pin_;
 };
 } // namespace daisy
 #endif
