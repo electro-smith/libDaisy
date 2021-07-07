@@ -124,6 +124,7 @@ void DaisyField::Init(bool boost)
 
     display_config.driver_config.transport_config.pin_config.dc
         = seed.GetPin(PIN_OLED_CMD);
+    display.Init(display_config);
 
     // LEDs
     // 2x PCA9685 addresses 0x00, and 0x02
