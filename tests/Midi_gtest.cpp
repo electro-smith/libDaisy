@@ -93,6 +93,7 @@ class MidiTest : public ::testing::Test
         EXPECT_FALSE(midi.HasEvents());
     }
 
+
     //help test sysex
     void TestSysex(MidiEvent event, uint8_t* msgs, int size)
     {
@@ -112,31 +113,163 @@ class MidiTest : public ::testing::Test
     MidiHandler<MidiTestTransport> midi;
 };
 
-//Channel Voice messages
-//for now I'm not using asNoteOff, etc. easier to just test on the raw MidiEvent
-TEST_F(MidiTest, channelVoice)
+// ================ Channel Voice Messages ================
+
+TEST_F(MidiTest, noteOff)
 {
-    for(uint8_t type = 0; type < 7; type++)
+    for(uint8_t chn = 0; chn < 16; chn++)
     {
-        for(uint8_t chn = 0; chn < 16; chn++)
+        for(uint8_t note = 0; note < 128; note++)
         {
-            for(uint8_t d0 = 0; d0 < 128; d0++)
+            for(uint8_t vel = 0; vel < 128; vel++)
             {
-                for(uint8_t d1 = 0; d1 < 128; d1++)
-                {
-                    uint8_t msgs[]
-                        = {(uint8_t)(0x80 + (type << 4) + chn), d0, d1};
+                uint8_t msgs[] = {(uint8_t)(0x80 + chn), note, vel};
+                MidiEvent event = ParseAndPop(msgs, 3);
+                NoteOffEvent offEvent = event.AsNoteOff();
 
-                    bool sendThree = type != 4 && type != 5;
-                    MidiEvent event = ParseAndPop(msgs, 2 + sendThree);
-
-                    uint8_t chkType
-                        = (type == 3 && d0 > 119) ? (uint8_t)ChannelMode : type;
-                    Test(event, (uint8_t)event.type, chkType, chn, sendThree, d0, d1);
-                }
+                EXPECT_EQ(event.type, MidiMessageType::NoteOff);
+                EXPECT_EQ(offEvent.channel, chn);
+                EXPECT_EQ(offEvent.note, note);
+                EXPECT_EQ(offEvent.velocity, vel);
             }
         }
     }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, noteOn)
+{
+    for(uint8_t chn = 0; chn < 16; chn++)
+    {
+        for(uint8_t note = 0; note < 128; note++)
+        {
+            for(uint8_t vel = 0; vel < 128; vel++)
+            {
+                uint8_t msgs[] = {(uint8_t)(0x80 + (1 << 4) + chn), note, vel};
+                MidiEvent event = ParseAndPop(msgs, 3);
+                NoteOnEvent onEvent = event.AsNoteOn();
+
+                //NoteOn of vel 0 is NoteOff
+                if(vel == 0)
+                    EXPECT_EQ(event.type, MidiMessageType::NoteOff);
+                else    
+                    EXPECT_EQ(event.type, MidiMessageType::NoteOn);
+    
+                EXPECT_EQ(onEvent.channel, chn);
+                EXPECT_EQ(onEvent.note, note);
+                EXPECT_EQ(onEvent.velocity, vel);
+            }
+        }
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, polyphonicKeyPressure)
+{
+    for(uint8_t chn = 0; chn < 16; chn++)
+    {
+        for(uint8_t note = 0; note < 128; note++)
+        {
+            for(uint8_t pressure = 0; pressure < 128; pressure++)
+            {
+                uint8_t msgs[] = {(uint8_t)(0x80 + (2 << 4) + chn), note, pressure};
+                MidiEvent event = ParseAndPop(msgs, 3);
+                PolyphonicKeyPressureEvent pkpEvent = event.AsPolyphonicKeyPressure();
+
+                EXPECT_EQ(event.type, MidiMessageType::PolyphonicKeyPressure);
+                EXPECT_EQ(pkpEvent.channel, chn);
+                EXPECT_EQ(pkpEvent.note, note);
+                EXPECT_EQ(pkpEvent.pressure, pressure);
+            }
+        }
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, controlChange)
+{
+    for(uint8_t chn = 0; chn < 16; chn++)
+    {
+        for(uint8_t ctrl = 0; ctrl < 120; ctrl++)
+        {
+            for(uint8_t val = 0; val < 128; val++)
+            {
+                uint8_t msgs[] = {(uint8_t)(0x80 + (3 << 4) + chn), ctrl, val};
+                MidiEvent event = ParseAndPop(msgs, 3);
+                ControlChangeEvent ctrlEvent = event.AsControlChange();
+
+                EXPECT_EQ(event.type, MidiMessageType::ControlChange);
+                EXPECT_EQ(ctrlEvent.channel, chn);
+                EXPECT_EQ(ctrlEvent.control_number, ctrl);
+                EXPECT_EQ(ctrlEvent.value, val);
+            }
+        }
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, programChange)
+{
+    for(uint8_t chn = 0; chn < 16; chn++)
+    {
+        for(uint8_t prog = 0; prog < 128; prog++)
+        {
+            uint8_t msgs[] = {(uint8_t)(0x80 + (4 << 4) + chn), prog};
+            MidiEvent event = ParseAndPop(msgs, 2);
+            ProgramChangeEvent pgmEvent = event.AsProgramChange();
+
+            EXPECT_EQ(event.type, MidiMessageType::ProgramChange);
+            EXPECT_EQ(pgmEvent.channel, chn);
+            EXPECT_EQ(pgmEvent.program, prog);
+        }
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, channelPressure)
+{
+    for(uint8_t chn = 0; chn < 16; chn++)
+    {
+        for(uint8_t pressure = 0; pressure < 128; pressure++)
+        {
+            uint8_t msgs[] = {(uint8_t)(0x80 + (5 << 4) + chn), pressure};
+            MidiEvent event = ParseAndPop(msgs, 2);
+            ChannelPressureEvent chpEvent = event.AsChannelPressure();
+
+            EXPECT_EQ(event.type, MidiMessageType::ChannelPressure);
+            EXPECT_EQ(chpEvent.channel, chn);
+            EXPECT_EQ(chpEvent.pressure, pressure);
+        }
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, pitchBend)
+{
+    for(uint8_t chn = 0; chn < 16; chn++)
+    {
+        for(uint8_t d0 = 0; d0 < 128; d0++)
+        {
+            for(uint8_t d1 = 0; d1 < 128; d1++)
+            {
+                uint8_t msgs[] = {(uint8_t)(0x80 + (6 << 4) + chn), d0, d1};
+                MidiEvent event = ParseAndPop(msgs, 3);
+                PitchBendEvent pbEvent = event.AsPitchBend();
+
+                EXPECT_EQ(event.type, MidiMessageType::PitchBend);
+                EXPECT_EQ(pbEvent.channel, chn);
+                EXPECT_EQ(pbEvent.value, ((uint16_t)d1 << 7) + (d0 - 8192));
+            }
+        }
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
 }
 
 //Channel Mode Messages
@@ -232,7 +365,7 @@ TEST_F(MidiTest, runningStatus)
     Test(event, (uint8_t)event.type, chkType, 0, true, 0x10, 0x0f);
 
     //running status
-    for(uint8_t i = 0; i < 20; i++)
+    for(uint8_t i = 1; i < 20; i++)
     {
         msgs[0] = msgs[1] = i;
         MidiEvent event = ParseAndPop(msgs, 2);

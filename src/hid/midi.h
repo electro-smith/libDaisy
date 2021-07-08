@@ -258,6 +258,14 @@ class MidiHandler
                 if((byte & kStatusByteMask) == 0)
                 {
                     incoming_message_.data[1] = byte & kDataByteMask;
+
+                    //velocity 0 NoteOns are NoteOffs
+                    if(running_status_ == NoteOn
+                       && incoming_message_.data[1] == 0)
+                    {
+                        incoming_message_.type = running_status_ = NoteOff;
+                    }
+
                     // At this point the message is valid, and we can add this MidiEvent to the queue
                     event_q_.Write(incoming_message_);
                 }
