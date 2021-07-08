@@ -409,30 +409,94 @@ TEST_F(MidiTest, polyModeOn){
     EXPECT_FALSE(midi.HasEvents());
 }
 
-//System Common Messages (no sysex)
-TEST_F(MidiTest, systemCommon)
+// ================ System Common Messages ================ 
+
+TEST_F(MidiTest, mtcQuarterFrame)
 {
-    //types 1-3
-    for(uint8_t type = 1; type < 4; type++)
+    for(uint8_t type = 0; type < 8; type++)
     {
-        for(uint8_t d0 = 0; d0 < 128; d0++)
+        for(uint8_t val = 0; val < 16; val++)
         {
-            for(uint8_t d1 = 0; d1 < 128; d1++)
-            {
-                uint8_t msg[] = {uint8_t((0x0f << 4) + type), d0, d1};
-                MidiEvent event = ParseAndPop(msg, 2 + (type == 2));
-                Test(event,(uint8_t)event.sc_type, type, 0, type == 2, d0, d1);
-            }
+            uint8_t msg[] = {uint8_t((0x0f << 4) + 1), (uint8_t)(val + (type << 4))};
+            MidiEvent event = ParseAndPop(msg, 2);
+            MTCQuarterFrameEvent qfEvent= event.AsMTCQuarterFrame();
+
+            EXPECT_EQ(event.type, SystemCommon);                
+            EXPECT_EQ(event.sc_type, MTCQuarterFrame);
+            EXPECT_EQ(qfEvent.message_type, type);                
+            EXPECT_EQ(qfEvent.value, val);                
         }
     }
+    EXPECT_FALSE(midi.HasEvents());
+}
 
-    //types 4-7
-    for(uint8_t type = 4; type < 8; type++)
+TEST_F(MidiTest, songPositionPointer)
+{
+    for(uint8_t low = 0; low < 128; low++)
     {
-        uint8_t msg[] = {uint8_t((0x0f << 4) + type)};
-        MidiEvent event = ParseAndPop(msg, 1);
-        EXPECT_EQ((uint8_t)event.sc_type, type);
+        for(uint8_t high = 0; high < 128; high++)
+        {
+            uint8_t msg[] = {uint8_t((0x0f << 4) + 2), low, high};
+            MidiEvent event = ParseAndPop(msg, 3);
+            SongPositionPointerEvent sppEvent= event.AsSongPositionPointer();
+
+            EXPECT_EQ(event.type, SystemCommon);                
+            EXPECT_EQ(event.sc_type, SongPositionPointer);
+            EXPECT_EQ(sppEvent.position, ((uint16_t)high << 7) | low);                
+        }
     }
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, songSelect)
+{
+    for(uint8_t song = 0; song < 128; song++)
+    {
+        uint8_t msg[] = {uint8_t((0x0f << 4) + 3), song};
+        MidiEvent event = ParseAndPop(msg, 2);
+        SongSelectEvent ssEvent= event.AsSongSelect();
+
+        EXPECT_EQ(event.type, SystemCommon);                
+        EXPECT_EQ(event.sc_type, SongSelect);
+        EXPECT_EQ(ssEvent.song, song);                
+    }
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, scUndefined0)
+{
+    uint8_t msg[] = {uint8_t((0x0f << 4) + 4), 0};
+    MidiEvent event = ParseAndPop(msg, 2);
+    EXPECT_EQ(event.type, SystemCommon);                
+    EXPECT_EQ(event.sc_type, SCUndefined0);
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, scUndefined1)
+{
+    uint8_t msg[] = {uint8_t((0x0f << 4) + 5), 0};
+    MidiEvent event = ParseAndPop(msg, 2);
+    EXPECT_EQ(event.type, SystemCommon);                
+    EXPECT_EQ(event.sc_type, SCUndefined1);
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, tuneRequest)
+{
+    uint8_t msg[] = {uint8_t((0x0f << 4) + 6), 0};
+    MidiEvent event = ParseAndPop(msg, 2);
+    EXPECT_EQ(event.type, SystemCommon);                
+    EXPECT_EQ(event.sc_type, TuneRequest);
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, sysexEnd)
+{
+    uint8_t msg[] = {uint8_t((0x0f << 4) + 7), 0};
+    MidiEvent event = ParseAndPop(msg, 2);
+    EXPECT_EQ(event.type, SystemCommon);                
+    EXPECT_EQ(event.sc_type, SysExEnd);
+    EXPECT_FALSE(midi.HasEvents());
 }
 
 // System Real Time Messages
