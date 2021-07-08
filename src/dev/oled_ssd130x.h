@@ -95,7 +95,6 @@ class SSD130x4WireSpiTransport
         spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_8;
 
         spi_config.pin_config.sclk = {Port::DSY_GPIOG, 11};
-        spi_config.pin_config.miso = {Port::DSY_GPIOX, 0};
         spi_config.pin_config.mosi = {Port::DSY_GPIOB, 5};
         spi_config.pin_config.nss  = {Port::DSY_GPIOG, 10};
 

@@ -29,6 +29,8 @@ struct Pin
 
     //allow equality operator to be used, replaces pin_cmp
     bool operator==(Pin& rhs) { return (rhs.pin == pin) && (rhs.port == port); }
+
+    static constexpr Pin invalid() { return {Port::DSY_GPIOX, 0}; }
 };
 
 /** General Purpose IO driver */

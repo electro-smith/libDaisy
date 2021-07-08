@@ -267,7 +267,7 @@ typedef struct
     uint8_t alt;
 } pin_alt;
 
-pin_alt pins_none = {{Port::DSY_GPIOX, 0}, 255};
+pin_alt pins_none = {Pin::invalid(), 255};
 
 //valid pins per periph, and the alt they're on
 pin_alt usart1_pins_tx[] = {{{Port::DSY_GPIOB, 6}, GPIO_AF7_USART1},
