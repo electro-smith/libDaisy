@@ -216,7 +216,7 @@ class LedDriverPca9685
     void InitializeDrivers()
     {
         // init OE pin and pull low to enable outputs
-        if(oe_pin_.port != Port::DSY_GPIOX)
+        if(oe_pin_.isValid())
         {
             GPIO::Config gpio_config;
             gpio_config.pin  = oe_pin_;

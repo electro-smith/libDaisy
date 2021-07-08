@@ -341,9 +341,8 @@ UartHandler::Result checkPinMatch(GPIO::Config init, Pin pin, int p_num)
 {
     for(int i = 0; i < 3; i++)
     {
-        Pin empty_pin;
+        Pin empty_pin = pin.invalid();
 
-        // Pin() defaults to GPIOX, 0
         if(pins_periphs[p_num][i].pin == empty_pin)
         {
             /* skip */
@@ -366,7 +365,7 @@ UartHandler::Result UartHandler::Impl::InitPins()
 
     int per_num = 2 * (int)(config_.periph);
 
-    if(config_.pin_config.tx.port != Port::DSY_GPIOX)
+    if(config_.pin_config.tx.isValid())
     {
         //check tx against periph
         if(checkPinMatch(gpio_conf, config_.pin_config.tx, per_num)
@@ -380,7 +379,7 @@ UartHandler::Result UartHandler::Impl::InitPins()
         tx.Init(gpio_conf);
     }
 
-    if(config_.pin_config.rx.port != Port::DSY_GPIOX)
+    if(config_.pin_config.rx.isValid())
     {
         //check rx against periph
         if(checkPinMatch(gpio_conf, config_.pin_config.rx, per_num + 1)

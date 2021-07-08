@@ -31,6 +31,7 @@ struct Pin
     bool operator==(Pin& rhs) { return (rhs.pin == pin) && (rhs.port == port); }
 
     static constexpr Pin invalid() { return {Port::DSY_GPIOX, 0}; }
+    constexpr bool       isValid() const { return port != Port::DSY_GPIOX; }
 };
 
 /** General Purpose IO driver */

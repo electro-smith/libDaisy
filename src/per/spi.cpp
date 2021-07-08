@@ -230,7 +230,7 @@ typedef struct
     uint8_t alt;
 } pin_alt_spi;
 
-static pin_alt_spi pins_none_spi = {Port::DSY_GPIOX, 0, 255};
+static pin_alt_spi pins_none_spi = {Pin::invalid(), 255};
 
 //this is a bit long...
 /* ============== spi1 ============== */
@@ -400,7 +400,7 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
     // nss = soft -> ss pin is unused for master and slave
     bool enable_ss = config_.nss != Config::NSS::SOFT;
 
-    if(config_.pin_config.sclk.port != Port::DSY_GPIOX)
+    if(config_.pin_config.sclk.isValid())
     {
         //check sclk against periph
         if(checkPinMatchSpi(&GPIO_InitStruct, config_.pin_config.sclk, per_num)
@@ -415,7 +415,7 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.miso.port != Port::DSY_GPIOX && enable_miso)
+    if(config_.pin_config.miso.isValid() && enable_miso)
     {
         //check miso against periph
         if(checkPinMatchSpi(
@@ -431,7 +431,7 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.mosi.port != Port::DSY_GPIOX && enable_mosi)
+    if(config_.pin_config.mosi.isValid() && enable_mosi)
     {
         //check mosi against periph
         if(checkPinMatchSpi(
@@ -447,7 +447,7 @@ SpiHandle::Result SpiHandle::Impl::InitPins()
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.nss.port != Port::DSY_GPIOX && enable_ss)
+    if(config_.pin_config.nss.isValid() && enable_ss)
     {
         //check nss against periph
         if(checkPinMatchSpi(
