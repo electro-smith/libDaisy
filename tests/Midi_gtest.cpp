@@ -272,30 +272,141 @@ TEST_F(MidiTest, pitchBend)
     EXPECT_FALSE(midi.HasEvents());
 }
 
-//Channel Mode Messages
-// also doesn't totally test channels (for now)
-TEST_F(MidiTest, channelMode)
+// ================ Channel Mode Messages ================ 
+
+TEST_F(MidiTest, allSoundOff)
 {
-    //All messages
-    for(uint8_t type = 120; type < 128; type++)
+    for(uint8_t chn = 0; chn < 16; chn++)
     {
-        uint8_t msg[] = {0x80 + (3 << 4), type, 0};
+        uint8_t msg[] = {(uint8_t)(0x80 + (3 << 4) + chn), 120, 0};
         MidiEvent event = ParseAndPop(msg, 3);
-        EXPECT_EQ((uint8_t)event.cm_type, type - 120);
+        AllSoundOffEvent asoEvent = event.AsAllSoundOff();
+
+        EXPECT_EQ((uint8_t)event.type, ChannelMode);
+        EXPECT_EQ((uint8_t)event.cm_type, AllSoundOff);
+        EXPECT_EQ((uint8_t)asoEvent.channel, chn);
     }
 
-    //LocalControlOn
-    uint8_t msg[] = {0x80 + (3 << 4), 122, 127};
-    MidiEvent event = ParseAndPop(msg, 3);
-    Test(event, (uint8_t)event.cm_type, (uint8_t)LocalControl, 0, true, 122, 127);
+    EXPECT_FALSE(midi.HasEvents());
+}
 
-    //MonoModeOn
-    for(uint8_t data = 0; data < 128; data++)
+TEST_F(MidiTest, resetAllControllers)
+{
+    for(uint8_t chn = 0; chn < 16; chn++)
     {
-        uint8_t msg[] = {0x80 + (3 << 4), 126, data};
-        MidiEvent event = ParseAndPop(msg, 3);
-        Test(event,(uint8_t)event.cm_type, (uint8_t)MonoModeOn, 0, true, 126, data);
+        for(uint8_t val = 0; val < 128; val++){
+            uint8_t msg[] = {(uint8_t)(0x80 + (3 << 4) + chn), 121, val};
+            MidiEvent event = ParseAndPop(msg, 3);
+            ResetAllControllersEvent racEvent = event.AsResetAllControllers();
+
+            EXPECT_EQ((uint8_t)event.type, ChannelMode);
+            EXPECT_EQ((uint8_t)event.cm_type, ResetAllControllers);
+            EXPECT_EQ((uint8_t)racEvent.channel, chn);
+            EXPECT_EQ((uint8_t)racEvent.value, val);
+        }
     }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, localControl)
+{
+    //Off
+    for(uint8_t chn = 0; chn < 16; chn++)
+    {
+        uint8_t msg[] = {(uint8_t)(0x80 + (3 << 4) + chn), 122, 0};
+        MidiEvent event = ParseAndPop(msg, 3);
+        LocalControlEvent lcEvent = event.AsLocalControl();
+
+        EXPECT_EQ((uint8_t)event.type, ChannelMode);
+        EXPECT_EQ((uint8_t)event.cm_type, LocalControl);
+        EXPECT_TRUE((uint8_t)lcEvent.local_control_off);
+        EXPECT_FALSE((uint8_t)lcEvent.local_control_on);
+    }
+
+    //On
+    for(uint8_t chn = 0; chn < 16; chn++)
+    {
+        uint8_t msg[] = {(uint8_t)(0x80 + (3 << 4) + chn), 122, 127};
+        MidiEvent event = ParseAndPop(msg, 3);
+        LocalControlEvent lcEvent = event.AsLocalControl();
+
+        EXPECT_EQ((uint8_t)event.type, ChannelMode);
+        EXPECT_EQ((uint8_t)event.cm_type, LocalControl);
+        EXPECT_TRUE((uint8_t)lcEvent.local_control_on);
+        EXPECT_FALSE((uint8_t)lcEvent.local_control_off);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, allNotesOff)
+{
+    for(uint8_t chn = 0; chn < 16; chn++){
+        uint8_t msg[] = {(uint8_t)(0x80 + (3 << 4) + chn), 123, 0};
+        MidiEvent event = ParseAndPop(msg, 3);
+        AllNotesOffEvent anoEvent = event.AsAllNotesOff();
+    
+        EXPECT_EQ((uint8_t)event.type, ChannelMode);
+        EXPECT_EQ((uint8_t)event.cm_type, AllNotesOff);
+        EXPECT_EQ((uint8_t)anoEvent.channel, chn);
+    }
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, omniModeOff){
+    for(uint8_t chn = 0; chn < 16; chn++){
+        uint8_t msg[] = {(uint8_t)(0x80 + (3 << 4) + chn), 124, 0};
+        MidiEvent event = ParseAndPop(msg, 3);
+        OmniModeOffEvent omoEvent = event.AsOmniModeOff();
+    
+        EXPECT_EQ((uint8_t)event.type, ChannelMode);
+        EXPECT_EQ((uint8_t)event.cm_type, OmniModeOff);
+        EXPECT_EQ((uint8_t)omoEvent.channel, chn);
+    }
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, omniModeOn){
+    for(uint8_t chn = 0; chn < 16; chn++){
+        uint8_t msg[] = {(uint8_t)(0x80 + (3 << 4) + chn), 125, 0};
+        MidiEvent event = ParseAndPop(msg, 3);
+        OmniModeOnEvent omoEvent = event.AsOmniModeOn();
+    
+        EXPECT_EQ((uint8_t)event.type, ChannelMode);
+        EXPECT_EQ((uint8_t)event.cm_type, OmniModeOn);
+        EXPECT_EQ((uint8_t)omoEvent.channel, chn);
+    }
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, monoModeOn){
+    for(uint8_t chn = 0; chn < 16; chn++){
+        for(uint8_t val = 0; val < 128; val++){
+            uint8_t msg[] = {(uint8_t)(0x80 + (3 << 4) + chn), 126, val};
+            MidiEvent event = ParseAndPop(msg, 3);
+            MonoModeOnEvent mmoEvent = event.AsMonoModeOn();
+        
+            EXPECT_EQ((uint8_t)event.type, ChannelMode);
+            EXPECT_EQ((uint8_t)event.cm_type, MonoModeOn);
+            EXPECT_EQ((uint8_t)mmoEvent.channel, chn);
+            EXPECT_EQ((uint8_t)mmoEvent.num_channels, val);
+        }
+    }
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+TEST_F(MidiTest, polyModeOn){
+    for(uint8_t chn = 0; chn < 16; chn++){
+        uint8_t msg[] = {(uint8_t)(0x80 + (3 << 4) + chn), 127, 0};
+        MidiEvent event = ParseAndPop(msg, 3);
+        PolyModeOnEvent pmoEvent = event.AsPolyModeOn();
+    
+        EXPECT_EQ((uint8_t)event.type, ChannelMode);
+        EXPECT_EQ((uint8_t)event.cm_type, PolyModeOn);
+        EXPECT_EQ((uint8_t)pmoEvent.channel, chn);
+    }
+    EXPECT_FALSE(midi.HasEvents());
 }
 
 //System Common Messages (no sysex)
