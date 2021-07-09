@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "daisy_core.h"
+#include "version.h"
 
 /** @addtogroup boards
     @{
