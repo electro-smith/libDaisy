@@ -85,6 +85,14 @@ class DaisyPatch
     /** Start analog to digital conversion.*/
     void StartAdc();
 
+    /** Start analog to digital conversion with exponential moving
+    average filtering applied. Experimentation will be required to
+    choose the coefficient value appropriate for the application.
+    \param filterCoeff  sets the filter coefficient for all controls
+    good values to try are in the range 0.01 to 0.1
+    */
+    void StartAdc(float filterCoeff);
+
     /** Stops Transfering data from the ADC */
     void StopAdc();
 

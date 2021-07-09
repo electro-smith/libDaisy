@@ -120,6 +120,13 @@ class AdcHandle
     float GetFloat(uint8_t chn) const;
 
     /**
+    Single channel filter configuration
+    \param chn channel to configure
+    \param coeff filter coefficient (good values are in range 0.01 to 0.1)
+    */
+    void ConfigureFilter(uint8_t chn, float coeff);
+
+    /**
        Getters for multiplexed inputs on a single channel (up to 8 per ADC input). 
        \param chn Channel to get from
        \param idx &
