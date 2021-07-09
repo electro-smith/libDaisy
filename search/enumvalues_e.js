@@ -1,13 +1,17 @@
 var searchData=
 [
-  ['slow_1932',['SLOW',['../classdaisy_1_1_sdmmc_handler.html#a78a654b5e915c05224fb64f0dfbe6bcea0e3066cbbd284dce8b76e7c4620d6d75',1,'daisy::SdmmcHandler']]],
-  ['standard_1933',['STANDARD',['../classdaisy_1_1_sdmmc_handler.html#a78a654b5e915c05224fb64f0dfbe6bcea94e94133f4bdc1794c6b647b8ea134d0',1,'daisy::SdmmcHandler']]],
-  ['sw_5f1_1934',['SW_1',['../classdaisy_1_1_daisy_field.html#a418e1e43655501188c4e740e90e98beca741b822407920a640d754e56dc9c5cf2',1,'daisy::DaisyField::SW_1()'],['../classdaisy_1_1_daisy_petal.html#a2651bb58e6ae33c0bd4bc770df3c7911ab2afe0429e8b94db1fad8f879aa4b2ff',1,'daisy::DaisyPetal::SW_1()']]],
-  ['sw_5f2_1935',['SW_2',['../classdaisy_1_1_daisy_field.html#a418e1e43655501188c4e740e90e98becaead8e960d21a99c44694ae3f7ddedf7b',1,'daisy::DaisyField::SW_2()'],['../classdaisy_1_1_daisy_petal.html#a2651bb58e6ae33c0bd4bc770df3c7911a684e6a6ab7d709f8b827c97b2639f2ab',1,'daisy::DaisyPetal::SW_2()']]],
-  ['sw_5f3_1936',['SW_3',['../classdaisy_1_1_daisy_petal.html#a2651bb58e6ae33c0bd4bc770df3c7911aa2bd052d217894508a36856ea5843d3e',1,'daisy::DaisyPetal']]],
-  ['sw_5f4_1937',['SW_4',['../classdaisy_1_1_daisy_petal.html#a2651bb58e6ae33c0bd4bc770df3c7911acda6031d654ad6b6d6f094419e97968c',1,'daisy::DaisyPetal']]],
-  ['sw_5f5_1938',['SW_5',['../classdaisy_1_1_daisy_petal.html#a2651bb58e6ae33c0bd4bc770df3c7911a9a13b8958600f5421b29017057614f64',1,'daisy::DaisyPetal']]],
-  ['sw_5f6_1939',['SW_6',['../classdaisy_1_1_daisy_petal.html#a2651bb58e6ae33c0bd4bc770df3c7911ad45878f759196455d7fa6ee41ed93dc6',1,'daisy::DaisyPetal']]],
-  ['sw_5f7_1940',['SW_7',['../classdaisy_1_1_daisy_petal.html#a2651bb58e6ae33c0bd4bc770df3c7911ae2a1269dd381d8c8aa9de3aae9e400f4',1,'daisy::DaisyPetal']]],
-  ['sw_5flast_1941',['SW_LAST',['../classdaisy_1_1_daisy_field.html#a418e1e43655501188c4e740e90e98beca865113e9e584259b98c17d98e2bb88ad',1,'daisy::DaisyField::SW_LAST()'],['../classdaisy_1_1_daisy_petal.html#a2651bb58e6ae33c0bd4bc770df3c7911af4668f61ed58c3103b2800d3cf45ca7c',1,'daisy::DaisyPetal::SW_LAST()']]]
+  ['receive_1981',['RECEIVE',['../classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54ca42ddaaef1ffd16ad35901150add8f8f2',1,'daisy::I2CHandle']]],
+  ['red_1982',['RED',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a8b805ea394bedf4786fd371ea10283b8',1,'daisy::Color']]],
+  ['reset_1983',['Reset',['../namespacedaisy.html#a3069be23e98a0299bbfa8f1759754d45a51ff911624e8d6e5a76ce0433d00130f',1,'daisy']]],
+  ['resetallcontrollers_1984',['ResetAllControllers',['../namespacedaisy.html#af9da54b73be4dec526670bd6c53ad98aa16372b6654282e39482508fd9dd45752',1,'daisy']]],
+  ['right_1985',['right',['../namespacedaisy.html#ac734c565c1dc55cbf6b74ea942f40c1ca7c4f29407893c334a6cb7a87bf045c0d',1,'daisy']]],
+  ['ring_5fled_5f1_1986',['RING_LED_1',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a4868bead6b4bb7b6d1e15ce3f6a34edf',1,'daisy::DaisyPetal']]],
+  ['ring_5fled_5f2_1987',['RING_LED_2',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682ac7b3f1596a8438fac25c8696a8d8e165',1,'daisy::DaisyPetal']]],
+  ['ring_5fled_5f3_1988',['RING_LED_3',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a1bd8643462c5d2072526d49dd47a69db',1,'daisy::DaisyPetal']]],
+  ['ring_5fled_5f4_1989',['RING_LED_4',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a546d934044b1971c72a872a95e1f7391',1,'daisy::DaisyPetal']]],
+  ['ring_5fled_5f5_1990',['RING_LED_5',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a962ed86e4759724ea0392e07ccc89aa9',1,'daisy::DaisyPetal']]],
+  ['ring_5fled_5f6_1991',['RING_LED_6',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682add3683515df29d7a38efde9933530895',1,'daisy::DaisyPetal']]],
+  ['ring_5fled_5f7_1992',['RING_LED_7',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a86e88f2c21c605b6bb514c3eaf6f330e',1,'daisy::DaisyPetal']]],
+  ['ring_5fled_5f8_1993',['RING_LED_8',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a1f6fc229b42f772bc9088f62ce3e5036',1,'daisy::DaisyPetal']]],
+  ['ring_5fled_5flast_1994',['RING_LED_LAST',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a4b60f0a2dbcfe749c77a3cf054f85e39',1,'daisy::DaisyPetal']]]
 ];

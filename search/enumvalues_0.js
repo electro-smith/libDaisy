@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['bits_5f1_1766',['BITS_1',['../classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799ba08670704a035571395ac7232b1bd887b',1,'daisy::SdmmcHandler']]],
-  ['bits_5f4_1767',['BITS_4',['../classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799bae5692a4697cba5753db569f838c5b47d',1,'daisy::SdmmcHandler']]],
-  ['blue_1768',['BLUE',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a7030ad36aea5814566cd1c9da26afe6d',1,'daisy::Color']]],
-  ['button_5f2_1769',['BUTTON_2',['../classdaisy_1_1_daisy_pod.html#a148bfabd288f0b4d20a26b1d0e3bdeeba8cfd4599497b987ade8a31200ffc941f',1,'daisy::DaisyPod']]],
-  ['button_5flast_1770',['BUTTON_LAST',['../classdaisy_1_1_daisy_pod.html#a148bfabd288f0b4d20a26b1d0e3bdeeba6c27f3526d6d8495c0718eb217e0bbe5',1,'daisy::DaisyPod']]]
+  ['activesensing_1807',['ActiveSensing',['../namespacedaisy.html#a3069be23e98a0299bbfa8f1759754d45a7bf17dfa0bcaed34dde4279c7d9c8f9c',1,'daisy']]],
+  ['allnotesoff_1808',['AllNotesOff',['../namespacedaisy.html#af9da54b73be4dec526670bd6c53ad98aa270bac989b5e82156b53f4ace9a27df3',1,'daisy']]],
+  ['allsoundoff_1809',['AllSoundOff',['../namespacedaisy.html#af9da54b73be4dec526670bd6c53ad98aa5b987ffb2be39ffa56bba82bd4d01151',1,'daisy']]]
 ];
