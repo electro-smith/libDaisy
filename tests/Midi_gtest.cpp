@@ -68,22 +68,6 @@ class MidiTest : public ::testing::Test
         return midi.PopEvent();
     }
 
-    //help test sysex
-    void TestSysex(MidiEvent event, uint8_t* msgs, int size)
-    {
-        EXPECT_EQ((uint8_t)event.type, (uint8_t)SystemCommon);
-        EXPECT_EQ((uint8_t)event.sc_type, (uint8_t)SystemExclusive);
-
-        EXPECT_EQ(event.sysex_message_len, size);
-
-        for(int i = 0; i < size; i++)
-        {
-            EXPECT_EQ(event.sysex_data[i], msgs[i]);
-        }
-
-        EXPECT_FALSE(midi.HasEvents());
-    }
-
     MidiHandler<MidiTestTransport> midi;
 };
 
@@ -495,15 +479,54 @@ TEST_F(MidiTest, systemExclusive)
         msgs[i] = (uint8_t)i;
     }
 
-    MidiEvent event = ParseAndPopSysex(msgs, 6);
-    TestSysex(event, msgs, 6);
+    // short message
+    int size = 6;
+    MidiEvent event = ParseAndPopSysex(msgs, size);
+    SystemExclusiveEvent sysexEvent = event.AsSystemExclusive();
+    EXPECT_EQ(event.type, SystemCommon);
+    EXPECT_EQ(event.sc_type, SystemExclusive);
 
-    event = ParseAndPopSysex(msgs, 128);
-    TestSysex(event, msgs, 128);
+    EXPECT_EQ(sysexEvent.length, size);
+
+    for(int i = 0; i < size; i++)
+    {
+        EXPECT_EQ(sysexEvent.data[i], msgs[i]);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+
+    // full length message
+    size = 128;
+    event = ParseAndPopSysex(msgs, size);
+    sysexEvent = event.AsSystemExclusive();
+    EXPECT_EQ(event.type, SystemCommon);
+    EXPECT_EQ(event.sc_type, SystemExclusive);
+
+    EXPECT_EQ(sysexEvent.length, size);
+
+    for(int i = 0; i < size; i++)
+    {
+        EXPECT_EQ(sysexEvent.data[i], msgs[i]);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
 
     //max len is 128, let's go past that
-    event = ParseAndPopSysex(msgs, 135);
-    TestSysex(event, msgs, 128);
+    size = 135;
+    event = ParseAndPopSysex(msgs, size);
+    sysexEvent = event.AsSystemExclusive();
+    EXPECT_EQ(event.type, SystemCommon);
+    EXPECT_EQ(event.sc_type, SystemExclusive);
+
+    //max len
+    EXPECT_EQ(sysexEvent.length, 128);
+
+    for(int i = 0; i < 128; i++)
+    {
+        EXPECT_EQ(sysexEvent.data[i], msgs[i]);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
 }
 
 // ================ Running Status ================ 
