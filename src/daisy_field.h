@@ -212,7 +212,7 @@ class DaisyField
 
     DaisySeed                                seed;
     OledDisplay<SSD130x4WireSpi128x64Driver> display;
-    dsy_gpio                                 gate_out;
+    GPIO                                     gate_out;
     GateIn                                   gate_in;
     LedDriverPca9685<2, true>                led_driver;
     Switch                                   sw[SW_LAST];

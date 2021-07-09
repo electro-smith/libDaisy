@@ -1,10 +1,7 @@
 #include <stm32h7xx_hal.h>
 #include "per/uart.h"
 #include "util/ringbuffer.h"
-extern "C"
-{
 #include "util/hal_map.h"
-}
 
 using namespace daisy;
 
@@ -62,6 +59,7 @@ class UartHandler::Impl
     size_t             rx_size_, rx_last_pos_;
     UartRingBuffer*    dma_fifo_rx_;
     bool               rx_active_, tx_active_;
+    GPIO               rx, tx;
 #ifdef UART_RX_DOUBLE_BUFFER
     UartRingBuffer queue_rx_;
 #endif
@@ -265,59 +263,59 @@ size_t UartHandler::Impl::Readable()
 
 typedef struct
 {
-    dsy_gpio_pin pin;
-    uint8_t      alt;
+    Pin     pin;
+    uint8_t alt;
 } pin_alt;
 
-pin_alt pins_none = {{DSY_GPIOX, 0}, 255};
+pin_alt pins_none = {Pin::invalid(), 255};
 
 //valid pins per periph, and the alt they're on
-pin_alt usart1_pins_tx[] = {{{DSY_GPIOB, 6}, GPIO_AF7_USART1},
-                            {{DSY_GPIOB, 14}, GPIO_AF4_USART1},
+pin_alt usart1_pins_tx[] = {{{Port::DSY_GPIOB, 6}, GPIO_AF7_USART1},
+                            {{Port::DSY_GPIOB, 14}, GPIO_AF4_USART1},
                             pins_none};
-pin_alt usart1_pins_rx[] = {{{DSY_GPIOB, 7}, GPIO_AF7_USART1},
-                            {{DSY_GPIOB, 15}, GPIO_AF4_USART1},
+pin_alt usart1_pins_rx[] = {{{Port::DSY_GPIOB, 7}, GPIO_AF7_USART1},
+                            {{Port::DSY_GPIOB, 15}, GPIO_AF4_USART1},
                             pins_none};
 
 pin_alt usart2_pins_tx[]
-    = {{{DSY_GPIOA, 2}, GPIO_AF7_USART2}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOA, 2}, GPIO_AF7_USART2}, pins_none, pins_none};
 pin_alt usart2_pins_rx[]
-    = {{{DSY_GPIOA, 3}, GPIO_AF7_USART2}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOA, 3}, GPIO_AF7_USART2}, pins_none, pins_none};
 
 pin_alt usart3_pins_tx[]
-    = {{{DSY_GPIOC, 10}, GPIO_AF7_USART3}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOC, 10}, GPIO_AF7_USART3}, pins_none, pins_none};
 pin_alt usart3_pins_rx[]
-    = {{{DSY_GPIOC, 11}, GPIO_AF7_USART3}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOC, 11}, GPIO_AF7_USART3}, pins_none, pins_none};
 
-pin_alt uart4_pins_tx[] = {{{DSY_GPIOB, 9}, GPIO_AF8_UART4},
-                           {{DSY_GPIOC, 10}, GPIO_AF8_UART4},
+pin_alt uart4_pins_tx[] = {{{Port::DSY_GPIOB, 9}, GPIO_AF8_UART4},
+                           {{Port::DSY_GPIOC, 10}, GPIO_AF8_UART4},
                            pins_none};
-pin_alt uart4_pins_rx[] = {{{DSY_GPIOB, 8}, GPIO_AF8_UART4},
-                           {{DSY_GPIOC, 11}, GPIO_AF8_UART4},
+pin_alt uart4_pins_rx[] = {{{Port::DSY_GPIOB, 8}, GPIO_AF8_UART4},
+                           {{Port::DSY_GPIOC, 11}, GPIO_AF8_UART4},
                            pins_none};
 
-pin_alt uart5_pins_tx[] = {{{DSY_GPIOC, 12}, GPIO_AF8_UART5},
-                           {{DSY_GPIOB, 6}, GPIO_AF14_UART5},
+pin_alt uart5_pins_tx[] = {{{Port::DSY_GPIOC, 12}, GPIO_AF8_UART5},
+                           {{Port::DSY_GPIOB, 6}, GPIO_AF14_UART5},
                            pins_none};
-pin_alt uart5_pins_rx[] = {{{DSY_GPIOB, 12}, GPIO_AF14_UART5},
-                           {{DSY_GPIOD, 2}, GPIO_AF8_UART5},
-                           {{DSY_GPIOB, 5}, GPIO_AF14_UART5}};
+pin_alt uart5_pins_rx[] = {{{Port::DSY_GPIOB, 12}, GPIO_AF14_UART5},
+                           {{Port::DSY_GPIOD, 2}, GPIO_AF8_UART5},
+                           {{Port::DSY_GPIOB, 5}, GPIO_AF14_UART5}};
 
 pin_alt usart6_pins_tx[] = {pins_none, pins_none, pins_none};
 pin_alt usart6_pins_rx[]
-    = {{{DSY_GPIOG, 9}, GPIO_AF7_USART6}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOG, 9}, GPIO_AF7_USART6}, pins_none, pins_none};
 
 pin_alt uart7_pins_tx[]
-    = {{{DSY_GPIOB, 4}, GPIO_AF11_UART7}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOB, 4}, GPIO_AF11_UART7}, pins_none, pins_none};
 pin_alt uart7_pins_rx[] = {pins_none, pins_none, pins_none};
 
 pin_alt uart8_pins_tx[] = {pins_none, pins_none, pins_none};
 pin_alt uart8_pins_rx[] = {pins_none, pins_none, pins_none};
 
 pin_alt lpuart1_pins_tx[]
-    = {{{DSY_GPIOB, 6}, GPIO_AF8_LPUART}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOB, 6}, GPIO_AF8_LPUART}, pins_none, pins_none};
 pin_alt lpuart1_pins_rx[]
-    = {{{DSY_GPIOB, 7}, GPIO_AF8_LPUART}, pins_none, pins_none};
+    = {{{Port::DSY_GPIOB, 7}, GPIO_AF8_LPUART}, pins_none, pins_none};
 
 //an array to hold everything
 pin_alt* pins_periphs[] = {usart1_pins_tx,
@@ -339,19 +337,20 @@ pin_alt* pins_periphs[] = {usart1_pins_tx,
                            lpuart1_pins_tx,
                            lpuart1_pins_rx};
 
-UartHandler::Result
-checkPinMatch(GPIO_InitTypeDef* init, dsy_gpio_pin pin, int p_num)
+UartHandler::Result checkPinMatch(GPIO::Config init, Pin pin, int p_num)
 {
     for(int i = 0; i < 3; i++)
     {
-        if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pins_none.pin))
+        Pin empty_pin = pin.invalid();
+
+        if(pins_periphs[p_num][i].pin == empty_pin)
         {
             /* skip */
         }
 
-        else if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pin))
+        else if(pins_periphs[p_num][i].pin == pin)
         {
-            init->Alternate = pins_periphs[p_num][i].alt;
+            init.alternate = pins_periphs[p_num][i].alt;
             return UartHandler::Result::OK;
         }
     }
@@ -361,42 +360,37 @@ checkPinMatch(GPIO_InitTypeDef* init, dsy_gpio_pin pin, int p_num)
 
 UartHandler::Result UartHandler::Impl::InitPins()
 {
-    GPIO_InitTypeDef GPIO_InitStruct;
-
-    GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull  = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO::Config gpio_conf;
+    gpio_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
 
     int per_num = 2 * (int)(config_.periph);
 
-    if(config_.pin_config.tx.port != DSY_GPIOX)
+    if(config_.pin_config.tx.isValid())
     {
         //check tx against periph
-        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.tx, per_num)
+        if(checkPinMatch(gpio_conf, config_.pin_config.tx, per_num)
            == Result::ERR)
         {
             return Result::ERR;
         }
 
         //setup tx pin
-        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.tx);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.tx);
-        HAL_GPIO_Init(port, &GPIO_InitStruct);
+        gpio_conf.pin = config_.pin_config.tx;
+        tx.Init(gpio_conf);
     }
 
-    if(config_.pin_config.rx.port != DSY_GPIOX)
+    if(config_.pin_config.rx.isValid())
     {
         //check rx against periph
-        if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.rx, per_num + 1)
+        if(checkPinMatch(gpio_conf, config_.pin_config.rx, per_num + 1)
            == Result::ERR)
         {
             return Result::ERR;
         }
 
         //setup rx pin
-        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.rx);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.rx);
-        HAL_GPIO_Init(port, &GPIO_InitStruct);
+        gpio_conf.pin = config_.pin_config.rx;
+        rx.Init(gpio_conf);
     }
 
     return Result::OK;
@@ -404,14 +398,8 @@ UartHandler::Result UartHandler::Impl::InitPins()
 
 UartHandler::Result UartHandler::Impl::DeInitPins()
 {
-    GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin_config.tx);
-    uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin_config.tx);
-    HAL_GPIO_DeInit(port, pin);
-
-    port = dsy_hal_map_get_port(&config_.pin_config.rx);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.rx);
-    HAL_GPIO_DeInit(port, pin);
-
+    tx.DeInit();
+    rx.DeInit();
     return Result::OK;
 }
 
@@ -489,8 +477,10 @@ void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
-    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.rx.port);
-    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.tx.port);
+
+    //GPIO::Init does this
+    // dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.rx.port);
+    // dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.tx.port);
 
     //enable the clock for our periph
     switch(handle->config_.periph)

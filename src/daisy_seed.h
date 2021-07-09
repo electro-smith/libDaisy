@@ -55,7 +55,7 @@ class DaisySeed
     Returns the gpio_pin corresponding to the index 0-31.
     For the given GPIO on the Daisy Seed (labeled 1-32 in docs).
     */
-    static dsy_gpio_pin GetPin(uint8_t pin_idx);
+    static Pin GetPin(uint8_t pin_idx);
 
     /** Begins the audio for the seeds builtin audio.
     the specified callback will get called whenever
@@ -134,23 +134,22 @@ class DaisySeed
 
     // While the library is still in heavy development, most of the
     // configuration handles will remain public.
-    dsy_sdram_handle sdram_handle; /**< & */
-    dsy_qspi_handle  qspi_handle;  /**< & */
-    AudioHandle      audio_handle; /**< & */
-    AdcHandle        adc;          /**< & */
-    DacHandle        dac;
-    UsbHandle        usb_handle; /**< & */
-    dsy_gpio         led, testpoint;
-    System           system;
+    QSPIHandle  qspi;
+    AudioHandle audio_handle; /**< & */
+    AdcHandle   adc;          /**< & */
+    DacHandle   dac;
+    UsbHandle   usb_handle;   /**< & */
+    SdramHandle sdram_handle; /**< & */
+    GPIO        led, testpoint;
+    System      system;
 
   private:
     /** Local shorthand for debug log destination
     */
     using Log = Logger<LOGGER_INTERNAL>;
 
-
-    void ConfigureSdram();
     void ConfigureQspi();
+    void ConfigureGpio();
     void ConfigureAudio();
     void ConfigureAdc();
     void ConfigureDac();

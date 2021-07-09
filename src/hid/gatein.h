@@ -27,7 +27,7 @@ class GateIn
     /** Init
     Initializes the gate input with specified hardware pin
     */
-    void Init(dsy_gpio_pin *pin_cfg);
+    void Init(Pin pin_cfg);
     // ~~~~
 
     /** Trig
@@ -42,11 +42,11 @@ class GateIn
 
     read function is inverted because of suggested BJT input circuit
     */
-    inline bool State() { return !dsy_gpio_read(&pin_); }
+    inline bool State() { return !gpio_.Read(); }
 
   private:
-    dsy_gpio pin_;
-    uint8_t  prev_state_, state_;
+    GPIO    gpio_;
+    uint8_t prev_state_, state_;
 };
 } // namespace daisy
 #endif

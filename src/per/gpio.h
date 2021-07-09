@@ -2,75 +2,117 @@
 #ifndef DSY_GPIO_H
 #define DSY_GPIO_H
 #include "daisy_core.h"
-#ifdef __cplusplus
-extern "C"
+
+namespace daisy
 {
-#endif
+enum class Port
+{
+    DSY_GPIOA, /**< & */
+    DSY_GPIOB, /**< & */
+    DSY_GPIOC, /**< & */
+    DSY_GPIOD, /**< & */
+    DSY_GPIOE, /**< & */
+    DSY_GPIOF, /**< & */
+    DSY_GPIOG, /**< & */
+    DSY_GPIOH, /**< & */
+    DSY_GPIOI, /**< & */
+    DSY_GPIOJ, /**< & */
+    DSY_GPIOK, /**< & */
+    DSY_GPIOX, /** This is a non-existant port for unsupported bits of hardware. */
+    DSY_GPIO_LAST, /** Final enum member */
+};
 
-    /** General Purpose IO driver */
+struct Pin
+{
+    Port    port = Port::DSY_GPIOX;
+    uint8_t pin  = 0;
 
-    /** @addtogroup other
-    @{
-    */
+    //allow equality operator to be used, replaces pin_cmp
+    bool operator==(Pin& rhs) { return (rhs.pin == pin) && (rhs.port == port); }
 
-    /** Sets the mode of the GPIO */
-    typedef enum
+    static constexpr Pin invalid() { return {Port::DSY_GPIOX, 0}; }
+    constexpr bool       isValid() const { return port != Port::DSY_GPIOX; }
+};
+
+/** General Purpose IO driver */
+class GPIO
+{
+  public:
+    GPIO() {}
+    ~GPIO() {}
+
+    struct Config
     {
-        DSY_GPIO_MODE_INPUT,     /**< & */
-        DSY_GPIO_MODE_OUTPUT_PP, /**< Push-Pull */
-        DSY_GPIO_MODE_OUTPUT_OD, /**< Open-Drain */
-        DSY_GPIO_MODE_ANALOG,    /**< & */
-        DSY_GPIO_MODE_LAST,      /**< & */
-    } dsy_gpio_mode;
+        /** Sets the mode of the GPIO */
+        enum class Mode
+        {
+            INPUT,     /**< & */
+            OUTPUT_PP, /**< Push-Pull */
+            OUTPUT_OD, /**< Open-Drain */
+            ANALOG,    /**< & */
+        };
 
-    /** Configures whether an internal Pull up or Pull down resistor is used */
-    typedef enum
-    {
-        DSY_GPIO_NOPULL,   /**< & */
-        DSY_GPIO_PULLUP,   /**< & */
-        DSY_GPIO_PULLDOWN, /**< & */
-    } dsy_gpio_pull;
+        /** Configures whether an internal Pull up or Pull down resistor is used */
+        enum class Pull
+        {
+            NOPULL,   /**< & */
+            PULLUP,   /**< & */
+            PULLDOWN, /**< & */
+        };
 
-    /** Struct for holding the pin, and configuration */
-    typedef struct
-    {
-        dsy_gpio_pin  pin;  /**< & */
-        dsy_gpio_mode mode; /**< & */
-        dsy_gpio_pull pull; /**< & */
-    } dsy_gpio;
+        enum class Speed
+        {
+            LOW,    /**< & */
+            MEDIUM, /**< & */
+            FAST,   /**< & */
+            HIGH,   /**< & */
+        };
+
+        Config()
+        {
+            //default setup is input
+            mode      = Mode::INPUT;
+            pull      = Pull::NOPULL;
+            speed     = Speed::LOW;
+            alternate = 0;
+        }
+
+        Mode     mode; /**< & */
+        Pull     pull; /**< & */
+        Speed    speed;
+        Pin      pin;
+        uint32_t alternate;
+    };
 
     /** Initializes the gpio with the settings configured. 
-    \param *p Pin pointer
+    \param config Configuration for this pin
     */
-    void dsy_gpio_init(const dsy_gpio *p);
+    void Init(const Config config);
 
     /** Deinitializes the gpio pin 
-    \param *p Pin pointer
      */
-    void dsy_gpio_deinit(const dsy_gpio *p);
+    void DeInit();
 
     /** 
     Reads the state of the gpio pin
-    \param *p Pin pointer 
     \return 1 if the pin is HIGH, and 0 if the pin is LOW */
-    uint8_t dsy_gpio_read(const dsy_gpio *p);
+    bool Read();
 
     /** 
     Writes the state to the gpio pin
     Pin will be set to 3v3 when state is 1, and 0V when state is 0
-    \param *p Pin pointer
     \param state State to write
     */
-    void dsy_gpio_write(const dsy_gpio *p, uint8_t state);
+    void Write(bool state);
 
     /** Toggles the state of the pin so that it is not at the same state as it was previously.
-    \param *p Pin pointer
      */
-    void dsy_gpio_toggle(const dsy_gpio *p);
+    void Toggle();
 
-#ifdef __cplusplus
-}
+  private:
+    Pin      pin_;
+    void*    mapped_port_;
+    uint16_t mapped_pin_;
+};
+} // namespace daisy
 #endif
-
-#endif
-/** @} */

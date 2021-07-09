@@ -55,8 +55,8 @@ void DaisyVersio::Init(bool boost)
 
     // gate in and momentary switch
     tap.Init(seed.GetPin(PIN_SW), blockrate_);
-    dsy_gpio_pin gate_gpio = seed.GetPin(PIN_TRIG_IN);
-    gate.Init(&gate_gpio);
+    Pin gate_gpio = seed.GetPin(PIN_TRIG_IN);
+    gate.Init(gate_gpio);
 
 
     // 3-position switches
@@ -81,9 +81,9 @@ void DaisyVersio::Init(bool boost)
     // RGB LEDs
     for(size_t i = 0; i < LED_LAST; i++)
     {
-        dsy_gpio_pin r = seed.GetPin(ledr_pin[i]);
-        dsy_gpio_pin g = seed.GetPin(ledg_pin[i]);
-        dsy_gpio_pin b = seed.GetPin(ledb_pin[i]);
+        Pin r = seed.GetPin(ledr_pin[i]);
+        Pin g = seed.GetPin(ledg_pin[i]);
+        Pin b = seed.GetPin(ledb_pin[i]);
         leds[i].Init(r, g, b, true);
     }
 }

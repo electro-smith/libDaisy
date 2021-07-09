@@ -122,7 +122,7 @@ class DaisyPatch
     OledDisplay<SSD130x4WireSpi128x64Driver> display; /**< & */
 
     // TODO: Add class for Gate output
-    dsy_gpio gate_output; /**< &  */
+    GPIO gate_output; /**< &  */
 
 
   private:

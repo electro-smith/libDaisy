@@ -1,5 +1,5 @@
 #include "util/bsp_sd_diskio.h"
-#include "util/hal_map.h"
+#include "stm32h7xx_hal.h"
 
 #define SD_DetectIRQHandler() \
     HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_8) // I don't think this is right...

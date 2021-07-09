@@ -3,6 +3,7 @@
 #define DSY_CODEC_AK4556_H
 
 #include "daisy_core.h"
+#include "per/gpio.h"
 
 namespace daisy
 {
@@ -23,7 +24,7 @@ class Ak4556
      ** Can be called statically:
      ** Ak4556::Init(pin); 
      ** */
-    static void Init(dsy_gpio_pin reset_pin);
+    static void Init(Pin reset_pin);
 };
 } // namespace daisy
 

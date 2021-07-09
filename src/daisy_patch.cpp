@@ -180,11 +180,11 @@ void DaisyPatch::InitAudio()
     sai_config[0].b_sync          = SaiHandle::Config::Sync::SLAVE;
     sai_config[0].a_dir           = SaiHandle::Config::Direction::TRANSMIT;
     sai_config[0].b_dir           = SaiHandle::Config::Direction::RECEIVE;
-    sai_config[0].pin_config.fs   = {DSY_GPIOE, 4};
-    sai_config[0].pin_config.mclk = {DSY_GPIOE, 2};
-    sai_config[0].pin_config.sck  = {DSY_GPIOE, 5};
-    sai_config[0].pin_config.sa   = {DSY_GPIOE, 6};
-    sai_config[0].pin_config.sb   = {DSY_GPIOE, 3};
+    sai_config[0].pin_config.fs   = {Port::DSY_GPIOE, 4};
+    sai_config[0].pin_config.mclk = {Port::DSY_GPIOE, 2};
+    sai_config[0].pin_config.sck  = {Port::DSY_GPIOE, 5};
+    sai_config[0].pin_config.sa   = {Port::DSY_GPIOE, 6};
+    sai_config[0].pin_config.sb   = {Port::DSY_GPIOE, 3};
 
     // External Codec
     sai_config[1].periph          = SaiHandle::Config::Peripheral::SAI_2;
@@ -206,7 +206,7 @@ void DaisyPatch::InitAudio()
 
     // Reset Pin for AK4556
     // Built-in AK4556 was reset during Seed Init
-    dsy_gpio_pin codec_reset_pin = seed.GetPin(PIN_AK4556_RESET);
+    Pin codec_reset_pin = seed.GetPin(PIN_AK4556_RESET);
     Ak4556::Init(codec_reset_pin);
 
     // Reinit Audio for _both_ codecs...
@@ -280,15 +280,16 @@ void DaisyPatch::InitEncoder()
 void DaisyPatch::InitGates()
 {
     // Gate Output
-    gate_output.pin  = seed.GetPin(PIN_GATE_OUT);
-    gate_output.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    gate_output.pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&gate_output);
+    GPIO::Config gpio_conf;
+    gpio_conf.pin  = seed.GetPin(PIN_GATE_OUT);
+    gpio_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
+    gpio_conf.pull = GPIO::Config::Pull::NOPULL;
+    gate_output.Init(gpio_conf);
 
     // Gate Inputs
-    dsy_gpio_pin pin;
+    Pin pin;
     pin = seed.GetPin(PIN_GATE_IN_1);
-    gate_input[GATE_IN_1].Init(&pin);
+    gate_input[GATE_IN_1].Init(pin);
     pin = seed.GetPin(PIN_GATE_IN_2);
-    gate_input[GATE_IN_2].Init(&pin);
+    gate_input[GATE_IN_2].Init(pin);
 }

@@ -34,7 +34,7 @@ struct AdcChannelConfig
     /** Initializes a single ADC pin as an ADC. 
     \param pin Pin to init.
      */
-    void InitSingle(dsy_gpio_pin pin);
+    void InitSingle(Pin pin);
 
     /** 
     Initializes a single ADC pin as a Multiplexed ADC.
@@ -48,15 +48,17 @@ struct AdcChannelConfig
     \param mux_2 Third mux pin
     \param adc_pin &
     */
-    void InitMux(dsy_gpio_pin adc_pin,
-                 size_t       mux_channels,
-                 dsy_gpio_pin mux_0,
-                 dsy_gpio_pin mux_1 = {DSY_GPIOX, 0},
-                 dsy_gpio_pin mux_2 = {DSY_GPIOX, 0});
+    void InitMux(Pin    adc_pin,
+                 size_t mux_channels,
+                 Pin    mux_0,
+                 Pin    mux_1 = Pin(),
+                 Pin    mux_2 = Pin());
 
-    dsy_gpio pin_;                   /**< & */
-    dsy_gpio mux_pin_[MUX_SEL_LAST]; /**< & */
-    uint8_t  mux_channels_;          /**< & */
+    GPIO         pin;                           /**< & */
+    GPIO::Config pin_config_;                   /**< & */
+    GPIO         mux_pin_[MUX_SEL_LAST];        /**< & */
+    GPIO::Config mux_pin_config_[MUX_SEL_LAST]; /**< & */
+    uint8_t      mux_channels_;                 /**< & */
 };
 
 /**
