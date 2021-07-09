@@ -42,6 +42,7 @@ hid/parameter \
 hid/rgb_led \
 hid/switch \
 hid/usb \
+hid/usb_midi \
 hid/wavplayer \
 hid/logger \
 per/adc \
