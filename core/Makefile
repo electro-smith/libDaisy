@@ -186,7 +186,7 @@ CPP_STANDARD ?= -std=gnu++14
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
+LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
 
 # libraries
 
