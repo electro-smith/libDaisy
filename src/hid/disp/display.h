@@ -4,6 +4,7 @@
 #include <cmath>
 #include "util/oled_fonts.h"
 #include "daisy_core.h"
+#include "graphics_common.h"
 
 #ifndef deg2rad
 #define deg2rad(deg) ((deg)*3.141592 / 180.0)
@@ -23,6 +24,12 @@ class OneBitGraphicsDisplay
 
     virtual uint16_t Height() const = 0;
     virtual uint16_t Width() const  = 0;
+
+    Rectangle GetBounds() const
+    {
+        return Rectangle(int16_t(Width()), int16_t(Height()));
+    }
+
 
     size_t CurrentX() { return currentX_; };
     size_t CurrentY() { return currentY_; };
@@ -63,6 +70,7 @@ class OneBitGraphicsDisplay
     \param x2 x Coordinate of the second point
     \param y2 y Coordinate of the second point
     \param on on or off
+    \param fill fill the rectangle or draw only the outline
     */
     virtual void DrawRect(uint_fast8_t x1,
                           uint_fast8_t y1,
@@ -71,6 +79,22 @@ class OneBitGraphicsDisplay
                           bool         on,
                           bool         fill = false)
         = 0;
+
+    /**
+    Draws a rectangle.
+    \param rect the rectangle
+    \param on   on or off
+    \param fill fill the rectangle or draw only the outline
+    */
+    void DrawRect(const Rectangle& rect, bool on, bool fill = false)
+    {
+        DrawRect(rect.GetX(),
+                 rect.GetY(),
+                 rect.GetRight(),
+                 rect.GetBottom(),
+                 on,
+                 fill);
+    }
 
     /**
     Draws an arc around the specified coordinate
@@ -122,6 +146,22 @@ class OneBitGraphicsDisplay
     \return &
     */
     virtual char WriteString(const char* str, FontDef font, bool on) = 0;
+
+    /** 
+    Similar to WriteString but justified within a bounding box.
+    \param str          string to be written
+    \param font         font to use
+    \param boundingBox  the bounding box to draw the text in
+    \param alignment    the alignment to use
+    \param on           on or off
+    \return The rectangle that was drawn to
+    */
+    virtual Rectangle WriteStringAligned(const char*    str,
+                                         const FontDef& font,
+                                         Rectangle      boundingBox,
+                                         Alignment      alignment,
+                                         bool           on)
+        = 0;
 
     /** 
     Moves the 'Cursor' position used for WriteChar, and WriteStr to the specified coordinate.
@@ -416,8 +456,35 @@ class OneBitGraphicsDisplayImpl : public OneBitGraphicsDisplay
         // Everything ok
         return *str;
     }
+
+    Rectangle WriteStringAligned(const char*    str,
+                                 const FontDef& font,
+                                 Rectangle      boundingBox,
+                                 Alignment      alignment,
+                                 bool           on) override
+    {
+        const auto alignedRect
+            = GetTextRect(str, font).AlignedWithin(boundingBox, alignment);
+        SetCursor(alignedRect.GetX(), alignedRect.GetY());
+        ((ChildType*)(this))->ChildType::WriteString(str, font, on);
+        return alignedRect;
+    }
+
+  private:
+    uint32_t strlen(const char* string)
+    {
+        uint32_t result = 0;
+        while(*string++ != '\0')
+            result++;
+        return result;
+    }
+
+    Rectangle GetTextRect(const char* text, const FontDef& font)
+    {
+        const auto numChars = strlen(text);
+        return {int16_t(numChars * font.FontWidth), font.FontHeight};
+    }
 };
-/** @} */
 
 } // namespace daisy
 
