@@ -68,32 +68,6 @@ class MidiTest : public ::testing::Test
         return midi.PopEvent();
     }
 
-    //help testing
-    void Test(MidiEvent event,
-              uint8_t evType,
-              uint8_t chkType,
-              uint8_t chn,
-              bool    twoData,
-              uint8_t d0,
-              uint8_t d1)
-    {
-        //test eventtype == expected type
-        EXPECT_EQ(evType, chkType);
-
-        //test channel
-        EXPECT_EQ(event.channel, chn);
-
-        //test data
-        EXPECT_EQ(event.data[0], d0);
-        if(twoData)
-        {
-            EXPECT_EQ(event.data[1], d1);
-        }
-
-        EXPECT_FALSE(midi.HasEvents());
-    }
-
-
     //help test sysex
     void TestSysex(MidiEvent event, uint8_t* msgs, int size)
     {
@@ -499,7 +473,8 @@ TEST_F(MidiTest, sysexEnd)
     EXPECT_FALSE(midi.HasEvents());
 }
 
-// System Real Time Messages
+// ================ System Real Time Messages ================ 
+
 TEST_F(MidiTest, systemRealTime)
 {
     for(uint8_t type = 0; type < 8; type++)
@@ -510,7 +485,8 @@ TEST_F(MidiTest, systemRealTime)
     }
 }
 
-// sysex
+// ================ System Exclusive Messages ================ 
+
 TEST_F(MidiTest, systemExclusive)
 {
     uint8_t msgs[135];
@@ -530,41 +506,61 @@ TEST_F(MidiTest, systemExclusive)
     TestSysex(event, msgs, 128);
 }
 
-//Running Status
+// ================ Running Status ================ 
+
 TEST_F(MidiTest, runningStatus)
 {
     //NoteOn with status bit
     uint8_t msgs[] = {0x90, 0x10, 0x0f};
     MidiEvent event = ParseAndPop(msgs, 3);
-    uint8_t chkType = (uint8_t)NoteOn;
-    Test(event, (uint8_t)event.type, chkType, 0, true, 0x10, 0x0f);
+    NoteOnEvent noEvent = event.AsNoteOn();
+    EXPECT_EQ(event.type, NoteOn);
+    EXPECT_EQ(noEvent.channel, 0);
+    EXPECT_EQ(noEvent.note, 0x10);
+    EXPECT_EQ(noEvent.velocity, 0x0f);
 
     //running status
     for(uint8_t i = 1; i < 20; i++)
     {
         msgs[0] = msgs[1] = i;
         MidiEvent event = ParseAndPop(msgs, 2);
-        Test(event,(uint8_t)event.type, chkType, 0, true, i, i);
+        NoteOnEvent noEvent = event.AsNoteOn();
+        EXPECT_EQ(event.type, NoteOn);
+        EXPECT_EQ(noEvent.channel, 0);
+        EXPECT_EQ(noEvent.note, i);
+        EXPECT_EQ(noEvent.velocity, i);
     }
+
+    EXPECT_FALSE(midi.HasEvents());
 
     //Again, with Control Change, channel 3
     msgs[0] = 0xB3;
     msgs[1] = 0x10;
     msgs[2] = 0x0f;
     event = ParseAndPop(msgs, 3);
-    chkType = (uint8_t)ControlChange;
-    Test(event,(uint8_t)event.type, chkType, 3, true, 0x10, 0x0f);
+    ControlChangeEvent ccEvent = event.AsControlChange();
+    EXPECT_EQ(event.type, ControlChange);
+    EXPECT_EQ(ccEvent.channel, 3);
+    EXPECT_EQ(ccEvent.control_number, 0x10);
+    EXPECT_EQ(ccEvent.value, 0x0f);
 
     //running status
     for(uint8_t i = 0; i < 20; i++)
     {
         msgs[0] = msgs[1] = i;
         MidiEvent event = ParseAndPop(msgs, 2);
-        Test(event,(uint8_t)event.type, chkType, 3, true, i, i);
+        ControlChangeEvent ccEvent = event.AsControlChange();
+        EXPECT_EQ(event.type, ControlChange);
+        EXPECT_EQ(ccEvent.channel, 3);
+        EXPECT_EQ(ccEvent.control_number, i);
+        EXPECT_EQ(ccEvent.value, i);
     }
+
+    EXPECT_FALSE(midi.HasEvents());
 }
 
-//Bad data
+// ================ Bad Data ================ 
+
 TEST_F(MidiTest, badData)
 {
     //multiple msgs with status bytes in a row
