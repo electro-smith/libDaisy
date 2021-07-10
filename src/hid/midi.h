@@ -101,7 +101,7 @@ class MidiHandler
         pstate_                = ParserEmpty;
     }
 
-    /** Starts listening on the selected input mode(s). MidiEvent Queue will begin to fill, and can be checked with */
+    /** Starts listening on the selected input mode(s). MidiEvent Queue will begin to fill, and can be checked with HasEvents() */
     void StartReceive() { transport_.StartRx(); }
 
     /** Start listening */
