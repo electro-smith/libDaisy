@@ -42,6 +42,33 @@ extern "C"
         HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
     }
 
+    void dsy_dma_deinit(void)
+    {
+        // DMA controller clock enable
+        __HAL_RCC_DMA1_CLK_DISABLE();
+        __HAL_RCC_DMA2_CLK_DISABLE();
+
+        // DMA interrupt init
+        // DMA1_Stream0_IRQn interrupt configuration
+        HAL_NVIC_DisableIRQ(DMA1_Stream0_IRQn);
+        // DMA1_Stream1_IRQn interrupt configuration
+        HAL_NVIC_DisableIRQ(DMA1_Stream1_IRQn);
+        // DMA1_Stream2_IRQn interrupt configuration
+        HAL_NVIC_DisableIRQ(DMA1_Stream2_IRQn);
+        // DMA1_Stream3_IRQn interrupt configuration
+        HAL_NVIC_DisableIRQ(DMA1_Stream3_IRQn);
+        // DMA1_Stream4_IRQn interrupt configuration
+        HAL_NVIC_DisableIRQ(DMA1_Stream4_IRQn);
+        // DMA1_Stream5_IRQn interrupt configuration
+        HAL_NVIC_DisableIRQ(DMA1_Stream5_IRQn);
+        // DMA1_Stream6_IRQn interrupt configuration for I2C
+        HAL_NVIC_DisableIRQ(DMA1_Stream6_IRQn);
+        // DMA2_Stream0_IRQn, interrupt configuration for DAC Ch1
+        HAL_NVIC_DisableIRQ(DMA2_Stream0_IRQn);
+        // DMA2_Stream1_IRQn, interrupt configuration for DAC Ch2
+        HAL_NVIC_DisableIRQ(DMA2_Stream1_IRQn);
+    }
+
     void dsy_dma_clear_cache_for_buffer(uint8_t* buffer, size_t size)
     {
         // clear all cache lines (32bytes each) that span the memory section

@@ -46,6 +46,11 @@ class DaisySeed
     void Init(bool boost = false);
 
     /** 
+    Deinitializes all peripherals automatically handled by `Init`.
+    */
+    void Deinit();
+
+    /** 
     Wait some ms before going on.
     \param del Delay time in ms.
     */

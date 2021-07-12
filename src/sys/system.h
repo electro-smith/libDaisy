@@ -69,6 +69,12 @@ class System
      */
     void Init(const Config& config);
 
+    /** Deinitializer
+     ** Deinitializes all modules and peripherals 
+     ** set up with `Init`.
+     */
+    void Deinit();
+
     /** Jumps to the first address of the external flash chip (0x90000000)
      ** If there is no code there, the chip will likely fall through to the while() loop
      ** TODO: Documentation/Loader for using external flash coming soon.
