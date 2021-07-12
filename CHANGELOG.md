@@ -8,6 +8,9 @@
 
 ### Features
 
+* fifo/stack: Add new methods for searching elements
+* fifo/stack: Reduce binary size
+
 ### Bug fixes
 
 * midi: SysEx messages that overflow stop reading data until rx sysexstop. Previously overflowed sysex would cause junk messages.
@@ -16,6 +19,7 @@
 ### Other
 
 * test: add unit testing for midi parser.  
+* tests: add tests for `FIFO`
 * docs: Update TODO comment in `uart.h` to reflect most recent uart update.
 * ci: add filters to the workflows
 
