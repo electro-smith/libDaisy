@@ -24,6 +24,8 @@
 * tests: add tests for `FIFO`
 * docs: Update TODO comment in `uart.h` to reflect most recent uart update.
 * ci: add filters to the workflows
+* ci: add workflow that builds libDaisy with CMake
+* build: small fixes in CMakeLists.txt
 
 ### Migrating
 
