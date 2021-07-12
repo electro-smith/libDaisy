@@ -3,8 +3,8 @@
 ## Unreleased
 
 * Update TODO comment in uart.h to reflect most recent uart update.
-* Add MidiEvent and related data to daisy namespace.
-* Update qspi API from C to C++.
+* BREAKING CHANGE: Add MidiEvent and related data to daisy namespace.
+* BREAKING CHANGE: Update qspi API from C to C++.
 
 ### Migrating QSPI example
 
