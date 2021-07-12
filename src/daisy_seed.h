@@ -139,8 +139,6 @@ class DaisySeed
 
     // While the library is still in heavy development, most of the
     // configuration handles will remain public.
-    dsy_sdram_handle sdram_handle; /**< & */
-    // dsy_qspi_handle  qspi_handle;  /**< & */
     QSPIHandle         qspi;
     QSPIHandle::Config qspi_config;
     AudioHandle        audio_handle; /**< & */
@@ -149,14 +147,19 @@ class DaisySeed
     UsbHandle          usb_handle; /**< & */
     dsy_gpio           led, testpoint;
     System             system;
+    SdramHandle     sdram_handle; /**< & */
+    AudioHandle     audio_handle; /**< & */
+    AdcHandle       adc;          /**< & */
+    DacHandle       dac;
+    UsbHandle       usb_handle; /**< & */
+    dsy_gpio        led, testpoint;
+    System          system;
 
   private:
     /** Local shorthand for debug log destination
     */
     using Log = Logger<LOGGER_INTERNAL>;
 
-
-    void ConfigureSdram();
     void ConfigureQspi();
     void ConfigureAudio();
     void ConfigureAdc();

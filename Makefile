@@ -8,6 +8,7 @@ hid/audio \
 dev/sdram \
 sys/fatfs \
 per/gpio \
+per/qspi \
 per/sai \
 per/sdmmc \
 util/bsp_sd_diskio \
@@ -45,6 +46,7 @@ hid/wavplayer \
 hid/logger \
 per/adc \
 per/dac \
+per/gpio \
 per/i2c \
 per/qspi \
 per/spi \

@@ -91,7 +91,6 @@ const dsy_gpio_pin seedgpio[32] = {
 void DaisySeed::Configure()
 {
     // Configure internal peripherals
-    ConfigureSdram();
     ConfigureQspi();
     //ConfigureDac();
     // Configure the built-in GPIOs.
@@ -111,8 +110,7 @@ void DaisySeed::Init(bool boost)
     system.Init(syscfg);
 
     qspi.Init(qspi_config);
-
-    dsy_sdram_init(&sdram_handle);
+    sdram_handle.Init();
     dsy_gpio_init(&led);
     dsy_gpio_init(&testpoint);
     ConfigureAudio();
@@ -128,7 +126,7 @@ void DaisySeed::Init(bool boost)
 void DaisySeed::Deinit()
 {
     qspi.Deinit();
-    HAL_sdram_deinit();
+    // HAL_sdram_deinit();
 
     system.Deinit();
 }
@@ -214,13 +212,6 @@ void DaisySeed::SetTestPoint(bool state)
 
 // Private Implementation
 
-void DaisySeed::ConfigureSdram()
-{
-    dsy_gpio_pin *pin_group;
-    sdram_handle.state             = DSY_SDRAM_STATE_ENABLE;
-    pin_group                      = sdram_handle.pin_config;
-    pin_group[DSY_SDRAM_PIN_SDNWE] = dsy_pin(DSY_GPIOH, 5);
-}
 void DaisySeed::ConfigureQspi()
 {
     qspi_config.device = QSPIHandle::Config::Device::IS25LP064A;
