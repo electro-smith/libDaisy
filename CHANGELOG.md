@@ -7,8 +7,10 @@
 * move MidiEvent and related data to `daisy` namespace.
 
 ### Features
-
+ 
 * string: allow more integer types in `FixedCapStr::AppendInt()`
+* fifo/stack: Add new methods for searching elements
+* fifo/stack: Reduce binary size
 
 ### Bug fixes
 
@@ -18,7 +20,9 @@
 ### Other
 
 * test: add unit testing for midi parser.  
+* tests: add tests for `FIFO`
 * docs: Update TODO comment in `uart.h` to reflect most recent uart update.
+* ci: add filters to the workflows
 
 ### Migrating
 
