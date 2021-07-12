@@ -122,15 +122,15 @@ void System::Init(const System::Config& config)
 
 void System::Deinit()
 {
-    HAL_DeInit(); // -- this seems to cause a system reset
-
-    // Clocks and MPU don't need to be deinitialized
     dsy_dma_deinit();
+    // tim_.Deinit();
+    HAL_MPU_Disable();
+    // HAL_RCC_DeInit();
     // The I2C global init doesn't actually initialize the periph
     SCB_DisableDCache();
     SCB_DisableICache();
-    // I _believe_ stopping the timer is sufficient
-    tim_.Stop();
+
+    // HAL_DeInit(); // -- this seems to cause a system reset
 }
 
 void System::JumpToQspi()

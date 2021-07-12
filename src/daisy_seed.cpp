@@ -126,7 +126,17 @@ void DaisySeed::Init(bool boost)
 void DaisySeed::Deinit()
 {
     qspi.Deinit();
-    // HAL_sdram_deinit();
+    sdram_handle.Deinit();
+    dsy_gpio_deinit(&led);
+    dsy_gpio_deinit(&testpoint);
+
+    dsy_gpio_pin codec_reset_pin;
+    codec_reset_pin = {DSY_GPIOB, 11};
+    // Perhaps a bit unnecessary, but maybe we'll make
+    // this non-static at some point
+    Ak4556::Deinit(codec_reset_pin);
+
+    audio_handle.Deinit();
 
     system.Deinit();
 }

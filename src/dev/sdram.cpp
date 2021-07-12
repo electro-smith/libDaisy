@@ -56,6 +56,19 @@ SdramHandle::Result SdramHandle::Init()
     return Result::OK;
 }
 
+SdramHandle::Result SdramHandle::Deinit()
+{
+    if(DeviceDeinit() != Result::OK)
+    {
+        return Result::ERR;
+    }
+    if(PeriphDeinit() != Result::OK)
+    {
+        return Result::ERR;
+    }
+    return Result::OK;
+}
+
 SdramHandle::Result SdramHandle::PeriphInit()
 {
     FMC_SDRAM_TimingTypeDef SdramTiming = {0};
@@ -147,6 +160,29 @@ SdramHandle::Result SdramHandle::DeviceInit()
 
     //HAL_SDRAM_ProgramRefreshRate(hsdram, 0x56A - 20);
     HAL_SDRAM_ProgramRefreshRate(&dsy_sdram.hsdram, 0x81A - 20);
+    return Result::OK;
+}
+
+SdramHandle::Result SdramHandle::DeviceDeinit()
+{
+    // I believe this is sufficient to enter power down mode
+    FMC_SDRAM_CommandTypeDef Command;
+    /* Send the module into powerdown mode */
+    Command.CommandMode            = FMC_SDRAM_CMD_POWERDOWN_MODE;
+    Command.CommandTarget          = FMC_SDRAM_CMD_TARGET_BANK1;
+    Command.AutoRefreshNumber      = 1;
+    Command.ModeRegisterDefinition = 0;
+
+    /* Send the command */
+    HAL_SDRAM_SendCommand(&dsy_sdram.hsdram, &Command, 0x1000);
+    return Result::OK;
+}
+
+SdramHandle::Result SdramHandle::PeriphDeinit()
+{
+    if (HAL_SDRAM_DeInit(&dsy_sdram.hsdram) != HAL_OK)
+        return Result::ERR;
+    
     return Result::OK;
 }
 

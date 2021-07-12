@@ -17,6 +17,7 @@ class SaiHandle::Impl
     };
 
     SaiHandle::Result        Init(const SaiHandle::Config& config);
+    SaiHandle::Result        Deinit();
     const SaiHandle::Config& GetConfig() const { return config_; }
 
     SaiHandle::Result StartDmaTransfer(int32_t*                       buffer_rx,
@@ -199,6 +200,24 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
         Error_Handler();
         return Result::ERR;
     }
+
+    return Result::OK;
+}
+
+SaiHandle::Result SaiHandle::Impl::Deinit()
+{
+    // Must have been initialized before deinitialization
+    if (&config_ == nullptr)
+        return Result::ERR;
+
+    DeinitDma(PeripheralBlock::BLOCK_A);
+    DeinitDma(PeripheralBlock::BLOCK_B);
+    DeinitPins();
+
+    if (HAL_SAI_DeInit(&sai_a_handle_) != HAL_OK)
+        return Result::ERR;
+    if (HAL_SAI_DeInit(&sai_b_handle_) != HAL_OK)
+        return Result::ERR;
 
     return Result::OK;
 }
@@ -511,6 +530,10 @@ SaiHandle::Result SaiHandle::Init(const Config& config)
 {
     pimpl_ = &sai_handles[int(config.periph)];
     return pimpl_->Init(config);
+}
+SaiHandle::Result SaiHandle::Deinit()
+{
+    return pimpl_->Deinit();
 }
 const SaiHandle::Config& SaiHandle::GetConfig() const
 {

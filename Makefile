@@ -7,8 +7,6 @@ sys/dma \
 hid/audio \
 dev/sdram \
 sys/fatfs \
-per/gpio \
-per/qspi \
 per/sai \
 per/sdmmc \
 util/bsp_sd_diskio \

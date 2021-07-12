@@ -91,10 +91,13 @@ class SdramHandle
 
     /** Initializes the SDRAM peripheral */
     Result Init();
+    Result Deinit();
 
   private:
     Result PeriphInit();
     Result DeviceInit();
+    Result PeriphDeinit();
+    Result DeviceDeinit();
 };
 #endif
 /** @} */
