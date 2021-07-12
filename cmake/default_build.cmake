@@ -28,6 +28,7 @@ target_link_options(${FIRMWARE_NAME} PUBLIC
     -Wl,--unresolved-symbols=report-all
     -Wl,--warn-common
     -Wl,--warn-section-align
+    -Wl,--print-memory-usage
 )
 
 add_custom_command(TARGET ${FIRMWARE_NAME} POST_BUILD
