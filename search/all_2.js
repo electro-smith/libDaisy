@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['back_81',['Back',['../classdaisy_1_1_f_i_f_o.html#ae625c15e22618cc4fff4ad6b5995a2b2',1,'daisy::FIFO::Back()'],['../classdaisy_1_1_f_i_f_o.html#aa51a460c066b216c773a2d9bfa5b1f79',1,'daisy::FIFO::Back() const']]],
+  ['back_81',['Back',['../classdaisy_1_1_f_i_f_o_base.html#a7945f771b0d1e54fe0072a9a40034e0d',1,'daisy::FIFOBase::Back()'],['../classdaisy_1_1_f_i_f_o_base.html#a2ed4d2e78dc5ecec126f59993be80f62',1,'daisy::FIFOBase::Back() const']]],
   ['bitdepth_82',['BitDepth',['../classdaisy_1_1_dac_handle.html#a0c969b1aa7f8549756e6309b3922e902',1,'daisy::DacHandle::BitDepth()'],['../structdaisy_1_1_sai_handle_1_1_config.html#aafe336101d7c50dd68e2611ccce7c808',1,'daisy::SaiHandle::Config::BitDepth()']]],
   ['bitpersample_83',['BitPerSample',['../structdaisy_1_1_w_a_v___format_type_def.html#ad504435ae2f2f6767f43b131e2ffd9b5',1,'daisy::WAV_FormatTypeDef']]],
   ['bits_5f1_84',['BITS_1',['../classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799ba08670704a035571395ac7232b1bd887b',1,'daisy::SdmmcHandler']]],
