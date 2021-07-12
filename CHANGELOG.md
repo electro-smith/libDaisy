@@ -8,6 +8,8 @@
 
 ### Features
 
+* string: allow more integer types in `FixedCapStr::AppendInt()`
+
 ### Bug fixes
 
 * midi: SysEx messages that overflow stop reading data until rx sysexstop. Previously overflowed sysex would cause junk messages.
