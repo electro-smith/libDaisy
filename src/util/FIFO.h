@@ -1,40 +1,48 @@
 #pragma once
 
 #include <stdint.h>
+#include <stddef.h>
+#include <initializer_list>
 
 namespace daisy
 {
-/** A simple FIFO ring buffer with a fixed size. */
-template <typename T, int kBufferSize>
-class FIFO
+/** Capacity-independent base class for FIFO. Use FIFO instead. */
+template <typename T>
+class FIFOBase
 {
+  protected:
+    FIFOBase(T* buffer, size_t bufferSize)
+    : buffer_(buffer), bufferSize_(bufferSize), bufferIn_(0), bufferOut_(0)
+    {
+    }
+
+    FIFOBase(T* buffer, size_t bufferSize, std::initializer_list<T> valuesToAdd)
+    : buffer_(buffer), bufferSize_(bufferSize), bufferIn_(0), bufferOut_(0)
+    {
+        PushBack(valuesToAdd);
+    }
+
   public:
-    FIFO() : bufferIn_(0), bufferOut_(0) {}
-
-    FIFO(const FIFO<T, kBufferSize>& other) { *this = other; }
-
-    FIFO<T, kBufferSize>& operator=(const FIFO<T, kBufferSize>& other)
+    /** Copies all elements from another FIFO */
+    FIFOBase<T>& operator=(const FIFOBase<T>& other)
     {
         bufferIn_ = bufferOut_ = 0;
         if(!other.IsEmpty())
         {
             int readPtr = other.bufferOut_;
-            while(readPtr != other.bufferIn_)
+            while((readPtr != other.bufferIn_) && (bufferIn_ < bufferSize_))
             {
                 buffer_[bufferIn_++] = other.buffer_[readPtr++];
-                if(readPtr >= kBufferSize)
-                    readPtr -= kBufferSize;
+                if(readPtr >= other.bufferSize_)
+                    readPtr -= other.bufferSize_;
             }
         }
         return *this;
     }
-    ~FIFO() {}
+    ~FIFOBase() {}
 
-    void Clear()
-    {
-        // TODO: overwrite elements with default value T() ?
-        bufferIn_ = bufferOut_ = 0;
-    }
+    /** Removes all elements from the FIFO */
+    void Clear() { bufferIn_ = bufferOut_ = 0; }
 
     /** Adds an element to the back of the buffer, returning true on
         success */
@@ -43,32 +51,49 @@ class FIFO
         if(!IsFull())
         {
             buffer_[bufferIn_++] = elementToAdd;
-            if(bufferIn_ >= kBufferSize)
-                bufferIn_ -= kBufferSize;
+            if(bufferIn_ >= bufferSize_)
+                bufferIn_ -= bufferSize_;
             return true;
         }
         return false;
     }
 
+    /** Adds multiple elements and returns the number of elements that were added */
+    int PushBack(std::initializer_list<T> valuesToAdd)
+    {
+        int numAdded = 0;
+        for(const auto& v : valuesToAdd)
+        {
+            if(IsFull())
+                return numAdded;
+
+            PushBack(v);
+            numAdded++;
+        }
+        return numAdded;
+    }
+
     /** returns a reference to the last element */
-    T Back()
+    T& Back()
     {
         if(IsEmpty())
-            return T();
+            // invalid, but better not pass a temporary T() object as a reference...
+            return buffer_[0];
         int idx = bufferIn_ - 1;
         if(idx < 0)
-            idx += kBufferSize;
+            idx += bufferSize_;
         return buffer_[idx];
     }
 
     /** returns a reference to the last element */
-    const T Back() const
+    const T& Back() const
     {
         if(IsEmpty())
-            return T();
+            // invalid, but better not pass a temporary T() object as a reference...
+            return buffer_[0];
         int idx = bufferIn_ - 1;
         if(idx < 0)
-            idx += kBufferSize;
+            idx += bufferSize_;
         return buffer_[idx];
     }
 
@@ -79,110 +104,226 @@ class FIFO
             return T();
         else
         {
-            int32_t indexToReturn = bufferOut_;
+            const auto result = buffer_[bufferOut_];
             bufferOut_++;
-            if(bufferOut_ >= kBufferSize)
-                bufferOut_ -= kBufferSize;
-            return buffer_[indexToReturn];
+            if(bufferOut_ >= bufferSize_)
+                bufferOut_ -= bufferSize_;
+            return result;
         }
     }
 
     /** returns a copy of the first element */
-    T Front()
+    T& Front()
     {
         if(IsEmpty())
-            return T();
+            // invalid, but better not pass a temporary T() object as a reference...
+            return buffer_[0];
         return buffer_[bufferOut_];
     }
 
     /** returns a reference to the first element */
-    const T Front() const
+    const T& Front() const
     {
         if(IsEmpty())
-            return T();
+            // invalid, but better not pass a temporary T() object as a reference...
+            return buffer_[0];
         return buffer_[bufferOut_];
+    }
+
+    /** Returns true if the buffer contains an element equal to the provided value */
+    bool Contains(const T& element)
+    {
+        auto idx = bufferOut_;
+        while(idx != bufferIn_)
+        {
+            if(buffer_[idx] == element)
+                return true;
+            idx++;
+            if(idx >= bufferSize_)
+                idx -= bufferSize_;
+        }
+        return false;
+    }
+
+    /** Returns the number of elements in the buffer that are equal to the provided value */
+    size_t CountEqualTo(const T& element)
+    {
+        size_t result = 0;
+        size_t idx    = bufferOut_;
+        while(idx != bufferIn_)
+        {
+            if(buffer_[idx] == element)
+                result++;
+            idx++;
+            if(idx >= bufferSize_)
+                idx -= bufferSize_;
+        }
+        return result;
     }
 
     /** returns true, if the buffer is empty */
     bool IsEmpty() const { return bufferIn_ == bufferOut_; }
 
     /** returns true, if the buffer is Full */
-    bool IsFull() const { return GetNumElements() == kBufferSize; }
+    bool IsFull() const { return GetNumElements() == bufferSize_ - 1; }
 
     /** returns the number of elements in the buffer */
-    int32_t GetNumElements() const
+    size_t GetNumElements() const
     {
         int32_t numElements = bufferIn_ - bufferOut_;
         if(numElements < 0)
-            numElements += kBufferSize;
-        return numElements;
+            numElements += bufferSize_;
+        return size_t(numElements);
     }
 
-    /** removes the element "idx" positions behind the first element */
-    void Remove(int idx)
+    /** inserts an element "idx" positions behind the first element and returns true if successful */
+    bool Insert(size_t idx, const T& element)
     {
-        if(idx < GetNumElements()) // TODO: optimize!
+        if(idx > GetNumElements())
+            return false;
+        if(IsFull())
+            return false;
+        if(idx == GetNumElements())
         {
-            int index = bufferOut_ + idx;
-            if(index >= kBufferSize)
-                index -= kBufferSize;
-            int nextIndex = index + 1;
-            if(nextIndex >= kBufferSize)
-                nextIndex -= kBufferSize;
-
-            while(nextIndex != bufferIn_)
-            {
-                buffer_[index] = buffer_[nextIndex];
-                index++;
-                nextIndex++;
-                if(index >= kBufferSize)
-                    index -= kBufferSize;
-                if(nextIndex >= kBufferSize)
-                    nextIndex -= kBufferSize;
-            }
-
-            bufferIn_--;
-            if(bufferIn_ < 0)
-                bufferIn_ += kBufferSize;
+            PushBack(element);
+            return true;
         }
+        // copy last element
+        PushBack(Back());
+        // move remaining elements: n => n+1
+        for(int i = GetNumElements() - 2; i > int(idx); i--)
+            (*this)[i] = (*this)[i - 1];
+        // insert element
+        (*this)[idx] = element;
+        return true;
+    }
+
+    /** removes the element "idx" positions behind the first element 
+     *  and returns true if successful */
+    bool Remove(size_t idx)
+    {
+        if(idx >= GetNumElements())
+            return false;
+
+        size_t index = bufferOut_ + idx;
+        if(index >= bufferSize_)
+            index -= bufferSize_;
+        size_t nextIndex = index + 1;
+        if(nextIndex >= bufferSize_)
+            nextIndex -= bufferSize_;
+
+        while(nextIndex != bufferIn_)
+        {
+            buffer_[index] = buffer_[nextIndex];
+            index++;
+            nextIndex++;
+            if(index >= bufferSize_)
+                index -= bufferSize_;
+            if(nextIndex >= bufferSize_)
+                nextIndex -= bufferSize_;
+        }
+
+        int32_t nextBufferIn = int32_t(bufferIn_) - 1;
+        if(nextBufferIn < 0)
+            nextBufferIn += bufferSize_;
+        bufferIn_ = size_t(nextBufferIn);
+
+        return true;
+    }
+
+    /** removes all elements from the buffer for which
+        (buffer(index) == element) returns true and returns the number of
+        elements that were removed. */
+    size_t RemoveAllEqualTo(const T& element)
+    {
+        size_t numRemoved = 0;
+        int    idx        = GetNumElements() - 1;
+        while(idx >= 0)
+        {
+            if((*this)[idx] == element)
+            {
+                numRemoved++;
+                Remove(idx);
+                // was that the last element?
+                if(idx == int(GetNumElements()) - 1)
+                    idx--;
+            }
+            else
+                idx--;
+        }
+        return numRemoved;
     }
 
     /** returns the element "idx" positions behind the first element */
-    T& operator[](int idx)
+    T& operator[](size_t idx)
     {
-        if(idx >= GetNumElements()) // TODO: optimize!
-        {
-            default_ = T();
-            return default_;
-        }
-        int index = bufferOut_ + idx;
-        if(index >= kBufferSize)
-            index -= kBufferSize;
+        if(idx >= GetNumElements())
+            // invalid, but better not pass a temporary T() object as a reference...
+            return buffer_[0];
+
+        size_t index = bufferOut_ + idx;
+        if(index >= bufferSize_)
+            index -= bufferSize_;
         return buffer_[index];
     }
 
     /** returns the element "idx" positions behind the first element */
-    const T& operator[](int idx) const
+    const T& operator[](size_t idx) const
     {
-        if(idx >= GetNumElements()) // TODO: optimize!
-        {
-            default_ = T();
-            return default_;
-        }
-        int index = bufferOut_ + idx;
-        if(index >= kBufferSize)
-            index -= kBufferSize;
+        if(idx >= GetNumElements())
+            // invalid, but better not pass a temporary T() object as a reference...
+            return buffer_[0];
+
+        size_t index = bufferOut_ + idx;
+        if(index >= bufferSize_)
+            index -= bufferSize_;
         return buffer_[index];
     }
 
     /** returns the total capacity */
-    uint32_t GetCapacity() const { return kBufferSize; }
+    size_t GetCapacity() const { return bufferSize_ - 1; }
 
   private:
-    T        default_;
-    T        buffer_[kBufferSize];
-    uint32_t bufferIn_;
-    uint32_t bufferOut_;
+    FIFOBase(const FIFOBase<T>& other) {} // non copyable
+
+  private:
+    T*           buffer_;
+    const size_t bufferSize_;
+    size_t       bufferIn_;
+    size_t       bufferOut_;
+};
+
+/** A simple FIFO ring buffer with a fixed size. */
+template <typename T, size_t capacity>
+class FIFO : public FIFOBase<T>
+{
+  public:
+    /** Creates an empty FIFO */
+    FIFO() : FIFOBase<T>(buffer_, capacity + 1) {}
+
+    /** Creates a FIFO and adds a list of values*/
+    explicit FIFO(std::initializer_list<T> valuesToAdd)
+    : FIFOBase<T>(buffer_, capacity, valuesToAdd)
+    {
+    }
+
+    /** Creates a FIFO and copies all values from another FIFO */
+    template <size_t otherCapacity>
+    FIFO(const FIFO<T, otherCapacity>& other)
+    {
+        *this = other;
+    }
+
+    /** Copies all values from another FIFO */
+    template <size_t otherCapacity>
+    FIFO<T, capacity>& operator=(const FIFO<T, otherCapacity>& other)
+    {
+        FIFOBase<T>::operator=(other);
+        return *this;
+    }
+
+  private:
+    T buffer_[capacity + 1];
 };
 
 } // namespace daisy
