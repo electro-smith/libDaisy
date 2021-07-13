@@ -3,20 +3,20 @@
 ## Unreleased
 
 ### Breaking Changes
-Gpio: Update from c to cpp.
-Gpio: Create GPIO and Pin classes.
-Gpio: Update hal_map from c to cpp.
+- Gpio: Update from c to cpp.
+- Gpio: Create GPIO and Pin classes.
+- Gpio: Update hal_map from c to cpp.
 
 ### Features
 
 ### Bug Fixes
 ### Other
-Gpio: Update all modules to use GPIO class rather than old dsy_gpio.
+- Gpio: Update all modules to use GPIO class rather than old dsy_gpio.
 
 ### Migrating
 
 #### GPIO:
-```
+``` c++
 // Init
   // OLD:
   mygpio.mode = DSY_GPIO_MODE_INPUT;
