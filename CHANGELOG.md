@@ -13,7 +13,7 @@
 ### Migrating
 
 #### Sdram:
-```
+``` cpp
 //Init
   //Old:
   dsy_gpio_pin *pin_group;
