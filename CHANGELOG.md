@@ -2,12 +2,17 @@
 
 ## Unreleased
 
-Update sdram from c to cpp.
-Creates SdramHandle class. Gets rid of configurable pin and hardcodes it instead.
-Updates CMake and Makefile.
+### Breaking Changes
+- Creates SdramHandle class. Gets rid of configurable pin and hardcodes it instead.
+### Features
+- Update sdram from c to cpp.
+- Updates CMake and Makefile.
 
-### Migrating SDRAM to C++
+### Bug Fixes
 
+### Migrating
+
+#### SDRAM
 ```
 //Init
   //Old:
