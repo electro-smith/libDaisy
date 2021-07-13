@@ -2,13 +2,20 @@
 
 ## Unreleased
 
-Update GPIO from c to cpp.
-Create GPIO and Pin classes.
-Update all modules to use GPIO class rather than old dsy_gpio.
-Update hal_map from c to cpp.
-Update Make and CMake to use new cpp files.
+### Breaking Changes
+Gpio: Update from c to cpp.
+Gpio: Create GPIO and Pin classes.
+Gpio: Update hal_map from c to cpp.
 
-### Migrating GPIO to C++ 
+### Features
+
+### Bug Fixes
+### Other
+Gpio: Update all modules to use GPIO class rather than old dsy_gpio.
+
+### Migrating
+
+#### GPIO:
 ```
 // Init
   // OLD:
