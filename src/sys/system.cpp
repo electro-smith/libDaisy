@@ -123,14 +123,17 @@ void System::Init(const System::Config& config)
 void System::Deinit()
 {
     dsy_dma_deinit();
-    // tim_.Deinit();
     HAL_MPU_Disable();
-    // HAL_RCC_DeInit();
     // The I2C global init doesn't actually initialize the periph
     SCB_DisableDCache();
     SCB_DisableICache();
 
-    // HAL_DeInit(); // -- this seems to cause a system reset
+    tim_.Deinit();
+    HAL_RCC_DeInit();
+
+    // WARNING -- without modifications, this function will
+    // cause the device to reset, preventing program loading
+    HAL_DeInit(); 
 }
 
 void System::JumpToQspi()
