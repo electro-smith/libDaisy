@@ -207,16 +207,15 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
 SaiHandle::Result SaiHandle::Impl::Deinit()
 {
     // Must have been initialized before deinitialization
-    if (&config_ == nullptr)
+    if(&config_ == nullptr)
         return Result::ERR;
 
     DeinitDma(PeripheralBlock::BLOCK_A);
     DeinitDma(PeripheralBlock::BLOCK_B);
-    DeinitPins();
 
-    if (HAL_SAI_DeInit(&sai_a_handle_) != HAL_OK)
+    if(HAL_SAI_DeInit(&sai_a_handle_) != HAL_OK)
         return Result::ERR;
-    if (HAL_SAI_DeInit(&sai_b_handle_) != HAL_OK)
+    if(HAL_SAI_DeInit(&sai_b_handle_) != HAL_OK)
         return Result::ERR;
 
     return Result::OK;

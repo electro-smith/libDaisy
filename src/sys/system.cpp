@@ -124,7 +124,8 @@ void System::Deinit()
 {
     dsy_dma_deinit();
     HAL_MPU_Disable();
-    // The I2C global init doesn't actually initialize the periph
+    // The I2C global init doesn't actually initialize the periph,
+    // so no need to deinitialize
     SCB_DisableDCache();
     SCB_DisableICache();
 
@@ -133,7 +134,7 @@ void System::Deinit()
 
     // WARNING -- without modifications, this function will
     // cause the device to reset, preventing program loading
-    HAL_DeInit(); 
+    HAL_DeInit();
 }
 
 void System::JumpToQspi()

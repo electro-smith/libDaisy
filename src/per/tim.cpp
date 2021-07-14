@@ -112,7 +112,7 @@ TimerHandle::Result TimerHandle::Impl::Init(const TimerHandle::Config& config)
 
 TimerHandle::Result TimerHandle::Impl::Deinit()
 {
-    if (Stop() != TimerHandle::Result::OK)
+    if(Stop() != TimerHandle::Result::OK)
     {
         Error_Handler();
     }

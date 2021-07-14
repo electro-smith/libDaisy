@@ -133,16 +133,16 @@ AudioHandle::Result AudioHandle::Impl::Init(const AudioHandle::Config config,
 AudioHandle::Result AudioHandle::Impl::Deinit()
 {
     Stop();
-    if (sai1_.IsInitialized())
+    if(sai1_.IsInitialized())
     {
-        if (sai1_.Deinit() != SaiHandle::Result::OK)
+        if(sai1_.Deinit() != SaiHandle::Result::OK)
         {
             return Result::ERR;
         }
     }
-    if (sai2_.IsInitialized())
+    if(sai2_.IsInitialized())
     {
-        if (sai2_.Deinit() != SaiHandle::Result::OK)
+        if(sai2_.Deinit() != SaiHandle::Result::OK)
         {
             return Result::ERR;
         }

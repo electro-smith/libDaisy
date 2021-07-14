@@ -113,6 +113,7 @@ void DaisySeed::Init(bool boost)
     sdram_handle.Init();
     dsy_gpio_init(&led);
     dsy_gpio_init(&testpoint);
+
     ConfigureAudio();
 
     callback_rate_ = AudioSampleRate() / AudioBlockSize();
@@ -135,7 +136,6 @@ void DaisySeed::Deinit()
     // Perhaps a bit unnecessary, but maybe we'll make
     // this non-static at some point
     Ak4556::Deinit(codec_reset_pin);
-
     audio_handle.Deinit();
 
     system.Deinit();

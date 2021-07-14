@@ -15,7 +15,7 @@ extern "C"
 // Notes from the Datasheet
 // tCK(3) - Clock Cycle Time (min.) 6ns
 // tAC(3) - Access time from Clk (max.) 5.5ns
-// tRAS	  - Row Active time (min.) 48ns
+// tRAS      - Row Active time (min.) 48ns
 // tRC    - Row Cycle time (min.) 60ns
 
 // 166MHz = 6.024ns
@@ -92,13 +92,13 @@ SdramHandle::Result SdramHandle::PeriphInit()
     SdramTiming.WriteRecoveryTime    = 3;
     SdramTiming.RPDelay              = 0;
     SdramTiming.RCDDelay             = 10; // started at 2
-    //	SdramTiming.LoadToActiveDelay = 16;
-    //	SdramTiming.ExitSelfRefreshDelay = 16;
-    //	SdramTiming.SelfRefreshTime = 16;
-    //	SdramTiming.RowCycleDelay = 16;
-    //	SdramTiming.WriteRecoveryTime = 16;
-    //	SdramTiming.RPDelay = 16;
-    //	SdramTiming.RCDDelay = 16;
+    //    SdramTiming.LoadToActiveDelay = 16;
+    //    SdramTiming.ExitSelfRefreshDelay = 16;
+    //    SdramTiming.SelfRefreshTime = 16;
+    //    SdramTiming.RowCycleDelay = 16;
+    //    SdramTiming.WriteRecoveryTime = 16;
+    //    SdramTiming.RPDelay = 16;
+    //    SdramTiming.RCDDelay = 16;
 
     if(HAL_SDRAM_Init(&dsy_sdram.hsdram, &SdramTiming) != HAL_OK)
     {
@@ -180,9 +180,9 @@ SdramHandle::Result SdramHandle::DeviceDeinit()
 
 SdramHandle::Result SdramHandle::PeriphDeinit()
 {
-    if (HAL_SDRAM_DeInit(&dsy_sdram.hsdram) != HAL_OK)
+    if(HAL_SDRAM_DeInit(&dsy_sdram.hsdram) != HAL_OK)
         return Result::ERR;
-    
+
     return Result::OK;
 }
 
@@ -209,64 +209,64 @@ static void HAL_FMC_MspInit(void)
 
 
     /** FMC GPIO Configuration  
-	PE1   ------> FMC_NBL1
-	PE0   ------> FMC_NBL0
-	PG15   ------> FMC_SDNCAS
-	PD0   ------> FMC_D2
-	PI7   ------> FMC_D29
-	PI6   ------> FMC_D28
-	PI5   ------> FMC_NBL3
-	PD1   ------> FMC_D3
-	PI3   ------> FMC_D27
-	PI2   ------> FMC_D26
-	PI9   ------> FMC_D30
-	PI4   ------> FMC_NBL2
-	PH15   ------> FMC_D23
-	PI1   ------> FMC_D25
-	PF0   ------> FMC_A0
-	PI10   ------> FMC_D31
-	PH13   ------> FMC_D21
-	PH14   ------> FMC_D22
-	PI0   ------> FMC_D24
-	PH2   ------> FMC_SDCKE0
-	PH3   ------> FMC_SDNE0
-	PF2   ------> FMC_A2
-	PF1   ------> FMC_A1
-	PG8   ------> FMC_SDCLK
-	PF3   ------> FMC_A3
-	PF4   ------> FMC_A4
-	PF5   ------> FMC_A5
-	PH12   ------> FMC_D20
-	PG5   ------> FMC_BA1
-	PG4   ------> FMC_BA0
-	PH11   ------> FMC_D19
-	PH10   ------> FMC_D18
-	PD15   ------> FMC_D1
-	PG2   ------> FMC_A12
-	PC0   ------> FMC_SDNWE
-	PG1   ------> FMC_A11
-	PH8   ------> FMC_D16
-	PH9   ------> FMC_D17
-	PD14   ------> FMC_D0
-	PF13   ------> FMC_A7
-	PG0   ------> FMC_A10
-	PE13   ------> FMC_D10
-	PD10   ------> FMC_D15
-	PF12   ------> FMC_A6
-	PF15   ------> FMC_A9
-	PE8   ------> FMC_D5
-	PE9   ------> FMC_D6
-	PE11   ------> FMC_D8
-	PE14   ------> FMC_D11
-	PD9   ------> FMC_D14
-	PD8   ------> FMC_D13
-	PF11   ------> FMC_SDNRAS
-	PF14   ------> FMC_A8
-	PE7   ------> FMC_D4
-	PE10   ------> FMC_D7
-	PE12   ------> FMC_D9
-	PE15   ------> FMC_D12
-	*/
+    PE1   ------> FMC_NBL1
+    PE0   ------> FMC_NBL0
+    PG15   ------> FMC_SDNCAS
+    PD0   ------> FMC_D2
+    PI7   ------> FMC_D29
+    PI6   ------> FMC_D28
+    PI5   ------> FMC_NBL3
+    PD1   ------> FMC_D3
+    PI3   ------> FMC_D27
+    PI2   ------> FMC_D26
+    PI9   ------> FMC_D30
+    PI4   ------> FMC_NBL2
+    PH15   ------> FMC_D23
+    PI1   ------> FMC_D25
+    PF0   ------> FMC_A0
+    PI10   ------> FMC_D31
+    PH13   ------> FMC_D21
+    PH14   ------> FMC_D22
+    PI0   ------> FMC_D24
+    PH2   ------> FMC_SDCKE0
+    PH3   ------> FMC_SDNE0
+    PF2   ------> FMC_A2
+    PF1   ------> FMC_A1
+    PG8   ------> FMC_SDCLK
+    PF3   ------> FMC_A3
+    PF4   ------> FMC_A4
+    PF5   ------> FMC_A5
+    PH12   ------> FMC_D20
+    PG5   ------> FMC_BA1
+    PG4   ------> FMC_BA0
+    PH11   ------> FMC_D19
+    PH10   ------> FMC_D18
+    PD15   ------> FMC_D1
+    PG2   ------> FMC_A12
+    PC0   ------> FMC_SDNWE
+    PG1   ------> FMC_A11
+    PH8   ------> FMC_D16
+    PH9   ------> FMC_D17
+    PD14   ------> FMC_D0
+    PF13   ------> FMC_A7
+    PG0   ------> FMC_A10
+    PE13   ------> FMC_D10
+    PD10   ------> FMC_D15
+    PF12   ------> FMC_A6
+    PF15   ------> FMC_A9
+    PE8   ------> FMC_D5
+    PE9   ------> FMC_D6
+    PE11   ------> FMC_D8
+    PE14   ------> FMC_D11
+    PD9   ------> FMC_D14
+    PD8   ------> FMC_D13
+    PF11   ------> FMC_SDNRAS
+    PF14   ------> FMC_A8
+    PE7   ------> FMC_D4
+    PE10   ------> FMC_D7
+    PE12   ------> FMC_D9
+    PE15   ------> FMC_D12
+    */
     /* GPIO_InitStruct */
     GPIO_InitStruct.Pin = GPIO_PIN_1 | GPIO_PIN_0 | GPIO_PIN_13 | GPIO_PIN_8
                           | GPIO_PIN_9 | GPIO_PIN_11 | GPIO_PIN_14 | GPIO_PIN_7
@@ -342,38 +342,38 @@ static void HAL_FMC_MspInit(void)
     HAL_GPIO_Init(port, &GPIO_InitStruct);
 
     // This pin can change between boards (SDNWE)
-    //	switch(dsy_sdram.board)
-    //	{
-    //	case DSY_SYS_BOARD_DAISY:
-    //		/* GPIO_InitStruct */
-    //		GPIO_InitStruct.Pin = GPIO_PIN_0;
-    //		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    //		GPIO_InitStruct.Pull = GPIO_NOPULL;
-    //		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    //		GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-    //		HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-    //		break;
-    //	case DSY_SYS_BOARD_DAISY_SEED:
-    //		/* GPIO_InitStruct */
-    //		GPIO_InitStruct.Pin = GPIO_PIN_5;
-    //		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    //		GPIO_InitStruct.Pull = GPIO_NOPULL;
-    //		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    //		GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-    //		HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
-    //		break;
-    //	case DSY_SYS_BOARD_AUDIO_BB:
-    //		/* GPIO_InitStruct */
-    //		GPIO_InitStruct.Pin = GPIO_PIN_5;
-    //		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    //		GPIO_InitStruct.Pull = GPIO_NOPULL;
-    //		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    //		GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-    //		HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
-    //		break;
-    //	default:
-    //		break;
-    //	}
+    //    switch(dsy_sdram.board)
+    //    {
+    //    case DSY_SYS_BOARD_DAISY:
+    //        /* GPIO_InitStruct */
+    //        GPIO_InitStruct.Pin = GPIO_PIN_0;
+    //        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    //        GPIO_InitStruct.Pull = GPIO_NOPULL;
+    //        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    //        GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
+    //        HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+    //        break;
+    //    case DSY_SYS_BOARD_DAISY_SEED:
+    //        /* GPIO_InitStruct */
+    //        GPIO_InitStruct.Pin = GPIO_PIN_5;
+    //        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    //        GPIO_InitStruct.Pull = GPIO_NOPULL;
+    //        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    //        GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
+    //        HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
+    //        break;
+    //    case DSY_SYS_BOARD_AUDIO_BB:
+    //        /* GPIO_InitStruct */
+    //        GPIO_InitStruct.Pin = GPIO_PIN_5;
+    //        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    //        GPIO_InitStruct.Pull = GPIO_NOPULL;
+    //        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    //        GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
+    //        HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
+    //        break;
+    //    default:
+    //        break;
+    //    }
 
     /* USER CODE BEGIN FMC_MspInit 1 */
 
@@ -407,64 +407,64 @@ static void HAL_FMC_MspDeInit(void)
     __HAL_RCC_FMC_CLK_DISABLE();
 
     /** FMC GPIO Configuration  
-	PE1   ------> FMC_NBL1
-	PE0   ------> FMC_NBL0
-	PG15   ------> FMC_SDNCAS
-	PD0   ------> FMC_D2
-	PI7   ------> FMC_D29
-	PI6   ------> FMC_D28
-	PI5   ------> FMC_NBL3
-	PD1   ------> FMC_D3
-	PI3   ------> FMC_D27
-	PI2   ------> FMC_D26
-	PI9   ------> FMC_D30
-	PI4   ------> FMC_NBL2
-	PH15   ------> FMC_D23
-	PI1   ------> FMC_D25
-	PF0   ------> FMC_A0
-	PI10   ------> FMC_D31
-	PH13   ------> FMC_D21
-	PH14   ------> FMC_D22
-	PI0   ------> FMC_D24
-	PH2   ------> FMC_SDCKE0
-	PH3   ------> FMC_SDNE0
-	PF2   ------> FMC_A2
-	PF1   ------> FMC_A1
-	PG8   ------> FMC_SDCLK
-	PF3   ------> FMC_A3
-	PF4   ------> FMC_A4
-	PF5   ------> FMC_A5
-	PH12   ------> FMC_D20
-	PG5   ------> FMC_BA1
-	PG4   ------> FMC_BA0
-	PH11   ------> FMC_D19
-	PH10   ------> FMC_D18
-	PD15   ------> FMC_D1
-	PG2   ------> FMC_A12
-	PC0   ------> FMC_SDNWE
-	PG1   ------> FMC_A11
-	PH8   ------> FMC_D16
-	PH9   ------> FMC_D17
-	PD14   ------> FMC_D0
-	PF13   ------> FMC_A7
-	PG0   ------> FMC_A10
-	PE13   ------> FMC_D10
-	PD10   ------> FMC_D15
-	PF12   ------> FMC_A6
-	PF15   ------> FMC_A9
-	PE8   ------> FMC_D5
-	PE9   ------> FMC_D6
-	PE11   ------> FMC_D8
-	PE14   ------> FMC_D11
-	PD9   ------> FMC_D14
-	PD8   ------> FMC_D13
-	PF11   ------> FMC_SDNRAS
-	PF14   ------> FMC_A8
-	PE7   ------> FMC_D4
-	PE10   ------> FMC_D7
-	PE12   ------> FMC_D9
-	PE15   ------> FMC_D12
-	*/
+    PE1   ------> FMC_NBL1
+    PE0   ------> FMC_NBL0
+    PG15   ------> FMC_SDNCAS
+    PD0   ------> FMC_D2
+    PI7   ------> FMC_D29
+    PI6   ------> FMC_D28
+    PI5   ------> FMC_NBL3
+    PD1   ------> FMC_D3
+    PI3   ------> FMC_D27
+    PI2   ------> FMC_D26
+    PI9   ------> FMC_D30
+    PI4   ------> FMC_NBL2
+    PH15   ------> FMC_D23
+    PI1   ------> FMC_D25
+    PF0   ------> FMC_A0
+    PI10   ------> FMC_D31
+    PH13   ------> FMC_D21
+    PH14   ------> FMC_D22
+    PI0   ------> FMC_D24
+    PH2   ------> FMC_SDCKE0
+    PH3   ------> FMC_SDNE0
+    PF2   ------> FMC_A2
+    PF1   ------> FMC_A1
+    PG8   ------> FMC_SDCLK
+    PF3   ------> FMC_A3
+    PF4   ------> FMC_A4
+    PF5   ------> FMC_A5
+    PH12   ------> FMC_D20
+    PG5   ------> FMC_BA1
+    PG4   ------> FMC_BA0
+    PH11   ------> FMC_D19
+    PH10   ------> FMC_D18
+    PD15   ------> FMC_D1
+    PG2   ------> FMC_A12
+    PC0   ------> FMC_SDNWE
+    PG1   ------> FMC_A11
+    PH8   ------> FMC_D16
+    PH9   ------> FMC_D17
+    PD14   ------> FMC_D0
+    PF13   ------> FMC_A7
+    PG0   ------> FMC_A10
+    PE13   ------> FMC_D10
+    PD10   ------> FMC_D15
+    PF12   ------> FMC_A6
+    PF15   ------> FMC_A9
+    PE8   ------> FMC_D5
+    PE9   ------> FMC_D6
+    PE11   ------> FMC_D8
+    PE14   ------> FMC_D11
+    PD9   ------> FMC_D14
+    PD8   ------> FMC_D13
+    PF11   ------> FMC_SDNRAS
+    PF14   ------> FMC_A8
+    PE7   ------> FMC_D4
+    PE10   ------> FMC_D7
+    PE12   ------> FMC_D9
+    PE15   ------> FMC_D12
+    */
 
     HAL_GPIO_DeInit(GPIOE,
                     GPIO_PIN_1 | GPIO_PIN_0 | GPIO_PIN_13 | GPIO_PIN_8
@@ -514,15 +514,15 @@ void HAL_SDRAM_MspDeInit(SDRAM_HandleTypeDef *sdramHandle)
 
 void __attribute__((constructor)) SDRAM_Init()
 {
-    //	extern void *_sisdram_data, *_ssdram_data, *_esdram_data;
-    //	extern void *_ssdram_bss, *_esdram_bss;
+    //    extern void *_sisdram_data, *_ssdram_data, *_esdram_data;
+    //    extern void *_ssdram_bss, *_esdram_bss;
 
-    //	void **pSource, **pDest;
-    //	for (pSource = &_sisdram_data, pDest = &_ssdram_data; pDest != &_esdram_data; pSource++, pDest++)
-    //		*pDest = *pSource;
+    //    void **pSource, **pDest;
+    //    for (pSource = &_sisdram_data, pDest = &_ssdram_data; pDest != &_esdram_data; pSource++, pDest++)
+    //        *pDest = *pSource;
     //
-    //	for (pDest = &_ssdram_bss; pDest != &_esdram_bss; pDest++)
-    //		*pDest = 0;
+    //    for (pDest = &_ssdram_bss; pDest != &_esdram_bss; pDest++)
+    //        *pDest = 0;
 }
 
 //Program the <project name>_QSPIFLASH.bin file to QSPIFLASH manually

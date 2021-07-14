@@ -21,7 +21,7 @@ void Ak4556::Init(dsy_gpio_pin reset_pin)
 void Ak4556::Deinit(dsy_gpio_pin reset_pin)
 {
     dsy_gpio reset;
-    reset.pin  = reset_pin;
+    reset.pin = reset_pin;
     dsy_gpio_deinit(&reset);
 }
 
