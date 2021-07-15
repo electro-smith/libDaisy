@@ -300,6 +300,10 @@ else
 C_DEFS += -DNDEBUG=1 -DRELEASE=1
 endif
 
+ifdef SRAM
+C_DEFS += -DVECT_TAB_SRAM
+endif
+
 CFLAGS += \
 -finline-functions
 
@@ -313,7 +317,7 @@ C_STANDARD = -std=gnu11
 CPP_STANDARD += -std=gnu++14
 
 # default action: build all
-all: $(BUILD_DIR)/$(TARGET).a 
+all: $(BUILD_DIR)/$(TARGET).a
 
 #######################################
 # build the application

@@ -5,6 +5,7 @@ CHIPSET ?= stm32h7x
 TARGET_BIN=$(TARGET).bin
 TARGET_ELF=$(TARGET).elf
 FLASH_ADDRESS ?= 0x08000000
+SRAM_ADDRESS  ?= 0x90040000
 
 # If you have the arm-none-eabi- toolchain located in a particular place, but not installed for the entire system, add the path here:
 # GCC_PATH=
@@ -277,6 +278,9 @@ program:
 
 program-dfu:
 	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
+
+program-sram:
+	dfu-util -a 0 -s $(SRAM_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
 
 #######################################
 # dependencies
