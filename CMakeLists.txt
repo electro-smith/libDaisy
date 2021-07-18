@@ -1,3 +1,4 @@
+cmake_policy(SET CMP0048 NEW)
 project (libdaisy VERSION 0.1.0)
 cmake_minimum_required(VERSION 3.20)
 
@@ -41,7 +42,6 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/hid/encoder.cpp
     ${MODULE_DIR}/hid/gatein.cpp
     ${MODULE_DIR}/hid/led.cpp
-    ${MODULE_DIR}/hid/midi.cpp
     ${MODULE_DIR}/hid/parameter.cpp
     ${MODULE_DIR}/hid/rgb_led.cpp
     ${MODULE_DIR}/hid/switch.cpp
