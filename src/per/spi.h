@@ -149,15 +149,17 @@ class SpiHandle
                        CallbackFunctionPtr callback,
                        void*               callback_context);
 
-    /** State of DMA transmit
-    \return 1 when finished, 0 otherwise
+    /** DMA-based receive 
+    \param *buff input buffer
+    \param size  buffer size
+    \param callback     A callback to execute when the transfer finishes, or NULL.
+    \param callback_context A pointer that will be passed back to you in the callback.    
+    \return Whether the receive was successful or not
     */
-    uint8_t GetDmaFlag();
-
-    /** Update DMA transmit flag
-    \param flag flag to set
-    */
-    void SetDmaFlag(uint8_t flag);
+    Result DmaReceive(uint8_t*                       buff,
+                      size_t                         size,
+                      SpiHandle::CallbackFunctionPtr callback,
+                      void*                          callback_context);
 
     /** \return the result of HAL_SPI_GetError() to the user. */
     int CheckError();
@@ -168,6 +170,11 @@ class SpiHandle
     Impl* pimpl_;
 };
 
+extern "C"
+{
+    /** internal. Used for global init. */
+    void dsy_spi_global_init();
+};
 
 /** @} */
 } // namespace daisy
