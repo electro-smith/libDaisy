@@ -110,7 +110,7 @@ void DaisySeed::Init(bool boost)
     boost ? syscfg.Boost() : syscfg.Defaults();
     system.Init(syscfg);
 
-    dsy_sdram_init(&sdram_handle);
+    // dsy_sdram_init(&sdram_handle);
     dsy_qspi_init(&qspi_handle);
     dsy_gpio_init(&led);
     dsy_gpio_init(&testpoint);
