@@ -3,8 +3,28 @@ name: Style
 on: 
   push:
     branches: [ master ]
+    paths:
+    - '.github/workflows/**'
+    - 'ci/**'
+    - 'cmake/**'
+    - 'core/**'
+    - 'Drivers/**'
+    - 'src/**'
+    - 'tests/**'
+    - 'CMakeLists.txt'
+    - 'Makefile'
   pull_request:
     branches: [ master ]
+    paths:
+    - '.github/workflows/**'
+    - 'ci/**'
+    - 'cmake/**'
+    - 'core/**'
+    - 'Drivers/**'
+    - 'src/**'
+    - 'tests/**'
+    - 'CMakeLists.txt'
+    - 'Makefile'
 
 jobs:
   build:
