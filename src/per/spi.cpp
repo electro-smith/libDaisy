@@ -371,7 +371,7 @@ void SpiHandle::Impl::DmaTransferFinished(SPI_HandleTypeDef* hspi,
             }
             else
             {
-                result = spi_handles[per].DmaReceive(
+                result = spi_handles[per].StartDmaRx(
                     queued_dma_transfers_[per].data,
                     queued_dma_transfers_[per].size,
                     queued_dma_transfers_[per].callback,
