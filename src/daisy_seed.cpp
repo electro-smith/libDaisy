@@ -110,7 +110,7 @@ void DaisySeed::Init(bool boost)
     system.Init(syscfg);
 
     qspi.Init(qspi_config);
-    sdram_handle.Init();
+    // sdram_handle.Init();
     dsy_gpio_init(&led);
     dsy_gpio_init(&testpoint);
 

@@ -30,7 +30,7 @@ class UiEventQueue
     struct __attribute__((packed)) Event
     {
         /** The type of event */
-        enum class EventType
+        enum class EventType : uint8_t
         {
             /** An invalid event. Returned to indicate that no events are left in the queue. */
             invalid,
@@ -49,7 +49,7 @@ class UiEventQueue
         };
 
         /** Used to indicate if a control is currently being used. */
-        enum class ActivityType
+        enum class ActivityType : uint8_t
         {
             /** The control is not in use at the moment. */
             inactive,
@@ -58,8 +58,7 @@ class UiEventQueue
         };
 
         /** The type of event that this Event object represents. */
-        EventType
-            type : 16; // default size could be more than 16 bits - not required
+        EventType type;
 
         union
         {
@@ -92,7 +91,7 @@ class UiEventQueue
                 /** The unique ID of the encoder that is affected. */
                 uint16_t id;
                 /** The new activity type. */
-                ActivityType newActivityType : 1;
+                ActivityType newActivityType;
             } asEncoderActivityChanged;
             struct __attribute__((packed))
             {
@@ -106,7 +105,7 @@ class UiEventQueue
                 /** The unique ID of the pot that is affected. */
                 uint16_t id;
                 /** The new activity type. */
-                ActivityType newActivityType : 1;
+                ActivityType newActivityType;
             } asPotActivityChanged;
         };
     };
