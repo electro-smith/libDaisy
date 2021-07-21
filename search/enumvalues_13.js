@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['white_2042',['WHITE',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a83ee753e5244371af742fc0f6a831826',1,'daisy::Color']]]
+  ['white_2049',['WHITE',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a83ee753e5244371af742fc0f6a831826',1,'daisy::Color']]]
 ];
