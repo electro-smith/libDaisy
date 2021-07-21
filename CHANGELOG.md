@@ -11,6 +11,7 @@
 * string: allow more integer types in `FixedCapStr::AppendInt()`
 * fifo/stack: Add new methods for searching elements
 * fifo/stack: Reduce binary size
+* RgbLed: Added individual setters for each color
 
 ### Bug fixes
 
