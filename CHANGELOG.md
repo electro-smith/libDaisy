@@ -1,5 +1,19 @@
 # libDaisy Changelog
 
+## Unreleased
+
+### Breaking Changes
+
+### Features
+
+* adc: added initialization mappings for pins ADC1_INP12 (PC2) and ADC1_INP13 (PC3) (Not accessible on Daisy Seed)
+
+### Bug fixes
+
+### Other
+
+### Migrating
+
 ## v1.0.0
 
 ### Breaking Changes
