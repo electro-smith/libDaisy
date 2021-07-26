@@ -27,7 +27,7 @@ on:
     - 'Makefile'
 
 jobs:
-  build:
+  clang-format:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
