@@ -23,14 +23,17 @@ typedef struct
 void SdramInit();
 void PeriphInit();
 void DeviceInit();
+void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t definition);
+void PeriphInitSimple();
+void DeviceInitSimple();
 void SdramMpuInit();
 
 #define TICKS_PER_US 64e6f * 1e-6f
 
 void SdramInit()
 {
-  PeriphInit();
-  DeviceInit();
+  PeriphInitSimple();
+  DeviceInitSimple();
   SdramMpuInit();
 }
 
@@ -79,7 +82,9 @@ static dsy_sdram_t dsy_sdram;
 
 void PeriphInit()
 {
-  FMC_SDRAM_TimingTypeDef SdramTiming = {0};
+//   FMC_SDRAM_TimingTypeDef SdramTiming = {0};
+  FMC_SDRAM_TimingTypeDef SdramTiming;
+
   dsy_sdram.hsdram.Instance           = FMC_SDRAM_DEVICE;
   // Init
   dsy_sdram.hsdram.Init.SDBank             = FMC_SDRAM_BANK1;
@@ -115,6 +120,131 @@ void PeriphInit()
       // return Result::ERR;
   }
   // return Result::OK;
+}
+
+/* --- SDCR Register ---*/
+/* SDCR register clear mask */
+#define SDCR_CLEAR_MASK   ((uint32_t)(FMC_SDCRx_NC    | FMC_SDCRx_NR     | \
+                                      FMC_SDCRx_MWID  | FMC_SDCRx_NB     | \
+                                      FMC_SDCRx_CAS   | FMC_SDCRx_WP     | \
+                                      FMC_SDCRx_SDCLK | FMC_SDCRx_RBURST | \
+                                      FMC_SDCRx_RPIPE))
+
+/* --- SDTR Register ---*/
+/* SDTR register clear mask */
+#define SDTR_CLEAR_MASK   ((uint32_t)(FMC_SDTRx_TMRD  | FMC_SDTRx_TXSR   | \
+                                      FMC_SDTRx_TRAS  | FMC_SDTRx_TRC    | \
+                                      FMC_SDTRx_TWR   | FMC_SDTRx_TRP    | \
+                                      FMC_SDTRx_TRCD))
+
+void PeriphInitSimple()
+{
+    HAL_SDRAM_MspInit(NULL); // the function doesn't use it anyway
+
+    // just for the best clarity:
+    // Init
+    // const uint32_t SDBank             = FMC_SDRAM_BANK1;
+    const uint32_t ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_9;
+    const uint32_t RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_13;
+    const uint32_t MemoryDataWidth    = FMC_SDRAM_MEM_BUS_WIDTH_32;
+    const uint32_t InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
+    const uint32_t CASLatency         = FMC_SDRAM_CAS_LATENCY_3;
+    const uint32_t WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
+    const uint32_t SDClockPeriod      = FMC_SDRAM_CLOCK_PERIOD_2;
+    const uint32_t ReadBurst          = FMC_SDRAM_RBURST_ENABLE;
+    const uint32_t ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_0;
+
+    MODIFY_REG (
+        FMC_SDRAM_DEVICE->SDCR[FMC_SDRAM_BANK1],
+        SDCR_CLEAR_MASK,
+        (
+            ColumnBitsNumber   |
+            RowBitsNumber      |
+            MemoryDataWidth    |
+            InternalBankNumber |
+            CASLatency         |
+            WriteProtection    |
+            SDClockPeriod      |
+            ReadBurst          |
+            ReadPipeDelay
+        )
+    );
+
+    const uint32_t LoadToActiveDelay    = 2;
+    const uint32_t ExitSelfRefreshDelay = 7;
+    const uint32_t SelfRefreshTime      = 4;
+    const uint32_t RowCycleDelay        = 8; // started at 7
+    const uint32_t WriteRecoveryTime    = 3;
+    const uint32_t RPDelay              = 0;
+    const uint32_t RCDDelay             = 10; // started at 2
+
+
+    MODIFY_REG(
+        FMC_SDRAM_DEVICE->SDTR[FMC_SDRAM_BANK1],
+        SDTR_CLEAR_MASK,
+        (
+            ((LoadToActiveDelay - 1U)    << 0U)                 |
+            ((ExitSelfRefreshDelay - 1U) << FMC_SDTRx_TXSR_Pos) |
+            ((SelfRefreshTime - 1U)      << FMC_SDTRx_TRAS_Pos) |
+            ((RowCycleDelay - 1U)        << FMC_SDTRx_TRC_Pos)  |
+            ((WriteRecoveryTime - 1U)    << FMC_SDTRx_TWR_Pos)  |
+            ((RPDelay - 1U)              << FMC_SDTRx_TRP_Pos)  |
+            ((RCDDelay - 1U)             << FMC_SDTRx_TRCD_Pos)
+        )
+    );
+
+    __FMC_ENABLE();
+}
+
+void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t definition)
+{
+    SET_BIT (
+        FMC_SDRAM_DEVICE->SDCMR, 
+        (
+            mode                                   |
+            target                                 |
+            ((refresh - 1U) << FMC_SDCMR_NRFS_Pos) |
+            (definition   << FMC_SDCMR_MRD_Pos)
+        )
+    );
+}
+
+void DeviceInitSimple()
+{
+    /* Step 3:  Configure a clock configuration enable command */
+    SendCommand(FMC_SDRAM_CMD_CLK_ENABLE, FMC_SDRAM_CMD_TARGET_BANK1, 1, 0);
+
+    /* Step 4: Insert 100 ms delay */
+    // HAL_Delay(100);
+    // DelayProcessMs(100);
+
+    // TODO -- double check that this takes the appropriate amount of time (seems a bit long)
+    // Volatile to (hopefully) ensure no optimization occurs. This may need to be accompanied with
+    // pragmas and attributes to be compiler cross-compatible
+
+    // The startup clock is 64MHz, and this loop
+    // typically compiles to 6 instructions, so for
+    // a delay of ~100 ms...
+    for (int i = 0; i < (int) (64e5 / 6); i++);
+
+    /* Step 5: Configure a PALL (precharge all) command */
+    SendCommand(FMC_SDRAM_CMD_PALL, FMC_SDRAM_CMD_TARGET_BANK1, 1, 0);
+
+    /* Step 6 : Configure a Auto-Refresh command */
+    SendCommand(FMC_SDRAM_CMD_AUTOREFRESH_MODE, FMC_SDRAM_CMD_TARGET_BANK1, 4, 0);
+
+    /* Step 7: Program the external memory mode register */
+    __IO uint32_t tmpmrd =  (uint32_t) SDRAM_MODEREG_BURST_LENGTH_4 | 
+                            SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL     | 
+                            SDRAM_MODEREG_CAS_LATENCY_3             | 
+                            SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;
+    //SDRAM_MODEREG_OPERATING_MODE_STANDARD | // Used in example, but can't find reference except for "Test Mode"
+
+    SendCommand(FMC_SDRAM_CMD_LOAD_MODE, FMC_SDRAM_CMD_TARGET_BANK1, 1, tmpmrd);
+    
+    /* Set the refresh rate in command register */
+    const uint32_t RefreshRate = 0x81A - 20;
+    MODIFY_REG(FMC_SDRAM_DEVICE->SDRTR, FMC_SDRTR_COUNT, (RefreshRate << FMC_SDRTR_COUNT_Pos));
 }
 
 void DeviceInit()
@@ -185,7 +315,8 @@ static uint32_t FMC_Initialized = 0;
 
 static void HAL_FMC_MspInit(void)
 {
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    GPIO_InitTypeDef GPIO_InitStruct;
+
     if(FMC_Initialized)
     {
         return;
