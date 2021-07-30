@@ -109,7 +109,7 @@ void DaisySeed::Init(bool boost)
     boost ? syscfg.Boost() : syscfg.Defaults();
     system.Init(syscfg);
 
-#ifndef BOOTLOADED
+#ifndef BOOT_VOLATILE
     // TODO -- get qspi working for a bootloaded application
     qspi.Init(qspi_config);
     // sdram_handle.Init();

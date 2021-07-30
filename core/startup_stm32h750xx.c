@@ -1548,7 +1548,7 @@ void __attribute__((naked, noreturn)) Reset_Handler()
 	for (pDest = &_sbss; pDest != &_ebss; pDest++)
 		*pDest = 0;
 
-	#ifndef BOOTLOADED
+	#ifndef BOOT_VOLATILE
 	SystemInit();
 	SdramInit();
 	#endif

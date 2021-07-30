@@ -267,7 +267,9 @@ C_DEFS =  \
 -Dflash_layout \
 -DHSE_VALUE=16000000 \
 -DUSE_HAL_DRIVER \
--DUSE_FULL_LL_DRIVER 
+-DUSE_FULL_LL_DRIVER \
+-DDATA_IN_D2_SRAM 
+# ^ added for easy startup access
 
 
 C_INCLUDES = \
@@ -301,10 +303,9 @@ else
 C_DEFS += -DNDEBUG=1 -DRELEASE=1
 endif
 
-ifdef BOOTLOADED
+ifdef VOLATILE
 C_DEFS += -DVECT_TAB_SRAM \
--DDATA_IN_D2_SRAM \
--DBOOTLOADED
+-DBOOT_VOLATILE
 endif
 
 CFLAGS += \

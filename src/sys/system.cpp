@@ -100,7 +100,7 @@ void System::Init(const System::Config& config)
 {
     cfg_ = config;
     HAL_Init();
-#ifndef BOOTLOADED
+#ifndef BOOT_VOLATILE
     ConfigureClocks();
     ConfigureMpu();
 #endif
