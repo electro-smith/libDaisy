@@ -109,12 +109,13 @@ void DaisySeed::Init(bool boost)
     boost ? syscfg.Boost() : syscfg.Defaults();
     system.Init(syscfg);
 
-    #ifndef BOOTLOADED
-    qspi.Init(qspi_config); // TODO -- get this working for a bootloaded application
+#ifndef BOOTLOADED
+    // TODO -- get qspi working for a bootloaded application
+    qspi.Init(qspi_config);
     // sdram_handle.Init();
     dsy_gpio_init(&led);
     dsy_gpio_init(&testpoint);
-    #endif
+#endif
 
     ConfigureAudio();
 

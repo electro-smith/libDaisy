@@ -142,12 +142,12 @@ class DaisySeed
     QSPIHandle         qspi;
     QSPIHandle::Config qspi_config;
     // SdramHandle        sdram_handle; /**< & */
-    AudioHandle        audio_handle; /**< & */
-    AdcHandle          adc;          /**< & */
-    DacHandle          dac;
-    UsbHandle          usb_handle; /**< & */
-    dsy_gpio           led, testpoint;
-    System             system;
+    AudioHandle audio_handle; /**< & */
+    AdcHandle   adc;          /**< & */
+    DacHandle   dac;
+    UsbHandle   usb_handle; /**< & */
+    dsy_gpio    led, testpoint;
+    System      system;
 
   private:
     /** Local shorthand for debug log destination
