@@ -109,10 +109,12 @@ void DaisySeed::Init(bool boost)
     boost ? syscfg.Boost() : syscfg.Defaults();
     system.Init(syscfg);
 
-    qspi.Init(qspi_config);
+    #ifndef BOOTLOADED
+    qspi.Init(qspi_config); // TODO -- get this working for a bootloaded application
     // sdram_handle.Init();
     dsy_gpio_init(&led);
     dsy_gpio_init(&testpoint);
+    #endif
 
     ConfigureAudio();
 
@@ -126,17 +128,20 @@ void DaisySeed::Init(bool boost)
 
 void DaisySeed::Deinit()
 {
+    // This is intended to be used by the bootloader, but
+    // we don't want to reinitialize pretty much anything in the
+    // target application, so...
     qspi.Deinit();
-    sdram_handle.Deinit();
-    dsy_gpio_deinit(&led);
-    dsy_gpio_deinit(&testpoint);
+    // sdram_handle.Deinit();
+    // dsy_gpio_deinit(&led);
+    // dsy_gpio_deinit(&testpoint);
 
-    dsy_gpio_pin codec_reset_pin;
-    codec_reset_pin = {DSY_GPIOB, 11};
-    // Perhaps a bit unnecessary, but maybe we'll make
-    // this non-static at some point
-    Ak4556::Deinit(codec_reset_pin);
-    audio_handle.Deinit();
+    // dsy_gpio_pin codec_reset_pin;
+    // codec_reset_pin = {DSY_GPIOB, 11};
+    // // Perhaps a bit unnecessary, but maybe we'll make
+    // // this non-static at some point
+    // Ak4556::Deinit(codec_reset_pin);
+    // audio_handle.Deinit();
 
     system.Deinit();
 }

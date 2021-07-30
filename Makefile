@@ -2,10 +2,11 @@ TARGET = libdaisy
 
 MODULE_DIR=src
 
+#dev/sdram -- this will soon be removed in favor of startup initialization
+
 C_MODULES = \
 sys/dma \
 hid/audio \
-dev/sdram \
 sys/fatfs \
 per/sai \
 per/sdmmc \
@@ -300,8 +301,10 @@ else
 C_DEFS += -DNDEBUG=1 -DRELEASE=1
 endif
 
-ifdef SRAM
-C_DEFS += -DVECT_TAB_SRAM
+ifdef BOOTLOADED
+C_DEFS += -DVECT_TAB_SRAM \
+-DDATA_IN_D2_SRAM \
+-DBOOTLOADED
 endif
 
 CFLAGS += \

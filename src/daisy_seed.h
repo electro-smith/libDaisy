@@ -141,7 +141,7 @@ class DaisySeed
     // configuration handles will remain public.
     QSPIHandle         qspi;
     QSPIHandle::Config qspi_config;
-    SdramHandle        sdram_handle; /**< & */
+    // SdramHandle        sdram_handle; /**< & */
     AudioHandle        audio_handle; /**< & */
     AdcHandle          adc;          /**< & */
     DacHandle          dac;

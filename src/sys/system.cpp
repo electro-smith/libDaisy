@@ -100,8 +100,10 @@ void System::Init(const System::Config& config)
 {
     cfg_ = config;
     HAL_Init();
-    ConfigureClocks();
+    #ifndef BOOTLOADED
+    ConfigureClocks(); 
     ConfigureMpu();
+    #endif
     dsy_dma_init();
     dsy_i2c_global_init();
 
@@ -123,18 +125,18 @@ void System::Init(const System::Config& config)
 void System::Deinit()
 {
     dsy_dma_deinit();
-    HAL_MPU_Disable();
+    // HAL_MPU_Disable();
     // The I2C global init doesn't actually initialize the periph,
     // so no need to deinitialize
     SCB_DisableDCache();
     SCB_DisableICache();
 
     tim_.Deinit();
-    HAL_RCC_DeInit();
+    // HAL_RCC_DeInit();
 
     // WARNING -- without modifications, this function will
     // cause the device to reset, preventing program loading
-    HAL_DeInit();
+    // HAL_DeInit();
 }
 
 void System::JumpToQspi()

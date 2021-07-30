@@ -1548,10 +1548,12 @@ void __attribute__((naked, noreturn)) Reset_Handler()
 	for (pDest = &_sbss; pDest != &_ebss; pDest++)
 		*pDest = 0;
 
+	#ifndef BOOTLOADED
 	SystemInit();
+	SdramInit();
+	#endif
 	__libc_init_array();
 
-	SdramInit();
 
 	(void)main();
 	for (;;) ;

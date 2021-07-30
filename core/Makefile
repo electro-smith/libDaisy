@@ -116,7 +116,12 @@ C_DEFS +=  \
 -DCORE_CM7  \
 -DSTM32H750IB \
 -DARM_MATH_CM7 \
--DUSE_FULL_LL_DRIVER 
+-DUSE_FULL_LL_DRIVER
+
+# for debugging bootloaded applications
+ifdef DEBUG
+C_DEFS += -DDEBUG
+endif
 
 # AS includes
 AS_INCLUDES =

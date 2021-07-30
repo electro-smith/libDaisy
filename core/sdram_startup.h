@@ -4,13 +4,9 @@
 
 #define SDRAM_MODEREG_BURST_LENGTH_2 ((1 << 0))
 #define SDRAM_MODEREG_BURST_LENGTH_4 ((1 << 1))
-
 #define SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL ((0 << 3))
-
 #define SDRAM_MODEREG_CAS_LATENCY_3 ((1 << 4) | (1 << 5))
-
 #define SDRAM_MODEREG_OPERATING_MODE_STANDARD ()
-
 #define SDRAM_MODEREG_WRITEBURST_MODE_SINGLE ((1 << 9))
 #define SDRAM_MODEREG_WRITEBURST_MODE_PROG_BURST ((0 << 9))
 
@@ -23,104 +19,17 @@ typedef struct
 void SdramInit();
 void PeriphInit();
 void DeviceInit();
-void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t definition);
-void PeriphInitSimple();
-void DeviceInitSimple();
+volatile void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t definition);
 void SdramMpuInit();
-
-#define TICKS_PER_US 64e6f * 1e-6f
 
 void SdramInit()
 {
-  PeriphInitSimple();
-  DeviceInitSimple();
+  PeriphInit();
+  DeviceInit();
   SdramMpuInit();
 }
 
 static dsy_sdram_t dsy_sdram;
-
-// These functions rely on the DWT unit, which
-// seems unreliable without a debugger attached
-// void EnableProcessTick()
-// {
-//     DWT->CTRL = 1;
-// }
-
-// float GetProcessTickUs()
-// {
-//     return (float) DWT->CYCCNT / TICKS_PER_US;
-// }
-
-// float GetProcessTickMs()
-// {
-//     return GetProcessTickUs() / 1e3f;
-// }
-
-// void DelayProcessUs(float microseconds)
-// {
-//   DWT->CTRL = 1; // ensure enable CYCCNT bit
-
-//   uint32_t start = DWT->CYCCNT;
-
-//   // This assumes we're using the HSI oscillator, which
-//   // for the STM32H750 is 64MHz
-
-//   uint32_t num_ticks = microseconds * TICKS_PER_US;
-
-//   while (DWT->CYCCNT - start < num_ticks);
-
-//   DWT->CYCCNT = 0; 
-
-// //   // Disabling the counter after its use
-// //   DWT->CTRL = 0;
-// }
-
-// void DelayProcessMs(float milliseconds)
-// {
-//     DelayProcessUs(milliseconds * 1e3f);
-// }
-
-void PeriphInit()
-{
-//   FMC_SDRAM_TimingTypeDef SdramTiming = {0};
-  FMC_SDRAM_TimingTypeDef SdramTiming;
-
-  dsy_sdram.hsdram.Instance           = FMC_SDRAM_DEVICE;
-  // Init
-  dsy_sdram.hsdram.Init.SDBank             = FMC_SDRAM_BANK1;
-  dsy_sdram.hsdram.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_9;
-  dsy_sdram.hsdram.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_13;
-  dsy_sdram.hsdram.Init.MemoryDataWidth    = FMC_SDRAM_MEM_BUS_WIDTH_32;
-  dsy_sdram.hsdram.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
-  dsy_sdram.hsdram.Init.CASLatency         = FMC_SDRAM_CAS_LATENCY_3;
-  dsy_sdram.hsdram.Init.WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
-  dsy_sdram.hsdram.Init.SDClockPeriod      = FMC_SDRAM_CLOCK_PERIOD_2;
-  dsy_sdram.hsdram.Init.ReadBurst          = FMC_SDRAM_RBURST_ENABLE;
-  dsy_sdram.hsdram.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_0;
-  /* SdramTiming */
-  SdramTiming.LoadToActiveDelay    = 2;
-  SdramTiming.ExitSelfRefreshDelay = 7;
-  SdramTiming.SelfRefreshTime      = 4;
-  SdramTiming.RowCycleDelay        = 8; // started at 7
-  SdramTiming.WriteRecoveryTime    = 3;
-  SdramTiming.RPDelay              = 0;
-  SdramTiming.RCDDelay             = 10; // started at 2
-  //	SdramTiming.LoadToActiveDelay = 16;
-  //	SdramTiming.ExitSelfRefreshDelay = 16;
-  //	SdramTiming.SelfRefreshTime = 16;
-  //	SdramTiming.RowCycleDelay = 16;
-  //	SdramTiming.WriteRecoveryTime = 16;
-  //	SdramTiming.RPDelay = 16;
-  //	SdramTiming.RCDDelay = 16;
-
-  // TODO -- add some kind of error indication
-  if(HAL_SDRAM_Init(&dsy_sdram.hsdram, &SdramTiming) != HAL_OK)
-  {
-      //Error_Handler();
-      // return Result::ERR;
-  }
-  // return Result::OK;
-}
 
 /* --- SDCR Register ---*/
 /* SDCR register clear mask */
@@ -137,8 +46,10 @@ void PeriphInit()
                                       FMC_SDTRx_TWR   | FMC_SDTRx_TRP    | \
                                       FMC_SDTRx_TRCD))
 
-void PeriphInitSimple()
+void PeriphInit()
 {
+    // __FMC_DISABLE();
+
     HAL_SDRAM_MspInit(NULL); // the function doesn't use it anyway
 
     // just for the best clarity:
@@ -175,7 +86,7 @@ void PeriphInitSimple()
     const uint32_t SelfRefreshTime      = 4;
     const uint32_t RowCycleDelay        = 8; // started at 7
     const uint32_t WriteRecoveryTime    = 3;
-    const uint32_t RPDelay              = 0;
+    const uint32_t RPDelay              = 1;
     const uint32_t RCDDelay             = 10; // started at 2
 
 
@@ -196,8 +107,9 @@ void PeriphInitSimple()
     __FMC_ENABLE();
 }
 
-void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t definition)
+volatile void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t definition)
 {
+    // Shouldn't this really just be writing to the register, not ORing?
     SET_BIT (
         FMC_SDRAM_DEVICE->SDCMR, 
         (
@@ -209,23 +121,19 @@ void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t defi
     );
 }
 
-void DeviceInitSimple()
+void DeviceInit()
 {
     /* Step 3:  Configure a clock configuration enable command */
     SendCommand(FMC_SDRAM_CMD_CLK_ENABLE, FMC_SDRAM_CMD_TARGET_BANK1, 1, 0);
 
-    /* Step 4: Insert 100 ms delay */
-    // HAL_Delay(100);
-    // DelayProcessMs(100);
-
-    // TODO -- double check that this takes the appropriate amount of time (seems a bit long)
+    // TODO -- double check that this takes the appropriate amount of time (seems a bit long).
     // Volatile to (hopefully) ensure no optimization occurs. This may need to be accompanied with
-    // pragmas and attributes to be compiler cross-compatible
+    // pragmas and attributes to be compiler cross-compatible.
 
     // The startup clock is 64MHz, and this loop
     // typically compiles to 6 instructions, so for
-    // a delay of ~100 ms...
-    for (int i = 0; i < (int) (64e5 / 6); i++);
+    // a delay of ~10 ms...
+    for (volatile int i = 0; i < (int) (64e4 / 6); i++);
 
     /* Step 5: Configure a PALL (precharge all) command */
     SendCommand(FMC_SDRAM_CMD_PALL, FMC_SDRAM_CMD_TARGET_BANK1, 1, 0);
@@ -245,70 +153,6 @@ void DeviceInitSimple()
     /* Set the refresh rate in command register */
     const uint32_t RefreshRate = 0x81A - 20;
     MODIFY_REG(FMC_SDRAM_DEVICE->SDRTR, FMC_SDRTR_COUNT, (RefreshRate << FMC_SDRTR_COUNT_Pos));
-}
-
-void DeviceInit()
-{
-  FMC_SDRAM_CommandTypeDef Command;
-
-  __IO uint32_t tmpmrd = 0;
-  /* Step 3:  Configure a clock configuration enable command */
-  Command.CommandMode            = FMC_SDRAM_CMD_CLK_ENABLE;
-  Command.CommandTarget          = FMC_SDRAM_CMD_TARGET_BANK1;
-  Command.AutoRefreshNumber      = 1;
-  Command.ModeRegisterDefinition = 0;
-
-  /* Send the command */
-  HAL_SDRAM_SendCommand(&dsy_sdram.hsdram, &Command, 0x1000);
-
-  /* Step 4: Insert 100 ms delay */
-  // HAL_Delay(100);
-  // DelayProcessMs(100);
-
-  // TODO -- double check that this takes the appropriate amount of time (seems a bit long)
-  // Volatile to (hopefully) ensure no optimization occurs. This may need to be accompanied with
-  // pragmas and attributes to be compiler cross-compatible
-
-  // The startup clock is 64MHz, and this loop
-  // typically compiles to 6 instructions, so for
-  // a delay of ~100 ms...
-  for (volatile int i = 0; i < (int) (64e5 / 6); i++);
-
-  /* Step 5: Configure a PALL (precharge all) command */
-  Command.CommandMode            = FMC_SDRAM_CMD_PALL;
-  Command.CommandTarget          = FMC_SDRAM_CMD_TARGET_BANK1;
-  Command.AutoRefreshNumber      = 1;
-  Command.ModeRegisterDefinition = 0;
-
-  /* Send the command */
-  HAL_SDRAM_SendCommand(&dsy_sdram.hsdram, &Command, 0x1000);
-
-  /* Step 6 : Configure a Auto-Refresh command */
-  Command.CommandMode            = FMC_SDRAM_CMD_AUTOREFRESH_MODE;
-  Command.CommandTarget          = FMC_SDRAM_CMD_TARGET_BANK1;
-  Command.AutoRefreshNumber      = 4;
-  Command.ModeRegisterDefinition = 0;
-
-  /* Send the command */
-  HAL_SDRAM_SendCommand(&dsy_sdram.hsdram, &Command, 0x1000);
-
-  /* Step 7: Program the external memory mode register */
-  tmpmrd = (uint32_t)SDRAM_MODEREG_BURST_LENGTH_4
-            | SDRAM_MODEREG_BURST_TYPE_SEQUENTIAL | SDRAM_MODEREG_CAS_LATENCY_3
-            | SDRAM_MODEREG_WRITEBURST_MODE_SINGLE;
-  //SDRAM_MODEREG_OPERATING_MODE_STANDARD | // Used in example, but can't find reference except for "Test Mode"
-
-  Command.CommandMode            = FMC_SDRAM_CMD_LOAD_MODE;
-  Command.CommandTarget          = FMC_SDRAM_CMD_TARGET_BANK1;
-  Command.AutoRefreshNumber      = 1;
-  Command.ModeRegisterDefinition = tmpmrd;
-
-  /* Send the command */
-  HAL_SDRAM_SendCommand(&dsy_sdram.hsdram, &Command, 0x1000);
-
-  //HAL_SDRAM_ProgramRefreshRate(hsdram, 0x56A - 20);
-  HAL_SDRAM_ProgramRefreshRate(&dsy_sdram.hsdram, 0x81A - 20);
-  // return Result::OK;
 }
 
 static uint32_t FMC_Initialized = 0;
@@ -667,17 +511,4 @@ void SdramMpuInit()
     HAL_MPU_ConfigRegion(&MPU_InitStruct);
 
     HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
-}
-
-void __attribute__((constructor)) SDRAM_Init()
-{
-    //	extern void *_sisdram_data, *_ssdram_data, *_esdram_data;
-    //	extern void *_ssdram_bss, *_esdram_bss;
-
-    //	void **pSource, **pDest;
-    //	for (pSource = &_sisdram_data, pDest = &_ssdram_data; pDest != &_esdram_data; pSource++, pDest++)
-    //		*pDest = *pSource;
-    //
-    //	for (pDest = &_ssdram_bss; pDest != &_esdram_bss; pDest++)
-    //		*pDest = 0;
 }
