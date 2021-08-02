@@ -285,7 +285,7 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     else
     {
         adc.hadc1.Init.ContinuousConvMode    = DISABLE;
-        adc.hadc1.Init.DiscontinuousConvMode = ENABLE;
+        adc.hadc1.Init.DiscontinuousConvMode = DISABLE;
         adc.hadc1.Init.ConversionDataManagement
             = ADC_CONVERSIONDATA_DMA_ONESHOT;
     }
