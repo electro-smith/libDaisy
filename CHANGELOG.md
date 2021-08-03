@@ -9,6 +9,7 @@
 - Sdram: Update  from c to cpp.
 
 ### Bug Fixes
+- Change SdramTiming.RPDelay to 1 to avoid underflow bug.
 
 ### Migrating
 
