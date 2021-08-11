@@ -316,8 +316,10 @@ void SystemCoreClockUpdate(void)
             pllm      = ((RCC->PLLCKSELR & RCC_PLLCKSELR_DIVM1) >> 4);
             pllfracen = ((RCC->PLLCFGR & RCC_PLLCFGR_PLL1FRACEN)
                          >> RCC_PLLCFGR_PLL1FRACEN_Pos);
-            fracn1    = (float_t)(uint32_t)(
-                pllfracen * ((RCC->PLL1FRACR & RCC_PLL1FRACR_FRACN1) >> 3));
+            fracn1
+                = (float_t)(uint32_t)(pllfracen
+                                      * ((RCC->PLL1FRACR & RCC_PLL1FRACR_FRACN1)
+                                         >> 3));
 
             if(pllm != 0U)
             {

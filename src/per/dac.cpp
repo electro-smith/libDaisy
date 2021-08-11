@@ -17,7 +17,7 @@ class DacHandle::Impl
     DacHandle::Result        Init(const DacHandle::Config &config);
     const DacHandle::Config &GetConfig() const { return config_; }
     DacHandle::Result
-                      Start(uint16_t *buffer, size_t size, DacHandle::DacCallback cb);
+    Start(uint16_t *buffer, size_t size, DacHandle::DacCallback cb);
     DacHandle::Result Start(uint16_t *             buffer_1,
                             uint16_t *             buffer_2,
                             size_t                 size,
@@ -45,7 +45,7 @@ class DacHandle::Impl
 
     DAC_HandleTypeDef hal_dac_; /**< ST HAL DAC Handle*/
     DMA_HandleTypeDef
-                      hal_dac_dma_[2]; /**< ST HAL DMA Hande (one per available channel) */
+        hal_dac_dma_[2]; /**< ST HAL DMA Hande (one per available channel) */
     TIM_HandleTypeDef hal_tim_;
 
   private:
@@ -109,9 +109,9 @@ DacHandle::Result DacHandle::Impl::Init(const DacHandle::Config &config)
         // Base tim freq is PClk2 * 2 (200/240MHz depending on system configuration).
         tim_base_freq = System::
             GetPClk2Freq(); // 100MHz (or 120MHz) depending on CPU Freq.
-        target_freq = config_.target_samplerate == 0
-                          ? 48000
-                          : config_.target_samplerate;
+        target_freq             = config_.target_samplerate == 0
+                                      ? 48000
+                                      : config_.target_samplerate;
         period                  = tim_base_freq / target_freq;
         hal_tim_.Init.Period    = period;
         hal_tim_.Init.Prescaler = 1;
@@ -158,11 +158,11 @@ DacHandle::Impl::Start(uint16_t *buffer, size_t size, DacHandle::DacCallback cb)
 {
     if(config_.mode != Mode::DMA || config_.chn == Channel::BOTH)
         return Result::ERR;
-    callback_   = cb;
-    buff_[0]    = buffer;
-    buff_size_  = size;
-    uint32_t bd = config_.bitdepth == BitDepth::BITS_8 ? DAC_ALIGN_8B_R
-                                                       : DAC_ALIGN_12B_R;
+    callback_    = cb;
+    buff_[0]     = buffer;
+    buff_size_   = size;
+    uint32_t bd  = config_.bitdepth == BitDepth::BITS_8 ? DAC_ALIGN_8B_R
+                                                        : DAC_ALIGN_12B_R;
     uint32_t chn = config_.chn == Channel::ONE ? DAC_CHANNEL_1 : DAC_CHANNEL_2;
     HAL_DAC_Start_DMA(&hal_dac_, chn, (uint32_t *)buff_[0], size, bd);
     HAL_TIM_Base_Start(&hal_tim_);
@@ -188,7 +188,7 @@ DacHandle::Result DacHandle::Impl::Start(uint16_t *             buffer_1,
     buff_[1]   = buffer_2;
     buff_size_ = size;
     bd         = config_.bitdepth == BitDepth::BITS_8 ? DAC_ALIGN_8B_R
-                                              : DAC_ALIGN_12B_R;
+                                                      : DAC_ALIGN_12B_R;
 
     // Start the DACs and then start the time source.
     HAL_DAC_Start_DMA(&hal_dac_, DAC_CHANNEL_1, (uint32_t *)buff_[0], size, bd);
