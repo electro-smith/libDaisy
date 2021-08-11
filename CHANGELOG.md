@@ -10,6 +10,8 @@
 
 ### Bug fixes
 
+* adc: fixed bug with ADC where designs with more than 8 channels AND a mux would halt the ADC.
+
 ### Other
 
 ### Migrating
