@@ -4,13 +4,28 @@
 
 ### Breaking Changes
 
+### Features
+
+* adc: added initialization mappings for pins ADC1_INP12 (PC2) and ADC1_INP13 (PC3) (Not accessible on Daisy Seed)
+
+### Bug fixes
+
+### Other
+
+### Migrating
+
+## v1.0.0
+
+### Breaking Changes
+
 * move MidiEvent and related data to `daisy` namespace.
 
 ### Features
- 
+
 * string: allow more integer types in `FixedCapStr::AppendInt()`
 * fifo/stack: Add new methods for searching elements
 * fifo/stack: Reduce binary size
+* RgbLed: Added individual setters for each color
 
 ### Bug fixes
 
@@ -30,7 +45,16 @@
 
 ### Migrating
 
+With `using namespace daisy` (as typical in example programs) no changes necessary. Otherwise:
+
+```c++
+// Old
+MidiEvent event;
+
+// New
+daisy::MidiEvent event;
+```
+
 ## v0.1.0
 
 Initial Release
-
