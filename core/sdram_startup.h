@@ -19,7 +19,7 @@
 void SdramInit();
 void PeriphInit();
 void DeviceInit();
-volatile void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t definition);
+void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t definition);
 void SdramMpuInit();
 
 void SdramInit()
@@ -107,7 +107,7 @@ void PeriphInit()
     __FMC_ENABLE();
 }
 
-volatile void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t definition)
+void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t definition)
 {
     // Shouldn't this really just be writing to the register, not ORing?
     SET_BIT (
