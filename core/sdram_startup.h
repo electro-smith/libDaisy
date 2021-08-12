@@ -10,11 +10,11 @@
 #define SDRAM_MODEREG_WRITEBURST_MODE_SINGLE ((1 << 9))
 #define SDRAM_MODEREG_WRITEBURST_MODE_PROG_BURST ((0 << 9))
 
-typedef struct
-{
-  uint8_t             board;
-  SDRAM_HandleTypeDef hsdram;
-} dsy_sdram_t;
+// typedef struct
+// {
+//   uint8_t             board;
+//   SDRAM_HandleTypeDef hsdram;
+// } dsy_sdram_t;
 
 void SdramInit();
 void PeriphInit();
@@ -29,7 +29,7 @@ void SdramInit()
   SdramMpuInit();
 }
 
-static dsy_sdram_t dsy_sdram;
+// static dsy_sdram_t dsy_sdram;
 
 /* --- SDCR Register ---*/
 /* SDCR register clear mask */
