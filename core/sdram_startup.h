@@ -22,6 +22,11 @@ void DeviceInit();
 void SendCommand(uint32_t mode, uint32_t target, uint32_t refresh, uint32_t definition);
 void SdramMpuInit();
 
+static void HAL_SDRAM_GpioInit();
+static void HAL_FMC_GpioInit();
+static void HAL_SDRAM_GpioDeInit();
+static void HAL_FMC_GpioDeInit();
+
 void SdramInit()
 {
   PeriphInit();
@@ -50,7 +55,7 @@ void PeriphInit()
 {
     // __FMC_DISABLE();
 
-    HAL_SDRAM_MspInit(NULL); // the function doesn't use it anyway
+    HAL_SDRAM_GpioInit(NULL); // the function doesn't use it anyway
 
     // just for the best clarity:
     // Init
@@ -157,7 +162,7 @@ void DeviceInit()
 
 static uint32_t FMC_Initialized = 0;
 
-static void HAL_FMC_MspInit(void)
+static void HAL_FMC_GpioInit(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct;
 
@@ -346,25 +351,25 @@ static void HAL_FMC_MspInit(void)
     //		break;
     //	}
 
-    /* USER CODE BEGIN FMC_MspInit 1 */
+    /* USER CODE BEGIN FMC_GpioInit 1 */
 
-    /* USER CODE END FMC_MspInit 1 */
+    /* USER CODE END FMC_GpioInit 1 */
 }
 
-void HAL_SDRAM_MspInit(SDRAM_HandleTypeDef *sdramHandle)
+void HAL_SDRAM_GpioInit(SDRAM_HandleTypeDef *sdramHandle)
 {
-    /* USER CODE BEGIN SDRAM_MspInit 0 */
+    /* USER CODE BEGIN SDRAM_GpioInit 0 */
 
-    /* USER CODE END SDRAM_MspInit 0 */
-    HAL_FMC_MspInit();
-    /* USER CODE BEGIN SDRAM_MspInit 1 */
+    /* USER CODE END SDRAM_GpioInit 0 */
+    HAL_FMC_GpioInit();
+    /* USER CODE BEGIN SDRAM_GpioInit 1 */
 
-    /* USER CODE END SDRAM_MspInit 1 */
+    /* USER CODE END SDRAM_GpioInit 1 */
 }
 
 static uint32_t FMC_DeInitialized = 0;
 
-static void HAL_FMC_MspDeInit(void)
+static void HAL_FMC_GpioDeInit(void)
 {
     /* USER CODE BEGIN FMC_MspDeInit 0 */
 
@@ -472,12 +477,12 @@ static void HAL_FMC_MspDeInit(void)
     /* USER CODE END FMC_MspDeInit 1 */
 }
 
-void HAL_SDRAM_MspDeInit(SDRAM_HandleTypeDef *sdramHandle)
+void HAL_SDRAM_GpioDeInit(SDRAM_HandleTypeDef *sdramHandle)
 {
     /* USER CODE BEGIN SDRAM_MspDeInit 0 */
 
     /* USER CODE END SDRAM_MspDeInit 0 */
-    HAL_FMC_MspDeInit();
+    HAL_FMC_GpioDeInit();
     /* USER CODE BEGIN SDRAM_MspDeInit 1 */
 
     /* USER CODE END SDRAM_MspDeInit 1 */
