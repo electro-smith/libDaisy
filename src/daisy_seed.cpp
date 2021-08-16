@@ -114,9 +114,9 @@ void DaisySeed::Init(bool boost)
     // Honestly, reinitializing the pins doesn't matter, but
     // I'll leave this here for good luck
 #ifndef BOOT_VOLATILE
-    // sdram_handle.Init();
     dsy_gpio_init(&led);
     dsy_gpio_init(&testpoint);
+    sdram_handle.Init();
 #endif
 
     ConfigureAudio();
