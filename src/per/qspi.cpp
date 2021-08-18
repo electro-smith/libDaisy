@@ -36,8 +36,7 @@ class QSPIHandle::Impl
         Memory Mapped mode: QSPI configured so that the QSPI can be
         read from starting address 0x90000000. Writing is not
         possible in this mode. \n 
-        Indirect Polling mode: Device driver enabled. \n     
-        Read/Write possible via dsy_qspi_* functions
+        Indirect Polling mode: Device driver enabled. 
         */
     enum Mode
     {
