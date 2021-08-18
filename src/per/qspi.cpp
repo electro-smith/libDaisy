@@ -142,7 +142,7 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
         return QSPIHandle::Result::ERR;
     }
 
-    if(mode == QSPIHandle::Config::Mode::DSY_MEMORY_MAPPED)
+    if(mode == QSPIHandle::Config::Mode::MEMORY_MAPPED)
     {
         if(EnableMemoryMappedMode() != QSPIHandle::Result::OK)
         {

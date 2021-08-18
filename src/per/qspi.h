@@ -47,7 +47,7 @@ class QSPIHandle
             */
         enum Mode
         {
-            DSY_MEMORY_MAPPED, /**< & */
+            MEMORY_MAPPED, /**< & */
             INDIRECT_POLLING,  /**< & */
             MODE_LAST,
         };
