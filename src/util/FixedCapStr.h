@@ -102,7 +102,8 @@ class FixedCapStrBase
         Append_(str, to_copy);
     }
 
-    constexpr void AppendInt(int value, bool alwaysIncludeSign = false)
+    template <typename IntType>
+    constexpr void AppendInt(IntType value, bool alwaysIncludeSign = false)
     {
         if(value == 0)
         {

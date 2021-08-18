@@ -77,7 +77,18 @@ TEST_F(util_Stack, d_insert)
     EXPECT_EQ(stack_[0], 1);
     EXPECT_EQ(stack_[1], 2);
     EXPECT_EQ(stack_[2], 3);
+
+    // pop last element
+    stack_.PopBack();
+    // insert an element at the end
+    EXPECT_TRUE(stack_.Insert(2, 3));
+
+    // values are correct
+    EXPECT_EQ(stack_[0], 1);
+    EXPECT_EQ(stack_[1], 2);
+    EXPECT_EQ(stack_[2], 3);
 }
+
 TEST_F(util_Stack, e_removeByIndex)
 {
     stack_.PushBack(1);
@@ -127,4 +138,23 @@ TEST_F(util_Stack, g_passByReference)
     // like a plain old C-array.
     stack_[0] = 4;
     EXPECT_EQ(stack_[0], 4);
+}
+
+TEST_F(util_Stack, h_contains)
+{
+    stack_.PushBack({1, 2, 3});
+    
+    EXPECT_TRUE(stack_.Contains(1));
+    EXPECT_TRUE(stack_.Contains(2));
+    EXPECT_TRUE(stack_.Contains(3));
+    EXPECT_FALSE(stack_.Contains(4));
+}
+
+TEST_F(util_Stack, i_countEqualTo)
+{
+    stack_.PushBack({1, 2, 2});
+    
+    EXPECT_EQ(stack_.CountEqualTo(1), 1u);
+    EXPECT_EQ(stack_.CountEqualTo(2), 2u);
+    EXPECT_EQ(stack_.CountEqualTo(3), 0u);
 }
