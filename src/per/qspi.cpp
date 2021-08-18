@@ -12,17 +12,18 @@ extern "C"
 //        due to upgrading the RAM size for the new 4MB chip.
 // TODO: AutopollingMemReady only works for 1-Line, not 4-Line
 
-#define SET_MODE(mode) \
-if (mode_ != mode) { \
-    mode_ = mode; \
-    if (Init(config_) != QSPIHandle::Result::OK) \
-    { \
-        mode_ = Mode::MEMORY_MAPPED; \
-        Init(config_); \
-        return QSPIHandle::Result::ERR; \
-    } \
-}
-    
+#define SET_MODE(mode)                              \
+    if(mode_ != mode)                               \
+    {                                               \
+        mode_ = mode;                               \
+        if(Init(config_) != QSPIHandle::Result::OK) \
+        {                                           \
+            mode_ = Mode::MEMORY_MAPPED;            \
+            Init(config_);                          \
+            return QSPIHandle::Result::ERR;         \
+        }                                           \
+    }
+
 
 namespace daisy
 {
@@ -40,8 +41,8 @@ class QSPIHandle::Impl
         */
     enum Mode
     {
-        MEMORY_MAPPED, /**< & */
-        INDIRECT_POLLING,  /**< & */
+        MEMORY_MAPPED,    /**< & */
+        INDIRECT_POLLING, /**< & */
         MODE_LAST,
     };
 
@@ -51,8 +52,10 @@ class QSPIHandle::Impl
 
     QSPIHandle::Result Deinit();
 
-    QSPIHandle::Result
-    WritePage(uint32_t address, uint32_t size, uint8_t* buffer, bool reset_mode = true);
+    QSPIHandle::Result WritePage(uint32_t address,
+                                 uint32_t size,
+                                 uint8_t* buffer,
+                                 bool     reset_mode = true);
 
     QSPIHandle::Result Write(uint32_t address, uint32_t size, uint8_t* buffer);
 
@@ -193,8 +196,10 @@ QSPIHandle::Result QSPIHandle::Impl::Deinit()
 }
 
 
-QSPIHandle::Result
-QSPIHandle::Impl::WritePage(uint32_t address, uint32_t size, uint8_t* buffer, bool reset_mode)
+QSPIHandle::Result QSPIHandle::Impl::WritePage(uint32_t address,
+                                               uint32_t size,
+                                               uint8_t* buffer,
+                                               bool     reset_mode)
 {
     SET_MODE(Mode::INDIRECT_POLLING);
 
@@ -232,15 +237,15 @@ QSPIHandle::Impl::WritePage(uint32_t address, uint32_t size, uint8_t* buffer, bo
         goto write_error;
     }
 
-    if (reset_mode)
+    if(reset_mode)
         SET_MODE(Mode::MEMORY_MAPPED);
     return QSPIHandle::Result::OK;
 
-    // I'm sorry, but it does minimize code size here
-    write_error:
-        if (reset_mode)
-            SET_MODE(Mode::MEMORY_MAPPED);
-        return QSPIHandle::Result::ERR;
+// I'm sorry, but it does minimize code size here
+write_error:
+    if(reset_mode)
+        SET_MODE(Mode::MEMORY_MAPPED);
+    return QSPIHandle::Result::ERR;
 }
 
 
@@ -397,10 +402,10 @@ QSPIHandle::Result QSPIHandle::Impl::EraseSector(uint32_t address)
     SET_MODE(Mode::MEMORY_MAPPED);
     return QSPIHandle::Result::OK;
 
-    // I'm sorry, but it does minimize code size here
-    erase_error:
-        SET_MODE(Mode::MEMORY_MAPPED);
-        return QSPIHandle::Result::ERR;
+// I'm sorry, but it does minimize code size here
+erase_error:
+    SET_MODE(Mode::MEMORY_MAPPED);
+    return QSPIHandle::Result::ERR;
 }
 
 
