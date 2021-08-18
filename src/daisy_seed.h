@@ -134,7 +134,7 @@ class DaisySeed
 
     // While the library is still in heavy development, most of the
     // configuration handles will remain public.
-    dsy_sdram_handle sdram_handle; /**< & */
+    dsy_sdram_handle   sdram_handle; /**< & */
     QSPIHandle         qspi;
     QSPIHandle::Config qspi_config;
     AudioHandle        audio_handle; /**< & */

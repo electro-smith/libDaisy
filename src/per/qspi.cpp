@@ -12,12 +12,39 @@ extern "C"
 //        due to upgrading the RAM size for the new 4MB chip.
 // TODO: AutopollingMemReady only works for 1-Line, not 4-Line
 
+#define SET_MODE(mode) \
+if (mode_ != mode) { \
+    mode_ = mode; \
+    if (Init(config_) != QSPIHandle::Result::OK) \
+    { \
+        mode_ = Mode::MEMORY_MAPPED; \
+        Init(config_); \
+        return QSPIHandle::Result::ERR; \
+    } \
+}
+    
+
 namespace daisy
 {
 /** Private implementation for QSPIHandle */
 class QSPIHandle::Impl
 {
   public:
+    /** 
+        Modes of operation.
+        Memory Mapped mode: QSPI configured so that the QSPI can be
+        read from starting address 0x90000000. Writing is not
+        possible in this mode. \n 
+        Indirect Polling mode: Device driver enabled. \n     
+        Read/Write possible via dsy_qspi_* functions
+        */
+    enum Mode
+    {
+        MEMORY_MAPPED, /**< & */
+        INDIRECT_POLLING,  /**< & */
+        MODE_LAST,
+    };
+
     QSPIHandle::Result Init(const QSPIHandle::Config& config);
 
     const QSPIHandle::Config& GetConfig() const { return config_; }
@@ -25,7 +52,7 @@ class QSPIHandle::Impl
     QSPIHandle::Result Deinit();
 
     QSPIHandle::Result
-    WritePage(uint32_t address, uint32_t size, uint8_t* buffer);
+    WritePage(uint32_t address, uint32_t size, uint8_t* buffer, bool reset_mode = true);
 
     QSPIHandle::Result Write(uint32_t address, uint32_t size, uint8_t* buffer);
 
@@ -36,6 +63,8 @@ class QSPIHandle::Impl
     uint32_t GetPin(size_t pin);
 
     GPIO_TypeDef* GetPort(size_t pin);
+
+    Mode GetMode() { return mode_; }
 
     QSPI_HandleTypeDef* GetHalHandle();
 
@@ -61,6 +90,7 @@ class QSPIHandle::Impl
 
     QSPIHandle::Config config_;
     QSPI_HandleTypeDef halqspi_;
+    Mode               mode_;
 
     static constexpr size_t pin_count_
         = sizeof(QSPIHandle::Config::pin_config) / sizeof(dsy_gpio_pin);
@@ -85,12 +115,9 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
 {
     // Set Handle Settings     o
 
-    //dsy_qspi_handle.board = board;
     config_ = config;
     QSPIHandle::Config::Device device;
-    QSPIHandle::Config::Mode   mode;
     device = config_.device;
-    mode   = config_.mode;
 
     if(HAL_QSPI_DeInit(&halqspi_) != HAL_OK)
     {
@@ -142,7 +169,7 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
         return QSPIHandle::Result::ERR;
     }
 
-    if(mode == QSPIHandle::Config::Mode::MEMORY_MAPPED)
+    if(mode_ == Mode::MEMORY_MAPPED)
     {
         if(EnableMemoryMappedMode() != QSPIHandle::Result::OK)
         {
@@ -167,8 +194,10 @@ QSPIHandle::Result QSPIHandle::Impl::Deinit()
 
 
 QSPIHandle::Result
-QSPIHandle::Impl::WritePage(uint32_t address, uint32_t size, uint8_t* buffer)
+QSPIHandle::Impl::WritePage(uint32_t address, uint32_t size, uint8_t* buffer, bool reset_mode)
 {
+    SET_MODE(Mode::INDIRECT_POLLING);
+
     QSPI_CommandTypeDef s_command;
     s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
     s_command.Instruction       = PAGE_PROG_CMD;
@@ -184,25 +213,34 @@ QSPIHandle::Impl::WritePage(uint32_t address, uint32_t size, uint8_t* buffer)
     s_command.Address           = address;
     if(WriteEnable() != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        goto write_error;
     }
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        goto write_error;
     }
     if(HAL_QSPI_Transmit(
            &halqspi_, (uint8_t*)buffer, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        goto write_error;
     }
     if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        goto write_error;
     }
+
+    if (reset_mode)
+        SET_MODE(Mode::MEMORY_MAPPED);
     return QSPIHandle::Result::OK;
+
+    // I'm sorry, but it does minimize code size here
+    write_error:
+        if (reset_mode)
+            SET_MODE(Mode::MEMORY_MAPPED);
+        return QSPIHandle::Result::ERR;
 }
 
 
@@ -223,21 +261,21 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
         if(NumOfPage == 0) /*!< NumByteToWrite < QSPI_PAGESIZE */
         {
             QSPI_DataNum = size;
-            WritePage(address, QSPI_DataNum, buffer);
+            WritePage(address, QSPI_DataNum, buffer, false);
         }
         else /*!< Size > QSPI_PAGESIZE */
         {
             while(NumOfPage--)
             {
                 QSPI_DataNum = flash_page_size;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
                 address += flash_page_size;
                 buffer += flash_page_size;
             }
 
             QSPI_DataNum = NumOfSingle;
             if(QSPI_DataNum > 0)
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
         }
     }
     else /*!< Address is not QSPI_PAGESIZE aligned  */
@@ -248,16 +286,16 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
             {
                 temp         = NumOfSingle - count;
                 QSPI_DataNum = count;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
                 address += count;
                 buffer += count;
                 QSPI_DataNum = temp;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
             }
             else
             {
                 QSPI_DataNum = size;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
             }
         }
         else /*!< Size > QSPI_PAGESIZE */
@@ -266,14 +304,14 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
             NumOfPage    = size / flash_page_size;
             NumOfSingle  = size % flash_page_size;
             QSPI_DataNum = count;
-            WritePage(address, QSPI_DataNum, buffer);
+            WritePage(address, QSPI_DataNum, buffer, false);
             address += count;
             buffer += count;
 
             while(NumOfPage--)
             {
                 QSPI_DataNum = flash_page_size;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
                 address += flash_page_size;
                 buffer += flash_page_size;
             }
@@ -281,10 +319,12 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
             if(NumOfSingle != 0)
             {
                 QSPI_DataNum = NumOfSingle;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
             }
         }
     }
+
+    SET_MODE(Mode::MEMORY_MAPPED);
     return QSPIHandle::Result::OK;
 }
 
@@ -334,21 +374,33 @@ QSPIHandle::Result QSPIHandle::Impl::EraseSector(uint32_t address)
     s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
     s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
     s_command.Address           = address;
+
+    // Erasing takes a long time anyway, so not much point trying to
+    // minimize reinitializations
+    SET_MODE(Mode::INDIRECT_POLLING);
+
     if(WriteEnable() != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        goto erase_error;
     }
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        goto erase_error;
     }
     if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        goto erase_error;
     }
+
+    SET_MODE(Mode::MEMORY_MAPPED);
     return QSPIHandle::Result::OK;
+
+    // I'm sorry, but it does minimize code size here
+    erase_error:
+        SET_MODE(Mode::MEMORY_MAPPED);
+        return QSPIHandle::Result::ERR;
 }
 
 

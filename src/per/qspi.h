@@ -37,21 +37,6 @@ class QSPIHandle
     /** Configuration structure for interfacing with QSPI Driver */
     struct Config
     {
-        /** 
-            Modes of operation.
-            Memory Mapped mode: QSPI configured so that the QSPI can be
-            read from starting address 0x90000000. Writing is not
-            possible in this mode. \n 
-            Indirect Polling mode: Device driver enabled. \n     
-            Read/Write possible via dsy_qspi_* functions
-            */
-        enum Mode
-        {
-            MEMORY_MAPPED, /**< & */
-            INDIRECT_POLLING,  /**< & */
-            MODE_LAST,
-        };
-
         /** Flash Devices supported. (Both of these are more-or-less the same, just different sizes). */
         enum Device
         {
@@ -71,7 +56,6 @@ class QSPIHandle
             dsy_gpio_pin ncs; /**< & */
         } pin_config;
 
-        Mode   mode;
         Device device;
     };
 
