@@ -100,10 +100,11 @@ void System::Init(const System::Config& config)
 {
     cfg_ = config;
     HAL_Init();
-#ifndef BOOT_VOLATILE
-    ConfigureClocks();
-    ConfigureMpu();
-#endif
+    if (!config.skip_clocks)
+    {
+        ConfigureClocks();
+        ConfigureMpu();
+    }
     dsy_dma_init();
     dsy_i2c_global_init();
 

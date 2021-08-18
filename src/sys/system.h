@@ -37,6 +37,7 @@ class System
             cpu_freq   = SysClkFreq::FREQ_400MHZ;
             use_dcache = true;
             use_icache = true;
+            skip_clocks = false;
         }
 
         /** Method to call on the struct to set to boost mode:
@@ -48,11 +49,13 @@ class System
             cpu_freq   = SysClkFreq::FREQ_480MHZ;
             use_dcache = true;
             use_icache = true;
+            skip_clocks = false;
         }
 
         SysClkFreq cpu_freq;
         bool       use_dcache;
         bool       use_icache;
+        bool       skip_clocks;
     };
 
     System() {}

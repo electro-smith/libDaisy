@@ -102,22 +102,26 @@ void DaisySeed::Configure()
     testpoint.mode     = DSY_GPIO_MODE_OUTPUT_PP;
 }
 
-void DaisySeed::Init(bool boost)
+void DaisySeed::Init(bool boost, ProgramMemory memory)
 {
     //dsy_system_init();
     System::Config syscfg;
     boost ? syscfg.Boost() : syscfg.Defaults();
+
+    if (memory != ProgramMemory::INTERNAL_FLASH)
+        syscfg.skip_clocks = true;
+
     system.Init(syscfg);
 
-    qspi.Init(qspi_config);
+    if (memory != ProgramMemory::QSPI)
+        qspi.Init(qspi_config);
 
-    // Honestly, reinitializing the pins doesn't matter, but
-    // I'll leave this here for good luck
-#ifndef BOOT_VOLATILE
-    dsy_gpio_init(&led);
-    dsy_gpio_init(&testpoint);
-    sdram_handle.Init();
-#endif
+    if (memory == ProgramMemory::INTERNAL_FLASH)
+    {
+        dsy_gpio_init(&led);
+        dsy_gpio_init(&testpoint);
+        sdram_handle.Init();
+    }
 
     ConfigureAudio();
 
@@ -134,7 +138,7 @@ void DaisySeed::Deinit()
     // This is intended to be used by the bootloader, but
     // we don't want to reinitialize pretty much anything in the
     // target application, so...
-    qspi.Deinit();
+    // qspi.Deinit();
     // sdram_handle.Deinit();
     // dsy_gpio_deinit(&led);
     // dsy_gpio_deinit(&testpoint);

@@ -34,6 +34,13 @@ class DaisySeed
     /** & */
     void Configure();
 
+    enum ProgramMemory 
+    {
+      INTERNAL_FLASH = 0,
+      AXI_SRAM,
+      QSPI
+    };
+
     /** 
     Initializes the Daisy Seed and the following peripherals:
     SDRAM, QSPI, 24-bit 48kHz Audio via AK4556, Internal USB,
@@ -43,7 +50,7 @@ class DaisySeed
     can be initialized using their specific initializers within libdaisy
     for a specific application.
     */
-    void Init(bool boost = false);
+    void Init(bool boost = false, ProgramMemory memory = INTERNAL_FLASH);
 
     /** 
     Deinitializes all peripherals automatically handled by `Init`.
