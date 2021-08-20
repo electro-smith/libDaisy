@@ -814,7 +814,7 @@ SpiHandle::Result SpiHandle::Impl::DeInitPins()
 
 volatile int8_t SpiHandle::Impl::dma_active_peripheral_;
 SpiHandle::Impl::SpiDmaJob
-    SpiHandle::Impl::queued_dma_transfers_[kNumSpiWithDma];
+                               SpiHandle::Impl::queued_dma_transfers_[kNumSpiWithDma];
 SpiHandle::CallbackFunctionPtr SpiHandle::Impl::next_callback_;
 void*                          SpiHandle::Impl::next_callback_context_;
 
