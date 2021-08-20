@@ -17,6 +17,21 @@ void RgbLed::Set(float r, float g, float b)
     b_.Set(b);
 }
 
+void RgbLed::SetRed(float val)
+{
+    r_.Set(val);
+}
+
+void RgbLed::SetGreen(float val)
+{
+    g_.Set(val);
+}
+
+void RgbLed::SetBlue(float val)
+{
+    b_.Set(val);
+}
+
 void RgbLed::SetColor(Color c)
 {
     r_.Set(c.Red());
