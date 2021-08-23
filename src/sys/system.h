@@ -34,9 +34,9 @@ class System
          ** */
         void Defaults()
         {
-            cpu_freq   = SysClkFreq::FREQ_400MHZ;
-            use_dcache = true;
-            use_icache = true;
+            cpu_freq    = SysClkFreq::FREQ_400MHZ;
+            use_dcache  = true;
+            use_icache  = true;
             skip_clocks = false;
         }
 
@@ -46,9 +46,9 @@ class System
          ** */
         void Boost()
         {
-            cpu_freq   = SysClkFreq::FREQ_480MHZ;
-            use_dcache = true;
-            use_icache = true;
+            cpu_freq    = SysClkFreq::FREQ_480MHZ;
+            use_dcache  = true;
+            use_icache  = true;
             skip_clocks = false;
         }
 
@@ -61,12 +61,12 @@ class System
     /** A simple way to represent where the program is executing from
      * 
      */
-    enum ProgramMemory 
+    enum ProgramMemory
     {
-      INTERNAL_FLASH = 0,
-      AXI_SRAM,
-      QSPI,
-      INVALID_ADDRESS,
+        INTERNAL_FLASH = 0,
+        AXI_SRAM,
+        QSPI,
+        INVALID_ADDRESS,
     };
 
     System() {}
@@ -173,12 +173,12 @@ class System
 
     // TODO -- unify this with bootloader so we don't have reduntant values
     static constexpr uint32_t sram_start_ = 0x24000000U;
-    static constexpr uint32_t sram_end_ = sram_start_ + 0x80000U;
+    static constexpr uint32_t sram_end_   = sram_start_ + 0x80000U;
     static constexpr uint32_t qspi_start_ = 0x90040000U;
     // TODO -- this is a bit too large:
-    static constexpr uint32_t qspi_end_ = qspi_start_ + 0x800000U;
+    static constexpr uint32_t qspi_end_       = qspi_start_ + 0x800000U;
     static constexpr uint32_t internal_start_ = 0x08000000U;
-    static constexpr uint32_t internal_end_ = internal_start_ + 0x20000U;
+    static constexpr uint32_t internal_end_   = internal_start_ + 0x20000U;
 
     /** One TimerHandle to rule them all
      ** Maybe this whole class should be static.. */

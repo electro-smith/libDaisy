@@ -112,15 +112,15 @@ void DaisySeed::Init(bool boost)
     // NOTE -- for now, we're just referencing the linker variables
     auto memory = System::GetProgramMemory();
 
-    if (memory != System::ProgramMemory::INTERNAL_FLASH)
+    if(memory != System::ProgramMemory::INTERNAL_FLASH)
         syscfg.skip_clocks = true;
 
     system.Init(syscfg);
 
-    if (memory != System::ProgramMemory::QSPI)
+    if(memory != System::ProgramMemory::QSPI)
         qspi.Init(qspi_config);
 
-    if (memory == System::ProgramMemory::INTERNAL_FLASH)
+    if(memory == System::ProgramMemory::INTERNAL_FLASH)
     {
         dsy_gpio_init(&led);
         dsy_gpio_init(&testpoint);
