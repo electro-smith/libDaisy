@@ -34,14 +34,6 @@ class DaisySeed
     /** & */
     void Configure();
 
-    enum ProgramMemory 
-    {
-      INTERNAL_FLASH = 0,
-      AXI_SRAM,
-      QSPI,
-      INVALID_ADDRESS,
-    };
-
     /** 
     Initializes the Daisy Seed and the following peripherals:
     SDRAM, QSPI, 24-bit 48kHz Audio via AK4556, Internal USB,
@@ -161,17 +153,6 @@ class DaisySeed
     /** Local shorthand for debug log destination
     */
     using Log = Logger<LOGGER_INTERNAL>;
-
-    ProgramMemory GetMemory();
-
-    // TODO -- unify this with bootloader so we don't have reduntant values
-    static constexpr uint32_t sram_start_ = 0x24000000U;
-    static constexpr uint32_t sram_end_ = sram_start_ + 0x80000U;
-    static constexpr uint32_t qspi_start_ = 0x90040000U;
-    // TODO -- this is a bit too large:
-    static constexpr uint32_t qspi_end_ = qspi_start_ + 0x800000U;
-    static constexpr uint32_t internal_start_ = 0x08000000U;
-    static constexpr uint32_t internal_end_ = internal_start_ + 0x20000U;
     
     void ConfigureQspi();
     void ConfigureAudio();

@@ -1,11 +1,11 @@
 #include "daisy_seed.h"
+#include "stm32h7xx_hal.h"
 
 extern "C"
 {
 #include "dev/codec_ak4556.h"
 }
 
-extern uint32_t _stext;
 using namespace daisy;
 
 #define SEED_LED_PORT DSY_GPIOC
@@ -110,17 +110,17 @@ void DaisySeed::Init(bool boost)
     boost ? syscfg.Boost() : syscfg.Defaults();
 
     // NOTE -- for now, we're just referencing the linker variables
-    auto memory = GetMemory();
+    auto memory = System::GetProgramMemory();
 
-    if (memory != ProgramMemory::INTERNAL_FLASH)
+    if (memory != System::ProgramMemory::INTERNAL_FLASH)
         syscfg.skip_clocks = true;
 
     system.Init(syscfg);
 
-    if (memory != ProgramMemory::QSPI)
+    if (memory != System::ProgramMemory::QSPI)
         qspi.Init(qspi_config);
 
-    if (memory == ProgramMemory::INTERNAL_FLASH)
+    if (memory == System::ProgramMemory::INTERNAL_FLASH)
     {
         dsy_gpio_init(&led);
         dsy_gpio_init(&testpoint);
@@ -237,19 +237,6 @@ void DaisySeed::SetTestPoint(bool state)
 }
 
 // Private Implementation
-
-DaisySeed::ProgramMemory DaisySeed::GetMemory()
-{
-    uint32_t program_start = _stext;
-    if (program_start >= sram_start_ && program_start < sram_end_)
-        return ProgramMemory::AXI_SRAM;
-    if (program_start >= internal_start_ && program_start < internal_end_)
-        return ProgramMemory::INTERNAL_FLASH;
-    if (program_start >= qspi_start_ && program_start < qspi_end_)
-        return ProgramMemory::QSPI;
-    
-    return ProgramMemory::INVALID_ADDRESS;
-}
 
 void DaisySeed::ConfigureQspi()
 {
