@@ -371,6 +371,19 @@ uint32_t System::GetPClk2Freq()
     return HAL_RCC_GetPCLK2Freq();
 }
 
+System::ProgramMemory System::GetProgramMemory()
+{
+    uint32_t program_start = SCB->VTOR;
+    if (program_start >= sram_start_ && program_start < sram_end_)
+        return ProgramMemory::AXI_SRAM;
+    if (program_start >= internal_start_ && program_start < internal_end_)
+        return ProgramMemory::INTERNAL_FLASH;
+    if (program_start >= qspi_start_ && program_start < qspi_end_)
+        return ProgramMemory::QSPI;
+    
+    return ProgramMemory::INVALID_ADDRESS;
+}
+
 
 } // namespace daisy
 

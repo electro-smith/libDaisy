@@ -34,6 +34,23 @@ class QSPIHandle
         ERR
     };
 
+    /** Indicates the current status of the module. 
+         *  Warnings are indicated by a leading W.
+         *  Errors are indicated by a leading E and cause an immediate exit.
+         * 
+         *  \param OK - No errors have been reported.
+         *  \param E_HAL_ERROR - HAL code did not return HAL_OK.
+         *  \param E_SWITCHING_MODES - An error was encountered while switching QSPI peripheral mode.
+         *  \param E_INVALID_MODE - QSPI should not be written to while the program is executing from it.
+         */
+    enum STATUS
+    {
+        OK = 0,
+        E_HAL_ERROR,
+        E_SWITCHING_MODES,
+        E_INVALID_WRITE,
+    };
+
     /** Configuration structure for interfacing with QSPI Driver */
     struct Config
     {
@@ -114,6 +131,11 @@ class QSPIHandle
         \return Result::OK or Result::ERR
         */
     Result EraseSector(uint32_t address);
+
+    /** Returns the current class status. Useful for debugging.
+     *  \returns Status
+     */
+    Status GetStatus() { return pimpl_->GetStatus(); }
 
     QSPIHandle() : pimpl_(nullptr) {}
     QSPIHandle(const QSPIHandle& other) = default;
