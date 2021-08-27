@@ -1,4 +1,5 @@
 #include "per/qspi.h"
+#include "sys/system.h"
 #include "stm32h7xx_hal.h"
 #include "dev/flash_IS25LP080D.h"
 #include "dev/flash_IS25LP064A.h"
@@ -17,7 +18,7 @@ extern "C"
         return Result::ERR; \
 
 #define ERR_RECOVERY(err) \
-    SetMode(Mode::MEMORY_MAPPED); \
+    SetMode(Config::Mode::MEMORY_MAPPED); \
     status_ = err; \
     return Result::ERR;
 
@@ -30,19 +31,6 @@ namespace daisy
 class QSPIHandle::Impl
 {
   public:
-    /** 
-        Modes of operation.
-        Memory Mapped mode: QSPI configured so that the QSPI can be
-        read from starting address 0x90000000. Writing is not
-        possible in this mode. \n 
-        Indirect Polling mode: Device driver enabled. 
-        */
-    enum Mode
-    {
-        MEMORY_MAPPED,    /**< & */
-        INDIRECT_POLLING, /**< & */
-        MODE_LAST,
-    };
 
     QSPIHandle::Result Init(const QSPIHandle::Config& config);
 
@@ -65,8 +53,6 @@ class QSPIHandle::Impl
 
     GPIO_TypeDef* GetPort(size_t pin);
 
-    Mode GetMode() { return mode_; }
-
     QSPI_HandleTypeDef* GetHalHandle();
 
     size_t GetNumPins() { return pin_count_; }
@@ -86,7 +72,7 @@ class QSPIHandle::Impl
 
     QSPIHandle::Result AutopollingMemReady(uint32_t timeout);
 
-    QSPIHandle::Result SetMode(Mode mode);
+    QSPIHandle::Result SetMode(Config::Mode mode);
 
     QSPIHandle::Result CheckProgramMemory();
 
@@ -97,7 +83,6 @@ class QSPIHandle::Impl
 
     QSPIHandle::Config config_;
     QSPI_HandleTypeDef halqspi_;
-    Mode               mode_;
     Status             status_;
 
     static constexpr size_t pin_count_
@@ -124,8 +109,8 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
     // Set Handle Settings     o
 
     config_ = config;
-    QSPIHandle::Config::Device device;
-    device = config_.device;
+    auto device = config_.device;
+    auto mode = config_.mode;
 
     if(HAL_QSPI_DeInit(&halqspi_) != HAL_OK)
     {
@@ -177,7 +162,7 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
         ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
-    if(mode_ == Mode::MEMORY_MAPPED)
+    if(mode == Config::Mode::MEMORY_MAPPED)
     {
         if(EnableMemoryMappedMode() != QSPIHandle::Result::OK)
         {
@@ -206,7 +191,7 @@ QSPIHandle::Result QSPIHandle::Impl::WritePage(uint32_t address,
                                                uint8_t* buffer,
                                                bool     reset_mode)
 {
-    RETURN_IF_ERR(SetMode(Mode::INDIRECT_POLLING));
+    RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
     RETURN_IF_ERR(CheckProgramMemory());
 
     QSPI_CommandTypeDef s_command;
@@ -244,7 +229,7 @@ QSPIHandle::Result QSPIHandle::Impl::WritePage(uint32_t address,
     }
 
     if(reset_mode)
-        RETURN_IF_ERR(SetMode(Mode::MEMORY_MAPPED), Status::E_SWITCHING_MODE);
+        RETURN_IF_ERR(SetMode(Config::Mode::MEMORY_MAPPED));
     return QSPIHandle::Result::OK;
 }
 
@@ -329,7 +314,7 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
         }
     }
 
-    RETURN_IF_ERR(SetMode(Mode::MEMORY_MAPPED));
+    RETURN_IF_ERR(SetMode(Config::Mode::MEMORY_MAPPED));
     return QSPIHandle::Result::OK;
 }
 
@@ -382,7 +367,7 @@ QSPIHandle::Result QSPIHandle::Impl::EraseSector(uint32_t address)
 
     // Erasing takes a long time anyway, so not much point trying to
     // minimize reinitializations
-    RETURN_IF_ERR(SetMode(Mode::INDIRECT_POLLING));
+    RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
     RETURN_IF_ERR(CheckProgramMemory());
 
     if(WriteEnable() != QSPIHandle::Result::OK)
@@ -400,7 +385,7 @@ QSPIHandle::Result QSPIHandle::Impl::EraseSector(uint32_t address)
         ERR_RECOVERY(Status::E_HAL_ERROR);
     }
 
-    RETURN_IF_ERR(SetMode(Mode::MEMORY_MAPPED));
+    RETURN_IF_ERR(SetMode(Config::Mode::MEMORY_MAPPED));
     return QSPIHandle::Result::OK;
 }
 
@@ -719,14 +704,14 @@ QSPIHandle::Result QSPIHandle::Impl::AutopollingMemReady(uint32_t timeout)
     return QSPIHandle::Result::OK;
 }
 
-QSPIHandle::Result QSPIHandle::Impl::SetMode(QSPIHandle::Impl::Mode mode)
+QSPIHandle::Result QSPIHandle::Impl::SetMode(QSPIHandle::Config::Mode mode)
 {
-    if(mode_ != mode)
+    if(config_.mode != mode)
     {
-        mode_ = mode;
+        config_.mode = mode;
         if(Init(config_) != Result::OK)
         {
-            mode_ = Mode::MEMORY_MAPPED;
+            config_.mode = Config::Mode::MEMORY_MAPPED;
             status_ = Status::E_SWITCHING_MODES;
             Init(config_);
             return Result::ERR;
@@ -737,10 +722,10 @@ QSPIHandle::Result QSPIHandle::Impl::SetMode(QSPIHandle::Impl::Mode mode)
 
 QSPIHandle::Result QSPIHandle::Impl::CheckProgramMemory()
 {
-    if (System::GetProgramMemory() == System::ProgramMemory::QSPI && mode_ == Mode::INDIRECT_POLLING)
+    if (System::GetProgramMemory() == System::ProgramMemory::QSPI && config_.mode == Config::Mode::INDIRECT_POLLING)
     {
         status_ = Status::E_INVALID_MODE;
-        SetMode(Mode::MEMORY_MAPPED);
+        SetMode(Config::Mode::MEMORY_MAPPED);
         return Result::ERR;
     }
     return Result::OK;
@@ -878,6 +863,11 @@ const QSPIHandle::Config& QSPIHandle::GetConfig() const
 QSPIHandle::Result QSPIHandle::Deinit()
 {
     return pimpl_->Deinit();
+}
+
+QSPIHandle::Status QSPIHandle::GetStatus()
+{
+    return pimpl_->GetStatus();
 }
 
 QSPIHandle::Result

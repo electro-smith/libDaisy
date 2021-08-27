@@ -38,17 +38,17 @@ class QSPIHandle
          *  Warnings are indicated by a leading W.
          *  Errors are indicated by a leading E and cause an immediate exit.
          * 
-         *  \param OK - No errors have been reported.
+         *  \param GOOD - No errors have been reported.
          *  \param E_HAL_ERROR - HAL code did not return HAL_OK.
          *  \param E_SWITCHING_MODES - An error was encountered while switching QSPI peripheral mode.
          *  \param E_INVALID_MODE - QSPI should not be written to while the program is executing from it.
          */
-    enum STATUS
+    enum Status
     {
-        OK = 0,
+        GOOD = 0,
         E_HAL_ERROR,
         E_SWITCHING_MODES,
-        E_INVALID_WRITE,
+        E_INVALID_MODE,
     };
 
     /** Configuration structure for interfacing with QSPI Driver */
@@ -60,6 +60,20 @@ class QSPIHandle
             IS25LP080D,  /**< & */
             IS25LP064A,  /**< & */
             DEVICE_LAST, /**< & */
+        };
+
+        /** 
+        Modes of operation.
+        Memory Mapped mode: QSPI configured so that the QSPI can be
+        read from starting address 0x90000000. Writing is not
+        possible in this mode. \n 
+        Indirect Polling mode: Device driver enabled. 
+        */
+        enum Mode
+        {
+            MEMORY_MAPPED,    /**< & */
+            INDIRECT_POLLING, /**< & */
+            MODE_LAST,
         };
 
         //SCK,  CE# (active low)
@@ -74,6 +88,7 @@ class QSPIHandle
         } pin_config;
 
         Device device;
+        Mode mode;
     };
 
     /** 
@@ -135,7 +150,7 @@ class QSPIHandle
     /** Returns the current class status. Useful for debugging.
      *  \returns Status
      */
-    Status GetStatus() { return pimpl_->GetStatus(); }
+    Status GetStatus();
 
     QSPIHandle() : pimpl_(nullptr) {}
     QSPIHandle(const QSPIHandle& other) = default;

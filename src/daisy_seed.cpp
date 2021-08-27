@@ -216,6 +216,7 @@ void DaisySeed::ConfigureSdram()
 void DaisySeed::ConfigureQspi()
 {
     qspi_config.device = QSPIHandle::Config::Device::IS25LP064A;
+    qspi_config.mode = QSPIHandle::Config::Mode::MEMORY_MAPPED;
 
     qspi_config.pin_config.io0 = dsy_pin(DSY_GPIOF, 8);
     qspi_config.pin_config.io1 = dsy_pin(DSY_GPIOF, 9);
