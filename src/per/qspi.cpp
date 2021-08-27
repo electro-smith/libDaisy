@@ -14,15 +14,17 @@ extern "C"
 // TODO: AutopollingMemReady only works for 1-Line, not 4-Line
 
 #define RETURN_IF_ERR(func) \
-    if (func != Result::OK) \
-        return Result::ERR; \
+    if(func != Result::OK)  \
+        return Result::ERR;
 
-#define ERR_RECOVERY(err) \
+#define ERR_RECOVERY(err)                 \
     SetMode(Config::Mode::MEMORY_MAPPED); \
-    status_ = err; \
+    status_ = err;                        \
     return Result::ERR;
 
-#define ERR_SIMPLE(err) status_ = err; return Result::ERR;
+#define ERR_SIMPLE(err) \
+    status_ = err;      \
+    return Result::ERR;
 
 
 namespace daisy
@@ -31,7 +33,6 @@ namespace daisy
 class QSPIHandle::Impl
 {
   public:
-
     QSPIHandle::Result Init(const QSPIHandle::Config& config);
 
     const QSPIHandle::Config& GetConfig() const { return config_; }
@@ -108,9 +109,9 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
 {
     // Set Handle Settings     o
 
-    config_ = config;
+    config_     = config;
     auto device = config_.device;
-    auto mode = config_.mode;
+    auto mode   = config_.mode;
 
     if(HAL_QSPI_DeInit(&halqspi_) != HAL_OK)
     {
@@ -377,7 +378,7 @@ QSPIHandle::Result QSPIHandle::Impl::EraseSector(uint32_t address)
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-       ERR_RECOVERY(Status::E_HAL_ERROR);
+        ERR_RECOVERY(Status::E_HAL_ERROR);
     }
     if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != QSPIHandle::Result::OK)
@@ -712,7 +713,7 @@ QSPIHandle::Result QSPIHandle::Impl::SetMode(QSPIHandle::Config::Mode mode)
         if(Init(config_) != Result::OK)
         {
             config_.mode = Config::Mode::MEMORY_MAPPED;
-            status_ = Status::E_SWITCHING_MODES;
+            status_      = Status::E_SWITCHING_MODES;
             Init(config_);
             return Result::ERR;
         }
@@ -722,7 +723,8 @@ QSPIHandle::Result QSPIHandle::Impl::SetMode(QSPIHandle::Config::Mode mode)
 
 QSPIHandle::Result QSPIHandle::Impl::CheckProgramMemory()
 {
-    if (System::GetProgramMemory() == System::ProgramMemory::QSPI && config_.mode == Config::Mode::INDIRECT_POLLING)
+    if(System::GetProgramMemory() == System::ProgramMemory::QSPI
+       && config_.mode == Config::Mode::INDIRECT_POLLING)
     {
         status_ = Status::E_INVALID_MODE;
         SetMode(Config::Mode::MEMORY_MAPPED);

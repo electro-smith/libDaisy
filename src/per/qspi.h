@@ -88,7 +88,7 @@ class QSPIHandle
         } pin_config;
 
         Device device;
-        Mode mode;
+        Mode   mode;
     };
 
     /** 
