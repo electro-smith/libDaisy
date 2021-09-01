@@ -162,8 +162,11 @@ class System
      */
     const Config& GetConfig() const { return cfg_; }
 
-    /** Returns an enum representing the current (primary) memory space used
+    /** Returns an enum representing the current (primary) memory space used 
      *  for executing the program.
+     *  \param program_start Optionally indicate a specific address to be checked. 
+     *  Checks the VTOR by default, which will generally indicate the memory
+     *  from which the program is executed.
      */
     static ProgramMemory GetProgramMemory(uint32_t program_start = SCB->VTOR);
 
