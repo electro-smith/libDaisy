@@ -1,4 +1,4 @@
-#include "DaisyPatchSM.h"
+#include "daisy_patch_sm.h"
 
 #define PIN_ADC_CTRL_1 \
     {                  \
