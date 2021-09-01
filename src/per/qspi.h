@@ -34,30 +34,46 @@ class QSPIHandle
         ERR
     };
 
+    /** Indicates the current status of the module. 
+         *  Warnings are indicated by a leading W.
+         *  Errors are indicated by a leading E and cause an immediate exit.
+         * 
+         *  \param GOOD - No errors have been reported.
+         *  \param E_HAL_ERROR - HAL code did not return HAL_OK.
+         *  \param E_SWITCHING_MODES - An error was encountered while switching QSPI peripheral mode.
+         *  \param E_INVALID_MODE - QSPI should not be written to while the program is executing from it.
+         */
+    enum Status
+    {
+        GOOD = 0,
+        E_HAL_ERROR,
+        E_SWITCHING_MODES,
+        E_INVALID_MODE,
+    };
+
     /** Configuration structure for interfacing with QSPI Driver */
     struct Config
     {
-        /** 
-            Modes of operation.
-            Memory Mapped mode: QSPI configured so that the QSPI can be
-            read from starting address 0x90000000. Writing is not
-            possible in this mode. \n 
-            Indirect Polling mode: Device driver enabled. \n     
-            Read/Write possible via dsy_qspi_* functions
-            */
-        enum Mode
-        {
-            DSY_MEMORY_MAPPED, /**< & */
-            INDIRECT_POLLING,  /**< & */
-            MODE_LAST,
-        };
-
         /** Flash Devices supported. (Both of these are more-or-less the same, just different sizes). */
         enum Device
         {
             IS25LP080D,  /**< & */
             IS25LP064A,  /**< & */
             DEVICE_LAST, /**< & */
+        };
+
+        /** 
+        Modes of operation.
+        Memory Mapped mode: QSPI configured so that the QSPI can be
+        read from starting address 0x90000000. Writing is not
+        possible in this mode. \n 
+        Indirect Polling mode: Device driver enabled. 
+        */
+        enum Mode
+        {
+            MEMORY_MAPPED,    /**< & */
+            INDIRECT_POLLING, /**< & */
+            MODE_LAST,
         };
 
         //SCK,  CE# (active low)
@@ -71,8 +87,8 @@ class QSPIHandle
             dsy_gpio_pin ncs; /**< & */
         } pin_config;
 
-        Mode   mode;
         Device device;
+        Mode   mode;
     };
 
     /** 
@@ -130,6 +146,11 @@ class QSPIHandle
         \return Result::OK or Result::ERR
         */
     Result EraseSector(uint32_t address);
+
+    /** Returns the current class status. Useful for debugging.
+     *  \returns Status
+     */
+    Status GetStatus();
 
     QSPIHandle() : pimpl_(nullptr) {}
     QSPIHandle(const QSPIHandle& other) = default;
