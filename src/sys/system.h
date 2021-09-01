@@ -4,6 +4,7 @@
 #ifndef UNIT_TEST // for unit tests, a dummy implementation is provided below
 
 #include <cstdint>
+#include <stm32h7xx_hal.h>
 #include "per/tim.h"
 
 namespace daisy
@@ -56,17 +57,6 @@ class System
         bool       use_dcache;
         bool       use_icache;
         bool       skip_clocks;
-    };
-
-    /** A simple way to represent where the program is executing from
-     * 
-     */
-    enum ProgramMemory
-    {
-        INTERNAL_FLASH = 0,
-        AXI_SRAM,
-        QSPI,
-        INVALID_ADDRESS,
     };
 
     /** A simple way to represent where the program is executing from
@@ -175,21 +165,22 @@ class System
     /** Returns an enum representing the current (primary) memory space used
      *  for executing the program.
      */
-    static ProgramMemory GetProgramMemory();
+    static ProgramMemory GetProgramMemory(uint32_t program_start = SCB->VTOR);
+
+    static constexpr uint32_t sram_start = 0x24000000U;
+    static constexpr uint32_t sram_end   = sram_start + 0x80000U;
+    static constexpr uint32_t qspi_start = 0x90040000U;
+    // TODO -- this is a bit too large:
+    static constexpr uint32_t qspi_end       = qspi_start + 0x800000U;
+    static constexpr uint32_t internal_start = 0x08000000U;
+    static constexpr uint32_t internal_end   = internal_start + 0x20000U;
+
+    static constexpr uint32_t expected_stack = 0x20020000U;
 
   private:
     void   ConfigureClocks();
     void   ConfigureMpu();
     Config cfg_;
-
-    // TODO -- unify this with bootloader so we don't have reduntant values
-    static constexpr uint32_t sram_start_ = 0x24000000U;
-    static constexpr uint32_t sram_end_   = sram_start_ + 0x80000U;
-    static constexpr uint32_t qspi_start_ = 0x90040000U;
-    // TODO -- this is a bit too large:
-    static constexpr uint32_t qspi_end_       = qspi_start_ + 0x800000U;
-    static constexpr uint32_t internal_start_ = 0x08000000U;
-    static constexpr uint32_t internal_end_   = internal_start_ + 0x20000U;
 
     /** One TimerHandle to rule them all
      ** Maybe this whole class should be static.. */
