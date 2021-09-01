@@ -28,6 +28,7 @@ daisy_patch \
 daisy_petal \
 daisy_field \
 daisy_versio \
+daisy_patch_sm \
 sys/system \
 dev/sr_595 \
 dev/codec_ak4556 \
