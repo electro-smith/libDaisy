@@ -14,6 +14,7 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/sys/fatfs.c
     ${MODULE_DIR}/per/gpio.c
     ${MODULE_DIR}/per/qspi.c
+    ${MODULE_DIR}/per/rng.cpp
     ${MODULE_DIR}/per/sai.cpp
     ${MODULE_DIR}/per/sdmmc.cpp
     ${MODULE_DIR}/util/bsp_sd_diskio.c
