@@ -6,7 +6,6 @@
 
 namespace daisy
 {
-
 void RandomNumberGenerator::Init()
 {
     /** NON-HAL except defines/macros */
