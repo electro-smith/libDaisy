@@ -4,10 +4,13 @@
 
 ### Breaking Changes
 
+* qspi: updated from C to C++.
+
 ### Features
 
 * adc: added initialization mappings for pins ADC1_INP12 (PC2) and ADC1_INP13 (PC3) (Not accessible on Daisy Seed)
 * board: added support files for upcoming Daisy Patch SM hardware
+* rng: added new RandomNumberGenerator module that provides access to the hardware True Random Number Generator
 
 ### Bug fixes
 
@@ -16,6 +19,20 @@
 ### Other
 
 ### Migrating
+
+* QSPI
+~~~c++
+DaisySeed hw;
+// ...
+
+// Old
+hw.qspi_handle.mode = DSY_QSPI_MODE_INDIRECT_POLLING;
+dsy_qspi_init(&hw.qspi_handle);
+dsy_qspi_erase(address, address + sector_size);
+
+// New -- qspi mode is automatically handled
+hw.qspi.Erase(address, address + sector_size);
+~~~
 
 ## v1.0.0
 
