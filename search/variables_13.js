@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['updateratems_5f_1741',['updateRateMs_',['../structdaisy_1_1_ui_canvas_descriptor.html#acde42d0bcf27e4e78933e0bca8deb324',1,'daisy::UiCanvasDescriptor']]],
-  ['usb_5fhandle_1742',['usb_handle',['../classdaisy_1_1_daisy_seed.html#aca07ac3af9281104c5e8006024b23ae8',1,'daisy::DaisySeed']]],
-  ['usb_5fhandle_5f_1743',['usb_handle_',['../classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___i_n_t_e_r_n_a_l_01_4.html#aa72b7704835630d0a4b8c8e46fae8ee6',1,'daisy::LoggerImpl&lt; LOGGER_INTERNAL &gt;::usb_handle_()'],['../classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___e_x_t_e_r_n_a_l_01_4.html#aa83a8c57053eb33a321aa7273a95d1e4',1,'daisy::LoggerImpl&lt; LOGGER_EXTERNAL &gt;::usb_handle_()']]],
-  ['usbd_5finterface_5ffops_5ffs_1744',['USBD_Interface_fops_FS',['../group___u_s_b_d___c_d_c___i_f___exported___variables.html#ga99394ed19b774f171df96c2848c411ed',1,'usbd_cdc_if.h']]],
-  ['usbd_5finterface_5ffops_5fhs_1745',['USBD_Interface_fops_HS',['../group___u_s_b_d___c_d_c___i_f___exported___variables.html#ga54c4abfdfb31c4abdb087abdbbeb65d6',1,'usbd_cdc_if.h']]]
+  ['value_0',['value',['../structdaisy_1_1_control_change_event.html#a226c1cdfa6e61d2126e77aea3a9e7d3f',1,'daisy::ControlChangeEvent::value()'],['../structdaisy_1_1_pitch_bend_event.html#a1fc608e73e787366ee6822d63b6c7e7e',1,'daisy::PitchBendEvent::value()'],['../structdaisy_1_1_m_t_c_quarter_frame_event.html#acce45e382b1aff05a0398cd9eda94ea3',1,'daisy::MTCQuarterFrameEvent::value()'],['../structdaisy_1_1_reset_all_controllers_event.html#a888de3e15c1efc5859f54c09b9b40bfd',1,'daisy::ResetAllControllersEvent::value()']]],
+  ['valueencoderid_1',['valueEncoderId',['../structdaisy_1_1_u_i_1_1_special_control_ids.html#abb3ee25b5a9be3d686ac6d864cfb3633',1,'daisy::UI::SpecialControlIds']]],
+  ['valuepotid_2',['valuePotId',['../structdaisy_1_1_u_i_1_1_special_control_ids.html#ab8a09fcf60b2035f04fab95c3bda2e60',1,'daisy::UI::SpecialControlIds']]],
+  ['valuetomodify_3',['valueToModify',['../structdaisy_1_1_abstract_menu_1_1_item_config.html#a486b6e91fe2d329846a3dd81572ceeb5',1,'daisy::AbstractMenu::ItemConfig::valueToModify()'],['../structdaisy_1_1_abstract_menu_1_1_item_config.html#a90d6beb8e952dd0526a63c74c2d5f22d',1,'daisy::AbstractMenu::ItemConfig::valueToModify()']]],
+  ['velocity_4',['velocity',['../structdaisy_1_1_note_off_event.html#a9880e1c6eab10114affe27c1ec5e9419',1,'daisy::NoteOffEvent::velocity()'],['../structdaisy_1_1_note_on_event.html#a35cf35e69cd28f75c11d4cc0f8245988',1,'daisy::NoteOnEvent::velocity()']]]
 ];

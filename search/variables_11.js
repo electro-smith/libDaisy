@@ -1,19 +1,9 @@
 var searchData=
 [
-  ['samplerate_1719',['SampleRate',['../structdaisy_1_1_w_a_v___format_type_def.html#af94f78ad6e950a2084e143fdc4b4ba04',1,'daisy::WAV_FormatTypeDef']]],
-  ['scl_1720',['scl',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a168960729dc107c030c3a7cfe5c4b138',1,'daisy::I2CHandle::Config']]],
-  ['sclk_1721',['sclk',['../structdaisy_1_1_spi_handle_1_1_config.html#a2f789b2a42c5a05c271b01e735aebcde',1,'daisy::SpiHandle::Config']]],
-  ['sda_1722',['sda',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a8d0a82df1f49113e5e4e2aff071e16e3',1,'daisy::I2CHandle::Config']]],
-  ['sdram_5fhandle_1723',['sdram_handle',['../classdaisy_1_1_daisy_seed.html#a03d712e565ea71ec3d7126d0bbab6220',1,'daisy::DaisySeed']]],
-  ['seed_1724',['seed',['../classdaisy_1_1_daisy_patch.html#a4705ca24e5ebc4d8add7d83232162fd7',1,'daisy::DaisyPatch::seed()'],['../classdaisy_1_1_daisy_petal.html#a2ef75f14bf008985bf6635e9ce87106a',1,'daisy::DaisyPetal::seed()'],['../classdaisy_1_1_daisy_pod.html#a75907b96ea78262bf52dd7b565136f58',1,'daisy::DaisyPod::seed()']]],
-  ['selecteditemidx_5f_1725',['selectedItemIdx_',['../classdaisy_1_1_abstract_menu.html#a452a319456f718cc729207ce803fe4a4',1,'daisy::AbstractMenu']]],
-  ['song_1726',['song',['../structdaisy_1_1_song_select_event.html#ab8348fcb912c6ba63200a15eb0386975',1,'daisy::SongSelectEvent']]],
-  ['speed_1727',['speed',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a7795ab9b3b85bd2f51950b6985a31b97',1,'daisy::I2CHandle::Config']]],
-  ['state_1728',['state',['../structdsy__sdram__handle.html#a052f782ca4905360ced7ebede5d29e3a',1,'dsy_sdram_handle']]],
-  ['subchunk1id_1729',['SubChunk1ID',['../structdaisy_1_1_w_a_v___format_type_def.html#a027b8307b27f1648d55fbcc9be8fa02f',1,'daisy::WAV_FormatTypeDef']]],
-  ['subchunk1size_1730',['SubChunk1Size',['../structdaisy_1_1_w_a_v___format_type_def.html#a3f00bebc16e12c569d7a30d4d0da5abc',1,'daisy::WAV_FormatTypeDef']]],
-  ['subchunk2id_1731',['SubChunk2ID',['../structdaisy_1_1_w_a_v___format_type_def.html#ae31021692b18b35a7f33e9e5e8d0a3f1',1,'daisy::WAV_FormatTypeDef']]],
-  ['subchunk2size_1732',['SubCHunk2Size',['../structdaisy_1_1_w_a_v___format_type_def.html#a93968350c8f1abcd287e79ded8b6a81d',1,'daisy::WAV_FormatTypeDef']]],
-  ['switches_1733',['switches',['../classdaisy_1_1_daisy_petal.html#a4c23c5086d0620b98c2d4a86fde53af2',1,'daisy::DaisyPetal']]],
-  ['sysex_5fdata_1734',['sysex_data',['../structdaisy_1_1_midi_event.html#a3832d8ac412e42359eff562b56362cbb',1,'daisy::MidiEvent']]]
+  ['target_5fsamplerate_0',['target_samplerate',['../structdaisy_1_1_dac_handle_1_1_config.html#ae225f5c1bdd9f14c795972c4db3409fc',1,'daisy::DacHandle::Config']]],
+  ['text_1',['text',['../structdaisy_1_1_abstract_menu_1_1_item_config.html#a7d9c5d9a01014d1369c21e5d175b1f6a',1,'daisy::AbstractMenu::ItemConfig']]],
+  ['tx_2',['tx',['../structdaisy_1_1_uart_handler_1_1_config.html#aede71d4e3449591e661b0decfeecd993',1,'daisy::UartHandler::Config']]],
+  ['tx_5fbuff_5f_3',['tx_buff_',['../group__external.html#gab254d9ed55afc936ae351128a3209484',1,'daisy::Logger']]],
+  ['tx_5fptr_5f_4',['tx_ptr_',['../group__external.html#ga00faf12f737b89347c2a9f7af123b25f',1,'daisy::Logger']]],
+  ['type_5',['type',['../structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91',1,'daisy::MidiEvent::type()'],['../structdaisy_1_1_abstract_menu_1_1_item_config.html#a0b79dcaa186542997e04669b92d821ae',1,'daisy::AbstractMenu::ItemConfig::type()']]]
 ];

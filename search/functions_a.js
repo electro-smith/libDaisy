@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['keyboardfallingedge_1453',['KeyboardFallingEdge',['../classdaisy_1_1_daisy_field.html#a65579fc1babfa3e019d14e1425df839e',1,'daisy::DaisyField']]],
-  ['keyboardrisingedge_1454',['KeyboardRisingEdge',['../classdaisy_1_1_daisy_field.html#aaadcfa499a8561a7efb12b7a6cd4f5b0',1,'daisy::DaisyField']]],
-  ['keyboardstate_1455',['KeyboardState',['../classdaisy_1_1_daisy_field.html#a6e4dd175743a617524ddb68666106d7f',1,'daisy::DaisyField']]]
+  ['jumptoqspi_0',['JumpToQspi',['../classdaisy_1_1_system.html#aa057a56c9d9e8ec6c6fb7a5f148c0619',1,'daisy::System']]]
 ];
