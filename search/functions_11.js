@@ -2,8 +2,8 @@ var searchData=
 [
   ['rawstate_0',['RawState',['../classdaisy_1_1_switch.html#a77496bb98f169ba613821e2f1b7fc243',1,'daisy::Switch']]],
   ['read_1',['Read',['../classdaisy_1_1_ring_buffer.html#a112c8553ddc197ad491be9bd8ffabaf9',1,'daisy::RingBuffer::Read()'],['../classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html#a5135f3de87d57d04dbde0ab633370251',1,'daisy::RingBuffer&lt; T, 0 &gt;::Read()']]],
-  ['readable_2',['readable',['../classdaisy_1_1_ring_buffer.html#a7055d8829240337fc8979fa3eba2341c',1,'daisy::RingBuffer::readable()'],['../classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html#af813b904145707cef9794fbd8346f066',1,'daisy::RingBuffer&lt; T, 0 &gt;::readable()']]],
-  ['readable_3',['Readable',['../classdaisy_1_1_uart_handler.html#a4b8cad10b4f9a9520d2248c567babcc1',1,'daisy::UartHandler']]],
+  ['readable_2',['Readable',['../classdaisy_1_1_uart_handler.html#a4b8cad10b4f9a9520d2248c567babcc1',1,'daisy::UartHandler']]],
+  ['readable_3',['readable',['../classdaisy_1_1_ring_buffer.html#a7055d8829240337fc8979fa3eba2341c',1,'daisy::RingBuffer::readable()'],['../classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html#af813b904145707cef9794fbd8346f066',1,'daisy::RingBuffer&lt; T, 0 &gt;::readable()']]],
   ['readdataataddress_4',['ReadDataAtAddress',['../classdaisy_1_1_i2_c_handle.html#a2a7a2bcf654a383c6032a86a13645ea3',1,'daisy::I2CHandle']]],
   ['receiveblocking_5',['ReceiveBlocking',['../classdaisy_1_1_i2_c_handle.html#a5232996113cc203d72cb75e57b62fa9d',1,'daisy::I2CHandle']]],
   ['receivedma_6',['ReceiveDma',['../classdaisy_1_1_i2_c_handle.html#ad6f3fdb091285a40a34ca2ebf09a94a8',1,'daisy::I2CHandle']]],

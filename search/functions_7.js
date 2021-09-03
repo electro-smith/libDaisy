@@ -60,5 +60,6 @@ var searchData=
   ['gettick_57',['GetTick',['../classdaisy_1_1_timer_handle.html#a00c499385a68755b49569c3149c0c603',1,'daisy::TimerHandle::GetTick()'],['../classdaisy_1_1_system.html#a43b51c5144a81671f7f7a9df47978995',1,'daisy::System::GetTick()']]],
   ['gettickfreq_58',['GetTickFreq',['../classdaisy_1_1_system.html#a6f66b23c64c258326e754168eca26847',1,'daisy::System']]],
   ['getus_59',['GetUs',['../classdaisy_1_1_timer_handle.html#aa22a2290d5fb0cc957dc5b06ce21789b',1,'daisy::TimerHandle::GetUs()'],['../classdaisy_1_1_system.html#ac5b9751a02cb0230fabc1cf189ac8d08',1,'daisy::System::GetUs()']]],
-  ['green_60',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]]
+  ['getvalue_60',['GetValue',['../classdaisy_1_1_random_number_generator.html#a3de7c2ca6f6ffeb310464c1377f3fde7',1,'daisy::RandomNumberGenerator']]],
+  ['green_61',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]]
 ];
