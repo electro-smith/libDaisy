@@ -22,8 +22,8 @@ var searchData=
   ['tx_19',['tx',['../structdaisy_1_1_uart_handler_1_1_config.html#aede71d4e3449591e661b0decfeecd993',1,'daisy::UartHandler::Config']]],
   ['tx_5fbuff_5f_20',['tx_buff_',['../group__external.html#gab254d9ed55afc936ae351128a3209484',1,'daisy::Logger']]],
   ['tx_5fptr_5f_21',['tx_ptr_',['../group__external.html#ga00faf12f737b89347c2a9f7af123b25f',1,'daisy::Logger']]],
-  ['type_22',['type',['../structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91',1,'daisy::MidiEvent::type()'],['../structdaisy_1_1_abstract_menu_1_1_item_config.html#a0b79dcaa186542997e04669b92d821ae',1,'daisy::AbstractMenu::ItemConfig::type()']]],
-  ['type_23',['Type',['../classdaisy_1_1_switch.html#a944058682bae079439ddddd42302b483',1,'daisy::Switch']]],
+  ['type_22',['Type',['../classdaisy_1_1_switch.html#a944058682bae079439ddddd42302b483',1,'daisy::Switch']]],
+  ['type_23',['type',['../structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91',1,'daisy::MidiEvent::type()'],['../structdaisy_1_1_abstract_menu_1_1_item_config.html#a0b79dcaa186542997e04669b92d821ae',1,'daisy::AbstractMenu::ItemConfig::type()']]],
   ['type_5fmomentary_24',['TYPE_MOMENTARY',['../classdaisy_1_1_switch.html#a944058682bae079439ddddd42302b483aaddc897d9c79b39b2024829bebb336a1',1,'daisy::Switch']]],
   ['type_5ftoggle_25',['TYPE_TOGGLE',['../classdaisy_1_1_switch.html#a944058682bae079439ddddd42302b483a5c6a5cc5d4fbe03be97b81244e669038',1,'daisy::Switch']]]
 ];
