@@ -46,6 +46,7 @@ hid/logger \
 per/adc \
 per/dac \
 per/i2c \
+per/rng \
 per/qspi \
 per/spi \
 per/tim \

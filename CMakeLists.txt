@@ -13,6 +13,7 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/dev/sdram.c
     ${MODULE_DIR}/sys/fatfs.c
     ${MODULE_DIR}/per/gpio.c
+    ${MODULE_DIR}/per/rng.cpp
     ${MODULE_DIR}/per/sai.cpp
     ${MODULE_DIR}/per/sdmmc.cpp
     ${MODULE_DIR}/util/bsp_sd_diskio.c
@@ -24,7 +25,6 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/usbd/usbd_cdc_if.c
     ${MODULE_DIR}/usbd/usbd_desc.c
     ${MODULE_DIR}/usbd/usbd_conf.c
-
     ${MODULE_DIR}/daisy_seed.cpp
     ${MODULE_DIR}/daisy_pod.cpp
     ${MODULE_DIR}/daisy_patch.cpp
