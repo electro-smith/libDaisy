@@ -57,6 +57,7 @@
 #include "util/FIFO.h"
 #include "util/FixedCapStr.h"
 #include "util/MappedValue.h"
+#include "util/PersistentStorage.h"
 #include "util/Stack.h"
 #include "util/WaveTableLoader.h"
 #include "util/WavWriter.h"
