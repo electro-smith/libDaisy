@@ -4,7 +4,7 @@
 
 ### Breaking Changes
 
-* qspi: updated from C to C++.
+* qspi: updated from C to C++, and fixed up the API to be cleaner, and simpler to use
 
 ### Features
 
