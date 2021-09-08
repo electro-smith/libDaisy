@@ -88,6 +88,7 @@ class VoctCalibration
         scale_  = scale;
         offset_ = offset;
         cal_    = true;
+        return Status::OK;
     }
 
     /** Process a value through the calibrated data to get a MIDI Note number */
@@ -97,8 +98,8 @@ class VoctCalibration
     }
 
   private:
-    float scale_, offset_;
     float c1_, c3_;
+    float scale_, offset_;
     bool  c1_read_, cal_;
 };
 
