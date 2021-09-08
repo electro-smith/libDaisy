@@ -88,6 +88,12 @@ Public Types</h2></td></tr>
 , <a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7acd22bad976363fdd1bfbf6759fede482">ERR</a>
  }</td></tr>
 <tr class="separator:acee8aad7e8008a2dbdfc8f260712bab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7c484882faf187c7c4153db7cf5e4da"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4da">DmaDirection</a> { <a class="el" href="classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daaf9c24782c24c237d16e79f18e2fa9046">RX</a>
+, <a class="el" href="classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daa869036c9d97cf6593c6f1c2ccfd99a49">TX</a>
+ }</td></tr>
+<tr class="separator:aa7c484882faf187c7c4153db7cf5e4da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a393cb62a82b7f197a0464395e364e8"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a8a393cb62a82b7f197a0464395e364e8">CallbackFunctionPtr</a>) (void *context, <a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a> result)</td></tr>
+<tr class="separator:a8a393cb62a82b7f197a0464395e364e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -105,12 +111,60 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a89ccde60807d2681bc96425c0600c82d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91106fe656c12d5b7be7858bcb2c6d16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a91106fe656c12d5b7be7858bcb2c6d16">BlockingReceive</a> (uint8_t *buffer, uint16_t size, uint32_t timeout)</td></tr>
 <tr class="separator:a91106fe656c12d5b7be7858bcb2c6d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a918f794a67be56c96e3533bef3bafba5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a918f794a67be56c96e3533bef3bafba5">DmaTransmit</a> (uint8_t *buff, size_t size, <a class="el" href="classdaisy_1_1_spi_handle.html#a8a393cb62a82b7f197a0464395e364e8">CallbackFunctionPtr</a> callback, void *callback_context)</td></tr>
+<tr class="separator:a918f794a67be56c96e3533bef3bafba5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4231ce536825d2e483fa82928e6f1e56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a4231ce536825d2e483fa82928e6f1e56">DmaReceive</a> (uint8_t *buff, size_t size, <a class="el" href="classdaisy_1_1_spi_handle.html#a8a393cb62a82b7f197a0464395e364e8">SpiHandle::CallbackFunctionPtr</a> callback, void *callback_context)</td></tr>
+<tr class="separator:a4231ce536825d2e483fa82928e6f1e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a903118263e0604c4ba351c972d005386"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a903118263e0604c4ba351c972d005386">CheckError</a> ()</td></tr>
 <tr class="separator:a903118263e0604c4ba351c972d005386"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Handler for serial peripheral interface </p>
-</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a8a393cb62a82b7f197a0464395e364e8" name="a8a393cb62a82b7f197a0464395e364e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a393cb62a82b7f197a0464395e364e8">&#9670;&nbsp;</a></span>CallbackFunctionPtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* daisy::SpiHandle::CallbackFunctionPtr) (void *context, <a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a> result)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >A callback to be executed when a dma transfer is complete. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="aa7c484882faf187c7c4153db7cf5e4da" name="aa7c484882faf187c7c4153db7cf5e4da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7c484882faf187c7c4153db7cf5e4da">&#9670;&nbsp;</a></span>DmaDirection</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4da">daisy::SpiHandle::DmaDirection</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa7c484882faf187c7c4153db7cf5e4daaf9c24782c24c237d16e79f18e2fa9046" name="aa7c484882faf187c7c4153db7cf5e4daaf9c24782c24c237d16e79f18e2fa9046"></a>RX&#160;</td><td class="fielddoc"><p >&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa7c484882faf187c7c4153db7cf5e4daa869036c9d97cf6593c6f1c2ccfd99a49" name="aa7c484882faf187c7c4153db7cf5e4daa869036c9d97cf6593c6f1c2ccfd99a49"></a>TX&#160;</td><td class="fielddoc"><p >&amp; </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="acee8aad7e8008a2dbdfc8f260712bab7" name="acee8aad7e8008a2dbdfc8f260712bab7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acee8aad7e8008a2dbdfc8f260712bab7">&#9670;&nbsp;</a></span>Result</h2>
 
@@ -240,6 +294,108 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>the result of HAL_SPI_GetError() to the user. </dd></dl>
+
+</div>
+</div>
+<a id="a4231ce536825d2e483fa82928e6f1e56" name="a4231ce536825d2e483fa82928e6f1e56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4231ce536825d2e483fa82928e6f1e56">&#9670;&nbsp;</a></span>DmaReceive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a> daisy::SpiHandle::DmaReceive </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classdaisy_1_1_spi_handle.html#a8a393cb62a82b7f197a0464395e364e8">SpiHandle::CallbackFunctionPtr</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>callback_context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >DMA-based receive </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">*buff</td><td>input buffer </td></tr>
+    <tr><td class="paramname">size</td><td>buffer size </td></tr>
+    <tr><td class="paramname">callback</td><td>A callback to execute when the transfer finishes, or NULL. </td></tr>
+    <tr><td class="paramname">callback_context</td><td>A pointer that will be passed back to you in the callback. <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the receive was successful or not </dd></dl>
+
+</div>
+</div>
+<a id="a918f794a67be56c96e3533bef3bafba5" name="a918f794a67be56c96e3533bef3bafba5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a918f794a67be56c96e3533bef3bafba5">&#9670;&nbsp;</a></span>DmaTransmit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a> daisy::SpiHandle::DmaTransmit </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classdaisy_1_1_spi_handle.html#a8a393cb62a82b7f197a0464395e364e8">CallbackFunctionPtr</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>callback_context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >DMA-based transmit </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">*buff</td><td>input buffer </td></tr>
+    <tr><td class="paramname">size</td><td>buffer size </td></tr>
+    <tr><td class="paramname">callback</td><td>A callback to execute when the transfer finishes, or NULL. </td></tr>
+    <tr><td class="paramname">callback_context</td><td>A pointer that will be passed back to you in the callback. <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the transmit was successful or not </dd></dl>
 
 </div>
 </div>

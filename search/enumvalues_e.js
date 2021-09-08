@@ -13,5 +13,6 @@ var searchData=
   ['ring_5fled_5f6_10',['RING_LED_6',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682add3683515df29d7a38efde9933530895',1,'daisy::DaisyPetal']]],
   ['ring_5fled_5f7_11',['RING_LED_7',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a86e88f2c21c605b6bb514c3eaf6f330e',1,'daisy::DaisyPetal']]],
   ['ring_5fled_5f8_12',['RING_LED_8',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a1f6fc229b42f772bc9088f62ce3e5036',1,'daisy::DaisyPetal']]],
-  ['ring_5fled_5flast_13',['RING_LED_LAST',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a4b60f0a2dbcfe749c77a3cf054f85e39',1,'daisy::DaisyPetal']]]
+  ['ring_5fled_5flast_13',['RING_LED_LAST',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a4b60f0a2dbcfe749c77a3cf054f85e39',1,'daisy::DaisyPetal']]],
+  ['rx_14',['RX',['../classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daaf9c24782c24c237d16e79f18e2fa9046',1,'daisy::SpiHandle']]]
 ];

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['callbackfunctionitem_0',['callbackFunctionItem',['../classdaisy_1_1_abstract_menu.html#a48039035e616d6ecf42cc15561544fadac69516f5d50e0ed1f9972b5b3130fa84',1,'daisy::AbstractMenu']]],
-  ['callbackfunctionptr_1',['CallbackFunctionPtr',['../classdaisy_1_1_sai_handle.html#ac7ca41a3568296357b71b6848d95c69c',1,'daisy::SaiHandle::CallbackFunctionPtr()'],['../classdaisy_1_1_i2_c_handle.html#a865f3f2c45b937c4084081f807e15d7b',1,'daisy::I2CHandle::CallbackFunctionPtr()']]],
+  ['callbackfunctionptr_1',['CallbackFunctionPtr',['../classdaisy_1_1_spi_handle.html#a8a393cb62a82b7f197a0464395e364e8',1,'daisy::SpiHandle::CallbackFunctionPtr()'],['../classdaisy_1_1_sai_handle.html#ac7ca41a3568296357b71b6848d95c69c',1,'daisy::SaiHandle::CallbackFunctionPtr()'],['../classdaisy_1_1_i2_c_handle.html#a865f3f2c45b937c4084081f807e15d7b',1,'daisy::I2CHandle::CallbackFunctionPtr()']]],
   ['canbeenteredforediting_2',['CanBeEnteredForEditing',['../classdaisy_1_1_abstract_menu_1_1_custom_item.html#aa55f0bcb0a3252e7980ea8e466669c28',1,'daisy::AbstractMenu::CustomItem']]],
   ['capacity_3',['capacity',['../classdaisy_1_1_ring_buffer.html#afac012f3c8d9c92fd9651576c9981f32',1,'daisy::RingBuffer::capacity()'],['../classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html#a434c2762e5592f6946072d065f902ac3',1,'daisy::RingBuffer&lt; T, 0 &gt;::capacity()']]],
   ['cardspeed_4',['CardSpeed',['../struct_d_s_y___s_d___card_info_type_def.html#a9d42091e137076f567f930e4c53ae26f',1,'DSY_SD_CardInfoTypeDef']]],
