@@ -54,6 +54,7 @@
 #include "ui/FullScreenItemMenu.h"
 #include "util/scopedirqblocker.h"
 #include "util/CpuLoadMeter.h"
+#include "util/CalibrationUtils.h"
 #include "util/FIFO.h"
 #include "util/FixedCapStr.h"
 #include "util/MappedValue.h"
