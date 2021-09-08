@@ -12,6 +12,7 @@
 * board: added support files for upcoming Daisy Patch SM hardware
 * rng: added new RandomNumberGenerator module that provides access to the hardware True Random Number Generator
 * util: added new PersistentStorage class for storing/recalling data between power cycles
+* util: added new VoctCalibration helper class for calibrating ADC inputs
 
 ### Bug fixes
 
