@@ -79,6 +79,16 @@ class VoctCalibration
         return Status::ERR_CAL_NOT_COMPLETE;
     }
 
+    /** Manually set the calibration data and mark internally as "calibrated" 
+     *  This is used to reset the data after a power cycle without having to 
+     *  redo the calibration procedure.
+    */
+    Status SetData(float scale, float offset)
+    {
+        scale_  = scale;
+        offset_ = offset;
+        cal_    = true;
+    }
 
     /** Process a value through the calibrated data to get a MIDI Note number */
     inline float ProcessInput(const float inval)
