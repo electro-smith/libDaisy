@@ -41,7 +41,7 @@ class Random
      *  \param min the minimum value to return, defaults to 0.f
      *  \param max the maximum value to return, defaults to 1.f
      */
-    static float GetFloat(float min=0.f, float max=1.f);
+    static float GetFloat(float min = 0.f, float max = 1.f);
 
     /** Checks the peripheral to see if a new value is ready 
      * 
