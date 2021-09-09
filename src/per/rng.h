@@ -9,11 +9,11 @@ namespace daisy
  * 
  * Provides static access to the built-in True Random Number Generator
  */
-class RandomNumberGenerator
+class Random
 {
   public:
-    RandomNumberGenerator() {}
-    ~RandomNumberGenerator() {}
+    Random() {}
+    ~Random() {}
 
     /** Initializes the Peripheral */
     static void Init();
@@ -34,6 +34,14 @@ class RandomNumberGenerator
      *  @return a 32-bit random number
      */
     static uint32_t GetValue();
+
+    /** Returns a floating point value between the specified
+     *  minimum and maximum. Calls GetValue() internally. 
+     * 
+     *  \param min the minimum value to return, defaults to 0.f
+     *  \param max the maximum value to return, defaults to 1.f
+     */
+    static float GetFloat(float min=0.f, float max=1.f);
 
     /** Checks the peripheral to see if a new value is ready 
      * 
