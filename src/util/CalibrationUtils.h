@@ -27,7 +27,7 @@ class VoctCalibration
 
     ~VoctCalibration() {}
 
-    enum class Status
+    enum class Result
     {
         OK,
         ERR_INVALID_RANGE,
@@ -35,22 +35,40 @@ class VoctCalibration
         ERR_CAL_NOT_COMPLETE,
     };
 
+    enum class State
+    {
+        WAITING,
+        STARTED,
+        FINISHED,
+    };
+
+    /** Return the current state of the system */
+    inline State GetStatus() const
+    {
+        if(cal_)
+            return State::FINISHED;
+        else if(c1_read_)
+            return State::STARTED;
+        else
+            return State::WAITING;
+    }
+
     /** Record the input value corresponding to 1 Volt */
-    Status Record1V(float val)
+    Result Record1V(float val)
     {
         c1_      = val;
         c1_read_ = true;
-        return Status::OK;
+        return Result::OK;
     }
 
     /** Record the input value corresponding to 3 Volts,
      *  and calculate the calibration data.
      */
-    Status Record3V(float val)
+    Result Record3V(float val)
     {
         /** Ensure cal is being done in order */
         if(!c1_read_)
-            return Status::ERR_CAL_OUT_OF_ORDER;
+            return Result::ERR_CAL_OUT_OF_ORDER;
 
         c3_         = val;
         float delta = c3_ - c1_;
@@ -62,33 +80,33 @@ class VoctCalibration
         }
         else
         {
-            return Status::ERR_INVALID_RANGE;
+            return Result::ERR_INVALID_RANGE;
         }
-        return Status::OK;
+        return Result::OK;
     }
 
     /** Get the scale and offset data from the calibration */
-    Status GetData(float *scale, float *offset)
+    Result GetData(float *scale, float *offset)
     {
         if(cal_)
         {
             *scale  = scale_;
             *offset = offset_;
-            return Status::OK;
+            return Result::OK;
         }
-        return Status::ERR_CAL_NOT_COMPLETE;
+        return Result::ERR_CAL_NOT_COMPLETE;
     }
 
     /** Manually set the calibration data and mark internally as "calibrated" 
      *  This is used to reset the data after a power cycle without having to 
      *  redo the calibration procedure.
     */
-    Status SetData(float scale, float offset)
+    Result SetData(float scale, float offset)
     {
         scale_  = scale;
         offset_ = offset;
         cal_    = true;
-        return Status::OK;
+        return Result::OK;
     }
 
     /** Process a value through the calibrated data to get a MIDI Note number */
