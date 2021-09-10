@@ -32,6 +32,22 @@
     {                  \
         DSY_GPIOC, 1   \
     }
+#define PIN_ADC_CTRL_9 \
+    {                  \
+        DSY_GPIOA, 1   \
+    }
+#define PIN_ADC_CTRL_10 \
+    {                   \
+        DSY_GPIOA, 0    \
+    }
+#define PIN_ADC_CTRL_11 \
+    {                   \
+        DSY_GPIOC, 3    \
+    }
+#define PIN_ADC_CTRL_12 \
+    {                   \
+        DSY_GPIOC, 2    \
+    }
 
 #define DUMMYPIN     \
     {                \
@@ -95,8 +111,105 @@ static const dsy_gpio_pin kPinMap[4][10] = {
 
 namespace daisy
 {
+/** outside of class static buffer(s) for DMA access */
+uint16_t DMA_BUFFER_MEM_SECTION dsy_patch_sm_dac_buffer[2][48];
+
+class DaisyPatchSM::Impl
+{
+  public:
+    Impl()
+    {
+        dac_running_            = false;
+        dac_buffer_size_        = 48;
+        dac_output_[0]          = 0;
+        dac_output_[1]          = 0;
+        internal_dac_buffer_[0] = dsy_patch_sm_dac_buffer[0];
+        internal_dac_buffer_[1] = dsy_patch_sm_dac_buffer[1];
+    }
+
+    void InitDac();
+
+    void StartDac(DacHandle::DacCallback callback);
+
+    void StopDac();
+
+    static void InternalDacCallback(uint16_t **output, size_t size);
+
+    /** Based on a 0-5V output with a 0-4095 12-bit DAC */
+    static inline uint16_t VoltageToCode(float input)
+    {
+        float pre = input * 819.2f;
+        return (uint16_t)pre;
+    }
+
+    inline void WriteCvOut(int channel, float voltage)
+    {
+        if(channel == 0 || channel == 1)
+            dac_output_[0] = VoltageToCode(voltage);
+        if(channel == 0 || channel == 2)
+            dac_output_[1] = VoltageToCode(voltage);
+    }
+
+    size_t    dac_buffer_size_;
+    uint16_t *internal_dac_buffer_[2];
+    uint16_t  dac_output_[2];
+    DacHandle dac_;
+
+  private:
+    bool dac_running_;
+};
+
+/** Static Local Object */
+static DaisyPatchSM::Impl patch_sm_hw;
+
+/** Impl function definintions */
+
+void DaisyPatchSM::Impl::InitDac()
+{
+    DacHandle::Config dac_config;
+    dac_config.mode = DacHandle::Mode::DMA;
+    dac_config.bitdepth
+        = DacHandle::BitDepth::BITS_12; /**< Sets the output value to 0-4095 */
+    dac_config.chn               = DacHandle::Channel::BOTH;
+    dac_config.buff_state        = DacHandle::BufferState::ENABLED;
+    dac_config.target_samplerate = 48000;
+    dac_.Init(dac_config);
+}
+
+void DaisyPatchSM::Impl::StartDac(DacHandle::DacCallback callback)
+{
+    if(dac_running_)
+        dac_.Stop();
+    dac_.Start(internal_dac_buffer_[0],
+               internal_dac_buffer_[1],
+               dac_buffer_size_,
+               callback == nullptr ? InternalDacCallback : callback);
+    dac_running_ = true;
+}
+
+void DaisyPatchSM::Impl::StopDac()
+{
+    dac_.Stop();
+    dac_running_ = false;
+}
+
+
+void DaisyPatchSM::Impl::InternalDacCallback(uint16_t **output, size_t size)
+{
+    /** We could add some smoothing, interp, or something to make this a bit less waste-y */
+    std::fill(&output[0][0], &output[0][size], patch_sm_hw.dac_output_[0]);
+    std::fill(&output[1][1], &output[1][size], patch_sm_hw.dac_output_[1]);
+}
+
+/** Actual DaisyPatchSM implementation 
+ *  With the pimpl model in place, we can/should probably
+ *  move the rest of the implementation to the Impl class
+ */
+
 void DaisyPatchSM::Init()
 {
+    /** Assign pimpl pointer */
+    pimpl_ = &patch_sm_hw;
     /** Initialize the MCU and clock tree */
     System::Config syscfg;
     syscfg.Defaults();
@@ -152,7 +265,7 @@ void DaisyPatchSM::Init()
     callback_rate_ = AudioSampleRate() / AudioBlockSize();
 
     /** ADC Init */
-    AdcChannelConfig adc_config[kNumAdcInputs];
+    AdcChannelConfig adc_config[ADC_LAST];
     dsy_gpio_pin     adc_pins[] = {
         PIN_ADC_CTRL_1,
         PIN_ADC_CTRL_2,
@@ -162,19 +275,33 @@ void DaisyPatchSM::Init()
         PIN_ADC_CTRL_6,
         PIN_ADC_CTRL_7,
         PIN_ADC_CTRL_8,
+        PIN_ADC_CTRL_9,
+        PIN_ADC_CTRL_10,
+        PIN_ADC_CTRL_11,
+        PIN_ADC_CTRL_12,
     };
-    for(int i = 0; i < kNumAdcInputs; i++)
+
+    for(int i = 0; i < ADC_LAST; i++)
     {
         adc_config[i].InitSingle(adc_pins[i]);
     }
-    adc.Init(adc_config, kNumAdcInputs);
+    adc.Init(adc_config, ADC_LAST);
     /** Control Init */
-    for(size_t i = 0; i < kNumAdcInputs; i++)
+    for(size_t i = 0; i < ADC_LAST; i++)
     {
-        controls[i].InitBipolarCv(adc.GetPtr(i), callback_rate_);
+        if(i < ADC_9)
+            controls[i].InitBipolarCv(adc.GetPtr(i), callback_rate_);
+        else
+            controls[i].Init(adc.GetPtr(i), callback_rate_);
     }
 
+
+    /** DAC init */
+    pimpl_->InitDac();
+
+    /** Start any background stuff */
     StartAdc();
+    StartDac();
 }
 
 void DaisyPatchSM::StartAudio(AudioHandle::AudioCallback cb)
@@ -252,7 +379,7 @@ void DaisyPatchSM::StopAdc()
 
 void DaisyPatchSM::ProcessAnalogControls()
 {
-    for(int i = 0; i < kNumAdcInputs; i++)
+    for(int i = 0; i < ADC_LAST; i++)
     {
         controls[i].Process();
     }
@@ -271,6 +398,21 @@ dsy_gpio_pin DaisyPatchSM::GetPin(PinBank bank, int idx)
         return DUMMYPIN;
     else
         return kPinMap[static_cast<int>(bank)][idx - 1];
+}
+
+void DaisyPatchSM::StartDac(DacHandle::DacCallback callback)
+{
+    pimpl_->StartDac(callback);
+}
+
+void DaisyPatchSM::StopDac()
+{
+    pimpl_->StopDac();
+}
+
+void DaisyPatchSM::WriteCvOut(const int channel, float voltage)
+{
+    pimpl_->WriteCvOut(channel, voltage);
 }
 
 bool DaisyPatchSM::ValidateSDRAM()

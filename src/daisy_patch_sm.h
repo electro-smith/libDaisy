@@ -43,22 +43,20 @@
 #define D9 daisy::DaisyPatchSM::PinBank::D, 9
 #define D10 daisy::DaisyPatchSM::PinBank::D, 10
 
+
 namespace daisy
 {
-/**@brief Board support file for DaisyPatchSM hardware
- * @author shensley
- * @ingroup boards
+/** @brief Board support file for DaisyPatchSM hardware
+ *  @author shensley
+ *  @ingroup boards
  * 
- * Daisy Patch SM is a complete Eurorack module DSP engine.
- * Based on the Daisy Seed, with circuits added for 
- * interfacing directly with eurorack modular synthesizers.
+ *  Daisy Patch SM is a complete Eurorack module DSP engine.
+ *  Based on the Daisy Seed, with circuits added for 
+ *  interfacing directly with eurorack modular synthesizers.
  */
 class DaisyPatchSM
 {
   public:
-    /** Number of -5V to 5V ADC Inputs on the board */
-    static constexpr int kNumAdcInputs = 8;
-
     /** Helper for mapping pins, and accessing them using the `GetPin` function */
     enum class PinBank
     {
@@ -66,6 +64,44 @@ class DaisyPatchSM
         B,
         C,
         D
+    };
+
+    /** Accessors for the Analog Controls. 
+     *  These cover the 8x Bipolar CV inputs
+     *  as well as the 4x 0-3V3 ADC inputs on
+     *  the hardware 
+     * 
+     *  When reading a value with GetAdcValue()
+     * 
+     *  You can use either (assuming obj. is named "patch"):
+     *  
+     *  patch.GetAdcValue(patch.CV_1);
+     *  or
+     *  patch.GetAdcValue(DaisyPatchSM::CV_1);
+     */
+    enum
+    {
+        CV_1 = 0x00,
+        CV_2,
+        CV_3,
+        CV_4,
+        CV_5,
+        CV_6,
+        CV_7,
+        CV_8,
+        ADC_9,
+        ADC_10,
+        ADC_11,
+        ADC_12,
+        ADC_LAST,
+    };
+
+    /** Enum for addressing the CV Outputs via the WriteCvOut function. */
+    enum
+    {
+        CV_OUT_BOTH = 0x00,
+        CV_OUT_1,
+        CV_OUT_2,
     };
 
     DaisyPatchSM() {}
@@ -113,7 +149,10 @@ class DaisyPatchSM
     /** Returns the rate at which the audio callback will be called in Hz */
     float AudioCallbackRate();
 
-    /** Starts the Control ADCs */
+    /** Starts the Control ADCs 
+     * 
+     *  This is started automatically when Init() is called.
+     */
     void StartAdc();
 
     /** Stops the Control ADCs */
@@ -122,7 +161,9 @@ class DaisyPatchSM
     /** Reads and filters all of the analog control inputs */
     void ProcessAnalogControls();
 
-    /** Reads and debounces any of the digital control inputs */
+    /** Reads and debounces any of the digital control inputs 
+     *  This does nothing on this board at this time.
+    */
     void ProcessDigitalControls();
 
     /** Does both of the above */
@@ -143,6 +184,48 @@ class DaisyPatchSM
      *  \param idx pin number between 1 and 10 for each of the pins on each header.
      */
     dsy_gpio_pin GetPin(PinBank bank, int idx);
+
+    /** Starts the DAC for the CV Outputs 
+     * 
+     *  By default this starts by running the 
+     *  internal callback at 48kHz, which will 
+     *  update the values based on the SetCvOut 
+     *  function.
+     * 
+     *  This is started automatically when Init() is called.
+     */
+    void StartDac(DacHandle::DacCallback callback = nullptr);
+
+    /** Stop the DAC from updating. 
+     *  This will suspend the CV Outputs from changing 
+     */
+    void StopDac();
+
+    /** Sets specified DAC channel to the target voltage. 
+     *  This may not be 100% accurate without calibration. 
+     *  
+     *  \todo Add Calibration to CV Outputs
+     * 
+     *  \param channel desired channel to update. 0 is both, otherwise 1 or 2 are valid.
+     *  \param volage value in Volts that you'd like to write to the DAC
+     */
+    void WriteCvOut(const int channel, float voltage);
+
+
+    /** Here are some wrappers around libDaisy Static functions 
+     *  to provide simpler syntax to those who prefer it. */
+
+    /** Delays for a specified number of milliseconds */
+    inline void Delay(uint32_t milliseconds) { System::Delay(milliseconds); }
+
+    /** Gets a random 32-bit value */
+    inline uint32_t GetRandomValue() { return Random::GetValue(); }
+
+    /** Gets a random floating point value between the specified minimum, and maxmimum */
+    inline float GetRandomFloat(float min = 0.f, float max = 1.f)
+    {
+        return Random::GetFloat(min, max);
+    }
 
     /** Print formatted debug log message
      */
@@ -186,11 +269,23 @@ class DaisyPatchSM
     AdcHandle        adc;
     UsbHandle        usb;
     Pcm3060          codec;
-    AnalogControl    controls[kNumAdcInputs];
+    DacHandle        dac;
+
+    /** Dedicated Function Pins */
+    AnalogControl controls[ADC_LAST];
+    GateIn        gate_in_1, gate_in_2;
+    dsy_gpio      gate_out_1, gate_out_2;
+
+    class Impl;
+
 
   private:
     using Log = Logger<LOGGER_INTERNAL>;
+
     float callback_rate_;
+
+    /** Background callback for updating the DACs. */
+    Impl* pimpl_;
 };
 
 } // namespace daisy
