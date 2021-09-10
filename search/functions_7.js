@@ -2,12 +2,12 @@ var searchData=
 [
   ['gate_0',['Gate',['../classdaisy_1_1_daisy_versio.html#ac23598501407665871cd4819fbdb458a',1,'daisy::DaisyVersio']]],
   ['gatein_1',['GateIn',['../classdaisy_1_1_gate_in.html#a0ee9c8b8015845e9ac290f1de287ce03',1,'daisy::GateIn']]],
-  ['get_2',['Get',['../classdaisy_1_1_mapped_float_value.html#a5d18463f67002c6c1dca03a38c0f0f02',1,'daisy::MappedFloatValue::Get()'],['../classdaisy_1_1_adc_handle.html#af32e759894cd10e5d41eb1fe192767fb',1,'daisy::AdcHandle::Get()'],['../classdaisy_1_1_mapped_int_value.html#a326cb67897ad6d96e7c13df024fe156e',1,'daisy::MappedIntValue::Get()']]],
+  ['get_2',['Get',['../classdaisy_1_1_mapped_float_value.html#a5d18463f67002c6c1dca03a38c0f0f02',1,'daisy::MappedFloatValue::Get()'],['../classdaisy_1_1_mapped_int_value.html#a326cb67897ad6d96e7c13df024fe156e',1,'daisy::MappedIntValue::Get()'],['../classdaisy_1_1_adc_handle.html#af32e759894cd10e5d41eb1fe192767fb',1,'daisy::AdcHandle::Get()']]],
   ['getadcvalue_3',['GetAdcValue',['../classdaisy_1_1_daisy_patch_s_m.html#acf03654f150d5cc70bd50992fd8dbd70',1,'daisy::DaisyPatchSM']]],
   ['getandremovenextevent_4',['GetAndRemoveNextEvent',['../classdaisy_1_1_ui_event_queue.html#ac9bf226e7a9f2188a5453a253a4801a5',1,'daisy::UiEventQueue']]],
   ['getas0to1_5',['GetAs0to1',['../classdaisy_1_1_mapped_value.html#a6170374297209fc14bbc7865438b71a8',1,'daisy::MappedValue::GetAs0to1()'],['../classdaisy_1_1_mapped_float_value.html#af50bd458997bf9932cd3766e18afa645',1,'daisy::MappedFloatValue::GetAs0to1()'],['../classdaisy_1_1_mapped_int_value.html#a11740454059cf7230bf9edd835ac796c',1,'daisy::MappedIntValue::GetAs0to1()'],['../classdaisy_1_1_mapped_string_list_value.html#acf385d0c5291eca317384a86e555688b',1,'daisy::MappedStringListValue::GetAs0to1()']]],
   ['getavgcpuload_6',['GetAvgCpuLoad',['../classdaisy_1_1_cpu_load_meter.html#a5f96966a053eda5d8e619409a5ce0c8e',1,'daisy::CpuLoadMeter']]],
-  ['getbackend_7',['GetBackend',['../classdaisy_1_1_pot_monitor.html#ade5fd2e268438d50d85b1ead5d7a5a88',1,'daisy::PotMonitor::GetBackend()'],['../classdaisy_1_1_button_monitor.html#a40c2d8cd10507a342aa3061d4f6c43f8',1,'daisy::ButtonMonitor::GetBackend()']]],
+  ['getbackend_7',['GetBackend',['../classdaisy_1_1_button_monitor.html#a40c2d8cd10507a342aa3061d4f6c43f8',1,'daisy::ButtonMonitor::GetBackend()'],['../classdaisy_1_1_pot_monitor.html#ade5fd2e268438d50d85b1ead5d7a5a88',1,'daisy::PotMonitor::GetBackend()']]],
   ['getblockrate_8',['GetBlockRate',['../classdaisy_1_1_sai_handle.html#a49d32d4b42f809606145e93761268e06',1,'daisy::SaiHandle']]],
   ['getblocksize_9',['GetBlockSize',['../classdaisy_1_1_sai_handle.html#a5b050e703e5044293be4cd351edd08f7',1,'daisy::SaiHandle']]],
   ['getcapacity_10',['GetCapacity',['../classdaisy_1_1_f_i_f_o_base.html#af01b616c140647cf399eb1ab8ab7da50',1,'daisy::FIFOBase::GetCapacity()'],['../classdaisy_1_1_stack_base.html#a9258967ba9f613b9759b20b888ea3b48',1,'daisy::StackBase::GetCapacity()']]],
@@ -18,7 +18,7 @@ var searchData=
   ['getcv_15',['GetCv',['../classdaisy_1_1_daisy_field.html#aff8d6f0f31965520f4d0c7a9dc0e4612',1,'daisy::DaisyField']]],
   ['getcvvalue_16',['GetCvValue',['../classdaisy_1_1_daisy_field.html#aac01b13713d80ffb73256b011173ba48',1,'daisy::DaisyField']]],
   ['getexpression_17',['GetExpression',['../classdaisy_1_1_daisy_petal.html#a603974a7c50f2761b83b557504f4fe18',1,'daisy::DaisyPetal']]],
-  ['getfloat_18',['GetFloat',['../classdaisy_1_1_adc_handle.html#a9572dffe03bc0ff076df90f10de990a6',1,'daisy::AdcHandle']]],
+  ['getfloat_18',['GetFloat',['../classdaisy_1_1_adc_handle.html#a9572dffe03bc0ff076df90f10de990a6',1,'daisy::AdcHandle::GetFloat()'],['../classdaisy_1_1_random.html#a1dbfaccca3b60e39e7da92c499781066',1,'daisy::Random::GetFloat()']]],
   ['getfreq_19',['GetFreq',['../classdaisy_1_1_timer_handle.html#a279bb0b7fb44ce22e9d80a21e918849f',1,'daisy::TimerHandle']]],
   ['gethclkfreq_20',['GetHClkFreq',['../classdaisy_1_1_system.html#a71e6876c84c1ede73337383227b708dd',1,'daisy::System']]],
   ['getindex_21',['GetIndex',['../classdaisy_1_1_mapped_string_list_value.html#ae76baf90c22b125e83266cd89ad55aab',1,'daisy::MappedStringListValue']]],
@@ -61,6 +61,6 @@ var searchData=
   ['gettick_58',['GetTick',['../classdaisy_1_1_timer_handle.html#a00c499385a68755b49569c3149c0c603',1,'daisy::TimerHandle::GetTick()'],['../classdaisy_1_1_system.html#a43b51c5144a81671f7f7a9df47978995',1,'daisy::System::GetTick()']]],
   ['gettickfreq_59',['GetTickFreq',['../classdaisy_1_1_system.html#a6f66b23c64c258326e754168eca26847',1,'daisy::System']]],
   ['getus_60',['GetUs',['../classdaisy_1_1_timer_handle.html#aa22a2290d5fb0cc957dc5b06ce21789b',1,'daisy::TimerHandle::GetUs()'],['../classdaisy_1_1_system.html#ac5b9751a02cb0230fabc1cf189ac8d08',1,'daisy::System::GetUs()']]],
-  ['getvalue_61',['GetValue',['../classdaisy_1_1_random_number_generator.html#a3de7c2ca6f6ffeb310464c1377f3fde7',1,'daisy::RandomNumberGenerator']]],
+  ['getvalue_61',['GetValue',['../classdaisy_1_1_random.html#a99172859b5fc01822213e15ddfe49078',1,'daisy::Random']]],
   ['green_62',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]]
 ];

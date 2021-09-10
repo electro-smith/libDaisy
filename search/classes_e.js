@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['randomnumbergenerator_0',['RandomNumberGenerator',['../classdaisy_1_1_random_number_generator.html',1,'daisy']]],
+  ['random_0',['Random',['../classdaisy_1_1_random.html',1,'daisy']]],
   ['rectangle_1',['Rectangle',['../classdaisy_1_1_rectangle.html',1,'daisy']]],
   ['resetallcontrollersevent_2',['ResetAllControllersEvent',['../structdaisy_1_1_reset_all_controllers_event.html',1,'daisy']]],
   ['rgbled_3',['RgbLed',['../classdaisy_1_1_rgb_led.html',1,'daisy']]],

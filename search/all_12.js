@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['randomnumbergenerator_0',['RandomNumberGenerator',['../classdaisy_1_1_random_number_generator.html',1,'daisy']]],
+  ['random_0',['Random',['../classdaisy_1_1_random.html',1,'daisy']]],
   ['raw_5fdata_1',['raw_data',['../structdaisy_1_1_wav_file_info.html#ad1e3c8f4c720cbbdfbdf26b5a2ea2903',1,'daisy::WavFileInfo']]],
   ['rawstate_2',['RawState',['../classdaisy_1_1_switch.html#a77496bb98f169ba613821e2f1b7fc243',1,'daisy::Switch']]],
   ['read_3',['Read',['../classdaisy_1_1_ring_buffer.html#a112c8553ddc197ad491be9bd8ffabaf9',1,'daisy::RingBuffer::Read()'],['../classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html#a5135f3de87d57d04dbde0ab633370251',1,'daisy::RingBuffer&lt; T, 0 &gt;::Read()']]],
