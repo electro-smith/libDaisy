@@ -3,11 +3,11 @@
 
 namespace daisy
 {
-/**@brief True Random Number Generator access
- * @author shensley
- * @ingroup utility
+/** @brief True Random Number Generator access
+ *  @author shensley
+ *  @ingroup utility
  * 
- * Provides static access to the built-in True Random Number Generator
+ *  Provides static access to the built-in True Random Number Generator
  */
 class Random
 {
@@ -15,7 +15,13 @@ class Random
     Random() {}
     ~Random() {}
 
-    /** Initializes the Peripheral */
+    /** Initializes the Peripheral
+     * 
+     *  This is called from System::Init, 
+     *  so the GetValue, and GetFloat functions
+     *  can be used without the application needing to 
+     *  manually initialize the RNG. 
+     */
     static void Init();
 
     /** Deinitializes the Peripheral */
