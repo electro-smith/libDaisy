@@ -3,6 +3,7 @@
 #include "sys/system.h"
 #include "sys/dma.h"
 #include "per/gpio.h"
+#include "per/rng.h"
 
 // global init functions for peripheral drivers.
 // These don't really need to be extern "C" anymore..
@@ -120,6 +121,9 @@ void System::Init(const System::Config& config)
     timcfg.dir    = TimerHandle::Config::CounterDir::UP;
     tim_.Init(timcfg);
     tim_.Start();
+
+    // Initialize the true random number generator
+    Random::Init();
 }
 
 void System::JumpToQspi()

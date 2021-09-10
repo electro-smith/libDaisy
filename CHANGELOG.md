@@ -10,7 +10,7 @@
 
 * adc: added initialization mappings for pins ADC1_INP12 (PC2) and ADC1_INP13 (PC3) (Not accessible on Daisy Seed)
 * board: added support files for upcoming Daisy Patch SM hardware
-* rng: added new RandomNumberGenerator module that provides access to the hardware True Random Number Generator
+* rng: added new Random module that provides access to the hardware True Random Number Generator
 * spi: added DMA Transactions (same type of queue system as I2C) to the SPI Handle class.
 
 ### Bug fixes
