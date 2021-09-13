@@ -40,7 +40,24 @@ class PersistentStorage
         USER    = 2,
     };
 
-    PersistentStorage() {}
+    // PersistentStorage()
+    // : start_address_(kMemBaseAddr),
+    //   default_settings_(),
+    //   settings_(),
+    //   state_(State::UNKNOWN),
+    //   in_place_storage_(nullptr)
+    // {
+    // }
+
+    PersistentStorage(QSPIHandle &qspi)
+    : qspi_(qspi),
+      start_address_(kMemBaseAddr),
+      default_settings_(),
+      settings_(),
+      state_(State::UNKNOWN),
+      in_place_storage_(nullptr)
+    {
+    }
 
     /** Initialize Storage class
      *
@@ -53,12 +70,9 @@ class PersistentStorage
      *  \param start_address address for location on the QSPI chip (offset to base address of device).
      *      This defaults to the first address on the chip, and will be masked to the nearest multiple of 256
      **/
-    void Init(QSPIHandle &         qspi,
-              const SettingStruct &defaults,
+    void Init(const SettingStruct &defaults,
               uint32_t             start_address = kMemBaseAddr)
     {
-        qspi_             = qspi;
-        state_            = State::UNKNOWN;
         default_settings_ = defaults;
         settings_         = defaults;
         start_address_    = start_address & (uint32_t)(~0xff);
@@ -113,11 +127,11 @@ class PersistentStorage
     {
         SaveStruct s;
         s.storage_state = state_;
-        s.user_data     = *settings_;
+        s.user_data     = settings_;
         // Only actually save if the new data is different
         // Use the `==operator` in custom SettingStruct to fine tune
         // what may or may not trigger the erase/save.
-        if(*settings_ != in_place_storage_->user_data)
+        if(settings_ != in_place_storage_->user_data)
         {
             qspi_.Erase(start_address_, start_address_ + sizeof(s));
             qspi_.Write(start_address_, sizeof(s), (uint8_t *)&s);
