@@ -55,7 +55,7 @@ class PersistentStorage
      **/
     void Init(QSPIHandle &         qspi,
               const SettingStruct &defaults,
-              uint32_t             start_address = 0x90000000)
+              uint32_t             start_address = kMemBaseAddr)
     {
         qspi_             = qspi;
         state_            = State::UNKNOWN;
