@@ -39,7 +39,7 @@ class DaisyPatchSM
      */
     enum
     {
-        CV_1 = 0x00,
+        CV_1 = 0,
         CV_2,
         CV_3,
         CV_4,
@@ -57,7 +57,7 @@ class DaisyPatchSM
     /** Enum for addressing the CV Outputs via the WriteCvOut function. */
     enum
     {
-        CV_OUT_BOTH = 0x00,
+        CV_OUT_BOTH = 0,
         CV_OUT_1,
         CV_OUT_2,
     };
