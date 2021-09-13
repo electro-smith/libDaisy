@@ -298,8 +298,8 @@ void DaisyPatchSM::Init()
     }
 
     /** Fixed-function Digital I/O */
-    gate_in_1.Init((dsy_gpio_pin*)&DaisyPatchSM::B10);
-    gate_in_2.Init((dsy_gpio_pin*)&DaisyPatchSM::B9);
+    gate_in_1.Init((dsy_gpio_pin *)&DaisyPatchSM::B10);
+    gate_in_2.Init((dsy_gpio_pin *)&DaisyPatchSM::B9);
 
     gate_out_1.mode = DSY_GPIO_MODE_OUTPUT_PP;
     gate_out_1.pull = DSY_GPIO_NOPULL;
