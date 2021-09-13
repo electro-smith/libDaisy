@@ -20,6 +20,19 @@ template <typename SettingStruct>
 class PersistentStorage
 {
   public:
+    /** State of the storage. 
+     *  When created, prior to initialiation, the state will be Unknown
+     *  
+     *  During initialization, the state will be changed to either FACTORY,
+     *  or USER. 
+     * 
+     *  If this is the first time these settings are being written to the
+     *  target address, the defaults will be written to that location,
+     *  and the state will be set to FACTORY.
+     * 
+     *  Once the first user-trigger save has been made, the state will be 
+     *  updated to USER to indicate that the defaults have overwritten.
+     */
     enum class State
     {
         UNKNOWN = 0,
@@ -40,14 +53,14 @@ class PersistentStorage
      *  \param start_address address for location on the QSPI chip (offset to base address of device).
      *      This defaults to the first address on the chip, and should be a multiple of 256
      **/
-    void Init(QSPIHandle *   qspi,
-              SettingStruct &settings,
-              uint32_t       start_address = 0x90000000)
+    void Init(QSPIHandle &         qspi,
+              const SettingStruct &defaults,
+              uint32_t             start_address = 0x90000000)
     {
         qspi_             = qspi;
         state_            = State::UNKNOWN;
-        default_settings_ = settings; // copy data to fixed struct.
-        settings_ = &settings; // copy reference to pointer for modification.
+        default_settings_ = defaults;
+        settings_         = defaults;
         start_address_    = start_address;
         in_place_storage_ = (SaveStruct *)(start_address_);
 
@@ -61,13 +74,16 @@ class PersistentStorage
         }
         else
         {
-            state_     = cur_state;
-            *settings_ = in_place_storage_->user_data;
+            state_    = cur_state;
+            settings_ = in_place_storage_->user_data;
         }
     }
 
     /** Returns the state of the Persistent Data */
     State GetState() const { return state_; }
+
+    /** Returns a reference to the setting struct */
+    SettingStruct &GetSettings() { return settings_; }
 
     /** Performs the save operation, storing the storage */
     void Save()
@@ -103,17 +119,17 @@ class PersistentStorage
         // what may or may not trigger the erase/save.
         if(*settings_ != in_place_storage_->user_data)
         {
-            qspi_->Erase(start_address_, start_address_ + sizeof(s));
-            qspi_->Write(start_address_, sizeof(s), (uint8_t *)&s);
+            qspi_.Erase(start_address_, start_address_ + sizeof(s));
+            qspi_.Write(start_address_, sizeof(s), (uint8_t *)&s);
         }
     }
 
-    QSPIHandle *   qspi_;
-    uint32_t       start_address_;
-    SettingStruct  default_settings_;
-    SettingStruct *settings_;
-    State          state_;
-    SaveStruct *   in_place_storage_;
+    QSPIHandle &  qspi_;
+    uint32_t      start_address_;
+    SettingStruct default_settings_;
+    SettingStruct settings_;
+    State         state_;
+    SaveStruct *  in_place_storage_;
 };
 
 } // namespace daisy
