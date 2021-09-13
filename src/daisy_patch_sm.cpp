@@ -1,60 +1,23 @@
 #include "daisy_patch_sm.h"
 
-#define PIN_ADC_CTRL_1 \
-    {                  \
-        DSY_GPIOA, 3   \
-    }
-#define PIN_ADC_CTRL_2 \
-    {                  \
-        DSY_GPIOA, 6   \
-    }
-#define PIN_ADC_CTRL_3 \
-    {                  \
-        DSY_GPIOA, 2   \
-    }
-#define PIN_ADC_CTRL_4 \
-    {                  \
-        DSY_GPIOA, 7   \
-    }
-#define PIN_ADC_CTRL_5 \
-    {                  \
-        DSY_GPIOB, 1   \
-    }
-#define PIN_ADC_CTRL_6 \
-    {                  \
-        DSY_GPIOC, 4   \
-    }
-#define PIN_ADC_CTRL_7 \
-    {                  \
-        DSY_GPIOC, 0   \
-    }
-#define PIN_ADC_CTRL_8 \
-    {                  \
-        DSY_GPIOC, 1   \
-    }
-#define PIN_ADC_CTRL_9 \
-    {                  \
-        DSY_GPIOA, 1   \
-    }
-#define PIN_ADC_CTRL_10 \
-    {                   \
-        DSY_GPIOA, 0    \
-    }
-#define PIN_ADC_CTRL_11 \
-    {                   \
-        DSY_GPIOC, 3    \
-    }
-#define PIN_ADC_CTRL_12 \
-    {                   \
-        DSY_GPIOC, 2    \
-    }
+namespace daisy
+{
+/** Const definitions */
+static constexpr dsy_gpio_pin DUMMYPIN        = {DSY_GPIOX, 0};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_1  = {DSY_GPIOA, 3};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_2  = {DSY_GPIOA, 6};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_3  = {DSY_GPIOA, 2};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_4  = {DSY_GPIOA, 7};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_5  = {DSY_GPIOB, 1};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_6  = {DSY_GPIOC, 4};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_7  = {DSY_GPIOC, 0};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_8  = {DSY_GPIOC, 1};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_9  = {DSY_GPIOA, 1};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_10 = {DSY_GPIOA, 0};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_11 = {DSY_GPIOC, 3};
+static constexpr dsy_gpio_pin PIN_ADC_CTRL_12 = {DSY_GPIOC, 2};
 
-#define DUMMYPIN     \
-    {                \
-        DSY_GPIOX, 0 \
-    }
-
-static const dsy_gpio_pin kPinMap[4][10] = {
+const dsy_gpio_pin kPinMap[4][10] = {
     /** Header Bank A */
     {
         DUMMYPIN,        /**< A1  - -12V Power Input */
@@ -109,8 +72,47 @@ static const dsy_gpio_pin kPinMap[4][10] = {
     },
 };
 
-namespace daisy
-{
+const dsy_gpio_pin DaisyPatchSM::A1  = kPinMap[0][0];
+const dsy_gpio_pin DaisyPatchSM::A2  = kPinMap[0][1];
+const dsy_gpio_pin DaisyPatchSM::A3  = kPinMap[0][2];
+const dsy_gpio_pin DaisyPatchSM::A4  = kPinMap[0][3];
+const dsy_gpio_pin DaisyPatchSM::A5  = kPinMap[0][4];
+const dsy_gpio_pin DaisyPatchSM::A6  = kPinMap[0][5];
+const dsy_gpio_pin DaisyPatchSM::A7  = kPinMap[0][6];
+const dsy_gpio_pin DaisyPatchSM::A8  = kPinMap[0][7];
+const dsy_gpio_pin DaisyPatchSM::A9  = kPinMap[0][8];
+const dsy_gpio_pin DaisyPatchSM::A10 = kPinMap[0][9];
+const dsy_gpio_pin DaisyPatchSM::B1  = kPinMap[1][0];
+const dsy_gpio_pin DaisyPatchSM::B2  = kPinMap[1][1];
+const dsy_gpio_pin DaisyPatchSM::B3  = kPinMap[1][2];
+const dsy_gpio_pin DaisyPatchSM::B4  = kPinMap[1][3];
+const dsy_gpio_pin DaisyPatchSM::B5  = kPinMap[1][4];
+const dsy_gpio_pin DaisyPatchSM::B6  = kPinMap[1][5];
+const dsy_gpio_pin DaisyPatchSM::B7  = kPinMap[1][6];
+const dsy_gpio_pin DaisyPatchSM::B8  = kPinMap[1][7];
+const dsy_gpio_pin DaisyPatchSM::B9  = kPinMap[1][8];
+const dsy_gpio_pin DaisyPatchSM::B10 = kPinMap[1][9];
+const dsy_gpio_pin DaisyPatchSM::C1  = kPinMap[2][0];
+const dsy_gpio_pin DaisyPatchSM::C2  = kPinMap[2][1];
+const dsy_gpio_pin DaisyPatchSM::C3  = kPinMap[2][2];
+const dsy_gpio_pin DaisyPatchSM::C4  = kPinMap[2][3];
+const dsy_gpio_pin DaisyPatchSM::C5  = kPinMap[2][4];
+const dsy_gpio_pin DaisyPatchSM::C6  = kPinMap[2][5];
+const dsy_gpio_pin DaisyPatchSM::C7  = kPinMap[2][6];
+const dsy_gpio_pin DaisyPatchSM::C8  = kPinMap[2][7];
+const dsy_gpio_pin DaisyPatchSM::C9  = kPinMap[2][8];
+const dsy_gpio_pin DaisyPatchSM::C10 = kPinMap[2][9];
+const dsy_gpio_pin DaisyPatchSM::D1  = kPinMap[3][0];
+const dsy_gpio_pin DaisyPatchSM::D2  = kPinMap[3][1];
+const dsy_gpio_pin DaisyPatchSM::D3  = kPinMap[3][2];
+const dsy_gpio_pin DaisyPatchSM::D4  = kPinMap[3][3];
+const dsy_gpio_pin DaisyPatchSM::D5  = kPinMap[3][4];
+const dsy_gpio_pin DaisyPatchSM::D6  = kPinMap[3][5];
+const dsy_gpio_pin DaisyPatchSM::D7  = kPinMap[3][6];
+const dsy_gpio_pin DaisyPatchSM::D8  = kPinMap[3][7];
+const dsy_gpio_pin DaisyPatchSM::D9  = kPinMap[3][8];
+const dsy_gpio_pin DaisyPatchSM::D10 = kPinMap[3][9];
+
 /** outside of class static buffer(s) for DMA access */
 uint16_t DMA_BUFFER_MEM_SECTION dsy_patch_sm_dac_buffer[2][48];
 
@@ -295,6 +297,19 @@ void DaisyPatchSM::Init()
             controls[i].Init(adc.GetPtr(i), callback_rate_);
     }
 
+    /** Fixed-function Digital I/O */
+    gate_in_1.Init((dsy_gpio_pin*)&DaisyPatchSM::B10);
+    gate_in_2.Init((dsy_gpio_pin*)&DaisyPatchSM::B9);
+
+    gate_out_1.mode = DSY_GPIO_MODE_OUTPUT_PP;
+    gate_out_1.pull = DSY_GPIO_NOPULL;
+    gate_out_1.pin  = DaisyPatchSM::B5;
+    dsy_gpio_init(&gate_out_1);
+
+    gate_out_2.mode = DSY_GPIO_MODE_OUTPUT_PP;
+    gate_out_2.pull = DSY_GPIO_NOPULL;
+    gate_out_2.pin  = DaisyPatchSM::B6;
+    dsy_gpio_init(&gate_out_2);
 
     /** DAC init */
     pimpl_->InitDac();
@@ -392,7 +407,7 @@ float DaisyPatchSM::GetAdcValue(int idx)
     return controls[idx].Value();
 }
 
-dsy_gpio_pin DaisyPatchSM::GetPin(PinBank bank, int idx)
+dsy_gpio_pin DaisyPatchSM::GetPin(const PinBank bank, const int idx)
 {
     if(idx <= 0 || idx > 10)
         return DUMMYPIN;

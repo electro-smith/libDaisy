@@ -2,48 +2,6 @@
 
 #include "daisy.h"
 
-#define A1 daisy::DaisyPatchSM::PinBank::A, 1
-#define A2 daisy::DaisyPatchSM::PinBank::A, 2
-#define A3 daisy::DaisyPatchSM::PinBank::A, 3
-#define A4 daisy::DaisyPatchSM::PinBank::A, 4
-#define A5 daisy::DaisyPatchSM::PinBank::A, 5
-#define A6 daisy::DaisyPatchSM::PinBank::A, 6
-#define A7 daisy::DaisyPatchSM::PinBank::A, 7
-#define A8 daisy::DaisyPatchSM::PinBank::A, 8
-#define A9 daisy::DaisyPatchSM::PinBank::A, 9
-#define A10 daisy::DaisyPatchSM::PinBank::A, 10
-#define B1 daisy::DaisyPatchSM::PinBank::B, 1
-#define B2 daisy::DaisyPatchSM::PinBank::B, 2
-#define B3 daisy::DaisyPatchSM::PinBank::B, 3
-#define B4 daisy::DaisyPatchSM::PinBank::B, 4
-#define B5 daisy::DaisyPatchSM::PinBank::B, 5
-#define B6 daisy::DaisyPatchSM::PinBank::B, 6
-#define B7 daisy::DaisyPatchSM::PinBank::B, 7
-#define B8 daisy::DaisyPatchSM::PinBank::B, 8
-#define B9 daisy::DaisyPatchSM::PinBank::B, 9
-#define B10 daisy::DaisyPatchSM::PinBank::B, 10
-#define C1 daisy::DaisyPatchSM::PinBank::C, 1
-#define C2 daisy::DaisyPatchSM::PinBank::C, 2
-#define C3 daisy::DaisyPatchSM::PinBank::C, 3
-#define C4 daisy::DaisyPatchSM::PinBank::C, 4
-#define C5 daisy::DaisyPatchSM::PinBank::C, 5
-#define C6 daisy::DaisyPatchSM::PinBank::C, 6
-#define C7 daisy::DaisyPatchSM::PinBank::C, 7
-#define C8 daisy::DaisyPatchSM::PinBank::C, 8
-#define C9 daisy::DaisyPatchSM::PinBank::C, 9
-#define C10 daisy::DaisyPatchSM::PinBank::C, 10
-#define D1 daisy::DaisyPatchSM::PinBank::D, 1
-#define D2 daisy::DaisyPatchSM::PinBank::D, 2
-#define D3 daisy::DaisyPatchSM::PinBank::D, 3
-#define D4 daisy::DaisyPatchSM::PinBank::D, 4
-#define D5 daisy::DaisyPatchSM::PinBank::D, 5
-#define D6 daisy::DaisyPatchSM::PinBank::D, 6
-#define D7 daisy::DaisyPatchSM::PinBank::D, 7
-#define D8 daisy::DaisyPatchSM::PinBank::D, 8
-#define D9 daisy::DaisyPatchSM::PinBank::D, 9
-#define D10 daisy::DaisyPatchSM::PinBank::D, 10
-
-
 namespace daisy
 {
 /** @brief Board support file for DaisyPatchSM hardware
@@ -183,7 +141,7 @@ class DaisyPatchSM
      *  \param bank should be one of the PinBank options above
      *  \param idx pin number between 1 and 10 for each of the pins on each header.
      */
-    dsy_gpio_pin GetPin(PinBank bank, int idx);
+    dsy_gpio_pin GetPin(const PinBank bank, const int idx);
 
     /** Starts the DAC for the CV Outputs 
      * 
@@ -210,7 +168,6 @@ class DaisyPatchSM
      *  \param volage value in Volts that you'd like to write to the DAC
      */
     void WriteCvOut(const int channel, float voltage);
-
 
     /** Here are some wrappers around libDaisy Static functions 
      *  to provide simpler syntax to those who prefer it. */
@@ -276,8 +233,17 @@ class DaisyPatchSM
     GateIn        gate_in_1, gate_in_2;
     dsy_gpio      gate_out_1, gate_out_2;
 
-    class Impl;
+    /** Pin Accessors */
+    static const dsy_gpio_pin A1, A2, A3, A4, A5;
+    static const dsy_gpio_pin A6, A7, A8, A9, A10;
+    static const dsy_gpio_pin B1, B2, B3, B4, B5;
+    static const dsy_gpio_pin B6, B7, B8, B9, B10;
+    static const dsy_gpio_pin C1, C2, C3, C4, C5;
+    static const dsy_gpio_pin C6, C7, C8, C9, C10;
+    static const dsy_gpio_pin D1, D2, D3, D4, D5;
+    static const dsy_gpio_pin D6, D7, D8, D9, D10;
 
+    class Impl;
 
   private:
     using Log = Logger<LOGGER_INTERNAL>;
@@ -286,6 +252,8 @@ class DaisyPatchSM
 
     /** Background callback for updating the DACs. */
     Impl* pimpl_;
+
+  public:
 };
 
 } // namespace daisy
