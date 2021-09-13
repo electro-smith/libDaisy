@@ -40,7 +40,7 @@ class PersistentStorage
         USER    = 2,
     };
 
-    PersistentStorage() : settings_(nullptr) {}
+    PersistentStorage() {}
 
     /** Initialize Storage class
      *
@@ -51,7 +51,7 @@ class PersistentStorage
      *  \param settings should be a setting structure containing the default values.
      *      this will be updated to contain the stored data.
      *  \param start_address address for location on the QSPI chip (offset to base address of device).
-     *      This defaults to the first address on the chip, and should be a multiple of 256
+     *      This defaults to the first address on the chip, and will be masked to the nearest multiple of 256
      **/
     void Init(QSPIHandle &         qspi,
               const SettingStruct &defaults,
@@ -61,7 +61,7 @@ class PersistentStorage
         state_            = State::UNKNOWN;
         default_settings_ = defaults;
         settings_         = defaults;
-        start_address_    = start_address;
+        start_address_    = start_address & (uint32_t)(~0xff);
         in_place_storage_ = (SaveStruct *)(start_address_);
 
         // check to see if the state is already in use.
@@ -70,7 +70,7 @@ class PersistentStorage
         {
             // Initialize the Data store State::FACTORY, and the DefaultSettings
             state_ = State::FACTORY;
-            StoreSettings();
+            StoreSettingsIfChanged();
         }
         else
         {
@@ -89,7 +89,7 @@ class PersistentStorage
     void Save()
     {
         state_ = State::USER;
-        StoreSettings();
+        StoreSettingsIfChanged();
     }
 
     /** Restores the settings stored in the QSPI */
@@ -97,7 +97,7 @@ class PersistentStorage
     {
         *settings_ = default_settings_;
         state_     = State::FACTORY;
-        StoreSettings();
+        StoreSettingsIfChanged();
     }
 
   private:
@@ -109,7 +109,7 @@ class PersistentStorage
         SettingStruct user_data;
     };
 
-    void StoreSettings()
+    void StoreSettingsIfChanged()
     {
         SaveStruct s;
         s.storage_state = state_;
