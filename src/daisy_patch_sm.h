@@ -253,7 +253,6 @@ class DaisyPatchSM
     /** Background callback for updating the DACs. */
     Impl* pimpl_;
 
-  public:
 };
 
 } // namespace daisy
