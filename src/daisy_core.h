@@ -47,19 +47,19 @@ cache enabled.
 
 /** shorthand macro for simplifying the reading of the left 
  *  channel of a non-interleaved output buffer named out */
-#define OUT_LEFT out[0]
+#define OUT_L out[0]
 
 /** shorthand macro for simplifying the reading of the right 
  *  channel of a non-interleaved output buffer named out */
-#define OUT_RIGHT out[1]
+#define OUT_R out[1]
 
 /** shorthand macro for simplifying the reading of the left 
  *  channel of a non-interleaved input buffer named in */
-#define IN_LEFT in[0]
+#define IN_L in[0]
 
 /** shorthand macro for simplifying the reading of the right 
  *  channel of a non-interleaved input buffer named in */
-#define IN_RIGHT in[1]
+#define IN_R in[1]
 
 /** 
     Computes cube.
