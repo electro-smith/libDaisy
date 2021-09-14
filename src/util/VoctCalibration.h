@@ -66,5 +66,4 @@ class VoctCalibration
     bool  cal_;
 };
 
-
 } // namespace daisy
