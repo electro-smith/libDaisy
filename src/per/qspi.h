@@ -154,6 +154,12 @@ class QSPIHandle
      */
     Status GetStatus();
 
+    /** Returns a pointer to the actual memory used 
+     *  The memory at this address is read-only
+     *  to write to it use the Write function.
+    */
+    void* GetData();
+
     QSPIHandle() : pimpl_(nullptr) {}
     QSPIHandle(const QSPIHandle& other) = default;
     QSPIHandle& operator=(const QSPIHandle& other) = default;
@@ -180,10 +186,6 @@ namespace daisy
  *  for the physical volatile memory. 
  *  This provides a block of memory that can be erased, or written
  *  to.
- *  
- *  On the hardware, the memory can be read directly from addresses
- *  0x90000000 and above. However, within the unit tests you must use
- *  the Read() function.
  */
 class QSPIHandle
 {
@@ -208,7 +210,7 @@ class QSPIHandle
     static Result Write(uint32_t address, uint32_t size, uint8_t* buffer)
     {
         // 256-byte aligned, normalized address value
-        uint32_t adjusted_addr = (address - kBaseAddress) & (uint32_t)(~0xff);
+        uint32_t adjusted_addr = (address) & (uint32_t)(~0xff);
         // Make sure memory is of approriate size
         uint32_t total_bytes = adjusted_addr + size;
         AdaptToSize(total_bytes);
@@ -221,10 +223,8 @@ class QSPIHandle
 
     static Result Erase(uint32_t start_addr, uint32_t end_addr)
     {
-        uint32_t adjusted_start_addr
-            = (start_addr - kBaseAddress) & (uint32_t)(~0xff);
-        uint32_t adjusted_end_addr
-            = (end_addr - kBaseAddress) & (uint32_t)(~0xff);
+        uint32_t adjusted_start_addr = (start_addr) & (uint32_t)(~0xff);
+        uint32_t adjusted_end_addr   = (end_addr) & (uint32_t)(~0xff);
 
         // guard addresses
         assert(adjusted_start_addr < kMaxAdjustedAddr);
@@ -239,17 +239,12 @@ class QSPIHandle
         return Result::OK;
     }
 
-    /** Mock-only function for reading since it's not memory-mapped */
-    static Result Read(uint32_t address, uint8_t* buffer, size_t size)
+    /** Returns a pointer to the actual memory used 
+    */
+    static void* GetData()
     {
-        uint32_t adjusted_addr = (address - kBaseAddress);
-        assert(adjusted_addr < kMaxAdjustedAddr);
-        assert(adjusted_addr + size < kMaxAdjustedAddr);
-        assert(buffer != nullptr);
-        AdaptToSize(adjusted_addr + size);
-        uint8_t* mem = testIsolator_.GetStateForCurrentTest()->memory_.data();
-        std::copy(&mem[adjusted_addr], &mem[adjusted_addr + size], buffer);
-        return Result::OK;
+        AdaptToSize(1); /**< Make sure it's not empty */
+        return (void*)(testIsolator_.GetStateForCurrentTest()->memory_.data());
     }
 
   private:
@@ -259,9 +254,8 @@ class QSPIHandle
         if(testIsolator_.GetStateForCurrentTest()->memory_.size()
            < required_bytes)
             testIsolator_.GetStateForCurrentTest()->memory_.resize(
-                required_bytes);
+                required_bytes, 0x00);
     }
-    static constexpr uint32_t kBaseAddress     = 0x90000000;
     static constexpr uint32_t kMaxAdjustedAddr = 0x800000;
     struct QSPIState
     {

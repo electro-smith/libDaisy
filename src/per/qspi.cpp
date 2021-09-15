@@ -61,6 +61,8 @@ class QSPIHandle::Impl
 
     Status GetStatus() { return status_; }
 
+    void* GetData() { return (void*)(0x90000000); }
+
   private:
     QSPIHandle::Result ResetMemory();
 
@@ -894,6 +896,11 @@ QSPIHandle::Result QSPIHandle::Erase(uint32_t start_addr, uint32_t end_addr)
 QSPIHandle::Result QSPIHandle::EraseSector(uint32_t address)
 {
     return pimpl_->EraseSector(address);
+}
+
+void* QSPIHandle::GetData()
+{
+    return pimpl_->GetData();
 }
 
 // ======================================================================
