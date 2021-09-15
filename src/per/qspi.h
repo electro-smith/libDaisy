@@ -194,13 +194,28 @@ class QSPIHandle
         ERR
     };
 
+    /** A mock-only function for resetting the memory to clean state 
+     *  This should be called at the beginning of any test to ensure that
+     *  data from a previous test does not interfere.
+     */
+    static Result ResetAndClear()
+    {
+        testIsolator_.GetStateForCurrentTest()->memory_.clear();
+        return Result::OK;
+    }
+
+
     static Result Write(uint32_t address, uint32_t size, uint8_t* buffer)
     {
-        /** 256-byte aligned, normalized address value */
+        // 256-byte aligned, normalized address value
         uint32_t adjusted_addr = (address - kBaseAddress) & (uint32_t)(~0xff);
+        // Make sure memory is of approriate size
+        uint32_t total_bytes = adjusted_addr + size;
+        AdaptToSize(total_bytes);
+        // Copy data into vector
         std::copy(&buffer[adjusted_addr],
                   &buffer[adjusted_addr + size],
-                  (uint8_t*)testIsolator_.GetStateForCurrentTest()->memory_);
+                  testIsolator_.GetStateForCurrentTest()->memory_.data());
         return Result::OK;
     }
 
@@ -210,21 +225,48 @@ class QSPIHandle
             = (start_addr - kBaseAddress) & (uint32_t)(~0xff);
         uint32_t adjusted_end_addr
             = (end_addr - kBaseAddress) & (uint32_t)(~0xff);
-        uint32_t* buff = testIsolator_.GetStateForCurrentTest()->memory_;
+
+        // guard addresses
+        assert(adjusted_start_addr < kMaxAdjustedAddr);
+        assert(adjusted_end_addr < kMaxAdjustedAddr);
+
+        // Make sure vector is of appropriate size
+        // size should be at least (adjusted_end_addr)
+        AdaptToSize(adjusted_end_addr);
+        uint8_t* buff = testIsolator_.GetStateForCurrentTest()->memory_.data();
         // Erases memory by setting all bits to 1
-        std::fill(
-            &buff[adjusted_start_addr], &buff[adjusted_end_addr], 0xffffffff);
+        std::fill(&buff[adjusted_start_addr], &buff[adjusted_end_addr], 0xff);
+        return Result::OK;
+    }
+
+    /** Mock-only function for reading since it's not memory-mapped */
+    static Result Read(uint32_t address, uint8_t* buffer, size_t size)
+    {
+        uint32_t adjusted_addr = (address - kBaseAddress);
+        assert(adjusted_addr < kMaxAdjustedAddr);
+        assert(adjusted_addr + size < kMaxAdjustedAddr);
+        assert(buffer != nullptr);
+        AdaptToSize(adjusted_addr + size);
+        uint8_t* mem = testIsolator_.GetStateForCurrentTest()->memory_.data();
+        std::copy(&mem[adjusted_addr], &mem[adjusted_addr + size], buffer);
         return Result::OK;
     }
 
   private:
-    static constexpr uint32_t kBaseAddress = 0x90000000;
+    /** Adjusts the test state vector to an appropriate size */
+    static void AdaptToSize(uint32_t required_bytes)
+    {
+        if(testIsolator_.GetStateForCurrentTest()->memory_.size()
+           < required_bytes)
+            testIsolator_.GetStateForCurrentTest()->memory_.resize(
+                required_bytes);
+    }
+    static constexpr uint32_t kBaseAddress     = 0x90000000;
+    static constexpr uint32_t kMaxAdjustedAddr = 0x800000;
     struct QSPIState
     {
-        // 8MB pool of memory -- not sure if we should limit this,
-        // but it will allow for testing out of range read/writes..
-        // Also, I think this should probably be in the heap instead.
-        uint32_t memory_[1024 * 1024 * 8 / 4] = {0xffffffff};
+        // Emulate the byte-memory of the QSPI flash
+        std::vector<uint8_t> memory_;
     };
     static TestIsolator<QSPIState> testIsolator_;
 };
