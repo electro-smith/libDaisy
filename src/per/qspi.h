@@ -157,8 +157,11 @@ class QSPIHandle
     /** Returns a pointer to the actual memory used 
      *  The memory at this address is read-only
      *  to write to it use the Write function.
+     * 
+     *  \param offset returns the pointer starting this 
+     *                many bytes into the memory
     */
-    void* GetData();
+    void* GetData(uint32_t offset = 0);
 
     QSPIHandle() : pimpl_(nullptr) {}
     QSPIHandle(const QSPIHandle& other) = default;
@@ -241,9 +244,10 @@ class QSPIHandle
 
     /** Returns a pointer to the actual memory used 
     */
-    static void* GetData()
+    static void* GetData(uint32_t offset = 0)
     {
-        AdaptToSize(1); /**< Make sure it's not empty */
+        assert(offset < kMaxAdjustedAddr);
+        AdaptToSize(offset + 1); /**< Make sure it's not empty */
         return (void*)(testIsolator_.GetStateForCurrentTest()->memory_.data());
     }
 

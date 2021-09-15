@@ -61,7 +61,7 @@ class QSPIHandle::Impl
 
     Status GetStatus() { return status_; }
 
-    void* GetData() { return (void*)(0x90000000); }
+    void* GetData(uint32_t offset) { return (void*)(0x90000000 + offset); }
 
   private:
     QSPIHandle::Result ResetMemory();
