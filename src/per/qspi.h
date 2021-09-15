@@ -1,6 +1,8 @@
 #ifndef DSY_QSPI
 #define DSY_QSPI /**< Macro */
 
+#ifndef UNIT_TEST // for unit tests, a dummy implementation
+
 #include <cstdint>
 #include "daisy_core.h" // Added for dsy_gpio_pin typedef
 
@@ -166,4 +168,71 @@ class QSPIHandle
 
 } // namespace daisy
 
-#endif
+#else
+
+#include <cstdint>
+#include "../tests/TestIsolator.h"
+
+namespace daisy
+{
+/** This is a dummy implementation for use in tests. 
+ *  In your tests you can use this as a placeholder 
+ *  for the physical volatile memory. 
+ *  This provides a block of memory that can be erased, or written
+ *  to.
+ *  
+ *  On the hardware, the memory can be read directly from addresses
+ *  0x90000000 and above. However, within the unit tests you must use
+ *  the Read() function.
+ */
+class QSPIHandle
+{
+  public:
+    enum Result
+    {
+        OK = 0,
+        ERR
+    };
+
+    static Result Write(uint32_t address, uint32_t size, uint8_t* buffer)
+    {
+        /** 256-byte aligned, normalized address value */
+        uint32_t adjusted_addr = (address - kBaseAddress) & (uint32_t)(~0xff);
+        std::copy(&buffer[adjusted_addr],
+                  &buffer[adjusted_addr + size],
+                  (uint8_t*)testIsolator_.GetStateForCurrentTest()->memory_);
+        return Result::OK;
+    }
+
+    static Result Erase(uint32_t start_addr, uint32_t end_addr)
+    {
+        uint32_t adjusted_start_addr
+            = (start_addr - kBaseAddress) & (uint32_t)(~0xff);
+        uint32_t adjusted_end_addr
+            = (end_addr - kBaseAddress) & (uint32_t)(~0xff);
+        uint32_t* buff = testIsolator_.GetStateForCurrentTest()->memory_;
+        // Erases memory by setting all bits to 1
+        std::fill(
+            &buff[adjusted_start_addr], &buff[adjusted_end_addr], 0xffffffff);
+        return Result::OK;
+    }
+
+  private:
+    static constexpr uint32_t kBaseAddress = 0x90000000;
+    struct QSPIState
+    {
+        // 8MB pool of memory -- not sure if we should limit this,
+        // but it will allow for testing out of range read/writes..
+        // Also, I think this should probably be in the heap instead.
+        uint32_t memory_[1024 * 1024 * 8 / 4] = {0xffffffff};
+    };
+    static TestIsolator<QSPIState> testIsolator_;
+};
+
+
+} // namespace daisy
+
+
+#endif // ifndef UNIT_TEST
+
+#endif // ifndef DSY_QSPI
