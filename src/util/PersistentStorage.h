@@ -40,18 +40,12 @@ class PersistentStorage
         USER    = 2,
     };
 
-    // PersistentStorage()
-    // : start_address_(kMemBaseAddr),
-    //   default_settings_(),
-    //   settings_(),
-    //   state_(State::UNKNOWN),
-    //   in_place_storage_(nullptr)
-    // {
-    // }
-
+    /** Constructor for storage class 
+     *  \param qspi reference to the hardware qspi peripheral.
+     */
     PersistentStorage(QSPIHandle &qspi)
     : qspi_(qspi),
-      start_address_(kMemBaseAddr),
+      address_offset_(0),
       default_settings_(),
       settings_(),
       state_(State::UNKNOWN),
@@ -64,25 +58,18 @@ class PersistentStorage
      *  The values in this class will be stored as the default
      *  for restoration to 'factory' settings.
      *
-     *  \param qspi handle to the hardware qspi peripheral.
-     *  \param settings should be a setting structure containing the default values.
+     *  \param defaults should be a setting structure containing the default values.
      *      this will be updated to contain the stored data.
-     *  \param start_address address for location on the QSPI chip (offset to base address of device).
+     *  \param address_offset offset for location on the QSPI chip (offset to base address of device).
      *      This defaults to the first address on the chip, and will be masked to the nearest multiple of 256
      **/
-    void Init(const SettingStruct &defaults,
-              uint32_t             start_address = kMemBaseAddr)
+    void Init(const SettingStruct &defaults, uint32_t address_offset = 0)
     {
         default_settings_ = defaults;
         settings_         = defaults;
-        start_address_    = start_address & (uint32_t)(~0xff);
-#ifdef UNIT_TEST
-        in_place_storage_ = new SaveStruct();
-        qspi_.Read(
-            start_address_, (uint8_t *)in_place_storage_, sizeof(SaveStruct));
-#else
-        in_place_storage_ = reinterpret_cast<SaveStruct *>(start_address_);
-#endif
+        address_offset_   = address_offset & (uint32_t)(~0xff);
+        in_place_storage_
+            = reinterpret_cast<SaveStruct *>(qspi_.GetData(address_offset_));
 
         // check to see if the state is already in use.
         State cur_state = in_place_storage_->storage_state;
@@ -121,8 +108,6 @@ class PersistentStorage
     }
 
   private:
-    static constexpr uint32_t kMemBaseAddr = 0x90000000;
-
     struct SaveStruct
     {
         State         storage_state;
@@ -139,13 +124,13 @@ class PersistentStorage
         // what may or may not trigger the erase/save.
         if(settings_ != in_place_storage_->user_data)
         {
-            qspi_.Erase(start_address_, start_address_ + sizeof(s));
-            qspi_.Write(start_address_, sizeof(s), (uint8_t *)&s);
+            qspi_.Erase(address_offset_, address_offset_ + sizeof(s));
+            qspi_.Write(address_offset_, sizeof(s), (uint8_t *)&s);
         }
     }
 
     QSPIHandle &  qspi_;
-    uint32_t      start_address_;
+    uint32_t      address_offset_;
     SettingStruct default_settings_;
     SettingStruct settings_;
     State         state_;
