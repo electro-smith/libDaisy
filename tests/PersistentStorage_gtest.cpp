@@ -21,9 +21,6 @@ TEST(util_PersistentStorage, a_stateAfterInitClean)
     StorageTestClass storage(qspi);
     StorageTestData  defaults;
 
-    // Resets the emulated memory pool
-    qspi.ResetAndClear();
-
     // Set default data and initialize
     // defaults from obj. constructor
     storage.Init(defaults);
@@ -39,9 +36,6 @@ TEST(util_PersistentStorage, a_stateAfterWrite)
     QSPIHandle       qspi;
     StorageTestClass storage(qspi);
     StorageTestData  defaults;
-
-    // Resets the emulated memory pool
-    qspi.ResetAndClear();
 
     // Set default data and initialize
     // defaults from obj. constructor
@@ -63,9 +57,6 @@ TEST(util_PersistentStorage, c_recallData)
     QSPIHandle       qspi;
     StorageTestClass storage(qspi);
     StorageTestData  defaults;
-
-    // Resets the emulated memory pool
-    qspi.ResetAndClear();
 
     // Initialize defaults (sets to FACTORY)
     storage.Init(defaults);
