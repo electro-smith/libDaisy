@@ -76,7 +76,13 @@ class PersistentStorage
         default_settings_ = defaults;
         settings_         = defaults;
         start_address_    = start_address & (uint32_t)(~0xff);
+#ifdef UNIT_TEST
+        in_place_storage_ = new SaveStruct();
+        qspi_.Read(
+            start_address_, (uint8_t *)in_place_storage_, sizeof(SaveStruct));
+#else
         in_place_storage_ = reinterpret_cast<SaveStruct *>(start_address_);
+#endif
 
         // check to see if the state is already in use.
         State cur_state = in_place_storage_->storage_state;
