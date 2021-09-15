@@ -1,3 +1,4 @@
+#ifndef UNIT_TEST
 #include "per/qspi.h"
 #include "sys/system.h"
 #include "stm32h7xx_hal.h"
@@ -1024,3 +1025,11 @@ extern "C" void QUADSPI_IRQHandler(void)
 //    {GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI}, // AUDIO BB
 //};
 //
+
+#else // ifndef UNIT_TEST
+
+#include "qspi.h"
+// static isolator for the dummy version used in unit tests
+TestIsolator<daisy::QSPIHandle::QSPIState> daisy::QSPIHandle::testIsolator_;
+
+#endif
