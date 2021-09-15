@@ -76,7 +76,7 @@ class PersistentStorage
         default_settings_ = defaults;
         settings_         = defaults;
         start_address_    = start_address & (uint32_t)(~0xff);
-        in_place_storage_ = (SaveStruct *)(start_address_);
+        in_place_storage_ = reinterpret_cast<SaveStruct *>(start_address_);
 
         // check to see if the state is already in use.
         State cur_state = in_place_storage_->storage_state;
