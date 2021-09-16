@@ -1,4 +1,5 @@
 #include "daisy_patch_sm.h"
+#include <vector>
 
 namespace daisy
 {
@@ -465,6 +466,33 @@ namespace patch_sm
                 num_failed++;
         }
         return num_failed == 0;
+    }
+
+    bool DaisyPatchSM::ValidateQSPI(bool quick)
+    {
+        if(quick)
+        {
+            uint32_t start = 0x400000;
+            uint32_t size  = 0x4000;
+            qspi.Erase(start, start + size);
+            std::vector<uint8_t> test;
+            test.resize(size);
+            uint8_t *testmem = test.data();
+            for(size_t i = 0; i < size; i++)
+                testmem[i] = (uint8_t)(i & 0xff);
+            qspi.Write(start, size, testmem);
+            // Read it all back
+            size_t fail_cnt = 0;
+            for(size_t i = 0; i < size; i++)
+                if(testmem[i] != (uint8_t)(i & 0xff))
+                    fail_cnt++;
+            return fail_cnt == 0;
+        }
+        else
+        {
+            return false;
+        }
+        return true;
     }
 
 } // namespace patch_sm

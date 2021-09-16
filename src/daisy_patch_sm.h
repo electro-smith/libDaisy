@@ -212,16 +212,31 @@ namespace patch_sm
             Log::StartLog(wait_for_pc);
         }
 
-        /** Tests entirety of SDRAM for validity 
-         *  This will wipe contents of SDRAM when testing. 
+        /** @brief Tests entirety of SDRAM for validity 
+         *         This will wipe contents of SDRAM when testing. 
          * 
-         *  If using the SDRAM for the default bss, or heap, and using constructors as initializers
-         *  do not call this function.
-         *  Otherwise, it could overwrite changes performed by constructors.
+         *  @note   If using the SDRAM for the default bss, or heap, 
+         *          and using constructors as initializers do not 
+         *          call this function. Otherwise, it could 
+         *          overwrite changes performed by constructors.
          * 
          *  \retval returns true if SDRAM is okay, otherwise false
          */
         bool ValidateSDRAM();
+
+        /** @brief Tests the QSPI for validity 
+         *         This will wipe contents of QSPI when testing. 
+         * 
+         *  @note  If called with quick = false, this will erase all memory
+         *         the "quick" test starts 0x400000 bytes into the memory and
+         *         test 16kB of data
+         * 
+         *  \param quick if this is true the test will only test a small piece of the QSPI
+         *               checking the entire 8MB can take roughly over a minute.
+         * 
+         *  \retval returns true if SDRAM is okay, otherwise false
+         */
+        bool ValidateQSPI(bool quick = true);
 
         /** Direct Access Structs/Classes */
         System           system;
