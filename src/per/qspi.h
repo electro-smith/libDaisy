@@ -249,7 +249,8 @@ class QSPIHandle
     {
         assert(offset < kMaxAdjustedAddr);
         AdaptToSize(offset + 1); /**< Make sure it's not empty */
-        return (void*)(testIsolator_.GetStateForCurrentTest()->memory_.data() + offset);
+        return (void*)(testIsolator_.GetStateForCurrentTest()->memory_.data()
+                       + offset);
     }
 
     /** Returns the current size of the memory vector.
