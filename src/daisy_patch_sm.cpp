@@ -277,15 +277,16 @@ namespace patch_sm
 
         /** ADC Init */
         AdcChannelConfig adc_config[ADC_LAST];
-        dsy_gpio_pin     adc_pins[] = {
+        /** Order of pins to match enum expectations */
+        dsy_gpio_pin adc_pins[] = {
             PIN_ADC_CTRL_1,
             PIN_ADC_CTRL_2,
             PIN_ADC_CTRL_3,
             PIN_ADC_CTRL_4,
+            PIN_ADC_CTRL_8,
+            PIN_ADC_CTRL_7,
             PIN_ADC_CTRL_5,
             PIN_ADC_CTRL_6,
-            PIN_ADC_CTRL_7,
-            PIN_ADC_CTRL_8,
             PIN_ADC_CTRL_9,
             PIN_ADC_CTRL_10,
             PIN_ADC_CTRL_11,
@@ -470,29 +471,36 @@ namespace patch_sm
 
     bool DaisyPatchSM::ValidateQSPI(bool quick)
     {
+        uint32_t start;
+        uint32_t size;
         if(quick)
         {
-            uint32_t start = 0x400000;
-            uint32_t size  = 0x4000;
-            qspi.Erase(start, start + size);
-            std::vector<uint8_t> test;
-            test.resize(size);
-            uint8_t *testmem = test.data();
-            for(size_t i = 0; i < size; i++)
-                testmem[i] = (uint8_t)(i & 0xff);
-            qspi.Write(start, size, testmem);
-            // Read it all back
-            size_t fail_cnt = 0;
-            for(size_t i = 0; i < size; i++)
-                if(testmem[i] != (uint8_t)(i & 0xff))
-                    fail_cnt++;
-            return fail_cnt == 0;
+            start = 0x400000;
+            size  = 0x4000;
         }
         else
         {
-            return false;
+            start = 0;
+            size  = 0x800000;
         }
-        return true;
+        // Erase the section to be tested
+        qspi.Erase(start, start + size);
+        // Create some test data
+        std::vector<uint8_t> test;
+        test.resize(size);
+        uint8_t *testmem = test.data();
+        for(size_t i = 0; i < size; i++)
+            testmem[i] = (uint8_t)(i & 0xff);
+        // Write the test data to the device
+        qspi.Write(start, size, testmem);
+        // Read it all back and count any/all errors
+        // I supppose any byte where ((data & 0xff) == data)
+        // would be able to false-pass..
+        size_t fail_cnt = 0;
+        for(size_t i = 0; i < size; i++)
+            if(testmem[i] != (uint8_t)(i & 0xff))
+                fail_cnt++;
+        return fail_cnt == 0;
     }
 
 } // namespace patch_sm
