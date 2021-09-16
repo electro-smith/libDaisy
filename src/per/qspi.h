@@ -218,9 +218,10 @@ class QSPIHandle
         uint32_t total_bytes = adjusted_addr + size;
         AdaptToSize(total_bytes);
         // Copy data into vector
+        uint8_t* dest = testIsolator_.GetStateForCurrentTest()->memory_.data();
         std::copy(&buffer[adjusted_addr],
                   &buffer[adjusted_addr + size],
-                  testIsolator_.GetStateForCurrentTest()->memory_.data());
+                  &dest[adjusted_addr]);
         return Result::OK;
     }
 
@@ -248,7 +249,16 @@ class QSPIHandle
     {
         assert(offset < kMaxAdjustedAddr);
         AdaptToSize(offset + 1); /**< Make sure it's not empty */
-        return (void*)(testIsolator_.GetStateForCurrentTest()->memory_.data());
+        return (void*)(testIsolator_.GetStateForCurrentTest()->memory_.data() + offset);
+    }
+
+    /** Returns the current size of the memory vector.
+     *  
+     *  This is not in the hardware class its just for testing purposes
+     */
+    static size_t GetCurrentSize()
+    {
+        return testIsolator_.GetStateForCurrentTest()->memory_.size();
     }
 
   private:

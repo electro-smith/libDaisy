@@ -898,9 +898,9 @@ QSPIHandle::Result QSPIHandle::EraseSector(uint32_t address)
     return pimpl_->EraseSector(address);
 }
 
-void* QSPIHandle::GetData()
+void* QSPIHandle::GetData(uint32_t offset)
 {
-    return pimpl_->GetData();
+    return pimpl_->GetData(offset);
 }
 
 // ======================================================================
