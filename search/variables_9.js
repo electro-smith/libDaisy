@@ -4,9 +4,8 @@ var searchData=
   ['knob1_1',['knob1',['../classdaisy_1_1_daisy_pod.html#ae5e2f78a926443e6e7d79a074727ee41',1,'daisy::DaisyPod']]],
   ['knob2_2',['knob2',['../classdaisy_1_1_daisy_pod.html#af7afc0469d04116f8847025120a4fc70',1,'daisy::DaisyPod']]],
   ['knobs_3',['knobs',['../classdaisy_1_1_daisy_pod.html#a1ddf61e634293aaf600dd7fd01c47598',1,'daisy::DaisyPod']]],
-  ['knumadcinputs_4',['kNumAdcInputs',['../classdaisy_1_1_daisy_patch_s_m.html#aedfeb707415cd083cd6c800da0908af6',1,'daisy::DaisyPatchSM']]],
-  ['kwavfilechunkid_5',['kWavFileChunkId',['../namespacedaisy.html#a03ef559c136c02da542e9b3a263d3759',1,'daisy']]],
-  ['kwavfilesubchunk1id_6',['kWavFileSubChunk1Id',['../namespacedaisy.html#aefff3cc0abb51c01a9fcb7d17b6fbabe',1,'daisy']]],
-  ['kwavfilesubchunk2id_7',['kWavFileSubChunk2Id',['../namespacedaisy.html#a21a161c10bbde49cdd811a48236d8a73',1,'daisy']]],
-  ['kwavfilewaveid_8',['kWavFileWaveId',['../namespacedaisy.html#a4a2662c77bff81dea52ab4438b22492a',1,'daisy']]]
+  ['kwavfilechunkid_4',['kWavFileChunkId',['../namespacedaisy.html#a03ef559c136c02da542e9b3a263d3759',1,'daisy']]],
+  ['kwavfilesubchunk1id_5',['kWavFileSubChunk1Id',['../namespacedaisy.html#aefff3cc0abb51c01a9fcb7d17b6fbabe',1,'daisy']]],
+  ['kwavfilesubchunk2id_6',['kWavFileSubChunk2Id',['../namespacedaisy.html#a21a161c10bbde49cdd811a48236d8a73',1,'daisy']]],
+  ['kwavfilewaveid_7',['kWavFileWaveId',['../namespacedaisy.html#a4a2662c77bff81dea52ab4438b22492a',1,'daisy']]]
 ];

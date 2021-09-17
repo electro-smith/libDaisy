@@ -16,5 +16,5 @@ var searchData=
   ['subchunk2size_13',['SubCHunk2Size',['../structdaisy_1_1_w_a_v___format_type_def.html#a93968350c8f1abcd287e79ded8b6a81d',1,'daisy::WAV_FormatTypeDef']]],
   ['switches_14',['switches',['../classdaisy_1_1_daisy_petal.html#a4c23c5086d0620b98c2d4a86fde53af2',1,'daisy::DaisyPetal']]],
   ['sysex_5fdata_15',['sysex_data',['../structdaisy_1_1_midi_event.html#a3832d8ac412e42359eff562b56362cbb',1,'daisy::MidiEvent']]],
-  ['system_16',['system',['../classdaisy_1_1_daisy_patch_s_m.html#ac25ca6490383b6f8fa6b7f2fc6c61ecd',1,'daisy::DaisyPatchSM']]]
+  ['system_16',['system',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#aee9989e96b489f7726676140ac0b9c26',1,'daisy::patch_sm::DaisyPatchSM']]]
 ];

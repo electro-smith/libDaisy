@@ -9,7 +9,7 @@ var searchData=
   ['uipage_6',['UiPage',['../classdaisy_1_1_ui_page.html',1,'daisy']]],
   ['up_7',['up',['../namespacedaisy.html#ac734c565c1dc55cbf6b74ea942f40c1ca46c48bec0d282018b9d167eef7711b2c',1,'daisy']]],
   ['update_8',['Update',['../classdaisy_1_1_s_s_d130x_driver.html#a016333b71cda3956f8a47680b7ef6bf7',1,'daisy::SSD130xDriver::Update()'],['../classdaisy_1_1_shift_register4021.html#a74b7a683eaa2893e227e42977041f692',1,'daisy::ShiftRegister4021::Update()'],['../classdaisy_1_1_one_bit_graphics_display.html#a0ea638bde2bff96ee10dec0969a7fc56',1,'daisy::OneBitGraphicsDisplay::Update()'],['../classdaisy_1_1_oled_display.html#aea1796db0121368cff3d760ed7bc8548',1,'daisy::OledDisplay::Update()'],['../classdaisy_1_1_led.html#aeec57ceddd9f685c50446321ba6e1492',1,'daisy::Led::Update()'],['../classdaisy_1_1_rgb_led.html#a6bf7b10c72831aa2d2a7f021822f1899',1,'daisy::RgbLed::Update()']]],
-  ['updateleds_9',['UpdateLeds',['../classdaisy_1_1_daisy_pod.html#a77da50cfdca4810687adde08a4913135',1,'daisy::DaisyPod::UpdateLeds()'],['../classdaisy_1_1_daisy_versio.html#ad25ccf6c7994e35b95d8912a63f00e72',1,'daisy::DaisyVersio::UpdateLeds()'],['../classdaisy_1_1_daisy_petal.html#ab224cad4e33c800d36ab90184859b006',1,'daisy::DaisyPetal::UpdateLeds()']]],
+  ['updateleds_9',['UpdateLeds',['../classdaisy_1_1_daisy_petal.html#ab224cad4e33c800d36ab90184859b006',1,'daisy::DaisyPetal::UpdateLeds()'],['../classdaisy_1_1_daisy_pod.html#a77da50cfdca4810687adde08a4913135',1,'daisy::DaisyPod::UpdateLeds()'],['../classdaisy_1_1_daisy_versio.html#ad25ccf6c7994e35b95d8912a63f00e72',1,'daisy::DaisyVersio::UpdateLeds()']]],
   ['updateratems_5f_10',['updateRateMs_',['../structdaisy_1_1_ui_canvas_descriptor.html#acde42d0bcf27e4e78933e0bca8deb324',1,'daisy::UiCanvasDescriptor']]],
   ['updownselectleftrightmodify_11',['upDownSelectLeftRightModify',['../classdaisy_1_1_abstract_menu.html#a888073f41ded25c2aff52aed3506470fa9767d663609a60d09b9d10921b04ef49',1,'daisy::AbstractMenu']]],
   ['usb_5fhandle_12',['usb_handle',['../classdaisy_1_1_daisy_seed.html#aca07ac3af9281104c5e8006024b23ae8',1,'daisy::DaisySeed']]],
@@ -57,5 +57,6 @@ var searchData=
   ['usbd_5fusrlog_54',['USBD_UsrLog',['../group___u_s_b_d___c_o_n_f___exported___macros.html#gad0adad09bbf4f06418659a39edc0f6c6',1,'usbd_conf.h']]],
   ['usbhandle_55',['UsbHandle',['../class_usb_handle.html',1,'']]],
   ['usbperiph_56',['UsbPeriph',['../class_usb_handle.html#a782f2982a91520188f2be5a80c9febb4',1,'UsbHandle::UsbPeriph()'],['../class_usb_handle.html#a782f2982a91520188f2be5a80c9febb4',1,'UsbHandle::UsbPeriph()']]],
-  ['utility_57',['UTILITY',['../group__utility.html',1,'']]]
+  ['user_5fled_57',['user_led',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a2ae2a7c25b4beae24a733acbd1d398b6',1,'daisy::patch_sm::DaisyPatchSM']]],
+  ['utility_58',['UTILITY',['../group__utility.html',1,'']]]
 ];
