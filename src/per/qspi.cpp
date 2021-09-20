@@ -575,6 +575,7 @@ QSPIHandle::Result QSPIHandle::Impl::QuadEnable()
     s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
     s_command.DataMode          = QSPI_DATA_1_LINE;
     s_command.DummyCycles       = 0;
+    s_command.NbData            = 1;
     s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
     s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
     s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
