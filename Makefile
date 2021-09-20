@@ -2,8 +2,6 @@ TARGET = libdaisy
 
 MODULE_DIR=src
 
-#dev/sdram -- this will soon be removed in favor of startup initialization
-
 C_MODULES = \
 sys/dma \
 hid/audio \
