@@ -239,14 +239,14 @@ namespace patch_sm
         bool ValidateQSPI(bool quick = true);
 
         /** Direct Access Structs/Classes */
-        System           system;
-        SdramHandle      sdram;
-        QSPIHandle       qspi;
-        AudioHandle      audio;
-        AdcHandle        adc;
-        UsbHandle        usb;
-        Pcm3060          codec;
-        DacHandle        dac;
+        System      system;
+        SdramHandle sdram;
+        QSPIHandle  qspi;
+        AudioHandle audio;
+        AdcHandle   adc;
+        UsbHandle   usb;
+        Pcm3060     codec;
+        DacHandle   dac;
 
         /** Dedicated Function Pins */
         dsy_gpio      user_led;
