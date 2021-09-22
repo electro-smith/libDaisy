@@ -22,15 +22,26 @@ class VoctCalibration
 
     ~VoctCalibration() {}
 
+    /** Uses the values retrieved for 1V and 3V in order to compute
+     *  a scale and offset value that can be used to convert a CV input 
+     *  signal to a calibrated 1V/oct range. 
+     * 
+     *  \param val1V ADC reading for 1 volt
+     *  \param val3V ADC reading for 3 volts
+     *  \retval returns true if the calibraiton is successful - this is always true
+     * 
+     *  \todo Add some sort of range validation. Originally we had a check
+     *        for a valid range on the input, but given that the input circuit
+     *        or the AnalogControl configuration can have a drastic effect on
+     *        input, that could cause unintentional failure to calibrate, 
+     *        it was removed.
+     **/
     bool Record(float val1V, float val3V)
     {
         float delta = val3V - val1V;
-        if(delta < 0.6f && delta > 0.1f)
-        {
-            scale_  = 24.f / delta;
-            offset_ = 12.f - scale_ * val1V;
-            cal_    = true;
-        }
+        scale_      = 24.f / delta;
+        offset_     = 12.f - scale_ * val1V;
+        cal_        = true;
         return cal_;
     }
 
