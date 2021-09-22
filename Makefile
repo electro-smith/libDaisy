@@ -305,11 +305,6 @@ else
 C_DEFS += -DNDEBUG=1 -DRELEASE=1
 endif
 
-ifdef VOLATILE
-C_DEFS += -DVECT_TAB_SRAM \
--DBOOT_VOLATILE
-endif
-
 CFLAGS += \
 -finline-functions
 
