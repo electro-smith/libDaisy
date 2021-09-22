@@ -13,6 +13,7 @@ util/bsp_sd_diskio \
 util/hal_map \
 util/oled_fonts \
 util/sd_diskio \
+util/usbh_diskio \
 util/unique_id \
 sys/system_stm32h7xx \
 usbd/usbd_cdc_if \
@@ -288,6 +289,7 @@ C_INCLUDES = \
 -I$(MODULE_DIR)/sys \
 -I$(MODULE_DIR)/usbd \
 -I$(MODULE_DIR)/usbh \
+-I$(MODULE_DIR)/util \
 -IDrivers/CMSIS/Include \
 -IDrivers/CMSIS/Device/ST/STM32H7xx/Include \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
