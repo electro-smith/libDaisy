@@ -40,27 +40,6 @@ TEST(util_VoctCalibration, b_recordValidRange)
     EXPECT_NEAR(offset, 0.f, 1.0e-5f);
 }
 
-TEST(util_VoctCalibration, c_recordInvalidRange)
-{
-    VoctCalibration cal;
-    // Reverse the inputs as if the calibration was performed
-    // in reverse order.
-    float v1           = 0.6f;
-    float v3           = 0.2f;
-    bool  isCalibrated = false;
-    isCalibrated       = cal.Record(v1, v3);
-
-    // Check that the calibration failed,
-    // and the default data didn't update.
-    float scale, offset;
-    cal.GetData(scale, offset);
-
-    // Verify values
-    EXPECT_FALSE(isCalibrated);
-    EXPECT_FLOAT_EQ(scale, 0.f);
-    EXPECT_FLOAT_EQ(offset, 0.f);
-}
-
 TEST(util_VoctCalibration, c_postCalibrationProcessing)
 {
     VoctCalibration cal;
