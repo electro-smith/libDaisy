@@ -242,7 +242,7 @@ void DaisySeed::ConfigureAudio()
     // Device-based Init
     switch(CheckBoardVersion())
     {
-        case DAISY_SEED_1_1:
+        case BoardVersion::DAISY_SEED_1_1:
         {
             // Data Line Directions
             sai_config.a_dir         = SaiHandle::Config::Direction::RECEIVE;
@@ -263,7 +263,7 @@ void DaisySeed::ConfigureAudio()
             codec.Init(codec_cfg, i2c_handle);
         }
         break;
-        case DAISY_SEED:
+        case BoardVersion::DAISY_SEED:
         default:
         {
             // Data Line Directions
@@ -315,11 +315,7 @@ DaisySeed::BoardVersion DaisySeed::CheckBoardVersion()
     pincheck.pin  = {DSY_GPIOD, 3};
     dsy_gpio_init(&pincheck);
     if(!dsy_gpio_read(&pincheck))
-    {
-        return DAISY_SEED_1_1;
-    }
+        return BoardVersion::DAISY_SEED_1_1;
     else
-    {
-        return DAISY_SEED;
-    }
+        return BoardVersion::DAISY_SEED;
 }

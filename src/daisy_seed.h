@@ -154,10 +154,10 @@ class DaisySeed
      *  and only needs to be checked to properly initialize
      *  the onboard-circuits.
     */
-    enum BoardVersion
+    enum class BoardVersion
     {
         /** Daisy Seed Rev4
-       *  This is the original Daisy Seed */
+         *  This is the original Daisy Seed */
         DAISY_SEED,
         /** Daisy Seed 1.1 (aka Daisy Seed Rev5)
          *  This is a pin-compatible version of the Daisy Seed
