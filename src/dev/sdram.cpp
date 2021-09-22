@@ -341,40 +341,6 @@ static void HAL_FMC_MspInit(void)
     GPIO_InitStruct.Alternate = GPIO_AF12_FMC; // They all seem to use this
     HAL_GPIO_Init(port, &GPIO_InitStruct);
 
-    // This pin can change between boards (SDNWE)
-    //    switch(dsy_sdram.board)
-    //    {
-    //    case DSY_SYS_BOARD_DAISY:
-    //        /* GPIO_InitStruct */
-    //        GPIO_InitStruct.Pin = GPIO_PIN_0;
-    //        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    //        GPIO_InitStruct.Pull = GPIO_NOPULL;
-    //        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    //        GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-    //        HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-    //        break;
-    //    case DSY_SYS_BOARD_DAISY_SEED:
-    //        /* GPIO_InitStruct */
-    //        GPIO_InitStruct.Pin = GPIO_PIN_5;
-    //        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    //        GPIO_InitStruct.Pull = GPIO_NOPULL;
-    //        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    //        GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-    //        HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
-    //        break;
-    //    case DSY_SYS_BOARD_AUDIO_BB:
-    //        /* GPIO_InitStruct */
-    //        GPIO_InitStruct.Pin = GPIO_PIN_5;
-    //        GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    //        GPIO_InitStruct.Pull = GPIO_NOPULL;
-    //        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    //        GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-    //        HAL_GPIO_Init(GPIOH, &GPIO_InitStruct);
-    //        break;
-    //    default:
-    //        break;
-    //    }
-
     /* USER CODE BEGIN FMC_MspInit 1 */
 
     /* USER CODE END FMC_MspInit 1 */
@@ -510,19 +476,6 @@ void HAL_SDRAM_MspDeInit(SDRAM_HandleTypeDef *sdramHandle)
     /* USER CODE BEGIN SDRAM_MspDeInit 1 */
 
     /* USER CODE END SDRAM_MspDeInit 1 */
-}
-
-void __attribute__((constructor)) SDRAM_Init()
-{
-    //    extern void *_sisdram_data, *_ssdram_data, *_esdram_data;
-    //    extern void *_ssdram_bss, *_esdram_bss;
-
-    //    void **pSource, **pDest;
-    //    for (pSource = &_sisdram_data, pDest = &_ssdram_data; pDest != &_esdram_data; pSource++, pDest++)
-    //        *pDest = *pSource;
-    //
-    //    for (pDest = &_ssdram_bss; pDest != &_esdram_bss; pDest++)
-    //        *pDest = 0;
 }
 
 //Program the <project name>_QSPIFLASH.bin file to QSPIFLASH manually
