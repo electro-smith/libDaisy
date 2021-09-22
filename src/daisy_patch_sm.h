@@ -180,7 +180,7 @@ class DaisyPatchSM
 
     /** Direct Access Structs/Classes */
     System           system;
-    SdramHandle      sdram;
+    dsy_sdram_handle sdram;
     QSPIHandle       qspi;
     AudioHandle      audio;
     AdcHandle        adc;
