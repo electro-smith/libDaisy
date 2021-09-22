@@ -149,6 +149,22 @@ class DaisySeed
     */
     using Log = Logger<LOGGER_INTERNAL>;
 
+    /** Internal indices for DaisySeed-equivalent devices 
+     *  This shouldn't have any effect on user-facing code,
+     *  and only needs to be checked to properly initialize
+     *  the onboard-circuits.
+    */
+    enum class BoardVersion
+    {
+        /** Daisy Seed Rev4
+         *  This is the original Daisy Seed */
+        DAISY_SEED,
+        /** Daisy Seed 1.1 (aka Daisy Seed Rev5)
+         *  This is a pin-compatible version of the Daisy Seed
+         *  that uses the WM8731 codec instead of the AK4430 */
+        DAISY_SEED_1_1,
+    };
+    BoardVersion CheckBoardVersion();
 
     void ConfigureSdram();
     void ConfigureQspi();

@@ -14,6 +14,7 @@
 * spi: added DMA Transactions (same type of queue system as I2C) to the SPI Handle class.
 * util: added new PersistentStorage class for storing/recalling data between power cycles
 * util: added new VoctCalibration helper class for calibrating ADC inputs
+* seed: added support for Daisy Seed 1.1 (aka Daisy Seed rev5) hardware. Pin-compatible, with same form factor. WM8731 Codec instead of AK4556.
 
 ### Bug fixes
 
