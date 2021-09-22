@@ -20,14 +20,12 @@ class MSDHandle::Impl {
     ~Impl() {}
 
     Result Init();
-    Result Deinit(DaisySeed& hw);
+    Result Deinit();
 
     void Process();
     bool GetReady();
 
   private:
-
-    DaisySeed* hw_;
         
 };
 
@@ -55,11 +53,10 @@ MSDHandle::Result MSDHandle::Impl::Init()
   return Result::OK;
 }
 
-MSDHandle::Result MSDHandle::Impl::Deinit(DaisySeed& hw)
+MSDHandle::Result MSDHandle::Impl::Deinit()
 {
   USBH_Stop(&hUsbHostHS);
   USBH_DeInit(&hUsbHostHS);
-  hw.DelayMs(100);
   return Result::OK;
 }
 
@@ -81,9 +78,9 @@ MSDHandle::Result MSDHandle::Init()
   return pimpl_->Init();
 }
 
-MSDHandle::Result MSDHandle::Deinit(DaisySeed& hw)
+MSDHandle::Result MSDHandle::Deinit()
 {
-  return pimpl_->Deinit(hw);
+  return pimpl_->Deinit();
 }
 
 bool MSDHandle::GetReady()

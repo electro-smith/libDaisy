@@ -2,7 +2,6 @@
 #define DSY_MSD
 
 #include <cstdint>
-#include "daisy_seed.h"
 
 namespace daisy
 {
@@ -47,7 +46,7 @@ class MSDHandle
     /** Deinitializes MSD-related peripherals
      * 
      */
-    Result Deinit(DaisySeed& hw);
+    Result Deinit();
 
     /** Manages usb host functionality
      * 
@@ -68,7 +67,6 @@ class MSDHandle
 
   private:
 
-    DaisySeed* hw_;
     Impl* pimpl_;
 
 };
