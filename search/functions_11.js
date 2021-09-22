@@ -14,6 +14,7 @@ var searchData=
   ['resettobootloader_11',['ResetToBootloader',['../classdaisy_1_1_system.html#ae7e0bb7a214d85ceaa2264f2d00afd5a',1,'daisy::System']]],
   ['resettodefault_12',['ResetToDefault',['../classdaisy_1_1_mapped_value.html#a60288a18a6173903f3a7e4c5c9aebb84',1,'daisy::MappedValue::ResetToDefault()'],['../classdaisy_1_1_mapped_float_value.html#accc506533ee066815a8c78f3b7a6cbfc',1,'daisy::MappedFloatValue::ResetToDefault()'],['../classdaisy_1_1_mapped_int_value.html#a921f370452a295e5f52f0483b3559a83',1,'daisy::MappedIntValue::ResetToDefault()'],['../classdaisy_1_1_mapped_string_list_value.html#aa1edf81d83cf2ce90d56d0f36f7a50a9',1,'daisy::MappedStringListValue::ResetToDefault()']]],
   ['restart_13',['Restart',['../classdaisy_1_1_wav_player.html#ac3b2f9f9cdf18ea861be227dcffd5da9',1,'daisy::WavPlayer']]],
-  ['risingedge_14',['RisingEdge',['../classdaisy_1_1_encoder.html#ab501cf73d10d81058b485c48b9eb506f',1,'daisy::Encoder::RisingEdge()'],['../classdaisy_1_1_switch.html#a71f6054840c76ebe3cb2517dc7830d34',1,'daisy::Switch::RisingEdge()']]],
-  ['rxactive_15',['RxActive',['../classdaisy_1_1_uart_handler.html#aeeb804c58c2ccf574142b2a030d2d83b',1,'daisy::UartHandler']]]
+  ['restoredefaults_14',['RestoreDefaults',['../classdaisy_1_1_persistent_storage.html#ad573b53a242aae9743eea18b93f6e39d',1,'daisy::PersistentStorage']]],
+  ['risingedge_15',['RisingEdge',['../classdaisy_1_1_encoder.html#ab501cf73d10d81058b485c48b9eb506f',1,'daisy::Encoder::RisingEdge()'],['../classdaisy_1_1_switch.html#a71f6054840c76ebe3cb2517dc7830d34',1,'daisy::Switch::RisingEdge()']]],
+  ['rxactive_16',['RxActive',['../classdaisy_1_1_uart_handler.html#aeeb804c58c2ccf574142b2a030d2d83b',1,'daisy::UartHandler']]]
 ];

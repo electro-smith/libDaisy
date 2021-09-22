@@ -113,6 +113,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1e4e0f74ab21ef1d92386a4452b0d534"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3facab36208cc9e017c403eac0f00864"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_q_s_p_i_handle.html#a130e764ad0cd53c10c0bc85193e8c133">Status</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_q_s_p_i_handle.html#a3facab36208cc9e017c403eac0f00864">GetStatus</a> ()</td></tr>
 <tr class="separator:a3facab36208cc9e017c403eac0f00864"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9efd73349ab2de211139f3f03e9a8925"><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_q_s_p_i_handle.html#a9efd73349ab2de211139f3f03e9a8925">GetData</a> (uint32_t offset=0)</td></tr>
+<tr class="separator:a9efd73349ab2de211139f3f03e9a8925"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e272769d4dc67d7be5e5ff94aab3c60"><td class="memItemLeft" align="right" valign="top"><a id="a0e272769d4dc67d7be5e5ff94aab3c60" name="a0e272769d4dc67d7be5e5ff94aab3c60"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>QSPIHandle</b> (const <a class="el" href="classdaisy_1_1_q_s_p_i_handle.html">QSPIHandle</a> &amp;other)=default</td></tr>
 <tr class="separator:a0e272769d4dc67d7be5e5ff94aab3c60"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -245,6 +247,31 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Returns the current config. </p>
+
+</div>
+</div>
+<a id="a9efd73349ab2de211139f3f03e9a8925" name="a9efd73349ab2de211139f3f03e9a8925"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9efd73349ab2de211139f3f03e9a8925">&#9670;&nbsp;</a></span>GetData()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void * daisy::QSPIHandle::GetData </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Returns a pointer to the actual memory used The memory at this address is read-only to write to it use the Write function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">offset</td><td>returns the pointer starting this many bytes into the memory </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
