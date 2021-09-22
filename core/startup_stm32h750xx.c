@@ -5,7 +5,6 @@
 */
 
 #include <stddef.h>
-//#include "sdram_startup.h"
 extern void *_estack;
 
 void Reset_Handler();
@@ -1550,7 +1549,6 @@ void __attribute__((naked, noreturn)) Reset_Handler()
 
 	#ifndef BOOT_APP
 	SystemInit();
-	//SdramInit();
 	#endif
 	__libc_init_array();
 
