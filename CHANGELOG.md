@@ -13,7 +13,7 @@
 * rng: added new Random module that provides access to the hardware True Random Number Generator
 * spi: added DMA Transactions (same type of queue system as I2C) to the SPI Handle class.
 * util: added new PersistentStorage class for storing/recalling data between power cycles
-
+* util: added new VoctCalibration helper class for calibrating ADC inputs
 
 ### Bug fixes
 
