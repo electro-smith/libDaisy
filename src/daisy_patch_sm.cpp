@@ -103,9 +103,10 @@ void DaisyPatchSM::Init()
     system.Init(syscfg);
     /** Memories */
     /** FMC SDRAM */
-    sdram.state                           = DSY_SDRAM_STATE_ENABLE;
-    sdram.pin_config[DSY_SDRAM_PIN_SDNWE] = {DSY_GPIOH, 5};
-    dsy_sdram_init(&sdram);
+    // sdram.state                           = DSY_SDRAM_STATE_ENABLE;
+    // sdram.pin_config[DSY_SDRAM_PIN_SDNWE] = {DSY_GPIOH, 5};
+    // dsy_sdram_init(&sdram);
+    sdram.Init();
     /** QUADSPI FLASH */
     QSPIHandle::Config qspi_config;
     qspi_config.device         = QSPIHandle::Config::Device::IS25LP064A;
