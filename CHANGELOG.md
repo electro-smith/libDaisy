@@ -12,6 +12,8 @@
 * board: added support files for upcoming Daisy Patch SM hardware
 * rng: added new Random module that provides access to the hardware True Random Number Generator
 * spi: added DMA Transactions (same type of queue system as I2C) to the SPI Handle class.
+* util: added new PersistentStorage class for storing/recalling data between power cycles
+
 
 ### Bug fixes
 
