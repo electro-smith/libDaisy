@@ -17,7 +17,7 @@ var searchData=
   ['getcurrentpotvalue_14',['GetCurrentPotValue',['../classdaisy_1_1_pot_monitor.html#aad0c019e7bb2d6c34167b96aa2ed7ba8',1,'daisy::PotMonitor']]],
   ['getcv_15',['GetCv',['../classdaisy_1_1_daisy_field.html#aff8d6f0f31965520f4d0c7a9dc0e4612',1,'daisy::DaisyField']]],
   ['getcvvalue_16',['GetCvValue',['../classdaisy_1_1_daisy_field.html#aac01b13713d80ffb73256b011173ba48',1,'daisy::DaisyField']]],
-  ['getdata_17',['GetData',['../classdaisy_1_1_q_s_p_i_handle.html#a9efd73349ab2de211139f3f03e9a8925',1,'daisy::QSPIHandle']]],
+  ['getdata_17',['GetData',['../classdaisy_1_1_q_s_p_i_handle.html#a9efd73349ab2de211139f3f03e9a8925',1,'daisy::QSPIHandle::GetData()'],['../classdaisy_1_1_voct_calibration.html#a2de4f82138921ace41e1ca4e4aa2d26e',1,'daisy::VoctCalibration::GetData()']]],
   ['getexpression_18',['GetExpression',['../classdaisy_1_1_daisy_petal.html#a603974a7c50f2761b83b557504f4fe18',1,'daisy::DaisyPetal']]],
   ['getfloat_19',['GetFloat',['../classdaisy_1_1_adc_handle.html#a9572dffe03bc0ff076df90f10de990a6',1,'daisy::AdcHandle::GetFloat()'],['../classdaisy_1_1_random.html#a1dbfaccca3b60e39e7da92c499781066',1,'daisy::Random::GetFloat()']]],
   ['getfreq_20',['GetFreq',['../classdaisy_1_1_timer_handle.html#a279bb0b7fb44ce22e9d80a21e918849f',1,'daisy::TimerHandle']]],
