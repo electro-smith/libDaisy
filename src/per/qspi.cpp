@@ -37,7 +37,7 @@ class QSPIHandle::Impl
 
     const QSPIHandle::Config& GetConfig() const { return config_; }
 
-    QSPIHandle::Result Deinit();
+    QSPIHandle::Result DeInit();
 
     QSPIHandle::Result WritePage(uint32_t address,
                                  uint32_t size,
@@ -175,7 +175,7 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
 }
 
 
-QSPIHandle::Result QSPIHandle::Impl::Deinit()
+QSPIHandle::Result QSPIHandle::Impl::DeInit()
 {
     halqspi_.Instance = QUADSPI;
     if(HAL_QSPI_DeInit(&halqspi_) != HAL_OK)
@@ -863,9 +863,9 @@ const QSPIHandle::Config& QSPIHandle::GetConfig() const
     return pimpl_->GetConfig();
 }
 
-QSPIHandle::Result QSPIHandle::Deinit()
+QSPIHandle::Result QSPIHandle::DeInit()
 {
-    return pimpl_->Deinit();
+    return pimpl_->DeInit();
 }
 
 QSPIHandle::Status QSPIHandle::GetStatus()

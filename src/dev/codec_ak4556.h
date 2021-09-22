@@ -27,9 +27,9 @@ class Ak4556
 
     /** Deinitialization function for Ak4556 
      ** Can be called statically:
-     ** Ak4556::Deinit(pin); 
+     ** Ak4556::DeInit(pin); 
      ** */
-    static void Deinit(dsy_gpio_pin reset_pin);
+    static void DeInit(dsy_gpio_pin reset_pin);
 };
 } // namespace daisy
 

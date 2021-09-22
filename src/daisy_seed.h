@@ -48,7 +48,7 @@ class DaisySeed
     /** 
     Deinitializes all peripherals automatically handled by `Init`.
     */
-    void Deinit();
+    void DeInit();
 
     /** 
     Wait some ms before going on.

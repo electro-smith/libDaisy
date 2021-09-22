@@ -32,7 +32,7 @@ class AudioHandle::Impl
     AudioHandle::Result Init(const AudioHandle::Config config, SaiHandle sai);
     AudioHandle::Result
                         Init(const AudioHandle::Config config, SaiHandle sai1, SaiHandle sai2);
-    AudioHandle::Result Deinit();
+    AudioHandle::Result DeInit();
     AudioHandle::Result Start(AudioHandle::AudioCallback callback);
     AudioHandle::Result Start(AudioHandle::InterleavingAudioCallback callback);
     AudioHandle::Result Stop();
@@ -130,19 +130,19 @@ AudioHandle::Result AudioHandle::Impl::Init(const AudioHandle::Config config,
     return Result::OK;
 }
 
-AudioHandle::Result AudioHandle::Impl::Deinit()
+AudioHandle::Result AudioHandle::Impl::DeInit()
 {
     Stop();
     if(sai1_.IsInitialized())
     {
-        if(sai1_.Deinit() != SaiHandle::Result::OK)
+        if(sai1_.DeInit() != SaiHandle::Result::OK)
         {
             return Result::ERR;
         }
     }
     if(sai2_.IsInitialized())
     {
-        if(sai2_.Deinit() != SaiHandle::Result::OK)
+        if(sai2_.DeInit() != SaiHandle::Result::OK)
         {
             return Result::ERR;
         }
@@ -484,9 +484,9 @@ AudioHandle::Init(const Config& config, SaiHandle sai1, SaiHandle sai2)
     return pimpl_->Init(config, sai1, sai2);
 }
 
-AudioHandle::Result AudioHandle::Deinit()
+AudioHandle::Result AudioHandle::DeInit()
 {
-    return pimpl_->Deinit();
+    return pimpl_->DeInit();
 }
 
 const AudioHandle::Config& AudioHandle::GetConfig() const

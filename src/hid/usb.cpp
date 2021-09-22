@@ -104,7 +104,7 @@ void UsbHandle::Init(UsbPeriph dev)
     HAL_PWREx_EnableUSBVoltageDetector();
 }
 
-void UsbHandle::Deinit(UsbPeriph dev)
+void UsbHandle::DeInit(UsbPeriph dev)
 {
     switch(dev)
     {

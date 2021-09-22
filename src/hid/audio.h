@@ -72,7 +72,7 @@ class AudioHandle
     Result Init(const Config& config, SaiHandle sai1, SaiHandle sai2);
 
     /** Stops and deinitializes audio. */
-    Result Deinit();
+    Result DeInit();
 
     /** Returns the Global Configuration struct for the Audio */
     const Config& GetConfig() const;

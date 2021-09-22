@@ -113,7 +113,7 @@ class SaiHandle
     Result Init(const Config& config);
 
     /** Deinitializes an SAI peripheral */
-    Result Deinit();
+    Result DeInit();
 
     /** Returns the current configuration */
     const Config& GetConfig() const;

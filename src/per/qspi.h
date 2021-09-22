@@ -108,7 +108,7 @@ class QSPIHandle
         This should be called before reinitializing QSPI in a different mode.
         \return Result::OK or Result::ERR
         */
-    Result Deinit();
+    Result DeInit();
 
     /** 
         Writes a single page to to the specified address on the QSPI chip.

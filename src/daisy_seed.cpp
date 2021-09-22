@@ -137,13 +137,13 @@ void DaisySeed::Init(bool boost)
     //usb_handle.Init(UsbHandle::FS_INTERNAL);
 }
 
-void DaisySeed::Deinit()
+void DaisySeed::DeInit()
 {
     // This is intended to be used by the bootloader, but
     // we don't want to reinitialize pretty much anything in the
     // target application, so...
-    // qspi.Deinit();
-    // sdram_handle.Deinit();
+    // qspi.DeInit();
+    // sdram_handle.DeInit();
     // dsy_gpio_deinit(&led);
     // dsy_gpio_deinit(&testpoint);
 
@@ -151,10 +151,10 @@ void DaisySeed::Deinit()
     // codec_reset_pin = {DSY_GPIOB, 11};
     // // Perhaps a bit unnecessary, but maybe we'll make
     // // this non-static at some point
-    // Ak4556::Deinit(codec_reset_pin);
-    // audio_handle.Deinit();
+    // Ak4556::DeInit(codec_reset_pin);
+    // audio_handle.DeInit();
 
-    system.Deinit();
+    system.DeInit();
 }
 
 dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)

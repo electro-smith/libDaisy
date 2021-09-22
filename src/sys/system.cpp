@@ -129,7 +129,7 @@ void System::Init(const System::Config& config)
     Random::Init();
 }
 
-void System::Deinit()
+void System::DeInit()
 {
     dsy_dma_deinit();
     // HAL_MPU_Disable();
@@ -138,7 +138,7 @@ void System::Deinit()
     SCB_DisableDCache();
     SCB_DisableICache();
 
-    tim_.Deinit();
+    tim_.DeInit();
     // HAL_RCC_DeInit();
 
     // WARNING -- without modifications, this function will

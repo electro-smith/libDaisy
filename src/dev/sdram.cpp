@@ -56,13 +56,13 @@ SdramHandle::Result SdramHandle::Init()
     return Result::OK;
 }
 
-SdramHandle::Result SdramHandle::Deinit()
+SdramHandle::Result SdramHandle::DeInit()
 {
-    if(DeviceDeinit() != Result::OK)
+    if(DeviceDeInit() != Result::OK)
     {
         return Result::ERR;
     }
-    if(PeriphDeinit() != Result::OK)
+    if(PeriphDeInit() != Result::OK)
     {
         return Result::ERR;
     }
@@ -163,7 +163,7 @@ SdramHandle::Result SdramHandle::DeviceInit()
     return Result::OK;
 }
 
-SdramHandle::Result SdramHandle::DeviceDeinit()
+SdramHandle::Result SdramHandle::DeviceDeInit()
 {
     // I believe this is sufficient to enter power down mode
     FMC_SDRAM_CommandTypeDef Command;
@@ -178,7 +178,7 @@ SdramHandle::Result SdramHandle::DeviceDeinit()
     return Result::OK;
 }
 
-SdramHandle::Result SdramHandle::PeriphDeinit()
+SdramHandle::Result SdramHandle::PeriphDeInit()
 {
     if(HAL_SDRAM_DeInit(&dsy_sdram.hsdram) != HAL_OK)
         return Result::ERR;

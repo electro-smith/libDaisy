@@ -20,7 +20,7 @@ class TimerHandle::Impl
 {
   public:
     TimerHandle::Result        Init(const TimerHandle::Config& config);
-    TimerHandle::Result        Deinit();
+    TimerHandle::Result        DeInit();
     const TimerHandle::Config& GetConfig() const { return config_; }
 
     TimerHandle::Result Start();
@@ -110,7 +110,7 @@ TimerHandle::Result TimerHandle::Impl::Init(const TimerHandle::Config& config)
     return TimerHandle::Result::OK;
 }
 
-TimerHandle::Result TimerHandle::Impl::Deinit()
+TimerHandle::Result TimerHandle::Impl::DeInit()
 {
     if(Stop() != TimerHandle::Result::OK)
     {
@@ -253,9 +253,9 @@ TimerHandle::Result TimerHandle::Init(const Config& config)
     return pimpl_->Init(config);
 }
 
-TimerHandle::Result TimerHandle::Deinit()
+TimerHandle::Result TimerHandle::DeInit()
 {
-    return pimpl_->Deinit();
+    return pimpl_->DeInit();
 }
 
 const TimerHandle::Config& TimerHandle::GetConfig() const

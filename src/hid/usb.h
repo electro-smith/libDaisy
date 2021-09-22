@@ -49,7 +49,7 @@ class UsbHandle
     /** Deinitializes the specified peripheral(s)
     \param dev Device to deinitialize
      */
-    void Deinit(UsbPeriph dev);
+    void DeInit(UsbPeriph dev);
 
     /** Transmits a buffer of 'size' bytes from the on board USB FS port. 
     \param buff Buffer to transmit
