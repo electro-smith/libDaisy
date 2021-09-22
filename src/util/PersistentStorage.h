@@ -48,8 +48,7 @@ class PersistentStorage
       address_offset_(0),
       default_settings_(),
       settings_(),
-      state_(State::UNKNOWN),
-      in_place_storage_(nullptr)
+      state_(State::UNKNOWN)
     {
     }
 
@@ -68,11 +67,11 @@ class PersistentStorage
         default_settings_ = defaults;
         settings_         = defaults;
         address_offset_   = address_offset & (uint32_t)(~0xff);
-        in_place_storage_
+        auto storage_data
             = reinterpret_cast<SaveStruct *>(qspi_.GetData(address_offset_));
 
         // check to see if the state is already in use.
-        State cur_state = in_place_storage_->storage_state;
+        State cur_state = storage_data->storage_state;
         if(cur_state != State::FACTORY && cur_state != State::USER)
         {
             // Initialize the Data store State::FACTORY, and the DefaultSettings
@@ -82,7 +81,7 @@ class PersistentStorage
         else
         {
             state_    = cur_state;
-            settings_ = in_place_storage_->user_data;
+            settings_ = storage_data->user_data;
         }
     }
 
@@ -122,7 +121,9 @@ class PersistentStorage
         // Only actually save if the new data is different
         // Use the `==operator` in custom SettingStruct to fine tune
         // what may or may not trigger the erase/save.
-        if(settings_ != in_place_storage_->user_data)
+        auto storage_data
+            = reinterpret_cast<SaveStruct *>(qspi_.GetData(address_offset_));
+        if(settings_ != storage_data->user_data)
         {
             qspi_.Erase(address_offset_, address_offset_ + sizeof(s));
             qspi_.Write(address_offset_, sizeof(s), (uint8_t *)&s);
@@ -134,7 +135,6 @@ class PersistentStorage
     SettingStruct default_settings_;
     SettingStruct settings_;
     State         state_;
-    SaveStruct *  in_place_storage_;
 };
 
 } // namespace daisy
