@@ -399,11 +399,11 @@ uint32_t System::GetPClk2Freq()
 
 System::ProgramMemory System::GetProgramMemory(uint32_t program_start)
 {
-    if(program_start >= sram_start && program_start < sram_end)
+    if(program_start >= kSramStart && program_start < kSramEnd)
         return ProgramMemory::AXI_SRAM;
-    if(program_start >= internal_start && program_start < internal_end)
+    if(program_start >= kInternalStart && program_start < kInternalEnd)
         return ProgramMemory::INTERNAL_FLASH;
-    if(program_start >= qspi_start && program_start < qspi_end)
+    if(program_start >= kQspiStart && program_start < kQspiEnd)
         return ProgramMemory::QSPI;
 
     return ProgramMemory::INVALID_ADDRESS;

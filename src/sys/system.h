@@ -170,15 +170,15 @@ class System
      */
     static ProgramMemory GetProgramMemory(uint32_t program_start = SCB->VTOR);
 
-    static constexpr uint32_t sram_start = 0x24000000U;
-    static constexpr uint32_t sram_end   = sram_start + 0x80000U;
-    static constexpr uint32_t qspi_start = 0x90040000U;
-    
-    static constexpr uint32_t qspi_end       = qspi_start + 0x7c0000;
-    static constexpr uint32_t internal_start = 0x08000000U;
-    static constexpr uint32_t internal_end   = internal_start + 0x20000U;
+    static constexpr uint32_t kSramStart = 0x24000000U;
+    static constexpr uint32_t kSramEnd   = kSramStart + 0x80000U;
+    static constexpr uint32_t kQspiStart = 0x90040000U;
 
-    static constexpr uint32_t expected_stack = 0x20020000U;
+    static constexpr uint32_t kQspiEnd       = kQspiStart + 0x7c0000;
+    static constexpr uint32_t kInternalStart = 0x08000000U;
+    static constexpr uint32_t kInternalEnd   = kInternalStart + 0x20000U;
+
+    static constexpr uint32_t kExpectedStack = 0x20020000U;
 
   private:
     void   ConfigureClocks();
