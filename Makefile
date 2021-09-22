@@ -6,6 +6,7 @@ C_MODULES = \
 sys/dma \
 hid/audio \
 sys/fatfs \
+sys/fatfs_usbh \
 per/gpio \
 per/sai \
 per/sdmmc \
@@ -289,7 +290,6 @@ C_INCLUDES = \
 -I$(MODULE_DIR)/sys \
 -I$(MODULE_DIR)/usbd \
 -I$(MODULE_DIR)/usbh \
--I$(MODULE_DIR)/util \
 -IDrivers/CMSIS/Include \
 -IDrivers/CMSIS/Device/ST/STM32H7xx/Include \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \

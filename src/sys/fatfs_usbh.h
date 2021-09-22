@@ -25,7 +25,7 @@
 
 #include "ff.h"
 #include "ff_gen_drv.h"
-#include "usbh_diskio.h" /* defines USBH_Driver as external */
+#include "util/usbh_diskio.h" /* defines USBH_Driver as external */
 
 /* USER CODE BEGIN Includes */
 
