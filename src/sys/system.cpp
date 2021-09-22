@@ -3,12 +3,14 @@
 #include "sys/system.h"
 #include "sys/dma.h"
 #include "per/gpio.h"
+#include "per/rng.h"
 
 // global init functions for peripheral drivers.
 // These don't really need to be extern "C" anymore..
 extern "C"
 {
     extern void dsy_i2c_global_init();
+    extern void dsy_spi_global_init();
 }
 
 // Jump related stuff
@@ -107,6 +109,7 @@ void System::Init(const System::Config& config)
     }
     dsy_dma_init();
     dsy_i2c_global_init();
+    dsy_spi_global_init();
 
     // Initialize Caches
     if(config.use_dcache)
@@ -121,6 +124,9 @@ void System::Init(const System::Config& config)
     timcfg.dir    = TimerHandle::Config::CounterDir::UP;
     tim_.Init(timcfg);
     tim_.Start();
+
+    // Initialize the true random number generator
+    Random::Init();
 }
 
 void System::Deinit()
