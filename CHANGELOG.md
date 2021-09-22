@@ -9,9 +9,10 @@
 ### Features
 
 * adc: added initialization mappings for pins ADC1_INP12 (PC2) and ADC1_INP13 (PC3) (Not accessible on Daisy Seed)
-* sdram: device and peripheral initialization is now handled in the stm32 startup
 * bootloader: BOOT_VOLATILE macro added for reconfiguring libDaisy to run from the Daisy bootloader
 * bootloader: added a number of deinitialization methods to core classes
+* board: added support files for upcoming Daisy Patch SM hardware
+* rng: added new RandomNumberGenerator module that provides access to the hardware True Random Number Generator
 
 ### Bug fixes
 

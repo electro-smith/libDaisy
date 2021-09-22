@@ -6,6 +6,7 @@ C_MODULES = \
 sys/dma \
 hid/audio \
 sys/fatfs \
+per/gpio \
 per/sai \
 per/sdmmc \
 util/bsp_sd_diskio \
@@ -25,6 +26,7 @@ daisy_patch \
 daisy_petal \
 daisy_field \
 daisy_versio \
+daisy_patch_sm \
 sys/system \
 dev/sr_595 \
 dev/codec_ak4556 \
@@ -46,6 +48,7 @@ per/adc \
 per/dac \
 per/gpio \
 per/i2c \
+per/rng \
 per/qspi \
 per/spi \
 per/tim \
