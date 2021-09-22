@@ -70,17 +70,6 @@ class System
         INVALID_ADDRESS,
     };
 
-    /** A simple way to represent where the program is executing from
-     * 
-     */
-    enum ProgramMemory
-    {
-        INTERNAL_FLASH = 0,
-        AXI_SRAM,
-        QSPI,
-        INVALID_ADDRESS,
-    };
-
     System() {}
     ~System() {}
 
