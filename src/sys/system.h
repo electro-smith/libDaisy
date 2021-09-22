@@ -173,8 +173,8 @@ class System
     static constexpr uint32_t sram_start = 0x24000000U;
     static constexpr uint32_t sram_end   = sram_start + 0x80000U;
     static constexpr uint32_t qspi_start = 0x90040000U;
-    // TODO -- this is a bit too large:
-    static constexpr uint32_t qspi_end       = qspi_start + 0x800000U;
+    
+    static constexpr uint32_t qspi_end       = qspi_start + 0x7c0000;
     static constexpr uint32_t internal_start = 0x08000000U;
     static constexpr uint32_t internal_end   = internal_start + 0x20000U;
 
