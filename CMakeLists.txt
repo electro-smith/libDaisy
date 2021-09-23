@@ -55,6 +55,9 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/per/spi.cpp
     ${MODULE_DIR}/per/tim.cpp
     ${MODULE_DIR}/per/uart.cpp
+    ${MODULE_DIR}/ui/AbstractMenu.cpp
+    ${MODULE_DIR}/ui/FullScreenItemMenu.cpp
+    ${MODULE_DIR}/ui/UI.cpp
     ${MODULE_DIR}/util/color.cpp
     ${MODULE_DIR}/util/WaveTableLoader.cpp
 

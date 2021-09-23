@@ -1,3 +1,4 @@
+#ifndef UNIT_TEST
 #include "per/qspi.h"
 #include "sys/system.h"
 #include "stm32h7xx_hal.h"
@@ -59,6 +60,8 @@ class QSPIHandle::Impl
     size_t GetNumPins() { return pin_count_; }
 
     Status GetStatus() { return status_; }
+
+    void* GetData(uint32_t offset) { return (void*)(0x90000000 + offset); }
 
   private:
     QSPIHandle::Result ResetMemory();
@@ -895,6 +898,11 @@ QSPIHandle::Result QSPIHandle::EraseSector(uint32_t address)
     return pimpl_->EraseSector(address);
 }
 
+void* QSPIHandle::GetData(uint32_t offset)
+{
+    return pimpl_->GetData(offset);
+}
+
 // ======================================================================
 // HAL service functions
 // ======================================================================
@@ -1024,3 +1032,11 @@ extern "C" void QUADSPI_IRQHandler(void)
 //    {GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI}, // AUDIO BB
 //};
 //
+
+#else // ifndef UNIT_TEST
+
+#include "qspi.h"
+// static isolator for the dummy version used in unit tests
+TestIsolator<daisy::QSPIHandle::QSPIState> daisy::QSPIHandle::testIsolator_;
+
+#endif
