@@ -40,6 +40,9 @@ EndBSPDependencies */
 #include "usbh_msc.h"
 #include "usbh_msc_bot.h"
 #include "usbh_msc_scsi.h"
+#include "daisy_core.h"
+
+MSC_HandleTypeDef DMA_BUFFER_MEM_SECTION static_msc;
 
 
 /** @addtogroup USBH_LIB
@@ -165,7 +168,9 @@ static USBH_StatusTypeDef USBH_MSC_InterfaceInit(USBH_HandleTypeDef *phost)
     return USBH_FAIL;
   }
 
-  phost->pActiveClass->pData = (MSC_HandleTypeDef *)USBH_malloc(sizeof(MSC_HandleTypeDef));
+  // phost->pActiveClass->pData = (MSC_HandleTypeDef *)USBH_malloc(sizeof(MSC_HandleTypeDef));
+  // MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;
+  phost->pActiveClass->pData = &static_msc;
   MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;
 
   if (MSC_Handle == NULL)
