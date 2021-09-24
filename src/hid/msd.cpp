@@ -1,5 +1,6 @@
 
 #include "msd.h"
+#include "daisy_core.h"
 #include "fatfs_usbh.h"
 #include "usbh_core.h"
 #include "usbh_msc.h"
@@ -9,7 +10,7 @@ using namespace daisy;
 extern "C" 
 {
   extern HCD_HandleTypeDef hhcd_USB_OTG_HS;
-  USBH_HandleTypeDef hUsbHostHS;
+  USBH_HandleTypeDef DMA_BUFFER_MEM_SECTION hUsbHostHS;
 }
 
 ApplicationTypeDef Appli_state = APPLICATION_IDLE;
@@ -91,6 +92,16 @@ bool MSDHandle::GetReady()
 void MSDHandle::Process()
 {
   pimpl_->Process();
+}
+
+bool MSDHandle::GetPresent()
+{
+  auto state = hUsbHostHS.gState;
+  return (
+    state != HOST_IDLE &&
+    state != HOST_ABORT_STATE &&
+    state != HOST_DEV_DISCONNECTED
+  );
 }
 
 // IRQ Handler

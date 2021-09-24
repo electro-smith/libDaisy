@@ -59,6 +59,12 @@ class MSDHandle
      */
     bool GetReady();
 
+    /** Run after the first `Process` call to detect if
+     *  a device is present
+     * 
+     */
+    bool GetPresent();
+
     MSDHandle() : pimpl_(nullptr) {}
     MSDHandle(const MSDHandle& other) = default;
     MSDHandle& operator=(const MSDHandle& other) = default;
