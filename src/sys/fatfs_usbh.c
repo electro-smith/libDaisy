@@ -17,11 +17,14 @@
   */
 
 #include "fatfs_usbh.h"
+#include "daisy_core.h"
 
-uint8_t retUSBH;    /* Return value for USBH */
-char USBHPath[4];   /* USBH logical drive path */
-FATFS USBHFatFS;    /* File system object for USBH logical drive */
-FIL USBHFile;       /* File object for USBH */
+uint8_t retUSBH;     /* Return value for USBH */
+char    USBHPath[4]; /* USBH logical drive path */
+
+// NOTE -- these _must_ be in a cacheless section to permit DMA transfers
+FATFS DMA_BUFFER_MEM_SECTION USBHFatFS;    /* File system object for USBH logical drive */
+FIL   DMA_BUFFER_MEM_SECTION USBHFile;     /* File object for USBH */
 
 /* USER CODE BEGIN Variables */
 
