@@ -224,7 +224,7 @@ $(BUILD_DIR)/%.o: %.cpp Makefile | $(BUILD_DIR)
 	$(CXX) -c $(CPPFLAGS) $(CPP_STANDARD) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.cpp=.lst)) $< -o $@
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
-	$(AS) -c $(CFLAGS) $< -o $@
+	$(AS) -c $(ASFLAGS) $< -o $@
 
 $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
 	$(CXX) $(OBJECTS) $(LDFLAGS) -o $@

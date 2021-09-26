@@ -344,7 +344,7 @@ $(BUILD_DIR)/%.o: %.cpp Makefile | $(BUILD_DIR)
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
 	mkdir -p $(@D)
-	$(AS) -c $(CFLAGS) $< -o $@ -MD -MP -MF $(BUILD_DIR)/$(notdir $(<:.s =.dep))
+	$(AS) -c $(ASFLAGS) $< -o $@ -MD -MP -MF $(BUILD_DIR)/$(notdir $(<:.s =.dep))
 
 $(BUILD_DIR)/$(TARGET).a: $(SORTED_OBJECTS) Makefile
 	$(AR) -r $@ $(SORTED_OBJECTS)
