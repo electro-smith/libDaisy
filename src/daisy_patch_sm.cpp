@@ -224,11 +224,11 @@ namespace patch_sm
         /** Initialize the MCU and clock tree */
         System::Config syscfg;
         syscfg.Defaults();
-        
+
         auto memory = System::GetProgramMemoryRegion();
         if(memory != System::MemoryRegion::INTERNAL_FLASH)
             syscfg.skip_clocks = true;
-        
+
         system.Init(syscfg);
         /** Memories */
         if(memory == System::MemoryRegion::INTERNAL_FLASH)
@@ -240,8 +240,8 @@ namespace patch_sm
         {
             /** QUADSPI FLASH */
             QSPIHandle::Config qspi_config;
-            qspi_config.device         = QSPIHandle::Config::Device::IS25LP064A;
-            qspi_config.mode           = QSPIHandle::Config::Mode::MEMORY_MAPPED;
+            qspi_config.device = QSPIHandle::Config::Device::IS25LP064A;
+            qspi_config.mode   = QSPIHandle::Config::Mode::MEMORY_MAPPED;
             qspi_config.pin_config.io0 = {DSY_GPIOF, 8};
             qspi_config.pin_config.io1 = {DSY_GPIOF, 9};
             qspi_config.pin_config.io2 = {DSY_GPIOF, 7};
