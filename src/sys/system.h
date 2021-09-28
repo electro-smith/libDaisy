@@ -177,20 +177,12 @@ class System
      */
     static MemoryRegion GetMemoryRegion(uint32_t address);
 
-    /** This offset from the base QSPI address is reserved
-     *  for libDaisy functionality.
+    /** This constant indicates the Daisy bootloader's offset from
+     *  the beginning of the QSPI's address space. 
+     *  Data written within the first 256K will remain 
+     *  untouched by the Daisy bootloader.
      */
-    static constexpr uint32_t kQspiOffset = 0x40000U;
-
-    // static constexpr uint32_t kSramStart = 0x24000000U;
-    // static constexpr uint32_t kSramEnd   = kSramStart + 0x80000U;
-    // static constexpr uint32_t kQspiStart = 0x90040000U;
-
-    // static constexpr uint32_t kQspiEnd       = kQspiStart + 0x7c0000;
-    // static constexpr uint32_t kInternalStart = 0x08000000U;
-    // static constexpr uint32_t kInternalEnd   = kInternalStart + 0x20000U;
-
-    // static constexpr uint32_t kExpectedStack = 0x20020000U;
+    static constexpr uint32_t kQspiBootloaderOffset = 0x40000U;
 
   private:
     void   ConfigureClocks();
