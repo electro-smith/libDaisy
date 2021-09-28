@@ -10,9 +10,6 @@
 ### Features
 
 * adc: added initialization mappings for pins ADC1_INP12 (PC2) and ADC1_INP13 (PC3) (Not accessible on Daisy Seed)
-* bootloader: BOOT_APP macro added for running a program from the daisy bootloader
-* bootloader: added a number of deinitialization methods to core classes
-* bootloader: added `System` and `DaisySeed` code to check code location at runtime and initialize accordingly
 * bootloader: added `program-app` make target to upload code to the daisy bootloader
 * board: added support files for upcoming Daisy Patch SM hardware
 * rng: added new Random module that provides access to the hardware True Random Number Generator
@@ -25,9 +22,11 @@
 ### Bug fixes
 
 * adc: fixed bug with ADC where designs with more than 8 channels AND a mux would halt the ADC.
-* Change SdramTiming.RPDelay to 1 to avoid underflow bug.
+* sdram: changed SdramTiming.RPDelay to 1 to avoid underflow bug.
 
 ### Other
+
+* bootloader: added deinits and memory-aware inits for bootloader compatibility
 
 ### Migrating
 

@@ -178,7 +178,7 @@ class System
     static MemoryRegion GetMemoryRegion(uint32_t address);
 
     /** This constant indicates the Daisy bootloader's offset from
-     *  the beginning of the QSPI's address space. 
+     *  the beginning of QSPI's address space. 
      *  Data written within the first 256K will remain 
      *  untouched by the Daisy bootloader.
      */
