@@ -4,7 +4,6 @@
 #ifndef UNIT_TEST // for unit tests, a dummy implementation is provided below
 
 #include <cstdint>
-#include <stm32h7xx_hal.h>
 #include "per/tim.h"
 
 namespace daisy
@@ -59,13 +58,18 @@ class System
         bool       skip_clocks;
     };
 
-    /** A simple way to represent where the program is executing from
+    /** Describes the different regions of memory available to the Daisy
      * 
      */
-    enum ProgramMemory
+    enum MemoryRegion
     {
         INTERNAL_FLASH = 0,
-        AXI_SRAM,
+        ITCMRAM,
+        DTCMRAM,
+        SRAM_D1,
+        SRAM_D2,
+        SRAM_D3,
+        SDRAM,
         QSPI,
         INVALID_ADDRESS,
     };
@@ -164,21 +168,28 @@ class System
 
     /** Returns an enum representing the current (primary) memory space used 
      *  for executing the program.
-     *  \param program_start Optionally indicate a specific address to be checked. 
+     *  \param address Optionally indicate a specific address to be checked. 
      *  Checks the VTOR by default, which will generally indicate the memory
      *  from which the program is executed.
      */
-    static ProgramMemory GetProgramMemory(uint32_t program_start = SCB->VTOR);
+    static MemoryRegion GetMemoryRegion();
 
-    static constexpr uint32_t kSramStart = 0x24000000U;
-    static constexpr uint32_t kSramEnd   = kSramStart + 0x80000U;
-    static constexpr uint32_t kQspiStart = 0x90040000U;
+    static MemoryRegion GetMemoryRegion(uint32_t address);
 
-    static constexpr uint32_t kQspiEnd       = kQspiStart + 0x7c0000;
-    static constexpr uint32_t kInternalStart = 0x08000000U;
-    static constexpr uint32_t kInternalEnd   = kInternalStart + 0x20000U;
+    /** This offset from the base QSPI address is reserved
+     *  for libDaisy functionality
+     */
+    static constexpr uint32_t kQspiOffset = 0x40000U;
 
-    static constexpr uint32_t kExpectedStack = 0x20020000U;
+    // static constexpr uint32_t kSramStart = 0x24000000U;
+    // static constexpr uint32_t kSramEnd   = kSramStart + 0x80000U;
+    // static constexpr uint32_t kQspiStart = 0x90040000U;
+
+    // static constexpr uint32_t kQspiEnd       = kQspiStart + 0x7c0000;
+    // static constexpr uint32_t kInternalStart = 0x08000000U;
+    // static constexpr uint32_t kInternalEnd   = kInternalStart + 0x20000U;
+
+    // static constexpr uint32_t kExpectedStack = 0x20020000U;
 
   private:
     void   ConfigureClocks();
