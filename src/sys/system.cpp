@@ -409,7 +409,7 @@ uint32_t System::GetPClk2Freq()
     return HAL_RCC_GetPCLK2Freq();
 }
 
-System::MemoryRegion System::GetMemoryRegion()
+System::MemoryRegion System::GetProgramMemoryRegion()
 {
     return GetMemoryRegion(SCB->VTOR);
 }

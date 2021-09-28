@@ -110,7 +110,7 @@ void DaisySeed::Init(bool boost)
     boost ? syscfg.Boost() : syscfg.Defaults();
 
     // NOTE -- for now, we're just referencing the linker variables
-    auto memory = System::GetMemoryRegion();
+    auto memory = System::GetProgramMemoryRegion();
 
     if(memory != System::MemoryRegion::INTERNAL_FLASH)
         syscfg.skip_clocks = true;

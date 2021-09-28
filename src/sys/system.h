@@ -162,22 +162,23 @@ class System
     static uint32_t GetPClk2Freq();
 
     /**
-     ** Returns a const reference to the Systems Configuration struct
+     ** Returns a const reference to the Systems Configuration struct.
      */
     const Config& GetConfig() const { return cfg_; }
 
     /** Returns an enum representing the current (primary) memory space used 
      *  for executing the program.
-     *  \param address Optionally indicate a specific address to be checked. 
-     *  Checks the VTOR by default, which will generally indicate the memory
-     *  from which the program is executed.
      */
-    static MemoryRegion GetMemoryRegion();
+    static MemoryRegion GetProgramMemoryRegion();
 
+    /** Returns an enum representing the the memory region 
+     *  that the given address belongs to.
+     *  \param address The address to be checked
+     */
     static MemoryRegion GetMemoryRegion(uint32_t address);
 
     /** This offset from the base QSPI address is reserved
-     *  for libDaisy functionality
+     *  for libDaisy functionality.
      */
     static constexpr uint32_t kQspiOffset = 0x40000U;
 

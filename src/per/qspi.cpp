@@ -727,7 +727,7 @@ QSPIHandle::Result QSPIHandle::Impl::SetMode(QSPIHandle::Config::Mode mode)
 
 QSPIHandle::Result QSPIHandle::Impl::CheckProgramMemory()
 {
-    if(System::GetMemoryRegion() == System::MemoryRegion::QSPI
+    if(System::GetProgramMemoryRegion() == System::MemoryRegion::QSPI
        && config_.mode == Config::Mode::INDIRECT_POLLING)
     {
         status_ = Status::E_INVALID_MODE;
