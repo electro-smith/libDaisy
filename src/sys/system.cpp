@@ -416,21 +416,22 @@ System::MemoryRegion System::GetProgramMemoryRegion()
 
 System::MemoryRegion System::GetMemoryRegion(uint32_t addr)
 {
-    if (addr >= D1_AXIFLASH_BASE && addr < D1_AXIFLASH_BASE + INTERNAL_FLASH_SIZE)
+    if(addr >= D1_AXIFLASH_BASE
+       && addr < D1_AXIFLASH_BASE + INTERNAL_FLASH_SIZE)
         return MemoryRegion::INTERNAL_FLASH;
-    if (addr >= D1_ITCMRAM_BASE && addr < D1_ITCMRAM_BASE + ITCMRAM_SIZE)
+    if(addr >= D1_ITCMRAM_BASE && addr < D1_ITCMRAM_BASE + ITCMRAM_SIZE)
         return MemoryRegion::ITCMRAM;
-    if (addr >= D1_DTCMRAM_BASE && addr < D1_DTCMRAM_BASE + DTCMRAM_SIZE)
+    if(addr >= D1_DTCMRAM_BASE && addr < D1_DTCMRAM_BASE + DTCMRAM_SIZE)
         return MemoryRegion::DTCMRAM;
-    if (addr >= D1_AXISRAM_BASE && addr < D1_AXISRAM_BASE + SRAM_D1_SIZE)
+    if(addr >= D1_AXISRAM_BASE && addr < D1_AXISRAM_BASE + SRAM_D1_SIZE)
         return MemoryRegion::SRAM_D1;
-    if (addr >= D2_AXISRAM_BASE && addr < D2_AXISRAM_BASE + SRAM_D2_SIZE)
+    if(addr >= D2_AXISRAM_BASE && addr < D2_AXISRAM_BASE + SRAM_D2_SIZE)
         return MemoryRegion::SRAM_D2;
-    if (addr >= D3_SRAM_BASE && addr < D3_SRAM_BASE + SRAM_D3_SIZE)
+    if(addr >= D3_SRAM_BASE && addr < D3_SRAM_BASE + SRAM_D3_SIZE)
         return MemoryRegion::SRAM_D3;
-    if (addr >= SDRAM_BASE && addr < SDRAM_BASE + SDRAM_SIZE)
+    if(addr >= SDRAM_BASE && addr < SDRAM_BASE + SDRAM_SIZE)
         return MemoryRegion::SDRAM;
-    if (addr >= QSPI_BASE && addr < QSPI_BASE + QSPI_SIZE)
+    if(addr >= QSPI_BASE && addr < QSPI_BASE + QSPI_SIZE)
         return MemoryRegion::QSPI;
 
     return MemoryRegion::INVALID_ADDRESS;
