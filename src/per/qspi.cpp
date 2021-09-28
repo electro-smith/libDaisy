@@ -110,6 +110,7 @@ static QSPIHandle::Impl qspi_impl;
 
 QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
 {
+    RETURN_IF_ERR(CheckProgramMemory());
     // Set Handle Settings     o
 
     config_     = config;
@@ -195,8 +196,8 @@ QSPIHandle::Result QSPIHandle::Impl::WritePage(uint32_t address,
                                                uint8_t* buffer,
                                                bool     reset_mode)
 {
-    RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
     RETURN_IF_ERR(CheckProgramMemory());
+    RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
 
     QSPI_CommandTypeDef s_command;
     s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
@@ -369,10 +370,10 @@ QSPIHandle::Result QSPIHandle::Impl::EraseSector(uint32_t address)
     s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
     s_command.Address           = address;
 
+    RETURN_IF_ERR(CheckProgramMemory());
     // Erasing takes a long time anyway, so not much point trying to
     // minimize reinitializations
     RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
-    RETURN_IF_ERR(CheckProgramMemory());
 
     if(WriteEnable() != QSPIHandle::Result::OK)
     {
@@ -727,11 +728,10 @@ QSPIHandle::Result QSPIHandle::Impl::SetMode(QSPIHandle::Config::Mode mode)
 
 QSPIHandle::Result QSPIHandle::Impl::CheckProgramMemory()
 {
-    if(System::GetProgramMemoryRegion() == System::MemoryRegion::QSPI
-       && config_.mode == Config::Mode::INDIRECT_POLLING)
+    if(System::GetProgramMemoryRegion() == System::MemoryRegion::QSPI)
     {
         status_ = Status::E_INVALID_MODE;
-        SetMode(Config::Mode::MEMORY_MAPPED);
+        // SetMode(Config::Mode::MEMORY_MAPPED);
         return Result::ERR;
     }
     return Result::OK;
