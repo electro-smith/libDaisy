@@ -1,7 +1,7 @@
 var searchData=
 [
   ['off_0',['OFF',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a725dbdfb5e3ab465acff41a70f1f5a9d',1,'daisy::Color']]],
-  ['ok_1',['OK',['../classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237ae0aa021e21dddbd6d8cecec71e9cf564',1,'daisy::UartHandler::OK()'],['../classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7ae0aa021e21dddbd6d8cecec71e9cf564',1,'daisy::SpiHandle::OK()'],['../classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16ae0aa021e21dddbd6d8cecec71e9cf564',1,'daisy::I2CHandle::OK()']]],
+  ['ok_1',['OK',['../classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237ae0aa021e21dddbd6d8cecec71e9cf564',1,'daisy::UartHandler::OK()'],['../classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7ae0aa021e21dddbd6d8cecec71e9cf564',1,'daisy::SpiHandle::OK()'],['../classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16ae0aa021e21dddbd6d8cecec71e9cf564',1,'daisy::I2CHandle::OK()'],['../class_sdram_handle.html#ab6b59b2a4b1abdec7369ffcdceac73f7ae0aa021e21dddbd6d8cecec71e9cf564',1,'SdramHandle::OK()']]],
   ['oleddisplay_2',['OledDisplay',['../classdaisy_1_1_oled_display.html',1,'daisy']]],
   ['omnimodeoff_3',['OmniModeOff',['../namespacedaisy.html#af9da54b73be4dec526670bd6c53ad98aac4babebcb76ef6c8a5c8118ad9400294',1,'daisy']]],
   ['omnimodeoffevent_4',['OmniModeOffEvent',['../structdaisy_1_1_omni_mode_off_event.html',1,'daisy']]],

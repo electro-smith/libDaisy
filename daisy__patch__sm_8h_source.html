@@ -198,14 +198,14 @@ $(function() {
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
 <div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a976a69ef54c3232033ed19e9ad8a8af4">  239</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a976a69ef54c3232033ed19e9ad8a8af4">ValidateQSPI</a>(<span class="keywordtype">bool</span> quick = <span class="keyword">true</span>);</div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#aee9989e96b489f7726676140ac0b9c26">  242</a></span>        <a class="code hl_class" href="classdaisy_1_1_system.html">System</a>           <a class="code hl_variable" href="classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#aee9989e96b489f7726676140ac0b9c26">system</a>;</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        <a class="code hl_struct" href="structdsy__sdram__handle.html">dsy_sdram_handle</a> sdram;</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        <a class="code hl_class" href="classdaisy_1_1_q_s_p_i_handle.html">QSPIHandle</a>       qspi;</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        <a class="code hl_class" href="classdaisy_1_1_audio_handle.html">AudioHandle</a>      audio;</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        <a class="code hl_class" href="classdaisy_1_1_adc_handle.html">AdcHandle</a>        adc;</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        <a class="code hl_class" href="class_usb_handle.html">UsbHandle</a>        usb;</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <a class="code hl_class" href="classdaisy_1_1_pcm3060.html">Pcm3060</a>          codec;</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <a class="code hl_class" href="classdaisy_1_1_dac_handle.html">DacHandle</a>        dac;</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#aee9989e96b489f7726676140ac0b9c26">  242</a></span>        <a class="code hl_class" href="classdaisy_1_1_system.html">System</a>      <a class="code hl_variable" href="classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#aee9989e96b489f7726676140ac0b9c26">system</a>;</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        <a class="code hl_class" href="class_sdram_handle.html">SdramHandle</a> sdram;</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        <a class="code hl_class" href="classdaisy_1_1_q_s_p_i_handle.html">QSPIHandle</a>  qspi;</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        <a class="code hl_class" href="classdaisy_1_1_audio_handle.html">AudioHandle</a> audio;</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        <a class="code hl_class" href="classdaisy_1_1_adc_handle.html">AdcHandle</a>   adc;</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        <a class="code hl_class" href="class_usb_handle.html">UsbHandle</a>   usb;</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <a class="code hl_class" href="classdaisy_1_1_pcm3060.html">Pcm3060</a>     codec;</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <a class="code hl_class" href="classdaisy_1_1_dac_handle.html">DacHandle</a>   dac;</div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
 <div class="line"><a id="l00252" name="l00252"></a><span class="lineno"><a class="line" href="classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a2ae2a7c25b4beae24a733acbd1d398b6">  252</a></span>        <a class="code hl_struct" href="structdsy__gpio.html">dsy_gpio</a>      <a class="code hl_variable" href="classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a2ae2a7c25b4beae24a733acbd1d398b6">user_led</a>;</div>
 <div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        <a class="code hl_class" href="classdaisy_1_1_analog_control.html">AnalogControl</a> controls[ADC_LAST];</div>
@@ -233,6 +233,7 @@ $(function() {
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>} <span class="comment">// namespace patch_sm</span></div>
 <div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
 <div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>} <span class="comment">// namespace daisy</span></div>
+<div class="ttc" id="aclass_sdram_handle_html"><div class="ttname"><a href="class_sdram_handle.html">SdramHandle</a></div><div class="ttdef"><b>Definition:</b> sdram.h:84</div></div>
 <div class="ttc" id="aclass_usb_handle_html"><div class="ttname"><a href="class_usb_handle.html">UsbHandle</a></div><div class="ttdoc">Interface for initializing and using the USB Peripherals on the daisy.</div><div class="ttdef"><b>Definition:</b> usb.h:19</div></div>
 <div class="ttc" id="aclassdaisy_1_1_adc_handle_html"><div class="ttname"><a href="classdaisy_1_1_adc_handle.html">daisy::AdcHandle</a></div><div class="ttdef"><b>Definition:</b> adc.h:66</div></div>
 <div class="ttc" id="aclassdaisy_1_1_analog_control_html"><div class="ttname"><a href="classdaisy_1_1_analog_control.html">daisy::AnalogControl</a></div><div class="ttdoc">Hardware Interface for control inputs   Primarily designed for ADC input controls such as   potentiom...</div><div class="ttdef"><b>Definition:</b> ctrl.h:18</div></div>
@@ -289,7 +290,6 @@ $(function() {
 <div class="ttc" id="anamespacedaisy_html"><div class="ttname"><a href="namespacedaisy.html">daisy</a></div><div class="ttdoc">Hardware defines and helpers for daisy field platform.</div><div class="ttdef"><b>Definition:</b> daisy_field.h:11</div></div>
 <div class="ttc" id="astructdsy__gpio__pin_html"><div class="ttname"><a href="structdsy__gpio__pin.html">dsy_gpio_pin</a></div><div class="ttdef"><b>Definition:</b> daisy_core.h:194</div></div>
 <div class="ttc" id="astructdsy__gpio_html"><div class="ttname"><a href="structdsy__gpio.html">dsy_gpio</a></div><div class="ttdef"><b>Definition:</b> gpio.h:36</div></div>
-<div class="ttc" id="astructdsy__sdram__handle_html"><div class="ttname"><a href="structdsy__sdram__handle.html">dsy_sdram_handle</a></div><div class="ttdef"><b>Definition:</b> sdram.h:120</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -21,12 +21,5 @@ var searchData=
   ['dsy_5fgpioh_18',['DSY_GPIOH',['../group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa3b8b0747c1cf089fe715cbe7b4c4da5c',1,'daisy_core.h']]],
   ['dsy_5fgpioi_19',['DSY_GPIOI',['../group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa10fced70f53bdc64ed8dfeb7fabb1848',1,'daisy_core.h']]],
   ['dsy_5fgpioj_20',['DSY_GPIOJ',['../group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa13a0ac1b8ea35939c28ecf7a1d0b80a0',1,'daisy_core.h']]],
-  ['dsy_5fgpiok_21',['DSY_GPIOK',['../group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa1c0c703541fdb07600ee67cd3e1e9c01',1,'daisy_core.h']]],
-  ['dsy_5fsdram_5ferr_22',['DSY_SDRAM_ERR',['../group__sdram.html#gga0411cd49bb5b71852cecd93bcbf0ca2da23287909a752d040d252df4ea31e5e60',1,'sdram.h']]],
-  ['dsy_5fsdram_5fok_23',['DSY_SDRAM_OK',['../group__sdram.html#gga0411cd49bb5b71852cecd93bcbf0ca2da3437e26eae6283a30f381ccfe0460964',1,'sdram.h']]],
-  ['dsy_5fsdram_5fpin_5flast_24',['DSY_SDRAM_PIN_LAST',['../group__sdram.html#ggae5b02cd39e08c80faa1c81edacf38303a7259fd7c6c52d0074b5a0aa9c2651862',1,'sdram.h']]],
-  ['dsy_5fsdram_5fpin_5fsdnwe_25',['DSY_SDRAM_PIN_SDNWE',['../group__sdram.html#ggae5b02cd39e08c80faa1c81edacf38303a87f571cbd1cf0777e7de144d7651a680',1,'sdram.h']]],
-  ['dsy_5fsdram_5fstate_5fdisable_26',['DSY_SDRAM_STATE_DISABLE',['../group__sdram.html#ggaa4b8e04989b35adf4cd19ae52235a03eaa4ca92105c7397ebefb60e71529dc62e',1,'sdram.h']]],
-  ['dsy_5fsdram_5fstate_5fenable_27',['DSY_SDRAM_STATE_ENABLE',['../group__sdram.html#ggaa4b8e04989b35adf4cd19ae52235a03ea696c408d3a11356286dcaf3f237151a8',1,'sdram.h']]],
-  ['dsy_5fsdram_5fstate_5flast_28',['DSY_SDRAM_STATE_LAST',['../group__sdram.html#ggaa4b8e04989b35adf4cd19ae52235a03ea2b14c0d1e048dfb7631a7b5033f8f30b',1,'sdram.h']]]
+  ['dsy_5fgpiok_21',['DSY_GPIOK',['../group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa1c0c703541fdb07600ee67cd3e1e9c01',1,'daisy_core.h']]]
 ];

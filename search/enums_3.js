@@ -5,7 +5,5 @@ var searchData=
   ['dmadirection_2',['DmaDirection',['../classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4da',1,'daisy::SpiHandle']]],
   ['dsy_5fgpio_5fmode_3',['dsy_gpio_mode',['../group__other.html#ga0edc3fcaf729346c5251d263d732666e',1,'gpio.h']]],
   ['dsy_5fgpio_5fport_4',['dsy_gpio_port',['../group__utility.html#ga3f3543798ae410cae1cade28cd0fc14a',1,'daisy_core.h']]],
-  ['dsy_5fgpio_5fpull_5',['dsy_gpio_pull',['../group__other.html#gad8a85223f8dbcdf2c2cfc9302b3451b8',1,'gpio.h']]],
-  ['dsy_5fsdram_5fpin_6',['dsy_sdram_pin',['../group__sdram.html#gae5b02cd39e08c80faa1c81edacf38303',1,'sdram.h']]],
-  ['dsy_5fsdram_5fstate_7',['dsy_sdram_state',['../group__sdram.html#gaa4b8e04989b35adf4cd19ae52235a03e',1,'sdram.h']]]
+  ['dsy_5fgpio_5fpull_5',['dsy_gpio_pull',['../group__other.html#gad8a85223f8dbcdf2c2cfc9302b3451b8',1,'gpio.h']]]
 ];

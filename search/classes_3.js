@@ -10,6 +10,5 @@ var searchData=
   ['daisyversio_7',['DaisyVersio',['../classdaisy_1_1_daisy_versio.html',1,'daisy']]],
   ['dsy_5fgpio_8',['dsy_gpio',['../structdsy__gpio.html',1,'']]],
   ['dsy_5fgpio_5fpin_9',['dsy_gpio_pin',['../structdsy__gpio__pin.html',1,'']]],
-  ['dsy_5fsd_5fcardinfotypedef_10',['DSY_SD_CardInfoTypeDef',['../struct_d_s_y___s_d___card_info_type_def.html',1,'']]],
-  ['dsy_5fsdram_5fhandle_11',['dsy_sdram_handle',['../structdsy__sdram__handle.html',1,'']]]
+  ['dsy_5fsd_5fcardinfotypedef_10',['DSY_SD_CardInfoTypeDef',['../struct_d_s_y___s_d___card_info_type_def.html',1,'']]]
 ];

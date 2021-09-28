@@ -64,9 +64,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">SDRAM<div class="ingroups"><a class="el" href="group__libdaisy.html">LIBDAISY</a> &raquo; <a class="el" href="group__device.html">DEVICE</a></div></div></div>
 </div><!--header-->
 <div class="contents">
@@ -76,7 +74,7 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdsy__sdram__handle.html">dsy_sdram_handle</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sdram_handle.html">SdramHandle</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -85,27 +83,6 @@ Macros</h2></td></tr>
 <tr class="separator:ga0831abc67d320a781d1eb0ed4dc98671"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf0d907706b8822fa9d7dafcd174806fe"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sdram.html#gaf0d907706b8822fa9d7dafcd174806fe">DSY_SDRAM_BSS</a>&#160;&#160;&#160;__attribute__((section(&quot;.sdram_bss&quot;)))</td></tr>
 <tr class="separator:gaf0d907706b8822fa9d7dafcd174806fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga0411cd49bb5b71852cecd93bcbf0ca2d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="group__sdram.html#gga0411cd49bb5b71852cecd93bcbf0ca2da3437e26eae6283a30f381ccfe0460964">DSY_SDRAM_OK</a>
-, <a class="el" href="group__sdram.html#gga0411cd49bb5b71852cecd93bcbf0ca2da23287909a752d040d252df4ea31e5e60">DSY_SDRAM_ERR</a>
- }</td></tr>
-<tr class="separator:ga0411cd49bb5b71852cecd93bcbf0ca2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa4b8e04989b35adf4cd19ae52235a03e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sdram.html#gaa4b8e04989b35adf4cd19ae52235a03e">dsy_sdram_state</a> { <a class="el" href="group__sdram.html#ggaa4b8e04989b35adf4cd19ae52235a03ea696c408d3a11356286dcaf3f237151a8">DSY_SDRAM_STATE_ENABLE</a>
-, <a class="el" href="group__sdram.html#ggaa4b8e04989b35adf4cd19ae52235a03eaa4ca92105c7397ebefb60e71529dc62e">DSY_SDRAM_STATE_DISABLE</a>
-, <a class="el" href="group__sdram.html#ggaa4b8e04989b35adf4cd19ae52235a03ea2b14c0d1e048dfb7631a7b5033f8f30b">DSY_SDRAM_STATE_LAST</a>
- }</td></tr>
-<tr class="separator:gaa4b8e04989b35adf4cd19ae52235a03e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae5b02cd39e08c80faa1c81edacf38303"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sdram.html#gae5b02cd39e08c80faa1c81edacf38303">dsy_sdram_pin</a> { <a class="el" href="group__sdram.html#ggae5b02cd39e08c80faa1c81edacf38303a87f571cbd1cf0777e7de144d7651a680">DSY_SDRAM_PIN_SDNWE</a>
-, <a class="el" href="group__sdram.html#ggae5b02cd39e08c80faa1c81edacf38303a7259fd7c6c52d0074b5a0aa9c2651862">DSY_SDRAM_PIN_LAST</a>
- }</td></tr>
-<tr class="separator:gae5b02cd39e08c80faa1c81edacf38303"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:gabf7e7c7c489397e0a2410043e424bdec"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sdram.html#gabf7e7c7c489397e0a2410043e424bdec">dsy_sdram_init</a> (<a class="el" href="structdsy__sdram__handle.html">dsy_sdram_handle</a> *dsy_hsdram)</td></tr>
-<tr class="separator:gabf7e7c7c489397e0a2410043e424bdec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p >SDRAM devices. </p>
@@ -140,91 +117,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <p >Usage: <br  />
  E.g. int DSY_SDRAM_DATA initialized_var = 1; </p>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="ga0411cd49bb5b71852cecd93bcbf0ca2d" name="ga0411cd49bb5b71852cecd93bcbf0ca2d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0411cd49bb5b71852cecd93bcbf0ca2d">&#9670;&nbsp;</a></span>anonymous enum</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">anonymous enum</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga0411cd49bb5b71852cecd93bcbf0ca2da3437e26eae6283a30f381ccfe0460964" name="gga0411cd49bb5b71852cecd93bcbf0ca2da3437e26eae6283a30f381ccfe0460964"></a>DSY_SDRAM_OK&#160;</td><td class="fielddoc"><p >&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="gga0411cd49bb5b71852cecd93bcbf0ca2da23287909a752d040d252df4ea31e5e60" name="gga0411cd49bb5b71852cecd93bcbf0ca2da23287909a752d040d252df4ea31e5e60"></a>DSY_SDRAM_ERR&#160;</td><td class="fielddoc"><p >&amp; </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="gae5b02cd39e08c80faa1c81edacf38303" name="gae5b02cd39e08c80faa1c81edacf38303"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae5b02cd39e08c80faa1c81edacf38303">&#9670;&nbsp;</a></span>dsy_sdram_pin</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group__sdram.html#gae5b02cd39e08c80faa1c81edacf38303">dsy_sdram_pin</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >This is PH5 on Daisy </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggae5b02cd39e08c80faa1c81edacf38303a87f571cbd1cf0777e7de144d7651a680" name="ggae5b02cd39e08c80faa1c81edacf38303a87f571cbd1cf0777e7de144d7651a680"></a>DSY_SDRAM_PIN_SDNWE&#160;</td><td class="fielddoc"><p >&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggae5b02cd39e08c80faa1c81edacf38303a7259fd7c6c52d0074b5a0aa9c2651862" name="ggae5b02cd39e08c80faa1c81edacf38303a7259fd7c6c52d0074b5a0aa9c2651862"></a>DSY_SDRAM_PIN_LAST&#160;</td><td class="fielddoc"><p >&amp; </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="gaa4b8e04989b35adf4cd19ae52235a03e" name="gaa4b8e04989b35adf4cd19ae52235a03e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaa4b8e04989b35adf4cd19ae52235a03e">&#9670;&nbsp;</a></span>dsy_sdram_state</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="group__sdram.html#gaa4b8e04989b35adf4cd19ae52235a03e">dsy_sdram_state</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Determines whether chip is initialized, and activated. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggaa4b8e04989b35adf4cd19ae52235a03ea696c408d3a11356286dcaf3f237151a8" name="ggaa4b8e04989b35adf4cd19ae52235a03ea696c408d3a11356286dcaf3f237151a8"></a>DSY_SDRAM_STATE_ENABLE&#160;</td><td class="fielddoc"><p >&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaa4b8e04989b35adf4cd19ae52235a03eaa4ca92105c7397ebefb60e71529dc62e" name="ggaa4b8e04989b35adf4cd19ae52235a03eaa4ca92105c7397ebefb60e71529dc62e"></a>DSY_SDRAM_STATE_DISABLE&#160;</td><td class="fielddoc"><p >&amp; </p>
-</td></tr>
-<tr><td class="fieldname"><a id="ggaa4b8e04989b35adf4cd19ae52235a03ea2b14c0d1e048dfb7631a7b5033f8f30b" name="ggaa4b8e04989b35adf4cd19ae52235a03ea2b14c0d1e048dfb7631a7b5033f8f30b"></a>DSY_SDRAM_STATE_LAST&#160;</td><td class="fielddoc"><p >&amp; </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="gabf7e7c7c489397e0a2410043e424bdec" name="gabf7e7c7c489397e0a2410043e424bdec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gabf7e7c7c489397e0a2410043e424bdec">&#9670;&nbsp;</a></span>dsy_sdram_init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t dsy_sdram_init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structdsy__sdram__handle.html">dsy_sdram_handle</a> *&#160;</td>
-          <td class="paramname"><em>dsy_hsdram</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Initializes the SDRAM peripheral </p>
 
 </div>
 </div>
