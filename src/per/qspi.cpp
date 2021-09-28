@@ -38,7 +38,7 @@ class QSPIHandle::Impl
 
     const QSPIHandle::Config& GetConfig() const { return config_; }
 
-    QSPIHandle::Result Deinit();
+    QSPIHandle::Result DeInit();
 
     QSPIHandle::Result WritePage(uint32_t address,
                                  uint32_t size,
@@ -110,6 +110,7 @@ static QSPIHandle::Impl qspi_impl;
 
 QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
 {
+    RETURN_IF_ERR(CheckProgramMemory());
     // Set Handle Settings     o
 
     config_     = config;
@@ -178,7 +179,7 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
 }
 
 
-QSPIHandle::Result QSPIHandle::Impl::Deinit()
+QSPIHandle::Result QSPIHandle::Impl::DeInit()
 {
     halqspi_.Instance = QUADSPI;
     if(HAL_QSPI_DeInit(&halqspi_) != HAL_OK)
@@ -195,8 +196,8 @@ QSPIHandle::Result QSPIHandle::Impl::WritePage(uint32_t address,
                                                uint8_t* buffer,
                                                bool     reset_mode)
 {
-    RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
     RETURN_IF_ERR(CheckProgramMemory());
+    RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
 
     QSPI_CommandTypeDef s_command;
     s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
@@ -369,10 +370,10 @@ QSPIHandle::Result QSPIHandle::Impl::EraseSector(uint32_t address)
     s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
     s_command.Address           = address;
 
+    RETURN_IF_ERR(CheckProgramMemory());
     // Erasing takes a long time anyway, so not much point trying to
     // minimize reinitializations
     RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
-    RETURN_IF_ERR(CheckProgramMemory());
 
     if(WriteEnable() != QSPIHandle::Result::OK)
     {
@@ -727,11 +728,10 @@ QSPIHandle::Result QSPIHandle::Impl::SetMode(QSPIHandle::Config::Mode mode)
 
 QSPIHandle::Result QSPIHandle::Impl::CheckProgramMemory()
 {
-    if(System::GetProgramMemory() == System::ProgramMemory::QSPI
-       && config_.mode == Config::Mode::INDIRECT_POLLING)
+    if(System::GetProgramMemoryRegion() == System::MemoryRegion::QSPI)
     {
         status_ = Status::E_INVALID_MODE;
-        SetMode(Config::Mode::MEMORY_MAPPED);
+        // SetMode(Config::Mode::MEMORY_MAPPED);
         return Result::ERR;
     }
     return Result::OK;
@@ -866,9 +866,9 @@ const QSPIHandle::Config& QSPIHandle::GetConfig() const
     return pimpl_->GetConfig();
 }
 
-QSPIHandle::Result QSPIHandle::Deinit()
+QSPIHandle::Result QSPIHandle::DeInit()
 {
-    return pimpl_->Deinit();
+    return pimpl_->DeInit();
 }
 
 QSPIHandle::Status QSPIHandle::GetStatus()

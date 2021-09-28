@@ -5,6 +5,7 @@ CHIPSET ?= stm32h7x
 TARGET_BIN=$(TARGET).bin
 TARGET_ELF=$(TARGET).elf
 FLASH_ADDRESS ?= 0x08000000
+QSPI_ADDRESS  ?= 0x90040000
 
 # If you have the arm-none-eabi- toolchain located in a particular place, but not installed for the entire system, add the path here:
 # GCC_PATH=
@@ -115,7 +116,12 @@ C_DEFS +=  \
 -DCORE_CM7  \
 -DSTM32H750IB \
 -DARM_MATH_CM7 \
--DUSE_FULL_LL_DRIVER 
+-DUSE_FULL_LL_DRIVER
+
+# for debugging bootloaded applications
+ifdef DEBUG
+C_DEFS += -DDEBUG
+endif
 
 # AS includes
 AS_INCLUDES =
@@ -186,7 +192,7 @@ CPP_STANDARD ?= -std=gnu++14
 # LDFLAGS
 #######################################
 # link script
-LDSCRIPT = $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
+LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
 
 # libraries
 
@@ -276,6 +282,9 @@ program:
 
 program-dfu:
 	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
+
+program-app:
+	dfu-util -a 0 -s $(QSPI_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
 
 #######################################
 # dependencies

@@ -5,13 +5,16 @@
 ### Breaking Changes
 
 * qspi: updated from C to C++, and fixed up the API to be cleaner, and simpler to use
+* sdram: Create SdramHandle class. Gets rid of configurable pin and hardcodes it instead.
 
 ### Features
 
 * adc: added initialization mappings for pins ADC1_INP12 (PC2) and ADC1_INP13 (PC3) (Not accessible on Daisy Seed)
+* bootloader: added `program-app` make target to upload code to the daisy bootloader
 * board: added support files for upcoming Daisy Patch SM hardware
 * rng: added new Random module that provides access to the hardware True Random Number Generator
 * spi: added DMA Transactions (same type of queue system as I2C) to the SPI Handle class.
+* sdram: Update from c to cpp.
 * util: added new PersistentStorage class for storing/recalling data between power cycles
 * util: added new VoctCalibration helper class for calibrating ADC inputs
 * seed: added support for Daisy Seed 1.1 (aka Daisy Seed rev5) hardware. Pin-compatible, with same form factor. WM8731 Codec instead of AK4556.
@@ -19,8 +22,11 @@
 ### Bug fixes
 
 * adc: fixed bug with ADC where designs with more than 8 channels AND a mux would halt the ADC.
+* sdram: changed SdramTiming.RPDelay to 1 to avoid underflow bug.
 
 ### Other
+
+* bootloader: added deinits and memory-aware inits for bootloader compatibility
 
 ### Migrating
 
@@ -39,6 +45,22 @@ dsy_qspi_write(address, size, (uint8_t*)&some_data);
 hw.qspi.Erase(address, address + sector_size);
 hw.qspi.Write(address, size, (uint8_t*)&some_data);
 ~~~
+
+#### Sdram:
+``` cpp
+//Init
+  //Old:
+  dsy_gpio_pin *pin_group;
+  dsy_sdram_handle sdram_handle;
+  sdram_handle.state             = DSY_SDRAM_STATE_ENABLE;
+  pin_group                      = sdram_handle.pin_config;
+  pin_group[DSY_SDRAM_PIN_SDNWE] = dsy_pin(DSY_GPIOH, 5);
+  dsy_sdram_init(&sdram_handle);
+
+  //New:
+  SdramHandle sdram;
+  sdram.Init();
+```
 
 ## v1.0.0
 

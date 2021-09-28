@@ -91,7 +91,6 @@ const dsy_gpio_pin seedgpio[32] = {
 void DaisySeed::Configure()
 {
     // Configure internal peripherals
-    ConfigureSdram();
     ConfigureQspi();
     //ConfigureDac();
     // Configure the built-in GPIOs.
@@ -108,13 +107,24 @@ void DaisySeed::Init(bool boost)
     //dsy_system_init();
     System::Config syscfg;
     boost ? syscfg.Boost() : syscfg.Defaults();
+
+    auto memory = System::GetProgramMemoryRegion();
+
+    if(memory != System::MemoryRegion::INTERNAL_FLASH)
+        syscfg.skip_clocks = true;
+
     system.Init(syscfg);
 
-    qspi.Init(qspi_config);
+    if(memory != System::MemoryRegion::QSPI)
+        qspi.Init(qspi_config);
 
-    dsy_sdram_init(&sdram_handle);
-    dsy_gpio_init(&led);
-    dsy_gpio_init(&testpoint);
+    if(memory == System::MemoryRegion::INTERNAL_FLASH)
+    {
+        dsy_gpio_init(&led);
+        dsy_gpio_init(&testpoint);
+        sdram_handle.Init();
+    }
+
     ConfigureAudio();
 
     callback_rate_ = AudioSampleRate() / AudioBlockSize();
@@ -123,6 +133,26 @@ void DaisySeed::Init(bool boost)
     // both; USB won't be initialized by the
     // SEED file.
     //usb_handle.Init(UsbHandle::FS_INTERNAL);
+}
+
+void DaisySeed::DeInit()
+{
+    // This is intended to be used by the bootloader, but
+    // we don't want to reinitialize pretty much anything in the
+    // target application, so...
+    // qspi.DeInit();
+    // sdram_handle.DeInit();
+    // dsy_gpio_deinit(&led);
+    // dsy_gpio_deinit(&testpoint);
+
+    // dsy_gpio_pin codec_reset_pin;
+    // codec_reset_pin = {DSY_GPIOB, 11};
+    // // Perhaps a bit unnecessary, but maybe we'll make
+    // // this non-static at some point
+    // Ak4556::DeInit(codec_reset_pin);
+    // audio_handle.DeInit();
+
+    system.DeInit();
 }
 
 dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
@@ -206,13 +236,6 @@ void DaisySeed::SetTestPoint(bool state)
 
 // Private Implementation
 
-void DaisySeed::ConfigureSdram()
-{
-    dsy_gpio_pin *pin_group;
-    sdram_handle.state             = DSY_SDRAM_STATE_ENABLE;
-    pin_group                      = sdram_handle.pin_config;
-    pin_group[DSY_SDRAM_PIN_SDNWE] = dsy_pin(DSY_GPIOH, 5);
-}
 void DaisySeed::ConfigureQspi()
 {
     qspi_config.device = QSPIHandle::Config::Device::IS25LP064A;

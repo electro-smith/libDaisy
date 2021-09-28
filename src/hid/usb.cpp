@@ -49,6 +49,14 @@ static void InitFS()
     }
 }
 
+static void DeinitFS()
+{
+    if(USBD_DeInit(&hUsbDeviceFS) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+}
+
 static void InitHS()
 {
     // HS as FS
@@ -71,6 +79,14 @@ static void InitHS()
     }
 }
 
+static void DeinitHS()
+{
+    if(USBD_DeInit(&hUsbDeviceHS) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+}
+
 
 void UsbHandle::Init(UsbPeriph dev)
 {
@@ -86,6 +102,22 @@ void UsbHandle::Init(UsbPeriph dev)
     }
     // Enable USB Regulator
     HAL_PWREx_EnableUSBVoltageDetector();
+}
+
+void UsbHandle::DeInit(UsbPeriph dev)
+{
+    switch(dev)
+    {
+        case FS_INTERNAL: DeinitFS(); break;
+        case FS_EXTERNAL: DeinitHS(); break;
+        case FS_BOTH:
+            DeinitHS();
+            DeinitFS();
+            break;
+        default: break;
+    }
+    // Enable USB Regulator
+    HAL_PWREx_DisableUSBVoltageDetector();
 }
 
 UsbHandle::Result UsbHandle::TransmitInternal(uint8_t* buff, size_t size)
