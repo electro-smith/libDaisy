@@ -1,5 +1,4 @@
 #include "daisy_seed.h"
-#include "stm32h7xx_hal.h"
 
 extern "C"
 {
@@ -109,7 +108,6 @@ void DaisySeed::Init(bool boost)
     System::Config syscfg;
     boost ? syscfg.Boost() : syscfg.Defaults();
 
-    // NOTE -- for now, we're just referencing the linker variables
     auto memory = System::GetProgramMemoryRegion();
 
     if(memory != System::MemoryRegion::INTERNAL_FLASH)
