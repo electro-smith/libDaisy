@@ -15,6 +15,9 @@ extern "C"
     /** Initializes the DMA (specifically for the modules used within the library) */
     void dsy_dma_init(void);
 
+    /** Deinitializes the DMA (specifically for the modules used within the library) */
+    void dsy_dma_deinit(void);
+
     /** DMA transfers require the buffers to be excluded from the cache because the DMA
      *  reads / writes directly to the SRAM whereas the processor itself accesses the cache.
      *  Otherwise the DMA will access whatever is in the SRAM at the time which may not be 

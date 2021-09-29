@@ -75,6 +75,9 @@ class TimerHandle
     /** Initializes the timer according to the configuration */
     Result Init(const Config& config);
 
+    /** Deinitializes the timer */
+    Result DeInit();
+
     /** Returns a const reference to the Config struct */
     const Config& GetConfig() const;
 

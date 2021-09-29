@@ -91,7 +91,6 @@ const dsy_gpio_pin seedgpio[32] = {
 void DaisySeed::Configure()
 {
     // Configure internal peripherals
-    ConfigureSdram();
     ConfigureQspi();
     //ConfigureDac();
     // Configure the built-in GPIOs.
@@ -108,13 +107,24 @@ void DaisySeed::Init(bool boost)
     //dsy_system_init();
     System::Config syscfg;
     boost ? syscfg.Boost() : syscfg.Defaults();
+
+    auto memory = System::GetProgramMemoryRegion();
+
+    if(memory != System::MemoryRegion::INTERNAL_FLASH)
+        syscfg.skip_clocks = true;
+
     system.Init(syscfg);
 
-    qspi.Init(qspi_config);
+    if(memory != System::MemoryRegion::QSPI)
+        qspi.Init(qspi_config);
 
-    dsy_sdram_init(&sdram_handle);
-    dsy_gpio_init(&led);
-    dsy_gpio_init(&testpoint);
+    if(memory == System::MemoryRegion::INTERNAL_FLASH)
+    {
+        dsy_gpio_init(&led);
+        dsy_gpio_init(&testpoint);
+        sdram_handle.Init();
+    }
+
     ConfigureAudio();
 
     callback_rate_ = AudioSampleRate() / AudioBlockSize();
@@ -123,6 +133,26 @@ void DaisySeed::Init(bool boost)
     // both; USB won't be initialized by the
     // SEED file.
     //usb_handle.Init(UsbHandle::FS_INTERNAL);
+}
+
+void DaisySeed::DeInit()
+{
+    // This is intended to be used by the bootloader, but
+    // we don't want to reinitialize pretty much anything in the
+    // target application, so...
+    // qspi.DeInit();
+    // sdram_handle.DeInit();
+    // dsy_gpio_deinit(&led);
+    // dsy_gpio_deinit(&testpoint);
+
+    // dsy_gpio_pin codec_reset_pin;
+    // codec_reset_pin = {DSY_GPIOB, 11};
+    // // Perhaps a bit unnecessary, but maybe we'll make
+    // // this non-static at some point
+    // Ak4556::DeInit(codec_reset_pin);
+    // audio_handle.DeInit();
+
+    system.DeInit();
 }
 
 dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
@@ -206,13 +236,6 @@ void DaisySeed::SetTestPoint(bool state)
 
 // Private Implementation
 
-void DaisySeed::ConfigureSdram()
-{
-    dsy_gpio_pin *pin_group;
-    sdram_handle.state             = DSY_SDRAM_STATE_ENABLE;
-    pin_group                      = sdram_handle.pin_config;
-    pin_group[DSY_SDRAM_PIN_SDNWE] = dsy_pin(DSY_GPIOH, 5);
-}
 void DaisySeed::ConfigureQspi()
 {
     qspi_config.device = QSPIHandle::Config::Device::IS25LP064A;
@@ -227,16 +250,6 @@ void DaisySeed::ConfigureQspi()
 }
 void DaisySeed::ConfigureAudio()
 {
-    // SAI2 - config
-    // Example Config
-    //      SAI2 Pins (available on pinout)
-    //    pin_group = sai_handle.sai2_pin_config;
-    //    pin_group[DSY_SAI_PIN_MCLK] = dsy_pin(DSY_GPIOA, 1);
-    //    pin_group[DSY_SAI_PIN_FS]   = dsy_pin(DSY_GPIOG, 9);
-    //    pin_group[DSY_SAI_PIN_SCK]  = dsy_pin(DSY_GPIOA, 2);
-    //    pin_group[DSY_SAI_PIN_SIN]  = dsy_pin(DSY_GPIOD, 11);
-    //    pin_group[DSY_SAI_PIN_SOUT] = dsy_pin(DSY_GPIOA, 0);
-
     // SAI1 -- Peripheral
     // Configure
     SaiHandle::Config sai_config;
@@ -245,22 +258,52 @@ void DaisySeed::ConfigureAudio()
     sai_config.bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
     sai_config.a_sync          = SaiHandle::Config::Sync::MASTER;
     sai_config.b_sync          = SaiHandle::Config::Sync::SLAVE;
-    sai_config.a_dir           = SaiHandle::Config::Direction::TRANSMIT;
-    sai_config.b_dir           = SaiHandle::Config::Direction::RECEIVE;
     sai_config.pin_config.fs   = {DSY_GPIOE, 4};
     sai_config.pin_config.mclk = {DSY_GPIOE, 2};
     sai_config.pin_config.sck  = {DSY_GPIOE, 5};
-    sai_config.pin_config.sa   = {DSY_GPIOE, 6};
-    sai_config.pin_config.sb   = {DSY_GPIOE, 3};
+
+    // Device-based Init
+    switch(CheckBoardVersion())
+    {
+        case BoardVersion::DAISY_SEED_1_1:
+        {
+            // Data Line Directions
+            sai_config.a_dir         = SaiHandle::Config::Direction::RECEIVE;
+            sai_config.pin_config.sa = {DSY_GPIOE, 6};
+            sai_config.b_dir         = SaiHandle::Config::Direction::TRANSMIT;
+            sai_config.pin_config.sb = {DSY_GPIOE, 3};
+            I2CHandle::Config i2c_config;
+            i2c_config.mode           = I2CHandle::Config::Mode::I2C_MASTER;
+            i2c_config.periph         = I2CHandle::Config::Peripheral::I2C_2;
+            i2c_config.speed          = I2CHandle::Config::Speed::I2C_400KHZ;
+            i2c_config.pin_config.scl = {DSY_GPIOH, 4};
+            i2c_config.pin_config.sda = {DSY_GPIOB, 11};
+            I2CHandle i2c_handle;
+            i2c_handle.Init(i2c_config);
+            Wm8731::Config codec_cfg;
+            codec_cfg.Defaults();
+            Wm8731 codec;
+            codec.Init(codec_cfg, i2c_handle);
+        }
+        break;
+        case BoardVersion::DAISY_SEED:
+        default:
+        {
+            // Data Line Directions
+            sai_config.a_dir         = SaiHandle::Config::Direction::TRANSMIT;
+            sai_config.pin_config.sa = {DSY_GPIOE, 6};
+            sai_config.b_dir         = SaiHandle::Config::Direction::RECEIVE;
+            sai_config.pin_config.sb = {DSY_GPIOE, 3};
+            dsy_gpio_pin codec_reset_pin;
+            codec_reset_pin = {DSY_GPIOB, 11};
+            Ak4556::Init(codec_reset_pin);
+        }
+        break;
+    }
+
     // Then Initialize
     SaiHandle sai_1_handle;
     sai_1_handle.Init(sai_config);
-
-    // Device Init
-    dsy_gpio_pin codec_reset_pin;
-    codec_reset_pin = {DSY_GPIOB, 11};
-    //codec_ak4556_init(codec_reset_pin);
-    Ak4556::Init(codec_reset_pin);
 
     // Audio
     AudioHandle::Config audio_config;
@@ -281,24 +324,21 @@ void DaisySeed::ConfigureDac()
     //    cfg.chn        = DacHandle::Config::Channel::BOTH;
     //    dac.Init(cfg);
 }
-/*void DaisySeed::ConfigureI2c()
+
+DaisySeed::BoardVersion DaisySeed::CheckBoardVersion()
 {
-    dsy_gpio_pin *pin_group;
-    // TODO: Add Config for I2C3 and I2C4
-    // I2C 1 - (On daisy patch this controls the LED Driver, and the WM8731).
-    i2c1_handle.periph              = DSY_I2C_PERIPH_1;
-    i2c1_handle.speed               = DSY_I2C_SPEED_400KHZ;
-    pin_group                       = i2c1_handle.pin_config;
-    pin_group[DSY_I2C_PIN_SCL].port = DSY_GPIOB;
-    pin_group[DSY_I2C_PIN_SCL].pin  = 8;
-    pin_group[DSY_I2C_PIN_SDA].port = DSY_GPIOB;
-    pin_group[DSY_I2C_PIN_SDA].pin  = 9;
-    // I2C 2 - (On daisy patch this controls the on-board WM8731)
-    i2c2_handle.periph              = DSY_I2C_PERIPH_2;
-    i2c2_handle.speed               = DSY_I2C_SPEED_400KHZ;
-    pin_group                       = i2c2_handle.pin_config;
-    pin_group[DSY_I2C_PIN_SCL].port = DSY_GPIOH;
-    pin_group[DSY_I2C_PIN_SCL].pin  = 4;
-    pin_group[DSY_I2C_PIN_SDA].port = DSY_GPIOB;
-    pin_group[DSY_I2C_PIN_SDA].pin  = 11;
-}*/
+    /** Version Checks:
+     *  * Fall through is Daisy Seed v1 (aka Daisy Seed rev4)
+     *  * PD3 tied to gnd is Daisy Seed v1.1 (aka Daisy Seed rev5)
+     *  * PD4 tied to gnd reserved for future hardware
+     */
+    dsy_gpio pincheck;
+    pincheck.mode = DSY_GPIO_MODE_INPUT;
+    pincheck.pull = DSY_GPIO_PULLUP;
+    pincheck.pin  = {DSY_GPIOD, 3};
+    dsy_gpio_init(&pincheck);
+    if(!dsy_gpio_read(&pincheck))
+        return BoardVersion::DAISY_SEED_1_1;
+    else
+        return BoardVersion::DAISY_SEED;
+}
