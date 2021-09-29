@@ -71,6 +71,9 @@ class AudioHandle
     /** Initializes audio to run using two SAI, each configured in Stereo I2S mode. */
     Result Init(const Config& config, SaiHandle sai1, SaiHandle sai2);
 
+    /** Stops and deinitializes audio. */
+    Result DeInit();
+
     /** Returns the Global Configuration struct for the Audio */
     const Config& GetConfig() const;
 

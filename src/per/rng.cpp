@@ -6,7 +6,7 @@
 
 namespace daisy
 {
-void RandomNumberGenerator::Init()
+void Random::Init()
 {
     /** NON-HAL except defines/macros */
     __HAL_RCC_RNG_CLK_ENABLE();
@@ -14,12 +14,12 @@ void RandomNumberGenerator::Init()
     RNG->CR |= RNG_CR_RNGEN;
 }
 
-void RandomNumberGenerator::DeInit()
+void Random::DeInit()
 {
     __HAL_RCC_RNG_CLK_DISABLE();
 }
 
-uint32_t RandomNumberGenerator::GetValue()
+uint32_t Random::GetValue()
 {
     /** HAL code */
     // HAL_RNG_GenerateRandomNumber()
@@ -38,7 +38,13 @@ uint32_t RandomNumberGenerator::GetValue()
     return t;
 }
 
-bool RandomNumberGenerator::IsReady()
+float Random::GetFloat(float min, float max)
+{
+    float norm = (float)GetValue() / 0x7fffffff;
+    return min + (norm * (max - min));
+}
+
+bool Random::IsReady()
 {
     return ((RNG->SR & RNG_FLAG_DRDY) == RNG_FLAG_DRDY) == SET;
 }

@@ -1,8 +1,10 @@
 #ifndef UNIT_TEST // for unit tests, a dummy implementation is provided below
 #include <stm32h7xx_hal.h>
+#include <stm32h750xx.h>
 #include "sys/system.h"
 #include "sys/dma.h"
 #include "per/gpio.h"
+#include "per/rng.h"
 
 // global init functions for peripheral drivers.
 // These don't really need to be extern "C" anymore..
@@ -33,6 +35,17 @@ extern "C"
 #define STK (SCS + 0x10)
 #define STK_CTRL (STK + 0x00)
 #define RCC_CR RCC
+
+#define SDRAM_BASE 0xC0000000
+
+#define INTERNAL_FLASH_SIZE 0x20000
+#define ITCMRAM_SIZE 0x10000
+#define DTCMRAM_SIZE 0x20000
+#define SRAM_D1_SIZE 0x80000
+#define SRAM_D2_SIZE 0x48000
+#define SRAM_D3_SIZE 0x10000
+#define SDRAM_SIZE 0x4000000
+#define QSPI_SIZE 0x800000
 
 typedef struct
 {
@@ -101,8 +114,11 @@ void System::Init(const System::Config& config)
 {
     cfg_ = config;
     HAL_Init();
-    ConfigureClocks();
-    ConfigureMpu();
+    if(!config.skip_clocks)
+    {
+        ConfigureClocks();
+        ConfigureMpu();
+    }
     dsy_dma_init();
     dsy_i2c_global_init();
     dsy_spi_global_init();
@@ -120,6 +136,26 @@ void System::Init(const System::Config& config)
     timcfg.dir    = TimerHandle::Config::CounterDir::UP;
     tim_.Init(timcfg);
     tim_.Start();
+
+    // Initialize the true random number generator
+    Random::Init();
+}
+
+void System::DeInit()
+{
+    dsy_dma_deinit();
+    // HAL_MPU_Disable();
+    // The I2C global init doesn't actually initialize the periph,
+    // so no need to deinitialize
+    SCB_DisableDCache();
+    SCB_DisableICache();
+
+    tim_.DeInit();
+    // HAL_RCC_DeInit();
+
+    // WARNING -- without modifications, this function will
+    // cause the device to reset, preventing program loading
+    // HAL_DeInit();
 }
 
 void System::JumpToQspi()
@@ -373,17 +409,32 @@ uint32_t System::GetPClk2Freq()
     return HAL_RCC_GetPCLK2Freq();
 }
 
-System::ProgramMemory System::GetProgramMemory()
+System::MemoryRegion System::GetProgramMemoryRegion()
 {
-    uint32_t program_start = SCB->VTOR;
-    if(program_start >= sram_start_ && program_start < sram_end_)
-        return ProgramMemory::AXI_SRAM;
-    if(program_start >= internal_start_ && program_start < internal_end_)
-        return ProgramMemory::INTERNAL_FLASH;
-    if(program_start >= qspi_start_ && program_start < qspi_end_)
-        return ProgramMemory::QSPI;
+    return GetMemoryRegion(SCB->VTOR);
+}
 
-    return ProgramMemory::INVALID_ADDRESS;
+System::MemoryRegion System::GetMemoryRegion(uint32_t addr)
+{
+    if(addr >= D1_AXIFLASH_BASE
+       && addr < D1_AXIFLASH_BASE + INTERNAL_FLASH_SIZE)
+        return MemoryRegion::INTERNAL_FLASH;
+    if(addr >= D1_ITCMRAM_BASE && addr < D1_ITCMRAM_BASE + ITCMRAM_SIZE)
+        return MemoryRegion::ITCMRAM;
+    if(addr >= D1_DTCMRAM_BASE && addr < D1_DTCMRAM_BASE + DTCMRAM_SIZE)
+        return MemoryRegion::DTCMRAM;
+    if(addr >= D1_AXISRAM_BASE && addr < D1_AXISRAM_BASE + SRAM_D1_SIZE)
+        return MemoryRegion::SRAM_D1;
+    if(addr >= D2_AXISRAM_BASE && addr < D2_AXISRAM_BASE + SRAM_D2_SIZE)
+        return MemoryRegion::SRAM_D2;
+    if(addr >= D3_SRAM_BASE && addr < D3_SRAM_BASE + SRAM_D3_SIZE)
+        return MemoryRegion::SRAM_D3;
+    if(addr >= SDRAM_BASE && addr < SDRAM_BASE + SDRAM_SIZE)
+        return MemoryRegion::SDRAM;
+    if(addr >= QSPI_BASE && addr < QSPI_BASE + QSPI_SIZE)
+        return MemoryRegion::QSPI;
+
+    return MemoryRegion::INVALID_ADDRESS;
 }
 
 
