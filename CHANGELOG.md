@@ -6,6 +6,10 @@
 
 ### Features
 
+### Bug fixes
+
+* qspi: fixed bug with GetData() that wouldn't return correct data when passed actual address instead of normalized offset (i.e. >= 0x90000000).
+
 ### Other
 
 ## v2.0.0
