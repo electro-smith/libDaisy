@@ -114,9 +114,6 @@ void                dummy_rx_callback(uint8_t* buf, uint32_t* len)
     // do nothing
 }
 
-CDC_ReceiveCallback rx_callback_fs = dummy_rx_callback;
-CDC_ReceiveCallback rx_callback_hs = dummy_rx_callback;
-
 /* USER CODE END PRIVATE_VARIABLES */
 
 /**
