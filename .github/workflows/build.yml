@@ -3,17 +3,55 @@ name: Build
 on:
   push:
     branches: [ master ]
+    paths:
+    - '.github/workflows/**'
+    - 'ci/**'
+    - 'cmake/**'
+    - 'core/**'
+    - 'Drivers/**'
+    - 'src/**'
+    - 'tests/**'
+    - 'CMakeLists.txt'
+    - 'Makefile'
   pull_request:
     branches: [ master ]
+    paths:
+    - '.github/workflows/**'
+    - 'ci/**'
+    - 'cmake/**'
+    - 'core/**'
+    - 'Drivers/**'
+    - 'src/**'
+    - 'tests/**'
+    - 'CMakeLists.txt'
+    - 'Makefile'
 
 jobs:
-  build:
+  build-makefile:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: arm-none-eabi-gcc
+    - name: Setup arm-none-eabi-gcc
       uses: fiam/arm-none-eabi-gcc@v1
       with:
         release: '9-2019-q4'
     - name: Build Library
       run: make -j
+
+  build-cmake:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup arm-none-eabi-gcc
+      uses: fiam/arm-none-eabi-gcc@v1
+      with:
+        release: '9-2019-q4'
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v1.9
+      with:
+        cmake-version: '3.20.x'
+    - name: Configure Library
+    
+      run: cmake -S . -B build -G "Unix Makefiles" -D CMAKE_TOOLCHAIN_FILE=cmake/toolchains/stm32h750xx.cmake -D TOOLCHAIN_PREFIX=$(which arm-none-eabi-gcc | sed -e "s/bin\/arm-none-eabi-gcc//")
+    - name: Build Library
+      run: cmake --build build

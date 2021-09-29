@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "daisy_core.h"
+#include "version.h"
 
 /** @addtogroup boards
     @{
@@ -34,8 +35,10 @@
 #include "per/sai.h"
 #include "per/sdmmc.h"
 #include "per/spi.h"
+#include "per/rng.h"
 #include "hid/disp/display.h"
 #include "hid/disp/oled_display.h"
+#include "hid/disp/graphics_common.h"
 #include "hid/wavplayer.h"
 #include "hid/led.h"
 #include "hid/rgb_led.h"
@@ -43,9 +46,18 @@
 #include "dev/codec_pcm3060.h"
 #include "dev/codec_wm8731.h"
 #include "dev/lcd_hd44780.h"
+#include "ui/ButtonMonitor.h"
+#include "ui/PotMonitor.h"
+#include "ui/UI.h"
+#include "ui/UiEventQueue.h"
+#include "ui/AbstractMenu.h"
+#include "ui/FullScreenItemMenu.h"
 #include "util/scopedirqblocker.h"
 #include "util/CpuLoadMeter.h"
+#include "util/FIFO.h"
 #include "util/FixedCapStr.h"
+#include "util/MappedValue.h"
+#include "util/Stack.h"
 #include "util/WaveTableLoader.h"
 #include "util/WavWriter.h"
 #endif
@@ -125,6 +137,12 @@
     @{ 
     */
 /** @} END BOARDS */
+
+/** @defgroup ui UI
+        @brief UI system. UI event queue, event readers, etc.
+    @{ 
+    */
+/** @} END UI */
 
 /** @defgroup utility UTILITY
         @brief General utilities. Ringbuffers, LED colors, OLED stuff, etc.

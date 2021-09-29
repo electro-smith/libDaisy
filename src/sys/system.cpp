@@ -3,12 +3,14 @@
 #include "sys/system.h"
 #include "sys/dma.h"
 #include "per/gpio.h"
+#include "per/rng.h"
 
 // global init functions for peripheral drivers.
 // These don't really need to be extern "C" anymore..
 extern "C"
 {
     extern void dsy_i2c_global_init();
+    extern void dsy_spi_global_init();
 }
 
 // Jump related stuff
@@ -104,6 +106,7 @@ void System::Init(const System::Config& config)
     ConfigureMpu();
     dsy_dma_init();
     dsy_i2c_global_init();
+    dsy_spi_global_init();
 
     // Initialize Caches
     if(config.use_dcache)
@@ -118,6 +121,9 @@ void System::Init(const System::Config& config)
     timcfg.dir    = TimerHandle::Config::CounterDir::UP;
     tim_.Init(timcfg);
     tim_.Start();
+
+    // Initialize the true random number generator
+    Random::Init();
 }
 
 void System::JumpToQspi()
@@ -369,6 +375,19 @@ uint32_t System::GetTickFreq()
 uint32_t System::GetPClk2Freq()
 {
     return HAL_RCC_GetPCLK2Freq();
+}
+
+System::ProgramMemory System::GetProgramMemory()
+{
+    uint32_t program_start = SCB->VTOR;
+    if(program_start >= sram_start_ && program_start < sram_end_)
+        return ProgramMemory::AXI_SRAM;
+    if(program_start >= internal_start_ && program_start < internal_end_)
+        return ProgramMemory::INTERNAL_FLASH;
+    if(program_start >= qspi_start_ && program_start < qspi_end_)
+        return ProgramMemory::QSPI;
+
+    return ProgramMemory::INVALID_ADDRESS;
 }
 
 

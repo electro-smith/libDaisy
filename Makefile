@@ -8,7 +8,6 @@ hid/audio \
 dev/sdram \
 sys/fatfs \
 per/gpio \
-per/qspi \
 per/sai \
 per/sdmmc \
 util/bsp_sd_diskio \
@@ -28,6 +27,7 @@ daisy_patch \
 daisy_petal \
 daisy_field \
 daisy_versio \
+daisy_patch_sm \
 sys/system \
 dev/sr_595 \
 dev/codec_ak4556 \
@@ -48,10 +48,16 @@ hid/logger \
 per/adc \
 per/dac \
 per/i2c \
+per/rng \
+per/qspi \
 per/spi \
 per/tim \
 per/uart \
+ui/UI \
+ui/AbstractMenu \
+ui/FullScreenItemMenu \
 util/color \
+util/MappedValue \
 util/WaveTableLoader \
 
 ######################################
