@@ -34,9 +34,10 @@ class System
          ** */
         void Defaults()
         {
-            cpu_freq   = SysClkFreq::FREQ_400MHZ;
-            use_dcache = true;
-            use_icache = true;
+            cpu_freq    = SysClkFreq::FREQ_400MHZ;
+            use_dcache  = true;
+            use_icache  = true;
+            skip_clocks = false;
         }
 
         /** Method to call on the struct to set to boost mode:
@@ -45,23 +46,30 @@ class System
          ** */
         void Boost()
         {
-            cpu_freq   = SysClkFreq::FREQ_480MHZ;
-            use_dcache = true;
-            use_icache = true;
+            cpu_freq    = SysClkFreq::FREQ_480MHZ;
+            use_dcache  = true;
+            use_icache  = true;
+            skip_clocks = false;
         }
 
         SysClkFreq cpu_freq;
         bool       use_dcache;
         bool       use_icache;
+        bool       skip_clocks;
     };
 
-    /** A simple way to represent where the program is executing from
+    /** Describes the different regions of memory available to the Daisy
      * 
      */
-    enum ProgramMemory
+    enum MemoryRegion
     {
         INTERNAL_FLASH = 0,
-        AXI_SRAM,
+        ITCMRAM,
+        DTCMRAM,
+        SRAM_D1,
+        SRAM_D2,
+        SRAM_D3,
+        SDRAM,
         QSPI,
         INVALID_ADDRESS,
     };
@@ -79,6 +87,12 @@ class System
      ** any necessary global inits.
      */
     void Init(const Config& config);
+
+    /** Deinitializer
+     ** Deinitializes all modules and peripherals 
+     ** set up with `Init`.
+     */
+    void DeInit();
 
     /** Jumps to the first address of the external flash chip (0x90000000)
      ** If there is no code there, the chip will likely fall through to the while() loop
@@ -148,28 +162,32 @@ class System
     static uint32_t GetPClk2Freq();
 
     /**
-     ** Returns a const reference to the Systems Configuration struct
+     ** Returns a const reference to the Systems Configuration struct.
      */
     const Config& GetConfig() const { return cfg_; }
 
-    /** Returns an enum representing the current (primary) memory space used
+    /** Returns an enum representing the current (primary) memory space used 
      *  for executing the program.
      */
-    static ProgramMemory GetProgramMemory();
+    static MemoryRegion GetProgramMemoryRegion();
+
+    /** Returns an enum representing the the memory region 
+     *  that the given address belongs to.
+     *  \param address The address to be checked
+     */
+    static MemoryRegion GetMemoryRegion(uint32_t address);
+
+    /** This constant indicates the Daisy bootloader's offset from
+     *  the beginning of QSPI's address space. 
+     *  Data written within the first 256K will remain 
+     *  untouched by the Daisy bootloader.
+     */
+    static constexpr uint32_t kQspiBootloaderOffset = 0x40000U;
 
   private:
     void   ConfigureClocks();
     void   ConfigureMpu();
     Config cfg_;
-
-    // TODO -- unify this with bootloader so we don't have reduntant values
-    static constexpr uint32_t sram_start_ = 0x24000000U;
-    static constexpr uint32_t sram_end_   = sram_start_ + 0x80000U;
-    static constexpr uint32_t qspi_start_ = 0x90040000U;
-    // TODO -- this is a bit too large:
-    static constexpr uint32_t qspi_end_       = qspi_start_ + 0x800000U;
-    static constexpr uint32_t internal_start_ = 0x08000000U;
-    static constexpr uint32_t internal_end_   = internal_start_ + 0x20000U;
 
     /** One TimerHandle to rule them all
      ** Maybe this whole class should be static.. */

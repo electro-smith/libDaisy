@@ -20,6 +20,7 @@ extern "C"
     extern FATFS   SDFatFS;              /**< & */
     extern FIL     SDFile;               /**< & */
     void           dsy_fatfs_init(void); /**< & */
+    void           dsy_fatfs_deinit(void);
 
 #ifdef __cplusplus
 }
