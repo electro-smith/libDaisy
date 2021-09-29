@@ -5,7 +5,6 @@ MODULE_DIR=src
 C_MODULES = \
 sys/dma \
 hid/audio \
-dev/sdram \
 sys/fatfs \
 per/gpio \
 per/sai \
@@ -34,6 +33,7 @@ dev/codec_ak4556 \
 dev/codec_pcm3060 \
 dev/codec_wm8731 \
 dev/lcd_hd44780 \
+dev/sdram \
 hid/ctrl \
 hid/encoder \
 hid/gatein \
@@ -47,6 +47,7 @@ hid/wavplayer \
 hid/logger \
 per/adc \
 per/dac \
+per/gpio \
 per/i2c \
 per/rng \
 per/qspi \
@@ -269,7 +270,9 @@ C_DEFS =  \
 -Dflash_layout \
 -DHSE_VALUE=16000000 \
 -DUSE_HAL_DRIVER \
--DUSE_FULL_LL_DRIVER 
+-DUSE_FULL_LL_DRIVER \
+-DDATA_IN_D2_SRAM 
+# ^ added for easy startup access
 
 
 C_INCLUDES = \
@@ -316,7 +319,7 @@ C_STANDARD = -std=gnu11
 CPP_STANDARD += -std=gnu++14
 
 # default action: build all
-all: $(BUILD_DIR)/$(TARGET).a 
+all: $(BUILD_DIR)/$(TARGET).a
 
 #######################################
 # build the application
@@ -345,7 +348,7 @@ $(BUILD_DIR)/%.o: %.cpp Makefile | $(BUILD_DIR)
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
 	mkdir -p $(@D)
-	$(AS) -c $(CFLAGS) $< -o $@ -MD -MP -MF $(BUILD_DIR)/$(notdir $(<:.s =.dep))
+	$(AS) -c $(ASFLAGS) $< -o $@ -MD -MP -MF $(BUILD_DIR)/$(notdir $(<:.s =.dep))
 
 $(BUILD_DIR)/$(TARGET).a: $(SORTED_OBJECTS) Makefile
 	$(AR) -r $@ $(SORTED_OBJECTS)
