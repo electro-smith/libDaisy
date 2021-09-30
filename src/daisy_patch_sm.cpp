@@ -24,23 +24,23 @@ namespace patch_sm
     const Pin kPinMap[4][10] = {
         /** Header Bank A */
         {
-            DUMMYPIN,        /**< A1  - -12V Power Input */
+            DUMMYPIN,              /**< A1  - -12V Power Input */
             {Port::DSY_GPIOA, 1},  /**< A2  - UART1 Rx */
             {Port::DSY_GPIOA, 0},  /**< A3  - UART1 Tx */
-            DUMMYPIN,        /**< A4  - GND */
-            DUMMYPIN,        /**< A5  - +12V Power Input */
-            DUMMYPIN,        /**< A6  - +5V Power Output */
-            DUMMYPIN,        /**< A7  - GND */
+            DUMMYPIN,              /**< A4  - GND */
+            DUMMYPIN,              /**< A5  - +12V Power Input */
+            DUMMYPIN,              /**< A6  - +5V Power Output */
+            DUMMYPIN,              /**< A7  - GND */
             {Port::DSY_GPIOB, 14}, /**< A8  - USB DM */
             {Port::DSY_GPIOB, 15}, /**< A9  - USB DP */
-            DUMMYPIN,        /**< A10 - +3V3 Power Output */
+            DUMMYPIN,              /**< A10 - +3V3 Power Output */
         },
         /** Header Bank B */
         {
-            DUMMYPIN,        /**< B1  - Audio Out Right */
-            DUMMYPIN,        /**< B2  - Audio Out Left*/
-            DUMMYPIN,        /**< B3  - Audio In Right */
-            DUMMYPIN,        /**< B4  - Audio In Left */
+            DUMMYPIN,              /**< B1  - Audio Out Right */
+            DUMMYPIN,              /**< B2  - Audio Out Left*/
+            DUMMYPIN,              /**< B3  - Audio In Right */
+            DUMMYPIN,              /**< B4  - Audio In Left */
             {Port::DSY_GPIOC, 13}, /**< B5  - GATE OUT 1 */
             {Port::DSY_GPIOC, 14}, /**< B6  - GATE OUT 2 */
             {Port::DSY_GPIOB, 8},  /**< B7  - I2C1 SCL */
@@ -51,14 +51,14 @@ namespace patch_sm
         /** Header Bank C */
         {
             {Port::DSY_GPIOA, 5}, /**< C1  - CV Out 2 */
-            PIN_ADC_CTRL_4, /**< C2  - CV In 4 */
-            PIN_ADC_CTRL_3, /**< C3  - CV In 3 */
-            PIN_ADC_CTRL_2, /**< C4  - CV In 2 */
-            PIN_ADC_CTRL_1, /**< C5  - CV In 1 */
-            PIN_ADC_CTRL_5, /**< C6  - CV In 5 */
-            PIN_ADC_CTRL_6, /**< C7  - CV In 6 */
-            PIN_ADC_CTRL_7, /**< C8  - CV In 7 */
-            PIN_ADC_CTRL_8, /**< C9  - CV In 8 */
+            PIN_ADC_CTRL_4,       /**< C2  - CV In 4 */
+            PIN_ADC_CTRL_3,       /**< C3  - CV In 3 */
+            PIN_ADC_CTRL_2,       /**< C4  - CV In 2 */
+            PIN_ADC_CTRL_1,       /**< C5  - CV In 1 */
+            PIN_ADC_CTRL_5,       /**< C6  - CV In 5 */
+            PIN_ADC_CTRL_6,       /**< C7  - CV In 6 */
+            PIN_ADC_CTRL_7,       /**< C8  - CV In 7 */
+            PIN_ADC_CTRL_8,       /**< C9  - CV In 8 */
             {Port::DSY_GPIOA, 4}, /**< C10 - CV Out 1 */
         },
         /** Header Bank D */
@@ -325,10 +325,10 @@ namespace patch_sm
         gate_in_1.Init(B10);
         gate_in_2.Init(B9);
 
-        gpio_conf.pin  = B5;
+        gpio_conf.pin = B5;
         gate_out_1.Init(gpio_conf);
 
-        gpio_conf.pin  = B6;
+        gpio_conf.pin = B6;
         gate_out_2.Init(gpio_conf);
 
         /** DAC init */

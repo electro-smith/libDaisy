@@ -22,7 +22,7 @@ void Ak4556::Init(Pin reset_pin)
 
 void Ak4556::DeInit(Pin reset_pin)
 {
-    GPIO reset;
+    GPIO         reset;
     GPIO::Config gpio_conf;
     gpio_conf.pin = reset_pin;
     reset.DeInit();

@@ -3,9 +3,15 @@
 
 using namespace daisy;
 
-#define SEED_LED_PIN {Port::DSY_GPIOC, 7}
+#define SEED_LED_PIN       \
+    {                      \
+        Port::DSY_GPIOC, 7 \
+    }
 
-#define SEED_TEST_POINT_PIN {Port::DSY_GPIOG, 14}
+#define SEED_TEST_POINT_PIN \
+    {                       \
+        Port::DSY_GPIOG, 14 \
+    }
 
 #ifndef SEED_REV2
 const Pin seedgpio[31] = {
@@ -92,9 +98,9 @@ void DaisySeed::Configure()
     //ConfigureDac();
     // Configure the built-in GPIOs.
     led_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
-    led_conf.pin = SEED_LED_PIN;
+    led_conf.pin  = SEED_LED_PIN;
     led.Init(led_conf);
-    
+
     testpoint_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
     testpoint_conf.pin  = SEED_TEST_POINT_PIN;
     testpoint.Init(testpoint_conf);
@@ -330,7 +336,7 @@ DaisySeed::BoardVersion DaisySeed::CheckBoardVersion()
      *  * PD3 tied to gnd is Daisy Seed v1.1 (aka Daisy Seed rev5)
      *  * PD4 tied to gnd reserved for future hardware
      */
-    GPIO pincheck;
+    GPIO         pincheck;
     GPIO::Config conf;
     conf.pull = GPIO::Config::Pull::PULLUP;
     conf.pin  = {Port::DSY_GPIOD, 3};
