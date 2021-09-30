@@ -22,6 +22,8 @@ static const uint32_t dsy_adc_channel_map[DSY_ADC_MAX_CHANNELS] = {
     ADC_CHANNEL_9,
     ADC_CHANNEL_10,
     ADC_CHANNEL_11,
+    ADC_CHANNEL_12,
+    ADC_CHANNEL_13,
     ADC_CHANNEL_14,
     ADC_CHANNEL_15,
     ADC_CHANNEL_16,
@@ -211,7 +213,7 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     else
     {
         adc.hadc1.Init.ContinuousConvMode    = DISABLE;
-        adc.hadc1.Init.DiscontinuousConvMode = ENABLE;
+        adc.hadc1.Init.DiscontinuousConvMode = DISABLE;
         adc.hadc1.Init.ConversionDataManagement
             = ADC_CONVERSIONDATA_DMA_ONESHOT;
     }

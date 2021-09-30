@@ -11,11 +11,23 @@ using namespace daisy;
 static void Error_Handler()
 {
     asm("bkpt 255");
+    while(1) {}
 }
 
 class SpiHandle::Impl
 {
   public:
+    struct SpiDmaJob
+    {
+        uint8_t*                       data             = nullptr;
+        uint16_t                       size             = 0;
+        SpiHandle::CallbackFunctionPtr callback         = nullptr;
+        void*                          callback_context = nullptr;
+        SpiHandle::DmaDirection        direction = SpiHandle::DmaDirection::TX;
+
+        bool IsValidJob() const { return data != nullptr; }
+        void Invalidate() { data = nullptr; }
+    };
     Result Init(const Config& config);
 
     const SpiHandle::Config& GetConfig() const { return config_; }
@@ -23,16 +35,52 @@ class SpiHandle::Impl
 
     Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout);
     Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
+    Result DmaTransmit(uint8_t*                       buff,
+                       size_t                         size,
+                       SpiHandle::CallbackFunctionPtr callback,
+                       void*                          callback_context);
+    Result DmaReceive(uint8_t*                       buff,
+                      size_t                         size,
+                      SpiHandle::CallbackFunctionPtr callback,
+                      void*                          callback_context);
 
     Result InitPins();
     Result DeInitPins();
 
+    Result StartDmaTx(uint8_t*                       buff,
+                      size_t                         size,
+                      SpiHandle::CallbackFunctionPtr callback,
+                      void*                          callback_context);
+
+    Result StartDmaRx(uint8_t*                       buff,
+                      size_t                         size,
+                      SpiHandle::CallbackFunctionPtr callback,
+                      void*                          callback_context);
+
+    static void GlobalInit();
+    static bool IsDmaBusy();
+    static void DmaTransferFinished(SPI_HandleTypeDef* hspi,
+                                    SpiHandle::Result  result);
+
+    static void QueueDmaTransfer(size_t spi_idx, const SpiDmaJob& job);
+    static bool IsDmaTransferQueuedFor(size_t spi_idx);
+
+    Result SetDmaPeripheral();
+    Result InitDma(SpiHandle::DmaDirection direction);
+
+    static constexpr uint8_t              kNumSpiWithDma = 4;
+    static volatile int8_t                dma_active_peripheral_;
+    static SpiDmaJob                      queued_dma_transfers_[kNumSpiWithDma];
+    static SpiHandle::CallbackFunctionPtr next_callback_;
+    static void*                          next_callback_context_;
+
     SpiHandle::Config config_;
     SPI_HandleTypeDef hspi_;
+    DMA_HandleTypeDef hdma_spi_;
 };
 
 // ================================================================
-// Global references for the availabel SpiHandle::Impl(s)
+// Global references for the available SpiHandle::Impl(s)
 // ================================================================
 
 static SpiHandle::Impl spi_handles[6];
@@ -52,6 +100,14 @@ SpiHandle::Impl* MapInstanceToHandle(SPI_TypeDef* instance)
 
     /* error */
     return NULL;
+}
+
+void SpiHandle::Impl::GlobalInit()
+{
+    // init the scheduler queue
+    dma_active_peripheral_ = -1;
+    for(int per = 0; per < kNumSpiWithDma; per++)
+        queued_dma_transfers_[per] = SpiHandle::Impl::SpiDmaJob();
 }
 
 SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
@@ -197,6 +253,135 @@ SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
     return SpiHandle::Result::OK;
 }
 
+SpiHandle::Result SpiHandle::Impl::SetDmaPeripheral()
+{
+    switch(config_.periph)
+    {
+        case SpiHandle::Config::Peripheral::SPI_1:
+            hdma_spi_.Init.Request = DMA_REQUEST_SPI1_TX;
+            break;
+        case SpiHandle::Config::Peripheral::SPI_2:
+            hdma_spi_.Init.Request = DMA_REQUEST_SPI2_TX;
+            break;
+        case SpiHandle::Config::Peripheral::SPI_3:
+            hdma_spi_.Init.Request = DMA_REQUEST_SPI3_TX;
+            break;
+        case SpiHandle::Config::Peripheral::SPI_4:
+            hdma_spi_.Init.Request = DMA_REQUEST_SPI4_TX;
+            break;
+        case SpiHandle::Config::Peripheral::SPI_5:
+            hdma_spi_.Init.Request = DMA_REQUEST_SPI5_TX;
+            break;
+        // DMA_REQUEST_SPI6_TX is not available?
+        default: return SpiHandle::Result::ERR;
+    }
+    return SpiHandle::Result::OK;
+}
+
+SpiHandle::Result SpiHandle::Impl::InitDma(SpiHandle::DmaDirection direction)
+{
+    hdma_spi_.Instance                 = DMA1_Stream7;
+    hdma_spi_.Init.PeriphInc           = DMA_PINC_DISABLE;
+    hdma_spi_.Init.MemInc              = DMA_MINC_ENABLE;
+    hdma_spi_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_spi_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+    hdma_spi_.Init.Mode                = DMA_NORMAL;
+    hdma_spi_.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
+    hdma_spi_.Init.FIFOMode            = DMA_FIFOMODE_ENABLE;
+    hdma_spi_.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+    hdma_spi_.Init.MemBurst            = DMA_MBURST_SINGLE;
+    hdma_spi_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
+    SetDmaPeripheral();
+
+    switch(direction)
+    {
+        case SpiHandle::DmaDirection::RX:
+            hdma_spi_.Init.Direction = DMA_PERIPH_TO_MEMORY;
+            break;
+        case SpiHandle::DmaDirection::TX:
+            hdma_spi_.Init.Direction = DMA_MEMORY_TO_PERIPH;
+            break;
+        default: return SpiHandle::Result::ERR;
+    }
+
+    if(HAL_DMA_Init(&hdma_spi_) != HAL_OK)
+    {
+        Error_Handler();
+        return SpiHandle::Result::ERR;
+    }
+
+    switch(direction)
+    {
+        case SpiHandle::DmaDirection::RX:
+            __HAL_LINKDMA(&hspi_, hdmarx, hdma_spi_);
+            break;
+        case SpiHandle::DmaDirection::TX:
+            __HAL_LINKDMA(&hspi_, hdmatx, hdma_spi_);
+            break;
+        default: return SpiHandle::Result::ERR;
+    }
+
+    return SpiHandle::Result::OK;
+}
+
+
+void SpiHandle::Impl::DmaTransferFinished(SPI_HandleTypeDef* hspi,
+                                          SpiHandle::Result  result)
+{
+    ScopedIrqBlocker block;
+
+    // on an error, reinit the peripheral to clear any flags
+    if(result != SpiHandle::Result::OK)
+        HAL_SPI_Init(hspi);
+
+    dma_active_peripheral_ = -1;
+
+    if(next_callback_ != nullptr)
+    {
+        // the callback may setup another transmission, hence we shouldn't reset this to
+        // nullptr after the callback - it might overwrite the new transmission.
+        auto callback  = next_callback_;
+        next_callback_ = nullptr;
+        // make the callback
+        callback(next_callback_context_, result);
+    }
+
+    // the callback could have started a new transmission right away...
+    if(IsDmaBusy())
+        return;
+
+    // dma is still idle. Check if another SPI peripheral waits for a job.
+    for(int per = 0; per < kNumSpiWithDma; per++)
+        if(IsDmaTransferQueuedFor(per))
+        {
+            SpiHandle::Result result;
+            if(queued_dma_transfers_[per].direction
+               == SpiHandle::DmaDirection::TX)
+            {
+                result = spi_handles[per].StartDmaTx(
+                    queued_dma_transfers_[per].data,
+                    queued_dma_transfers_[per].size,
+                    queued_dma_transfers_[per].callback,
+                    queued_dma_transfers_[per].callback_context);
+            }
+            else
+            {
+                result = spi_handles[per].StartDmaRx(
+                    queued_dma_transfers_[per].data,
+                    queued_dma_transfers_[per].size,
+                    queued_dma_transfers_[per].callback,
+                    queued_dma_transfers_[per].callback_context);
+            }
+            if(result == SpiHandle::Result::OK)
+            {
+                // remove the job from the queue
+                queued_dma_transfers_[per].Invalidate();
+                return;
+            }
+        }
+}
+
+
 int SpiHandle::Impl::CheckError()
 {
     return HAL_SPI_GetError(&hspi_);
@@ -208,6 +393,142 @@ SpiHandle::Impl::BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout)
 {
     if(HAL_SPI_Transmit(&hspi_, buff, size, timeout) != HAL_OK)
     {
+        return SpiHandle::Result::ERR;
+    }
+    return SpiHandle::Result::OK;
+}
+
+bool SpiHandle::Impl::IsDmaBusy()
+{
+    return dma_active_peripheral_ >= 0;
+}
+
+bool SpiHandle::Impl::IsDmaTransferQueuedFor(size_t spi_idx)
+{
+    return queued_dma_transfers_[spi_idx].IsValidJob();
+}
+
+void SpiHandle::Impl::QueueDmaTransfer(size_t spi_idx, const SpiDmaJob& job)
+{
+    // wait for any previous job on this peripheral to finish
+    // and the queue position to become free
+    while(IsDmaTransferQueuedFor(spi_idx))
+    {
+        continue;
+    };
+
+
+    // queue the job
+    ScopedIrqBlocker block;
+    queued_dma_transfers_[spi_idx] = job;
+}
+
+
+SpiHandle::Result
+SpiHandle::Impl::DmaTransmit(uint8_t*                       buff,
+                             size_t                         size,
+                             SpiHandle::CallbackFunctionPtr callback,
+                             void*                          callback_context)
+{
+    // if dma is currently running - queue a job
+    if(IsDmaBusy())
+    {
+        SpiDmaJob job;
+        job.data             = buff;
+        job.size             = size;
+        job.direction        = SpiHandle::DmaDirection::TX;
+        job.callback         = callback;
+        job.callback_context = callback_context;
+
+        const int spi_idx = int(config_.periph);
+
+        // queue a job (blocks until the queue position is free)
+        QueueDmaTransfer(spi_idx, job);
+        // TODO: the user can't tell if he got returned "OK"
+        // because the transfer was executed or because it was queued...
+        // should we change that?
+        return SpiHandle::Result::OK;
+    }
+
+    return StartDmaTx(buff, size, callback, callback_context);
+}
+
+SpiHandle::Result
+SpiHandle::Impl::StartDmaTx(uint8_t*                       buff,
+                            size_t                         size,
+                            SpiHandle::CallbackFunctionPtr callback,
+                            void*                          callback_context)
+{
+    InitDma(SpiHandle::DmaDirection::TX);
+
+    while(HAL_SPI_GetState(&hspi_) != HAL_SPI_STATE_READY) {};
+
+    ScopedIrqBlocker block;
+
+    dma_active_peripheral_ = int(config_.periph);
+    next_callback_         = callback;
+    next_callback_context_ = callback_context;
+
+    if(HAL_SPI_Transmit_DMA(&hspi_, buff, size) != HAL_OK)
+    {
+        dma_active_peripheral_ = -1;
+        next_callback_         = NULL;
+        next_callback_context_ = NULL;
+        return SpiHandle::Result::ERR;
+    }
+    return SpiHandle::Result::OK;
+}
+
+SpiHandle::Result
+SpiHandle::Impl::DmaReceive(uint8_t*                       buff,
+                            size_t                         size,
+                            SpiHandle::CallbackFunctionPtr callback,
+                            void*                          callback_context)
+{
+    // if dma is currently running - queue a job
+    if(IsDmaBusy())
+    {
+        SpiDmaJob job;
+        job.data             = buff;
+        job.size             = size;
+        job.direction        = SpiHandle::DmaDirection::RX;
+        job.callback         = callback;
+        job.callback_context = callback_context;
+
+        const int spi_idx = int(config_.periph);
+
+        // queue a job (blocks until the queue position is free)
+        QueueDmaTransfer(spi_idx, job);
+        // TODO: the user can't tell if he got returned "OK"
+        // because the transfer was executed or because it was queued...
+        // should we change that?
+        return SpiHandle::Result::OK;
+    }
+
+    return StartDmaRx(buff, size, callback, callback_context);
+}
+
+SpiHandle::Result
+SpiHandle::Impl::StartDmaRx(uint8_t*                       buff,
+                            size_t                         size,
+                            SpiHandle::CallbackFunctionPtr callback,
+                            void*                          callback_context)
+{
+    InitDma(SpiHandle::DmaDirection::RX);
+
+    while(HAL_SPI_GetState(&hspi_) != HAL_SPI_STATE_READY) {};
+
+    ScopedIrqBlocker block;
+
+    dma_active_peripheral_ = int(config_.periph);
+    next_callback_         = callback;
+    next_callback_context_ = callback_context;
+
+    if(HAL_SPI_Receive_DMA(&hspi_, buff, size) != HAL_OK)
+    {
+        dma_active_peripheral_ = -1;
+        next_callback_         = NULL;
+        next_callback_context_ = NULL;
         return SpiHandle::Result::ERR;
     }
     return SpiHandle::Result::OK;
@@ -487,6 +808,12 @@ SpiHandle::Result SpiHandle::Impl::DeInitPins()
     return Result::OK;
 }
 
+volatile int8_t SpiHandle::Impl::dma_active_peripheral_;
+SpiHandle::Impl::SpiDmaJob
+                               SpiHandle::Impl::queued_dma_transfers_[kNumSpiWithDma];
+SpiHandle::CallbackFunctionPtr SpiHandle::Impl::next_callback_;
+void*                          SpiHandle::Impl::next_callback_context_;
+
 void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
 {
     SpiHandle::Impl* handle = MapInstanceToHandle(spiHandle->Instance);
@@ -501,24 +828,45 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
     switch(handle->config_.periph)
     {
         case SpiHandle::Config::Peripheral::SPI_1:
+        {
             __HAL_RCC_SPI1_CLK_ENABLE();
-            break;
+            HAL_NVIC_SetPriority(SPI1_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(SPI1_IRQn);
+        }
+        break;
         case SpiHandle::Config::Peripheral::SPI_2:
+        {
             __HAL_RCC_SPI2_CLK_ENABLE();
-            break;
+            HAL_NVIC_SetPriority(SPI2_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(SPI2_IRQn);
+        }
+        break;
         case SpiHandle::Config::Peripheral::SPI_3:
+        {
             __HAL_RCC_SPI3_CLK_ENABLE();
-            break;
+            HAL_NVIC_SetPriority(SPI3_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(SPI3_IRQn);
+        }
+        break;
         case SpiHandle::Config::Peripheral::SPI_4:
+        {
             __HAL_RCC_SPI4_CLK_ENABLE();
-            break;
+            HAL_NVIC_SetPriority(SPI4_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(SPI4_IRQn);
+        }
+        break;
         case SpiHandle::Config::Peripheral::SPI_5:
+        {
             __HAL_RCC_SPI5_CLK_ENABLE();
-            break;
+            HAL_NVIC_SetPriority(SPI5_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(SPI5_IRQn);
+        }
+        break;
         case SpiHandle::Config::Peripheral::SPI_6:
             __HAL_RCC_SPI6_CLK_ENABLE();
             break;
     }
+
 
     if(handle->InitPins() == SpiHandle::Result::ERR)
     {
@@ -559,6 +907,43 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* spiHandle)
     }
 }
 
+extern "C" void dsy_spi_global_init()
+{
+    SpiHandle::Impl::GlobalInit();
+}
+
+extern "C" void SPI1_IRQHandler(void)
+{
+    HAL_SPI_IRQHandler(&spi_handles[0].hspi_);
+}
+
+void HalSpiDmaStreamCallback(void)
+{
+    ScopedIrqBlocker block;
+    if(SpiHandle::Impl::dma_active_peripheral_ >= 0)
+        HAL_DMA_IRQHandler(
+            &spi_handles[SpiHandle::Impl::dma_active_peripheral_].hdma_spi_);
+}
+extern "C" void DMA1_Stream7_IRQHandler(void)
+{
+    HalSpiDmaStreamCallback();
+}
+
+extern "C" void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef* hspi)
+{
+    SpiHandle::Impl::DmaTransferFinished(hspi, SpiHandle::Result::OK);
+}
+
+extern "C" void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef* hspi)
+{
+    SpiHandle::Impl::DmaTransferFinished(hspi, SpiHandle::Result::OK);
+}
+
+extern "C" void HAL_SPI_ErrorCallback(SPI_HandleTypeDef* hspi)
+{
+    SpiHandle::Impl::DmaTransferFinished(hspi, SpiHandle::Result::ERR);
+}
+
 // ======================================================================
 // SpiHandler > SpiHandlePimpl
 // ======================================================================
@@ -590,4 +975,21 @@ SpiHandle::Result
 SpiHandle::BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout)
 {
     return pimpl_->BlockingReceive(buffer, size, timeout);
+}
+
+SpiHandle::Result
+SpiHandle::DmaTransmit(uint8_t*                       buff,
+                       size_t                         size,
+                       SpiHandle::CallbackFunctionPtr callback,
+                       void*                          callback_context)
+{
+    return pimpl_->DmaTransmit(buff, size, callback, callback_context);
+}
+
+SpiHandle::Result SpiHandle::DmaReceive(uint8_t*                       buff,
+                                        size_t                         size,
+                                        SpiHandle::CallbackFunctionPtr callback,
+                                        void* callback_context)
+{
+    return pimpl_->DmaReceive(buff, size, callback, callback_context);
 }

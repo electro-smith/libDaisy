@@ -3,13 +3,14 @@
 #define DSY_MIDI_H
 
 // TODO: make this adjustable
-#define SYSEX_BUFFER_LEN 100
+#define SYSEX_BUFFER_LEN 128
 
 #include <stdint.h>
 #include <stdlib.h>
 #include "per/uart.h"
 #include "util/ringbuffer.h"
 #include "hid/MidiEvent.h"
+#include "sys/system.h"
 
 namespace daisy
 {
@@ -101,7 +102,7 @@ class MidiHandler
         pstate_                = ParserEmpty;
     }
 
-    /** Starts listening on the selected input mode(s). MidiEvent Queue will begin to fill, and can be checked with */
+    /** Starts listening on the selected input mode(s). MidiEvent Queue will begin to fill, and can be checked with HasEvents() */
     void StartReceive() { transport_.StartRx(); }
 
     /** Start listening */
@@ -257,6 +258,14 @@ class MidiHandler
                 if((byte & kStatusByteMask) == 0)
                 {
                     incoming_message_.data[1] = byte & kDataByteMask;
+
+                    //velocity 0 NoteOns are NoteOffs
+                    if(running_status_ == NoteOn
+                       && incoming_message_.data[1] == 0)
+                    {
+                        incoming_message_.type = running_status_ = NoteOff;
+                    }
+
                     // At this point the message is valid, and we can add this MidiEvent to the queue
                     event_q_.Write(incoming_message_);
                 }
@@ -266,13 +275,12 @@ class MidiHandler
                 break;
             case ParserSysEx:
                 // end of sysex
-                if(byte == 0xf7
-                   || incoming_message_.sysex_message_len >= SYSEX_BUFFER_LEN)
+                if(byte == 0xf7)
                 {
                     pstate_ = ParserEmpty;
                     event_q_.Write(incoming_message_);
                 }
-                else
+                else if(incoming_message_.sysex_message_len < SYSEX_BUFFER_LEN)
                 {
                     incoming_message_
                         .sysex_data[incoming_message_.sysex_message_len]

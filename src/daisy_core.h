@@ -44,6 +44,23 @@ cache enabled.
 #define S322F_SCALE 4.6566129e-10f    /**< 1 / (2** 31) */
 #define F2S32_SCALE 2147483647.f      /**< (2 ** 31) - 1 */
 
+
+/** shorthand macro for simplifying the reading of the left 
+ *  channel of a non-interleaved output buffer named out */
+#define OUT_L out[0]
+
+/** shorthand macro for simplifying the reading of the right 
+ *  channel of a non-interleaved output buffer named out */
+#define OUT_R out[1]
+
+/** shorthand macro for simplifying the reading of the left 
+ *  channel of a non-interleaved input buffer named in */
+#define IN_L in[0]
+
+/** shorthand macro for simplifying the reading of the right 
+ *  channel of a non-interleaved input buffer named in */
+#define IN_R in[1]
+
 /** 
     Computes cube.
     \param x Number to be cubed

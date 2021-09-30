@@ -1,11 +1,7 @@
 /* 
 TODO
-- Add flexible config for:
-  - data size, stop bits, parity, baud, etc.
-  - dma vs interrupt (or not).
-  - Error handling
+- UART1 defaults to DMA, add flexible config for DMA on all periphs
 - Transmit function improvements.
-- Other UART Peripherals (currently only handles USART1 in UART mode.
 - Overflow handling, etc. for Rx Queue.
 */
 

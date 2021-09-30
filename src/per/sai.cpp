@@ -14,6 +14,7 @@ class SaiHandle::Impl
     };
 
     SaiHandle::Result        Init(const SaiHandle::Config& config);
+    SaiHandle::Result        DeInit();
     const SaiHandle::Config& GetConfig() const { return config_; }
 
     SaiHandle::Result StartDmaTransfer(int32_t*                       buffer_rx,
@@ -44,11 +45,11 @@ class SaiHandle::Impl
 
     /** Pin Initiazlization */
     void InitPins();
-    void DeinitPins();
+    void DeInitPins();
 
     /** DMA Initialization */
     void InitDma(PeripheralBlock block);
-    void DeinitDma(PeripheralBlock block);
+    void DeInitDma(PeripheralBlock block);
 };
 
 // ================================================================
@@ -200,6 +201,23 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
     return Result::OK;
 }
 
+SaiHandle::Result SaiHandle::Impl::DeInit()
+{
+    // Must have been initialized before deinitialization
+    if(&config_ == nullptr)
+        return Result::ERR;
+
+    DeInitDma(PeripheralBlock::BLOCK_A);
+    DeInitDma(PeripheralBlock::BLOCK_B);
+
+    if(HAL_SAI_DeInit(&sai_a_handle_) != HAL_OK)
+        return Result::ERR;
+    if(HAL_SAI_DeInit(&sai_b_handle_) != HAL_OK)
+        return Result::ERR;
+
+    return Result::OK;
+}
+
 void SaiHandle::Impl::InitDma(PeripheralBlock block)
 {
     SAI_HandleTypeDef* hsai;
@@ -257,7 +275,7 @@ void SaiHandle::Impl::InitDma(PeripheralBlock block)
     __HAL_LINKDMA(hsai, hdmatx, *hdma);
 }
 
-void SaiHandle::Impl::DeinitDma(PeripheralBlock block)
+void SaiHandle::Impl::DeInitDma(PeripheralBlock block)
 {
     if(block == PeripheralBlock::BLOCK_A)
     {
@@ -371,7 +389,7 @@ void SaiHandle::Impl::InitPins()
     }
 }
 
-void SaiHandle::Impl::DeinitPins()
+void SaiHandle::Impl::DeInitPins()
 {
     GPIO_TypeDef* port;
     uint16_t      pin;
@@ -439,12 +457,12 @@ extern "C" void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
     if(hsai->Instance == SAI1_Block_A)
     {
         __HAL_RCC_SAI1_CLK_DISABLE();
-        sai_handles[0].DeinitPins();
+        sai_handles[0].DeInitPins();
     }
     else if(hsai->Instance == SAI2_Block_A)
     {
         __HAL_RCC_SAI2_CLK_DISABLE();
-        sai_handles[1].DeinitPins();
+        sai_handles[1].DeInitPins();
     }
 }
 
@@ -508,6 +526,10 @@ SaiHandle::Result SaiHandle::Init(const Config& config)
 {
     pimpl_ = &sai_handles[int(config.periph)];
     return pimpl_->Init(config);
+}
+SaiHandle::Result SaiHandle::DeInit()
+{
+    return pimpl_->DeInit();
 }
 const SaiHandle::Config& SaiHandle::GetConfig() const
 {

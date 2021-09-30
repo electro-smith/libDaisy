@@ -6,7 +6,7 @@
 #include "daisy_core.h"
 #include "per/gpio.h"
 
-#define DSY_ADC_MAX_CHANNELS 14 /**< Maximum number of ADC channels */
+#define DSY_ADC_MAX_CHANNELS 16 /**< Maximum number of ADC channels */
 
 namespace daisy
 {

@@ -25,6 +25,12 @@ class Ak4556
      ** Ak4556::Init(pin); 
      ** */
     static void Init(Pin reset_pin);
+
+    /** Deinitialization function for Ak4556 
+     ** Can be called statically:
+     ** Ak4556::DeInit(pin); 
+     ** */
+    static void DeInit(Pin reset_pin);
 };
 } // namespace daisy
 

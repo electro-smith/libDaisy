@@ -1,4 +1,6 @@
+#ifndef UNIT_TEST
 #include "per/qspi.h"
+#include "sys/system.h"
 #include "stm32h7xx_hal.h"
 #include "dev/flash_IS25LP080D.h"
 #include "dev/flash_IS25LP064A.h"
@@ -8,6 +10,20 @@
 //        This will be a thing much sooner than anticipated
 //        due to upgrading the RAM size for the new 4MB chip.
 // TODO: AutopollingMemReady only works for 1-Line, not 4-Line
+
+#define RETURN_IF_ERR(func) \
+    if(func != Result::OK)  \
+        return Result::ERR;
+
+#define ERR_RECOVERY(err)                 \
+    SetMode(Config::Mode::MEMORY_MAPPED); \
+    status_ = err;                        \
+    return Result::ERR;
+
+#define ERR_SIMPLE(err) \
+    status_ = err;      \
+    return Result::ERR;
+
 
 namespace daisy
 {
@@ -19,10 +35,12 @@ class QSPIHandle::Impl
 
     const QSPIHandle::Config& GetConfig() const { return config_; }
 
-    QSPIHandle::Result Deinit();
+    QSPIHandle::Result DeInit();
 
-    QSPIHandle::Result
-    WritePage(uint32_t address, uint32_t size, uint8_t* buffer);
+    QSPIHandle::Result WritePage(uint32_t address,
+                                 uint32_t size,
+                                 uint8_t* buffer,
+                                 bool     reset_mode = true);
 
     QSPIHandle::Result Write(uint32_t address, uint32_t size, uint8_t* buffer);
 
@@ -38,6 +56,13 @@ class QSPIHandle::Impl
 
     size_t GetNumPins() { return pin_count_; }
 
+    Status GetStatus() { return status_; }
+
+    void* GetData(uint32_t offset)
+    {
+        return (void*)(0x90000000 + (offset & 0x0fffffff));
+    }
+
   private:
     QSPIHandle::Result ResetMemory();
 
@@ -51,6 +76,10 @@ class QSPIHandle::Impl
 
     QSPIHandle::Result AutopollingMemReady(uint32_t timeout);
 
+    QSPIHandle::Result SetMode(Config::Mode mode);
+
+    QSPIHandle::Result CheckProgramMemory();
+
     // These functions are defined, but we haven't added the ability to switch to quad mode. So they're currently unused.
     QSPIHandle::Result EnterQuadMode() __attribute__((unused));
     QSPIHandle::Result ExitQuadMode() __attribute__((unused));
@@ -58,16 +87,17 @@ class QSPIHandle::Impl
 
     QSPIHandle::Config config_;
     QSPI_HandleTypeDef halqspi_;
+    Status             status_;
 
     static constexpr size_t pin_count_
-        = sizeof(QSPIHandle::Config::pin_config) / sizeof(Pin);
+        = sizeof(QSPIHandle::Config::pin_config) / sizeof(dsy_gpio_pin);
     // Data structure for easy hal initialization
-    Pin* pin_config_arr_[pin_count_] = {&config_.pin_config.io0,
-                                        &config_.pin_config.io1,
-                                        &config_.pin_config.io2,
-                                        &config_.pin_config.io3,
-                                        &config_.pin_config.clk,
-                                        &config_.pin_config.ncs};
+    GPIO::Config pin_config_arr_[pin_count_] = {config_.pin_config.io0,
+                                                 config_.pin_config.io1,
+                                                 config_.pin_config.io2,
+                                                 config_.pin_config.io3,
+                                                 config_.pin_config.clk,
+                                                 config_.pin_config.ncs};
 };
 
 
@@ -80,18 +110,16 @@ static QSPIHandle::Impl qspi_impl;
 
 QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
 {
+    RETURN_IF_ERR(CheckProgramMemory());
     // Set Handle Settings     o
 
-    //dsy_qspi_handle.board = board;
-    config_ = config;
-    QSPIHandle::Config::Device device;
-    QSPIHandle::Config::Mode   mode;
-    device = config_.device;
-    mode   = config_.mode;
+    config_     = config;
+    auto device = config_.device;
+    auto mode   = config_.mode;
 
     if(HAL_QSPI_DeInit(&halqspi_) != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     //HAL_QSPI_MspInit(&dsy_qspi_handle);     // I think this gets called a in HAL_QSPI_Init();
     // Set Initialization values for the QSPI Peripheral
@@ -120,30 +148,30 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
 
     if(HAL_QSPI_Init(&halqspi_) != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     if(ResetMemory() != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     //    uint8_t fifothresh = HAL_QSPI_GetFifoThreshold(&dsy_qspi_handle.hqspi);
     //    uint8_t reg = 0;
     //    reg = get_status_register(&dsy_qspi_handle);
     if(DummyCyclesConfig(device) != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     // Once writing test with 1 Line is confirmed lets move this out, and update writing to use 4-line.
     if(QuadEnable() != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
-    if(mode == QSPIHandle::Config::Mode::DSY_MEMORY_MAPPED)
+    if(mode == Config::Mode::MEMORY_MAPPED)
     {
         if(EnableMemoryMappedMode() != QSPIHandle::Result::OK)
         {
-            return QSPIHandle::Result::ERR;
+            ERR_SIMPLE(Status::E_HAL_ERROR);
         }
     }
 
@@ -151,21 +179,26 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
 }
 
 
-QSPIHandle::Result QSPIHandle::Impl::Deinit()
+QSPIHandle::Result QSPIHandle::Impl::DeInit()
 {
     halqspi_.Instance = QUADSPI;
     if(HAL_QSPI_DeInit(&halqspi_) != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     HAL_QSPI_MspDeInit(&halqspi_);
     return QSPIHandle::Result::OK;
 }
 
 
-QSPIHandle::Result
-QSPIHandle::Impl::WritePage(uint32_t address, uint32_t size, uint8_t* buffer)
+QSPIHandle::Result QSPIHandle::Impl::WritePage(uint32_t address,
+                                               uint32_t size,
+                                               uint8_t* buffer,
+                                               bool     reset_mode)
 {
+    RETURN_IF_ERR(CheckProgramMemory());
+    RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
+
     QSPI_CommandTypeDef s_command;
     s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
     s_command.Instruction       = PAGE_PROG_CMD;
@@ -181,24 +214,27 @@ QSPIHandle::Impl::WritePage(uint32_t address, uint32_t size, uint8_t* buffer)
     s_command.Address           = address;
     if(WriteEnable() != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_RECOVERY(Status::E_HAL_ERROR);
     }
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_RECOVERY(Status::E_HAL_ERROR);
     }
     if(HAL_QSPI_Transmit(
            &halqspi_, (uint8_t*)buffer, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_RECOVERY(Status::E_HAL_ERROR);
     }
     if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_RECOVERY(Status::E_HAL_ERROR);
     }
+
+    if(reset_mode)
+        RETURN_IF_ERR(SetMode(Config::Mode::MEMORY_MAPPED));
     return QSPIHandle::Result::OK;
 }
 
@@ -220,21 +256,21 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
         if(NumOfPage == 0) /*!< NumByteToWrite < QSPI_PAGESIZE */
         {
             QSPI_DataNum = size;
-            WritePage(address, QSPI_DataNum, buffer);
+            WritePage(address, QSPI_DataNum, buffer, false);
         }
         else /*!< Size > QSPI_PAGESIZE */
         {
             while(NumOfPage--)
             {
                 QSPI_DataNum = flash_page_size;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
                 address += flash_page_size;
                 buffer += flash_page_size;
             }
 
             QSPI_DataNum = NumOfSingle;
             if(QSPI_DataNum > 0)
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
         }
     }
     else /*!< Address is not QSPI_PAGESIZE aligned  */
@@ -245,16 +281,16 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
             {
                 temp         = NumOfSingle - count;
                 QSPI_DataNum = count;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
                 address += count;
                 buffer += count;
                 QSPI_DataNum = temp;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
             }
             else
             {
                 QSPI_DataNum = size;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
             }
         }
         else /*!< Size > QSPI_PAGESIZE */
@@ -263,14 +299,14 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
             NumOfPage    = size / flash_page_size;
             NumOfSingle  = size % flash_page_size;
             QSPI_DataNum = count;
-            WritePage(address, QSPI_DataNum, buffer);
+            WritePage(address, QSPI_DataNum, buffer, false);
             address += count;
             buffer += count;
 
             while(NumOfPage--)
             {
                 QSPI_DataNum = flash_page_size;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
                 address += flash_page_size;
                 buffer += flash_page_size;
             }
@@ -278,10 +314,12 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
             if(NumOfSingle != 0)
             {
                 QSPI_DataNum = NumOfSingle;
-                WritePage(address, QSPI_DataNum, buffer);
+                WritePage(address, QSPI_DataNum, buffer, false);
             }
         }
     }
+
+    RETURN_IF_ERR(SetMode(Config::Mode::MEMORY_MAPPED));
     return QSPIHandle::Result::OK;
 }
 
@@ -298,7 +336,7 @@ QSPIHandle::Result QSPIHandle::Impl::Erase(uint32_t start_addr,
         block_addr = start_addr & 0x0FFFFFFF;
         if(EraseSector(block_addr) != QSPIHandle::Result::OK)
         {
-            return QSPIHandle::Result::ERR;
+            ERR_RECOVERY(Status::E_HAL_ERROR);
         }
         start_addr += block_size;
     }
@@ -326,25 +364,33 @@ QSPIHandle::Result QSPIHandle::Impl::EraseSector(uint32_t address)
     s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
     s_command.DataMode          = QSPI_DATA_NONE;
     s_command.DummyCycles       = 0;
-    s_command.NbData            = 0;
+    s_command.NbData            = 1;
     s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
     s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
     s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
     s_command.Address           = address;
+
+    RETURN_IF_ERR(CheckProgramMemory());
+    // Erasing takes a long time anyway, so not much point trying to
+    // minimize reinitializations
+    RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
+
     if(WriteEnable() != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_RECOVERY(Status::E_HAL_ERROR);
     }
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_RECOVERY(Status::E_HAL_ERROR);
     }
     if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_RECOVERY(Status::E_HAL_ERROR);
     }
+
+    RETURN_IF_ERR(SetMode(Config::Mode::MEMORY_MAPPED));
     return QSPIHandle::Result::OK;
 }
 
@@ -368,7 +414,7 @@ QSPIHandle::Result QSPIHandle::Impl::ResetMemory()
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
     /* Send the reset memory command */
@@ -376,14 +422,14 @@ QSPIHandle::Result QSPIHandle::Impl::ResetMemory()
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
     /* Configure automatic polling mode to wait the memory is ready */
     if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     return QSPIHandle::Result::OK;
 }
@@ -413,7 +459,7 @@ QSPIHandle::Impl::DummyCyclesConfig(QSPIHandle::Config::Device device)
                &halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
            != HAL_OK)
         {
-            return QSPIHandle::Result::ERR;
+            ERR_SIMPLE(Status::E_HAL_ERROR);
         }
 
         /* Reception of the data */
@@ -421,13 +467,13 @@ QSPIHandle::Impl::DummyCyclesConfig(QSPIHandle::Config::Device device)
                &halqspi_, (uint8_t*)(&reg), HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
            != HAL_OK)
         {
-            return QSPIHandle::Result::ERR;
+            ERR_SIMPLE(Status::E_HAL_ERROR);
         }
         MODIFY_REG(reg, 0x78, (IS25LP080D_DUMMY_CYCLES_READ_QUAD << 3));
         /* Enable write operations */
         if(WriteEnable() != QSPIHandle::Result::OK)
         {
-            return QSPIHandle::Result::ERR;
+            ERR_SIMPLE(Status::E_HAL_ERROR);
         }
     }
     else
@@ -452,7 +498,7 @@ QSPIHandle::Impl::DummyCyclesConfig(QSPIHandle::Config::Device device)
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
     /* Transmission of the data */
@@ -460,14 +506,14 @@ QSPIHandle::Impl::DummyCyclesConfig(QSPIHandle::Config::Device device)
            &halqspi_, (uint8_t*)(&reg), HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
     /* Configure automatic polling mode to wait the memory is ready */
     if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     return QSPIHandle::Result::OK;
 }
@@ -489,10 +535,12 @@ QSPIHandle::Result QSPIHandle::Impl::WriteEnable()
     s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
     s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
 
+    RETURN_IF_ERR(CheckProgramMemory());
+
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
     /* Configure automatic polling mode to wait for write enabling */
@@ -512,7 +560,7 @@ QSPIHandle::Result QSPIHandle::Impl::WriteEnable()
            &halqspi_, &s_command, &s_config, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     return QSPIHandle::Result::OK;
 }
@@ -531,6 +579,7 @@ QSPIHandle::Result QSPIHandle::Impl::QuadEnable()
     s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
     s_command.DataMode          = QSPI_DATA_1_LINE;
     s_command.DummyCycles       = 0;
+    s_command.NbData            = 1;
     s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
     s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
     s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
@@ -538,13 +587,13 @@ QSPIHandle::Result QSPIHandle::Impl::QuadEnable()
     /* Enable write operations */
     if(WriteEnable() != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
 
@@ -558,7 +607,7 @@ QSPIHandle::Result QSPIHandle::Impl::QuadEnable()
            &halqspi_, (uint8_t*)(&reg), HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
     /* Configure automatic polling mode to wait for write enabling */
@@ -581,14 +630,14 @@ QSPIHandle::Result QSPIHandle::Impl::QuadEnable()
            &halqspi_, &s_command, &s_config, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
     /* Configure automatic polling mode to wait the memory is ready */
     if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     return QSPIHandle::Result::OK;
 }
@@ -623,7 +672,7 @@ QSPIHandle::Result QSPIHandle::Impl::EnableMemoryMappedMode()
     if(HAL_QSPI_MemoryMapped(&halqspi_, &s_command, &s_mem_mapped_cfg)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     return QSPIHandle::Result::OK;
 }
@@ -656,11 +705,37 @@ QSPIHandle::Result QSPIHandle::Impl::AutopollingMemReady(uint32_t timeout)
     if(HAL_QSPI_AutoPolling(&halqspi_, &s_command, &s_config, timeout)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     return QSPIHandle::Result::OK;
 }
 
+QSPIHandle::Result QSPIHandle::Impl::SetMode(QSPIHandle::Config::Mode mode)
+{
+    if(config_.mode != mode)
+    {
+        config_.mode = mode;
+        if(Init(config_) != Result::OK)
+        {
+            config_.mode = Config::Mode::MEMORY_MAPPED;
+            status_      = Status::E_SWITCHING_MODES;
+            Init(config_);
+            return Result::ERR;
+        }
+    }
+    return Result::OK;
+}
+
+QSPIHandle::Result QSPIHandle::Impl::CheckProgramMemory()
+{
+    if(System::GetProgramMemoryRegion() == System::MemoryRegion::QSPI)
+    {
+        status_ = Status::E_INVALID_MODE;
+        // SetMode(Config::Mode::MEMORY_MAPPED);
+        return Result::ERR;
+    }
+    return Result::OK;
+}
 
 QSPIHandle::Result QSPIHandle::Impl::EnterQuadMode()
 {
@@ -673,7 +748,7 @@ QSPIHandle::Result QSPIHandle::Impl::EnterQuadMode()
     s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
     s_command.DataMode          = QSPI_DATA_NONE;
     s_command.DummyCycles       = 0;
-    s_command.NbData            = 0;
+    s_command.NbData            = 1;
     s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
     s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
     s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
@@ -682,7 +757,7 @@ QSPIHandle::Result QSPIHandle::Impl::EnterQuadMode()
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     //    /* Wait for WIP bit in SR */
     //    if (QSPI_AutoPollingMemReady(&halqspi_, HAL_QPSI_TIMEOUT_DEFAULT_VALUE) != QSPIHandle::Result::OK)
@@ -704,7 +779,7 @@ QSPIHandle::Result QSPIHandle::Impl::ExitQuadMode()
     s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
     s_command.DataMode          = QSPI_DATA_NONE;
     s_command.DummyCycles       = 0;
-    s_command.NbData            = 0;
+    s_command.NbData            = 1;
     s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
     s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
     s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
@@ -713,13 +788,13 @@ QSPIHandle::Result QSPIHandle::Impl::ExitQuadMode()
     if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != HAL_OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     /* Wait for WIP bit in SR */
     if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
        != QSPIHandle::Result::OK)
     {
-        return QSPIHandle::Result::ERR;
+        ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     return QSPIHandle::Result::OK;
 }
@@ -789,9 +864,14 @@ const QSPIHandle::Config& QSPIHandle::GetConfig() const
     return pimpl_->GetConfig();
 }
 
-QSPIHandle::Result QSPIHandle::Deinit()
+QSPIHandle::Result QSPIHandle::DeInit()
 {
-    return pimpl_->Deinit();
+    return pimpl_->DeInit();
+}
+
+QSPIHandle::Status QSPIHandle::GetStatus()
+{
+    return pimpl_->GetStatus();
 }
 
 QSPIHandle::Result
@@ -814,6 +894,11 @@ QSPIHandle::Result QSPIHandle::Erase(uint32_t start_addr, uint32_t end_addr)
 QSPIHandle::Result QSPIHandle::EraseSector(uint32_t address)
 {
     return pimpl_->EraseSector(address);
+}
+
+void* QSPIHandle::GetData(uint32_t offset)
+{
+    return pimpl_->GetData(offset);
 }
 
 // ======================================================================
@@ -945,3 +1030,11 @@ extern "C" void QUADSPI_IRQHandler(void)
 //    {GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF10_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI, GPIO_AF9_QUADSPI}, // AUDIO BB
 //};
 //
+
+#else // ifndef UNIT_TEST
+
+#include "qspi.h"
+// static isolator for the dummy version used in unit tests
+TestIsolator<daisy::QSPIHandle::QSPIState> daisy::QSPIHandle::testIsolator_;
+
+#endif

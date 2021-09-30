@@ -1,4 +1,5 @@
-project (libdaisy VERSION 0.1.0)
+cmake_policy(SET CMP0048 NEW)
+project (libdaisy VERSION 1.0.0)
 cmake_minimum_required(VERSION 3.20)
 
 set(TARGET daisy)
@@ -11,6 +12,7 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/hid/audio.cpp
     ${MODULE_DIR}/sys/fatfs.c
     ${MODULE_DIR}/per/gpio.c
+    ${MODULE_DIR}/per/rng.cpp
     ${MODULE_DIR}/per/sai.cpp
     ${MODULE_DIR}/per/sdmmc.cpp
     ${MODULE_DIR}/util/bsp_sd_diskio.c
@@ -21,13 +23,13 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/usbd/usbd_cdc_if.c
     ${MODULE_DIR}/usbd/usbd_desc.c
     ${MODULE_DIR}/usbd/usbd_conf.c
-
     ${MODULE_DIR}/daisy_seed.cpp
     ${MODULE_DIR}/daisy_pod.cpp
     ${MODULE_DIR}/daisy_patch.cpp
     ${MODULE_DIR}/daisy_petal.cpp
     ${MODULE_DIR}/daisy_field.cpp
     ${MODULE_DIR}/daisy_versio.cpp
+    ${MODULE_DIR}/daisy_patch_sm.cpp
     ${MODULE_DIR}/sys/system.cpp
     ${MODULE_DIR}/dev/sr_595.cpp
     ${MODULE_DIR}/dev/codec_ak4556.cpp
@@ -38,7 +40,6 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/hid/encoder.cpp
     ${MODULE_DIR}/hid/gatein.cpp
     ${MODULE_DIR}/hid/led.cpp
-    ${MODULE_DIR}/hid/midi.cpp
     ${MODULE_DIR}/hid/parameter.cpp
     ${MODULE_DIR}/hid/rgb_led.cpp
     ${MODULE_DIR}/hid/switch.cpp
@@ -53,6 +54,9 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/per/spi.cpp
     ${MODULE_DIR}/per/tim.cpp
     ${MODULE_DIR}/per/uart.cpp
+    ${MODULE_DIR}/ui/AbstractMenu.cpp
+    ${MODULE_DIR}/ui/FullScreenItemMenu.cpp
+    ${MODULE_DIR}/ui/UI.cpp
     ${MODULE_DIR}/util/color.cpp
     ${MODULE_DIR}/util/hal_map.cpp
     ${MODULE_DIR}/util/WaveTableLoader.cpp

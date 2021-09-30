@@ -1,6 +1,8 @@
 #ifndef DSY_QSPI
 #define DSY_QSPI /**< Macro */
 
+#ifndef UNIT_TEST // for unit tests, a dummy implementation
+
 #include <cstdint>
 #include "per/gpio.h"
 
@@ -34,30 +36,46 @@ class QSPIHandle
         ERR
     };
 
+    /** Indicates the current status of the module. 
+         *  Warnings are indicated by a leading W.
+         *  Errors are indicated by a leading E and cause an immediate exit.
+         * 
+         *  \param GOOD - No errors have been reported.
+         *  \param E_HAL_ERROR - HAL code did not return HAL_OK.
+         *  \param E_SWITCHING_MODES - An error was encountered while switching QSPI peripheral mode.
+         *  \param E_INVALID_MODE - QSPI should not be written to while the program is executing from it.
+         */
+    enum Status
+    {
+        GOOD = 0,
+        E_HAL_ERROR,
+        E_SWITCHING_MODES,
+        E_INVALID_MODE,
+    };
+
     /** Configuration structure for interfacing with QSPI Driver */
     struct Config
     {
-        /** 
-            Modes of operation.
-            Memory Mapped mode: QSPI configured so that the QSPI can be
-            read from starting address 0x90000000. Writing is not
-            possible in this mode. \n 
-            Indirect Polling mode: Device driver enabled. \n     
-            Read/Write possible via dsy_qspi_* functions
-            */
-        enum Mode
-        {
-            DSY_MEMORY_MAPPED, /**< & */
-            INDIRECT_POLLING,  /**< & */
-            MODE_LAST,
-        };
-
         /** Flash Devices supported. (Both of these are more-or-less the same, just different sizes). */
         enum Device
         {
             IS25LP080D,  /**< & */
             IS25LP064A,  /**< & */
             DEVICE_LAST, /**< & */
+        };
+
+        /** 
+        Modes of operation.
+        Memory Mapped mode: QSPI configured so that the QSPI can be
+        read from starting address 0x90000000. Writing is not
+        possible in this mode. \n 
+        Indirect Polling mode: Device driver enabled. 
+        */
+        enum Mode
+        {
+            MEMORY_MAPPED,    /**< & */
+            INDIRECT_POLLING, /**< & */
+            MODE_LAST,
         };
 
         //SCK,  CE# (active low)
@@ -71,8 +89,8 @@ class QSPIHandle
             Pin ncs; /**< & */
         } pin_config;
 
-        Mode   mode;
         Device device;
+        Mode   mode;
     };
 
     /** 
@@ -131,6 +149,20 @@ class QSPIHandle
         */
     Result EraseSector(uint32_t address);
 
+    /** Returns the current class status. Useful for debugging.
+     *  \returns Status
+     */
+    Status GetStatus();
+
+    /** Returns a pointer to the actual memory used 
+     *  The memory at this address is read-only
+     *  to write to it use the Write function.
+     * 
+     *  \param offset returns the pointer starting this 
+     *                many bytes into the memory
+    */
+    void* GetData(uint32_t offset = 0);
+
     QSPIHandle() : pimpl_(nullptr) {}
     QSPIHandle(const QSPIHandle& other) = default;
     QSPIHandle& operator=(const QSPIHandle& other) = default;
@@ -145,4 +177,113 @@ class QSPIHandle
 
 } // namespace daisy
 
-#endif
+#else
+
+#include <cstdint>
+#include "../tests/TestIsolator.h"
+
+namespace daisy
+{
+/** This is a dummy implementation for use in tests. 
+ *  In your tests you can use this as a placeholder 
+ *  for the physical volatile memory. 
+ *  This provides a block of memory that can be erased, or written
+ *  to.
+ */
+class QSPIHandle
+{
+  public:
+    enum Result
+    {
+        OK = 0,
+        ERR
+    };
+
+    /** A mock-only function for resetting the memory to clean state 
+     *  This should be called at the beginning of any test to ensure that
+     *  data from a previous test does not interfere.
+     */
+    static Result ResetAndClear()
+    {
+        testIsolator_.GetStateForCurrentTest()->memory_.clear();
+        return Result::OK;
+    }
+
+
+    static Result Write(uint32_t address, uint32_t size, uint8_t* buffer)
+    {
+        // 256-byte aligned, normalized address value
+        uint32_t adjusted_addr = (address) & (uint32_t)(~0xff);
+        // Make sure memory is of approriate size
+        uint32_t total_bytes = adjusted_addr + size;
+        AdaptToSize(total_bytes);
+        // Copy data into vector
+        uint8_t* dest = testIsolator_.GetStateForCurrentTest()->memory_.data();
+        std::copy(&buffer[adjusted_addr],
+                  &buffer[adjusted_addr + size],
+                  &dest[adjusted_addr]);
+        return Result::OK;
+    }
+
+    static Result Erase(uint32_t start_addr, uint32_t end_addr)
+    {
+        uint32_t adjusted_start_addr = (start_addr) & (uint32_t)(~0xff);
+        uint32_t adjusted_end_addr   = (end_addr) & (uint32_t)(~0xff);
+
+        // guard addresses
+        assert(adjusted_start_addr < kMaxAdjustedAddr);
+        assert(adjusted_end_addr < kMaxAdjustedAddr);
+
+        // Make sure vector is of appropriate size
+        // size should be at least (adjusted_end_addr)
+        AdaptToSize(adjusted_end_addr);
+        uint8_t* buff = testIsolator_.GetStateForCurrentTest()->memory_.data();
+        // Erases memory by setting all bits to 1
+        std::fill(&buff[adjusted_start_addr], &buff[adjusted_end_addr], 0xff);
+        return Result::OK;
+    }
+
+    /** Returns a pointer to the actual memory used 
+    */
+    static void* GetData(uint32_t offset = 0)
+    {
+        assert(offset < kMaxAdjustedAddr);
+        AdaptToSize(offset + 1); /**< Make sure it's not empty */
+        return (void*)(testIsolator_.GetStateForCurrentTest()->memory_.data()
+                       + offset);
+    }
+
+    /** Returns the current size of the memory vector.
+     *  
+     *  This is not in the hardware class its just for testing purposes
+     */
+    static size_t GetCurrentSize()
+    {
+        return testIsolator_.GetStateForCurrentTest()->memory_.size();
+    }
+
+  private:
+    /** Adjusts the test state vector to an appropriate size */
+    static void AdaptToSize(uint32_t required_bytes)
+    {
+        if(testIsolator_.GetStateForCurrentTest()->memory_.size()
+           < required_bytes)
+            testIsolator_.GetStateForCurrentTest()->memory_.resize(
+                required_bytes, 0x00);
+    }
+    static constexpr uint32_t kMaxAdjustedAddr = 0x800000;
+    struct QSPIState
+    {
+        // Emulate the byte-memory of the QSPI flash
+        std::vector<uint8_t> memory_;
+    };
+    static TestIsolator<QSPIState> testIsolator_;
+};
+
+
+} // namespace daisy
+
+
+#endif // ifndef UNIT_TEST
+
+#endif // ifndef DSY_QSPI

@@ -46,6 +46,11 @@ class DaisySeed
     void Init(bool boost = false);
 
     /** 
+    Deinitializes all peripherals automatically handled by `Init`.
+    */
+    void DeInit();
+
+    /** 
     Wait some ms before going on.
     \param del Delay time in ms.
     */
@@ -134,19 +139,38 @@ class DaisySeed
 
     // While the library is still in heavy development, most of the
     // configuration handles will remain public.
-    QSPIHandle  qspi;
-    AudioHandle audio_handle; /**< & */
-    AdcHandle   adc;          /**< & */
-    DacHandle   dac;
-    UsbHandle   usb_handle;   /**< & */
-    SdramHandle sdram_handle; /**< & */
-    GPIO        led, testpoint;
-    System      system;
+    QSPIHandle         qspi;
+    QSPIHandle::Config qspi_config;
+    SdramHandle        sdram_handle; /**< & */
+    AudioHandle        audio_handle; /**< & */
+    AdcHandle          adc;          /**< & */
+    DacHandle          dac;
+    UsbHandle          usb_handle; /**< & */
+    GPIO               led, testpoint;
+    GPIO::Config       led_conf, testpoint_conf;
+    System             system;
 
   private:
     /** Local shorthand for debug log destination
     */
     using Log = Logger<LOGGER_INTERNAL>;
+
+    /** Internal indices for DaisySeed-equivalent devices 
+     *  This shouldn't have any effect on user-facing code,
+     *  and only needs to be checked to properly initialize
+     *  the onboard-circuits.
+    */
+    enum class BoardVersion
+    {
+        /** Daisy Seed Rev4
+         *  This is the original Daisy Seed */
+        DAISY_SEED,
+        /** Daisy Seed 1.1 (aka Daisy Seed Rev5)
+         *  This is a pin-compatible version of the Daisy Seed
+         *  that uses the WM8731 codec instead of the AK4430 */
+        DAISY_SEED_1_1,
+    };
+    BoardVersion CheckBoardVersion();
 
     void ConfigureQspi();
     void ConfigureGpio();

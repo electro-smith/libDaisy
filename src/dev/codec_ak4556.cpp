@@ -20,4 +20,13 @@ void Ak4556::Init(Pin reset_pin)
     reset.Write(1);
 }
 
+void Ak4556::DeInit(Pin reset_pin)
+{
+    GPIO reset;
+    GPIO::Config gpio_conf;
+    gpio_conf.pin = reset_pin;
+    reset.DeInit();
+}
+
+
 } // namespace daisy
