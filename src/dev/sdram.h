@@ -98,6 +98,8 @@ class SdramHandle
   private:
     Result PeriphInit();
     Result DeviceInit();
+    Result PeriphDeInit();
+    Result DeviceDeInit();
 };
 } //namespace daisy
 #endif
