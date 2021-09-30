@@ -99,11 +99,9 @@ void DaisySeed::Configure()
     // Configure the built-in GPIOs.
     led_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
     led_conf.pin  = SEED_LED_PIN;
-    led.Init(led_conf);
 
     testpoint_conf.mode = GPIO::Config::Mode::OUTPUT_PP;
     testpoint_conf.pin  = SEED_TEST_POINT_PIN;
-    testpoint.Init(testpoint_conf);
 }
 
 void DaisySeed::Init(bool boost)
