@@ -1,5 +1,6 @@
 #include "per/spi.h"
 #include "util/hal_map.h"
+#include "util/scopedirqblocker.h"
 
 // TODO
 // - fix up rest of lib so that we can add a spi_handle map to the hal map
