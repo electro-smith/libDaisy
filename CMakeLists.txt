@@ -11,7 +11,7 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/sys/dma.c
     ${MODULE_DIR}/hid/audio.cpp
     ${MODULE_DIR}/sys/fatfs.c
-    ${MODULE_DIR}/per/gpio.c
+    ${MODULE_DIR}/per/gpio.cpp
     ${MODULE_DIR}/per/rng.cpp
     ${MODULE_DIR}/per/sai.cpp
     ${MODULE_DIR}/per/sdmmc.cpp
