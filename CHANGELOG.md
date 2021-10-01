@@ -9,6 +9,7 @@
 ### Bug fixes
 
 * qspi: fixed bug with GetData() that wouldn't return correct data when passed actual address instead of normalized offset (i.e. >= 0x90000000).
+* sdram: fixed occasional hard fault caused by `RPDelay`, which is now set to 16
 
 ### Other
 
