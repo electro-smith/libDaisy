@@ -87,7 +87,7 @@ void DaisyPetal::Init(bool boost)
     InitEncoder();
     InitLeds();
     InitAnalogControls();
-    SetAudioBlockSize(48);
+    SetAudioBlockSize(4);
     //seed.usb_handle.Init(UsbHandle::FS_INTERNAL);
 }
 

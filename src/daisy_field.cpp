@@ -76,7 +76,7 @@ void DaisyField::Init(bool boost)
 {
     seed.Configure();
     seed.Init(boost);
-    seed.SetAudioBlockSize(48);
+    seed.SetAudioBlockSize(4);
 
     // Switches
     uint8_t sw_pin[]  = {PIN_SW_1, PIN_SW_2};

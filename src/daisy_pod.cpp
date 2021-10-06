@@ -82,7 +82,7 @@ void DaisyPod::Init(bool boost)
     InitLeds();
     InitKnobs();
     InitMidi();
-    SetAudioBlockSize(48);
+    SetAudioBlockSize(4);
 }
 
 void DaisyPod::DelayMs(size_t del)

@@ -36,7 +36,7 @@ void DaisyVersio::Init(bool boost)
     // seed init
     seed.Configure();
     seed.Init(boost);
-    seed.SetAudioBlockSize(48);
+    seed.SetAudioBlockSize(4);
     float blockrate_ = seed.AudioSampleRate() / (float)seed.AudioBlockSize();
 
     // pin numbers
