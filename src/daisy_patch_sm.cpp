@@ -145,9 +145,9 @@ namespace patch_sm
         static inline uint16_t VoltageToCode(float input)
         {
             float pre = input * 819.f;
-            if (pre > 4095.f)
+            if(pre > 4095.f)
                 pre = 4095.f;
-            else if (pre < 0.f)
+            else if(pre < 0.f)
                 pre = 0.f;
             return (uint16_t)pre;
         }
