@@ -227,7 +227,7 @@ namespace patch_sm
         pimpl_ = &patch_sm_hw;
         /** Initialize the MCU and clock tree */
         System::Config syscfg;
-        syscfg.Defaults();
+        syscfg.Boost();
 
         auto memory = System::GetProgramMemoryRegion();
         if(memory != System::MemoryRegion::INTERNAL_FLASH)
