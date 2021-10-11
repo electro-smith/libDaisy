@@ -20,6 +20,7 @@
 
 * qspi: fixed bug with GetData() that wouldn't return correct data when passed actual address instead of normalized offset (i.e. >= 0x90000000)
 * sdram: fixed occasional hard fault caused by `RPDelay`, which is now set to 16 (same as in v1.0.0 and earlier)
+* patch_sm: fixed integer overflow error with `VoltageToCode` method
 
 ### Other
 

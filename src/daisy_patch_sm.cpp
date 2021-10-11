@@ -144,7 +144,11 @@ namespace patch_sm
         /** Based on a 0-5V output with a 0-4095 12-bit DAC */
         static inline uint16_t VoltageToCode(float input)
         {
-            float pre = input * 819.2f;
+            float pre = input * 819.f;
+            if(pre > 4095.f)
+                pre = 4095.f;
+            else if(pre < 0.f)
+                pre = 0.f;
             return (uint16_t)pre;
         }
 
@@ -223,7 +227,7 @@ namespace patch_sm
         pimpl_ = &patch_sm_hw;
         /** Initialize the MCU and clock tree */
         System::Config syscfg;
-        syscfg.Defaults();
+        syscfg.Boost();
 
         auto memory = System::GetProgramMemoryRegion();
         if(memory != System::MemoryRegion::INTERNAL_FLASH)
