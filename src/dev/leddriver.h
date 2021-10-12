@@ -44,6 +44,8 @@ class LedDriverPca9685
         } leds[16];
         /** full size in bytes */
         static constexpr uint16_t size = 16 * 4 + 1;
+        /** Whether any led in this buff has an unwritten update */
+        bool updated;
     };
     /** Buffer type for the entire DMA buffer. */
     using DmaBuffer = PCA9685TransmitBuffer[numDrivers];
@@ -125,12 +127,21 @@ class LedDriverPca9685
         const auto ch = GetDriverChannelForLed(ledIndex);
         // mask away the "full on" bit
         const auto on                = draw_buffer_[d].leds[ch].on & (0x0FFF);
-        draw_buffer_[d].leds[ch].off = (on + rawBrightness) & (0x0FFF);
+        const auto off                = (on + rawBrightness) & (0x0FFF);
+
+        draw_buffer_[d].updated |= off != draw_buffer_[d].leds[ch].off;
+
+        draw_buffer_[d].leds[ch].off = off;
+
         // full on condition
-        if(rawBrightness + on >= 0x0FFF)
+        if(rawBrightness >= 0x0FFF){
+            draw_buffer_[d].updated |= !(draw_buffer_[d].leds[ch].on & 0x1000); // updating on?
             draw_buffer_[d].leds[ch].on = 0x1000 | on; // set "full on" bit
-        else
+        }
+        else{
+            draw_buffer_[d].updated |= draw_buffer_[d].leds[ch].on & 0x1000; // updating on?
             draw_buffer_[d].leds[ch].on = on; // clear "full on" bit
+        }
     }
 
     /** Swaps the current draw buffer and the current transmit buffer and
@@ -173,16 +184,27 @@ class LedDriverPca9685
 
         const auto    d       = current_driver_idx_;
         const uint8_t address = PCA9685_I2C_BASE_ADDRESS | addresses_[d];
-        const auto    status  = i2c_.TransmitDma(address,
-                                             (uint8_t*)&transmit_buffer_[d],
-                                             PCA9685TransmitBuffer::size,
-                                             &TxCpltCallback,
-                                             this);
-        if(status != I2CHandle::Result::OK)
-        {
-            // TODO: fix this :-)
-            // Reinit I2C (probably a flag to kill, but hey this works fairly well for now.)
-            i2c_.Init(i2c_.GetConfig());
+       
+        if(transmit_buffer_[d].updated){
+
+            transmit_buffer_[d].updated = false; // reset the flag
+
+            // send the bufer            
+            const auto    status  = i2c_.TransmitDma(address,
+                                                (uint8_t*)&transmit_buffer_[d],
+                                                PCA9685TransmitBuffer::size,
+                                                &TxCpltCallback,
+                                                this);
+
+            if(status != I2CHandle::Result::OK)
+            {
+                // TODO: fix this :-)
+                // Reinit I2C (probably a flag to kill, but hey this works fairly well for now.)
+                i2c_.Init(i2c_.GetConfig());
+            }
+        }
+        else{
+            ContinueTransmission();
         }
     }
     uint16_t GetStartCycleForLed(int ledIndex) const
@@ -207,9 +229,12 @@ class LedDriverPca9685
             draw_buffer_[d].registerAddr     = PCA9685_LED0;
             draw_buffer_[d].leds[ch].on      = startCycle;
             draw_buffer_[d].leds[ch].off     = startCycle;
+            draw_buffer_[d].updated      = false;
             transmit_buffer_[d].registerAddr = PCA9685_LED0;
             transmit_buffer_[d].leds[ch].on  = startCycle;
             transmit_buffer_[d].leds[ch].off = startCycle;
+            transmit_buffer_[d].leds[ch].off = startCycle;
+            transmit_buffer_[d].updated = false;
         }
     }
 
