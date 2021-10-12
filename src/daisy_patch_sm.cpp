@@ -400,6 +400,12 @@ namespace patch_sm
         callback_rate_ = AudioSampleRate() / AudioBlockSize();
     }
 
+    void DaisyPatchSM::SetAudioSampleRate(SaiHandle::Config::SampleRate sample_rate)
+    {
+        audio.SetSampleRate(sample_rate);
+        callback_rate_ = AudioSampleRate() / AudioBlockSize();
+    }
+
     size_t DaisyPatchSM::AudioBlockSize()
     {
         return audio.GetConfig().blocksize;

@@ -98,6 +98,8 @@ namespace patch_sm
          */
         void SetAudioSampleRate(float sr);
 
+        void SetAudioSampleRate(SaiHandle::Config::SampleRate sample_rate);
+
         /** Returns the number of samples processed in an audio callback */
         size_t AudioBlockSize();
 
