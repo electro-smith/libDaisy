@@ -331,12 +331,12 @@ namespace patch_sm
 
         gate_out_1.mode = DSY_GPIO_MODE_OUTPUT_PP;
         gate_out_1.pull = DSY_GPIO_NOPULL;
-        gate_out_1.pin  = B5;
+        gate_out_1.pin  = B6;
         dsy_gpio_init(&gate_out_1);
 
         gate_out_2.mode = DSY_GPIO_MODE_OUTPUT_PP;
         gate_out_2.pull = DSY_GPIO_NOPULL;
-        gate_out_2.pin  = B6;
+        gate_out_2.pin  = B5;
         dsy_gpio_init(&gate_out_2);
 
         /** DAC init */
