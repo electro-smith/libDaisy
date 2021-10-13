@@ -223,7 +223,7 @@ class Max11300TestHelper : public ::testing::Test
                 || pin_config.mode == MAX11300Test::PinMode::GPO)
         {
             // In GPI/O mode there is an additional transaction for setting the threshold
-            uint16_t gpio_threshold = MAX11300Test::voltsTo12BitUint(
+            uint16_t gpio_threshold = MAX11300Test::VoltsTo12BitUint(
                 pin_config.threshold, pin_config.range);
 
             Max11300TestHelper::TxTransaction tx_set_threshold;
@@ -259,7 +259,7 @@ class Max11300TestHelper : public ::testing::Test
         txrx_transactions.emplace_back(txrx_pincfg_verify);
 
         // Set the pin config now, and verify success.
-        bool success = max11300.setPinConfig(pin, pin_config)
+        bool success = max11300.SetPinConfig(pin, pin_config)
                        == MAX11300Test::Result::OK;
 
         // Clean up
@@ -491,7 +491,7 @@ TEST_F(Max11300TestHelper, verifyWriteAnalogPin)
     // the transactions...
     // Transaction 1
     uint16_t dac_val = 3583;
-    max11300.writeAnalogPinRaw(pin, dac_val);
+    max11300.WriteAnalogPinRaw(pin, dac_val);
 
     TxTransaction tx_write_dac1;
     tx_write_dac1.description = "DAC write value transaction";
@@ -502,11 +502,11 @@ TEST_F(Max11300TestHelper, verifyWriteAnalogPin)
     tx_write_dac1.wait        = 0;
     tx_transactions.push_back(tx_write_dac1);
 
-    EXPECT_TRUE(max11300.update() == MAX11300Test::Result::OK);
+    EXPECT_TRUE(max11300.Update() == MAX11300Test::Result::OK);
 
     // Transaction 2
     dac_val = 1421;
-    max11300.writeAnalogPinRaw(pin, dac_val);
+    max11300.WriteAnalogPinRaw(pin, dac_val);
 
     TxTransaction tx_write_dac2;
     tx_write_dac2.description = "DAC write value transaction";
@@ -517,7 +517,7 @@ TEST_F(Max11300TestHelper, verifyWriteAnalogPin)
     tx_write_dac2.wait        = 0;
     tx_transactions.push_back(tx_write_dac2);
 
-    EXPECT_TRUE(max11300.update() == MAX11300Test::Result::OK);
+    EXPECT_TRUE(max11300.Update() == MAX11300Test::Result::OK);
 }
 
 TEST_F(Max11300TestHelper, verifyWriteAnalogPinMultiple)
@@ -540,10 +540,10 @@ TEST_F(Max11300TestHelper, verifyWriteAnalogPinMultiple)
     // Write two different values to two DAC pins and verify
     // the transaction
     uint16_t dac_val1 = 3583;
-    max11300.writeAnalogPinRaw(pin1, dac_val1);
+    max11300.WriteAnalogPinRaw(pin1, dac_val1);
 
     uint16_t dac_val2 = 1421;
-    max11300.writeAnalogPinRaw(pin2, dac_val2);
+    max11300.WriteAnalogPinRaw(pin2, dac_val2);
 
     // Here we have a 5 byte transaction as per the datasheet when configured in
     // burst mode.
@@ -558,7 +558,7 @@ TEST_F(Max11300TestHelper, verifyWriteAnalogPinMultiple)
     tx_write_dac1.wait        = 0;
     tx_transactions.push_back(tx_write_dac1);
 
-    EXPECT_TRUE(max11300.update() == MAX11300Test::Result::OK);
+    EXPECT_TRUE(max11300.Update() == MAX11300Test::Result::OK);
 }
 
 
@@ -582,9 +582,9 @@ TEST_F(Max11300TestHelper, verifyReadAnalogPin)
     txrx_read_adc1.size    = 3;
     txrx_transactions.push_back(txrx_read_adc1);
 
-    EXPECT_TRUE(max11300.update() == MAX11300Test::Result::OK);
+    EXPECT_TRUE(max11300.Update() == MAX11300Test::Result::OK);
 
-    EXPECT_EQ(adc_val, max11300.readAnalogPinRaw(pin));
+    EXPECT_EQ(adc_val, max11300.ReadAnalogPinRaw(pin));
 }
 
 TEST_F(Max11300TestHelper, verifyReadAnalogPinMultiple)
@@ -627,10 +627,10 @@ TEST_F(Max11300TestHelper, verifyReadAnalogPinMultiple)
     txrx_read_adc.size    = 5;
     txrx_transactions.push_back(txrx_read_adc);
 
-    EXPECT_TRUE(max11300.update() == MAX11300Test::Result::OK);
+    EXPECT_TRUE(max11300.Update() == MAX11300Test::Result::OK);
 
-    EXPECT_EQ(adc_val1, max11300.readAnalogPinRaw(pin1));
-    EXPECT_EQ(adc_val2, max11300.readAnalogPinRaw(pin2));
+    EXPECT_EQ(adc_val1, max11300.ReadAnalogPinRaw(pin1));
+    EXPECT_EQ(adc_val2, max11300.ReadAnalogPinRaw(pin2));
 }
 
 TEST_F(Max11300TestHelper, verifyWriteDigitalPin)
@@ -650,9 +650,9 @@ TEST_F(Max11300TestHelper, verifyWriteDigitalPin)
     tx_write_gpo1.size = 5;
     tx_transactions.push_back(tx_write_gpo1);
 
-    max11300.writeDigitalPin(pin1, true);
+    max11300.WriteDigitalPin(pin1, true);
 
-    EXPECT_TRUE(max11300.update() == MAX11300Test::Result::OK);
+    EXPECT_TRUE(max11300.Update() == MAX11300Test::Result::OK);
 }
 
 
@@ -681,10 +681,10 @@ TEST_F(Max11300TestHelper, verifyWriteDigitalPinMultiple)
     tx_write_gpo1.size = 5;
     tx_transactions.push_back(tx_write_gpo1);
 
-    max11300.writeDigitalPin(pin1, true);
-    max11300.writeDigitalPin(pin2, true);
+    max11300.WriteDigitalPin(pin1, true);
+    max11300.WriteDigitalPin(pin2, true);
 
-    EXPECT_TRUE(max11300.update() == MAX11300Test::Result::OK);
+    EXPECT_TRUE(max11300.Update() == MAX11300Test::Result::OK);
 
     TxTransaction tx_write_gpo2;
     tx_write_gpo2.description = "GPO write transaction 2";
@@ -693,10 +693,10 @@ TEST_F(Max11300TestHelper, verifyWriteDigitalPinMultiple)
     tx_write_gpo2.size = 5;
     tx_transactions.push_back(tx_write_gpo2);
 
-    max11300.writeDigitalPin(pin1, false);
-    max11300.writeDigitalPin(pin2, false);
+    max11300.WriteDigitalPin(pin1, false);
+    max11300.WriteDigitalPin(pin2, false);
 
-    EXPECT_TRUE(max11300.update() == MAX11300Test::Result::OK);
+    EXPECT_TRUE(max11300.Update() == MAX11300Test::Result::OK);
 }
 
 
@@ -718,9 +718,9 @@ TEST_F(Max11300TestHelper, verifyReadDigitalPin)
     txrx_read_gpi1.size    = 5;
     txrx_transactions.push_back(txrx_read_gpi1);
 
-    EXPECT_TRUE(max11300.update() == MAX11300Test::Result::OK);
+    EXPECT_TRUE(max11300.Update() == MAX11300Test::Result::OK);
 
-    EXPECT_TRUE(max11300.readDigitalPin(pin1));
+    EXPECT_TRUE(max11300.ReadDigitalPin(pin1));
 }
 
 
@@ -751,10 +751,10 @@ TEST_F(Max11300TestHelper, verifyReadDigitalPinMultiple)
     txrx_read_gpi1.size    = 5;
     txrx_transactions.push_back(txrx_read_gpi1);
 
-    EXPECT_TRUE(max11300.update() == MAX11300Test::Result::OK);
+    EXPECT_TRUE(max11300.Update() == MAX11300Test::Result::OK);
 
-    EXPECT_TRUE(max11300.readDigitalPin(pin1));
-    EXPECT_TRUE(max11300.readDigitalPin(pin2));
+    EXPECT_TRUE(max11300.ReadDigitalPin(pin1));
+    EXPECT_TRUE(max11300.ReadDigitalPin(pin2));
 }
 
 
@@ -795,8 +795,8 @@ TEST_F(Max11300TestHelper, verifyHeterogeneousPinBehavior)
     EXPECT_TRUE(setPinConfigAndVerify(pin4, pin_cfg4));
 
     uint16_t dac_val = 1234;
-    max11300.writeAnalogPinRaw(pin3, dac_val);
-    max11300.writeDigitalPin(pin2, true);
+    max11300.WriteAnalogPinRaw(pin3, dac_val);
+    max11300.WriteDigitalPin(pin2, true);
 
 
     TxTransaction tx_write_dac1;
@@ -834,10 +834,10 @@ TEST_F(Max11300TestHelper, verifyHeterogeneousPinBehavior)
     txrx_transactions.push_back(txrx_read_gpi1);
 
 
-    EXPECT_TRUE(max11300.update() == MAX11300Test::Result::OK);
+    EXPECT_TRUE(max11300.Update() == MAX11300Test::Result::OK);
 
-    EXPECT_TRUE(max11300.readDigitalPin(pin1));
-    EXPECT_EQ(adc_val, max11300.readAnalogPinRaw(pin4));
+    EXPECT_TRUE(max11300.ReadDigitalPin(pin1));
+    EXPECT_EQ(adc_val, max11300.ReadAnalogPinRaw(pin4));
     
 }
 
@@ -845,86 +845,86 @@ TEST_F(Max11300TestHelper, verifyHeterogeneousPinBehavior)
 TEST(dev_MAX11300, a_VoltsTo12BitUint)
 {
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(-1, MAX11300::VoltageRange::ZERO_TO_10), 0);
-    EXPECT_EQ(MAX11300::voltsTo12BitUint(0, MAX11300::VoltageRange::ZERO_TO_10),
+        MAX11300::VoltsTo12BitUint(-1, MAX11300::VoltageRange::ZERO_TO_10), 0);
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(0, MAX11300::VoltageRange::ZERO_TO_10),
               0);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(2.5, MAX11300::VoltageRange::ZERO_TO_10),
+        MAX11300::VoltsTo12BitUint(2.5, MAX11300::VoltageRange::ZERO_TO_10),
         1023);
-    EXPECT_EQ(MAX11300::voltsTo12BitUint(5, MAX11300::VoltageRange::ZERO_TO_10),
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(5, MAX11300::VoltageRange::ZERO_TO_10),
               2047);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(7.5, MAX11300::VoltageRange::ZERO_TO_10),
+        MAX11300::VoltsTo12BitUint(7.5, MAX11300::VoltageRange::ZERO_TO_10),
         3071);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(10, MAX11300::VoltageRange::ZERO_TO_10),
+        MAX11300::VoltsTo12BitUint(10, MAX11300::VoltageRange::ZERO_TO_10),
         4095);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(12, MAX11300::VoltageRange::ZERO_TO_10),
+        MAX11300::VoltsTo12BitUint(12, MAX11300::VoltageRange::ZERO_TO_10),
         4095);
 
-    EXPECT_EQ(MAX11300::voltsTo12BitUint(
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
                   -5.5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
               0);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(-5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
+        MAX11300::VoltsTo12BitUint(-5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
         0);
-    EXPECT_EQ(MAX11300::voltsTo12BitUint(
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
                   -2.5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
               1023);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(0, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
+        MAX11300::VoltsTo12BitUint(0, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
         2047);
-    EXPECT_EQ(MAX11300::voltsTo12BitUint(
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
                   2.5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
               3071);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
+        MAX11300::VoltsTo12BitUint(5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
         4095);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(7, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
+        MAX11300::VoltsTo12BitUint(7, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
         4095);
 
-    EXPECT_EQ(MAX11300::voltsTo12BitUint(
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
                   -12, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
               0);
-    EXPECT_EQ(MAX11300::voltsTo12BitUint(
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
                   -10, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
               0);
-    EXPECT_EQ(MAX11300::voltsTo12BitUint(
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
                   -7.5, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
               1023);
-    EXPECT_EQ(MAX11300::voltsTo12BitUint(
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
                   -5, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
               2047);
-    EXPECT_EQ(MAX11300::voltsTo12BitUint(
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
                   -2.5, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
               3071);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(0, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+        MAX11300::VoltsTo12BitUint(0, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
         4095);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(2, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+        MAX11300::VoltsTo12BitUint(2, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
         4095);
 
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(-1, MAX11300::VoltageRange::ZERO_TO_2_5), 0);
+        MAX11300::VoltsTo12BitUint(-1, MAX11300::VoltageRange::ZERO_TO_2_5), 0);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(0, MAX11300::VoltageRange::ZERO_TO_2_5), 0);
+        MAX11300::VoltsTo12BitUint(0, MAX11300::VoltageRange::ZERO_TO_2_5), 0);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(1, MAX11300::VoltageRange::ZERO_TO_2_5),
+        MAX11300::VoltsTo12BitUint(1, MAX11300::VoltageRange::ZERO_TO_2_5),
         1638);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(1.25, MAX11300::VoltageRange::ZERO_TO_2_5),
+        MAX11300::VoltsTo12BitUint(1.25, MAX11300::VoltageRange::ZERO_TO_2_5),
         2047);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(2, MAX11300::VoltageRange::ZERO_TO_2_5),
+        MAX11300::VoltsTo12BitUint(2, MAX11300::VoltageRange::ZERO_TO_2_5),
         3276);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(2.5, MAX11300::VoltageRange::ZERO_TO_2_5),
+        MAX11300::VoltsTo12BitUint(2.5, MAX11300::VoltageRange::ZERO_TO_2_5),
         4095);
     EXPECT_EQ(
-        MAX11300::voltsTo12BitUint(5, MAX11300::VoltageRange::ZERO_TO_2_5),
+        MAX11300::VoltsTo12BitUint(5, MAX11300::VoltageRange::ZERO_TO_2_5),
         4095);
 }
 

@@ -269,7 +269,7 @@ class MAX11300Driver
 
         // First, let's verify the SPI comms, and chip presence.  The DEVID register
         // is a fixed, read-only value we can compare against to ensure we're connected.
-        if(readRegister(MAX11300_DEVICE_ID) != 0x0424)
+        if(ReadRegister(MAX11300_DEVICE_ID) != 0x0424)
         {
             return Result::ERR;
         }
@@ -282,7 +282,7 @@ class MAX11300Driver
         uint16_t devctl = 0x0000;
         // 1:0 ADCCTL[1:0] - ADC conversion mode selection = 11: Continuous sweep
         devctl = devctl | 0x0003;
-        // 3:2 DACCTL[1:0] - DAC mode selection = 01: Immediate update mode for DAC-configured ports.
+        // 3:2 DACCTL[1:0] - DAC mode selection = 01: Immediate Update mode for DAC-configured ports.
         devctl = devctl | 0x0004;
         // 5:4 ADCCONV[1:0] - ADC conversion rate selection = 11: ADC conversion rate of 400ksps
         devctl = devctl | 0x0030;
@@ -300,12 +300,12 @@ class MAX11300Driver
         // 15 RESET - Soft reset control = 0 (Default)
 
         // Write the device configuration
-        if(writeRegister(MAX11300_DEVCTL, devctl) == Result::ERR)
+        if(WriteRegister(MAX11300_DEVCTL, devctl) == Result::ERR)
         {
             return Result::ERR;
         }
         // Verify our configuration was written...
-        if(readRegister(MAX11300_DEVCTL) != devctl)
+        if(ReadRegister(MAX11300_DEVCTL) != devctl)
         {
             return Result::ERR;
         }
@@ -321,7 +321,7 @@ class MAX11300Driver
             PinConfig pin_cfg;
             pin_cfg.Defaults();
             pin_configurations_[i] = pin_cfg;
-            setPinConfig(static_cast<Pin>(i), pin_cfg);
+            SetPinConfig(static_cast<Pin>(i), pin_cfg);
         }
 
         return Result::OK;
@@ -334,14 +334,14 @@ class MAX11300Driver
      * \param pin_config - The pin configuration to apply
      * \return - OK if the configuration was successfully applied
      */
-    Result setPinConfig(Pin pin, PinConfig pin_config)
+    Result SetPinConfig(Pin pin, PinConfig pin_config)
     {
         uint16_t pin_func_cfg = 0x0000;
 
         if(pin_config.mode != PinMode::NONE)
         {
             // Set the pin to high impedance mode before changing (as per the datasheet).
-            writeRegister(MAX11300_FUNC_BASE + pin, 0x0000);
+            WriteRegister(MAX11300_FUNC_BASE + pin, 0x0000);
         }
 
         // Apply the pin configuration
@@ -350,7 +350,7 @@ class MAX11300Driver
 
         if(pin_config.mode == PinMode::ANALOG_IN)
         {
-            // In ADC mode we'll average 128 samples per update
+            // In ADC mode we'll average 128 samples per Update
             pin_func_cfg = pin_func_cfg | 0x00e0;
         }
         else if(pin_config.mode == PinMode::GPI)
@@ -359,26 +359,26 @@ class MAX11300Driver
             // intended input threshold voltage. Any input voltage above that programmed threshold is
             // reported as a logic one. The input voltage must be between 0V and 5V.
             //  It may take up to 1ms for the threshold voltage to be effective
-            writeRegister((MAX11300_DACDAT_BASE + pin),
-                          MAX11300Driver::voltsTo12BitUint(pin_config.threshold,
+            WriteRegister((MAX11300_DACDAT_BASE + pin),
+                          MAX11300Driver::VoltsTo12BitUint(pin_config.threshold,
                                                            pin_config.range));
         }
         else if(pin_config.mode == PinMode::GPO)
         {
             // The port’s DAC data register needs to be set first. It may require up to 1ms for the
             // port to be ready to produce the desired logic one level.
-            writeRegister((MAX11300_DACDAT_BASE + pin),
-                          MAX11300Driver::voltsTo12BitUint(pin_config.threshold,
+            WriteRegister((MAX11300_DACDAT_BASE + pin),
+                          MAX11300Driver::VoltsTo12BitUint(pin_config.threshold,
                                                            pin_config.range));
         }
 
         // Write the configuration now...
-        if(writeRegister(MAX11300_FUNC_BASE + pin, pin_func_cfg) != Result::OK)
+        if(WriteRegister(MAX11300_FUNC_BASE + pin, pin_func_cfg) != Result::OK)
         {
             return Result::ERR;
         }
         // Verify our configuration was written
-        if(readRegister(MAX11300_FUNC_BASE + pin) != pin_func_cfg)
+        if(ReadRegister(MAX11300_FUNC_BASE + pin) != pin_func_cfg)
         {
             return Result::ERR;
         }
@@ -387,7 +387,7 @@ class MAX11300Driver
         pin_configurations_[pin] = pin_config;
 
         // Update and re-index the pin configuration now...
-        updatePinConfig();
+        UpdatePinConfig();
 
         return Result::OK;
     }
@@ -398,17 +398,17 @@ class MAX11300Driver
      * \param pin - The pin for which to retrieve the configuration
      * \return - The configuration of the given pin
      */
-    PinConfig getPinConfig(Pin pin) { return pin_configurations_[pin]; }
+    PinConfig GetPinConfig(Pin pin) { return pin_configurations_[pin]; }
 
     /**
      * Read the raw 12 bit (0-4095) value of a given ANALOG_IN (ADC) pin.
      * 
-     * *note this read is local, call MAX11300::update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the value
      * \return - The raw, 12 bit value of the given ANALOG_IN (ADC) pin.
      */
-    uint16_t readAnalogPinRaw(Pin pin)
+    uint16_t ReadAnalogPinRaw(Pin pin)
     {
         if(pin_configurations_[pin].value == nullptr)
         {
@@ -420,25 +420,25 @@ class MAX11300Driver
     /**
      * Read the value of a given ADC pin in volts.
      * 
-     * *note this read is local, call MAX11300::update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the voltage
      * \return - The value of the given ANALOG_IN (ADC) pin in volts
      */
-    float readAnalogPinVolts(Pin pin)
+    float ReadAnalogPinVolts(Pin pin)
     {
         return MAX11300Driver::TwelveBitUintToVolts(
-            readAnalogPinRaw(pin), pin_configurations_[pin].range);
+            ReadAnalogPinRaw(pin), pin_configurations_[pin].range);
     }
 
     /**
      * Write a raw 12 bit (0-4095) value to a given ANALOG_OUT (DAC) pin
      * 
-     * *note this write is local, call MAX11300::update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the value
      */
-    void writeAnalogPinRaw(Pin pin, uint16_t raw_value)
+    void WriteAnalogPinRaw(Pin pin, uint16_t raw_value)
     {
         if(pin_configurations_[pin].value != nullptr)
         {
@@ -450,26 +450,26 @@ class MAX11300Driver
      * Write a voltage value, within the bounds of the configured volatge range, 
      * to a given ANALOG_OUT (DAC) pin.
      * 
-     * *note this write is local, call MAX11300::update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the voltage
      */
-    void writeAnalogPinVolts(Pin pin, float voltage)
+    void WriteAnalogPinVolts(Pin pin, float voltage)
     {
         PinConfig pin_config = pin_configurations_[pin];
-        return writeAnalogPinRaw(
-            pin, MAX11300Driver::voltsTo12BitUint(voltage, pin_config.range));
+        return WriteAnalogPinRaw(
+            pin, MAX11300Driver::VoltsTo12BitUint(voltage, pin_config.range));
     }
 
     /**
      * Read the state of a GPI pin
      * 
-     * *note this read is local, call MAX11300::update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the value
      * \return - The boolean state of the pin
      */
-    bool readDigitalPin(Pin pin)
+    bool ReadDigitalPin(Pin pin)
     {
         if(pin > Pin::PIN_15)
         {
@@ -488,12 +488,12 @@ class MAX11300Driver
     /**
      * Write a digital state to the given GPO pin
      * 
-     * *note this write is local, call MAX11300::update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the value
      * \param value - the boolean state to write
      */
-    void writeDigitalPin(Pin pin, bool value)
+    void WriteDigitalPin(Pin pin, bool value)
     {
         // (void) pin;
         // (void) value;
@@ -540,7 +540,7 @@ class MAX11300Driver
      * TODO - Provide more info on usage location and the side-effects of blocking...
      * 
      */
-    Result update()
+    Result Update()
     {
         // Check first if were ready to TX/RX
         if(!transport_.Ready())
@@ -626,7 +626,7 @@ class MAX11300Driver
      * \param range the MAX11300::VoltageRange to constrain to
      * \return the voltage as 12 bit unsigned integer
      */
-    static uint16_t voltsTo12BitUint(float volts, VoltageRange range)
+    static uint16_t VoltsTo12BitUint(float volts, VoltageRange range)
     {
         float vmax = 0;
         float vmin = 0;
@@ -710,7 +710,7 @@ class MAX11300Driver
     /**
      * Updates all pin configurations and ensures correct pointer assignment, and addressing
      */
-    Result updatePinConfig()
+    Result UpdatePinConfig()
     {
         // Zero everything out...
         memset(dac_buffer_, 0, sizeof(dac_buffer_));
@@ -780,10 +780,10 @@ class MAX11300Driver
      * \param address - the register address to read
      * \return the value at the given register as returned by the MAX11300 
      */
-    uint16_t readRegister(uint8_t address)
+    uint16_t ReadRegister(uint8_t address)
     {
         uint16_t val = 0;
-        readRegister(address, &val, 1);
+        ReadRegister(address, &val, 1);
         return val;
     }
 
@@ -794,7 +794,7 @@ class MAX11300Driver
      * \param size - the number of bytes to read
      * \return OK if the transaction was successful 
      */
-    Result readRegister(uint8_t address, uint16_t* values, size_t size)
+    Result ReadRegister(uint8_t address, uint16_t* values, size_t size)
     {
         size_t  rx_length          = (size * 2) + 1;
         uint8_t rx_buff[rx_length] = {};
@@ -822,9 +822,9 @@ class MAX11300Driver
      * \param value - the value to write at the given register
      * \return OK if the transaction was successful 
      */
-    Result writeRegister(uint8_t address, uint16_t value)
+    Result WriteRegister(uint8_t address, uint16_t value)
     {
-        return writeRegister(address, &value, 1);
+        return WriteRegister(address, &value, 1);
     }
 
     /**
@@ -834,7 +834,7 @@ class MAX11300Driver
      * \param size - the number of bytes to written
      * \return OK if the transaction was successful 
      */
-    Result writeRegister(uint8_t address, uint16_t* values, size_t size)
+    Result WriteRegister(uint8_t address, uint16_t* values, size_t size)
     {
         size_t  tx_size          = (size * 2) + 1;
         uint8_t tx_buff[tx_size] = {};
@@ -864,11 +864,11 @@ class MAX11300Driver
      * \return OK if the transaction was successful
      */
     Result
-    readModifyWriteRegister(uint8_t address, uint16_t mask, uint16_t value)
+    ReadModifyWriteRegister(uint8_t address, uint16_t mask, uint16_t value)
     {
-        uint16_t reg = readRegister(address);
+        uint16_t reg = ReadRegister(address);
         reg          = (reg & ~mask) | (uint16_t)(value);
-        return writeRegister(address, reg);
+        return WriteRegister(address, reg);
     }
 
     PinConfig pin_configurations_[20];
