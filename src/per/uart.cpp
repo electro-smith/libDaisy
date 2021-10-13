@@ -56,6 +56,12 @@ class UartHandler::Impl
 
     void UARTRxComplete();
 
+    /** Scheduling and statics for DMA management
+     *  TODO: Flesh out with full DmaJob, etc. 
+    */
+    static void            GlobalInit();
+    static volatile int8_t dma_active_peripheral_;
+
     UART_HandleTypeDef huart_;
     DMA_HandleTypeDef  hdma_rx_;
     bool               receiving_;
@@ -69,6 +75,16 @@ class UartHandler::Impl
     UartHandler::Config config_;
 };
 
+// ================================================================
+// Static functions for dma management, etc.
+// ================================================================
+
+volatile int8_t UartHandler::Impl::dma_active_peripheral_;
+
+void UartHandler::Impl::GlobalInit()
+{
+    dma_active_peripheral_ = -1;
+}
 
 // ================================================================
 // Global references for the availabel UartHandler::Impl(s)
@@ -208,6 +224,9 @@ int UartHandler::Impl::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
 UartHandler::Result UartHandler::Impl::StartRx()
 {
     int status = 0;
+    // Set active dma peripheral
+    dma_active_peripheral_ = static_cast<int8_t>(config_.periph);
+
     // Now start Rx
     status = HAL_UART_Receive_DMA(
         &huart_, (uint8_t*)dma_fifo_rx_->GetMutableBuffer(), rx_size_);
@@ -291,10 +310,10 @@ pin_alt usart3_pins_rx[]
 
 pin_alt uart4_pins_tx[] = {{{DSY_GPIOB, 9}, GPIO_AF8_UART4},
                            {{DSY_GPIOC, 10}, GPIO_AF8_UART4},
-                           pins_none};
+                           {{DSY_GPIOA, 0}, GPIO_AF8_UART4}};
 pin_alt uart4_pins_rx[] = {{{DSY_GPIOB, 8}, GPIO_AF8_UART4},
                            {{DSY_GPIOC, 11}, GPIO_AF8_UART4},
-                           pins_none};
+                           {{DSY_GPIOA, 1}, GPIO_AF8_UART4}};
 
 pin_alt uart5_pins_tx[] = {{{DSY_GPIOC, 12}, GPIO_AF8_UART5},
                            {{DSY_GPIOB, 6}, GPIO_AF14_UART5},
@@ -480,6 +499,7 @@ void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
     //    asm("bkpt 255");
 }
 
+
 // Unimplemented HAL Callbacks
 //void HAL_UART_TxHalfCpltCallback(UART_HandleTypeDef *huart);
 //void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
@@ -532,10 +552,22 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     /* USART1 DMA Init */
     /* USART1_RX Init */
     //usart1 uses dma by default for now
-    if(handle->huart_.Instance == USART1)
+
+    /** Temporary removal of the check will allow 
+     *  first come, first serve use of the DMA.
+     *  
+     *  TODO: Add the DmaJob queue pattern used in I2C and SPI
+     *       
+     */
+    //if(handle->huart_.Instance == USART1)
     {
+        /** Super hacky stuff to get working now */
+        if(handle->huart_.Instance == USART1)
+            handle->hdma_rx_.Init.Request = DMA_REQUEST_USART1_RX;
+        else if(handle->huart_.Instance == UART4)
+            handle->hdma_rx_.Init.Request = DMA_REQUEST_UART4_RX;
+
         handle->hdma_rx_.Instance                 = DMA1_Stream5;
-        handle->hdma_rx_.Init.Request             = DMA_REQUEST_USART1_RX;
         handle->hdma_rx_.Init.Direction           = DMA_PERIPH_TO_MEMORY;
         handle->hdma_rx_.Init.PeriphInc           = DMA_PINC_DISABLE;
         handle->hdma_rx_.Init.MemInc              = DMA_MINC_ENABLE;
@@ -640,9 +672,21 @@ void UART_IRQHandler(UartHandler::Impl* handle)
     }
 }
 
+void HalUartDmaStreamCallback(void)
+{
+    //TODO for now USART1 is the only one working with DMA
+    //in the future we want to keep track of who connects to which DMA
+    //stream, then refer to that info here
+    if(UartHandler::Impl::dma_active_peripheral_ >= 0)
+        HAL_DMA_IRQHandler(
+            &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_rx_);
+}
+
 // HAL Interrupts.
 extern "C"
 {
+    void dsy_uart_global_init() { UartHandler::Impl::GlobalInit(); }
+
     void USART1_IRQHandler() { UART_IRQHandler(&uart_handles[0]); }
     void USART2_IRQHandler() { UART_IRQHandler(&uart_handles[1]); }
     void USART3_IRQHandler() { UART_IRQHandler(&uart_handles[2]); }
@@ -653,13 +697,7 @@ extern "C"
     void UART8_IRQHandler() { UART_IRQHandler(&uart_handles[7]); }
     void LPUART1_IRQHandler() { UART_IRQHandler(&uart_handles[8]); }
 
-    void DMA1_Stream5_IRQHandler()
-    {
-        //TODO for now USART1 is the only one working with DMA
-        //in the future we want to keep track of who connects to which DMA
-        //stream, then refer to that info here
-        HAL_DMA_IRQHandler(&uart_handles[0].hdma_rx_);
-    }
+    void DMA1_Stream5_IRQHandler() { HalUartDmaStreamCallback(); }
 }
 
 // ======================================================================

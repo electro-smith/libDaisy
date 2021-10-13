@@ -153,6 +153,11 @@ class UartHandler
     Impl* pimpl_;
 };
 
+extern "C"
+{
+    void dsy_uart_global_init();
+}
+
 /** @} */
 } // namespace daisy
 
