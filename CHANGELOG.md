@@ -8,6 +8,8 @@
 
 ### Bug fixes
 
+* patch_sm: corrected the order of the gate out pins
+
 ### Other
 
 ## v2.0.1
