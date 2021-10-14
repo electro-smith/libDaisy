@@ -313,7 +313,7 @@ SaiHandle::Impl::StartDmaTransfer(int32_t*                       buffer_rx,
     callback_  = callback;
 
     // This assumes there will be one master and one slave
-    if (config_.a_sync == Config::Sync::SLAVE)
+    if(config_.a_sync == Config::Sync::SLAVE)
     {
         config_.a_dir == Config::Direction::RECEIVE
             ? HAL_SAI_Receive_DMA(&sai_a_handle_, (uint8_t*)buffer_rx, size)
