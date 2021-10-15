@@ -185,20 +185,31 @@ class MAX11300Driver
     /**
      * Pins/ports of the MAX11300 are freely configurable to operate within
      * several pre-defined voltage ranges (assuming the power supply 
-     * requirements for the range is met).  
+     * requirements for the range is met), depending on the configured PinMode.
      * 
-     * In the case of ANALOG_IN (DAC), 
-     * and ANALOG_OUT (ADC) modes, this range determines how the input or output 
+     * In the case of ANALOG_IN (ADC), 
+     * and ANALOG_OUT (DAC) modes, this range determines how the input or output 
      * voltage maps to the 12 bit (4096) discrete values.
      * 
      * In the case of GPI and GPO, the range is used (in combination with the DAC registers) 
-     * to define what voltage threshold determines a logical 1.
+     * to define what voltage threshold determines a logical true.
+     * 
+     * The following PinMode/VoltageRange combinations are valid
+     * 
+     * * PinMode::GPI - ZERO_TO_10 (threshold voltage limited to 0-5V)
+     * * PinMode::GPO - ZERO_TO_10
+     * * PinMode::ANALOG_OUT - ZERO_TO_10, NEGATIVE_5_TO_5, and NEGATIVE_10_TO_0
+     * * PinMode::ANALOG_IN - All voltage ranges
+     * 
+     * Be aware that when a pin is configured to PinMode::GPI and a voltage lower than
+     *  -250mV is applied, The codes read from ALL other pins confiured in 
+     * PinMode::ANALOG_IN will become unusuably corrupted.
      */
     enum class VoltageRange
     {
         ZERO_TO_10       = 0x0100,
         NEGATIVE_5_TO_5  = 0x0200,
-        NEGATIVE_10_TO_0 = 0x0300, 
+        NEGATIVE_10_TO_0 = 0x0300,
         ZERO_TO_2_5      = 0x0400,
         NONE             = 0x0000
     };
