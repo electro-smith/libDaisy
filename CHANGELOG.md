@@ -9,6 +9,7 @@
 ### Bug fixes
 
 * patch_sm: corrected the order of the gate out pins
+* sai: fixed occasional output audio channel swap
 
 ### Other
 
