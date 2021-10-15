@@ -796,6 +796,7 @@ class MAX11300Driver
     // excluded from the unit tests without dirtying up the code so much
     void DelayUs(uint32_t delay)
     {
+        (void)delay;
 #ifndef UNIT_TEST
         System::DelayUs(delay);
 #endif
