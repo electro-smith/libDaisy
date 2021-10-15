@@ -79,8 +79,8 @@ class BlockingSpiTransport
             // return "OK".
             if(ts < next_tx_)
             {
-                // Check if the clock rolled over, the max wait time is 20*80us
-                if((next_tx_ - ts) > 1600)
+                // Check if the clock rolled over, the max wait time is 20*40us
+                if((next_tx_ - ts) > (20 * 40))
                 {
                     next_tx_ = ts + wait_us;
                     return Result::OK;
@@ -198,7 +198,7 @@ class MAX11300Driver
     {
         ZERO_TO_10       = 0x0100,
         NEGATIVE_5_TO_5  = 0x0200,
-        NEGATIVE_10_TO_0 = 0x0300,
+        NEGATIVE_10_TO_0 = 0x0300, 
         ZERO_TO_2_5      = 0x0400,
         NONE             = 0x0000
     };
@@ -310,10 +310,8 @@ class MAX11300Driver
             return Result::ERR;
         }
 
-#ifndef UNIT_TEST
-        // Delay as recommended in the datasheet...
-        System::DelayUs(200);
-#endif
+        // Add a delay as recommended in the datasheet.
+        DelayUs(200);
 
         // Set all pins to the default high impedance state...
         for(uint8_t i = 0; i < Pin::PIN_LAST; i++)
@@ -342,6 +340,10 @@ class MAX11300Driver
         {
             // Set the pin to high impedance mode before changing (as per the datasheet).
             WriteRegister(MAX11300_FUNC_BASE + pin, 0x0000);
+            // According to the datasheet, the amount of time necessary for the pin to
+            // switch to high impedance mode depends on the prior configuration.
+            // The worst case recommended wait time seems to be 1ms.
+            DelayUs(1000);
         }
 
         // Apply the pin configuration
@@ -377,6 +379,10 @@ class MAX11300Driver
         {
             return Result::ERR;
         }
+
+        // Wait for 1ms as per the datasheet
+        DelayUs(1000);
+
         // Verify our configuration was written
         if(ReadRegister(MAX11300_FUNC_BASE + pin) != pin_func_cfg)
         {
@@ -563,7 +569,7 @@ class MAX11300Driver
             // per configured DAC pin. Here we inform the transport to wait at least N uS before transmitting
             // again.
             size_t tx_size = (dac_pin_count_ * 2) + 1;
-            if(transport_.Transmit(dac_buffer_, tx_size, (dac_pin_count_ * 80))
+            if(transport_.Transmit(dac_buffer_, tx_size, (dac_pin_count_ * 40))
                != Transport::Result::OK)
             {
                 return Result::ERR;
@@ -773,6 +779,15 @@ class MAX11300Driver
         }
 
         return Result::OK;
+    }
+
+    // This is just a wrapper for System::DelayUs to allow it to be
+    // excluded from the unit tests without dirtying up the code so much
+    void DelayUs(uint32_t delay)
+    {
+#ifndef UNIT_TEST
+        System::DelayUs(delay);
+#endif
     }
 
     /**
