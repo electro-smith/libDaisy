@@ -32,6 +32,14 @@ namespace patch_sm
         ADC_LAST,
     };
 
+    /** Enum for addressing the CV Outputs via the WriteCvOut function. */
+    enum
+    {
+        CV_OUT_BOTH = 0,
+        CV_OUT_1,
+        CV_OUT_2,
+    };
+
 
     /** @brief Board support file for DaisyPatchSM hardware
      *  @author shensley
@@ -51,15 +59,6 @@ namespace patch_sm
             B,
             C,
             D
-        };
-
-
-        /** Enum for addressing the CV Outputs via the WriteCvOut function. */
-        enum
-        {
-            CV_OUT_BOTH = 0,
-            CV_OUT_1,
-            CV_OUT_2,
         };
 
         DaisyPatchSM() {}
