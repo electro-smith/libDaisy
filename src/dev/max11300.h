@@ -5,7 +5,7 @@
 #include "daisy_core.h"
 #include "per/spi.h"
 #include "sys/system.h"
-#include <string.h>
+#include <cstring>
 
 // Some register definitions
 #define MAX11300_DEVICE_ID 0x00
@@ -730,10 +730,10 @@ class MAX11300Driver
     Result UpdatePinConfig()
     {
         // Zero everything out...
-        memset(dac_buffer_, 0, sizeof(dac_buffer_));
-        memset(adc_buffer_, 0, sizeof(adc_buffer_));
-        memset(gpi_buffer_, 0, sizeof(gpi_buffer_));
-        memset(gpo_buffer_, 0, sizeof(gpo_buffer_));
+        std::memset(dac_buffer_, 0, sizeof(dac_buffer_));
+        std::memset(adc_buffer_, 0, sizeof(adc_buffer_));
+        std::memset(gpi_buffer_, 0, sizeof(gpi_buffer_));
+        std::memset(gpo_buffer_, 0, sizeof(gpo_buffer_));
 
         dac_pin_count_ = 0;
         adc_pin_count_ = 0;
