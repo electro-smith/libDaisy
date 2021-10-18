@@ -3,7 +3,7 @@
 #define DSY_SWITCH_H
 #include "daisy_core.h"
 #include "per/gpio.h"
-#include "system.h"
+#include "sys/system.h"
 
 namespace daisy
 {
