@@ -241,7 +241,7 @@ class MAX11300Driver
         {
             mode      = PinMode::NONE;
             range     = VoltageRange::NONE;
-            threshold = 2.5;
+            threshold = 2.5f;
             value     = nullptr;
         }
     };
