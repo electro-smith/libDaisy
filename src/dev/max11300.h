@@ -593,8 +593,8 @@ class MAX11300Driver
             // as described above...
             size_t size = (adc_pin_count_ * 2) + 1;
 
-            uint8_t tx_buff[size] = {};
-            tx_buff[0]            = adc_buffer_[0];
+            uint8_t tx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
+            tx_buff[0]                                   = adc_buffer_[0];
             if(transport_.TransmitAndReceive(tx_buff, adc_buffer_, size)
                != Transport::Result::OK)
             {
@@ -823,10 +823,10 @@ class MAX11300Driver
      */
     Result ReadRegister(uint8_t address, uint16_t* values, size_t size)
     {
-        size_t  rx_length          = (size * 2) + 1;
-        uint8_t rx_buff[rx_length] = {};
-        uint8_t tx_buff[rx_length] = {};
-        tx_buff[0]                 = (address << 1) | 1;
+        size_t  rx_length                            = (size * 2) + 1;
+        uint8_t rx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
+        uint8_t tx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
+        tx_buff[0]                                   = (address << 1) | 1;
 
         if(transport_.TransmitAndReceive(tx_buff, rx_buff, rx_length)
            != Transport::Result::OK)
@@ -837,7 +837,8 @@ class MAX11300Driver
         size_t rx_idx = 1;
         for(size_t i = 0; i < size; i++)
         {
-            values[i] = static_cast<uint16_t>((rx_buff[rx_idx] << 8) + rx_buff[rx_idx + 1]);
+            values[i] = static_cast<uint16_t>((rx_buff[rx_idx] << 8)
+                                              + rx_buff[rx_idx + 1]);
             rx_idx    = rx_idx + 2;
         }
         return Result::OK;
@@ -863,9 +864,9 @@ class MAX11300Driver
      */
     Result WriteRegister(uint8_t address, uint16_t* values, size_t size)
     {
-        size_t  tx_size          = (size * 2) + 1;
-        uint8_t tx_buff[tx_size] = {};
-        tx_buff[0]               = (address << 1);
+        size_t  tx_size                              = (size * 2) + 1;
+        uint8_t tx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
+        tx_buff[0]                                   = (address << 1);
 
         size_t tx_idx = 1;
         for(size_t i = 0; i < size; i++)
@@ -897,6 +898,8 @@ class MAX11300Driver
         reg          = (reg & ~mask) | (uint16_t)(value);
         return WriteRegister(address, reg);
     }
+
+    static const size_t MAX_TRANSPORT_BUFFER_LENGTH = 41;
 
     PinConfig pin_configurations_[20];
 
