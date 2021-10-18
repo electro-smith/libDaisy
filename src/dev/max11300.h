@@ -837,7 +837,7 @@ class MAX11300Driver
         size_t rx_idx = 1;
         for(size_t i = 0; i < size; i++)
         {
-            values[i] = (uint16_t)(rx_buff[rx_idx] << 8) + rx_buff[rx_idx + 1];
+            values[i] = static_cast<uint16_t>((rx_buff[rx_idx] << 8) + rx_buff[rx_idx + 1]);
             rx_idx    = rx_idx + 2;
         }
         return Result::OK;
@@ -870,8 +870,8 @@ class MAX11300Driver
         size_t tx_idx = 1;
         for(size_t i = 0; i < size; i++)
         {
-            tx_buff[tx_idx++] = (uint8_t)(values[i] >> 8);
-            tx_buff[tx_idx++] = (uint8_t)(values[i]);
+            tx_buff[tx_idx++] = static_cast<uint8_t>(values[i] >> 8);
+            tx_buff[tx_idx++] = static_cast<uint8_t>(values[i]);
         }
 
         if(transport_.Transmit(tx_buff, tx_size, 0) == Transport::Result::OK)
