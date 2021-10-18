@@ -81,8 +81,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac4c797dfe737427064fb64ceeb28be80"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_encoder.html#ac4c797dfe737427064fb64ceeb28be80">Init</a> (<a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> a, <a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> b, <a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> click, float update_rate)</td></tr>
-<tr class="separator:ac4c797dfe737427064fb64ceeb28be80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebee661fcf4faf8ca2bc6550bcffee68"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_encoder.html#aebee661fcf4faf8ca2bc6550bcffee68">Init</a> (<a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> a, <a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> b, <a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> click, float update_rate=0.f)</td></tr>
+<tr class="separator:aebee661fcf4faf8ca2bc6550bcffee68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5bed96517dbffee1fb16255ec9faa7e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_encoder.html#a5bed96517dbffee1fb16255ec9faa7e7">Debounce</a> ()</td></tr>
 <tr class="separator:a5bed96517dbffee1fb16255ec9faa7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0f2d9d22a006a45daa1ac9cbcba4050"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_encoder.html#ae0f2d9d22a006a45daa1ac9cbcba4050">Increment</a> () const</td></tr>
@@ -174,8 +174,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac4c797dfe737427064fb64ceeb28be80" name="ac4c797dfe737427064fb64ceeb28be80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4c797dfe737427064fb64ceeb28be80">&#9670;&nbsp;</a></span>Init()</h2>
+<a id="aebee661fcf4faf8ca2bc6550bcffee68" name="aebee661fcf4faf8ca2bc6550bcffee68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebee661fcf4faf8ca2bc6550bcffee68">&#9670;&nbsp;</a></span>Init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -202,7 +202,7 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>update_rate</em>&#160;</td>
+          <td class="paramname"><em>update_rate</em> = <code>0.f</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -211,7 +211,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Initializes the encoder with the specified hardware pins. Update rate should be the rate at which <a class="el" href="classdaisy_1_1_encoder.html#a5bed96517dbffee1fb16255ec9faa7e7">Debounce()</a> gets called in Hertz. </p>
+<p >Initializes the encoder with the specified hardware pins. Update rate is to be deprecated in a future release </p>
 
 </div>
 </div>
@@ -290,9 +290,9 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Call this with the new update rate if you change the block size or sample rate after init'ing the switch </p><dl class="params"><dt>Parameters</dt><dd>
+<p >To be removed in breaking update </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">update_rate</td><td>the rate at which the <a class="el" href="classdaisy_1_1_encoder.html#a5bed96517dbffee1fb16255ec9faa7e7">Debounce()</a> function will be called. (used for timing). </td></tr>
+    <tr><td class="paramname">update_rate</td><td>Does nothing </td></tr>
   </table>
   </dd>
 </dl>
