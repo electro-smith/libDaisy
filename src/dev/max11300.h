@@ -645,25 +645,30 @@ class MAX11300Driver
      */
     static uint16_t VoltsTo12BitUint(float volts, VoltageRange range)
     {
-        float vmax = 0;
-        float vmin = 0;
+        float vmax    = 0;
+        float vmin    = 0;
+        float vscaler = 0;
         switch(range)
         {
             case VoltageRange::NEGATIVE_10_TO_0:
-                vmin = -10;
-                vmax = 0;
+                vmin    = -10;
+                vmax    = 0;
+                vscaler = 4095.0f / (vmax - vmin);
                 break;
             case VoltageRange::NEGATIVE_5_TO_5:
-                vmin = -5;
-                vmax = 5;
+                vmin    = -5;
+                vmax    = 5;
+                vscaler = 4095.0f / (vmax - vmin);
                 break;
             case VoltageRange::ZERO_TO_10:
-                vmin = 0;
-                vmax = 10;
+                vmin    = 0;
+                vmax    = 10;
+                vscaler = 4095.0f / (vmax - vmin);
                 break;
             case VoltageRange::ZERO_TO_2_5:
-                vmin = 0;
-                vmax = 2.5;
+                vmin    = 0;
+                vmax    = 2.5;
+                vscaler = 4095.0f / (vmax - vmin);
                 break;
             default:
                 // Nothing left to do
@@ -677,7 +682,7 @@ class MAX11300Driver
         if(volts < vmin)
             volts = vmin;
 
-        return static_cast<uint16_t>((volts - vmin) * 4095.0f / (vmax - vmin));
+        return static_cast<uint16_t>((volts - vmin) * vscaler);
     }
 
     /**
@@ -691,25 +696,30 @@ class MAX11300Driver
      */
     static float TwelveBitUintToVolts(uint16_t value, VoltageRange range)
     {
-        float vmax = 0;
-        float vmin = 0;
+        float vmax    = 0;
+        float vmin    = 0;
+        float vscaler = 0;
         switch(range)
         {
             case VoltageRange::NEGATIVE_10_TO_0:
-                vmin = -10;
-                vmax = 0;
+                vmin    = -10;
+                vmax    = 0;
+                vscaler = (vmax - vmin) / 4095;
                 break;
             case VoltageRange::NEGATIVE_5_TO_5:
-                vmin = -5;
-                vmax = 5;
+                vmin    = -5;
+                vmax    = 5;
+                vscaler = (vmax - vmin) / 4095;
                 break;
             case VoltageRange::ZERO_TO_10:
-                vmin = 0;
-                vmax = 10;
+                vmin    = 0;
+                vmax    = 10;
+                vscaler = (vmax - vmin) / 4095;
                 break;
             case VoltageRange::ZERO_TO_2_5:
-                vmin = 0;
-                vmax = 2.5;
+                vmin    = 0;
+                vmax    = 2.5;
+                vscaler = (vmax - vmin) / 4095;
                 break;
             default:
                 // Nothing left to do
@@ -720,7 +730,7 @@ class MAX11300Driver
         if(value > 4095)
             value = 4095;
 
-        return value * (vmax - vmin) / 4095 + vmin;
+        return (value * vscaler) + vmin;
     }
 
   private:
