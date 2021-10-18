@@ -47,13 +47,10 @@ class Encoder
     /** Returns the time in milliseconds that the encoder has been held down. */
     inline float TimeHeldMs() const { return sw_.TimeHeldMs(); }
 
-    /** Call this with the new update rate if you change the block size or sample rate after init'ing the switch
-     * \param update_rate the rate at which the Debounce() function will be called. (used for timing).
+    /** To be removed in breaking update
+     * \param update_rate Does nothing
     */
-    inline void SetUpdateRate(float update_rate)
-    {
-        sw_.SetUpdateRate(update_rate);
-    }
+    inline void SetUpdateRate(float update_rate) {}
 
   private:
     Switch   sw_;
