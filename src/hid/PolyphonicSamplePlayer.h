@@ -12,8 +12,6 @@ this module. However, by using the extern'd SDFile, etc. I think that would brea
 #include "util/wav_format.h"
 #include "hid/sampleplayer.h"
 
-#define MAX_PLAYERS 1
-
 /** @file hid_wavplayer.h */
 
 namespace daisy
@@ -24,7 +22,7 @@ TODO:
 */
 
 
-/** */
+template <size_t max_files, size_t max_buffer, size_t max_polyphony>
 class PolyphonicSamplePlayer
 {
   public:
@@ -33,7 +31,7 @@ class PolyphonicSamplePlayer
 
     /** Initializes the WavPlayer, loading up to max_files of wav files from an SD Card. */
     void Init(float sr) {
-      for(int i = 0; i < MAX_PLAYERS; i++){
+      for(int i = 0; i < max_polyphony; i++){
         players[i].Init(sr);
       }
     }
@@ -42,23 +40,29 @@ class PolyphonicSamplePlayer
     \param sel File to open
      */
     int Open(size_t sel, uint16_t idx){
-      if(idx < MAX_PLAYERS){
+      if(idx < max_polyphony){
         players[idx].Open(sel);
       }
       return 0;
+    }
+
+    void SetFileSel(size_t sel, uint16_t idx){
+      if(idx < max_polyphony){
+        players[idx].SetFileSel(sel);
+      }
     }
 
     /** Closes whatever file is currently open.
     \return &
      */
     int Close(uint16_t idx){
-      if(idx < MAX_PLAYERS){
+      if(idx < max_polyphony){
         return players[idx].Close();
       }
     }
 
     int CloseAll(){
-      for(int i = 0; i < MAX_PLAYERS; i++){
+      for(int i = 0; i < max_polyphony; i++){
         int status = players[i].Close();
         
         if(status != 0){ //FR_OK
@@ -67,33 +71,40 @@ class PolyphonicSamplePlayer
       }
     }
 
-    /** \return The next sample if playing, otherwise returns 0 */
-    int16_t Stream(){
-      int sum = 0;
+    float Stream(uint16_t idx){
+      if(idx < max_polyphony){
+        return players[idx].Stream();
+      }
+      return 0.f;
+    }
 
-      for(int i = 0; i < MAX_PLAYERS; i++){
-        sum += players[i].Stream();
+    /** \return The next sample if playing, otherwise returns 0 */
+    float StreamAll(){
+      float sum = 0;
+
+      for(int i = 0; i < max_polyphony; i++){
+        sum += Stream(i);
       }
 
-      return sum / MAX_PLAYERS;
+      return sum / (float)max_polyphony;
     }
 
     /** Collects buffer for playback when needed. */
     void Prepare() {
-      for(int i = 0; i < MAX_PLAYERS; i++){
+      for(int i = 0; i < max_polyphony; i++){
         players[i].Prepare();
       }
     }
 
     /** Resets the playback position to the beginning of the file immediately */
     void Restart(uint16_t idx){
-      if (idx < MAX_PLAYERS){
+      if (idx < max_polyphony){
         players[idx].Restart();
       }
     }
 
     void RestartAll(){
-      for(int i = 0; i < MAX_PLAYERS; i++){
+      for(int i = 0; i < max_polyphony; i++){
         Restart(i);
       }
     }
@@ -102,13 +113,13 @@ class PolyphonicSamplePlayer
     \param loop To loop or not to loop.
     */
     inline void SetLooping(bool loop, uint16_t idx) { 
-      if (idx < MAX_PLAYERS){
+      if (idx < max_polyphony){
         players[idx].SetLooping(loop);
       }
     }
 
     inline void SetLoopingAll(bool loop){
-      for(int i = 0; i < MAX_PLAYERS; i++){
+      for(int i = 0; i < max_polyphony; i++){
         SetLooping(loop, i);
       }
     }
@@ -123,7 +134,7 @@ class PolyphonicSamplePlayer
     // inline size_t GetCurrentFile() const { return file_sel_; }
 
   private:
-    SamplePlayer<32, 32767> players[MAX_PLAYERS];
+    SamplePlayer<max_files, max_buffer> players[max_polyphony];
   
  };
 
