@@ -10,7 +10,7 @@ this module. However, by using the extern'd SDFile, etc. I think that would brea
 #define DSY_POlYPHONIC_SAMPLE_PLAYER_H /**< Macro */
 #include "daisy_core.h"
 #include "util/wav_format.h"
-#include "hid/wavplayer.h"
+#include "hid/sampleplayer.h"
 
 #define MAX_PLAYERS 1
 
@@ -32,9 +32,9 @@ class PolyphonicSamplePlayer
     ~PolyphonicSamplePlayer() {}
 
     /** Initializes the WavPlayer, loading up to max_files of wav files from an SD Card. */
-    void Init() {
+    void Init(float sr) {
       for(int i = 0; i < MAX_PLAYERS; i++){
-        players[i].Init();
+        players[i].Init(sr);
       }
     }
 
@@ -123,7 +123,7 @@ class PolyphonicSamplePlayer
     // inline size_t GetCurrentFile() const { return file_sel_; }
 
   private:
-    WavPlayer players[MAX_PLAYERS];
+    SamplePlayer<32, 32767> players[MAX_PLAYERS];
   
  };
 
