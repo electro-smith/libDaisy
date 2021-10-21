@@ -30,6 +30,7 @@
 #include "hid/ctrl.h"
 #include "hid/gatein.h"
 #include "hid/parameter.h"
+#include "hid/PolyphonicSamplePlayer.h"
 #include "hid/usb.h"
 #include "hid/logger.h"
 #include "per/sai.h"
