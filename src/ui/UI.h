@@ -434,11 +434,13 @@ class UI
   private:
     bool                                       isMuted_;
     bool                                       queueEvents_;
-    static constexpr int                       kMaxNumPages    = 32;
-    static constexpr int                       kMaxNumCanvases = 8;
+    static constexpr int                       kMaxNumPages       = 32;
+    static constexpr int                       kMaxNumCanvases    = 8;
+    static constexpr uint32_t                  screenSaverTimeOut = 20000;
     Stack<UiPage*, kMaxNumPages>               pages_;
     Stack<UiCanvasDescriptor, kMaxNumCanvases> canvases_;
     uint32_t          lastUpdateTimes_[kMaxNumCanvases];
+    uint32_t          lastEventTime_;
     UiEventQueue*     eventQueue_;
     SpecialControlIds specialControlIds_;
     uint16_t          primaryOneBitGraphicsDisplayId_ = invalidCanvasId;
