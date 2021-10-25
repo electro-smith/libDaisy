@@ -168,8 +168,8 @@ CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Wno-missing-attributes -fa
 
 ifeq ($(DEBUG), 1)
 #CFLAGS += -g -gdwarf-2
-endif
 CFLAGS += -g -ggdb
+endif
 
 # Generate dependency information
 CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
