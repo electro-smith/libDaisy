@@ -170,10 +170,7 @@ endif
 
 CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Wno-missing-attributes -fasm -fdata-sections -ffunction-sections -Wno-stringop-overflow
 
-ifeq ($(DEBUG), 1)
-#CFLAGS += -g -gdwarf-2
 CFLAGS += -g -ggdb
-endif
 
 # Generate dependency information
 CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
