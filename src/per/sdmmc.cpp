@@ -55,19 +55,31 @@ void HAL_SD_MspInit(SD_HandleTypeDef* sdHandle)
             PC8     ------> SDMMC1_D0 
         */
 
+        // Adjust the gpio drive strength based on the clock divider,
+        // which is derived from the Speed config
+        uint32_t gpioSpeed = GPIO_SPEED_FREQ_VERY_HIGH;
+        switch(sdHandle->Init.ClockDiv)
+        {
+            case 250: gpioSpeed = GPIO_SPEED_FREQ_LOW; break;     // SLOW
+            case 8: gpioSpeed = GPIO_SPEED_FREQ_MEDIUM; break;    // MEDIUM_SLOW
+            case 4: gpioSpeed = GPIO_SPEED_FREQ_HIGH; break;      // STANDARD
+            case 2: gpioSpeed = GPIO_SPEED_FREQ_VERY_HIGH; break; // FAST
+            case 1: gpioSpeed = GPIO_SPEED_FREQ_VERY_HIGH; break; // VERY_FAST
+        }
+
         GPIO_InitStruct.Pin = GPIO_PIN_12 | GPIO_PIN_8;
         if(sdHandle->Init.BusWide == SDMMC_BUS_WIDE_4B)
             GPIO_InitStruct.Pin |= GPIO_PIN_9 | GPIO_PIN_10 | GPIO_PIN_11;
         GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull      = GPIO_NOPULL;
-        GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
+        GPIO_InitStruct.Speed     = gpioSpeed;
         GPIO_InitStruct.Alternate = GPIO_AF12_SDIO1;
         HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
         GPIO_InitStruct.Pin       = GPIO_PIN_2;
         GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
         GPIO_InitStruct.Pull      = GPIO_NOPULL;
-        GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
+        GPIO_InitStruct.Speed     = gpioSpeed;
         GPIO_InitStruct.Alternate = GPIO_AF12_SDIO1;
         HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
