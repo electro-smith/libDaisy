@@ -71,7 +71,7 @@ enum class MCPMode : uint8_t
  * For now it supports only polling approach.
  * 
  * Usage:
- *  Mcp23017Transport mcp;
+ *  Mcp23017 mcp;
  *  mcp.Init();
  *  mcp.PortMode(MCP23017Port::A, 0xFF); // Inputs
  *  mcp.PortMode(MCP23017Port::B, 0xFF);
@@ -121,196 +121,10 @@ class Mcp23017Transport
         WriteReg(MCPRegister::GPPU_A, 0xFF, 0xFF);
     };
 
-    /**
-	 * Controls the pins direction on a whole port at once.
-	 * 
-	 * directions: 0 - output, 1 - input
-	 * pullups: 0 - disabled, 1 - enabled
-	 * inverted: 0 - false/normal, 1 - true/inverted
-	 * 
-	 * See "3.5.1 I/O Direction register".
-	 */
-    void PortMode(MCPPort port,
-                  uint8_t directions,
-                  uint8_t pullups  = 0xFF,
-                  uint8_t inverted = 0x00)
-    {
-        WriteReg(MCPRegister::IODIR_A + port, directions);
-        WriteReg(MCPRegister::GPPU_A + port, pullups);
-        WriteReg(MCPRegister::IPOL_A + port, inverted);
-    }
-
-    /**
-	 * Controls a single pin direction. 
-	 * Pin 0-7 for port A, 8-15 fo port B.
-	 * 
-	 * 1 = Pin is configured as an input.
-	 * 0 = Pin is configured as an output.
-	 *
-	 * See "3.5.1 I/O Direction register".
-	 */
-    void PinMode(uint8_t pin, MCPMode mode, bool inverted)
-    {
-        MCPRegister iodirreg  = MCPRegister::IODIR_A;
-        MCPRegister pullupreg = MCPRegister::GPPU_A;
-        MCPRegister polreg    = MCPRegister::IPOL_A;
-        uint8_t     iodir, pol, pull;
-        if(pin > 7)
-        {
-            iodirreg  = MCPRegister::IODIR_B;
-            pullupreg = MCPRegister::GPPU_B;
-            polreg    = MCPRegister::IPOL_B;
-            pin -= 8;
-        }
-        iodir = ReadReg(iodirreg);
-        if(mode == MCPMode::INPUT || mode == MCPMode::INPUT_PULLUP)
-            SetBit(iodir, pin);
-        else
-            ClearBit(iodir, pin);
-        pull = ReadReg(pullupreg);
-        if(mode == MCPMode::INPUT_PULLUP)
-            SetBit(pull, pin);
-        else
-            ClearBit(pull, pin);
-        pol = ReadReg(polreg);
-        if(inverted)
-            SetBit(pol, pin);
-        else
-            ClearBit(pol, pin);
-        WriteReg(iodirreg, iodir);
-        WriteReg(pullupreg, pull);
-        WriteReg(polreg, pol);
-    }
-
-    /**
-	 * Writes a single pin state.
-	 * Pin 0-7 for port A, 8-15 for port B.
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
-    void WritePin(uint8_t pin, uint8_t state)
-    {
-        MCPRegister gpioreg = MCPRegister::GPIO_A;
-        uint8_t     gpio;
-        if(pin > 7)
-        {
-            gpioreg = MCPRegister::GPIO_B;
-            pin -= 8;
-        }
-
-        gpio = ReadReg(gpioreg);
-        if(state > 0)
-        {
-            gpio = SetBit(gpio, pin);
-        }
-        else
-        {
-            gpio = ClearBit(gpio, pin);
-        }
-
-        WriteReg(gpioreg, gpio);
-    }
-
-    /**
-	 * Reads a single pin state.
-	 * Pin 0-7 for port A, 8-15 for port B.
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
-    uint8_t ReadPin(uint8_t pin)
-    {
-        MCPRegister gpioreg = MCPRegister::GPIO_A;
-        uint8_t     gpio;
-        if(pin > 7)
-        {
-            gpioreg = MCPRegister::GPIO_B;
-            pin -= 8;
-        }
-
-        gpio = ReadReg(gpioreg);
-        if(ReadBit(gpio, pin))
-        {
-            return 1;
-        }
-
-        return 0;
-    }
-
-    /**
-	 * Writes pins state to a whole port.
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
-    void WritePort(MCPPort port, uint8_t value)
-    {
-        WriteReg(MCPRegister::GPIO_A + port, value);
-    }
-
-    /**
-	 * Reads pins state for a whole port.
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
-    uint8_t ReadPort(MCPPort port)
-    {
-        return ReadReg(MCPRegister::GPIO_A + port);
-    }
-
-    /**
-	 * Writes pins state to both ports.
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
-    void Write(uint16_t value)
-    {
-        WriteReg(MCPRegister::GPIO_A, LowByte(value), HighByte(value));
-    }
-
-    /**
-	 * Reads pins state for both ports. 
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
-    uint16_t Read()
-    {
-        uint8_t a = ReadPort(MCPPort::A);
-        uint8_t b = ReadPort(MCPPort::B);
-
-        pin_data = a | b << 8;
-        return pin_data;
-    }
-
-    /**
-     * @brief Fetches pin state from the result of recent Read() call. Useful to preserve unneeded reads
-     * 
-     * @param id pin ID
-     * @return uint8_t pin state: 0x00 or 0xFF
-     */
-    uint8_t GetPin(uint8_t id) { return ReadBit(pin_data, id); }
-
-  private:
-    void WriteReg(MCPRegister reg, uint8_t val)
+    I2CHandle::Result WriteReg(MCPRegister reg, uint8_t val)
     {
         uint8_t data[1] = {val};
-        i2c_.WriteDataAtAddress(
+        return i2c_.WriteDataAtAddress(
             i2c_address_, static_cast<uint8_t>(reg), 1, data, 1, timeout);
     }
 
@@ -339,6 +153,219 @@ class Mcp23017Transport
         portB = data[1];
     }
 
+    daisy::I2CHandle i2c_;
+    uint8_t          i2c_address_;
+    uint8_t          timeout{10};
+};
+
+template <typename Transport>
+class Mcp23X17
+{
+  public:
+    struct Config
+    {
+        typename Transport::Config transport_config;
+    };
+
+    void Init()
+    {
+        Config config;
+        config.transport_config.Defaults();
+        Init(config);
+    };
+
+    void Init(const Config& config)
+    {
+        transport.Init(config.transport_config);
+    };
+
+    /**
+	 * Controls the pins direction on a whole port at once.
+	 * 
+	 * directions: 0 - output, 1 - input
+	 * pullups: 0 - disabled, 1 - enabled
+	 * inverted: 0 - false/normal, 1 - true/inverted
+	 * 
+	 * See "3.5.1 I/O Direction register".
+	 */
+    void PortMode(MCPPort port,
+                  uint8_t directions,
+                  uint8_t pullups  = 0xFF,
+                  uint8_t inverted = 0x00)
+    {
+        transport.WriteReg(MCPRegister::IODIR_A + port, directions);
+        transport.WriteReg(MCPRegister::GPPU_A + port, pullups);
+        transport.WriteReg(MCPRegister::IPOL_A + port, inverted);
+    }
+
+    /**
+	 * Controls a single pin direction. 
+	 * Pin 0-7 for port A, 8-15 fo port B.
+	 * 
+	 * 1 = Pin is configured as an input.
+	 * 0 = Pin is configured as an output.
+	 *
+	 * See "3.5.1 I/O Direction register".
+	 */
+    void PinMode(uint8_t pin, MCPMode mode, bool inverted)
+    {
+        MCPRegister iodirreg  = MCPRegister::IODIR_A;
+        MCPRegister pullupreg = MCPRegister::GPPU_A;
+        MCPRegister polreg    = MCPRegister::IPOL_A;
+        uint8_t     iodir, pol, pull;
+        if(pin > 7)
+        {
+            iodirreg  = MCPRegister::IODIR_B;
+            pullupreg = MCPRegister::GPPU_B;
+            polreg    = MCPRegister::IPOL_B;
+            pin -= 8;
+        }
+        iodir = transport.ReadReg(iodirreg);
+        if(mode == MCPMode::INPUT || mode == MCPMode::INPUT_PULLUP)
+            SetBit(iodir, pin);
+        else
+            ClearBit(iodir, pin);
+        pull = transport.ReadReg(pullupreg);
+        if(mode == MCPMode::INPUT_PULLUP)
+            SetBit(pull, pin);
+        else
+            ClearBit(pull, pin);
+        pol = transport.ReadReg(polreg);
+        if(inverted)
+            SetBit(pol, pin);
+        else
+            ClearBit(pol, pin);
+        transport.WriteReg(iodirreg, iodir);
+        transport.WriteReg(pullupreg, pull);
+        transport.WriteReg(polreg, pol);
+    }
+
+    /**
+	 * Writes a single pin state.
+	 * Pin 0-7 for port A, 8-15 for port B.
+	 * 
+	 * 1 = Logic-high
+	 * 0 = Logic-low
+	 * 
+	 * See "3.5.10 Port register".
+	 */
+    void WritePin(uint8_t pin, uint8_t state)
+    {
+        MCPRegister gpioreg = MCPRegister::GPIO_A;
+        uint8_t     gpio;
+        if(pin > 7)
+        {
+            gpioreg = MCPRegister::GPIO_B;
+            pin -= 8;
+        }
+
+        gpio = transport.ReadReg(gpioreg);
+        if(state > 0)
+        {
+            gpio = SetBit(gpio, pin);
+        }
+        else
+        {
+            gpio = ClearBit(gpio, pin);
+        }
+
+        transport.WriteReg(gpioreg, gpio);
+    }
+
+    /**
+	 * Reads a single pin state.
+	 * Pin 0-7 for port A, 8-15 for port B.
+	 * 
+	 * 1 = Logic-high
+	 * 0 = Logic-low
+	 * 
+	 * See "3.5.10 Port register".
+	 */
+    uint8_t ReadPin(uint8_t pin)
+    {
+        MCPRegister gpioreg = MCPRegister::GPIO_A;
+        uint8_t     gpio;
+        if(pin > 7)
+        {
+            gpioreg = MCPRegister::GPIO_B;
+            pin -= 8;
+        }
+
+        gpio = transport.ReadReg(gpioreg);
+        if(ReadBit(gpio, pin))
+        {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    /**
+	 * Writes pins state to a whole port.
+	 * 
+	 * 1 = Logic-high
+	 * 0 = Logic-low
+	 * 
+	 * See "3.5.10 Port register".
+	 */
+    void WritePort(MCPPort port, uint8_t value)
+    {
+        transport.WriteReg(MCPRegister::GPIO_A + port, value);
+    }
+
+    /**
+	 * Reads pins state for a whole port.
+	 * 
+	 * 1 = Logic-high
+	 * 0 = Logic-low
+	 * 
+	 * See "3.5.10 Port register".
+	 */
+    uint8_t ReadPort(MCPPort port)
+    {
+        return transport.ReadReg(MCPRegister::GPIO_A + port);
+    }
+
+    /**
+	 * Writes pins state to both ports.
+	 * 
+	 * 1 = Logic-high
+	 * 0 = Logic-low
+	 * 
+	 * See "3.5.10 Port register".
+	 */
+    void Write(uint16_t value)
+    {
+        transport.WriteReg(
+            MCPRegister::GPIO_A, LowByte(value), HighByte(value));
+    }
+
+    /**
+	 * Reads pins state for both ports. 
+	 * 
+	 * 1 = Logic-high
+	 * 0 = Logic-low
+	 * 
+	 * See "3.5.10 Port register".
+	 */
+    uint16_t Read()
+    {
+        uint8_t a = ReadPort(MCPPort::A);
+        uint8_t b = ReadPort(MCPPort::B);
+
+        pin_data = a | b << 8;
+        return pin_data;
+    }
+
+    /**
+     * @brief Fetches pin state from the result of recent Read() call. Useful to preserve unneeded reads
+     * 
+     * @param id pin ID
+     * @return uint8_t pin state: 0x00 or 0xFF
+     */
+    uint8_t GetPin(uint8_t id) { return ReadBit(pin_data, id); }
+
+  private:
     uint8_t GetBit(uint8_t data, uint8_t id)
     {
         uint8_t mask     = 1 << id;
@@ -366,10 +393,9 @@ class Mcp23017Transport
     uint8_t LowByte(uint16_t val) { return val & 0xFF; }
     uint8_t HighByte(uint16_t val) { return (val >> 8) & 0xff; }
 
-    daisy::I2CHandle i2c_;
-    uint8_t          i2c_address_;
-    uint8_t          timeout{10};
-    uint16_t         pin_data;
+    uint16_t  pin_data;
+    Transport transport;
 };
 
+using Mcp23017 = Mcp23X17<Mcp23017Transport>;
 } // namespace daisy
