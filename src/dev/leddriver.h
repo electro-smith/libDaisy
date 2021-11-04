@@ -45,7 +45,7 @@ class LedDriverPca9685
         /** full size in bytes */
         static constexpr uint16_t size = 16 * 4 + 1;
         /** Whether any led in this buff has an unwritten update */
-        bool updated;
+        bool updated[16];
     };
     /** Buffer type for the entire DMA buffer. */
     using DmaBuffer = PCA9685TransmitBuffer[numDrivers];
@@ -129,20 +129,20 @@ class LedDriverPca9685
         const auto on  = draw_buffer_[d].leds[ch].on & (0x0FFF);
         const auto off = (on + rawBrightness) & (0x0FFF);
 
-        draw_buffer_[d].updated |= off != draw_buffer_[d].leds[ch].off;
+        draw_buffer_[d].updated[ch] |= off != draw_buffer_[d].leds[ch].off;
 
         draw_buffer_[d].leds[ch].off = off;
 
         // full on condition
         if(rawBrightness >= 0x0FFF)
         {
-            draw_buffer_[d].updated
+            draw_buffer_[d].updated[ch]
                 |= !(draw_buffer_[d].leds[ch].on & 0x1000); // updating on?
             draw_buffer_[d].leds[ch].on = 0x1000 | on;      // set "full on" bit
         }
         else
         {
-            draw_buffer_[d].updated
+            draw_buffer_[d].updated[ch]
                 |= draw_buffer_[d].leds[ch].on & 0x1000; // updating on?
             draw_buffer_[d].leds[ch].on = on;            // clear "full on" bit
         }
@@ -165,10 +165,14 @@ class LedDriverPca9685
         // to keep the led settings (if required)
         if(persistentBufferContents)
         {
-            for(int d = 0; d < numDrivers; d++)
-                for(int ch = 0; ch < 16; ch++)
+            for(int d = 0; d < numDrivers; d++){
+                for(int ch = 0; ch < 16; ch++){
                     draw_buffer_[d].leds[ch].off
                         = transmit_buffer_[d].leds[ch].off;
+                    draw_buffer_[d].updated[ch]
+                        = transmit_buffer_[d].updated[ch];
+                }
+            }
         }
 
         // start transmission
@@ -189,27 +193,32 @@ class LedDriverPca9685
         const auto    d       = current_driver_idx_;
         const uint8_t address = PCA9685_I2C_BASE_ADDRESS | addresses_[d];
 
-        if(transmit_buffer_[d].updated)
-        {
-            transmit_buffer_[d].updated = false; // reset the flag
+        for(int i = 0; i < 16; i++){
+            uint8_t ch = GetDriverChannelForLed(i);
 
-            // send the bufer
+            if(transmit_buffer_[d].updated[ch]){
+            uint8_t regAddr = transmit_buffer_[d].registerAddr;
+            uint8_t onLow = transmit_buffer_[d].leds[ch].on;
+            uint8_t onHigh = (transmit_buffer_[d].leds[ch].on >> 8);
+            uint8_t offLow = transmit_buffer_[d].leds[ch].off;
+            uint8_t offHigh = (transmit_buffer_[d].leds[ch].off >> 8);
+
+            uint8_t data[5] = {regAddr, onLow, onHigh, offLow, offHigh};
+
             const auto status = i2c_.TransmitDma(address,
-                                                 (uint8_t*)&transmit_buffer_[d],
-                                                 PCA9685TransmitBuffer::size,
+                                                 data,
+                                                 5,
                                                  &TxCpltCallback,
                                                  this);
-
-            if(status != I2CHandle::Result::OK)
-            {
-                // TODO: fix this :-)
-                // Reinit I2C (probably a flag to kill, but hey this works fairly well for now.)
-                i2c_.Init(i2c_.GetConfig());
+                if(status != I2CHandle::Result::OK)
+                {
+                    // TODO: fix this :-)
+                    // Reinit I2C (probably a flag to kill, but hey this works fairly well for now.)
+                    i2c_.Init(i2c_.GetConfig());
+                }
             }
-        }
-        else
-        {
-            ContinueTransmission();
+
+            transmit_buffer_[d].updated[i] = false; // reset the flag
         }
     }
     uint16_t GetStartCycleForLed(int ledIndex) const
@@ -234,12 +243,12 @@ class LedDriverPca9685
             draw_buffer_[d].registerAddr     = PCA9685_LED0;
             draw_buffer_[d].leds[ch].on      = startCycle;
             draw_buffer_[d].leds[ch].off     = startCycle;
-            draw_buffer_[d].updated          = false;
+            draw_buffer_[d].updated[ch]          = false;
             transmit_buffer_[d].registerAddr = PCA9685_LED0;
             transmit_buffer_[d].leds[ch].on  = startCycle;
             transmit_buffer_[d].leds[ch].off = startCycle;
             transmit_buffer_[d].leds[ch].off = startCycle;
-            transmit_buffer_[d].updated      = false;
+            transmit_buffer_[d].updated[ch]      = false;
         }
     }
 
@@ -270,7 +279,8 @@ class LedDriverPca9685
             System::Delay(20);
             buffer[0] = PCA9685_MODE1;
             // auto increment on
-            buffer[1] = 0b00100000;
+            // buffer[1] = 0b00100000;
+            buffer[1] = 0b00000000;
             i2c_.TransmitBlocking(address, buffer, 2, 1);
             System::Delay(20);
             buffer[0] = PCA9685_MODE2;
