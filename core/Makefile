@@ -164,11 +164,12 @@ C_INCLUDES += -I$(FATFS_DIR)
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
+ifeq ($(DEBUG), 1)
+ASFLAGS += -g -ggdb
+endif
+
 CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -Wno-missing-attributes -fasm -fdata-sections -ffunction-sections -Wno-stringop-overflow
 
-ifeq ($(DEBUG), 1)
-#CFLAGS += -g -gdwarf-2
-endif
 CFLAGS += -g -ggdb
 
 # Generate dependency information
