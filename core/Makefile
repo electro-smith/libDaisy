@@ -61,6 +61,8 @@ C_INCLUDES += -include stm32h7xx.h
 #ASM_SOURCES += \
 #$(SYSTEM_FILES_DIR)/startup_stm32h750xx.s
 
+BOOT_BIN = $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
+
 #######################################
 # binaries
 #######################################
@@ -286,6 +288,9 @@ program-dfu:
 
 program-app:
 	dfu-util -a 0 -s $(QSPI_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
+
+program-boot:
+	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BOOT_BIN) -d ,0483:df11
 
 #######################################
 # dependencies
