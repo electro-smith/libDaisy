@@ -6,6 +6,7 @@ C_MODULES = \
 sys/dma \
 hid/audio \
 sys/fatfs \
+sys/fatfs_usbh \
 per/gpio \
 per/sai \
 per/sdmmc \
@@ -14,6 +15,7 @@ util/hal_map \
 util/oled_fonts \
 util/sd_diskio \
 util/unique_id \
+util/usbh_diskio \
 sys/system_stm32h7xx \
 usbd/usbd_cdc_if \
 usbd/usbd_desc \
