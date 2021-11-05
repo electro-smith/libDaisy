@@ -6,6 +6,8 @@
 
 ### Features
 
+* bootloader: the bootloader can now be flashed directly from libDaisy using `make program-boot`
+
 ### Bug fixes
 
 * patch_sm: corrected the order of the gate out pins
