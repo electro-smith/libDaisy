@@ -6,6 +6,8 @@
 
 ### Features
 
+* msd: added the ability to read/write USB drives
+
 ### Bug fixes
 
 * patch_sm: corrected the order of the gate out pins
