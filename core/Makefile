@@ -4,6 +4,7 @@ CHIPSET ?= stm32h7x
 
 TARGET_BIN=$(TARGET).bin
 TARGET_ELF=$(TARGET).elf
+BOOT_BIN ?= $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
 FLASH_ADDRESS ?= 0x08000000
 QSPI_ADDRESS  ?= 0x90040000
 
@@ -60,8 +61,6 @@ C_INCLUDES += -include stm32h7xx.h
 
 #ASM_SOURCES += \
 #$(SYSTEM_FILES_DIR)/startup_stm32h750xx.s
-
-BOOT_BIN = $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
 
 #######################################
 # binaries
