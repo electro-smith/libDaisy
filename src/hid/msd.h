@@ -5,16 +5,16 @@
 
 namespace daisy
 {
-
 /** Status of USB Host application
  * 
  */
-typedef enum {
-  APPLICATION_IDLE = 0,
-  APPLICATION_START,
-  APPLICATION_READY,
-  APPLICATION_DISCONNECT
-}ApplicationTypeDef;
+typedef enum
+{
+    APPLICATION_IDLE = 0,
+    APPLICATION_START,
+    APPLICATION_READY,
+    APPLICATION_DISCONNECT
+} ApplicationTypeDef;
 
 /** 
    @author Gabriel Ball
@@ -34,7 +34,6 @@ class MSDHandle
     /** Configuration structure for interfacing with MSD Driver */
     struct Config
     {
-
     };
 
     /** Initializes the USB drivers and starts timeout.
@@ -72,9 +71,7 @@ class MSDHandle
     class Impl; /**< & */
 
   private:
-
     Impl* pimpl_;
-
 };
 
 } // namespace daisy
