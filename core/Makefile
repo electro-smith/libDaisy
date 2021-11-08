@@ -4,6 +4,7 @@ CHIPSET ?= stm32h7x
 
 TARGET_BIN=$(TARGET).bin
 TARGET_ELF=$(TARGET).elf
+BOOT_BIN ?= $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
 FLASH_ADDRESS ?= 0x08000000
 QSPI_ADDRESS  ?= 0x90040000
 
@@ -286,6 +287,9 @@ program-dfu:
 
 program-app:
 	dfu-util -a 0 -s $(QSPI_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
+
+program-boot:
+	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BOOT_BIN) -d ,0483:df11
 
 #######################################
 # dependencies
