@@ -23,8 +23,9 @@ uint8_t retUSBH;     /* Return value for USBH */
 char    USBHPath[4]; /* USBH logical drive path */
 
 // NOTE -- these _must_ be in a cacheless section to permit DMA transfers
-FATFS DMA_BUFFER_MEM_SECTION USBHFatFS;    /* File system object for USBH logical drive */
-FIL   DMA_BUFFER_MEM_SECTION USBHFile;     /* File object for USBH */
+FATFS DMA_BUFFER_MEM_SECTION
+                           USBHFatFS; /* File system object for USBH logical drive */
+FIL DMA_BUFFER_MEM_SECTION USBHFile; /* File object for USBH */
 
 /* USER CODE BEGIN Variables */
 
@@ -32,12 +33,12 @@ FIL   DMA_BUFFER_MEM_SECTION USBHFile;     /* File object for USBH */
 
 void MX_FATFS_Init(void)
 {
-  /*## FatFS: Link the USBH driver ###########################*/
-  retUSBH = FATFS_LinkDriver(&USBH_Driver, USBHPath);
+    /*## FatFS: Link the USBH driver ###########################*/
+    retUSBH = FATFS_LinkDriver(&USBH_Driver, USBHPath);
 
-  /* USER CODE BEGIN Init */
-  /* additional user code for init */
-  /* USER CODE END Init */
+    /* USER CODE BEGIN Init */
+    /* additional user code for init */
+    /* USER CODE END Init */
 }
 
 /* USER CODE BEGIN Application */
