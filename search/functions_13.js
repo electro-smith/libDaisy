@@ -8,5 +8,6 @@ var searchData=
   ['transmitexternal_5',['TransmitExternal',['../class_usb_handle.html#a4658cfe98d883c621e2c6353de515ad2',1,'UsbHandle::TransmitExternal(uint8_t *buff, size_t size)'],['../class_usb_handle.html#a4658cfe98d883c621e2c6353de515ad2',1,'UsbHandle::TransmitExternal(uint8_t *buff, size_t size)']]],
   ['transmitinternal_6',['TransmitInternal',['../class_usb_handle.html#ac167e061b8619e82666f67e13020ba6e',1,'UsbHandle::TransmitInternal(uint8_t *buff, size_t size)'],['../class_usb_handle.html#ac167e061b8619e82666f67e13020ba6e',1,'UsbHandle::TransmitInternal(uint8_t *buff, size_t size)']]],
   ['transmitsync_7',['TransmitSync',['../group__external.html#gaef8c51265ad22308928509d2bd491015',1,'daisy::Logger']]],
-  ['trig_8',['Trig',['../classdaisy_1_1_gate_in.html#a6a9bac9fe44985baa7097bd47a90a40f',1,'daisy::GateIn']]]
+  ['trig_8',['Trig',['../classdaisy_1_1_gate_in.html#a6a9bac9fe44985baa7097bd47a90a40f',1,'daisy::GateIn']]],
+  ['twelvebituinttovolts_9',['TwelveBitUintToVolts',['../group__dac.html#ga086fceb7760823216e43206438862139',1,'daisy::MAX11300Driver']]]
 ];

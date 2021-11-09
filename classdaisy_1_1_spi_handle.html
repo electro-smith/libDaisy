@@ -109,6 +109,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a58e083a015d563791848080c619186f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89ccde60807d2681bc96425c0600c82d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a89ccde60807d2681bc96425c0600c82d">BlockingTransmit</a> (uint8_t *buff, size_t size, uint32_t timeout=100)</td></tr>
 <tr class="separator:a89ccde60807d2681bc96425c0600c82d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a106ff23028e560dad08ea62900e26229"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a106ff23028e560dad08ea62900e26229">BlockingTransmitAndReceive</a> (uint8_t *tx_buff, uint8_t *rx_buff, size_t size, uint32_t timeout=100)</td></tr>
+<tr class="separator:a106ff23028e560dad08ea62900e26229"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91106fe656c12d5b7be7858bcb2c6d16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a91106fe656c12d5b7be7858bcb2c6d16">BlockingReceive</a> (uint8_t *buffer, uint16_t size, uint32_t timeout)</td></tr>
 <tr class="separator:a91106fe656c12d5b7be7858bcb2c6d16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a918f794a67be56c96e3533bef3bafba5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_spi_handle.html#a918f794a67be56c96e3533bef3bafba5">DmaTransmit</a> (uint8_t *buff, size_t size, <a class="el" href="classdaisy_1_1_spi_handle.html#a8a393cb62a82b7f197a0464395e364e8">CallbackFunctionPtr</a> callback, void *callback_context)</td></tr>
@@ -273,6 +275,54 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">*buff</td><td>input buffer </td></tr>
     <tr><td class="paramname">size</td><td>buffer size </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a106ff23028e560dad08ea62900e26229" name="a106ff23028e560dad08ea62900e26229"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a106ff23028e560dad08ea62900e26229">&#9670;&nbsp;</a></span>BlockingTransmitAndReceive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7">Result</a> daisy::SpiHandle::BlockingTransmitAndReceive </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>tx_buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>rx_buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>100</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Blocking transmit and receive </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">*tx_buff</td><td>the transmit buffer </td></tr>
+    <tr><td class="paramname">*rx_buff</td><td>the receive buffer </td></tr>
+    <tr><td class="paramname">size</td><td>the length of the transaction </td></tr>
   </table>
   </dd>
 </dl>
