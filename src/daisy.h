@@ -46,6 +46,7 @@
 #include "dev/codec_pcm3060.h"
 #include "dev/codec_wm8731.h"
 #include "dev/lcd_hd44780.h"
+#include "dev/max11300.h"
 #include "ui/ButtonMonitor.h"
 #include "ui/PotMonitor.h"
 #include "ui/UI.h"

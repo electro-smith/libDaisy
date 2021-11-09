@@ -7,6 +7,7 @@
 ### Features
 
 * bootloader: the bootloader can now be flashed directly from libDaisy using `make program-boot`
+* driver: added support for the MAX11300 ADC/DAC/GPI/GPO device
 
 ### Bug fixes
 
