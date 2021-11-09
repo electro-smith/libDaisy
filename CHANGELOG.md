@@ -7,6 +7,7 @@
 ### Features
 
 * msd: added the ability to read/write USB drives
+* bootloader: the bootloader can now be flashed directly from libDaisy using `make program-boot`
 
 ### Bug fixes
 
