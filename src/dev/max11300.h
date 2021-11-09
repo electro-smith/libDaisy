@@ -165,86 +165,28 @@ class MAX11300Driver
         PIN_16,
         PIN_17,
         PIN_18,
-        PIN_19,
-        PIN_LAST,
-    };
-    /**
-     * Pins/ports of the MAX11300 are freely configurable to function as 
-     * ANALOG_IN (ADC), ANALOG_OUT (DAC), GPI, or GPO.  
-     * This enum describes these modes.
-     */
-    enum class PinMode
-    {
-        NONE       = 0x0000, // Mode 0 (High impedance)
-        GPI        = 0x1000, // Mode 1
-        GPO        = 0x3000, // Mode 3
-        ANALOG_OUT = 0x5000, // Mode 5
-        ANALOG_IN  = 0x7000, // Mode 7
+        PIN_19
     };
 
     /**
-     * Pins/ports of the MAX11300 are freely configurable to operate within
-     * several pre-defined voltage ranges (assuming the power supply 
-     * requirements for the range is met), depending on the configured PinMode.
+     * Pins of the MAX11300 configured for AnalogRead/Write may be defined to 
+     * operate within several pre-defined voltage ranges (assuming the power supply 
+     * requirements for the range is met).
      * 
-     * In the case of ANALOG_IN (ADC), 
-     * and ANALOG_OUT (DAC) modes, this range determines how the input or output 
-     * voltage maps to the 12 bit (4096) discrete values.
+     * Pins configiured for DigitalRead/Write are 0-5V only, and do not tolerate
+     * or produce negative voltages.
      * 
-     * In the case of GPI and GPO, the range is used (in combination with the DAC registers) 
-     * to define what voltage threshold determines a logical true.
-     * 
-     * The following PinMode/VoltageRange combinations are valid
-     * 
-     * * PinMode::GPI - ZERO_TO_10 (threshold voltage limited to 0-5V)
-     * * PinMode::GPO - ZERO_TO_10
-     * * PinMode::ANALOG_OUT - ZERO_TO_10, NEGATIVE_5_TO_5, and NEGATIVE_10_TO_0
-     * * PinMode::ANALOG_IN - All voltage ranges
-     * 
-     * Be aware that when a pin is configured to PinMode::GPI and a voltage lower than
-     *  -250mV is applied, The codes read from ALL other pins confiured in 
-     * PinMode::ANALOG_IN will become unusuably corrupted.
+     * WARNING, when a pin is configured as DigitalRead and a voltage lower than
+     *  -250mV is applied, The codes read from ALL other pins confiured as
+     * AnalogRead will become unusuably corrupted.
      */
     enum class VoltageRange
     {
         ZERO_TO_10       = 0x0100,
         NEGATIVE_5_TO_5  = 0x0200,
-        NEGATIVE_10_TO_0 = 0x0300,
-        ZERO_TO_2_5      = 0x0400,
-        NONE             = 0x0000
+        NEGATIVE_10_TO_0 = 0x0300
     };
 
-    /**
-     * The PinConfig struct holds the necessary information needed to configure a
-     * pin/port of the MAX11300, as well as a pointer to the stateful pin data.  
-     */
-    struct PinConfig
-    {
-        PinMode      mode;  /**< & */
-        VoltageRange range; /**< & */
-        /**
-         * This is a voltage value used as follows:
-         * 
-         *  GPI - Defines what input voltage constituates a logical 1
-         *  GPO - The output voltage of the pin at logical 1
-         */
-        float threshold;
-        /**
-         * In the case of ANALOG_IN or ANALOG_OUT modes, this points to the 
-         * current 12 bit value of the pin.
-         */
-        uint16_t* value;
-        /**
-         * Default pin settings - Disabled (High-Z mode)
-         */
-        void Defaults()
-        {
-            mode      = PinMode::NONE;
-            range     = VoltageRange::NONE;
-            threshold = 2.5f;
-            value     = nullptr;
-        }
-    };
 
     struct Config
     {
@@ -325,97 +267,72 @@ class MAX11300Driver
         DelayUs(200);
 
         // Set all pins to the default high impedance state...
-        for(uint8_t i = 0; i < Pin::PIN_LAST; i++)
+        for(uint8_t i = 0; i <= Pin::PIN_19; i++)
         {
             PinConfig pin_cfg;
             pin_cfg.Defaults();
             pin_configurations_[i] = pin_cfg;
-            SetPinConfig(static_cast<Pin>(i), pin_cfg);
+            SetPinConfig(static_cast<Pin>(i));
         }
 
         return Result::OK;
     }
 
-    /**
-     * Apply the given configuration to the given pin
-     * 
-     * \param pin - The pin to configure
-     * \param pin_config - The pin configuration to apply
-     * \return - OK if the configuration was successfully applied
-     */
-    Result SetPinConfig(Pin pin, PinConfig pin_config)
+    Result ConfigurePinAsDigitalRead(Pin pin, float threshold_voltage)
     {
-        uint16_t pin_func_cfg = 0x0000;
+        if(threshold_voltage > 5.0f)
+            threshold_voltage = 5.0f;
 
-        if(pin_config.mode != PinMode::NONE)
-        {
-            // Set the pin to high impedance mode before changing (as per the datasheet).
-            WriteRegister(MAX11300_FUNC_BASE + pin, 0x0000);
-            // According to the datasheet, the amount of time necessary for the pin to
-            // switch to high impedance mode depends on the prior configuration.
-            // The worst case recommended wait time seems to be 1ms.
-            DelayUs(1000);
-        }
+        if(threshold_voltage < 0.0f)
+            threshold_voltage = 0.0f;
 
-        // Apply the pin configuration
-        pin_func_cfg = pin_func_cfg | static_cast<uint16_t>(pin_config.mode)
-                       | static_cast<uint16_t>(pin_config.range);
+        pin_configurations_[pin].Defaults();
+        pin_configurations_[pin].mode = PinMode::GPI;
+        pin_configurations_[pin].threshold = threshold_voltage;
 
-        if(pin_config.mode == PinMode::ANALOG_IN)
-        {
-            // In ADC mode we'll average 128 samples per Update
-            pin_func_cfg = pin_func_cfg | 0x00e0;
-        }
-        else if(pin_config.mode == PinMode::GPI)
-        {
-            // The DAC data register for that port needs to be set to the value corresponding to the
-            // intended input threshold voltage. Any input voltage above that programmed threshold is
-            // reported as a logic one. The input voltage must be between 0V and 5V.
-            //  It may take up to 1ms for the threshold voltage to be effective
-            WriteRegister((MAX11300_DACDAT_BASE + pin),
-                          MAX11300Driver::VoltsTo12BitUint(pin_config.threshold,
-                                                           pin_config.range));
-        }
-        else if(pin_config.mode == PinMode::GPO)
-        {
-            // The port’s DAC data register needs to be set first. It may require up to 1ms for the
-            // port to be ready to produce the desired logic one level.
-            WriteRegister((MAX11300_DACDAT_BASE + pin),
-                          MAX11300Driver::VoltsTo12BitUint(pin_config.threshold,
-                                                           pin_config.range));
-        }
-
-        // Write the configuration now...
-        if(WriteRegister(MAX11300_FUNC_BASE + pin, pin_func_cfg) != Result::OK)
-        {
-            return Result::ERR;
-        }
-
-        // Wait for 1ms as per the datasheet
-        DelayUs(1000);
-
-        // Verify our configuration was written
-        if(ReadRegister(MAX11300_FUNC_BASE + pin) != pin_func_cfg)
-        {
-            return Result::ERR;
-        }
-
-        // Persist this pin configuration now.
-        pin_configurations_[pin] = pin_config;
-
-        // Update and re-index the pin configuration now...
-        UpdatePinConfig();
-
-        return Result::OK;
+        return SetPinConfig(pin);
     }
 
-    /**
-     * Get the current configuration for the given pin
-     * 
-     * \param pin - The pin for which to retrieve the configuration
-     * \return - The configuration of the given pin
-     */
-    PinConfig GetPinConfig(Pin pin) { return pin_configurations_[pin]; }
+    Result ConfigurePinAsDigitalWrite(Pin pin, float output_voltage)
+    {
+        if(output_voltage > 5.0f)
+            output_voltage = 5.0f;
+
+        if(output_voltage < 0.0f)
+            output_voltage = 0.0f;
+
+        pin_configurations_[pin].Defaults();
+        pin_configurations_[pin].mode = PinMode::GPO;
+        pin_configurations_[pin].threshold = output_voltage;
+
+        return SetPinConfig(pin);
+    }
+
+    Result ConfigurePinAsAnalogRead(Pin pin, VoltageRange range)
+    {
+        pin_configurations_[pin].Defaults();
+        pin_configurations_[pin].mode  = PinMode::ANALOG_IN;
+        pin_configurations_[pin].range = range;
+
+        return SetPinConfig(pin);
+    }
+
+    Result ConfigurePinAsAnalogWrite(Pin pin, VoltageRange range)
+    {
+        pin_configurations_[pin].Defaults();
+        pin_configurations_[pin].mode  = PinMode::ANALOG_OUT;
+        pin_configurations_[pin].range = range;
+
+        return SetPinConfig(pin);
+    }
+
+
+    Result DisablePin(Pin pin)
+    {
+        PinConfig pin_config = GetPinConfig(pin);
+        pin_configurations_[pin].Defaults();
+        SetPinConfig(pin_config);
+    }
 
     /**
      * Read the raw 12 bit (0-4095) value of a given ANALOG_IN (ADC) pin.
@@ -665,11 +582,6 @@ class MAX11300Driver
                 vmax    = 10;
                 vscaler = 4095.0f / (vmax - vmin);
                 break;
-            case VoltageRange::ZERO_TO_2_5:
-                vmin    = 0;
-                vmax    = 2.5;
-                vscaler = 4095.0f / (vmax - vmin);
-                break;
             default:
                 // Nothing left to do
                 return 0;
@@ -716,11 +628,6 @@ class MAX11300Driver
                 vmax    = 10;
                 vscaler = (vmax - vmin) / 4095;
                 break;
-            case VoltageRange::ZERO_TO_2_5:
-                vmin    = 0;
-                vmax    = 2.5;
-                vscaler = (vmax - vmin) / 4095;
-                break;
             default:
                 // Nothing left to do
                 return 0;
@@ -734,6 +641,121 @@ class MAX11300Driver
     }
 
   private:
+    /**
+     * Pins/ports of the MAX11300 are freely configurable to function as 
+     * ANALOG_IN (ADC), ANALOG_OUT (DAC), GPI, or GPO.  
+     * This enum describes these modes.
+     */
+    enum class PinMode
+    {
+        NONE       = 0x0000, // Mode 0 (High impedance)
+        GPI        = 0x1000, // Mode 1
+        GPO        = 0x3000, // Mode 3
+        ANALOG_OUT = 0x5000, // Mode 5
+        ANALOG_IN  = 0x7000, // Mode 7
+    };
+
+    /**
+     * The PinConfig struct holds the necessary information needed to configure a
+     * pin/port of the MAX11300, as well as a pointer to the stateful pin data.  
+     */
+    struct PinConfig
+    {
+        PinMode      mode;  /**< & */
+        VoltageRange range; /**< & */
+        /**
+         * This is a voltage value used as follows:
+         * 
+         *  GPI - Defines what input voltage constituates a logical 1
+         *  GPO - The output voltage of the pin at logical 1
+         */
+        float threshold;
+        /**
+         * In the case of ANALOG_IN or ANALOG_OUT modes, this points to the 
+         * current 12 bit value of the pin.
+         */
+        uint16_t* value;
+        /**
+         * Default pin settings - Disabled (High-Z mode)
+         */
+        void Defaults()
+        {
+            mode      = PinMode::NONE;
+            range     = VoltageRange::ZERO_TO_10;
+            threshold = 0.0f;
+            value     = nullptr;
+        }
+    };
+
+    /**
+     * Apply the current configuration to the given pin
+     * 
+     * \param pin - The pin to configure
+     * \return - OK if the configuration was successfully applied
+     */
+    Result SetPinConfig(Pin pin)
+    {
+        uint16_t pin_func_cfg = 0x0000;
+
+        if(pin_configurations_[pin].mode != PinMode::NONE)
+        {
+            // Set the pin to high impedance mode before changing (as per the datasheet).
+            WriteRegister(MAX11300_FUNC_BASE + pin, 0x0000);
+            // According to the datasheet, the amount of time necessary for the pin to
+            // switch to high impedance mode depends on the prior configuration.
+            // The worst case recommended wait time seems to be 1ms.
+            DelayUs(1000);
+        }
+
+        // Apply the pin configuration
+        pin_func_cfg = pin_func_cfg | static_cast<uint16_t>(pin_configurations_[pin].mode)
+                       | static_cast<uint16_t>(pin_configurations_[pin].range);
+
+        if(pin_configurations_[pin].mode == PinMode::ANALOG_IN)
+        {
+            // In ADC mode we'll average 128 samples per Update
+            pin_func_cfg = pin_func_cfg | 0x00e0;
+        }
+        else if(pin_configurations_[pin].mode == PinMode::GPI)
+        {
+            // The DAC data register for that port needs to be set to the value corresponding to the
+            // intended input threshold voltage. Any input voltage above that programmed threshold is
+            // reported as a logic one. The input voltage must be between 0V and 5V.
+            //  It may take up to 1ms for the threshold voltage to be effective
+            WriteRegister((MAX11300_DACDAT_BASE + pin),
+                          MAX11300Driver::VoltsTo12BitUint(pin_configurations_[pin].threshold,
+                                                           pin_configurations_[pin].range));
+        }
+        else if(pin_configurations_[pin].mode == PinMode::GPO)
+        {
+            // The port’s DAC data register needs to be set first. It may require up to 1ms for the
+            // port to be ready to produce the desired logic one level.
+            WriteRegister((MAX11300_DACDAT_BASE + pin),
+                          MAX11300Driver::VoltsTo12BitUint(pin_configurations_[pin].threshold,
+                                                           pin_configurations_[pin].range));
+        }
+
+        // Write the configuration now...
+        if(WriteRegister(MAX11300_FUNC_BASE + pin, pin_func_cfg) != Result::OK)
+        {
+            return Result::ERR;
+        }
+
+        // Wait for 1ms as per the datasheet
+        DelayUs(1000);
+
+        // Verify our configuration was written
+        if(ReadRegister(MAX11300_FUNC_BASE + pin) != pin_func_cfg)
+        {
+            return Result::ERR;
+        }
+
+        // Update and re-index the pin configuration now...
+        UpdatePinConfig();
+
+        return Result::OK;
+    }
+
     /**
      * Updates all pin configurations and ensures correct pointer assignment, and addressing
      */
@@ -750,7 +772,7 @@ class MAX11300Driver
         gpi_pin_count_ = 0;
         gpo_pin_count_ = 0;
 
-        for(uint8_t i = 0; i < Pin::PIN_LAST; i++)
+        for(uint8_t i = 0; i <= Pin::PIN_19; i++)
         {
             Pin pin = static_cast<Pin>(i);
 

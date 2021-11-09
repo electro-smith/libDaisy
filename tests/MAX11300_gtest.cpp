@@ -106,8 +106,49 @@ class Max11300TestHelper : public ::testing::Test
         size_t               size;
     };
 
+    /**
+     * Pins/ports of the MAX11300 are freely configurable to function as 
+     * ANALOG_IN (ADC), ANALOG_OUT (DAC), GPI, or GPO.  
+     * This enum describes these modes.
+     */
+    enum class PinMode
+    {
+        NONE       = 0x0000, // Mode 0 (High impedance)
+        GPI        = 0x1000, // Mode 1
+        GPO        = 0x3000, // Mode 3
+        ANALOG_OUT = 0x5000, // Mode 5
+        ANALOG_IN  = 0x7000, // Mode 7
+    };
+
+    /**
+     * The PinConfig struct holds the necessary information needed to configure a
+     * pin/port of the MAX11300, as well as a pointer to the stateful pin data.  
+     */
+    struct PinConfig
+    {
+        PinMode                    mode;  /**< & */
+        MAX11300Test::VoltageRange range; /**< & */
+        /**
+         * This is a voltage value used as follows:
+         * 
+         *  GPI - Defines what input voltage constituates a logical 1
+         *  GPO - The output voltage of the pin at logical 1
+         */
+        float threshold;
+        /**
+         * In the case of ANALOG_IN or ANALOG_OUT modes, this points to the 
+         * current 12 bit value of the pin.
+         */
+        void Defaults()
+        {
+            mode      = PinMode::NONE;
+            range     = MAX11300Test::VoltageRange::ZERO_TO_10;
+            threshold = 0.0f;
+        }
+    };
+
     Max11300TestHelper() {}
-    ~Max11300TestHelper() {}
+    ~Max11300TestHelper() { clearAllTransactions(); }
 
     /**
      * Initializing this helper class also verifies the Init() routine of the driver.
@@ -139,14 +180,14 @@ class Max11300TestHelper : public ::testing::Test
         txrx_devicectl_verify.size    = 3;
         txrx_transactions.push_back(txrx_devicectl_verify);
 
-        for(size_t i = 0; i < MAX11300::Pin::PIN_LAST; i++)
+        for(size_t i = 0; i <= MAX11300::Pin::PIN_19; i++)
         {
             // The initial pin config transactions
             TxTransaction tx_pincfg;
             tx_pincfg.description
                 = std::string("Pin config #").append(std::to_string(i));
             tx_pincfg.buff
-                = {(uint8_t)((MAX11300_FUNC_BASE + i) << 1), 0x00, 0x00};
+                = {(uint8_t)((MAX11300_FUNC_BASE + i) << 1), 0x01, 0x00};
             tx_pincfg.size = 3;
             tx_pincfg.wait = 0;
             tx_transactions.push_back(tx_pincfg);
@@ -186,18 +227,26 @@ class Max11300TestHelper : public ::testing::Test
      */
     void clearAllTransactions()
     {
+        for(size_t i = 0; i < txrx_transactions.size(); i++)
+        {
+            txrx_transactions[i].rx_buff.clear();
+            txrx_transactions[i].tx_buff.clear();
+            txrx_transactions[i].description.clear();
+        }
+        for(size_t i = 0; i < tx_transactions.size(); i++)
+        {
+            tx_transactions[i].buff.clear();
+            tx_transactions[i].description.clear();
+        }
         tx_transactions.clear();
         txrx_transactions.clear();
         tx_transaction_count   = 0;
         txrx_transaction_count = 0;
     }
 
-    /**
-     * This method sets a pin configuration to the MAX11300 and verifies the 
-     * SPI transactions that it creates
-     */
-    bool setPinConfigAndVerify(MAX11300Test::Pin       pin,
-                               MAX11300Test::PinConfig pin_config)
+
+    bool ConfigurePinAsDigitalReadAndVerify(MAX11300Test::Pin pin,
+                                            float             threshold_voltage)
     {
         // We expect..
         // The initial pin config reset transaction
@@ -209,33 +258,25 @@ class Max11300TestHelper : public ::testing::Test
         tx_pincfgreset.wait = 0;
         tx_transactions.push_back(tx_pincfgreset);
 
+        // In GPI/O mode there is an additional transaction for setting the threshold
+        uint16_t gpio_threshold = MAX11300Test::VoltsTo12BitUint(
+            threshold_voltage, MAX11300Test::VoltageRange::ZERO_TO_10);
+
+        Max11300TestHelper::TxTransaction tx_set_threshold;
+        tx_set_threshold.description = "GPIO set threshold transaction";
+        tx_set_threshold.buff = {(uint8_t)((MAX11300_DACDAT_BASE + pin) << 1),
+                                 (uint8_t)(gpio_threshold >> 8),
+                                 (uint8_t)gpio_threshold};
+        tx_set_threshold.size = 3;
+        tx_set_threshold.wait = 0;
+        tx_transactions.push_back(tx_set_threshold);
+
+
         // Now we handle the expected pin configuration
         uint16_t expected_pin_cfg = 0x0000;
-        expected_pin_cfg          = expected_pin_cfg
-                           | static_cast<uint16_t>(pin_config.mode)
-                           | static_cast<uint16_t>(pin_config.range);
-        if(pin_config.mode == MAX11300Test::PinMode::ANALOG_IN)
-        {
-            // In ADC mode the config includes a sample rate...
-            expected_pin_cfg = expected_pin_cfg | 0x00E0;
-        }
-        else if(pin_config.mode == MAX11300Test::PinMode::GPI
-                || pin_config.mode == MAX11300Test::PinMode::GPO)
-        {
-            // In GPI/O mode there is an additional transaction for setting the threshold
-            uint16_t gpio_threshold = MAX11300Test::VoltsTo12BitUint(
-                pin_config.threshold, pin_config.range);
-
-            Max11300TestHelper::TxTransaction tx_set_threshold;
-            tx_set_threshold.description = "GPIO set threshold transaction";
-            tx_set_threshold.buff
-                = {(uint8_t)((MAX11300_DACDAT_BASE + pin) << 1),
-                   (uint8_t)(gpio_threshold >> 8),
-                   (uint8_t)gpio_threshold};
-            tx_set_threshold.size = 3;
-            tx_set_threshold.wait = 0;
-            tx_transactions.push_back(tx_set_threshold);
-        }
+        expected_pin_cfg
+            = expected_pin_cfg | static_cast<uint16_t>(PinMode::GPI)
+              | static_cast<uint16_t>(MAX11300Test::VoltageRange::ZERO_TO_10);
 
 
         // The pin config transaction
@@ -256,16 +297,174 @@ class Max11300TestHelper : public ::testing::Test
         txrx_pincfg_verify.rx_buff = {
             0x00, (uint8_t)(expected_pin_cfg >> 8), (uint8_t)expected_pin_cfg};
         txrx_pincfg_verify.size = 3;
-        txrx_transactions.emplace_back(txrx_pincfg_verify);
+        txrx_transactions.push_back(txrx_pincfg_verify);
 
-        // Set the pin config now, and verify success.
-        bool success = max11300.SetPinConfig(pin, pin_config)
-                       == MAX11300Test::Result::OK;
+        bool result = max11300.ConfigurePinAsDigitalRead(pin, threshold_voltage)
+                      == MAX11300Test::Result::OK;
 
-        // Clean up
         clearAllTransactions();
 
-        return success;
+        return result;
+    }
+
+    bool ConfigurePinAsDigitalWriteAndVerify(MAX11300Test::Pin pin,
+                                             float             output_voltage)
+    {
+        // We expect..
+        // The initial pin config reset transaction
+        Max11300TestHelper::TxTransaction tx_pincfgreset;
+        tx_pincfgreset.description = "High impedance pin reset transaction";
+        tx_pincfgreset.buff
+            = {(uint8_t)((MAX11300_FUNC_BASE + pin) << 1), 0x00, 0x00};
+        tx_pincfgreset.size = 3;
+        tx_pincfgreset.wait = 0;
+        tx_transactions.push_back(tx_pincfgreset);
+
+        // In GPI/O mode there is an additional transaction for setting the threshold
+        uint16_t gpio_threshold = MAX11300Test::VoltsTo12BitUint(
+            output_voltage, MAX11300Test::VoltageRange::ZERO_TO_10);
+
+        Max11300TestHelper::TxTransaction tx_set_threshold;
+        tx_set_threshold.description = "GPIO set threshold transaction";
+        tx_set_threshold.buff = {(uint8_t)((MAX11300_DACDAT_BASE + pin) << 1),
+                                 (uint8_t)(gpio_threshold >> 8),
+                                 (uint8_t)gpio_threshold};
+        tx_set_threshold.size = 3;
+        tx_set_threshold.wait = 0;
+        tx_transactions.push_back(tx_set_threshold);
+
+
+        // Now we handle the expected pin configuration
+        uint16_t expected_pin_cfg = 0x0000;
+        expected_pin_cfg
+            = expected_pin_cfg | static_cast<uint16_t>(PinMode::GPO)
+              | static_cast<uint16_t>(MAX11300Test::VoltageRange::ZERO_TO_10);
+
+
+        // The pin config transaction
+        Max11300TestHelper::TxTransaction tx_pincfg;
+        tx_pincfg.description = "Pin configuration transaction";
+        tx_pincfg.buff        = {(uint8_t)((MAX11300_FUNC_BASE + pin) << 1),
+                          (uint8_t)(expected_pin_cfg >> 8),
+                          (uint8_t)expected_pin_cfg};
+        tx_pincfg.size        = 3;
+        tx_pincfg.wait        = 0;
+        tx_transactions.push_back(tx_pincfg);
+
+        // ...and the pin config verification transaction
+        Max11300TestHelper::TxRxTransaction txrx_pincfg_verify;
+        txrx_pincfg_verify.description = "Pin config verification transaction";
+        txrx_pincfg_verify.tx_buff
+            = {(uint8_t)(((MAX11300_FUNC_BASE + pin) << 1) | 1), 0x00, 0x00};
+        txrx_pincfg_verify.rx_buff = {
+            0x00, (uint8_t)(expected_pin_cfg >> 8), (uint8_t)expected_pin_cfg};
+        txrx_pincfg_verify.size = 3;
+        txrx_transactions.push_back(txrx_pincfg_verify);
+
+        bool result = max11300.ConfigurePinAsDigitalWrite(pin, output_voltage)
+                      == MAX11300Test::Result::OK;
+
+        clearAllTransactions();
+
+        return result;
+    }
+
+    bool ConfigurePinAsAnalogReadAndVerify(MAX11300Test::Pin          pin,
+                                           MAX11300Test::VoltageRange range)
+    {
+        // We expect..
+        // The initial pin config reset transaction
+        Max11300TestHelper::TxTransaction tx_pincfgreset;
+        tx_pincfgreset.description = "High impedance pin reset transaction";
+        tx_pincfgreset.buff
+            = {(uint8_t)((MAX11300_FUNC_BASE + pin) << 1), 0x00, 0x00};
+        tx_pincfgreset.size = 3;
+        tx_pincfgreset.wait = 0;
+        tx_transactions.push_back(tx_pincfgreset);
+
+        // Now we handle the expected pin configuration
+        uint16_t expected_pin_cfg = 0x0000;
+        expected_pin_cfg          = expected_pin_cfg
+                           | static_cast<uint16_t>(PinMode::ANALOG_IN)
+                           | static_cast<uint16_t>(range);
+
+        // In ADC mode the config includes a sample rate...
+        expected_pin_cfg = expected_pin_cfg | 0x00E0;
+
+        // The pin config transaction
+        Max11300TestHelper::TxTransaction tx_pincfg;
+        tx_pincfg.description = "Pin configuration transaction";
+        tx_pincfg.buff        = {(uint8_t)((MAX11300_FUNC_BASE + pin) << 1),
+                          (uint8_t)(expected_pin_cfg >> 8),
+                          (uint8_t)expected_pin_cfg};
+        tx_pincfg.size        = 3;
+        tx_pincfg.wait        = 0;
+        tx_transactions.push_back(tx_pincfg);
+
+        // ...and the pin config verification transaction
+        Max11300TestHelper::TxRxTransaction txrx_pincfg_verify;
+        txrx_pincfg_verify.description = "Pin config verification transaction";
+        txrx_pincfg_verify.tx_buff
+            = {(uint8_t)(((MAX11300_FUNC_BASE + pin) << 1) | 1), 0x00, 0x00};
+        txrx_pincfg_verify.rx_buff = {
+            0x00, (uint8_t)(expected_pin_cfg >> 8), (uint8_t)expected_pin_cfg};
+        txrx_pincfg_verify.size = 3;
+        txrx_transactions.push_back(txrx_pincfg_verify);
+
+        bool result = max11300.ConfigurePinAsAnalogRead(pin, range)
+                      == MAX11300Test::Result::OK;
+
+        clearAllTransactions();
+
+        return result;
+    }
+
+
+    bool ConfigurePinAsAnalogWriteAndVerify(MAX11300Test::Pin          pin,
+                                            MAX11300Test::VoltageRange range)
+    {
+        // We expect..
+        // The initial pin config reset transaction
+        Max11300TestHelper::TxTransaction tx_pincfgreset;
+        tx_pincfgreset.description = "High impedance pin reset transaction";
+        tx_pincfgreset.buff
+            = {(uint8_t)((MAX11300_FUNC_BASE + pin) << 1), 0x00, 0x00};
+        tx_pincfgreset.size = 3;
+        tx_pincfgreset.wait = 0;
+        tx_transactions.push_back(tx_pincfgreset);
+
+        // Now we handle the expected pin configuration
+        uint16_t expected_pin_cfg = 0x0000;
+        expected_pin_cfg          = expected_pin_cfg
+                           | static_cast<uint16_t>(PinMode::ANALOG_OUT)
+                           | static_cast<uint16_t>(range);
+
+        // The pin config transaction
+        Max11300TestHelper::TxTransaction tx_pincfg;
+        tx_pincfg.description = "Pin configuration transaction";
+        tx_pincfg.buff        = {(uint8_t)((MAX11300_FUNC_BASE + pin) << 1),
+                          (uint8_t)(expected_pin_cfg >> 8),
+                          (uint8_t)expected_pin_cfg};
+        tx_pincfg.size        = 3;
+        tx_pincfg.wait        = 0;
+        tx_transactions.push_back(tx_pincfg);
+
+        // ...and the pin config verification transaction
+        Max11300TestHelper::TxRxTransaction txrx_pincfg_verify;
+        txrx_pincfg_verify.description = "Pin config verification transaction";
+        txrx_pincfg_verify.tx_buff
+            = {(uint8_t)(((MAX11300_FUNC_BASE + pin) << 1) | 1), 0x00, 0x00};
+        txrx_pincfg_verify.rx_buff = {
+            0x00, (uint8_t)(expected_pin_cfg >> 8), (uint8_t)expected_pin_cfg};
+        txrx_pincfg_verify.size = 3;
+        txrx_transactions.push_back(txrx_pincfg_verify);
+
+        bool result = max11300.ConfigurePinAsAnalogWrite(pin, range)
+                      == MAX11300Test::Result::OK;
+
+        clearAllTransactions();
+
+        return result;
     }
 
     /**
@@ -432,60 +631,33 @@ TEST_F(Max11300TestHelper, verifyDriverInitializationRoutine) {}
 
 TEST_F(Max11300TestHelper, verifyDacPinConfiguration)
 {
-    MAX11300Test::Pin       pin = MAX11300Test::PIN_6;
-    MAX11300Test::PinConfig pin_cfg;
-    pin_cfg.Defaults();
-    pin_cfg.mode  = MAX11300Test::PinMode::ANALOG_OUT;
-    pin_cfg.range = MAX11300Test::VoltageRange::NEGATIVE_5_TO_5;
-
-    EXPECT_TRUE(setPinConfigAndVerify(pin, pin_cfg));
+    EXPECT_TRUE(ConfigurePinAsAnalogWriteAndVerify(
+        MAX11300Test::PIN_6, MAX11300Test::VoltageRange::NEGATIVE_5_TO_5));
 }
 
 
 TEST_F(Max11300TestHelper, verifyAdcPinConfiguration)
 {
-    MAX11300Test::Pin       pin = MAX11300Test::PIN_14;
-    MAX11300Test::PinConfig pin_cfg;
-    pin_cfg.Defaults();
-    pin_cfg.mode  = MAX11300Test::PinMode::ANALOG_IN;
-    pin_cfg.range = MAX11300Test::VoltageRange::ZERO_TO_10;
-
-    EXPECT_TRUE(setPinConfigAndVerify(pin, pin_cfg));
+    EXPECT_TRUE(ConfigurePinAsAnalogReadAndVerify(
+        MAX11300Test::PIN_14, MAX11300Test::VoltageRange::ZERO_TO_10));
 }
 
 TEST_F(Max11300TestHelper, verifyGpiPinConfiguration)
 {
-    MAX11300Test::Pin       pin = MAX11300Test::PIN_19;
-    MAX11300Test::PinConfig pin_cfg;
-    pin_cfg.Defaults();
-    pin_cfg.mode      = MAX11300Test::PinMode::GPI;
-    pin_cfg.range     = MAX11300Test::VoltageRange::ZERO_TO_10;
-    pin_cfg.threshold = 2.5f;
-
-    EXPECT_TRUE(setPinConfigAndVerify(pin, pin_cfg));
+    EXPECT_TRUE(ConfigurePinAsDigitalReadAndVerify(MAX11300Test::PIN_19, 2.5f));
 }
 
 TEST_F(Max11300TestHelper, verifyGpoPinConfiguration)
 {
-    MAX11300Test::Pin       pin = MAX11300Test::PIN_3;
-    MAX11300Test::PinConfig pin_cfg;
-    pin_cfg.Defaults();
-    pin_cfg.mode      = MAX11300Test::PinMode::GPO;
-    pin_cfg.range     = MAX11300Test::VoltageRange::ZERO_TO_10;
-    pin_cfg.threshold = 5.0f;
-
-    EXPECT_TRUE(setPinConfigAndVerify(pin, pin_cfg));
+    EXPECT_TRUE(ConfigurePinAsDigitalWriteAndVerify(MAX11300Test::PIN_3, 5.0f));
 }
 
 
 TEST_F(Max11300TestHelper, verifyWriteAnalogPin)
 {
-    MAX11300Test::Pin       pin = MAX11300Test::PIN_3;
-    MAX11300Test::PinConfig pin_cfg;
-    pin_cfg.Defaults();
-    pin_cfg.mode  = MAX11300Test::PinMode::ANALOG_OUT;
-    pin_cfg.range = MAX11300Test::VoltageRange::ZERO_TO_10;
-    EXPECT_TRUE(setPinConfigAndVerify(pin, pin_cfg));
+    MAX11300Test::Pin pin = MAX11300Test::PIN_3;
+    EXPECT_TRUE(ConfigurePinAsAnalogWriteAndVerify(
+        pin, MAX11300Test::VoltageRange::ZERO_TO_10));
 
     // Write two different values to a single DAC pin and verify
     // the transactions...
@@ -522,20 +694,13 @@ TEST_F(Max11300TestHelper, verifyWriteAnalogPin)
 
 TEST_F(Max11300TestHelper, verifyWriteAnalogPinMultiple)
 {
-    MAX11300Test::Pin       pin1 = MAX11300Test::PIN_3;
-    MAX11300Test::PinConfig pin1_cfg;
-    pin1_cfg.Defaults();
-    pin1_cfg.mode  = MAX11300Test::PinMode::ANALOG_OUT;
-    pin1_cfg.range = MAX11300Test::VoltageRange::ZERO_TO_10;
-    EXPECT_TRUE(setPinConfigAndVerify(pin1, pin1_cfg));
+    MAX11300Test::Pin pin1 = MAX11300Test::PIN_3;
+    EXPECT_TRUE(ConfigurePinAsAnalogWriteAndVerify(
+        pin1, MAX11300Test::VoltageRange::ZERO_TO_10));
 
-    MAX11300Test::Pin       pin2 = MAX11300Test::PIN_12;
-    MAX11300Test::PinConfig pin2_cfg;
-    pin2_cfg.Defaults();
-    pin2_cfg.mode  = MAX11300Test::PinMode::ANALOG_OUT;
-    pin2_cfg.range = MAX11300Test::VoltageRange::ZERO_TO_10;
-    EXPECT_TRUE(setPinConfigAndVerify(pin2, pin2_cfg));
-
+    MAX11300Test::Pin pin2 = MAX11300Test::PIN_12;
+    EXPECT_TRUE(ConfigurePinAsAnalogWriteAndVerify(
+        pin2, MAX11300Test::VoltageRange::ZERO_TO_10));
 
     // Write two different values to two DAC pins and verify
     // the transaction
@@ -564,12 +729,9 @@ TEST_F(Max11300TestHelper, verifyWriteAnalogPinMultiple)
 
 TEST_F(Max11300TestHelper, verifyReadAnalogPin)
 {
-    MAX11300Test::Pin       pin = MAX11300Test::PIN_7;
-    MAX11300Test::PinConfig pin_cfg;
-    pin_cfg.Defaults();
-    pin_cfg.mode  = MAX11300Test::PinMode::ANALOG_IN;
-    pin_cfg.range = MAX11300Test::VoltageRange::NEGATIVE_5_TO_5;
-    EXPECT_TRUE(setPinConfigAndVerify(pin, pin_cfg));
+    MAX11300Test::Pin pin = MAX11300Test::PIN_7;
+    EXPECT_TRUE(ConfigurePinAsAnalogReadAndVerify(
+        pin, MAX11300Test::VoltageRange::NEGATIVE_5_TO_5));
 
     uint16_t adc_val = 3583;
 
@@ -589,20 +751,13 @@ TEST_F(Max11300TestHelper, verifyReadAnalogPin)
 
 TEST_F(Max11300TestHelper, verifyReadAnalogPinMultiple)
 {
-    MAX11300Test::Pin       pin1 = MAX11300Test::PIN_12;
-    MAX11300Test::PinConfig pin1_cfg;
-    pin1_cfg.Defaults();
-    pin1_cfg.mode  = MAX11300Test::PinMode::ANALOG_IN;
-    pin1_cfg.range = MAX11300Test::VoltageRange::ZERO_TO_10;
-    EXPECT_TRUE(setPinConfigAndVerify(pin1, pin1_cfg));
+    MAX11300Test::Pin pin1 = MAX11300Test::PIN_12;
+    EXPECT_TRUE(ConfigurePinAsAnalogReadAndVerify(
+        pin1, MAX11300Test::VoltageRange::ZERO_TO_10));
 
-    MAX11300Test::Pin       pin2 = MAX11300Test::PIN_18;
-    MAX11300Test::PinConfig pin2_cfg;
-    pin2_cfg.Defaults();
-    pin2_cfg.mode  = MAX11300Test::PinMode::ANALOG_IN;
-    pin2_cfg.range = MAX11300Test::VoltageRange::NEGATIVE_5_TO_5;
-    EXPECT_TRUE(setPinConfigAndVerify(pin2, pin2_cfg));
-
+    MAX11300Test::Pin pin2 = MAX11300Test::PIN_18;
+    EXPECT_TRUE(ConfigurePinAsAnalogReadAndVerify(
+        pin2, MAX11300Test::VoltageRange::ZERO_TO_10));
 
     // Read two different values from the ADC pins and verify
     // the transaction
@@ -635,13 +790,8 @@ TEST_F(Max11300TestHelper, verifyReadAnalogPinMultiple)
 
 TEST_F(Max11300TestHelper, verifyWriteDigitalPin)
 {
-    MAX11300Test::Pin       pin1 = MAX11300Test::PIN_16;
-    MAX11300Test::PinConfig pin_cfg1;
-    pin_cfg1.Defaults();
-    pin_cfg1.mode      = MAX11300Test::PinMode::GPO;
-    pin_cfg1.range     = MAX11300Test::VoltageRange::ZERO_TO_10;
-    pin_cfg1.threshold = 5.0f;
-    EXPECT_TRUE(setPinConfigAndVerify(pin1, pin_cfg1));
+    MAX11300Test::Pin pin1 = MAX11300Test::PIN_16;
+    EXPECT_TRUE(ConfigurePinAsDigitalWriteAndVerify(pin1, 5.0f));
 
     TxTransaction tx_write_gpo1;
     tx_write_gpo1.description = "GPO write transaction";
@@ -658,21 +808,11 @@ TEST_F(Max11300TestHelper, verifyWriteDigitalPin)
 
 TEST_F(Max11300TestHelper, verifyWriteDigitalPinMultiple)
 {
-    MAX11300Test::Pin       pin1 = MAX11300Test::PIN_1;
-    MAX11300Test::PinConfig pin_cfg1;
-    pin_cfg1.Defaults();
-    pin_cfg1.mode      = MAX11300Test::PinMode::GPO;
-    pin_cfg1.range     = MAX11300Test::VoltageRange::ZERO_TO_10;
-    pin_cfg1.threshold = 5.0f;
-    EXPECT_TRUE(setPinConfigAndVerify(pin1, pin_cfg1));
+    MAX11300Test::Pin pin1 = MAX11300Test::PIN_1;
+    EXPECT_TRUE(ConfigurePinAsDigitalWriteAndVerify(pin1, 5.0f));
 
-    MAX11300Test::Pin       pin2 = MAX11300Test::PIN_16;
-    MAX11300Test::PinConfig pin_cfg2;
-    pin_cfg2.Defaults();
-    pin_cfg2.mode      = MAX11300Test::PinMode::GPO;
-    pin_cfg2.range     = MAX11300Test::VoltageRange::ZERO_TO_10;
-    pin_cfg2.threshold = 5.0f;
-    EXPECT_TRUE(setPinConfigAndVerify(pin2, pin_cfg2));
+    MAX11300Test::Pin pin2 = MAX11300Test::PIN_16;
+    EXPECT_TRUE(ConfigurePinAsDigitalWriteAndVerify(pin2, 5.0f));
 
     TxTransaction tx_write_gpo1;
     tx_write_gpo1.description = "GPO write transaction 1";
@@ -702,13 +842,8 @@ TEST_F(Max11300TestHelper, verifyWriteDigitalPinMultiple)
 
 TEST_F(Max11300TestHelper, verifyReadDigitalPin)
 {
-    MAX11300Test::Pin       pin1 = MAX11300Test::PIN_1;
-    MAX11300Test::PinConfig pin_cfg1;
-    pin_cfg1.Defaults();
-    pin_cfg1.mode      = MAX11300Test::PinMode::GPI;
-    pin_cfg1.range     = MAX11300Test::VoltageRange::ZERO_TO_10;
-    pin_cfg1.threshold = 2.5f;
-    EXPECT_TRUE(setPinConfigAndVerify(pin1, pin_cfg1));
+    MAX11300Test::Pin pin1 = MAX11300Test::PIN_1;
+    EXPECT_TRUE(ConfigurePinAsDigitalReadAndVerify(pin1, 2.5f));
 
     TxRxTransaction txrx_read_gpi1;
     txrx_read_gpi1.description = "GPI read transaction";
@@ -726,22 +861,12 @@ TEST_F(Max11300TestHelper, verifyReadDigitalPin)
 
 TEST_F(Max11300TestHelper, verifyReadDigitalPinMultiple)
 {
-    MAX11300Test::Pin       pin1 = MAX11300Test::PIN_1;
-    MAX11300Test::PinConfig pin_cfg1;
-    pin_cfg1.Defaults();
-    pin_cfg1.mode      = MAX11300Test::PinMode::GPI;
-    pin_cfg1.range     = MAX11300Test::VoltageRange::ZERO_TO_10;
-    pin_cfg1.threshold = 2.5f;
-    EXPECT_TRUE(setPinConfigAndVerify(pin1, pin_cfg1));
+    MAX11300Test::Pin pin1 = MAX11300Test::PIN_1;
+    EXPECT_TRUE(ConfigurePinAsDigitalReadAndVerify(pin1, 2.5f));
 
 
-    MAX11300Test::Pin       pin2 = MAX11300Test::PIN_18;
-    MAX11300Test::PinConfig pin_cfg2;
-    pin_cfg2.Defaults();
-    pin_cfg2.mode      = MAX11300Test::PinMode::GPI;
-    pin_cfg2.range     = MAX11300Test::VoltageRange::ZERO_TO_10;
-    pin_cfg2.threshold = 2.5f;
-    EXPECT_TRUE(setPinConfigAndVerify(pin2, pin_cfg2));
+    MAX11300Test::Pin pin2 = MAX11300Test::PIN_18;
+    EXPECT_TRUE(ConfigurePinAsDigitalReadAndVerify(pin2, 2.7f));
 
     TxRxTransaction txrx_read_gpi1;
     txrx_read_gpi1.description = "GPI read transaction";
@@ -761,38 +886,22 @@ TEST_F(Max11300TestHelper, verifyReadDigitalPinMultiple)
 TEST_F(Max11300TestHelper, verifyHeterogeneousPinBehavior)
 {
     // Pin 1 is a GPI pin
-    MAX11300Test::Pin       pin1 = MAX11300Test::PIN_11;
-    MAX11300Test::PinConfig pin_cfg1;
-    pin_cfg1.Defaults();
-    pin_cfg1.mode      = MAX11300Test::PinMode::GPI;
-    pin_cfg1.range     = MAX11300Test::VoltageRange::ZERO_TO_10;
-    pin_cfg1.threshold = 2.5f;
-    EXPECT_TRUE(setPinConfigAndVerify(pin1, pin_cfg1));
+    MAX11300Test::Pin pin1 = MAX11300Test::PIN_11;
+    EXPECT_TRUE(ConfigurePinAsDigitalReadAndVerify(pin1, 2.5f));
 
     // Pin 2 is a GPO pin
-    MAX11300Test::Pin       pin2 = MAX11300Test::PIN_10;
-    MAX11300Test::PinConfig pin_cfg2;
-    pin_cfg2.Defaults();
-    pin_cfg2.mode      = MAX11300Test::PinMode::GPO;
-    pin_cfg2.range     = MAX11300Test::VoltageRange::ZERO_TO_10;
-    pin_cfg2.threshold = 2.5f;
-    EXPECT_TRUE(setPinConfigAndVerify(pin2, pin_cfg2));
+    MAX11300Test::Pin pin2 = MAX11300Test::PIN_10;
+    EXPECT_TRUE(ConfigurePinAsDigitalWriteAndVerify(pin2, 2.5f));
 
     // Pin 3 is a DAC pin
-    MAX11300Test::Pin       pin3 = MAX11300Test::PIN_5;
-    MAX11300Test::PinConfig pin_cfg3;
-    pin_cfg3.Defaults();
-    pin_cfg3.mode  = MAX11300Test::PinMode::ANALOG_OUT;
-    pin_cfg3.range = MAX11300Test::VoltageRange::ZERO_TO_10;
-    EXPECT_TRUE(setPinConfigAndVerify(pin3, pin_cfg3));
+    MAX11300Test::Pin pin3 = MAX11300Test::PIN_5;
+    EXPECT_TRUE(ConfigurePinAsAnalogWriteAndVerify(
+        pin3, MAX11300Test::VoltageRange::ZERO_TO_10));
 
     // Pin 4 is an ADC pin
-    MAX11300Test::Pin       pin4 = MAX11300Test::PIN_16;
-    MAX11300Test::PinConfig pin_cfg4;
-    pin_cfg4.Defaults();
-    pin_cfg4.mode  = MAX11300Test::PinMode::ANALOG_IN;
-    pin_cfg4.range = MAX11300Test::VoltageRange::ZERO_TO_10;
-    EXPECT_TRUE(setPinConfigAndVerify(pin4, pin_cfg4));
+    MAX11300Test::Pin pin4 = MAX11300Test::PIN_16;
+    EXPECT_TRUE(ConfigurePinAsAnalogReadAndVerify(
+        pin4, MAX11300Test::VoltageRange::ZERO_TO_10));
 
     uint16_t dac_val = 1234;
     max11300.WriteAnalogPinRaw(pin3, dac_val);
@@ -838,7 +947,6 @@ TEST_F(Max11300TestHelper, verifyHeterogeneousPinBehavior)
 
     EXPECT_TRUE(max11300.ReadDigitalPin(pin1));
     EXPECT_EQ(adc_val, max11300.ReadAnalogPinRaw(pin4));
-    
 }
 
 
@@ -906,32 +1014,11 @@ TEST(dev_MAX11300, a_VoltsTo12BitUint)
     EXPECT_EQ(
         MAX11300::VoltsTo12BitUint(2, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
         4095);
-
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(-1, MAX11300::VoltageRange::ZERO_TO_2_5), 0);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(0, MAX11300::VoltageRange::ZERO_TO_2_5), 0);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(1, MAX11300::VoltageRange::ZERO_TO_2_5),
-        1638);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(1.25, MAX11300::VoltageRange::ZERO_TO_2_5),
-        2047);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(2, MAX11300::VoltageRange::ZERO_TO_2_5),
-        3276);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(2.5, MAX11300::VoltageRange::ZERO_TO_2_5),
-        4095);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(5, MAX11300::VoltageRange::ZERO_TO_2_5),
-        4095);
 }
 
 TEST(dev_MAX11300, b_TwelveBitUintToVolts)
 {
-    float oneLsbAtTenVolts          = 10.0f / 4096.0f;
-    float oneLsbAtTwoPointFiveVolts = 2.5f / 4096.0f;
+    float oneLsbAtTenVolts = 10.0f / 4096.0f;
 
     EXPECT_FLOAT_EQ(
         MAX11300::TwelveBitUintToVolts(0, MAX11300::VoltageRange::ZERO_TO_10),
@@ -998,26 +1085,4 @@ TEST(dev_MAX11300, b_TwelveBitUintToVolts)
     EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
                         5000, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
                     0);
-
-    EXPECT_FLOAT_EQ(
-        MAX11300::TwelveBitUintToVolts(0, MAX11300::VoltageRange::ZERO_TO_2_5),
-        0);
-    EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    1638, MAX11300::VoltageRange::ZERO_TO_2_5),
-                1,
-                oneLsbAtTwoPointFiveVolts);
-    EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    2047, MAX11300::VoltageRange::ZERO_TO_2_5),
-                1.25,
-                oneLsbAtTwoPointFiveVolts);
-    EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    3276, MAX11300::VoltageRange::ZERO_TO_2_5),
-                2,
-                oneLsbAtTwoPointFiveVolts);
-    EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
-                        4095, MAX11300::VoltageRange::ZERO_TO_2_5),
-                    2.5);
-    EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
-                        5000, MAX11300::VoltageRange::ZERO_TO_2_5),
-                    2.5);
 }
