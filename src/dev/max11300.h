@@ -287,7 +287,7 @@ class MAX11300Driver
             threshold_voltage = 0.0f;
 
         pin_configurations_[pin].Defaults();
-        pin_configurations_[pin].mode = PinMode::GPI;
+        pin_configurations_[pin].mode      = PinMode::GPI;
         pin_configurations_[pin].threshold = threshold_voltage;
 
         return SetPinConfig(pin);
@@ -302,7 +302,7 @@ class MAX11300Driver
             output_voltage = 0.0f;
 
         pin_configurations_[pin].Defaults();
-        pin_configurations_[pin].mode = PinMode::GPO;
+        pin_configurations_[pin].mode      = PinMode::GPO;
         pin_configurations_[pin].threshold = output_voltage;
 
         return SetPinConfig(pin);
@@ -708,7 +708,8 @@ class MAX11300Driver
         }
 
         // Apply the pin configuration
-        pin_func_cfg = pin_func_cfg | static_cast<uint16_t>(pin_configurations_[pin].mode)
+        pin_func_cfg = pin_func_cfg
+                       | static_cast<uint16_t>(pin_configurations_[pin].mode)
                        | static_cast<uint16_t>(pin_configurations_[pin].range);
 
         if(pin_configurations_[pin].mode == PinMode::ANALOG_IN)
@@ -723,16 +724,18 @@ class MAX11300Driver
             // reported as a logic one. The input voltage must be between 0V and 5V.
             //  It may take up to 1ms for the threshold voltage to be effective
             WriteRegister((MAX11300_DACDAT_BASE + pin),
-                          MAX11300Driver::VoltsTo12BitUint(pin_configurations_[pin].threshold,
-                                                           pin_configurations_[pin].range));
+                          MAX11300Driver::VoltsTo12BitUint(
+                              pin_configurations_[pin].threshold,
+                              pin_configurations_[pin].range));
         }
         else if(pin_configurations_[pin].mode == PinMode::GPO)
         {
             // The port’s DAC data register needs to be set first. It may require up to 1ms for the
             // port to be ready to produce the desired logic one level.
             WriteRegister((MAX11300_DACDAT_BASE + pin),
-                          MAX11300Driver::VoltsTo12BitUint(pin_configurations_[pin].threshold,
-                                                           pin_configurations_[pin].range));
+                          MAX11300Driver::VoltsTo12BitUint(
+                              pin_configurations_[pin].threshold,
+                              pin_configurations_[pin].range));
         }
 
         // Write the configuration now...
