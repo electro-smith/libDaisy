@@ -1,7 +1,7 @@
 
 #include "msd.h"
 #include "daisy_core.h"
-#include "fatfs_usbh.h"
+// #include "fatfs_usbh.h"
 #include "usbh_core.h"
 #include "usbh_msc.h"
 
@@ -50,7 +50,7 @@ MSDHandle::Result MSDHandle::Impl::Init()
     {
         return Result::ERR;
     }
-    MX_FATFS_Init();
+    // MX_FATFS_Init();
     return Result::OK;
 }
 
