@@ -10,6 +10,7 @@
 
 * patch_sm: corrected the order of the gate out pins
 * sai: fixed occasional output audio channel swap (#268)
+* sd_diskio: removed extraneous strobing of unrelated GPIO pin
 
 ### Other
 * Switch: Use `System::GetNow()` rather than the update rate to calculate `TimeHeldMs()`.  
