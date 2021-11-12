@@ -14,11 +14,14 @@
 * patch_sm: corrected the order of the gate out pins
 * sai: fixed occasional output audio channel swap (#268)
 * sd_diskio: removed extraneous strobing of unrelated GPIO pin
+* patch: fixed seed1.1 compatibility to properly initialize the primary codec due to special 4-channel audio
 
 ### Other
+
 * Switch: Use `System::GetNow()` rather than the update rate to calculate `TimeHeldMs()`.  
 
 ### Migrating
+
 * Backwards compatability will be maintained until the next breaking change, at which point the `update_rate` argument will be removed from `Switch::Init`.
 
 ## v2.0.1
