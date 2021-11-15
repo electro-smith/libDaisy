@@ -8,7 +8,7 @@ using namespace daisy;
 class MidiUsbTransport::Impl
 {
   public:
-    void Init();
+    void Init(Config config);
 
     void    StartRx() { rx_active_ = true; }
     size_t  Readable() { return rx_buffer_.readable(); }
@@ -24,6 +24,7 @@ class MidiUsbTransport::Impl
     /** USB Handle for CDC transfers 
          */
     UsbHandle usb_handle_;
+    Config config_;
 
     static constexpr size_t kBufferSize = 1024;
     bool                    rx_active_;
@@ -68,7 +69,7 @@ void ReceiveCallback(uint8_t* buffer, uint32_t* length)
     }
 }
 
-void MidiUsbTransport::Impl::Init()
+void MidiUsbTransport::Impl::Init(Config config)
 {
     // Borrowed from logger
     /** this implementation relies on the fact that UsbHandle class has no member variables and can be shared
@@ -76,16 +77,26 @@ void MidiUsbTransport::Impl::Init()
      */
     // static_assert(1u == sizeof(MidiUsbTransport::Impl::usb_handle_), "UsbHandle is not static");
     usbd_mode = USBD_MODE_MIDI;
-    usb_handle_.Init(UsbHandle::FS_INTERNAL);
+    config_ = config;
+
+    UsbHandle::UsbPeriph periph = UsbHandle::FS_INTERNAL;
+    if (config_.periph == Config::EXTERNAL)
+        periph = UsbHandle::FS_EXTERNAL;
+
+    usb_handle_.Init(periph);
+    
     rx_active_ = false;
-    // System::DelayUs(16000);
-    usb_handle_.SetReceiveCallback(ReceiveCallback, UsbHandle::FS_INTERNAL);
+    System::Delay(10);
+    usb_handle_.SetReceiveCallback(ReceiveCallback, periph);
 }
 
 void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
 {
     MidiToUsb(buffer, size);
-    usb_handle_.TransmitInternal(tx_buffer_, tx_ptr_);
+    if (config_.periph == Config::EXTERNAL)
+        usb_handle_.TransmitExternal(tx_buffer_, tx_ptr_);
+    else
+        usb_handle_.TransmitInternal(tx_buffer_, tx_ptr_);
     tx_ptr_ = 0;
 }
 
@@ -103,7 +114,7 @@ void MidiUsbTransport::Impl::UsbToMidi(uint8_t* buffer, uint8_t length)
     if(code_index == 0x0 || code_index == 0x1 || code_index == 0xF)
     {
         // 0x0 and 0x1 are reserved codes, and if they come up,
-        // there's probably been an error. *0xF indicated data is
+        // there's probably been an error. *0xF indicates data is
         // sent one byte at a time, rather than in packets of four.
         // This functionality could be supported later.
         return;
@@ -167,7 +178,7 @@ void MidiUsbTransport::Impl::MidiToUsb(uint8_t* buffer, size_t size)
 void MidiUsbTransport::Init(MidiUsbTransport::Config config)
 {
     pimpl_ = &midi_usb_handle;
-    pimpl_->Init();
+    pimpl_->Init(config);
 }
 
 void MidiUsbTransport::StartRx()
