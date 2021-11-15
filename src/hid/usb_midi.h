@@ -16,12 +16,13 @@ class MidiUsbTransport
 
     struct Config
     {
-      enum Periph {
-        INTERNAL = 0,
-        EXTERNAL
-      };
+        enum Periph
+        {
+            INTERNAL = 0,
+            EXTERNAL
+        };
 
-      Periph periph;
+        Periph periph;
     };
 
     void Init(Config config);

@@ -24,7 +24,7 @@ class MidiUsbTransport::Impl
     /** USB Handle for CDC transfers 
          */
     UsbHandle usb_handle_;
-    Config config_;
+    Config    config_;
 
     static constexpr size_t kBufferSize = 1024;
     bool                    rx_active_;
@@ -76,15 +76,17 @@ void MidiUsbTransport::Impl::Init(Config config)
      * assert this statement:
      */
     // static_assert(1u == sizeof(MidiUsbTransport::Impl::usb_handle_), "UsbHandle is not static");
+
+    // This tells the USB middleware to send out MIDI descriptors instead of CDC
     usbd_mode = USBD_MODE_MIDI;
-    config_ = config;
+    config_   = config;
 
     UsbHandle::UsbPeriph periph = UsbHandle::FS_INTERNAL;
-    if (config_.periph == Config::EXTERNAL)
+    if(config_.periph == Config::EXTERNAL)
         periph = UsbHandle::FS_EXTERNAL;
 
     usb_handle_.Init(periph);
-    
+
     rx_active_ = false;
     System::Delay(10);
     usb_handle_.SetReceiveCallback(ReceiveCallback, periph);
@@ -93,7 +95,7 @@ void MidiUsbTransport::Impl::Init(Config config)
 void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
 {
     MidiToUsb(buffer, size);
-    if (config_.periph == Config::EXTERNAL)
+    if(config_.periph == Config::EXTERNAL)
         usb_handle_.TransmitExternal(tx_buffer_, tx_ptr_);
     else
         usb_handle_.TransmitInternal(tx_buffer_, tx_ptr_);
