@@ -47,6 +47,7 @@
 #include "dev/codec_wm8731.h"
 #include "dev/lcd_hd44780.h"
 #include "dev/mcp23017.h"
+#include "dev/max11300.h"
 #include "ui/ButtonMonitor.h"
 #include "ui/PotMonitor.h"
 #include "ui/UI.h"
