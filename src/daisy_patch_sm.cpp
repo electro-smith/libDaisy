@@ -388,6 +388,9 @@ namespace patch_sm
             case 32000:
                 sai_sr = SaiHandle::Config::SampleRate::SAI_32KHZ;
                 break;
+            case 44100:
+                sai_sr = SaiHandle::Config::SampleRate::SAI_44KHZ;
+                break;
             case 48000:
                 sai_sr = SaiHandle::Config::SampleRate::SAI_48KHZ;
                 break;

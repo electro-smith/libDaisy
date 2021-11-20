@@ -8,6 +8,8 @@
 
 * bootloader: the bootloader can now be flashed directly from libDaisy using `make program-boot`
 * driver: added support for the MAX11300 ADC/DAC/GPI/GPO device
+* SAI: add support for 44.1kHz sample rates
+* patch_sm: add support for 44.1kHz sample rates
 
 ### Bug fixes
 

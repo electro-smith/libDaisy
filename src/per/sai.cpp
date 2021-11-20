@@ -109,6 +109,10 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
             sai_a_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_32K;
             sai_b_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_32K;
             break;
+        case Config::SampleRate::SAI_44KHZ:
+            sai_a_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_44K;
+            sai_b_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_44K;
+            break;
         case Config::SampleRate::SAI_48KHZ:
             sai_a_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
             sai_b_handle_.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
@@ -348,6 +352,7 @@ float SaiHandle::Impl::GetSampleRate()
         case Config::SampleRate::SAI_8KHZ: return 8000.f;
         case Config::SampleRate::SAI_16KHZ: return 16000.f;
         case Config::SampleRate::SAI_32KHZ: return 32000.f;
+        case Config::SampleRate::SAI_44KHZ: return 44100.f;
         case Config::SampleRate::SAI_48KHZ: return 48000.f;
         case Config::SampleRate::SAI_96KHZ: return 96000.f;
         default: return 48000.f;
