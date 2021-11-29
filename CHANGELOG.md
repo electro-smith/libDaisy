@@ -6,8 +6,23 @@
 
 ### Features
 
+### Bug Fixes
+
+### Other
+
+### Migrating
+
+## v3.0.0
+
+### Breaking Changes
+
+* ui: addition of `CanvasDescriptor::screenSaverTimeout` can cause sporadic OLED response if not explicitly set.
+
+### Features
+
 * bootloader: the bootloader can now be flashed directly from libDaisy using `make program-boot`
 * driver: added support for the MAX11300 ADC/DAC/GPI/GPO device
+* usb_midi: added `MidiUsbTransport` class for easy usb midi functionality
 
 ### Bug fixes
 
@@ -18,11 +33,16 @@
 
 ### Other
 
-* Switch: Use `System::GetNow()` rather than the update rate to calculate `TimeHeldMs()`.  
+* switch: Use `System::GetNow()` rather than the update rate to calculate `TimeHeldMs()`.  
+  * This has also been applied to the `Encoder` class (since it uses `Switch` internally).
+* usb host: ST Middleware for USB Host support has been added to the Middlewares folder
+* fatfs: changed default `FS_LOCK` to 0, allowing for more simultaneously open FIL objects.
 
 ### Migrating
 
-* Backwards compatability will be maintained until the next breaking change, at which point the `update_rate` argument will be removed from `Switch::Init`.
+* switch/encoder: Backwards compatability for Initializing switches/encoders will be maintained until the next breaking change, at which point the `update_rate` argument will be removed from `Switch::Init`.
+* fatfs: If file locking was being used, `FS_LOCK` will have to be changed back to a non-zero, positive value.
+* ui: `UiCanvasDescriptor::screenSaverTimeout` has been added, and must be explicitly set to 0 to be always on. Otherwise, setting it to a value in milliseconds will cause the OLED to shut off during periods of inactivity.
 
 ## v2.0.1
 
@@ -56,7 +76,6 @@
 * util: added new VoctCalibration helper class for calibrating ADC inputs
 * seed: added support for Daisy Seed 1.1 (aka Daisy Seed rev5) hardware. Pin-compatible, with same form factor. WM8731 Codec instead of AK4556.
 * bootloader: added `program-app` make target to upload code to the daisy bootloader
-* usb_midi: added `MidiUsbTransport` class for easy usb midi functionality
 
 ### Bug fixes
 
