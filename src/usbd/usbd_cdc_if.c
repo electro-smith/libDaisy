@@ -177,8 +177,8 @@ static int8_t CDC_Init_FS(void)
     /* Set Application Buffers */
     USBD_CDC_SetTxBuffer(&hUsbDeviceFS, UserTxBufferFS, 0);
     USBD_CDC_SetRxBuffer(&hUsbDeviceFS, UserRxBufferFS);
-    if (!rx_callback_fs)
-      rx_callback_fs = dummy_rx_callback;
+    if(!rx_callback_fs)
+        rx_callback_fs = dummy_rx_callback;
     return (USBD_OK);
     /* USER CODE END 3 */
 }
@@ -320,8 +320,8 @@ static int8_t CDC_Init_HS(void)
     /* Set Application Buffers */
     USBD_CDC_SetTxBuffer(&hUsbDeviceHS, UserTxBufferHS, 0);
     USBD_CDC_SetRxBuffer(&hUsbDeviceHS, UserRxBufferHS);
-    if (!rx_callback_hs)
-      rx_callback_hs = dummy_rx_callback;
+    if(!rx_callback_hs)
+        rx_callback_hs = dummy_rx_callback;
     return (USBD_OK);
     /* USER CODE END 8 */
 }

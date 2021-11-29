@@ -45,6 +45,7 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/hid/rgb_led.cpp
     ${MODULE_DIR}/hid/switch.cpp
     ${MODULE_DIR}/hid/usb.cpp
+    ${MODULE_DIR}/hid/usb_midi.cpp
     ${MODULE_DIR}/hid/wavplayer.cpp
     ${MODULE_DIR}/hid/logger.cpp
     ${MODULE_DIR}/per/adc.cpp

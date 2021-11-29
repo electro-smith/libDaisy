@@ -56,6 +56,7 @@
 * util: added new VoctCalibration helper class for calibrating ADC inputs
 * seed: added support for Daisy Seed 1.1 (aka Daisy Seed rev5) hardware. Pin-compatible, with same form factor. WM8731 Codec instead of AK4556.
 * bootloader: added `program-app` make target to upload code to the daisy bootloader
+* usb_midi: added `MidiUsbTransport` class for easy usb midi functionality
 
 ### Bug fixes
 
