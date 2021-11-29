@@ -45,6 +45,9 @@ struct UiCanvasDescriptor
     /** The desired update rate in ms */
     uint32_t updateRateMs_;
 
+    uint32_t screenSaverTimeOut;
+    bool     screenSaverOn = false;
+
     /** A function to clear the display before the UiPages are drawn. */
     using ClearFuncPtr = void (*)(const UiCanvasDescriptor& canvasToClear);
     ClearFuncPtr clearFunction_;
@@ -439,6 +442,7 @@ class UI
     Stack<UiPage*, kMaxNumPages>               pages_;
     Stack<UiCanvasDescriptor, kMaxNumCanvases> canvases_;
     uint32_t          lastUpdateTimes_[kMaxNumCanvases];
+    uint32_t          lastEventTime_;
     UiEventQueue*     eventQueue_;
     SpecialControlIds specialControlIds_;
     uint16_t          primaryOneBitGraphicsDisplayId_ = invalidCanvasId;
