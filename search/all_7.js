@@ -73,6 +73,6 @@ var searchData=
   ['getus_70',['GetUs',['../classdaisy_1_1_timer_handle.html#aa22a2290d5fb0cc957dc5b06ce21789b',1,'daisy::TimerHandle::GetUs()'],['../classdaisy_1_1_system.html#ac5b9751a02cb0230fabc1cf189ac8d08',1,'daisy::System::GetUs()']]],
   ['getvalue_71',['GetValue',['../classdaisy_1_1_random.html#a99172859b5fc01822213e15ddfe49078',1,'daisy::Random']]],
   ['gold_72',['GOLD',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a0b32c5df8961411a66895e57509677ac',1,'daisy::Color']]],
-  ['green_73',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]],
-  ['green_74',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color']]]
+  ['green_73',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color']]],
+  ['green_74',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]]
 ];
