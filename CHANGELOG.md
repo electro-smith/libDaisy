@@ -12,17 +12,20 @@
 
 ### Migrating
 
-## v3.0.0
+## v2.1.0
 
 ### Breaking Changes
-
-* ui: addition of `CanvasDescriptor::screenSaverTimeout` can cause sporadic OLED response if not explicitly set.
 
 ### Features
 
 * bootloader: the bootloader can now be flashed directly from libDaisy using `make program-boot`
+  * apps can be built by overwriting `LDSCRIPT` with one of the new (\_sram.lds, or \_qspi.lds) linker scripts, and adding `-DBOOT_APP` to the `C_DEFS` within the user makefile.
+  * once the bootloader is on the device, apps compiled with the above changes can be flashed to the bootloader using `make program-app`
+  * this process is subject to change, and will be improved and documented in the coming weeks.
 * driver: added support for the MAX11300 ADC/DAC/GPI/GPO device
-* usb_midi: added `MidiUsbTransport` class for easy usb midi functionality
+* usb_midi: added `MidiUsbTransport` class for easy usb midi functionality via `MidiUsbHandler`
+* ui: addition of `CanvasDescriptor::screenSaverTimeout` setting turns off display after as many milliseconds. Useful for preventing screen burn-in on sensitive displays like OLEDs.
+* usb_msd: basic support for Mass Storage USB host class has been added. Integration with FatFS is in progress.
 
 ### Bug fixes
 
@@ -40,9 +43,8 @@
 
 ### Migrating
 
-* switch/encoder: Backwards compatability for Initializing switches/encoders will be maintained until the next breaking change, at which point the `update_rate` argument will be removed from `Switch::Init`.
+* switch/encoder: Backwards compatability for Initializing switches/encoders will be maintained until the next breaking change, at which point the `update_rate` argument will be removed from `Switch::Init`, and `Encoder::Init`.
 * fatfs: If file locking was being used, `FS_LOCK` will have to be changed back to a non-zero, positive value.
-* ui: `UiCanvasDescriptor::screenSaverTimeout` has been added, and must be explicitly set to 0 to be always on. Otherwise, setting it to a value in milliseconds will cause the OLED to shut off during periods of inactivity.
 
 ## v2.0.1
 
