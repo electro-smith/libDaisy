@@ -111,6 +111,14 @@ class Bmp390SpiTransport{
         spi_.Init(spi_conf);
     }
 
+    void Write(uint8_t* data, uint16_t size){
+        spi_.BlockingTransmit(data, size);
+    }
+
+    void Read(uint8_t* data, uint16_t size){
+        spi_.BlockingReceive(data, size, 10);
+    }
+
   private:
   SpiHandle spi_;
 };
