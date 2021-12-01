@@ -48,6 +48,11 @@ class SpiHandle::Impl
                       size_t                         size,
                       SpiHandle::CallbackFunctionPtr callback,
                       void*                          callback_context);
+    Result BlockingTransmitAndReceive(uint8_t* tx_buff,
+                                      uint8_t* rx_buff,
+                                      size_t   size,
+                                      uint32_t timeout);
+
 
     Result InitPins();
     Result DeInitPins();
@@ -539,6 +544,19 @@ SpiHandle::Impl::StartDmaRx(uint8_t*                       buff,
     return SpiHandle::Result::OK;
 }
 
+SpiHandle::Result SpiHandle::Impl::BlockingTransmitAndReceive(uint8_t* tx_buff,
+                                                              uint8_t* rx_buff,
+                                                              size_t   size,
+                                                              uint32_t timeout)
+{
+    if(HAL_SPI_TransmitReceive(&hspi_, tx_buff, rx_buff, size, timeout)
+       != HAL_OK)
+    {
+        return SpiHandle::Result::ERR;
+    }
+    return SpiHandle::Result::OK;
+}
+
 SpiHandle::Result SpiHandle::Impl::BlockingReceive(uint8_t* buffer,
                                                    uint16_t size,
                                                    uint32_t timeout)
@@ -981,6 +999,7 @@ SpiHandle::BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout)
     return pimpl_->BlockingReceive(buffer, size, timeout);
 }
 
+
 SpiHandle::Result
 SpiHandle::DmaTransmit(uint8_t*                       buff,
                        size_t                         size,
@@ -996,4 +1015,12 @@ SpiHandle::Result SpiHandle::DmaReceive(uint8_t*                       buff,
                                         void* callback_context)
 {
     return pimpl_->DmaReceive(buff, size, callback, callback_context);
+}
+
+SpiHandle::Result SpiHandle::BlockingTransmitAndReceive(uint8_t* tx_buff,
+                                                        uint8_t* rx_buff,
+                                                        size_t   size,
+                                                        uint32_t timeout)
+{
+    return pimpl_->BlockingTransmitAndReceive(tx_buff, rx_buff, size, timeout);
 }

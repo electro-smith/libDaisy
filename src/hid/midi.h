@@ -10,6 +10,7 @@
 #include "per/uart.h"
 #include "util/ringbuffer.h"
 #include "hid/MidiEvent.h"
+#include "hid/usb_midi.h"
 #include "sys/system.h"
 
 namespace daisy
@@ -322,5 +323,6 @@ class MidiHandler
 /** @} */
 
 using MidiUartHandler = MidiHandler<MidiUartTransport>;
+using MidiUsbHandler  = MidiHandler<MidiUsbTransport>;
 } // namespace daisy
 #endif
