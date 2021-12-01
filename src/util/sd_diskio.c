@@ -138,8 +138,7 @@ DSTATUS SD_status(BYTE lun)
 DRESULT SD_read(BYTE lun, BYTE *buff, DWORD sector, UINT count)
 {
     DRESULT res = RES_ERROR;
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, 1);
-    ReadStatus = 0;
+    ReadStatus  = 0;
     uint32_t timeout;
 #if(ENABLE_SD_DMA_CACHE_MAINTENANCE == 1)
     uint32_t alignedAddr;
@@ -169,10 +168,8 @@ DRESULT SD_read(BYTE lun, BYTE *buff, DWORD sector, UINT count)
                 {
                     res = RES_OK;
 #if(ENABLE_SD_DMA_CACHE_MAINTENANCE == 1)
-                    /*
-               the SCB_InvalidateDCache_by_Addr() requires a 32-Byte aligned address,
-               adjust the address and the D-Cache size to invalidate accordingly.
-             */
+                    /* the SCB_InvalidateDCache_by_Addr() requires a 32-Byte aligned address,
+                     * adjust the address and the D-Cache size to invalidate accordingly. */
                     SCB_InvalidateDCache_by_Addr(
                         (uint32_t *)alignedAddr,
                         count * BLOCKSIZE + ((uint32_t)buff - alignedAddr));
@@ -182,7 +179,6 @@ DRESULT SD_read(BYTE lun, BYTE *buff, DWORD sector, UINT count)
             }
         }
     }
-    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, 0);
 
     return res;
 }

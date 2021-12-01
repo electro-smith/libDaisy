@@ -129,6 +129,16 @@ class SpiHandle
     */
     Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout = 100);
 
+    /** Blocking transmit and receive
+    \param *tx_buff the transmit buffer
+    \param *rx_buff the receive buffer
+    \param size the length of the transaction
+    */
+    Result BlockingTransmitAndReceive(uint8_t* tx_buff,
+                                      uint8_t* rx_buff,
+                                      size_t   size,
+                                      uint32_t timeout = 100);
+
     /** Polling Receive
     \param *buff input buffer
     \param size  buffer size

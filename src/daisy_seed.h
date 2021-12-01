@@ -149,11 +149,6 @@ class DaisySeed
     dsy_gpio           led, testpoint;
     System             system;
 
-  private:
-    /** Local shorthand for debug log destination
-    */
-    using Log = Logger<LOGGER_INTERNAL>;
-
     /** Internal indices for DaisySeed-equivalent devices 
      *  This shouldn't have any effect on user-facing code,
      *  and only needs to be checked to properly initialize
@@ -169,7 +164,14 @@ class DaisySeed
          *  that uses the WM8731 codec instead of the AK4430 */
         DAISY_SEED_1_1,
     };
+
+    /** Returns the BoardVersion detected during intiialization */
     BoardVersion CheckBoardVersion();
+
+  private:
+    /** Local shorthand for debug log destination
+    */
+    using Log = Logger<LOGGER_INTERNAL>;
 
     void ConfigureQspi();
     void ConfigureAudio();
