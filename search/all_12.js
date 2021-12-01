@@ -15,8 +15,8 @@ var searchData=
   ['read_5fserial_5fflash_5fdisco_5fparam_5fcmd_12',['READ_SERIAL_FLASH_DISCO_PARAM_CMD',['../group__flash.html#ga216fff040d8bab7b5df5591ebfc2c5d6',1,'READ_SERIAL_FLASH_DISCO_PARAM_CMD():&#160;flash_IS25LP080D.h'],['../group__flash.html#ga216fff040d8bab7b5df5591ebfc2c5d6',1,'READ_SERIAL_FLASH_DISCO_PARAM_CMD():&#160;flash_IS25LP064A.h']]],
   ['read_5fstatus_5freg_5fcmd_13',['READ_STATUS_REG_CMD',['../group__flash.html#gaa3c6b4a899c5b0875dfcf503f1e41b63',1,'READ_STATUS_REG_CMD():&#160;flash_IS25LP064A.h'],['../group__flash.html#gaa3c6b4a899c5b0875dfcf503f1e41b63',1,'READ_STATUS_REG_CMD():&#160;flash_IS25LP080D.h']]],
   ['read_5funique_5fid_14',['READ_UNIQUE_ID',['../group__flash.html#gab326593933b21da8d3fb2765aca1d282',1,'READ_UNIQUE_ID():&#160;flash_IS25LP064A.h'],['../group__flash.html#gab326593933b21da8d3fb2765aca1d282',1,'READ_UNIQUE_ID():&#160;flash_IS25LP080D.h']]],
-  ['readable_15',['Readable',['../classdaisy_1_1_uart_handler.html#a4b8cad10b4f9a9520d2248c567babcc1',1,'daisy::UartHandler']]],
-  ['readable_16',['readable',['../classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html#af813b904145707cef9794fbd8346f066',1,'daisy::RingBuffer&lt; T, 0 &gt;::readable()'],['../classdaisy_1_1_ring_buffer.html#a7055d8829240337fc8979fa3eba2341c',1,'daisy::RingBuffer::readable()']]],
+  ['readable_15',['readable',['../classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html#af813b904145707cef9794fbd8346f066',1,'daisy::RingBuffer&lt; T, 0 &gt;::readable()'],['../classdaisy_1_1_ring_buffer.html#a7055d8829240337fc8979fa3eba2341c',1,'daisy::RingBuffer::readable()']]],
+  ['readable_16',['Readable',['../classdaisy_1_1_uart_handler.html#a4b8cad10b4f9a9520d2248c567babcc1',1,'daisy::UartHandler']]],
   ['readanalogpinraw_17',['ReadAnalogPinRaw',['../group__dac.html#ga74c9a868d438fb4aaa4331c7a586e6e5',1,'daisy::MAX11300Driver']]],
   ['readanalogpinvolts_18',['ReadAnalogPinVolts',['../group__dac.html#ga3a129f6c9a3f0f3616b696eca4aab4fc',1,'daisy::MAX11300Driver']]],
   ['readdataataddress_19',['ReadDataAtAddress',['../classdaisy_1_1_i2_c_handle.html#a2a7a2bcf654a383c6032a86a13645ea3',1,'daisy::I2CHandle']]],
@@ -59,7 +59,7 @@ var searchData=
   ['ringbuffer_3c_20t_2c_200_20_3e_56',['RingBuffer&lt; T, 0 &gt;',['../classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html',1,'daisy']]],
   ['ringled_57',['RingLed',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682',1,'daisy::DaisyPetal']]],
   ['risingedge_58',['RisingEdge',['../classdaisy_1_1_switch.html#a71f6054840c76ebe3cb2517dc7830d34',1,'daisy::Switch::RisingEdge()'],['../classdaisy_1_1_encoder.html#ab501cf73d10d81058b485c48b9eb506f',1,'daisy::Encoder::RisingEdge()']]],
-  ['rx_59',['RX',['../classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daaf9c24782c24c237d16e79f18e2fa9046',1,'daisy::SpiHandle']]],
-  ['rx_60',['rx',['../structdaisy_1_1_uart_handler_1_1_config.html#adb318e26f13636e1bee740fa47497392',1,'daisy::UartHandler::Config']]],
+  ['rx_59',['rx',['../structdaisy_1_1_uart_handler_1_1_config.html#adb318e26f13636e1bee740fa47497392',1,'daisy::UartHandler::Config']]],
+  ['rx_60',['RX',['../classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daaf9c24782c24c237d16e79f18e2fa9046',1,'daisy::SpiHandle']]],
   ['rxactive_61',['RxActive',['../classdaisy_1_1_uart_handler.html#aeeb804c58c2ccf574142b2a030d2d83b',1,'daisy::UartHandler']]]
 ];
