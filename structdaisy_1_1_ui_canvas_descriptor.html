@@ -89,8 +89,7 @@ Public Attributes</h2></td></tr>
 <tr class="separator:abad766aae20df7c5c6fcafced7dcf6c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acde42d0bcf27e4e78933e0bca8deb324"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_ui_canvas_descriptor.html#acde42d0bcf27e4e78933e0bca8deb324">updateRateMs_</a></td></tr>
 <tr class="separator:acde42d0bcf27e4e78933e0bca8deb324"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a467cc6b1c0e64d27a392c65ac977abb3"><td class="memItemLeft" align="right" valign="top"><a id="a467cc6b1c0e64d27a392c65ac977abb3" name="a467cc6b1c0e64d27a392c65ac977abb3"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>screenSaverTimeOut</b></td></tr>
+<tr class="memitem:a467cc6b1c0e64d27a392c65ac977abb3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_ui_canvas_descriptor.html#a467cc6b1c0e64d27a392c65ac977abb3">screenSaverTimeOut</a> = 0</td></tr>
 <tr class="separator:a467cc6b1c0e64d27a392c65ac977abb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55b3a4dbe2ee58537b098ce50bae6c93"><td class="memItemLeft" align="right" valign="top"><a id="a55b3a4dbe2ee58537b098ce50bae6c93" name="a55b3a4dbe2ee58537b098ce50bae6c93"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>screenSaverOn</b> = false</td></tr>
@@ -161,6 +160,21 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>screenSaverOn</b> = f
       </table>
 </div><div class="memdoc">
 <p >An id number to tell apart various types of canvases that are used concurrently in your system. </p>
+
+</div>
+</div>
+<a id="a467cc6b1c0e64d27a392c65ac977abb3" name="a467cc6b1c0e64d27a392c65ac977abb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a467cc6b1c0e64d27a392c65ac977abb3">&#9670;&nbsp;</a></span>screenSaverTimeOut</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t daisy::UiCanvasDescriptor::screenSaverTimeOut = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >The desired timeout in ms before a display will shut off. This defaults to 0, which will keep the display on all the time. Nonzero values are useful for displays that can suffer from burn-in, such as OLEDs. </p>
 
 </div>
 </div>
