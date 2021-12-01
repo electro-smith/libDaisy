@@ -21,13 +21,14 @@ class MSDHandle::Impl
     Impl() {}
     ~Impl() {}
 
-    Result Init();
+    Result Init(Config config);
     Result Deinit();
 
     void Process();
     bool GetReady();
 
   private:
+    Config config_;
 };
 
 // Global dfu handle
@@ -35,8 +36,9 @@ MSDHandle::Impl msd_impl;
 
 static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id);
 
-MSDHandle::Result MSDHandle::Impl::Init()
+MSDHandle::Result MSDHandle::Impl::Init(MSDHandle::Config config)
 {
+    config_ = config;
     /* Init host Library, add supported class and start the library. */
     if(USBH_Init(&hUsbHostHS, USBH_UserProcess, HOST_HS) != USBH_OK)
     {
@@ -73,10 +75,10 @@ bool MSDHandle::Impl::GetReady()
 
 // MSDHandle -> Impl
 
-MSDHandle::Result MSDHandle::Init()
+MSDHandle::Result MSDHandle::Init(Config config)
 {
     pimpl_ = &msd_impl;
-    return pimpl_->Init();
+    return pimpl_->Init(config);
 }
 
 MSDHandle::Result MSDHandle::Deinit()

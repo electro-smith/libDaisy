@@ -38,9 +38,9 @@ class MSDHandle
 
     /** Initializes the USB drivers and starts timeout.
      * 
-     *  \param seed Pointer to initialized seed hardware class
+     *  \param config Configuration struct for initialization
      */
-    Result Init();
+    Result Init(Config config);
 
     /** Deinitializes MSD-related peripherals
      * 
