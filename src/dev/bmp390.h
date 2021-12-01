@@ -11,6 +11,9 @@
 #define BMP3_REG_OSR UINT8_C(0x1C)
 #define BMP3_REG_ODR UINT8_C(0x1D)
 #define BMP3_REG_IIR UINT8_C(0x1F)
+#define BMP3_REG_CONFIG UINT8_C(0x1F)
+#define BMP3_REG_CALIB_DATA UINT8_C(0x31)
+#define BMP3_REG_CMD UINT8_C(0x7E)
 
 #define BMP3_LEN_P_T_DATA UINT8_C(6)
 
@@ -157,6 +160,7 @@ class Bmp390
 
         transport_.Init(config_.transport_config);
 
+        SoftReset();
         SetOversampling(0, 0); // no oversampling for temp or pressure
         SetOutputDataRate(3);  // 25 Hz
         SetIIRFilterCoeff(0);  // disabled
@@ -308,6 +312,12 @@ class Bmp390
             /* Compensate the pressure data */
             // pressure_ = compensate_pressure(uncomp_data, calib_data);
         }
+    }
+
+    void SoftReset()
+    {
+        // soft reset command is 0xB6
+        WriteToReg(BMP3_REG_CMD, 0xB6);
     }
 
     bool      sdo_state_;
