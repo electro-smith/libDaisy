@@ -7,9 +7,12 @@
 #define BMP390_CHIP_ID UINT8_C(0x60)
 #define BMP390_SLAVE_ADD UINT8_C(0xEC)
 
+#define BMP3_REG_DATA UINT8_C(0x04)
 #define BMP3_REG_OSR UINT8_C(0x1C)
 #define BMP3_REG_ODR UINT8_C(0x1D)
 #define BMP3_REG_IIR UINT8_C(0x1F)
+
+#define BMP3_LEN_P_T_DATA UINT8_C(6)
 
 namespace daisy
 {
@@ -74,8 +77,18 @@ class Bmp390SpiTransport{
     struct Config
     {
         SpiHandle::Config::Peripheral periph;
+        dsy_gpio_pin sclk;
+        dsy_gpio_pin miso;
+        dsy_gpio_pin mosi;
+        dsy_gpio_pin nss;
+
         Config()
         {
+            periph = SpiHandle::Config::Peripheral::SPI_1;
+            sclk = {DSY_GPIOG, 11};
+            miso = {DSY_GPIOB, 4};
+            mosi = {DSY_GPIOB, 5};
+            nss = {DSY_GPIOG, 10};
         }
     };
 
@@ -87,6 +100,13 @@ class Bmp390SpiTransport{
         spi_conf.clock_polarity = SpiHandle::Config::ClockPolarity::LOW;
         spi_conf.clock_phase = SpiHandle::Config::ClockPhase::ONE_EDGE;
         spi_conf.baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_2;
+        spi_conf.nss = SpiHandle::Config::NSS::SOFT;
+
+        spi_conf.periph = config.periph;
+        spi_conf.pin_config.sclk = config.sclk;
+        spi_conf.pin_config.miso = config.miso;
+        spi_conf.pin_config.mosi = config.mosi;
+        spi_conf.pin_config.nss = config.nss;
 
         spi_.Init(spi_conf);
     }
@@ -110,6 +130,8 @@ class Bmp390
     struct Config
     {
         typename Transport::Config transport_config;
+        bool compensate_pressure;
+        bool compensate_temp;
     };
 
     enum Result{
@@ -138,6 +160,7 @@ class Bmp390
         WriteToReg(BMP3_REG_ODR, rate);
     }
 
+    /** (0,7) -> {bypass, 1, 3, 7, 15, 31, 63, 127} */
     void SetIIRFilterCoeff(uint8_t coeff){
         if(coeff > 7)
             coeff = 7;
@@ -145,7 +168,7 @@ class Bmp390
         WriteToReg(BMP3_REG_IIR, coeff);
     }
 
-    /** (0,5) = {1, 2, 4, 8, 16, 32} */
+    /** (0,5) -> {1, 2, 4, 8, 16, 32} */
     void SetOversampling(uint8_t temp, uint8_t press){
         if(temp > 5)
             temp = 5;
@@ -168,10 +191,82 @@ class Bmp390
         transport_.Write(write_buff, 3);
     }
 
+    void ReadFromReg(uint8_t reg, uint8_t* read_buff, uint16_t size){
+        transport_.Write(&reg, 1);
+        transport_.Read(read_buff, size);
+    }
+
+    /** Performs a pressure reading
+        \return Pressure in Pascals
+    */
+    uint32_t ReadPressure(){
+        PerformReading();
+        return pressure_;
+    }
+
+    /** Performs a temperature reading
+        \return Temperature in degrees Centigrade
+    */
+    uint32_t ReadTemperature(){
+        PerformReading();
+        return temperature_;
+    }
+
+    /** Calculates the altitude in meters 
+        \param sealevel Sea-level pressure in hPa
+        \return altitude in meters
+    */
+    float ReadAltitude(float sealevel){
+        float atmospheric = ReadPressure() / 100.f;
+        return 44330.f * (1.f - pow(atmospheric / sealevel, 0.1903f));
+    }
+
   private: 
+    void PerformReading(){
+        uint8_t reg_data[BMP3_LEN_P_T_DATA];
+        ReadFromReg(BMP3_REG_DATA, reg_data, BMP3_LEN_P_T_DATA);
+        ParseData(reg_data);
+        CompensateData();
+    }
+
+    void ParseData(uint8_t* reg_data){
+        uint32_t data_xlsb;
+        uint32_t data_lsb;
+        uint32_t data_msb;
+
+        /* Store the parsed register values for pressure data */
+        data_xlsb = (uint32_t)reg_data[0];
+        data_lsb = (uint32_t)reg_data[1] << 8;
+        data_msb = (uint32_t)reg_data[2] << 16;
+        pressure_ = data_msb | data_lsb | data_xlsb;
+
+        /* Store the parsed register values for temperature data */
+        data_xlsb = (uint32_t)reg_data[3];
+        data_lsb = (uint32_t)reg_data[4] << 8;
+        data_msb = (uint32_t)reg_data[5] << 16;
+        temperature_ = data_msb | data_lsb | data_xlsb;
+    }
+
+    void CompensateData()
+    {
+        /* If pressure or temperature component is selected */
+        if (config_.compensate_pressure | config_.compensate_temp)
+        {
+            /* Compensate the temperature data */
+            // temperature = compensate_temperature(uncomp_data, calib_data);
+        }
+
+        if (config_.compensate_pressure)
+        {
+            /* Compensate the pressure data */
+            // pressure_ = compensate_pressure(uncomp_data, calib_data);
+        }
+    }
+
     bool sdo_state_;
     Config                     config_;
     Transport                  transport_;
+    float temperature_, pressure_;
 };
 
 /** @} */
