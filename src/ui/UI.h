@@ -52,7 +52,7 @@ struct UiCanvasDescriptor
      */
     uint32_t screenSaverTimeOut = 0;
 
-    bool     screenSaverOn = false;
+    bool screenSaverOn = false;
 
     /** A function to clear the display before the UiPages are drawn. */
     using ClearFuncPtr = void (*)(const UiCanvasDescriptor& canvasToClear);
