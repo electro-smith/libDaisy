@@ -93,7 +93,7 @@ namespace patch_sm
 
         /** Sets the samplerate for the audio engine 
          *  This will set it to the closest valid samplerate. Options being:
-         *  8kHz, 16kHz, 32kHz, 48kHz, and 96kHz
+         *  8kHz, 16kHz, 32kHz, 44.1kHz, 48kHz, and 96kHz
          */
         void SetAudioSampleRate(float sr);
 
