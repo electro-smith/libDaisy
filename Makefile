@@ -5,8 +5,6 @@ MODULE_DIR=src
 C_MODULES = \
 sys/dma \
 hid/audio \
-sys/fatfs \
-sys/fatfs_usbh \
 per/gpio \
 per/sai \
 per/sdmmc \
@@ -30,6 +28,7 @@ daisy_petal \
 daisy_field \
 daisy_versio \
 daisy_patch_sm \
+sys/fatfs \
 sys/system \
 dev/sr_595 \
 dev/codec_ak4556 \
