@@ -161,7 +161,7 @@ This option switches character encoding on the API. (0:ANSI/OEM or 1:UTF-16)
 / Drive/Volume Configurations
 /----------------------------------------------------------------------------*/
 
-#define _VOLUMES 1 /**< Number of volumes (logical drives) to be used. */
+#define _VOLUMES 2 /**< Number of volumes (logical drives) to be used. */
 
 /* USER CODE BEGIN Volumes */
 #define _STR_VOLUME_ID \
