@@ -1,6 +1,5 @@
 #include <cstring>
 #include "hid/wavplayer.h"
-#include "ff.h"
 
 using namespace daisy;
 
