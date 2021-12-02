@@ -312,12 +312,12 @@ class Tlv493d
         WriteOut();
     }
 
-    void CalcParity() 
+    void CalcParity()
     {
         uint8_t i;
         uint8_t y = 0x00;
         // set parity bit to 1
-        // algorithm will calculate an even parity and replace this bit, 
+        // algorithm will calculate an even parity and replace this bit,
         // so parity becomes odd
         SetRegBits(W_PARITY, 1);
         // combine array to one byte first
@@ -330,7 +330,7 @@ class Tlv493d
         y = y ^ (y >> 2);
         y = y ^ (y >> 4);
         // parity is in the LSB of y
-        SetRegBits(W_PARITY, y&0x01);
+        SetRegBits(W_PARITY, y & 0x01);
     }
 
   private:
