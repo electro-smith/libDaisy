@@ -1,6 +1,3 @@
-// #include "sys/fatfs.h"
-// #include "util/sd_diskio.h"
-// #include "util/usbh_diskio.h"
 #include "sys/fatfs.h"
 #include "ff_gen_drv.h"
 #include "util/sd_diskio.h"
