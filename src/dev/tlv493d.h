@@ -118,14 +118,14 @@ class Tlv493d
         uint8_t shift;
     };
 
-	enum AccessMode_e
-	{
-		POWERDOWNMODE = 0,
-		FASTMODE,
-		LOWPOWERMODE,
-		ULTRALOWPOWERMODE,
-		MASTERCONTROLLEDMODE,
-	};
+    enum AccessMode_e
+    {
+        POWERDOWNMODE = 0,
+        FASTMODE,
+        LOWPOWERMODE,
+        ULTRALOWPOWERMODE,
+        MASTERCONTROLLEDMODE,
+    };
 
     const RegMask_t RegMasks[] = {
         {REGMASK_READ, 0, 0xFF, 0},  // R_BX1
