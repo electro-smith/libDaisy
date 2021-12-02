@@ -4,6 +4,11 @@
 
 #define APDS9960_ADDRESS (0x39) /**< I2C Address */
 
+#define APDS9960_UP 0x01    /**< Gesture Up */
+#define APDS9960_DOWN 0x02  /**< Gesture Down */
+#define APDS9960_LEFT 0x03  /**< Gesture Left */
+#define APDS9960_RIGHT 0x04 /**< Gesture Right */
+
 namespace daisy
 {
 /** @addtogroup external 
@@ -61,7 +66,8 @@ class Apds9960I2CTransport
     I2CHandle i2c_;
 };
 
-/** @brief Device support for APDS9960    
+/** @brief Device support for APDS9960
+    gesture / RGB / proximity sensor.
     @author beserge
     @date December 2021
 */
@@ -192,7 +198,6 @@ class Apds9960
         Write8(APDS9960_GPULSE, gpulse_.get());
     }
 
-
     /** Sets the integration time for the ADC of the APDS9960, in millis
         \param  iTimeMS Integration time
     */
@@ -212,7 +217,6 @@ class Apds9960
         /* Update the timing register */
         write8(APDS9960_ATIME, (uint8_t)temp);
     }
-
 
     /** Adjusts the color/ALS gain on the APDS9960 (adjusts the sensitivity to light)
         \param  aGain Gain
@@ -338,8 +342,117 @@ class Apds9960
         transport_.Write(buff, 2);
     }
 
+    uint8_t Read8(uint8_t reg)
+    {
+        uint8_t buff[1] = {reg};
+        transport_.Write(buff, 1);
+        transport_.Read(buff, 1);
+        return buff[0];
+    }
+
+    /** Read proximity data
+        \return Proximity
+    */
+    uint8_t ReadProximity() { return read8(APDS9960_PDATA); }
+
+    /** Returns validity status of a gesture
+        \return Status (True/False)
+    */
+    bool GestureValid()
+    {
+        gstatus_.set(Read8(APDS9960_GSTATUS));
+        return gstatus_.GVALID;
+    }
+
+    /** Reads gesture
+        \return Received gesture (1,4) -> {UP, DOWN, LEFT, RIGHT}
+    */
+    uint8_t ReadGesture()
+    {
+        uint8_t       toRead;
+        uint8_t       buf[256];
+        unsigned long t = 0;
+        uint8_t       gestureReceived;
+        while(true)
+        {
+            int up_down_diff    = 0;
+            int left_right_diff = 0;
+            gestureReceived     = 0;
+            if(!GestureValid())
+                return 0;
+
+            System::Delay(30);
+            toRead = Read8(APDS9960_GFLVL);
+
+            // produces sideffects needed for readGesture to work
+            uint8_t reg = APDS9960_GFIFO_U;
+            transport_.Write(&reg, 1);
+            transport_.Read(buf, toRead);
+
+            if(abs((int)buf[0] - (int)buf[1]) > 13)
+                up_down_diff += (int)buf[0] - (int)buf[1];
+
+            if(abs((int)buf[2] - (int)buf[3]) > 13)
+                left_right_diff += (int)buf[2] - (int)buf[3];
+
+            if(up_down_diff != 0)
+            {
+                if(up_down_diff < 0)
+                {
+                    if(DCount_ > 0)
+                    {
+                        gestureReceived = APDS9960_UP;
+                    }
+                    else
+                        UCount_++;
+                }
+                else if(up_down_diff > 0)
+                {
+                    if(UCount_ > 0)
+                    {
+                        gestureReceived = APDS9960_DOWN;
+                    }
+                    else
+                        DCount_++;
+                }
+            }
+
+            if(left_right_diff != 0)
+            {
+                if(left_right_diff < 0)
+                {
+                    if(RCount_ > 0)
+                    {
+                        gestureReceived_ = APDS9960_LEFT;
+                    }
+                    else
+                        LCount_++;
+                }
+                else if(left_right_diff > 0)
+                {
+                    if(LCount_ > 0)
+                    {
+                        gestureReceived_ = APDS9960_RIGHT;
+                    }
+                    else
+                        RCount_++;
+                }
+            }
+
+            if(up_down_diff != 0 || left_right_diff != 0)
+                t = System::GetNow();
+
+            if(gestureReceived || System::GetNow() - t > 300)
+            {
+                ResetCounts();
+                return gestureReceived;
+            }
+        }
+    }
+
   private:
     uint8_t gestCnt_, UCount_, DCount_, LCount_, RCount_; // counters
+    uint8_t gestureReceived_;
 
     struct gconf1
     {
@@ -411,6 +524,19 @@ class Apds9960
         uint8_t get() { return (GPLEN << 6) | GPULSE; }
     };
     gpulse gpulse_;
+
+    struct gstatus
+    {
+        uint8_t GVALID : 1; // Gesture FIFO Data Are we OK to read FIFO?
+        uint8_t GFOV : 1;   // Gesture FIFO Overflow Flag
+
+        void set(uint8_t data)
+        {
+            GFOV   = (data >> 1) & 0x01;
+            GVALID = data & 0x01;
+        }
+    };
+    gstatus gstatus_;
 
     Config    config_;
     Transport transport_;
