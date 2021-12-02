@@ -300,8 +300,38 @@ class Tlv493d
                           + pow(static_cast<float>(mYdata), 2)));
     }
 
-
     uint16_t GetMeasurementDelay() { return accModes[mMode].measurementTime; }
+
+    void SetAccessMode(AccessMode_e mode)
+    {
+        const AccessMode_t *modeConfig = &(accModes[mode]);
+        SetRegBits(W_FAST, modeConfig->fast);
+        SetRegBits(W_LOWPOWER, modeConfig->lp);
+        SetRegBits(W_LP_PERIOD, modeConfig->lpPeriod);
+        CalcParity();
+        WriteOut();
+    }
+
+    void CalcParity() 
+    {
+        uint8_t i;
+        uint8_t y = 0x00;
+        // set parity bit to 1
+        // algorithm will calculate an even parity and replace this bit, 
+        // so parity becomes odd
+        SetRegBits(W_PARITY, 1);
+        // combine array to one byte first
+        for(i = 0; i < TLV493D_BUSIF_WRITESIZE; i++)
+        {
+            y ^= regWriteData[i];
+        }
+        // combine all bits of this byte
+        y = y ^ (y >> 1);
+        y = y ^ (y >> 2);
+        y = y ^ (y >> 4);
+        // parity is in the LSB of y
+        SetRegBits(W_PARITY, y&0x01);
+    }
 
   private:
     Config    config_;
