@@ -52,12 +52,12 @@ class Apds9960I2CTransport
         i2c_.Init(i2c_config);
     }
 
-    void Write(uint8_t* data, uint16_t size)
+    void Write(uint8_t *data, uint16_t size)
     {
         i2c_.TransmitBlocking(APDS9960_ADDRESS, data, size, 10);
     }
 
-    void Read(uint8_t* data, uint16_t size)
+    void Read(uint8_t *data, uint16_t size)
     {
         i2c_.ReceiveBlocking(APDS9960_ADDRESS, data, size, 10);
     }
@@ -350,6 +350,15 @@ class Apds9960
         return buff[0];
     }
 
+    uint16_t Read16R(uint8_t reg)
+    {
+        uint8_t ret[2];
+        transport_.Write(&reg, 1);
+        transport_.Read(ret, 2);
+
+        return (ret[1] << 8) | ret[0];
+    }
+
     /** Read proximity data
         \return Proximity
     */
@@ -450,6 +459,42 @@ class Apds9960
         }
     }
 
+    /** Set LED brightness for proximity/gesture
+        \param  drive LED Drive (0,3) -> {100mA, 50mA, 25mA, 12.5mA}
+        \param  boost LED Boost (0,3) -> {100%, 150%, 200%, 300%}
+    */
+    void SetLED(uint8_t drive, uint8_t boost)
+    {
+        config2_.LED_BOOST = boost;
+        Write8(APDS9960_CONFIG2, config2_.get());
+
+        control_.LDRIVE = drive;
+        rite8(APDS9960_CONTROL, control_.get());
+    }
+
+    /** Returns status of color data
+        \return True if color data ready, False otherwise
+    */
+    bool ColorDataReady()
+    {
+        status_.set(Read8(APDS9960_STATUS));
+        return status_.AVALID;
+    }
+
+    /** Reads the raw red, green, blue and clear channel values
+        \param  *r Red value
+        \param  *g Green value
+        \param  *b Blue value
+        \param  *c Clear channel value
+    */
+    void GetColorData(uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c)
+    {
+        *c = Read16R(APDS9960_CDATAL);
+        *r = Read16R(APDS9960_RDATAL);
+        *g = Read16R(APDS9960_GDATAL);
+        *b = Read16R(APDS9960_BDATAL);
+    }
+
   private:
     uint8_t gestCnt_, UCount_, DCount_, LCount_, RCount_; // counters
     uint8_t gestureReceived_;
@@ -537,6 +582,57 @@ class Apds9960
         }
     };
     gstatus gstatus_;
+
+    struct config2
+    {
+        /* Additional LDR current during proximity and gesture LED pulses. Current
+        value, set by LDRIVE, is increased by the percentage of LED_BOOST.
+        */
+        uint8_t LED_BOOST : 2;
+        uint8_t CPSIEN : 1; // clear photodiode saturation int enable
+        uint8_t PSIEN : 1;  // proximity saturation interrupt enable
+
+        uint8_t get()
+        {
+            return (PSIEN << 7) | (CPSIEN << 6) | (LED_BOOST << 4) | 1;
+        }
+    };
+    config2 config2_;
+
+    struct status
+    {
+        uint8_t AVALID : 1; // ALS Valid
+        uint8_t PVALID : 1; // Proximity Valid
+        uint8_t GINT : 1;   // Gesture Interrupt
+        uint8_t AINT : 1;   // ALS Interrupt
+        uint8_t PINT : 1;   // Proximity Interrupt
+
+        /* Indicates that an analog saturation event occurred during a previous
+        proximity or gesture cycle. Once set, this bit remains set until cleared by
+        clear proximity interrupt special function command (0xE5 PICLEAR) or by
+        disabling Prox (PEN=0). This bit triggers an interrupt if PSIEN is set.
+        */
+        uint8_t PGSAT : 1;
+
+        /* Clear Photodiode Saturation. When asserted, the analog sensor was at the
+        upper end of its dynamic range. The bit can be de-asserted by sending a
+        Clear channel interrupt command (0xE6 CICLEAR) or by disabling the ADC
+        (AEN=0). This bit triggers an interrupt if CPSIEN is set.
+        */
+        uint8_t CPSAT : 1;
+
+        void set(uint8_t data)
+        {
+            AVALID = data & 0x01;
+            PVALID = (data >> 1) & 0x01;
+            GINT   = (data >> 2) & 0x01;
+            AINT   = (data >> 4) & 0x01;
+            PINT   = (data >> 5) & 0x01;
+            PGSAT  = (data >> 6) & 0x01;
+            CPSAT  = (data >> 7) & 0x01;
+        }
+    };
+    status status_;
 
     Config    config_;
     Transport transport_;
