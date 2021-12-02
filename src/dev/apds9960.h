@@ -188,7 +188,7 @@ class Apds9960
         ResetCounts();
 
         gpulse_.GPLEN  = 0x03; // 32 us
-        gpulse_.GPULSE = 9; // 10 pulses
+        gpulse_.GPULSE = 9;    // 10 pulses
         Write8(APDS9960_GPULSE, gpulse_.get());
     }
 
@@ -406,7 +406,7 @@ class Apds9960
     struct gpulse
     {
         uint8_t GPULSE : 6; // Number of gesture pulses = GPULSE + 1
-        uint8_t GPLEN : 2; // Gesture Pulse Length
+        uint8_t GPLEN : 2;  // Gesture Pulse Length
 
         uint8_t get() { return (GPLEN << 6) | GPULSE; }
     };
