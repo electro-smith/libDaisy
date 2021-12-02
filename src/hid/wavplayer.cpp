@@ -1,27 +1,32 @@
-#include <string.h>
+#include <cstring>
 #include "hid/wavplayer.h"
-#include "fatfs.h"
 
 using namespace daisy;
 
-void WavPlayer::Init()
+void WavPlayer::Init(FatFSInterface &fsi)
 {
     // First check for all .wav files, and add them to the list until its full or there are no more.
     // Only checks '/'
+    fs_interface_  = fsi;
     FRESULT result = FR_OK;
     FILINFO fno;
     DIR     dir;
-    char *  fn;
+    char   *fn;
     file_sel_ = 0;
     file_cnt_ = 0;
     playing_  = true;
     looping_  = false;
-    // Init Fatfs
-    dsy_fatfs_init();
+    /** Only initialize the FatFS Interface if it is not already initialized */
+    if(!fs_interface_.Initialized())
+    {
+        FatFSInterface::Config fs_cfg;
+        fs_cfg.media = static_cast<uint8_t>(FatFSInterface::Config::Media::SD);
+        fs_interface_.Init(fs_cfg);
+    }
     // Mount SD Card
-    f_mount(&SDFatFS, SDPath, 1);
+    f_mount(&fs_, fs_interface_.GetSDPath(), 1);
     // Open Dir and scan for files.
-    if(f_opendir(&dir, SDPath) != FR_OK)
+    if(f_opendir(&dir, fs_interface_.GetSDPath()) != FR_OK)
     {
         return;
     }
@@ -56,11 +61,11 @@ void WavPlayer::Init()
     for(size_t i = 0; i < file_cnt_; i++)
     {
         size_t bytesread;
-        if(f_open(&SDFile, file_info_[i].name, (FA_OPEN_EXISTING | FA_READ))
+        if(f_open(&fil_, file_info_[i].name, (FA_OPEN_EXISTING | FA_READ))
            == FR_OK)
         {
             // Populate the WAV Info
-            if(f_read(&SDFile,
+            if(f_read(&fil_,
                       (void *)&file_info_[i].raw_data,
                       sizeof(WAV_FormatTypeDef),
                       &bytesread)
@@ -69,7 +74,7 @@ void WavPlayer::Init()
                 // Maybe add return type
                 return;
             }
-            f_close(&SDFile);
+            f_close(&fil_);
         }
     }
     // fill buffer with first file preemptively.
@@ -84,17 +89,17 @@ int WavPlayer::Open(size_t sel)
 {
     if(sel != file_sel_)
     {
-        f_close(&SDFile);
+        f_close(&fil_);
         file_sel_ = sel < file_cnt_ ? sel : file_cnt_ - 1;
     }
     // Set Buffer Position
     return f_open(
-        &SDFile, file_info_[file_sel_].name, (FA_OPEN_EXISTING | FA_READ));
+        &fil_, file_info_[file_sel_].name, (FA_OPEN_EXISTING | FA_READ));
 }
 
 int WavPlayer::Close()
 {
-    return f_close(&SDFile);
+    return f_close(&fil_);
 }
 
 int16_t WavPlayer::Stream()
@@ -127,13 +132,13 @@ void WavPlayer::Prepare()
         bytesread = 0;
         rxsize    = (kBufferSize / 2) * sizeof(buff_[0]);
         offset    = buff_state_ == BUFFER_STATE_PREPARE_1 ? kBufferSize / 2 : 0;
-        f_read(&SDFile, &buff_[offset], rxsize, &bytesread);
-        if(bytesread < rxsize || f_eof(&SDFile))
+        f_read(&fil_, &buff_[offset], rxsize, &bytesread);
+        if(bytesread < rxsize || f_eof(&fil_))
         {
             if(looping_)
             {
                 Restart();
-                f_read(&SDFile,
+                f_read(&fil_,
                        &buff_[offset + (bytesread / 2)],
                        rxsize - bytesread,
                        &bytesread);
@@ -150,7 +155,7 @@ void WavPlayer::Prepare()
 void WavPlayer::Restart()
 {
     playing_ = true;
-    f_lseek(&SDFile,
+    f_lseek(&fil_,
             sizeof(WAV_FormatTypeDef)
                 + file_info_[file_sel_].raw_data.SubChunk1Size);
 }
