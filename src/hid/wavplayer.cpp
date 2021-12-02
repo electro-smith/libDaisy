@@ -10,7 +10,7 @@ void WavPlayer::Init(const char *search_path)
     FRESULT result = FR_OK;
     FILINFO fno;
     DIR     dir;
-    char   *fn;
+    char *  fn;
     file_sel_ = 0;
     file_cnt_ = 0;
     playing_  = true;
