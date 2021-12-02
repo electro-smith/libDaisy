@@ -23,6 +23,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "ff_gen_drv.h"
 #include "usbh_diskio.h"
+#include "daisy_core.h"
 
 extern USBH_HandleTypeDef hUsbHostHS;
 #define hUSB_Host hUsbHostHS
@@ -32,9 +33,11 @@ extern USBH_HandleTypeDef hUsbHostHS;
 
 #define USB_DEFAULT_BLOCK_SIZE 512
 
+#define ENABLE_USB_DMA_CACHE_MAINTENANCE 1
+
 /* Private variables ---------------------------------------------------------*/
-static DWORD              scratch[_MAX_SS / 4];
-extern USBH_HandleTypeDef hUSB_Host;
+static DWORD DMA_BUFFER_MEM_SECTION scratch[_MAX_SS / 4];
+extern USBH_HandleTypeDef           hUSB_Host;
 
 /* Private function prototypes -----------------------------------------------*/
 DSTATUS USBH_initialize(BYTE);
@@ -118,6 +121,13 @@ DRESULT USBH_read(BYTE lun, BYTE *buff, DWORD sector, UINT count)
     MSC_LUNTypeDef     info;
     USBH_StatusTypeDef status = USBH_OK;
 
+#if(ENABLE_USB_DMA_CACHE_MAINTENANCE == 1)
+    uint32_t alignedAddr;
+    alignedAddr = (uint32_t)buff & ~0x1F;
+    SCB_CleanDCache_by_Addr((uint32_t *)alignedAddr,
+                            count * BLOCKSIZE + ((uint32_t)buff - alignedAddr));
+#endif
+
     if(((DWORD)buff & 3)
        && (((HCD_HandleTypeDef *)hUSB_Host.pData)->Init.dma_enable))
     {
@@ -140,6 +150,13 @@ DRESULT USBH_read(BYTE lun, BYTE *buff, DWORD sector, UINT count)
     {
         status = USBH_MSC_Read(&hUSB_Host, lun, sector, buff, count);
     }
+#if(ENABLE_USB_DMA_CACHE_MAINTENANCE == 1)
+    /* the SCB_InvalidateDCache_by_Addr() requires a 32-Byte aligned address,
+                     * adjust the address and the D-Cache size to invalidate accordingly. */
+    SCB_InvalidateDCache_by_Addr((uint32_t *)alignedAddr,
+                                 count * BLOCKSIZE
+                                     + ((uint32_t)buff - alignedAddr));
+#endif
 
     if(status == USBH_OK)
     {
@@ -183,6 +200,16 @@ DRESULT USBH_write(BYTE lun, const BYTE *buff, DWORD sector, UINT count)
     DRESULT            res = RES_ERROR;
     MSC_LUNTypeDef     info;
     USBH_StatusTypeDef status = USBH_OK;
+#if(ENABLE_USB_DMA_CACHE_MAINTENANCE == 1)
+    uint32_t alignedAddr;
+    /*
+    the SCB_CleanDCache_by_Addr() requires a 32-Byte aligned address
+    adjust the address and the D-Cache size to clean accordingly.
+    */
+    alignedAddr = (uint32_t)buff & ~0x1F;
+    SCB_CleanDCache_by_Addr((uint32_t *)alignedAddr,
+                            count * BLOCKSIZE + ((uint32_t)buff - alignedAddr));
+#endif
 
     if(((DWORD)buff & 3)
        && (((HCD_HandleTypeDef *)hUSB_Host.pData)->Init.dma_enable))
