@@ -77,10 +77,8 @@ class Tlv493d
     struct Config
     {
         typename Transport::Config transport_config;
-        uint8_t address;
-        Config(){
-            address = TLV493D_ADDRESS1;
-        }
+        uint8_t                    address;
+        Config() { address = TLV493D_ADDRESS1; }
     };
 
     /** Initialize the TLV493D device
@@ -133,7 +131,6 @@ class Tlv493d
 
         transport_.Write(data, 2);
     }
-
 };
 
 /** @} */
