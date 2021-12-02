@@ -162,34 +162,34 @@ class Apds9960
         transport_.Init(config_.transport_config);
 
         /* Set default integration time and gain */
-        setADCIntegrationTime(config_.integrationTimeMs);
-        setADCGain(config.adcGain);
+        SetADCIntegrationTime(config_.integrationTimeMs);
+        SetADCGain(config.adcGain);
 
         // disable everything to start
-        // enableGesture(false);
-        // enableProximity(false);
-        // enableColor(false);
+        EnableGesture(false);
+        EnableProximity(false);
+        EnableColor(false);
 
-        // disableColorInterrupt();
-        // disableProximityInterrupt();
-        // clearInterrupt();
+        EnableColorInterrupt(false);
+        EnableProximityInterrupt(false);
+        ClearInterrupt();
 
         /* Note: by default, the device is in power down mode on bootup */
-        // enable(false);
+        Enable(false);
         System::Delay(10);
-        // enable(true);
+        Enable(true);
         System::Delay(10);
 
         // default to all gesture dimensions
-        setGestureDimensions(config_.gestureDimensions);
-        setGestureFIFOThreshold(config_.gestureFifoThresh);
-        setGestureGain(config_.gestureGain);
-        setGestureProximityThreshold(config_.gestureProximityThresh);
+        SetGestureDimensions(config_.gestureDimensions);
+        SetGestureFIFOThreshold(config_.gestureFifoThresh);
+        SetGestureGain(config_.gestureGain);
+        SetGestureProximityThreshold(config_.gestureProximityThresh);
         ResetCounts();
 
-        // _gpulse.GPLEN = APDS9960_GPULSE_32US;
-        // _gpulse.GPULSE = 9; // 10 pulses
-        // this->write8(APDS9960_GPULSE, _gpulse.get());
+        gpulse_.GPLEN  = 0x03; // 32 us
+        gpulse_.GPULSE = 9; // 10 pulses
+        Write8(APDS9960_GPULSE, gpulse_.get());
     }
 
 
@@ -257,6 +257,70 @@ class Apds9960
         Write8(APDS9960_GPENTH, thresh);
     }
 
+    /** Enables the device / Disables the device 
+        (putting it in lower power sleep mode)
+        \param  en Enable
+    */
+    void Enable(bool en)
+    {
+        enable_.PON = en;
+        Write8(APDS9960_ENABLE, enable_.get());
+    }
+
+    /** Enable gesture readings
+        \param  en Enable    
+    */
+    void EnableGesture(bool en)
+    {
+        if(!en)
+        {
+            gconf4_.GMODE = 0;
+            write8(APDS9960_GCONF4, gconf4_.get());
+        }
+        enable_.GEN = en;
+        write8(APDS9960_ENABLE, enable_.get());
+        ResetCounts();
+    }
+
+    /** Enable proximity readings
+        \param  en Enable
+    */
+    void EnableProximity(bool en)
+    {
+        enable_.PEN = en;
+
+        write8(APDS9960_ENABLE, enable_.get());
+    }
+
+    /** Enable color readings
+        \param  en Enable
+    */
+    void EnableColor(bool en)
+    {
+        enable_.AEN = en;
+        write8(APDS9960_ENABLE, enable_.get());
+    }
+
+    /** Enables/disables color interrupt
+        \param en Enable / disable
+    */
+    void EnableColorInterrupt(bool en)
+    {
+        enable_.AIEN = en;
+        write8(APDS9960_ENABLE, enable_.get());
+    }
+
+    /** Enables / Disables color interrupt
+        \param en Enable / disable
+    */
+    void EnableProximityInterrupt(bool en)
+    {
+        enable_.PIEN = en;
+        write8(APDS9960_ENABLE, enable_.get());
+    }
+
+    /** Clears interrupt */
+    void ClearInterrupt() { transport_.Write(APDS9960_AICLEAR, 1); }
 
     /** Resets gesture counts */
     void ResetCounts()
@@ -296,8 +360,20 @@ class Apds9960
 
         uint8_t get() { return (GGAIN << 5) | (GLDRIVE << 3) | GWTIME; }
     };
-
     gconf2 gconf2_;
+
+    struct gconf4
+    {
+        uint8_t GMODE : 1; // Gesture mode
+        uint8_t GIEN : 2;  // Gesture Interrupt Enable
+        uint8_t get() { return (GIEN << 1) | GMODE; }
+        void    set(uint8_t data)
+        {
+            GIEN  = (data >> 1) & 0x01;
+            GMODE = data & 0x01;
+        }
+    };
+    gconf4 gconf4_;
 
     struct control
     {
@@ -308,6 +384,33 @@ class Apds9960
         uint8_t get() { return (LDRIVE << 6) | (PGAIN << 2) | AGAIN; }
     };
     control control_;
+
+    struct enable
+    {
+        uint8_t PON : 1;  // power on
+        uint8_t AEN : 1;  // ALS enable
+        uint8_t PEN : 1;  // Proximity detect enable
+        uint8_t WEN : 1;  // wait timer enable
+        uint8_t AIEN : 1; // ALS interrupt enable
+        uint8_t PIEN : 1; // proximity interrupt enable
+        uint8_t GEN : 1;  // gesture enable
+
+        uint8_t get()
+        {
+            return (GEN << 6) | (PIEN << 5) | (AIEN << 4) | (WEN << 3)
+                   | (PEN << 2) | (AEN << 1) | PON;
+        };
+    };
+    struct enable enable_;
+
+    struct gpulse
+    {
+        uint8_t GPULSE : 6; // Number of gesture pulses = GPULSE + 1
+        uint8_t GPLEN : 2; // Gesture Pulse Length
+
+        uint8_t get() { return (GPLEN << 6) | GPULSE; }
+    };
+    gpulse gpulse_;
 
     Config    config_;
     Transport transport_;
