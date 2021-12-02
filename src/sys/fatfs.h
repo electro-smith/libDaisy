@@ -2,9 +2,6 @@
 #define __fatfs_H /**< & */
 
 #include "ff.h"
-#include "ff_gen_drv.h"
-#include "util/sd_diskio.h"
-#include "util/usbh_diskio.h"
 
 namespace daisy
 {
@@ -44,55 +41,27 @@ class FatFSInterface
          *  When mounting multiple volumes, ffconf.h must have 
          *  _VOLUMES set to an appropriate value.
          * 
-         *  TODO: FIX THE OR'ING Because that actually can't
-         *   be done with the enum class on it's own..
+         *  FatFS will register multiple volumes in the order of the enum,
+         *   the first registered class will mount at "0:/",
+         *   the second registered class will mount at "1:/", and so on
          */
-        enum class Media : uint8_t
+        enum Media : uint8_t
         {
-            SD   = 0x01,
-            USBH = 0x02,
-            // QSPI = 0x04,
+            MEDIA_SD  = 0x01,
+            MEDIA_USB = 0x02,
+            // MEDIA_QSPI = 0x04,
         };
-                          
+
         uint8_t media;
     };
 
     FatFSInterface() {}
 
     /** Link the desired hardware specified via Config::Media */
-    Result Init(const Config& cfg)
-    {
-        Result ret = Result::ERR_NO_MEDIA_SELECTED;
-        cfg_       = cfg;
-        if(cfg_.media & static_cast<uint8_t>(Config::Media::SD))
-            ret = FATFS_LinkDriver(&SD_Driver, path_[0]) == FR_OK
-                      ? Result::OK
-                      : Result::ERR_TOO_MANY_VOLUMES;
-        if(cfg_.media & static_cast<uint8_t>(Config::Media::USBH))
-            ret = FATFS_LinkDriver(&USBH_Driver, path_[1]) == FR_OK
-                      ? Result::OK
-                      : Result::ERR_TOO_MANY_VOLUMES;
-        if(ret == Result::OK)
-            initialized_ = true;
-        return ret;
-    }
+    Result Init(const Config& cfg);
 
     /** Unlinks FatFS from the configured media */
-    Result DeInit()
-    {
-        Result ret = Result::ERR_NO_MEDIA_SELECTED;
-        if(cfg_.media & static_cast<uint8_t>(Config::Media::SD))
-            ret = FATFS_UnLinkDriver(path_[0]) == FR_OK
-                      ? Result::OK
-                      : Result::ERR_TOO_MANY_VOLUMES;
-        if(cfg_.media & static_cast<uint8_t>(Config::Media::USBH))
-            ret = FATFS_UnLinkDriver(path_[1]) == FR_OK
-                      ? Result::OK
-                      : Result::ERR_TOO_MANY_VOLUMES;
-        if(ret == Result::OK)
-            initialized_ = false;
-        return ret;
-    }
+    Result DeInit();
 
     bool Initialized() const { return initialized_; }
 
@@ -108,12 +77,24 @@ class FatFSInterface
     /** Returns the path to a USB Device volume to use with f_mount */
     const char* GetUSBPath() const { return path_[1]; }
 
+    /** Returns reference to filesystem object for the SD volume. */
+    FATFS& GetSDFileSystem() { return fs_[0]; }
+
+    /** Returns reference to filesystem object for the USB volume. */
+    FATFS& GetUSBFileSystem() { return fs_[1]; }
+
   private:
-    char   path_[2][4];
     Config cfg_;
+    FATFS  fs_[_VOLUMES];
+    char   path_[_VOLUMES][4];
     bool   initialized_;
 };
 
 } // namespace daisy
+
+/** Implementation of FatFS time method 
+ *  @return 0
+*/
+extern "C" DWORD get_fattime(void);
 
 #endif
