@@ -8,7 +8,7 @@
 #define TLV493D_BUSIF_WRITESIZE 4
 #define TLV493D_NUM_OF_REGMASKS 25
 #define TLV493D_DEFAULTMODE POWERDOWNMODE
-#define TLV493D_MEASUREMENT_READOUT	7
+#define TLV493D_MEASUREMENT_READOUT 7
 
 #define TLV493D_B_MULT 0.098f
 #define TLV493D_TEMP_MULT 1.1
@@ -125,9 +125,9 @@ class Tlv493d
 
     typedef struct
     {
-        uint8_t fast;
-        uint8_t lp;
-        uint8_t lpPeriod;
+        uint8_t  fast;
+        uint8_t  lp;
+        uint8_t  lpPeriod;
         uint16_t measurementTime;
     } AccessMode_t;
 
@@ -141,11 +141,11 @@ class Tlv493d
     };
 
     const AccessMode_t accModes[] = {
-        { 0, 0, 0, 1000 },		// POWERDOWNMODE
-        { 1, 0, 0, 0 },			// FASTMODE
-        { 0, 1, 1, 10 },		// LOWPOWERMODE
-        { 0, 1, 0, 100 },		// ULTRALOWPOWERMODE
-        { 1, 1, 1, 10 }			// MASTERCONTROLLEDMODE
+        {0, 0, 0, 1000}, // POWERDOWNMODE
+        {1, 0, 0, 0},    // FASTMODE
+        {0, 1, 1, 10},   // LOWPOWERMODE
+        {0, 1, 0, 100},  // ULTRALOWPOWERMODE
+        {1, 1, 1, 10}    // MASTERCONTROLLEDMODE
     };
 
     const RegMask_t RegMasks[] = {
@@ -301,17 +301,14 @@ class Tlv493d
     }
 
 
-    uint16_t GetMeasurementDelay()
-    {
-        return accModes[mMode].measurementTime;
-}
+    uint16_t GetMeasurementDelay() { return accModes[mMode].measurementTime; }
 
   private:
     Config    config_;
     Transport transport_;
     uint8_t   regReadData[TLV493D_BUSIF_READSIZE];
     uint8_t   regWriteData[TLV493D_BUSIF_WRITESIZE];
-    int16_t mXdata, mYdata, mZdata, mTempdata, mExpectedFrameCount, mMode;
+    int16_t   mXdata, mYdata, mZdata, mTempdata, mExpectedFrameCount, mMode;
 
     // internal function called by begin()
     void ResetSensor(uint8_t adr)
