@@ -8,6 +8,11 @@
 #define TLV493D_BUSIF_WRITESIZE 4
 #define TLV493D_NUM_OF_REGMASKS 25
 #define TLV493D_DEFAULTMODE POWERDOWNMODE
+#define TLV493D_MEASUREMENT_READOUT	7
+
+#define TLV493D_B_MULT 0.098f
+#define TLV493D_TEMP_MULT 1.1
+#define TLV493D_TEMP_OFFSET 315
 
 #define REGMASK_READ 0
 #define REGMASK_WRITE 1
@@ -118,6 +123,14 @@ class Tlv493d
         uint8_t shift;
     };
 
+    typedef struct
+    {
+        uint8_t fast;
+        uint8_t lp;
+        uint8_t lpPeriod;
+        uint16_t measurementTime;
+    } AccessMode_t;
+
     enum AccessMode_e
     {
         POWERDOWNMODE = 0,
@@ -125,6 +138,14 @@ class Tlv493d
         LOWPOWERMODE,
         ULTRALOWPOWERMODE,
         MASTERCONTROLLEDMODE,
+    };
+
+    const AccessMode_t accModes[] = {
+        { 0, 0, 0, 1000 },		// POWERDOWNMODE
+        { 1, 0, 0, 0 },			// FASTMODE
+        { 0, 1, 1, 10 },		// LOWPOWERMODE
+        { 0, 1, 0, 100 },		// ULTRALOWPOWERMODE
+        { 1, 1, 1, 10 }			// MASTERCONTROLLEDMODE
     };
 
     const RegMask_t RegMasks[] = {
@@ -216,11 +237,81 @@ class Tlv493d
         }
     }
 
+
+    void UpdateData()
+    {
+        SetAccessMode(MASTERCONTROLLEDMODE);
+        System::Delay(GetMeasurementDelay());
+
+        ReadOut(TLV493D_MEASUREMENT_READOUT);
+
+        // construct results from registers
+        mXdata = ConcatResults(getRegBits(R_BX1), getRegBits(R_BX2), true);
+        mYdata = ConcatResults(getRegBits(R_BY1), getRegBits(R_BY2), true);
+        mZdata = ConcatResults(getRegBits(R_BZ1), getRegBits(R_BZ2), true);
+        mTempdata
+            = ConcatResults(getRegBits(R_TEMP1), getRegBits(R_TEMP2), false);
+
+        SetAccessMode(POWERDOWNMODE);
+        GetRegBits(R_CHANNEL);
+
+        mExpectedFrameCount = GetRegBits(R_FRAMECOUNTER) + 1;
+    }
+
+
+    float GetX() { return static_cast<float>(mXdata) * TLV493D_B_MULT; }
+
+
+    float GetY() { return static_cast<float>(mYdata) * TLV493D_B_MULT; }
+
+
+    float GetZ() { return static_cast<float>(mZdata) * TLV493D_B_MULT; }
+
+
+    float GetTemp()
+    {
+        return static_cast<float>(mTempdata - TLV493D_TEMP_OFFSET)
+               * TLV493D_TEMP_MULT;
+    }
+
+
+    float GetAmount()
+    {
+        // sqrt(x^2 + y^2 + z^2)
+        return TLV493D_B_MULT
+               * sqrt(pow(static_cast<float>(mXdata), 2)
+                      + pow(static_cast<float>(mYdata), 2)
+                      + pow(static_cast<float>(mZdata), 2));
+    }
+
+
+    float GetAzimuth()
+    {
+        // arctan(y/x)
+        return atan2(static_cast<float>(mYdata), static_cast<float>(mXdata));
+    }
+
+
+    float GetPolar()
+    {
+        // arctan(z/(sqrt(x^2+y^2)))
+        return atan2(static_cast<float>(mZdata),
+                     sqrt(pow(static_cast<float>(mXdata), 2)
+                          + pow(static_cast<float>(mYdata), 2)));
+    }
+
+
+    uint16_t GetMeasurementDelay()
+    {
+        return accModes[mMode].measurementTime;
+}
+
   private:
     Config    config_;
     Transport transport_;
     uint8_t   regReadData[TLV493D_BUSIF_READSIZE];
     uint8_t   regWriteData[TLV493D_BUSIF_WRITESIZE];
+    int16_t mXdata, mYdata, mZdata, mTempdata, mExpectedFrameCount, mMode;
 
     // internal function called by begin()
     void ResetSensor(uint8_t adr)
