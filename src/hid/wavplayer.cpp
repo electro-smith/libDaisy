@@ -1,13 +1,13 @@
 #include <cstring>
 #include "hid/wavplayer.h"
+#include "ff.h"
 
 using namespace daisy;
 
-void WavPlayer::Init(FatFSInterface &fsi)
+void WavPlayer::Init(const char *search_path)
 {
     // First check for all .wav files, and add them to the list until its full or there are no more.
     // Only checks '/'
-    fs_interface_  = fsi;
     FRESULT result = FR_OK;
     FILINFO fno;
     DIR     dir;
@@ -16,17 +16,8 @@ void WavPlayer::Init(FatFSInterface &fsi)
     file_cnt_ = 0;
     playing_  = true;
     looping_  = false;
-    /** Only initialize the FatFS Interface if it is not already initialized */
-    if(!fs_interface_.Initialized())
-    {
-        FatFSInterface::Config fs_cfg;
-        fs_cfg.media = static_cast<uint8_t>(FatFSInterface::Config::Media::SD);
-        fs_interface_.Init(fs_cfg);
-    }
-    // Mount SD Card
-    f_mount(&fs_, fs_interface_.GetSDPath(), 1);
     // Open Dir and scan for files.
-    if(f_opendir(&dir, fs_interface_.GetSDPath()) != FR_OK)
+    if(f_opendir(&dir, search_path) != FR_OK)
     {
         return;
     }
@@ -45,7 +36,8 @@ void WavPlayer::Init(FatFSInterface &fsi)
         {
             if(strstr(fn, ".wav") || strstr(fn, ".WAV"))
             {
-                strcpy(file_info_[file_cnt_].name, fn);
+                strcpy(file_info_[file_cnt_].name, search_path);
+                strcat(file_info_[file_cnt_].name, fn);
                 file_cnt_++;
                 // For now lets break anyway to test.
                 //                break;
