@@ -5,7 +5,6 @@
 
 namespace daisy
 {
-
 /** @brief Daisy FatFS Driver Interface
  *  @details Specifies the desired media (SD Card, USB, etc.) to be mountable with FatFS
  *           within a given application. Once initialization is called, the standard
