@@ -83,9 +83,7 @@ class HallSensor
         HAL_TIMEx_HallSensor_Start(&hall_);
     }
 
-    uint8_t GetCount(){
-        return hall_.Instance->CNT;
-    }
+    uint8_t GetCount() { return hall_.Instance->CNT; }
 
     void InitPins()
     {
