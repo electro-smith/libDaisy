@@ -47,12 +47,12 @@ class Vl53l1xI2CTransport
 
     void Write(uint8_t *data, uint16_t size)
     {
-        i2c_.TransmitBlocking(VL53L1X_ADDRESS1, data, size, 10);
+        // i2c_.TransmitBlocking(addr, data, size, 10);
     }
 
     void Read(uint8_t *data, uint16_t size)
     {
-        i2c_.ReceiveBlocking(VL53L1X_ADDRESS1, data, size, 10);
+        // i2c_.ReceiveBlocking(addr, data, size, 10);
     }
 
   private:
@@ -90,6 +90,7 @@ class Vl53l1x
     Config    config_;
     Transport transport_;
 
+}; // Class
 /** @} */
 
 using Vl53l1xI2C = Vl53l1x<Vl53l1xI2CTransport>;
