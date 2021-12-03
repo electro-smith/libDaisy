@@ -310,6 +310,7 @@ class Tlv493d
         SetRegBits(W_LP_PERIOD, modeConfig->lpPeriod);
         CalcParity();
         WriteOut();
+        mMode = mode;
     }
 
     void CalcParity()
