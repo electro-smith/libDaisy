@@ -77,10 +77,14 @@ class HallSensor
 
     void StartBlockingRead()
     {
-        // wait for previous transfer to be finished
+        // are we ready, kids?
         while(HAL_TIMEx_HallSensor_GetState(&hall_) != HAL_TIM_STATE_READY) {};
 
         HAL_TIMEx_HallSensor_Start(&hall_);
+    }
+
+    uint8_t GetCount(){
+        return hall_.Instance->CNT;
     }
 
     void InitPins()
