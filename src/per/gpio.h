@@ -2,6 +2,159 @@
 #ifndef DSY_GPIO_H
 #define DSY_GPIO_H
 #include "daisy_core.h"
+
+/** New C++ GPIO */
+#ifdef __cplusplus
+
+namespace daisy
+{
+
+/** @brief GPIO Port names */
+enum GPIOPort
+{
+    PA, /**< Port A */
+    PB, /**< Port B */
+    PC, /**< Port C */
+    PD, /**< Port D */
+    PE, /**< Port E */
+    PF, /**< Port F */
+    PG, /**< Port G */
+    PH, /**< Port H */
+    PI, /**< Port I */
+    PJ, /**< Port J */
+    PK, /**< Port K */
+    PX, /**< Used as a dummy port*/
+};
+
+/** @brief representation of hardware port/pin combination */
+struct Pin
+{
+    GPIOPort port;
+    uint8_t  pin;
+
+    /** @brief Basic Constructor creates an invalid Pin object */
+    Pin() : port(PX), pin(255) {}
+
+    /** @brief Constructor creates a valid pin. 
+     *  @param pt GPIOPort between PA, and PK corresponding to STM32 Port.
+     *  @param pn pin number in range of 0-15
+    */
+    Pin(GPIOPort pt, uint8_t pn) : port(pt), pin(pn) {}
+
+    /** @brief checks validity of a Pin 
+     *  @retval returns true if the port is a valid hardware pin, otherwise false.
+    */
+    inline bool IsValid() { return port != PX && pin < 16; }
+
+    /** @brief comparison operator for checking equality between Pin objects */
+    bool operator==(Pin &rhs) { return (rhs.port == port) && (rhs.pin == pin); }
+
+    /** @brief comparison operator for checking inequality between Pin objects */
+    bool operator!=(Pin &rhs) { return !operator==(rhs); }
+};
+
+
+/** @brief General Purpose I/O control */
+class GPIO
+{
+  public:
+    /** @brief Configuration for a given GPIO */
+    struct Config
+    {
+        /** @brief Mode of operation for the specified GPIO */
+        enum class Mode
+        {
+            INPUT,     /**< Input for reading state of pin */
+            OUTPUT_PP, /**< Output w/ push-pull configuration */
+            OUTPUT_OD, /**< Output w/ open-drain configuration */
+            ANALOG,    /**< Analog for connection to ADC or DAC peripheral */
+        };
+
+        /** @brief Configures whether an internal Pull up or Pull down resistor is used. 
+         *  
+		 * Internal Pull up/down resistors are typically 40k ohms, and will be between
+         * 30k and 50k
+         * 
+         * When the Pin is configured in Analog mode, the pull up/down resistors are
+         * disabled by hardware. 
+         */
+        enum class Pull
+        {
+            NOPULL,   /**< No pull up resistor */
+            PULLUP,   /**< Internal pull up enabled */
+            PULLDOWN, /**< Internal pull down enabled*/
+        };
+
+        /** TODO: Document me (and everything else below) :-) */
+        enum class Speed
+        {
+            LOW,       /**< & */
+            MEDIUM,    /**< & */
+            HIGH,      /**< & */
+            VERY_HIGH, /**< & */
+        };
+
+        Config()
+        : pin(PX, 0), mode(Mode::INPUT), pull(Pull::NOPULL), speed(Speed::LOW)
+        {
+        }
+
+        Pin   pin;
+        Mode  mode;
+        Pull  pull;
+        Speed speed;
+    };
+
+    GPIO() {}
+
+    /** These other constructors might not make much sense.. */
+    // GPIO(Pin p) {}
+    // GPIO(Config cfg) {}
+    // GPIO(Pin p, Config cfg) {}
+
+    // void Init();
+    void Init(const Config &cfg);
+    void Init(Pin p, const Config &cfg);
+    void Init(Pin           p,
+              Config::Mode  m  = Config::Mode::INPUT,
+              Config::Pull  pu = Config::Pull::NOPULL,
+              Config::Speed sp = Config::Speed::LOW);
+    void DeInit();
+    bool Read();
+    void Write(bool state);
+    void Toggle();
+
+    /** Return a reference to the internal Config struct */
+    Config &GetConfig() { return cfg_; }
+
+  private:
+    /** This will internally be cast to the 
+     *  STM32H7 GPIO_Typedef* type, which 
+     *  is just the base address to the
+     *  specified GPIO register. 
+     * 
+     *  This prevents us needing to have an internal
+     *  Impl class just to store the GPIO_Typedef* 
+     */
+    uint32_t *GetGPIOBaseRegister();
+
+    /** Internal copy of the Configuration of the given pin */
+    Config cfg_;
+
+    /** Internal pointer to base address of relavent GPIO register */
+    uint32_t *port_base_addr_;
+};
+
+} // namespace daisy
+
+#endif
+
+/** Old Style C API for GPIO is staying in place for a 
+ *  few versions to support backwards compatibility.
+ * 
+ *  This should not be used for anything new.
+ */
+
 #ifdef __cplusplus
 extern "C"
 {
