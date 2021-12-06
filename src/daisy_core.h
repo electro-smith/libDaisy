@@ -237,8 +237,8 @@ FORCE_INLINE uint8_t dsy_pin_cmp(dsy_gpio_pin *a, dsy_gpio_pin *b)
 
 #ifdef __cplusplus
 
-namespace daisy {
-
+namespace daisy
+{
 /** @brief GPIO Port names */
 enum GPIOPort
 {
