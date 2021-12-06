@@ -86,63 +86,11 @@ const dsy_gpio_pin seedgpio[32] = {
 };
 #endif
 
-/** Constant Pinout consts */
-const Pin DaisySeed::D0  = Pin(PB, 12);
-const Pin DaisySeed::D1  = Pin(PC, 11);
-const Pin DaisySeed::D2  = Pin(PC, 10);
-const Pin DaisySeed::D3  = Pin(PC, 9);
-const Pin DaisySeed::D4  = Pin(PC, 8);
-const Pin DaisySeed::D5  = Pin(PD, 2);
-const Pin DaisySeed::D6  = Pin(PC, 12);
-const Pin DaisySeed::D7  = Pin(PG, 10);
-const Pin DaisySeed::D8  = Pin(PG, 11);
-const Pin DaisySeed::D9  = Pin(PB, 4);
-const Pin DaisySeed::D10 = Pin(PB, 5);
-const Pin DaisySeed::D11 = Pin(PB, 8);
-const Pin DaisySeed::D12 = Pin(PB, 9);
-const Pin DaisySeed::D13 = Pin(PB, 6);
-const Pin DaisySeed::D14 = Pin(PB, 7);
-const Pin DaisySeed::D15 = Pin(PC, 0);
-const Pin DaisySeed::D16 = Pin(PA, 3);
-const Pin DaisySeed::D17 = Pin(PB, 1);
-const Pin DaisySeed::D18 = Pin(PA, 7);
-const Pin DaisySeed::D19 = Pin(PA, 6);
-const Pin DaisySeed::D20 = Pin(PC, 1);
-const Pin DaisySeed::D21 = Pin(PC, 4);
-const Pin DaisySeed::D22 = Pin(PA, 5);
-const Pin DaisySeed::D23 = Pin(PA, 4);
-const Pin DaisySeed::D24 = Pin(PA, 1);
-const Pin DaisySeed::D25 = Pin(PA, 0);
-const Pin DaisySeed::D26 = Pin(PD, 11);
-const Pin DaisySeed::D27 = Pin(PG, 9);
-const Pin DaisySeed::D28 = Pin(PA, 2);
-const Pin DaisySeed::D29 = Pin(PB, 14);
-const Pin DaisySeed::D30 = Pin(PB, 15);
-
-/** Analog pins share same pins as digital pins */
-const Pin DaisySeed::A0  = DaisySeed::D15;
-const Pin DaisySeed::A1  = DaisySeed::D16;
-const Pin DaisySeed::A2  = DaisySeed::D17;
-const Pin DaisySeed::A3  = DaisySeed::D18;
-const Pin DaisySeed::A4  = DaisySeed::D19;
-const Pin DaisySeed::A5  = DaisySeed::D20;
-const Pin DaisySeed::A6  = DaisySeed::D21;
-const Pin DaisySeed::A7  = DaisySeed::D22;
-const Pin DaisySeed::A8  = DaisySeed::D23;
-const Pin DaisySeed::A9  = DaisySeed::D24;
-const Pin DaisySeed::A10 = DaisySeed::D25;
-const Pin DaisySeed::A11 = DaisySeed::D28;
-
-/** Pins unique to Daisy Seed 2 DFM */
-const Pin DaisySeed::D31 = Pin(PC, 2);
-const Pin DaisySeed::D32 = Pin(PC, 3);
-
-/** Analog Pin alias */
-const Pin DaisySeed::A12 = DaisySeed::D31;
-const Pin DaisySeed::A13 = DaisySeed::D32;
-
 // Public Initialization
 
+/** Vestigial function body for old function
+ *  This is no longer in use.
+ */
 void DaisySeed::Configure() {}
 
 void DaisySeed::Init(bool boost)

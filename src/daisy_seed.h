@@ -9,6 +9,7 @@
 
 namespace daisy
 {
+
 /**
    @brief This is the higher-level interface for the Daisy board. \n 
     All basic peripheral configuration/initialization is setup here. \n
@@ -20,16 +21,6 @@ class DaisySeed
   public:
     DaisySeed() {}
     ~DaisySeed() {}
-
-    /** 
-    Configures the settings for all internal peripherals,
-    but does not initialize them.
-    This allows for modification of the configuration
-    handles prior to initialization.
-    */
-
-    //Defaults listed below:
-    //TODO: Add defaults
 
     /** This function used to provide a pre-initialization configuraiton 
      *  it has since been deprecated, and does nothing.
@@ -170,22 +161,6 @@ class DaisySeed
     /** Returns the BoardVersion detected during intiialization */
     BoardVersion CheckBoardVersion();
 
-    /** Pinout Consts */
-
-    /** Digital Pins */
-    static const Pin D0, D1, D2, D3, D4, D5, D6, D7;
-    static const Pin D8, D9, D10, D11, D12, D13, D14, D15;
-    static const Pin D16, D17, D18, D19, D20, D21, D22, D23;
-    static const Pin D24, D25, D26, D27, D28, D29, D30;
-
-
-    /** Analog Pins */
-    static const Pin A0, A1, A2, A3, A4, A5, A6, A7;
-    static const Pin A8, A9, A10, A11;
-
-    /** Only available on Daisy Seed 2 DFM */
-    static const Pin D31, D32;
-    static const Pin A12, A13;
 
   private:
     /** Local shorthand for debug log destination
@@ -199,6 +174,67 @@ class DaisySeed
     //void     ConfigureI2c();
     float callback_rate_;
 };
+
+/** seed namespace contains pinout constants for addressing 
+ * the pins on the Daisy Seed SOM.
+ */
+namespace seed
+{
+    /** Constant Pinout consts */
+    constexpr Pin D0  = Pin(PB, 12);
+    constexpr Pin D1  = Pin(PC, 11);
+    constexpr Pin D2  = Pin(PC, 10);
+    constexpr Pin D3  = Pin(PC, 9);
+    constexpr Pin D4  = Pin(PC, 8);
+    constexpr Pin D5  = Pin(PD, 2);
+    constexpr Pin D6  = Pin(PC, 12);
+    constexpr Pin D7  = Pin(PG, 10);
+    constexpr Pin D8  = Pin(PG, 11);
+    constexpr Pin D9  = Pin(PB, 4);
+    constexpr Pin D10 = Pin(PB, 5);
+    constexpr Pin D11 = Pin(PB, 8);
+    constexpr Pin D12 = Pin(PB, 9);
+    constexpr Pin D13 = Pin(PB, 6);
+    constexpr Pin D14 = Pin(PB, 7);
+    constexpr Pin D15 = Pin(PC, 0);
+    constexpr Pin D16 = Pin(PA, 3);
+    constexpr Pin D17 = Pin(PB, 1);
+    constexpr Pin D18 = Pin(PA, 7);
+    constexpr Pin D19 = Pin(PA, 6);
+    constexpr Pin D20 = Pin(PC, 1);
+    constexpr Pin D21 = Pin(PC, 4);
+    constexpr Pin D22 = Pin(PA, 5);
+    constexpr Pin D23 = Pin(PA, 4);
+    constexpr Pin D24 = Pin(PA, 1);
+    constexpr Pin D25 = Pin(PA, 0);
+    constexpr Pin D26 = Pin(PD, 11);
+    constexpr Pin D27 = Pin(PG, 9);
+    constexpr Pin D28 = Pin(PA, 2);
+    constexpr Pin D29 = Pin(PB, 14);
+    constexpr Pin D30 = Pin(PB, 15);
+
+    /** Analog pins share same pins as digital pins */
+    constexpr Pin A0  = D15;
+    constexpr Pin A1  = D16;
+    constexpr Pin A2  = D17;
+    constexpr Pin A3  = D18;
+    constexpr Pin A4  = D19;
+    constexpr Pin A5  = D20;
+    constexpr Pin A6  = D21;
+    constexpr Pin A7  = D22;
+    constexpr Pin A8  = D23;
+    constexpr Pin A9  = D24;
+    constexpr Pin A10 = D25;
+    constexpr Pin A11 = D28;
+
+    /** Pins unique to Daisy Seed 2 DFM */
+    constexpr Pin D31 = Pin(PC, 2);
+    constexpr Pin D32 = Pin(PC, 3);
+
+    /** Analog Pin alias */
+    constexpr Pin A12 = D31;
+    constexpr Pin A13 = D32;
+} // namespace seed
 
 } // namespace daisy
 
