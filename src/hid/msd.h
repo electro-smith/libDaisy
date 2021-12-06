@@ -22,7 +22,7 @@ typedef enum
 
    @brief Presents a USB Mass Storage Device host interface
 */
-class MSDHandle
+class USBHostHandle
 {
   public:
     enum Result
@@ -41,6 +41,8 @@ class MSDHandle
      *  \param config Configuration struct for initialization
      */
     Result Init(Config config);
+
+    /** Initializes the USB drivers and starts timeout.
 
     /** Deinitializes MSD-related peripherals
      * 
@@ -64,9 +66,9 @@ class MSDHandle
      */
     bool GetPresent();
 
-    MSDHandle() : pimpl_(nullptr) {}
-    MSDHandle(const MSDHandle& other) = default;
-    MSDHandle& operator=(const MSDHandle& other) = default;
+    USBHostHandle() : pimpl_(nullptr) {}
+    USBHostHandle(const USBHostHandle& other) = default;
+    USBHostHandle& operator=(const USBHostHandle& other) = default;
 
     class Impl; /**< & */
 
