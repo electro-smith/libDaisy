@@ -8,52 +8,6 @@
 
 namespace daisy
 {
-
-/** @brief GPIO Port names */
-enum GPIOPort
-{
-    PA, /**< Port A */
-    PB, /**< Port B */
-    PC, /**< Port C */
-    PD, /**< Port D */
-    PE, /**< Port E */
-    PF, /**< Port F */
-    PG, /**< Port G */
-    PH, /**< Port H */
-    PI, /**< Port I */
-    PJ, /**< Port J */
-    PK, /**< Port K */
-    PX, /**< Used as a dummy port*/
-};
-
-/** @brief representation of hardware port/pin combination */
-struct Pin
-{
-    GPIOPort port;
-    uint8_t  pin;
-
-    /** @brief Constructor creates a valid pin. 
-     *  @param pt GPIOPort between PA, and PK corresponding to STM32 Port.
-     *  @param pn pin number in range of 0-15
-    */
-    constexpr Pin(const GPIOPort pt, const uint8_t pn) : port(pt), pin(pn) {}
-
-    /** @brief Basic Constructor creates an invalid Pin object */
-    constexpr Pin() : port(PX), pin(255) {}
-
-    /** @brief checks validity of a Pin 
-     *  @retval returns true if the port is a valid hardware pin, otherwise false.
-    */
-    constexpr bool IsValid() const { return port != PX && pin < 16; }
-
-    /** @brief comparison operator for checking equality between Pin objects */
-    constexpr bool operator==(const Pin &rhs) const { return (rhs.port == port) && (rhs.pin == pin); }
-
-    /** @brief comparison operator for checking inequality between Pin objects */
-    constexpr bool operator!=(const Pin &rhs) const { return !operator==(rhs); }
-};
-
-
 /** @brief General Purpose I/O control */
 class GPIO
 {
@@ -117,7 +71,7 @@ class GPIO
     void Init(Pin p, const Config &cfg);
 
     /** @brief Explicity initialize all configuration for the GPIO */
-    void Init(Pin           p,
+    void Init(Pin   p,
               Mode  m  = Mode::INPUT,
               Pull  pu = Pull::NOPULL,
               Speed sp = Speed::LOW);
