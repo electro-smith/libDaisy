@@ -47,7 +47,7 @@ hid/usb \
 hid/usb_midi \
 hid/wavplayer \
 hid/logger \
-hid/msd \
+hid/usb_host \
 per/adc \
 per/dac \
 per/gpio \

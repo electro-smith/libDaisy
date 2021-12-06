@@ -42,8 +42,6 @@ class USBHostHandle
      */
     Result Init(Config config);
 
-    /** Initializes the USB drivers and starts timeout.
-
     /** Deinitializes MSD-related peripherals
      * 
      */
