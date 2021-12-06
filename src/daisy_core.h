@@ -237,6 +237,8 @@ FORCE_INLINE uint8_t dsy_pin_cmp(dsy_gpio_pin *a, dsy_gpio_pin *b)
 
 #ifdef __cplusplus
 
+namespace daisy {
+
 /** @brief GPIO Port names */
 enum GPIOPort
 {
@@ -294,6 +296,8 @@ struct Pin
         return dsy_pin(static_cast<dsy_gpio_port>(port), pin);
     }
 };
+
+} // namespace daisy
 
 #endif // __cplusplus
 
