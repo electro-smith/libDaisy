@@ -85,15 +85,18 @@ class GPIO
             PULLDOWN, /**< Internal pull down enabled*/
         };
 
-        /** TODO: Document me (and everything else below) :-) */
+        /** @brief Output speed controls the drive strength, and slew rate of the pin */
         enum class Speed
         {
-            LOW,       /**< & */
-            MEDIUM,    /**< & */
-            HIGH,      /**< & */
-            VERY_HIGH, /**< & */
+            LOW,
+            MEDIUM,
+            HIGH,
+            VERY_HIGH,
         };
 
+        /** Constructor with no arguments will prepare an invalid GPIO set as
+         *  an input, with no pullup. 
+         */
         Config()
         : pin(PX, 0), mode(Mode::INPUT), pull(Pull::NOPULL), speed(Speed::LOW)
         {
@@ -107,21 +110,35 @@ class GPIO
 
     GPIO() {}
 
-    /** These other constructors might not make much sense.. */
-    // GPIO(Pin p) {}
-    // GPIO(Config cfg) {}
-    // GPIO(Pin p, Config cfg) {}
-
-    // void Init();
+    /** @brief Initialize the GPIO from a Configuration struct */
     void Init(const Config &cfg);
+
+    /** @brief Initialize the GPIO with a Configuration struct, and explicit pin */
     void Init(Pin p, const Config &cfg);
+
+    /** @brief Explicity initialize all configuration for the GPIO */
     void Init(Pin           p,
               Config::Mode  m  = Config::Mode::INPUT,
               Config::Pull  pu = Config::Pull::NOPULL,
               Config::Speed sp = Config::Speed::LOW);
+
+    /** @brief Deinitializes the GPIO pin */
     void DeInit();
+
+    /** @brief Reads the state of the GPIO.
+     *  If a GPIO is configured in Config::Mode::ANALOG, this function will 
+     *  always return false.
+     */
     bool Read();
+
+    /** @brief Changes the state of the GPIO hardware when configured as an OUTPUT. 
+     *  @param state setting true writes an output HIGH, while setting false writes an output LOW.
+     */ 
     void Write(bool state);
+
+    /** @brief flips the current state of the GPIO. 
+     *  If it was HIGH, it will go LOW, and vice versa.
+     */
     void Toggle();
 
     /** Return a reference to the internal Config struct */
