@@ -14,27 +14,25 @@ void GPIO::Init(const Config &cfg)
     GPIO_InitTypeDef ginit;
     switch(cfg_.mode)
     {
-        case Config::Mode::OUTPUT_PP: ginit.Mode = GPIO_MODE_OUTPUT_PP; break;
-        case Config::Mode::OUTPUT_OD: ginit.Mode = GPIO_MODE_OUTPUT_OD; break;
-        case Config::Mode::ANALOG: ginit.Mode = GPIO_MODE_ANALOG; break;
-        case Config::Mode::INPUT:
+        case Mode::OUTPUT: ginit.Mode = GPIO_MODE_OUTPUT_PP; break;
+        case Mode::OUTPUT_OD: ginit.Mode = GPIO_MODE_OUTPUT_OD; break;
+        case Mode::ANALOG: ginit.Mode = GPIO_MODE_ANALOG; break;
+        case Mode::INPUT:
         default: ginit.Mode = GPIO_MODE_INPUT; break;
     }
     switch(cfg_.pull)
     {
-        case Config::Pull::PULLUP: ginit.Pull = GPIO_PULLUP; break;
-        case Config::Pull::PULLDOWN: ginit.Pull = GPIO_PULLDOWN; break;
-        case Config::Pull::NOPULL:
+        case Pull::PULLUP: ginit.Pull = GPIO_PULLUP; break;
+        case Pull::PULLDOWN: ginit.Pull = GPIO_PULLDOWN; break;
+        case Pull::NOPULL:
         default: ginit.Pull = GPIO_NOPULL;
     }
     switch(cfg_.speed)
     {
-        case Config::Speed::VERY_HIGH:
-            ginit.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-            break;
-        case Config::Speed::HIGH: ginit.Speed = GPIO_SPEED_FREQ_HIGH; break;
-        case Config::Speed::MEDIUM: ginit.Speed = GPIO_SPEED_FREQ_MEDIUM; break;
-        case Config::Speed::LOW:
+        case Speed::VERY_HIGH: ginit.Speed = GPIO_SPEED_FREQ_VERY_HIGH; break;
+        case Speed::HIGH: ginit.Speed = GPIO_SPEED_FREQ_HIGH; break;
+        case Speed::MEDIUM: ginit.Speed = GPIO_SPEED_FREQ_MEDIUM; break;
+        case Speed::LOW:
         default: ginit.Speed = GPIO_SPEED_FREQ_LOW;
     }
 
@@ -67,7 +65,7 @@ void GPIO::Init(Pin p, const Config &cfg)
     cfg_.pin = p;
     Init(cfg_);
 }
-void GPIO::Init(Pin p, Config::Mode m, Config::Pull pu, Config::Speed sp)
+void GPIO::Init(Pin p, Mode m, Pull pu, Speed sp)
 {
     // Populate Config struct, and init with overload
     cfg_.pin   = p;

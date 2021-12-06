@@ -32,25 +32,25 @@ struct Pin
     GPIOPort port;
     uint8_t  pin;
 
-    /** @brief Basic Constructor creates an invalid Pin object */
-    Pin() : port(PX), pin(255) {}
-
     /** @brief Constructor creates a valid pin. 
      *  @param pt GPIOPort between PA, and PK corresponding to STM32 Port.
      *  @param pn pin number in range of 0-15
     */
-    Pin(GPIOPort pt, uint8_t pn) : port(pt), pin(pn) {}
+    constexpr Pin(const GPIOPort pt, const uint8_t pn) : port(pt), pin(pn) {}
+
+    /** @brief Basic Constructor creates an invalid Pin object */
+    constexpr Pin() : port(PX), pin(255) {}
 
     /** @brief checks validity of a Pin 
      *  @retval returns true if the port is a valid hardware pin, otherwise false.
     */
-    inline bool IsValid() { return port != PX && pin < 16; }
+    constexpr bool IsValid() const { return port != PX && pin < 16; }
 
     /** @brief comparison operator for checking equality between Pin objects */
-    bool operator==(Pin &rhs) { return (rhs.port == port) && (rhs.pin == pin); }
+    constexpr bool operator==(const Pin &rhs) const { return (rhs.port == port) && (rhs.pin == pin); }
 
     /** @brief comparison operator for checking inequality between Pin objects */
-    bool operator!=(Pin &rhs) { return !operator==(rhs); }
+    constexpr bool operator!=(const Pin &rhs) const { return !operator==(rhs); }
 };
 
 
@@ -58,41 +58,46 @@ struct Pin
 class GPIO
 {
   public:
+    /** @brief Mode of operation for the specified GPIO */
+    enum class Mode
+    {
+        INPUT,     /**< Input for reading state of pin */
+        OUTPUT,    /**< Output w/ push-pull configuration */
+        OUTPUT_OD, /**< Output w/ open-drain configuration */
+        ANALOG,    /**< Analog for connection to ADC or DAC peripheral */
+    };
+
+    /** @brief Configures whether an internal Pull up or Pull down resistor is used. 
+     *  
+     * Internal Pull up/down resistors are typically 40k ohms, and will be between
+     * 30k and 50k
+     * 
+     * When the Pin is configured in Analog mode, the pull up/down resistors are
+     * disabled by hardware. 
+     */
+    enum class Pull
+    {
+        NOPULL,   /**< No pull up resistor */
+        PULLUP,   /**< Internal pull up enabled */
+        PULLDOWN, /**< Internal pull down enabled*/
+    };
+
+    /** @brief Output speed controls the drive strength, and slew rate of the pin */
+    enum class Speed
+    {
+        LOW,
+        MEDIUM,
+        HIGH,
+        VERY_HIGH,
+    };
+
     /** @brief Configuration for a given GPIO */
     struct Config
     {
-        /** @brief Mode of operation for the specified GPIO */
-        enum class Mode
-        {
-            INPUT,     /**< Input for reading state of pin */
-            OUTPUT_PP, /**< Output w/ push-pull configuration */
-            OUTPUT_OD, /**< Output w/ open-drain configuration */
-            ANALOG,    /**< Analog for connection to ADC or DAC peripheral */
-        };
-
-        /** @brief Configures whether an internal Pull up or Pull down resistor is used. 
-         *  
-		 * Internal Pull up/down resistors are typically 40k ohms, and will be between
-         * 30k and 50k
-         * 
-         * When the Pin is configured in Analog mode, the pull up/down resistors are
-         * disabled by hardware. 
-         */
-        enum class Pull
-        {
-            NOPULL,   /**< No pull up resistor */
-            PULLUP,   /**< Internal pull up enabled */
-            PULLDOWN, /**< Internal pull down enabled*/
-        };
-
-        /** @brief Output speed controls the drive strength, and slew rate of the pin */
-        enum class Speed
-        {
-            LOW,
-            MEDIUM,
-            HIGH,
-            VERY_HIGH,
-        };
+        Pin   pin;
+        Mode  mode;
+        Pull  pull;
+        Speed speed;
 
         /** Constructor with no arguments will prepare an invalid GPIO set as
          *  an input, with no pullup. 
@@ -101,11 +106,6 @@ class GPIO
         : pin(PX, 0), mode(Mode::INPUT), pull(Pull::NOPULL), speed(Speed::LOW)
         {
         }
-
-        Pin   pin;
-        Mode  mode;
-        Pull  pull;
-        Speed speed;
     };
 
     GPIO() {}
@@ -118,9 +118,9 @@ class GPIO
 
     /** @brief Explicity initialize all configuration for the GPIO */
     void Init(Pin           p,
-              Config::Mode  m  = Config::Mode::INPUT,
-              Config::Pull  pu = Config::Pull::NOPULL,
-              Config::Speed sp = Config::Speed::LOW);
+              Mode  m  = Mode::INPUT,
+              Pull  pu = Pull::NOPULL,
+              Speed sp = Speed::LOW);
 
     /** @brief Deinitializes the GPIO pin */
     void DeInit();
@@ -133,7 +133,7 @@ class GPIO
 
     /** @brief Changes the state of the GPIO hardware when configured as an OUTPUT. 
      *  @param state setting true writes an output HIGH, while setting false writes an output LOW.
-     */ 
+     */
     void Write(bool state);
 
     /** @brief flips the current state of the GPIO. 
