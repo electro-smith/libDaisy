@@ -26,7 +26,7 @@ FatFSInterface::Result FatFSInterface::Init(const FatFSInterface::Config& cfg)
 FatFSInterface::Result FatFSInterface::Init(const uint8_t media)
 {
     cfg_.media = media;
-    Init(cfg_);
+    return Init(cfg_);
 }
 
 
