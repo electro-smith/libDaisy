@@ -16,6 +16,13 @@ namespace daisy
  *           will mount at "1:/".
  *           The relevant hardware peripheral (SDMMC, or MSD) needs to be initialized
  *           separately by the application before using FatFS.
+ *          
+ *           This object has some memory limitations due to the media connected to it.
+ *           The SDMMC1 peripheral can only communicate with the AXI SRAM, and the DTCMRAM 
+ *           cannot communicate with the DMA. So the FatFSInterface object should always be
+ *           located in the AXI SRAM. This is the default location for all data/bss memory
+ *           using the standard build. However, applciations using the electrosmith bootloader
+ *           will need special consideration when using this object AND an SD Card. 
  */
 class FatFSInterface
 {
@@ -58,6 +65,12 @@ class FatFSInterface
 
     /** Link the desired hardware specified via Config::Media */
     Result Init(const Config& cfg);
+
+    /** Link the desired hardware specified via Config::Media 
+     * 
+     *  Alternate, explicit initialization provided for simplified syntax.
+     */
+    Result Init(const uint8_t media);
 
     /** Unlinks FatFS from the configured media */
     Result DeInit();

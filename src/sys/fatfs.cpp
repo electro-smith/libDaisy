@@ -23,6 +23,13 @@ FatFSInterface::Result FatFSInterface::Init(const FatFSInterface::Config& cfg)
     return ret;
 }
 
+FatFSInterface::Result FatFSInterface::Init(const uint8_t media)
+{
+    cfg_.media = media;
+    Init(cfg_);
+}
+
+
 FatFSInterface::Result FatFSInterface::DeInit()
 {
     Result ret = Result::ERR_NO_MEDIA_SELECTED;
