@@ -31,7 +31,9 @@ class DaisySeed
     //Defaults listed below:
     //TODO: Add defaults
 
-    /** & */
+    /** This function used to provide a pre-initialization configuraiton 
+     *  it has since been deprecated, and does nothing.
+     */
     void Configure();
 
     /** 
@@ -167,6 +169,23 @@ class DaisySeed
 
     /** Returns the BoardVersion detected during intiialization */
     BoardVersion CheckBoardVersion();
+
+    /** Pinout Consts */
+
+    /** Digital Pins */
+    static const Pin D0, D1, D2, D3, D4, D5, D6, D7;
+    static const Pin D8, D9, D10, D11, D12, D13, D14, D15;
+    static const Pin D16, D17, D18, D19, D20, D21, D22, D23;
+    static const Pin D24, D25, D26, D27, D28, D29, D30;
+
+
+    /** Analog Pins */
+    static const Pin A0, A1, A2, A3, A4, A5, A6, A7;
+    static const Pin A8, A9, A10, A11;
+
+    /** Only available on Daisy Seed 2 DFM */
+    static const Pin D31, D32;
+    static const Pin A12, A13;
 
   private:
     /** Local shorthand for debug log destination
