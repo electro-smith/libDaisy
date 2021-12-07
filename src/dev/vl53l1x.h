@@ -261,7 +261,7 @@ class Vl53l1x
 
         transport_.Write(buff, 2);
         transport_.Read(&ret, 4); // how about this?
-    
+
         return ret;
     }
 
@@ -416,7 +416,7 @@ class Vl53l1x
         ClockPLL = Read8(RESULT__OSC_CALIBRATE_VAL);
         ClockPLL = ClockPLL & 0x3FF;
         WriteDWord(SYSTEM__INTERMEASUREMENT_PERIOD,
-                (uint32_t)(ClockPLL * InterMeasMs * 1.075));
+                   (uint32_t)(ClockPLL * InterMeasMs * 1.075));
     }
 
     uint16_t GetInterMeasurementInMs()
@@ -425,7 +425,7 @@ class Vl53l1x
         uint32_t tmp;
         uint16_t pIM;
 
-        tmp = ReadDWord(SYSTEM__INTERMEASUREMENT_PERIOD);
+        tmp      = ReadDWord(SYSTEM__INTERMEASUREMENT_PERIOD);
         pIM      = (uint16_t)tmp;
         ClockPLL = Read8(RESULT__OSC_CALIBRATE_VAL);
         ClockPLL = ClockPLL & 0x3FF;
