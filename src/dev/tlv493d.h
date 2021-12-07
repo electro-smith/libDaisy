@@ -258,6 +258,19 @@ class Tlv493d
         mExpectedFrameCount = GetRegBits(R_FRAMECOUNTER) + 1;
     }
 
+    void SetInterrupt(bool enable)
+    {
+        SetRegBits(W_INT, enable);
+        CalcParity();
+        WriteOut();
+    }
+
+    void EnableTemp(bool enable)
+    {
+        SetRegBits(W_TEMP_NEN, enable);
+        CalcParity();
+        WriteOut();
+    }
 
     float GetX() { return static_cast<float>(mXdata) * TLV493D_B_MULT; }
 
@@ -332,6 +345,24 @@ class Tlv493d
         y = y ^ (y >> 4);
         // parity is in the LSB of y
         SetRegBits(W_PARITY, y & 0x01);
+    }
+
+    int16_t ConcatResults(uint8_t upperByte, uint8_t lowerByte, bool upperFull)
+    {
+        //16-bit signed integer for 12-bit values of sensor
+        int16_t value = 0x0000;
+        if(upperFull)
+        {
+            value = upperByte << 8;
+            value |= (lowerByte & 0x0F) << 4;
+        }
+        else
+        {
+            value = (upperByte & 0x0F) << 12;
+            value |= lowerByte << 4;
+        }
+        value >>= 4; //shift left so that value is a signed 12 bit integer
+        return value;
     }
 
   private:
