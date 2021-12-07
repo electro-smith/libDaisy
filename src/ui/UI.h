@@ -45,8 +45,14 @@ struct UiCanvasDescriptor
     /** The desired update rate in ms */
     uint32_t updateRateMs_;
 
-    uint32_t screenSaverTimeOut;
-    bool     screenSaverOn = false;
+    /** The desired timeout in ms before a display will shut off. 
+     *  This defaults to 0, which will keep the display on all the time.
+     *  Nonzero values are useful for displays that can suffer from burn-in,
+     *  such as OLEDs. 
+     */
+    uint32_t screenSaverTimeOut = 0;
+
+    bool screenSaverOn = false;
 
     /** A function to clear the display before the UiPages are drawn. */
     using ClearFuncPtr = void (*)(const UiCanvasDescriptor& canvasToClear);
