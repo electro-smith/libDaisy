@@ -32,7 +32,7 @@
 #include "hid/parameter.h"
 #include "hid/usb.h"
 #include "hid/logger.h"
-#include "hid/msd.h"
+#include "hid/usb_host.h"
 #include "per/sai.h"
 #include "per/sdmmc.h"
 #include "per/spi.h"
