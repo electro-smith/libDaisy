@@ -6,6 +6,7 @@
 
 ### Features
 
+* msd: added the ability to read/write USB drives
 * bootloader: the bootloader can now be flashed directly from libDaisy using `make program-boot`
 * driver: added support for the MAX11300 ADC/DAC/GPI/GPO device
 
