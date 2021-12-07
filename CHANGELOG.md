@@ -56,6 +56,8 @@
   * This has also been applied to the `Encoder` class (since it uses `Switch` internally).
 * usb host: ST Middleware for USB Host support has been added to the Middlewares folder
 * fatfs: changed default `FS_LOCK` to 0, allowing for more simultaneously open FIL objects.
+* seed: the contents of `DaisySeed::Configure()` have been moved into the `DaisySeed::Init()` function, leaving it empty. This function can now be omitted.
+  * the function was left in place to preserve backwards compatibility, and will be removed in a future version.
 
 ### Migrating
 
