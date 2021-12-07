@@ -49,7 +49,7 @@ class HallSensor
         {
             // These defaults are for the US5881
             periph = Peripheral::TIM_3;
-            pin   = {DSY_GPIOA, 8};
+            pin    = {DSY_GPIOA, 8};
 
             polarity  = TIM_ICPOLARITY_RISING; // rising, falling, bothedge
             prescaler = TIM_ICPSC_DIV1;        // 1, 2, 4, 8
