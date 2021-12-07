@@ -43,13 +43,13 @@ class HallSensor
         uint32_t filter;
         uint32_t commutation_delay;
 
-        dsy_gpio_pin pin_;
+        dsy_gpio_pin pin;
 
         Config()
         {
             // These defaults are for the US5881
             periph = Peripheral::TIM_3;
-            pin_   = {DSY_GPIOA, 8};
+            pin   = {DSY_GPIOA, 8};
 
             polarity  = TIM_ICPOLARITY_RISING; // rising, falling, bothedge
             prescaler = TIM_ICPSC_DIV1;        // 1, 2, 4, 8
@@ -120,10 +120,17 @@ class HallSensor
             default: break;
         }
 
-        port                = dsy_hal_map_get_port(&config_.pin_);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_);
+        port                = dsy_hal_map_get_port(&config_.pin);
+        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin);
         HAL_GPIO_Init(port, &GPIO_InitStruct);
-        dsy_hal_map_gpio_clk_enable(config_.pin_.port);
+        dsy_hal_map_gpio_clk_enable(config_.pin.port);
+    }
+
+    void DeInitPins()
+    {
+        GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin);
+        uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin);
+        HAL_GPIO_DeInit(port, pin);
     }
 
   private:
@@ -163,6 +170,35 @@ extern "C"
             __HAL_RCC_TIM6_CLK_ENABLE();
         }
     }
+
+    void HAL_TIM_Encoder_MspDeInit(TIM_HandleTypeDef* htim)
+    {
+        if(htim->Instance == TIM1)
+        {
+            __HAL_RCC_TIM1_CLK_DISABLE();
+        }
+        if(htim->Instance == TIM2)
+        {
+            __HAL_RCC_TIM2_CLK_DISABLE();
+        }
+        else if(htim->Instance == TIM3)
+        {
+            __HAL_RCC_TIM3_CLK_DISABLE();
+        }
+        else if(htim->Instance == TIM4)
+        {
+            __HAL_RCC_TIM4_CLK_DISABLE();
+        }
+        else if(htim->Instance == TIM5)
+        {
+            __HAL_RCC_TIM5_CLK_DISABLE();
+        }
+        else if(htim->Instance == TIM6)
+        {
+            __HAL_RCC_TIM6_CLK_DISABLE();
+        }
+    }
+
 } // extern C
 
 } // namespace daisy
