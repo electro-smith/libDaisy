@@ -77,7 +77,7 @@ int main(void) {
   dsy_fatfs_init();
   . . .
   // now:
-  fsi.Init(FatFSInterface::Config::Media::SDMMC);
+  fsi.Init(FatFSInterface::Config::MEDIA_SD);
 
   // and instead of the global FATFS object you can now:
   FATFS& fs = fsi.GetSDFileSystem();
