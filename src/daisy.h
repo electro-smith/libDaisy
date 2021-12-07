@@ -52,6 +52,7 @@
 #include "dev/lcd_hd44780.h"
 #include "dev/max11300.h"
 #include "dev/tlv493d.h"
+#include "dev/vl53l1x.h"
 #include "ui/ButtonMonitor.h"
 #include "ui/PotMonitor.h"
 #include "ui/UI.h"
