@@ -704,7 +704,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Enums and a simple struct for defining a hardware pin on the MCU These correlate with the stm32 datasheet, and are used to configure the hardware. </p>
+<p >Enums and a simple struct for defining a hardware pin on the MCU These correlate with the stm32 datasheet, and are used to configure the hardware.</p>
+<p >This along with the <a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> class should no longer be used. They are available for backwards compatability.</p>
+<p >Please use GPIOPort enum and the Pin struct instead. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga3f3543798ae410cae1cade28cd0fc14aaa225b0aab0961f0839d6ff8ea39af4a6" name="gga3f3543798ae410cae1cade28cd0fc14aaa225b0aab0961f0839d6ff8ea39af4a6"></a>DSY_GPIOA&#160;</td><td class="fielddoc"><p >&amp; </p>
 </td></tr>
@@ -1289,7 +1291,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Helper for creating pins from port/pin combos easily </p>
+<p >Helper for creating pins from port/pin combos easily</p>
+<p >The <a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> struct should no longer be used, and is only available for backwards compatability.</p>
+<p >Please use Pin struct instead. </p>
 
 </div>
 </div>
@@ -1318,7 +1322,9 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Helper for testing sameness of two dsy_gpio_pins </p><dl class="section return"><dt>Returns</dt><dd>1 if same, 0 if different </dd></dl>
+<p >Helper for testing sameness of two dsy_gpio_pins </p><dl class="section return"><dt>Returns</dt><dd>1 if same, 0 if different</dd></dl>
+<p>The <a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> struct should no longer be used, and is only available for backwards compatability.</p>
+<p >Please use Pin struct instead. </p>
 
 </div>
 </div>

@@ -6,5 +6,5 @@ var searchData=
   ['pins_3',['Pins',['../class_shift_register595.html#a2e0140c5d6cac8821d558b2683f7a134',1,'ShiftRegister595']]],
   ['polarity_4',['Polarity',['../classdaisy_1_1_switch.html#aef37136dd1b4cd077ef82a0f62bcfa3d',1,'daisy::Switch']]],
   ['presetcolor_5',['PresetColor',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40',1,'daisy::Color']]],
-  ['pull_6',['Pull',['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51',1,'daisy::Switch']]]
+  ['pull_6',['Pull',['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51',1,'daisy::Switch::Pull()'],['../classdaisy_1_1_g_p_i_o.html#a99f432b0880dab3d3b202f1cd8081f0d',1,'daisy::GPIO::Pull()']]]
 ];
