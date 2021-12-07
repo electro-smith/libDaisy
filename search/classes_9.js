@@ -11,6 +11,5 @@ var searchData=
   ['midiuarttransport_8',['MidiUartTransport',['../classdaisy_1_1_midi_uart_transport.html',1,'daisy']]],
   ['midiusbtransport_9',['MidiUsbTransport',['../classdaisy_1_1_midi_usb_transport.html',1,'daisy']]],
   ['monomodeonevent_10',['MonoModeOnEvent',['../structdaisy_1_1_mono_mode_on_event.html',1,'daisy']]],
-  ['msdhandle_11',['MSDHandle',['../classdaisy_1_1_m_s_d_handle.html',1,'daisy']]],
-  ['mtcquarterframeevent_12',['MTCQuarterFrameEvent',['../structdaisy_1_1_m_t_c_quarter_frame_event.html',1,'daisy']]]
+  ['mtcquarterframeevent_11',['MTCQuarterFrameEvent',['../structdaisy_1_1_m_t_c_quarter_frame_event.html',1,'daisy']]]
 ];

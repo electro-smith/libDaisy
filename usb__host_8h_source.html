@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libDaisy: src/hid/msd.h Source File</title>
+<title>libDaisy: src/hid/usb_host.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,7 +66,7 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle"><div class="title">msd.h</div></div>
+  <div class="headertitle"><div class="title">usb_host.h</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef DSY_MSD</span></div>
@@ -84,7 +84,7 @@ $(function() {
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    APPLICATION_DISCONNECT</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>} <a class="code hl_enumeration" href="namespacedaisy.html#a521c3cc3f26ece5409f24e8b5764fa8d">ApplicationTypeDef</a>;</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classdaisy_1_1_m_s_d_handle.html">   25</a></span><span class="keyword">class </span><a class="code hl_class" href="classdaisy_1_1_m_s_d_handle.html">MSDHandle</a></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classdaisy_1_1_u_s_b_host_handle.html">   25</a></span><span class="keyword">class </span><a class="code hl_class" href="classdaisy_1_1_u_s_b_host_handle.html">USBHostHandle</a></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>{</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>  <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">enum</span> Result</div>
@@ -93,23 +93,23 @@ $(function() {
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        ERR</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    };</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="structdaisy_1_1_m_s_d_handle_1_1_config.html">   35</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structdaisy_1_1_m_s_d_handle_1_1_config.html">Config</a></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="structdaisy_1_1_u_s_b_host_handle_1_1_config.html">   35</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structdaisy_1_1_u_s_b_host_handle_1_1_config.html">Config</a></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    {</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    };</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classdaisy_1_1_m_s_d_handle.html#aac2623c266b4d6e7ab3dadcfac4a7ab5">   43</a></span>    Result <a class="code hl_function" href="classdaisy_1_1_m_s_d_handle.html#aac2623c266b4d6e7ab3dadcfac4a7ab5">Init</a>(<a class="code hl_struct" href="structdaisy_1_1_m_s_d_handle_1_1_config.html">Config</a> config);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classdaisy_1_1_u_s_b_host_handle.html#aaf6e11074b3f982dc723bb014ceb1390">   43</a></span>    Result <a class="code hl_function" href="classdaisy_1_1_u_s_b_host_handle.html#aaf6e11074b3f982dc723bb014ceb1390">Init</a>(<a class="code hl_struct" href="structdaisy_1_1_u_s_b_host_handle_1_1_config.html">Config</a> config);</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classdaisy_1_1_m_s_d_handle.html#ada4f71d709892ec9d7cd7bed47c6806b">   48</a></span>    Result <a class="code hl_function" href="classdaisy_1_1_m_s_d_handle.html#ada4f71d709892ec9d7cd7bed47c6806b">Deinit</a>();</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classdaisy_1_1_u_s_b_host_handle.html#acb7c3bbcfa35120d737cd97de448986a">   48</a></span>    Result <a class="code hl_function" href="classdaisy_1_1_u_s_b_host_handle.html#acb7c3bbcfa35120d737cd97de448986a">Deinit</a>();</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classdaisy_1_1_m_s_d_handle.html#a102419454ceb97107cd3dfc108b50ba9">   53</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_m_s_d_handle.html#a102419454ceb97107cd3dfc108b50ba9">Process</a>();</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classdaisy_1_1_u_s_b_host_handle.html#a457c949aeba24327775640e98d7983fd">   53</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_u_s_b_host_handle.html#a457c949aeba24327775640e98d7983fd">Process</a>();</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classdaisy_1_1_m_s_d_handle.html#af576bfc4418efdb26044be57bde25169">   59</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdaisy_1_1_m_s_d_handle.html#af576bfc4418efdb26044be57bde25169">GetReady</a>();</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classdaisy_1_1_u_s_b_host_handle.html#ac9fa7017546be9ab038a5100b7f7483e">   59</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdaisy_1_1_u_s_b_host_handle.html#ac9fa7017546be9ab038a5100b7f7483e">GetReady</a>();</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classdaisy_1_1_m_s_d_handle.html#aafd50e5870ae9c97aa850c6951d4881b">   65</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdaisy_1_1_m_s_d_handle.html#aafd50e5870ae9c97aa850c6951d4881b">GetPresent</a>();</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classdaisy_1_1_u_s_b_host_handle.html#a3efc40d3a6a6ef516328e1744640d887">   65</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classdaisy_1_1_u_s_b_host_handle.html#a3efc40d3a6a6ef516328e1744640d887">GetPresent</a>();</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <a class="code hl_class" href="classdaisy_1_1_m_s_d_handle.html">MSDHandle</a>() : pimpl_(nullptr) {}</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <a class="code hl_class" href="classdaisy_1_1_m_s_d_handle.html">MSDHandle</a>(<span class="keyword">const</span> <a class="code hl_class" href="classdaisy_1_1_m_s_d_handle.html">MSDHandle</a>&amp; other) = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_class" href="classdaisy_1_1_m_s_d_handle.html">MSDHandle</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="classdaisy_1_1_m_s_d_handle.html">MSDHandle</a>&amp; other) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <a class="code hl_class" href="classdaisy_1_1_u_s_b_host_handle.html">USBHostHandle</a>() : pimpl_(nullptr) {}</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <a class="code hl_class" href="classdaisy_1_1_u_s_b_host_handle.html">USBHostHandle</a>(<span class="keyword">const</span> <a class="code hl_class" href="classdaisy_1_1_u_s_b_host_handle.html">USBHostHandle</a>&amp; other) = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_class" href="classdaisy_1_1_u_s_b_host_handle.html">USBHostHandle</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="classdaisy_1_1_u_s_b_host_handle.html">USBHostHandle</a>&amp; other) = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keyword">class </span>Impl; </div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>  <span class="keyword">private</span>:</div>
@@ -119,15 +119,15 @@ $(function() {
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>} <span class="comment">// namespace daisy</span></div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="preprocessor">#endif </span><span class="comment">// DSY_MSD</span></div>
-<div class="ttc" id="aclassdaisy_1_1_m_s_d_handle_html"><div class="ttname"><a href="classdaisy_1_1_m_s_d_handle.html">daisy::MSDHandle</a></div><div class="ttdoc">Presents a USB Mass Storage Device host interface.</div><div class="ttdef"><b>Definition:</b> msd.h:26</div></div>
-<div class="ttc" id="aclassdaisy_1_1_m_s_d_handle_html_a102419454ceb97107cd3dfc108b50ba9"><div class="ttname"><a href="classdaisy_1_1_m_s_d_handle.html#a102419454ceb97107cd3dfc108b50ba9">daisy::MSDHandle::Process</a></div><div class="ttdeci">void Process()</div></div>
-<div class="ttc" id="aclassdaisy_1_1_m_s_d_handle_html_aac2623c266b4d6e7ab3dadcfac4a7ab5"><div class="ttname"><a href="classdaisy_1_1_m_s_d_handle.html#aac2623c266b4d6e7ab3dadcfac4a7ab5">daisy::MSDHandle::Init</a></div><div class="ttdeci">Result Init(Config config)</div></div>
-<div class="ttc" id="aclassdaisy_1_1_m_s_d_handle_html_aafd50e5870ae9c97aa850c6951d4881b"><div class="ttname"><a href="classdaisy_1_1_m_s_d_handle.html#aafd50e5870ae9c97aa850c6951d4881b">daisy::MSDHandle::GetPresent</a></div><div class="ttdeci">bool GetPresent()</div></div>
-<div class="ttc" id="aclassdaisy_1_1_m_s_d_handle_html_ada4f71d709892ec9d7cd7bed47c6806b"><div class="ttname"><a href="classdaisy_1_1_m_s_d_handle.html#ada4f71d709892ec9d7cd7bed47c6806b">daisy::MSDHandle::Deinit</a></div><div class="ttdeci">Result Deinit()</div></div>
-<div class="ttc" id="aclassdaisy_1_1_m_s_d_handle_html_af576bfc4418efdb26044be57bde25169"><div class="ttname"><a href="classdaisy_1_1_m_s_d_handle.html#af576bfc4418efdb26044be57bde25169">daisy::MSDHandle::GetReady</a></div><div class="ttdeci">bool GetReady()</div></div>
+<div class="ttc" id="aclassdaisy_1_1_u_s_b_host_handle_html"><div class="ttname"><a href="classdaisy_1_1_u_s_b_host_handle.html">daisy::USBHostHandle</a></div><div class="ttdoc">Presents a USB Mass Storage Device host interface.</div><div class="ttdef"><b>Definition:</b> usb_host.h:26</div></div>
+<div class="ttc" id="aclassdaisy_1_1_u_s_b_host_handle_html_a3efc40d3a6a6ef516328e1744640d887"><div class="ttname"><a href="classdaisy_1_1_u_s_b_host_handle.html#a3efc40d3a6a6ef516328e1744640d887">daisy::USBHostHandle::GetPresent</a></div><div class="ttdeci">bool GetPresent()</div></div>
+<div class="ttc" id="aclassdaisy_1_1_u_s_b_host_handle_html_a457c949aeba24327775640e98d7983fd"><div class="ttname"><a href="classdaisy_1_1_u_s_b_host_handle.html#a457c949aeba24327775640e98d7983fd">daisy::USBHostHandle::Process</a></div><div class="ttdeci">void Process()</div></div>
+<div class="ttc" id="aclassdaisy_1_1_u_s_b_host_handle_html_aaf6e11074b3f982dc723bb014ceb1390"><div class="ttname"><a href="classdaisy_1_1_u_s_b_host_handle.html#aaf6e11074b3f982dc723bb014ceb1390">daisy::USBHostHandle::Init</a></div><div class="ttdeci">Result Init(Config config)</div></div>
+<div class="ttc" id="aclassdaisy_1_1_u_s_b_host_handle_html_ac9fa7017546be9ab038a5100b7f7483e"><div class="ttname"><a href="classdaisy_1_1_u_s_b_host_handle.html#ac9fa7017546be9ab038a5100b7f7483e">daisy::USBHostHandle::GetReady</a></div><div class="ttdeci">bool GetReady()</div></div>
+<div class="ttc" id="aclassdaisy_1_1_u_s_b_host_handle_html_acb7c3bbcfa35120d737cd97de448986a"><div class="ttname"><a href="classdaisy_1_1_u_s_b_host_handle.html#acb7c3bbcfa35120d737cd97de448986a">daisy::USBHostHandle::Deinit</a></div><div class="ttdeci">Result Deinit()</div></div>
 <div class="ttc" id="anamespacedaisy_html"><div class="ttname"><a href="namespacedaisy.html">daisy</a></div><div class="ttdoc">Hardware defines and helpers for daisy field platform.</div><div class="ttdef"><b>Definition:</b> daisy_field.h:11</div></div>
-<div class="ttc" id="anamespacedaisy_html_a521c3cc3f26ece5409f24e8b5764fa8d"><div class="ttname"><a href="namespacedaisy.html#a521c3cc3f26ece5409f24e8b5764fa8d">daisy::ApplicationTypeDef</a></div><div class="ttdeci">ApplicationTypeDef</div><div class="ttdef"><b>Definition:</b> msd.h:12</div></div>
-<div class="ttc" id="astructdaisy_1_1_m_s_d_handle_1_1_config_html"><div class="ttname"><a href="structdaisy_1_1_m_s_d_handle_1_1_config.html">daisy::MSDHandle::Config</a></div><div class="ttdef"><b>Definition:</b> msd.h:36</div></div>
+<div class="ttc" id="anamespacedaisy_html_a521c3cc3f26ece5409f24e8b5764fa8d"><div class="ttname"><a href="namespacedaisy.html#a521c3cc3f26ece5409f24e8b5764fa8d">daisy::ApplicationTypeDef</a></div><div class="ttdeci">ApplicationTypeDef</div><div class="ttdef"><b>Definition:</b> usb_host.h:12</div></div>
+<div class="ttc" id="astructdaisy_1_1_u_s_b_host_handle_1_1_config_html"><div class="ttname"><a href="structdaisy_1_1_u_s_b_host_handle_1_1_config.html">daisy::USBHostHandle::Config</a></div><div class="ttdef"><b>Definition:</b> usb_host.h:36</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
