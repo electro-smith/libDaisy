@@ -40,17 +40,17 @@ void GPIO::Init(const Config &cfg)
     /** Start Relevant GPIO clock */
     switch(cfg_.pin.port)
     {
-        case PA: __HAL_RCC_GPIOA_CLK_ENABLE(); break;
-        case PB: __HAL_RCC_GPIOB_CLK_ENABLE(); break;
-        case PC: __HAL_RCC_GPIOC_CLK_ENABLE(); break;
-        case PD: __HAL_RCC_GPIOD_CLK_ENABLE(); break;
-        case PE: __HAL_RCC_GPIOE_CLK_ENABLE(); break;
-        case PF: __HAL_RCC_GPIOF_CLK_ENABLE(); break;
-        case PG: __HAL_RCC_GPIOG_CLK_ENABLE(); break;
-        case PH: __HAL_RCC_GPIOH_CLK_ENABLE(); break;
-        case PI: __HAL_RCC_GPIOI_CLK_ENABLE(); break;
-        case PJ: __HAL_RCC_GPIOJ_CLK_ENABLE(); break;
-        case PK: __HAL_RCC_GPIOK_CLK_ENABLE(); break;
+        case PORTA: __HAL_RCC_GPIOA_CLK_ENABLE(); break;
+        case PORTB: __HAL_RCC_GPIOB_CLK_ENABLE(); break;
+        case PORTC: __HAL_RCC_GPIOC_CLK_ENABLE(); break;
+        case PORTD: __HAL_RCC_GPIOD_CLK_ENABLE(); break;
+        case PORTE: __HAL_RCC_GPIOE_CLK_ENABLE(); break;
+        case PORTF: __HAL_RCC_GPIOF_CLK_ENABLE(); break;
+        case PORTG: __HAL_RCC_GPIOG_CLK_ENABLE(); break;
+        case PORTH: __HAL_RCC_GPIOH_CLK_ENABLE(); break;
+        case PORTI: __HAL_RCC_GPIOI_CLK_ENABLE(); break;
+        case PORTJ: __HAL_RCC_GPIOJ_CLK_ENABLE(); break;
+        case PORTK: __HAL_RCC_GPIOK_CLK_ENABLE(); break;
         default: break;
     }
     /** Set pin based on stm32 schema */
@@ -100,17 +100,17 @@ uint32_t *GPIO::GetGPIOBaseRegister()
 {
     switch(cfg_.pin.port)
     {
-        case PA: return (uint32_t *)GPIOA;
-        case PB: return (uint32_t *)GPIOB;
-        case PC: return (uint32_t *)GPIOC;
-        case PD: return (uint32_t *)GPIOD;
-        case PE: return (uint32_t *)GPIOE;
-        case PF: return (uint32_t *)GPIOF;
-        case PG: return (uint32_t *)GPIOG;
-        case PH: return (uint32_t *)GPIOH;
-        case PI: return (uint32_t *)GPIOI;
-        case PJ: return (uint32_t *)GPIOJ;
-        case PK: return (uint32_t *)GPIOK;
+        case PORTA: return (uint32_t *)GPIOA;
+        case PORTB: return (uint32_t *)GPIOB;
+        case PORTC: return (uint32_t *)GPIOC;
+        case PORTD: return (uint32_t *)GPIOD;
+        case PORTE: return (uint32_t *)GPIOE;
+        case PORTF: return (uint32_t *)GPIOF;
+        case PORTG: return (uint32_t *)GPIOG;
+        case PORTH: return (uint32_t *)GPIOH;
+        case PORTI: return (uint32_t *)GPIOI;
+        case PORTJ: return (uint32_t *)GPIOJ;
+        case PORTK: return (uint32_t *)GPIOK;
         default: return NULL;
     }
 }

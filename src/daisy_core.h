@@ -242,18 +242,18 @@ namespace daisy
 /** @brief GPIO Port names */
 enum GPIOPort
 {
-    PA, /**< Port A */
-    PB, /**< Port B */
-    PC, /**< Port C */
-    PD, /**< Port D */
-    PE, /**< Port E */
-    PF, /**< Port F */
-    PG, /**< Port G */
-    PH, /**< Port H */
-    PI, /**< Port I */
-    PJ, /**< Port J */
-    PK, /**< Port K */
-    PX, /**< Used as a dummy port*/
+    PORTA, /**< Port A */
+    PORTB, /**< Port B */
+    PORTC, /**< Port C */
+    PORTD, /**< Port D */
+    PORTE, /**< Port E */
+    PORTF, /**< Port F */
+    PORTG, /**< Port G */
+    PORTH, /**< Port H */
+    PORTI, /**< Port I */
+    PORTJ, /**< Port J */
+    PORTK, /**< Port K */
+    PORTX, /**< Used as a dummy port to signal an invalid pin. */
 };
 
 /** @brief representation of hardware port/pin combination */
@@ -269,12 +269,12 @@ struct Pin
     constexpr Pin(const GPIOPort pt, const uint8_t pn) : port(pt), pin(pn) {}
 
     /** @brief Basic Constructor creates an invalid Pin object */
-    constexpr Pin() : port(PX), pin(255) {}
+    constexpr Pin() : port(PORTX), pin(255) {}
 
     /** @brief checks validity of a Pin 
      *  @retval returns true if the port is a valid hardware pin, otherwise false.
     */
-    constexpr bool IsValid() const { return port != PX && pin < 16; }
+    constexpr bool IsValid() const { return port != PORTX && pin < 16; }
 
     /** @brief comparison operator for checking equality between Pin objects */
     constexpr bool operator==(const Pin &rhs) const

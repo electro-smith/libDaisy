@@ -180,37 +180,37 @@ class DaisySeed
 namespace seed
 {
     /** Constant Pinout consts */
-    constexpr Pin D0  = Pin(PB, 12);
-    constexpr Pin D1  = Pin(PC, 11);
-    constexpr Pin D2  = Pin(PC, 10);
-    constexpr Pin D3  = Pin(PC, 9);
-    constexpr Pin D4  = Pin(PC, 8);
-    constexpr Pin D5  = Pin(PD, 2);
-    constexpr Pin D6  = Pin(PC, 12);
-    constexpr Pin D7  = Pin(PG, 10);
-    constexpr Pin D8  = Pin(PG, 11);
-    constexpr Pin D9  = Pin(PB, 4);
-    constexpr Pin D10 = Pin(PB, 5);
-    constexpr Pin D11 = Pin(PB, 8);
-    constexpr Pin D12 = Pin(PB, 9);
-    constexpr Pin D13 = Pin(PB, 6);
-    constexpr Pin D14 = Pin(PB, 7);
-    constexpr Pin D15 = Pin(PC, 0);
-    constexpr Pin D16 = Pin(PA, 3);
-    constexpr Pin D17 = Pin(PB, 1);
-    constexpr Pin D18 = Pin(PA, 7);
-    constexpr Pin D19 = Pin(PA, 6);
-    constexpr Pin D20 = Pin(PC, 1);
-    constexpr Pin D21 = Pin(PC, 4);
-    constexpr Pin D22 = Pin(PA, 5);
-    constexpr Pin D23 = Pin(PA, 4);
-    constexpr Pin D24 = Pin(PA, 1);
-    constexpr Pin D25 = Pin(PA, 0);
-    constexpr Pin D26 = Pin(PD, 11);
-    constexpr Pin D27 = Pin(PG, 9);
-    constexpr Pin D28 = Pin(PA, 2);
-    constexpr Pin D29 = Pin(PB, 14);
-    constexpr Pin D30 = Pin(PB, 15);
+    constexpr Pin D0  = Pin(PORTB, 12);
+    constexpr Pin D1  = Pin(PORTC, 11);
+    constexpr Pin D2  = Pin(PORTC, 10);
+    constexpr Pin D3  = Pin(PORTC, 9);
+    constexpr Pin D4  = Pin(PORTC, 8);
+    constexpr Pin D5  = Pin(PORTD, 2);
+    constexpr Pin D6  = Pin(PORTC, 12);
+    constexpr Pin D7  = Pin(PORTG, 10);
+    constexpr Pin D8  = Pin(PORTG, 11);
+    constexpr Pin D9  = Pin(PORTB, 4);
+    constexpr Pin D10 = Pin(PORTB, 5);
+    constexpr Pin D11 = Pin(PORTB, 8);
+    constexpr Pin D12 = Pin(PORTB, 9);
+    constexpr Pin D13 = Pin(PORTB, 6);
+    constexpr Pin D14 = Pin(PORTB, 7);
+    constexpr Pin D15 = Pin(PORTC, 0);
+    constexpr Pin D16 = Pin(PORTA, 3);
+    constexpr Pin D17 = Pin(PORTB, 1);
+    constexpr Pin D18 = Pin(PORTA, 7);
+    constexpr Pin D19 = Pin(PORTA, 6);
+    constexpr Pin D20 = Pin(PORTC, 1);
+    constexpr Pin D21 = Pin(PORTC, 4);
+    constexpr Pin D22 = Pin(PORTA, 5);
+    constexpr Pin D23 = Pin(PORTA, 4);
+    constexpr Pin D24 = Pin(PORTA, 1);
+    constexpr Pin D25 = Pin(PORTA, 0);
+    constexpr Pin D26 = Pin(PORTD, 11);
+    constexpr Pin D27 = Pin(PORTG, 9);
+    constexpr Pin D28 = Pin(PORTA, 2);
+    constexpr Pin D29 = Pin(PORTB, 14);
+    constexpr Pin D30 = Pin(PORTB, 15);
 
     /** Analog pins share same pins as digital pins */
     constexpr Pin A0  = D15;
@@ -227,8 +227,8 @@ namespace seed
     constexpr Pin A11 = D28;
 
     /** Pins unique to Daisy Seed 2 DFM */
-    constexpr Pin D31 = Pin(PC, 2);
-    constexpr Pin D32 = Pin(PC, 3);
+    constexpr Pin D31 = Pin(PORTC, 2);
+    constexpr Pin D32 = Pin(PORTC, 3);
 
     /** Analog Pin alias */
     constexpr Pin A12 = D31;

@@ -57,7 +57,7 @@ class GPIO
          *  an input, with no pullup. 
          */
         Config()
-        : pin(PX, 0), mode(Mode::INPUT), pull(Pull::NOPULL), speed(Speed::LOW)
+        : pin(), mode(Mode::INPUT), pull(Pull::NOPULL), speed(Speed::LOW)
         {
         }
     };
