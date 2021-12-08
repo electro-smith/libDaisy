@@ -136,12 +136,11 @@ class Vl53l1x
     {
         config_ = config;
 
-        dsy_gpio gpio_conf;
-        gpio_conf.pin  = config_.xShut;
-        gpio_conf.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        gpio_conf.pull = DSY_GPIO_NOPULL;
-        dsy_gpio_init(&gpio_conf);
-        dsy_gpio_write(config_.xShut, true);
+        xShut_.pin  = config_.xShut;
+        xShut_.mode = DSY_GPIO_MODE_OUTPUT_PP;
+        xShut_.pull = DSY_GPIO_NOPULL;
+        dsy_gpio_init(&xShut_);
+        dsy_gpio_write(&xShut_, true);
 
         transport_.Init(config_.transport_config);
 
@@ -207,18 +206,18 @@ class Vl53l1x
 
     uint8_t Read8(uint16_t index)
     {
-        uint8_t buff[] = {index >> 8, index & 0xff};
+        uint8_t buff[] = {(uint8_t)(index >> 8), (uint8_t)(index & 0xff)};
         uint8_t ret;
 
         transport_.Write(buff, 2);
-        transport_.Read(ret, 1);
+        transport_.Read(&ret, 1);
 
         return ret;
     }
 
-    void Write8(uint8_t devaddr, uint16_t index, uint8_t data)
+    void Write8(uint16_t index, uint8_t data)
     {
-        uint8_t buff[] = {index >> 8, index & 0xFF, data};
+        uint8_t buff[] = {(uint8_t)(index >> 8), (uint8_t)(index & 0xFF), data};
         transport_.Write(buff, 3);
     }
 
@@ -749,9 +748,10 @@ class Vl53l1x
   private:
     Config    config_;
     Transport transport_;
+    dsy_gpio  xShut_;
 
     // yikes...
-    const uint8_t VL51L1X_DEFAULT_CONFIGURATION[] = {
+    const uint8_t VL51L1X_DEFAULT_CONFIGURATION[92] = {
         0x00, /* 0x2d : set bit 2 and 5 to 1 for fast plus mode (1MHz I2C), else don't touch */
         0x00, /* 0x2e : bit 0 if I2C pulled up at 1.8V, else set bit 0 to 1 (pull up at AVDD) */
         0x00, /* 0x2f : bit 0 if GPIO pulled up at 1.8V, else set bit 0 to 1 (pull up at AVDD) */
