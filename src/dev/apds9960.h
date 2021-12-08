@@ -158,6 +158,8 @@ class Apds9960
         }
     };
 
+    // turn on/off elements
+    void enable(bool en = true);
     /** Initialize the APDS9960 device
         \param config Configuration settings
     */
@@ -176,8 +178,8 @@ class Apds9960
         EnableProximity(false);
         EnableColor(false);
 
-        EnableColorInterrupt(false);
-        EnableProximityInterrupt(false);
+        SetColorInterrupt(false);
+        SetProximityInterrupt(false);
         ClearInterrupt();
 
         /* Note: by default, the device is in power down mode on bootup */
@@ -215,7 +217,23 @@ class Apds9960
             temp = 0.f;
 
         /* Update the timing register */
-        write8(APDS9960_ATIME, (uint8_t)temp);
+        Write8(APDS9960_ATIME, (uint8_t)temp);
+    }
+
+    /**
+    *    Returns the integration time for the ADC of the APDS9960, in millis
+    *  \return Integration time
+    */
+    float GetADCIntegrationTime()
+    {
+        float temp;
+
+        temp = Read8(APDS9960_ATIME);
+
+        // convert to units of 2.78 ms
+        temp = 256 - temp;
+        temp *= 2.78;
+        return temp;
     }
 
     /** Adjusts the color/ALS gain on the APDS9960 (adjusts the sensitivity to light)
@@ -224,7 +242,24 @@ class Apds9960
     void SetADCGain(uint8_t aGain)
     {
         control_.AGAIN = aGain;
-        write8(APDS9960_CONTROL, control_.get());
+        Write8(APDS9960_CONTROL, control_.get());
+    }
+
+    /** Sets gesture sensor offset
+        \param  offset_up Up offset  
+        \param  offset_down Down offset
+        \param  offset_left Left offset
+        \param  offset_right Right offset
+    */
+    void SetGestureOffset(uint8_t offset_up,
+                          uint8_t offset_down,
+                          uint8_t offset_left,
+                          uint8_t offset_right)
+    {
+        Write8(APDS9960_GOFFSET_U, offset_up);
+        Write8(APDS9960_GOFFSET_D, offset_down);
+        Write8(APDS9960_GOFFSET_L, offset_left);
+        Write8(APDS9960_GOFFSET_R, offset_right);
     }
 
     /** Sets gesture dimensions
@@ -279,10 +314,10 @@ class Apds9960
         if(!en)
         {
             gconf4_.GMODE = 0;
-            write8(APDS9960_GCONF4, gconf4_.get());
+            Write8(APDS9960_GCONF4, gconf4_.get());
         }
         enable_.GEN = en;
-        write8(APDS9960_ENABLE, enable_.get());
+        Write8(APDS9960_ENABLE, enable_.get());
         ResetCounts();
     }
 
@@ -293,7 +328,7 @@ class Apds9960
     {
         enable_.PEN = en;
 
-        write8(APDS9960_ENABLE, enable_.get());
+        Write8(APDS9960_ENABLE, enable_.get());
     }
 
     /** Enable color readings
@@ -302,25 +337,25 @@ class Apds9960
     void EnableColor(bool en)
     {
         enable_.AEN = en;
-        write8(APDS9960_ENABLE, enable_.get());
+        Write8(APDS9960_ENABLE, enable_.get());
     }
 
     /** Enables/disables color interrupt
         \param en Enable / disable
     */
-    void EnableColorInterrupt(bool en)
+    void SetColorInterrupt(bool en)
     {
         enable_.AIEN = en;
-        write8(APDS9960_ENABLE, enable_.get());
+        Write8(APDS9960_ENABLE, enable_.get());
     }
 
     /** Enables / Disables color interrupt
         \param en Enable / disable
     */
-    void EnableProximityInterrupt(bool en)
+    void SetProximityInterrupt(bool en)
     {
         enable_.PIEN = en;
-        write8(APDS9960_ENABLE, enable_.get());
+        Write8(APDS9960_ENABLE, enable_.get());
     }
 
     /** Clears interrupt */
@@ -362,7 +397,41 @@ class Apds9960
     /** Read proximity data
         \return Proximity
     */
-    uint8_t ReadProximity() { return read8(APDS9960_PDATA); }
+    uint8_t ReadProximity() { return Read8(APDS9960_PDATA); }
+
+    /** Adjusts the Proximity gain on the APDS9960
+        \param  pGain Gain
+    */
+    void SetProxGain(uint8_t pGain)
+    {
+        control_.PGAIN = pGain;
+
+        /* Update the timing register */
+        Write8(APDS9960_CONTROL, control_.get());
+    }
+
+    /** Returns the Proximity gain on the APDS9960
+        \return Proxmity gain
+    */
+    uint8_t GetProxGain() { return ((Read8(APDS9960_CONTROL) & 0x0C) >> 2); }
+
+    /** Sets number of proxmity pulses
+        \param  pLen Pulse Length
+        \param  pulses Number of pulses
+    */
+    void SetProxPulse(uint8_t pLen, uint8_t pulses)
+    {
+        if(pulses < 1)
+            pulses = 1;
+        if(pulses > 64)
+            pulses = 64;
+        pulses--;
+
+        ppulse_.PPLEN  = pLen;
+        ppulse_.PPULSE = pulses;
+
+        Write8(APDS9960_PPULSE, ppulse_.get());
+    }
 
     /** Returns validity status of a gesture
         \return Status (True/False)
@@ -472,6 +541,73 @@ class Apds9960
         rite8(APDS9960_CONTROL, control_.get());
     }
 
+    /** Converts the raw R/G/B values to color temperature in degrees Kelvin
+        \param  r Red value
+        \param  g Green value
+        \param  b Blue value
+        
+        \return Color temperature
+    */
+    uint16_t CalculateColorTemperature(uint16_t r, uint16_t g, uint16_t b)
+    {
+        float X, Y, Z; /* RGB to XYZ correlation      */
+        float xc, yc;  /* Chromaticity co-ordinates   */
+        float n;       /* McCamy's formula            */
+        float cct;
+
+        /* 1. Map RGB values to their XYZ counterparts.    */
+        /* Based on 6500K fluorescent, 3000K fluorescent   */
+        /* and 60W incandescent values for a wide range.   */
+        /* Note: Y = Illuminance or lux                    */
+        X = (-0.14282F * r) + (1.54924F * g) + (-0.95641F * b);
+        Y = (-0.32466F * r) + (1.57837F * g) + (-0.73191F * b);
+        Z = (-0.68202F * r) + (0.77073F * g) + (0.56332F * b);
+
+        /* 2. Calculate the chromaticity co-ordinates      */
+        xc = (X) / (X + Y + Z);
+        yc = (Y) / (X + Y + Z);
+
+        /* 3. Use McCamy's formula to determine the CCT    */
+        n = (xc - 0.3320F) / (0.1858F - yc);
+
+        /* Calculate the final CCT */
+        cct = (449.0F * powf(n, 3)) + (3525.0F * powf(n, 2)) + (6823.3F * n)
+              + 5520.33F;
+
+        /* Return the results in degrees Kelvin */
+        return (uint16_t)cct;
+    }
+
+    /** Calculate ambient light values
+        \param  r Red value
+        \param  g Green value
+        \param  b Blue value
+        \return LUX value
+    */
+    uint16_t CalculateLux(uint16_t r, uint16_t g, uint16_t b)
+    {
+        float illuminance;
+
+        /* This only uses RGB ... how can we integrate clear or calculate lux */
+        /* based exclusively on clear since this might be more reliable?      */
+        illuminance = (-0.32466F * r) + (1.57837F * g) + (-0.73191F * b);
+
+        return (uint16_t)illuminance;
+    }
+
+    /** Sets interrupt limits
+        \param  low Low limit
+        \param  high High limit
+    */
+    void SetIntLimits(uint16_t low, uint16_t high)
+    {
+        Write8(APDS9960_AILTIL, low & 0xFF);
+        Write8(APDS9960_AILTH, low >> 8);
+        Write8(APDS9960_AIHTL, high & 0xFF);
+        Write8(APDS9960_AIHTH, high >> 8);
+    }
+
+
     /** Returns status of color data
         \return True if color data ready, False otherwise
     */
@@ -542,6 +678,15 @@ class Apds9960
         uint8_t get() { return (LDRIVE << 6) | (PGAIN << 2) | AGAIN; }
     };
     control control_;
+
+    struct ppulse
+    {
+        uint8_t PPULSE : 6; //Proximity Pulse Count
+        uint8_t PPLEN : 2;  // Proximity Pulse Length
+
+        uint8_t get() { return (PPLEN << 6) | PPULSE; }
+    };
+    ppulse ppulse_;
 
     struct enable
     {
