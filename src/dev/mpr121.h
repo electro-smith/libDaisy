@@ -88,11 +88,12 @@ class Mpr121
     struct Config
     {
         typename Transport::Config transport_config;
-        uint8_t touch_threshold;
-        uint8_t release_threshold;
+        uint8_t                    touch_threshold;
+        uint8_t                    release_threshold;
 
-        Config(){
-            touch_threshold = MPR121_TOUCH_THRESHOLD_DEFAULT;
+        Config()
+        {
+            touch_threshold   = MPR121_TOUCH_THRESHOLD_DEFAULT;
             release_threshold = MPR121_RELEASE_THRESHOLD_DEFAULT;
         }
     };
