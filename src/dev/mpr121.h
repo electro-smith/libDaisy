@@ -322,9 +322,9 @@ class Mpr121
     Transport transport_;
 
     /** @} */
-
-    using Mpr121I2C = Mpr121<Mpr121I2CTransport>;
-
 }; // class
+
+using Mpr121I2C = Mpr121<Mpr121I2CTransport>;
+
 } // namespace daisy
 #endif
