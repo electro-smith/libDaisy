@@ -221,7 +221,7 @@ class Tlv493d
         }
     }
 
-    uint8_t  GetRegBits(uint8_t regMaskIndex)
+    uint8_t GetRegBits(uint8_t regMaskIndex)
     {
         if(regMaskIndex < TLV493D_NUM_OF_REGMASKS)
         {
