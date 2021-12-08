@@ -44,6 +44,7 @@
 #include "hid/led.h"
 #include "hid/rgb_led.h"
 #include "dev/sr_595.h"
+#include "dev/bme280.h"
 #include "dev/codec_pcm3060.h"
 #include "dev/codec_wm8731.h"
 #include "dev/lcd_hd44780.h"
