@@ -140,7 +140,7 @@ class Tlv493d
         MASTERCONTROLLEDMODE,
     };
 
-    const AccessMode_t accModes[] = {
+    const AccessMode_t accModes[5] = {
         {0, 0, 0, 1000}, // POWERDOWNMODE
         {1, 0, 0, 0},    // FASTMODE
         {0, 1, 1, 10},   // LOWPOWERMODE
@@ -148,7 +148,7 @@ class Tlv493d
         {1, 1, 1, 10}    // MASTERCONTROLLEDMODE
     };
 
-    const RegMask_t RegMasks[] = {
+    const RegMask_t RegMasks[25] = {
         {REGMASK_READ, 0, 0xFF, 0},  // R_BX1
         {REGMASK_READ, 4, 0xF0, 4},  // R_BX2
         {REGMASK_READ, 1, 0xFF, 0},  // R_BY1
@@ -217,11 +217,11 @@ class Tlv493d
     {
         if(regMaskIndex < TLV493D_NUM_OF_REGMASKS)
         {
-            SetToRegs(RegMasks[regMaskIndex], regWriteData, data);
+            SetToRegs(&RegMasks[regMaskIndex], regWriteData, data);
         }
     }
 
-    void GetRegBits(uint8_t regMaskIndex)
+    uint8_t  GetRegBits(uint8_t regMaskIndex)
     {
         if(regMaskIndex < TLV493D_NUM_OF_REGMASKS)
         {
@@ -235,6 +235,7 @@ class Tlv493d
                 return GetFromRegs(mask, regWriteData);
             }
         }
+        return 0;
     }
 
 
