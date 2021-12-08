@@ -149,6 +149,19 @@ class Bmp390
         typename Transport::Config transport_config;
         bool                       compensate_pressure;
         bool                       compensate_temp;
+
+        uint8_t temp_oversampling;
+        uint8_t pressure_oversampling;
+        uint8_t output_data_rate;
+        uint8_t iir_filter_coeff;
+
+        Config()
+        {
+            temp_oversampling     = 0; // nada
+            pressure_oversampling = 0; // zilch
+            output_data_rate      = 3; // 25Hz
+            iir_filter_coeff      = 0; // zip
+        }
     };
 
     /** Initialize the BMP390 device
@@ -161,9 +174,10 @@ class Bmp390
         transport_.Init(config_.transport_config);
 
         SoftReset();
-        SetOversampling(0, 0); // no oversampling for temp or pressure
-        SetOutputDataRate(3);  // 25 Hz
-        SetIIRFilterCoeff(0);  // disabled
+        SetOversampling(config_.temp_oversampling,
+                        config_.pressure_oversampling);
+        SetOutputDataRate(config_.output_data_rate);
+        SetIIRFilterCoeff(config_.iir_filter_coeff);
     }
 
     /** Set the output data rate. 
