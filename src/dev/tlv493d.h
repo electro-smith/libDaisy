@@ -244,14 +244,14 @@ class Tlv493d
         SetAccessMode(MASTERCONTROLLEDMODE);
         System::Delay(GetMeasurementDelay());
 
-        ReadOut(TLV493D_MEASUREMENT_READOUT);
+        ReadOut();
 
         // construct results from registers
-        mXdata = ConcatResults(getRegBits(R_BX1), getRegBits(R_BX2), true);
-        mYdata = ConcatResults(getRegBits(R_BY1), getRegBits(R_BY2), true);
-        mZdata = ConcatResults(getRegBits(R_BZ1), getRegBits(R_BZ2), true);
+        mXdata = ConcatResults(GetRegBits(R_BX1), GetRegBits(R_BX2), true);
+        mYdata = ConcatResults(GetRegBits(R_BY1), GetRegBits(R_BY2), true);
+        mZdata = ConcatResults(GetRegBits(R_BZ1), GetRegBits(R_BZ2), true);
         mTempdata
-            = ConcatResults(getRegBits(R_TEMP1), getRegBits(R_TEMP2), false);
+            = ConcatResults(GetRegBits(R_TEMP1), GetRegBits(R_TEMP2), false);
 
         SetAccessMode(POWERDOWNMODE);
         GetRegBits(R_CHANNEL);
