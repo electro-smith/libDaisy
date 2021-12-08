@@ -1,6 +1,6 @@
 #pragma once
-#ifndef DSY_H
-#define DSY_H
+#ifndef DSY_VL53L1X_H
+#define DSY_VL53L1X_H
 
 #define I2C_SLAVE__DEVICE_ADDRESS 0x0001
 #define VHV_CONFIG__TIMEOUT_MACROP_LOOP_BOUND 0x0008
