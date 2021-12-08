@@ -88,11 +88,18 @@ const dsy_gpio_pin seedgpio[32] = {
 
 // Public Initialization
 
-void DaisySeed::Configure()
+/** Vestigial function body for old function
+ *  This is no longer in use.
+ */
+void DaisySeed::Configure() {}
+
+void DaisySeed::Init(bool boost)
 {
-    // Configure internal peripherals
+    //dsy_system_init();
+    System::Config syscfg;
+    boost ? syscfg.Boost() : syscfg.Defaults();
+
     ConfigureQspi();
-    //ConfigureDac();
     // Configure the built-in GPIOs.
     led.pin.port       = SEED_LED_PORT;
     led.pin.pin        = SEED_LED_PIN;
@@ -100,13 +107,7 @@ void DaisySeed::Configure()
     testpoint.pin.port = SEED_TEST_POINT_PORT;
     testpoint.pin.pin  = SEED_TEST_POINT_PIN;
     testpoint.mode     = DSY_GPIO_MODE_OUTPUT_PP;
-}
 
-void DaisySeed::Init(bool boost)
-{
-    //dsy_system_init();
-    System::Config syscfg;
-    boost ? syscfg.Boost() : syscfg.Defaults();
 
     auto memory = System::GetProgramMemoryRegion();
 

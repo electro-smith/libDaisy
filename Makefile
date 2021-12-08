@@ -5,7 +5,6 @@ MODULE_DIR=src
 C_MODULES = \
 sys/dma \
 hid/audio \
-sys/fatfs \
 per/gpio \
 per/sai \
 per/sdmmc \
@@ -14,6 +13,7 @@ util/hal_map \
 util/oled_fonts \
 util/sd_diskio \
 util/unique_id \
+util/usbh_diskio \
 sys/system_stm32h7xx \
 usbd/usbd_cdc_if \
 usbd/usbd_desc \
@@ -28,6 +28,7 @@ daisy_petal \
 daisy_field \
 daisy_versio \
 daisy_patch_sm \
+sys/fatfs \
 sys/system \
 dev/sr_595 \
 dev/codec_ak4556 \
@@ -47,7 +48,7 @@ hid/usb \
 hid/usb_midi \
 hid/wavplayer \
 hid/logger \
-hid/msd \
+hid/usb_host \
 per/adc \
 per/dac \
 per/gpio \

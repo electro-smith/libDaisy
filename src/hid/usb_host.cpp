@@ -1,7 +1,6 @@
 
-#include "msd.h"
+#include "usb_host.h"
 #include "daisy_core.h"
-// #include "fatfs_usbh.h"
 #include "usbh_core.h"
 #include "usbh_msc.h"
 
@@ -15,7 +14,7 @@ extern "C"
 
 ApplicationTypeDef Appli_state = APPLICATION_IDLE;
 
-class MSDHandle::Impl
+class USBHostHandle::Impl
 {
   public:
     Impl() {}
@@ -32,11 +31,11 @@ class MSDHandle::Impl
 };
 
 // Global dfu handle
-MSDHandle::Impl msd_impl;
+USBHostHandle::Impl msd_impl;
 
 static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id);
 
-MSDHandle::Result MSDHandle::Impl::Init(MSDHandle::Config config)
+USBHostHandle::Result USBHostHandle::Impl::Init(USBHostHandle::Config config)
 {
     config_ = config;
     /* Init host Library, add supported class and start the library. */
@@ -52,72 +51,57 @@ MSDHandle::Result MSDHandle::Impl::Init(MSDHandle::Config config)
     {
         return Result::ERR;
     }
-    // MX_FATFS_Init();
     return Result::OK;
 }
 
-MSDHandle::Result MSDHandle::Impl::Deinit()
+USBHostHandle::Result USBHostHandle::Impl::Deinit()
 {
     USBH_Stop(&hUsbHostHS);
     USBH_DeInit(&hUsbHostHS);
     return Result::OK;
 }
 
-void MSDHandle::Impl::Process()
+void USBHostHandle::Impl::Process()
 {
     USBH_Process(&hUsbHostHS);
 }
 
-bool MSDHandle::Impl::GetReady()
+bool USBHostHandle::Impl::GetReady()
 {
     return (bool)USBH_MSC_IsReady(&hUsbHostHS);
 }
 
 // MSDHandle -> Impl
 
-MSDHandle::Result MSDHandle::Init(Config config)
+USBHostHandle::Result USBHostHandle::Init(Config config)
 {
     pimpl_ = &msd_impl;
     return pimpl_->Init(config);
 }
 
-MSDHandle::Result MSDHandle::Deinit()
+USBHostHandle::Result USBHostHandle::Deinit()
 {
     return pimpl_->Deinit();
 }
 
-bool MSDHandle::GetReady()
+bool USBHostHandle::GetReady()
 {
     return pimpl_->GetReady();
 }
 
-void MSDHandle::Process()
+void USBHostHandle::Process()
 {
     pimpl_->Process();
 }
 
-bool MSDHandle::GetPresent()
+bool USBHostHandle::GetPresent()
 {
     auto state = hUsbHostHS.gState;
     return (state != HOST_IDLE && state != HOST_ABORT_STATE
             && state != HOST_DEV_DISCONNECTED);
 }
 
-// IRQ Handler
-extern "C"
-{
-    void OTG_HS_EP1_OUT_IRQHandler(void)
-    {
-        HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
-    }
-
-    void OTG_HS_EP1_IN_IRQHandler(void)
-    {
-        HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
-    }
-
-    void OTG_HS_IRQHandler(void) { HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS); }
-}
+// Shared USB IRQ Handlers are located in sys/System.cpp
 
 // This isn't super useful for our typical code structure
 static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
