@@ -79,50 +79,10 @@ class HallSensor
     TIM_HandleTypeDef hall_;
 
     /** Get the hall sensor pin going and working with the correct clock */
-    void InitPins()
-    {
-        GPIO_InitTypeDef GPIO_InitStruct;
-        GPIO_TypeDef*    port;
-
-        GPIO_InitStruct.Mode  = GPIO_MODE_INPUT; // is this right?
-        GPIO_InitStruct.Pull  = GPIO_PULLUP;
-        GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW; // what about this?
-        switch(config_.periph)
-        {
-            case Config::Peripheral::TIM_1:
-                GPIO_InitStruct.Alternate = GPIO_AF1_TIM1;
-                break;
-            case Config::Peripheral::TIM_2:
-                GPIO_InitStruct.Alternate = GPIO_AF1_TIM2;
-                break;
-            case Config::Peripheral::TIM_3:
-                GPIO_InitStruct.Alternate = GPIO_AF2_TIM3;
-                break;
-            case Config::Peripheral::TIM_4:
-                GPIO_InitStruct.Alternate = GPIO_AF2_TIM4;
-                break;
-            case Config::Peripheral::TIM_5:
-                GPIO_InitStruct.Alternate = GPIO_AF2_TIM5;
-                break;
-            case Config::Peripheral::TIM_6:
-                GPIO_InitStruct.Alternate = GPIO_AF1_TIM16;
-                break;
-            default: break;
-        }
-
-        port                = dsy_hal_map_get_port(&config_.pin);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin);
-        HAL_GPIO_Init(port, &GPIO_InitStruct);
-        dsy_hal_map_gpio_clk_enable(config_.pin.port);
-    }
+    void InitPins();
 
     /** Deinit the hall sensor pin. Unused as of now. */
-    void DeInitPins()
-    {
-        GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin);
-        uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin);
-        HAL_GPIO_DeInit(port, pin);
-    }
+    void DeInitPins();
 
     /** @} */
 }; // HallSensor

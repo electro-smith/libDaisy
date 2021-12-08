@@ -33,6 +33,7 @@ dev/sr_595 \
 dev/codec_ak4556 \
 dev/codec_pcm3060 \
 dev/codec_wm8731 \
+dev/hall_sensor \
 dev/lcd_hd44780 \
 dev/sdram \
 hid/ctrl \
