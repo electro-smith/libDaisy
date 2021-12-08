@@ -47,48 +47,37 @@ class HallSensor
 
         Config()
         {
-            // These defaults are for the US5881
             periph = Peripheral::TIM_3;
             pin    = {DSY_GPIOA, 8};
 
-            polarity  = TIM_ICPOLARITY_RISING; // rising, falling, bothedge
-            prescaler = TIM_ICPSC_DIV1;        // 1, 2, 4, 8
-            filter    = 0x05;           // 0x0 -> 0xF basically the debounce
-            commutation_delay = 0x0000; // 0x0000 -> 0xFFFF
+            polarity  = TIM_ICPOLARITY_RISING; // options are rising, falling, bothedge
+            prescaler = TIM_ICPSC_DIV1;        // options are 1, 2, 4, 8
+            filter    = 0x05;           // range is 0x0 -> 0xF basically the debounce
+            commutation_delay = 0x0000; // range is 0x0000 -> 0xFFFF
         }
     };
 
     /** Initialize the Hall Sensor device
         \param config Configuration settings
     */
-    void Init(Config config)
-    {
-        config_ = config;
+    void Init(Config config);
 
-        TIM_HallSensor_InitTypeDef hall_conf_;
+    /** Start reading in a blocking fashion. Init calls this by default. */
+    void StartBlockingRead();
 
-        hall_conf_.IC1Polarity       = config_.polarity;
-        hall_conf_.IC1Prescaler      = config_.prescaler;
-        hall_conf_.IC1Filter         = config_.filter;
-        hall_conf_.Commutation_Delay = config_.commutation_delay;
-
-        HAL_TIMEx_HallSensor_Init(&hall_, &hall_conf_);
-
-        StartBlockingRead(); // blocking read by default
-    }
-
-    void StartBlockingRead()
-    {
-        // are we ready, kids?
-        while(HAL_TIMEx_HallSensor_GetState(&hall_) != HAL_TIM_STATE_READY) {};
-
-        HAL_TIMEx_HallSensor_Start(&hall_);
-    }
-
+    /** Stop reading in a blocking fashion */
     void StopBlockingRead() { HAL_TIMEx_HallSensor_Stop(&hall_); }
 
+    /** Get the total count of hall sensor clicks so far 
+        \return Total number of times hall sensor has gone high since init.
+    */
     uint8_t GetCount() { return hall_.Instance->CNT; }
 
+  private:
+    Config            config_;
+    TIM_HandleTypeDef hall_;
+
+    /** Get the hall sensor pin going and working with the correct clock */
     void InitPins()
     {
         GPIO_InitTypeDef GPIO_InitStruct;
@@ -126,6 +115,7 @@ class HallSensor
         dsy_hal_map_gpio_clk_enable(config_.pin.port);
     }
 
+    /** Deinit the hall sensor pin. Unused as of now. */
     void DeInitPins()
     {
         GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin);
@@ -133,73 +123,8 @@ class HallSensor
         HAL_GPIO_DeInit(port, pin);
     }
 
-  private:
-    Config            config_;
-    TIM_HandleTypeDef hall_;
-
     /** @} */
-
-}; // Class
-
-extern "C"
-{
-    void HAL_TIMEx_HallSensor_MspInit(TIM_HandleTypeDef* htim)
-    {
-        if(htim->Instance == TIM1)
-        {
-            __HAL_RCC_TIM1_CLK_ENABLE();
-        }
-        if(htim->Instance == TIM2)
-        {
-            __HAL_RCC_TIM2_CLK_ENABLE();
-        }
-        else if(htim->Instance == TIM3)
-        {
-            __HAL_RCC_TIM3_CLK_ENABLE();
-        }
-        else if(htim->Instance == TIM4)
-        {
-            __HAL_RCC_TIM4_CLK_ENABLE();
-        }
-        else if(htim->Instance == TIM5)
-        {
-            __HAL_RCC_TIM5_CLK_ENABLE();
-        }
-        else if(htim->Instance == TIM6)
-        {
-            __HAL_RCC_TIM6_CLK_ENABLE();
-        }
-    }
-
-    void HAL_TIM_Encoder_MspDeInit(TIM_HandleTypeDef* htim)
-    {
-        if(htim->Instance == TIM1)
-        {
-            __HAL_RCC_TIM1_CLK_DISABLE();
-        }
-        if(htim->Instance == TIM2)
-        {
-            __HAL_RCC_TIM2_CLK_DISABLE();
-        }
-        else if(htim->Instance == TIM3)
-        {
-            __HAL_RCC_TIM3_CLK_DISABLE();
-        }
-        else if(htim->Instance == TIM4)
-        {
-            __HAL_RCC_TIM4_CLK_DISABLE();
-        }
-        else if(htim->Instance == TIM5)
-        {
-            __HAL_RCC_TIM5_CLK_DISABLE();
-        }
-        else if(htim->Instance == TIM6)
-        {
-            __HAL_RCC_TIM6_CLK_DISABLE();
-        }
-    }
-
-} // extern C
+}; // HallSensor
 
 } // namespace daisy
 #endif
