@@ -50,9 +50,10 @@ class HallSensor
             periph = Peripheral::TIM_3;
             pin    = {DSY_GPIOA, 8};
 
-            polarity  = TIM_ICPOLARITY_RISING; // options are rising, falling, bothedge
-            prescaler = TIM_ICPSC_DIV1;        // options are 1, 2, 4, 8
-            filter    = 0x05;           // range is 0x0 -> 0xF basically the debounce
+            polarity
+                = TIM_ICPOLARITY_RISING; // options are rising, falling, bothedge
+            prescaler = TIM_ICPSC_DIV1;  // options are 1, 2, 4, 8
+            filter    = 0x05; // range is 0x0 -> 0xF basically the debounce
             commutation_delay = 0x0000; // range is 0x0000 -> 0xFFFF
         }
     };
