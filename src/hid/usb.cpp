@@ -158,17 +158,7 @@ static void UsbErrorHandler()
 // IRQ Handler
 extern "C"
 {
-    void OTG_HS_EP1_OUT_IRQHandler(void)
-    {
-        HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
-    }
-
-    void OTG_HS_EP1_IN_IRQHandler(void)
-    {
-        HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
-    }
-
-    void OTG_HS_IRQHandler(void) { HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS); }
+    // Shared USB IRQ Handlers for USB HS peripheral are located in sys/System.cpp
 
     void OTG_FS_EP1_OUT_IRQHandler(void)
     {
