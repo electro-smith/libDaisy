@@ -229,7 +229,7 @@ class Mpr121
     {
         uint16_t buff;
         transport_.Write(&reg, 1);
-        transport_.Read((uint8_t*)&buff, 2);
+        transport_.Read((uint8_t *)&buff, 2);
 
         return buff;
     }
