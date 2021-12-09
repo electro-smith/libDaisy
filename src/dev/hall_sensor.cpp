@@ -2,7 +2,7 @@
 
 namespace daisy
 {
-void HallSensor::Init(HallSensor::Config config)
+HallSensor::Result HallSensor::Init(HallSensor::Config config)
 {
     config_ = config;
 
@@ -13,17 +13,22 @@ void HallSensor::Init(HallSensor::Config config)
     hall_conf_.IC1Filter         = config_.filter;
     hall_conf_.Commutation_Delay = config_.commutation_delay;
 
-    HAL_TIMEx_HallSensor_Init(&hall_, &hall_conf_);
+    if(HAL_TIMEx_HallSensor_Init(&hall_, &hall_conf_) != HAL_OK)
+    {
+        return ERR;
+    }
 
-    StartBlockingRead(); // blocking read by default
+    // blocking read by default
+    return StartBlockingRead();
 }
 
-void HallSensor::StartBlockingRead()
+HallSensor::Result HallSensor::StartBlockingRead()
 {
     // are we ready, kids?
     while(HAL_TIMEx_HallSensor_GetState(&hall_) != HAL_TIM_STATE_READY) {};
 
-    HAL_TIMEx_HallSensor_Start(&hall_);
+    HAL_StatusTypeDef res = HAL_TIMEx_HallSensor_Start(&hall_);
+    return res == HAL_OK ? OK : ERR;
 }
 
 void HallSensor::InitPins()

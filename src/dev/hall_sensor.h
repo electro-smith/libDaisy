@@ -58,13 +58,19 @@ class HallSensor
         }
     };
 
+    enum Result
+    {
+        OK = 0,
+        ERR
+    };
+
     /** Initialize the Hall Sensor device
         \param config Configuration settings
     */
-    void Init(Config config);
+    Result Init(Config config);
 
     /** Start reading in a blocking fashion. Init calls this by default. */
-    void StartBlockingRead();
+    Result StartBlockingRead();
 
     /** Stop reading in a blocking fashion */
     void StopBlockingRead() { HAL_TIMEx_HallSensor_Stop(&hall_); }
