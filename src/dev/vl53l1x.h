@@ -81,7 +81,8 @@ class Vl53l1xI2CTransport
         }
     };
 
-    inline void Init(Config config)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    inline bool Init(Config config)
     {
         I2CHandle::Config i2c_config;
         i2c_config.mode   = I2CHandle::Config::Mode::I2C_MASTER;
@@ -91,18 +92,22 @@ class Vl53l1xI2CTransport
         i2c_config.pin_config.scl = config.scl;
         i2c_config.pin_config.sda = config.sda;
 
-        i2c_.Init(i2c_config);
+        return I2CHandle::Result::OK != i2c_.Init(i2c_config);
     }
 
-    void Write(uint8_t *data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Write(uint8_t *data, uint16_t size)
     {
-        i2c_.TransmitBlocking(dev_addr_, data, size, 10);
+        return I2CHandle::Result::OK
+               != i2c_.TransmitBlocking(dev_addr_, data, size, 10);
     }
 
-    void Read(uint8_t *data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Read(uint8_t *data, uint16_t size)
     {
         // dev_addr_ may need >> 1...
-        i2c_.ReceiveBlocking(dev_addr_, data, size, 10);
+        return I2CHandle::Result::OK
+               != i2c_.ReceiveBlocking(dev_addr_, data, size, 10);
     }
 
   private:
@@ -129,10 +134,16 @@ class Vl53l1x
         typename Transport::Config transport_config;
     };
 
+    enum Result
+    {
+        OK = 0,
+        ERR
+    };
+
     /** Initialize the VL53L1X device
         \param config Configuration settings
     */
-    void Init(Config config)
+    Result Init(Config config)
     {
         config_ = config;
 
@@ -142,7 +153,7 @@ class Vl53l1x
         dsy_gpio_init(&xShut_);
         dsy_gpio_write(&xShut_, true);
 
-        transport_.Init(config_.transport_config);
+        SetTransportErr(transport_.Init(config_.transport_config));
 
         // initialize the device...
         uint8_t Addr = 0x00, tmp = 0;
@@ -167,6 +178,8 @@ class Vl53l1x
 
         // start VHV from the previous temperature
         Write8(0x0B, 0);
+
+        return GetTransportErr();
     }
 
     uint16_t GetDistance()
@@ -209,8 +222,8 @@ class Vl53l1x
         uint8_t buff[] = {(uint8_t)(index >> 8), (uint8_t)(index & 0xff)};
         uint8_t ret;
 
-        transport_.Write(buff, 2);
-        transport_.Read(&ret, 1);
+        SetTransportErr(transport_.Write(buff, 2));
+        SetTransportErr(transport_.Read(&ret, 1));
 
         return ret;
     }
@@ -218,7 +231,7 @@ class Vl53l1x
     void Write8(uint16_t index, uint8_t data)
     {
         uint8_t buff[] = {(uint8_t)(index >> 8), (uint8_t)(index & 0xFF), data};
-        transport_.Write(buff, 3);
+        SetTransportErr(transport_.Write(buff, 3));
     }
 
     uint16_t ReadWord(uint16_t index)
@@ -226,8 +239,8 @@ class Vl53l1x
         uint8_t  buff[] = {index >> 8, index & 0xff};
         uint16_t ret;
 
-        transport_.Write(buff, 2);
-        transport_.Read(&ret, 2); // is this ok?
+        SetTransportErr(transport_.Write(buff, 2));
+        SetTransportErr(transport_.Read(&ret, 2)); // is this ok?
 
         return ret;
     }
@@ -235,7 +248,7 @@ class Vl53l1x
     void WriteWord(uint16_t index, uint16_t data)
     {
         uint8_t buff[] = {index >> 8, index & 0xFF, data >> 8, data & 0xFF};
-        transport_.Write(buff, 4);
+        SetTransportErr(transport_.Write(buff, 4));
     }
 
     void WriteDWord(uint16_t index, uint32_t data)
@@ -250,7 +263,7 @@ class Vl53l1x
         buff[4] = (data >> 8) & 0xFF;
         buff[5] = (data >> 0) & 0xFF;
 
-        transport_.Write(buff, 6);
+        SetTransportErr(transport_.Write(buff, 6));
     }
 
     uint32_t ReadDWord(uint16_t index)
@@ -258,8 +271,8 @@ class Vl53l1x
         uint8_t  buff[] = {index >> 8, index & 0xff};
         uint32_t ret;
 
-        transport_.Write(buff, 2);
-        transport_.Read(&ret, 4); // how about this?
+        SetTransportErr(transport_.Write(buff, 2));
+        SetTransportErr(transport_.Read(&ret, 4)); // how about this?
 
         return ret;
     }
@@ -749,6 +762,18 @@ class Vl53l1x
     Config    config_;
     Transport transport_;
     dsy_gpio  xShut_;
+    bool      transport_error_;
+
+    /** Set the global transport_error_ bool */
+    void SetTransportErr(bool err) { transport_error_ |= err; }
+
+    /** Get the global transport_error_ bool (as a Result), then reset it */
+    Result GetTransportErr()
+    {
+        Result ret       = transport_error_ ? ERR : OK;
+        transport_error_ = false;
+        return ret;
+    }
 
     // yikes...
     const uint8_t VL51L1X_DEFAULT_CONFIGURATION[92] = {
