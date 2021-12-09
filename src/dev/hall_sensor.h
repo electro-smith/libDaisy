@@ -58,7 +58,8 @@ class HallSensor
         }
     };
 
-    enum Result{
+    enum Result
+    {
         OK = 0,
         ERR
     };
