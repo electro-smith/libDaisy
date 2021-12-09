@@ -186,7 +186,7 @@ class Bmp390
         config_          = config;
         transport_error_ = false;
 
-        SetTransportError(transport_.Init(config_.transport_config));
+        SetTransportErr(transport_.Init(config_.transport_config));
 
         SoftReset();
         SetOversampling(config_.temp_oversampling,
@@ -255,7 +255,7 @@ class Bmp390
         write_buff[1] = reg;      // register address
         write_buff[2] = data;     // value to write
 
-        SetTransportError(transport_.Write(write_buff, 3));
+        SetTransportErr(transport_.Write(write_buff, 3));
     }
 
     /** Sequential read from register(s).
@@ -265,8 +265,8 @@ class Bmp390
     */
     void ReadFromReg(uint8_t reg, uint8_t* read_buff, uint16_t size)
     {
-        SetTransportError(transport_.Write(&reg, 1));
-        SetTransportError(transport_.Read(read_buff, size));
+        SetTransportErr(transport_.Write(&reg, 1));
+        SetTransportErr(transport_.Read(read_buff, size));
     }
 
     /** Performs a pressure reading
