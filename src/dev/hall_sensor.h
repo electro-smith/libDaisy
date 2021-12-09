@@ -48,7 +48,7 @@ class HallSensor
         Config()
         {
             periph = Peripheral::TIM_3;
-            pin    = {DSY_GPIOA, 8};
+            pin    = {DSY_GPIOC, 6};
 
             polarity
                 = TIM_ICPOLARITY_RISING; // options are rising, falling, bothedge
