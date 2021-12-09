@@ -47,7 +47,8 @@ class Bmp390I2CTransport
         }
     };
 
-    inline void Init(Config config)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    inline bool Init(Config config)
     {
         I2CHandle::Config i2c_config;
         i2c_config.mode   = I2CHandle::Config::Mode::I2C_MASTER;
@@ -57,17 +58,21 @@ class Bmp390I2CTransport
         i2c_config.pin_config.scl = config.scl;
         i2c_config.pin_config.sda = config.sda;
 
-        i2c_.Init(i2c_config);
+        return I2CHandle::Result::OK != i2c_.Init(i2c_config);
     }
 
-    void Write(uint8_t* data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Write(uint8_t* data, uint16_t size)
     {
-        i2c_.TransmitBlocking(BMP390_CHIP_ID, data, size, 10);
+        return I2CHandle::Result::OK
+               != i2c_.TransmitBlocking(BMP390_CHIP_ID, data, size, 10);
     }
 
-    void Read(uint8_t* data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Read(uint8_t* data, uint16_t size)
     {
-        i2c_.ReceiveBlocking(BMP390_CHIP_ID, data, size, 10);
+        return I2CHandle::Result::OK
+               != i2c_.ReceiveBlocking(BMP390_CHIP_ID, data, size, 10);
     }
 
   private:
@@ -99,7 +104,8 @@ class Bmp390SpiTransport
         }
     };
 
-    inline void Init(Config config)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    inline bool Init(Config config)
     {
         SpiHandle::Config spi_conf;
         spi_conf.mode           = SpiHandle::Config::Mode::MASTER;
@@ -115,17 +121,19 @@ class Bmp390SpiTransport
         spi_conf.pin_config.mosi = config.mosi;
         spi_conf.pin_config.nss  = config.nss;
 
-        spi_.Init(spi_conf);
+        return SpiHandle::Result::OK != spi_.Init(spi_conf);
     }
 
-    void Write(uint8_t* data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Write(uint8_t* data, uint16_t size)
     {
-        spi_.BlockingTransmit(data, size);
+        return SpiHandle::Result::OK != spi_.BlockingTransmit(data, size);
     }
 
-    void Read(uint8_t* data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Read(uint8_t* data, uint16_t size)
     {
-        spi_.BlockingReceive(data, size, 10);
+        return SpiHandle::Result::OK != spi_.BlockingReceive(data, size, 10);
     }
 
   private:
@@ -164,20 +172,29 @@ class Bmp390
         }
     };
 
+    enum Result
+    {
+        OK = 0,
+        ERR
+    };
+
     /** Initialize the BMP390 device
         \param config Configuration settings
     */
-    void Init(Config config)
+    Result Init(Config config)
     {
-        config_ = config;
+        config_          = config;
+        transport_error_ = false;
 
-        transport_.Init(config_.transport_config);
+        SetTransportError(transport_.Init(config_.transport_config));
 
         SoftReset();
         SetOversampling(config_.temp_oversampling,
                         config_.pressure_oversampling);
         SetOutputDataRate(config_.output_data_rate);
         SetIIRFilterCoeff(config_.iir_filter_coeff);
+
+        return GetTransportErr();
     }
 
     /** Set the output data rate. 
@@ -238,7 +255,7 @@ class Bmp390
         write_buff[1] = reg;      // register address
         write_buff[2] = data;     // value to write
 
-        transport_.Write(write_buff, 3);
+        SetTransportError(transport_.Write(write_buff, 3));
     }
 
     /** Sequential read from register(s).
@@ -248,8 +265,8 @@ class Bmp390
     */
     void ReadFromReg(uint8_t reg, uint8_t* read_buff, uint16_t size)
     {
-        transport_.Write(&reg, 1);
-        transport_.Read(read_buff, size);
+        SetTransportError(transport_.Write(&reg, 1));
+        SetTransportError(transport_.Read(read_buff, size));
     }
 
     /** Performs a pressure reading
@@ -281,6 +298,19 @@ class Bmp390
     }
 
   private:
+    bool transport_error_;
+
+    /** Set the global transport_error_ bool */
+    void SetTransportErr(bool err) { transport_error_ |= err; }
+
+    /** Get the global transport_error_ bool (as a Result), then reset it */
+    Result GetTransportErr()
+    {
+        Result ret       = transport_error_ ? ERR : OK;
+        transport_error_ = false;
+        return ret;
+    }
+
     /** Do all the steps involved in a read */
     void PerformReading()
     {
