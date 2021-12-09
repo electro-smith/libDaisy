@@ -649,19 +649,18 @@ class Apds9960
   private:
     uint8_t gestCnt_, UCount_, DCount_, LCount_, RCount_; // counters
     uint8_t gestureReceived_;
-    bool      transport_error_;
+    bool    transport_error_;
 
     Config    config_;
     Transport transport_;
-    
+
     /** Set the global transport_error_ bool */
-    void SetTransportErr(bool err){
-        transport_error_ |= err;
-    }
+    void SetTransportErr(bool err) { transport_error_ |= err; }
 
     /** Get the global transport_error_ bool (as a Result), then reset it */
-    Result GetTransportErr(){
-        Result ret = transport_error_ ? ERR : OK;
+    Result GetTransportErr()
+    {
+        Result ret       = transport_error_ ? ERR : OK;
         transport_error_ = false;
         return ret;
     }
