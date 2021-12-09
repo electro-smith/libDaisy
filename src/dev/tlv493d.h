@@ -47,6 +47,7 @@ class Tlv493dI2CTransport
         }
     };
 
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
     inline bool Init(Config config)
     {
         I2CHandle::Config i2c_config;
@@ -60,12 +61,14 @@ class Tlv493dI2CTransport
         return I2CHandle::Result::OK != i2c_.Init(i2c_config);
     }
 
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
     bool Write(uint8_t *data, uint16_t size)
     {
         return I2CHandle::Result::OK
                != i2c_.TransmitBlocking(TLV493D_ADDRESS1, data, size, 10);
     }
 
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
     bool Read(uint8_t *data, uint16_t size)
     {
         return I2CHandle::Result::OK
