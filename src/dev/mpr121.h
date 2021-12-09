@@ -229,7 +229,7 @@ class Mpr121
     {
         uint16_t buff;
         transport_.Write(&reg, 1);
-        transport_.Read(&buff, 2);
+        transport_.Read((uint8_t*)&buff, 2);
 
         return buff;
     }
@@ -321,10 +321,11 @@ class Mpr121
     Config    config_;
     Transport transport_;
 
-    /** @} */
-
-    using Mpr121I2C = Mpr121<Mpr121I2CTransport>;
-
 }; // class
+
+using Mpr121I2C = Mpr121<Mpr121I2CTransport>;
+
+/** @} */
+
 } // namespace daisy
 #endif
