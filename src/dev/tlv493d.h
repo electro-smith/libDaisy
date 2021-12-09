@@ -47,7 +47,8 @@ class Tlv493dI2CTransport
         }
     };
 
-    inline void Init(Config config)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    inline bool Init(Config config)
     {
         I2CHandle::Config i2c_config;
         i2c_config.mode   = I2CHandle::Config::Mode::I2C_MASTER;
@@ -57,17 +58,21 @@ class Tlv493dI2CTransport
         i2c_config.pin_config.scl = config.scl;
         i2c_config.pin_config.sda = config.sda;
 
-        i2c_.Init(i2c_config);
+        return I2CHandle::Result::OK != i2c_.Init(i2c_config);
     }
 
-    void Write(uint8_t *data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Write(uint8_t *data, uint16_t size)
     {
-        i2c_.TransmitBlocking(TLV493D_ADDRESS1, data, size, 10);
+        return I2CHandle::Result::OK
+               != i2c_.TransmitBlocking(TLV493D_ADDRESS1, data, size, 10);
     }
 
-    void Read(uint8_t *data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Read(uint8_t *data, uint16_t size)
     {
-        i2c_.ReceiveBlocking(TLV493D_ADDRESS1, data, size, 10);
+        return I2CHandle::Result::OK
+               != i2c_.ReceiveBlocking(TLV493D_ADDRESS1, data, size, 10);
     }
 
   private:
@@ -183,14 +188,20 @@ class Tlv493d
         Config() { address = TLV493D_ADDRESS1; }
     };
 
+    enum Result
+    {
+        OK = 0,
+        ERR
+    };
+
     /** Initialize the TLV493D device
         \param config Configuration settings
     */
-    void Init(Config config)
+    Result Init(Config config)
     {
         config_ = config;
 
-        transport_.Init(config_.transport_config);
+        SetTransportErr(transport_.Init(config_.transport_config));
 
         System::Delay(40); // 40ms startup delay
 
@@ -207,11 +218,20 @@ class Tlv493d
         // config sensor to lowpower mode
         // also contains parity calculation and writeout to sensor
         SetAccessMode(TLV493D_DEFAULTMODE);
+
+        return GetTransportErr();
     }
 
-    void ReadOut() { transport_.Read(regReadData, TLV493D_BUSIF_READSIZE); }
+    void ReadOut()
+    {
+        SetTransportErr(transport_.Read(regReadData, TLV493D_BUSIF_READSIZE));
+    }
 
-    void WriteOut() { transport_.Write(regWriteData, TLV493D_BUSIF_WRITESIZE); }
+    void WriteOut()
+    {
+        SetTransportErr(
+            transport_.Write(regWriteData, TLV493D_BUSIF_WRITESIZE));
+    }
 
     void SetRegBits(uint8_t regMaskIndex, uint8_t data)
     {
@@ -372,6 +392,18 @@ class Tlv493d
     uint8_t   regReadData[TLV493D_BUSIF_READSIZE];
     uint8_t   regWriteData[TLV493D_BUSIF_WRITESIZE];
     int16_t   mXdata, mYdata, mZdata, mTempdata, mExpectedFrameCount, mMode;
+    bool      transport_error_;
+
+    /** Set the global transport_error_ bool */
+    void SetTransportErr(bool err) { transport_error_ |= err; }
+
+    /** Get the global transport_error_ bool (as a Result), then reset it */
+    Result GetTransportErr()
+    {
+        Result ret       = transport_error_ ? ERR : OK;
+        transport_error_ = false;
+        return ret;
+    }
 
     // internal function called by begin()
     void ResetSensor(uint8_t adr)
@@ -389,7 +421,7 @@ class Tlv493d
             data[1] = 0x00;
         }
 
-        transport_.Write(data, 2);
+        SetTransportErr(transport_.Write(data, 2));
     }
 
     uint8_t GetFromRegs(const RegMask_t *mask, uint8_t *regData)
