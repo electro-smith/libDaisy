@@ -43,7 +43,8 @@ class Mpr121I2CTransport
         }
     };
 
-    inline void Init(Config config)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    inline bool Init(Config config)
     {
         config_ = config;
 
@@ -55,17 +56,21 @@ class Mpr121I2CTransport
         i2c_conf.pin_config.scl = config.scl;
         i2c_conf.pin_config.sda = config.sda;
 
-        i2c_.Init(i2c_conf);
+        return I2CHandle::Result::OK != i2c_.Init(i2c_conf);
     }
 
-    void Write(uint8_t *data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Write(uint8_t *data, uint16_t size)
     {
-        i2c_.TransmitBlocking(config_.dev_addr, data, size, 10);
+        return I2CHandle::Result::OK
+               != i2c_.TransmitBlocking(config_.dev_addr, data, size, 10);
     }
 
-    void Read(uint8_t *data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Read(uint8_t *data, uint16_t size)
     {
-        i2c_.ReceiveBlocking(config_.dev_addr, data, size, 10);
+        return I2CHandle::Result::OK
+               != i2c_.ReceiveBlocking(config_.dev_addr, data, size, 10);
     }
 
   private:
@@ -98,14 +103,20 @@ class Mpr121
         }
     };
 
+    enum Result
+    {
+        OK = 0,
+        ERR
+    };
+
     /** Initialize the MPR121 device
         \param config Configuration settings
     */
-    void Init(Config config)
+    Result Init(Config config)
     {
         config_ = config;
 
-        transport_.Init(config_.transport_config);
+        SetTransportErr(transport_.Init(config_.transport_config));
 
         // soft reset
         WriteRegister(MPR121_SOFTRESET, 0x63);
@@ -116,7 +127,7 @@ class Mpr121
         uint8_t c = ReadRegister8(MPR121_CONFIG2);
 
         if(c != 0x24)
-            return;
+            return ERR;
 
         SetThresholds(config_.touch_threshold, config_.release_threshold);
         WriteRegister(MPR121_MHDR, 0x01);
@@ -151,6 +162,8 @@ class Mpr121
                     // amount of electrodes running (12)
         WriteRegister(MPR121_ECR,
                       ECR_SETTING); // start with above ECR setting
+
+        return GetTransportErr();
     }
 
     /** Set the touch and release thresholds for all 13 channels on the
@@ -215,8 +228,8 @@ class Mpr121
     uint8_t ReadRegister8(uint8_t reg)
     {
         uint8_t buff;
-        transport_.Write(&reg, 1);
-        transport_.Read(&buff, 1);
+        SetTransportErr(transport_.Write(&reg, 1));
+        SetTransportErr(transport_.Read(&buff, 1));
 
         return buff;
     }
@@ -228,8 +241,8 @@ class Mpr121
     uint16_t ReadRegister16(uint8_t reg)
     {
         uint16_t buff;
-        transport_.Write(&reg, 1);
-        transport_.Read((uint8_t *)&buff, 2);
+        SetTransportErr(transport_.Write(&reg, 1));
+        SetTransportErr(transport_.Read((uint8_t *)&buff, 2));
 
         return buff;
     }
@@ -247,10 +260,10 @@ class Mpr121
         uint8_t ecr_reg = MPR121_ECR;
         uint8_t buff[2] = {ecr_reg, 0x00};
 
-        transport_.Write(buff, 1);
+        SetTransportErr(transport_.Write(buff, 1));
 
         uint8_t ecr_backup;
-        transport_.Read(&ecr_backup, 1);
+        SetTransportErr(transport_.Read(&ecr_backup, 1));
         if((reg == MPR121_ECR) || ((0x73 <= reg) && (reg <= 0x7A)))
         {
             stop_required = false;
@@ -259,18 +272,18 @@ class Mpr121
         if(stop_required)
         {
             // clear this register to set stop mode
-            transport_.Write(buff, 2);
+            SetTransportErr(transport_.Write(buff, 2));
         }
 
         buff[0] = reg;
         buff[1] = value;
-        transport_.Write(buff, 2);
+        SetTransportErr(transport_.Write(buff, 2));
 
         if(stop_required)
         {
             // write back the previous set ECR settings
             buff[1] = ecr_backup;
-            transport_.Write(buff, 2);
+            SetTransportErr(transport_.Write(buff, 2));
         }
     }
 
@@ -320,6 +333,18 @@ class Mpr121
   private:
     Config    config_;
     Transport transport_;
+    bool      transport_error_;
+
+    /** Set the global transport_error_ bool */
+    void SetTransportErr(bool err) { transport_error_ |= err; }
+
+    /** Get the global transport_error_ bool (as a Result), then reset it */
+    Result GetTransportErr()
+    {
+        Result ret       = transport_error_ ? ERR : OK;
+        transport_error_ = false;
+        return ret;
+    }
 
 }; // class
 
