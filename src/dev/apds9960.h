@@ -91,7 +91,8 @@ class Apds9960I2CTransport
         }
     };
 
-    inline void Init(Config config)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    inline bool Init(Config config)
     {
         I2CHandle::Config i2c_config;
         i2c_config.mode   = I2CHandle::Config::Mode::I2C_MASTER;
@@ -101,17 +102,21 @@ class Apds9960I2CTransport
         i2c_config.pin_config.scl = config.scl;
         i2c_config.pin_config.sda = config.sda;
 
-        i2c_.Init(i2c_config);
+        return I2CHandle::Result::OK != i2c_.Init(i2c_config);
     }
 
-    void Write(uint8_t *data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Write(uint8_t *data, uint16_t size)
     {
-        i2c_.TransmitBlocking(APDS9960_ADDRESS, data, size, 10);
+        return I2CHandle::Result::OK
+               != i2c_.TransmitBlocking(APDS9960_ADDRESS, data, size, 10);
     }
 
-    void Read(uint8_t *data, uint16_t size)
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool Read(uint8_t *data, uint16_t size)
     {
-        i2c_.ReceiveBlocking(APDS9960_ADDRESS, data, size, 10);
+        return I2CHandle::Result::OK
+               != i2c_.ReceiveBlocking(APDS9960_ADDRESS, data, size, 10);
     }
 
   private:
@@ -155,16 +160,23 @@ class Apds9960
         }
     };
 
+    enum Result
+    {
+        OK = 0,
+        ERR
+    };
+
     // turn on/off elements
     void enable(bool en = true);
     /** Initialize the APDS9960 device
         \param config Configuration settings
     */
-    void Init(Config config)
+    Result Init(Config config)
     {
-        config_ = config;
+        config_          = config;
+        transport_error_ = false;
 
-        transport_.Init(config_.transport_config);
+        SetTransportErr(transport_.Init(config_.transport_config));
 
         /* Set default integration time and gain */
         SetADCIntegrationTime(config_.integrationTimeMs);
@@ -195,6 +207,8 @@ class Apds9960
         gpulse_.GPLEN  = 0x03; // 32 us
         gpulse_.GPULSE = 9;    // 10 pulses
         Write8(APDS9960_GPULSE, gpulse_.get());
+
+        return GetTransportErr();
     }
 
     /** Sets the integration time for the ADC of the APDS9960, in millis
@@ -359,7 +373,7 @@ class Apds9960
     void ClearInterrupt()
     {
         uint8_t val = APDS9960_AICLEAR;
-        transport_.Write(&val, 1);
+        SetTransportErr(transport_.Write(&val, 1));
     }
 
     /** Resets gesture counts */
@@ -375,22 +389,22 @@ class Apds9960
     void Write8(uint8_t reg, uint8_t data)
     {
         uint8_t buff[2] = {reg, data};
-        transport_.Write(buff, 2);
+        SetTransportErr(transport_.Write(buff, 2));
     }
 
     uint8_t Read8(uint8_t reg)
     {
         uint8_t buff[1] = {reg};
-        transport_.Write(buff, 1);
-        transport_.Read(buff, 1);
+        SetTransportErr(transport_.Write(buff, 1));
+        SetTransportErr(transport_.Read(buff, 1));
         return buff[0];
     }
 
     uint16_t Read16R(uint8_t reg)
     {
         uint8_t ret[2];
-        transport_.Write(&reg, 1);
-        transport_.Read(ret, 2);
+        SetTransportErr(transport_.Write(&reg, 1));
+        SetTransportErr(transport_.Read(ret, 2));
 
         return (ret[1] << 8) | ret[0];
     }
@@ -465,8 +479,8 @@ class Apds9960
 
             // produces sideffects needed for readGesture to work
             uint8_t reg = APDS9960_GFIFO_U;
-            transport_.Write(&reg, 1);
-            transport_.Read(buf, toRead);
+            SetTransportErr(transport_.Write(&reg, 1));
+            SetTransportErr(transport_.Read(buf, toRead));
 
             if(abs((int)buf[0] - (int)buf[1]) > 13)
                 up_down_diff += (int)buf[0] - (int)buf[1];
@@ -635,6 +649,21 @@ class Apds9960
   private:
     uint8_t gestCnt_, UCount_, DCount_, LCount_, RCount_; // counters
     uint8_t gestureReceived_;
+    bool    transport_error_;
+
+    Config    config_;
+    Transport transport_;
+
+    /** Set the global transport_error_ bool */
+    void SetTransportErr(bool err) { transport_error_ |= err; }
+
+    /** Get the global transport_error_ bool (as a Result), then reset it */
+    Result GetTransportErr()
+    {
+        Result ret       = transport_error_ ? ERR : OK;
+        transport_error_ = false;
+        return ret;
+    }
 
     struct gconf1
     {
@@ -779,9 +808,6 @@ class Apds9960
         }
     };
     status status_;
-
-    Config    config_;
-    Transport transport_;
 };
 
 /** @} */
