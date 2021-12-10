@@ -41,6 +41,12 @@
 #define BME280_REGISTER_TEMPDATA 0xFA
 #define BME280_REGISTER_HUMIDDATA 0xFD
 
+#define SAMPLING_MODE_DEFAULT MODE_NORMAL
+#define SAMPLING_TEMP_DEFAULT SAMPLING_X16
+#define SAMPLING_PRESS_DEFAULT SAMPLING_X16
+#define SAMPLING_HUM_DEFAULT SAMPLING_X16
+#define SAMPLING_FILTER_DEFAULT FILTER_OFF
+#define SAMPLING_DURATION_DEFAULT STANDBY_MS_0_5
 
 namespace daisy
 {
@@ -391,7 +397,13 @@ class Bme280
 
         ReadCoefficients(); // read trimming parameters, see DS 4.2.2
 
-        SetSampling(); // use defaults
+        // use defaults
+        SetSampling(SAMPLING_MODE_DEFAULT,
+                    SAMPLING_TEMP_DEFAULT,
+                    SAMPLING_PRESS_DEFAULT,
+                    SAMPLING_HUM_DEFAULT,
+                    SAMPLING_FILTER_DEFAULT,
+                    SAMPLING_DURATION_DEFAULT);
 
         System::Delay(100);
 
