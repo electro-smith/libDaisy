@@ -517,8 +517,10 @@ class Bme280
         _bme280_calib.dig_H1 = Read8(BME280_REGISTER_DIG_H1);
         _bme280_calib.dig_H2 = ReadS16_LE(BME280_REGISTER_DIG_H2);
         _bme280_calib.dig_H3 = Read8(BME280_REGISTER_DIG_H3);
-        _bme280_calib.dig_H4 = ((int8_t)Read8(BME280_REGISTER_DIG_H4) << 4)| (Read8(BME280_REGISTER_DIG_H4 + 1) & 0xF);
-        _bme280_calib.dig_H5 = ((int8_t)Read8(BME280_REGISTER_DIG_H5 + 1) << 4) | (Read8(BME280_REGISTER_DIG_H5) >> 4);
+        _bme280_calib.dig_H4 = ((int8_t)Read8(BME280_REGISTER_DIG_H4) << 4)
+                               | (Read8(BME280_REGISTER_DIG_H4 + 1) & 0xF);
+        _bme280_calib.dig_H5 = ((int8_t)Read8(BME280_REGISTER_DIG_H5 + 1) << 4)
+                               | (Read8(BME280_REGISTER_DIG_H5) >> 4);
         _bme280_calib.dig_H6 = (int8_t)Read8(BME280_REGISTER_DIG_H6);
     }
 
@@ -547,7 +549,8 @@ class Bme280
         var1 = (int32_t)((adc_T / 8) - ((int32_t)_bme280_calib.dig_T1 * 2));
         var1 = (var1 * ((int32_t)_bme280_calib.dig_T2)) / 2048;
         var2 = (int32_t)((adc_T / 16) - ((int32_t)_bme280_calib.dig_T1));
-        var2 = (((var2 * var2) / 4096) * ((int32_t)_bme280_calib.dig_T3)) / 16384;
+        var2 = (((var2 * var2) / 4096) * ((int32_t)_bme280_calib.dig_T3))
+               / 16384;
 
         t_fine = var1 + var2 + t_fine_adjust;
 
