@@ -146,12 +146,6 @@ class Vl53l1x
         ERR
     };
 
-    enum Result
-    {
-        OK = 0,
-        ERR
-    };
-
     /** Initialize the VL53L1X device
         \param config Configuration settings
     */
