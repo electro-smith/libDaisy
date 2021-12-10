@@ -35,6 +35,8 @@ dev/codec_ak4556 \
 dev/codec_pcm3060 \
 dev/codec_wm8731 \
 dev/lcd_hd44780 \
+dev/motor \
+dev/pca9685 \
 dev/sdram \
 hid/ctrl \
 hid/encoder \
