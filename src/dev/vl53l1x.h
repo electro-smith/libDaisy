@@ -132,6 +132,12 @@ class Vl53l1x
         dsy_gpio_pin
                                    xShut; // active low. Not sure if we need it but it's nice to have
         typename Transport::Config transport_config;
+
+        Config()
+        {
+            xShut.port = DSY_GPIOB;
+            xShut.pin  = 6;
+        }
     };
 
     enum Result
