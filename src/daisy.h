@@ -17,6 +17,8 @@
 #include "dev/leddriver.h"
 #include "dev/sdram.h"
 #include "dev/sr_4021.h"
+#include "dev/motor.h"
+#include "dev/pca9685.h"
 #include "hid/audio.h"
 #include "util/unique_id.h"
 #ifdef __cplusplus
