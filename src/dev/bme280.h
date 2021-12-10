@@ -478,12 +478,12 @@ class Bme280
         {
             return_value = true;
             // set to forced mode, i.e. "take next measurement"
-            Write8((BME280_REGISTER_CONTROL, _measReg.get());
+            Write8(BME280_REGISTER_CONTROL, _measReg.get());
             // Store current time to measure the timeout
             uint32_t timeout_start = System::GetNow();
             // wait until measurement has been completed, otherwise we would read the
             // the values from the last measurement or the timeout occurred after 2 sec.
-            while(Read8((BME280_REGISTER_STATUS) & 0x08)
+            while(Read8(BME280_REGISTER_STATUS) & 0x08)
             {
                 // In case of a timeout, stop the while loop
                 if((System::GetNow() - timeout_start) > 2000)
@@ -498,195 +498,195 @@ class Bme280
     }
 
     /**  Reads the factory-set coefficients */
-    // void ReadCoefficients()
-    // {
-    //     _bme280_calib.dig_T1 = Read16_LE(BME280_REGISTER_DIG_T1);
-    //     _bme280_calib.dig_T2 = ReadS16_LE(BME280_REGISTER_DIG_T2);
-    //     _bme280_calib.dig_T3 = ReadS16_LE(BME280_REGISTER_DIG_T3);
+    void ReadCoefficients()
+    {
+        _bme280_calib.dig_T1 = Read16_LE(BME280_REGISTER_DIG_T1);
+        _bme280_calib.dig_T2 = ReadS16_LE(BME280_REGISTER_DIG_T2);
+        _bme280_calib.dig_T3 = ReadS16_LE(BME280_REGISTER_DIG_T3);
 
-    //     _bme280_calib.dig_P1 = Read16_LE(BME280_REGISTER_DIG_P1);
-    //     _bme280_calib.dig_P2 = ReadS16_LE(BME280_REGISTER_DIG_P2);
-    //     _bme280_calib.dig_P3 = ReadS16_LE(BME280_REGISTER_DIG_P3);
-    //     _bme280_calib.dig_P4 = ReadS16_LE(BME280_REGISTER_DIG_P4);
-    //     _bme280_calib.dig_P5 = ReadS16_LE(BME280_REGISTER_DIG_P5);
-    //     _bme280_calib.dig_P6 = ReadS16_LE(BME280_REGISTER_DIG_P6);
-    //     _bme280_calib.dig_P7 = ReadS16_LE(BME280_REGISTER_DIG_P7);
-    //     _bme280_calib.dig_P8 = ReadS16_LE(BME280_REGISTER_DIG_P8);
-    //     _bme280_calib.dig_P9 = ReadS16_LE(BME280_REGISTER_DIG_P9);
+        _bme280_calib.dig_P1 = Read16_LE(BME280_REGISTER_DIG_P1);
+        _bme280_calib.dig_P2 = ReadS16_LE(BME280_REGISTER_DIG_P2);
+        _bme280_calib.dig_P3 = ReadS16_LE(BME280_REGISTER_DIG_P3);
+        _bme280_calib.dig_P4 = ReadS16_LE(BME280_REGISTER_DIG_P4);
+        _bme280_calib.dig_P5 = ReadS16_LE(BME280_REGISTER_DIG_P5);
+        _bme280_calib.dig_P6 = ReadS16_LE(BME280_REGISTER_DIG_P6);
+        _bme280_calib.dig_P7 = ReadS16_LE(BME280_REGISTER_DIG_P7);
+        _bme280_calib.dig_P8 = ReadS16_LE(BME280_REGISTER_DIG_P8);
+        _bme280_calib.dig_P9 = ReadS16_LE(BME280_REGISTER_DIG_P9);
 
-    //     _bme280_calib.dig_H1 = Read8(BME280_REGISTER_DIG_H1);
-    //     _bme280_calib.dig_H2 = ReadS16_LE(BME280_REGISTER_DIG_H2);
-    //     _bme280_calib.dig_H3 = Read8(BME280_REGISTER_DIG_H3);
-    //     _bme280_calib.dig_H4 = ((int8_t)Read8(BME280_REGISTER_DIG_H4) << 4)| (Read8(BME280_REGISTER_DIG_H4 + 1) & 0xF);
-    //     _bme280_calib.dig_H5 = ((int8_t)Read8(BME280_REGISTER_DIG_H5 + 1) << 4) | (Read8(BME280_REGISTER_DIG_H5) >> 4);
-    //     _bme280_calib.dig_H6 = (int8_t)Read8(BME280_REGISTER_DIG_H6);
-    // }
+        _bme280_calib.dig_H1 = Read8(BME280_REGISTER_DIG_H1);
+        _bme280_calib.dig_H2 = ReadS16_LE(BME280_REGISTER_DIG_H2);
+        _bme280_calib.dig_H3 = Read8(BME280_REGISTER_DIG_H3);
+        _bme280_calib.dig_H4 = ((int8_t)Read8(BME280_REGISTER_DIG_H4) << 4)| (Read8(BME280_REGISTER_DIG_H4 + 1) & 0xF);
+        _bme280_calib.dig_H5 = ((int8_t)Read8(BME280_REGISTER_DIG_H5 + 1) << 4) | (Read8(BME280_REGISTER_DIG_H5) >> 4);
+        _bme280_calib.dig_H6 = (int8_t)Read8(BME280_REGISTER_DIG_H6);
+    }
 
     /** return true if chip is busy reading cal data
         \returns true if reading calibration, false otherwise
     */
-    // bool isReadingCalibration()
-    // {
-    //     uint8_t const rStatus = Read8(BME280_REGISTER_STATUS);
+    bool isReadingCalibration()
+    {
+        uint8_t const rStatus = Read8(BME280_REGISTER_STATUS);
 
-    //     return (rStatus & (1 << 0)) != 0;
-    // }
+        return (rStatus & (1 << 0)) != 0;
+    }
 
     /**  Returns the temperature from the sensor
         \returns the temperature read from the device
     */
-    // float ReadTemperature()
-    // {
-    //     int32_t var1, var2;
+    float ReadTemperature()
+    {
+        int32_t var1, var2;
 
-    //     int32_t adc_T = Read24(BME280_REGISTER_TEMPDATA);
-    //     if(adc_T == 0x800000) // value in case temp measurement was disabled
-    //         return NAN;
-    //     adc_T >>= 4;
+        int32_t adc_T = Read24(BME280_REGISTER_TEMPDATA);
+        if(adc_T == 0x800000) // value in case temp measurement was disabled
+            return NAN;
+        adc_T >>= 4;
 
-    //     var1 = (int32_t)((adc_T / 8) - ((int32_t)_bme280_calib.dig_T1 * 2));
-    //     var1 = (var1 * ((int32_t)_bme280_calib.dig_T2)) / 2048;
-    //     var2 = (int32_t)((adc_T / 16) - ((int32_t)_bme280_calib.dig_T1));
-    //     var2 = (((var2 * var2) / 4096) * ((int32_t)_bme280_calib.dig_T3)) / 16384;
+        var1 = (int32_t)((adc_T / 8) - ((int32_t)_bme280_calib.dig_T1 * 2));
+        var1 = (var1 * ((int32_t)_bme280_calib.dig_T2)) / 2048;
+        var2 = (int32_t)((adc_T / 16) - ((int32_t)_bme280_calib.dig_T1));
+        var2 = (((var2 * var2) / 4096) * ((int32_t)_bme280_calib.dig_T3)) / 16384;
 
-    //     t_fine = var1 + var2 + t_fine_adjust;
+        t_fine = var1 + var2 + t_fine_adjust;
 
-    //     int32_t T = (t_fine * 5 + 128) / 256;
+        int32_t T = (t_fine * 5 + 128) / 256;
 
-    //     return (float)T / 100;
-    // }
+        return (float)T / 100;
+    }
 
     /**  Returns the pressure from the sensor
         \returns the pressure value (in Pascal) read from the device
     */
-    // float ReadPressure()
-    // {
-    //     int64_t var1, var2, var3, var4;
+    float ReadPressure()
+    {
+        int64_t var1, var2, var3, var4;
 
-    //     ReadTemperature(); // must be done first to get t_fine
+        ReadTemperature(); // must be done first to get t_fine
 
-    //     int32_t adc_P = Read24(BME280_REGISTER_PRESSUREDATA);
-    //     if(adc_P == 0x800000) // value in case pressure measurement was disabled
-    //         return NAN;
-    //     adc_P >>= 4;
+        int32_t adc_P = Read24(BME280_REGISTER_PRESSUREDATA);
+        if(adc_P == 0x800000) // value in case pressure measurement was disabled
+            return NAN;
+        adc_P >>= 4;
 
-    //     var1 = ((int64_t)t_fine) - 128000;
-    //     var2 = var1 * var1 * (int64_t)_bme280_calib.dig_P6;
-    //     var2 = var2 + ((var1 * (int64_t)_bme280_calib.dig_P5) * 131072);
-    //     var2 = var2 + (((int64_t)_bme280_calib.dig_P4) * 34359738368);
-    //     var1 = ((var1 * var1 * (int64_t)_bme280_calib.dig_P3) / 256)
-    //            + ((var1 * ((int64_t)_bme280_calib.dig_P2) * 4096));
-    //     var3 = ((int64_t)1) * 140737488355328;
-    //     var1 = (var3 + var1) * ((int64_t)_bme280_calib.dig_P1) / 8589934592;
+        var1 = ((int64_t)t_fine) - 128000;
+        var2 = var1 * var1 * (int64_t)_bme280_calib.dig_P6;
+        var2 = var2 + ((var1 * (int64_t)_bme280_calib.dig_P5) * 131072);
+        var2 = var2 + (((int64_t)_bme280_calib.dig_P4) * 34359738368);
+        var1 = ((var1 * var1 * (int64_t)_bme280_calib.dig_P3) / 256)
+               + ((var1 * ((int64_t)_bme280_calib.dig_P2) * 4096));
+        var3 = ((int64_t)1) * 140737488355328;
+        var1 = (var3 + var1) * ((int64_t)_bme280_calib.dig_P1) / 8589934592;
 
-    //     if(var1 == 0)
-    //     {
-    //         return 0; // avoid exception caused by division by zero
-    //     }
+        if(var1 == 0)
+        {
+            return 0; // avoid exception caused by division by zero
+        }
 
-    //     var4 = 1048576 - adc_P;
-    //     var4 = (((var4 * 2147483648) - var2) * 3125) / var1;
-    //     var1 = (((int64_t)_bme280_calib.dig_P9) * (var4 / 8192) * (var4 / 8192))
-    //            / 33554432;
-    //     var2 = (((int64_t)_bme280_calib.dig_P8) * var4) / 524288;
-    //     var4 = ((var4 + var1 + var2) / 256)
-    //            + (((int64_t)_bme280_calib.dig_P7) * 16);
+        var4 = 1048576 - adc_P;
+        var4 = (((var4 * 2147483648) - var2) * 3125) / var1;
+        var1 = (((int64_t)_bme280_calib.dig_P9) * (var4 / 8192) * (var4 / 8192))
+               / 33554432;
+        var2 = (((int64_t)_bme280_calib.dig_P8) * var4) / 524288;
+        var4 = ((var4 + var1 + var2) / 256)
+               + (((int64_t)_bme280_calib.dig_P7) * 16);
 
-    //     float P = var4 / 256.0;
+        float P = var4 / 256.0;
 
-    //     return P;
-    // }
+        return P;
+    }
 
-    // /** Returns the humidity from the sensor
-    //     \returns the humidity value read from the device
-    // */
-    // float ReadHumidity()
-    // {
-    //     int32_t var1, var2, var3, var4, var5;
+    /** Returns the humidity from the sensor
+        \returns the humidity value read from the device
+    */
+    float ReadHumidity()
+    {
+        int32_t var1, var2, var3, var4, var5;
 
-    //     ReadTemperature(); // must be done first to get t_fine
+        ReadTemperature(); // must be done first to get t_fine
 
-    //     int32_t adc_H = Read16(BME280_REGISTER_HUMIDDATA);
-    //     if(adc_H == 0x8000) // value in case humidity measurement was disabled
-    //         return NAN;
+        int32_t adc_H = Read16(BME280_REGISTER_HUMIDDATA);
+        if(adc_H == 0x8000) // value in case humidity measurement was disabled
+            return NAN;
 
-    //     var1 = t_fine - ((int32_t)76800);
-    //     var2 = (int32_t)(adc_H * 16384);
-    //     var3 = (int32_t)(((int32_t)_bme280_calib.dig_H4) * 1048576);
-    //     var4 = ((int32_t)_bme280_calib.dig_H5) * var1;
-    //     var5 = (((var2 - var3) - var4) + (int32_t)16384) / 32768;
-    //     var2 = (var1 * ((int32_t)_bme280_calib.dig_H6)) / 1024;
-    //     var3 = (var1 * ((int32_t)_bme280_calib.dig_H3)) / 2048;
-    //     var4 = ((var2 * (var3 + (int32_t)32768)) / 1024) + (int32_t)2097152;
-    //     var2 = ((var4 * ((int32_t)_bme280_calib.dig_H2)) + 8192) / 16384;
-    //     var3 = var5 * var2;
-    //     var4 = ((var3 / 32768) * (var3 / 32768)) / 128;
-    //     var5 = var3 - ((var4 * ((int32_t)_bme280_calib.dig_H1)) / 16);
-    //     var5 = (var5 < 0 ? 0 : var5);
-    //     var5 = (var5 > 419430400 ? 419430400 : var5);
-    //     uint32_t H = (uint32_t)(var5 / 4096);
+        var1 = t_fine - ((int32_t)76800);
+        var2 = (int32_t)(adc_H * 16384);
+        var3 = (int32_t)(((int32_t)_bme280_calib.dig_H4) * 1048576);
+        var4 = ((int32_t)_bme280_calib.dig_H5) * var1;
+        var5 = (((var2 - var3) - var4) + (int32_t)16384) / 32768;
+        var2 = (var1 * ((int32_t)_bme280_calib.dig_H6)) / 1024;
+        var3 = (var1 * ((int32_t)_bme280_calib.dig_H3)) / 2048;
+        var4 = ((var2 * (var3 + (int32_t)32768)) / 1024) + (int32_t)2097152;
+        var2 = ((var4 * ((int32_t)_bme280_calib.dig_H2)) + 8192) / 16384;
+        var3 = var5 * var2;
+        var4 = ((var3 / 32768) * (var3 / 32768)) / 128;
+        var5 = var3 - ((var4 * ((int32_t)_bme280_calib.dig_H1)) / 16);
+        var5 = (var5 < 0 ? 0 : var5);
+        var5 = (var5 > 419430400 ? 419430400 : var5);
+        uint32_t H = (uint32_t)(var5 / 4096);
 
-    //     return (float)H / 1024.0;
-    // }
+        return (float)H / 1024.0;
+    }
 
-    // /** Calculates the altitude (in meters) from the specified atmospheric
-    //     pressure (in hPa), and sea-level pressure (in hPa).
-    //     \param  seaLevel      Sea-level pressure in hPa
-    //     \returns the altitude value read from the device
-    // */
-    // float ReadAltitude(float seaLevel)
-    // {
-    //     // Equation taken from BMP180 datasheet (page 16):
-    //     //  http://www.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf
+    /** Calculates the altitude (in meters) from the specified atmospheric
+        pressure (in hPa), and sea-level pressure (in hPa).
+        \param  seaLevel      Sea-level pressure in hPa
+        \returns the altitude value read from the device
+    */
+    float ReadAltitude(float seaLevel)
+    {
+        // Equation taken from BMP180 datasheet (page 16):
+        //  http://www.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf
 
-    //     // Note that using the equation from wikipedia can give bad results
-    //     // at high altitude. See this thread for more information:
-    //     //  http://forums.adafruit.com/viewtopic.php?f=22&t=58064
+        // Note that using the equation from wikipedia can give bad results
+        // at high altitude. See this thread for more information:
+        //  http://forums.adafruit.com/viewtopic.php?f=22&t=58064
 
-    //     float atmospheric = ReadPressure() / 100.0F;
-    //     return 44330.0 * (1.0 - pow(atmospheric / seaLevel, 0.1903));
-    // }
+        float atmospheric = ReadPressure() / 100.0F;
+        return 44330.0 * (1.0 - pow(atmospheric / seaLevel, 0.1903));
+    }
 
-    // /** Calculates the pressure at sea level (in hPa) from the specified
-    //     altitude (in meters), and atmospheric pressure (in hPa).
-    //     \param  altitude      Altitude in meters
-    //     \param  atmospheric   Atmospheric pressure in hPa
-    //     \returns the pressure at sea level (in hPa) from the specified altitude
-    // */
-    // float SeaLevelForAltitude(float altitude, float atmospheric)
-    // {
-    //     // Equation taken from BMP180 datasheet (page 17):
-    //     //  http://www.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf
+    /** Calculates the pressure at sea level (in hPa) from the specified
+        altitude (in meters), and atmospheric pressure (in hPa).
+        \param  altitude      Altitude in meters
+        \param  atmospheric   Atmospheric pressure in hPa
+        \returns the pressure at sea level (in hPa) from the specified altitude
+    */
+    float SeaLevelForAltitude(float altitude, float atmospheric)
+    {
+        // Equation taken from BMP180 datasheet (page 17):
+        //  http://www.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf
 
-    //     // Note that using the equation from wikipedia can give bad results
-    //     // at high altitude. See this thread for more information:
-    //     //  http://forums.adafruit.com/viewtopic.php?f=22&t=58064
+        // Note that using the equation from wikipedia can give bad results
+        // at high altitude. See this thread for more information:
+        //  http://forums.adafruit.com/viewtopic.php?f=22&t=58064
 
-    //     return atmospheric / pow(1.0 - (altitude / 44330.0), 5.255);
-    // }
+        return atmospheric / pow(1.0 - (altitude / 44330.0), 5.255);
+    }
 
-    // /** Returns Sensor ID found by init() for diagnostics
-    //     \returns Sensor ID 0x60 for BME280, 0x56, 0x57, 0x58 BMP280
-    // */
-    // uint32_t SensorID() { return _SensorID; }
+    /** Returns Sensor ID found by init() for diagnostics
+        \returns Sensor ID 0x60 for BME280, 0x56, 0x57, 0x58 BMP280
+    */
+    uint32_t SensorID() { return _sensorID; }
 
-    // /** Returns the current temperature compensation value in degrees Celcius
-    //     \returns the current temperature compensation value in degrees Celcius
-    // */
-    // float GetTemperatureCompensation()
-    // {
-    //     return float((t_fine_adjust * 5) >> 8) / 100.0;
-    // }
+    /** Returns the current temperature compensation value in degrees Celcius
+        \returns the current temperature compensation value in degrees Celcius
+    */
+    float GetTemperatureCompensation()
+    {
+        return float((t_fine_adjust * 5) >> 8) / 100.0;
+    }
 
-    // /** Sets a value to be added to each temperature reading. This adjusted
-    //     temperature is used in pressure and humidity readings.
-    //     \param  adjustment  Value to be added to each tempature reading in Celcius
-    // */
-    // void SetTemperatureCompensation(float adjustment)
-    // {
-    //     // convert the value in C into and adjustment to t_fine
-    //     t_fine_adjust = ((int32_t(adjustment * 100) << 8)) / 5;
-    // }
+    /** Sets a value to be added to each temperature reading. This adjusted
+        temperature is used in pressure and humidity readings.
+        \param  adjustment  Value to be added to each tempature reading in Celcius
+    */
+    void SetTemperatureCompensation(float adjustment)
+    {
+        // convert the value in C into and adjustment to t_fine
+        t_fine_adjust = ((int32_t(adjustment * 100) << 8)) / 5;
+    }
 
   private:
     int32_t _sensorID; //!< ID of the BME Sensor
