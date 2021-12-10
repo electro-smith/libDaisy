@@ -93,12 +93,14 @@ class Bme280I2CTransport
 
     void Write(uint8_t *data, uint16_t size)
     {
-        i2c_.TransmitBlocking(config_.address, data, size, 10);
+        error_ |= I2CHandle::Result::OK
+                  != i2c_.TransmitBlocking(config_.address, data, size, 10);
     }
 
     void Read(uint8_t *data, uint16_t size)
     {
-        i2c_.ReceiveBlocking(config_.address, data, size, 10);
+        error_ |= I2CHandle::Result::OK
+                  != i2c_.ReceiveBlocking(config_.address, data, size, 10);
     }
 
     /**  Writes an 8 bit value
@@ -159,9 +161,19 @@ class Bme280I2CTransport
                | uint32_t(buffer[2]);
     }
 
+    bool GetError()
+    {
+        bool tmp = error_;
+        error_   = false;
+        return tmp;
+    }
+
   private:
     I2CHandle i2c_;
     Config    config_;
+
+    // true if error has occured since last check
+    bool error_;
 };
 
 /** SPI Transport for Bme280 */
@@ -210,12 +222,12 @@ class Bme280SpiTransport
 
     void Write(uint8_t *data, uint16_t size)
     {
-        spi_.BlockingTransmit(data, size);
+        error_ |= SpiHandle::Result::OK != spi_.BlockingTransmit(data, size);
     }
 
     void Read(uint8_t *data, uint16_t size)
     {
-        spi_.BlockingReceive(data, size, 10);
+        error_ |= SpiHandle::Result::OK != spi_.BlockingReceive(data, size, 10);
     }
 
     /**  Writes an 8 bit value
@@ -278,8 +290,16 @@ class Bme280SpiTransport
                | uint32_t(buffer[2]);
     }
 
+    bool GetError()
+    {
+        bool tmp = error_;
+        error_   = false;
+        return tmp;
+    }
+
   private:
     SpiHandle spi_;
+    bool      error_;
 };
 
 /** \brief Device support for BME280 Humidity Pressure Sensor
@@ -343,10 +363,16 @@ class Bme280
         Config() {}
     };
 
+    enum Result
+    {
+        OK = 0,
+        ERR
+    };
+
     /** Initialize the Bme280 device
         \param config Configuration settings
     */
-    void Init(Config config)
+    Result Init(Config config)
     {
         config_ = config;
 
@@ -368,6 +394,8 @@ class Bme280
         SetSampling(); // use defaults
 
         System::Delay(100);
+
+        return GetTransportError();
     }
 
     /**  setup sensor with given parameters / settings
@@ -690,6 +718,11 @@ class Bme280
         // convert the value in C into and adjustment to t_fine
         t_fine_adjust = ((int32_t(adjustment * 100) << 8)) / 5;
     }
+
+    /** Get and reset the transport error flag
+        \return Whether the transport has errored since the last check
+    */
+    Result GetTransportError() { return transport_.GetError() ? ERR : OK; }
 
   private:
     int32_t _sensorID; //!< ID of the BME Sensor
