@@ -191,7 +191,7 @@ class Max11300TestHelper : public ::testing::Test
             tx_pincfg.description
                 = std::string("Pin config #").append(std::to_string(i));
             tx_pincfg.buff
-                = {(uint8_t)((MAX11300_FUNC_BASE + i) << 1), 0x01, 0x00};
+                = {(uint8_t)((MAX11300_FUNC_BASE + i) << 1), 0x00, 0x00};
             tx_pincfg.size = 3;
             tx_pincfg.wait = 0;
             tx_transactions.push_back(tx_pincfg);
@@ -279,8 +279,7 @@ class Max11300TestHelper : public ::testing::Test
         // Now we handle the expected pin configuration
         uint16_t expected_pin_cfg = 0x0000;
         expected_pin_cfg
-            = expected_pin_cfg | static_cast<uint16_t>(PinMode::GPI)
-              | static_cast<uint16_t>(MAX11300Test::AdcVoltageRange::ZERO_TO_10);
+            = expected_pin_cfg | static_cast<uint16_t>(PinMode::GPI);
 
 
         // The pin config transaction
@@ -341,8 +340,7 @@ class Max11300TestHelper : public ::testing::Test
         // Now we handle the expected pin configuration
         uint16_t expected_pin_cfg = 0x0000;
         expected_pin_cfg
-            = expected_pin_cfg | static_cast<uint16_t>(PinMode::GPO)
-              | static_cast<uint16_t>(MAX11300Test::DacVoltageRange::ZERO_TO_10);
+            = expected_pin_cfg | static_cast<uint16_t>(PinMode::GPO);
 
 
         // The pin config transaction
@@ -1108,7 +1106,7 @@ TEST(dev_MAX11300, b_TwelveBitUintToVolts)
                 oneLsbAtTenVolts);
     EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
                     3071, MAX11300::AdcVoltageRange::ZERO_TO_2P5),
-                -1.875,
+                1.875,
                 oneLsbAtTenVolts);
     EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
                         4095, MAX11300::AdcVoltageRange::ZERO_TO_2P5),
