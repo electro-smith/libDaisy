@@ -4,6 +4,8 @@
 
 ### Breaking Changes
 
+* driver: added support for the 0 .. 2.5V ADC range to MAX11300 getter functions `const`, splitting the `enum VoltageRange` into two enums for the ADC and DAC configurations.
+
 ### Features
 
 ### Bug Fixes
@@ -14,6 +16,18 @@
 ### Other
 
 ### Migrating
+
+#### MAX11300
+
+```c++
+// Old: Same enum used for DAC and ADC configurations
+max11300driver.ConfigurePinAsAnalogRead(daisy::MAX11300::PIN_0, daisy::MAX11300::VoltageRange::NEGATIVE_5_TO_5);
+max11300driver.ConfigurePinAsAnalogWrite(daisy::MAX11300::PIN_1, daisy::MAX11300::VoltageRange::NEGATIVE_5_TO_5);
+
+// New: Different enum used for DAC and ADC configurations
+max11300driver.ConfigurePinAsAnalogRead(daisy::MAX11300::PIN_0, daisy::MAX11300::AdcVoltageRange::NEGATIVE_5_TO_5);
+max11300driver.ConfigurePinAsAnalogWrite(daisy::MAX11300::PIN_1, daisy::MAX11300::DacVoltageRange::NEGATIVE_5_TO_5);
+```
 
 ## v3.0.0
 

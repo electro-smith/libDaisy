@@ -126,8 +126,12 @@ class Max11300TestHelper : public ::testing::Test
      */
     struct PinConfig
     {
-        PinMode                    mode;  /**< & */
-        MAX11300Test::VoltageRange range; /**< & */
+        PinMode mode; /**< & */
+        union
+        {
+            MAX11300Test::AdcVoltageRange adc;
+            MAX11300Test::DacVoltageRange dac;
+        } range; /**< & */
         /**
          * This is a voltage value used as follows:
          * 
@@ -142,7 +146,7 @@ class Max11300TestHelper : public ::testing::Test
         void Defaults()
         {
             mode      = PinMode::NONE;
-            range     = MAX11300Test::VoltageRange::ZERO_TO_10;
+            range.adc = MAX11300Test::AdcVoltageRange::ZERO_TO_10;
             threshold = 0.0f;
         }
     };
@@ -260,7 +264,7 @@ class Max11300TestHelper : public ::testing::Test
 
         // In GPI/O mode there is an additional transaction for setting the threshold
         uint16_t gpio_threshold = MAX11300Test::VoltsTo12BitUint(
-            threshold_voltage, MAX11300Test::VoltageRange::ZERO_TO_10);
+            threshold_voltage, MAX11300Test::DacVoltageRange::ZERO_TO_10);
 
         Max11300TestHelper::TxTransaction tx_set_threshold;
         tx_set_threshold.description = "GPIO set threshold transaction";
@@ -276,7 +280,7 @@ class Max11300TestHelper : public ::testing::Test
         uint16_t expected_pin_cfg = 0x0000;
         expected_pin_cfg
             = expected_pin_cfg | static_cast<uint16_t>(PinMode::GPI)
-              | static_cast<uint16_t>(MAX11300Test::VoltageRange::ZERO_TO_10);
+              | static_cast<uint16_t>(MAX11300Test::AdcVoltageRange::ZERO_TO_10);
 
 
         // The pin config transaction
@@ -322,7 +326,7 @@ class Max11300TestHelper : public ::testing::Test
 
         // In GPI/O mode there is an additional transaction for setting the threshold
         uint16_t gpio_threshold = MAX11300Test::VoltsTo12BitUint(
-            output_voltage, MAX11300Test::VoltageRange::ZERO_TO_10);
+            output_voltage, MAX11300Test::DacVoltageRange::ZERO_TO_10);
 
         Max11300TestHelper::TxTransaction tx_set_threshold;
         tx_set_threshold.description = "GPIO set threshold transaction";
@@ -338,7 +342,7 @@ class Max11300TestHelper : public ::testing::Test
         uint16_t expected_pin_cfg = 0x0000;
         expected_pin_cfg
             = expected_pin_cfg | static_cast<uint16_t>(PinMode::GPO)
-              | static_cast<uint16_t>(MAX11300Test::VoltageRange::ZERO_TO_10);
+              | static_cast<uint16_t>(MAX11300Test::DacVoltageRange::ZERO_TO_10);
 
 
         // The pin config transaction
@@ -369,8 +373,8 @@ class Max11300TestHelper : public ::testing::Test
         return result;
     }
 
-    bool ConfigurePinAsAnalogReadAndVerify(MAX11300Test::Pin          pin,
-                                           MAX11300Test::VoltageRange range)
+    bool ConfigurePinAsAnalogReadAndVerify(MAX11300Test::Pin             pin,
+                                           MAX11300Test::AdcVoltageRange range)
     {
         // We expect..
         // The initial pin config reset transaction
@@ -420,8 +424,8 @@ class Max11300TestHelper : public ::testing::Test
     }
 
 
-    bool ConfigurePinAsAnalogWriteAndVerify(MAX11300Test::Pin          pin,
-                                            MAX11300Test::VoltageRange range)
+    bool ConfigurePinAsAnalogWriteAndVerify(MAX11300Test::Pin             pin,
+                                            MAX11300Test::DacVoltageRange range)
     {
         // We expect..
         // The initial pin config reset transaction
@@ -613,14 +617,16 @@ class Max11300TestHelper : public ::testing::Test
 
     // Callback for tx transactions
     TestTransport::TxCallback tx_callback
-        = [this](uint8_t* buff, size_t size, uint32_t wait_us) -> bool {
+        = [this](uint8_t* buff, size_t size, uint32_t wait_us) -> bool
+    {
         verifyTxTransaction(buff, size, wait_us);
         return true;
     };
 
     // Callback for txrx transactions
     TestTransport::TxRxCallback txrx_callback
-        = [this](uint8_t* tx_buff, uint8_t* rx_buff, size_t size) -> bool {
+        = [this](uint8_t* tx_buff, uint8_t* rx_buff, size_t size) -> bool
+    {
         verifyTxRxTransaction(tx_buff, rx_buff, size);
         return true;
     };
@@ -632,14 +638,14 @@ TEST_F(Max11300TestHelper, verifyDriverInitializationRoutine) {}
 TEST_F(Max11300TestHelper, verifyDacPinConfiguration)
 {
     EXPECT_TRUE(ConfigurePinAsAnalogWriteAndVerify(
-        MAX11300Test::PIN_6, MAX11300Test::VoltageRange::NEGATIVE_5_TO_5));
+        MAX11300Test::PIN_6, MAX11300Test::DacVoltageRange::NEGATIVE_5_TO_5));
 }
 
 
 TEST_F(Max11300TestHelper, verifyAdcPinConfiguration)
 {
     EXPECT_TRUE(ConfigurePinAsAnalogReadAndVerify(
-        MAX11300Test::PIN_14, MAX11300Test::VoltageRange::ZERO_TO_10));
+        MAX11300Test::PIN_14, MAX11300Test::AdcVoltageRange::ZERO_TO_10));
 }
 
 TEST_F(Max11300TestHelper, verifyGpiPinConfiguration)
@@ -657,7 +663,7 @@ TEST_F(Max11300TestHelper, verifyWriteAnalogPin)
 {
     MAX11300Test::Pin pin = MAX11300Test::PIN_3;
     EXPECT_TRUE(ConfigurePinAsAnalogWriteAndVerify(
-        pin, MAX11300Test::VoltageRange::ZERO_TO_10));
+        pin, MAX11300Test::DacVoltageRange::ZERO_TO_10));
 
     // Write two different values to a single DAC pin and verify
     // the transactions...
@@ -696,11 +702,11 @@ TEST_F(Max11300TestHelper, verifyWriteAnalogPinMultiple)
 {
     MAX11300Test::Pin pin1 = MAX11300Test::PIN_3;
     EXPECT_TRUE(ConfigurePinAsAnalogWriteAndVerify(
-        pin1, MAX11300Test::VoltageRange::ZERO_TO_10));
+        pin1, MAX11300Test::DacVoltageRange::ZERO_TO_10));
 
     MAX11300Test::Pin pin2 = MAX11300Test::PIN_12;
     EXPECT_TRUE(ConfigurePinAsAnalogWriteAndVerify(
-        pin2, MAX11300Test::VoltageRange::ZERO_TO_10));
+        pin2, MAX11300Test::DacVoltageRange::ZERO_TO_10));
 
     // Write two different values to two DAC pins and verify
     // the transaction
@@ -731,7 +737,7 @@ TEST_F(Max11300TestHelper, verifyReadAnalogPin)
 {
     MAX11300Test::Pin pin = MAX11300Test::PIN_7;
     EXPECT_TRUE(ConfigurePinAsAnalogReadAndVerify(
-        pin, MAX11300Test::VoltageRange::NEGATIVE_5_TO_5));
+        pin, MAX11300Test::AdcVoltageRange::NEGATIVE_5_TO_5));
 
     uint16_t adc_val = 3583;
 
@@ -753,11 +759,11 @@ TEST_F(Max11300TestHelper, verifyReadAnalogPinMultiple)
 {
     MAX11300Test::Pin pin1 = MAX11300Test::PIN_12;
     EXPECT_TRUE(ConfigurePinAsAnalogReadAndVerify(
-        pin1, MAX11300Test::VoltageRange::ZERO_TO_10));
+        pin1, MAX11300Test::AdcVoltageRange::ZERO_TO_10));
 
     MAX11300Test::Pin pin2 = MAX11300Test::PIN_18;
     EXPECT_TRUE(ConfigurePinAsAnalogReadAndVerify(
-        pin2, MAX11300Test::VoltageRange::ZERO_TO_10));
+        pin2, MAX11300Test::AdcVoltageRange::ZERO_TO_10));
 
     // Read two different values from the ADC pins and verify
     // the transaction
@@ -896,12 +902,12 @@ TEST_F(Max11300TestHelper, verifyHeterogeneousPinBehavior)
     // Pin 3 is a DAC pin
     MAX11300Test::Pin pin3 = MAX11300Test::PIN_5;
     EXPECT_TRUE(ConfigurePinAsAnalogWriteAndVerify(
-        pin3, MAX11300Test::VoltageRange::ZERO_TO_10));
+        pin3, MAX11300Test::DacVoltageRange::ZERO_TO_10));
 
     // Pin 4 is an ADC pin
     MAX11300Test::Pin pin4 = MAX11300Test::PIN_16;
     EXPECT_TRUE(ConfigurePinAsAnalogReadAndVerify(
-        pin4, MAX11300Test::VoltageRange::ZERO_TO_10));
+        pin4, MAX11300Test::AdcVoltageRange::ZERO_TO_10));
 
     uint16_t dac_val = 1234;
     max11300.WriteAnalogPinRaw(pin3, dac_val);
@@ -953,136 +959,161 @@ TEST_F(Max11300TestHelper, verifyHeterogeneousPinBehavior)
 TEST(dev_MAX11300, a_VoltsTo12BitUint)
 {
     EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(-1, MAX11300::VoltageRange::ZERO_TO_10), 0);
-    EXPECT_EQ(MAX11300::VoltsTo12BitUint(0, MAX11300::VoltageRange::ZERO_TO_10),
-              0);
+        MAX11300::VoltsTo12BitUint(-1, MAX11300::DacVoltageRange::ZERO_TO_10),
+        0);
     EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(2.5, MAX11300::VoltageRange::ZERO_TO_10),
+        MAX11300::VoltsTo12BitUint(0, MAX11300::DacVoltageRange::ZERO_TO_10),
+        0);
+    EXPECT_EQ(
+        MAX11300::VoltsTo12BitUint(2.5, MAX11300::DacVoltageRange::ZERO_TO_10),
         1023);
-    EXPECT_EQ(MAX11300::VoltsTo12BitUint(5, MAX11300::VoltageRange::ZERO_TO_10),
-              2047);
     EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(7.5, MAX11300::VoltageRange::ZERO_TO_10),
+        MAX11300::VoltsTo12BitUint(5, MAX11300::DacVoltageRange::ZERO_TO_10),
+        2047);
+    EXPECT_EQ(
+        MAX11300::VoltsTo12BitUint(7.5, MAX11300::DacVoltageRange::ZERO_TO_10),
         3071);
     EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(10, MAX11300::VoltageRange::ZERO_TO_10),
+        MAX11300::VoltsTo12BitUint(10, MAX11300::DacVoltageRange::ZERO_TO_10),
         4095);
     EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(12, MAX11300::VoltageRange::ZERO_TO_10),
-        4095);
-
-    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
-                  -5.5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
-              0);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(-5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
-        0);
-    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
-                  -2.5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
-              1023);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(0, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
-        2047);
-    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
-                  2.5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
-              3071);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(5, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
-        4095);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(7, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
+        MAX11300::VoltsTo12BitUint(12, MAX11300::DacVoltageRange::ZERO_TO_10),
         4095);
 
     EXPECT_EQ(MAX11300::VoltsTo12BitUint(
-                  -12, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+                  -5.5, MAX11300::DacVoltageRange::NEGATIVE_5_TO_5),
               0);
     EXPECT_EQ(MAX11300::VoltsTo12BitUint(
-                  -10, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+                  -5, MAX11300::DacVoltageRange::NEGATIVE_5_TO_5),
               0);
     EXPECT_EQ(MAX11300::VoltsTo12BitUint(
-                  -7.5, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+                  -2.5, MAX11300::DacVoltageRange::NEGATIVE_5_TO_5),
               1023);
     EXPECT_EQ(MAX11300::VoltsTo12BitUint(
-                  -5, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+                  0, MAX11300::DacVoltageRange::NEGATIVE_5_TO_5),
               2047);
     EXPECT_EQ(MAX11300::VoltsTo12BitUint(
-                  -2.5, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+                  2.5, MAX11300::DacVoltageRange::NEGATIVE_5_TO_5),
               3071);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(0, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
-        4095);
-    EXPECT_EQ(
-        MAX11300::VoltsTo12BitUint(2, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
-        4095);
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
+                  5, MAX11300::DacVoltageRange::NEGATIVE_5_TO_5),
+              4095);
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
+                  7, MAX11300::DacVoltageRange::NEGATIVE_5_TO_5),
+              4095);
+
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
+                  -12, MAX11300::DacVoltageRange::NEGATIVE_10_TO_0),
+              0);
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
+                  -10, MAX11300::DacVoltageRange::NEGATIVE_10_TO_0),
+              0);
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
+                  -7.5, MAX11300::DacVoltageRange::NEGATIVE_10_TO_0),
+              1023);
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
+                  -5, MAX11300::DacVoltageRange::NEGATIVE_10_TO_0),
+              2047);
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
+                  -2.5, MAX11300::DacVoltageRange::NEGATIVE_10_TO_0),
+              3071);
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
+                  0, MAX11300::DacVoltageRange::NEGATIVE_10_TO_0),
+              4095);
+    EXPECT_EQ(MAX11300::VoltsTo12BitUint(
+                  2, MAX11300::DacVoltageRange::NEGATIVE_10_TO_0),
+              4095);
 }
 
 TEST(dev_MAX11300, b_TwelveBitUintToVolts)
 {
     float oneLsbAtTenVolts = 10.0f / 4096.0f;
 
-    EXPECT_FLOAT_EQ(
-        MAX11300::TwelveBitUintToVolts(0, MAX11300::VoltageRange::ZERO_TO_10),
-        0);
+    EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
+                        0, MAX11300::AdcVoltageRange::ZERO_TO_10),
+                    0);
     EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    1023, MAX11300::VoltageRange::ZERO_TO_10),
+                    1023, MAX11300::AdcVoltageRange::ZERO_TO_10),
                 2.5,
                 oneLsbAtTenVolts);
     EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    2047, MAX11300::VoltageRange::ZERO_TO_10),
+                    2047, MAX11300::AdcVoltageRange::ZERO_TO_10),
                 5,
                 oneLsbAtTenVolts);
     EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    3071, MAX11300::VoltageRange::ZERO_TO_10),
+                    3071, MAX11300::AdcVoltageRange::ZERO_TO_10),
                 7.5,
                 oneLsbAtTenVolts);
     EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
-                        4095, MAX11300::VoltageRange::ZERO_TO_10),
+                        4095, MAX11300::AdcVoltageRange::ZERO_TO_10),
                     10);
     EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
-                        5000, MAX11300::VoltageRange::ZERO_TO_10),
+                        5000, MAX11300::AdcVoltageRange::ZERO_TO_10),
                     10);
 
     EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
-                        0, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
+                        0, MAX11300::AdcVoltageRange::NEGATIVE_5_TO_5),
                     -5);
     EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    1023, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
+                    1023, MAX11300::AdcVoltageRange::NEGATIVE_5_TO_5),
                 -2.5,
                 oneLsbAtTenVolts);
     EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    2047, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
+                    2047, MAX11300::AdcVoltageRange::NEGATIVE_5_TO_5),
                 0,
                 oneLsbAtTenVolts);
     EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    3071, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
+                    3071, MAX11300::AdcVoltageRange::NEGATIVE_5_TO_5),
                 2.5,
                 oneLsbAtTenVolts);
     EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
-                        4095, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
+                        4095, MAX11300::AdcVoltageRange::NEGATIVE_5_TO_5),
                     5);
     EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
-                        5000, MAX11300::VoltageRange::NEGATIVE_5_TO_5),
+                        5000, MAX11300::AdcVoltageRange::NEGATIVE_5_TO_5),
                     5);
 
     EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
-                        0, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+                        0, MAX11300::AdcVoltageRange::NEGATIVE_10_TO_0),
                     -10);
     EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    1023, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+                    1023, MAX11300::AdcVoltageRange::NEGATIVE_10_TO_0),
                 -7.5,
                 oneLsbAtTenVolts);
     EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    2047, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+                    2047, MAX11300::AdcVoltageRange::NEGATIVE_10_TO_0),
                 -5,
                 oneLsbAtTenVolts);
     EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
-                    3071, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+                    3071, MAX11300::AdcVoltageRange::NEGATIVE_10_TO_0),
                 -2.5,
                 oneLsbAtTenVolts);
     EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
-                        4095, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+                        4095, MAX11300::AdcVoltageRange::NEGATIVE_10_TO_0),
                     0);
     EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
-                        5000, MAX11300::VoltageRange::NEGATIVE_10_TO_0),
+                        5000, MAX11300::AdcVoltageRange::NEGATIVE_10_TO_0),
                     0);
+
+    EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
+                        0, MAX11300::AdcVoltageRange::ZERO_TO_2P5),
+                    0);
+    EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
+                    1023, MAX11300::AdcVoltageRange::ZERO_TO_2P5),
+                0.625,
+                oneLsbAtTenVolts);
+    EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
+                    2047, MAX11300::AdcVoltageRange::ZERO_TO_2P5),
+                1.25,
+                oneLsbAtTenVolts);
+    EXPECT_NEAR(MAX11300::TwelveBitUintToVolts(
+                    3071, MAX11300::AdcVoltageRange::ZERO_TO_2P5),
+                -1.875,
+                oneLsbAtTenVolts);
+    EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
+                        4095, MAX11300::AdcVoltageRange::ZERO_TO_2P5),
+                    2.5);
+    EXPECT_FLOAT_EQ(MAX11300::TwelveBitUintToVolts(
+                        5000, MAX11300::AdcVoltageRange::ZERO_TO_2P5),
+                    2.5);
 }
