@@ -12,6 +12,7 @@
 
 * usb: fixed bug where using FatFS and a USB Device class simultaneously would result in a linker error.
   * Shared IRQHandlers for the USB HS peripheral have been moved to sys/system.cpp
+* driver: made MAX11300 getter functions `const`
 
 ### Other
 

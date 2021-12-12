@@ -358,7 +358,7 @@ class MAX11300Driver
      * \param pin - The pin of which to read the value
      * \return - The raw, 12 bit value of the given ANALOG_IN (ADC) pin.
      */
-    uint16_t ReadAnalogPinRaw(Pin pin)
+    uint16_t ReadAnalogPinRaw(Pin pin) const
     {
         if(pin_configurations_[pin].value == nullptr)
         {
@@ -375,7 +375,7 @@ class MAX11300Driver
      * \param pin - The pin of which to read the voltage
      * \return - The value of the given ANALOG_IN (ADC) pin in volts
      */
-    float ReadAnalogPinVolts(Pin pin)
+    float ReadAnalogPinVolts(Pin pin) const
     {
         return MAX11300Driver::TwelveBitUintToVolts(
             ReadAnalogPinRaw(pin), pin_configurations_[pin].range.adc);
@@ -419,7 +419,7 @@ class MAX11300Driver
      * \param pin - The pin of which to read the value
      * \return - The boolean state of the pin
      */
-    bool ReadDigitalPin(Pin pin)
+    bool ReadDigitalPin(Pin pin) const
     {
         if(pin > Pin::PIN_15)
         {
