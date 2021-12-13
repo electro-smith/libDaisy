@@ -44,6 +44,7 @@
 #include "hid/wavplayer.h"
 #include "hid/led.h"
 #include "hid/rgb_led.h"
+#include "dev/bno055.h"
 #include "dev/sr_595.h"
 #include "dev/bme280.h"
 #include "dev/bmp390.h"
