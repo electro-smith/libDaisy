@@ -82,6 +82,6 @@ var searchData=
   ['gold_79',['GOLD',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a0b32c5df8961411a66895e57509677ac',1,'daisy::Color']]],
   ['gpio_80',['GPIO',['../classdaisy_1_1_g_p_i_o.html',1,'daisy']]],
   ['gpioport_81',['GPIOPort',['../namespacedaisy.html#a0f3f80696b55547e8471a18de01b8e13',1,'daisy']]],
-  ['green_82',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]],
-  ['green_83',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color']]]
+  ['green_82',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color']]],
+  ['green_83',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]]
 ];

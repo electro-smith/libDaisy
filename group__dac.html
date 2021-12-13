@@ -125,11 +125,17 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:gaf52f8de78c569c80ad0b6618a2403795"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0ce392f9f4a377e23ea84b1ef6bcd827"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">daisy::MAX11300Driver&lt; Transport &gt;::VoltageRange</a> { <b>ZERO_TO_10</b> = 0x0100
+<tr class="memitem:ga907598f467ef006bbf5c15b9b352cd9a"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga907598f467ef006bbf5c15b9b352cd9a">daisy::MAX11300Driver&lt; Transport &gt;::AdcVoltageRange</a> { <b>ZERO_TO_10</b> = 0x0100
+, <b>NEGATIVE_5_TO_5</b> = 0x0200
+, <b>NEGATIVE_10_TO_0</b> = 0x0300
+, <b>ZERO_TO_2P5</b> = 0x0400
+ }</td></tr>
+<tr class="separator:ga907598f467ef006bbf5c15b9b352cd9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1d7fdba107fa9770457c1c373dc23b4"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gab1d7fdba107fa9770457c1c373dc23b4">daisy::MAX11300Driver&lt; Transport &gt;::DacVoltageRange</a> { <b>ZERO_TO_10</b> = 0x0100
 , <b>NEGATIVE_5_TO_5</b> = 0x0200
 , <b>NEGATIVE_10_TO_0</b> = 0x0300
  }</td></tr>
-<tr class="separator:ga0ce392f9f4a377e23ea84b1ef6bcd827"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:gab1d7fdba107fa9770457c1c373dc23b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacd2952c79b8b9a8aa50158af12569b1c"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">daisy::MAX11300Driver&lt; Transport &gt;::Result</a> { <a class="el" href="group__dac.html#ggacd2952c79b8b9a8aa50158af12569b1cae0aa021e21dddbd6d8cecec71e9cf564">daisy::MAX11300Driver&lt; Transport &gt;::Result::OK</a>
 , <a class="el" href="group__dac.html#ggacd2952c79b8b9a8aa50158af12569b1cacd22bad976363fdd1bfbf6759fede482">daisy::MAX11300Driver&lt; Transport &gt;::Result::ERR</a>
  }</td></tr>
@@ -162,33 +168,33 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>daisy::MAX11300Driver
 <tr class="memitem:ga7401e4e7235395106f1ae2be0adbe054"><td class="memItemLeft" align="right" valign="top"><a id="ga7401e4e7235395106f1ae2be0adbe054" name="ga7401e4e7235395106f1ae2be0adbe054"></a>
 <a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>daisy::MAX11300Driver&lt; Transport &gt;::ConfigurePinAsDigitalWrite</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, float output_voltage)</td></tr>
 <tr class="separator:ga7401e4e7235395106f1ae2be0adbe054"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6641e1864cb5bd3126ab073e6dbff1c3"><td class="memItemLeft" align="right" valign="top"><a id="ga6641e1864cb5bd3126ab073e6dbff1c3" name="ga6641e1864cb5bd3126ab073e6dbff1c3"></a>
-<a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>daisy::MAX11300Driver&lt; Transport &gt;::ConfigurePinAsAnalogRead</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, <a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a> range)</td></tr>
-<tr class="separator:ga6641e1864cb5bd3126ab073e6dbff1c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab39f9e597e96c09b040174a3dd352cfc"><td class="memItemLeft" align="right" valign="top"><a id="gab39f9e597e96c09b040174a3dd352cfc" name="gab39f9e597e96c09b040174a3dd352cfc"></a>
-<a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>daisy::MAX11300Driver&lt; Transport &gt;::ConfigurePinAsAnalogWrite</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, <a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a> range)</td></tr>
-<tr class="separator:gab39f9e597e96c09b040174a3dd352cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05c3bcec7eaf23be7b0055d9b1be3f77"><td class="memItemLeft" align="right" valign="top"><a id="ga05c3bcec7eaf23be7b0055d9b1be3f77" name="ga05c3bcec7eaf23be7b0055d9b1be3f77"></a>
+<a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>daisy::MAX11300Driver&lt; Transport &gt;::ConfigurePinAsAnalogRead</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, <a class="el" href="group__dac.html#ga907598f467ef006bbf5c15b9b352cd9a">AdcVoltageRange</a> range)</td></tr>
+<tr class="separator:ga05c3bcec7eaf23be7b0055d9b1be3f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabac2f8e130ef712df9c50b3c7b24fd2d"><td class="memItemLeft" align="right" valign="top"><a id="gabac2f8e130ef712df9c50b3c7b24fd2d" name="gabac2f8e130ef712df9c50b3c7b24fd2d"></a>
+<a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>daisy::MAX11300Driver&lt; Transport &gt;::ConfigurePinAsAnalogWrite</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, <a class="el" href="group__dac.html#gab1d7fdba107fa9770457c1c373dc23b4">DacVoltageRange</a> range)</td></tr>
+<tr class="separator:gabac2f8e130ef712df9c50b3c7b24fd2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4824322f9bf6ea2235bb74858e2a277b"><td class="memItemLeft" align="right" valign="top"><a id="ga4824322f9bf6ea2235bb74858e2a277b" name="ga4824322f9bf6ea2235bb74858e2a277b"></a>
 <a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>daisy::MAX11300Driver&lt; Transport &gt;::DisablePin</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin)</td></tr>
 <tr class="separator:ga4824322f9bf6ea2235bb74858e2a277b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74c9a868d438fb4aaa4331c7a586e6e5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga74c9a868d438fb4aaa4331c7a586e6e5">daisy::MAX11300Driver&lt; Transport &gt;::ReadAnalogPinRaw</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin)</td></tr>
-<tr class="separator:ga74c9a868d438fb4aaa4331c7a586e6e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3a129f6c9a3f0f3616b696eca4aab4fc"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga3a129f6c9a3f0f3616b696eca4aab4fc">daisy::MAX11300Driver&lt; Transport &gt;::ReadAnalogPinVolts</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin)</td></tr>
-<tr class="separator:ga3a129f6c9a3f0f3616b696eca4aab4fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6603318cab9240017018f64bb2e2e39b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga6603318cab9240017018f64bb2e2e39b">daisy::MAX11300Driver&lt; Transport &gt;::ReadAnalogPinRaw</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin) const</td></tr>
+<tr class="separator:ga6603318cab9240017018f64bb2e2e39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9e5aba13cddab1e9536339c52d5e2fa"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gaa9e5aba13cddab1e9536339c52d5e2fa">daisy::MAX11300Driver&lt; Transport &gt;::ReadAnalogPinVolts</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin) const</td></tr>
+<tr class="separator:gaa9e5aba13cddab1e9536339c52d5e2fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf72218a5a82d09f5c1dc2dc0c3cf330d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gaf72218a5a82d09f5c1dc2dc0c3cf330d">daisy::MAX11300Driver&lt; Transport &gt;::WriteAnalogPinRaw</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, uint16_t raw_value)</td></tr>
 <tr class="separator:gaf72218a5a82d09f5c1dc2dc0c3cf330d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac36928e00899ec7a2341bee87e41a521"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gac36928e00899ec7a2341bee87e41a521">daisy::MAX11300Driver&lt; Transport &gt;::WriteAnalogPinVolts</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, float voltage)</td></tr>
 <tr class="separator:gac36928e00899ec7a2341bee87e41a521"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca7e94e6b78c0d7dc9172fc86dbc8179"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gaca7e94e6b78c0d7dc9172fc86dbc8179">daisy::MAX11300Driver&lt; Transport &gt;::ReadDigitalPin</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin)</td></tr>
-<tr class="separator:gaca7e94e6b78c0d7dc9172fc86dbc8179"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6079974bfc9bf0f3010e0d07f287364"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gab6079974bfc9bf0f3010e0d07f287364">daisy::MAX11300Driver&lt; Transport &gt;::ReadDigitalPin</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin) const</td></tr>
+<tr class="separator:gab6079974bfc9bf0f3010e0d07f287364"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga77600c8953e064cbae503c964f31045e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga77600c8953e064cbae503c964f31045e">daisy::MAX11300Driver&lt; Transport &gt;::WriteDigitalPin</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, bool value)</td></tr>
 <tr class="separator:ga77600c8953e064cbae503c964f31045e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga47a23901c126ae03aa9b7b0196cce163"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga47a23901c126ae03aa9b7b0196cce163">daisy::MAX11300Driver&lt; Transport &gt;::Update</a> ()</td></tr>
 <tr class="separator:ga47a23901c126ae03aa9b7b0196cce163"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga068965a87c579aa92b612208cc9d022a"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga068965a87c579aa92b612208cc9d022a">daisy::MAX11300Driver&lt; Transport &gt;::VoltsTo12BitUint</a> (float volts, <a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a> range)</td></tr>
-<tr class="separator:ga068965a87c579aa92b612208cc9d022a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga086fceb7760823216e43206438862139"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga086fceb7760823216e43206438862139">daisy::MAX11300Driver&lt; Transport &gt;::TwelveBitUintToVolts</a> (uint16_t value, <a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a> range)</td></tr>
-<tr class="separator:ga086fceb7760823216e43206438862139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5795e9c45dfffa692e052559b07a3e66"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga5795e9c45dfffa692e052559b07a3e66">daisy::MAX11300Driver&lt; Transport &gt;::VoltsTo12BitUint</a> (float volts, <a class="el" href="group__dac.html#gab1d7fdba107fa9770457c1c373dc23b4">DacVoltageRange</a> range)</td></tr>
+<tr class="separator:ga5795e9c45dfffa692e052559b07a3e66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5cc4cf5379abc236509222a545cfa24"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gaa5cc4cf5379abc236509222a545cfa24">daisy::MAX11300Driver&lt; Transport &gt;::TwelveBitUintToVolts</a> (uint16_t value, <a class="el" href="group__dac.html#ga907598f467ef006bbf5c15b9b352cd9a">AdcVoltageRange</a> range)</td></tr>
+<tr class="separator:gaa5cc4cf5379abc236509222a545cfa24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa75d3a183b67957ac05ff5660a47ec6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gaa75d3a183b67957ac05ff5660a47ec6a">daisy::MAX11300Driver&lt; Transport &gt;::PinConfig::Defaults</a> ()</td></tr>
 <tr class="separator:gaa75d3a183b67957ac05ff5660a47ec6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -201,8 +207,21 @@ Transport::Config&#160;</td><td class="memItemRight" valign="bottom"><b>daisy::M
 <tr class="separator:ga79041975b221be5583a2771fafec67de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga62426ed9ca04bf42ee07188c623a4926"><td class="memItemLeft" align="right" valign="top">PinMode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga62426ed9ca04bf42ee07188c623a4926">daisy::MAX11300Driver&lt; Transport &gt;::PinConfig::mode</a></td></tr>
 <tr class="separator:ga62426ed9ca04bf42ee07188c623a4926"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab73fcc174e34fef4d684f2d51a523397"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gab73fcc174e34fef4d684f2d51a523397">daisy::MAX11300Driver&lt; Transport &gt;::PinConfig::range</a></td></tr>
-<tr class="separator:gab73fcc174e34fef4d684f2d51a523397"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga54fcd50781753d169296239b38313b0f"><td class="memItemLeft" >
+<a class="el" href="group__dac.html#ga907598f467ef006bbf5c15b9b352cd9a">AdcVoltageRange</a>&#160;&#160;&#160;<b>daisy::MAX11300Driver&lt; Transport &gt;::PinConfig::adc</b></td></tr>
+<tr class="separator:ga54fcd50781753d169296239b38313b0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24305da622c9dd8051f4f51c0b90d92b"><td class="memItemLeft" >
+<a class="el" href="group__dac.html#gab1d7fdba107fa9770457c1c373dc23b4">DacVoltageRange</a>&#160;&#160;&#160;<b>daisy::MAX11300Driver&lt; Transport &gt;::PinConfig::dac</b></td></tr>
+<tr class="separator:ga24305da622c9dd8051f4f51c0b90d92b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50af178928b95fd04d42711c016035c1"><td class="memItemLeft" >union {</td></tr>
+<tr class="memitem:ga54fcd50781753d169296239b38313b0f"><td class="memItemLeft" >
+&#160;&#160;&#160;<a class="el" href="group__dac.html#ga907598f467ef006bbf5c15b9b352cd9a">AdcVoltageRange</a>&#160;&#160;&#160;<b>adc</b></td></tr>
+<tr class="separator:ga54fcd50781753d169296239b38313b0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga24305da622c9dd8051f4f51c0b90d92b"><td class="memItemLeft" >
+&#160;&#160;&#160;<a class="el" href="group__dac.html#gab1d7fdba107fa9770457c1c373dc23b4">DacVoltageRange</a>&#160;&#160;&#160;<b>dac</b></td></tr>
+<tr class="separator:ga24305da622c9dd8051f4f51c0b90d92b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga50af178928b95fd04d42711c016035c1"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga50af178928b95fd04d42711c016035c1">daisy::MAX11300Driver&lt; Transport &gt;::PinConfig::range</a></td></tr>
+<tr class="separator:ga50af178928b95fd04d42711c016035c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0117f0f619cd39155b4c723289341039"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga0117f0f619cd39155b4c723289341039">daisy::MAX11300Driver&lt; Transport &gt;::PinConfig::threshold</a></td></tr>
 <tr class="separator:ga0117f0f619cd39155b4c723289341039"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga48fd26f5b4b053639fab295f68228f2e"><td class="memItemLeft" align="right" valign="top">uint16_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga48fd26f5b4b053639fab295f68228f2e">daisy::MAX11300Driver&lt; Transport &gt;::PinConfig::value</a></td></tr>
@@ -210,6 +229,59 @@ Transport::Config&#160;</td><td class="memItemRight" valign="bottom"><b>daisy::M
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga907598f467ef006bbf5c15b9b352cd9a" name="ga907598f467ef006bbf5c15b9b352cd9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga907598f467ef006bbf5c15b9b352cd9a">&#9670;&nbsp;</a></span>AdcVoltageRange</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Transport &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="group__dac.html#ga907598f467ef006bbf5c15b9b352cd9a">daisy::MAX11300Driver::AdcVoltageRange</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Pins of the MAX11300 configured for AnalogRead may be defined to operate within several pre-defined voltage ranges (assuming the power supply requirements for the range is met).</p>
+<p >Pins configiured for DigitalRead are 0-5V only, and do not tolerate negative voltages.</p>
+<p >WARNING, when a pin is configured as DigitalRead and a voltage lower than -250mV is applied, the codes read from ALL other pins confiured as AnalogRead will become unusuably corrupted. </p>
+
+</div>
+</div>
+<a id="gab1d7fdba107fa9770457c1c373dc23b4" name="gab1d7fdba107fa9770457c1c373dc23b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab1d7fdba107fa9770457c1c373dc23b4">&#9670;&nbsp;</a></span>DacVoltageRange</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Transport &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="group__dac.html#gab1d7fdba107fa9770457c1c373dc23b4">daisy::MAX11300Driver::DacVoltageRange</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Pins of the MAX11300 configured for AnalogWrite may be defined to operate within several pre-defined voltage ranges (assuming the power supply requirements for the range is met).</p>
+<p >Pins configiured for DigitalWrite are 0-5V only, and do not produce negative voltages. </p>
+
+</div>
+</div>
 <a id="gaf52f8de78c569c80ad0b6618a2403795" name="gaf52f8de78c569c80ad0b6618a2403795"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gaf52f8de78c569c80ad0b6618a2403795">&#9670;&nbsp;</a></span>Pin</h2>
 
@@ -283,33 +355,6 @@ template&lt;typename Transport &gt; </div>
 <tr><td class="fieldname"><a id="ggacd2952c79b8b9a8aa50158af12569b1cacd22bad976363fdd1bfbf6759fede482" name="ggacd2952c79b8b9a8aa50158af12569b1cacd22bad976363fdd1bfbf6759fede482"></a>ERR&#160;</td><td class="fielddoc"><p >&amp; </p>
 </td></tr>
 </table>
-
-</div>
-</div>
-<a id="ga0ce392f9f4a377e23ea84b1ef6bcd827" name="ga0ce392f9f4a377e23ea84b1ef6bcd827"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga0ce392f9f4a377e23ea84b1ef6bcd827">&#9670;&nbsp;</a></span>VoltageRange</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Transport &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum class <a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">daisy::MAX11300Driver::VoltageRange</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p >Pins of the MAX11300 configured for AnalogRead/Write may be defined to operate within several pre-defined voltage ranges (assuming the power supply requirements for the range is met).</p>
-<p >Pins configiured for DigitalRead/Write are 0-5V only, and do not tolerate or produce negative voltages.</p>
-<p >WARNING, when a pin is configured as DigitalRead and a voltage lower than -250mV is applied, The codes read from ALL other pins confiured as AnalogRead will become unusuably corrupted. </p>
 
 </div>
 </div>
@@ -404,8 +449,8 @@ template&lt;typename Transport &gt; </div>
 
 </div>
 </div>
-<a id="ga74c9a868d438fb4aaa4331c7a586e6e5" name="ga74c9a868d438fb4aaa4331c7a586e6e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga74c9a868d438fb4aaa4331c7a586e6e5">&#9670;&nbsp;</a></span>ReadAnalogPinRaw()</h2>
+<a id="ga6603318cab9240017018f64bb2e2e39b" name="ga6603318cab9240017018f64bb2e2e39b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga6603318cab9240017018f64bb2e2e39b">&#9670;&nbsp;</a></span>ReadAnalogPinRaw()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -420,7 +465,7 @@ template&lt;typename Transport &gt; </div>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a>&#160;</td>
           <td class="paramname"><em>pin</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -441,8 +486,8 @@ template&lt;typename Transport &gt; </div>
 
 </div>
 </div>
-<a id="ga3a129f6c9a3f0f3616b696eca4aab4fc" name="ga3a129f6c9a3f0f3616b696eca4aab4fc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga3a129f6c9a3f0f3616b696eca4aab4fc">&#9670;&nbsp;</a></span>ReadAnalogPinVolts()</h2>
+<a id="gaa9e5aba13cddab1e9536339c52d5e2fa" name="gaa9e5aba13cddab1e9536339c52d5e2fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa9e5aba13cddab1e9536339c52d5e2fa">&#9670;&nbsp;</a></span>ReadAnalogPinVolts()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -457,7 +502,7 @@ template&lt;typename Transport &gt; </div>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a>&#160;</td>
           <td class="paramname"><em>pin</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -478,8 +523,8 @@ template&lt;typename Transport &gt; </div>
 
 </div>
 </div>
-<a id="gaca7e94e6b78c0d7dc9172fc86dbc8179" name="gaca7e94e6b78c0d7dc9172fc86dbc8179"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaca7e94e6b78c0d7dc9172fc86dbc8179">&#9670;&nbsp;</a></span>ReadDigitalPin()</h2>
+<a id="gab6079974bfc9bf0f3010e0d07f287364" name="gab6079974bfc9bf0f3010e0d07f287364"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab6079974bfc9bf0f3010e0d07f287364">&#9670;&nbsp;</a></span>ReadDigitalPin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -494,7 +539,7 @@ template&lt;typename Transport &gt; </div>
           <td>(</td>
           <td class="paramtype"><a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a>&#160;</td>
           <td class="paramname"><em>pin</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -515,8 +560,8 @@ template&lt;typename Transport &gt; </div>
 
 </div>
 </div>
-<a id="ga086fceb7760823216e43206438862139" name="ga086fceb7760823216e43206438862139"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga086fceb7760823216e43206438862139">&#9670;&nbsp;</a></span>TwelveBitUintToVolts()</h2>
+<a id="gaa5cc4cf5379abc236509222a545cfa24" name="gaa5cc4cf5379abc236509222a545cfa24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa5cc4cf5379abc236509222a545cfa24">&#9670;&nbsp;</a></span>TwelveBitUintToVolts()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -535,7 +580,7 @@ template&lt;typename Transport &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__dac.html#ga907598f467ef006bbf5c15b9b352cd9a">AdcVoltageRange</a>&#160;</td>
           <td class="paramname"><em>range</em>&#160;</td>
         </tr>
         <tr>
@@ -554,7 +599,7 @@ template&lt;typename Transport &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>the 12 bit value to convert </td></tr>
-    <tr><td class="paramname">range</td><td>the <a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">MAX11300::VoltageRange</a> to constrain to </td></tr>
+    <tr><td class="paramname">range</td><td>the <a class="el" href="group__dac.html#ga907598f467ef006bbf5c15b9b352cd9a">MAX11300::AdcVoltageRange</a> to constrain to </td></tr>
   </table>
   </dd>
 </dl>
@@ -597,8 +642,8 @@ template&lt;typename Transport &gt; </div>
 
 </div>
 </div>
-<a id="ga068965a87c579aa92b612208cc9d022a" name="ga068965a87c579aa92b612208cc9d022a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga068965a87c579aa92b612208cc9d022a">&#9670;&nbsp;</a></span>VoltsTo12BitUint()</h2>
+<a id="ga5795e9c45dfffa692e052559b07a3e66" name="ga5795e9c45dfffa692e052559b07a3e66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5795e9c45dfffa692e052559b07a3e66">&#9670;&nbsp;</a></span>VoltsTo12BitUint()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -617,7 +662,7 @@ template&lt;typename Transport &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="group__dac.html#gab1d7fdba107fa9770457c1c373dc23b4">DacVoltageRange</a>&#160;</td>
           <td class="paramname"><em>range</em>&#160;</td>
         </tr>
         <tr>
@@ -636,7 +681,7 @@ template&lt;typename Transport &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">volts</td><td>the voltage to convert </td></tr>
-    <tr><td class="paramname">range</td><td>the <a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">MAX11300::VoltageRange</a> to constrain to </td></tr>
+    <tr><td class="paramname">range</td><td>the <a class="el" href="group__dac.html#gab1d7fdba107fa9770457c1c373dc23b4">MAX11300::DacVoltageRange</a> to constrain to </td></tr>
   </table>
   </dd>
 </dl>
@@ -801,16 +846,14 @@ template&lt;typename Transport &gt; </div>
 
 </div>
 </div>
-<a id="gab73fcc174e34fef4d684f2d51a523397" name="gab73fcc174e34fef4d684f2d51a523397"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab73fcc174e34fef4d684f2d51a523397">&#9670;&nbsp;</a></span>range</h2>
+<a id="ga50af178928b95fd04d42711c016035c1" name="ga50af178928b95fd04d42711c016035c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga50af178928b95fd04d42711c016035c1">&#9670;&nbsp;</a></span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename Transport &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a> <a class="el" href="classdaisy_1_1_m_a_x11300_driver.html">daisy::MAX11300Driver</a>&lt; Transport &gt;::PinConfig::range</td>
+          <td class="memname">union  { ... }  <a class="el" href="classdaisy_1_1_m_a_x11300_driver.html">daisy::MAX11300Driver</a>&lt; Transport &gt;::PinConfig::range</td>
         </tr>
       </table>
 </div><div class="memdoc">

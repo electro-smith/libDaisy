@@ -116,11 +116,17 @@ Public Types</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:gaf52f8de78c569c80ad0b6618a2403795"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0ce392f9f4a377e23ea84b1ef6bcd827"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a> { <b>ZERO_TO_10</b> = 0x0100
+<tr class="memitem:ga907598f467ef006bbf5c15b9b352cd9a"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga907598f467ef006bbf5c15b9b352cd9a">AdcVoltageRange</a> { <b>ZERO_TO_10</b> = 0x0100
+, <b>NEGATIVE_5_TO_5</b> = 0x0200
+, <b>NEGATIVE_10_TO_0</b> = 0x0300
+, <b>ZERO_TO_2P5</b> = 0x0400
+ }</td></tr>
+<tr class="separator:ga907598f467ef006bbf5c15b9b352cd9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab1d7fdba107fa9770457c1c373dc23b4"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gab1d7fdba107fa9770457c1c373dc23b4">DacVoltageRange</a> { <b>ZERO_TO_10</b> = 0x0100
 , <b>NEGATIVE_5_TO_5</b> = 0x0200
 , <b>NEGATIVE_10_TO_0</b> = 0x0300
  }</td></tr>
-<tr class="separator:ga0ce392f9f4a377e23ea84b1ef6bcd827"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:gab1d7fdba107fa9770457c1c373dc23b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacd2952c79b8b9a8aa50158af12569b1c"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a> { <a class="el" href="group__dac.html#ggacd2952c79b8b9a8aa50158af12569b1cae0aa021e21dddbd6d8cecec71e9cf564">Result::OK</a>
 , <a class="el" href="group__dac.html#ggacd2952c79b8b9a8aa50158af12569b1cacd22bad976363fdd1bfbf6759fede482">Result::ERR</a>
  }</td></tr>
@@ -136,25 +142,25 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ga7401e4e7235395106f1ae2be0adbe054"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ConfigurePinAsDigitalWrite</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, float output_voltage)</td></tr>
 <tr class="separator:ga7401e4e7235395106f1ae2be0adbe054"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6641e1864cb5bd3126ab073e6dbff1c3"><td class="memItemLeft" align="right" valign="top">
-<a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ConfigurePinAsAnalogRead</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, <a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a> range)</td></tr>
-<tr class="separator:ga6641e1864cb5bd3126ab073e6dbff1c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab39f9e597e96c09b040174a3dd352cfc"><td class="memItemLeft" align="right" valign="top">
-<a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ConfigurePinAsAnalogWrite</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, <a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a> range)</td></tr>
-<tr class="separator:gab39f9e597e96c09b040174a3dd352cfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga05c3bcec7eaf23be7b0055d9b1be3f77"><td class="memItemLeft" align="right" valign="top">
+<a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ConfigurePinAsAnalogRead</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, <a class="el" href="group__dac.html#ga907598f467ef006bbf5c15b9b352cd9a">AdcVoltageRange</a> range)</td></tr>
+<tr class="separator:ga05c3bcec7eaf23be7b0055d9b1be3f77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabac2f8e130ef712df9c50b3c7b24fd2d"><td class="memItemLeft" align="right" valign="top">
+<a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ConfigurePinAsAnalogWrite</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, <a class="el" href="group__dac.html#gab1d7fdba107fa9770457c1c373dc23b4">DacVoltageRange</a> range)</td></tr>
+<tr class="separator:gabac2f8e130ef712df9c50b3c7b24fd2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4824322f9bf6ea2235bb74858e2a277b"><td class="memItemLeft" align="right" valign="top">
 <a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><b>DisablePin</b> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin)</td></tr>
 <tr class="separator:ga4824322f9bf6ea2235bb74858e2a277b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga74c9a868d438fb4aaa4331c7a586e6e5"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga74c9a868d438fb4aaa4331c7a586e6e5">ReadAnalogPinRaw</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin)</td></tr>
-<tr class="separator:ga74c9a868d438fb4aaa4331c7a586e6e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3a129f6c9a3f0f3616b696eca4aab4fc"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga3a129f6c9a3f0f3616b696eca4aab4fc">ReadAnalogPinVolts</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin)</td></tr>
-<tr class="separator:ga3a129f6c9a3f0f3616b696eca4aab4fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6603318cab9240017018f64bb2e2e39b"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga6603318cab9240017018f64bb2e2e39b">ReadAnalogPinRaw</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin) const</td></tr>
+<tr class="separator:ga6603318cab9240017018f64bb2e2e39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa9e5aba13cddab1e9536339c52d5e2fa"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gaa9e5aba13cddab1e9536339c52d5e2fa">ReadAnalogPinVolts</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin) const</td></tr>
+<tr class="separator:gaa9e5aba13cddab1e9536339c52d5e2fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf72218a5a82d09f5c1dc2dc0c3cf330d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gaf72218a5a82d09f5c1dc2dc0c3cf330d">WriteAnalogPinRaw</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, uint16_t raw_value)</td></tr>
 <tr class="separator:gaf72218a5a82d09f5c1dc2dc0c3cf330d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac36928e00899ec7a2341bee87e41a521"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gac36928e00899ec7a2341bee87e41a521">WriteAnalogPinVolts</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, float voltage)</td></tr>
 <tr class="separator:gac36928e00899ec7a2341bee87e41a521"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca7e94e6b78c0d7dc9172fc86dbc8179"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gaca7e94e6b78c0d7dc9172fc86dbc8179">ReadDigitalPin</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin)</td></tr>
-<tr class="separator:gaca7e94e6b78c0d7dc9172fc86dbc8179"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab6079974bfc9bf0f3010e0d07f287364"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gab6079974bfc9bf0f3010e0d07f287364">ReadDigitalPin</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin) const</td></tr>
+<tr class="separator:gab6079974bfc9bf0f3010e0d07f287364"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga77600c8953e064cbae503c964f31045e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga77600c8953e064cbae503c964f31045e">WriteDigitalPin</a> (<a class="el" href="group__dac.html#gaf52f8de78c569c80ad0b6618a2403795">Pin</a> pin, bool value)</td></tr>
 <tr class="separator:ga77600c8953e064cbae503c964f31045e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga47a23901c126ae03aa9b7b0196cce163"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__dac.html#gacd2952c79b8b9a8aa50158af12569b1c">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga47a23901c126ae03aa9b7b0196cce163">Update</a> ()</td></tr>
@@ -162,10 +168,10 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ga068965a87c579aa92b612208cc9d022a"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga068965a87c579aa92b612208cc9d022a">VoltsTo12BitUint</a> (float volts, <a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a> range)</td></tr>
-<tr class="separator:ga068965a87c579aa92b612208cc9d022a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga086fceb7760823216e43206438862139"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga086fceb7760823216e43206438862139">TwelveBitUintToVolts</a> (uint16_t value, <a class="el" href="group__dac.html#ga0ce392f9f4a377e23ea84b1ef6bcd827">VoltageRange</a> range)</td></tr>
-<tr class="separator:ga086fceb7760823216e43206438862139"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5795e9c45dfffa692e052559b07a3e66"><td class="memItemLeft" align="right" valign="top">static uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#ga5795e9c45dfffa692e052559b07a3e66">VoltsTo12BitUint</a> (float volts, <a class="el" href="group__dac.html#gab1d7fdba107fa9770457c1c373dc23b4">DacVoltageRange</a> range)</td></tr>
+<tr class="separator:ga5795e9c45dfffa692e052559b07a3e66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa5cc4cf5379abc236509222a545cfa24"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__dac.html#gaa5cc4cf5379abc236509222a545cfa24">TwelveBitUintToVolts</a> (uint16_t value, <a class="el" href="group__dac.html#ga907598f467ef006bbf5c15b9b352cd9a">AdcVoltageRange</a> range)</td></tr>
+<tr class="separator:gaa5cc4cf5379abc236509222a545cfa24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Transport&gt;<br />
