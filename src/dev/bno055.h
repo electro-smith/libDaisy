@@ -164,7 +164,7 @@ class Bno055
         ERR
     };
 
-    struct BnoVector3
+    struct Vector
     {
         float x;
         float y;
@@ -211,10 +211,10 @@ class Bno055
         union
         {
             float      data[4];
-            BnoVector3 acceleration;
-            BnoVector3 magnetic;
-            BnoVector3 orientation;
-            BnoVector3 gyro;
+            Vector acceleration;
+            Vector magnetic;
+            Vector orientation;
+            Vector gyro;
             float      temperature;
             float      distance;
             float      light;
@@ -754,9 +754,9 @@ class Bno055
                   VECTOR_GRAVITY]
         \return  vector from specified source
     */
-    BnoVector3 GetVector(vector_type_t vector_type)
+    Vector GetVector(vector_type_t vector_type)
     {
-        BnoVector3 xyz;
+        Vector xyz;
         uint8_t    buffer[6] = {0, 0, 0, 0, 0, 0};
 
         int16_t x, y, z;
@@ -844,6 +844,8 @@ class Bno055
         quat.x            = scale * x;
         quat.y            = scale * y;
         quat.z            = scale * z;
+
+        return quat;
     }
 
     /**  Reads the sensor and returns the data as a sensors_event_t
@@ -861,7 +863,7 @@ class Bno055
         event->timestamp = System::GetNow();
 
         /* Get a Euler angle sample for orientation */
-        BnoVector3 euler     = GetVector(VECTOR_EULER);
+        Vector euler     = GetVector(VECTOR_EULER);
         event->orientation.x = euler.x;
         event->orientation.y = euler.y;
         event->orientation.z = euler.z;
@@ -884,7 +886,7 @@ class Bno055
         event->timestamp = System::GetNow();
 
         // read the data according to vec_type
-        BnoVector3 vec;
+        Vector vec;
         if(vec_type == VECTOR_LINEARACCEL)
         {
             event->type = SENSOR_TYPE_LINEAR_ACCELERATION;
