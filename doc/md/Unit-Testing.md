@@ -41,7 +41,7 @@ This generates and runs a small commandline program `tests/libDaisy_gtest`.
 
 Programmers using Visual Studio Code can install the recommended extensions (you will be prompted to do so) and use the test panel to directly run the tests. Take a look at the screenshot below:
 
-![Visual Studio Code test panel](images/vscode-test-panel.png)
+![Visual Studio Code test panel](../images/vscode-test-panel.png)
 
 - Build tests by executing the `build-libDaisy-tests` task with `Ctrl-Shift-B` (Win) or `Cmd-Shift-B` (macOS).
 - Run and debug individual tests or entire test suites from the test panel. (see screenshot)
