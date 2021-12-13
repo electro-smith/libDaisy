@@ -210,18 +210,18 @@ class Bno055
         int32_t timestamp;
         union
         {
-            float      data[4];
+            float  data[4];
             Vector acceleration;
             Vector magnetic;
             Vector orientation;
             Vector gyro;
-            float      temperature;
-            float      distance;
-            float      light;
-            float      pressure;
-            float      relative_humidity;
-            float      current;
-            float      voltage;
+            float  temperature;
+            float  distance;
+            float  light;
+            float  pressure;
+            float  relative_humidity;
+            float  current;
+            float  voltage;
             // sensors_color_t color;
         };
     };
@@ -756,8 +756,8 @@ class Bno055
     */
     Vector GetVector(vector_type_t vector_type)
     {
-        Vector xyz;
-        uint8_t    buffer[6] = {0, 0, 0, 0, 0, 0};
+        Vector  xyz;
+        uint8_t buffer[6] = {0, 0, 0, 0, 0, 0};
 
         int16_t x, y, z;
         x = y = z = 0;
@@ -863,7 +863,7 @@ class Bno055
         event->timestamp = System::GetNow();
 
         /* Get a Euler angle sample for orientation */
-        Vector euler     = GetVector(VECTOR_EULER);
+        Vector euler         = GetVector(VECTOR_EULER);
         event->orientation.x = euler.x;
         event->orientation.y = euler.y;
         event->orientation.z = euler.z;
