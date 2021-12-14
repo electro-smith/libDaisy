@@ -19,6 +19,7 @@
 ### Breaking Changes
 
 * driver: added support for the 0 .. 2.5V ADC range to MAX11300, splitting the `enum VoltageRange` into two enums for the ADC and DAC configurations.
+* spi: added start callbacks to SPI DMA transfers; changed Callback Function type names; now using DMA2
 
 ### Features
 
@@ -34,6 +35,10 @@
 ### Other
 
 ### Migrating
+
+#### SPI
+
+`SpiHandle` now uses `DMA2_Stream2` and `DMA2_Stream3` for transmit and receive.
 
 #### MAX11300
 
