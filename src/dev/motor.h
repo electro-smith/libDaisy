@@ -75,6 +75,7 @@ class Adafruit_MotorShield
         uint8_t Onestep(uint8_t dir, uint8_t style);
         void    Release(void);
         void    Process(void);
+        /** Check if the motor is currently handling a non-blocking process */
         bool    GetBusy() { return nonblock_active; }
 
         friend class
