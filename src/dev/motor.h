@@ -75,6 +75,7 @@ class Adafruit_MotorShield
         uint8_t Onestep(uint8_t dir, uint8_t style);
         void    Release(void);
         void    Process(void);
+        bool    GetBusy() { return nonblock_active; }
 
         friend class
             Adafruit_MotorShield; ///< Let MotorShield create StepperMotors
