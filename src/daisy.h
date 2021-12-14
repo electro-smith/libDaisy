@@ -48,6 +48,7 @@
 #include "dev/codec_wm8731.h"
 #include "dev/lcd_hd44780.h"
 #include "dev/max11300.h"
+#include "dev/neopixel.h"
 #include "dev/neotrellis.h"
 #include "ui/ButtonMonitor.h"
 #include "ui/PotMonitor.h"

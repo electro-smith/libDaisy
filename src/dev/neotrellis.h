@@ -2,6 +2,8 @@
 #ifndef DSY_NEO_TRELLIS_H
 #define DSY_NEO_TRELLIS_H
 
+#include "dev/neopixel.h"
+
 #define NEO_TRELLIS_ADDR 0x2E
 
 #define NEO_TRELLIS_NEOPIX_PIN 3
@@ -220,8 +222,10 @@ class NeoTrellis
     struct Config
     {
         typename Transport::Config transport_config;
+        bool init_reset; //< Should the device be reset on init
+        NeoPixelI2C::Config pixels_conf;
 
-        Config() {}
+        Config() { init_reset = true; }
     };
 
     enum Result
@@ -239,7 +243,7 @@ class NeoTrellis
 
         transport_.Init(config_.transport_config);
 
-        pixels.begin(addr, flow);
+        pixels.Init(config_.pixels_conf);
 
         if(config_.init_reset)
             SWReset();
@@ -359,6 +363,8 @@ class NeoTrellis
     }
 
   private:
+    NeoPixelI2C pixels;
+
     Config    config_;
     Transport transport_;
 
