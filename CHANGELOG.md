@@ -18,7 +18,7 @@
 
 ### Breaking Changes
 
-* driver: added support for the 0 .. 2.5V ADC range to MAX11300 getter functions `const`, splitting the `enum VoltageRange` into two enums for the ADC and DAC configurations.
+* driver: added support for the 0 .. 2.5V ADC range to MAX11300, splitting the `enum VoltageRange` into two enums for the ADC and DAC configurations.
 
 ### Features
 
