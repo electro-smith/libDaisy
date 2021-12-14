@@ -6,6 +6,8 @@
 
 ### Features
 
+* spi: added `MultiSlaveSpiHandle` that allows to connect to multiple SPI slave devices on a shared bus
+
 ### Bug Fixes
 
 * logger: Added 10ms delay at the end of `StartLog` function. Without this, messages immediatly following the `StartLog` function were getting missed when `wait_for_pc` is set to `true`.
