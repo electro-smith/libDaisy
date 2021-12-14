@@ -172,14 +172,23 @@ class RingBuffer<T, 0>
     inline size_t capacity() const { return 0; } /**< \return 0 */
     inline size_t writable() const { return 0; } /**< \return 0 */
     inline size_t readable() const { return 0; } /**< \return 0 */
-    inline void   Write(T v) {}           /**<  \param v Value to write */
-    inline void   Overwrite(T v) {}       /**< \param v Value to overwrite */
-    inline T      Read() { return T(0); } /**< \return Read value */
-    inline T      ImmediateRead() { return T(0); } /**< \return Read value */
-    inline void   Flush() {}                       /**< Flush the buffer */
-    inline void   ImmediateRead(T* destination, size_t num_elements) {
+    inline void   Write(T v) { (void)(v); } /**<  \param v Value to write */
+    inline void   Overwrite(T v)
+    {
+        (void)(v);
+    }                                   /**< \param v Value to overwrite */
+    inline T    Read() { return T(0); } /**< \return Read value */
+    inline T    ImmediateRead() { return T(0); } /**< \return Read value */
+    inline void Flush() {}                       /**< Flush the buffer */
+    inline void ImmediateRead(T* destination, size_t num_elements)
+    {
+        (void)(destination);
+        (void)(num_elements);
     } /**< \param destination & \param num_elements & */
-    inline void Overwrite(const T* source, size_t num_elements) {
+    inline void Overwrite(const T* source, size_t num_elements)
+    {
+        (void)(source);
+        (void)(num_elements);
     } /**< \param source 3 \param num_elements & */
 
   private:

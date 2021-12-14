@@ -10,6 +10,7 @@ this module. However, by using the extern'd SDFile, etc. I think that would brea
 #define DSY_WAVPLAYER_H /**< Macro */
 #include "daisy_core.h"
 #include "util/wav_format.h"
+#include "ff.h"
 
 #define WAV_FILENAME_MAX \
     256 /**< Maximum LFN (set to same in FatFs (ffconf.h) */
@@ -42,7 +43,7 @@ class WavPlayer
     ~WavPlayer() {}
 
     /** Initializes the WavPlayer, loading up to max_files of wav files from an SD Card. */
-    void Init();
+    void Init(const char* search_path);
 
     /** Opens the file at index sel for reading.
     \param sel File to open
@@ -88,13 +89,14 @@ class WavPlayer
     BufferState GetNextBuffState();
 
     static constexpr size_t kMaxFiles   = 8;
-    static constexpr size_t kBufferSize = 512;
+    static constexpr size_t kBufferSize = 4096;
     WavFileInfo             file_info_[kMaxFiles];
     size_t                  file_cnt_, file_sel_;
     BufferState             buff_state_;
     int16_t                 buff_[kBufferSize];
     size_t                  read_ptr_;
     bool                    looping_, playing_;
+    FIL                     fil_;
 };
 
 } // namespace daisy

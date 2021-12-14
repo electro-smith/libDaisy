@@ -10,8 +10,8 @@ set(MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 add_library(${TARGET} STATIC
     ${MODULE_DIR}/sys/dma.c
     ${MODULE_DIR}/hid/audio.cpp
-    ${MODULE_DIR}/sys/fatfs.c
-    ${MODULE_DIR}/per/gpio.c
+    ${MODULE_DIR}/sys/fatfs.cpp
+    ${MODULE_DIR}/per/gpio.cpp
     ${MODULE_DIR}/per/rng.cpp
     ${MODULE_DIR}/per/sai.cpp
     ${MODULE_DIR}/per/sdmmc.cpp
@@ -19,11 +19,13 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/util/hal_map.c
     ${MODULE_DIR}/util/oled_fonts.c
     ${MODULE_DIR}/util/sd_diskio.c
+    ${MODULE_DIR}/util/usbh_diskio.c
     ${MODULE_DIR}/util/unique_id.c
     ${MODULE_DIR}/sys/system_stm32h7xx.c
     ${MODULE_DIR}/usbd/usbd_cdc_if.c
     ${MODULE_DIR}/usbd/usbd_desc.c
     ${MODULE_DIR}/usbd/usbd_conf.c
+    ${MODULE_DIR}/usbh/usbh_conf.c
     ${MODULE_DIR}/daisy_seed.cpp
     ${MODULE_DIR}/daisy_pod.cpp
     ${MODULE_DIR}/daisy_patch.cpp
@@ -45,6 +47,8 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/hid/rgb_led.cpp
     ${MODULE_DIR}/hid/switch.cpp
     ${MODULE_DIR}/hid/usb.cpp
+    ${MODULE_DIR}/hid/usb_host.cpp
+    ${MODULE_DIR}/hid/usb_midi.cpp
     ${MODULE_DIR}/hid/wavplayer.cpp
     ${MODULE_DIR}/hid/logger.cpp
     ${MODULE_DIR}/per/adc.cpp
@@ -177,6 +181,13 @@ add_library(${TARGET} STATIC
     Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c
     Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c
     Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c
+    Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.c
+    Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.c
+    Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.c
+    Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_pipes.c
+    Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_bot.c
+    Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_scsi.c
+    Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc.c
     Middlewares/Third_Party/FatFs/src/diskio.c
     Middlewares/Third_Party/FatFs/src/ff.c
     Middlewares/Third_Party/FatFs/src/ff_gen_drv.c
@@ -191,10 +202,13 @@ target_include_directories(${TARGET} PUBLIC
     Drivers/STM32H7xx_HAL_Driver/Inc/Legacy
     Middlewares/ST/STM32_USB_Device_Library/Core/Inc
     Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
+    Middlewares/ST/STM32_USB_Host_Library/Core/Inc
+    Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc
     Middlewares/Third_Party/FatFs/src
     src
     src/sys
     src/usbd
+    src/usbh
     )
 
 set_target_properties(${TARGET} PROPERTIES

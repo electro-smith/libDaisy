@@ -39,11 +39,25 @@ UI::~UI()
 
 void UI::Process()
 {
+    const auto currentTimeInMs = System::GetNow();
+
     // handle user input
     if(!isMuted_)
     {
         while(!eventQueue_->IsQueueEmpty())
         {
+            // clear next event if screen is off
+            for(uint32_t i = 0; i < canvases_.GetNumElements(); i++)
+            {
+                if(canvases_[i].screenSaverOn)
+                {
+                    eventQueue_->GetAndRemoveNextEvent();
+                    canvases_[i].screenSaverOn = false;
+                    break;
+                }
+            }
+
+            lastEventTime_        = currentTimeInMs;
             UiEventQueue::Event e = eventQueue_->GetAndRemoveNextEvent();
             if(e.type != UiEventQueue::Event::EventType::invalid)
                 ProcessEvent(e);
@@ -57,12 +71,22 @@ void UI::Process()
     }
 
     // redraw canvases
-    const auto currentTimeInMs = System::GetNow();
     for(uint32_t i = 0; i < canvases_.GetNumElements(); i++)
     {
-        const uint32_t timeDiff = currentTimeInMs - lastUpdateTimes_[i];
-        if(timeDiff > canvases_[i].updateRateMs_)
-            RedrawCanvas(i, currentTimeInMs);
+        if(canvases_[i].screenSaverTimeOut == 0
+           || currentTimeInMs - lastEventTime_
+                  < canvases_[i].screenSaverTimeOut)
+        {
+            const uint32_t timeDiff = currentTimeInMs - lastUpdateTimes_[i];
+            if(timeDiff > canvases_[i].updateRateMs_)
+                RedrawCanvas(i, currentTimeInMs);
+        }
+        else
+        { // turn off oled
+            canvases_[i].clearFunction_(canvases_[i]);
+            canvases_[i].flushFunction_(canvases_[i]);
+            canvases_[i].screenSaverOn = true;
+        }
     }
 }
 
