@@ -222,7 +222,7 @@ class NeoTrellis
     struct Config
     {
         typename Transport::Config transport_config;
-        bool init_reset; //< Should the device be reset on init
+        bool                init_reset; //< Should the device be reset on init
         NeoPixelI2C::Config pixels_conf;
 
         Config() { init_reset = true; }
@@ -243,7 +243,10 @@ class NeoTrellis
 
         transport_.Init(config_.transport_config);
 
-        pixels.Init(config_.pixels_conf);
+        if(pixels.Init(config_.pixels_conf) == NeoPixelI2C::Result::ERR)
+        {
+            return ERR;
+        }
 
         if(config_.init_reset)
             SWReset();
@@ -257,9 +260,9 @@ class NeoTrellis
         \param reg the register address to write to
         \param value the value to write to the register
     */
-    void Write8(uint8_t reg, uint8_t value)
+    void Write8(uint8_t reg_high, uint8_t reg_low, uint8_t value)
     {
-        return transport_.Write8(reg, value);
+        return transport_.Write8(reg_high, reg_low, value);
     }
 
     /**  Reads an 8 bit value
@@ -287,8 +290,7 @@ class NeoTrellis
     */
     void SWReset()
     {
-        return Write8(SEESAW_STATUS_BASE, SEESAW_STATUS_SWRST);
-        System::Delay(255);
+        return Write8(SEESAW_STATUS_BASE, SEESAW_STATUS_SWRST, 0xFF);
     }
 
     /** activate or deactivate a given key event
@@ -359,7 +361,7 @@ class NeoTrellis
     /** Enable the keypad interrupt that fires when events are in the fifo. */
     void EnableKeypadInterrupt()
     {
-        Write8(SEESAW_KEYPAD_BASE, SEESAW_KEYPAD_INTENSET);
+        Write8(SEESAW_KEYPAD_BASE, SEESAW_KEYPAD_INTENSET, 0x01);
     }
 
   private:

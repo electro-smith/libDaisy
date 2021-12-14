@@ -89,7 +89,7 @@ class NeoPixelI2CTransport
 
         for(int i = 0; i < size; i++)
         {
-            reg[i] = buff[i + 2];
+            reg[i + 2] = buff[i];
         }
 
         Write(reg, size + 2);
@@ -234,9 +234,9 @@ class NeoPixel
         \param reg the register address to write to
         \param value the value to write to the register
     */
-    void Write8(uint8_t reg, uint8_t value)
+    void Write8(uint8_t reg_high, uint8_t reg_low, uint8_t value)
     {
-        return transport_.Write8(reg, value);
+        return transport_.Write8(reg_high, reg_low, value);
     }
 
     /**  Reads an 8 bit value
@@ -264,8 +264,7 @@ class NeoPixel
     */
     void SWReset()
     {
-        return Write8(SEESAW_STATUS_BASE, SEESAW_STATUS_SWRST);
-        System::Delay(255);
+        return Write8(SEESAW_STATUS_BASE, SEESAW_STATUS_SWRST, 0xFF);
     }
 
     void UpdateLength(uint16_t n)
