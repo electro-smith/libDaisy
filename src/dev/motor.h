@@ -71,8 +71,10 @@ class Adafruit_MotorShield
         void SetSpeed(uint16_t);
 
         void    Step(uint16_t steps, uint8_t dir, uint8_t style = SINGLE);
+        void    StepNonblocking(uint16_t steps, uint8_t dir, uint8_t style = SINGLE);
         uint8_t Onestep(uint8_t dir, uint8_t style);
         void    Release(void);
+        void    Process(void);
 
         friend class
             Adafruit_MotorShield; ///< Let MotorShield create StepperMotors
@@ -85,6 +87,11 @@ class Adafruit_MotorShield
         uint16_t revsteps; // # steps per revolution
         uint8_t  currentstep;
         uint8_t  steppernum;
+
+        uint8_t nonblock_dir, nonblock_style;
+        uint16_t nonblock_steps;
+        uint32_t nonblock_uspers, prev_micros;
+        bool nonblock_active;
 
         Adafruit_MotorShield *MC;
     };

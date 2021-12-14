@@ -325,6 +325,7 @@ void Adafruit_MotorShield::Adafruit_DCMotor::FullOff()
 Adafruit_MotorShield::Adafruit_StepperMotor::Adafruit_StepperMotor(void)
 {
     revsteps = steppernum = currentstep = 0;
+    nonblock_active = false;
 }
 
 /**************************************************************************/
@@ -388,6 +389,68 @@ void Adafruit_MotorShield::Adafruit_StepperMotor::Step(uint16_t steps,
         // Serial.println("step!"); Serial.println(uspers);
         Onestep(dir, style);
         System::DelayUs(uspers);
+    }
+}
+
+/**************************************************************************/
+/*!
+    @brief  Move the stepper motor with the given RPM speed in a non-blocking
+    fashion in combination with `Process()`. This is called once to begin
+    a process, so any subsequent calls made before the move is complete will
+    interrupt it.
+    {@link Adafruit_StepperMotor.setSpeed} to set the speed!
+    @param  steps The number of steps we want to move
+    @param  dir The direction to go, can be FORWARD or BACKWARD
+    @param  style How to perform each step, can be SINGLE, DOUBLE, INTERLEAVE or
+   MICROSTEP
+*/
+/**************************************************************************/
+void Adafruit_MotorShield::Adafruit_StepperMotor::StepNonblocking(uint16_t steps,
+                                                                  uint8_t  dir,
+                                                                  uint8_t  style)
+{
+    nonblock_uspers = usperstep;
+    nonblock_steps = steps;
+    nonblock_dir = dir;
+    nonblock_style = style;
+
+    if(style == INTERLEAVE)
+    {
+        nonblock_uspers /= 2;
+    }
+    else if(style == MICROSTEP)
+    {
+        nonblock_uspers /= MICROSTEPS;
+        nonblock_steps *= MICROSTEPS;
+    }
+
+    nonblock_active = true;
+    prev_micros = System::GetUs();
+}
+
+/**************************************************************************/
+/*!
+    @brief  Handle step processing in a non-blocking fashion. This should
+    be placed in the main process loop or in a frequently-occurring callback
+*/
+/**************************************************************************/
+void Adafruit_MotorShield::Adafruit_StepperMotor::Process()
+{
+    if (nonblock_active)
+    {
+        uint32_t now = System::GetUs();
+        if (now - prev_micros >= nonblock_uspers)
+        {
+            prev_micros = now;
+            if (nonblock_steps--)
+            {
+                Onestep(nonblock_dir, nonblock_style);
+            }
+            else
+            {
+                nonblock_active = false;
+            }
+        }
     }
 }
 
