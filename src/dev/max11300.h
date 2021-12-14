@@ -26,104 +26,7 @@ namespace daisy
 #define MAX11300_GPODAT 0x0d
 #define MAX11300_ADCDAT_BASE 0x40
 #define MAX11300_DACDAT_BASE 0x60
-
-namespace daisy
-{
-/** @addtogroup dac
-    @{
-    */
-
-class MAX11300MultiSlaveSpiTransport
-{
-  public:
-    /**
-     * Transport configuration struct for the MAX11300
-     */
-    template <size_t numDevices>
-    struct Config
-    {
-        struct PinConfig
-        {
-            dsy_gpio_pin nss[numDevices] = {{DSY_GPIOG, 10}}; // Pin 7
-            dsy_gpio_pin mosi            = {DSY_GPIOB, 5};    // Pin 10
-            dsy_gpio_pin miso            = {DSY_GPIOB, 4};    // Pin 9
-            dsy_gpio_pin sclk            = {DSY_GPIOG, 11};   // Pin 8
-        } pin_config;
-
-        SpiHandle::Config::Peripheral periph
-            = SpiHandle::Config::Peripheral::SPI_1;
-        SpiHandle::Config::BaudPrescaler baud_prescaler
-            = SpiHandle::Config::BaudPrescaler::PS_8;
-    };
-
-    enum class Result
-    {
-        OK, /**< & */
-        ERR /**< & */
-    };
-
-    template <size_t num_devices>
-    Result Init(Config<num_devices> config)
-    {
-        MultiSlaveSpiHandle::Config spi_config;
-        spi_config.pin_config.mosi = config.pin_config.mosi;
-        spi_config.pin_config.miso = config.pin_config.miso;
-        spi_config.pin_config.sclk = config.pin_config.sclk;
-        const auto clamped_num_devices
-            = std::min(num_devices, MultiSlaveSpiHandle::max_num_devices_);
-        for(size_t i = 0; i < clamped_num_devices; i++)
-            spi_config.pin_config.nss[i] = config.pin_config.nss[i];
-        spi_config.periph         = config.periph;
-        spi_config.direction      = SpiHandle::Config::Direction::TWO_LINES;
-        spi_config.datasize       = 8;
-        spi_config.clock_polarity = SpiHandle::Config::ClockPolarity::LOW;
-        spi_config.clock_phase    = SpiHandle::Config::ClockPhase::ONE_EDGE;
-        spi_config.baud_prescaler = config.baud_prescaler;
-        // not using clamped value here on purpose to escalate errors from SPI init
-        spi_config.num_devices = num_devices;
-        num_devices_           = num_devices;
-
-        const auto result = spi_.Init(spi_config);
-
-        ready_ = result == SpiHandle::Result::OK;
-        return ready_ ? Result::OK : Result::ERR;
-    }
-
-    bool Ready() { return ready_; }
-
-    Result TransmitBlocking(size_t device_id, uint8_t* buff, size_t size)
-    {
-        if(spi_.BlockingTransmit(device_id, buff, size)
-           == SpiHandle::Result::ERR)
-        {
-            return Result::ERR;
-        }
-        return Result::OK;
-    }
-
-    Result TransmitAndReceiveBlocking(size_t   device_id,
-                                      uint8_t* tx_buff,
-                                      uint8_t* rx_buff,
-                                      size_t   size)
-    {
-        if(spi_.BlockingTransmitAndReceive(device_id, tx_buff, rx_buff, size)
-           == SpiHandle::Result::ERR)
-        {
-            return Result::ERR;
-        }
-
-        return Result::OK;
-    }
-
-    size_t GetNumDevices() const { return num_devices_; }
-
-    // TransportCallbackFunctionPtr
-
-  private:
-    MultiSlaveSpiHandle spi_;
-    size_t              num_devices_ = 0;
-    bool                ready_       = false;
-};
+#define MAX11300_TRANSPORT_BUFFER_LENGTH 41
 
 namespace MAX11300Types
 {
@@ -197,7 +100,150 @@ namespace MAX11300Types
         OK, /**< & */
         ERR /**< & */
     };
+
+    /** a callback type used by the transport layer */
+    typedef void (*TransportCallbackFunctionPtr)(void*             context,
+                                                 SpiHandle::Result result);
+
+    /** A dma buffer that the user must put in non-cached memory. */
+    struct DmaBuffer
+    {
+        uint8_t rx_buffer[MAX11300_TRANSPORT_BUFFER_LENGTH];
+        uint8_t tx_buffer[MAX11300_TRANSPORT_BUFFER_LENGTH];
+    };
 } // namespace MAX11300Types
+
+class MAX11300MultiSlaveSpiTransport
+{
+  public:
+    /**
+     * Transport configuration struct for the MAX11300
+     */
+    template <size_t numDevices>
+    struct Config
+    {
+        struct PinConfig
+        {
+            dsy_gpio_pin nss[numDevices] = {{DSY_GPIOG, 10}}; // Pin 7
+            dsy_gpio_pin mosi            = {DSY_GPIOB, 5};    // Pin 10
+            dsy_gpio_pin miso            = {DSY_GPIOB, 4};    // Pin 9
+            dsy_gpio_pin sclk            = {DSY_GPIOG, 11};   // Pin 8
+        } pin_config;
+
+        SpiHandle::Config::Peripheral periph
+            = SpiHandle::Config::Peripheral::SPI_1;
+        SpiHandle::Config::BaudPrescaler baud_prescaler
+            = SpiHandle::Config::BaudPrescaler::PS_8;
+    };
+
+    enum class Result
+    {
+        OK, /**< & */
+        ERR /**< & */
+    };
+
+    template <size_t num_devices>
+    Result Init(Config<num_devices> config)
+    {
+        MultiSlaveSpiHandle::Config spi_config;
+        spi_config.pin_config.mosi = config.pin_config.mosi;
+        spi_config.pin_config.miso = config.pin_config.miso;
+        spi_config.pin_config.sclk = config.pin_config.sclk;
+        const auto clamped_num_devices
+            = std::min(num_devices, MultiSlaveSpiHandle::max_num_devices_);
+        for(size_t i = 0; i < clamped_num_devices; i++)
+            spi_config.pin_config.nss[i] = config.pin_config.nss[i];
+        spi_config.periph         = config.periph;
+        spi_config.direction      = SpiHandle::Config::Direction::TWO_LINES;
+        spi_config.datasize       = 8;
+        spi_config.clock_polarity = SpiHandle::Config::ClockPolarity::LOW;
+        spi_config.clock_phase    = SpiHandle::Config::ClockPhase::ONE_EDGE;
+        spi_config.baud_prescaler = config.baud_prescaler;
+        // not using clamped value here on purpose to escalate errors from SPI init
+        spi_config.num_devices = num_devices;
+        num_devices_           = num_devices;
+
+        const auto result = spi_.Init(spi_config);
+
+        ready_ = result == SpiHandle::Result::OK;
+        return ready_ ? Result::OK : Result::ERR;
+    }
+
+    bool Ready() { return ready_; }
+
+    Result TransmitBlocking(size_t device_index, uint8_t* buff, size_t size)
+    {
+        if(spi_.BlockingTransmit(device_index, buff, size)
+           == SpiHandle::Result::ERR)
+        {
+            return Result::ERR;
+        }
+        return Result::OK;
+    }
+
+    Result
+    TransmitDma(size_t                                      device_index,
+                uint8_t*                                    buff,
+                size_t                                      size,
+                MAX11300Types::TransportCallbackFunctionPtr complete_callback,
+                void*                                       callback_context)
+    {
+        if(spi_.DmaTransmit(device_index,
+                            buff,
+                            size,
+                            nullptr, // start callback
+                            complete_callback,
+                            callback_context)
+           == SpiHandle::Result::ERR)
+        {
+            return Result::ERR;
+        }
+        return Result::OK;
+    }
+
+    Result TransmitAndReceiveBlocking(size_t   device_index,
+                                      uint8_t* tx_buff,
+                                      uint8_t* rx_buff,
+                                      size_t   size)
+    {
+        if(spi_.BlockingTransmitAndReceive(device_index, tx_buff, rx_buff, size)
+           == SpiHandle::Result::ERR)
+        {
+            return Result::ERR;
+        }
+
+        return Result::OK;
+    }
+
+    Result TransmitAndReceiveDma(
+        size_t                                      device_index,
+        uint8_t*                                    tx_buff,
+        uint8_t*                                    rx_buff,
+        size_t                                      size,
+        MAX11300Types::TransportCallbackFunctionPtr complete_callback,
+        void*                                       callback_context)
+    {
+        if(spi_.DmaTransmitAndReceive(device_index,
+                                      tx_buff,
+                                      rx_buff,
+                                      size,
+                                      nullptr, // start callback
+                                      complete_callback,
+                                      callback_context)
+           == SpiHandle::Result::ERR)
+        {
+            return Result::ERR;
+        }
+        return Result::OK;
+    }
+
+    size_t GetNumDevices() const { return num_devices_; }
+
+  private:
+    MultiSlaveSpiHandle spi_;
+    size_t              num_devices_ = 0;
+    bool                ready_       = false;
+};
 
 /**
  * @brief Device Driver for the MAX11300 20 port ADC/DAC/GPIO device.
@@ -234,11 +280,18 @@ class MAX11300Driver
      * intitalizes all pins by default to High-Z mode.
      * 
      * \param config - The MAX11300 configuration
+     * \param dma_buffer a buffer in DMA-accessible memory. 
+     *                   Allocate it like this: `MAX11300DmaBuffer DMA_BUFFER_MEM_SECTION myBuffer;`
      */
-    MAX11300Types::Result Init(Config config)
+    MAX11300Types::Result Init(Config                    config,
+                               MAX11300Types::DmaBuffer* dma_buffer)
     {
+        dma_buffer_ = dma_buffer;
+
         if(transport_.Init(config.transport_config) != Transport::Result::OK)
             return MAX11300Types::Result::ERR;
+
+        sequencer_.Invalidate();
 
         for(size_t device_index = 0; device_index < transport_.GetNumDevices();
             device_index++)
@@ -258,8 +311,8 @@ class MAX11300Driver
             uint16_t devctl = 0x0000;
             // 1:0 ADCCTL[1:0] - ADC conversion mode selection = 11: Continuous sweep
             devctl = devctl | 0x0003;
-            // 3:2 DACCTL[1:0] - DAC mode selection = 01: Immediate Update mode for DAC-configured ports.
-            devctl = devctl | 0x0004;
+            // 3:2 DACCTL[1:0] - DAC mode selection = 00: Sequential Update mode for DAC-configured ports.
+            devctl = devctl | 0x0000;
             // 5:4 ADCCONV[1:0] - ADC conversion rate selection = 11: ADC conversion rate of 400ksps
             devctl = devctl | 0x0030;
             // 6 DACREF - DAC voltage reference selection = 1: Internal reference voltage
@@ -542,91 +595,12 @@ class MAX11300Driver
      */
     MAX11300Types::Result Update()
     {
-        for(size_t device_index = 0; device_index < num_devices; device_index++)
-        {
-            auto& device = devices_[device_index];
+        if(sequencer_.IsBusy())
+            return MAX11300Types::Result::ERR;
 
-            // Check first if were ready to TX/RX
-            if(!transport_.Ready())
-                return MAX11300Types::Result::OK;
-
-            if(device.dac_pin_count_ > 0)
-            {
-                // This is a burst transaction utilizing the contextual addressing
-                // scheme of the MAX11300. See the datasheet @ pp. 30
-                //
-                // We've prefixed the dac_buffer_ to point at the first dac pin to be written to.
-                // Subsequent DAC pins are written in their absolute order (0-19) if configured as such.
-                // For example:
-                // [1st_dac_pin_addr],[1st_dac_pin_msb],[1st_dac_pin_lsb],[2nd_dac_pin_msb],[2nd_dac_pin_lsb]...
-                //
-                // The size of the transaction is determined by the number of configured dac pins,
-                // plus one byte for the initial pin address.
-                //
-                // The datasheet recommends waiting 80us between DAC updates, in practice the appears to be
-                // per configured DAC pin. Here we inform the transport to wait at least N uS before transmitting
-                // again.
-                size_t tx_size = (device.dac_pin_count_ * 2) + 1;
-                if(transport_.TransmitBlocking(device_index,
-                                               device.dac_buffer_,
-                                               tx_size)
-                   != Transport::Result::OK)
-                {
-                    return MAX11300Types::Result::ERR;
-                }
-            }
-
-            if(device.adc_pin_count_ > 0)
-            {
-                // Reading ADC pins is a burst transaction approximately the same as the DAC transaction
-                // as described above...
-                size_t size = (device.adc_pin_count_ * 2) + 1;
-
-                uint8_t tx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
-                tx_buff[0] = device.adc_buffer_[0];
-                if(transport_.TransmitAndReceiveBlocking(
-                       device_index, tx_buff, device.adc_buffer_, size)
-                   != Transport::Result::OK)
-                {
-                    device.adc_buffer_[0] = tx_buff[0];
-                    return MAX11300Types::Result::ERR;
-                }
-                device.adc_buffer_[0] = tx_buff[0];
-            }
-
-            if(device.gpo_pin_count_ > 0)
-            {
-                // Writing GPO pins is a single 5 byte transaction, with the first byte being the
-                // the GPO data register, and the subsequent 4 bytes containing the state of the
-                // GPO ports to be written.
-                if(transport_.TransmitBlocking(device_index,
-                                               device.gpo_buffer_,
-                                               sizeof(device.gpo_buffer_))
-                   != Transport::Result::OK)
-                {
-                    return MAX11300Types::Result::ERR;
-                }
-            }
-
-            if(device.gpi_pin_count_ > 0)
-            {
-                // Reading GPI pins is a single, 5 byte, full-duplex transaction with the first
-                // and only TX byte being the GPI register.
-                uint8_t tx_buff[sizeof(device.gpi_buffer_)] = {};
-                tx_buff[0] = device.gpi_buffer_[0];
-                if(transport_.TransmitAndReceiveBlocking(
-                       device_index,
-                       tx_buff,
-                       device.gpi_buffer_,
-                       sizeof(device.gpi_buffer_))
-                   != Transport::Result::OK)
-                {
-                    device.gpi_buffer_[0] = tx_buff[0];
-                    return MAX11300Types::Result::ERR;
-                }
-                device.gpi_buffer_[0] = tx_buff[0];
-            }
-        }
+        sequencer_.current_device_ = 0;
+        sequencer_.current_step_   = UpdateSequencer::first_step_;
+        ContinueUpdate();
 
         return MAX11300Types::Result::OK;
     }
@@ -717,9 +691,6 @@ class MAX11300Driver
 
         return (value * vscaler) + vmin;
     }
-
-    /** a callback used by the transport layer */
-    typedef void (*TransportCallbackFunctionPtr)(void* context);
 
   private:
     /**
@@ -906,7 +877,7 @@ class MAX11300Driver
                     // If this is the first pin of this type, we need to set
                     // the initial address of the adc_buffer_ to point at this pin.
                     // The ordering of subsequent pins is known by the MAX11300.
-                    device.adc_buffer_[0]
+                    device.adc_first_adress
                         = ((MAX11300_ADCDAT_BASE + pin) << 1) | 1;
                 }
                 // set the pin_config.value to a pointer at the appropriate
@@ -918,12 +889,10 @@ class MAX11300Driver
             else if(device.pin_configurations_[i].mode == PinMode::GPI)
             {
                 device.gpi_pin_count_++;
-                device.gpi_buffer_[0] = (MAX11300_GPIDAT << 1) | 1;
             }
             else if(device.pin_configurations_[i].mode == PinMode::GPO)
             {
                 device.gpo_pin_count_++;
-                device.gpo_buffer_[0] = (MAX11300_GPODAT << 1);
             }
         }
 
@@ -964,10 +933,10 @@ class MAX11300Driver
                                        uint16_t* values,
                                        size_t    size)
     {
-        size_t  rx_length                            = (size * 2) + 1;
-        uint8_t rx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
-        uint8_t tx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
-        tx_buff[0]                                   = (address << 1) | 1;
+        size_t  rx_length                                 = (size * 2) + 1;
+        uint8_t rx_buff[MAX11300_TRANSPORT_BUFFER_LENGTH] = {};
+        uint8_t tx_buff[MAX11300_TRANSPORT_BUFFER_LENGTH] = {};
+        tx_buff[0]                                        = (address << 1) | 1;
 
         if(transport_.TransmitAndReceiveBlocking(
                device_index, tx_buff, rx_buff, rx_length)
@@ -1010,9 +979,9 @@ class MAX11300Driver
                                         uint16_t* values,
                                         size_t    size)
     {
-        size_t  tx_size                              = (size * 2) + 1;
-        uint8_t tx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
-        tx_buff[0]                                   = (address << 1);
+        size_t  tx_size                                   = (size * 2) + 1;
+        uint8_t tx_buff[MAX11300_TRANSPORT_BUFFER_LENGTH] = {};
+        tx_buff[0]                                        = (address << 1);
 
         size_t tx_idx = 1;
         for(size_t i = 0; i < size; i++)
@@ -1048,7 +1017,188 @@ class MAX11300Driver
         return WriteRegister(device_index, address, reg);
     }
 
-    static const size_t MAX_TRANSPORT_BUFFER_LENGTH = 41;
+    void ContinueUpdate()
+    {
+        // read results from the transmission that was just completed
+        switch(sequencer_.current_step_)
+        {
+            case UpdateSequencer::Step::start:
+                sequencer_.current_device_ = 0;
+                sequencer_.current_step_   = UpdateSequencer::Step::updateDac;
+                break;
+            case UpdateSequencer::Step::updateDac:
+                // nothing to read back; we only sent data
+                sequencer_.current_step_ = UpdateSequencer::Step::updateAdc;
+                break;
+            case UpdateSequencer::Step::updateAdc:
+            {
+                // read back rx data
+                const size_t size
+                    = (devices_[sequencer_.current_device_].adc_pin_count_ * 2)
+                      + 1;
+                memcpy(devices_[sequencer_.current_device_].adc_buffer_,
+                       dma_buffer_->rx_buffer,
+                       size);
+                sequencer_.current_step_ = UpdateSequencer::Step::updateGpo;
+            }
+            break;
+            case UpdateSequencer::Step::updateGpo:
+                // nothing to read back; we only sent data
+                sequencer_.current_step_ = UpdateSequencer::Step::updateGpi;
+                break;
+            case UpdateSequencer::Step::updateGpi:
+            {
+                // read back rx data
+                const size_t size
+                    = sizeof(devices_[sequencer_.current_device_].gpi_buffer_);
+                memcpy(devices_[sequencer_.current_device_].gpi_buffer_,
+                       dma_buffer_->rx_buffer,
+                       size);
+
+                sequencer_.current_device_++;
+                sequencer_.current_step_ = UpdateSequencer::Step::updateDac;
+            }
+            break;
+        }
+
+        bool done = false;
+        while(!done)
+        {
+            if(sequencer_.current_device_ >= num_devices)
+            {
+                sequencer_.Invalidate();
+                return; // all devices complete
+            }
+
+            auto& device = devices_[sequencer_.current_device_];
+
+            switch(sequencer_.current_step_)
+            {
+                case UpdateSequencer::Step::updateDac:
+                    if(device.dac_pin_count_ > 0)
+                    {
+                        // This is a burst transaction utilizing the contextual addressing
+                        // scheme of the MAX11300. See the datasheet @ pp. 30
+                        //
+                        // We've prefixed the dac_buffer_ to point at the first dac pin to be written to.
+                        // Subsequent DAC pins are written in their absolute order (0-19) if configured as such.
+                        // For example:
+                        // [1st_dac_pin_addr],[1st_dac_pin_msb],[1st_dac_pin_lsb],[2nd_dac_pin_msb],[2nd_dac_pin_lsb]...
+                        //
+                        // The size of the transaction is determined by the number of configured dac pins,
+                        // plus one byte for the initial pin address.
+                        //
+                        // The datasheet recommends waiting 80us between DAC updates, in practice the appears to be
+                        // per configured DAC pin. Here we inform the transport to wait at least N uS before transmitting
+                        // again.
+                        size_t tx_size = (device.dac_pin_count_ * 2) + 1;
+                        memcpy(dma_buffer_->tx_buffer,
+                               device.dac_buffer_,
+                               tx_size);
+                        transport_.TransmitDma(sequencer_.current_device_,
+                                               dma_buffer_->tx_buffer,
+                                               tx_size,
+                                               &DmaCompleteCallback,
+                                               this);
+                        done = true;
+                    }
+                    else
+                    {
+                        sequencer_.current_step_
+                            = UpdateSequencer::Step::updateAdc;
+                        done = false; // cycle again
+                    }
+                    break;
+                case UpdateSequencer::Step::updateAdc:
+                    if(device.adc_pin_count_ > 0)
+                    {
+                        // Reading ADC pins is a burst transaction approximately the same as the DAC transaction
+                        // as described above...
+                        size_t size = (device.adc_pin_count_ * 2) + 1;
+                        dma_buffer_->tx_buffer[0] = device.adc_first_adress;
+                        transport_.TransmitAndReceiveDma(
+                            sequencer_.current_device_,
+                            dma_buffer_->tx_buffer,
+                            dma_buffer_->rx_buffer,
+                            size,
+                            &DmaCompleteCallback,
+                            this);
+                        done = true;
+                    }
+                    else
+                    {
+                        sequencer_.current_step_
+                            = UpdateSequencer::Step::updateGpo;
+                        done = false; // cycle again
+                    }
+                    break;
+                case UpdateSequencer::Step::updateGpo:
+                    if(device.gpo_pin_count_ > 0)
+                    {
+                        // Writing GPO pins is a single 5 byte transaction, with the first byte being the
+                        // the GPO data register, and the subsequent 4 bytes containing the state of the
+                        // GPO ports to be written.
+                        memcpy(dma_buffer_->tx_buffer,
+                               device.gpo_buffer_,
+                               sizeof(device.gpo_buffer_));
+                        dma_buffer_->tx_buffer[0] = (MAX11300_GPODAT << 1);
+                        transport_.TransmitDma(sequencer_.current_device_,
+                                               dma_buffer_->tx_buffer,
+                                               sizeof(device.gpo_buffer_),
+                                               &DmaCompleteCallback,
+                                               this);
+                        done = true;
+                    }
+                    else
+                    {
+                        sequencer_.current_step_
+                            = UpdateSequencer::Step::updateGpi;
+                        done = false; // cycle again
+                    }
+                    break;
+
+                case UpdateSequencer::Step::updateGpi:
+                    if(device.gpi_pin_count_ > 0)
+                    {
+                        // Reading GPI pins is a single, 5 byte, full-duplex transaction with the first
+                        // and only TX byte being the GPI register.
+                        dma_buffer_->tx_buffer[0] = (MAX11300_GPIDAT << 1) | 1;
+                        transport_.TransmitAndReceiveDma(
+                            sequencer_.current_device_,
+                            dma_buffer_->tx_buffer,
+                            dma_buffer_->rx_buffer,
+                            sizeof(device.gpi_buffer_),
+                            &DmaCompleteCallback,
+                            this);
+                        done = true;
+                    }
+                    else
+                    {
+                        sequencer_.current_step_ = UpdateSequencer::Step::updateDac;
+                        sequencer_
+                            .current_device_++; // go to next chip in sequence
+                        done = false;           // cycle again
+                    }
+                    break;
+                default: break;
+            }
+        }
+    }
+
+    static void DmaCompleteCallback(void* context, SpiHandle::Result result)
+    {
+        auto& driver = *reinterpret_cast<MAX11300Driver*>(context);
+        if(result == SpiHandle::Result::OK)
+        {
+            driver.ContinueUpdate();
+        }
+        else
+        {
+            driver.sequencer_.Invalidate();
+        }
+    }
+
+    MAX11300Types::DmaBuffer* dma_buffer_;
 
     struct Device
     {
@@ -1058,11 +1208,34 @@ class MAX11300Driver
         uint8_t   gpi_pin_count_;
         uint8_t   gpo_pin_count_;
         uint8_t   dac_buffer_[41];
+        uint8_t   adc_first_adress;
         uint8_t   adc_buffer_[41];
         uint8_t   gpi_buffer_[5];
         uint8_t   gpo_buffer_[5];
     };
     Device devices_[num_devices];
+
+    struct UpdateSequencer
+    {
+        size_t current_device_ = 0;
+        enum class Step
+        {
+            start = 0,
+            updateDac,
+            updateAdc,
+            updateGpo,
+            updateGpi,
+        };
+        static constexpr auto first_step_   = Step::start;
+        static constexpr auto last_step_    = Step::updateGpi;
+        Step                  current_step_ = first_step_;
+        bool IsBusy() const { return current_device_ < num_devices; }
+        void Invalidate()
+        {
+            current_device_ = num_devices;
+            current_step_   = first_step_;
+        }
+    } sequencer_;
 
     Transport transport_;
 };
