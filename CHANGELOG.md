@@ -8,7 +8,7 @@
 
 * bootloader: the bootloader can now be flashed directly from libDaisy using `make program-boot`
 * driver: added support for the MAX11300 ADC/DAC/GPI/GPO device
-* driver: added support for the MCP23x17 
+* driver: added support for the MCP23x17 I/O Expander with I2C transport implementation
 
 ### Bug fixes
 
