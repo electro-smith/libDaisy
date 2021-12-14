@@ -107,18 +107,6 @@ class Mcp23017Transport
     {
         i2c_address_ = config.i2c_address << 1;
         i2c_.Init(config.i2c_config);
-
-        //BANK = 	0 : sequential register addresses
-        //MIRROR = 	0 : use configureInterrupt
-        //SEQOP = 	1 : sequential operation disabled, address pointer does not increment
-        //DISSLW = 	0 : slew rate enabled
-        //HAEN = 	0 : hardware address pin is always enabled on 23017
-        //ODR = 	0 : open drain output
-        //INTPOL = 	0 : interrupt active low
-        WriteReg(MCPRegister::IOCON, 0b00100000);
-
-        //enable all pull up resistors (will be effective for input pins only)
-        WriteReg(MCPRegister::GPPU_A, 0xFF, 0xFF);
     };
 
     I2CHandle::Result WriteReg(MCPRegister reg, uint8_t val)
@@ -177,6 +165,18 @@ class Mcp23X17
     void Init(const Config& config)
     {
         transport.Init(config.transport_config);
+
+        //BANK = 	0 : sequential register addresses
+        //MIRROR = 	0 : use configureInterrupt
+        //SEQOP = 	1 : sequential operation disabled, address pointer does not increment
+        //DISSLW = 	0 : slew rate enabled
+        //HAEN = 	0 : hardware address pin is always enabled on 23017
+        //ODR = 	0 : open drain output
+        //INTPOL = 	0 : interrupt active low
+        transport.WriteReg(MCPRegister::IOCON, 0b00100000);
+
+        //enable all pull up resistors (will be effective for input pins only)
+        transport.WriteReg(MCPRegister::GPPU_A, 0xFF, 0xFF);
     };
 
     /**
