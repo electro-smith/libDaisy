@@ -65,8 +65,8 @@ class Bme280I2CTransport
     {
         I2CHandle::Config::Peripheral periph;
         I2CHandle::Config::Speed      speed;
-        Pin                  scl;
-        Pin                  sda;
+        Pin                           scl;
+        Pin                           sda;
 
         uint8_t address;
 
@@ -192,10 +192,10 @@ class Bme280SpiTransport
     struct Config
     {
         SpiHandle::Config::Peripheral periph;
-        Pin                  sclk;
-        Pin                  miso;
-        Pin                  mosi;
-        Pin                  nss;
+        Pin                           sclk;
+        Pin                           miso;
+        Pin                           mosi;
+        Pin                           nss;
 
         Config()
         {
