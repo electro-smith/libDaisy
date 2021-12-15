@@ -169,6 +169,34 @@ USBD_ClassTypeDef  USBD_CDC =
   USBD_CDC_GetDeviceQualifierDescriptor,
 };
 
+__ALIGN_BEGIN uint8_t USBD_MIDI_CfgDesc[USB_MIDI_CONFIG_DESC_SIZ] __ALIGN_END = 
+{
+  // configuration descriptor
+  0x09, 0x02, USB_MIDI_CONFIG_DESC_SIZ, 0x00, 0x02, 0x01, 0x00, 0xc0, 0x50,
+
+  // The Audio Interface Collection
+  0x09, 0x04, 0x00, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00, // Standard AC Interface Descriptor
+  0x09, 0x24, 0x01, 0x00, 0x01, 0x09, 0x00, 0x01, 0x01, // Class-specific AC Interface Descriptor
+  0x09, 0x04, 0x01, 0x00, 0x02, 0x01, 0x03, 0x00, 0x00, // MIDIStreaming Interface Descriptors
+  0x07, 0x24, 0x01, 0x00, 0x01, 0x41, 0x00,             // Class-Specific MS Interface Header Descriptor
+
+  // MIDI IN JACKS
+  0x06, 0x24, 0x02, 0x01, 0x01, 0x00,
+  0x06, 0x24, 0x02, 0x02, 0x02, 0x00,
+
+  // MIDI OUT JACKS
+  0x09, 0x24, 0x03, 0x01, 0x03, 0x01, 0x02, 0x01, 0x00,
+  0x09, 0x24, 0x03, 0x02, 0x06, 0x01, 0x01, 0x01, 0x00,
+
+  // OUT endpoint descriptor
+  0x09, 0x05, CDC_OUT_EP, 0x02, 0x40, 0x00, 0x00, 0x00, 0x00,
+  0x05, 0x25, 0x01, 0x01, 0x01,
+
+  // IN endpoint descriptor
+  0x09, 0x05, CDC_IN_EP, 0x02, 0x40, 0x00, 0x00, 0x00, 0x00,
+  0x05, 0x25, 0x01, 0x01, 0x03
+};
+
 /* USB CDC device Configuration Descriptor */
 __ALIGN_BEGIN uint8_t USBD_CDC_CfgHSDesc[USB_CDC_CONFIG_DESC_SIZ] __ALIGN_END =
 {
@@ -757,8 +785,20 @@ static uint8_t  USBD_CDC_EP0_RxReady (USBD_HandleTypeDef *pdev)
   */
 static uint8_t  *USBD_CDC_GetFSCfgDesc (uint16_t *length)
 {
-  *length = sizeof (USBD_CDC_CfgFSDesc);
-  return USBD_CDC_CfgFSDesc;
+  switch (usbd_mode)
+  {
+    default:
+    case USBD_MODE_CDC:
+    {
+      *length = sizeof (USBD_CDC_CfgFSDesc);
+      return USBD_CDC_CfgFSDesc;
+    }
+    case USBD_MODE_MIDI:
+    {
+      *length = sizeof (USBD_MIDI_CfgDesc);
+      return USBD_MIDI_CfgDesc;
+    }
+  }
 }
 
 /**
@@ -770,8 +810,20 @@ static uint8_t  *USBD_CDC_GetFSCfgDesc (uint16_t *length)
   */
 static uint8_t  *USBD_CDC_GetHSCfgDesc (uint16_t *length)
 {
-  *length = sizeof (USBD_CDC_CfgHSDesc);
-  return USBD_CDC_CfgHSDesc;
+  switch (usbd_mode)
+  {
+    default:
+    case USBD_MODE_CDC:
+    {
+      *length = sizeof (USBD_CDC_CfgHSDesc);
+      return USBD_CDC_CfgHSDesc;
+    }
+    case USBD_MODE_MIDI:
+    {
+      *length = sizeof (USBD_MIDI_CfgDesc);
+      return USBD_MIDI_CfgDesc;
+    }
+  }
 }
 
 /**
@@ -783,8 +835,20 @@ static uint8_t  *USBD_CDC_GetHSCfgDesc (uint16_t *length)
   */
 static uint8_t  *USBD_CDC_GetOtherSpeedCfgDesc (uint16_t *length)
 {
-  *length = sizeof (USBD_CDC_OtherSpeedCfgDesc);
-  return USBD_CDC_OtherSpeedCfgDesc;
+  switch (usbd_mode)
+  {
+    default:
+    case USBD_MODE_CDC:
+    {
+      *length = sizeof (USBD_CDC_OtherSpeedCfgDesc);
+      return USBD_CDC_OtherSpeedCfgDesc;
+    }
+    case USBD_MODE_MIDI:
+    {
+      *length = sizeof (USBD_MIDI_CfgDesc);
+      return USBD_MIDI_CfgDesc;
+    }
+  }
 }
 
 /**

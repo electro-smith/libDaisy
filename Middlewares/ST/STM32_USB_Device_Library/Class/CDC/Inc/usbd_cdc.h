@@ -58,7 +58,9 @@
 #define CDC_DATA_FS_MAX_PACKET_SIZE                 64U  /* Endpoint IN & OUT Packet size */
 #define CDC_CMD_PACKET_SIZE                         8U  /* Control Endpoint Packet size */
 
+
 #define USB_CDC_CONFIG_DESC_SIZ                     67U
+#define USB_MIDI_CONFIG_DESC_SIZ                     101U
 #define CDC_DATA_HS_IN_PACKET_SIZE                  CDC_DATA_HS_MAX_PACKET_SIZE
 #define CDC_DATA_HS_OUT_PACKET_SIZE                 CDC_DATA_HS_MAX_PACKET_SIZE
 
@@ -139,6 +141,11 @@ USBD_CDC_HandleTypeDef;
 
 extern USBD_ClassTypeDef  USBD_CDC;
 #define USBD_CDC_CLASS    &USBD_CDC
+
+#define USBD_MODE_CDC  0
+#define USBD_MODE_MIDI 1
+extern uint8_t usbd_mode;
+
 /**
   * @}
   */
