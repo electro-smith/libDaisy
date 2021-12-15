@@ -284,7 +284,7 @@ class FIFOBase
     size_t GetCapacity() const { return bufferSize_ - 1; }
 
   private:
-    FIFOBase(const FIFOBase<T>& other) {} // non copyable
+    FIFOBase(const FIFOBase<T>&) {} // non copyable
 
   private:
     T*           buffer_;
