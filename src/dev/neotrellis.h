@@ -451,9 +451,9 @@ class NeoTrellis
         }
     }
 
-  private:
     NeoPixelI2C pixels;
 
+  private:
     Config    config_;
     Transport transport_;
 
