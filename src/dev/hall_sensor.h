@@ -43,12 +43,12 @@ class HallSensor
         uint32_t filter;
         uint32_t commutation_delay;
 
-        dsy_gpio_pin pin;
+        Pin pin;
 
         Config()
         {
             periph = Peripheral::TIM_4;
-            pin    = {DSY_GPIOB, 6};
+            pin    = Pin(PORTB, 6);
 
             polarity
                 = TIM_ICPOLARITY_RISING; // options are rising, falling, bothedge

@@ -62,16 +62,18 @@ void HallSensor::InitPins()
         default: break;
     }
 
-    port                = dsy_hal_map_get_port(&config_.pin);
-    GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin);
+    dsy_gpio_pin p = config_.pin;
+    port                = dsy_hal_map_get_port(&p);
+    GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&p);
     HAL_GPIO_Init(port, &GPIO_InitStruct);
-    dsy_hal_map_gpio_clk_enable(config_.pin.port);
+    dsy_hal_map_gpio_clk_enable(p.port);
 }
 
 void HallSensor::DeInitPins()
 {
-    GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin);
-    uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin);
+    dsy_gpio_pin p = config_.pin;
+    GPIO_TypeDef* port = dsy_hal_map_get_port(&p);
+    uint16_t      pin  = dsy_hal_map_get_pin(&p);
     HAL_GPIO_DeInit(port, pin);
 }
 
