@@ -187,36 +187,39 @@ class NeoTrellis
         SEESAW_STATUS_SWRST   = 0x7F,
     };
 
-    union keyEventRaw
+    struct keyEventRaw
     {
-        struct bit
+        struct Bit
         {
             uint8_t EDGE : 2; ///< the edge that was triggered
             uint8_t NUM : 6;  ///< the event number
         };                    ///< bitfield format
-        uint8_t reg;          ///< register format
+        Bit     bit;
+        uint8_t reg; ///< register format
     };
 
     /** extended key event stucture for keypad module */
-    union keyEvent
+    struct keyEvent
     {
-        struct bit
+        struct Bit
         {
             uint8_t  EDGE : 2; ///< the edge that was triggered
             uint16_t NUM : 14; ///< the event number
         };                     ///< bitfield format
-        uint16_t reg;          ///< register format
+        Bit      bit;
+        uint16_t reg; ///< register format
     };
 
     /** key state struct that will be written to seesaw chip keypad module */
-    union keyState
+    struct keyState
     {
-        struct bit
+        struct Bit
         {
             uint8_t STATE : 1;  ///< the current state of the key
             uint8_t ACTIVE : 4; ///< the registered events for that key
         };                      ///< bitfield format
-        uint8_t reg;            ///< register format
+        Bit     bit;
+        uint8_t reg; ///< register format
     };
 
     struct Config
@@ -233,6 +236,8 @@ class NeoTrellis
         OK = 0,
         ERR
     };
+
+    typedef void (*TrellisCallback)(keyEvent evt); //< Trellis Callback typedef
 
     /** Initialize the NeoTrellis device
         \param config Configuration settings
@@ -354,8 +359,8 @@ class NeoTrellis
         keyState ks;
         ks.bit.STATE  = enable;
         ks.bit.ACTIVE = (1 << edge);
-        uint8_t cmd[] = {key, ks.reg};
-        this->write(SEESAW_KEYPAD_BASE, SEESAW_KEYPAD_EVENT, cmd, 2);
+        uint8_t cmd[] = {SEESAW_KEYPAD_BASE, SEESAW_KEYPAD_EVENT, key, ks.reg};
+        transport_.Write(cmd, 4);
     }
 
     /** Enable the keypad interrupt that fires when events are in the fifo. */
@@ -364,13 +369,39 @@ class NeoTrellis
         Write8(SEESAW_KEYPAD_BASE, SEESAW_KEYPAD_INTENSET, 0x01);
     }
 
+    /** register a callback for a key addressed by key index.
+        \param  x the column index of the key. column 0 is on the lefthand side of the matix.
+        \param  y the row index of the key. row 0 is at the top of the matrix and the numbers increase downwards.
+        \param  cb the function to be called when an event from the specified key is detected.
+    */
+    void RegisterCallback(uint8_t x, uint8_t y, TrellisCallback (*cb)(keyEvent))
+    {
+        int xkey = NEO_TRELLIS_X(x);
+        int ykey
+            = NEO_TRELLIS_Y(y % NEO_TRELLIS_NUM_ROWS * NEO_TRELLIS_NUM_COLS);
+
+        _callbacks[NEO_TRELLIS_XY(xkey, ykey)] = cb;
+    }
+
+    /** Unregister a callback for a key addressed by key index.
+        \param  x the column index of the key. column 0 is on the lefthand side of the matix.
+        \param  y the row index of the key. row 0 is at the top of the matrix and the numbers increase downwards.
+    */
+    void UnregisterCallback(uint8_t x, uint8_t y)
+    {
+        int xkey = NEO_TRELLIS_X(x);
+        int ykey
+            = NEO_TRELLIS_Y(y % NEO_TRELLIS_NUM_ROWS * NEO_TRELLIS_NUM_COLS);
+
+        _callbacks[NEO_TRELLIS_XY(xkey, ykey)] = NULL;
+    }
+
   private:
     NeoPixelI2C pixels;
 
     Config    config_;
     Transport transport_;
 
-    typedef void (*TrellisCallback)(keyEvent evt);
     TrellisCallback (*_callbacks[NEO_TRELLIS_NUM_KEYS])(
         keyEvent); ///< the array of callback functions
 
