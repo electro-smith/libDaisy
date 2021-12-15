@@ -52,11 +52,11 @@ var searchData=
   ['getparentui_49',['GetParentUI',['../classdaisy_1_1_ui_page.html#a8d78fa9c2aa10c0bd36ef9ea14cce483',1,'daisy::UiPage::GetParentUI()'],['../classdaisy_1_1_ui_page.html#a3e506456c82d9f18a25c1013d48eb449',1,'daisy::UiPage::GetParentUI() const']]],
   ['getpclk1freq_50',['GetPClk1Freq',['../classdaisy_1_1_system.html#a43b38c779eed65816b35e5ec3edb5634',1,'daisy::System']]],
   ['getpclk2freq_51',['GetPClk2Freq',['../classdaisy_1_1_system.html#a84bfce9e2ad676568e31811e8b9803e5',1,'daisy::System']]],
-  ['getpin_52',['GetPin',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a2cb2af471a74e90cb05fc13be1461819',1,'daisy::patch_sm::DaisyPatchSM::GetPin()'],['../classdaisy_1_1_daisy_seed.html#ab50d750ccf424a9ca8537b696afb99a2',1,'daisy::DaisySeed::GetPin()']]],
+  ['getpin_52',['GetPin',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a2cb2af471a74e90cb05fc13be1461819',1,'daisy::patch_sm::DaisyPatchSM::GetPin()'],['../classdaisy_1_1_daisy_seed.html#ab50d750ccf424a9ca8537b696afb99a2',1,'daisy::DaisySeed::GetPin()'],['../classdaisy_1_1_mcp23_x17.html#a60f0fa9de95c2c651e6a4aec047ab283',1,'daisy::Mcp23X17::GetPin()']]],
   ['getpresent_53',['GetPresent',['../classdaisy_1_1_u_s_b_host_handle.html#a3efc40d3a6a6ef516328e1744640d887',1,'daisy::USBHostHandle']]],
   ['getprimaryonebitgraphicsdisplayid_54',['GetPrimaryOneBitGraphicsDisplayId',['../classdaisy_1_1_u_i.html#a6a5d8c6bd712790698727b14b18ca2ac',1,'daisy::UI']]],
   ['getprogrammemoryregion_55',['GetProgramMemoryRegion',['../classdaisy_1_1_system.html#ab6a34a924868c67ace84fd8a19f3e7b9',1,'daisy::System']]],
-  ['getptr_56',['GetPtr',['../classdaisy_1_1_mapped_float_value.html#afb7f7a962aa3311216f43ccf2afcb003',1,'daisy::MappedFloatValue::GetPtr()'],['../classdaisy_1_1_mapped_int_value.html#a86947977cd268fb62a2b6e237397d2e3',1,'daisy::MappedIntValue::GetPtr()'],['../classdaisy_1_1_adc_handle.html#afbc5226775ac6baacaa2f1f09e211120',1,'daisy::AdcHandle::GetPtr()']]],
+  ['getptr_56',['GetPtr',['../classdaisy_1_1_adc_handle.html#afbc5226775ac6baacaa2f1f09e211120',1,'daisy::AdcHandle::GetPtr()'],['../classdaisy_1_1_mapped_int_value.html#a86947977cd268fb62a2b6e237397d2e3',1,'daisy::MappedIntValue::GetPtr()'],['../classdaisy_1_1_mapped_float_value.html#afb7f7a962aa3311216f43ccf2afcb003',1,'daisy::MappedFloatValue::GetPtr()']]],
   ['getrandomfloat_57',['GetRandomFloat',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a95458f0d0f483d96d89be0dd134424eb',1,'daisy::patch_sm::DaisyPatchSM']]],
   ['getrandomvalue_58',['GetRandomValue',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#acbbf0b3c5615ee2b4b99638e3367554b',1,'daisy::patch_sm::DaisyPatchSM']]],
   ['getrawfloat_59',['GetRawFloat',['../classdaisy_1_1_analog_control.html#a33c39b4db77b62c46fb5093cc19b8380',1,'daisy::AnalogControl']]],
@@ -82,6 +82,6 @@ var searchData=
   ['gold_79',['GOLD',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a0b32c5df8961411a66895e57509677ac',1,'daisy::Color']]],
   ['gpio_80',['GPIO',['../classdaisy_1_1_g_p_i_o.html',1,'daisy']]],
   ['gpioport_81',['GPIOPort',['../namespacedaisy.html#a0f3f80696b55547e8471a18de01b8e13',1,'daisy']]],
-  ['green_82',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color']]],
-  ['green_83',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]]
+  ['green_82',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]],
+  ['green_83',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color']]]
 ];

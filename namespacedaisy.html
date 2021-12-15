@@ -202,6 +202,10 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_m_a_x11300_driver.html">MAX11300Driver</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Driver for the MAX11300 20 port ADC/DAC/GPIO device.  <a href="classdaisy_1_1_m_a_x11300_driver.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_mcp23017_transport.html">Mcp23017Transport</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_mcp23_x17.html">Mcp23X17</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html">MidiHandler</a></td></tr>
@@ -334,6 +338,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:ga780eec9c7c383eae7d8c39b5a9b5ba66"><td class="memItemLeft" align="right" valign="top">
 using&#160;</td><td class="memItemRight" valign="bottom"><b>MAX11300</b> = <a class="el" href="classdaisy_1_1_m_a_x11300_driver.html">daisy::MAX11300Driver</a>&lt; <a class="el" href="classdaisy_1_1_blocking_spi_transport.html">BlockingSpiTransport</a> &gt;</td></tr>
 <tr class="separator:ga780eec9c7c383eae7d8c39b5a9b5ba66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f595bc253392d5e44b18fd5426577ad"><td class="memItemLeft" align="right" valign="top"><a id="a3f595bc253392d5e44b18fd5426577ad" name="a3f595bc253392d5e44b18fd5426577ad"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>Mcp23017</b> = <a class="el" href="classdaisy_1_1_mcp23_x17.html">Mcp23X17</a>&lt; <a class="el" href="classdaisy_1_1_mcp23017_transport.html">Mcp23017Transport</a> &gt;</td></tr>
+<tr class="separator:a3f595bc253392d5e44b18fd5426577ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee317551f4e4af6b26f81739b7ba2f42"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#aee317551f4e4af6b26f81739b7ba2f42">SSD130x4WireSpi128x64Driver</a> = <a class="el" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver</a>&lt; 128, 64, <a class="el" href="classdaisy_1_1_s_s_d130x4_wire_spi_transport.html">SSD130x4WireSpiTransport</a> &gt;</td></tr>
 <tr class="separator:aee317551f4e4af6b26f81739b7ba2f42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11d2079f8e664f71755233a82ed3403a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a11d2079f8e664f71755233a82ed3403a">SSD130x4WireSpi128x32Driver</a> = <a class="el" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver</a>&lt; 128, 32, <a class="el" href="classdaisy_1_1_s_s_d130x4_wire_spi_transport.html">SSD130x4WireSpiTransport</a> &gt;</td></tr>
@@ -382,6 +389,45 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a0f3f80696b55547e8471a18de01b8e13"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO Port names.  <a href="namespacedaisy.html#a0f3f80696b55547e8471a18de01b8e13">More...</a><br /></td></tr>
 <tr class="separator:a0f3f80696b55547e8471a18de01b8e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f8fe174eb9db8e8a38e8c08155f1f46"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46">MCPRegister</a> : uint8_t { <br />
+&#160;&#160;<b>IODIR_A</b> = 0x00
+, <b>IODIR_B</b> = 0x01
+, <b>IPOL_A</b> = 0x02
+, <b>IPOL_B</b> = 0x03
+, <br />
+&#160;&#160;<b>GPINTEN_A</b> = 0x04
+, <b>GPINTEN_B</b> = 0x05
+, <b>DEFVAL_A</b> = 0x06
+, <b>DEFVAL_B</b> = 0x07
+, <br />
+&#160;&#160;<b>INTCON_A</b> = 0x08
+, <b>INTCON_B</b> = 0x09
+, <b>IOCON</b> = 0x0A
+, <b>GPPU_A</b> = 0x0C
+, <br />
+&#160;&#160;<b>GPPU_B</b> = 0x0D
+, <b>INTF_A</b> = 0x0E
+, <b>INTF_B</b> = 0x0F
+, <b>INTCAP_A</b> = 0x10
+, <br />
+&#160;&#160;<b>INTCAP_B</b> = 0x11
+, <b>GPIO_A</b> = 0x12
+, <b>GPIO_B</b> = 0x13
+, <b>OLAT_A</b> = 0x14
+, <br />
+&#160;&#160;<b>OLAT_B</b> = 0x15
+<br />
+ }</td></tr>
+<tr class="separator:a8f8fe174eb9db8e8a38e8c08155f1f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d0fda25eb2fa3a27bec48dc5871486b"><td class="memItemLeft" align="right" valign="top"><a id="a4d0fda25eb2fa3a27bec48dc5871486b" name="a4d0fda25eb2fa3a27bec48dc5871486b"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>MCPPort</b> : uint8_t { <b>A</b> = 0
+, <b>B</b> = 1
+ }</td></tr>
+<tr class="separator:a4d0fda25eb2fa3a27bec48dc5871486b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58f4604034b789f798c3872963c10f50"><td class="memItemLeft" align="right" valign="top"><a id="a58f4604034b789f798c3872963c10f50" name="a58f4604034b789f798c3872963c10f50"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>MCPMode</b> : uint8_t { <b>INPUT</b>
+, <b>INPUT_PULLUP</b>
+, <b>OUTPUT</b>
+ }</td></tr>
+<tr class="separator:a58f4604034b789f798c3872963c10f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9697449f10c05aa93ee32b36020ea387"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a9697449f10c05aa93ee32b36020ea387">Alignment</a> { <br />
 &#160;&#160;<b>centered</b>
 , <b>topLeft</b>
@@ -490,6 +536,9 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:abf09565ffab28a550d8f142cffa5c9b3"><td class="memItemLeft" align="right" valign="top"><a id="abf09565ffab28a550d8f142cffa5c9b3" name="abf09565ffab28a550d8f142cffa5c9b3"></a>
+<a class="el" href="namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46">MCPRegister</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (<a class="el" href="namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46">MCPRegister</a> a, MCPPort b)</td></tr>
+<tr class="separator:abf09565ffab28a550d8f142cffa5c9b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0b19c7433a9a4943496c1223cd410b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#ae0b19c7433a9a4943496c1223cd410b2">dsy_i2c_global_init</a> ()</td></tr>
 <tr class="separator:ae0b19c7433a9a4943496c1223cd410b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6d59bd4c60c6568d42ded1cbad96d8fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__serial.html#ga6d59bd4c60c6568d42ded1cbad96d8fd">dsy_spi_global_init</a> ()</td></tr>
@@ -849,6 +898,29 @@ Example product: <a href="https://www.adafruit.com/product/181">https://www.adaf
 <tr><td class="fieldname"><a id="a1c3b206bedb5432fc7b46e4f1cbce8f9a6e8f437322ea4b40e3e85b1f61bfba70" name="a1c3b206bedb5432fc7b46e4f1cbce8f9a6e8f437322ea4b40e3e85b1f61bfba70"></a>LOGGER_SEMIHOST&#160;</td><td class="fielddoc"><p >stdout </p>
 </td></tr>
 </table>
+
+</div>
+</div>
+<a id="a8f8fe174eb9db8e8a38e8c08155f1f46" name="a8f8fe174eb9db8e8a38e8c08155f1f46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f8fe174eb9db8e8a38e8c08155f1f46">&#9670;&nbsp;</a></span>MCPRegister</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46">daisy::MCPRegister</a> : uint8_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Registers addresses. The library use addresses for IOCON.BANK = 0. See "3.2.1 Byte mode and Sequential mode". </p>
 
 </div>
 </div>
