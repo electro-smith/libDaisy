@@ -159,4 +159,14 @@ Now you can read from either input. If you want to read the pot connected to A0 
 
 You'll notice that you access them by the order in which you initialized them, not by the number associated with the Pin.
 
+## Using Different Kinds of Inputs
+
+OK. So now we know what to do with one, or a few inputs that already conform to the expected input range.
+
+What happens when we're connecting something that doesn't?
+
+This could include sensors that output signals on the scale of millivolts, or something like a Eurorack CV input that has a wide 10V range.
+
+Let's take them one at a time.
+
 ## Further Reading
