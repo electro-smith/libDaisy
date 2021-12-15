@@ -18,6 +18,8 @@ class FixedCapStrBase
     {
     }
 
+    constexpr FixedCapStrBase(const FixedCapStrBase& other) = delete;
+
     constexpr FixedCapStrBase& operator=(const FixedCapStrBase& str)
     {
         size_ = std::min(str.Size(), capacity_);
@@ -492,6 +494,13 @@ class FixedCapStr : public FixedCapStrBase<CharType>
     {
     }
 
+    constexpr FixedCapStr(const FixedCapStr& str) noexcept
+    : FixedCapStrBase<CharType>(buffer_, capacity)
+    {
+        this->size_ = std::min(str.Size(), capacity);
+        this->Copy_(str.Data(), str.Data() + this->size_, buffer_);
+    }
+
     template <size_t otherSize>
     constexpr FixedCapStr(const FixedCapStr<otherSize>& str) noexcept
     : FixedCapStrBase<CharType>(buffer_, capacity)
@@ -512,6 +521,12 @@ class FixedCapStr : public FixedCapStrBase<CharType>
     {
         this->size_ = std::min(length, capacity);
         this->Copy_(str, str + this->size_, buffer_);
+    }
+
+    constexpr FixedCapStr& operator=(const FixedCapStr& str) noexcept
+    {
+        *static_cast<FixedCapStrBase<CharType>*>(this) = str;
+        return *this;
     }
 
   private:
