@@ -56,6 +56,8 @@
 #include "dev/max11300.h"
 #include "dev/tlv493d.h"
 #include "dev/vl53l1x.h"
+#include "dev/neopixel.h"
+#include "dev/neotrellis.h"
 #include "ui/ButtonMonitor.h"
 #include "ui/PotMonitor.h"
 #include "ui/UI.h"
