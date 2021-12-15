@@ -4,6 +4,53 @@
 
 #define SEESAW_ADDRESS (0x49) ///< Default Seesaw I2C address
 
+// RGB NeoPixel permutations; white and red offsets are always same
+// Offset:         W          R          G          B
+#define NEO_RGB ((0 << 6) | (0 << 4) | (1 << 2) | (2))
+#define NEO_RBG ((0 << 6) | (0 << 4) | (2 << 2) | (1))
+#define NEO_GRB ((1 << 6) | (1 << 4) | (0 << 2) | (2))
+#define NEO_GBR ((2 << 6) | (2 << 4) | (0 << 2) | (1))
+#define NEO_BRG ((1 << 6) | (1 << 4) | (2 << 2) | (0))
+#define NEO_BGR ((2 << 6) | (2 << 4) | (1 << 2) | (0))
+
+// RGBW NeoPixel permutations; all 4 offsets are distinct
+// Offset:         W          R          G          B
+#define NEO_WRGB ((0 << 6) | (1 << 4) | (2 << 2) | (3))
+#define NEO_WRBG ((0 << 6) | (1 << 4) | (3 << 2) | (2))
+#define NEO_WGRB ((0 << 6) | (2 << 4) | (1 << 2) | (3))
+#define NEO_WGBR ((0 << 6) | (3 << 4) | (1 << 2) | (2))
+#define NEO_WBRG ((0 << 6) | (2 << 4) | (3 << 2) | (1))
+#define NEO_WBGR ((0 << 6) | (3 << 4) | (2 << 2) | (1))
+
+#define NEO_RWGB ((1 << 6) | (0 << 4) | (2 << 2) | (3))
+#define NEO_RWBG ((1 << 6) | (0 << 4) | (3 << 2) | (2))
+#define NEO_RGWB ((2 << 6) | (0 << 4) | (1 << 2) | (3))
+#define NEO_RGBW ((3 << 6) | (0 << 4) | (1 << 2) | (2))
+#define NEO_RBWG ((2 << 6) | (0 << 4) | (3 << 2) | (1))
+#define NEO_RBGW ((3 << 6) | (0 << 4) | (2 << 2) | (1))
+
+#define NEO_GWRB ((1 << 6) | (2 << 4) | (0 << 2) | (3))
+#define NEO_GWBR ((1 << 6) | (3 << 4) | (0 << 2) | (2))
+#define NEO_GRWB ((2 << 6) | (1 << 4) | (0 << 2) | (3))
+#define NEO_GRBW ((3 << 6) | (1 << 4) | (0 << 2) | (2))
+#define NEO_GBWR ((2 << 6) | (3 << 4) | (0 << 2) | (1))
+#define NEO_GBRW ((3 << 6) | (2 << 4) | (0 << 2) | (1))
+
+#define NEO_BWRG ((1 << 6) | (2 << 4) | (3 << 2) | (0))
+#define NEO_BWGR ((1 << 6) | (3 << 4) | (2 << 2) | (0))
+#define NEO_BRWG ((2 << 6) | (1 << 4) | (3 << 2) | (0))
+#define NEO_BRGW ((3 << 6) | (1 << 4) | (2 << 2) | (0))
+#define NEO_BGWR ((2 << 6) | (3 << 4) | (1 << 2) | (0))
+#define NEO_BGRW ((3 << 6) | (2 << 4) | (1 << 2) | (0))
+
+// If 400 KHz support is enabled, the third parameter to the constructor
+// requires a 16-bit value (in order to select 400 vs 800 KHz speed).
+// If only 800 KHz is enabled (as is default on ATtiny), an 8-bit value
+// is sufficient to encode pixel color order, saving some space.
+
+#define NEO_KHZ800 0x0000 // 800 KHz datastream
+#define NEO_KHZ400 0x0100 // 400 KHz datastream
+
 namespace daisy
 {
 /** @addtogroup external 
@@ -151,8 +198,17 @@ class NeoPixel
     {
         typename Transport::Config transport_config;
         bool                       init_reset;
+        uint16_t                   type;
+        uint16_t                   numLEDs;
+        int8_t                     output_pin;
 
-        Config() { init_reset = true; }
+        Config()
+        {
+            init_reset = true;
+            type       = NEO_GRB + NEO_KHZ800;
+            numLEDs    = 16;
+            output_pin = 6;
+        }
     };
 
     enum Result
@@ -212,6 +268,10 @@ class NeoPixel
     Result Init(Config config)
     {
         config_ = config;
+
+        type    = config_.type;
+        numLEDs = config_.numLEDs;
+        pin     = config_.output_pin;
 
         transport_.Init(config_.transport_config);
 
