@@ -169,22 +169,38 @@ class MAX11300Driver
     };
 
     /**
-     * Pins of the MAX11300 configured for AnalogRead/Write may be defined to 
+     * Pins of the MAX11300 configured for AnalogRead may be defined to 
      * operate within several pre-defined voltage ranges (assuming the power supply 
      * requirements for the range is met).
      * 
-     * Pins configiured for DigitalRead/Write are 0-5V only, and do not tolerate
-     * or produce negative voltages.
+     * Pins configiured for DigitalRead are 0-5V only, and do not tolerate negative
+     * voltages.
      * 
      * WARNING, when a pin is configured as DigitalRead and a voltage lower than
-     *  -250mV is applied, The codes read from ALL other pins confiured as
+     * -250mV is applied, the codes read from ALL other pins confiured as
      * AnalogRead will become unusuably corrupted.
      */
-    enum class VoltageRange
+    enum class AdcVoltageRange
     {
         ZERO_TO_10       = 0x0100,
         NEGATIVE_5_TO_5  = 0x0200,
-        NEGATIVE_10_TO_0 = 0x0300
+        NEGATIVE_10_TO_0 = 0x0300,
+        ZERO_TO_2P5      = 0x0400
+    };
+
+    /**
+     * Pins of the MAX11300 configured for AnalogWrite may be defined to 
+     * operate within several pre-defined voltage ranges (assuming the power supply 
+     * requirements for the range is met).
+     * 
+     * Pins configiured for DigitalWrite are 0-5V only, and do not produce negative
+     * voltages.
+     */
+    enum class DacVoltageRange
+    {
+        ZERO_TO_10       = 0x0100,
+        NEGATIVE_5_TO_5  = 0x0200,
+        NEGATIVE_10_TO_0 = 0x0300,
     };
 
 
@@ -308,20 +324,20 @@ class MAX11300Driver
         return SetPinConfig(pin);
     }
 
-    Result ConfigurePinAsAnalogRead(Pin pin, VoltageRange range)
+    Result ConfigurePinAsAnalogRead(Pin pin, AdcVoltageRange range)
     {
         pin_configurations_[pin].Defaults();
-        pin_configurations_[pin].mode  = PinMode::ANALOG_IN;
-        pin_configurations_[pin].range = range;
+        pin_configurations_[pin].mode      = PinMode::ANALOG_IN;
+        pin_configurations_[pin].range.adc = range;
 
         return SetPinConfig(pin);
     }
 
-    Result ConfigurePinAsAnalogWrite(Pin pin, VoltageRange range)
+    Result ConfigurePinAsAnalogWrite(Pin pin, DacVoltageRange range)
     {
         pin_configurations_[pin].Defaults();
-        pin_configurations_[pin].mode  = PinMode::ANALOG_OUT;
-        pin_configurations_[pin].range = range;
+        pin_configurations_[pin].mode      = PinMode::ANALOG_OUT;
+        pin_configurations_[pin].range.dac = range;
 
         return SetPinConfig(pin);
     }
@@ -342,7 +358,7 @@ class MAX11300Driver
      * \param pin - The pin of which to read the value
      * \return - The raw, 12 bit value of the given ANALOG_IN (ADC) pin.
      */
-    uint16_t ReadAnalogPinRaw(Pin pin)
+    uint16_t ReadAnalogPinRaw(Pin pin) const
     {
         if(pin_configurations_[pin].value == nullptr)
         {
@@ -359,10 +375,10 @@ class MAX11300Driver
      * \param pin - The pin of which to read the voltage
      * \return - The value of the given ANALOG_IN (ADC) pin in volts
      */
-    float ReadAnalogPinVolts(Pin pin)
+    float ReadAnalogPinVolts(Pin pin) const
     {
         return MAX11300Driver::TwelveBitUintToVolts(
-            ReadAnalogPinRaw(pin), pin_configurations_[pin].range);
+            ReadAnalogPinRaw(pin), pin_configurations_[pin].range.adc);
     }
 
     /**
@@ -403,7 +419,7 @@ class MAX11300Driver
      * \param pin - The pin of which to read the value
      * \return - The boolean state of the pin
      */
-    bool ReadDigitalPin(Pin pin)
+    bool ReadDigitalPin(Pin pin) const
     {
         if(pin > Pin::PIN_15)
         {
@@ -557,34 +573,30 @@ class MAX11300Driver
      * voltage range, to the first 12 bits (0-4095) of an unsigned 16 bit integer value. 
      * 
      * \param volts the voltage to convert
-     * \param range the MAX11300::VoltageRange to constrain to
+     * \param range the MAX11300::DacVoltageRange to constrain to
      * \return the voltage as 12 bit unsigned integer
      */
-    static uint16_t VoltsTo12BitUint(float volts, VoltageRange range)
+    static uint16_t VoltsTo12BitUint(float volts, DacVoltageRange range)
     {
         float vmax    = 0;
         float vmin    = 0;
         float vscaler = 0;
         switch(range)
         {
-            case VoltageRange::NEGATIVE_10_TO_0:
+            case DacVoltageRange::NEGATIVE_10_TO_0:
                 vmin    = -10;
                 vmax    = 0;
                 vscaler = 4095.0f / (vmax - vmin);
                 break;
-            case VoltageRange::NEGATIVE_5_TO_5:
+            case DacVoltageRange::NEGATIVE_5_TO_5:
                 vmin    = -5;
                 vmax    = 5;
                 vscaler = 4095.0f / (vmax - vmin);
                 break;
-            case VoltageRange::ZERO_TO_10:
+            case DacVoltageRange::ZERO_TO_10:
                 vmin    = 0;
                 vmax    = 10;
                 vscaler = 4095.0f / (vmax - vmin);
-                break;
-            default:
-                // Nothing left to do
-                return 0;
                 break;
         }
         // Clamp...
@@ -603,34 +615,35 @@ class MAX11300Driver
      * scaled and bound to the given voltage range.
      * 
      * \param value the 12 bit value to convert
-     * \param range the MAX11300::VoltageRange to constrain to
+     * \param range the MAX11300::AdcVoltageRange to constrain to
      * \return the value as a float voltage constrained to the given voltage range
      */
-    static float TwelveBitUintToVolts(uint16_t value, VoltageRange range)
+    static float TwelveBitUintToVolts(uint16_t value, AdcVoltageRange range)
     {
         float vmax    = 0;
         float vmin    = 0;
         float vscaler = 0;
         switch(range)
         {
-            case VoltageRange::NEGATIVE_10_TO_0:
+            case AdcVoltageRange::NEGATIVE_10_TO_0:
                 vmin    = -10;
                 vmax    = 0;
                 vscaler = (vmax - vmin) / 4095;
                 break;
-            case VoltageRange::NEGATIVE_5_TO_5:
+            case AdcVoltageRange::NEGATIVE_5_TO_5:
                 vmin    = -5;
                 vmax    = 5;
                 vscaler = (vmax - vmin) / 4095;
                 break;
-            case VoltageRange::ZERO_TO_10:
+            case AdcVoltageRange::ZERO_TO_10:
                 vmin    = 0;
                 vmax    = 10;
                 vscaler = (vmax - vmin) / 4095;
                 break;
-            default:
-                // Nothing left to do
-                return 0;
+            case AdcVoltageRange::ZERO_TO_2P5:
+                vmin    = 0;
+                vmax    = 2.5;
+                vscaler = (vmax - vmin) / 4095;
                 break;
         }
         // Clamp...
@@ -661,8 +674,12 @@ class MAX11300Driver
      */
     struct PinConfig
     {
-        PinMode      mode;  /**< & */
-        VoltageRange range; /**< & */
+        PinMode mode; /**< & */
+        union
+        {
+            AdcVoltageRange adc;
+            DacVoltageRange dac;
+        } range; /**< & */
         /**
          * This is a voltage value used as follows:
          * 
@@ -681,7 +698,7 @@ class MAX11300Driver
         void Defaults()
         {
             mode      = PinMode::NONE;
-            range     = VoltageRange::ZERO_TO_10;
+            range.adc = AdcVoltageRange::ZERO_TO_10;
             threshold = 0.0f;
             value     = nullptr;
         }
@@ -709,13 +726,19 @@ class MAX11300Driver
 
         // Apply the pin configuration
         pin_func_cfg = pin_func_cfg
-                       | static_cast<uint16_t>(pin_configurations_[pin].mode)
-                       | static_cast<uint16_t>(pin_configurations_[pin].range);
+                       | static_cast<uint16_t>(pin_configurations_[pin].mode);
 
-        if(pin_configurations_[pin].mode == PinMode::ANALOG_IN)
+        if(pin_configurations_[pin].mode == PinMode::ANALOG_OUT)
+        {
+            pin_func_cfg
+                |= static_cast<uint16_t>(pin_configurations_[pin].range.dac);
+        }
+        else if(pin_configurations_[pin].mode == PinMode::ANALOG_IN)
         {
             // In ADC mode we'll average 128 samples per Update
-            pin_func_cfg = pin_func_cfg | 0x00e0;
+            pin_func_cfg
+                = pin_func_cfg | 0x00e0
+                  | static_cast<uint16_t>(pin_configurations_[pin].range.adc);
         }
         else if(pin_configurations_[pin].mode == PinMode::GPI)
         {
@@ -726,7 +749,7 @@ class MAX11300Driver
             WriteRegister((MAX11300_DACDAT_BASE + pin),
                           MAX11300Driver::VoltsTo12BitUint(
                               pin_configurations_[pin].threshold,
-                              pin_configurations_[pin].range));
+                              pin_configurations_[pin].range.dac));
         }
         else if(pin_configurations_[pin].mode == PinMode::GPO)
         {
@@ -735,7 +758,7 @@ class MAX11300Driver
             WriteRegister((MAX11300_DACDAT_BASE + pin),
                           MAX11300Driver::VoltsTo12BitUint(
                               pin_configurations_[pin].threshold,
-                              pin_configurations_[pin].range));
+                              pin_configurations_[pin].range.dac));
         }
 
         // Write the configuration now...
