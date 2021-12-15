@@ -34,16 +34,16 @@ class Bmp390I2CTransport
     {
         I2CHandle::Config::Peripheral periph;
         I2CHandle::Config::Speed      speed;
-        dsy_gpio_pin                  scl;
-        dsy_gpio_pin                  sda;
+        Pin                  scl;
+        Pin                  sda;
 
         Config()
         {
             periph = I2CHandle::Config::Peripheral::I2C_1;
             speed  = I2CHandle::Config::Speed::I2C_400KHZ;
 
-            scl = {DSY_GPIOB, 8};
-            sda = {DSY_GPIOB, 9};
+            scl = Pin(PORTB, 8);
+            sda = Pin(PORTB, 9);
         }
     };
 
@@ -89,18 +89,18 @@ class Bmp390SpiTransport
     struct Config
     {
         SpiHandle::Config::Peripheral periph;
-        dsy_gpio_pin                  sclk;
-        dsy_gpio_pin                  miso;
-        dsy_gpio_pin                  mosi;
-        dsy_gpio_pin                  nss;
+        Pin                  sclk;
+        Pin                  miso;
+        Pin                  mosi;
+        Pin                  nss;
 
         Config()
         {
             periph = SpiHandle::Config::Peripheral::SPI_1;
-            sclk   = {DSY_GPIOG, 11};
-            miso   = {DSY_GPIOB, 4};
-            mosi   = {DSY_GPIOB, 5};
-            nss    = {DSY_GPIOG, 10};
+            sclk   = Pin(PORTG, 11);
+            miso   = Pin(PORTB, 4);
+            mosi   = Pin(PORTB, 5);
+            nss    = Pin(PORTG, 10);
         }
     };
 
