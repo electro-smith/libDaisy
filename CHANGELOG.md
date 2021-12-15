@@ -8,12 +8,42 @@
 
 ### Bug Fixes
 
+### Other
+
+### Migrating
+
+## v4.0.0
+
+### Breaking Changes
+
+* driver: added support for the 0 .. 2.5V ADC range to MAX11300 getter functions `const`, splitting the `enum VoltageRange` into two enums for the ADC and DAC configurations.
+
+### Features
+
+* driver: added support for the MCP23x17 I/O Expander with I2C transport implementation
+
+### Bug Fixes
+
 * usb: fixed bug where using FatFS and a USB Device class simultaneously would result in a linker error.
   * Shared IRQHandlers for the USB HS peripheral have been moved to sys/system.cpp
+* driver: made MAX11300 getter functions `const`
+* cmake: changed optimization to `-O0` for Debug builds
 
 ### Other
 
 ### Migrating
+
+#### MAX11300
+
+```c++
+// Old: Same enum used for DAC and ADC configurations
+max11300driver.ConfigurePinAsAnalogRead(daisy::MAX11300::PIN_0, daisy::MAX11300::VoltageRange::NEGATIVE_5_TO_5);
+max11300driver.ConfigurePinAsAnalogWrite(daisy::MAX11300::PIN_1, daisy::MAX11300::VoltageRange::NEGATIVE_5_TO_5);
+
+// New: Different enum used for DAC and ADC configurations
+max11300driver.ConfigurePinAsAnalogRead(daisy::MAX11300::PIN_0, daisy::MAX11300::AdcVoltageRange::NEGATIVE_5_TO_5);
+max11300driver.ConfigurePinAsAnalogWrite(daisy::MAX11300::PIN_1, daisy::MAX11300::DacVoltageRange::NEGATIVE_5_TO_5);
+```
 
 ## v3.0.0
 
