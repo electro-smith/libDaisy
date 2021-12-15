@@ -31,8 +31,8 @@ class Bno055I2CTransport
     {
         I2CHandle::Config::Peripheral periph;
         I2CHandle::Config::Speed      speed;
-        dsy_gpio_pin                  scl;
-        dsy_gpio_pin                  sda;
+        Pin                           scl;
+        Pin                           sda;
 
         uint8_t address;
 
@@ -43,8 +43,8 @@ class Bno055I2CTransport
             periph = I2CHandle::Config::Peripheral::I2C_1;
             speed  = I2CHandle::Config::Speed::I2C_400KHZ;
 
-            scl = {DSY_GPIOB, 8};
-            sda = {DSY_GPIOB, 9};
+            scl = Pin(PORTB, 8);
+            sda = Pin(PORTB, 9);
         }
     };
 
