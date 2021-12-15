@@ -255,16 +255,9 @@ class NeoTrellis
         transport_.Init(config_.transport_config);
 
         // init neopixels
-        for(int x = 0; x < NEO_TRELLIS_NUM_COLS; x++)
+        if(pixels.Init(config_.pixels_conf) == NeoPixelI2C::Result::ERR)
         {
-            for(int y = 0; y < NEO_TRELLIS_NUM_ROWS; y++)
-            {
-                if(pixels[x][y].Init(config_.pixels_conf)
-                   == NeoPixelI2C::Result::ERR)
-                {
-                    return ERR;
-                }
-            }
+            return ERR;
         }
 
         if(config_.init_reset)
@@ -427,7 +420,23 @@ class NeoTrellis
         int ykey
             = NEO_TRELLIS_Y(y % NEO_TRELLIS_NUM_ROWS * NEO_TRELLIS_NUM_COLS);
 
-        pixels[x][y].SetPixelColor(NEO_TRELLIS_XY(xkey, ykey), color);
+        pixels.SetPixelColor(NEO_TRELLIS_XY(xkey, ykey), color);
+    }
+
+    /** set the color of a neopixel at a key number.
+        \param  num the keynumber to set the color of. Key 0 is in the top left
+            corner of the trellis matrix, key 1 is directly to the right of it,
+            and the last key number is in the bottom righthand corner.
+        \param  color the color to set the pixel to. This is a 24 bit RGB value.
+            for example, full brightness red would be 0xFF0000, and full
+            brightness blue would be 0x0000FF.
+    */
+    void SetPixelColor(uint16_t num, uint32_t color)
+    {
+        uint8_t x = NEO_TRELLIS_X(num);
+        uint8_t y = NEO_TRELLIS_Y(num);
+
+        SetPixelColor(x, y, color);
     }
 
     /** call show for all connected neotrellis boards to show all neopixels */
@@ -437,13 +446,13 @@ class NeoTrellis
         {
             for(int m = 0; m < NEO_TRELLIS_NUM_COLS; m++)
             {
-                pixels[n][m].Show();
+                pixels.Show();
             }
         }
     }
 
   private:
-    NeoPixelI2C pixels[NEO_TRELLIS_NUM_COLS][NEO_TRELLIS_NUM_ROWS];
+    NeoPixelI2C pixels;
 
     Config    config_;
     Transport transport_;
