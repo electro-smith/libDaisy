@@ -187,39 +187,45 @@ class NeoTrellis
         SEESAW_STATUS_SWRST   = 0x7F,
     };
 
-    struct keyEventRaw
+    union keyEventRaw
     {
-        struct Bit
+        struct
         {
             uint8_t EDGE : 2; ///< the edge that was triggered
             uint8_t NUM : 6;  ///< the event number
-        };                    ///< bitfield format
-        Bit     bit;
-        uint8_t reg; ///< register format
+        } bit;                ///< bitfield format
+        uint8_t reg;          ///< register format
     };
 
     /** extended key event stucture for keypad module */
-    struct keyEvent
+    union keyEvent
     {
         struct Bit
         {
             uint8_t  EDGE : 2; ///< the edge that was triggered
             uint16_t NUM : 14; ///< the event number
-        };                     ///< bitfield format
-        Bit      bit;
-        uint16_t reg; ///< register format
+        } bit;                 ///< bitfield format
+        uint16_t reg;          ///< register format
     };
 
     /** key state struct that will be written to seesaw chip keypad module */
-    struct keyState
+    union keyState
     {
-        struct Bit
+        struct
         {
             uint8_t STATE : 1;  ///< the current state of the key
             uint8_t ACTIVE : 4; ///< the registered events for that key
-        };                      ///< bitfield format
-        Bit     bit;
-        uint8_t reg; ///< register format
+        } bit;                  ///< bitfield format
+        uint8_t reg;            ///< register format
+    };
+
+    /** keypad module edge definitions */
+    enum KeypadEdge
+    {
+        HIGH = 0,
+        LOW,
+        FALLING,
+        RISING,
     };
 
     struct Config
@@ -248,9 +254,17 @@ class NeoTrellis
 
         transport_.Init(config_.transport_config);
 
-        if(pixels.Init(config_.pixels_conf) == NeoPixelI2C::Result::ERR)
+        // init neopixels
+        for(int x = 0; x < NEO_TRELLIS_NUM_COLS; x++)
         {
-            return ERR;
+            for(int y = 0; y < NEO_TRELLIS_NUM_ROWS; y++)
+            {
+                if(pixels[x][y].Init(config_.pixels_conf)
+                   == NeoPixelI2C::Result::ERR)
+                {
+                    return ERR;
+                }
+            }
         }
 
         if(config_.init_reset)
@@ -303,9 +317,14 @@ class NeoTrellis
         \param  edge the edge sensitivity of the event
         \param  enable pass true to enable the passed event, false to disable it.
     */
-    void ActivateKey(uint8_t key, uint8_t edge, bool enable)
+    void ActivateKey(uint8_t x, uint8_t y, uint8_t edge, bool enable)
     {
-        SetKeypadEvent(NEO_TRELLIS_KEY(key), edge, enable);
+        int xkey = NEO_TRELLIS_X(x);
+        int ykey
+            = NEO_TRELLIS_Y(y % NEO_TRELLIS_NUM_ROWS * NEO_TRELLIS_NUM_COLS);
+
+        SetKeypadEvent(
+            NEO_TRELLIS_KEY(NEO_TRELLIS_XY(xkey, ykey)), edge, enable);
     }
 
     /** read all events currently stored in the seesaw fifo and call any callbacks.
@@ -396,8 +415,35 @@ class NeoTrellis
         _callbacks[NEO_TRELLIS_XY(xkey, ykey)] = NULL;
     }
 
+    /** set the color of a neopixel at a key index.
+        \param  x the column index of the key. column 0 is on the lefthand side of the matrix.
+        \param  y the row index of the key. row 0 is at the top of the matrix and the numbers increase downwards.
+        \param  color the color to set the pixel to. This is a 24 bit RGB value. 
+        for example, full brightness red would be 0xFF0000, and full brightness blue would be 0x0000FF.
+    */
+    void SetPixelColor(uint8_t x, uint8_t y, uint32_t color)
+    {
+        int xkey = NEO_TRELLIS_X(x);
+        int ykey
+            = NEO_TRELLIS_Y(y % NEO_TRELLIS_NUM_ROWS * NEO_TRELLIS_NUM_COLS);
+
+        pixels[x][y].SetPixelColor(NEO_TRELLIS_XY(xkey, ykey), color);
+    }
+
+    /** call show for all connected neotrellis boards to show all neopixels */
+    void Show()
+    {
+        for(int n = 0; n < NEO_TRELLIS_NUM_ROWS; n++)
+        {
+            for(int m = 0; m < NEO_TRELLIS_NUM_COLS; m++)
+            {
+                pixels[n][m].Show();
+            }
+        }
+    }
+
   private:
-    NeoPixelI2C pixels;
+    NeoPixelI2C pixels[NEO_TRELLIS_NUM_COLS][NEO_TRELLIS_NUM_ROWS];
 
     Config    config_;
     Transport transport_;
