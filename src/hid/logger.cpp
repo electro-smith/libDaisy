@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cassert>
 #include "logger.h"
+#include "sys/system.h"
 
 namespace daisy
 {
@@ -54,6 +55,7 @@ void Logger<dest>::StartLog(bool wait_for_pc)
      */
     PrintLine("Daisy is online");
     PrintLine("===============");
+    System::Delay(10);
 }
 
 template <LoggerDestination dest>
