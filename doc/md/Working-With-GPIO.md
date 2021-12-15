@@ -8,7 +8,7 @@ The Daisy exposes several GPIO on it's pinout. Most of these pins can do much mo
 
 Below, we'll discuss the code, hardware, and provide a few examples of how to use the GPIO within the Daisy ecosystem.
 
-## The CPP objects used
+## The CPP Objects Used
 
 We'll be using the `DaisySeed`, `Pin`, and `GPIO` objects in the following sections.
 
@@ -49,17 +49,17 @@ using namespace daisy::seed;
 DaisySeed hw;
 
 int main(void) {
-  /** Initialize the Daisy Seed */
+  // Initialize the Daisy Seed
   hw.Init();
 
-  /** Create a GPIO object */
+  // Create a GPIO object
   GPIO my_button;
 
-  /** Initialize the GPIO object */
+  // Initialize the GPIO object
   my_button.Init(D0, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
 
   while(1) {
-    /** And let's store the state of the button in a variable called "button_state" */
+    // And let's store the state of the button in a variable called "button_state"
     bool button_state = my_button.Read();
   }
 }
@@ -161,7 +161,7 @@ And then we can use the `button_state` variable we were reading from the button 
 ```cpp
 while(1)
 {
-  /** And let's store the state of the button in a variable called "button_state" */
+  // And let's store the state of the button in a variable called "button_state"
   bool button_state = my_button.Read();
   my_led.Write(button_state);
 }
@@ -174,8 +174,8 @@ So you get that all set up, and you might be thinking, "Well, this is great, but
 That's because of the way we set up the button in the first step. Because we used the internal pull up resistor, to avoiding adding extra parts to our board, the GPIO is returning true while the button is not pressed instead of what we might expect. Well, C++ has a very easy way of flipping that over.
 
 ```cpp
-bool button_state = my_button.Read(); /** state is false while button is pressed */
-bool button_pressed = !button_state; /** "!" is a "not" operator, which will flip a bool var. */
+bool button_state = my_button.Read(); // state is false while button is pressed
+bool button_pressed = !button_state; // "!" is a "not" operator, which will flip a bool var.
 ```
 
 So all together, our short little light switch program will look something like:
@@ -189,26 +189,25 @@ using namespace daisy::seed;
 DaisySeed hw;
 
 int main(void) {
-  /** Initialize the Daisy Seed */
+  // Initialize the Daisy Seed
   hw.Init();
 
-  /** Create our GPIO object */
+  // Create our GPIO object
   GPIO my_button;
   GPIO my_led;
 
-  /** Initialize the GPIO object for our button */
+  // Initialize the GPIO object for our button */
   my_button.Init(D0, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
 
-  /** Initialize the GPIO object for our LED */
+  // Initialize the GPIO object for our LED
   my_led.Init(D1, GPIO::Mode::OUTPUT);
 
   while(1) {
-    /** And let's store the state of the button in a variable called "button_state" */
+    // And let's store the state of the button in a variable called "button_state"
     bool button_state = my_button.Read();
 
-    /** And we want to light up the LED while we're pressing the button 
-     *  so let's use the "!" to flip over the button_state
-     */
+    // And we want to light up the LED while we're pressing the button 
+    // so let's use the "!" to flip over the button_state
     my_led.Write(!button_state);
   }
 }
