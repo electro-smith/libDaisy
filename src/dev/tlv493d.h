@@ -34,8 +34,8 @@ class Tlv493dI2CTransport
     {
         I2CHandle::Config::Peripheral periph;
         I2CHandle::Config::Speed      speed;
-        Pin                  scl;
-        Pin                  sda;
+        Pin                           scl;
+        Pin                           sda;
 
         Config()
         {
