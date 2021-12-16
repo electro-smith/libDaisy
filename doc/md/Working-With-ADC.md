@@ -102,7 +102,7 @@ int main(void) {
 }
 ```
 
-To find out more about the serial printing, and what software to use, see our [tutorial on working with Serial Printing]().
+To find out more about the serial printing, and what software to use, see our [tutorial on working with Serial Printing](Printing-With-USB.md).
 
 With the above program, you should see a number printing that moves from 0 to 65536 as you rotate the pot. Now, pots, and electronics aren't perfect.
 So there's a chance that this may not reach those extremes, or it might reach them slightly before the edges of the potentiometer's range.
@@ -110,9 +110,9 @@ This will largely depend on the potentiometer you're using.
 
 Now that's great and all, but it would be nicer to work with a number that is scaled between 0 and 1 instead (since that's more useful for doing other things).
 
-We can actually get the value in that range instead by changing the line where we were doing 
+We can actually get the value in that range instead by changing the line where we were doing:
 
-```cpp 
+```cpp
 int value = hw.adc.Get(0); // value will be 0-65536
 ```
 
