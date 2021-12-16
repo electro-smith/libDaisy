@@ -170,3 +170,8 @@ This could include sensors that output signals on the scale of millivolts, or so
 Let's take them one at a time.
 
 ## Further Reading
+
+Topics coming soon:
+
+* Printing with USB
+* HID classes (Switch, Led, AnalogControl) and why we use them

@@ -4,7 +4,7 @@ GPIO stands for General Purpose Input/Output. These are common to microcontrolle
 
 GPIO are used as the basis for several interface components including switches, LEDs, encoders, etc.
 
-The Daisy exposes several GPIO on it's pinout. Most of these pins can do much more than just be a digital input or output, but we'll keep it simple for now.
+The Daisy exposes several GPIO on its pinout. Most of these pins can do much more than just be a digital input or output, but we'll keep it simple for now.
 
 Below, we'll discuss the code, hardware, and provide a few examples of how to use the GPIO within the Daisy ecosystem.
 
@@ -138,7 +138,7 @@ We will always have to Init the GPIO with a Pin, otherwise the program won't kno
 
 ## GPIO Output
 
-So you've got your button reading code, and your board wired up, and you're probably thinking, "Great! So how can I tell if I've done this correctly!?".
+So you've got your button reading code, your board wired up, and you're probably thinking, "Great! So how can I tell if I've done this correctly!?".
 
 Well, let's set up a second pin as an output to light up an LED when we push our button. That way we can tell everything we've done so far is working.
 
@@ -171,7 +171,7 @@ And that's it! Easy, right?
 
 So you get that all set up, and you might be thinking, "Well, this is great, but the LED turns off when I push the button instead of turning it on, what the heck?"
 
-That's because of the way we set up the button in the first step. Because we used the internal pull up resistor, to avoiding adding extra parts to our board, the GPIO is returning true while the button is not pressed instead of what we might expect. Well, C++ has a very easy way of flipping that over.
+That's because of the way we set up the button in the first step. Because we used the internal pull up resistor, to avoid adding extra parts to our board, the GPIO is returning true while the button is not pressed instead of what we might expect. Well, C++ has a very easy way of flipping that over.
 
 ```cpp
 bool button_state = my_button.Read(); // state is false while button is pressed
