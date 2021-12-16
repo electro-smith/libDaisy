@@ -140,7 +140,7 @@ class Bmp390SpiTransport
     SpiHandle spi_;
 };
 
-/** @brief Device support for CMP390 temperature / pressure sensor.
+/** @brief Device support for BMP390 temperature / pressure sensor.
     Class is based on Adafruit arduino support, and Bosch datasheet.
     @author beserge
     @date November 2021
