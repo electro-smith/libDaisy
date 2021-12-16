@@ -39,6 +39,8 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/dev/codec_pcm3060.cpp
     ${MODULE_DIR}/dev/codec_wm8731.cpp
     ${MODULE_DIR}/dev/lcd_hd44780.cpp
+    ${MODULE_DIR}/dev/motor.cpp
+    ${MODULE_DIR}/dev/pca9685.cpp
     ${MODULE_DIR}/hid/ctrl.cpp
     ${MODULE_DIR}/hid/encoder.cpp
     ${MODULE_DIR}/hid/gatein.cpp
