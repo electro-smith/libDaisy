@@ -132,7 +132,7 @@ class NeoTrellisI2CTransport
     bool error_;
 };
 
-/** \brief Device support for BNO055 Humidity Pressure Sensor
+/** \brief Device support for the Adafruit Neotrellis device
     @author beserge
     @date December 2021
 */
