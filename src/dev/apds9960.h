@@ -632,6 +632,31 @@ class Apds9960
         return status_.AVALID;
     }
 
+
+    /** Reads the raw red channel value
+        \return Red channel value
+    */
+    uint16_t GetColorDataRed() { return Read16R(APDS9960_RDATAL); }
+
+
+    /** Reads the raw green channel value
+        \return Green channel value
+    */
+    uint16_t GetColorDataGreen() { return Read16R(APDS9960_GDATAL); }
+
+
+    /** Reads the raw blue channel value
+        \return Blue channel value
+    */
+    uint16_t GetColorDataBlue() { return Read16R(APDS9960_BDATAL); }
+
+
+    /** Reads the raw clear channel value
+        \return Clear channel value
+    */
+    uint16_t GetColorDataClear() { return Read16R(APDS9960_CDATAL); }
+
+
     /** Reads the raw red, green, blue and clear channel values
         \param  *r Red value
         \param  *g Green value
@@ -640,10 +665,10 @@ class Apds9960
     */
     void GetColorData(uint16_t *r, uint16_t *g, uint16_t *b, uint16_t *c)
     {
-        *c = Read16R(APDS9960_CDATAL);
-        *r = Read16R(APDS9960_RDATAL);
-        *g = Read16R(APDS9960_GDATAL);
-        *b = Read16R(APDS9960_BDATAL);
+        *c = GetColorDataClear();
+        *r = GetColorDataRed();
+        *g = GetColorDataGreen();
+        *b = GetColorDataBlue();
     }
 
   private:
