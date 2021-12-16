@@ -121,7 +121,7 @@ class Bno055I2CTransport
     bool error_;
 };
 
-/** \brief Device support for BNO055 Humidity Pressure Sensor
+/** \brief Device support for BNO055 Absolute Orientation Sensor
     @author beserge
     @date December 2021
 */
