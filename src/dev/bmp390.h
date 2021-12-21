@@ -447,7 +447,7 @@ class Bmp390
     /** This internal API is used to calculate the power functionality for
         floating point values.
     */
-    static float pow_bmp3(float base, uint8_t power)
+    float pow_bmp3(float base, uint8_t power)
     {
         float pow_output = 1;
 
@@ -460,22 +460,6 @@ class Bmp390
         return pow_output;
     }
 
-    /** This internal API reads the calibration data from the sensor, parse
-        it then compensates it and store in the device structure.
-    */
-    static void GetCalibData()
-    {
-        uint8_t reg_addr = BMP3_REG_CALIB_DATA;
-
-        /* Array to store calibration data */
-        uint8_t calib_data[BMP3_LEN_CALIB_DATA] = {0};
-
-        /* Read the calibration data from the sensor */
-        ReadFromReg(reg_addr, calib_data, BMP3_LEN_CALIB_DATA);
-
-        /* Parse calibration data and store it in device structure */
-        ParseCalibData(calib_data);
-    }
 
     /** This internal API is used to parse the calibration data, compensates it and store it in device structure */
     void ParseCalibData(const uint8_t* reg_data)
@@ -535,6 +519,22 @@ class Bmp390
         calib_data_.par_p11 = (float)reg_data[20] / temp_var;
     }
 
+    /** This internal API reads the calibration data from the sensor, parse
+        it then compensates it and store in the device structure.
+    */
+    void GetCalibData()
+    {
+        uint8_t reg_addr = BMP3_REG_CALIB_DATA;
+
+        /* Array to store calibration data */
+        uint8_t calib_data[BMP3_LEN_CALIB_DATA] = {0};
+
+        /* Read the calibration data from the sensor */
+        ReadFromReg(reg_addr, calib_data, BMP3_LEN_CALIB_DATA);
+
+        /* Parse calibration data and store it in device structure */
+        ParseCalibData(calib_data);
+    }
 
     void SoftReset()
     {
