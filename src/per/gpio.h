@@ -207,7 +207,6 @@ extern "C"
      */
     void dsy_gpio_toggle(const dsy_gpio *p);
     /**@} */
-
 }
 #endif
 

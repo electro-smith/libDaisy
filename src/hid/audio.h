@@ -5,7 +5,6 @@
 
 namespace daisy
 {
-
 /** @brief Audio Engine Handle
  *  @ingroup audio 
  *  @details This class allows for higher level access to an audio engine.

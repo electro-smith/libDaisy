@@ -1,6 +1,5 @@
 namespace daisy
 {
-
 /** @ingroup midi
  *  @{
  */

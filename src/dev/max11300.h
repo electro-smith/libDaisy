@@ -10,7 +10,6 @@
 
 namespace daisy
 {
-
 /** @addtogroup device
  *  @{
  */
@@ -19,7 +18,7 @@ namespace daisy
  *  @{
  */
 
-//MAX11300 register definitions 
+//MAX11300 register definitions
 #define MAX11300_DEVICE_ID 0x00
 #define MAX11300_DEVCTL 0x10
 #define MAX11300_FUNC_BASE 0x20

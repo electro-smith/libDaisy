@@ -6,7 +6,6 @@
 #include "per/gpio.h"
 
 
-
 namespace daisy
 {
 /**
