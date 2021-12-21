@@ -1,6 +1,6 @@
-# Working With ADC
+# Getting Started - ADCs
 
-ADC stands for Analog to Digital Converter. These are used to read in a variable signal. These variable signals can be anything from an potentiometer, photoresistor, external control voltage, etc.
+ADC stands for Analog to Digital Converter. These are used to read in a variable signal. These variable signals can be anything from a potentiometer, photoresistor, external control voltage, etc.
 
 On the Daisy, the ADC inputs expect a signal in the range of 0V to 3.3V, unless otherwise stated (e.g. The CV inputs on the Daisy Patch SM are set up to expect -5V to 5V, a common range for Modular Synthesizers).
 
@@ -24,7 +24,7 @@ The `AdcChannelConfig` object is used to define each of the connections to the A
 
 For this tutorial all we'll need is:
 
-* a few potentiometersr like these [9mm Plastic Shaft Pot with Pointers](https://www.electro-smith.com/parts/trimmer), but any potentiometer should do the trick.
+* a few potentiometers like these [9mm Plastic Shaft Pot with Pointers](https://www.electro-smith.com/parts/trimmer), but any potentiometer should do the trick.
 
 To wire up the pot we'll want to connect pin 1 of the pot to GND, and pin 3 of the pot to 3v3_A, and the middle leg (pin 2) will now output a variable voltage from 0V to 3.3V; perfect for our expected input range.
 

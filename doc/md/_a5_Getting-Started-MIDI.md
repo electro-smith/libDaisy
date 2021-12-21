@@ -1,4 +1,4 @@
-# Working with MIDI
+# Getting Started - MIDI
 
 ## TRS or DIN MIDI
 

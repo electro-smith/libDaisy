@@ -3,15 +3,19 @@
   <!-- Navigation index tabs for HTML output -->
   <navindex>
     <tab type="mainpage" visible="yes" title="Introduction"></tab>
-    <tab type="usergroup" title="Guides" intro="Get started working with the Daisy">
-      <tab type="pages" visible="yes" title="" intro=""/>
-    </tab>
     <tab type="modules" visible="yes" title="API Documentation" intro="libDaisy API reference"/>
-    <tab type="pages" visible="no" title="" intro=""/>
+    <tab type="pages" visible="yes" title="" intro=""/>
     <tab type="interfaces" visible="yes" title="">
       <tab type="interfacelist" visible="yes" title="" intro=""/>
       <tab type="interfaceindex" visible="$ALPHABETICAL_INDEX" title=""/>
       <tab type="interfacehierarchy" visible="yes" title="" intro=""/>
+    </tab>
+    <tab type="usergroup" title="Additional Resources" intro="">
+      <tab type="user" url="https://electro-smith.com/daisy" title="Daisy Seed Product Page"/>
+      <tab type="user" url="https://electro-smith.github.io/Programmer/" title="Daisy Web Programmer"/>
+      <tab type="user" url="https://static1.squarespace.com/static/58d03fdc1b10e3bf442567b8/t/61ba1bf5214a31356d23d73d/1639586811625/Daisy_Seed_datasheet.pdf" title="Daisy Seed Datasheet"/>
+      <tab type="user" url="https://electro-smith.github.io/DaisySP/" title="DaisySP DSP Library Documentation"/>
+      <tab type="user" url="https://forum.electro-smith.com/" title="Daisy Forum"/>
     </tab>
     <tab type="classes" visible="yes" title="">
       <tab type="classlist" visible="yes" title="" intro=""/>

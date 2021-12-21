@@ -1,4 +1,4 @@
-# Printing with USB Serial
+# Getting Started - Serial Printing
 
 One of the most effective ways of debugging your software without having to add additional hardware is to be able to print information from your source code.
 
@@ -110,7 +110,7 @@ Now, there are times where this is exactly what we want, and there's times where
 
 ## String Formatting
 
-For those of you used to format specifies from C, or C++ you will feel right at home as the `Print` and `PrintLine` functions both use the same syntax.
+For those of you used to format specifiers from C or C++, you will feel right at home as the `Print` and `PrintLine` functions both use the same syntax.
 
 For those unfamiliar, you can find information on the specifiers in the [cpp language documentation](https://en.cppreference.com/w/cpp/io/c/fprintf).
 

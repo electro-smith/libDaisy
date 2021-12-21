@@ -1,4 +1,4 @@
-# Working With GPIO
+# Getting Started - GPIO
 
 GPIO stands for General Purpose Input/Output. These are common to microcontrollers of all sizes, and are one of the many ways to work with external components.
 

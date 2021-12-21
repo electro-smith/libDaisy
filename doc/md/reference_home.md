@@ -2,20 +2,26 @@
 
 libDaisy is a C++ hardware support library for the electrosmith Daisy platform.
 
-## Working with Daisy
+## Getting Started -  Daisy
+
+### Setting Up Your Developement Environment
 
 * [Getting Started](https://github.com/electro-smith/DaisyWiki/wiki)
 * [Setting up the development environment](https://github.com/electro-smith/DaisyWiki/wiki/1.-Setting-Up-Your-Development-Environment)
 * [Creating a new Project](https://github.com/electro-smith/DaisyWiki/wiki/How-To:-Create-a-New-Project)
-* [Working with GPIO](Working-With-GPIO.md)
-* [Printing with USB Serial](Printing-With-USB.md)
-* [Working with the ADC Inputs](Working-With-ADC.md)
-* [Reading and Writing files to an SD Card or USB Drive]()
-* [Using the external 64MB of SDRAM](Using-External-SDRAM.md)
-* [Working with Audio](Working-with-Audio.md)
-* [Working with MIDI](Working-with-MIDI.md)
-* [Code Conventions and Common Types]()
-* [Running and writing Unit Tests](Unit-Testing.md)
+
+### Using libDaisy
+
+* [Getting Started - GPIO](_a1_Getting-Started-GPIO.md)
+* [Printing with USB Serial](_a2_Getting-Started-Serial-Printing.md)
+* [Getting Started - the ADC Inputs](_a3_Getting-Started-ADCs.md)
+* [Getting Started - Audio](_a4_Getting-Started-Audio.md)
+* [Getting Started - MIDI](_a5_Getting-Started-MIDI.md)
+* [Using the external 64MB of SDRAM](_a5_Getting-Started-External-SDRAM.md)
+
+### Development
+
+* [Running and writing Unit Tests](_b1_Development-Unit-Testing.md)
 
 ## Troubleshooting
 

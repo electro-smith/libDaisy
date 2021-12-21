@@ -1,4 +1,4 @@
-# Working with Audio
+# Getting Started - Audio
 
 Audio is an essential part of the daisy ecosystem, but isn't entirely simple to work with if you're not used to writing code in general.
 
@@ -123,6 +123,8 @@ void MyCallback(AudioHandle::InputBuffer in,
 {
     for (size_t i = 0; i < size; i++)
     {
+        // The oscillator's Process function synthesizes, and
+        // returns the next sample.
         float sine_signal = osc.Process();
         out[0][i] = sine_signal;
         out[1][i] = sine_signal;
@@ -173,7 +175,6 @@ Now, whatever you send through the daisy is going to get multiplied by the 100Hz
 
 [DaisySP](https://github.com/electro-smith/DaisySP) is filled with other objects to filter, delay, bit crush, reverberate, and otherwise synthesize, and process sound, and can be a great stepping off point from here to making some interesting sounds.
 
-
 ### Audio Data Packing
 
 On the daisy, there are two ways the audio data can be prepeared, "Interleaved" and "Non-Interleaved", the overall callback structure functions the same in either case, but the way the input and output data is packed is different in each one.
@@ -210,7 +211,7 @@ hw.SetAudioSampleRate(SaiHandle::Config::SampleRate::SAI_48KHZ);
 
 Block size can be any number up to 256.
 
-See the [SaiHandle::Config::SampleRate](@ref SaiHandle::Config::SampleRate) enum for the available samplerate options. It's also worth mentioning that, depending on what codec is connected, not all options are compatible.
+See the [SaiHandle::Config::SampleRate](@ref daisy::SaiHandle::Config::SampleRate) enum for the available samplerate options. It's also worth mentioning that, depending on what codec is connected, not all options are compatible.
 
 ## What Not to do in the Audio Callback
 
@@ -224,3 +225,27 @@ These things include:
 
 * calls to other peripheral blocking functions (i.e. DAC Write, SPI tranfer, etc.)
 * dynamic allocation like `malloc`
+
+If you do need to trigger non-deterministic events from within the audio callback you can use a flag, or other mechanism that can be checked in the main loop. An overly simplified example of this might look like:
+
+```cpp
+// Global:
+bool action_flag;
+
+// In callback:
+if (some_event) // like a button press, or something
+    action_flag = true; 
+
+// In main()
+
+while(1) 
+{
+    
+    if (action_flag) {
+        // Do the big thing that can take a while
+        initiate_big_transfer();
+        // and clear the flag
+        action_flag = false;
+    }
+}
+```

@@ -1,4 +1,4 @@
-# Using External SDRAM
+# Getting Started - External SDRAM
 
 The Daisy comes with 64MB of external memory in addition to it's 1MB of internal memory
 
@@ -28,7 +28,7 @@ So, let's make the same array again, but in the SDRAM:
 float __attribute__(section((".sdram_bss"))) my_buffer[1024];
 ```
 
-"WOAH, That's SO much to type!", you're thinking. Yeah. Don't worry. You don't have to type that. libDaisy has a nice little shorthand:
+Now, that is a lot of stuff to type, and pretty hard to remember. So we made a shorthand macro to make it a bit easier:
 
 ```cpp
 float DSY_SDRAM_BSS my_buffer[1024];
@@ -42,15 +42,15 @@ Now, when you use this memory it's initial condition is undefined, meaning it co
 
 Beyond that, this memory operates in much the same way as normal memory, just a little bit slower. For most things this won't be noticeable, but if you're trying to do extreme-granular-wavetable super-synthesis, you may have to pay attention to what memory you're using.
 
-### Addressing
+## Addressing
 
 The SDRAM is memory-mapped to `0xC0000000`. So if you're using pointers, or want to create some sort of dynamic allocator of some kind, that would be the base address of the SDRAM. It is totally usable across it's range. Just keep in mind some of the limitations mentioned above.
 
-### Initialization
+## Initialization
 
 Most objects that might expect SDRAM memory within libDaisy, or more-often DaisySP, use `Init` functions meant to be called after the `DaisySeed::Init` to fill the memory with expected data. If you're building your own looper, sampler, delay, etc. you'll want to make sure to zero, or fill the SDRAM allocated buffer _after_ within a function that can be called from the Init function instead of during a constructor.
 
-### Class Design with Large Memory
+## Class Design with Large Memory
 
 The simplest way to allow for a huge chunk of memory to be use an external buffer type of some sort.
 
@@ -65,8 +65,8 @@ float *internal_buffer_;
 
 Where a float buffer can be declared of any size, in any memory region, and passed in at init-time.
 
-### Future Work
+## Future Work
 
-There are plans to initialize the SDRAM during startup to allow access via constructors, or as the default heap, etc. 
+There are plans to initialize the SDRAM during startup to allow access via constructors, or as the default heap, etc.
 
-So these limitations are not set in stone. Check in the [Release Notes](https://github.com/electro-smith/libDaisy/releases), and the [Forum](forum.electro-smith.com) for updates in the future.
+So these limitations are not set in stone. Check in the [Release Notes](https://github.com/electro-smith/libDaisy/releases), and the [Forum](https://forum.electro-smith.com) for updates in the future.
