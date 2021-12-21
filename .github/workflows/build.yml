@@ -69,5 +69,5 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
-    - name: Build Library
+    - name: Build Examples
       run: ./ci/build_examples.py -f core doc src tests
