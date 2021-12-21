@@ -74,6 +74,8 @@ int main(void)
 
 The above example shows starting the audio engine, with our callback, but doesn't actually do anything with the sound coming in, or create any sound to go out.
 
+### Audio Output
+
 Where would we start if we wanted to make some sound? Well, there are two things we need to know if we want to _output_ some sound.
 
 1. What is "out", What is a AudioHandle::OutputBuffer?

@@ -1,5 +1,7 @@
 # Getting Started - External SDRAM
 
+## Usage
+
 The Daisy comes with 64MB of external memory in addition to it's 1MB of internal memory
 
 This is extremely valuable for DSP effects like delays, sample-based synthesis, and more.
