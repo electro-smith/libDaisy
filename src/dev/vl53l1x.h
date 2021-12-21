@@ -188,11 +188,6 @@ class Vl53l1x
         return GetTransportErr();
     }
 
-    uint16_t GetDistance()
-    {
-        return Read8(RESULT__FINAL_CROSSTALK_CORRECTED_RANGE_MM_SD0);
-    }
-
     void StartRanging()
     {
         Write8(SYSTEM__MODE_START, 0x40); /* Enable VL53L1X */
@@ -215,6 +210,7 @@ class Vl53l1x
             ReadSignalRate();
             ReadSpadNb();
             ReadAmbientRate();
+            ReadDistance();
         }
     }
 
@@ -227,6 +223,8 @@ class Vl53l1x
     uint16_t GetSpadNb() { return snb_; };
 
     uint16_t GetAmbientRate() { return ar_; };
+
+    uint16_t GetDistance() { return dist_; }
 
     bool CheckForDataReady()
     {
@@ -389,7 +387,7 @@ class Vl53l1x
     {
         uint16_t Temp;
 
-        Temp = Read8(RANGE_CONFIG__TIMEOUT_MACROP_A_HI);
+        Temp = ReadWord(RANGE_CONFIG__TIMEOUT_MACROP_A_HI);
         switch(Temp)
         {
             case 0x001D: return 15;
@@ -456,7 +454,7 @@ class Vl53l1x
     {
         uint16_t ClockPLL;
 
-        ClockPLL = Read8(RESULT__OSC_CALIBRATE_VAL);
+        ClockPLL = ReadWord(RESULT__OSC_CALIBRATE_VAL);
         ClockPLL = ClockPLL & 0x3FF;
         WriteDWord(SYSTEM__INTERMEASUREMENT_PERIOD,
                    (uint32_t)(ClockPLL * InterMeasMs * 1.075));
@@ -470,7 +468,7 @@ class Vl53l1x
 
         tmp      = ReadDWord(SYSTEM__INTERMEASUREMENT_PERIOD);
         pIM      = (uint16_t)tmp;
-        ClockPLL = Read8(RESULT__OSC_CALIBRATE_VAL);
+        ClockPLL = ReadWord(RESULT__OSC_CALIBRATE_VAL);
         ClockPLL = ClockPLL & 0x3FF;
         pIM      = (uint16_t)(pIM / (ClockPLL * 1.065));
 
@@ -479,7 +477,7 @@ class Vl53l1x
 
     uint8_t BootState() { return Read8(FIRMWARE__SYSTEM_STATUS); }
 
-    uint16_t GetSensorId() { return Read8(IDENTIFICATION__MODEL_ID); }
+    uint16_t GetSensorId() { return ReadWord(IDENTIFICATION__MODEL_ID); }
 
     uint8_t GetRangeStatus()
     {
@@ -523,7 +521,7 @@ class Vl53l1x
     {
         uint16_t Temp;
 
-        Temp = Read8(ALGO__PART_TO_PART_RANGE_OFFSET_MM);
+        Temp = ReadWord(ALGO__PART_TO_PART_RANGE_OFFSET_MM);
         Temp = Temp << 3;
         return Temp / 32;
     }
@@ -544,7 +542,7 @@ class Vl53l1x
     {
         uint16_t tmp;
 
-        tmp = Read8(ALGO__CROSSTALK_COMPENSATION_PLANE_OFFSET_KCPS);
+        tmp = ReadWord(ALGO__CROSSTALK_COMPENSATION_PLANE_OFFSET_KCPS);
         /* * 1000 to convert kcps to cps and >> 9 (7.9 format) */
         return (tmp * 1000) >> 9;
     }
@@ -581,9 +579,12 @@ class Vl53l1x
     }
 
 
-    uint16_t GetDistanceThresholdLow() { return Read8(SYSTEM__THRESH_LOW); }
+    uint16_t GetDistanceThresholdLow() { return ReadWord(SYSTEM__THRESH_LOW); }
 
-    uint16_t GetDistanceThresholdHigh() { return Read8(SYSTEM__THRESH_HIGH); }
+    uint16_t GetDistanceThresholdHigh()
+    {
+        return ReadWord(SYSTEM__THRESH_HIGH);
+    }
 
     void SetROI(uint16_t X, uint16_t Y)
     {
@@ -626,7 +627,7 @@ class Vl53l1x
 
     uint16_t GetSignalThreshold(uint16_t *signal)
     {
-        return Read8(RANGE_CONFIG__MIN_COUNT_RATE_RTN_LIMIT_MCPS);
+        return ReadWord(RANGE_CONFIG__MIN_COUNT_RATE_RTN_LIMIT_MCPS);
     }
 
     void SetSigmaThreshold(uint16_t Sigma)
@@ -643,7 +644,7 @@ class Vl53l1x
     {
         uint16_t tmp;
 
-        tmp = Read8(RANGE_CONFIG__SIGMA_THRESH);
+        tmp = ReadWord(RANGE_CONFIG__SIGMA_THRESH);
         return tmp >> 2;
     }
 
@@ -744,7 +745,7 @@ class Vl53l1x
     dsy_gpio  xShut_;
     bool      transport_error_;
 
-    uint16_t sps_, aps_, sr_, snb_, ar_;
+    uint16_t sps_, aps_, sr_, snb_, ar_, dist_;
 
     // *** Read the signals from within the Process function, these can be retrieved with the getters later ***
 
@@ -752,9 +753,9 @@ class Vl53l1x
     {
         uint16_t SpNb = 1, signal;
 
-        signal = Read8(
+        signal = ReadWord(
             RESULT__PEAK_SIGNAL_COUNT_RATE_CROSSTALK_CORRECTED_MCPS_SD0);
-        SpNb = Read8(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
+        SpNb = ReadWord(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
         sps_ = (uint16_t)(2000.0 * signal / SpNb);
     }
 
@@ -763,8 +764,8 @@ class Vl53l1x
     {
         uint16_t AmbientRate, SpNb = 1;
 
-        AmbientRate = Read8(RESULT__AMBIENT_COUNT_RATE_MCPS_SD);
-        SpNb        = Read8(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
+        AmbientRate = ReadWord(RESULT__AMBIENT_COUNT_RATE_MCPS_SD);
+        SpNb        = ReadWord(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
         aps_        = (uint16_t)(2000.0 * AmbientRate / SpNb);
     }
 
@@ -773,7 +774,7 @@ class Vl53l1x
     {
         uint16_t tmp;
 
-        tmp = Read8(
+        tmp = ReadWord(
             RESULT__PEAK_SIGNAL_COUNT_RATE_CROSSTALK_CORRECTED_MCPS_SD0);
         sr_ = 8 * tmp;
     }
@@ -783,7 +784,7 @@ class Vl53l1x
     {
         uint16_t tmp;
 
-        tmp  = Read8(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
+        tmp  = ReadWord(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
         snb_ = tmp >> 8;
     }
 
@@ -792,9 +793,15 @@ class Vl53l1x
     {
         uint16_t tmp;
 
-        tmp = Read8(RESULT__AMBIENT_COUNT_RATE_MCPS_SD);
+        tmp = ReadWord(RESULT__AMBIENT_COUNT_RATE_MCPS_SD);
         ar_ = tmp * 8;
     }
+
+    void ReadDistance()
+    {
+        dist_ = ReadWord(RESULT__FINAL_CROSSTALK_CORRECTED_RANGE_MM_SD0);
+    }
+
 
     /** Set the global transport_error_ bool */
     void SetTransportErr(bool err) { transport_error_ |= err; }
