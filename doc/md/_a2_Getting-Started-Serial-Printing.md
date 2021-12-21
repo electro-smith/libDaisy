@@ -208,8 +208,8 @@ This last option has a lot of flexibility for other types, and works well when b
 
 ## Further Reading
 
-Topics coming soon:
+Topics without links are coming soon:
 
 * Reading and Writing to SD Cards and USB Drives
-* [Working with ADCs](Working-With-ADC.md)
+* [Working with ADCs](_a4_Getting-Started-ADCs.md)
 * Building UIs for Displays

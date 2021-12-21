@@ -102,7 +102,7 @@ int main(void) {
 }
 ```
 
-To find out more about the serial printing, and what software to use, see our [tutorial on working with Serial Printing](Printing-With-USB.md).
+To find out more about the serial printing, and what software to use, see our [tutorial on working with Serial Printing](_a2_Getting-Started-Serial-Printing.md).
 
 With the above program, you should see a number printing that moves from 0 to 65536 as you rotate the pot. Now, pots, and electronics aren't perfect.
 So there's a chance that this may not reach those extremes, or it might reach them slightly before the edges of the potentiometer's range.

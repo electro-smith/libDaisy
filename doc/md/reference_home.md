@@ -14,10 +14,10 @@ libDaisy is a C++ hardware support library for the electrosmith Daisy platform.
 
 * [Getting Started - GPIO](_a1_Getting-Started-GPIO.md)
 * [Printing with USB Serial](_a2_Getting-Started-Serial-Printing.md)
-* [Getting Started - the ADC Inputs](_a3_Getting-Started-ADCs.md)
-* [Getting Started - Audio](_a4_Getting-Started-Audio.md)
+* [Getting Started - Audio](_a3_Getting-Started-Audio.md)
+* [Getting Started - the ADC Inputs](_a4_Getting-Started-ADCs.md)
 * [Getting Started - MIDI](_a5_Getting-Started-MIDI.md)
-* [Using the external 64MB of SDRAM](_a5_Getting-Started-External-SDRAM.md)
+* [Using the external 64MB of SDRAM](_a6_Getting-Started-External-SDRAM.md)
 
 ### Development
 
