@@ -18,11 +18,10 @@ HallSensor::Result HallSensor::Init(HallSensor::Config config)
         return ERR;
     }
 
-    // blocking read by default
-    return StartBlockingRead();
+    return StartRead();
 }
 
-HallSensor::Result HallSensor::StartBlockingRead()
+HallSensor::Result HallSensor::StartRead()
 {
     // are we ready, kids?
     while(HAL_TIMEx_HallSensor_GetState(&hall_) != HAL_TIM_STATE_READY) {};
@@ -73,6 +72,15 @@ void HallSensor::DeInitPins()
     GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin);
     uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin);
     HAL_GPIO_DeInit(port, pin);
+}
+
+uint8_t HallSensor::GetState()
+{
+    GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin);
+    uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin);
+    // The pin is pulled low if a field is near, so let's reverse it
+    // for ease of use
+    return 1 - HAL_GPIO_ReadPin(port, pin);
 }
 
 extern "C"

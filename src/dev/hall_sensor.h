@@ -69,16 +69,21 @@ class HallSensor
     */
     Result Init(Config config);
 
-    /** Start reading in a blocking fashion. Init calls this by default. */
-    Result StartBlockingRead();
+    /** Start reading in the background. Init calls this by default. */
+    Result StartRead();
 
-    /** Stop reading in a blocking fashion */
+    /** Stop reading. */
     void StopBlockingRead() { HAL_TIMEx_HallSensor_Stop(&hall_); }
 
     /** Get the total count of hall sensor clicks so far 
         \return Total number of times hall sensor has gone high since init.
     */
     uint8_t GetCount() { return hall_.Instance->CNT; }
+
+    /** Get the current state of the sensor
+        \return 1 if a magnetic field of the right polarity is near, otherwise 0
+    */
+    uint8_t GetState();
 
   private:
     Config            config_;
