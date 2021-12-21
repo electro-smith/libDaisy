@@ -9,7 +9,7 @@
 
 namespace daisy
 {
-/** @addtogroup external 
+/** @ingroup logging
     @{ 
 */
 
@@ -54,6 +54,12 @@ namespace daisy
 /**   @brief Interface for simple USB logging
  *    @author Alexander Petrov-Savchenko (axp@soft-amp.com)
  *    @date November 2020
+ *    
+ *    Simple Example:
+ *    @include HelloWorld.cpp
+ * 
+ *    Full Test, and Usage:
+ *    @include Logger.cpp
  */
 template <LoggerDestination dest = LOGGER_INTERNAL>
 class Logger

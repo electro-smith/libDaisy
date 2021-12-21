@@ -1,5 +1,10 @@
 namespace daisy
 {
+
+/** @ingroup midi
+ *  @{
+ */
+
 /** Parsed from the Status Byte, these are the common Midi Messages that can be handled. \n
 At this time only 3-byte messages are correctly parsed into MidiEvents.
 */
@@ -377,4 +382,5 @@ struct MidiEvent
         return m;
     }
 };
+/** @} */
 } //namespace daisy

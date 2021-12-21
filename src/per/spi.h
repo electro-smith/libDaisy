@@ -126,6 +126,8 @@ class SpiHandle
     /** Blocking transmit 
     \param *buff input buffer
     \param size  buffer size
+    \param timeout how long in milliseconds the function will wait 
+                   before returning without successful communication
     */
     Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout = 100);
 
@@ -133,6 +135,8 @@ class SpiHandle
     \param *tx_buff the transmit buffer
     \param *rx_buff the receive buffer
     \param size the length of the transaction
+    \param timeout how long in milliseconds the function will wait 
+                   before returning without successful communication
     */
     Result BlockingTransmitAndReceive(uint8_t* tx_buff,
                                       uint8_t* rx_buff,
@@ -140,9 +144,9 @@ class SpiHandle
                                       uint32_t timeout = 100);
 
     /** Polling Receive
-    \param *buff input buffer
+    \param buffer input buffer
     \param size  buffer size
-    \param timeout How long to timeout for
+    \param timeout How long to timeout for in milliseconds
     \return Whether the receive was successful or not
     */
     Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);

@@ -25,6 +25,8 @@ namespace daisy
  *                      If you will alway update all leds before calling 
  *                      SwapBuffersAndTransmit(), you can set this to false
  *                      and safe some cycles.
+ * 
+ *  @ingroup device
  */
 template <int numDrivers, bool persistentBufferContents = true>
 class LedDriverPca9685
@@ -316,4 +318,3 @@ class LedDriverPca9685
 
 #endif
 #endif
-/** @} */

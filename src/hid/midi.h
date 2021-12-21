@@ -15,7 +15,7 @@
 
 namespace daisy
 {
-/** @addtogroup external 
+/** @ingroup midi
     @{ 
 */
 
@@ -89,8 +89,7 @@ class MidiHandler
     };
 
     /** Initializes the MidiHandler 
-    \param in_mode Input mode
-    \param out_mode Output mode
+     *  \param config Configuration structure used to define specifics to the MIDI Handler.
      */
     void Init(Config config)
     {
