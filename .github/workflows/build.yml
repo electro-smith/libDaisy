@@ -35,8 +35,14 @@ jobs:
       uses: fiam/arm-none-eabi-gcc@v1
       with:
         release: '9-2019-q4'
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
     - name: Build Library
       run: make -j
+    - name: Build Examples
+      run: ./ci/build_examples.py -f core doc src tests
 
   build-cmake:
     runs-on: ubuntu-latest
@@ -55,19 +61,3 @@ jobs:
       run: cmake -S . -B build -G "Unix Makefiles" -D CMAKE_TOOLCHAIN_FILE=cmake/toolchains/stm32h750xx.cmake -D TOOLCHAIN_PREFIX=$(which arm-none-eabi-gcc | sed -e "s/bin\/arm-none-eabi-gcc//")
     - name: Build Library
       run: cmake --build build
-
-  build-examples-makefile:
-    needs: build-makefile
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Setup arm-none-eabi-gcc
-      uses: fiam/arm-none-eabi-gcc@v1
-      with:
-        release: '9-2019-q4'
-    - name: Setup python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    - name: Build Examples
-      run: ./ci/build_examples.py -f core doc src tests
