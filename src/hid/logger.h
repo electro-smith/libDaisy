@@ -56,10 +56,8 @@ namespace daisy
  *    @date November 2020
  *    
  *    Simple Example:
- *    @include HelloWorld.cpp
+ *    @include SerialPrint.cpp
  * 
- *    Full Test, and Usage:
- *    @include Logger.cpp
  */
 template <LoggerDestination dest = LOGGER_INTERNAL>
 class Logger
