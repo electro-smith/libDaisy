@@ -320,11 +320,11 @@ class NeoTrellis
             NEO_TRELLIS_KEY(NEO_TRELLIS_XY(xkey, ykey)), edge, enable);
     }
 
-    /** read all events currently stored in the seesaw fifo and call any callbacks.
-        \param  polling pass true if the interrupt pin is not being used, false if
-        it is. Defaults to true.
+    /** read all events currently stored in the seesaw fifo and call any callbacks.  
+        \param polling pass true if the interrupt pin is not being used, false if
+        it is. Defaults to true. 
     */
-    void Read(bool polling)
+    void Process(bool polling = true)
     {
         uint8_t count = GetKeypadCount();
         System::DelayUs(500);
@@ -336,16 +336,66 @@ class NeoTrellis
             ReadKeypad(e, count);
             for(int i = 0; i < count; i++)
             {
-                // call any callbacks associated with the key
                 e[i].bit.NUM = NEO_TRELLIS_SEESAW_KEY(e[i].bit.NUM);
-                if(e[i].bit.NUM < NEO_TRELLIS_NUM_KEYS
-                   && _callbacks[e[i].bit.NUM] != NULL)
+                if(e[i].bit.NUM < NEO_TRELLIS_NUM_KEYS)
                 {
                     keyEvent evt = {e[i].bit.EDGE, e[i].bit.NUM};
-                    _callbacks[e[i].bit.NUM](evt);
+
+                    state_[evt.bit.NUM]
+                        = evt.bit.EDGE == HIGH || evt.bit.EDGE == RISING;
+                    rising_[evt.bit.NUM]  = evt.bit.EDGE == RISING;
+                    falling_[evt.bit.NUM] = evt.bit.EDGE == FALLING;
+
+                    // call any callbacks associated with the key
+                    if(_callbacks[e[i].bit.NUM] != NULL)
+                    {
+                        _callbacks[e[i].bit.NUM](evt);
+                    }
                 }
             }
         }
+    }
+
+    /** Is this key currently pressed or released? Updated via the Process() function.
+        \param idx Key to check
+        \return True if pressed, false otherwise
+    */
+    bool GetState(uint8_t idx)
+    {
+        if(idx < NEO_TRELLIS_NUM_KEYS)
+        {
+            return state_[idx];
+        }
+
+        return false;
+    }
+
+    /** Has this key just been pressed? (aka rising edge) Updated via the Process() function.
+        \param idx Key to check
+        \return True if just pressed, false otherwise
+    */
+    bool GetRising(uint8_t idx)
+    {
+        if(idx < NEO_TRELLIS_NUM_KEYS)
+        {
+            return rising_[idx];
+        }
+
+        return false;
+    }
+
+    /** Has this key just been released? (aka falling edge) Updated via the Process() function.
+        \param idx Key to check
+        \return True if just released, false otherwise
+    */
+    bool GetFalling(uint8_t idx)
+    {
+        if(idx < NEO_TRELLIS_NUM_KEYS)
+        {
+            return falling_[idx];
+        }
+
+        return false;
     }
 
     void ReadKeypad(keyEventRaw *buf, uint8_t count)
@@ -456,6 +506,10 @@ class NeoTrellis
   private:
     Config    config_;
     Transport transport_;
+
+    bool state_[NEO_TRELLIS_NUM_KEYS];
+    bool rising_[NEO_TRELLIS_NUM_KEYS];
+    bool falling_[NEO_TRELLIS_NUM_KEYS];
 
     TrellisCallback (*_callbacks[NEO_TRELLIS_NUM_KEYS])(
         keyEvent); ///< the array of callback functions
