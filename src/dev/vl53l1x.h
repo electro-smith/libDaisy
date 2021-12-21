@@ -203,6 +203,31 @@ class Vl53l1x
         Write8(SYSTEM__MODE_START, 0x00); /* Disable VL53L1X */
     }
 
+    void Process()
+    {
+        if(CheckForDataReady())
+        {
+            ClearInterrupt();
+
+            // Read everything that can be read
+            ReadSignalPerSpad();
+            ReadAmbientPerSpad();
+            ReadSignalRate();
+            ReadSpadNb();
+            ReadAmbientRate();
+        }
+    }
+
+    uint16_t GetSignalPerSpad() { return sps_; };
+
+    uint16_t GetAmbientPerSpad() { return aps_; };
+
+    uint16_t GetSignalRate() { return sr_; };
+
+    uint16_t GetSpadNb() { return snb_; };
+
+    uint16_t GetAmbientRate() { return ar_; };
+
     bool CheckForDataReady()
     {
         uint8_t Temp;
@@ -452,60 +477,9 @@ class Vl53l1x
         return pIM;
     }
 
-
     uint8_t BootState() { return Read8(FIRMWARE__SYSTEM_STATUS); }
 
-
     uint16_t GetSensorId() { return Read8(IDENTIFICATION__MODEL_ID); }
-
-    uint16_t GetSignalPerSpad()
-    {
-        uint16_t SpNb = 1, signal;
-
-        signal = Read8(
-            RESULT__PEAK_SIGNAL_COUNT_RATE_CROSSTALK_CORRECTED_MCPS_SD0);
-        SpNb = Read8(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
-        return (uint16_t)(2000.0 * signal / SpNb);
-    }
-
-
-    uint16_t GetAmbientPerSpad()
-    {
-        uint16_t AmbientRate, SpNb = 1;
-
-        AmbientRate = Read8(RESULT__AMBIENT_COUNT_RATE_MCPS_SD);
-        SpNb        = Read8(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
-        return (uint16_t)(2000.0 * AmbientRate / SpNb);
-    }
-
-
-    uint16_t GetSignalRate()
-    {
-        uint16_t tmp;
-
-        tmp = Read8(
-            RESULT__PEAK_SIGNAL_COUNT_RATE_CROSSTALK_CORRECTED_MCPS_SD0);
-        return 8 * tmp;
-    }
-
-
-    uint16_t GetSpadNb()
-    {
-        uint16_t tmp;
-
-        tmp = Read8(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
-        return tmp >> 8;
-    }
-
-
-    uint16_t GetAmbientRate()
-    {
-        uint16_t tmp;
-
-        tmp = Read8(RESULT__AMBIENT_COUNT_RATE_MCPS_SD);
-        return tmp * 8;
-    }
-
 
     uint8_t GetRangeStatus()
     {
@@ -769,6 +743,58 @@ class Vl53l1x
     Transport transport_;
     dsy_gpio  xShut_;
     bool      transport_error_;
+
+    uint16_t sps_, aps_, sr_, snb_, ar_;
+
+    // *** Read the signals from within the Process function, these can be retrieved with the getters later ***
+
+    void ReadSignalPerSpad()
+    {
+        uint16_t SpNb = 1, signal;
+
+        signal = Read8(
+            RESULT__PEAK_SIGNAL_COUNT_RATE_CROSSTALK_CORRECTED_MCPS_SD0);
+        SpNb = Read8(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
+        sps_ = (uint16_t)(2000.0 * signal / SpNb);
+    }
+
+
+    void ReadAmbientPerSpad()
+    {
+        uint16_t AmbientRate, SpNb = 1;
+
+        AmbientRate = Read8(RESULT__AMBIENT_COUNT_RATE_MCPS_SD);
+        SpNb        = Read8(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
+        aps_        = (uint16_t)(2000.0 * AmbientRate / SpNb);
+    }
+
+
+    void ReadSignalRate()
+    {
+        uint16_t tmp;
+
+        tmp = Read8(
+            RESULT__PEAK_SIGNAL_COUNT_RATE_CROSSTALK_CORRECTED_MCPS_SD0);
+        sr_ = 8 * tmp;
+    }
+
+
+    void ReadSpadNb()
+    {
+        uint16_t tmp;
+
+        tmp  = Read8(RESULT__DSS_ACTUAL_EFFECTIVE_SPADS_SD0);
+        snb_ = tmp >> 8;
+    }
+
+
+    void ReadAmbientRate()
+    {
+        uint16_t tmp;
+
+        tmp = Read8(RESULT__AMBIENT_COUNT_RATE_MCPS_SD);
+        ar_ = tmp * 8;
+    }
 
     /** Set the global transport_error_ bool */
     void SetTransportErr(bool err) { transport_error_ |= err; }
