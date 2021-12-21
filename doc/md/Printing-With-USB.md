@@ -147,6 +147,14 @@ and so on all the way up to 100 before repeating itself.
 
 Due to the small memory footprint of an embedded platform like daisy, floating point numbers are handled slightly differently by default, and won't work with the `%f` format specifier.
 
+Each of the following options has its own benefits:
+
+* Adding the `LDFLAG` for `%f` support: For ease-of-use, when memory limits are not an issue.
+* Using the `FLT_FMT`, `FLT_VAR` specifiers: For minimal cost, drop in for printing the ocassional float.
+* FixedCapStr: When you know the size of the strings, building UIs, etc.
+
+### Using %f specifier
+
 That said, if you really want to be able to use the `%f`, and your application isn't nearing the maximum size, you can add the following to your project's application Makefile:
 
 ```Make
@@ -161,6 +169,8 @@ With that flag added you can print floats as you would expect:
 float my_flt = 123.456f;
 hw.PrintLine("My Float: %f", my_flt);
 ```
+
+### Using FLT_FMT and FLT_VAR macros
 
 Without the extra memory cost of adding that linker flag, there are a few other ways to output floating point numbers:
 
@@ -178,6 +188,8 @@ float more_precice_float = 123.456789f;
 hw.PrintLine("My Float: " FLT_FMT(6), FLT_VAR(6, my_flt));
 ```
 
+### Using FixedCapStr class
+
 Another way is to use the `FixedCapStr` class, and the `appendFloat` function:
 
 ```cpp
@@ -194,16 +206,10 @@ str.AppendFloat(123.456f, 3);
 
 This last option has a lot of flexibility for other types, and works well when building complex user interfaces with Displays, and the `Ui` class. You do have to be mindful that the template argument is large enough for the final string you want to make.
 
-Each of these options has its own benefits:
-
-* Adding the `LDFLAG` for `%f` support: For ease-of-use, when memory limits are not an issue.
-* Using the `FLT_FMT`, `FLT_VAR` specifiers: For minimal cost, drop in for printing the ocassional float.
-* FixedCapStr: When you know the size of the strings, building UIs, etc.
-
 ## Further Reading
 
 Topics coming soon:
 
 * Reading and Writing to SD Cards and USB Drives
-* Working with ADCs
+* [Working with ADCs](Working-With-ADC.md)
 * Building UIs for Displays

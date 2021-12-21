@@ -163,11 +163,7 @@ You'll notice that you access them by the order in which you initialized them, n
 
 OK. So now we know what to do with one, or a few inputs that already conform to the expected input range.
 
-What happens when we're connecting something that doesn't?
-
-This could include sensors that output signals on the scale of millivolts, or something like a Eurorack CV input that has a wide 10V range.
-
-Let's take them one at a time.
+In a future guide we'll look at using active and passive circuits to condition a signal to the best range for sending to the Daisy.
 
 ## Further Reading
 
