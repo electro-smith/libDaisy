@@ -14,8 +14,12 @@
 #define BMP3_REG_CONFIG UINT8_C(0x1F)
 #define BMP3_REG_CALIB_DATA UINT8_C(0x31)
 #define BMP3_REG_CMD UINT8_C(0x7E)
+#define BMP3_LEN_CALIB_DATA UINT8_C(21)
 
 #define BMP3_LEN_P_T_DATA UINT8_C(6)
+
+/**\name Macro to combine two 8 bit data's to form a 16 bit data */
+#define BMP3_CONCAT_BYTES(msb, lsb) (((uint16_t)msb << 8) | (uint16_t)lsb)
 
 namespace daisy
 {
@@ -194,6 +198,8 @@ class Bmp390
         SetOutputDataRate(config_.output_data_rate);
         SetIIRFilterCoeff(config_.iir_filter_coeff);
 
+        GetCalibData();
+
         return GetTransportErr();
     }
 
@@ -272,20 +278,12 @@ class Bmp390
     /** Performs a pressure reading
         \return Pressure in Pascals
     */
-    uint32_t ReadPressure()
-    {
-        PerformReading();
-        return pressure_;
-    }
+    uint32_t ReadPressure() { return pressure_; }
 
     /** Performs a temperature reading
         \return Temperature in degrees Centigrade
     */
-    uint32_t ReadTemperature()
-    {
-        PerformReading();
-        return temperature_;
-    }
+    uint32_t ReadTemperature() { return temperature_; }
 
     /** Calculates the altitude in meters 
         \param sealevel Sea-level pressure in hPa
@@ -297,8 +295,45 @@ class Bmp390
         return 44330.f * (1.f - pow(atmospheric / sealevel, 0.1903f));
     }
 
+    /** Read and compensate the data for the getters */
+    void Process()
+    {
+        uint8_t reg_data[BMP3_LEN_P_T_DATA];
+        ReadFromReg(BMP3_REG_DATA, reg_data, BMP3_LEN_P_T_DATA);
+        ParseData(reg_data);
+        CompensateData();
+    }
+
   private:
     bool transport_error_;
+
+
+    /** Quantized Trim Variables */
+    struct bmp3_calib_data
+    {
+        /** @ Quantized Trim Variables */
+
+        /**@{*/
+        float par_t1;
+        float par_t2;
+        float par_t3;
+        float par_p1;
+        float par_p2;
+        float par_p3;
+        float par_p4;
+        float par_p5;
+        float par_p6;
+        float par_p7;
+        float par_p8;
+        float par_p9;
+        float par_p10;
+        float par_p11;
+        float t_lin;
+
+        /**@}*/
+    };
+
+    bmp3_calib_data calib_data_;
 
     /** Set the global transport_error_ bool */
     void SetTransportErr(bool err) { transport_error_ |= err; }
@@ -311,15 +346,6 @@ class Bmp390
         return ret;
     }
 
-    /** Do all the steps involved in a read */
-    void PerformReading()
-    {
-        uint8_t reg_data[BMP3_LEN_P_T_DATA];
-        ReadFromReg(BMP3_REG_DATA, reg_data, BMP3_LEN_P_T_DATA);
-        ParseData(reg_data);
-        CompensateData();
-    }
-
     /** Stuff the raw bytes into usable temp and pressure vars */
     void ParseData(uint8_t* reg_data)
     {
@@ -328,16 +354,16 @@ class Bmp390
         uint32_t data_msb;
 
         /* Store the parsed register values for pressure data */
-        data_xlsb = (uint32_t)reg_data[0];
-        data_lsb  = (uint32_t)reg_data[1] << 8;
-        data_msb  = (uint32_t)reg_data[2] << 16;
-        pressure_ = data_msb | data_lsb | data_xlsb;
+        data_xlsb     = (uint32_t)reg_data[0];
+        data_lsb      = (uint32_t)reg_data[1] << 8;
+        data_msb      = (uint32_t)reg_data[2] << 16;
+        raw_pressure_ = data_msb | data_lsb | data_xlsb;
 
         /* Store the parsed register values for temperature data */
-        data_xlsb    = (uint32_t)reg_data[3];
-        data_lsb     = (uint32_t)reg_data[4] << 8;
-        data_msb     = (uint32_t)reg_data[5] << 16;
-        temperature_ = data_msb | data_lsb | data_xlsb;
+        data_xlsb        = (uint32_t)reg_data[3];
+        data_lsb         = (uint32_t)reg_data[4] << 8;
+        data_msb         = (uint32_t)reg_data[5] << 16;
+        raw_temperature_ = data_msb | data_lsb | data_xlsb;
     }
 
     /** Compensate the data based on calibration data read in from IC.
@@ -348,15 +374,167 @@ class Bmp390
         if(config_.compensate_pressure | config_.compensate_temp)
         {
             /* Compensate the temperature data */
-            // temperature = compensate_temperature(uncomp_data, calib_data);
+            CompensateTemperature();
         }
 
         if(config_.compensate_pressure)
         {
             /* Compensate the pressure data */
-            // pressure_ = compensate_pressure(uncomp_data, calib_data);
+            CompensatePressure();
         }
     }
+
+    /** This internal API is used to compensate the raw temperature data and
+        return the compensated temperature data in float data type.
+        for e.g. returns temperature 24.26 deg Celsius
+    */
+    void CompensateTemperature()
+    {
+        uint32_t uncomp_temp = raw_temperature_;
+        float    partial_data1;
+        float    partial_data2;
+
+        partial_data1 = (float)(uncomp_temp - calib_data_.par_t1);
+        partial_data2 = (float)(partial_data1 * calib_data_.par_t2);
+
+        /* Update the compensated temperature in calib structure since this is
+            needed for pressure calculation */
+        calib_data_.t_lin
+            = partial_data2
+              + (partial_data1 * partial_data1) * calib_data_.par_t3;
+
+        /* Returns compensated temperature */
+        temperature_ = calib_data_.t_lin;
+    }
+
+    /** This internal API is used to compensate the raw pressure data and
+        return the compensated pressure data in float data type.
+        For e.g. returns pressure in Pascal p = 95305.295 which is 953.05295 hecto pascal
+    */
+    void CompensatePressure()
+    {
+        uint32_t uncomp_press = raw_pressure_;
+
+        /* Temporary variables used for compensation */
+        float partial_data1;
+        float partial_data2;
+        float partial_data3;
+        float partial_data4;
+        float partial_out1;
+        float partial_out2;
+
+        partial_data1 = calib_data_.par_p6 * calib_data_.t_lin;
+        partial_data2 = calib_data_.par_p7 * pow_bmp3(calib_data_.t_lin, 2);
+        partial_data3 = calib_data_.par_p8 * pow_bmp3(calib_data_.t_lin, 3);
+        partial_out1  = calib_data_.par_p5 + partial_data1 + partial_data2
+                       + partial_data3;
+        partial_data1 = calib_data_.par_p2 * calib_data_.t_lin;
+        partial_data2 = calib_data_.par_p3 * pow_bmp3(calib_data_.t_lin, 2);
+        partial_data3 = calib_data_.par_p4 * pow_bmp3(calib_data_.t_lin, 3);
+        partial_out2  = uncomp_press
+                       * (calib_data_.par_p1 + partial_data1 + partial_data2
+                          + partial_data3);
+        partial_data1 = pow_bmp3((float)uncomp_press, 2);
+        partial_data2
+            = calib_data_.par_p9 + calib_data_.par_p10 * calib_data_.t_lin;
+        partial_data3 = partial_data1 * partial_data2;
+        partial_data4
+            = partial_data3
+              + pow_bmp3((float)uncomp_press, 3) * calib_data_.par_p11;
+        pressure_ = partial_out1 + partial_out2 + partial_data4;
+    }
+
+    /** This internal API is used to calculate the power functionality for
+        floating point values.
+    */
+    static float pow_bmp3(float base, uint8_t power)
+    {
+        float pow_output = 1;
+
+        while(power != 0)
+        {
+            pow_output = (float)base * pow_output;
+            power--;
+        }
+
+        return pow_output;
+    }
+
+    /** This internal API reads the calibration data from the sensor, parse
+        it then compensates it and store in the device structure.
+    */
+    static void GetCalibData()
+    {
+        uint8_t reg_addr = BMP3_REG_CALIB_DATA;
+
+        /* Array to store calibration data */
+        uint8_t calib_data[BMP3_LEN_CALIB_DATA] = {0};
+
+        /* Read the calibration data from the sensor */
+        ReadFromReg(reg_addr, calib_data, BMP3_LEN_CALIB_DATA);
+
+        /* Parse calibration data and store it in device structure */
+        ParseCalibData(calib_data);
+    }
+
+    /** This internal API is used to parse the calibration data, compensates it and store it in device structure */
+    void ParseCalibData(const uint8_t* reg_data)
+    {
+        /* Temporary variable */
+        float temp_var;
+
+        /* 1 / 2^8 */
+        temp_var = 0.00390625f;
+        calib_data_.par_t1
+            = (float)BMP3_CONCAT_BYTES(reg_data[1], reg_data[0]) / temp_var;
+
+        temp_var = 1073741824.0f;
+        calib_data_.par_t2
+            = (float)BMP3_CONCAT_BYTES(reg_data[3], reg_data[2]) / temp_var;
+
+        temp_var           = 281474976710656.0f;
+        calib_data_.par_t3 = (float)reg_data[4] / temp_var;
+
+        temp_var           = 1048576.0f;
+        calib_data_.par_p1 = (float)BMP3_CONCAT_BYTES(reg_data[6], reg_data[5]);
+        calib_data_.par_p1 = (calib_data_.par_p1 - (16384.f)) / temp_var;
+
+        temp_var           = 536870912.0f;
+        calib_data_.par_p2 = (float)BMP3_CONCAT_BYTES(reg_data[8], reg_data[7]);
+        calib_data_.par_p2 = (calib_data_.par_p2 - (16384.f)) / temp_var;
+
+        temp_var           = 4294967296.0f;
+        calib_data_.par_p3 = (float)reg_data[9] / temp_var;
+
+        temp_var           = 137438953472.0f;
+        calib_data_.par_p4 = (float)reg_data[10] / temp_var;
+
+        /* 1 / 2^3 */
+        temp_var = 0.125f;
+        calib_data_.par_p5
+            = (float)BMP3_CONCAT_BYTES(reg_data[12], reg_data[11]) / temp_var;
+
+        temp_var = 64.0f;
+        calib_data_.par_p6
+            = (float)BMP3_CONCAT_BYTES(reg_data[14], reg_data[13]) / temp_var;
+
+        temp_var           = 256.0f;
+        calib_data_.par_p7 = (float)reg_data[15] / temp_var;
+
+        temp_var           = 32768.0f;
+        calib_data_.par_p8 = (float)reg_data[16] / temp_var;
+
+        temp_var = 281474976710656.0f;
+        calib_data_.par_p9
+            = (float)BMP3_CONCAT_BYTES(reg_data[18], reg_data[17]) / temp_var;
+
+        temp_var            = 281474976710656.0f;
+        calib_data_.par_p10 = (float)reg_data[19] / temp_var;
+
+        temp_var            = 36893488147419103232.0f;
+        calib_data_.par_p11 = (float)reg_data[20] / temp_var;
+    }
+
 
     void SoftReset()
     {
@@ -368,6 +546,7 @@ class Bmp390
     Config    config_;
     Transport transport_;
     float     temperature_, pressure_;
+    uint32_t  raw_temperature_, raw_pressure_;
 };
 
 /** @} */
