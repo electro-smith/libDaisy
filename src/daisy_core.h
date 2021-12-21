@@ -268,6 +268,11 @@ struct Pin
     */
     constexpr Pin(const GPIOPort pt, const uint8_t pn) : port(pt), pin(pn) {}
 
+    /** @brief Constructor creates a valid pin from the old-style struct. 
+     *  @param old_pin dsy_gpio_pin corresponding to the STM32 GPIO.
+    */
+    constexpr Pin(const dsy_gpio_pin& old_pin) : port((GPIOPort) old_pin.port), pin(old_pin.pin) {}
+
     /** @brief Basic Constructor creates an invalid Pin object */
     constexpr Pin() : port(PORTX), pin(255) {}
 
