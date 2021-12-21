@@ -265,11 +265,11 @@ class Vl53l1x
 
     uint16_t ReadWord(uint16_t index)
     {
-        uint8_t  buff[] = {index >> 8, index & 0xff};
+        uint8_t  buff[] = {uint8_t(index >> 8), uint8_t(index & 0xff)};
         uint16_t ret;
 
         SetTransportErr(transport_.Write(buff, 2));
-        SetTransportErr(transport_.Read(&ret, 2)); // is this ok?
+        SetTransportErr(transport_.Read((uint8_t *)&ret, 2)); // is this ok?
 
         return ret;
     }
