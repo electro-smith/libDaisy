@@ -1,6 +1,5 @@
 namespace daisy
 {
-
 /** @addtogroup midi MIDI
  *  @ingroup human_interface
  *  @ingroup libdaisy

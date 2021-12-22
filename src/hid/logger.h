@@ -15,7 +15,7 @@ namespace daisy
  *  @ingroup human_interface
  *  @ingroup libdaisy
  * 
- *  The following is a short example of using the DaisySeed::Logger 
+ *  The following is a short example of using the DaisySeed::Logger
  *  to print to a serial port.
  *  @include SerialPrint.cpp
  *  @{
