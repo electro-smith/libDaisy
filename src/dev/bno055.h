@@ -735,86 +735,34 @@ class Bno055
         }
     }
 
-    /**  Gets the temperature in degrees celsius
-        \return temperature in degrees celsius
+    /** Reads data from the chip
     */
-    int8_t GetTemp()
+    void Process()
     {
-        int8_t temp = (int8_t)(Read8(BNO055_TEMP_ADDR));
-        return temp;
+        ReadTemp();
+        ReadAllVectors();
     }
 
-    /**   Gets a vector reading from the specified source
-        \param   vector_type possible vector type values
-                 [VECTOR_ACCELEROMETER
-                  VECTOR_MAGNETOMETER
-                  VECTOR_GYROSCOPE
-                  VECTOR_EULER
-                  VECTOR_LINEARACCEL
-                  VECTOR_GRAVITY]
-        \return  vector from specified source
-    */
-    Vector GetVector(vector_type_t vector_type)
-    {
-        Vector  xyz;
-        uint8_t buffer[6] = {0, 0, 0, 0, 0, 0};
+    /** Get the temperature in Degrees Centigrade */
+    uint8_t GetTemp() { return temp_; }
 
-        int16_t x, y, z;
-        x = y = z = 0;
+    /** Get the Vector reading from the Accelerometer in m/s^2 */
+    Vector GetVectorAccelerometer() { return vacc_; }
 
-        /* Read vector data (6 bytes) */
-        ReadLen((reg_t)vector_type, buffer, 6);
+    /** Get the Vector reading from the Magenetomer in uT*/
+    Vector GetVectorMagnetometer() { return vmag_; }
 
-        x = ((int16_t)buffer[0]) | (((int16_t)buffer[1]) << 8);
-        y = ((int16_t)buffer[2]) | (((int16_t)buffer[3]) << 8);
-        z = ((int16_t)buffer[4]) | (((int16_t)buffer[5]) << 8);
+    /** Get the Vector reading from the Gyroscope in dps */
+    Vector GetVectorGyroscope() { return vgyro_; }
 
-        /**
-            Convert the value to an appropriate range (section 3.6.4)
-            and assign the value to the Vector type
-        */
-        switch(vector_type)
-        {
-            case VECTOR_MAGNETOMETER:
-                /* 1uT = 16 LSB */
-                xyz.x = ((float)x) / 16.f;
-                xyz.y = ((float)y) / 16.f;
-                xyz.z = ((float)z) / 16.f;
-                break;
-            case VECTOR_GYROSCOPE:
-                /* 1dps = 16 LSB */
-                xyz.x = ((float)x) / 16.f;
-                xyz.y = ((float)y) / 16.f;
-                xyz.z = ((float)z) / 16.f;
-                break;
-            case VECTOR_EULER:
-                /* 1 degree = 16 LSB */
-                xyz.x = ((float)x) / 16.f;
-                xyz.y = ((float)y) / 16.f;
-                xyz.z = ((float)z) / 16.f;
-                break;
-            case VECTOR_ACCELEROMETER:
-                /* 1m/s^2 = 100 LSB */
-                xyz.x = ((float)x) / 100.f;
-                xyz.y = ((float)y) / 100.f;
-                xyz.z = ((float)z) / 100.f;
-                break;
-            case VECTOR_LINEARACCEL:
-                /* 1m/s^2 = 100 LSB */
-                xyz.x = ((float)x) / 100.f;
-                xyz.y = ((float)y) / 100.f;
-                xyz.z = ((float)z) / 100.f;
-                break;
-            case VECTOR_GRAVITY:
-                /* 1m/s^2 = 100 LSB */
-                xyz.x = ((float)x) / 100.f;
-                xyz.y = ((float)y) / 100.f;
-                xyz.z = ((float)z) / 100.f;
-                break;
-        }
+    /** Get the Euler reading as a Vector in degrees*/
+    Vector GetVectorEuler() { return veul_; }
 
-        return xyz;
-    }
+    /** Get the Linear Acceleration reading as a Vector in m/s^2 */
+    Vector GetVectorLinearAccel() { return vlin_; }
+
+    /** Get the Gravity reading as a Vector in m/s^2 */
+    Vector GetVectorGravity() { return vgrav_; }
 
     /**  Gets a quaternion reading from the specified source
         \return quaternion reading
@@ -1191,6 +1139,74 @@ class Bno055
     opmode_t  _mode;
     Config    config_;
     Transport transport_;
+    int8_t    temp_;
+    Vector    vacc_, vmag_, vgyro_, veul_, vlin_, vgrav_;
+
+    /** Reads the temp in deg C to be later gotten by the getter */
+    void ReadTemp() { temp_ = (int8_t)(Read8(BNO055_TEMP_ADDR)); }
+
+    /** Read from a reg and return the vector with the raw values */
+    Vector ReadVector(vector_type_t vector_type)
+    {
+        Vector  ret;
+        uint8_t buffer[6] = {0, 0, 0, 0, 0, 0};
+
+        ReadLen((reg_t)vector_type, buffer, 6);
+
+        ret.x = float(((int16_t)buffer[0]) | (((int16_t)buffer[1]) << 8));
+        ret.y = float(((int16_t)buffer[2]) | (((int16_t)buffer[3]) << 8));
+        ret.z = float(((int16_t)buffer[4]) | (((int16_t)buffer[5]) << 8));
+
+        return ret;
+    }
+
+    /**   Read all of the vectors for the getters to later use */
+    void ReadAllVectors()
+    {
+        Vector xyz;
+
+        xyz = ReadVector(VECTOR_ACCELEROMETER);
+        /* 1m/s^2 = 100 LSB */
+        xyz.x = (xyz.x) / 100.f;
+        xyz.y = (xyz.y) / 100.f;
+        xyz.z = (xyz.z) / 100.f;
+        vacc_ = xyz;
+
+        xyz = ReadVector(VECTOR_MAGNETOMETER);
+        /* 1uT = 16 LSB */
+        xyz.x = (xyz.x) / 16.f;
+        xyz.y = (xyz.y) / 16.f;
+        xyz.z = (xyz.z) / 16.f;
+        vmag_ = xyz;
+
+        xyz = ReadVector(VECTOR_GYROSCOPE);
+        /* 1dps = 16 LSB */
+        xyz.x  = (xyz.x) / 16.f;
+        xyz.y  = (xyz.y) / 16.f;
+        xyz.z  = (xyz.z) / 16.f;
+        vgyro_ = xyz;
+
+        xyz = ReadVector(VECTOR_EULER);
+        /* 1 degree = 16 LSB */
+        xyz.x = (xyz.x) / 16.f;
+        xyz.y = (xyz.y) / 16.f;
+        xyz.z = (xyz.z) / 16.f;
+        veul_ = xyz;
+
+        xyz = ReadVector(VECTOR_LINEARACCEL);
+        /* 1m/s^2 = 100 LSB */
+        xyz.x = (xyz.x) / 100.f;
+        xyz.y = (xyz.y) / 100.f;
+        xyz.z = (xyz.z) / 100.f;
+        vlin_ = xyz;
+
+        xyz    = ReadVector(VECTOR_GRAVITY);
+        xyz.x  = (xyz.x) / 100.f;
+        xyz.y  = (xyz.y) / 100.f;
+        xyz.z  = (xyz.z) / 100.f;
+        vgrav_ = xyz;
+    }
+
 }; // namespace daisy
 
 /** @} */
