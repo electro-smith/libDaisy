@@ -735,12 +735,12 @@ class Bno055
         }
     }
 
-    /** Reads data from the chip
-    */
+    /** Reads data from the chip */
     void Process()
     {
         ReadTemp();
         ReadAllVectors();
+        ReadQuat();
     }
 
     /** Get the temperature in Degrees Centigrade */
@@ -764,37 +764,7 @@ class Bno055
     /** Get the Gravity reading as a Vector in m/s^2 */
     Vector GetVectorGravity() { return vgrav_; }
 
-    /**  Gets a quaternion reading from the specified source
-        \return quaternion reading
-    */
-    Quaternion GetQuat()
-    {
-        uint8_t buffer[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-
-        Quaternion quat;
-
-        int16_t x, y, z, w;
-        x = y = z = w = 0;
-
-        /* Read quat data (8 bytes) */
-        ReadLen(BNO055_QUATERNION_DATA_W_LSB_ADDR, buffer, 8);
-        w = (((uint16_t)buffer[1]) << 8) | ((uint16_t)buffer[0]);
-        x = (((uint16_t)buffer[3]) << 8) | ((uint16_t)buffer[2]);
-        y = (((uint16_t)buffer[5]) << 8) | ((uint16_t)buffer[4]);
-        z = (((uint16_t)buffer[7]) << 8) | ((uint16_t)buffer[6]);
-
-        /** Assign to Quaternion
-            See https://cdn-shop.adafruit.com/datasheets/BST_BNO055_DS000_12.pdf
-            3.6.5.5 Orientation (Quaternion)
-        */
-        const float scale = (1.0 / (1 << 14));
-        quat.w            = scale * w;
-        quat.x            = scale * x;
-        quat.y            = scale * y;
-        quat.z            = scale * z;
-
-        return quat;
-    }
+    Quaternion GetQuat() { return quat_; }
 
     /**  Reads the sensor and returns the data as a sensors_event_t
         \param  event Event description
@@ -1135,12 +1105,13 @@ class Bno055
     }
 
   private:
-    int32_t   _sensorID;
-    opmode_t  _mode;
-    Config    config_;
-    Transport transport_;
-    int8_t    temp_;
-    Vector    vacc_, vmag_, vgyro_, veul_, vlin_, vgrav_;
+    int32_t    _sensorID;
+    opmode_t   _mode;
+    Config     config_;
+    Transport  transport_;
+    int8_t     temp_;
+    Vector     vacc_, vmag_, vgyro_, veul_, vlin_, vgrav_;
+    Quaternion quat_;
 
     /** Reads the temp in deg C to be later gotten by the getter */
     void ReadTemp() { temp_ = (int8_t)(Read8(BNO055_TEMP_ADDR)); }
@@ -1205,6 +1176,36 @@ class Bno055
         xyz.y  = (xyz.y) / 100.f;
         xyz.z  = (xyz.z) / 100.f;
         vgrav_ = xyz;
+    }
+
+    /**  Gets a quaternion reading */
+    void ReadQuat()
+    {
+        uint8_t buffer[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+        Quaternion quat;
+
+        int16_t x, y, z, w;
+        x = y = z = w = 0;
+
+        /* Read quat data (8 bytes) */
+        ReadLen(BNO055_QUATERNION_DATA_W_LSB_ADDR, buffer, 8);
+        w = (((uint16_t)buffer[1]) << 8) | ((uint16_t)buffer[0]);
+        x = (((uint16_t)buffer[3]) << 8) | ((uint16_t)buffer[2]);
+        y = (((uint16_t)buffer[5]) << 8) | ((uint16_t)buffer[4]);
+        z = (((uint16_t)buffer[7]) << 8) | ((uint16_t)buffer[6]);
+
+        /** Assign to Quaternion
+            See https://cdn-shop.adafruit.com/datasheets/BST_BNO055_DS000_12.pdf
+            3.6.5.5 Orientation (Quaternion)
+        */
+        const float scale = (1.0 / (1 << 14));
+        quat.w            = scale * w;
+        quat.x            = scale * x;
+        quat.y            = scale * y;
+        quat.z            = scale * z;
+
+        quat_ = quat;
     }
 
 }; // namespace daisy
