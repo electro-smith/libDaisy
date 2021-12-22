@@ -41,9 +41,9 @@ To define what connections are made we will use the `AdcChannelConfig` class.
 The AdcChannelConfig has two possible initialization functions:
 
 * `InitSingle` - For configuring a single input to a single pin on the Daisy
-* `InitMux` - For configuring several inputs from an external multiplexor (like CD4051) to a single pin on the Daisy
+* `InitMux` - For configuring several inputs from an external multiplexer (like CD4051) to a single pin on the Daisy
 
-Below we'll only be using the `InitSingle` function, but stay tuned for a guide for connecting a ton of controls using external multiplexor in the future.
+Below we'll only be using the `InitSingle` function, but stay tuned for a guide for connecting a ton of controls using external multiplexer in the future.
 
 The `InitSingle` function takes an old version of the Daisy's `Pin` object, but it is compatible with the new pins. So anywhere you see, `dsy_gpio_pin` you can use the `Pin` object instead.
 
@@ -83,7 +83,7 @@ int main(void) {
   // Set up the ADC config with a connection to pin A0
   adc_config.InitSingle(A0);
 
-  // Initialize the ADC peripheral with that configuraiton
+  // Initialize the ADC peripheral with that configuration
   hw.adc.Init(&adc_config, 1);
 
   // Start the ADC
@@ -122,7 +122,7 @@ to this Instead:
 float value = hw.adc.GetFloat(0); // value will be 0.0 to 1.0
 ```
 
-floating point numbers have a few pecularities because of the hardware and memory requirements of an embedded project, but you can keep the serial printing by adding the following to the project Makefile:
+floating point numbers have a few peculiarities because of the hardware and memory requirements of an embedded project, but you can keep the serial printing by adding the following to the project Makefile:
 
 ```make
 LDFLAGS += -u _printf_float
