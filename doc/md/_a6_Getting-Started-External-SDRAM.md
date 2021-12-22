@@ -36,7 +36,7 @@ Now, that is a lot of stuff to type, and pretty hard to remember. So we made a s
 float DSY_SDRAM_BSS my_buffer[1024];
 ```
 
-The first, longform example is the spelled out gcc attribute that says what memory section to put the array in. This can be useful on big projects when using one of the many other available memory sections within the STM32H7 processor.
+The first, longform example is the spelled out compiler attribute that says what memory section to put the array in. This can be useful on big projects when using one of the many other available memory sections within the STM32H7 processor.
 
 However, for now, we don't need to worry much about that, and can just use the `DSY_SDRAM_BSS` macro.
 
