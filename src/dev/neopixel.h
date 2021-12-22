@@ -376,19 +376,14 @@ class NeoPixel
     {
         if(!pixels)
             return;
+        
+        // Non-blocking display write
+        if (CanShow())
+        {
+            Write(SEESAW_NEOPIXEL_BASE, SEESAW_NEOPIXEL_SHOW, NULL, 0);
 
-        // Data latch = 300+ microsecond pause in the output stream.  Rather than
-        // put a delay at the end of the function, the ending time is noted and
-        // the function will simply hold off (if needed) on issuing the
-        // subsequent round of data until the latch time has elapsed.  This
-        // allows the mainline code to start generating the next frame of data
-        // rather than stalling for the latch.
-        while(!CanShow())
-            ;
-
-        Write(SEESAW_NEOPIXEL_BASE, SEESAW_NEOPIXEL_SHOW, NULL, 0);
-
-        endTime = System::GetUs(); // Save EOD time for latch on next call
+            endTime = System::GetUs(); // Save EOD time for latch on next call
+        }
     }
 
     // Set the output pin number
