@@ -86,7 +86,7 @@ class DacHandle
     DacHandle &operator=(const DacHandle &other) = default;
 
     /** Callback for DMA transfers. This is called every time half 
-     ** of the samples of the buffer are transmitted, and the buffer is readdy
+     ** of the samples of the buffer are transmitted, and the buffer is ready
      ** to be filled again.
      ** 
      ** The data is organized in arrays per channel, for example if both channels are in use:

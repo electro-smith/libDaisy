@@ -19,11 +19,12 @@ namespace daisy {
  *          @defgroup feedback FEEDBACK
  *          @brief LEDs, and other physical outputs.
  * 
+ * 					@defgroup hid_logging LOGGING
+ * 					@brief Logging to external ports (Serial, JTAG, etc.)
+ * 
  * 					@defgroup midi MIDI
  * 					@brief MIDI handlers, transports, and message types
  * 
- * 					@defgroup logging LOGGING
- * 					@brief Logging to external ports (Serial, JTAG, etc.)
  *      @} //end hid
  *      @defgroup peripheral PERIPHERAL
  *      @brief control over internal mechanisms within MCU (GPIO, AdcHandle, SpiHandle, UartHandler, etc.)

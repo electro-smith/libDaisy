@@ -9,25 +9,28 @@
 
 namespace daisy
 {
-/** @ingroup logging
-    @{ 
+/** 
+ *  @addtogroup hid_logging LOGGING
+ *  @brief Intefaces for Logging over USB, etc.
+ *  @ingroup human_interface
+ *  @ingroup libdaisy
+    @{
 */
 
+/** @defgroup logging_macros LoggerHelperMacros 
+ *  @{ */
 /** Logger configuration
  */
 #define LOGGER_NEWLINE "\r\n" /**< custom newline character sequence */
 #define LOGGER_BUFFER 128     /**< size in bytes */
 
-/** Helper macros for string concatenation and macro expansion
- * @{
+/** 
+ * Helper macros for string concatenation and macro expansion
  */
 #define PPCAT_NX(A, B) A##B          /**< non-expanding concatenation */
 #define PPCAT(A, B) PPCAT_NX(A, B)   /**< concatenate tokens */
 #define STRINGIZE_NX(A) #A           /**< non-expanding stringize  */
 #define STRINGIZE(A) STRINGIZE_NX(A) /**< make a string */
-/*
- * @}
- */
 
 /** Floating point output formatting string. Include in your printf-style format string
  *  example: printf("float value = " FLT_FMT(3) " continue like that", FLT_VAR(3, x));
@@ -50,6 +53,7 @@ namespace daisy
  */
 #define FLT_VAR3(_x) FLT_VAR(3, _x)
 
+/** @} */ // End logging_macros
 
 /**   @brief Interface for simple USB logging
  *    @author Alexander Petrov-Savchenko (axp@soft-amp.com)
@@ -135,7 +139,9 @@ class Logger
     static LoggerImpl<dest> impl_;    /**< underlying trasnfer implementation */
 };
 
-/** member variable definition (could switch to inline statics in C++17)
+/** @addtogroup logger_statics LoggerStaticMembers
+ *  @brief member variable definition (could switch to inline statics in C++17)
+ *  @{
  */
 
 /** this needs to remain in SRAM to support startup-time printouts
@@ -154,6 +160,7 @@ size_t Logger<dest>::tx_ptr_ = 0;
 template <LoggerDestination dest>
 LoggerImpl<dest> Logger<dest>::impl_;
 
+/** @} */ // end logger_statics
 
 /** Specialization for a muted log
  */
