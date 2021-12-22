@@ -160,6 +160,34 @@ Now you can read from either input. If you want to read the pot connected to A0 
 
 You'll notice that you access them by the order in which you initialized them, not by the number associated with the Pin.
 
+## Order To Chaos - Naming ADC Channels
+
+Once you have a lot of ADC channels, it can be difficult to remember which channel corresponds to which control. To solve this, you can use `enum`s to assign names to channels like this:
+
+```cpp
+enum AdcChannel {
+   pitchKnob = 0,
+   pitchCv,
+   gainKnob,
+   gainCv,
+   NUM_ADC_CHANNELS
+}
+```
+
+Here, the first value is assigned to `0`and the others increment automatically. Interestingly, this logic can be used to automatically get the total number of channels you use, by adding one last value `NUM_ADC_CHANNELS`. Of course you could also specify the individual values by hand, just add `myKnob = 3,`.
+
+Now you can make your code much easier to read - and maintain, should you decide to change the hardware connections later:
+
+```cpp
+AdcChannelConfig my_adc_config[NUM_ADC_CHANNELS];
+// ...
+my_adc_config[pitchCv].InitSingle(A0);
+// ...
+hw.adc.Init(my_adc_config, NUM_ADC_CHANNELS);
+// ...
+const float pitchCvValue = hw.adc.GetFloat(pitchCv);
+```
+
 ## Using Different Kinds of Inputs
 
 OK. So now we know what to do with one, or a few inputs that already conform to the expected input range.
