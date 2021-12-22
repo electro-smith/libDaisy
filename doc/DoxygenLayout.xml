@@ -11,7 +11,8 @@
       <tab type="interfacehierarchy" visible="yes" title="" intro=""/>
     </tab>
     <tab type="usergroup" title="Additional Resources" intro="">
-      <tab type="user" url="https://electro-smith.com/daisy" title="Daisy Seed Product Page"/>
+      <tab type="user" url="https://electro-smith.com/" title="Electrosmith Website"/>
+      <tab type="user" url="https://electro-smith.com/daisy/daisy" title="Daisy Seed Product Page"/>
       <tab type="user" url="https://electro-smith.github.io/Programmer/" title="Daisy Web Programmer"/>
       <tab type="user" url="https://static1.squarespace.com/static/58d03fdc1b10e3bf442567b8/t/61ba1bf5214a31356d23d73d/1639586811625/Daisy_Seed_datasheet.pdf" title="Daisy Seed Datasheet"/>
       <tab type="user" url="https://electro-smith.github.io/DaisySP/" title="DaisySP DSP Library Documentation"/>
