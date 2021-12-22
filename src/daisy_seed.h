@@ -43,7 +43,7 @@ class DaisySeed
     can be initialized using their specific initializers within libdaisy
     for a specific application.
     */
-    void Init(bool boost = false);
+    void Init(bool boost = false, bool init_qspi = true);
 
     /** 
     Deinitializes all peripherals automatically handled by `Init`.

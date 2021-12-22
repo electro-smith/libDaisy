@@ -102,7 +102,7 @@ void DaisySeed::Configure()
     testpoint.mode     = DSY_GPIO_MODE_OUTPUT_PP;
 }
 
-void DaisySeed::Init(bool boost)
+void DaisySeed::Init(bool boost, bool init_qspi)
 {
     //dsy_system_init();
     System::Config syscfg;
@@ -115,7 +115,7 @@ void DaisySeed::Init(bool boost)
 
     system.Init(syscfg);
 
-    if(memory != System::MemoryRegion::QSPI)
+    if(memory != System::MemoryRegion::QSPI && init_qspi)
         qspi.Init(qspi_config);
 
     if(memory == System::MemoryRegion::INTERNAL_FLASH)
