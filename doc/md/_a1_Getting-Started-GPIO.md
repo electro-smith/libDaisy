@@ -135,7 +135,7 @@ Well, let's set up a second pin as an output to light up an LED when we push our
 
 Setting up the GPIO output isn't much more work.
 
-On your hardware you'll want to take the second pin (right above the square D0 pin), and connect a resistor, and an LED in series. You'll want the **cathode** of the LED connected to GND, with the **anode** connected to the resistor.
+On your hardware, you'll want to take the second pin (right above the square D0 pin), and connect a resistor, and an LED in series. You'll want the **cathode** of the LED connected to GND, with the **anode** connected to the resistor, [as described here](https://makecode.adafruit.com/learnsystem/pins-tutorial/devices/led-connections).
 
 Once you've got that set up we can add a few lines to our example.
 
