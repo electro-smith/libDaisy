@@ -92,7 +92,7 @@ The second argument: `Mode m` can be any of the following:
 * `Mode::INPUT` - configures the pin as an input
 * `Mode::OUTPUT` - configures the pin as an output (in push pull configuration)
 * `Mode::OUTPUT_OD` - also an output, but the transistor connection to pull the signal to GND is not connected, this is less commonly used.
-* `Mode::ANALOG` - configures the GPIO for connection to the ADC or DAC peripherals within the Mircocontroller.
+* `Mode::ANALOG` - configures the GPIO for connection to the ADC or DAC peripherals within the micro controller.
 
 If you only supply the `Pin` argument, the GPIO will default to `Mode::INPUT` configuration.
 
@@ -100,7 +100,7 @@ If you only supply the `Pin` argument, the GPIO will default to `Mode::INPUT` co
 
 The third argument: `Pull pu` is used to select whether the GPIO will use an internal (around 30-50k) resistor as a pull up or pull down resistor.
 
-A pull up resistor will keep the GPIO idling at 3v3 unless something pulls it down, while a pull down resistor will keep a GPIO idling at 0V unless something pulls it up.
+A pull up resistor will keep the GPIO idling at 3V3 unless something pulls it down, while a pull down resistor will keep a GPIO idling at 0V unless something pulls it up.
 
 The options for this argument are:
 
@@ -109,6 +109,19 @@ The options for this argument are:
 * `Pull::PULLDOWN` - pull down resistor is connected to the GPIO line.
 
 This argument will default to `Pull::NOPULL` if you only supply a `Pin` and a `Mode`
+
+So when, and why do we need pull up or pull down resistors anyway?
+
+Well, if we connect a wire to one of Daisy's GPIO pins, and there are no internal or external resistors attached, there's no definite way to know what voltage the wire is sitting at.
+
+Now, if we connect the wire to a button, as we did in the above example, and connect the other side of the button to 3V3 then we _do_ know the voltage at the pin when the button pressed.
+However, when the button is not pressed, we still have an "undefined" state, as we can't guarantee that the pin will be at 0V when the button isn't pressed.
+
+To solve this unknown state issue, we can add a resistor to the pin that "pulls" the signal to GND when the button isn't actively pulling the voltage up to 3V3 (while pressed).
+
+Instead of adding an external resistor to do this, we can use the built-in pull-down feature to accomplish the same thing.
+
+In the example above, we did the same thing except we used the pull up resistor, and wired the button to GND. This usually just requires less wires, but the function is the same.
 
 ### Speed Argument
 
