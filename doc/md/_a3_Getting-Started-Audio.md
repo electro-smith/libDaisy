@@ -251,3 +251,60 @@ while(1)
     }
 }
 ```
+
+## How to measure the processing load
+
+It is crucial to have a feeling of how much processing load your algorithm introduces and how much room for additions you still have. This can be done by measuring the execution time of the audio callback and comparing it to the available time. Daisy comes with a helper class to do this, the `CpuLoadMeter`.
+
+To measure the CPU load, you would call `.OnBlockStart()` at the beginning, and `.OnBlockEnd()` at the end of your audio callback. The you can request the resulting load measurement and print it on a display or a serial connection. It is crucial to do the printing from the main loop, not the audio callback itself, as discussed before.
+
+A complete example would look like this:
+
+```cpp
+#include "daisy_seed.h"
+#include "daisysp.h"
+using namespace daisy;
+DaisySeed hw;
+CpuLoadMeter loadMeter;
+
+void MyCallback(AudioHandle::InputBuffer in, 
+                AudioHandle::OutputBuffer out, 
+                size_t size) 
+{
+    loadMeter.OnBlockStart();
+    for (size_t i = 0; i < size; i++)
+    {
+        // add your processing here
+        out[0][i] = 0.0f;
+        out[1][i] = 0.0f;
+    }
+    loadMeter.OnBlockEnd();
+}
+int main(void)
+{
+    hw.Init();
+    
+    // start logging to the serial connection
+    hw.StartLog();
+    
+    // initialize the load meter so that it knows what time is available for the processing:
+    loadMeter.Init(hw.AudioSampleRate(), hw.AudioBlockSize());
+    
+    // start the audio processing callback
+    hw.StartAudio(MyCallback);
+    
+    while(1) {
+        // get the current load (smoothed value and peak values)
+        const float avgLoad = cpuLoadMeter.GetAvgCpuLoad();
+        const float maxLoad = cpuLoadMeter.GetMaxCpuLoad();
+        const float minLoad = cpuLoadMeter.GetMinCpuLoad();
+        // print it to the serial connection (as percentages)
+        hw.PrintLine("Processing Load %:");
+        hw.PrintLine("Max: " FLT_FMT3, FLT_VAR3(maxLoad * 100.0f));
+        hw.PrintLine("Avg: " FLT_FMT3, FLT_VAR3(avgLoad * 100.0f));
+        hw.PrintLine("Min: " FLT_FMT3, FLT_VAR3(minLoad * 100.0f));
+        // don't spam the serial connection too much
+        System::Delay(500);
+    }
+}
+```
