@@ -1,0 +1,55 @@
+var classdaisy_1_1_daisy_versio =
+[
+    [ "AV_KNOBS", "classdaisy_1_1_daisy_versio.html#a598029b7d1e5280ac647a1f06fa81c68", [
+      [ "KNOB_0", "classdaisy_1_1_daisy_versio.html#a598029b7d1e5280ac647a1f06fa81c68a7ece1fb251a95755e63464a1e807d6fe", null ],
+      [ "KNOB_1", "classdaisy_1_1_daisy_versio.html#a598029b7d1e5280ac647a1f06fa81c68ab412a0beaf29a30401e3368eff4de63c", null ],
+      [ "KNOB_2", "classdaisy_1_1_daisy_versio.html#a598029b7d1e5280ac647a1f06fa81c68ab9b2a74b7d0982fa5f2e10106b6447cc", null ],
+      [ "KNOB_3", "classdaisy_1_1_daisy_versio.html#a598029b7d1e5280ac647a1f06fa81c68a235947b162b816cccbe4a56d8cd4d797", null ],
+      [ "KNOB_4", "classdaisy_1_1_daisy_versio.html#a598029b7d1e5280ac647a1f06fa81c68affde000b67decc816fb20de78262e75b", null ],
+      [ "KNOB_5", "classdaisy_1_1_daisy_versio.html#a598029b7d1e5280ac647a1f06fa81c68a5d2924f388a42f93d89ba718fa4c940e", null ],
+      [ "KNOB_6", "classdaisy_1_1_daisy_versio.html#a598029b7d1e5280ac647a1f06fa81c68a5acfe048ce1b428e1c512e2ac050a797", null ],
+      [ "KNOB_LAST", "classdaisy_1_1_daisy_versio.html#a598029b7d1e5280ac647a1f06fa81c68a4bb4ed413362604f58976463b2eb326d", null ]
+    ] ],
+    [ "AV_LEDS", "classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428c", [
+      [ "LED_0", "classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428ca376f4e958942a471d88cdca0274a9dc9", null ],
+      [ "LED_1", "classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428caf4bbae651b7931a7f926eee506c75f06", null ],
+      [ "LED_2", "classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428ca883aebb89ab52e6e78a50c760c9aa099", null ],
+      [ "LED_3", "classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428ca735d6168ab54f269d457928fbd349b1a", null ],
+      [ "LED_LAST", "classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428ca2eefb496ce87e54eecdd0fb4043fc2ae", null ]
+    ] ],
+    [ "AV_TOGGLE3", "classdaisy_1_1_daisy_versio.html#a6f2416114c97e313ade19a8142c396b7", [
+      [ "SW_0", "classdaisy_1_1_daisy_versio.html#a6f2416114c97e313ade19a8142c396b7a25db83ab54213d7db432a505cdc269d6", null ],
+      [ "SW_1", "classdaisy_1_1_daisy_versio.html#a6f2416114c97e313ade19a8142c396b7aa290d40f4d9adcf845b94cdb25b981d1", null ],
+      [ "SW_LAST", "classdaisy_1_1_daisy_versio.html#a6f2416114c97e313ade19a8142c396b7a9b6a42bbf8432dcdc700dc268da61404", null ]
+    ] ],
+    [ "DaisyVersio", "classdaisy_1_1_daisy_versio.html#a5cc92fc82054e1bb3c200a03cece4931", null ],
+    [ "~DaisyVersio", "classdaisy_1_1_daisy_versio.html#a76bc1e3ba7c20bbc51a48ece0e522d34", null ],
+    [ "AudioBlockSize", "classdaisy_1_1_daisy_versio.html#a1e35b58309ebae48f069b30e9c5e0117", null ],
+    [ "AudioCallbackRate", "classdaisy_1_1_daisy_versio.html#a7be793497341298618481fac85c96f04", null ],
+    [ "AudioSampleRate", "classdaisy_1_1_daisy_versio.html#acb58ac0c618ca8ce5a2ccfa6c1a72d18", null ],
+    [ "ChangeAudioCallback", "classdaisy_1_1_daisy_versio.html#aab768d8a7b8ad96d42a3dccb5b7802b5", null ],
+    [ "ChangeAudioCallback", "classdaisy_1_1_daisy_versio.html#ac531434a69979b8e9a9d30102f95cc11", null ],
+    [ "DelayMs", "classdaisy_1_1_daisy_versio.html#ad546da132a10c6300f5a20ff22b3855e", null ],
+    [ "Gate", "classdaisy_1_1_daisy_versio.html#ac23598501407665871cd4819fbdb458a", null ],
+    [ "GetKnobValue", "classdaisy_1_1_daisy_versio.html#a5f662a5029b088ae95df2b65007461d9", null ],
+    [ "Init", "classdaisy_1_1_daisy_versio.html#ad50e0740d75a92c6c5117a2c1ec68f40", null ],
+    [ "ProcessAllControls", "classdaisy_1_1_daisy_versio.html#ac680c7da2f51a209b95b3b559b2d9310", null ],
+    [ "ProcessAnalogControls", "classdaisy_1_1_daisy_versio.html#aa164af66eba7f3e5577d53ca5cd53b71", null ],
+    [ "SetAudioBlockSize", "classdaisy_1_1_daisy_versio.html#af7c9ee88f95151cf6a1ce7caa77e09ca", null ],
+    [ "SetAudioSampleRate", "classdaisy_1_1_daisy_versio.html#ae0612be43ce8620e9df2cbe7fa9c018e", null ],
+    [ "SetLed", "classdaisy_1_1_daisy_versio.html#a1ebe1bea805a13bcc366de005c14a27c", null ],
+    [ "StartAdc", "classdaisy_1_1_daisy_versio.html#a2e0fb36f0915cb10ed1e04af68b99b7c", null ],
+    [ "StartAudio", "classdaisy_1_1_daisy_versio.html#ad0aaeb0f8ab4ba21654b188dd6f6d8c7", null ],
+    [ "StartAudio", "classdaisy_1_1_daisy_versio.html#a4590bf0bd0eea4fef423379d579a6a39", null ],
+    [ "StopAdc", "classdaisy_1_1_daisy_versio.html#a33ff3c1fc69dfc391cdf202ee2f332cb", null ],
+    [ "StopAudio", "classdaisy_1_1_daisy_versio.html#a2f9891f4d072f8492c1feb794880c4ed", null ],
+    [ "SwitchPressed", "classdaisy_1_1_daisy_versio.html#a2c1972b50f762a75aec4bcc5baa99bb7", null ],
+    [ "UpdateExample", "classdaisy_1_1_daisy_versio.html#a925301048f435829a808907b62ff41d8", null ],
+    [ "UpdateLeds", "classdaisy_1_1_daisy_versio.html#ad25ccf6c7994e35b95d8912a63f00e72", null ],
+    [ "gate", "classdaisy_1_1_daisy_versio.html#ab35b4fd55a051a19cd49834b8c215978", null ],
+    [ "knobs", "classdaisy_1_1_daisy_versio.html#a04fcf008e5f506d818a0f52dc9a63c52", null ],
+    [ "leds", "classdaisy_1_1_daisy_versio.html#ac70b2e95ff30a0567892577277a01b02", null ],
+    [ "seed", "classdaisy_1_1_daisy_versio.html#ad7fb38b8d273231caa2d158db39c82da", null ],
+    [ "sw", "classdaisy_1_1_daisy_versio.html#aa40cf7681aed764ecf3529b3573f0a25", null ],
+    [ "tap", "classdaisy_1_1_daisy_versio.html#a79d471972f35f43ae892357457715e6f", null ]
+];
