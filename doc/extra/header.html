@@ -22,6 +22,7 @@ $search
 $mathjax
 <link href="$relpath^$stylesheet" rel="stylesheet" type="text/css" />
 $extrastylesheet
+<script type="text/javascript" src="$relpath^doxygen-awesome-darkmode-toggle.js"></script>
 </head>
 <body>
 <!--BEGIN DISABLE_INDEX-->
@@ -39,21 +40,21 @@ $extrastylesheet
  <tr style="height: 56px;">
   <!--BEGIN PROJECT_LOGO-->
   <td id="projectlogo">
-    <a href="$relpath^index.html"><img alt="Logo" src="$relpath^$projectlogo"/> </a>
+    <a href="$relpath^index.html"><img alt="Logo" src="$relpath^$projectlogo"/></a>
   </td>
   <!--END PROJECT_LOGO-->
   <!--BEGIN PROJECT_NAME-->
-  <!-- <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">$projectname<span id="projectnumber">&#160;$projectnumber</span> 
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">$projectname<!--BEGIN PROJECT_NUMBER--><span id="projectnumber">&#160;$projectnumber</span><!--END PROJECT_NUMBER-->
    </div>
-   <div id="projectbrief">$projectbrief</div>
-  </td> -->
+   <!--BEGIN PROJECT_BRIEF--><div id="projectbrief">$projectbrief</div><!--END PROJECT_BRIEF-->
+  </td>
   <!--END PROJECT_NAME-->
   <!--BEGIN !PROJECT_NAME-->
    <!--BEGIN PROJECT_BRIEF-->
-    <!-- <td style="padding-left: 0.5em;">
+    <td style="padding-left: 0.5em;">
     <div id="projectbrief">$projectbrief</div>
-    </td> -->
+    </td>
    <!--END PROJECT_BRIEF-->
   <!--END !PROJECT_NAME-->
   <!--BEGIN DISABLE_INDEX-->
