@@ -252,7 +252,7 @@ while(1)
 }
 ```
 
-## How to measure the processing load
+## How To Measure the Processing Load
 
 It is crucial to have a feeling of how much processing load your algorithm introduces and how much room for additions you still have. This can be done by measuring the execution time of the audio callback and comparing it to the available time. Daisy comes with a helper class to do this, the `CpuLoadMeter`.
 
