@@ -217,7 +217,9 @@ class Tlv493d
         SetRegBits(W_PARITY_EN, 1);
         // config sensor to lowpower mode
         // also contains parity calculation and writeout to sensor
-        SetAccessMode(TLV493D_DEFAULTMODE);
+        SetAccessMode(MASTERCONTROLLEDMODE);
+
+        prev_sample_period_ = System::GetNow();
 
         return GetTransportErr();
     }
@@ -261,22 +263,25 @@ class Tlv493d
 
     void UpdateData()
     {
-        SetAccessMode(MASTERCONTROLLEDMODE);
-        System::Delay(GetMeasurementDelay());
+        uint32_t now = System::GetNow();
+        if (now - prev_sample_period_ >= GetMeasurementDelay())
+        {
+            prev_sample_period_ = now;
 
-        ReadOut();
+            ReadOut();
 
-        // construct results from registers
-        mXdata = ConcatResults(GetRegBits(R_BX1), GetRegBits(R_BX2), true);
-        mYdata = ConcatResults(GetRegBits(R_BY1), GetRegBits(R_BY2), true);
-        mZdata = ConcatResults(GetRegBits(R_BZ1), GetRegBits(R_BZ2), true);
-        mTempdata
-            = ConcatResults(GetRegBits(R_TEMP1), GetRegBits(R_TEMP2), false);
+            // construct results from registers
+            mXdata = ConcatResults(GetRegBits(R_BX1), GetRegBits(R_BX2), true);
+            mYdata = ConcatResults(GetRegBits(R_BY1), GetRegBits(R_BY2), true);
+            mZdata = ConcatResults(GetRegBits(R_BZ1), GetRegBits(R_BZ2), true);
+            mTempdata
+                = ConcatResults(GetRegBits(R_TEMP1), GetRegBits(R_TEMP2), false);
 
-        SetAccessMode(POWERDOWNMODE);
-        GetRegBits(R_CHANNEL);
+            // SetAccessMode(POWERDOWNMODE);
+            GetRegBits(R_CHANNEL);
 
-        mExpectedFrameCount = GetRegBits(R_FRAMECOUNTER) + 1;
+            mExpectedFrameCount = GetRegBits(R_FRAMECOUNTER) + 1;
+        }
     }
 
     void SetInterrupt(bool enable)
@@ -393,6 +398,7 @@ class Tlv493d
     uint8_t   regWriteData[TLV493D_BUSIF_WRITESIZE];
     int16_t   mXdata, mYdata, mZdata, mTempdata, mExpectedFrameCount, mMode;
     bool      transport_error_;
+    uint32_t  prev_sample_period_;
 
     /** Set the global transport_error_ bool */
     void SetTransportErr(bool err) { transport_error_ |= err; }
