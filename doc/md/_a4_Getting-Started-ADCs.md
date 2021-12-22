@@ -153,7 +153,7 @@ my_adc_config[1].InitSingle(A4);
 And finally when we go to initialize the ADC itself, we can now omit the `&` that we had to use before because it's an array of objects, and we want to make sure to update the total count that we passed in before:
 
 ```cpp
-hw.adc.Init(my_adc_config, 2);
+hw.adc.Init(my_adc_config, num_adc_channels);
 ```
 
 Now you can read from either input. If you want to read the pot connected to A0 you would use `hw.adc.Get(0)`, or `hw.adc.GetFloat(0)`, and if you want to read from the pot connected to A4, you would use `hw.adc.Get(1)`, or `hw.adc.GetFloat(1)`.
