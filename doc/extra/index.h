@@ -1,4 +1,5 @@
 #pragma once
+namespace daisy {
 // Define the groups to be used throughout all of libdaisy for 
 // automated documentation
 /** @defgroup libdaisy LIBDAISY
@@ -7,7 +8,7 @@
  *      @defgroup boards BOARDS
  *      @brief board support files for official hardware
  *      @defgroup human_interface HUMAN_INTERFACE
- *      @brief Human Interface Components (Switches, LEDs, Controls, etc.)
+ *      @brief Human Interface Components (Switch, Led, AnalogControl, AudioHandle, etc.)
  *      @{ // start hid
  *          @defgroup audio AUDIO
  *          @brief Audio API
@@ -25,12 +26,12 @@
  * 					@brief Logging to external ports (Serial, JTAG, etc.)
  *      @} //end hid
  *      @defgroup peripheral PERIPHERAL
- *      @brief control over internal mechanisms within MCU (ADC, SPI, UART, etc.)
+ *      @brief control over internal mechanisms within MCU (GPIO, AdcHandle, SpiHandle, UartHandler, etc.)
  *      @{ // start peripheral
  * 					@defgroup serial SERIAL
  * 					@brief Serial Communications (i.e. SPI, UART, I2C, etc.)
  * 
- * 				  @defgroup analog_digital_conversion ANALOG_DIGITAL_CONVERSION
+ * 				  @defgroup per_analog ANALOG
  * 					@brief Analog Peripherals (ADC, DAC)
  *      @} // end peripheral
  * 			@defgroup system SYSTEM
@@ -54,8 +55,9 @@
  * 					@brief SDRAM devices
  * 			@} // end device
  * 			@defgroup ui UI
- * 			@brief UI System, UI Event Queue, Event readers, etc.
+ * 			@brief User Interface, UI Event Queue, Event readers, etc.
  * 			@defgroup utility UTILITY
  * 			@brief General Utilities (Ringbuffers, FIFOs, LED Colors, etc.)
  *  @} // End libdaisy
  */
+}
