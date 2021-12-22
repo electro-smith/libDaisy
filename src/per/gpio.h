@@ -15,7 +15,7 @@ namespace daisy
  *  @include GPIO_Input.cpp 
  * 
  *  Output Example (perfect for blinking an LED)
- *  @include GPIO_Output.cpp LED Output
+ *  @include GPIO_Output.cpp
  * 
 */
 class GPIO
@@ -139,9 +139,9 @@ class GPIO
 
 
 /** @ingroup peripheral
- *  @addtogroup Old-GPIO
+ *  @addtogroup DEPRECATED-OLD-GPIO
  * 
- *  @brief Old Style C API for GPIO is staying in place for a 
+ *  @brief Deprecated C API for GPIO is staying in place for a 
  *  few versions to support backwards compatibility.
  * 
  *  This should not be used for anything new.

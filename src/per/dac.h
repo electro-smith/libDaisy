@@ -7,7 +7,7 @@
 namespace daisy
 {
 /** @brief DAC handle for Built-in DAC Peripheral 
- *  @ingroup analog_digital_conversion
+ *  @ingroup per_analog
  ** 
  ** For now only Normal Mode is supported,
  ** Sample and hold mode provides reduced power consumption, but requires a bit more setup.
