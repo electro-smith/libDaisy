@@ -15,10 +15,10 @@
 
 namespace daisy
 {
-/** @addtogroup external 
-    @{ 
+/** @brief   Transport layer for sending and receiving MIDI data over UART 
+ *  @details This is the mode of communication used for TRS and DIN MIDI
+ *  @ingroup midi
 */
-
 class MidiUartTransport
 {
   public:
@@ -75,6 +75,7 @@ class MidiUartTransport
     The MidiEvents fill a FIFO queue that the user can pop messages from.
     @author shensley
     @date March 2020
+    @ingroup midi
 */
 template <typename Transport>
 class MidiHandler
@@ -89,8 +90,7 @@ class MidiHandler
     };
 
     /** Initializes the MidiHandler 
-    \param in_mode Input mode
-    \param out_mode Output mode
+     *  \param config Configuration structure used to define specifics to the MIDI Handler.
      */
     void Init(Config config)
     {
@@ -320,9 +320,13 @@ class MidiHandler
     const uint8_t kSystemRealTimeMask = 0x07;
 };
 
-/** @} */
-
+/**
+ *  @{ 
+ *  @ingroup midi
+ *  @brief shorthand accessors for MIDI Handlers
+ * */
 using MidiUartHandler = MidiHandler<MidiUartTransport>;
 using MidiUsbHandler  = MidiHandler<MidiUsbTransport>;
+/** @} */
 } // namespace daisy
 #endif

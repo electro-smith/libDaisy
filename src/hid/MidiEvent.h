@@ -1,5 +1,16 @@
 namespace daisy
 {
+/** @addtogroup midi MIDI
+ *  @ingroup human_interface
+ *  @ingroup libdaisy
+ *  @brief MIDI handlers, transports, and message types
+ *  @{
+ */
+
+/** @defgroup midi_events MIDI_EVENTS 
+ *  @{
+*/
+
 /** Parsed from the Status Byte, these are the common Midi Messages that can be handled. \n
 At this time only 3-byte messages are correctly parsed into MidiEvents.
 */
@@ -377,4 +388,8 @@ struct MidiEvent
         return m;
     }
 };
+
+/** @} */ // End midi_events
+
+/** @} */ // End midi
 } //namespace daisy

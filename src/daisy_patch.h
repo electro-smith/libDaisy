@@ -51,7 +51,7 @@ class DaisyPatch
 
 
     /** Starts the callback
-    \cb multichannel callback function
+    \param cb multichannel callback function
     */
     void StartAudio(AudioHandle::AudioCallback cb);
 

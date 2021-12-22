@@ -8,7 +8,7 @@ namespace daisy
 {
 /** @brief Base class for complex menus.
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  * 
  * This is the base class for any form of UiPage that displays a menu with multiple items.
  * It handles all the logic behind a menu (selecting items, editing items, etc.) but doesn't

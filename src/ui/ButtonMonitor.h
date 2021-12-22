@@ -7,7 +7,7 @@ namespace daisy
 {
 /** @brief A button monitor that generates events in a UiEventQueue
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  * 
  *  This class monitors a number of buttons and detects changes in their state.
  *  When a change is detected, an event is added to a UiEventQueue. If required, software

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 namespace daisy
-/** @addtogroup externals
+/** @addtogroup human_interface
     @{
 */
 
