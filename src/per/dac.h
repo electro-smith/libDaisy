@@ -12,7 +12,7 @@ namespace daisy
  ** For now only Normal Mode is supported,
  ** Sample and hold mode provides reduced power consumption, but requires a bit more setup.
  **
- ** For now connecting the DAC through other internal periphearls is also not supported.
+ ** For now connecting the DAC through other internal peripherals is also not supported.
  **
  ** Since the DAC channels have dedicated pins we don't need to pass in a pin config like with
  ** other modules. However, it is still important to not try to use the DAC pins for anything else.
