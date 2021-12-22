@@ -142,7 +142,8 @@ So for setting up two pots we'll change the initialization code to look a little
 
 ```cpp
 // Create an array of two AdcChannelConfig objects
-AdcChannelConfig my_adc_config[2];
+const int num_adc_channels = 2;
+AdcChannelConfig my_adc_config[num_adc_channels];
 // Initialize the first one connected to A0
 my_adc_config[0].InitSingle(A0);
 // Initialize the second one connected to A4
