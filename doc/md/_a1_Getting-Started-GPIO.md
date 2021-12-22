@@ -112,29 +112,7 @@ This argument will default to `Pull::NOPULL` if you only supply a `Pin` and a `M
 
 ### Speed Argument
 
-The final argument, `Speed sp` is a special configuration for Output modes that control the slew rate, or the speed at which it can switch from 0V to 3V. We won't go super in depth on that in this, but you'll always want it to be the lowest speed possible for a given application.
-
-### Defaults
-
-So in our example above, we can avoid having to connect any external resistors to our button by using the pull up feature.
-
-If we wanted to use some external resistors we could pull one side high with a resistor to 5V, and the other with a resistor to GND, and connect one side to the GPIO input, and if we didn't need to use the GPIO pull up resistor we could initialize the pin using the default settings:
-
-```cpp
-my_button.Init(D0)
-```
-
-By specifying the input mode, and pullup configuration we can do the same thing with just a button, and no external resistors by adding the Mode and Pull arguments:
-
-```cpp
-my_button.Init(D0, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
-```
-
-We will always have to Init the GPIO with a Pin, otherwise the program won't know what pin on the hardware we actually want to use, but the other inputs have the following defaults:
-
-* Mode: Input
-* Pull: No Pull Up
-* Speed: Low
+The final argument, `Speed sp` is a special configuration for Output modes that control the slew rate, or the speed at which it can switch from 0V to 3V. We won't go super in depth on that in this, but you'll always want it to be the lowest speed possible for a given application to reduce the amount of electrical noise emitted.
 
 ## GPIO Output
 
