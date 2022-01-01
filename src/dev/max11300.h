@@ -111,6 +111,16 @@ namespace MAX11300Types
         uint8_t rx_buffer[MAX11300_TRANSPORT_BUFFER_LENGTH];
         uint8_t tx_buffer[MAX11300_TRANSPORT_BUFFER_LENGTH];
     };
+
+    /** A function called when all MAX11300s have been updated */
+    typedef void (*UpdateCompleteCallbackFunctionPtr)(void* context);
+
+    /** Controls if the driver should automatically update the MAX11300s chips */
+    enum class AutoUpdate
+    {
+        enabled,
+        disabled
+    };
 } // namespace MAX11300Types
 
 class MAX11300MultiSlaveSpiTransport
@@ -286,7 +296,10 @@ class MAX11300Driver
     MAX11300Types::Result Init(Config                    config,
                                MAX11300Types::DmaBuffer* dma_buffer)
     {
-        dma_buffer_ = dma_buffer;
+        dma_buffer_                       = dma_buffer;
+        update_complete_callback_         = nullptr;
+        update_complete_callback_context_ = nullptr;
+        auto_update_                      = MAX11300Types::AutoUpdate::disabled;
 
         if(transport_.Init(config.transport_config) != Transport::Result::OK)
             return MAX11300Types::Result::ERR;
@@ -585,18 +598,31 @@ class MAX11300Driver
     /**
      * Update and synchronize the MAX11300 - This method does the following:
      * 
-     * - Write all current ANALOG_OUT (DAC) values to the MAX11300
+     * - Write all current ANALOG_OUT (DAC) values to all MAX11300s
      * - Read all current ANALOG_IN (ADC) values to memory
-     * - Write all GPO states to the MAX11300
+     * - Write all GPO states to all MAX11300s
      * - Read all GPI states to memory
+     * - call the provided callback function when complete
+     * - automatically trigger the next update if audo_update == MAX11300Types::AutoUpdate::enabled
      * 
-     * TODO - Provide more info on usage location and the side-effects of blocking...
-     * 
+     * \param  auto_update Controls if the driver should automatically trigger the next update after a
+     *                     successful update
+     * \param complete_callback A callback function that's called after each successful update
+     * \param complete_callback_context A context pointer provided to the complete_callback
      */
-    MAX11300Types::Result Update()
+    MAX11300Types::Result
+    Update(MAX11300Types::AutoUpdate auto_update
+           = MAX11300Types::AutoUpdate::disabled,
+           MAX11300Types::UpdateCompleteCallbackFunctionPtr complete_callback
+           = nullptr,
+           void* complete_callback_context = nullptr)
     {
         if(sequencer_.IsBusy())
             return MAX11300Types::Result::ERR;
+
+        auto_update_ = auto_update;
+        update_complete_callback_ = complete_callback;
+        update_complete_callback_context_ = complete_callback_context;
 
         sequencer_.current_device_ = 0;
         sequencer_.current_step_   = UpdateSequencer::first_step_;
@@ -1067,7 +1093,17 @@ class MAX11300Driver
             if(sequencer_.current_device_ >= num_devices)
             {
                 sequencer_.Invalidate();
-                return; // all devices complete
+                if(update_complete_callback_)
+                    update_complete_callback_(
+                        update_complete_callback_context_);
+                // retrigger if requested
+                if(auto_update_ == MAX11300Types::AutoUpdate::enabled)
+                {
+                    sequencer_.current_device_ = 0;
+                    sequencer_.current_step_   = UpdateSequencer::Step::updateDac;
+                }
+                else
+                    return; // all devices complete, no retriggering
             }
 
             auto& device = devices_[sequencer_.current_device_];
@@ -1174,7 +1210,8 @@ class MAX11300Driver
                     }
                     else
                     {
-                        sequencer_.current_step_ = UpdateSequencer::Step::updateDac;
+                        sequencer_.current_step_
+                            = UpdateSequencer::Step::updateDac;
                         sequencer_
                             .current_device_++; // go to next chip in sequence
                         done = false;           // cycle again
@@ -1238,6 +1275,10 @@ class MAX11300Driver
     } sequencer_;
 
     Transport transport_;
+
+    MAX11300Types::UpdateCompleteCallbackFunctionPtr update_complete_callback_;
+    void*                     update_complete_callback_context_;
+    MAX11300Types::AutoUpdate auto_update_;
 };
 template <size_t num_devices = 1>
 using MAX11300
