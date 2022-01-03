@@ -240,12 +240,12 @@ class LedDriverPca9685
             draw_buffer_[d].leds[ch].regAddr     = PCA9685_LED0 + 4 * ch;
             draw_buffer_[d].leds[ch].on          = startCycle;
             draw_buffer_[d].leds[ch].off         = startCycle;
-            draw_buffer_[d].updated[ch]          = false;
+            draw_buffer_[d].updated[ch]          = true;
             transmit_buffer_[d].leds[ch].regAddr = PCA9685_LED0 + 4 * ch;
             transmit_buffer_[d].leds[ch].on      = startCycle;
             transmit_buffer_[d].leds[ch].off     = startCycle;
             transmit_buffer_[d].leds[ch].off     = startCycle;
-            transmit_buffer_[d].updated[ch]      = false;
+            transmit_buffer_[d].updated[ch]      = true;
         }
     }
 
