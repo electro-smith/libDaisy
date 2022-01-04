@@ -2,6 +2,71 @@
 #ifndef DSY_ICM20948_H
 #define DSY_ICM20948_H
 
+// Misc configuration macros
+#define I2C_MASTER_RESETS_BEFORE_FAIL \
+    5 ///< The number of times to try resetting a stuck I2C master before giving up
+#define NUM_FINISHED_CHECKS ///< How many times to poll I2C_SLV4_DONE before giving up and resetting
+
+// Bank 0
+#define ICM20X_B0_WHOAMI 0x00         ///< Chip ID register
+#define ICM20X_B0_USER_CTRL 0x03      ///< User Control Reg. Includes I2C Master
+#define ICM20X_B0_LP_CONFIG 0x05      ///< Low Power config
+#define ICM20X_B0_REG_INT_PIN_CFG 0xF ///< Interrupt config register
+#define ICM20X_B0_REG_INT_ENABLE 0x10 ///< Interrupt enable register 0
+#define ICM20X_B0_REG_INT_ENABLE_1 0x11 ///< Interrupt enable register 1
+#define ICM20X_B0_I2C_MST_STATUS \
+    0x17 ///< Records if I2C master bus data is finished
+#define ICM20X_B0_REG_BANK_SEL 0x7F ///< register bank selection register
+#define ICM20X_B0_PWR_MGMT_1 0x06   ///< primary power management register
+#define ICM20X_B0_ACCEL_XOUT_H 0x2D ///< first byte of accel data
+#define ICM20X_B0_GYRO_XOUT_H 0x33  ///< first byte of accel data
+
+// Bank 2
+#define ICM20X_B2_GYRO_SMPLRT_DIV 0x00    ///< Gyroscope data rate divisor
+#define ICM20X_B2_GYRO_CONFIG_1 0x01      ///< Gyro config for range setting
+#define ICM20X_B2_ACCEL_SMPLRT_DIV_1 0x10 ///< Accel data rate divisor MSByte
+#define ICM20X_B2_ACCEL_SMPLRT_DIV_2 0x11 ///< Accel data rate divisor LSByte
+#define ICM20X_B2_ACCEL_CONFIG_1 0x14     ///< Accel config for setting range
+
+// Bank 3
+#define ICM20X_B3_I2C_MST_ODR_CONFIG 0x0 ///< Sets ODR for I2C master bus
+#define ICM20X_B3_I2C_MST_CTRL 0x1       ///< I2C master bus config
+#define ICM20X_B3_I2C_MST_DELAY_CTRL 0x2 ///< I2C master bus config
+#define ICM20X_B3_I2C_SLV0_ADDR \
+    0x3 ///< Sets I2C address for I2C master bus slave 0
+#define ICM20X_B3_I2C_SLV0_REG \
+    0x4 ///< Sets register address for I2C master bus slave 0
+#define ICM20X_B3_I2C_SLV0_CTRL 0x5 ///< Controls for I2C master bus slave 0
+#define ICM20X_B3_I2C_SLV0_DO 0x6   ///< Sets I2C master bus slave 0 data out
+
+#define ICM20X_B3_I2C_SLV4_ADDR \
+    0x13 ///< Sets I2C address for I2C master bus slave 4
+#define ICM20X_B3_I2C_SLV4_REG \
+    0x14 ///< Sets register address for I2C master bus slave 4
+#define ICM20X_B3_I2C_SLV4_CTRL 0x15 ///< Controls for I2C master bus slave 4
+#define ICM20X_B3_I2C_SLV4_DO 0x16   ///< Sets I2C master bus slave 4 data out
+#define ICM20X_B3_I2C_SLV4_DI 0x17   ///< Sets I2C master bus slave 4 data in
+
+#define ICM20948_CHIP_ID 0xEA ///< ICM20948 default device id from WHOAMI
+#define ICM20649_CHIP_ID 0xE1 ///< ICM20649 default device id from WHOAMI
+
+#define ICM20948_I2CADDR_DEFAULT 0x69 ///< ICM20948 default i2c address
+#define ICM20948_MAG_ID 0x09          ///< The chip ID for the magnetometer
+
+#define ICM20948_UT_PER_LSB 0.15 ///< mag data LSB value (fixed)
+
+#define AK09916_WIA2 0x01  ///< Magnetometer
+#define AK09916_ST1 0x10   ///< Magnetometer
+#define AK09916_HXL 0x11   ///< Magnetometer
+#define AK09916_HXH 0x12   ///< Magnetometer
+#define AK09916_HYL 0x13   ///< Magnetometer
+#define AK09916_HYH 0x14   ///< Magnetometer
+#define AK09916_HZL 0x15   ///< Magnetometer
+#define AK09916_HZH 0x16   ///< Magnetometer
+#define AK09916_ST2 0x18   ///< Magnetometer
+#define AK09916_CNTL2 0x31 ///< Magnetometer
+#define AK09916_CNTL3 0x32 ///< Magnetometer
+
 namespace daisy
 {
 /** @addtogroup external 
@@ -93,32 +158,6 @@ class Icm20948I2CTransport
         uint8_t buffer;
         ReadReg(reg, &buffer, 1);
         return buffer;
-    }
-
-    /**  Reads a 16 bit value
-        \param reg the register address to read from
-        \return the 16 bit data value read from the device
-    */
-    uint16_t Read16(uint8_t reg)
-    {
-        uint8_t buffer[2];
-        ReadReg(reg, buffer, 2);
-
-        return uint16_t(buffer[0]) << 8 | uint16_t(buffer[1]);
-    }
-
-    /**  Reads a 24 bit value
-        \param reg the register address to read from
-        \return the 24 bit data value read from the device
-    */
-    uint32_t Read24(uint8_t reg)
-    {
-        uint8_t buffer[3];
-
-        ReadReg(reg, buffer, 3);
-
-        return uint32_t(buffer[0]) << 16 | uint32_t(buffer[1]) << 8
-               | uint32_t(buffer[2]);
     }
 
     bool GetError()
@@ -224,32 +263,6 @@ class Icm20948SpiTransport
         return buffer;
     }
 
-    /**  Reads a 16 bit value over I2C or SPI
-        \param reg the register address to read from
-        \return the 16 bit data value read from the device
-    */
-    uint16_t Read16(uint8_t reg)
-    {
-        uint8_t buffer[2];
-        ReadReg(reg, buffer, 2);
-
-        return uint16_t(buffer[0]) << 8 | uint16_t(buffer[1]);
-    }
-
-    /**  Reads a 24 bit value
-        \param reg the register address to read from
-        \return the 24 bit data value read from the device
-    */
-    uint32_t Read24(uint8_t reg)
-    {
-        uint8_t buffer[3];
-
-        ReadReg(reg, buffer, 3);
-
-        return uint32_t(buffer[0]) << 16 | uint32_t(buffer[1]) << 8
-               | uint32_t(buffer[2]);
-    }
-
     bool GetError()
     {
         bool tmp = error_;
@@ -343,13 +356,8 @@ class Icm20948
 
         Reset();
 
-        Adafruit_BusIO_Register pwr_mgmt_1 = Adafruit_BusIO_Register(
-            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B0_PWR_MGMT_1);
-
-        Adafruit_BusIO_RegisterBits sleep
-            = Adafruit_BusIO_RegisterBits(&pwr_mgmt_1, 1, 6);
-
-        sleep.write(false); // take out of default sleep state
+        // take out of default sleep state
+        WriteBits(ICM20X_B0_PWR_MGMT_1, false, 1, 6);
 
         // 3 will be the largest range for either sensor
         WriteGyroRange(3);
@@ -376,13 +384,7 @@ class Icm20948
     {
         SetBank(0);
 
-        Adafruit_BusIO_Register pwr_mgmt1 = Adafruit_BusIO_Register(
-            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B0_PWR_MGMT_1, 1);
-
-        Adafruit_BusIO_RegisterBits reset_bit
-            = Adafruit_BusIO_RegisterBits(&pwr_mgmt1, 1, 7);
-
-        reset_bit.write(1);
+        WriteBits(ICM20X_B0_PWR_MGMT_1, true, 1, 7);
         System::Delay(20);
 
         while(reset_bit.read())
@@ -397,7 +399,7 @@ class Icm20948
     uint8_t GetMagId()
     {
         // verify the magnetometer id
-        return readExternalRegister(0x8C, 0x01);
+        return ReadExternalRegister(0x8C, 0x01);
     }
 
     Result SetupMag()
@@ -578,10 +580,7 @@ class Icm20948
     */
     void SetBank(uint8_t bank_number)
     {
-        Adafruit_BusIO_Register reg_bank_sel = Adafruit_BusIO_Register(
-            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B0_REG_BANK_SEL);
-
-        reg_bank_sel.write((bank_number & 0b11) << 4);
+        Write8(ICM20X_B0_REG_BANK_SEL, (bank_number & 0b11) << 4);
     }
 
 
@@ -609,12 +608,11 @@ class Icm20948
             false, slv_addr, reg_addr, value);
     }
 
-    /** Write a single byte to a given register address for an I2C slave device on the auxiliary I2C bus
+    /** Read / Write a single byte to a given register address for an I2C slave device on the auxiliary I2C bus
         \param slv_addr the 7-bit I2C address of the slave device
         \param reg_addr the register address to write to
         \param value the value to write
-        \return true
-        \return false
+        \return Read value ( if it's a read operation ), else true or false
     */
     uint8_t AuxillaryRegisterTransaction(bool    read,
                                          uint8_t slv_addr,
@@ -623,53 +621,34 @@ class Icm20948
     {
         SetBank(3);
 
-        Adafruit_BusIO_Register *slv4_di_reg;
-
-        Adafruit_BusIO_Register *slv4_do_reg;
-        Adafruit_BusIO_Register  slv4_addr_reg = Adafruit_BusIO_Register(
-            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B3_I2C_SLV4_ADDR);
-
-        Adafruit_BusIO_Register slv4_reg_reg = Adafruit_BusIO_Register(
-            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B3_I2C_SLV4_REG);
-
-        Adafruit_BusIO_Register slv4_ctrl_reg = Adafruit_BusIO_Register(
-            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B3_I2C_SLV4_CTRL);
-
-        Adafruit_BusIO_Register i2c_master_status_reg = Adafruit_BusIO_Register(
-            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B0_I2C_MST_STATUS);
-
-        Adafruit_BusIO_RegisterBits slave_finished_bit
-            = Adafruit_BusIO_RegisterBits(&i2c_master_status_reg, 1, 6);
-
         if(read)
         {
-            slv_addr
-                |= 0x80; // set high bit for read, presumably for multi-byte reads
-
-            slv4_di_reg = new Adafruit_BusIO_Register(
-                i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B3_I2C_SLV4_DI);
+            // set high bit for read, presumably for multi-byte reads
+            slv_addr |= 0x80;
         }
         else
         {
-            slv4_do_reg = new Adafruit_BusIO_Register(
-                i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B3_I2C_SLV4_DO);
-
-            if(!slv4_do_reg->write(value))
+            Write8(ICM20X_B3_I2C_SLV4_DO, value);
+            if(GetTransportError() == ERR)
             {
                 return (uint8_t) false;
             }
         }
 
-        if(!slv4_addr_reg.write(slv_addr))
-        {
-            return (uint8_t) false;
-        }
-        if(!slv4_reg_reg.write(reg_addr))
+        Write8(ICM20X_B3_I2C_SLV4_ADDR, slv_addr);
+        if(GetTransportError() == ERR)
         {
             return (uint8_t) false;
         }
 
-        if(!slv4_ctrl_reg.write(0x80))
+        Write8(ICM20X_B3_I2C_SLV4_REG, reg_addr);
+        if(GetTransportError() == ERR)
+        {
+            return (uint8_t) false;
+        }
+
+        Write8(ICM20X_B3_I2C_SLV4_CTRL, 0x80);
+        if(GetTransportError() == ERR)
         {
             return (uint8_t) false;
         }
@@ -677,7 +656,7 @@ class Icm20948
         SetBank(0);
         uint8_t tries = 0;
         // wait until the operation is finished
-        while(slave_finished_bit.read() != true)
+        while(!ReadBits(ICM20X_B0_I2C_MST_STATUS, 1, 6))
         {
             tries++;
             if(tries >= NUM_FINISHED_CHECKS)
@@ -685,11 +664,13 @@ class Icm20948
                 return (uint8_t) false;
             }
         }
+
         if(read)
         {
             SetBank(3);
-            return slv4_di_reg->read();
+            return Read8(ICM20X_B3_I2C_SLV4_DI);
         }
+
         return (uint8_t) true;
     }
 
@@ -708,45 +689,33 @@ class Icm20948
         return transport_.ReadReg(reg, buff, size);
     }
 
+    bool ReadBits(uint8_t reg, uint8_t bits, uint8_t shift)
+    {
+        uint8_t val = Read8(reg);
+        val >>= shift;
+        return val & ((1 << (bits)) - 1);
+    }
+
+    void WriteBits(uint8_t reg, bool data, uint8_t bits, uint8_t shift)
+    {
+        uint8_t val = Read8(reg);
+
+        // mask off the data before writing
+        uint8_t mask = (1 << (bits)) - 1;
+        data &= mask;
+
+        mask <<= shift;
+        val &= ~mask;         // remove the current data at that spot
+        val |= data << shift; // and add in the new data
+
+        Write8(reg, val);
+    }
+
     /**  Reads an 8 bit value
         \param reg the register address to read from
         \return the data uint8_t read from the device
     */
     uint8_t Read8(uint8_t reg) { return transport_.Read8(reg); }
-
-    /**  Reads a 16 bit value over I2C or SPI
-        \param reg the register address to read from
-        \return the 16 bit data value read from the device
-    */
-    uint16_t Read16(uint8_t reg) { return transport_.Read16(reg); }
-
-    /**  Reads a 24 bit value
-        \param reg the register address to read from
-        \return the 24 bit data value read from the device
-    */
-    uint32_t Read24(uint8_t reg) { return transport_.Read24(reg); }
-
-    /**  Reads a signed 16 bit little endian value over I2C or SPI
-        \param reg the register address to read from
-        \return the 16 bit data value read from the device
-    */
-    uint16_t Read16_LE(uint8_t reg)
-    {
-        uint16_t temp = Read16(reg);
-        return (temp >> 8) | (temp << 8);
-    }
-
-    /**  Reads a signed 16 bit value over I2C or SPI
-        \param reg the register address to read from
-        \return the 16 bit data value read from the device
-    */
-    int16_t ReadS16(uint8_t reg) { return (int16_t)Read16(reg); }
-
-    /**  Reads a signed little endian 16 bit value over I2C or SPI
-        \param reg the register address to read from
-        \return the 16 bit data value read from the device
-    */
-    int16_t ReadS16_LE(uint8_t reg) { return (int16_t)Read16_LE(reg); }
 
     /** Get and reset the transport error flag
         \return Whether the transport has errored since the last check
