@@ -86,7 +86,7 @@ class Icm20948I2CTransport
 
     /**  Reads an 8 bit value
         \param reg the register address to read from
-        \returns the 16 bit data value read from the device
+        \return the 16 bit data value read from the device
     */
     uint8_t Read8(uint8_t reg)
     {
@@ -97,7 +97,7 @@ class Icm20948I2CTransport
 
     /**  Reads a 16 bit value
         \param reg the register address to read from
-        \returns the 16 bit data value read from the device
+        \return the 16 bit data value read from the device
     */
     uint16_t Read16(uint8_t reg)
     {
@@ -109,7 +109,7 @@ class Icm20948I2CTransport
 
     /**  Reads a 24 bit value
         \param reg the register address to read from
-        \returns the 24 bit data value read from the device
+        \return the 24 bit data value read from the device
     */
     uint32_t Read24(uint8_t reg)
     {
@@ -215,7 +215,7 @@ class Icm20948SpiTransport
 
     /**  Reads an 8 bit value
         \param reg the register address to read from
-        \returns the data uint8_t read from the device
+        \return the data uint8_t read from the device
     */
     uint8_t Read8(uint8_t reg)
     {
@@ -226,7 +226,7 @@ class Icm20948SpiTransport
 
     /**  Reads a 16 bit value over I2C or SPI
         \param reg the register address to read from
-        \returns the 16 bit data value read from the device
+        \return the 16 bit data value read from the device
     */
     uint16_t Read16(uint8_t reg)
     {
@@ -238,7 +238,7 @@ class Icm20948SpiTransport
 
     /**  Reads a 24 bit value
         \param reg the register address to read from
-        \returns the 24 bit data value read from the device
+        \return the 24 bit data value read from the device
     */
     uint32_t Read24(uint8_t reg)
     {
@@ -280,6 +280,37 @@ class Icm20948
         Config() {}
     };
 
+    /** The accelerometer data range */
+    enum icm20948_accel_range_t
+    {
+        ICM20948_ACCEL_RANGE_2_G,
+        ICM20948_ACCEL_RANGE_4_G,
+        ICM20948_ACCEL_RANGE_8_G,
+        ICM20948_ACCEL_RANGE_16_G,
+    };
+
+    /** The gyro data range */
+    enum icm20948_gyro_range_t
+    {
+        ICM20948_GYRO_RANGE_250_DPS,
+        ICM20948_GYRO_RANGE_500_DPS,
+        ICM20948_GYRO_RANGE_1000_DPS,
+        ICM20948_GYRO_RANGE_2000_DPS,
+    };
+
+    /** Data rates/modes for the embedded AsahiKASEI AK09916 3-axis magnetometer */
+    enum ak09916_data_rate_t
+    {
+        AK09916_MAG_DATARATE_SHUTDOWN = 0x0, ///< Stops measurement updates
+        AK09916_MAG_DATARATE_SINGLE
+        = 0x1, ///< Takes a single measurement then switches to
+               ///< AK09916_MAG_DATARATE_SHUTDOWN
+        AK09916_MAG_DATARATE_10_HZ  = 0x2, ///< updates at 10Hz
+        AK09916_MAG_DATARATE_20_HZ  = 0x4, ///< updates at 20Hz
+        AK09916_MAG_DATARATE_50_HZ  = 0x6, ///< updates at 50Hz
+        AK09916_MAG_DATARATE_100_HZ = 0x8, ///< updates at 100Hz
+    };
+
     enum Result
     {
         OK = 0,
@@ -295,7 +326,371 @@ class Icm20948
 
         transport_.Init(config_.transport_config);
 
+        SetBank(0);
+
+        uint8_t chip_id_ = chip_id.read();
+
+        // This returns true when using a 649 lib with a 948
+        if((chip_id_ != ICM20649_CHIP_ID) && (chip_id_ != ICM20948_CHIP_ID))
+        {
+            return false;
+        }
+
+        _sensorid_accel = sensor_id;
+        _sensorid_gyro  = sensor_id + 1;
+        _sensorid_mag   = sensor_id + 2;
+        _sensorid_temp  = sensor_id + 3;
+
+        Reset();
+
+        Adafruit_BusIO_Register pwr_mgmt_1 = Adafruit_BusIO_Register(
+            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B0_PWR_MGMT_1);
+
+        Adafruit_BusIO_RegisterBits sleep
+            = Adafruit_BusIO_RegisterBits(&pwr_mgmt_1, 1, 6);
+
+        sleep.write(false); // take out of default sleep state
+
+        // 3 will be the largest range for either sensor
+        WriteGyroRange(3);
+        WriteAccelRange(3);
+
+        // 1100Hz/(1+10) = 100Hz
+        SetGyroRateDivisor(10);
+
+        // # 1125Hz/(1+20) = 53.57Hz
+        SetAccelRateDivisor(20);
+
+        temp_sensor  = new Adafruit_ICM20X_Temp(this);
+        accel_sensor = new Adafruit_ICM20X_Accelerometer(this);
+        gyro_sensor  = new Adafruit_ICM20X_Gyro(this);
+        mag_sensor   = new Adafruit_ICM20X_Magnetometer(this);
+
+        System::Delay(20);
+
         return GetTransportError();
+    }
+
+    /** Reset the internal registers and restores the default settings */
+    void Reset()
+    {
+        SetBank(0);
+
+        Adafruit_BusIO_Register pwr_mgmt1 = Adafruit_BusIO_Register(
+            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B0_PWR_MGMT_1, 1);
+
+        Adafruit_BusIO_RegisterBits reset_bit
+            = Adafruit_BusIO_RegisterBits(&pwr_mgmt1, 1, 7);
+
+        reset_bit.write(1);
+        System::Delay(20);
+
+        while(reset_bit.read())
+        {
+            System::Delay(10);
+        };
+
+        System::Delay(50);
+    }
+
+
+    uint8_t GetMagId()
+    {
+        // verify the magnetometer id
+        return readExternalRegister(0x8C, 0x01);
+    }
+
+    Result SetupMag()
+    {
+        uint8_t buffer[2];
+
+        SetI2CBypass(false);
+
+        ConfigureI2CMaster();
+
+        EnableI2CMaster(true);
+
+        if(AuxI2CBusSetupFailed())
+        {
+            return ERR;
+        }
+
+        // set mag data rate
+        if(!SetMagDataRate(AK09916_MAG_DATARATE_100_HZ))
+        {
+            // Serial.println("Error setting magnetometer data rate on external bus");
+            return ERR;
+        }
+
+        // TODO: extract method
+        // Set up Slave0 to proxy Mag readings
+        SetBank(3);
+
+        // set up slave0 to proxy reads to mag
+        Write8(ICM20X_B3_I2C_SLV0_ADDR, 0x8C);
+        if(GetTransportError() != OK)
+        {
+            return ERR;
+        }
+
+        Write8(ICM20X_B3_I2C_SLV0_REG, 0x10);
+        if(GetTransportError() != OK)
+        {
+            return ERR;
+        }
+
+        // enable, read 9 bytes
+        Write8(ICM20X_B3_I2C_SLV0_CTRL, 0x89);
+        if(GetTransportError() != OK)
+        {
+            return ERR;
+        }
+
+        return OK;
+    }
+
+    /**
+        \param slv_addr
+        \param mag_reg_addr
+        \param num_finished_checks
+        \return uint8_t
+    */
+    uint8_t ReadMagRegister(uint8_t mag_reg_addr)
+    {
+        return ReadExternalRegister(0x8C, mag_reg_addr);
+    }
+
+    bool WriteMagRegister(uint8_t mag_reg_addr, uint8_t value)
+    {
+        return WriteExternalRegister(0x0C, mag_reg_addr, value);
+    }
+
+    void ScaleValues()
+    {
+        icm20948_gyro_range_t gyro_range
+            = (icm20948_gyro_range_t)current_gyro_range;
+        icm20948_accel_range_t accel_range
+            = (icm20948_accel_range_t)current_accel_range;
+
+        float accel_scale = 1.0;
+        float gyro_scale  = 1.0;
+
+        if(gyro_range == ICM20948_GYRO_RANGE_250_DPS)
+            gyro_scale = 131.0;
+        if(gyro_range == ICM20948_GYRO_RANGE_500_DPS)
+            gyro_scale = 65.5;
+        if(gyro_range == ICM20948_GYRO_RANGE_1000_DPS)
+            gyro_scale = 32.8;
+        if(gyro_range == ICM20948_GYRO_RANGE_2000_DPS)
+            gyro_scale = 16.4;
+
+        if(accel_range == ICM20948_ACCEL_RANGE_2_G)
+            accel_scale = 16384.0;
+        if(accel_range == ICM20948_ACCEL_RANGE_4_G)
+            accel_scale = 8192.0;
+        if(accel_range == ICM20948_ACCEL_RANGE_8_G)
+            accel_scale = 4096.0;
+        if(accel_range == ICM20948_ACCEL_RANGE_16_G)
+            accel_scale = 2048.0;
+
+        gyroX = rawGyroX / gyro_scale;
+        gyroY = rawGyroY / gyro_scale;
+        gyroZ = rawGyroZ / gyro_scale;
+
+        accX = rawAccX / accel_scale;
+        accY = rawAccY / accel_scale;
+        accZ = rawAccZ / accel_scale;
+
+        magX = rawMagX * ICM20948_UT_PER_LSB;
+        magY = rawMagY * ICM20948_UT_PER_LSB;
+        magZ = rawMagZ * ICM20948_UT_PER_LSB;
+    }
+
+    /** Get the accelerometer's measurement range.
+        \return The accelerometer's measurement range (`icm20948_accel_range_t`).
+    */
+    icm20948_accel_range_t GetAccelRange()
+    {
+        return (icm20948_accel_range_t)ReadAccelRange();
+    }
+
+    /** Sets the accelerometer's measurement range.
+        \param  new_accel_range Measurement range to be set. Must be an `icm20948_accel_range_t`.
+    */
+    void SetAccelRange(icm20948_accel_range_t new_accel_range)
+    {
+        WriteAccelRange((uint8_t)new_accel_range);
+    }
+
+    /** Get the gyro's measurement range.
+        \return The gyro's measurement range (`icm20948_gyro_range_t`).
+    */
+    icm20948_gyro_range_t GetGyroRange()
+    {
+        return (icm20948_gyro_range_t)ReadGyroRange();
+    }
+
+    /** Sets the gyro's measurement range.
+        \param  new_gyro_range Measurement range to be set. Must be an `icm20948_gyro_range_t`.
+    */
+    void SetGyroRange(icm20948_gyro_range_t new_gyro_range)
+    {
+        WriteGyroRange((uint8_t)new_gyro_range);
+    }
+
+    /** Get the current magnetometer measurement rate
+        \return ak09916_data_rate_t the current rate
+    */
+    ak09916_data_rate_t GetMagDataRate()
+    {
+        uint8_t raw_mag_rate = ReadMagRegister(AK09916_CNTL2);
+        return (ak09916_data_rate_t)(raw_mag_rate);
+    }
+
+    /** Set the magnetometer measurement rate
+        \param rate The rate to set.
+        \return true: success false: failure
+    */
+    bool SetMagDataRate(ak09916_data_rate_t rate)
+    {
+        /* Following the datasheet, the sensor will be set to
+        * AK09916_MAG_DATARATE_SHUTDOWN followed by a 100ms delay, followed by
+        * setting the new data rate.
+        *
+        * See page 9 of https://www.y-ic.es/datasheet/78/SMDSW.020-2OZ.pdf */
+
+        // don't need to read/mask because there's nothing else in the register and
+        // it's right justified
+        bool success
+            = WriteMagRegister(AK09916_CNTL2, AK09916_MAG_DATARATE_SHUTDOWN);
+        System::Delay(1);
+        return WriteMagRegister(AK09916_CNTL2, rate) && success;
+    }
+
+    GetMagId()
+    {
+        // verify the magnetometer id
+        return ReadExternalRegister(0x8C, 0x01);
+    }
+
+    /** Sets register bank.
+        \param bank_number The bank to set to active
+    */
+    void SetBank(uint8_t bank_number)
+    {
+        Adafruit_BusIO_Register reg_bank_sel = Adafruit_BusIO_Register(
+            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B0_REG_BANK_SEL);
+
+        reg_bank_sel.write((bank_number & 0b11) << 4);
+    }
+
+
+    /** Read a single byte from a given register address for an I2C slave device on the auxiliary I2C bus
+        \param slv_addr the 7-bit I2C address of the slave device
+        \param reg_addr the register address to read from
+        \return the requested register value
+    */
+    uint8_t ReadExternalRegister(uint8_t slv_addr, uint8_t reg_addr)
+    {
+        return AuxillaryRegisterTransaction(true, slv_addr, reg_addr);
+    }
+
+    /** Write a single byte to a given register address for an I2C slave device on the auxiliary I2C bus
+        \param slv_addr the 7-bit I2C address of the slave device
+        \param reg_addr the register address to write to
+        \param value the value to write
+        \return true
+        \return false
+    */
+    bool
+    WriteExternalRegister(uint8_t slv_addr, uint8_t reg_addr, uint8_t value)
+    {
+        return (bool)AuxillaryRegisterTransaction(
+            false, slv_addr, reg_addr, value);
+    }
+
+    /** Write a single byte to a given register address for an I2C slave device on the auxiliary I2C bus
+        \param slv_addr the 7-bit I2C address of the slave device
+        \param reg_addr the register address to write to
+        \param value the value to write
+        \return true
+        \return false
+    */
+    uint8_t AuxillaryRegisterTransaction(bool    read,
+                                         uint8_t slv_addr,
+                                         uint8_t reg_addr,
+                                         uint8_t value)
+    {
+        SetBank(3);
+
+        Adafruit_BusIO_Register *slv4_di_reg;
+
+        Adafruit_BusIO_Register *slv4_do_reg;
+        Adafruit_BusIO_Register  slv4_addr_reg = Adafruit_BusIO_Register(
+            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B3_I2C_SLV4_ADDR);
+
+        Adafruit_BusIO_Register slv4_reg_reg = Adafruit_BusIO_Register(
+            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B3_I2C_SLV4_REG);
+
+        Adafruit_BusIO_Register slv4_ctrl_reg = Adafruit_BusIO_Register(
+            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B3_I2C_SLV4_CTRL);
+
+        Adafruit_BusIO_Register i2c_master_status_reg = Adafruit_BusIO_Register(
+            i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B0_I2C_MST_STATUS);
+
+        Adafruit_BusIO_RegisterBits slave_finished_bit
+            = Adafruit_BusIO_RegisterBits(&i2c_master_status_reg, 1, 6);
+
+        if(read)
+        {
+            slv_addr
+                |= 0x80; // set high bit for read, presumably for multi-byte reads
+
+            slv4_di_reg = new Adafruit_BusIO_Register(
+                i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B3_I2C_SLV4_DI);
+        }
+        else
+        {
+            slv4_do_reg = new Adafruit_BusIO_Register(
+                i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, ICM20X_B3_I2C_SLV4_DO);
+
+            if(!slv4_do_reg->write(value))
+            {
+                return (uint8_t) false;
+            }
+        }
+
+        if(!slv4_addr_reg.write(slv_addr))
+        {
+            return (uint8_t) false;
+        }
+        if(!slv4_reg_reg.write(reg_addr))
+        {
+            return (uint8_t) false;
+        }
+
+        if(!slv4_ctrl_reg.write(0x80))
+        {
+            return (uint8_t) false;
+        }
+
+        SetBank(0);
+        uint8_t tries = 0;
+        // wait until the operation is finished
+        while(slave_finished_bit.read() != true)
+        {
+            tries++;
+            if(tries >= NUM_FINISHED_CHECKS)
+            {
+                return (uint8_t) false;
+            }
+        }
+        if(read)
+        {
+            SetBank(3);
+            return slv4_di_reg->read();
+        }
+        return (uint8_t) true;
     }
 
     /**  Writes an 8 bit value
@@ -315,25 +710,25 @@ class Icm20948
 
     /**  Reads an 8 bit value
         \param reg the register address to read from
-        \returns the data uint8_t read from the device
+        \return the data uint8_t read from the device
     */
     uint8_t Read8(uint8_t reg) { return transport_.Read8(reg); }
 
     /**  Reads a 16 bit value over I2C or SPI
         \param reg the register address to read from
-        \returns the 16 bit data value read from the device
+        \return the 16 bit data value read from the device
     */
     uint16_t Read16(uint8_t reg) { return transport_.Read16(reg); }
 
     /**  Reads a 24 bit value
         \param reg the register address to read from
-        \returns the 24 bit data value read from the device
+        \return the 24 bit data value read from the device
     */
     uint32_t Read24(uint8_t reg) { return transport_.Read24(reg); }
 
     /**  Reads a signed 16 bit little endian value over I2C or SPI
         \param reg the register address to read from
-        \returns the 16 bit data value read from the device
+        \return the 16 bit data value read from the device
     */
     uint16_t Read16_LE(uint8_t reg)
     {
@@ -343,13 +738,13 @@ class Icm20948
 
     /**  Reads a signed 16 bit value over I2C or SPI
         \param reg the register address to read from
-        \returns the 16 bit data value read from the device
+        \return the 16 bit data value read from the device
     */
     int16_t ReadS16(uint8_t reg) { return (int16_t)Read16(reg); }
 
     /**  Reads a signed little endian 16 bit value over I2C or SPI
         \param reg the register address to read from
-        \returns the 16 bit data value read from the device
+        \return the 16 bit data value read from the device
     */
     int16_t ReadS16_LE(uint8_t reg) { return (int16_t)Read16_LE(reg); }
 
