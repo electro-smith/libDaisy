@@ -5,7 +5,8 @@
 // Misc configuration macros
 #define I2C_MASTER_RESETS_BEFORE_FAIL \
     5 ///< The number of times to try resetting a stuck I2C master before giving up
-#define NUM_FINISHED_CHECKS ///< How many times to poll I2C_SLV4_DONE before giving up and resetting
+#define NUM_FINISHED_CHECKS \
+    100 ///< How many times to poll I2C_SLV4_DONE before giving up and resetting
 
 // Bank 0
 #define ICM20X_B0_WHOAMI 0x00         ///< Chip ID register
@@ -48,7 +49,6 @@
 #define ICM20X_B3_I2C_SLV4_DI 0x17   ///< Sets I2C master bus slave 4 data in
 
 #define ICM20948_CHIP_ID 0xEA ///< ICM20948 default device id from WHOAMI
-#define ICM20649_CHIP_ID 0xE1 ///< ICM20649 default device id from WHOAMI
 
 #define ICM20948_I2CADDR_DEFAULT 0x69 ///< ICM20948 default i2c address
 #define ICM20948_MAG_ID 0x09          ///< The chip ID for the magnetometer
@@ -341,12 +341,11 @@ class Icm20948
 
         SetBank(0);
 
-        uint8_t chip_id_ = chip_id.read();
+        uint8_t chip_id = Read8(ICM20X_B0_WHOAMI);
 
-        // This returns true when using a 649 lib with a 948
-        if((chip_id_ != ICM20649_CHIP_ID) && (chip_id_ != ICM20948_CHIP_ID))
+        if(chip_id != ICM20948_CHIP_ID)
         {
-            return false;
+            return ERR;
         }
 
         _sensorid_accel = sensor_id;
@@ -357,7 +356,7 @@ class Icm20948
         Reset();
 
         // take out of default sleep state
-        WriteBits(ICM20X_B0_PWR_MGMT_1, false, 1, 6);
+        WriteBits(ICM20X_B0_PWR_MGMT_1, 0, 1, 6);
 
         // 3 will be the largest range for either sensor
         WriteGyroRange(3);
@@ -384,7 +383,7 @@ class Icm20948
     {
         SetBank(0);
 
-        WriteBits(ICM20X_B0_PWR_MGMT_1, true, 1, 7);
+        WriteBits(ICM20X_B0_PWR_MGMT_1, 1, 1, 7);
         System::Delay(20);
 
         while(reset_bit.read())
@@ -470,9 +469,9 @@ class Icm20948
     void ScaleValues()
     {
         icm20948_gyro_range_t gyro_range
-            = (icm20948_gyro_range_t)current_gyro_range;
+            = (icm20948_gyro_range_t)current_gyro_range_;
         icm20948_accel_range_t accel_range
-            = (icm20948_accel_range_t)current_accel_range;
+            = (icm20948_accel_range_t)current_accel_range_;
 
         float accel_scale = 1.0;
         float gyro_scale  = 1.0;
@@ -516,6 +515,28 @@ class Icm20948
         return (icm20948_accel_range_t)ReadAccelRange();
     }
 
+    /** Get the accelerometer's measurement range.
+        \return The accelerometer's measurement range (`icm20x_accel_range_t`).
+    */
+    uint8_t ReadAccelRange()
+    {
+        SetBank(2);
+        uint8_t range = ReadBits(ICM20X_B2_ACCEL_CONFIG_1, 2, 1);
+        SetBank(0);
+        return range;
+    }
+
+    /** Sets the accelerometer's measurement range.
+        \param  new_accel_range Measurement range to be set. Must be an `icm20x_accel_range_t`.
+    */
+    void WriteAccelRange(uint8_t new_accel_range)
+    {
+        SetBank(2);
+        WriteBits(ICM20X_B2_ACCEL_CONFIG_1, new_accel_range, 2, 1);
+        current_accel_range_ = new_accel_range;
+        SetBank(0);
+    }
+
     /** Sets the accelerometer's measurement range.
         \param  new_accel_range Measurement range to be set. Must be an `icm20948_accel_range_t`.
     */
@@ -539,6 +560,30 @@ class Icm20948
     {
         WriteGyroRange((uint8_t)new_gyro_range);
     }
+
+    /** Sets the gyro's measurement range.
+        \param  new_gyro_range Measurement range to be set. Must be an  `icm20x_gyro_range_t`.
+    */
+    void WriteGyroRange(uint8_t new_gyro_range)
+    {
+        SetBank(2);
+        WriteBits(ICM20X_B2_GYRO_CONFIG_1, new_gyro_range, 2, 1);
+        current_gyro_range_ = new_gyro_range;
+        SetBank(0);
+    }
+
+
+    /** Get the gyro's measurement range.
+        \return The gyro's measurement range (`icm20x_gyro_range_t`).
+    */
+    uint8_t ReadGyroRange()
+    {
+        SetBank(2);
+        uint8_t range = ReadBits(ICM20X_B2_GYRO_CONFIG_1, 2, 1);
+        SetBank(0);
+        return range;
+    }
+
 
     /** Get the current magnetometer measurement rate
         \return ak09916_data_rate_t the current rate
@@ -656,7 +701,7 @@ class Icm20948
         SetBank(0);
         uint8_t tries = 0;
         // wait until the operation is finished
-        while(!ReadBits(ICM20X_B0_I2C_MST_STATUS, 1, 6))
+        while(ReadBits(ICM20X_B0_I2C_MST_STATUS, 1, 6) != true)
         {
             tries++;
             if(tries >= NUM_FINISHED_CHECKS)
@@ -689,14 +734,14 @@ class Icm20948
         return transport_.ReadReg(reg, buff, size);
     }
 
-    bool ReadBits(uint8_t reg, uint8_t bits, uint8_t shift)
+    uint8_t ReadBits(uint8_t reg, uint8_t bits, uint8_t shift)
     {
         uint8_t val = Read8(reg);
         val >>= shift;
         return val & ((1 << (bits)) - 1);
     }
 
-    void WriteBits(uint8_t reg, bool data, uint8_t bits, uint8_t shift)
+    void WriteBits(uint8_t reg, uint8_t data, uint8_t bits, uint8_t shift)
     {
         uint8_t val = Read8(reg);
 
@@ -725,6 +770,9 @@ class Icm20948
   private:
     Config    config_;
     Transport transport_;
+
+    uint8_t current_accel_range_; ///< accelerometer range cache
+    uint8_t current_gyro_range_;  ///< gyro range cache
 };
 
 /** @} */
