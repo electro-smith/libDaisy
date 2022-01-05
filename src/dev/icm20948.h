@@ -67,6 +67,9 @@
 #define AK09916_CNTL2 0x31 ///< Magnetometer
 #define AK09916_CNTL3 0x32 ///< Magnetometer
 
+#define SENSORS_GRAVITY_EARTH (9.80665F)
+#define SENSORS_DPS_TO_RADS (0.017453293F)
+
 namespace daisy
 {
 /** @addtogroup external 
@@ -146,7 +149,7 @@ class Icm20948I2CTransport
         \param reg the register address to write to
         \param value the value to write to the register
     */
-    void Write8(uint8_t reg, uint16_t value)
+    void Write16(uint8_t reg, uint16_t value)
     {
         uint8_t buffer[3];
 
@@ -323,6 +326,13 @@ class Icm20948
         Config() {}
     };
 
+    struct Icm20948Vect
+    {
+        float x;
+        float y;
+        float z;
+    };
+
     /** The accelerometer data range */
     enum icm20948_accel_range_t
     {
@@ -397,11 +407,6 @@ class Icm20948
 
         // # 1125Hz/(1+20) = 53.57Hz
         SetAccelRateDivisor(20);
-
-        temp_sensor  = new Adafruit_ICM20X_Temp(this);
-        accel_sensor = new Adafruit_ICM20X_Accelerometer(this);
-        gyro_sensor  = new Adafruit_ICM20X_Gyro(this);
-        mag_sensor   = new Adafruit_ICM20X_Magnetometer(this);
 
         System::Delay(20);
 
@@ -763,6 +768,80 @@ class Icm20948
         return (uint8_t) true;
     }
 
+    /** Updates the measurement data for all sensors simultaneously */
+    void Process()
+    {
+        SetBank(0);
+
+        // reading 9 bytes of mag data to fetch the register that tells the mag we've
+        // read all the data
+        const uint8_t numbytes
+            = 14 + 9; // Read Accel, gyro, temp, and 9 bytes of mag
+
+        uint8_t buffer[numbytes];
+        transport_.ReadReg(ICM20X_B0_ACCEL_XOUT_H, buffer, numbytes);
+
+        rawAccX = buffer[0] << 8 | buffer[1];
+        rawAccY = buffer[2] << 8 | buffer[3];
+        rawAccZ = buffer[4] << 8 | buffer[5];
+
+        rawGyroX = buffer[6] << 8 | buffer[7];
+        rawGyroY = buffer[8] << 8 | buffer[9];
+        rawGyroZ = buffer[10] << 8 | buffer[11];
+
+        temperature = buffer[12] << 8 | buffer[13];
+
+        rawMagX = ((buffer[16] << 8)
+                   | (buffer[15] & 0xFF)); // Mag data is read little endian
+        rawMagY = ((buffer[18] << 8) | (buffer[17] & 0xFF));
+        rawMagZ = ((buffer[20] << 8) | (buffer[19] & 0xFF));
+
+        ScaleValues();
+        SetBank(0);
+    }
+
+    Icm20948Vect GetAccelVect()
+    {
+        Icm20948Vect vect;
+        vect.x = accX * SENSORS_GRAVITY_EARTH;
+        vect.y = accY * SENSORS_GRAVITY_EARTH;
+        vect.z = accZ * SENSORS_GRAVITY_EARTH;
+
+        return vect;
+    }
+
+    Icm20948Vect GetGyroVect()
+    {
+        Icm20948Vect vect;
+        vect.x = gyroX * SENSORS_DPS_TO_RADS;
+        vect.y = gyroY * SENSORS_DPS_TO_RADS;
+        vect.z = gyroZ * SENSORS_DPS_TO_RADS;
+
+        return vect;
+    }
+
+    Icm20948Vect GetMagVect()
+    {
+        Icm20948Vect vect;
+        vect.x = magX;
+        vect.y = magY;
+        vect.z = magZ;
+
+        return vect;
+    }
+
+    float GetTemp()
+    {
+        Icm20948Vect vect;
+        return (temperature / 333.87) + 21.0;
+    }
+
+    /**  Reads an 8 bit value
+        \param reg the register address to read from
+        \return the data uint8_t read from the device
+    */
+    uint8_t Read8(uint8_t reg) { return transport_.Read8(reg); }
+
     /**  Writes an 8 bit value
         \param reg the register address to write to
         \param value the value to write to the register
@@ -808,12 +887,6 @@ class Icm20948
 
         Write8(reg, val);
     }
-
-    /**  Reads an 8 bit value
-        \param reg the register address to read from
-        \return the data uint8_t read from the device
-    */
-    uint8_t Read8(uint8_t reg) { return transport_.Read8(reg); }
 
     /** Sets the bypass status of the I2C master bus support.
         \param bypass_i2c Set to true to bypass the internal I2C master circuitry,
