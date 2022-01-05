@@ -5,7 +5,6 @@
 
 namespace daisy
 {
-/** @file hid_gatein.h */
 /**
    @brief Generic Class for handling gate inputs through GPIO.
    @author Stephen Hensley

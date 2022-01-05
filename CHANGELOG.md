@@ -8,6 +8,8 @@
 
 ### Bug Fixes
 
+* logger: Added 10ms delay at the end of `StartLog` function. Without this, messages immediatly following the `StartLog` function were getting missed when `wait_for_pc` is set to `true`.
+
 ### Other
 
 ### Migrating

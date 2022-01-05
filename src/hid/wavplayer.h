@@ -15,8 +15,6 @@ this module. However, by using the extern'd SDFile, etc. I think that would brea
 #define WAV_FILENAME_MAX \
     256 /**< Maximum LFN (set to same in FatFs (ffconf.h) */
 
-/** @file hid_wavplayer.h */
-
 namespace daisy
 {
 // TODO: add bitrate, samplerate, length, etc.

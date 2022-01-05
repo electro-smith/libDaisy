@@ -9,7 +9,7 @@ class UI;
 
 /** @brief The type of arrow button in the UI system.
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  */
 enum class ArrowButtonType
 {
@@ -25,7 +25,7 @@ enum class ArrowButtonType
 
 /** @brief A descriptor for a canvas in the UI system.
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  * 
  *  A descriptor for a generic display / led / output device 
  *  that's used in the UI system.
@@ -69,7 +69,7 @@ class OneBitGraphicsLookAndFeel;
 
 /** @brief The base class for a page in the UI system.
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  */
 class UiPage
 {
@@ -336,7 +336,7 @@ class UiPage
 
 /** @brief A generic UI system
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  *
  *  This system allows you to create complex and dynamic user interfaces 
  *  with menus, pages and dialogs. It holds a stack of pages. Each page 

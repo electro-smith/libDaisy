@@ -7,7 +7,18 @@
 #include "sys/system.h"
 #include <cstring>
 
-// Some register definitions
+
+namespace daisy
+{
+/** @addtogroup device
+ *  @{
+ */
+
+/** @addtogroup MAX11300
+ *  @{
+ */
+
+//MAX11300 register definitions
 #define MAX11300_DEVICE_ID 0x00
 #define MAX11300_DEVCTL 0x10
 #define MAX11300_FUNC_BASE 0x20
@@ -16,12 +27,9 @@
 #define MAX11300_ADCDAT_BASE 0x40
 #define MAX11300_DACDAT_BASE 0x60
 
-namespace daisy
-{
-/** @addtogroup dac
-    @{
-    */
-
+/** @brief Blocking SPI Transport for the MAX11300 
+ *  @todo rename this so that it is not ambiguous (i.e. MAX11300BlockSpiTransport, or similar)
+*/
 class BlockingSpiTransport
 {
   public:
@@ -387,6 +395,7 @@ class MAX11300Driver
      * *note this write is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the value
+     * \param raw_value - the 12-bit code to write to the given Pin
      */
     void WriteAnalogPinRaw(Pin pin, uint16_t raw_value)
     {
@@ -403,6 +412,7 @@ class MAX11300Driver
      * *note this write is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the voltage
+     * \param voltage - Target voltage
      */
     void WriteAnalogPinVolts(Pin pin, float voltage)
     {
@@ -981,6 +991,9 @@ class MAX11300Driver
 };
 
 using MAX11300 = daisy::MAX11300Driver<BlockingSpiTransport>;
+
+/** @} */
+/** @} */
 
 }; // namespace daisy
 

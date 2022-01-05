@@ -13,7 +13,7 @@ namespace daisy
  ** cache handling, and any other necessary global initiailzation
  **
  ** @author shensley
- ** @addtogroup system
+ ** @ingroup system
  */
 class System
 {

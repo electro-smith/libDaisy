@@ -6,7 +6,7 @@ mkdir -p doc
 
 # Generate doxygen HTML
 echo "Creating doxygen documentation"
-doxygen Doxyfile > /dev/null
+doxygen doc/Doxyfile > /dev/null
 
 # Generate reference manual PDF
 reference_manual_pdf_name=doc/libdaisy_reference.pdf

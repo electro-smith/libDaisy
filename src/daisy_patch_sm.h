@@ -166,7 +166,7 @@ namespace patch_sm
          *  \todo Add Calibration to CV Outputs
          * 
          *  \param channel desired channel to update. 0 is both, otherwise 1 or 2 are valid.
-         *  \param volage value in Volts that you'd like to write to the DAC. The valid range is 0-5V.
+         *  \param voltage value in Volts that you'd like to write to the DAC. The valid range is 0-5V.
          */
         void WriteCvOut(const int channel, float voltage);
 
