@@ -91,7 +91,7 @@ class Icm20948I2CTransport
 
         Config()
         {
-            address = ;
+            address = ICM20948_I2CADDR_DEFAULT;
 
             periph = I2CHandle::Config::Peripheral::I2C_1;
             speed  = I2CHandle::Config::Speed::I2C_400KHZ;
