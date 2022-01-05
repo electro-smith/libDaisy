@@ -142,6 +142,21 @@ class Icm20948I2CTransport
         Write(buffer, 2);
     }
 
+    /**  Writes a 16 bit value MSB first
+        \param reg the register address to write to
+        \param value the value to write to the register
+    */
+    void Write8(uint8_t reg, uint16_t value)
+    {
+        uint8_t buffer[3];
+
+        buffer[0] = reg;
+        buffer[1] = value >> 8;
+        buffer[1] = value & 0xFF;
+
+        Write(buffer, 2);
+    }
+
     /** Read from a reg address a defined number of bytes */
     void ReadReg(uint8_t reg, uint8_t *buff, uint8_t size)
     {
@@ -241,6 +256,21 @@ class Icm20948SpiTransport
         buffer[1] = value;
 
         Write(buffer, 2);
+    }
+
+    /**  Writes a 16 bit value MSB first
+        \param reg the register address to write to
+        \param value the value to write to the register
+    */
+    void Write16(uint8_t reg, uint16_t value)
+    {
+        uint8_t buffer[3];
+
+        buffer[0] = reg & ~0x80;
+        buffer[1] = value >> 8;
+        buffer[2] = value & 0xFF;
+
+        Write(buffer, 3);
     }
 
     /** Read from a reg address a defined number of bytes */
@@ -348,10 +378,10 @@ class Icm20948
             return ERR;
         }
 
-        _sensorid_accel = sensor_id;
-        _sensorid_gyro  = sensor_id + 1;
-        _sensorid_mag   = sensor_id + 2;
-        _sensorid_temp  = sensor_id + 3;
+        _sensorid_accel = 0;
+        _sensorid_gyro  = 1;
+        _sensorid_mag   = 2;
+        _sensorid_temp  = 3;
 
         Reset();
 
@@ -386,14 +416,13 @@ class Icm20948
         WriteBits(ICM20X_B0_PWR_MGMT_1, 1, 1, 7);
         System::Delay(20);
 
-        while(reset_bit.read())
+        while(ReadBits(ICM20X_B0_PWR_MGMT_1, 1, 7))
         {
             System::Delay(10);
         };
 
         System::Delay(50);
     }
-
 
     uint8_t GetMagId()
     {
@@ -411,7 +440,7 @@ class Icm20948
 
         EnableI2CMaster(true);
 
-        if(AuxI2CBusSetupFailed())
+        if(AuxI2CBusSetupFailed() == ERR)
         {
             return ERR;
         }
@@ -507,6 +536,16 @@ class Icm20948
         magZ = rawMagZ * ICM20948_UT_PER_LSB;
     }
 
+    /** Sets the accelerometer's data rate divisor.
+        \param  new_accel_divisor The accelerometer's data rate divisor (`uint16_t`). This 12-bit value must be <= 4095
+    */
+    void SetAccelRateDivisor(uint16_t new_accel_divisor)
+    {
+        SetBank(2);
+        Write16(ICM20X_B2_ACCEL_SMPLRT_DIV_1, new_accel_divisor);
+        SetBank(0);
+    }
+
     /** Get the accelerometer's measurement range.
         \return The accelerometer's measurement range (`icm20948_accel_range_t`).
     */
@@ -543,6 +582,17 @@ class Icm20948
     void SetAccelRange(icm20948_accel_range_t new_accel_range)
     {
         WriteAccelRange((uint8_t)new_accel_range);
+    }
+
+
+    /** Sets the gyro's data rate divisor.
+        @param  new_gyro_divisor The gyro's data rate divisor (`uint8_t`).
+    */
+    void SetGyroRateDivisor(uint8_t new_gyro_divisor)
+    {
+        SetBank(2);
+        Write8(ICM20X_B2_GYRO_SMPLRT_DIV, new_gyro_divisor);
+        SetBank(0);
     }
 
     /** Get the gyro's measurement range.
@@ -612,12 +662,6 @@ class Icm20948
             = WriteMagRegister(AK09916_CNTL2, AK09916_MAG_DATARATE_SHUTDOWN);
         System::Delay(1);
         return WriteMagRegister(AK09916_CNTL2, rate) && success;
-    }
-
-    GetMagId()
-    {
-        // verify the magnetometer id
-        return ReadExternalRegister(0x8C, 0x01);
     }
 
     /** Sets register bank.
@@ -728,6 +772,15 @@ class Icm20948
         return transport_.Write8(reg, value);
     }
 
+    /**  Writes a 16 bit value MSB first
+        \param reg the register address to write to
+        \param value the value to write to the register
+    */
+    void Write16(uint8_t reg, uint16_t value)
+    {
+        return transport_.Write16(reg, value);
+    }
+
     /** Read from a reg address a defined number of bytes */
     void ReadReg(uint8_t reg, uint8_t *buff, uint8_t size)
     {
@@ -762,6 +815,71 @@ class Icm20948
     */
     uint8_t Read8(uint8_t reg) { return transport_.Read8(reg); }
 
+    /** Sets the bypass status of the I2C master bus support.
+        \param bypass_i2c Set to true to bypass the internal I2C master circuitry,
+        connecting the external I2C bus to the main I2C bus. Set to false to
+        re-connect
+    */
+    void SetI2CBypass(bool bypass_i2c)
+    {
+        SetBank(0);
+        WriteBits(ICM20X_B0_REG_INT_PIN_CFG, bypass_i2c, 1, 1);
+    }
+
+    /** Enable or disable the I2C mastercontroller
+        \param enable_i2c_master true: enable false: disable
+        \return true: success false: error
+    */
+    Result EnableI2CMaster(bool enable_i2c_master)
+    {
+        SetBank(0);
+        WriteBits(ICM20X_B0_USER_CTRL, enable_i2c_master, 1, 5);
+        return GetTransportError();
+    }
+
+    /** Set the I2C clock rate for the auxillary I2C bus to 345.60kHz and disable repeated start
+        \return true: success false: failure
+    */
+    Result ConfigureI2CMaster(void)
+    {
+        SetBank(3);
+        Write8(ICM20X_B3_I2C_MST_CTRL, 0x17);
+        return GetTransportError();
+    }
+
+    /** Reset the I2C master */
+    void ResetI2CMaster(void)
+    {
+        SetBank(0);
+
+        WriteBits(ICM20X_B0_USER_CTRL, true, 1, 1);
+        while(ReadBits(ICM20X_B0_USER_CTRL, 1, 1))
+        {
+            System::Delay(10);
+        }
+        System::Delay(100);
+    }
+
+    // A million thanks to the SparkFun folks for their library that I pillaged to
+    // write this method! See their Arduino library here:
+    // https://github.com/sparkfun/SparkFun_ICM-20948_ArduinoLibrary
+    Result AuxI2CBusSetupFailed(void)
+    {
+        // check aux I2C bus connection by reading the magnetometer chip ID
+        for(int i = 0; i < I2C_MASTER_RESETS_BEFORE_FAIL; i++)
+        {
+            if(GetMagId() != ICM20948_MAG_ID)
+            {
+                ResetI2CMaster();
+            }
+            else
+            {
+                return ERR;
+            }
+        }
+        return OK;
+    }
+
     /** Get and reset the transport error flag
         \return Whether the transport has errored since the last check
     */
@@ -771,8 +889,35 @@ class Icm20948
     Config    config_;
     Transport transport_;
 
+    uint16_t _sensorid_accel, ///< ID number for accelerometer
+        _sensorid_gyro,       ///< ID number for gyro
+        _sensorid_mag,        ///< ID number for mag
+        _sensorid_temp;       ///< ID number for temperature
+
     uint8_t current_accel_range_; ///< accelerometer range cache
     uint8_t current_gyro_range_;  ///< gyro range cache
+
+    int16_t rawAccX, ///< temp variables
+        rawAccY,     ///< temp variables
+        rawAccZ,     ///< temp variables
+        rawTemp,     ///< temp variables
+        rawGyroX,    ///< temp variables
+        rawGyroY,    ///< temp variables
+        rawGyroZ,    ///< temp variables
+        rawMagX,     ///< temp variables
+        rawMagY,     ///< temp variables
+        rawMagZ;     ///< temp variables
+
+    float temperature, ///< Last reading's temperature (C)
+        accX,          ///< Last reading's accelerometer X axis m/s^2
+        accY,          ///< Last reading's accelerometer Y axis m/s^2
+        accZ,          ///< Last reading's accelerometer Z axis m/s^2
+        gyroX,         ///< Last reading's gyro X axis in rad/s
+        gyroY,         ///< Last reading's gyro Y axis in rad/s
+        gyroZ,         ///< Last reading's gyro Z axis in rad/s
+        magX,          ///< Last reading's mag X axis in rad/s
+        magY,          ///< Last reading's mag Y axis in rad/s
+        magZ;          ///< Last reading's mag Z axis in rad/s
 };
 
 /** @} */
