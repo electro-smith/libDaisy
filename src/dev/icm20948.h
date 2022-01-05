@@ -830,11 +830,7 @@ class Icm20948
         return vect;
     }
 
-    float GetTemp()
-    {
-        Icm20948Vect vect;
-        return (temperature / 333.87) + 21.0;
-    }
+    float GetTemp() { return (temperature / 333.87) + 21.0; }
 
     /**  Reads an 8 bit value
         \param reg the register address to read from
