@@ -4,24 +4,99 @@
 
 ### Breaking Changes
 
+* driver: MAX11300 driver interface changed considerably
+* spi: Order of arguments of the `SpiHandle` DMA functions changed
+* dma: `SpiHandle` previously used `DMA1_Stream7`, now uses `DMA2_Stream2` and `DMA2_Stream3`
+
 ### Features
 
+* spi: `SpiHandle` now has callbacks before and after a DMA transaction starts (can be used for software driven chip select)
 * spi: added `MultiSlaveSpiHandle` that allows to connect to multiple SPI slave devices on a shared bus
+* driver: MAX11300 now supports multiple chips on a shared bus
+* driver: MAX11300 now uses DMA to handle updates without blocking
+* driver: MAX11300 now has an auto-update mode where it continuously updates itself
+* driver: MAX11300 can now call a user-provided callback after an update is complete
 
 ### Bug Fixes
 
 * logger: Added 10ms delay at the end of `StartLog` function. Without this, messages immediatly following the `StartLog` function were getting missed when `wait_for_pc` is set to `true`.
+* testing: debugging configuration now uses `lldb` debugging extension to support unit test debugging on macOS with Apple Silicon
 
 ### Other
 
 ### Migrating
+
+#### SPI
+
+```c++
+// Old
+SpiHandle::Result DmaTransmit(uint8_t*            buff,
+                              size_t              size,
+                              SpiHandle::CallbackFunctionPtr callback,
+                              void*               callback_context);
+// New
+SpiHandle::Result DmaTransmit(uint8_t*                            buff,
+                              size_t                              size,
+                              SpiHandle::StartCallbackFunctionPtr start_callback,
+                              SpiHandle::EndCallbackFunctionPtr   end_callback,
+                              void*                               callback_context);
+// Same for DmaReceive and DmaTransmitAndReceive
+```
+
+#### MAX11300
+
+```c++
+// Old: MAX11300 takes no template arguments
+MAX11300 max11300driver;
+// New: MAX11300 takes number of chips as template argument
+const size_t num_devices = 4;
+MAX11300<num_devices> max11300driver;
+
+// Old: constructor only takes a config struct
+max11300driver.Init(config);
+// New: constructor takes a DMA buffer situated in non-cached and DMA-accessible memory
+MAX11300Types::DmaBuffer DMA_BUFFER_MEM_SECTION max11300DmaBuffer;
+max11300driver.Init(config, &max11300DmaBuffer);
+
+// Old: most types are inside the MAX11300 classname scope
+daisy::MAX11300::PIN_0
+daisy::MAX11300::AdcVoltageRange
+// New: types are in a separate namespace to keep them independent from the "num_devices" template argument
+daisy::MAX11300Types::PIN_0
+daisy::MAX11300Types::AdcVoltageRange
+
+// Old: only a single chip was handled by the driver
+max11300driver.ConfigurePinAsAnalogRead(daisy::MAX11300::PIN_0, daisy::MAX11300::AdcVoltageRange::NEGATIVE_5_TO_5);
+max11300driver.ConfigurePinAsAnalogWrite(daisy::MAX11300::PIN_1, daisy::MAX11300::DacVoltageRange::NEGATIVE_5_TO_5);
+// New: each function now takes an additional argument, the index of the chip
+max11300driver.ConfigurePinAsAnalogRead(0, daisy::MAX11300Types::PIN_0, daisy::MAX11300Types::AdcVoltageRange::NEGATIVE_5_TO_5);
+max11300driver.ConfigurePinAsAnalogWrite(1, daisy::MAX11300Types::PIN_1, daisy::MAX11300Types::DacVoltageRange::NEGATIVE_5_TO_5);
+
+// Old: Update() synchronously updates the chip and blocks until the update is complete
+max11300driver.Update(); // blocks
+// New: - Update() works asynchronously in the background using DMA
+//      - Update() can retrigger itself automatically
+//      - A callback can be called after each update cycle that was completed successfully
+void MyUpdateCompleteCallback(void* context) {
+    // use the context to trace back where the callback came from
+    // or ignore it
+}
+max11300driver.Update(
+    daisy::MAX11300Types::AutoUpdate::enabled, // default: disabled
+    &MyUpdateCompleteCallback, // or nullptr if you don't need a callback. default: nullptr
+    &someThingThatYouWantToGetPassedToYourCallback // callback context, or nullptr if not needed
+);
+// you don't have to specify the arguments, then the defaults will be used
+max11300driver.Update();
+// you can stop the auto update after you started it
+max11300driver.StopAutoUpdate();
+```
 
 ## v4.0.0
 
 ### Breaking Changes
 
 * driver: added support for the 0 .. 2.5V ADC range to MAX11300, splitting the `enum VoltageRange` into two enums for the ADC and DAC configurations.
-* spi: added start callbacks to SPI DMA transfers; changed Callback Function type names; now using DMA2
 
 ### Features
 
@@ -37,10 +112,6 @@
 ### Other
 
 ### Migrating
-
-#### SPI
-
-`SpiHandle` now uses `DMA2_Stream2` and `DMA2_Stream3` for transmit and receive.
 
 #### MAX11300
 
