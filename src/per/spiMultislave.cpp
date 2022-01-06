@@ -2,7 +2,6 @@
 
 namespace daisy
 {
-
 SpiHandle::Result MultiSlaveSpiHandle::Init(const Config& config)
 {
     if(config.num_devices >= max_num_devices_)
