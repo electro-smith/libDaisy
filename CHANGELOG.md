@@ -79,7 +79,8 @@ max11300driver.Update(); // blocks
 //      - A callback can be called after each update cycle that was completed successfully
 void MyUpdateCompleteCallback(void* context) {
     // use the context to trace back where the callback came from
-    // or ignore it
+    // or ignore it.
+    // This callback comes from an interrupt, keep is fast.
 }
 max11300driver.Update(
     daisy::MAX11300Types::AutoUpdate::enabled, // default: disabled

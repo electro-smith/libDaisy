@@ -156,7 +156,9 @@ class SpiHandle
     \param *buff input buffer
     \param size  buffer size
     \param start_callback   A callback to execute when the transfer starts, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
     \param end_callback     A callback to execute when the transfer finishes, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
     \param callback_context A pointer that will be passed back to you in the callbacks.     
     \return Whether the transmit was successful or not
     */
@@ -170,7 +172,9 @@ class SpiHandle
     \param *buff input buffer
     \param size  buffer size
     \param start_callback   A callback to execute when the transfer starts, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
     \param end_callback     A callback to execute when the transfer finishes, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
     \param callback_context A pointer that will be passed back to you in the callbacks.    
     \return Whether the receive was successful or not
     */
@@ -185,7 +189,9 @@ class SpiHandle
     \param rx_buff  the receive buffer
     \param size     buffer size
     \param start_callback   A callback to execute when the transfer starts, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
     \param end_callback     A callback to execute when the transfer finishes, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
     \param callback_context A pointer that will be passed back to you in the callbacks.    
     \return Whether the receive was successful or not
     */

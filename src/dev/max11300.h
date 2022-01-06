@@ -602,12 +602,13 @@ class MAX11300Driver
      * - Read all current ANALOG_IN (ADC) values to memory
      * - Write all GPO states to all MAX11300s
      * - Read all GPI states to memory
-     * - call the provided callback function when complete
+     * - call the provided callback function when complete (from an interrupt)
      * - automatically trigger the next update if audo_update == MAX11300Types::AutoUpdate::enabled
      * 
      * \param  auto_update Controls if the driver should automatically trigger the next update after a
      *                     successful update
      * \param complete_callback A callback function that's called after each successful update
+     *                          Keep this callback function simple and fast, it's called from an interrupt.
      * \param complete_callback_context A context pointer provided to the complete_callback
      */
     MAX11300Types::Result
