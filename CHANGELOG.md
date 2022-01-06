@@ -49,7 +49,7 @@ SpiHandle::Result DmaTransmit(uint8_t*                            buff,
 // Old: MAX11300 takes no template arguments
 MAX11300 max11300driver;
 // New: MAX11300 takes number of chips as template argument
-const size_t num_devices = 4;
+constexpr size_t num_devices = 4;
 MAX11300<num_devices> max11300driver;
 
 // Old: constructor only takes a config struct
@@ -78,8 +78,7 @@ max11300driver.Update(); // blocks
 //      - Update() can retrigger itself automatically
 //      - A callback can be called after each update cycle that was completed successfully
 void MyUpdateCompleteCallback(void* context) {
-    // use the context to trace back where the callback came from
-    // or ignore it.
+    // The context is the pointer you passed when calling `.Update()`
     // This callback comes from an interrupt, keep is fast.
 }
 max11300driver.Update(
