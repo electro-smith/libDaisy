@@ -308,7 +308,7 @@ class Icm20948SpiTransport
     bool      error_;
 };
 
-/** \brief Device support for ICM20948 TOF sensor
+/** \brief Device support for ICM20948 IMU sensor
     @author beserge
     @date December 2021
 */
