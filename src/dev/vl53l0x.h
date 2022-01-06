@@ -2,6 +2,22 @@
 #ifndef DSY_VL53L0X_H
 #define DSY_VL53L0X_H
 
+/* Defines */
+#define VL53L0X_SETPARAMETERFIELD(Dev, field, value) \
+    PALDevDataSet(Dev, CurrentParameters.field, value)
+
+#define VL53L0X_GETPARAMETERFIELD(Dev, field, variable) \
+    variable = PALDevDataGet(Dev, CurrentParameters).field
+
+#define VL53L0X_SETARRAYPARAMETERFIELD(Dev, field, index, value) \
+    PALDevDataSet(Dev, CurrentParameters.field[index], value)
+
+#define VL53L0X_GETARRAYPARAMETERFIELD(Dev, field, index, variable) \
+    variable = PALDevDataGet(Dev, CurrentParameters).field[index]
+
+#define VL53L0X_FIXPOINT1616TOFIXPOINT97(Value) \
+    (uint16_t)((Value >> 9) & 0xFFFF)
+
 namespace daisy
 {
 /** @addtogroup external 
@@ -36,8 +52,7 @@ class Vl53l0xI2CTransport
         }
     };
 
-    /** \return Did the transaction error? i.e. Return true if error, false if ok */
-    inline bool Init(Config config)
+    inline void Init(Config config)
     {
         I2CHandle::Config i2c_config;
         i2c_config.mode   = I2CHandle::Config::Mode::I2C_MASTER;
@@ -47,27 +62,50 @@ class Vl53l0xI2CTransport
         i2c_config.pin_config.scl = config.scl;
         i2c_config.pin_config.sda = config.sda;
 
-        return I2CHandle::Result::OK != i2c_.Init(i2c_config);
+        error_ = false;
+
+        error_ |= I2CHandle::Result::OK != i2c_.Init(i2c_config);
     }
 
-    /** \return Did the transaction error? i.e. Return true if error, false if ok */
-    bool Write(uint8_t *data, uint16_t size)
+    void Write(uint8_t *data, uint16_t size)
     {
-        return I2CHandle::Result::OK
-               != i2c_.TransmitBlocking(dev_addr_, data, size, 10);
+        I2CHandle::Result res
+            = i2c_.TransmitBlocking(dev_addr_, data, size, 10);
+        error_ |= (res != I2CHandle::\result::OK);
     }
 
-    /** \return Did the transaction error? i.e. Return true if error, false if ok */
-    bool Read(uint8_t *data, uint16_t size)
+    void Read(uint8_t *data, uint16_t size)
     {
-        // dev_addr_ may need >> 1...
-        return I2CHandle::Result::OK
-               != i2c_.ReceiveBlocking(dev_addr_, data, size, 10);
+        I2CHandle::Result res = i2c_.ReceiveBlocking(dev_addr_, data, size, 10);
+        error_ |= (res != I2CHandle::Result::OK);
+    }
+
+    void Write8(uint8_t reg, uint8_t val)
+    {
+        uint8_t buff[2] = {reg, val};
+        Write(buff, 2);
+    }
+
+    uint8_t Read8(uint8_t reg)
+    {
+        uint8_t ret;
+
+        Write(reg);
+        Read(ret);
+        return ret;
+    }
+    /** \return true if error occured since last check */
+    bool GetError()
+    {
+        bool tmp = error_;
+        error_   = false;
+        return error_;
     }
 
   private:
     I2CHandle i2c_;
     uint8_t   dev_addr_;
+    bool      error_;
 };
 
 
@@ -105,6 +143,19 @@ class Vl53l0x
         return GetTransportErr();
     }
 
+    uint8_t Read8(uint8_t reg) { return transport_.Read8(reg); }
+
+    void Write8(uint8_t reg, uint8_t val) { transport_.Write8(reg, val); }
+
+    void Update8(uint8_t reg, uint8_t AndData, uint8_t OrData)
+    {
+        uint8_t data = Read8(reg);
+        data         = (data & AndData) | OrData;
+        Write8(reg, data);
+    }
+
+
+    Result GetTransportError() { return transport_.GetError() ? ERR : OK; }
 
     /**  Setups the I2C interface and hardware
         \param  i2c_addr Optional I2C address the sensor can be found on. Default is 0x29
@@ -145,7 +196,7 @@ class Vl53l0x
                     VERSION_REQUIRED_MINOR) "." STR(VERSION_REQUIRED_BUILD)));
             }
 
-            Status = VL53L0X_ERROR_NOT_SUPPORTED;
+            Status = ERR;
 
             return false;
         }
@@ -159,7 +210,7 @@ class Vl53l0x
 
         Status = VL53L0X_GetDeviceInfo(&MyDevice, &DeviceInfo);
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             if(debug)
             {
@@ -188,11 +239,11 @@ class Vl53l0x
                     Serial.println(DeviceInfo.ProductRevisionMinor);
                 }
 
-                Status = VL53L0X_ERROR_NOT_SUPPORTED;
+                Status = ERR;
             }
         }
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             if(debug)
             {
@@ -202,7 +253,7 @@ class Vl53l0x
             Status = VL53L0X_StaticInit(pMyDevice); // Device Initialization
         }
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             if(debug)
             {
@@ -223,7 +274,7 @@ class Vl53l0x
             }
         }
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             if(debug)
             {
@@ -236,7 +287,7 @@ class Vl53l0x
                 &PhaseCal); // Device Initialization
         }
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             // no need to do this when we use VL53L0X_PerformSingleRangingMeasurement
             if(debug)
@@ -250,12 +301,12 @@ class Vl53l0x
         }
 
         // call off to the config function to do the last part of configuration.
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             configSensor(vl_config);
         }
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             return true;
         }
@@ -283,7 +334,7 @@ class Vl53l0x
 
         delay(10);
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             pMyDevice->I2cDevAddr = newAddr; // 7 bit addr
             return true;
@@ -310,13 +361,13 @@ class Vl53l0x
         Status = VL53L0X_SetLimitCheckEnable(
             pMyDevice, VL53L0X_CHECKENABLE_SIGMA_FINAL_RANGE, 1);
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             Status = VL53L0X_SetLimitCheckEnable(
                 pMyDevice, VL53L0X_CHECKENABLE_SIGNAL_RATE_FINAL_RANGE, 1);
         }
 
-        if(Status != VL53L0X_ERROR_NONE)
+        if(Status != OK)
             return false;
 
         switch(vl_config)
@@ -325,7 +376,7 @@ class Vl53l0x
                 // Taken directly from SDK vl5310x_SingleRanging_example.c
                 // Maybe should convert to helper functions but...
                 // Serial.println("  VL53L0X_SENSE_DEFAULT");
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     Status = VL53L0X_SetLimitCheckEnable(
                         pMyDevice,
@@ -333,7 +384,7 @@ class Vl53l0x
                         1);
                 }
 
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     Status = VL53L0X_SetLimitCheckValue(
                         pMyDevice,
@@ -347,25 +398,25 @@ class Vl53l0x
                     pMyDevice,
                     VL53L0X_CHECKENABLE_SIGNAL_RATE_FINAL_RANGE,
                     (FixPoint1616_t)(0.1 * 65536));
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     Status = VL53L0X_SetLimitCheckValue(
                         pMyDevice,
                         VL53L0X_CHECKENABLE_SIGMA_FINAL_RANGE,
                         (FixPoint1616_t)(60 * 65536));
                 }
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     Status = VL53L0X_SetMeasurementTimingBudgetMicroSeconds(
                         pMyDevice, 33000);
                 }
 
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     Status = VL53L0X_SetVcselPulsePeriod(
                         pMyDevice, VL53L0X_VCSEL_PERIOD_PRE_RANGE, 18);
                 }
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     Status = VL53L0X_SetVcselPulsePeriod(
                         pMyDevice, VL53L0X_VCSEL_PERIOD_FINAL_RANGE, 14);
@@ -377,14 +428,14 @@ class Vl53l0x
                     pMyDevice,
                     VL53L0X_CHECKENABLE_SIGNAL_RATE_FINAL_RANGE,
                     (FixPoint1616_t)(0.25 * 65536));
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     Status = VL53L0X_SetLimitCheckValue(
                         pMyDevice,
                         VL53L0X_CHECKENABLE_SIGMA_FINAL_RANGE,
                         (FixPoint1616_t)(32 * 65536));
                 }
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     Status = VL53L0X_SetMeasurementTimingBudgetMicroSeconds(
                         pMyDevice, 30000);
@@ -393,23 +444,23 @@ class Vl53l0x
             case VL53L0X_SENSE_HIGH_ACCURACY:
                 // increase timing budget to 200 ms
 
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     SetLimitCheckValue(
                         VL53L0X_CHECKENABLE_SIGNAL_RATE_FINAL_RANGE,
                         (FixPoint1616_t)(0.25 * 65536));
                 }
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     SetLimitCheckValue(VL53L0X_CHECKENABLE_SIGMA_FINAL_RANGE,
                                        (FixPoint1616_t)(18 * 65536));
                 }
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     setMeasurementTimingBudgetMicroSeconds(200000);
                 }
                 // Not sure about ignore threshold, try turnning it off...
-                if(Status == VL53L0X_ERROR_NONE)
+                if(Status == OK)
                 {
                     Status = VL53L0X_SetLimitCheckEnable(
                         pMyDevice,
@@ -420,7 +471,7 @@ class Vl53l0x
                 break;
         }
 
-        return (Status == VL53L0X_ERROR_NONE);
+        return (Status == OK);
     }
 
     /**  get a ranging measurement from the device
@@ -428,18 +479,18 @@ class Vl53l0x
         \param debug Optional debug flag. If true debug information will print via Serial.print during execution. Defaults to false.
         \return True if address was set successfully, False otherwise
     */
-    VL53L0X_Error getSingleRangingMeasurement(
+    Result getSingleRangingMeasurement(
         VL53L0X_RangingMeasurementData_t *RangingMeasurementData,
         boolean                           debug)
     {
-        VL53L0X_Error  Status = VL53L0X_ERROR_NONE;
+        Result         Status = OK;
         FixPoint1616_t LimitCheckCurrent;
 
         /*
    *  Step  4 : Test ranging mode
    */
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             if(debug)
             {
@@ -505,7 +556,7 @@ class Vl53l0x
         Status       = getSingleRangingMeasurement(&measure, false);
         _rangeStatus = measure.RangeStatus;
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
             return measure.RangeMilliMeter;
         // Other status return something totally out of bounds...
         return 0xffff;
@@ -527,12 +578,12 @@ class Vl53l0x
         Status = VL53L0X_SetDeviceMode(pMyDevice,
                                        VL53L0X_DEVICEMODE_SINGLE_RANGING);
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             // Lets start up the measurement
             Status = VL53L0X_StartMeasurement(pMyDevice);
         }
-        return (Status == VL53L0X_ERROR_NONE);
+        return (Status == OK);
     }
 
     /**  Checks to see if a range operation has completed
@@ -542,7 +593,7 @@ class Vl53l0x
     {
         uint8_t NewDataReady = 0;
         Status = VL53L0X_GetMeasurementDataReady(pMyDevice, &NewDataReady);
-        return ((Status != VL53L0X_ERROR_NONE) || (NewDataReady == 1));
+        return ((Status != OK) || (NewDataReady == 1));
     }
 
     /**  Wait until Range operation has completed.
@@ -552,7 +603,7 @@ class Vl53l0x
     {
         Status = VL53L0X_measurement_poll_for_completion(pMyDevice);
 
-        return (Status == VL53L0X_ERROR_NONE);
+        return (Status == OK);
     }
 
     /**  Return the range in mm for the last operation.
@@ -564,10 +615,10 @@ class Vl53l0x
 
         Status       = VL53L0X_GetRangingMeasurementData(pMyDevice, &measure);
         _rangeStatus = measure.RangeStatus;
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
             Status = VL53L0X_ClearInterruptMask(pMyDevice, 0);
 
-        if((Status == VL53L0X_ERROR_NONE) && (_rangeStatus != 4))
+        if((Status == OK) && (_rangeStatus != 4))
             return measure.RangeMilliMeter;
 
         return 0xffff; // some out of range value
@@ -585,18 +636,18 @@ class Vl53l0x
         Status = VL53L0X_SetDeviceMode(
             pMyDevice, VL53L0X_DEVICEMODE_CONTINUOUS_TIMED_RANGING);
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             Status = VL53L0X_SetInterMeasurementPeriodMilliSeconds(pMyDevice,
                                                                    period_ms);
         }
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             // Lets start up the measurement
             Status = VL53L0X_StartMeasurement(pMyDevice);
         }
-        return (Status == VL53L0X_ERROR_NONE);
+        return (Status == OK);
     }
 
     /**  Stop a continuous ranging operation */
@@ -610,14 +661,14 @@ class Vl53l0x
 
         // Wait until it finished
         // use timeout to avoid deadlock
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             LoopNb = 0;
             do
             {
                 Status
                     = VL53L0X_GetStopCompletedStatus(pMyDevice, &StopCompleted);
-                if((StopCompleted == 0x00) || Status != VL53L0X_ERROR_NONE)
+                if((StopCompleted == 0x00) || Status != OK)
                 {
                     break;
                 }
@@ -627,11 +678,11 @@ class Vl53l0x
 
             if(LoopNb >= VL53L0X_DEFAULT_MAX_LOOP)
             {
-                Status = VL53L0X_ERROR_TIME_OUT;
+                Status = ERR;
             }
         }
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             Status = VL53L0X_ClearInterruptMask(
                 pMyDevice, VL53L0X_REG_SYSTEM_INTERRUPT_GPIO_NEW_SAMPLE_READY);
@@ -646,7 +697,7 @@ class Vl53l0x
     {
         Status = VL53L0X_SetMeasurementTimingBudgetMicroSeconds(pMyDevice,
                                                                 budget_us);
-        return (Status == VL53L0X_ERROR_NONE);
+        return (Status == OK);
     }
 
     /**  Wrapper to ST library code to budget how long a measurement should take
@@ -670,7 +721,7 @@ class Vl53l0x
     {
         Status = VL53L0X_SetVcselPulsePeriod(
             pMyDevice, VcselPeriodType, VCSELPulsePeriod);
-        return (Status == VL53L0X_ERROR_NONE);
+        return (Status == OK);
     }
 
     /** Gets the VCSEL pulse period.
@@ -694,7 +745,7 @@ class Vl53l0x
     {
         Status = VL53L0X_SetLimitCheckEnable(
             pMyDevice, LimitCheckId, LimitCheckEnable);
-        return (Status == VL53L0X_ERROR_NONE);
+        return (Status == OK);
     }
 
     /**  Get specific limit check enable state
@@ -719,7 +770,7 @@ class Vl53l0x
     {
         Status = VL53L0X_SetLimitCheckValue(
             pMyDevice, LimitCheckId, LimitCheckValue);
-        return (Status == VL53L0X_ERROR_NONE);
+        return (Status == OK);
     }
 
     /**  Get a specific limit check value
@@ -738,7 +789,7 @@ class Vl53l0x
                                        uint16_t    LimitCheckId,
                                        uint8_t     LimitCheckEnable)
     {
-        VL53L0X_Error  Status              = VL53L0X_ERROR_NONE;
+        Result         Status              = OK;
         FixPoint1616_t TempFix1616         = 0;
         uint8_t        LimitCheckEnableInt = 0;
         uint8_t        LimitCheckDisable   = 0;
@@ -809,16 +860,14 @@ class Vl53l0x
             case VL53L0X_CHECKENABLE_SIGNAL_RATE_MSRC:
 
                 Temp8  = (uint8_t)(LimitCheckDisable << 1);
-                Status = VL53L0X_UpdateByte(
-                    Dev, VL53L0X_REG_MSRC_CONFIG_CONTROL, 0xFE, Temp8);
+                Status = Update8(VL53L0X_REG_MSRC_CONFIG_CONTROL, 0xFE, Temp8);
 
                 break;
 
             case VL53L0X_CHECKENABLE_SIGNAL_RATE_PRE_RANGE:
 
                 Temp8  = (uint8_t)(LimitCheckDisable << 4);
-                Status = VL53L0X_UpdateByte(
-                    Dev, VL53L0X_REG_MSRC_CONFIG_CONTROL, 0xEF, Temp8);
+                Status = Update8(VL53L0X_REG_MSRC_CONFIG_CONTROL, 0xEF, Temp8);
 
                 break;
 
@@ -828,7 +877,7 @@ class Vl53l0x
         return OK;
     }
 
-    if(Status == VL53L0X_ERROR_NONE)
+    if(Status == OK)
     {
         if(LimitCheckEnable == 0)
         {
@@ -842,19 +891,16 @@ class Vl53l0x
         }
     }
 
-    LOG_FUNCTION_END(Status);
     return Status;
 }
 
-VL53L0X_Error
+Result
 VL53L0X_SetLimitCheckValue(VL53L0X_DEV    Dev,
                            uint16_t       LimitCheckId,
                            FixPoint1616_t LimitCheckValue)
 {
-    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
-    uint8_t       Temp8;
-
-    LOG_FUNCTION_START("");
+    Result  Status = OK;
+    uint8_t Temp8;
 
     VL53L0X_GETARRAYPARAMETERFIELD(Dev, LimitChecksEnable, LimitCheckId, Temp8);
 
@@ -917,26 +963,22 @@ VL53L0X_SetLimitCheckValue(VL53L0X_DEV    Dev,
 
                 break;
 
-            default: Status = VL53L0X_ERROR_INVALID_PARAMS;
+            default: Status = ERR;
         }
 
-        if(Status == VL53L0X_ERROR_NONE)
+        if(Status == OK)
         {
             VL53L0X_SETARRAYPARAMETERFIELD(
                 Dev, LimitChecksValue, LimitCheckId, LimitCheckValue);
         }
     }
 
-    LOG_FUNCTION_END(Status);
     return Status;
 }
 
-VL53L0X_Error VL53L0X_SetDeviceMode(VL53L0X_DEV         Dev,
-                                    VL53L0X_DeviceModes DeviceMode)
+Result VL53L0X_SetDeviceMode(VL53L0X_DEV Dev, VL53L0X_DeviceModes DeviceMode)
 {
-    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
-
-    LOG_FUNCTION_START("%d", (int)DeviceMode);
+    Result Status = OK;
 
     switch(DeviceMode)
     {
@@ -950,84 +992,81 @@ VL53L0X_Error VL53L0X_SetDeviceMode(VL53L0X_DEV         Dev,
             break;
         default:
             /* Unsupported mode */
-            Status = VL53L0X_ERROR_MODE_NOT_SUPPORTED;
+            Status = ERR;
     }
 
-    LOG_FUNCTION_END(Status);
     return Status;
 }
 
-VL53L0X_Error VL53L0X_SetMeasurementTimingBudgetMicroSeconds(
+Result VL53L0X_SetMeasurementTimingBudgetMicroSeconds(
     VL53L0X_DEV Dev,
     uint32_t    MeasurementTimingBudgetMicroSeconds)
 {
-    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
-    LOG_FUNCTION_START("");
+    Result Status = OK;
 
     Status = VL53L0X_set_measurement_timing_budget_micro_seconds(
         Dev, MeasurementTimingBudgetMicroSeconds);
 
-    LOG_FUNCTION_END(Status);
 
     return Status;
 }
 
-VL53L0X_Error VL53L0X_SetVcselPulsePeriod(VL53L0X_DEV         Dev,
-                                          VL53L0X_VcselPeriod VcselPeriodType,
-                                          uint8_t VCSELPulsePeriodPCLK)
+Result VL53L0X_SetVcselPulsePeriod(VL53L0X_DEV         Dev,
+                                   VL53L0X_VcselPeriod VcselPeriodType,
+                                   uint8_t             VCSELPulsePeriodPCLK)
 {
-    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
-    LOG_FUNCTION_START("");
+    Result Status = OK;
 
     Status = VL53L0X_set_vcsel_pulse_period(
         Dev, VcselPeriodType, VCSELPulsePeriodPCLK);
 
-    LOG_FUNCTION_END(Status);
     return Status;
 }
 
-VL53L0X_Error VL53L0X_StartMeasurement(VL53L0X_DEV Dev)
+Result VL53L0X_StartMeasurement(VL53L0X_DEV Dev)
 {
-    VL53L0X_Error       Status = VL53L0X_ERROR_NONE;
+    Result              Status = OK;
     VL53L0X_DeviceModes DeviceMode;
     uint8_t             Byte;
     uint8_t             StartStopByte = VL53L0X_REG_SYSRANGE_MODE_START_STOP;
     uint32_t            LoopNb;
-    LOG_FUNCTION_START("");
 
     /* Get Current DeviceMode */
     VL53L0X_GetDeviceMode(Dev, &DeviceMode);
 
-    Status = VL53L0X_WrByte(Dev, 0x80, 0x01);
-    Status = VL53L0X_WrByte(Dev, 0xFF, 0x01);
-    Status = VL53L0X_WrByte(Dev, 0x00, 0x00);
-    Status = VL53L0X_WrByte(Dev, 0x91, PALDevDataGet(Dev, StopVariable));
-    Status = VL53L0X_WrByte(Dev, 0x00, 0x01);
-    Status = VL53L0X_WrByte(Dev, 0xFF, 0x00);
-    Status = VL53L0X_WrByte(Dev, 0x80, 0x00);
+    Write8(0x80, 0x01);
+    Write8(0xFF, 0x01);
+    Write8(0x00, 0x00);
+    Write8(0x91, PALDevDataGet(Dev, StopVariable));
+    Write8(0x00, 0x01);
+    Write8(0xFF, 0x00);
+    Write8(0x80, 0x00);
+    Status = GetTransportError();
 
     switch(DeviceMode)
     {
         case VL53L0X_DEVICEMODE_SINGLE_RANGING:
-            Status = VL53L0X_WrByte(Dev, VL53L0X_REG_SYSRANGE_START, 0x01);
+            Write8(VL53L0X_REG_SYSRANGE_START, 0x01);
+
+            Status = GetTransportError();
 
             Byte = StartStopByte;
-            if(Status == VL53L0X_ERROR_NONE)
+            if(Status == OK)
             {
                 /* Wait until start bit has been cleared */
                 LoopNb = 0;
                 do
                 {
                     if(LoopNb > 0)
-                        Status = VL53L0X_RdByte(
-                            Dev, VL53L0X_REG_SYSRANGE_START, &Byte);
+                        Byte = Read8(VL53L0X_REG_SYSRANGE_START);
+                    Status = GetTransportError();
                     LoopNb = LoopNb + 1;
                 } while(((Byte & StartStopByte) == StartStopByte)
-                        && (Status == VL53L0X_ERROR_NONE)
+                        && (Status == OK)
                         && (LoopNb < VL53L0X_DEFAULT_MAX_LOOP));
 
                 if(LoopNb >= VL53L0X_DEFAULT_MAX_LOOP)
-                    Status = VL53L0X_ERROR_TIME_OUT;
+                    Status = ERR;
             }
 
             break;
@@ -1035,13 +1074,13 @@ VL53L0X_Error VL53L0X_StartMeasurement(VL53L0X_DEV Dev)
             /* Back-to-back mode */
 
             /* Check if need to apply interrupt settings */
-            if(Status == VL53L0X_ERROR_NONE)
+            if(Status == OK)
                 Status = VL53L0X_CheckAndLoadInterruptSettings(Dev, 1);
 
-            Status = VL53L0X_WrByte(Dev,
-                                    VL53L0X_REG_SYSRANGE_START,
-                                    VL53L0X_REG_SYSRANGE_MODE_BACKTOBACK);
-            if(Status == VL53L0X_ERROR_NONE)
+            Write8(VL53L0X_REG_SYSRANGE_START,
+                   VL53L0X_REG_SYSRANGE_MODE_BACKTOBACK);
+            Status = GetTransportError();
+            if(Status == OK)
             {
                 /* Set PAL State to Running */
                 PALDevDataSet(Dev, PalState, VL53L0X_STATE_RUNNING);
@@ -1050,14 +1089,13 @@ VL53L0X_Error VL53L0X_StartMeasurement(VL53L0X_DEV Dev)
         case VL53L0X_DEVICEMODE_CONTINUOUS_TIMED_RANGING:
             /* Continuous mode */
             /* Check if need to apply interrupt settings */
-            if(Status == VL53L0X_ERROR_NONE)
+            if(Status == OK)
                 Status = VL53L0X_CheckAndLoadInterruptSettings(Dev, 1);
 
-            Status = VL53L0X_WrByte(Dev,
-                                    VL53L0X_REG_SYSRANGE_START,
-                                    VL53L0X_REG_SYSRANGE_MODE_TIMED);
+            Write8(VL53L0X_REG_SYSRANGE_START, VL53L0X_REG_SYSRANGE_MODE_TIMED);
+            Status = GetTransportError();
 
-            if(Status == VL53L0X_ERROR_NONE)
+            if(Status == OK)
             {
                 /* Set PAL State to Running */
                 PALDevDataSet(Dev, PalState, VL53L0X_STATE_RUNNING);
@@ -1065,38 +1103,33 @@ VL53L0X_Error VL53L0X_StartMeasurement(VL53L0X_DEV Dev)
             break;
         default:
             /* Selected mode not supported */
-            Status = VL53L0X_ERROR_MODE_NOT_SUPPORTED;
+            Status = ERR;
     }
 
-    LOG_FUNCTION_END(Status);
     return Status;
 }
 
 /* Group PAL Interrupt Functions */
-VL53L0X_Error VL53L0X_ClearInterruptMask(VL53L0X_DEV Dev,
-                                         uint32_t    InterruptMask)
+Result VL53L0X_ClearInterruptMask(VL53L0X_DEV Dev, uint32_t InterruptMask)
 {
-    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
-    uint8_t       LoopCount;
-    uint8_t       Byte;
-    LOG_FUNCTION_START("");
+    Result  Status = OK;
+    uint8_t LoopCount;
+    uint8_t Byte;
 
     /* clear bit 0 range interrupt, bit 1 error interrupt */
     LoopCount = 0;
     do
     {
-        Status = VL53L0X_WrByte(Dev, VL53L0X_REG_SYSTEM_INTERRUPT_CLEAR, 0x01);
-        Status |= VL53L0X_WrByte(Dev, VL53L0X_REG_SYSTEM_INTERRUPT_CLEAR, 0x00);
-        Status
-            |= VL53L0X_RdByte(Dev, VL53L0X_REG_RESULT_INTERRUPT_STATUS, &Byte);
+        Write8(VL53L0X_REG_SYSTEM_INTERRUPT_CLEAR, 0x01);
+        Write8(VL53L0X_REG_SYSTEM_INTERRUPT_CLEAR, 0x00);
+        Byte   = Read8(VL53L0X_REG_RESULT_INTERRUPT_STATUS);
+        Status = GetTransportError();
         LoopCount++;
-    } while(((Byte & 0x07) != 0x00) && (LoopCount < 3)
-            && (Status == VL53L0X_ERROR_NONE));
+    } while(((Byte & 0x07) != 0x00) && (LoopCount < 3) && (Status == OK));
 
     if(LoopCount >= 3)
-        Status = VL53L0X_ERROR_INTERRUPT_NOT_CLEARED;
+        Status = ERR;
 
-    LOG_FUNCTION_END(Status);
     return Status;
 }
 
