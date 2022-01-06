@@ -389,8 +389,8 @@ class MAX11300Driver
     }
 
     MAX11300Types::Result ConfigurePinAsDigitalWrite(size_t device_index,
-                                                     Pin    pin,
-                                                     float  output_voltage)
+                                                     MAX11300Types::Pin pin,
+                                                     float output_voltage)
     {
         auto& device = devices_[device_index];
 
@@ -618,10 +618,22 @@ class MAX11300Driver
            void* complete_callback_context = nullptr)
     {
         if(sequencer_.IsBusy())
-            return MAX11300Types::Result::ERR;
+        {
+            // When the sequencer is currently busy, we can just return right away.
+            // For the auto-update case, we update the callbacks and return true (it's still working, as requested).
+            // For the manual update mode, we return an error (current transaction is still running!)
+            if(auto_update_ == MAX11300Types::AutoUpdate::enabled)
+            {
+                update_complete_callback_         = complete_callback;
+                update_complete_callback_context_ = complete_callback_context;
+                return MAX11300Types::Result::OK;
+            }
+            else
+                return MAX11300Types::Result::ERR;
+        }
 
-        auto_update_ = auto_update;
-        update_complete_callback_ = complete_callback;
+        auto_update_                      = auto_update;
+        update_complete_callback_         = complete_callback;
         update_complete_callback_context_ = complete_callback_context;
 
         sequencer_.current_device_ = 0;
@@ -629,6 +641,12 @@ class MAX11300Driver
         ContinueUpdate();
 
         return MAX11300Types::Result::OK;
+    }
+
+    /** Call this to stop the auto updating, but complete the current update. */
+    void StopAutoUpdate()
+    {
+        auto_update_ = MAX11300Types::AutoUpdate::disabled;
     }
 
     /**
@@ -1100,7 +1118,7 @@ class MAX11300Driver
                 if(auto_update_ == MAX11300Types::AutoUpdate::enabled)
                 {
                     sequencer_.current_device_ = 0;
-                    sequencer_.current_step_   = UpdateSequencer::Step::updateDac;
+                    sequencer_.current_step_ = UpdateSequencer::Step::updateDac;
                 }
                 else
                     return; // all devices complete, no retriggering
@@ -1123,10 +1141,6 @@ class MAX11300Driver
                         //
                         // The size of the transaction is determined by the number of configured dac pins,
                         // plus one byte for the initial pin address.
-                        //
-                        // The datasheet recommends waiting 80us between DAC updates, in practice the appears to be
-                        // per configured DAC pin. Here we inform the transport to wait at least N uS before transmitting
-                        // again.
                         size_t tx_size = (device.dac_pin_count_ * 2) + 1;
                         memcpy(dma_buffer_->tx_buffer,
                                device.dac_buffer_,
@@ -1152,6 +1166,9 @@ class MAX11300Driver
                         // as described above...
                         size_t size = (device.adc_pin_count_ * 2) + 1;
                         dma_buffer_->tx_buffer[0] = device.adc_first_adress;
+                        // clear the rest of the buffer (it may contain stuff from a previous transaction)
+                        for(size_t i = 1; i < size; i++)
+                            dma_buffer_->tx_buffer[i] = 0x00;
                         transport_.TransmitAndReceiveDma(
                             sequencer_.current_device_,
                             dma_buffer_->tx_buffer,
@@ -1199,6 +1216,9 @@ class MAX11300Driver
                         // Reading GPI pins is a single, 5 byte, full-duplex transaction with the first
                         // and only TX byte being the GPI register.
                         dma_buffer_->tx_buffer[0] = (MAX11300_GPIDAT << 1) | 1;
+                        // clear the rest of the buffer (it may contain stuff from a previous transaction)
+                        for(size_t i = 1; i < sizeof(device.gpi_buffer_); i++)
+                            dma_buffer_->tx_buffer[i] = 0x00;
                         transport_.TransmitAndReceiveDma(
                             sequencer_.current_device_,
                             dma_buffer_->tx_buffer,
