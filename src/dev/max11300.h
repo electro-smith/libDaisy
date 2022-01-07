@@ -446,7 +446,7 @@ class MAX11300Driver
     /**
      * Read the raw 12 bit (0-4095) value of a given ANALOG_IN (ADC) pin.
      * 
-     * *note this read is local, call MAX11300Types::Update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the value
      * \return - The raw, 12 bit value of the given ANALOG_IN (ADC) pin.
@@ -465,7 +465,7 @@ class MAX11300Driver
     /**
      * Read the value of a given ADC pin in volts.
      * 
-     * *note this read is local, call MAX11300Types::Update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the voltage
      * \return - The value of the given ANALOG_IN (ADC) pin in volts
@@ -482,7 +482,7 @@ class MAX11300Driver
     /**
      * Write a raw 12 bit (0-4095) value to a given ANALOG_OUT (DAC) pin
      * 
-     * *note this write is local, call MAX11300Types::Update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the value
      * \param raw_value - the 12-bit code to write to the given Pin
@@ -504,7 +504,7 @@ class MAX11300Driver
      * Write a voltage value, within the bounds of the configured volatge range, 
      * to a given ANALOG_OUT (DAC) pin.
      * 
-     * *note this write is local, call MAX11300Types::Update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the voltage
      * \param voltage - Target voltage
@@ -525,7 +525,7 @@ class MAX11300Driver
     /**
      * Read the state of a GPI pin
      * 
-     * *note this read is local, call MAX11300Types::Update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the value
      * \return - The boolean state of the pin
@@ -551,7 +551,7 @@ class MAX11300Driver
     /**
      * Write a digital state to the given GPO pin
      * 
-     * *note this write is local, call MAX11300Types::Update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the value
      * \param value - the boolean state to write
@@ -603,7 +603,7 @@ class MAX11300Driver
      * - Write all GPO states to all MAX11300s
      * - Read all GPI states to memory
      * - call the provided callback function when complete (from an interrupt)
-     * - automatically trigger the next update if audo_update == MAX11300Types::AutoUpdate::enabled
+     * - automatically trigger the next update if auto_update == MAX11300Types::AutoUpdate::enabled
      * 
      * \param  auto_update Controls if the driver should automatically trigger the next update after a
      *                     successful update

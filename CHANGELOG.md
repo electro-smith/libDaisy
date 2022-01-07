@@ -11,6 +11,7 @@
 ### Features
 
 * spi: `SpiHandle` now has callbacks before and after a DMA transaction starts (can be used for software driven chip select)
+* spi: `SpiHandle` now supports simultaneous transmit and receive with DMA using `SpiHandle::DmaTransmitAndReceive()`
 * spi: added `MultiSlaveSpiHandle` that allows to connect to multiple SPI slave devices on a shared bus
 * driver: MAX11300 now supports multiple chips on a shared bus
 * driver: MAX11300 now uses DMA to handle updates without blocking
