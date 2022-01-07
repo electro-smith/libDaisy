@@ -14,8 +14,9 @@ static constexpr size_t num_devices = 2;
  * This is a mock transport implementation with hooks for verifying the 
  * SPI transactions invoked by the driver at the byte level. All calls from
  * the MAX11300 driver (our system-under-test) to the transport will be
- * logged. Then the test cases can verify that the driver sent the correct
- * byte patterns to the device.
+ * examined during the test to verify that the driver sent the correct
+ * byte patterns to the device. The examination is done by injecting a
+ * callback function into the transport.
  */
 class TestTransport
 {
@@ -56,7 +57,7 @@ class TestTransport
         ERR /**< & */
     };
 
-    //
+    // Called by the MAX11300 driver during initialization
     template <size_t num_driver_devices>
     Result Init(Config<num_driver_devices> config)
     {
@@ -145,6 +146,29 @@ using MAX11300Test = daisy::MAX11300Driver<TestTransport, num_devices>;
  * It manages some common setup/teardown and provides basic testing functions for each
  * test case. This helps keep the test cases small and readable by extracting commonly used
  * "helper" code out of the test cases.
+ * 
+ * Internally, it holds a buffer of expected SPI transactions. The individual test cases
+ * can fill that buffer with expected transactions and eventually call some function on the
+ * MAX11300 driver (our SUT). The SUT will execute and call its transport layer to send and
+ * receive data via SPI. We use a mocked transport layer that doesn't actually use a hardware
+ * SPI - instead it refers to the buffer of expected SPI transactions; comparing the actual
+ * transaction to the expected transaction and failing the test if there's a mismatch.
+ * 
+ * For that reason, all test cases look like this:
+ * - init the driver (this is done implicitly at the start of each test when the
+ *   googletest framework executes SetUp() here in the fixture base class):
+ *      - fill buffer of expected transactions
+ *      - call driver.Init() - comparing each transaction from the driver
+ *        with the buffer of excpected transactions
+ * - configure some pins (done from the test case itself by calling helper functions
+ *   that this fixture provides):
+ *      - fill buffer of expected transactions
+ *      - call driver.<SomeConfigFunction>() - comparing each transaction from the driver
+ *        with the buffer of excpected transactions
+ * - some more buffer-filling and driver-calling - depending on the test case
+ * - fail the test if there are still transactions in the buffer that have not been
+ *   executed by the SUT (this is done implicitly at the end of eah test case when the
+ *   googletest framework executes TearDown() here in the fixture base class)
  */
 class MAX11300TestFixture : public ::testing::Test
 {
@@ -281,34 +305,42 @@ class MAX11300TestFixture : public ::testing::Test
         {
             ADD_FAILURE() << "MAX11300 Init() invocation result was ERR";
         }
-        // ...and clean up...
-        clearAllTransactions();
+
+        ExpectNoRemainingTransactions();
     }
 
-    void TearDown() {}
+    void TearDown() { ExpectNoRemainingTransactions(); }
 
     /**
      * Remove all transaction fixtures.
      */
     void clearAllTransactions()
     {
-        for(size_t i = 0; i < txrx_transactions_.size(); i++)
-        {
-            txrx_transactions_[i].rx_buff.clear();
-            txrx_transactions_[i].tx_buff.clear();
-            txrx_transactions_[i].description.clear();
-        }
-        for(size_t i = 0; i < tx_transactions_.size(); i++)
-        {
-            tx_transactions_[i].buff.clear();
-            tx_transactions_[i].description.clear();
-        }
         tx_transactions_.clear();
         txrx_transactions_.clear();
-        tx_transaction_count   = 0;
-        txrx_transaction_count = 0;
     }
 
+    /**
+     * Expects that no transactions remain in the buffers
+     */
+    void ExpectNoRemainingTransactions()
+    {
+        if(!tx_transactions_.empty() || !txrx_transactions_.empty())
+        {
+            std::string tx_transactions_string
+                = "Remaining TX transactions: \n";
+            for(const auto& t : tx_transactions_)
+                tx_transactions_string += t.description + "\n";
+
+            std::string txrx_transactions_string
+                = "Remaining TX-RX transactions: \n";
+            for(const auto& t : txrx_transactions_)
+                txrx_transactions_string += t.description + "\n";
+
+            ADD_FAILURE() << "Not all expected transactions were executed.\n"
+                          << tx_transactions_string << txrx_transactions_string;
+        }
+    }
 
     bool ConfigurePinAsDigitalReadAndVerify(size_t             device_index,
                                             MAX11300Types::Pin pin,
@@ -376,7 +408,7 @@ class MAX11300TestFixture : public ::testing::Test
                           device_index, pin, threshold_voltage)
                       == MAX11300Types::Result::OK;
 
-        clearAllTransactions();
+        ExpectNoRemainingTransactions();
 
         return result;
     }
@@ -447,7 +479,7 @@ class MAX11300TestFixture : public ::testing::Test
                           device_index, pin, output_voltage)
                       == MAX11300Types::Result::OK;
 
-        clearAllTransactions();
+        ExpectNoRemainingTransactions();
 
         return result;
     }
@@ -506,7 +538,7 @@ class MAX11300TestFixture : public ::testing::Test
             = max11300_.ConfigurePinAsAnalogRead(device_index, pin, range)
               == MAX11300Types::Result::OK;
 
-        clearAllTransactions();
+        ExpectNoRemainingTransactions();
 
         return result;
     }
@@ -564,7 +596,7 @@ class MAX11300TestFixture : public ::testing::Test
             = max11300_.ConfigurePinAsAnalogWrite(device_index, pin, range)
               == MAX11300Types::Result::OK;
 
-        clearAllTransactions();
+        ExpectNoRemainingTransactions();
 
         return result;
     }
@@ -585,11 +617,6 @@ class MAX11300TestFixture : public ::testing::Test
      * A list of TXRX transaction fixtures to be verified
      */
     std::vector<TxRxTransaction> txrx_transactions_;
-
-    // Counters to keep track of how many transactions the driver has invoked
-    // TODO: this is obsolete, remove it.
-    size_t tx_transaction_count   = 0;
-    size_t txrx_transaction_count = 0;
 
   protected:
     int update_complete_callback_count_ = 0;
@@ -616,14 +643,14 @@ class MAX11300TestFixture : public ::testing::Test
     // This method verifies a TX transaction against a TxTransaction fixture
     void verifyTxTransaction(size_t device_index, uint8_t* buff, size_t size)
     {
-        // Increment the tx count and make sure we have enough fixtures...
-        tx_transaction_count++;
-        if(tx_transactions_.size() < tx_transaction_count)
+        // Make sure we have enough fixtures to compare against...
+        if(tx_transactions_.empty())
         {
             ADD_FAILURE() << "Missing TxTransaction fixture";
+            return;
         }
         // Get the transaction fixture
-        TxTransaction t = tx_transactions_.at(tx_transaction_count - 1);
+        const auto& t = tx_transactions_.front();
 
         // Verify that our fixture is targeting the right device index...
         if(t.device_index != device_index)
@@ -680,6 +707,9 @@ class MAX11300TestFixture : public ::testing::Test
             message.append("\n");
             ADD_FAILURE() << message;
         }
+
+        // remove this transaction from the queue
+        tx_transactions_.erase(tx_transactions_.begin());
     }
 
     // This method verifies a TXRX transaction against a TxRxTransaction fixture
@@ -688,20 +718,20 @@ class MAX11300TestFixture : public ::testing::Test
                                uint8_t* rx_buff,
                                size_t   size)
     {
-        // Increment the txrx count and make sure we have enough fixtures...
-        txrx_transaction_count++;
-        if(txrx_transactions_.size() < txrx_transaction_count)
+        // Make sure we have enough fixtures to compare against...
+        if(txrx_transactions_.empty())
         {
             ADD_FAILURE() << "Missing TxRxTransaction fixture";
+            return;
         }
         // Get the transaction fixture
-        TxRxTransaction t = txrx_transactions_.at(txrx_transaction_count - 1);
+        const auto& t = txrx_transactions_.front();
 
         // Verify that our fixture is targeting the right device index...
         if(t.device_index != device_index)
         {
             ADD_FAILURE()
-                << "TxTransaction fixture transaction device_index != actual "
+                << "TxRxTransaction fixture transaction device_index != actual "
                    "transaction device_index: "
                 << t.device_index << " != " << device_index;
         }
@@ -756,6 +786,9 @@ class MAX11300TestFixture : public ::testing::Test
         {
             rx_buff[i] = t.rx_buff[i];
         }
+
+        // remove this transaction from the queue
+        txrx_transactions_.erase(txrx_transactions_.begin());
     }
 
     // Callback for tx transactions. This is what the SUT will be
@@ -1364,7 +1397,8 @@ TEST_F(MAX11300TestFixture, verifyAutoUpdate)
     for(int i = 0; i < stop_auto_updates_after_; i++)
     {
         TxRxTransaction txrx_read_gpi1;
-        txrx_read_gpi1.description  = "Chip 0: GPI read transaction " + std::to_string(i);
+        txrx_read_gpi1.description
+            = "Chip 0: GPI read transaction " + std::to_string(i);
         txrx_read_gpi1.device_index = 0;
         txrx_read_gpi1.tx_buff
             = {((MAX11300_GPIDAT << 1) | 1), 0x00, 0x00, 0x00, 0x00};
