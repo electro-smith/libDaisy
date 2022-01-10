@@ -26,8 +26,8 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#include "../../vl53l0x_api.h"
-#include "../../vl53l0x_api_core.h"
+#include "vl53l0x_api.h"
+#include "vl53l0x_api_core.h"
 
 #ifndef __KERNEL__
 #include <stdlib.h>

@@ -47,11 +47,11 @@
 #include "dev/max11300.h"
 /** VL53l0X */
 #include "dev/vl53l0x/vl53l0x.h"
-#include "dev/vl53l0x/vl53l0x_interrupt_threshold_settings.h"
+// #include "dev/vl53l0x/vl53l0x_interrupt_threshold_settings.h"
 #include "dev/vl53l0x/vl53l0x_platform_log.h"
 #include "dev/vl53l0x/vl53l0x_i2c_platform.h"
 #include "dev/vl53l0x/vl53l0x_types.h"
-#include "dev/vl53l0x/vl53l0x_tuning.h"
+// #include "dev/vl53l0x/vl53l0x_tuning.h"
 #include "dev/vl53l0x/vl53l0x_device.h"
 #include "dev/vl53l0x/vl53l0x_def.h"
 #include "dev/vl53l0x/vl53l0x_api.h"
