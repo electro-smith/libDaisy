@@ -32,6 +32,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "vl53l0x_def.h"
 #include "vl53l0x_platform.h"
 
+namespace daisy
+{
+/** @addtogroup external 
+    @{ 
+*/
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -105,5 +111,9 @@ uint16_t VL53L0X_encode_timeout(uint32_t timeout_macro_clks);
 #ifdef __cplusplus
 }
 #endif
+
+/** @} */
+
+} // namespace daisy
 
 #endif /* _VL53L0X_API_CORE_H_ */

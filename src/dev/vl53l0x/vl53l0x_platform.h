@@ -37,17 +37,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 extern "C" {
 #endif
 
-/**
- * @file vl53l0_platform.h
- *
- * @brief All end user OS/platform/application porting
- */
-
-/**
- * @defgroup VL53L0X_platform_group VL53L0 Platform Functions
- * @brief    VL53L0 Platform Functions
- *  @{
- */
+namespace daisy
+{
+/** @addtogroup external 
+    @{ 
+*/
 
 /**
  * @struct  VL53L0X_Dev_t
@@ -64,7 +58,7 @@ typedef struct {
       comms_type; /*!< Type of comms : VL53L0X_COMMS_I2C or VL53L0X_COMMS_SPI */
   uint16_t comms_speed_khz; /*!< Comms speed [kHz] : typically 400kHz for I2C */
 
-  TwoWire *i2c;
+  I2CHandle *i2c;
 
 } VL53L0X_Dev_t;
 
@@ -244,4 +238,5 @@ VL53L0X_Error VL53L0X_PollingDelay(
 }
 #endif
 
+} // namespace daisy
 #endif /* _VL53L0X_PLATFORM_H_ */

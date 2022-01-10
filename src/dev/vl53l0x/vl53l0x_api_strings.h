@@ -32,6 +32,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "vl53l0x_def.h"
 #include "vl53l0x_platform.h"
 
+namespace daisy
+{
+/** @addtogroup external 
+    @{ 
+*/
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -229,5 +235,9 @@ VL53L0X_Error VL53L0X_get_limit_check_info(VL53L0X_DEV Dev,
 #ifdef __cplusplus
 }
 #endif
+
+/** @} */
+
+} // namespace daisy
 
 #endif
