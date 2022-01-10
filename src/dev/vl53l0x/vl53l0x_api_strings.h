@@ -39,32 +39,33 @@ namespace daisy
 */
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-VL53L0X_Error
-VL53L0X_get_device_info(VL53L0X_DEV Dev,
-                        VL53L0X_DeviceInfo_t *pVL53L0X_DeviceInfo);
+    VL53L0X_Error
+    VL53L0X_get_device_info(VL53L0X_DEV           Dev,
+                            VL53L0X_DeviceInfo_t *pVL53L0X_DeviceInfo);
 
-VL53L0X_Error VL53L0X_get_device_error_string(VL53L0X_DeviceError ErrorCode,
-                                              char *pDeviceErrorString);
+    VL53L0X_Error VL53L0X_get_device_error_string(VL53L0X_DeviceError ErrorCode,
+                                                  char *pDeviceErrorString);
 
-VL53L0X_Error VL53L0X_get_range_status_string(uint8_t RangeStatus,
-                                              char *pRangeStatusString);
+    VL53L0X_Error VL53L0X_get_range_status_string(uint8_t RangeStatus,
+                                                  char *  pRangeStatusString);
 
-VL53L0X_Error VL53L0X_get_pal_error_string(VL53L0X_Error PalErrorCode,
-                                           char *pPalErrorString);
+    VL53L0X_Error VL53L0X_get_pal_error_string(VL53L0X_Error PalErrorCode,
+                                               char *        pPalErrorString);
 
-VL53L0X_Error VL53L0X_get_pal_state_string(VL53L0X_State PalStateCode,
-                                           char *pPalStateString);
+    VL53L0X_Error VL53L0X_get_pal_state_string(VL53L0X_State PalStateCode,
+                                               char *        pPalStateString);
 
-VL53L0X_Error
-VL53L0X_get_sequence_steps_info(VL53L0X_SequenceStepId SequenceStepId,
-                                char *pSequenceStepsString);
+    VL53L0X_Error
+    VL53L0X_get_sequence_steps_info(VL53L0X_SequenceStepId SequenceStepId,
+                                    char *pSequenceStepsString);
 
-VL53L0X_Error VL53L0X_get_limit_check_info(VL53L0X_DEV Dev,
-                                           uint16_t LimitCheckId,
-                                           char *pLimitCheckString);
+    VL53L0X_Error VL53L0X_get_limit_check_info(VL53L0X_DEV Dev,
+                                               uint16_t    LimitCheckId,
+                                               char *      pLimitCheckString);
 
 #ifdef USE_EMPTY_STRING
 #define VL53L0X_STRING_DEVICE_INFO_NAME ""
@@ -163,8 +164,8 @@ VL53L0X_Error VL53L0X_get_limit_check_info(VL53L0X_DEV Dev,
 #define VL53L0X_STRING_ERROR_MODE_NOT_SUPPORTED "Mode not supported error"
 #define VL53L0X_STRING_ERROR_BUFFER_TOO_SMALL "Buffer too small"
 #define VL53L0X_STRING_ERROR_GPIO_NOT_EXISTING "GPIO not existing"
-#define VL53L0X_STRING_ERROR_GPIO_FUNCTIONALITY_NOT_SUPPORTED                  \
-  "GPIO funct not supported"
+#define VL53L0X_STRING_ERROR_GPIO_FUNCTIONALITY_NOT_SUPPORTED \
+    "GPIO funct not supported"
 #define VL53L0X_STRING_ERROR_INTERRUPT_NOT_CLEARED "Interrupt not Cleared"
 #define VL53L0X_STRING_ERROR_CONTROL_INTERFACE "Control Interface Error"
 #define VL53L0X_STRING_ERROR_INVALID_COMMAND "Invalid Command Error"
@@ -194,33 +195,33 @@ VL53L0X_Error VL53L0X_get_limit_check_info(VL53L0X_DEV Dev,
 
 /* Device Specific */
 #define VL53L0X_STRING_DEVICEERROR_NONE "No Update"
-#define VL53L0X_STRING_DEVICEERROR_VCSELCONTINUITYTESTFAILURE                  \
-  "VCSEL Continuity Test Failure"
-#define VL53L0X_STRING_DEVICEERROR_VCSELWATCHDOGTESTFAILURE                    \
-  "VCSEL Watchdog Test Failure"
+#define VL53L0X_STRING_DEVICEERROR_VCSELCONTINUITYTESTFAILURE \
+    "VCSEL Continuity Test Failure"
+#define VL53L0X_STRING_DEVICEERROR_VCSELWATCHDOGTESTFAILURE \
+    "VCSEL Watchdog Test Failure"
 #define VL53L0X_STRING_DEVICEERROR_NOVHVVALUEFOUND "No VHV Value found"
 #define VL53L0X_STRING_DEVICEERROR_MSRCNOTARGET "MSRC No Target Error"
 #define VL53L0X_STRING_DEVICEERROR_SNRCHECK "SNR Check Exit"
 #define VL53L0X_STRING_DEVICEERROR_RANGEPHASECHECK "Range Phase Check Error"
-#define VL53L0X_STRING_DEVICEERROR_SIGMATHRESHOLDCHECK                         \
-  "Sigma Threshold Check Error"
+#define VL53L0X_STRING_DEVICEERROR_SIGMATHRESHOLDCHECK \
+    "Sigma Threshold Check Error"
 #define VL53L0X_STRING_DEVICEERROR_TCC "TCC Error"
 #define VL53L0X_STRING_DEVICEERROR_PHASECONSISTENCY "Phase Consistency Error"
 #define VL53L0X_STRING_DEVICEERROR_MINCLIP "Min Clip Error"
 #define VL53L0X_STRING_DEVICEERROR_RANGECOMPLETE "Range Complete"
 #define VL53L0X_STRING_DEVICEERROR_ALGOUNDERFLOW "Range Algo Underflow Error"
 #define VL53L0X_STRING_DEVICEERROR_ALGOOVERFLOW "Range Algo Overflow Error"
-#define VL53L0X_STRING_DEVICEERROR_RANGEIGNORETHRESHOLD                        \
-  "Range Ignore Threshold Error"
+#define VL53L0X_STRING_DEVICEERROR_RANGEIGNORETHRESHOLD \
+    "Range Ignore Threshold Error"
 #define VL53L0X_STRING_DEVICEERROR_UNKNOWN "Unknown error code"
 
 /* Check Enable */
 #define VL53L0X_STRING_CHECKENABLE_SIGMA_FINAL_RANGE "SIGMA FINAL RANGE"
-#define VL53L0X_STRING_CHECKENABLE_SIGNAL_RATE_FINAL_RANGE                     \
-  "SIGNAL RATE FINAL RANGE"
+#define VL53L0X_STRING_CHECKENABLE_SIGNAL_RATE_FINAL_RANGE \
+    "SIGNAL RATE FINAL RANGE"
 #define VL53L0X_STRING_CHECKENABLE_SIGNAL_REF_CLIP "SIGNAL REF CLIP"
-#define VL53L0X_STRING_CHECKENABLE_RANGE_IGNORE_THRESHOLD                      \
-  "RANGE IGNORE THRESHOLD"
+#define VL53L0X_STRING_CHECKENABLE_RANGE_IGNORE_THRESHOLD \
+    "RANGE IGNORE THRESHOLD"
 #define VL53L0X_STRING_CHECKENABLE_SIGNAL_RATE_MSRC "SIGNAL RATE MSRC"
 #define VL53L0X_STRING_CHECKENABLE_SIGNAL_RATE_PRE_RANGE "SIGNAL RATE PRE RANGE"
 

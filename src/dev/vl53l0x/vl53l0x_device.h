@@ -96,17 +96,17 @@ typedef uint8_t VL53L0X_DeviceError;
  */
 typedef uint8_t VL53L0X_GpioFunctionality;
 
-#define VL53L0X_GPIOFUNCTIONALITY_OFF                                          \
-  ((VL53L0X_GpioFunctionality)0) /*!< NO Interrupt  */
-#define VL53L0X_GPIOFUNCTIONALITY_THRESHOLD_CROSSED_LOW                        \
-  ((VL53L0X_GpioFunctionality)1) /*!< Level Low (value < thresh_low)  */
-#define VL53L0X_GPIOFUNCTIONALITY_THRESHOLD_CROSSED_HIGH                       \
-  ((VL53L0X_GpioFunctionality)2) /*!< Level High (value > thresh_high) */
-#define VL53L0X_GPIOFUNCTIONALITY_THRESHOLD_CROSSED_OUT                        \
-  ((VL53L0X_GpioFunctionality)3)
+#define VL53L0X_GPIOFUNCTIONALITY_OFF \
+    ((VL53L0X_GpioFunctionality)0) /*!< NO Interrupt  */
+#define VL53L0X_GPIOFUNCTIONALITY_THRESHOLD_CROSSED_LOW \
+    ((VL53L0X_GpioFunctionality)1) /*!< Level Low (value < thresh_low)  */
+#define VL53L0X_GPIOFUNCTIONALITY_THRESHOLD_CROSSED_HIGH \
+    ((VL53L0X_GpioFunctionality)2) /*!< Level High (value > thresh_high) */
+#define VL53L0X_GPIOFUNCTIONALITY_THRESHOLD_CROSSED_OUT \
+    ((VL53L0X_GpioFunctionality)3)
 /*!< Out Of Window (value < thresh_low OR value > thresh_high)  */
-#define VL53L0X_GPIOFUNCTIONALITY_NEW_MEASURE_READY                            \
-  ((VL53L0X_GpioFunctionality)4) /*!< New Sample Ready  */
+#define VL53L0X_GPIOFUNCTIONALITY_NEW_MEASURE_READY \
+    ((VL53L0X_GpioFunctionality)4) /*!< New Sample Ready  */
 
 /** @} end of VL53L0X_GpioFunctionality_group */
 

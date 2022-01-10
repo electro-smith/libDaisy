@@ -290,7 +290,7 @@ bool Adafruit_VL53L0X::configSensor(VL53L0X_Sense_config_t vl_config)
 /**************************************************************************/
 VL53L0X_Error Adafruit_VL53L0X::getSingleRangingMeasurement(
     VL53L0X_RangingMeasurementData_t *RangingMeasurementData,
-    bool                           debug)
+    bool                              debug)
 {
     VL53L0X_Error  Status = VL53L0X_ERROR_NONE;
     FixPoint1616_t LimitCheckCurrent;
@@ -493,8 +493,8 @@ void Adafruit_VL53L0X::stopRangeContinuous(void)
     @returns True if success
 */
 /**************************************************************************/
-bool
-Adafruit_VL53L0X::setMeasurementTimingBudgetMicroSeconds(uint32_t budget_us)
+bool Adafruit_VL53L0X::setMeasurementTimingBudgetMicroSeconds(
+    uint32_t budget_us)
 {
     Status
         = VL53L0X_SetMeasurementTimingBudgetMicroSeconds(pMyDevice, budget_us);
@@ -525,9 +525,8 @@ uint32_t Adafruit_VL53L0X::getMeasurementTimingBudgetMicroSeconds()
     @returns True if success
 */
 /**************************************************************************/
-bool
-Adafruit_VL53L0X::setVcselPulsePeriod(VL53L0X_VcselPeriod VcselPeriodType,
-                                      uint8_t             VCSELPulsePeriod)
+bool Adafruit_VL53L0X::setVcselPulsePeriod(VL53L0X_VcselPeriod VcselPeriodType,
+                                           uint8_t             VCSELPulsePeriod)
 {
     Status = VL53L0X_SetVcselPulsePeriod(
         pMyDevice, VcselPeriodType, VCSELPulsePeriod);
@@ -565,7 +564,7 @@ Adafruit_VL53L0X::getVcselPulsePeriod(VL53L0X_VcselPeriod VcselPeriodType)
  */
 /**************************************************************************/
 bool Adafruit_VL53L0X::setLimitCheckEnable(uint16_t LimitCheckId,
-                                              uint8_t  LimitCheckEnable)
+                                           uint8_t  LimitCheckEnable)
 {
     Status = VL53L0X_SetLimitCheckEnable(
         pMyDevice, LimitCheckId, LimitCheckEnable);
@@ -599,7 +598,7 @@ uint8_t Adafruit_VL53L0X::getLimitCheckEnable(uint16_t LimitCheckId)
 /**************************************************************************/
 
 bool Adafruit_VL53L0X::setLimitCheckValue(uint16_t       LimitCheckId,
-                                             FixPoint1616_t LimitCheckValue)
+                                          FixPoint1616_t LimitCheckValue)
 {
     Status
         = VL53L0X_SetLimitCheckValue(pMyDevice, LimitCheckId, LimitCheckValue);
