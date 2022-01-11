@@ -67,14 +67,14 @@ Adafruit_VL53L0X::Result Adafruit_VL53L0X::Init(Adafruit_VL53L0X::Config config)
     {
         Status = VL53L0X_ERROR_NOT_SUPPORTED;
 
-        return false;
+        return ERR;
     }
 
     Status = VL53L0X_DataInit(&MyDevice); // Data initialization
 
-    if(!setAddress(i2c_addr))
+    if(!setAddress(config_.dev_addr))
     {
-        return false;
+        return ERR;
     }
 
     Status = VL53L0X_GetDeviceInfo(&MyDevice, &DeviceInfo);
@@ -119,16 +119,16 @@ Adafruit_VL53L0X::Result Adafruit_VL53L0X::Init(Adafruit_VL53L0X::Config config)
     // call off to the config function to do the last part of configuration.
     if(Status == VL53L0X_ERROR_NONE)
     {
-        configSensor(vl_config);
+        configSensor(config_.vl_config);
     }
 
     if(Status == VL53L0X_ERROR_NONE)
     {
-        return true;
+        return OK;
     }
     else
     {
-        return false;
+        return ERR;
     }
 }
 
@@ -294,8 +294,8 @@ VL53L0X_Error Adafruit_VL53L0X::getSingleRangingMeasurement(
     VL53L0X_RangingMeasurementData_t *RangingMeasurementData,
     bool                              debug)
 {
-    VL53L0X_Error  Status = VL53L0X_ERROR_NONE;
-    FixPoint1616_t LimitCheckCurrent;
+    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
+    // FixPoint1616_t LimitCheckCurrent;
 
     /*
    *  Step  4 : Test ranging mode

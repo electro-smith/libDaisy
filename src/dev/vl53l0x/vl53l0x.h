@@ -21,6 +21,7 @@
 #ifndef DSY_VL53L0X_H
 #define DSY_VL53L0X_H
 
+#include "sys/system.h"
 #include "dev/vl53l0x/vl53l0x_api.h"
 
 #define VL53L0X_I2C_ADDR 0x29 ///< Default sensor I2C address
@@ -61,7 +62,7 @@ class Adafruit_VL53L0X
         Pin                           scl;
         Pin                           sda;
 
-        // uint8_t dev_addr;
+        uint8_t dev_addr;
 
         Config()
         {
@@ -73,7 +74,7 @@ class Adafruit_VL53L0X
             scl = Pin(PORTB, 8);
             sda = Pin(PORTB, 9);
 
-            // dev_addr = VL53L0X_I2C_ADDR;
+            dev_addr = VL53L0X_I2C_ADDR;
         }
     };
 

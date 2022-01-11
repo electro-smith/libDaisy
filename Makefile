@@ -35,6 +35,7 @@ dev/codec_ak4556 \
 dev/codec_pcm3060 \
 dev/codec_wm8731 \
 dev/lcd_hd44780 \
+dev/vl53l0x/vl53l0x \
 dev/vl53l0x/core/vl53l0x_api_calibration \
 dev/vl53l0x/core/vl53l0x_api_core \
 dev/vl53l0x/core/vl53l0x_api_ranging \
