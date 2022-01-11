@@ -282,12 +282,6 @@ bool Adafruit_VL53L0X::configSensor(VL53L0X_Sense_config_t vl_config)
     return (Status == VL53L0X_ERROR_NONE);
 }
 
-/**************************************************************************/
-/*!
-    @brief  get a ranging measurement from the device
-    @returns VL53L0X_RangingMeasurementData_t object
-*/
-/**************************************************************************/
 VL53L0X_RangingMeasurementData_t Adafruit_VL53L0X::getSingleRangingMeasurement()
 {
     VL53L0X_RangingMeasurementData_t data;
@@ -295,13 +289,6 @@ VL53L0X_RangingMeasurementData_t Adafruit_VL53L0X::getSingleRangingMeasurement()
     return data;
 }
 
-/**************************************************************************/
-/*!
-    @brief  Single shot ranging. Be sure to check the return of readRangeStatus
-    to before using the return value!
-    @return Distance in millimeters if valid
-*/
-/**************************************************************************/
 
 uint16_t Adafruit_VL53L0X::readRange(void)
 {
@@ -316,24 +303,10 @@ uint16_t Adafruit_VL53L0X::readRange(void)
     return 0xffff;
 }
 
-/**************************************************************************/
-/*!
-    @brief  Request ranging success/error message (retrieve after ranging)
-    @returns One of possible VL6180X_ERROR_* values
-*/
-/**************************************************************************/
-
 uint8_t Adafruit_VL53L0X::readRangeStatus(void)
 {
     return _rangeStatus;
 }
-
-/**************************************************************************/
-/*!
-    @brief  Start a range operation
-    @return true if range operation successfully started.
-*/
-/**************************************************************************/
 
 bool Adafruit_VL53L0X::startRange(void)
 {
@@ -351,13 +324,6 @@ bool Adafruit_VL53L0X::startRange(void)
     return (Status == VL53L0X_ERROR_NONE);
 }
 
-/**************************************************************************/
-/*!
-    @brief  Checks to see if a range operation has completed
-    @return true if range operation completed or an error has happened
-*/
-/**************************************************************************/
-
 bool Adafruit_VL53L0X::isRangeComplete(void)
 {
     uint8_t NewDataReady = 0;
@@ -365,26 +331,12 @@ bool Adafruit_VL53L0X::isRangeComplete(void)
     return ((Status != VL53L0X_ERROR_NONE) || (NewDataReady == 1));
 }
 
-/**************************************************************************/
-/*!
-    @brief  Wait until Range operation has completed.
-    @return true if range operation completed, false if error.
-*/
-/**************************************************************************/
-
 bool Adafruit_VL53L0X::waitRangeComplete(void)
 {
     Status = VL53L0X_measurement_poll_for_completion(pMyDevice);
 
     return (Status == VL53L0X_ERROR_NONE);
 }
-
-/**************************************************************************/
-/*!
-    @brief  Return the range in mm for the last operation.
-    @return Range in mm.
-*/
-/**************************************************************************/
 
 uint16_t Adafruit_VL53L0X::readRangeResult(void)
 {
@@ -401,13 +353,6 @@ uint16_t Adafruit_VL53L0X::readRangeResult(void)
     return 0xffff; // some out of range value
 }
 
-/**************************************************************************/
-/*!
-    @brief  Start a continuous range operation
-    @param period_ms inter measurement period in milliseconds
-    @return True if successful, false otherwise
-*/
-/**************************************************************************/
 bool Adafruit_VL53L0X::startRangeContinuous(uint16_t period_ms)
 {
     /* This function will do a complete single ranging
@@ -430,11 +375,6 @@ bool Adafruit_VL53L0X::startRangeContinuous(uint16_t period_ms)
     return (Status == VL53L0X_ERROR_NONE);
 }
 
-/**************************************************************************/
-/*!
-    @brief  Stop a continuous ranging operation
-*/
-/**************************************************************************/
 void Adafruit_VL53L0X::stopRangeContinuous(void)
 {
     Status = VL53L0X_StopMeasurement(pMyDevice);
@@ -472,14 +412,6 @@ void Adafruit_VL53L0X::stopRangeContinuous(void)
     }
 }
 
-/**************************************************************************/
-/*!
-    @brief  Wrapper to ST library code to budget how long a measurement
-    should take
-    @param  budget_us the new budget
-    @returns True if success
-*/
-/**************************************************************************/
 bool Adafruit_VL53L0X::setMeasurementTimingBudgetMicroSeconds(
     uint32_t budget_us)
 {
@@ -488,13 +420,6 @@ bool Adafruit_VL53L0X::setMeasurementTimingBudgetMicroSeconds(
     return (Status == VL53L0X_ERROR_NONE);
 }
 
-/**************************************************************************/
-/*!
-    @brief  Wrapper to ST library code to budget how long a measurement
-    should take
-    @returns the current budget time in microseconds.
-*/
-/**************************************************************************/
 uint32_t Adafruit_VL53L0X::getMeasurementTimingBudgetMicroSeconds()
 {
     uint32_t budget_us;
@@ -503,15 +428,6 @@ uint32_t Adafruit_VL53L0X::getMeasurementTimingBudgetMicroSeconds()
     return (budget_us);
 }
 
-/**************************************************************************/
-/*!
-    @brief Sets the VCSEL pulse period.
-
-    @param   VcselPeriodType       VCSEL period identifier (pre-range|final).
-    @param   VCSELPulsePeriod          VCSEL period value
-    @returns True if success
-*/
-/**************************************************************************/
 bool Adafruit_VL53L0X::setVcselPulsePeriod(VL53L0X_VcselPeriod VcselPeriodType,
                                            uint8_t             VCSELPulsePeriod)
 {
@@ -520,14 +436,6 @@ bool Adafruit_VL53L0X::setVcselPulsePeriod(VL53L0X_VcselPeriod VcselPeriodType,
     return (Status == VL53L0X_ERROR_NONE);
 }
 
-/**************************************************************************/
-/*!
-    @brief Gets the VCSEL pulse period.
-
-    @param   VcselPeriodType       VCSEL period identifier (pre-range|final).
-    @returns the current pulse peried for the given type.
-*/
-/**************************************************************************/
 uint8_t
 Adafruit_VL53L0X::getVcselPulsePeriod(VL53L0X_VcselPeriod VcselPeriodType)
 {
@@ -537,19 +445,6 @@ Adafruit_VL53L0X::getVcselPulsePeriod(VL53L0X_VcselPeriod VcselPeriodType)
     return (cur_period);
 }
 
-/**************************************************************************/
-/*!
-    @brief  Enable/Disable a specific limit check
-
-    @param   LimitCheckId                  Limit Check ID
-     (0<= LimitCheckId < VL53L0X_GetNumberOfLimitCheck() ).
-    @param   LimitCheckEnable              if 1 the check limit
-     corresponding to LimitCheckId is Enabled
-                                           if 0 the check limit
-     corresponding to LimitCheckId is disabled
-    @return  true if succeeded
- */
-/**************************************************************************/
 bool Adafruit_VL53L0X::setLimitCheckEnable(uint16_t LimitCheckId,
                                            uint8_t  LimitCheckEnable)
 {
@@ -558,31 +453,12 @@ bool Adafruit_VL53L0X::setLimitCheckEnable(uint16_t LimitCheckId,
     return (Status == VL53L0X_ERROR_NONE);
 }
 
-/**************************************************************************/
-/*!
-    @brief  Get specific limit check enable state
-    @param   LimitCheckId                  Limit Check ID
-     (0<= LimitCheckId < VL53L0X_GetNumberOfLimitCheck() ).
-    @return  current state of limit enabled
- */
-/**************************************************************************/
 uint8_t Adafruit_VL53L0X::getLimitCheckEnable(uint16_t LimitCheckId)
 {
     uint8_t cur_limit;
     Status = VL53L0X_GetLimitCheckEnable(pMyDevice, LimitCheckId, &cur_limit);
     return (cur_limit);
 }
-
-/**************************************************************************/
-/*!
-    @brief  Set a specific limit check value
-    @param  LimitCheckId  Limit Check ID
-     (0<= LimitCheckId < VL53L0X_GetNumberOfLimitCheck() ).
-    LimitCheckId
-    @param  LimitCheckValue  Limit Check Value
-    @return  true if succeeded.
- */
-/**************************************************************************/
 
 bool Adafruit_VL53L0X::setLimitCheckValue(uint16_t       LimitCheckId,
                                           FixPoint1616_t LimitCheckValue)
@@ -592,14 +468,6 @@ bool Adafruit_VL53L0X::setLimitCheckValue(uint16_t       LimitCheckId,
     return (Status == VL53L0X_ERROR_NONE);
 }
 
-/**************************************************************************/
-/*!
-    @brief  Get a specific limit check value
-    @param   LimitCheckId                  Limit Check ID
-     (0<= LimitCheckId < VL53L0X_GetNumberOfLimitCheck() ).
-    @return  limit check value in FixPoint1616
- */
-/**************************************************************************/
 FixPoint1616_t Adafruit_VL53L0X::getLimitCheckValue(uint16_t LimitCheckId)
 {
     FixPoint1616_t LimitCheckValue;
