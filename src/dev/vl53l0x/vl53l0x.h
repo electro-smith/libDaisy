@@ -91,34 +91,18 @@ class Adafruit_VL53L0X
 
     bool setAddress(uint8_t newAddr);
 
-    // uint8_t getAddress(void); // not currently implemented
+    /** Get the last error code
+        \return VL53L0X_Error 0 OK, anything else ERR
+    */
+    VL53L0X_Error GetError() { return Status; }
 
     /**************************************************************************/
     /*!
       @brief  get a ranging measurement from the device
-      @param  pRangingMeasurementData the pointer to the struct the data will be
-     stored in
-      @param debug Optional debug flag. If true debug information will print via
-     Serial.print during execution. Defaults to false.
-      @returns True if address was set successfully, False otherwise
-  */
-    /**************************************************************************/
-    VL53L0X_Error
-    rangingTest(VL53L0X_RangingMeasurementData_t *pRangingMeasurementData,
-                bool                              debug = false)
-    {
-        return getSingleRangingMeasurement(pRangingMeasurementData, debug);
-    };
+      @returns measurement data
+    */
+    VL53L0X_RangingMeasurementData_t getSingleRangingMeasurement();
 
-    VL53L0X_Error getSingleRangingMeasurement(
-        VL53L0X_RangingMeasurementData_t *pRangingMeasurementData,
-        bool                              debug = false);
-    void
-    printRangeStatus(VL53L0X_RangingMeasurementData_t *pRangingMeasurementData);
-
-    VL53L0X_Error Status
-        = VL53L0X_ERROR_NONE; ///< indicates whether or not the sensor has
-                              ///< encountered an error
     // Add similar methods as Adafruit_VL6180X class adapted to range of device
     uint16_t readRange(void);
     // float readLux(uint8_t gain);
@@ -164,6 +148,9 @@ class Adafruit_VL53L0X
   private:
     Config    config_;
     I2CHandle i2c_;
+
+    VL53L0X_Error Status
+        = VL53L0X_ERROR_NONE; ///< indicates whether or not the sensor has encountered an error
 
     Result InitI2C();
 

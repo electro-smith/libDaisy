@@ -285,29 +285,14 @@ bool Adafruit_VL53L0X::configSensor(VL53L0X_Sense_config_t vl_config)
 /**************************************************************************/
 /*!
     @brief  get a ranging measurement from the device
-    @param  RangingMeasurementData the pointer to the struct the data will be stored in
-    @param debug unused
-    @returns True if address was set successfully, False otherwise
+    @returns VL53L0X_RangingMeasurementData_t object
 */
 /**************************************************************************/
-VL53L0X_Error Adafruit_VL53L0X::getSingleRangingMeasurement(
-    VL53L0X_RangingMeasurementData_t *RangingMeasurementData,
-    bool                              debug)
+VL53L0X_RangingMeasurementData_t Adafruit_VL53L0X::getSingleRangingMeasurement()
 {
-    VL53L0X_Error Status = VL53L0X_ERROR_NONE;
-    // FixPoint1616_t LimitCheckCurrent;
-
-    /*
-   *  Step  4 : Test ranging mode
-   */
-
-    if(Status == VL53L0X_ERROR_NONE)
-    {
-        Status = VL53L0X_PerformSingleRangingMeasurement(
-            pMyDevice, RangingMeasurementData);
-    }
-
-    return Status;
+    VL53L0X_RangingMeasurementData_t data;
+    Status = VL53L0X_PerformSingleRangingMeasurement(pMyDevice, &data);
+    return data;
 }
 
 /**************************************************************************/
@@ -320,9 +305,9 @@ VL53L0X_Error Adafruit_VL53L0X::getSingleRangingMeasurement(
 
 uint16_t Adafruit_VL53L0X::readRange(void)
 {
-    VL53L0X_RangingMeasurementData_t measure; // keep our own private copy
+    VL53L0X_RangingMeasurementData_t measure;
 
-    Status       = getSingleRangingMeasurement(&measure, false);
+    measure      = getSingleRangingMeasurement();
     _rangeStatus = measure.RangeStatus;
 
     if(Status == VL53L0X_ERROR_NONE)
