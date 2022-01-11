@@ -26,9 +26,9 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#include "vl53l0x_api_strings.h"
-#include "vl53l0x_api.h"
-#include "vl53l0x_api_core.h"
+#include "dev/vl53l0x/vl53l0x_api_strings.h"
+#include "dev/vl53l0x/vl53l0x_api.h"
+#include "dev/vl53l0x/vl53l0x_api_core.h"
 
 #ifndef __KERNEL__
 #include <stdlib.h>
@@ -40,6 +40,8 @@
     _LOG_FUNCTION_END(TRACE_MODULE_API, status, ##__VA_ARGS__)
 #define LOG_FUNCTION_END_FMT(status, fmt, ...) \
     _LOG_FUNCTION_END_FMT(TRACE_MODULE_API, status, fmt, ##__VA_ARGS__)
+
+namespace daisy{
 
 VL53L0X_Error VL53L0X_check_part_used(VL53L0X_DEV           Dev,
                                       uint8_t *             Revision,
@@ -465,3 +467,5 @@ VL53L0X_Error VL53L0X_get_limit_check_info(VL53L0X_DEV Dev,
     LOG_FUNCTION_END(Status);
     return Status;
 }
+
+} // namespace

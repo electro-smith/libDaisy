@@ -2,6 +2,8 @@
 #ifndef DSY_VL53L0X_I2C_PLATFORM_H
 #define DSY_VL53L0X_I2C_PLATFORM_H
 
+#include "daisy_core.h"
+
 namespace daisy
 {
 /** @addtogroup external 

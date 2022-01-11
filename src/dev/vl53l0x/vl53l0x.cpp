@@ -29,8 +29,8 @@
  *
  */
 
-#include "Adafruit_VL53L0X.h"
-#include "vl53l0x_api_core.h"
+#include "dev/vl53l0x/vl53l0x.h"
+#include "dev/vl53l0x/vl53l0x_api_core.h"
 
 #define VERSION_REQUIRED_MAJOR 1 ///< Required sensor major version
 #define VERSION_REQUIRED_MINOR 0 ///< Required sensor minor version
@@ -39,6 +39,8 @@
 #define STR_HELPER(x) #x     ///< a string helper
 #define STR(x) STR_HELPER(x) ///< string helper wrapper
 
+namespace daisy
+{
 /**************************************************************************/
 /*!
     @brief  Setups the I2C interface and hardware
@@ -634,3 +636,5 @@ Adafruit_VL53L0X::Result Adafruit_VL53L0X::InitI2C()
 
     return I2CHandle::Result::OK == i2c_.Init(i2c_config) ? OK : ERR;
 }
+
+} // namespace daisy

@@ -29,8 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _VL53L0X_API_CORE_H_
 #define _VL53L0X_API_CORE_H_
 
-#include "vl53l0x_def.h"
-#include "vl53l0x_platform.h"
+#include "dev/vl53l0x/vl53l0x_def.h"
+#include "dev/vl53l0x/vl53l0x_platform.h"
 
 namespace daisy
 {
@@ -38,10 +38,10 @@ namespace daisy
     @{ 
 */
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+//#ifdef __cplusplus
+//extern "C"
+//{
+//#endif
 
     VL53L0X_Error VL53L0X_reverse_bytes(uint8_t *data, uint32_t size);
 
@@ -120,9 +120,9 @@ extern "C"
 
     uint16_t VL53L0X_encode_timeout(uint32_t timeout_macro_clks);
 
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus
+//}
+//#endif
 
 /** @} */
 

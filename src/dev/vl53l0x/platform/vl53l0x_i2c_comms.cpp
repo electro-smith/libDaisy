@@ -1,10 +1,13 @@
-#include "vl53l0x_def.h"
-#include "vl53l0x_i2c_platform.h
+#include "per/i2c.h"
+#include "dev/vl53l0x/vl53l0x_def.h"
+#include "dev/vl53l0x/vl53l0x_i2c_platform.h"
 
 // int VL53L0X_i2c_init(I2CHandle *i2c) {
 //   i2c->begin();
 //   return VL53L0X_ERROR_NONE;
 // }
+
+namespace daisy{
 
 int VL53L0X_write_multi(uint8_t    deviceAddress,
                         uint8_t    index,
@@ -105,3 +108,5 @@ int VL53L0X_read_dword(uint8_t    deviceAddress,
 
     return r;
 }
+
+} // namespace

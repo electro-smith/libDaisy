@@ -36,10 +36,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _VL53L0X_DEF_H_
 #define _VL53L0X_DEF_H_
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+//#ifdef __cplusplus
+//extern "C"
+//{
+//#endif
 
 /** @defgroup VL53L0X_globaldefine_group VL53L0X Defines
  *	@brief	  VL53L0X Defines
@@ -84,8 +84,8 @@ extern "C"
 #define VL53L0X_DEFAULT_MAX_LOOP 200
 #define VL53L0X_MAX_STRING_LENGTH 32
 
-#include "vl53l0x_device.h"
-#include "vl53l0x_types.h"
+#include "dev/vl53l0x/vl53l0x_device.h"
+#include "dev/vl53l0x/vl53l0x_types.h"
 
     /****************************************
  * PRIVATE define do not edit
@@ -606,8 +606,8 @@ extern "C"
 
     /** @} VL53L0X_globaldefine_group */
 
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus
+//}
+//#endif
 
 #endif /* _VL53L0X_DEF_H_ */

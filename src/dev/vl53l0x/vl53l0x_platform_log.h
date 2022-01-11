@@ -33,10 +33,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string.h>
 /* LOG Functions */
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+//#ifdef __cplusplus
+//extern "C"
+//{
+//#endif
 
     /**
  * @file vl53l0_platform_log.h
@@ -135,8 +135,8 @@ extern "C"
 
 #define VL53L0X_COPYSTRING(str, ...) strcpy(str, ##__VA_ARGS__)
 
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus
+//}
+//#endif
 
 #endif /* _VL53L0X_PLATFORM_LOG_H_ */

@@ -29,9 +29,10 @@
 #ifndef _VL53L0X_API_H_
 #define _VL53L0X_API_H_
 
-#include "vl53l0x_api_strings.h"
-#include "vl53l0x_def.h"
-#include "vl53l0x_platform.h"
+#include "daisy_core.h"
+#include "dev/vl53l0x/vl53l0x_api_strings.h"
+#include "dev/vl53l0x/vl53l0x_def.h"
+#include "dev/vl53l0x/vl53l0x_platform.h"
 
 namespace daisy
 {
@@ -39,10 +40,10 @@ namespace daisy
     @{ 
 */
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+//#ifdef __cplusplus
+//extern "C"
+//{
+//#endif
 
 #ifdef _MSC_VER
 #ifdef VL53L0X_API_EXPORTS
@@ -2049,9 +2050,9 @@ extern "C"
 
     /** @} VL53L0X_cut11_group */
 
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus
+//}
+//#endif
 
 /** @} */
 

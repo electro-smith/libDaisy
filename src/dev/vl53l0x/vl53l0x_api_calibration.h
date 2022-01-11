@@ -29,8 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef _VL53L0X_API_CALIBRATION_H_
 #define _VL53L0X_API_CALIBRATION_H_
 
-#include "vl53l0x_def.h"
-#include "vl53l0x_platform.h"
+#include "dev/vl53l0x/vl53l0x_def.h"
+#include "dev/vl53l0x/vl53l0x_platform.h"
 
 namespace daisy
 {
@@ -38,10 +38,10 @@ namespace daisy
     @{ 
 */
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+//#ifdef __cplusplus
+//extern "C"
+//{
+//#endif
 
     VL53L0X_Error VL53L0X_perform_xtalk_calibration(
         VL53L0X_DEV     Dev,
@@ -94,9 +94,9 @@ extern "C"
                                               uint8_t *   pVhvSettings,
                                               uint8_t *   pPhaseCal);
 
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus
+//}
+//#endif
 
 /** @} */
 

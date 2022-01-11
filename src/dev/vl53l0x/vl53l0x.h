@@ -21,7 +21,7 @@
 #ifndef DSY_VL53L0X_H
 #define DSY_VL53L0X_H
 
-#include "vl53l0x_api.h"
+#include "dev/vl53l0x/vl53l0x_api.h"
 
 #define VL53L0X_I2C_ADDR 0x29 ///< Default sensor I2C address
 
@@ -30,23 +30,6 @@ namespace daisy
 /** @addtogroup external 
     @{ 
 */
-
-// uint8_t Read8(uint8_t reg)
-// {
-//     return transport_.Read8(reg);
-// }
-
-// Result Write8(uint8_t reg, uint8_t val)
-// {
-//     transport_.Write8(reg, val);
-// }
-
-// Result Update8(uint8_t reg, uint8_t AndData, uint8_t OrData)
-// {
-//     uint8_t data = Read8(reg);
-//     data         = (data & AndData) | OrData;
-//     Write8(reg, data);
-// }
 
 /**************************************************************************/
 /*!

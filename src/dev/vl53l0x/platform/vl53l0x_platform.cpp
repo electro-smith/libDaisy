@@ -34,9 +34,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  * provide variable word size byte/Word/dword VL6180x register access via i2c
  *
  */
-#include "vl53l0x_platform.h"
-#include "vl53l0x_api.h"
-#include "vl53l0x_i2c_platform.h"
+#include "dev/vl53l0x/vl53l0x_platform.h"
+#include "dev/vl53l0x/vl53l0x_api.h"
+#include "dev/vl53l0x/vl53l0x_i2c_platform.h"
 
 /**
  * @def I2C_BUFFER_CONFIG
@@ -89,6 +89,12 @@ uint8_t i2c_global_buffer[VL53L0X_MAX_I2C_XFER_SIZE];
                                 again */
 #define VL53L0X_GetI2CAccess(Dev) /* todo mutex acquire */
 #define VL53L0X_DoneI2CAcces(Dev) /* todo mutex release */
+
+namespace daisy
+{
+/** @addtogroup external 
+    @{ 
+*/
 
 VL53L0X_Error VL53L0X_LockSequenceAccess(VL53L0X_DEV Dev)
 {
@@ -296,3 +302,5 @@ VL53L0X_Error VL53L0X_PollingDelay(VL53L0X_DEV Dev)
 
     return status;
 }
+
+} // namespace

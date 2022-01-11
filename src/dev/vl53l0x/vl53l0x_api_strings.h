@@ -29,8 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef VL53L0X_API_STRINGS_H_
 #define VL53L0X_API_STRINGS_H_
 
-#include "vl53l0x_def.h"
-#include "vl53l0x_platform.h"
+#include "dev/vl53l0x/vl53l0x_def.h"
+#include "dev/vl53l0x/vl53l0x_platform.h"
 
 namespace daisy
 {
@@ -38,10 +38,10 @@ namespace daisy
     @{ 
 */
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
+//#ifdef __cplusplus
+//extern "C"
+//{
+//#endif
 
     VL53L0X_Error
     VL53L0X_get_device_info(VL53L0X_DEV           Dev,
@@ -233,9 +233,9 @@ extern "C"
 #define VL53L0X_STRING_SEQUENCESTEP_FINAL_RANGE "FINAL RANGE"
 #endif /* USE_EMPTY_STRING */
 
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus
+//}
+//#endif
 
 /** @} */
 

@@ -26,9 +26,9 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-#include "vl53l0x_api_calibration.h"
-#include "vl53l0x_api.h"
-#include "vl53l0x_api_core.h"
+#include "dev/vl53l0x/vl53l0x_api_calibration.h"
+#include "dev/vl53l0x/vl53l0x_api.h"
+#include "dev/vl53l0x/vl53l0x_api_core.h"
 
 #ifndef __KERNEL__
 #include <stdlib.h>
@@ -44,6 +44,8 @@
 #define REF_ARRAY_SPAD_0 0
 #define REF_ARRAY_SPAD_5 5
 #define REF_ARRAY_SPAD_10 10
+
+namespace daisy{
 
 uint32_t refArrayQuadrants[4]
     = {REF_ARRAY_SPAD_10, REF_ARRAY_SPAD_5, REF_ARRAY_SPAD_0, REF_ARRAY_SPAD_5};
@@ -1313,3 +1315,5 @@ VL53L0X_Error VL53L0X_get_ref_calibration(VL53L0X_DEV Dev,
 
     return Status;
 }
+
+} // namespace
