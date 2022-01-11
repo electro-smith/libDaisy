@@ -15,8 +15,10 @@ int VL53L0X_write_multi(uint8_t    deviceAddress,
                         uint32_t   count,
                         I2CHandle *i2c)
 {
-    i2c->WriteDataAtAddress(
+    I2CHandle::Result res = i2c->WriteDataAtAddress(
         deviceAddress, index, 1, pdata, (uint16_t)count, 10);
+
+    return res == I2CHandle::Result::OK ? 0 : 1;
 }
 
 int VL53L0X_read_multi(uint8_t    deviceAddress,
@@ -25,7 +27,9 @@ int VL53L0X_read_multi(uint8_t    deviceAddress,
                        uint32_t   count,
                        I2CHandle *i2c)
 {
-    i2c->ReadDataAtAddress(deviceAddress, index, 1, pdata, (uint16_t)count, 10);
+    I2CHandle::Result res = i2c->ReadDataAtAddress(
+        deviceAddress, index, 1, pdata, (uint16_t)count, 10);
+    return res == I2CHandle::Result::OK ? 0 : 1;
 }
 
 int VL53L0X_write_byte(uint8_t    deviceAddress,
