@@ -43,29 +43,29 @@ namespace daisy
 //{
 //#endif
 
-    VL53L0X_Error
-    VL53L0X_get_device_info(VL53L0X_DEV           Dev,
-                            VL53L0X_DeviceInfo_t *pVL53L0X_DeviceInfo);
+VL53L0X_Error
+VL53L0X_get_device_info(VL53L0X_DEV           Dev,
+                        VL53L0X_DeviceInfo_t *pVL53L0X_DeviceInfo);
 
-    VL53L0X_Error VL53L0X_get_device_error_string(VL53L0X_DeviceError ErrorCode,
-                                                  char *pDeviceErrorString);
+VL53L0X_Error VL53L0X_get_device_error_string(VL53L0X_DeviceError ErrorCode,
+                                              char *pDeviceErrorString);
 
-    VL53L0X_Error VL53L0X_get_range_status_string(uint8_t RangeStatus,
-                                                  char *  pRangeStatusString);
+VL53L0X_Error VL53L0X_get_range_status_string(uint8_t RangeStatus,
+                                              char *  pRangeStatusString);
 
-    VL53L0X_Error VL53L0X_get_pal_error_string(VL53L0X_Error PalErrorCode,
-                                               char *        pPalErrorString);
+VL53L0X_Error VL53L0X_get_pal_error_string(VL53L0X_Error PalErrorCode,
+                                           char *        pPalErrorString);
 
-    VL53L0X_Error VL53L0X_get_pal_state_string(VL53L0X_State PalStateCode,
-                                               char *        pPalStateString);
+VL53L0X_Error VL53L0X_get_pal_state_string(VL53L0X_State PalStateCode,
+                                           char *        pPalStateString);
 
-    VL53L0X_Error
-    VL53L0X_get_sequence_steps_info(VL53L0X_SequenceStepId SequenceStepId,
-                                    char *pSequenceStepsString);
+VL53L0X_Error
+VL53L0X_get_sequence_steps_info(VL53L0X_SequenceStepId SequenceStepId,
+                                char *                 pSequenceStepsString);
 
-    VL53L0X_Error VL53L0X_get_limit_check_info(VL53L0X_DEV Dev,
-                                               uint16_t    LimitCheckId,
-                                               char *      pLimitCheckString);
+VL53L0X_Error VL53L0X_get_limit_check_info(VL53L0X_DEV Dev,
+                                           uint16_t    LimitCheckId,
+                                           char *      pLimitCheckString);
 
 #ifdef USE_EMPTY_STRING
 #define VL53L0X_STRING_DEVICE_INFO_NAME ""

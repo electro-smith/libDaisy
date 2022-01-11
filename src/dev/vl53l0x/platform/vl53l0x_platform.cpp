@@ -303,4 +303,4 @@ VL53L0X_Error VL53L0X_PollingDelay(VL53L0X_DEV Dev)
     return status;
 }
 
-} // namespace
+} // namespace daisy

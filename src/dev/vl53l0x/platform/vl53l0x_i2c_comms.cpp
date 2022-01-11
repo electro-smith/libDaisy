@@ -7,8 +7,8 @@
 //   return VL53L0X_ERROR_NONE;
 // }
 
-namespace daisy{
-
+namespace daisy
+{
 int VL53L0X_write_multi(uint8_t    deviceAddress,
                         uint8_t    index,
                         uint8_t *  pdata,
@@ -109,4 +109,4 @@ int VL53L0X_read_dword(uint8_t    deviceAddress,
     return r;
 }
 
-} // namespace
+} // namespace daisy

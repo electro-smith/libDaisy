@@ -45,8 +45,8 @@
 #define REF_ARRAY_SPAD_5 5
 #define REF_ARRAY_SPAD_10 10
 
-namespace daisy{
-
+namespace daisy
+{
 uint32_t refArrayQuadrants[4]
     = {REF_ARRAY_SPAD_10, REF_ARRAY_SPAD_5, REF_ARRAY_SPAD_0, REF_ARRAY_SPAD_5};
 
@@ -1316,4 +1316,4 @@ VL53L0X_Error VL53L0X_get_ref_calibration(VL53L0X_DEV Dev,
     return Status;
 }
 
-} // namespace
+} // namespace daisy

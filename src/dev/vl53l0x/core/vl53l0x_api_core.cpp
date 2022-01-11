@@ -40,8 +40,8 @@
 #define LOG_FUNCTION_END_FMT(status, fmt, ...) \
     _LOG_FUNCTION_END_FMT(TRACE_MODULE_API, status, fmt, ##__VA_ARGS__)
 
-namespace daisy{
-
+namespace daisy
+{
 VL53L0X_Error VL53L0X_reverse_bytes(uint8_t *data, uint32_t size)
 {
     VL53L0X_Error Status = VL53L0X_ERROR_NONE;
@@ -2247,4 +2247,4 @@ VL53L0X_Error VL53L0X_get_pal_range_status(
     return Status;
 }
 
-} // namespace
+} // namespace daisy
