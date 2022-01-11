@@ -38,6 +38,14 @@ dev/hall_sensor \
 dev/lcd_hd44780 \
 dev/motor \
 dev/pca9685 \
+dev/vl53l0x/vl53l0x \
+dev/vl53l0x/core/vl53l0x_api_calibration \
+dev/vl53l0x/core/vl53l0x_api_core \
+dev/vl53l0x/core/vl53l0x_api_ranging \
+dev/vl53l0x/core/vl53l0x_api_strings \
+dev/vl53l0x/core/vl53l0x_api \
+dev/vl53l0x/platform/vl53l0x_i2c_comms \
+dev/vl53l0x/platform/vl53l0x_platform \
 dev/sdram \
 hid/ctrl \
 hid/encoder \
