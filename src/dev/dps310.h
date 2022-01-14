@@ -545,16 +545,12 @@ class Dps310
     /** Get last temperature reading
         \return temp in degrees Centigrade
     */
-    float GetTemperature(){
-        return _temperature;
-    }
+    float GetTemperature() { return _temperature; }
 
     /** Get the last pressure reading
         \return Pressure in hPa
     */
-    float GetPressure(){
-        return _pressure / 100;
-    }
+    float GetPressure() { return _pressure / 100; }
 
     /**  Writes an 8 bit value
         \param reg the register address to write to
