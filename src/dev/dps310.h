@@ -284,7 +284,7 @@ class Dps310
     Dps310() {}
     ~Dps310() {}
 
-    static int32_t oversample_scalefactor[]
+    int32_t oversample_scalefactor[]
         = {524288, 1572864, 3670016, 7864320, 253952, 516096, 1040384, 2088960};
 
     /** The measurement rate ranges */
@@ -347,7 +347,7 @@ class Dps310
         transport_.Init(config_.transport_config);
 
         // make sure we're talking to the right chip
-        if(Read8(DSP310_PRODREVID) != 0x10)
+        if(Read8(DPS310_PRODREVID) != 0x10)
         {
             // No DPS310 detected ... return false
             return ERR;
@@ -404,9 +404,7 @@ class Dps310
         uint8_t coeffs[18];
         for(uint8_t addr = 0; addr < 18; addr++)
         {
-            Adafruit_BusIO_Register coeff = Adafruit_BusIO_Register(
-                i2c_dev, spi_dev, ADDRBIT8_HIGH_TOREAD, 0x10 + addr, 1);
-            coeffs[addr] = coeff.read();
+            coeffs[addr] = Read8(0x10 + addr);
         }
         _c0 = ((uint16_t)coeffs[0] << 4) | (((uint16_t)coeffs[1] >> 4) & 0x0F);
         _c0 = twosComplement(_c0, 12);
@@ -451,11 +449,11 @@ class Dps310
         \param seaLevelhPa The current hPa at sea level.
          \return The approximate altitude above sea level in meters.
     */
-    float readAltitude(float seaLevelhPa)
+    float GetAltitude(float seaLevelhPa)
     {
         float altitude;
 
-        _read();
+        Process();
 
         altitude = 44330 * (1.0 - pow((_pressure / 100) / seaLevelhPa, 0.1903));
 
@@ -468,7 +466,7 @@ class Dps310
             DPS310_ONE_TEMPERATURE, continuous: DPS310_CONT_PRESSURE, DPS310_CONT_TEMP,
             DPS310_CONT_PRESTEMP
     */
-    void setMode(dps310_mode_t mode) { WriteBits(DPS310_MEASCFG, mode, 3, 0) }
+    void setMode(dps310_mode_t mode) { WriteBits(DPS310_MEASCFG, mode, 3, 0); }
 
 
     /** Set the sample rate and oversampling averaging for pressure
@@ -482,11 +480,11 @@ class Dps310
 
         if(os > DPS310_8SAMPLES)
         {
-            WriteBits(DPS310_CFGREG, 1, 1, 2)
+            WriteBits(DPS310_CFGREG, 1, 1, 2);
         }
         else
         {
-            WriteBits(DPS310_CFGREG, 0, 1, 2)
+            WriteBits(DPS310_CFGREG, 0, 1, 2);
         }
 
         pressure_scale = oversample_scalefactor[os];
@@ -515,14 +513,14 @@ class Dps310
 
         // Find out what our calibration source is
         uint8_t read = ReadBits(DPS310_TMPCOEFSRCE, 1, 7);
-        WriteBits(DPS310_TMPCFG, read, 1, 7)
+        WriteBits(DPS310_TMPCFG, read, 1, 7);
     }
 
 
     /** Read the XYZ data from the sensor and store in the internal 
         raw_pressure, raw_temperature, _pressure and _temperature variables. 
     */
-    void _read(void)
+    void Process(void)
     {
         raw_temperature = twosComplement(Read24(DPS310_TMPB2), 24);
         raw_pressure    = twosComplement(Read24(DPS310_PRSB2), 24);
@@ -544,109 +542,18 @@ class Dps310
                              * ((int32_t)_c11 + _pressure * (int32_t)_c21));
     }
 
-
-    /**  Gets the most recent sensor event, Adafruit Unified Sensor format
-        \param  temp_event Pointer to an Adafruit Unified sensor_event_t object that
-                we'll fill in with temperature data
-        \param  pressure_event Pointer to an Adafruit Unified sensor_event_t object
-                that we'll fill in with pressure data
-        \returns True on successful read
+    /** Get last temperature reading
+        \return temp in degrees Centigrade
     */
-    bool getEvents(sensors_event_t *temp_event, sensors_event_t *pressure_event)
-    {
-        _read();
-
-        if(temp_event != NULL)
-        {
-            /* Clear the event */
-            memset(temp_event, 0, sizeof(sensors_event_t));
-            // fill in deets
-            temp_event->version     = 1;
-            temp_event->sensor_id   = _sensorID;
-            temp_event->type        = SENSOR_TYPE_AMBIENT_TEMPERATURE;
-            temp_event->timestamp   = millis();
-            temp_event->temperature = _temperature;
-        }
-
-        if(pressure_event != NULL)
-        {
-            memset(pressure_event, 0, sizeof(sensors_event_t));
-            pressure_event->version   = 1;
-            pressure_event->sensor_id = _sensorID;
-            pressure_event->type      = SENSOR_TYPE_PRESSURE;
-            pressure_event->timestamp = millis();
-            pressure_event->pressure  = _pressure / 100;
-        }
-
-        return true;
+    float GetTemperature(){
+        return _temperature;
     }
 
-    /**  Gets an Adafruit Unified Sensor object for the temp sensor component
-        \return Adafruit_Sensor pointer to temperature sensor
+    /** Get the last pressure reading
+        \return Pressure in hPa
     */
-    Adafruit_Sensor *getTemperatureSensor(void) { return temp_sensor; }
-
-    /**  Gets an Adafruit Unified Sensor object for the pressure sensor component
-        \return Adafruit_Sensor pointer to pressure sensor
-    */
-    Adafruit_Sensor *getPressureSensor(void) { return pressure_sensor; }
-
-
-    /**  Gets the sensor_t data for the DPS310's temperature sensor */
-    void getSensor(sensor_t *sensor)
-    {
-        /* Clear the sensor_t object */
-        memset(sensor, 0, sizeof(sensor_t));
-
-        /* Insert the sensor name in the fixed length char array */
-        strncpy(sensor->name, "DPS310", sizeof(sensor->name) - 1);
-        sensor->name[sizeof(sensor->name) - 1] = 0;
-        sensor->version                        = 1;
-        sensor->sensor_id                      = _sensorID;
-        sensor->type       = SENSOR_TYPE_AMBIENT_TEMPERATURE;
-        sensor->min_delay  = 0;
-        sensor->max_value  = -40.0; /* Temperature range -40 ~ +85 C  */
-        sensor->min_value  = +85.0;
-        sensor->resolution = 0.01; /*  0.01 C */
-    }
-
-
-    /**  Gets the temperature as a standard sensor event
-        \param  event Sensor event object that will be populated
-        \returns True
-    */
-    bool getEvent(sensors_event_t *event)
-    {
-        return _theDPS310->getEvents(event, NULL);
-    }
-
-
-    /**  Gets the sensor_t data for the DPS310's pressure sensor */
-    void getSensor(sensor_t *sensor)
-    {
-        /* Clear the sensor_t object */
-        memset(sensor, 0, sizeof(sensor_t));
-
-        /* Insert the sensor name in the fixed length char array */
-        strncpy(sensor->name, "DPS310", sizeof(sensor->name) - 1);
-        sensor->name[sizeof(sensor->name) - 1] = 0;
-        sensor->version                        = 1;
-        sensor->sensor_id                      = _sensorID;
-        sensor->type                           = SENSOR_TYPE_PRESSURE;
-        sensor->min_delay                      = 0;
-        sensor->max_value                      = 300.0; /* 300 ~ 1200 hPa  */
-        sensor->min_value                      = 1200.0;
-        sensor->resolution                     = 0.002; /* 0.002 hPa relative */
-    }
-
-
-    /**  Gets the pressure as a standard sensor event
-        \param  event Sensor event object that will be populated
-        \return True
-    */
-    bool getEvent(sensors_event_t *event)
-    {
-        return _theDPS310->getEvents(NULL, event);
+    float GetPressure(){
+        return _pressure / 100;
     }
 
     /**  Writes an 8 bit value
