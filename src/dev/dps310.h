@@ -284,7 +284,7 @@ class Dps310
     Dps310() {}
     ~Dps310() {}
 
-    int32_t oversample_scalefactor[]
+    int32_t oversample_scalefactor[8]
         = {524288, 1572864, 3670016, 7864320, 253952, 516096, 1040384, 2088960};
 
     /** The measurement rate ranges */
