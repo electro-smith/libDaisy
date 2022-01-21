@@ -2,6 +2,8 @@
 #ifndef DSY_TLV493D_H
 #define DSY_TLV493D_H
 
+#define TLV493D_DEFAULTMODE POWERDOWNMODE
+
 #define TLV493D_ADDRESS1 0x5E
 #define TLV493D_ADDRESS2 0x1F
 #define TLV493D_BUSIF_READSIZE 10
@@ -34,49 +36,72 @@ class Tlv493dI2CTransport
     {
         I2CHandle::Config::Peripheral periph;
         I2CHandle::Config::Speed      speed;
-        Pin                           scl;
-        Pin                           sda;
+        dsy_gpio_pin                  scl;
+        dsy_gpio_pin                  sda;
+
+        uint8_t address;
 
         Config()
         {
             periph = I2CHandle::Config::Peripheral::I2C_1;
             speed  = I2CHandle::Config::Speed::I2C_400KHZ;
 
-            scl = Pin(PORTB, 8);
-            sda = Pin(PORTB, 9);
+            scl = {DSY_GPIOB, 8};
+            sda = {DSY_GPIOB, 9};
+
+            address = TLV493D_ADDRESS1;
         }
     };
 
-    /** \return Did the transaction error? i.e. Return true if error, false if ok */
-    inline bool Init(Config config)
+    void Init(Config config)
     {
+        config_ = config;
+
         I2CHandle::Config i2c_config;
         i2c_config.mode   = I2CHandle::Config::Mode::I2C_MASTER;
-        i2c_config.periph = config.periph;
-        i2c_config.speed  = config.speed;
+        i2c_config.periph = config_.periph;
+        i2c_config.speed  = config_.speed;
 
-        i2c_config.pin_config.scl = config.scl;
-        i2c_config.pin_config.sda = config.sda;
+        i2c_config.pin_config.scl = config_.scl;
+        i2c_config.pin_config.sda = config_.sda;
 
-        return I2CHandle::Result::OK != i2c_.Init(i2c_config);
+        err_ = false;
+
+        err_ |= I2CHandle::Result::OK != i2c_.Init(i2c_config);
     }
 
-    /** \return Did the transaction error? i.e. Return true if error, false if ok */
-    bool Write(uint8_t *data, uint16_t size)
+    // used for the weird reset sequence. This ends in an error but that's OK
+    void WriteAddress(uint8_t add, uint8_t *data, uint16_t size)
     {
-        return I2CHandle::Result::OK
-               != i2c_.TransmitBlocking(TLV493D_ADDRESS1, data, size, 10);
+        i2c_.TransmitBlocking(add, data, size, 10);
     }
 
-    /** \return Did the transaction error? i.e. Return true if error, false if ok */
-    bool Read(uint8_t *data, uint16_t size)
+    void Write(uint8_t *data, uint16_t size)
     {
-        return I2CHandle::Result::OK
-               != i2c_.ReceiveBlocking(TLV493D_ADDRESS1, data, size, 10);
+        err_ |= I2CHandle::Result::OK
+                != i2c_.TransmitBlocking(config_.address, data, size, 10);
     }
+
+    void Read(uint8_t *data, uint16_t size)
+    {
+        err_ |= I2CHandle::Result::OK
+                != i2c_.ReceiveBlocking(config_.address, data, size, 10);
+    }
+
+    bool GetError()
+    {
+        bool tmp = err_;
+        err_     = false;
+
+        return tmp;
+    }
+
+    uint8_t GetAddress() { return config_.address; }
 
   private:
     I2CHandle i2c_;
+    Config    config_;
+    bool      err_;
 };
 
 
@@ -184,8 +209,7 @@ class Tlv493d
     struct Config
     {
         typename Transport::Config transport_config;
-        uint8_t                    address;
-        Config() { address = TLV493D_ADDRESS1; }
+        Config() {}
     };
 
     enum Result
@@ -200,12 +224,11 @@ class Tlv493d
     Result Init(Config config)
     {
         config_ = config;
-
-        SetTransportErr(transport_.Init(config_.transport_config));
-
         System::Delay(40); // 40ms startup delay
 
-        ResetSensor(config_.address);
+        transport_.Init(config_.transport_config);
+
+        ResetSensor();
 
         // get all register data from sensor
         ReadOut();
@@ -217,21 +240,16 @@ class Tlv493d
         SetRegBits(W_PARITY_EN, 1);
         // config sensor to lowpower mode
         // also contains parity calculation and writeout to sensor
-        SetAccessMode(TLV493D_DEFAULTMODE);
+        SetAccessMode(MASTERCONTROLLEDMODE);
+
+        prev_sample_period_ = System::GetNow();
 
         return GetTransportErr();
     }
 
-    void ReadOut()
-    {
-        SetTransportErr(transport_.Read(regReadData, TLV493D_BUSIF_READSIZE));
-    }
+    void ReadOut() { transport_.Read(regReadData, TLV493D_BUSIF_READSIZE); }
 
-    void WriteOut()
-    {
-        SetTransportErr(
-            transport_.Write(regWriteData, TLV493D_BUSIF_WRITESIZE));
-    }
+    void WriteOut() { transport_.Write(regWriteData, TLV493D_BUSIF_WRITESIZE); }
 
     void SetRegBits(uint8_t regMaskIndex, uint8_t data)
     {
@@ -261,22 +279,25 @@ class Tlv493d
 
     void UpdateData()
     {
-        SetAccessMode(MASTERCONTROLLEDMODE);
-        System::Delay(GetMeasurementDelay());
+        uint32_t now = System::GetNow();
+        if(now - prev_sample_period_ >= GetMeasurementDelay())
+        {
+            prev_sample_period_ = now;
 
-        ReadOut();
+            ReadOut();
 
-        // construct results from registers
-        mXdata = ConcatResults(GetRegBits(R_BX1), GetRegBits(R_BX2), true);
-        mYdata = ConcatResults(GetRegBits(R_BY1), GetRegBits(R_BY2), true);
-        mZdata = ConcatResults(GetRegBits(R_BZ1), GetRegBits(R_BZ2), true);
-        mTempdata
-            = ConcatResults(GetRegBits(R_TEMP1), GetRegBits(R_TEMP2), false);
+            // construct results from registers
+            mXdata = ConcatResults(GetRegBits(R_BX1), GetRegBits(R_BX2), true);
+            mYdata = ConcatResults(GetRegBits(R_BY1), GetRegBits(R_BY2), true);
+            mZdata = ConcatResults(GetRegBits(R_BZ1), GetRegBits(R_BZ2), true);
+            mTempdata = ConcatResults(
+                GetRegBits(R_TEMP1), GetRegBits(R_TEMP2), false);
 
-        SetAccessMode(POWERDOWNMODE);
-        GetRegBits(R_CHANNEL);
+            // SetAccessMode(POWERDOWNMODE);
+            GetRegBits(R_CHANNEL);
 
-        mExpectedFrameCount = GetRegBits(R_FRAMECOUNTER) + 1;
+            mExpectedFrameCount = GetRegBits(R_FRAMECOUNTER) + 1;
+        }
     }
 
     void SetInterrupt(bool enable)
@@ -392,36 +413,32 @@ class Tlv493d
     uint8_t   regReadData[TLV493D_BUSIF_READSIZE];
     uint8_t   regWriteData[TLV493D_BUSIF_WRITESIZE];
     int16_t   mXdata, mYdata, mZdata, mTempdata, mExpectedFrameCount, mMode;
-    bool      transport_error_;
-
-    /** Set the global transport_error_ bool */
-    void SetTransportErr(bool err) { transport_error_ |= err; }
+    uint32_t  prev_sample_period_;
 
     /** Get the global transport_error_ bool (as a Result), then reset it */
     Result GetTransportErr()
     {
-        Result ret       = transport_error_ ? ERR : OK;
-        transport_error_ = false;
+        Result ret = transport_.GetError() ? ERR : OK;
         return ret;
     }
 
     // internal function called by begin()
-    void ResetSensor(uint8_t adr)
+    void ResetSensor()
     {
-        uint8_t data[2];
-        data[0] = 0x00;
-        if(adr == TLV493D_ADDRESS1)
+        uint8_t data;
+        if(transport_.GetAddress() == TLV493D_ADDRESS1)
         {
             // if the sensor shall be initialized with i2c address 0x1F
-            data[1] = 0xFF;
+            data = 0xFF;
         }
         else
         {
             // if the sensor shall be initialized with address 0x5E
-            data[1] = 0x00;
+            data = 0x00;
         }
 
-        SetTransportErr(transport_.Write(data, 2));
+        // Write data to slave add 0x00
+        transport_.WriteAddress(0x00, &data, 1);
     }
 
     uint8_t GetFromRegs(const RegMask_t *mask, uint8_t *regData)
