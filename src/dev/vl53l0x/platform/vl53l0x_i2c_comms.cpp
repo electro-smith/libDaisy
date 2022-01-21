@@ -15,9 +15,16 @@ int VL53L0X_write_multi(uint8_t    deviceAddress,
                         uint32_t   count,
                         I2CHandle *i2c)
 {
-    I2CHandle::Result res = i2c->WriteDataAtAddress(
-        deviceAddress, index, 1, pdata, (uint16_t)count, 10);
+    // I2CHandle::Result res = i2c->WriteDataAtAddress(
+    //     deviceAddress, index, 1, pdata, (uint16_t)count, 10);
 
+    uint8_t data[512];
+    data [0] = index;
+    for(size_t i = 0; i < count; i++){
+        data[i + 1] = pdata[i];
+    }
+
+    I2CHandle::Result res = i2c->TransmitBlocking(deviceAddress, data, count + 1, 10);
     return res == I2CHandle::Result::OK ? 0 : 1;
 }
 
@@ -27,8 +34,14 @@ int VL53L0X_read_multi(uint8_t    deviceAddress,
                        uint32_t   count,
                        I2CHandle *i2c)
 {
-    I2CHandle::Result res = i2c->ReadDataAtAddress(
-        deviceAddress, index, 1, pdata, (uint16_t)count, 10);
+    I2CHandle::Result res = i2c->TransmitBlocking(deviceAddress, &index, 1, 10);
+    if(res != I2CHandle::Result::OK) { return 1; }
+
+    res = i2c->ReceiveBlocking(deviceAddress, pdata, (uint16_t)count, 10);
+
+    // I2CHandle::Result res = i2c->ReadDataAtAddress(
+    //     deviceAddress, index, 1, pdata, (uint16_t)count, 10);
+
     return res == I2CHandle::Result::OK ? 0 : 1;
 }
 

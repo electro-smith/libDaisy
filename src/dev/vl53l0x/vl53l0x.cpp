@@ -60,16 +60,6 @@ Adafruit_VL53L0X::Result Adafruit_VL53L0X::Init(Adafruit_VL53L0X::Config config)
     // Initialize Comms
     InitI2C();
 
-    // unclear if this is even needed:
-    if(VL53L0X_IMPLEMENTATION_VER_MAJOR != VERSION_REQUIRED_MAJOR
-       || VL53L0X_IMPLEMENTATION_VER_MINOR != VERSION_REQUIRED_MINOR
-       || VL53L0X_IMPLEMENTATION_VER_SUB != VERSION_REQUIRED_BUILD)
-    {
-        Status = VL53L0X_ERROR_NOT_SUPPORTED;
-
-        return ERR;
-    }
-
     Status = VL53L0X_DataInit(&MyDevice); // Data initialization
 
     if(!setAddress(config_.dev_addr))
@@ -92,6 +82,8 @@ Adafruit_VL53L0X::Result Adafruit_VL53L0X::Init(Adafruit_VL53L0X::Config config)
     {
         Status = VL53L0X_StaticInit(pMyDevice); // Device Initialization
     }
+
+    return Status == VL53L0X_ERROR_NONE ? OK : ERR;
 
     if(Status == VL53L0X_ERROR_NONE)
     {
@@ -479,6 +471,9 @@ FixPoint1616_t Adafruit_VL53L0X::getLimitCheckValue(uint16_t LimitCheckId)
 
 Adafruit_VL53L0X::Result Adafruit_VL53L0X::InitI2C()
 {
+    MyDevice.i2c = &i2c_;
+    MyDevice.I2cDevAddr = VL53L0X_I2C_ADDR; // always start with the default address
+
     I2CHandle::Config i2c_config;
     i2c_config.mode   = I2CHandle::Config::Mode::I2C_MASTER;
     i2c_config.periph = config_.periph;

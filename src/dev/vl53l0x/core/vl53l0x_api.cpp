@@ -473,7 +473,9 @@ VL53L0X_Error VL53L0X_DataInit(VL53L0X_DEV Dev)
     int                        i;
     uint8_t                    StopVariable;
 
-    LOG_FUNCTION_START("");
+    // LOG_FUNCTION_START("");
+
+    // return Status;
 
     /* by default the I2C is running at 1V8 if you want to change it you
    * need to include this define at compilation level. */
@@ -481,6 +483,8 @@ VL53L0X_Error VL53L0X_DataInit(VL53L0X_DEV Dev)
     Status = VL53L0X_UpdateByte(
         Dev, VL53L0X_REG_VHV_CONFIG_PAD_SCL_SDA__EXTSUP_HV, 0xFE, 0x01);
 #endif
+
+    return Status;
 
     /* Set I2C standard mode */
     if(Status == VL53L0X_ERROR_NONE)
@@ -616,7 +620,7 @@ VL53L0X_Error VL53L0X_DataInit(VL53L0X_DEV Dev)
     if(Status == VL53L0X_ERROR_NONE)
         VL53L0X_SETDEVICESPECIFICPARAMETER(Dev, RefSpadsInitialised, 0);
 
-    LOG_FUNCTION_END(Status);
+    // LOG_FUNCTION_END(Status);
     return Status;
 }
 
@@ -2753,7 +2757,7 @@ VL53L0X_Error VL53L0X_PerformSingleRangingMeasurement(
 {
     VL53L0X_Error Status = VL53L0X_ERROR_NONE;
 
-    LOG_FUNCTION_START("");
+    // LOG_FUNCTION_START("");
 
     /* This function will do a complete single ranging
    * Here we fix the mode! */
@@ -2769,7 +2773,7 @@ VL53L0X_Error VL53L0X_PerformSingleRangingMeasurement(
     if(Status == VL53L0X_ERROR_NONE)
         Status = VL53L0X_ClearInterruptMask(Dev, 0);
 
-    LOG_FUNCTION_END(Status);
+    // LOG_FUNCTION_END(Status);
     return Status;
 }
 
