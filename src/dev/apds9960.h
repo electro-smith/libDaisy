@@ -146,6 +146,10 @@ class Apds9960
         uint8_t  gestureGain; // (0,3) -> {1x, 2x, 4x, 8x}
         uint16_t gestureProximityThresh;
 
+        bool color_mode;
+        bool prox_mode;
+        bool gesture_mode;
+
         typename Transport::Config transport_config;
 
         Config()
@@ -156,7 +160,11 @@ class Apds9960
             gestureDimensions      = 0; // gesture all
             gestureFifoThresh      = 1; // interrupt w/ 2 datasets in fifo
             gestureGain            = 2; // 4x gesture gain
-            gestureProximityThresh = 50;
+            gestureProximityThresh = 40;
+
+            color_mode   = true;
+            prox_mode    = true;
+            gesture_mode = false;
         }
     };
 
@@ -207,6 +215,13 @@ class Apds9960
         gpulse_.GPLEN  = 0x03; // 32 us
         gpulse_.GPULSE = 9;    // 10 pulses
         Write8(APDS9960_GPULSE, gpulse_.get());
+
+        // prox / color mode by default
+        // only one gesture or prox can be used at a time
+        // in gesture mode you should have prox mode on also, the data will just not be useful
+        EnableGesture(config_.gesture_mode);
+        EnableProximity(config_.prox_mode);
+        EnableColor(config_.color_mode);
 
         return GetTransportErr();
     }
