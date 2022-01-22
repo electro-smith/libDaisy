@@ -15,7 +15,7 @@
 * spi: added `MultiSlaveSpiHandle` that allows to connect to multiple SPI slave devices on a shared bus
 * driver: MAX11300 now supports multiple chips on a shared bus
 * driver: MAX11300 now uses DMA to handle updates without blocking
-* driver: MAX11300 now has an auto-update mode where it continuously updates itself
+* driver: MAX11300 now updates the chips continuously until manually stopped
 * driver: MAX11300 can now call a user-provided callback after an update is complete
 
 ### Bug Fixes
@@ -75,22 +75,21 @@ max11300driver.ConfigurePinAsAnalogWrite(1, daisy::MAX11300Types::PIN_1, daisy::
 
 // Old: Update() synchronously updates the chip and blocks until the update is complete
 max11300driver.Update(); // blocks
-// New: - Update() works asynchronously in the background using DMA
-//      - Update() can retrigger itself automatically
+// New: - Start() works asynchronously in the background using DMA
+//      - Start() will retrigger updates itself automatically, until stopped by calling Stop()
 //      - A callback can be called after each update cycle that was completed successfully
 void MyUpdateCompleteCallback(void* context) {
     // The context is the pointer you passed when calling `.Update()`
     // This callback comes from an interrupt, keep is fast.
 }
-max11300driver.Update(
-    daisy::MAX11300Types::AutoUpdate::enabled, // default: disabled
+max11300driver.Start(
     &MyUpdateCompleteCallback, // or nullptr if you don't need a callback. default: nullptr
     &someThingThatYouWantToGetPassedToYourCallback // callback context, or nullptr if not needed
 );
 // you don't have to specify the arguments, then the defaults will be used
-max11300driver.Update();
+max11300driver.Start();
 // you can stop the auto update after you started it
-max11300driver.StopAutoUpdate();
+max11300driver.Stop();
 ```
 
 ## v4.0.0

@@ -620,9 +620,9 @@ class MAX11300TestFixture : public ::testing::Test
 
   protected:
     int update_complete_callback_count_ = 0;
-    int stop_auto_updates_after_        = -1;
+    int stop_auto_updates_after_        = 1;
     /** In a test, we can provide this callback function to the SUT when calling
-     * MAX11300Driver.Update(), and use `this`as the callback context.
+     * MAX11300Driver.Start(), and use `this` as the callback context.
      * It will use the callback_context as a pointer and increment the
      * update_complete_callback_count_ for later examination.
      */
@@ -635,7 +635,7 @@ class MAX11300TestFixture : public ::testing::Test
            && fixture.update_complete_callback_count_
                   >= fixture.stop_auto_updates_after_)
         {
-            fixture.max11300_.StopAutoUpdate();
+            fixture.max11300_.Stop();
         }
     }
 
@@ -861,7 +861,7 @@ TEST_F(MAX11300TestFixture, verifyGpoPinConfiguration)
 TEST_F(MAX11300TestFixture, verifyWriteAnalogPin)
 {
     // Configure a single DAC pin on the second chip.
-    // Set a DAC value, call Update() and expect the correct
+    // Set a DAC value, call Start() and expect the correct
     // byte patterns to be sent via the transport.
 
     MAX11300Types::Pin pin = MAX11300Types::PIN_3;
@@ -885,9 +885,7 @@ TEST_F(MAX11300TestFixture, verifyWriteAnalogPin)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update(MAX11300Types::AutoUpdate::disabled,
-                                 &update_complete_callback,
-                                 this)
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
                 == MAX11300Types::Result::OK);
     EXPECT_EQ(update_complete_callback_count_, 1);
     update_complete_callback_count_ = 0; // reset
@@ -907,9 +905,7 @@ TEST_F(MAX11300TestFixture, verifyWriteAnalogPin)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update(MAX11300Types::AutoUpdate::disabled,
-                                 &update_complete_callback,
-                                 this)
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
                 == MAX11300Types::Result::OK);
     EXPECT_EQ(update_complete_callback_count_, 1);
 }
@@ -917,7 +913,7 @@ TEST_F(MAX11300TestFixture, verifyWriteAnalogPin)
 TEST_F(MAX11300TestFixture, verifyWriteAnalogPinMultiple)
 {
     // Configure a two DAC pins on each chip.
-    // Set the DAC values, call Update() and expect the correct
+    // Set the DAC values, call Start() and expect the correct
     // byte patterns to be sent via the transport.
 
     // configure some pins on both chips
@@ -974,9 +970,7 @@ TEST_F(MAX11300TestFixture, verifyWriteAnalogPinMultiple)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update(MAX11300Types::AutoUpdate::disabled,
-                                 &update_complete_callback,
-                                 this)
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
                 == MAX11300Types::Result::OK);
     EXPECT_EQ(update_complete_callback_count_, 1);
 }
@@ -985,7 +979,7 @@ TEST_F(MAX11300TestFixture, verifyWriteAnalogPinMultiple)
 TEST_F(MAX11300TestFixture, verifyReadAnalogPin)
 {
     // Configure a single ADC pin on the first chip.
-    // Call Update() and expect the correct byte patterns
+    // Call Start() and expect the correct byte patterns
     // to be sent via the transport to request the ADC value.
     // Expect the results from those transactions to be evaluated
     // correctly.
@@ -1008,7 +1002,8 @@ TEST_F(MAX11300TestFixture, verifyReadAnalogPin)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update() == MAX11300Types::Result::OK);
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
+                == MAX11300Types::Result::OK);
 
     EXPECT_EQ(adc_val, max11300_.ReadAnalogPinRaw(0, pin));
 }
@@ -1016,7 +1011,7 @@ TEST_F(MAX11300TestFixture, verifyReadAnalogPin)
 TEST_F(MAX11300TestFixture, verifyReadAnalogPinMultiple)
 {
     // Configure two ADC pins on each chip.
-    // Call Update() and expect the correct byte patterns
+    // Call Start() and expect the correct byte patterns
     // to be sent via the transport to request the ADC values.
     // Expect the results from those transactions to be evaluated
     // correctly.
@@ -1082,9 +1077,7 @@ TEST_F(MAX11300TestFixture, verifyReadAnalogPinMultiple)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update(MAX11300Types::AutoUpdate::disabled,
-                                 &update_complete_callback,
-                                 this)
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
                 == MAX11300Types::Result::OK);
     EXPECT_EQ(update_complete_callback_count_, 1);
 
@@ -1097,7 +1090,7 @@ TEST_F(MAX11300TestFixture, verifyReadAnalogPinMultiple)
 TEST_F(MAX11300TestFixture, verifyWriteDigitalPin)
 {
     // Configure a single GPO pin on the second chip.
-    // Call Update() and expect the correct byte patterns
+    // Call Start() and expect the correct byte patterns
     // to be sent via the transport to update the pin
 
     MAX11300Types::Pin pin1 = MAX11300Types::PIN_16;
@@ -1115,9 +1108,7 @@ TEST_F(MAX11300TestFixture, verifyWriteDigitalPin)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update(MAX11300Types::AutoUpdate::disabled,
-                                 &update_complete_callback,
-                                 this)
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
                 == MAX11300Types::Result::OK);
     EXPECT_EQ(update_complete_callback_count_, 1);
 }
@@ -1126,7 +1117,7 @@ TEST_F(MAX11300TestFixture, verifyWriteDigitalPin)
 TEST_F(MAX11300TestFixture, verifyWriteDigitalPinMultiple)
 {
     // Configure two GPO pins on each chip.
-    // Call Update() and expect the correct byte patterns
+    // Call Start() and expect the correct byte patterns
     // to be sent via the transport to update the pins
 
     MAX11300Types::Pin pin0_0 = MAX11300Types::PIN_1;
@@ -1164,9 +1155,7 @@ TEST_F(MAX11300TestFixture, verifyWriteDigitalPinMultiple)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update(MAX11300Types::AutoUpdate::disabled,
-                                 &update_complete_callback,
-                                 this)
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
                 == MAX11300Types::Result::OK);
     EXPECT_EQ(update_complete_callback_count_, 1);
     update_complete_callback_count_ = 0; // reset
@@ -1194,9 +1183,7 @@ TEST_F(MAX11300TestFixture, verifyWriteDigitalPinMultiple)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update(MAX11300Types::AutoUpdate::disabled,
-                                 &update_complete_callback,
-                                 this)
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
                 == MAX11300Types::Result::OK);
     EXPECT_EQ(update_complete_callback_count_, 1);
 }
@@ -1204,7 +1191,7 @@ TEST_F(MAX11300TestFixture, verifyWriteDigitalPinMultiple)
 TEST_F(MAX11300TestFixture, verifyReadDigitalPin)
 {
     // Configure a single GPI pin on the first chip.
-    // Call Update() and expect the correct byte patterns
+    // Call Start() and expect the correct byte patterns
     // to be sent via the transport to read the pin.
     // Expect the results from those transactions to be evaluated
     // correctly.
@@ -1223,9 +1210,7 @@ TEST_F(MAX11300TestFixture, verifyReadDigitalPin)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update(MAX11300Types::AutoUpdate::disabled,
-                                 &update_complete_callback,
-                                 this)
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
                 == MAX11300Types::Result::OK);
     EXPECT_EQ(update_complete_callback_count_, 1);
 
@@ -1235,7 +1220,7 @@ TEST_F(MAX11300TestFixture, verifyReadDigitalPin)
 TEST_F(MAX11300TestFixture, verifyReadDigitalPinMultiple)
 {
     // Configure two GPI pins on each chip.
-    // Call Update() and expect the correct byte patterns
+    // Call Start() and expect the correct byte patterns
     // to be sent via the transport to update the pins.
     // Expect the results from those transactions to be evaluated
     // correctly.
@@ -1272,9 +1257,7 @@ TEST_F(MAX11300TestFixture, verifyReadDigitalPinMultiple)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update(MAX11300Types::AutoUpdate::disabled,
-                                 &update_complete_callback,
-                                 this)
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
                 == MAX11300Types::Result::OK);
     EXPECT_EQ(update_complete_callback_count_, 1);
 
@@ -1368,9 +1351,7 @@ TEST_F(MAX11300TestFixture, verifyHeterogeneousPinBehavior)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update(MAX11300Types::AutoUpdate::disabled,
-                                 &update_complete_callback,
-                                 this)
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
                 == MAX11300Types::Result::OK);
     EXPECT_EQ(update_complete_callback_count_, 1);
 
@@ -1383,7 +1364,7 @@ TEST_F(MAX11300TestFixture, verifyHeterogeneousPinBehavior)
 TEST_F(MAX11300TestFixture, verifyAutoUpdate)
 {
     // Configure a single GPI pin on the first chip.
-    // Call Update() and enable auto updating.
+    // Call Start() and enable auto updating.
     // Expect the correct number of updates and
     // update_complete callbacks
 
@@ -1409,9 +1390,7 @@ TEST_F(MAX11300TestFixture, verifyAutoUpdate)
 
     // this will call the mocked transport, verifying each transaction
     // against the expectation we set in the lines above
-    EXPECT_TRUE(max11300_.Update(MAX11300Types::AutoUpdate::enabled,
-                                 &update_complete_callback,
-                                 this)
+    EXPECT_TRUE(max11300_.Start(&update_complete_callback, this)
                 == MAX11300Types::Result::OK);
     // the correct number of callbacks was made
     EXPECT_EQ(update_complete_callback_count_, stop_auto_updates_after_);

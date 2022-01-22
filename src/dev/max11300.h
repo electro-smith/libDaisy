@@ -115,12 +115,6 @@ namespace MAX11300Types
     /** A function called when all MAX11300s have been updated */
     typedef void (*UpdateCompleteCallbackFunctionPtr)(void* context);
 
-    /** Controls if the driver should automatically update the MAX11300s chips */
-    enum class AutoUpdate
-    {
-        enabled,
-        disabled
-    };
 } // namespace MAX11300Types
 
 class MAX11300MultiSlaveSpiTransport
@@ -299,7 +293,7 @@ class MAX11300Driver
         dma_buffer_                       = dma_buffer;
         update_complete_callback_         = nullptr;
         update_complete_callback_context_ = nullptr;
-        auto_update_                      = MAX11300Types::AutoUpdate::disabled;
+        run_                              = false;
 
         if(transport_.Init(config.transport_config) != Transport::Result::OK)
             return MAX11300Types::Result::ERR;
@@ -446,7 +440,7 @@ class MAX11300Driver
     /**
      * Read the raw 12 bit (0-4095) value of a given ANALOG_IN (ADC) pin.
      * 
-     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the value
      * \return - The raw, 12 bit value of the given ANALOG_IN (ADC) pin.
@@ -465,7 +459,7 @@ class MAX11300Driver
     /**
      * Read the value of a given ADC pin in volts.
      * 
-     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the voltage
      * \return - The value of the given ANALOG_IN (ADC) pin in volts
@@ -482,7 +476,7 @@ class MAX11300Driver
     /**
      * Write a raw 12 bit (0-4095) value to a given ANALOG_OUT (DAC) pin
      * 
-     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the value
      * \param raw_value - the 12-bit code to write to the given Pin
@@ -504,7 +498,7 @@ class MAX11300Driver
      * Write a voltage value, within the bounds of the configured volatge range, 
      * to a given ANALOG_OUT (DAC) pin.
      * 
-     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the voltage
      * \param voltage - Target voltage
@@ -525,7 +519,7 @@ class MAX11300Driver
     /**
      * Read the state of a GPI pin
      * 
-     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the value
      * \return - The boolean state of the pin
@@ -551,7 +545,7 @@ class MAX11300Driver
     /**
      * Write a digital state to the given GPO pin
      * 
-     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the value
      * \param value - the boolean state to write
@@ -596,44 +590,37 @@ class MAX11300Driver
     }
 
     /**
-     * Update and synchronize the MAX11300 - This method does the following:
+     * Starts to update and synchronize the MAX11300 - This method does the following:
      * 
      * - Write all current ANALOG_OUT (DAC) values to all MAX11300s
      * - Read all current ANALOG_IN (ADC) values to memory
      * - Write all GPO states to all MAX11300s
      * - Read all GPI states to memory
      * - call the provided callback function when complete (from an interrupt)
-     * - automatically trigger the next update if auto_update == MAX11300Types::AutoUpdate::enabled
+     * - repeat
      * 
-     * \param  auto_update Controls if the driver should automatically trigger the next update after a
-     *                     successful update
-     * \param complete_callback A callback function that's called after each successful update
+     * The driver can be stopped by calling Stop().
+     * @see Stop()
+     * 
+     * \param complete_callback An optional callback function that's called after each successful update
      *                          Keep this callback function simple and fast, it's called from an interrupt.
-     * \param complete_callback_context A context pointer provided to the complete_callback
+     * \param complete_callback_context An optional context pointer provided to the complete_callback
      */
     MAX11300Types::Result
-    Update(MAX11300Types::AutoUpdate auto_update
-           = MAX11300Types::AutoUpdate::disabled,
-           MAX11300Types::UpdateCompleteCallbackFunctionPtr complete_callback
-           = nullptr,
-           void* complete_callback_context = nullptr)
+    Start(MAX11300Types::UpdateCompleteCallbackFunctionPtr complete_callback
+          = nullptr,
+          void* complete_callback_context = nullptr)
     {
-        if(sequencer_.IsBusy())
+        if(sequencer_.IsBusy() && run_)
         {
-            // When the sequencer is currently busy, we can just return right away.
-            // For the auto-update case, we update the callbacks and return true (it's still working, as requested).
-            // For the manual update mode, we return an error (current transaction is still running!)
-            if(auto_update_ == MAX11300Types::AutoUpdate::enabled)
-            {
-                update_complete_callback_         = complete_callback;
-                update_complete_callback_context_ = complete_callback_context;
-                return MAX11300Types::Result::OK;
-            }
-            else
-                return MAX11300Types::Result::ERR;
+            // When the sequencer is currently busy, we can just return right away, and only
+            // update the callbacks
+            update_complete_callback_         = complete_callback;
+            update_complete_callback_context_ = complete_callback_context;
+            return MAX11300Types::Result::OK;
         }
 
-        auto_update_                      = auto_update;
+        run_                              = true;
         update_complete_callback_         = complete_callback;
         update_complete_callback_context_ = complete_callback_context;
 
@@ -645,10 +632,7 @@ class MAX11300Driver
     }
 
     /** Call this to stop the auto updating, but complete the current update. */
-    void StopAutoUpdate()
-    {
-        auto_update_ = MAX11300Types::AutoUpdate::disabled;
-    }
+    void Stop() { run_ = false; }
 
     /**
      * A utility funtion for converting a voltage (float) value, bound to a given
@@ -1115,8 +1099,8 @@ class MAX11300Driver
                 if(update_complete_callback_)
                     update_complete_callback_(
                         update_complete_callback_context_);
-                // retrigger if requested
-                if(auto_update_ == MAX11300Types::AutoUpdate::enabled)
+                // retrigger if not stopped
+                if(run_)
                 {
                     sequencer_.current_device_ = 0;
                     sequencer_.current_step_ = UpdateSequencer::Step::updateDac;
@@ -1298,8 +1282,8 @@ class MAX11300Driver
     Transport transport_;
 
     MAX11300Types::UpdateCompleteCallbackFunctionPtr update_complete_callback_;
-    void*                     update_complete_callback_context_;
-    MAX11300Types::AutoUpdate auto_update_;
+    void* update_complete_callback_context_;
+    bool  run_;
 };
 template <size_t num_devices = 1>
 using MAX11300
