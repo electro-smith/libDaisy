@@ -17,6 +17,7 @@
 * driver: MAX11300 now uses DMA to handle updates without blocking
 * driver: MAX11300 now updates the chips continuously until manually stopped
 * driver: MAX11300 can now call a user-provided callback after an update is complete
+* debugging: added additional debugging aids to the HardFault handler
 
 ### Bug Fixes
 
