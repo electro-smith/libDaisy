@@ -78,7 +78,7 @@ Adafruit_VL53L0X::Result Adafruit_VL53L0X::Init(Adafruit_VL53L0X::Config config)
         }
     }
 
-    PALDevDataSet(pMyDevice, UseInternalTuningSettings, true); // DEBUG
+    PALDevDataSet(pMyDevice, UseInternalTuningSettings, true); // DEBUG!
 
     if(Status == VL53L0X_ERROR_NONE)
     {
@@ -474,7 +474,8 @@ FixPoint1616_t Adafruit_VL53L0X::getLimitCheckValue(uint16_t LimitCheckId)
 Adafruit_VL53L0X::Result Adafruit_VL53L0X::InitI2C()
 {
     MyDevice.i2c = &i2c_;
-    MyDevice.I2cDevAddr = VL53L0X_I2C_ADDR; // always start with the default address
+    MyDevice.I2cDevAddr
+        = VL53L0X_I2C_ADDR; // always start with the default address
 
     I2CHandle::Config i2c_config;
     i2c_config.mode   = I2CHandle::Config::Mode::I2C_MASTER;
