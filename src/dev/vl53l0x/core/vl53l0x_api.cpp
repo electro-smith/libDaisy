@@ -484,7 +484,7 @@ VL53L0X_Error VL53L0X_DataInit(VL53L0X_DEV Dev)
         Dev, VL53L0X_REG_VHV_CONFIG_PAD_SCL_SDA__EXTSUP_HV, 0xFE, 0x01);
 #endif
 
-    return Status;
+    // return Status;
 
     /* Set I2C standard mode */
     if(Status == VL53L0X_ERROR_NONE)

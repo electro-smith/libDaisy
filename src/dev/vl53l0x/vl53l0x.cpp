@@ -78,15 +78,12 @@ Adafruit_VL53L0X::Result Adafruit_VL53L0X::Init(Adafruit_VL53L0X::Config config)
         }
     }
 
-    PALDevDataSet(pMyDevice, UseInternalTuningSettings, true); // DEBUG!
-
     if(Status == VL53L0X_ERROR_NONE)
     {
         Status = VL53L0X_StaticInit(pMyDevice); // Device Initialization
     }
 
-    // DEBUG!
-    if(Status == VL53L0X_ERROR_NONE && false)
+    if(Status == VL53L0X_ERROR_NONE)
     {
         Status = VL53L0X_PerformRefSpadManagement(
             pMyDevice,
@@ -94,8 +91,7 @@ Adafruit_VL53L0X::Result Adafruit_VL53L0X::Init(Adafruit_VL53L0X::Config config)
             &isApertureSpads); // Device Initialization
     }
 
-    // DEBUG!
-    if(Status == VL53L0X_ERROR_NONE && false)
+    if(Status == VL53L0X_ERROR_NONE)
     {
         Status
             = VL53L0X_PerformRefCalibration(pMyDevice,
