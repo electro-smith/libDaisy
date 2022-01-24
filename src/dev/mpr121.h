@@ -24,8 +24,8 @@ class Mpr121I2CTransport
     {
         I2CHandle::Config::Peripheral periph;
         I2CHandle::Config::Speed      speed;
-        dsy_gpio_pin                  scl;
-        dsy_gpio_pin                  sda;
+        Pin                           scl;
+        Pin                           sda;
 
         I2CHandle::Config::Mode mode;
 
@@ -36,8 +36,8 @@ class Mpr121I2CTransport
             periph = I2CHandle::Config::Peripheral::I2C_1;
             speed  = I2CHandle::Config::Speed::I2C_400KHZ;
 
-            scl = {DSY_GPIOB, 8};
-            sda = {DSY_GPIOB, 9};
+            scl = Pin(PORTB, 8);
+            sda = Pin(PORTB, 9);
 
             dev_addr = MPR121_I2CADDR_DEFAULT;
         }
@@ -124,10 +124,11 @@ class Mpr121
 
         WriteRegister(MPR121_ECR, 0x0);
 
-        uint8_t c = ReadRegister8(MPR121_CONFIG2);
+        // this doesn't work for some reason...
+        // uint8_t c = ReadRegister8(MPR121_CONFIG2);
 
-        if(c != 0x24)
-            return ERR;
+        // if(c != 0x24)
+        //     return ERR;
 
         SetThresholds(config_.touch_threshold, config_.release_threshold);
         WriteRegister(MPR121_MHDR, 0x01);
@@ -148,12 +149,14 @@ class Mpr121
         WriteRegister(MPR121_CONFIG1, 0x10); // default, 16uA charge current
         WriteRegister(MPR121_CONFIG2, 0x20); // 0.5uS encoding, 1ms period
 
-        WriteRegister(MPR121_AUTOCONFIG0, 0x0B);
+        // autoconfig
+        // WriteRegister(MPR121_AUTOCONFIG0, 0x0B);
 
         // correct values for Vdd = 3.3V
-        WriteRegister(MPR121_UPLIMIT, 200);     // ((Vdd - 0.7)/Vdd) * 256
-        WriteRegister(MPR121_TARGETLIMIT, 180); // UPLIMIT * 0.9
-        WriteRegister(MPR121_LOWLIMIT, 130);    // UPLIMIT * 0.65
+        // WriteRegister(MPR121_UPLIMIT, 200);     // ((Vdd - 0.7)/Vdd) * 256
+        // WriteRegister(MPR121_TARGETLIMIT, 180); // UPLIMIT * 0.9
+        // WriteRegister(MPR121_LOWLIMIT, 130);    // UPLIMIT * 0.65
+        // autoconfig
 
         // enable X electrodes and start MPR121
         uint8_t ECR_SETTING
@@ -282,6 +285,7 @@ class Mpr121
         if(stop_required)
         {
             // write back the previous set ECR settings
+            buff[0] = ecr_reg;
             buff[1] = ecr_backup;
             SetTransportErr(transport_.Write(buff, 2));
         }
