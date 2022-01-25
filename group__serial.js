@@ -102,10 +102,12 @@ var group__serial =
         [ "pin_config", "structdaisy_1_1_spi_handle_1_1_config.html#a3670fbca71f9f481abfc24298db444c9", null ],
         [ "sclk", "structdaisy_1_1_spi_handle_1_1_config.html#a2f789b2a42c5a05c271b01e735aebcde", null ]
       ] ],
-      [ "CallbackFunctionPtr", "classdaisy_1_1_spi_handle.html#a8a393cb62a82b7f197a0464395e364e8", null ],
+      [ "EndCallbackFunctionPtr", "classdaisy_1_1_spi_handle.html#a239cd884e622201118be911ffd155570", null ],
+      [ "StartCallbackFunctionPtr", "classdaisy_1_1_spi_handle.html#ac2f47ed26b7630dd193c59204a72daa1", null ],
       [ "DmaDirection", "classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4da", [
         [ "RX", "classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daaf9c24782c24c237d16e79f18e2fa9046", null ],
-        [ "TX", "classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daa869036c9d97cf6593c6f1c2ccfd99a49", null ]
+        [ "TX", "classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daa869036c9d97cf6593c6f1c2ccfd99a49", null ],
+        [ "RX_TX", "classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daaa9f94fc2b5a22b1ebff62655559f82b2", null ]
       ] ],
       [ "Result", "classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7", [
         [ "OK", "classdaisy_1_1_spi_handle.html#acee8aad7e8008a2dbdfc8f260712bab7ae0aa021e21dddbd6d8cecec71e9cf564", null ],
@@ -117,11 +119,39 @@ var group__serial =
       [ "BlockingTransmit", "classdaisy_1_1_spi_handle.html#a89ccde60807d2681bc96425c0600c82d", null ],
       [ "BlockingTransmitAndReceive", "classdaisy_1_1_spi_handle.html#a106ff23028e560dad08ea62900e26229", null ],
       [ "CheckError", "classdaisy_1_1_spi_handle.html#a903118263e0604c4ba351c972d005386", null ],
-      [ "DmaReceive", "classdaisy_1_1_spi_handle.html#a4231ce536825d2e483fa82928e6f1e56", null ],
-      [ "DmaTransmit", "classdaisy_1_1_spi_handle.html#a918f794a67be56c96e3533bef3bafba5", null ],
+      [ "DmaReceive", "classdaisy_1_1_spi_handle.html#a31e8c1a9d346d0bed9de92cdeeaef792", null ],
+      [ "DmaTransmit", "classdaisy_1_1_spi_handle.html#a196ed2de11f4a57996e3be5f427d7a12", null ],
+      [ "DmaTransmitAndReceive", "classdaisy_1_1_spi_handle.html#a335f8b3b3535880dd1b31eb413ca76c2", null ],
       [ "GetConfig", "classdaisy_1_1_spi_handle.html#a58e083a015d563791848080c619186f4", null ],
       [ "Init", "classdaisy_1_1_spi_handle.html#a9bec410bfc0d743be479be9856560c71", null ],
       [ "operator=", "classdaisy_1_1_spi_handle.html#abc442f17110770768ea6e89b0747d20e", null ]
+    ] ],
+    [ "daisy::MultiSlaveSpiHandle", "classdaisy_1_1_multi_slave_spi_handle.html", [
+      [ "Config", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html", [
+        [ "baud_prescaler", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a8ccc9763b9159538697038c359f854b1", null ],
+        [ "clock_phase", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a05b61b4da91b34aff7944ccd4e587619", null ],
+        [ "clock_polarity", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a7ad5927e1840e5d75ddd203704056ea0", null ],
+        [ "datasize", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#af0d046026cab26489faeda2d49aaff16", null ],
+        [ "direction", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a0450bf0421f871419b530a641062a98c", null ],
+        [ "miso", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#ae5ab6c8fdd8a01bed98b1fb6e172da22", null ],
+        [ "mosi", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#abf916c22d230e1043b50b37ca236d55f", null ],
+        [ "nss", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a8002eed9d6318c93bb1a87de02e6d0dc", null ],
+        [ "num_devices", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a2400853acec103058b771d0287a0c79a", null ],
+        [ "periph", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a752107d691777891a4f97730f40f07b8", null ],
+        [ "pin_config", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a25425f5ea35d10c09bc9f8e090a3875c", null ],
+        [ "sclk", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a0490cabfbea30e846bf7ce04ca80dc8c", null ]
+      ] ],
+      [ "MultiSlaveSpiHandle", "classdaisy_1_1_multi_slave_spi_handle.html#a04c84637b158d7f362f88ecfcf1fbdb8", null ],
+      [ "MultiSlaveSpiHandle", "classdaisy_1_1_multi_slave_spi_handle.html#abb9ab2ccf9b7750d3346194e6e495c63", null ],
+      [ "BlockingReceive", "classdaisy_1_1_multi_slave_spi_handle.html#a0aa1732f5b06ce525610d0b2af1bed3c", null ],
+      [ "BlockingTransmit", "classdaisy_1_1_multi_slave_spi_handle.html#a61dec175de2c4d16c4952f51c30b9b68", null ],
+      [ "BlockingTransmitAndReceive", "classdaisy_1_1_multi_slave_spi_handle.html#ab2455acb7a9503d845df7ec55fff51bb", null ],
+      [ "CheckError", "classdaisy_1_1_multi_slave_spi_handle.html#a092ec4a9faa69c48a39acfa24d10e238", null ],
+      [ "DmaReceive", "classdaisy_1_1_multi_slave_spi_handle.html#acf833858186cd740fc66a2124a323999", null ],
+      [ "DmaTransmit", "classdaisy_1_1_multi_slave_spi_handle.html#af1cbbafeed04cf3683921eb34176603a", null ],
+      [ "DmaTransmitAndReceive", "classdaisy_1_1_multi_slave_spi_handle.html#af4a6d59338d72c69b9f65e79d3333b50", null ],
+      [ "GetConfig", "classdaisy_1_1_multi_slave_spi_handle.html#ab8cfe256f2220eaecddcf774dbffed79", null ],
+      [ "Init", "classdaisy_1_1_multi_slave_spi_handle.html#a0ddc3024b08b9a934dbb80b7594b4bc7", null ]
     ] ],
     [ "daisy::UartHandler", "classdaisy_1_1_uart_handler.html", [
       [ "Config", "structdaisy_1_1_uart_handler_1_1_config.html", [
@@ -161,7 +191,7 @@ var group__serial =
         [ "mode", "structdaisy_1_1_uart_handler_1_1_config.html#a3b30e6ff02efbb4829b888f7d93091ea", null ],
         [ "parity", "structdaisy_1_1_uart_handler_1_1_config.html#ac48641737eaf10a6d0c78172aff2762a", null ],
         [ "periph", "structdaisy_1_1_uart_handler_1_1_config.html#a610e071e45e1258b17896a05c4a23cf3", null ],
-        [ "pin_config", "structdaisy_1_1_uart_handler_1_1_config.html#ad2165832f623d8cd4654bf10f9713d0f", null ],
+        [ "pin_config", "structdaisy_1_1_uart_handler_1_1_config.html#a84abb54f847347736965f547eeb02be4", null ],
         [ "rx", "structdaisy_1_1_uart_handler_1_1_config.html#adb318e26f13636e1bee740fa47497392", null ],
         [ "stopbits", "structdaisy_1_1_uart_handler_1_1_config.html#a490845e58271053432b93ec8cc56798e", null ],
         [ "tx", "structdaisy_1_1_uart_handler_1_1_config.html#aede71d4e3449591e661b0decfeecd993", null ],

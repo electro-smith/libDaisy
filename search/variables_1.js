@@ -12,7 +12,7 @@ var searchData=
   ['b9_9',['B9',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#aef8c40ea3b08958ee6055a644b24694c',1,'daisy::patch_sm::DaisyPatchSM']]],
   ['b_5fdir_10',['b_dir',['../structdaisy_1_1_sai_handle_1_1_config.html#a39845c4ac5a8044cc2afeaa90d2b747a',1,'daisy::SaiHandle::Config']]],
   ['b_5fsync_11',['b_sync',['../structdaisy_1_1_sai_handle_1_1_config.html#ae94551a85d97c784e3849cc287b02603',1,'daisy::SaiHandle::Config']]],
-  ['baud_5fprescaler_12',['baud_prescaler',['../structdaisy_1_1_spi_handle_1_1_config.html#aafe290af675fa8107f3692353e2f60b1',1,'daisy::SpiHandle::Config']]],
+  ['baud_5fprescaler_12',['baud_prescaler',['../structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config.html#ac58a936f12dfdfb850d19b30a3d75e54',1,'daisy::MAX11300MultiSlaveSpiTransport::Config::baud_prescaler()'],['../structdaisy_1_1_spi_handle_1_1_config.html#aafe290af675fa8107f3692353e2f60b1',1,'daisy::SpiHandle::Config::baud_prescaler()'],['../structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a8ccc9763b9159538697038c359f854b1',1,'daisy::MultiSlaveSpiHandle::Config::baud_prescaler()']]],
   ['baudrate_13',['baudrate',['../structdaisy_1_1_uart_handler_1_1_config.html#aaa158f6471d11b79c9873215bac76df7',1,'daisy::UartHandler::Config']]],
   ['bit_5fdepth_14',['bit_depth',['../structdaisy_1_1_sai_handle_1_1_config.html#a1585662c8843c7a59e0de3366df039b8',1,'daisy::SaiHandle::Config']]],
   ['bitdepth_15',['bitdepth',['../structdaisy_1_1_dac_handle_1_1_config.html#a2b9d0b048259279df3d14fbaa8e89be5',1,'daisy::DacHandle::Config']]],

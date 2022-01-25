@@ -5,5 +5,5 @@ var searchData=
   ['value_2',['Value',['../classdaisy_1_1_analog_control.html#a099ff147f24ae2220921d22729a66020',1,'daisy::AnalogControl::Value()'],['../classdaisy_1_1_parameter.html#a0599bc2fa6dae903698de8ee499a0306',1,'daisy::Parameter::Value()']]],
   ['vegasmode_3',['VegasMode',['../classdaisy_1_1_daisy_field.html#a41545d0550827c3d751676dc37d67253',1,'daisy::DaisyField']]],
   ['voctcalibration_4',['VoctCalibration',['../classdaisy_1_1_voct_calibration.html#a9cc66906bc44a5a636634d1bb95c413d',1,'daisy::VoctCalibration']]],
-  ['voltsto12bituint_5',['VoltsTo12BitUint',['../classdaisy_1_1_m_a_x11300_driver.html#a5795e9c45dfffa692e052559b07a3e66',1,'daisy::MAX11300Driver']]]
+  ['voltsto12bituint_5',['VoltsTo12BitUint',['../classdaisy_1_1_m_a_x11300_driver.html#a44263deb8122e356fdf89a35f1787859',1,'daisy::MAX11300Driver']]]
 ];

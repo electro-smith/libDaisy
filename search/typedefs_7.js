@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['receivecallback_0',['ReceiveCallback',['../class_usb_handle.html#a33ca9123252e485a3d2045590e5e6217',1,'UsbHandle::ReceiveCallback()'],['../class_usb_handle.html#a33ca9123252e485a3d2045590e5e6217',1,'UsbHandle::ReceiveCallback()']]]
+  ['outputbuffer_0',['OutputBuffer',['../classdaisy_1_1_audio_handle.html#aa0728b1916a1a1c569e601f27224a3a1',1,'daisy::AudioHandle']]]
 ];

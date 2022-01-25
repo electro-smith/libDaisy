@@ -1,13 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"classdaisy_1_1_dac_handle.html":[4,0,2,1,2],
-"classdaisy_1_1_dac_handle.html#a0c969b1aa7f8549756e6309b3922e902":[4,0,2,1,2,2],
-"classdaisy_1_1_dac_handle.html#a0c969b1aa7f8549756e6309b3922e902a506328a07de044eef05ac29ed6b48a7e":[4,0,2,1,2,2,0],
-"classdaisy_1_1_dac_handle.html#a0c969b1aa7f8549756e6309b3922e902a5cdb4593c18074255e55c311cd64bd83":[4,0,2,1,2,2,1],
-"classdaisy_1_1_dac_handle.html#a11c804998db9c5c40bc46bacd8040358":[4,0,2,1,2,13],
-"classdaisy_1_1_dac_handle.html#a289e67cd433da73e2508a5395edf1d44":[4,0,2,1,2,7],
-"classdaisy_1_1_dac_handle.html#a30248a4615012854c7271b510ba7803c":[4,0,2,1,2,3],
-"classdaisy_1_1_dac_handle.html#a30248a4615012854c7271b510ba7803ca055c1a591abb0e8cd86dc969727bcc0b":[4,0,2,1,2,3,1],
 "classdaisy_1_1_dac_handle.html#a30248a4615012854c7271b510ba7803cac8cf6eea8f096ed51160b484d97c5bbd":[4,0,2,1,2,3,0],
 "classdaisy_1_1_dac_handle.html#a43de298bdbb02c15b2a35948a15c7125":[4,0,2,1,2,4],
 "classdaisy_1_1_dac_handle.html#a43de298bdbb02c15b2a35948a15c7125a0f82d86afa0f5dc965c5c15aca58dcfb":[4,0,2,1,2,4,1],
@@ -249,5 +241,13 @@ var NAVTREEINDEX1 =
 "classdaisy_1_1_daisy_versio.html":[4,0,0,6],
 "classdaisy_1_1_daisy_versio.html#a04fcf008e5f506d818a0f52dc9a63c52":[4,0,0,6,28],
 "classdaisy_1_1_daisy_versio.html#a1e35b58309ebae48f069b30e9c5e0117":[4,0,0,6,5],
-"classdaisy_1_1_daisy_versio.html#a1ebe1bea805a13bcc366de005c14a27c":[4,0,0,6,18]
+"classdaisy_1_1_daisy_versio.html#a1ebe1bea805a13bcc366de005c14a27c":[4,0,0,6,18],
+"classdaisy_1_1_daisy_versio.html#a2c1972b50f762a75aec4bcc5baa99bb7":[4,0,0,6,24],
+"classdaisy_1_1_daisy_versio.html#a2e0fb36f0915cb10ed1e04af68b99b7c":[4,0,0,6,19],
+"classdaisy_1_1_daisy_versio.html#a2f9891f4d072f8492c1feb794880c4ed":[4,0,0,6,23],
+"classdaisy_1_1_daisy_versio.html#a33ff3c1fc69dfc391cdf202ee2f332cb":[4,0,0,6,22],
+"classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428c":[4,0,0,6,1],
+"classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428ca2eefb496ce87e54eecdd0fb4043fc2ae":[4,0,0,6,1,4],
+"classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428ca376f4e958942a471d88cdca0274a9dc9":[4,0,0,6,1,0],
+"classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428ca735d6168ab54f269d457928fbd349b1a":[4,0,0,6,1,3]
 };

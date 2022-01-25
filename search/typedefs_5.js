@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['max11300_0',['MAX11300',['../group___m_a_x11300.html#ga780eec9c7c383eae7d8c39b5a9b5ba66',1,'daisy']]],
-  ['mcp23017_1',['Mcp23017',['../namespacedaisy.html#a3f595bc253392d5e44b18fd5426577ad',1,'daisy']]],
-  ['midiuarthandler_2',['MidiUartHandler',['../group__midi.html#gaaa674dd8cc356904785b384ed493b201',1,'daisy']]],
-  ['midiusbhandler_3',['MidiUsbHandler',['../group__midi.html#gaae7397a71c41654e7d4236b47185ced1',1,'daisy']]]
+  ['inputbuffer_0',['InputBuffer',['../classdaisy_1_1_audio_handle.html#ac7317ab5e51e18172be03af8bfb194f6',1,'daisy::AudioHandle']]],
+  ['interleavingaudiocallback_1',['InterleavingAudioCallback',['../classdaisy_1_1_audio_handle.html#a125528dd20d6657e53ab78341cbdbb91',1,'daisy::AudioHandle']]],
+  ['interleavinginputbuffer_2',['InterleavingInputBuffer',['../classdaisy_1_1_audio_handle.html#a4e0f74f2093de2f0762d51ca915af01d',1,'daisy::AudioHandle']]],
+  ['interleavingoutputbuffer_3',['InterleavingOutputBuffer',['../classdaisy_1_1_audio_handle.html#a2d737450dbb443fc13f12134a46b43e4',1,'daisy::AudioHandle']]]
 ];

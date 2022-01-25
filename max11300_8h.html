@@ -96,12 +96,13 @@ $(document).ready(function(){initNavTree('max11300_8h.html',''); initResizable()
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle"><div class="title">max11300.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="daisy__core_8h_source.html">daisy_core.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="spi_8h_source.html">per/spi.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="spi_multislave_8h_source.html">per/spiMultislave.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="system_8h_source.html">sys/system.h</a>&quot;</code><br />
 <code>#include &lt;cstring&gt;</code><br />
 </div>
@@ -109,21 +110,26 @@ $(document).ready(function(){initNavTree('max11300_8h.html',''); initResizable()
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_blocking_spi_transport.html">daisy::BlockingSpiTransport</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocking SPI Transport for the MAX11300.  <a href="classdaisy_1_1_blocking_spi_transport.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html">daisy::MAX11300Types::DmaBuffer</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_blocking_spi_transport_1_1_config.html">daisy::BlockingSpiTransport::Config</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_m_a_x11300_multi_slave_spi_transport.html">daisy::MAX11300MultiSlaveSpiTransport</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_m_a_x11300_driver.html">daisy::MAX11300Driver&lt; Transport &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config.html">daisy::MAX11300MultiSlaveSpiTransport::Config&lt; numDevices &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html">daisy::MAX11300MultiSlaveSpiTransport::Config&lt; numDevices &gt;::PinConfig</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_m_a_x11300_driver.html">daisy::MAX11300Driver&lt; Transport, num_devices &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Driver for the MAX11300 20 port ADC/DAC/GPIO device.  <a href="classdaisy_1_1_m_a_x11300_driver.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_m_a_x11300_driver_1_1_config.html">daisy::MAX11300Driver&lt; Transport &gt;::Config</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_m_a_x11300_driver_1_1_config.html">daisy::MAX11300Driver&lt; Transport, num_devices &gt;::Config</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacedaisy"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html">daisy</a></td></tr>
 <tr class="memdesc:namespacedaisy"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware defines and helpers for daisy field platform. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacedaisy_1_1_m_a_x11300_types"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html">daisy::MAX11300Types</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
@@ -144,11 +150,64 @@ Macros</h2></td></tr>
 <tr class="separator:ga09c6d94e2956da4fc2d4261063daa9c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaadeeb834eecd8208400f74f078358a41"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_a_x11300.html#gaadeeb834eecd8208400f74f078358a41">MAX11300_DACDAT_BASE</a>&#160;&#160;&#160;0x60</td></tr>
 <tr class="separator:gaadeeb834eecd8208400f74f078358a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab694c2cc9dcdfb40c14b6e838476cdea"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_a_x11300.html#gab694c2cc9dcdfb40c14b6e838476cdea">MAX11300_TRANSPORT_BUFFER_LENGTH</a>&#160;&#160;&#160;41</td></tr>
+<tr class="separator:gab694c2cc9dcdfb40c14b6e838476cdea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga780eec9c7c383eae7d8c39b5a9b5ba66"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___m_a_x11300.html#ga780eec9c7c383eae7d8c39b5a9b5ba66">daisy::MAX11300</a> = <a class="el" href="classdaisy_1_1_m_a_x11300_driver.html">daisy::MAX11300Driver</a>&lt; BlockingSpiTransport &gt;</td></tr>
-<tr class="separator:ga780eec9c7c383eae7d8c39b5a9b5ba66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fe4bebd1da4375dd9957bd27db76c93"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#a4fe4bebd1da4375dd9957bd27db76c93">daisy::MAX11300Types::TransportCallbackFunctionPtr</a>) (void *context, SpiHandle::Result result)</td></tr>
+<tr class="separator:a4fe4bebd1da4375dd9957bd27db76c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af15978664d74d499cff347ecef851392"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#af15978664d74d499cff347ecef851392">daisy::MAX11300Types::UpdateCompleteCallbackFunctionPtr</a>) (void *context)</td></tr>
+<tr class="separator:af15978664d74d499cff347ecef851392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab0d61b51c537d727e16e6d61a114a91a"><td class="memTemplParams" colspan="2">template&lt;size_t num_devices = 1&gt; </td></tr>
+<tr class="memitem:gab0d61b51c537d727e16e6d61a114a91a"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group___m_a_x11300.html#gab0d61b51c537d727e16e6d61a114a91a">daisy::MAX11300</a> = <a class="el" href="classdaisy_1_1_m_a_x11300_driver.html">daisy::MAX11300Driver</a>&lt; MAX11300MultiSlaveSpiTransport, num_devices &gt;</td></tr>
+<tr class="separator:gab0d61b51c537d727e16e6d61a114a91a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:aa5a2b717c98a118def838b1d7515daff"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daff">daisy::MAX11300Types::Pin</a> { <br />
+&#160;&#160;<a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa3db3652189a41bc712e5a1ad74d296c6">daisy::MAX11300Types::PIN_0</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa22acd8d218609187597cdfffb2630f4f">daisy::MAX11300Types::PIN_1</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa33e6042829fa4bd47105f78fb8480727">daisy::MAX11300Types::PIN_2</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa724ed3270313e4b42c29df48f7ecdd79">daisy::MAX11300Types::PIN_3</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffaea5a5d872b34f664c45ce1f11ddce8c1">daisy::MAX11300Types::PIN_4</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa4242c6c18e81d45bd8a82ee6a72b4cd6">daisy::MAX11300Types::PIN_5</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa561dfa2ad78f68aa9a599c96219a2dcc">daisy::MAX11300Types::PIN_6</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa2b1f9e8577ab3b69cb0f16e40bc1f3dd">daisy::MAX11300Types::PIN_7</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa21f6213bf11fb62369cce6de63264e0c">daisy::MAX11300Types::PIN_8</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffaaac19a1147b2db7c6ee538aed9c4c6b1">daisy::MAX11300Types::PIN_9</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffadad5ed90826998446148a6ff24833ed1">daisy::MAX11300Types::PIN_10</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffacd639d8fd3ad6efe770eabff7f14bc84">daisy::MAX11300Types::PIN_11</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa67c66259fa0ad285bbe2b36e68b02b26">daisy::MAX11300Types::PIN_12</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa40be8bbbd3405ccfe268c143a86f989b">daisy::MAX11300Types::PIN_13</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffab92c26279f257364abef1356ee62766d">daisy::MAX11300Types::PIN_14</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa7e3ac2c57c783e793f3ed6e82ace85e5">daisy::MAX11300Types::PIN_15</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffadfad642c747e747bc0826282867255fc">daisy::MAX11300Types::PIN_16</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffac093878fbe2e3d87f7e536028ee285f8">daisy::MAX11300Types::PIN_17</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa433fb143a773dc7f630b1bae63178461">daisy::MAX11300Types::PIN_18</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa1d0351a8ff35d39d61a48cd1a61635bd">daisy::MAX11300Types::PIN_19</a>
+<br />
+ }</td></tr>
+<tr class="separator:aa5a2b717c98a118def838b1d7515daff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2604bd1a07178f2a22f9edf829f4c47"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa2604bd1a07178f2a22f9edf829f4c47">daisy::MAX11300Types::AdcVoltageRange</a> { <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa2604bd1a07178f2a22f9edf829f4c47a5c8b5748dc40c6fd5064af585f5d3224">daisy::MAX11300Types::ZERO_TO_10</a> = 0x0100
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa2604bd1a07178f2a22f9edf829f4c47a1ffc50c90d3e458e9a641840eec1c541">daisy::MAX11300Types::NEGATIVE_5_TO_5</a> = 0x0200
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa2604bd1a07178f2a22f9edf829f4c47a59136a8606208d070ab08a0639032f72">daisy::MAX11300Types::NEGATIVE_10_TO_0</a> = 0x0300
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#aa2604bd1a07178f2a22f9edf829f4c47aa4db7ece02d17dd62ee8459f8c07b04b">daisy::MAX11300Types::ZERO_TO_2P5</a> = 0x0400
+ }</td></tr>
+<tr class="separator:aa2604bd1a07178f2a22f9edf829f4c47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c0fb886b30c1bd5c1d0ec66b3bd4fe3"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#a2c0fb886b30c1bd5c1d0ec66b3bd4fe3">daisy::MAX11300Types::DacVoltageRange</a> { <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#a2c0fb886b30c1bd5c1d0ec66b3bd4fe3a5c8b5748dc40c6fd5064af585f5d3224">daisy::MAX11300Types::ZERO_TO_10</a> = 0x0100
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#a2c0fb886b30c1bd5c1d0ec66b3bd4fe3a1ffc50c90d3e458e9a641840eec1c541">daisy::MAX11300Types::NEGATIVE_5_TO_5</a> = 0x0200
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#a2c0fb886b30c1bd5c1d0ec66b3bd4fe3a59136a8606208d070ab08a0639032f72">daisy::MAX11300Types::NEGATIVE_10_TO_0</a> = 0x0300
+ }</td></tr>
+<tr class="separator:a2c0fb886b30c1bd5c1d0ec66b3bd4fe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24cefdb4cc0f16357cc883d597243a81"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#a24cefdb4cc0f16357cc883d597243a81">daisy::MAX11300Types::Result</a> { <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#a24cefdb4cc0f16357cc883d597243a81ae0aa021e21dddbd6d8cecec71e9cf564">daisy::MAX11300Types::OK</a>
+, <a class="el" href="namespacedaisy_1_1_m_a_x11300_types.html#a24cefdb4cc0f16357cc883d597243a81acd22bad976363fdd1bfbf6759fede482">daisy::MAX11300Types::ERR</a>
+ }</td></tr>
+<tr class="separator:a24cefdb4cc0f16357cc883d597243a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="ab9dfd45f397163e28f9d664a18940756" name="ab9dfd45f397163e28f9d664a18940756"></a>

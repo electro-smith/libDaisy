@@ -152,7 +152,8 @@ GPIO Input</h1>
 <h1><a class="anchor" id="autotoc_md4"></a>
 Breaking Down the Init function</h1>
 <p >Let's look at that GPIO init function in a bit more detail, shall we? First, we'll breakdown the full Initialization definition:</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> Init(Pin p, Mode m=Mode::INPUT, Pull pu=Pull::NOPULL, Speed sp=Speed::LOW);</div>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> Init(<a class="code hl_enumeration" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daff">Pin</a> p, Mode m=Mode::INPUT, Pull pu=Pull::NOPULL, Speed sp=Speed::LOW);</div>
+<div class="ttc" id="anamespacedaisy_1_1_m_a_x11300_types_html_aa5a2b717c98a118def838b1d7515daff"><div class="ttname"><a href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daff">daisy::MAX11300Types::Pin</a></div><div class="ttdeci">Pin</div><div class="ttdef"><b>Definition:</b> max11300.h:37</div></div>
 </div><!-- fragment --><p >The first thing you may be wondering, if you're not used to C++ is the <code>::</code> characters all over the place. These are used for the configuration settings so that the compiler will only allow you to use the correct inputs instead of being able to pass the wrong thing to the input, or even just mis-order the arguments, and end up scratching your head for hours wondering what's not working.</p>
 <p >These <code>::</code> are also used for namespaces, which we handle in the above example with the <code>using namespace</code> lines. Without that we'd have to use <code><a class="el" href="classdaisy_1_1_g_p_i_o.html" title="General Purpose I/O control.">daisy::GPIO</a></code> instead of <code>GPIO</code>, <code><a class="el" href="namespacedaisy_1_1seed.html#a1796c1ab85923482d0278dc7e25cfbf7">daisy::seed::D0</a></code> instead of <code>D0</code>, etc.</p>
 <h2><a class="anchor" id="autotoc_md5"></a>

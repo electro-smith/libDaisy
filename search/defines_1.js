@@ -41,11 +41,12 @@ var searchData=
   ['dsy_5fsdmmc_5fh_38',['DSY_SDMMC_H',['../sdmmc_8h.html#a3cc3409b86d5c9046cce9bf27d88bcc3',1,'sdmmc.h']]],
   ['dsy_5fseed_5fh_39',['DSY_SEED_H',['../daisy__seed_8h.html#aa67c132c8b8f311867d70b4343aadba6',1,'daisy_seed.h']]],
   ['dsy_5fspi_5fh_40',['DSY_SPI_H',['../spi_8h.html#afb09f1033e41308643e77a556c6f593c',1,'spi.h']]],
-  ['dsy_5fswitch_5fh_41',['DSY_SWITCH_H',['../switch_8h.html#af3c6f18531c9746e156c796b6d7da082',1,'switch.h']]],
-  ['dsy_5ftim_5fh_42',['DSY_TIM_H',['../tim_8h.html#a092becb63941b910af5079ed3275eb11',1,'tim.h']]],
-  ['dsy_5fuart_5fh_43',['DSY_UART_H',['../uart_8h.html#ae95c00416c4aaa293e062b8aaed79909',1,'uart.h']]],
-  ['dsy_5futil_5funique_5fid_5fh_44',['DSY_UTIL_UNIQUE_ID_H',['../unique__id_8h.html#a2140d8723a0ad66047c1b04bb4319b0b',1,'unique_id.h']]],
-  ['dsy_5fversion_5fh_45',['DSY_VERSION_H',['../version_8h.html#a9234b53a2198452930f6bd1cc113c49e',1,'version.h']]],
-  ['dsy_5fwav_5fformat_5fh_46',['DSY_WAV_FORMAT_H',['../wav__format_8h.html#ab9fb82face7890d0821ddc69926311ea',1,'wav_format.h']]],
-  ['dsy_5fwavplayer_5fh_47',['DSY_WAVPLAYER_H',['../wavplayer_8h.html#ad384c43689d53e261578fa4dcb9dd00a',1,'wavplayer.h']]]
+  ['dsy_5fspi_5fmultislave_5fh_41',['DSY_SPI_MULTISLAVE_H',['../spi_multislave_8h.html#a5ba744eaa49250dad9ceded21604855f',1,'spiMultislave.h']]],
+  ['dsy_5fswitch_5fh_42',['DSY_SWITCH_H',['../switch_8h.html#af3c6f18531c9746e156c796b6d7da082',1,'switch.h']]],
+  ['dsy_5ftim_5fh_43',['DSY_TIM_H',['../tim_8h.html#a092becb63941b910af5079ed3275eb11',1,'tim.h']]],
+  ['dsy_5fuart_5fh_44',['DSY_UART_H',['../uart_8h.html#ae95c00416c4aaa293e062b8aaed79909',1,'uart.h']]],
+  ['dsy_5futil_5funique_5fid_5fh_45',['DSY_UTIL_UNIQUE_ID_H',['../unique__id_8h.html#a2140d8723a0ad66047c1b04bb4319b0b',1,'unique_id.h']]],
+  ['dsy_5fversion_5fh_46',['DSY_VERSION_H',['../version_8h.html#a9234b53a2198452930f6bd1cc113c49e',1,'version.h']]],
+  ['dsy_5fwav_5fformat_5fh_47',['DSY_WAV_FORMAT_H',['../wav__format_8h.html#ab9fb82face7890d0821ddc69926311ea',1,'wav_format.h']]],
+  ['dsy_5fwavplayer_5fh_48',['DSY_WAVPLAYER_H',['../wavplayer_8h.html#ad384c43689d53e261578fa4dcb9dd00a',1,'wavplayer.h']]]
 ];

@@ -23,7 +23,7 @@ var searchData=
   ['_7emappedintvalue_20',['~MappedIntValue',['../classdaisy_1_1_mapped_int_value.html#a511cb7cffb45ea88659d6d3069311a92',1,'daisy::MappedIntValue']]],
   ['_7emappedstringlistvalue_21',['~MappedStringListValue',['../classdaisy_1_1_mapped_string_list_value.html#aa7abdcf18e743439299238ee7a179528',1,'daisy::MappedStringListValue']]],
   ['_7emappedvalue_22',['~MappedValue',['../classdaisy_1_1_mapped_value.html#adef06a6f880bab0ed50b29029c3bc1f8',1,'daisy::MappedValue']]],
-  ['_7emax11300driver_23',['~MAX11300Driver',['../classdaisy_1_1_m_a_x11300_driver.html#ac7a1165dc4ca62bf1d89c033a661101e',1,'daisy::MAX11300Driver']]],
+  ['_7emax11300driver_23',['~MAX11300Driver',['../classdaisy_1_1_m_a_x11300_driver.html#ad96dbcf4028a2aed29de10bf117a7d06',1,'daisy::MAX11300Driver']]],
   ['_7emidihandler_24',['~MidiHandler',['../classdaisy_1_1_midi_handler.html#afd52da947947fdce95e725209aae5831',1,'daisy::MidiHandler']]],
   ['_7emidiuarttransport_25',['~MidiUartTransport',['../classdaisy_1_1_midi_uart_transport.html#a4934d3331c639115b6bd64ceffa5a888',1,'daisy::MidiUartTransport']]],
   ['_7emidiusbtransport_26',['~MidiUsbTransport',['../classdaisy_1_1_midi_usb_transport.html#a6feaa01b40329b31042c2d681bd31956',1,'daisy::MidiUsbTransport']]],

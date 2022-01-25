@@ -8,7 +8,8 @@ var searchData=
   ['daisypod_5',['DaisyPod',['../classdaisy_1_1_daisy_pod.html',1,'daisy']]],
   ['daisyseed_6',['DaisySeed',['../classdaisy_1_1_daisy_seed.html',1,'daisy']]],
   ['daisyversio_7',['DaisyVersio',['../classdaisy_1_1_daisy_versio.html',1,'daisy']]],
-  ['dsy_5fgpio_8',['dsy_gpio',['../structdsy__gpio.html',1,'']]],
-  ['dsy_5fgpio_5fpin_9',['dsy_gpio_pin',['../structdsy__gpio__pin.html',1,'']]],
-  ['dsy_5fsd_5fcardinfotypedef_10',['DSY_SD_CardInfoTypeDef',['../struct_d_s_y___s_d___card_info_type_def.html',1,'']]]
+  ['dmabuffer_8',['DmaBuffer',['../structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html',1,'daisy::MAX11300Types']]],
+  ['dsy_5fgpio_9',['dsy_gpio',['../structdsy__gpio.html',1,'']]],
+  ['dsy_5fgpio_5fpin_10',['dsy_gpio_pin',['../structdsy__gpio__pin.html',1,'']]],
+  ['dsy_5fsd_5fcardinfotypedef_11',['DSY_SD_CardInfoTypeDef',['../struct_d_s_y___s_d___card_info_type_def.html',1,'']]]
 ];

@@ -1,6 +1,9 @@
 var annotated_dup =
 [
     [ "daisy", "namespacedaisy.html", [
+      [ "MAX11300Types", "namespacedaisy_1_1_m_a_x11300_types.html", [
+        [ "DmaBuffer", "structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html", "structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer" ]
+      ] ],
       [ "patch_sm", "namespacedaisy_1_1patch__sm.html", [
         [ "DaisyPatchSM", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m" ]
       ] ],
@@ -12,7 +15,6 @@ var annotated_dup =
       [ "AllSoundOffEvent", "structdaisy_1_1_all_sound_off_event.html", "structdaisy_1_1_all_sound_off_event" ],
       [ "AnalogControl", "classdaisy_1_1_analog_control.html", "classdaisy_1_1_analog_control" ],
       [ "AudioHandle", "classdaisy_1_1_audio_handle.html", "classdaisy_1_1_audio_handle" ],
-      [ "BlockingSpiTransport", "classdaisy_1_1_blocking_spi_transport.html", "classdaisy_1_1_blocking_spi_transport" ],
       [ "ButtonMonitor", "classdaisy_1_1_button_monitor.html", "classdaisy_1_1_button_monitor" ],
       [ "ChannelPressureEvent", "structdaisy_1_1_channel_pressure_event.html", "structdaisy_1_1_channel_pressure_event" ],
       [ "Color", "classdaisy_1_1_color.html", "classdaisy_1_1_color" ],
@@ -50,6 +52,7 @@ var annotated_dup =
       [ "MappedStringListValue", "classdaisy_1_1_mapped_string_list_value.html", "classdaisy_1_1_mapped_string_list_value" ],
       [ "MappedValue", "classdaisy_1_1_mapped_value.html", "classdaisy_1_1_mapped_value" ],
       [ "MAX11300Driver", "classdaisy_1_1_m_a_x11300_driver.html", "classdaisy_1_1_m_a_x11300_driver" ],
+      [ "MAX11300MultiSlaveSpiTransport", "classdaisy_1_1_m_a_x11300_multi_slave_spi_transport.html", "classdaisy_1_1_m_a_x11300_multi_slave_spi_transport" ],
       [ "Mcp23017Transport", "classdaisy_1_1_mcp23017_transport.html", "classdaisy_1_1_mcp23017_transport" ],
       [ "Mcp23X17", "classdaisy_1_1_mcp23_x17.html", "classdaisy_1_1_mcp23_x17" ],
       [ "MidiEvent", "structdaisy_1_1_midi_event.html", "structdaisy_1_1_midi_event" ],
@@ -58,6 +61,7 @@ var annotated_dup =
       [ "MidiUsbTransport", "classdaisy_1_1_midi_usb_transport.html", "classdaisy_1_1_midi_usb_transport" ],
       [ "MonoModeOnEvent", "structdaisy_1_1_mono_mode_on_event.html", "structdaisy_1_1_mono_mode_on_event" ],
       [ "MTCQuarterFrameEvent", "structdaisy_1_1_m_t_c_quarter_frame_event.html", "structdaisy_1_1_m_t_c_quarter_frame_event" ],
+      [ "MultiSlaveSpiHandle", "classdaisy_1_1_multi_slave_spi_handle.html", "classdaisy_1_1_multi_slave_spi_handle" ],
       [ "NoteOffEvent", "structdaisy_1_1_note_off_event.html", "structdaisy_1_1_note_off_event" ],
       [ "NoteOnEvent", "structdaisy_1_1_note_on_event.html", "structdaisy_1_1_note_on_event" ],
       [ "OledDisplay", "classdaisy_1_1_oled_display.html", "classdaisy_1_1_oled_display" ],
