@@ -83,11 +83,17 @@ class NeoTrellisI2CTransport
                   != i2c_.ReceiveBlocking(config_.address, data, size, 10);
     }
 
-    void
-    ReadLen(uint8_t reg_high, uint8_t reg_low, uint8_t *buff, uint16_t size)
+    void ReadLen(uint8_t  reg_high,
+                 uint8_t  reg_low,
+                 uint8_t *buff,
+                 uint16_t size,
+                 int      delay)
     {
         uint8_t reg[2] = {reg_high, reg_low};
         Write(reg, 2);
+
+        System::DelayUs(delay);
+
         Read(buff, size);
     }
 
@@ -110,10 +116,10 @@ class NeoTrellisI2CTransport
         \param reg the register address to read from
         \returns the 16 bit data value read from the device
     */
-    uint8_t Read8(uint8_t reg_high, uint8_t reg_low)
+    uint8_t Read8(uint8_t reg_high, uint8_t reg_low, int delay)
     {
         uint8_t buffer;
-        ReadLen(reg_high, reg_low, &buffer, 1);
+        ReadLen(reg_high, reg_low, &buffer, 1, delay);
         return buffer;
     }
 
@@ -231,10 +237,9 @@ class NeoTrellis
     struct Config
     {
         typename Transport::Config transport_config;
-        bool                init_reset; //< Should the device be reset on init
-        NeoPixelI2C::Config pixels_conf;
+        NeoPixelI2C::Config        pixels_conf;
 
-        Config() { init_reset = true; }
+        Config() {}
     };
 
     enum Result
@@ -252,16 +257,16 @@ class NeoTrellis
     {
         config_ = config;
 
-        transport_.Init(config_.transport_config);
-
         // init neopixels
         if(pixels.Init(config_.pixels_conf) == NeoPixelI2C::Result::ERR)
         {
             return ERR;
         }
 
-        if(config_.init_reset)
-            SWReset();
+        transport_.Init(config_.transport_config);
+
+        // 10 ms delay
+        System::Delay(10);
 
         EnableKeypadInterrupt();
 
@@ -281,14 +286,18 @@ class NeoTrellis
         \param reg the register address to read from
         \returns the data uint8_t read from the device
     */
-    uint8_t Read8(uint8_t reg_high, uint8_t reg_low)
+    uint8_t Read8(uint8_t reg_high, uint8_t reg_low, int delay)
     {
-        return transport_.Read8(reg_high, reg_low);
+        return transport_.Read8(reg_high, reg_low, delay);
     }
 
-    void ReadLen(uint8_t reg_high, uint8_t reg_low, uint8_t *buff, uint8_t len)
+    void ReadLen(uint8_t  reg_high,
+                 uint8_t  reg_low,
+                 uint8_t *buff,
+                 uint8_t  len,
+                 int      delay)
     {
-        transport_.ReadLen(reg_high, reg_low, buff, len);
+        transport_.ReadLen(reg_high, reg_low, buff, len, delay);
     }
 
     /** Get and reset the transport error flag
@@ -378,7 +387,9 @@ class NeoTrellis
     {
         if(idx < NEO_TRELLIS_NUM_KEYS)
         {
-            return rising_[idx];
+            bool tmp     = rising_[idx];
+            rising_[idx] = false;
+            return tmp;
         }
 
         return false;
@@ -392,7 +403,9 @@ class NeoTrellis
     {
         if(idx < NEO_TRELLIS_NUM_KEYS)
         {
-            return falling_[idx];
+            bool tmp      = falling_[idx];
+            falling_[idx] = false;
+            return tmp;
         }
 
         return false;
@@ -400,7 +413,11 @@ class NeoTrellis
 
     void ReadKeypad(keyEventRaw *buf, uint8_t count)
     {
-        ReadLen(SEESAW_KEYPAD_BASE, SEESAW_KEYPAD_FIFO, (uint8_t *)buf, count);
+        ReadLen(SEESAW_KEYPAD_BASE,
+                SEESAW_KEYPAD_FIFO,
+                (uint8_t *)buf,
+                count,
+                1000);
     }
 
     /** Get the number of events currently in the fifo
@@ -408,7 +425,7 @@ class NeoTrellis
     */
     uint8_t GetKeypadCount()
     {
-        return Read8(SEESAW_KEYPAD_BASE, SEESAW_KEYPAD_COUNT);
+        return Read8(SEESAW_KEYPAD_BASE, SEESAW_KEYPAD_COUNT, 500);
     }
 
     /** activate or deactivate a key and edge on the keypad module
@@ -456,49 +473,6 @@ class NeoTrellis
             = NEO_TRELLIS_Y(y % NEO_TRELLIS_NUM_ROWS * NEO_TRELLIS_NUM_COLS);
 
         _callbacks[NEO_TRELLIS_XY(xkey, ykey)] = NULL;
-    }
-
-    /** set the color of a neopixel at a key index.
-        \param  x the column index of the key. column 0 is on the lefthand side of the matrix.
-        \param  y the row index of the key. row 0 is at the top of the matrix and the numbers increase downwards.
-        \param  color the color to set the pixel to. This is a 24 bit RGB value. 
-        for example, full brightness red would be 0xFF0000, and full brightness blue would be 0x0000FF.
-    */
-    void SetPixelColor(uint8_t x, uint8_t y, uint32_t color)
-    {
-        int xkey = NEO_TRELLIS_X(x);
-        int ykey
-            = NEO_TRELLIS_Y(y % NEO_TRELLIS_NUM_ROWS * NEO_TRELLIS_NUM_COLS);
-
-        pixels.SetPixelColor(NEO_TRELLIS_XY(xkey, ykey), color);
-    }
-
-    /** set the color of a neopixel at a key number.
-        \param  num the keynumber to set the color of. Key 0 is in the top left
-            corner of the trellis matrix, key 1 is directly to the right of it,
-            and the last key number is in the bottom righthand corner.
-        \param  color the color to set the pixel to. This is a 24 bit RGB value.
-            for example, full brightness red would be 0xFF0000, and full
-            brightness blue would be 0x0000FF.
-    */
-    void SetPixelColor(uint16_t num, uint32_t color)
-    {
-        uint8_t x = NEO_TRELLIS_X(num);
-        uint8_t y = NEO_TRELLIS_Y(num);
-
-        SetPixelColor(x, y, color);
-    }
-
-    /** call show for all connected neotrellis boards to show all neopixels */
-    void Show()
-    {
-        for(int n = 0; n < NEO_TRELLIS_NUM_ROWS; n++)
-        {
-            for(int m = 0; m < NEO_TRELLIS_NUM_COLS; m++)
-            {
-                pixels.Show();
-            }
-        }
     }
 
     NeoPixelI2C pixels;

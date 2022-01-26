@@ -2,7 +2,7 @@
 #ifndef DSY_NEO_PIXEL_H
 #define DSY_NEO_PIXEL_H
 
-#define SEESAW_ADDRESS (0x49) ///< Default Seesaw I2C address
+#define NEO_TRELLIS_ADDR_NEOPIXEL (0x2E) ///< Default Neotrellis I2C address
 
 // RGB NeoPixel permutations; white and red offsets are always same
 // Offset:         W          R          G          B
@@ -75,7 +75,7 @@ class NeoPixelI2CTransport
 
         Config()
         {
-            address = SEESAW_ADDRESS;
+            address = NEO_TRELLIS_ADDR_NEOPIXEL;
 
             periph = I2CHandle::Config::Peripheral::I2C_1;
             speed  = I2CHandle::Config::Speed::I2C_400KHZ;
@@ -197,17 +197,15 @@ class NeoPixel
     struct Config
     {
         typename Transport::Config transport_config;
-        bool                       init_reset;
         uint16_t                   type;
         uint16_t                   numLEDs;
         int8_t                     output_pin;
 
         Config()
         {
-            init_reset = true;
             type       = NEO_GRB + NEO_KHZ800;
             numLEDs    = 16;
-            output_pin = 6;
+            output_pin = 3;
         }
     };
 
@@ -272,11 +270,14 @@ class NeoPixel
         type    = config_.type;
         numLEDs = config_.numLEDs;
         pin     = config_.output_pin;
+        pixels  = pixelsd;
 
         transport_.Init(config_.transport_config);
 
-        if(config_.init_reset)
-            SWReset();
+        SWReset();
+
+        // 10 ms delay
+        System::Delay(10);
 
         UpdateType(type);
         UpdateLength(numLEDs);
@@ -329,20 +330,10 @@ class NeoPixel
 
     void UpdateLength(uint16_t n)
     {
-        if(pixels)
-            free(pixels); // Free existing data (if any)
-
         // Allocate new data -- note: ALL PIXELS ARE CLEARED
         numBytes = n * ((wOffset == rOffset) ? 3 : 4);
-        if((pixels = (uint8_t *)malloc(numBytes)))
-        {
-            memset(pixels, 0, numBytes);
-            numLEDs = n;
-        }
-        else
-        {
-            numLEDs = numBytes = 0;
-        }
+        mymemset(pixels, 0, numBytes);
+        numLEDs = n;
 
         uint8_t buf[] = {(uint8_t)(numBytes >> 8), (uint8_t)(numBytes & 0xFF)};
         Write(SEESAW_NEOPIXEL_BASE, SEESAW_NEOPIXEL_BUF_LENGTH, buf, 2);
@@ -362,21 +353,15 @@ class NeoPixel
 
         // If bytes-per-pixel has changed (and pixel data was previously
         // allocated), re-allocate to new size.  Will clear any data.
-        if(pixels)
-        {
-            bool newThreeBytesPerPixel = (wOffset == rOffset);
-            if(newThreeBytesPerPixel != oldThreeBytesPerPixel)
-                UpdateLength(numLEDs);
-        }
+        bool newThreeBytesPerPixel = (wOffset == rOffset);
+        if(newThreeBytesPerPixel != oldThreeBytesPerPixel)
+            UpdateLength(numLEDs);
     }
 
     inline bool CanShow(void) { return (System::GetUs() - endTime) >= 300L; }
 
     void Show(void)
     {
-        if(!pixels)
-            return;
-
         // Data latch = 300+ microsecond pause in the output stream.  Rather than
         // put a delay at the end of the function, the ending time is noted and
         // the function will simply hold off (if needed) on issuing the
@@ -584,11 +569,11 @@ class NeoPixel
     void Clear()
     {
         // Clear local pixel buffer
-        memset(pixels, 0, numBytes);
+        mymemset(pixels, 0, numBytes);
 
         // Now clear the pixels on the seesaw
         uint8_t writeBuf[32];
-        memset(writeBuf, 0, 32);
+        mymemset(writeBuf, 0, 32);
         for(uint8_t offset = 0; offset < numBytes; offset += 32 - 4)
         {
             writeBuf[0] = (offset >> 8);
@@ -608,6 +593,14 @@ class NeoPixel
         }
     }
 
+    void mymemset(uint8_t *addr, uint8_t val, uint8_t len)
+    {
+        for(uint8_t i = 0; i < len; i++)
+        {
+            addr[i] = val;
+        }
+    }
+
     Config    config_;
     Transport transport_;
 
@@ -616,7 +609,10 @@ class NeoPixel
         begun;        // true if begin() previously called
     uint16_t numLEDs, // Number of RGB LEDs in strip
         numBytes;     // Size of 'pixels' buffer below (3 or 4 bytes/pixel)
-    int8_t  pin;
+    int8_t pin;
+
+    uint8_t pixelsd[256]; // hopefully we won't need more than this...
+
     uint8_t brightness,
         *pixels,      // Holds LED color values (3 or 4 bytes each)
         rOffset,      // Index of red byte within each 3- or 4-byte pixel
