@@ -18,10 +18,10 @@
 #include "pca9685.h"
 
 #define MICROSTEPS 16 // 8 or 16
+#define MOTOR_SHIELD_ADDRESS_DEFAULT 0x60
 
 namespace daisy
 {
-
 /** Object that controls and keeps state for the whole motor shield.
     Use it to create DC and Stepper motor objects! */
 class Adafruit_MotorShield
@@ -32,10 +32,15 @@ class Adafruit_MotorShield
 
     struct Config
     {
-        Config() { frequency = 1600; }
+        Config()
+        {
+            frequency = 1600;
+            address   = MOTOR_SHIELD_ADDRESS_DEFAULT;
+        }
 
         Pca9685::Config pca9685_config;
         float           frequency;
+        uint8_t         address;
     };
 
     enum Result
@@ -70,13 +75,14 @@ class Adafruit_MotorShield
         Adafruit_StepperMotor(void);
         void SetSpeed(uint16_t);
 
-        void    Step(uint16_t steps, uint8_t dir, uint8_t style = SINGLE);
-        void    StepNonblocking(uint16_t steps, uint8_t dir, uint8_t style = SINGLE);
+        void Step(uint16_t steps, uint8_t dir, uint8_t style = SINGLE);
+        void
+                StepNonblocking(uint16_t steps, uint8_t dir, uint8_t style = SINGLE);
         uint8_t Onestep(uint8_t dir, uint8_t style);
         void    Release(void);
         void    Process(void);
         /** Check if the motor is currently handling a non-blocking process */
-        bool    GetBusy() { return nonblock_active; }
+        bool GetBusy() { return nonblock_active; }
 
         friend class
             Adafruit_MotorShield; ///< Let MotorShield create StepperMotors
@@ -90,16 +96,16 @@ class Adafruit_MotorShield
         uint8_t  currentstep;
         uint8_t  steppernum;
 
-        uint8_t nonblock_dir, nonblock_style;
+        uint8_t  nonblock_dir, nonblock_style;
         uint16_t nonblock_steps;
         uint32_t nonblock_uspers, prev_micros;
-        bool nonblock_active;
+        bool     nonblock_active;
 
         Adafruit_MotorShield *MC;
     };
 
     Result                 Init(Config &config);
-    Adafruit_DCMotor      *GetMotor(uint8_t n);
+    Adafruit_DCMotor *     GetMotor(uint8_t n);
     Adafruit_StepperMotor *GetStepper(uint16_t steps, uint8_t n);
 
     void SetPWM(uint8_t pin, uint16_t val);

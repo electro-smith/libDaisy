@@ -42,23 +42,23 @@ static uint8_t microstepcurve[] = {0, 50, 98, 142, 180, 212, 236, 250, 255};
 ///! A sinusoial microstepping curve for the PWM output (8-bit range) with 17
 /// points - last one is start of next step.
 static uint8_t microstepcurve[] = {
-  0,
-  25,
-  50,
-  74,
-  98,
-  120,
-  141,
-  162,
-  180,
-  197,
-  212,
-  225,
-  236,
-  244,
-  250,
-  253,
-  255,
+    0,
+    25,
+    50,
+    74,
+    98,
+    120,
+    141,
+    162,
+    180,
+    197,
+    212,
+    225,
+    236,
+    244,
+    250,
+    253,
+    255,
 };
 #endif
 
@@ -77,7 +77,9 @@ static uint8_t microstepcurve[] = {
 Adafruit_MotorShield::Result
 Adafruit_MotorShield::Init(Adafruit_MotorShield::Config &config)
 {
-    config_ = config;
+    config_                        = config;
+    config_.pca9685_config.address = config_.address;
+
     if(pwm_.Init(config_.pca9685_config) != Pca9685::OK)
         return Result::ERR;
 
@@ -325,7 +327,7 @@ void Adafruit_MotorShield::Adafruit_DCMotor::FullOff()
 Adafruit_MotorShield::Adafruit_StepperMotor::Adafruit_StepperMotor(void)
 {
     revsteps = steppernum = currentstep = 0;
-    nonblock_active = false;
+    nonblock_active                     = false;
 }
 
 /**************************************************************************/
@@ -405,14 +407,15 @@ void Adafruit_MotorShield::Adafruit_StepperMotor::Step(uint16_t steps,
    MICROSTEP
 */
 /**************************************************************************/
-void Adafruit_MotorShield::Adafruit_StepperMotor::StepNonblocking(uint16_t steps,
-                                                                  uint8_t  dir,
-                                                                  uint8_t  style)
+void Adafruit_MotorShield::Adafruit_StepperMotor::StepNonblocking(
+    uint16_t steps,
+    uint8_t  dir,
+    uint8_t  style)
 {
     nonblock_uspers = usperstep;
-    nonblock_steps = steps;
-    nonblock_dir = dir;
-    nonblock_style = style;
+    nonblock_steps  = steps;
+    nonblock_dir    = dir;
+    nonblock_style  = style;
 
     if(style == INTERLEAVE)
     {
@@ -425,7 +428,7 @@ void Adafruit_MotorShield::Adafruit_StepperMotor::StepNonblocking(uint16_t steps
     }
 
     nonblock_active = true;
-    prev_micros = System::GetUs();
+    prev_micros     = System::GetUs();
 }
 
 /**************************************************************************/
@@ -436,13 +439,13 @@ void Adafruit_MotorShield::Adafruit_StepperMotor::StepNonblocking(uint16_t steps
 /**************************************************************************/
 void Adafruit_MotorShield::Adafruit_StepperMotor::Process()
 {
-    if (nonblock_active)
+    if(nonblock_active)
     {
         uint32_t now = System::GetUs();
-        if (now - prev_micros >= nonblock_uspers)
+        if(now - prev_micros >= nonblock_uspers)
         {
             prev_micros = now;
-            if (nonblock_steps--)
+            if(nonblock_steps--)
             {
                 Onestep(nonblock_dir, nonblock_style);
             }
