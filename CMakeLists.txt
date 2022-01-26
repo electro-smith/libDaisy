@@ -59,6 +59,7 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/per/qspi.cpp
     ${MODULE_DIR}/dev/sdram.cpp
     ${MODULE_DIR}/per/spi.cpp
+    ${MODULE_DIR}/per/spiMultislave.cpp
     ${MODULE_DIR}/per/tim.cpp
     ${MODULE_DIR}/per/uart.cpp
     ${MODULE_DIR}/ui/AbstractMenu.cpp

@@ -66,6 +66,7 @@ per/i2c \
 per/rng \
 per/qspi \
 per/spi \
+per/spiMultislave \
 per/tim \
 per/uart \
 ui/UI \
