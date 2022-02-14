@@ -57,7 +57,7 @@ enum SystemRealTimeType
 
 enum ChannelModeType
 {
-    AllSoundOff,         /**< & */
+    AllSoundOff = 0,     /**< & */
     ResetAllControllers, /**< & */
     LocalControl,        /**< & */
     AllNotesOff,         /**< & */
@@ -129,6 +129,14 @@ struct PitchBendEvent
 {
     int     channel; /**< & */
     int16_t value;   /**< & */
+};
+/** Struct containing channel mode event for a given channel.
+Can be made from MidiEvent
+*/
+struct ChannelModeEvent
+{
+    ChannelModeType event_type; /**< & */
+    int16_t         value;      /**< & */
 };
 /** Struct containing sysex data.
 Can be made from MidiEvent
@@ -302,6 +310,17 @@ struct MidiEvent
         m.value   = ((uint16_t)data[1] << 7) + (data[0] - 8192);
         return m;
     }
+
+    ChannelModeEvent AsChannelMode()
+    {
+        ChannelModeEvent m;
+
+        m.event_type = (ChannelModeType)(channel - 120);
+        m.value      = ((uint16_t)data[1] << 7) + (data[0] - 8192);
+
+        return m;
+    }
+
     SystemExclusiveEvent AsSystemExclusive()
     {
         SystemExclusiveEvent m;
