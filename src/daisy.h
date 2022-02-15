@@ -20,6 +20,7 @@
 #include "per/adc.h"
 #include "per/uart.h"
 #include "hid/midi.h"
+#include "hid/MidiDistributor.h"
 #include "hid/encoder.h"
 #include "hid/switch.h"
 #include "hid/switch3.h"

@@ -1,3 +1,7 @@
+#pragma once
+#ifndef DSY_MIDI_EVENT_H
+#define DSY_MIDI_EVENT_H
+
 namespace daisy
 {
 /** @addtogroup midi MIDI
@@ -412,3 +416,5 @@ struct MidiEvent
 
 /** @} */ // End midi
 } //namespace daisy
+
+#endif
