@@ -57,7 +57,7 @@ enum SystemRealTimeType
 
 enum ChannelModeType
 {
-    AllSoundOff,     /**< & */
+    AllSoundOff,         /**< & */
     ResetAllControllers, /**< & */
     LocalControl,        /**< & */
     AllNotesOff,         /**< & */
@@ -135,6 +135,7 @@ Can be made from MidiEvent
 */
 struct ChannelModeEvent
 {
+    int             channel;    /**< & */
     ChannelModeType event_type; /**< & */
     int16_t         value;      /**< & */
 };
@@ -315,8 +316,9 @@ struct MidiEvent
     {
         ChannelModeEvent m;
 
-        m.event_type = (ChannelModeType)(channel - 120);
-        m.value      = ((uint16_t)data[1] << 7) + (data[0] - 8192);
+        m.channel    = channel;
+        m.event_type = (ChannelModeType)(data[0] - 120);
+        m.value      = data[1];
 
         return m;
     }
