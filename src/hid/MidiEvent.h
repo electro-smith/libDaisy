@@ -57,7 +57,7 @@ enum SystemRealTimeType
 
 enum ChannelModeType
 {
-    AllSoundOff = 0,     /**< & */
+    AllSoundOff,     /**< & */
     ResetAllControllers, /**< & */
     LocalControl,        /**< & */
     AllNotesOff,         /**< & */
