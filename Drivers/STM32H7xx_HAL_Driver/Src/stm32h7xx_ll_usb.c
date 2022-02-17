@@ -138,7 +138,7 @@ HAL_StatusTypeDef USB_CoreInit(USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef c
 HAL_StatusTypeDef USB_SetTurnaroundTime(USB_OTG_GlobalTypeDef *USBx,
                                         uint32_t hclk, uint8_t speed)
 {
-  uint32_t UsbTrd;
+  volatile uint32_t UsbTrd;
 
   /* The USBTRD is configured according to the tables below, depending on AHB frequency
   used by application. In the low AHB frequency range it is used to stretch enough the USB response
@@ -441,7 +441,7 @@ HAL_StatusTypeDef USB_DevInit(USB_OTG_GlobalTypeDef *USBx, USB_OTG_CfgTypeDef cf
   */
 HAL_StatusTypeDef USB_FlushTxFifo(USB_OTG_GlobalTypeDef *USBx, uint32_t num)
 {
-  uint32_t count = 0U;
+  volatile uint32_t count = 0U;
 
   USBx->GRSTCTL = (USB_OTG_GRSTCTL_TXFFLSH | (num << 6));
 
@@ -464,7 +464,7 @@ HAL_StatusTypeDef USB_FlushTxFifo(USB_OTG_GlobalTypeDef *USBx, uint32_t num)
   */
 HAL_StatusTypeDef USB_FlushRxFifo(USB_OTG_GlobalTypeDef *USBx)
 {
-  uint32_t count = 0;
+  volatile uint32_t count = 0;
 
   USBx->GRSTCTL = USB_OTG_GRSTCTL_RXFFLSH;
 
@@ -511,7 +511,7 @@ uint8_t USB_GetDevSpeed(USB_OTG_GlobalTypeDef *USBx)
 {
   uint32_t USBx_BASE = (uint32_t)USBx;
   uint8_t speed;
-  uint32_t DevEnumSpeed = USBx_DEVICE->DSTS & USB_OTG_DSTS_ENUMSPD;
+  volatile uint32_t DevEnumSpeed = USBx_DEVICE->DSTS & USB_OTG_DSTS_ENUMSPD;
 
   if (DevEnumSpeed == DSTS_ENUMSPD_HS_PHY_30MHZ_OR_60MHZ)
   {
@@ -1121,7 +1121,7 @@ HAL_StatusTypeDef  USB_DevDisconnect(USB_OTG_GlobalTypeDef *USBx)
   */
 uint32_t  USB_ReadInterrupts(USB_OTG_GlobalTypeDef *USBx)
 {
-  uint32_t tmpreg;
+  volatile uint32_t tmpreg;
 
   tmpreg = USBx->GINTSTS;
   tmpreg &= USBx->GINTMSK;
@@ -1137,7 +1137,7 @@ uint32_t  USB_ReadInterrupts(USB_OTG_GlobalTypeDef *USBx)
 uint32_t USB_ReadDevAllOutEpInterrupt(USB_OTG_GlobalTypeDef *USBx)
 {
   uint32_t USBx_BASE = (uint32_t)USBx;
-  uint32_t tmpreg;
+  volatile uint32_t tmpreg;
 
   tmpreg  = USBx_DEVICE->DAINT;
   tmpreg &= USBx_DEVICE->DAINTMSK;
@@ -1153,7 +1153,7 @@ uint32_t USB_ReadDevAllOutEpInterrupt(USB_OTG_GlobalTypeDef *USBx)
 uint32_t USB_ReadDevAllInEpInterrupt(USB_OTG_GlobalTypeDef *USBx)
 {
   uint32_t USBx_BASE = (uint32_t)USBx;
-  uint32_t tmpreg;
+  volatile uint32_t tmpreg;
 
   tmpreg  = USBx_DEVICE->DAINT;
   tmpreg &= USBx_DEVICE->DAINTMSK;
@@ -1171,7 +1171,7 @@ uint32_t USB_ReadDevAllInEpInterrupt(USB_OTG_GlobalTypeDef *USBx)
 uint32_t USB_ReadDevOutEPInterrupt(USB_OTG_GlobalTypeDef *USBx, uint8_t epnum)
 {
   uint32_t USBx_BASE = (uint32_t)USBx;
-  uint32_t tmpreg;
+  volatile uint32_t tmpreg;
 
   tmpreg  = USBx_OUTEP((uint32_t)epnum)->DOEPINT;
   tmpreg &= USBx_DEVICE->DOEPMSK;
@@ -1189,7 +1189,7 @@ uint32_t USB_ReadDevOutEPInterrupt(USB_OTG_GlobalTypeDef *USBx, uint8_t epnum)
 uint32_t USB_ReadDevInEPInterrupt(USB_OTG_GlobalTypeDef *USBx, uint8_t epnum)
 {
   uint32_t USBx_BASE = (uint32_t)USBx;
-  uint32_t tmpreg, msk, emp;
+  volatile uint32_t tmpreg, msk, emp;
 
   msk = USBx_DEVICE->DIEPMSK;
   emp = USBx_DEVICE->DIEPEMPMSK;
@@ -1289,7 +1289,7 @@ HAL_StatusTypeDef USB_EP0_OutStart(USB_OTG_GlobalTypeDef *USBx, uint8_t dma, uin
   */
 static HAL_StatusTypeDef USB_CoreReset(USB_OTG_GlobalTypeDef *USBx)
 {
-  uint32_t count = 0U;
+  volatile uint32_t count = 0U;
 
   /* Wait for AHB master IDLE state. */
   do
@@ -1819,7 +1819,7 @@ HAL_StatusTypeDef USB_HC_Halt(USB_OTG_GlobalTypeDef *USBx, uint8_t hc_num)
 {
   uint32_t USBx_BASE = (uint32_t)USBx;
   uint32_t hcnum = (uint32_t)hc_num;
-  uint32_t count = 0U;
+  volatile uint32_t count = 0U;
   uint32_t HcEpType = (USBx_HC(hcnum)->HCCHAR & USB_OTG_HCCHAR_EPTYP) >> 18;
 
   /* Check for space in the request queue to issue the halt. */
@@ -1885,7 +1885,7 @@ HAL_StatusTypeDef USB_DoPing(USB_OTG_GlobalTypeDef *USBx, uint8_t ch_num)
   uint32_t USBx_BASE = (uint32_t)USBx;
   uint32_t chnum = (uint32_t)ch_num;
   uint32_t num_packets = 1U;
-  uint32_t tmpreg;
+  volatile uint32_t tmpreg;
 
   USBx_HC(chnum)->HCTSIZ = ((num_packets << 19) & USB_OTG_HCTSIZ_PKTCNT) |
                            USB_OTG_HCTSIZ_DOPING;
@@ -1907,8 +1907,8 @@ HAL_StatusTypeDef USB_DoPing(USB_OTG_GlobalTypeDef *USBx, uint8_t ch_num)
 HAL_StatusTypeDef USB_StopHost(USB_OTG_GlobalTypeDef *USBx)
 {
   uint32_t USBx_BASE = (uint32_t)USBx;
-  uint32_t count = 0U;
-  uint32_t value;
+  volatile uint32_t count = 0U;
+  volatile uint32_t value;
   uint32_t i;
 
 
@@ -2005,3 +2005,4 @@ HAL_StatusTypeDef USB_DeActivateRemoteWakeup(USB_OTG_GlobalTypeDef *USBx)
   */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+
