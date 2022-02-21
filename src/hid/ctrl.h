@@ -56,8 +56,16 @@ class AnalogControl
     inline float Value() const { return val_; }
 
     /** Directly set the Coefficient of the one pole smoothing filter. 
-     ***/
-    inline void SetCoeff(float val) { coeff_ = val; }
+      \param val Value to set coefficient to. Max of 1, min of 0.
+    */
+    // using conditionals since clamp() is unavailable
+    inline void SetCoeff(float val)
+    {
+        val = val > 1.f ? 1.f : val;
+        val = val < 0.f ? 0.f : val;
+
+        coeff_ = val;
+    }
 
     /** Returns the raw unsigned 16-bit value from the ADC */
     inline uint16_t GetRawValue() { return *raw_; }
