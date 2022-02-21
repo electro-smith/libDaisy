@@ -216,7 +216,7 @@ $(document).ready(function(){initNavTree('leddriver_8h_source.html',''); initRes
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>  <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    <span class="keywordtype">void</span> ContinueTransmission()</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    {</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        current_driver_idx_++;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        current_driver_idx_ = current_driver_idx_ + 1;</div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keywordflow">if</span>(current_driver_idx_ &gt;= numDrivers)</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        {</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>            current_driver_idx_ = -1;</div>
