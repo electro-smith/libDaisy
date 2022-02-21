@@ -25,75 +25,75 @@
 var NAVTREE =
 [
   [ "libDaisy", "index.html", [
-    [ "Setting Up Your Development Environment", "index.html#autotoc_md55", null ],
-    [ "Using libDaisy", "index.html#autotoc_md56", null ],
-    [ "Development", "index.html#autotoc_md57", null ],
-    [ "Troubleshooting", "index.html#autotoc_md58", null ],
+    [ "Setting Up Your Development Environment", "index.html#autotoc_md56", null ],
+    [ "Using libDaisy", "index.html#autotoc_md57", null ],
+    [ "Development", "index.html#autotoc_md58", null ],
+    [ "Troubleshooting", "index.html#autotoc_md59", null ],
     [ "API Documentation", "modules.html", "modules" ],
     [ "Getting Started - GPIO", "md_doc_md__a1__getting__started__g_p_i_o.html", [
-      [ "The CPP Objects Used", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md1", null ],
-      [ "The Hardware Connections", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md2", null ],
-      [ "GPIO Input", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md3", null ],
-      [ "Breaking Down the Init function", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md4", [
-        [ "Pin Argument", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md5", null ],
-        [ "Mode Argument", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md6", null ],
-        [ "Pull Argument", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md7", null ],
-        [ "Speed Argument", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md8", null ]
+      [ "The CPP Objects Used", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md2", null ],
+      [ "The Hardware Connections", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md3", null ],
+      [ "GPIO Input", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md4", null ],
+      [ "Breaking Down the Init function", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md5", [
+        [ "Pin Argument", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md6", null ],
+        [ "Mode Argument", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md7", null ],
+        [ "Pull Argument", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md8", null ],
+        [ "Speed Argument", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md9", null ]
       ] ],
-      [ "GPIO Output", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md9", null ],
-      [ "Further Reading", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md10", null ]
+      [ "GPIO Output", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md10", null ],
+      [ "Further Reading", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md11", null ]
     ] ],
     [ "Getting Started - Serial Printing", "md_doc_md__a2__getting__started__serial__printing.html", [
-      [ "Choosing a Serial Monitor", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md12", null ],
-      [ "Hello World", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md13", null ],
-      [ "String Formatting", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md14", null ],
-      [ "Floating Point Numbers", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md15", [
-        [ "Using %f specifier", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md16", null ],
-        [ "Using FLT_FMT and FLT_VAR macros", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md17", null ],
-        [ "Using FixedCapStr class", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md18", null ]
+      [ "Choosing a Serial Monitor", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md13", null ],
+      [ "Hello World", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md14", null ],
+      [ "String Formatting", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md15", null ],
+      [ "Floating Point Numbers", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md16", [
+        [ "Using %f specifier", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md17", null ],
+        [ "Using FLT_FMT and FLT_VAR macros", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md18", null ],
+        [ "Using FixedCapStr class", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md19", null ]
       ] ],
-      [ "Further Reading", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md19", null ]
+      [ "Further Reading", "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md20", null ]
     ] ],
     [ "Getting Started - Audio", "md_doc_md__a3__getting__started__audio.html", [
-      [ "Analog and Digital Audio", "md_doc_md__a3__getting__started__audio.html#autotoc_md21", [
-        [ "Sample Rate", "md_doc_md__a3__getting__started__audio.html#autotoc_md22", null ],
-        [ "Bit Depth", "md_doc_md__a3__getting__started__audio.html#autotoc_md23", null ],
-        [ "Block Size", "md_doc_md__a3__getting__started__audio.html#autotoc_md24", null ]
+      [ "Analog and Digital Audio", "md_doc_md__a3__getting__started__audio.html#autotoc_md22", [
+        [ "Sample Rate", "md_doc_md__a3__getting__started__audio.html#autotoc_md23", null ],
+        [ "Bit Depth", "md_doc_md__a3__getting__started__audio.html#autotoc_md24", null ],
+        [ "Block Size", "md_doc_md__a3__getting__started__audio.html#autotoc_md25", null ]
       ] ],
-      [ "Making Some Sound", "md_doc_md__a3__getting__started__audio.html#autotoc_md25", [
-        [ "Audio Output", "md_doc_md__a3__getting__started__audio.html#autotoc_md26", null ],
-        [ "Audio Input", "md_doc_md__a3__getting__started__audio.html#autotoc_md27", null ],
-        [ "Audio Data Packing", "md_doc_md__a3__getting__started__audio.html#autotoc_md28", null ]
+      [ "Making Some Sound", "md_doc_md__a3__getting__started__audio.html#autotoc_md26", [
+        [ "Audio Output", "md_doc_md__a3__getting__started__audio.html#autotoc_md27", null ],
+        [ "Audio Input", "md_doc_md__a3__getting__started__audio.html#autotoc_md28", null ],
+        [ "Audio Data Packing", "md_doc_md__a3__getting__started__audio.html#autotoc_md29", null ]
       ] ],
-      [ "Changing Audio Settings", "md_doc_md__a3__getting__started__audio.html#autotoc_md29", null ],
-      [ "What Not to do in the Audio Callback", "md_doc_md__a3__getting__started__audio.html#autotoc_md30", null ],
-      [ "How To Measure the Processing Load", "md_doc_md__a3__getting__started__audio.html#autotoc_md31", null ]
+      [ "Changing Audio Settings", "md_doc_md__a3__getting__started__audio.html#autotoc_md30", null ],
+      [ "What Not to do in the Audio Callback", "md_doc_md__a3__getting__started__audio.html#autotoc_md31", null ],
+      [ "How To Measure the Processing Load", "md_doc_md__a3__getting__started__audio.html#autotoc_md32", null ]
     ] ],
     [ "Getting Started - ADCs", "md_doc_md__a4__getting__started__a_d_cs.html", [
-      [ "The CPP Objects Used", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md33", null ],
-      [ "The Hardware Connections", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md34", null ],
-      [ "ADC Channel Config", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md35", null ],
-      [ "A Single Input", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md36", null ],
-      [ "Multiple Inputs", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md37", null ],
-      [ "Order To Chaos - Naming ADC Channels", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md38", null ],
-      [ "Using Different Kinds of Inputs", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md39", null ],
-      [ "Further Reading", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md40", null ]
+      [ "The CPP Objects Used", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md34", null ],
+      [ "The Hardware Connections", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md35", null ],
+      [ "ADC Channel Config", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md36", null ],
+      [ "A Single Input", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md37", null ],
+      [ "Multiple Inputs", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md38", null ],
+      [ "Order To Chaos - Naming ADC Channels", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md39", null ],
+      [ "Using Different Kinds of Inputs", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md40", null ],
+      [ "Further Reading", "md_doc_md__a4__getting__started__a_d_cs.html#autotoc_md41", null ]
     ] ],
     [ "Getting Started - External SDRAM", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html", [
-      [ "Usage", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md42", null ],
-      [ "Addressing", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md43", null ],
-      [ "Initialization", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md44", null ],
-      [ "Class Design with Large Memory", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md45", null ],
-      [ "Future Work", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md46", null ]
+      [ "Usage", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md43", null ],
+      [ "Addressing", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md44", null ],
+      [ "Initialization", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md45", null ],
+      [ "Class Design with Large Memory", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md46", null ],
+      [ "Future Work", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md47", null ]
     ] ],
     [ "Development - Unit-Testing", "md_doc_md__b1__development__unit__testing.html", [
-      [ "Why write tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md48", null ],
-      [ "How to run tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md49", [
-        [ "From the commandline", "md_doc_md__b1__development__unit__testing.html#autotoc_md50", null ],
-        [ "From Visual Studio Code", "md_doc_md__b1__development__unit__testing.html#autotoc_md51", null ]
+      [ "Why write tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md49", null ],
+      [ "How to run tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md50", [
+        [ "From the commandline", "md_doc_md__b1__development__unit__testing.html#autotoc_md51", null ],
+        [ "From Visual Studio Code", "md_doc_md__b1__development__unit__testing.html#autotoc_md52", null ]
       ] ],
-      [ "Getting started with unit testing", "md_doc_md__b1__development__unit__testing.html#autotoc_md52", null ],
-      [ "Drawbacks & things to watch out for", "md_doc_md__b1__development__unit__testing.html#autotoc_md53", null ]
+      [ "Getting started with unit testing", "md_doc_md__b1__development__unit__testing.html#autotoc_md53", null ],
+      [ "Drawbacks & things to watch out for", "md_doc_md__b1__development__unit__testing.html#autotoc_md54", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Deprecated List", "deprecated.html", null ],

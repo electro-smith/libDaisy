@@ -59,6 +59,9 @@ var hierarchy =
     [ "daisy::FIFOBase< T >", "classdaisy_1_1_f_i_f_o_base.html", [
       [ "daisy::FIFO< T, capacity >", "classdaisy_1_1_f_i_f_o.html", null ]
     ] ],
+    [ "daisy::FIFOBase< Event >", "classdaisy_1_1_f_i_f_o_base.html", [
+      [ "daisy::FIFO< Event, 256 >", "classdaisy_1_1_f_i_f_o.html", null ]
+    ] ],
     [ "daisy::FixedCapStrBase< CharType >", "classdaisy_1_1_fixed_cap_str_base.html", null ],
     [ "daisy::FixedCapStrBase< char >", "classdaisy_1_1_fixed_cap_str_base.html", [
       [ "daisy::FixedCapStr< capacity, CharType >", "classdaisy_1_1_fixed_cap_str.html", null ]
@@ -71,6 +74,7 @@ var hierarchy =
     [ "daisy::LcdHD44780", "classdaisy_1_1_lcd_h_d44780.html", null ],
     [ "daisy::Led", "classdaisy_1_1_led.html", null ],
     [ "daisy::LedDriverPca9685< numDrivers, persistentBufferContents >", "classdaisy_1_1_led_driver_pca9685.html", null ],
+    [ "daisy::LedDriverPca9685< 2, true >", "classdaisy_1_1_led_driver_pca9685.html", null ],
     [ "daisy::LocalControlEvent", "structdaisy_1_1_local_control_event.html", null ],
     [ "daisy::Logger< dest >", "classdaisy_1_1_logger.html", null ],
     [ "daisy::Logger< LOGGER_NONE >", "classdaisy_1_1_logger_3_01_l_o_g_g_e_r___n_o_n_e_01_4.html", null ],
@@ -103,6 +107,9 @@ var hierarchy =
       [ "daisy::OneBitGraphicsDisplayImpl< OledDisplay< DisplayDriver > >", "classdaisy_1_1_one_bit_graphics_display_impl.html", [
         [ "daisy::OledDisplay< DisplayDriver >", "classdaisy_1_1_oled_display.html", null ]
       ] ],
+      [ "daisy::OneBitGraphicsDisplayImpl< OledDisplay< daisy::SSD130xDriver > >", "classdaisy_1_1_one_bit_graphics_display_impl.html", [
+        [ "daisy::OledDisplay< daisy::SSD130xDriver >", "classdaisy_1_1_oled_display.html", null ]
+      ] ],
       [ "daisy::OneBitGraphicsDisplayImpl< ChildType >", "classdaisy_1_1_one_bit_graphics_display_impl.html", null ]
     ] ],
     [ "daisy::Parameter", "classdaisy_1_1_parameter.html", null ],
@@ -121,12 +128,14 @@ var hierarchy =
     [ "daisy::ResetAllControllersEvent", "structdaisy_1_1_reset_all_controllers_event.html", null ],
     [ "daisy::RgbLed", "classdaisy_1_1_rgb_led.html", null ],
     [ "daisy::RingBuffer< T, size >", "classdaisy_1_1_ring_buffer.html", null ],
+    [ "daisy::RingBuffer< daisy::MidiEvent, 256 >", "classdaisy_1_1_ring_buffer.html", null ],
     [ "daisy::RingBuffer< T, 0 >", "classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html", null ],
     [ "daisy::SaiHandle", "classdaisy_1_1_sai_handle.html", null ],
     [ "daisy::ScopedIrqBlocker", "classdaisy_1_1_scoped_irq_blocker.html", null ],
     [ "daisy::SdmmcHandler", "classdaisy_1_1_sdmmc_handler.html", null ],
     [ "SdramHandle", "class_sdram_handle.html", null ],
     [ "daisy::ShiftRegister4021< num_daisychained, num_parallel >", "classdaisy_1_1_shift_register4021.html", null ],
+    [ "daisy::ShiftRegister4021< 2 >", "classdaisy_1_1_shift_register4021.html", null ],
     [ "ShiftRegister595", "class_shift_register595.html", null ],
     [ "daisy::SongPositionPointerEvent", "structdaisy_1_1_song_position_pointer_event.html", null ],
     [ "daisy::SongSelectEvent", "structdaisy_1_1_song_select_event.html", null ],
@@ -137,6 +146,12 @@ var hierarchy =
     [ "daisy::SSD130xI2CTransport", "classdaisy_1_1_s_s_d130x_i2_c_transport.html", null ],
     [ "daisy::StackBase< T >", "classdaisy_1_1_stack_base.html", [
       [ "daisy::Stack< T, capacity >", "classdaisy_1_1_stack.html", null ]
+    ] ],
+    [ "daisy::StackBase< daisy::UiCanvasDescriptor >", "classdaisy_1_1_stack_base.html", [
+      [ "daisy::Stack< daisy::UiCanvasDescriptor, kMaxNumCanvases >", "classdaisy_1_1_stack.html", null ]
+    ] ],
+    [ "daisy::StackBase< daisy::UiPage * >", "classdaisy_1_1_stack_base.html", [
+      [ "daisy::Stack< daisy::UiPage *, kMaxNumPages >", "classdaisy_1_1_stack.html", null ]
     ] ],
     [ "daisy::Switch", "classdaisy_1_1_switch.html", null ],
     [ "daisy::Switch3", "classdaisy_1_1_switch3.html", null ],
