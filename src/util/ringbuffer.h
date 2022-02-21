@@ -144,9 +144,9 @@ class RingBuffer
         size_t free;
         free         = this->writable();
         num_elements = num_elements < free ? num_elements : free;
-        write_ptr_ += num_elements;
+        write_ptr_   = write_ptr_ + num_elements;
         if(write_ptr_ > size)
-            write_ptr_ -= size;
+            write_ptr_ = write_ptr_ - size;
     }
 
     /**Returns a pointer to the actual Ring Buffer
