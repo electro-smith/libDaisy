@@ -16,6 +16,7 @@ var annotated_dup =
       [ "AnalogControl", "classdaisy_1_1_analog_control.html", "classdaisy_1_1_analog_control" ],
       [ "AudioHandle", "classdaisy_1_1_audio_handle.html", "classdaisy_1_1_audio_handle" ],
       [ "ButtonMonitor", "classdaisy_1_1_button_monitor.html", "classdaisy_1_1_button_monitor" ],
+      [ "ChannelModeEvent", "structdaisy_1_1_channel_mode_event.html", "structdaisy_1_1_channel_mode_event" ],
       [ "ChannelPressureEvent", "structdaisy_1_1_channel_pressure_event.html", "structdaisy_1_1_channel_pressure_event" ],
       [ "Color", "classdaisy_1_1_color.html", "classdaisy_1_1_color" ],
       [ "ControlChangeEvent", "structdaisy_1_1_control_change_event.html", "structdaisy_1_1_control_change_event" ],

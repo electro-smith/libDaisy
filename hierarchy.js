@@ -8,6 +8,7 @@ var hierarchy =
     [ "daisy::AnalogControl", "classdaisy_1_1_analog_control.html", null ],
     [ "daisy::AudioHandle", "classdaisy_1_1_audio_handle.html", null ],
     [ "daisy::ButtonMonitor< BackendType, numButtons >", "classdaisy_1_1_button_monitor.html", null ],
+    [ "daisy::ChannelModeEvent", "structdaisy_1_1_channel_mode_event.html", null ],
     [ "daisy::ChannelPressureEvent", "structdaisy_1_1_channel_pressure_event.html", null ],
     [ "daisy::Color", "classdaisy_1_1_color.html", null ],
     [ "daisy::AudioHandle::Config", "structdaisy_1_1_audio_handle_1_1_config.html", null ],

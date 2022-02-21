@@ -2,6 +2,7 @@ var structdaisy_1_1_midi_event =
 [
     [ "AsAllNotesOff", "structdaisy_1_1_midi_event.html#a8a909f5a769eedf0eed5ee54890c5fa5", null ],
     [ "AsAllSoundOff", "structdaisy_1_1_midi_event.html#a51bf39a73e3d521f93e0a940d3dead96", null ],
+    [ "AsChannelMode", "structdaisy_1_1_midi_event.html#a08f868f8613fb38af27b3bfe10fea60c", null ],
     [ "AsChannelPressure", "structdaisy_1_1_midi_event.html#ab0fdc3a0e9e448ec561af10749705f2d", null ],
     [ "AsControlChange", "structdaisy_1_1_midi_event.html#a95ed496b1b526f640376d5819131d064", null ],
     [ "AsLocalControl", "structdaisy_1_1_midi_event.html#aa6d8435f2ada50147850e7c040a78f3c", null ],
