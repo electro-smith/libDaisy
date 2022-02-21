@@ -291,10 +291,10 @@ pin_alt usart3_pins_rx[]
 
 pin_alt uart4_pins_tx[] = {{{DSY_GPIOB, 9}, GPIO_AF8_UART4},
                            {{DSY_GPIOC, 10}, GPIO_AF8_UART4},
-                           pins_none};
+                           {{DSY_GPIOA, 0}, GPIO_AF8_UART4}};
 pin_alt uart4_pins_rx[] = {{{DSY_GPIOB, 8}, GPIO_AF8_UART4},
                            {{DSY_GPIOC, 11}, GPIO_AF8_UART4},
-                           pins_none};
+                           {{DSY_GPIOA, 1}, GPIO_AF8_UART4}};
 
 pin_alt uart5_pins_tx[] = {{{DSY_GPIOC, 12}, GPIO_AF8_UART5},
                            {{DSY_GPIOB, 6}, GPIO_AF14_UART5},
