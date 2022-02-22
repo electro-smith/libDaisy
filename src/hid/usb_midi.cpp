@@ -65,8 +65,9 @@ void ReceiveCallback(uint8_t* buffer, uint32_t* length)
     {
         for(uint16_t i = 0; i < *length; i += 4)
         {
-            uint8_t packet_length = *length - i >= 4 ? 4 : *length - i;
-            midi_usb_handle.UsbToMidi(buffer, packet_length);
+            size_t remaining_bytes = *length - i;
+            uint8_t packet_length = remaining_bytes > 4 ? 4 : remaining_bytes;
+            midi_usb_handle.UsbToMidi(buffer + i, packet_length);
         }
     }
 }
