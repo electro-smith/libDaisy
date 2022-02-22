@@ -65,8 +65,8 @@ void ReceiveCallback(uint8_t* buffer, uint32_t* length)
     {
         for(uint16_t i = 0; i < *length; i += 4)
         {
-            size_t remaining_bytes = *length - i;
-            uint8_t packet_length = remaining_bytes > 4 ? 4 : remaining_bytes;
+            size_t  remaining_bytes = *length - i;
+            uint8_t packet_length   = remaining_bytes > 4 ? 4 : remaining_bytes;
             midi_usb_handle.UsbToMidi(buffer + i, packet_length);
         }
     }
@@ -220,7 +220,7 @@ void MidiUsbTransport::Impl::MidiToUsbSingle(uint8_t* buffer, size_t size)
                 tx_buffer_[tx_ptr_ + 2] = buffer[i + 1];
                 tx_buffer_[tx_ptr_ + 3] = buffer[i + 2];
             }
-            
+
             // Fill CIN for terminating bytes
             // 0x05 for 1 remaining byte
             // 0x06 for 2
