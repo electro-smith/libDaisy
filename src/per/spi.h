@@ -84,6 +84,15 @@ class SpiHandle
             dsy_gpio_pin nss;  /**< & */
         } pin_config;
 
+        Config()
+        {
+            // user must specify periph, mode, direction, nss, and pin_config
+            datasize       = 8;
+            clock_polarity = ClockPolarity::LOW;
+            clock_phase    = ClockPhase::ONE_EDGE;
+            baud_prescaler = BaudPrescaler::PS_8;
+        }
+
         Peripheral    periph;
         Mode          mode;
         Direction     direction;

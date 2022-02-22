@@ -738,14 +738,15 @@ static pin_alt_spi spi1_pins_nss[] = {{{DSY_GPIOG, 10}, GPIO_AF5_SPI1},
 
 /* ============== spi2 ============== */
 static pin_alt_spi spi2_pins_sclk[]
-    = {pins_none_spi, pins_none_spi, pins_none_spi};
+    = {{{DSY_GPIOD, 3}, GPIO_AF5_SPI2}, pins_none_spi, pins_none_spi};
 
-static pin_alt_spi spi2_pins_miso[]
-    = {{{DSY_GPIOB, 14}, GPIO_AF5_SPI2}, pins_none_spi, pins_none_spi};
+static pin_alt_spi spi2_pins_miso[] = {{{DSY_GPIOB, 14}, GPIO_AF5_SPI2},
+                                       {{DSY_GPIOC, 2}, GPIO_AF5_SPI2},
+                                       pins_none_spi};
 
 static pin_alt_spi spi2_pins_mosi[] = {{{DSY_GPIOC, 1}, GPIO_AF5_SPI2},
                                        {{DSY_GPIOB, 15}, GPIO_AF5_SPI2},
-                                       pins_none_spi};
+                                       {{DSY_GPIOC, 3}, GPIO_AF5_SPI2}};
 
 static pin_alt_spi spi2_pins_nss[] = {{{DSY_GPIOB, 12}, GPIO_AF5_SPI2},
                                       {{DSY_GPIOB, 4}, GPIO_AF7_SPI2},
