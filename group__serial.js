@@ -188,6 +188,7 @@ var group__serial =
           [ "BITS_8", "structdaisy_1_1_uart_handler_1_1_config.html#ab6153f90fb41fbfe3c95a48b63dbfcd2a506328a07de044eef05ac29ed6b48a7e", null ],
           [ "BITS_9", "structdaisy_1_1_uart_handler_1_1_config.html#ab6153f90fb41fbfe3c95a48b63dbfcd2a9ab6572ed9c11c2b6bd8e9876730ea8c", null ]
         ] ],
+        [ "Config", "structdaisy_1_1_uart_handler_1_1_config.html#a8fb7fc98d0066fa010457bbe092d434b", null ],
         [ "baudrate", "structdaisy_1_1_uart_handler_1_1_config.html#aaa158f6471d11b79c9873215bac76df7", null ],
         [ "mode", "structdaisy_1_1_uart_handler_1_1_config.html#a3b30e6ff02efbb4829b888f7d93091ea", null ],
         [ "parity", "structdaisy_1_1_uart_handler_1_1_config.html#ac48641737eaf10a6d0c78172aff2762a", null ],
