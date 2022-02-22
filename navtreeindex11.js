@@ -1,5 +1,6 @@
 var NAVTREEINDEX11 =
 {
+"structdaisy_1_1_uart_handler_1_1_config.html#a563a78c968ce1adbcc05585c617a5eec":[4,0,2,0,3,0,13],
 "structdaisy_1_1_uart_handler_1_1_config.html#a610e071e45e1258b17896a05c4a23cf3":[4,0,2,0,3,0,8],
 "structdaisy_1_1_uart_handler_1_1_config.html#a69458bc285ceaf3e20fba9299e2ea5b8":[4,0,2,0,3,0,1],
 "structdaisy_1_1_uart_handler_1_1_config.html#a69458bc285ceaf3e20fba9299e2ea5b8a57a1355d5527355458c7cc08ba70bf94":[4,0,2,0,3,0,1,2],

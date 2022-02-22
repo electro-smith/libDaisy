@@ -146,7 +146,7 @@ var NAVTREEINDEX =
 "group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a09f31e6b22e89d20b9a9912a39be26e7",
 "md_doc_md__a3__getting__started__audio.html",
 "structdaisy_1_1_midi_event.html#a8a909f5a769eedf0eed5ee54890c5fa5",
-"structdaisy_1_1_uart_handler_1_1_config.html#a610e071e45e1258b17896a05c4a23cf3"
+"structdaisy_1_1_uart_handler_1_1_config.html#a563a78c968ce1adbcc05585c617a5eec"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

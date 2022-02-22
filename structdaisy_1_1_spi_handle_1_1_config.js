@@ -41,6 +41,7 @@ var structdaisy_1_1_spi_handle_1_1_config =
       [ "SPI_5", "structdaisy_1_1_spi_handle_1_1_config.html#a446ef992a86b93c86fa966f42375586dad542978ab136ddc731480ff46302acb9", null ],
       [ "SPI_6", "structdaisy_1_1_spi_handle_1_1_config.html#a446ef992a86b93c86fa966f42375586dac81c898df22f87db948fdb3f9377314b", null ]
     ] ],
+    [ "Config", "structdaisy_1_1_spi_handle_1_1_config.html#ac8f7dcc5214fc0b910e7755deac5e5f5", null ],
     [ "baud_prescaler", "structdaisy_1_1_spi_handle_1_1_config.html#aafe290af675fa8107f3692353e2f60b1", null ],
     [ "clock_phase", "structdaisy_1_1_spi_handle_1_1_config.html#a87e4362d9c238f2401231b0209780415", null ],
     [ "clock_polarity", "structdaisy_1_1_spi_handle_1_1_config.html#a035f8343e15d67d087f019f6256a0e81", null ],
