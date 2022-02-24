@@ -7,7 +7,7 @@ void Encoder::Init(dsy_gpio_pin a,
                    dsy_gpio_pin click,
                    float        update_rate)
 {
-    last_update_ = 0;
+    last_update_ = System::GetNow();
 
     // Init GPIO for A, and B
     hw_a_.pin  = a;

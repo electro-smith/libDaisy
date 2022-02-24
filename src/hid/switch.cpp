@@ -7,7 +7,7 @@ void Switch::Init(dsy_gpio_pin pin,
                   Polarity     pol,
                   Pull         pu)
 {
-    last_update_ = 0;
+    last_update_ = System::GetNow();
     state_       = 0x00;
     t_           = t;
     // Flip may seem opposite to logical direction,
