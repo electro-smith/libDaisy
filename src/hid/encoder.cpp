@@ -31,7 +31,7 @@ void Encoder::Debounce()
     uint32_t now = System::GetNow();
     if(now - last_update_ >= 1)
     {
-        lat_update_ = now;
+        last_update_ = now;
 
         // Shift Button states to debounce
         a_ = (a_ << 1) | dsy_gpio_read(&hw_a_);
