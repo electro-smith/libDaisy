@@ -31,11 +31,12 @@ void Encoder::Debounce()
     uint32_t now = System::GetNow();
     if(now - last_update_ >= 1)
     {
+        lat_update_ = now;
+
         // Shift Button states to debounce
         a_ = (a_ << 1) | dsy_gpio_read(&hw_a_);
         b_ = (b_ << 1) | dsy_gpio_read(&hw_b_);
-        // Debounce built-in switch
-        sw_.Debounce();
+
         // infer increment direction
         inc_ = 0; // reset inc_ first
         if((a_ & 0x03) == 0x02 && (b_ & 0x03) == 0x00)
@@ -47,4 +48,7 @@ void Encoder::Debounce()
             inc_ = -1;
         }
     }
+
+    // Debounce built-in switch
+    sw_.Debounce();
 }
