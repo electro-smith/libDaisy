@@ -110,6 +110,11 @@ class UartHandler
     /** Returns the current config. */
     const Config& GetConfig() const;
 
+    /** A callback to be executed right before a dma transfer is started. */
+    typedef void (*StartCallbackFunctionPtr)(void* context);
+    /** A callback to be executed after a dma transfer is completed. */
+    typedef void (*EndCallbackFunctionPtr)(void* context, Result result);
+
     /** Reads the amount of bytes in blocking mode with a 10ms timeout.
     \param *buff Buffer  to read to
     \param size Buff size
@@ -152,6 +157,57 @@ class UartHandler
     \return 1 or 0 ??
      */
     size_t Readable();
+
+    /** DMA-based transmit 
+    \param *buff input buffer
+    \param size  buffer size
+    \param start_callback   A callback to execute when the transfer starts, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param end_callback     A callback to execute when the transfer finishes, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param callback_context A pointer that will be passed back to you in the callbacks.     
+    \return Whether the transmit was successful or not
+    */
+    Result DmaTransmit(uint8_t*                            buff,
+                       size_t                              size,
+                       SpiHandle::StartCallbackFunctionPtr start_callback,
+                       SpiHandle::EndCallbackFunctionPtr   end_callback,
+                       void*                               callback_context);
+
+    /** DMA-based receive 
+    \param *buff input buffer
+    \param size  buffer size
+    \param start_callback   A callback to execute when the transfer starts, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param end_callback     A callback to execute when the transfer finishes, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param callback_context A pointer that will be passed back to you in the callbacks.    
+    \return Whether the receive was successful or not
+    */
+    Result DmaReceive(uint8_t*                            buff,
+                      size_t                              size,
+                      SpiHandle::StartCallbackFunctionPtr start_callback,
+                      SpiHandle::EndCallbackFunctionPtr   end_callback,
+                      void*                               callback_context);
+
+    /** DMA-based transmit and receive 
+    \param tx_buff  the transmit buffer
+    \param rx_buff  the receive buffer
+    \param size     buffer size
+    \param start_callback   A callback to execute when the transfer starts, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param end_callback     A callback to execute when the transfer finishes, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param callback_context A pointer that will be passed back to you in the callbacks.    
+    \return Whether the receive was successful or not
+    */
+    Result
+    DmaTransmitAndReceive(uint8_t*                            tx_buff,
+                          uint8_t*                            rx_buff,
+                          size_t                              size,
+                          SpiHandle::StartCallbackFunctionPtr start_callback,
+                          SpiHandle::EndCallbackFunctionPtr   end_callback,
+                          void*                               callback_context);
 
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
