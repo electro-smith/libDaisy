@@ -1,4 +1,5 @@
 #include "daisy_seed.h"
+#include "dma.h"
 
 using namespace daisy;
 
@@ -205,6 +206,8 @@ void DaisySeed::ConfigureAudio()
     sai_handle.bitdepth[DSY_SAI_1]    = DSY_AUDIO_BITDEPTH_24;
     sai_handle.a_direction[DSY_SAI_1] = DSY_AUDIO_TX;
     sai_handle.b_direction[DSY_SAI_1] = DSY_AUDIO_RX;
+    // sai_handle.a_direction[DSY_SAI_1] = DSY_AUDIO_RX;
+    // sai_handle.b_direction[DSY_SAI_1] = DSY_AUDIO_TX;
 #else
     sai_handle.device[DSY_SAI_1] = DSY_AUDIO_DEVICE_WM8731;
     sai_handle.samplerate[DSY_SAI_1]  = DSY_AUDIO_SAMPLERATE_48K;

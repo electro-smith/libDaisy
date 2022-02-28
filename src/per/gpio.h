@@ -16,11 +16,14 @@ extern "C"
     /** Sets the mode of the GPIO */
     typedef enum
     {
-        DSY_GPIO_MODE_INPUT,     /**< & */
-        DSY_GPIO_MODE_OUTPUT_PP, /**< Push-Pull */
-        DSY_GPIO_MODE_OUTPUT_OD, /**< Open-Drain */
-        DSY_GPIO_MODE_ANALOG,    /**< & */
-        DSY_GPIO_MODE_LAST,      /**< & */
+        DSY_GPIO_MODE_INPUT,      /**< & */
+        DSY_GPIO_MODE_OUTPUT_PP,  /**< Push-Pull */
+        DSY_GPIO_MODE_OUTPUT_OD,  /**< Open-Drain */
+        DSY_GPIO_MODE_ANALOG,     /**< & */
+        DSY_GPIO_MODE_IT_RISING,  /**< &*/
+        DSY_GPIO_MODE_IT_FALLING, /** < & */
+        DSY_GPIO_MODE_IT_BOTH,    /** < &*/
+        DSY_GPIO_MODE_LAST,       /**< & */
     } dsy_gpio_mode;
 
     /** Configures whether an internal Pull up or Pull down resistor is used */
@@ -31,12 +34,16 @@ extern "C"
         DSY_GPIO_PULLDOWN, /**< & */
     } dsy_gpio_pull;
 
+    /**Callback for Interrupt Functionality*/
+    typedef void (*dsy_gpio_callback)(void);
+
     /** Struct for holding the pin, and configuration */
     typedef struct
     {
-        dsy_gpio_pin  pin;  /**< & */
-        dsy_gpio_mode mode; /**< & */
-        dsy_gpio_pull pull; /**< & */
+        dsy_gpio_pin      pin;  /**< & */
+        dsy_gpio_mode     mode; /**< & */
+        dsy_gpio_pull     pull; /**< & */
+        dsy_gpio_callback cb;   /**< &*/
     } dsy_gpio;
 
     /** Initializes the gpio with the settings configured. 

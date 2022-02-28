@@ -69,7 +69,12 @@ void SysTick_Handler(void)
 
 void HardFault_Handler()
 {
+#ifdef DEBUG
     asm("bkpt 255");
+#else
+    // Maybe we should do something much different than this...
+    NVIC_SystemReset();
+#endif
 }
 
 void dsy_system_init()
@@ -164,8 +169,9 @@ void SystemClock_Config()
           | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_QSPI | RCC_PERIPHCLK_FMC;
     // PLL 2
     PeriphClkInitStruct.PLL2.PLL2M = 4;
-    //  PeriphClkInitStruct.PLL2.PLL2N = 115; // Max Freq @ 3v3
-    PeriphClkInitStruct.PLL2.PLL2N      = 84; // Max Freq @ 1V9
+    //PeriphClkInitStruct.PLL2.PLL2N = 115; // Max Freq @ 3v3
+    //PeriphClkInitStruct.PLL2.PLL2N      = 84; // Max Freq @ 1V9
+    PeriphClkInitStruct.PLL2.PLL2N      = 100;
     PeriphClkInitStruct.PLL2.PLL2P      = 8;  // 57.5
     PeriphClkInitStruct.PLL2.PLL2Q      = 10; // 46
     PeriphClkInitStruct.PLL2.PLL2R      = 2;  // 115Mhz
@@ -173,9 +179,10 @@ void SystemClock_Config()
     PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
     PeriphClkInitStruct.PLL2.PLL2FRACN  = 0;
     // PLL 3
-    PeriphClkInitStruct.PLL3.PLL3M        = 6;
-    PeriphClkInitStruct.PLL3.PLL3N        = 295;
-    PeriphClkInitStruct.PLL3.PLL3P        = 64; // 12.29Mhz
+    PeriphClkInitStruct.PLL3.PLL3M = 6;
+    PeriphClkInitStruct.PLL3.PLL3N = 295;
+    //PeriphClkInitStruct.PLL3.PLL3P        = 64; // 12.29Mhz
+    PeriphClkInitStruct.PLL3.PLL3P        = 16; // 12.29Mhz
     PeriphClkInitStruct.PLL3.PLL3Q        = 4;
     PeriphClkInitStruct.PLL3.PLL3R        = 32; // 24.xMhz
     PeriphClkInitStruct.PLL3.PLL3RGE      = RCC_PLL3VCIRANGE_1;

@@ -55,6 +55,22 @@ class AnalogControl
     /** Returns the current stored value, without reprocessing */
     inline float Value() const { return val_; }
 
+    /** Sets the Scale/Offset for the processor 
+     ** A 0-3v3 input would use scale =1 offset = 0 
+     ** A typical -5V to +5V CV input circuit would be inverted, and have a scale of 2, and offset of 0.5
+     ** */
+    inline void SetScaleOffset(float scale, float offset)
+    {
+        scale_  = scale;
+        offset_ = offset;
+    }
+
+    /** Adjusts the Filter Coefficient to use.*/
+    inline void SetFilterSlewTime(float slew_seconds)
+    {
+        coeff_ = 1.0f / (slew_seconds * samplerate_ * 0.5f);
+    }
+
   private:
     uint16_t *raw_;
     float     coeff_, samplerate_, val_;

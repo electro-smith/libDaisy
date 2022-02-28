@@ -11,6 +11,11 @@ void dsy_gpio_init(const dsy_gpio *p)
         case DSY_GPIO_MODE_INPUT: ginit.Mode = GPIO_MODE_INPUT; break;
         case DSY_GPIO_MODE_OUTPUT_PP: ginit.Mode = GPIO_MODE_OUTPUT_PP; break;
         case DSY_GPIO_MODE_OUTPUT_OD: ginit.Mode = GPIO_MODE_OUTPUT_OD; break;
+        case DSY_GPIO_MODE_IT_RISING: ginit.Mode = GPIO_MODE_IT_RISING; break;
+        case DSY_GPIO_MODE_IT_FALLING: ginit.Mode = GPIO_MODE_IT_FALLING; break;
+        case DSY_GPIO_MODE_IT_BOTH:
+            ginit.Mode = GPIO_MODE_IT_RISING_FALLING;
+            break;
         case DSY_GPIO_MODE_ANALOG: ginit.Mode = GPIO_MODE_ANALOG; break;
         default: ginit.Mode = GPIO_MODE_INPUT; break;
     }
@@ -25,6 +30,14 @@ void dsy_gpio_init(const dsy_gpio *p)
     port        = dsy_hal_map_get_port(&p->pin);
     ginit.Pin   = dsy_hal_map_get_pin(&p->pin);
     HAL_GPIO_Init(port, &ginit);
+
+    if(p->mode == DSY_GPIO_MODE_IT_RISING
+       || p->mode == DSY_GPIO_MODE_IT_FALLING
+       || p->mode == DSY_GPIO_MODE_IT_BOTH)
+    {
+        HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+    }
 }
 
 void dsy_gpio_deinit(const dsy_gpio *p)
@@ -60,3 +73,11 @@ void dsy_gpio_toggle(const dsy_gpio *p)
     //    HAL_GPIO_TogglePin((GPIO_TypeDef *)gpio_hal_port_map[p->pin.port],
     //                       gpio_hal_pin_map[p->pin.pin]);
 }
+
+void EXTI9_5_IRQHandler()
+{
+    // Add others to this list for other stuff.
+//    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_15);
+    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_6);
+}
+

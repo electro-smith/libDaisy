@@ -94,6 +94,9 @@ class RingBuffer
         read_ptr_ = (write_ptr_ + 1 + n) % size;
     }
 
+    /** Swallows all inputs, setting the read pointer to the write pointer */
+    inline void SwallowAll() { read_ptr_ = write_ptr_; }
+
     /** Reads a number of elements into a buffer immediately
     \param destination buffer to write to
     \param num_elements number of elements in buffer    

@@ -140,8 +140,9 @@ static void dsy_sai_blocks_init(uint8_t            sai_idx,
 
     blockA->Init.OutputDrive    = SAI_OUTPUTDRIVE_DISABLE;
     blockA->Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
-    blockA->Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_EMPTY;
-    blockA->Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
+    blockA->Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_HF;
+    //blockA->Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
+    blockA->Init.AudioFrequency = SAI_AUDIO_FREQUENCY_96K;
     blockA->Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
     blockA->Init.MonoStereoMode = SAI_STEREOMODE;
     blockA->Init.CompandingMode = SAI_NOCOMPANDING;
@@ -157,7 +158,7 @@ static void dsy_sai_blocks_init(uint8_t            sai_idx,
     //    hsai_BlockB1.Init.AudioMode      = SAI_MODESLAVE_RX;
     blockB->Init.Synchro        = SAI_SYNCHRONOUS;
     blockB->Init.OutputDrive    = SAI_OUTPUTDRIVE_DISABLE;
-    blockB->Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_EMPTY;
+    blockB->Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_HF;
     blockB->Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
     blockB->Init.MonoStereoMode = SAI_STEREOMODE;
     blockB->Init.CompandingMode = SAI_NOCOMPANDING;
@@ -211,7 +212,8 @@ static void dsy_sai1_init()
     hsai_BlockA1.Init.OutputDrive    = SAI_OUTPUTDRIVE_DISABLE;
     hsai_BlockA1.Init.NoDivider      = SAI_MASTERDIVIDER_ENABLE;
     hsai_BlockA1.Init.FIFOThreshold  = SAI_FIFOTHRESHOLD_EMPTY;
-    hsai_BlockA1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
+//    hsai_BlockA1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_48K;
+    hsai_BlockA1.Init.AudioFrequency = SAI_AUDIO_FREQUENCY_96K;
     hsai_BlockA1.Init.SynchroExt     = SAI_SYNCEXT_DISABLE;
     hsai_BlockA1.Init.MonoStereoMode = SAI_STEREOMODE;
     hsai_BlockA1.Init.CompandingMode = SAI_NOCOMPANDING;

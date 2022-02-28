@@ -12,7 +12,8 @@ const float Color::standard_colors[Color::LAST][3] = {
     {1.0f, 1.0f, 1.0f},   // WHITE
     {0.25f, 0.0f, 1.0f},  // PURPLE
     {0.0f, 0.25f, 0.75f}, // CYAN
-    {1.0f, 0.33f, 0.0f},  // GOLD
+//    {1.0f, 0.33f, 0.0f},  // GOLD
+    {0.8f, 0.75f, 0.0f},  // GOLD
     {0.0f, 0.0f, 0.0f},   // OFF
 };
 
