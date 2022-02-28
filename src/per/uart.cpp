@@ -30,6 +30,23 @@ static void Error_Handler()
 class UartHandler::Impl
 {
   public:
+    struct UartDmaJob
+    {
+        uint8_t*                              data_rx          = nullptr;
+        uint8_t*                              data_tx          = nullptr;
+        uint16_t                              size             = 0;
+        UartHandler::StartCallbackFunctionPtr start_callback   = nullptr;
+        UartHandler::EndCallbackFunctionPtr   end_callback     = nullptr;
+        void*                                 callback_context = nullptr;
+        UartHandler::DmaDirection direction = UartHandler::DmaDirection::TX;
+
+        bool IsValidJob() const
+        {
+            return data_rx != nullptr && data_tx != nullptr;
+        }
+        void Invalidate() { data_rx = data_tx = nullptr; }
+    };
+
     UartHandler::Result Init(const UartHandler::Config& config);
 
     const UartHandler::Config& GetConfig() const { return config_; }
@@ -48,6 +65,58 @@ class UartHandler::Impl
 
     size_t Readable();
 
+    UartHandler::Result
+    DmaTransmit(uint8_t*                              buff,
+                size_t                                size,
+                UartHandler::StartCallbackFunctionPtr start_callback,
+                UartHandler::EndCallbackFunctionPtr   end_callback,
+                void*                                 callback_context);
+
+    UartHandler::Result
+    DmaReceive(uint8_t*                              buff,
+               size_t                                size,
+               UartHandler::StartCallbackFunctionPtr start_callback,
+               UartHandler::EndCallbackFunctionPtr   end_callback,
+               void*                                 callback_context);
+
+    UartHandler::Result
+    DmaTransmitAndReceive(uint8_t*                              tx_buff,
+                          uint8_t*                              rx_buff,
+                          size_t                                size,
+                          UartHandler::StartCallbackFunctionPtr start_callback,
+                          UartHandler::EndCallbackFunctionPtr   end_callback,
+                          void* callback_context);
+
+
+    Result StartDmaTx(uint8_t*                            buff,
+                      size_t                              size,
+                      SpiHandle::StartCallbackFunctionPtr start_callback,
+                      SpiHandle::EndCallbackFunctionPtr   end_callback,
+                      void*                               callback_context);
+
+    Result StartDmaRx(uint8_t*                            buff,
+                      size_t                              size,
+                      SpiHandle::StartCallbackFunctionPtr start_callback,
+                      SpiHandle::EndCallbackFunctionPtr   end_callback,
+                      void*                               callback_context);
+    Result StartDmaRxTx(uint8_t*                            tx_buff,
+                        uint8_t*                            rx_buff,
+                        size_t                              size,
+                        SpiHandle::StartCallbackFunctionPtr start_callback,
+                        SpiHandle::EndCallbackFunctionPtr   end_callback,
+                        void*                               callback_context);
+
+    static void GlobalInit();
+    static bool IsDmaBusy();
+    static void DmaTransferFinished(SPI_HandleTypeDef* hspi,
+                                    SpiHandle::Result  result);
+
+    static void QueueDmaTransfer(size_t spi_idx, const SpiDmaJob& job);
+    static bool IsDmaTransferQueuedFor(size_t spi_idx);
+
+    Result SetDmaPeripheral();
+    Result InitDma();
+
     int CheckError();
 
     UartHandler::Result InitPins();
@@ -57,7 +126,6 @@ class UartHandler::Impl
     void UARTRxComplete();
 
     UART_HandleTypeDef huart_;
-    DMA_HandleTypeDef  hdma_rx_;
     bool               receiving_;
     size_t             rx_size_, rx_last_pos_;
     UartRingBuffer*    dma_fifo_rx_;
@@ -67,6 +135,15 @@ class UartHandler::Impl
 #endif
 
     UartHandler::Config config_;
+
+    // DMA stuff
+    static constexpr uint8_t kNumUartWithDma = ;
+    static volatile int8_t   dma_active_peripheral_;
+    static UartDmaJob        queued_dma_transfers_[kNumUartWithDma];
+    static UartHandler::EndCallbackFunctionPtr next_end_callback_;
+    static void*                               next_callback_context_;
+    DMA_HandleTypeDef                          hdma_rx_;
+    DMA_HandleTypeDef                          hdma_tx_;
 };
 
 
