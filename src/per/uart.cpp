@@ -1126,14 +1126,10 @@ UartHandler::Result UartHandler::PollTx(uint8_t* buff, size_t size)
     return pimpl_->BlockingTransmit(buff, size, 10);
 }
 
-// this almost certainly doesn't work...
-void    scb(void* c) {}
-void    ecb(void* c, UartHandler::Result r) {}
 uint8_t UartHandler::PopRx()
 {
     uint8_t buff;
-    void*   p = 0;
-    pimpl_->DmaReceive(&buff, 1, scb, ecb, p);
+    pimpl_->DmaReceive(&buff, 1, NULL, NULL, NULL);
     return buff;
 }
 
