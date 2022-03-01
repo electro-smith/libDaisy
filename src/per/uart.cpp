@@ -53,20 +53,12 @@ class UartHandler::Impl
 
     const UartHandler::Config& GetConfig() const { return config_; }
 
-    int PollReceive(uint8_t* buff, size_t size, uint32_t timeout);
-
-    UartHandler::Result StartRx();
-
-    bool RxActive();
-
-    UartHandler::Result FlushRx();
-
-    UartHandler::Result PollTx(uint8_t* buff, size_t size);
-
-    uint8_t PopRx();
-
-    size_t Readable();
-
+    Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout);
+    Result BlockingReceive(uint8_t* buff, size_t size, uint32_t timeout);
+    Result BlockingTransmitAndReceive(uint8_t* tx_buff,
+                                      uint8_t* rx_buff,
+                                      size_t   size,
+                                      uint32_t timeout);
     UartHandler::Result
     DmaTransmit(uint8_t*                              buff,
                 size_t                                size,
@@ -687,67 +679,31 @@ UartHandler::Result UartHandler::Impl::StartDmaRxTx(
     return UartHandler::Result::OK;
 }
 
-int UartHandler::Impl::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
+UartHandler::Result
+UartHandler::Impl::BlockingReceive(uint8_t* buff, size_t size, uint32_t timeout)
 {
-    return HAL_UART_Receive(&huart_, (uint8_t*)buff, size, timeout);
-}
-
-UartHandler::Result UartHandler::Impl::StartRx()
-{
-    int status = 0;
-    // Now start Rx
-    status = HAL_UART_Receive_DMA(
-        &huart_, (uint8_t*)dma_fifo_rx_->GetMutableBuffer(), rx_size_);
-    if(status == 0)
-        rx_active_ = true;
-    return rx_active_ ? Result::OK : Result::ERR;
-}
-
-bool UartHandler::Impl::RxActive()
-{
-    return rx_active_;
-}
-
-//this originally had a useless status var hanging about
-//I don't think we can actually error check this...
-UartHandler::Result UartHandler::Impl::FlushRx()
-{
-#ifdef UART_RX_DOUBLE_BUFFER
-    queue_rx_.Flush();
-#else
-    dma_fifo_rx_->Flush();
-#endif
+    if(HAL_UART_Receive(&huart_, (uint8_t*)buff, size, timeout) != HAL_OK)
+    {
+        return Result::ERR;
+    }
     return Result::OK;
 }
 
-UartHandler::Result UartHandler::Impl::PollTx(uint8_t* buff, size_t size)
+UartHandler::Result UartHandler::Impl::BlockingTransmit(uint8_t* buff,
+                                                        size_t   size,
+                                                        uint32_t timeout)
 {
-    HAL_StatusTypeDef status
-        = HAL_UART_Transmit(&huart_, (uint8_t*)buff, size, 10);
-    return (status == HAL_OK ? Result::OK : Result::ERR);
+    if(HAL_UART_Transmit(&huart_, (uint8_t*)buff, size, timeout) != HAL_OK)
+    {
+        return Result::ERR;
+    }
+    return Result::OK;
 }
+
 
 int UartHandler::Impl::CheckError()
 {
     return HAL_UART_GetError(&huart_);
-}
-
-uint8_t UartHandler::Impl::PopRx()
-{
-#ifdef UART_RX_DOUBLE_BUFFER
-    return queue_rx_.Read();
-#else
-    return dma_fifo_rx_->Read();
-#endif
-}
-
-size_t UartHandler::Impl::Readable()
-{
-#ifdef UART_RX_DOUBLE_BUFFER
-    return queue_rx_.readable();
-#else
-    return dma_fifo_rx_->readable();
-#endif
 }
 
 typedef struct
@@ -902,76 +858,6 @@ UartHandler::Result UartHandler::Impl::DeInitPins()
     return Result::OK;
 }
 
-// Callbacks
-void UartHandler::Impl::UARTRxComplete()
-{
-    size_t len, cur_pos;
-    //get current write pointer
-    cur_pos = (rx_size_ - ((DMA_Stream_TypeDef*)huart_.hdmarx->Instance)->NDTR)
-              & (rx_size_ - 1);
-    //calculate how far the DMA write pointer has moved
-    len = (cur_pos - rx_last_pos_ + rx_size_) % rx_size_;
-    //check message size
-    if(len <= rx_size_)
-    {
-        dma_fifo_rx_->Advance(len);
-        rx_last_pos_ = cur_pos;
-#ifdef UART_RX_DOUBLE_BUFFER
-        // Copy to queue fifo we don't want to use primary fifo to avoid
-        // changes to the buffer while its being processed
-        uint8_t processbuf[256];
-        dma_fifo_rx_->ImmediateRead(processbuf, len);
-        queue_rx_.Overwrite(processbuf, len);
-#endif
-    }
-    else
-    {
-        while(1)
-            ; //implement message to large exception
-    }
-}
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
-{
-    UartHandler::Impl* handle = MapInstanceToHandle(huart->Instance);
-    if(__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))
-    {
-        handle->UARTRxComplete();
-    }
-}
-
-void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
-{
-    switch(huart->ErrorCode)
-    {
-        case HAL_UART_ERROR_NONE: break;
-        case HAL_UART_ERROR_PE: break;  // Parity Error
-        case HAL_UART_ERROR_NE: break;  // Noise Error
-        case HAL_UART_ERROR_FE: break;  // Frame Error
-        case HAL_UART_ERROR_ORE: break; // Overrun Error
-        case HAL_UART_ERROR_DMA: break; // DMA Transfer Erro
-        default: break;
-    }
-    // Mark rx as deactivated
-    MapInstanceToHandle(huart->Instance)->rx_active_ = false;
-}
-void HAL_UART_AbortCpltCallback(UART_HandleTypeDef* huart)
-{
-    //    asm("bkpt 255");
-}
-void HAL_UART_AbortTransmitCpltCallback(UART_HandleTypeDef* huart)
-{
-    //    asm("bkpt 255");
-}
-void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
-{
-    //    asm("bkpt 255");
-}
-
-// Unimplemented HAL Callbacks
-//void HAL_UART_TxHalfCpltCallback(UART_HandleTypeDef *huart);
-//void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart);
-//void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart);
-
 // HAL Interface functions
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
@@ -984,76 +870,54 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     {
         case UartHandler::Config::Peripheral::USART_1:
             __HAL_RCC_USART1_CLK_ENABLE();
+            HAL_NVIC_SetPriority(USART1_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(USART1_IRQn);
             break;
         case UartHandler::Config::Peripheral::USART_2:
             __HAL_RCC_USART2_CLK_ENABLE();
+            HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(USART2_IRQn);
             break;
         case UartHandler::Config::Peripheral::USART_3:
             __HAL_RCC_USART3_CLK_ENABLE();
+            HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(USART3_IRQn);
             break;
         case UartHandler::Config::Peripheral::UART_4:
             __HAL_RCC_UART4_CLK_ENABLE();
+            HAL_NVIC_SetPriority(UART4_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(UART4_IRQn);
             break;
         case UartHandler::Config::Peripheral::UART_5:
             __HAL_RCC_UART5_CLK_ENABLE();
+            HAL_NVIC_SetPriority(UART5_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(UART5_IRQn);
             break;
         case UartHandler::Config::Peripheral::USART_6:
             __HAL_RCC_USART6_CLK_ENABLE();
+            HAL_NVIC_SetPriority(USART6_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(USART6_IRQn);
             break;
         case UartHandler::Config::Peripheral::UART_7:
             __HAL_RCC_UART7_CLK_ENABLE();
+            HAL_NVIC_SetPriority(UART7_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(UART7_IRQn);
             break;
         case UartHandler::Config::Peripheral::UART_8:
             __HAL_RCC_UART8_CLK_ENABLE();
+            HAL_NVIC_SetPriority(UART8_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(UART8_IRQn);
             break;
         case UartHandler::Config::Peripheral::LPUART_1:
             __HAL_RCC_LPUART1_CLK_ENABLE();
+            HAL_NVIC_SetPriority(LPUART1_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(LPUART1_IRQn);
             break;
     }
 
     if(handle->InitPins() == UartHandler::Result::ERR)
     {
         Error_Handler();
-    }
-
-    /* USART1 DMA Init */
-    /* USART1_RX Init */
-    //usart1 uses dma by default for now
-    if(handle->huart_.Instance == USART1)
-    {
-        handle->hdma_rx_.Instance                 = DMA1_Stream5;
-        handle->hdma_rx_.Init.Request             = DMA_REQUEST_USART1_RX;
-        handle->hdma_rx_.Init.Direction           = DMA_PERIPH_TO_MEMORY;
-        handle->hdma_rx_.Init.PeriphInc           = DMA_PINC_DISABLE;
-        handle->hdma_rx_.Init.MemInc              = DMA_MINC_ENABLE;
-        handle->hdma_rx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
-        handle->hdma_rx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-        handle->hdma_rx_.Init.Mode                = DMA_CIRCULAR;
-        handle->hdma_rx_.Init.Priority            = DMA_PRIORITY_LOW;
-        handle->hdma_rx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-        if(HAL_DMA_Init(&handle->hdma_rx_) != HAL_OK)
-        {
-            Error_Handler();
-        }
-
-        __HAL_LINKDMA(uartHandle, hdmarx, handle->hdma_rx_);
-
-        // Disable HalfTransfer Interrupt
-        ((DMA_Stream_TypeDef*)handle->hdma_rx_.Instance)->CR
-            &= ~(DMA_SxCR_HTIE);
-
-        IRQn_Type types[] = {USART1_IRQn,
-                             USART2_IRQn,
-                             USART3_IRQn,
-                             UART4_IRQn,
-                             UART5_IRQn,
-                             USART6_IRQn,
-                             UART7_IRQn,
-                             UART8_IRQn,
-                             LPUART1_IRQn};
-
-        HAL_NVIC_SetPriority(types[(int)handle->config_.periph], 0, 0);
-        HAL_NVIC_EnableIRQ(types[(int)handle->config_.periph]);
     }
 
     /* USER CODE BEGIN USART1_MspInit 1 */
@@ -1144,14 +1008,50 @@ extern "C"
     void UART7_IRQHandler() { UART_IRQHandler(&uart_handles[6]); }
     void UART8_IRQHandler() { UART_IRQHandler(&uart_handles[7]); }
     void LPUART1_IRQHandler() { UART_IRQHandler(&uart_handles[8]); }
+}
 
-    void DMA1_Stream5_IRQHandler()
-    {
-        //TODO for now USART1 is the only one working with DMA
-        //in the future we want to keep track of who connects to which DMA
-        //stream, then refer to that info here
-        HAL_DMA_IRQHandler(&uart_handles[0].hdma_rx_);
-    }
+void HalUartDmaRxStreamCallback(void)
+{
+    ScopedIrqBlocker block;
+    if(UartHandler::Impl::dma_active_peripheral_ >= 0)
+        HAL_DMA_IRQHandler(
+            &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_rx_);
+}
+extern "C" void DMA1_Stream5_IRQHandler()
+{
+    HalUartDmaRxStreamCallback();
+}
+
+void HalUartDmaTxStreamCallback(void)
+{
+    ScopedIrqBlocker block;
+    if(UartHandler::Impl::dma_active_peripheral_ >= 0)
+        HAL_DMA_IRQHandler(
+            &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_tx_);
+}
+extern "C" void DMA2_Stream4_IRQHandler()
+{
+    HalUartDmaTxStreamCallback();
+}
+
+extern "C" void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart)
+{
+    UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
+}
+
+extern "C" void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
+{
+    UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
+}
+
+extern "C" void HAL_UART_TxRxCpltCallback(UART_HandleTypeDef* huart)
+{
+    UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
+}
+
+extern "C" void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
+{
+    UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::ERR);
 }
 
 // ======================================================================
@@ -1169,42 +1069,105 @@ const UartHandler::Config& UartHandler::GetConfig() const
     return pimpl_->GetConfig();
 }
 
-int UartHandler::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
+UartHandler::Result
+UartHandler::BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout)
 {
-    return pimpl_->PollReceive(buff, size, timeout);
+    return pimpl_->BlockingTransmit(buff, size, timeout);
 }
 
-UartHandler::Result UartHandler::StartRx()
+UartHandler::Result
+UartHandler::BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout)
 {
-    return pimpl_->StartRx();
+    return pimpl_->BlockingReceive(buffer, size, timeout);
 }
 
-bool UartHandler::RxActive()
+
+UartHandler::Result
+UartHandler::DmaTransmit(uint8_t*                              buff,
+                         size_t                                size,
+                         UartHandler::StartCallbackFunctionPtr start_callback,
+                         UartHandler::EndCallbackFunctionPtr   end_callback,
+                         void*                                 callback_context)
 {
-    return pimpl_->RxActive();
+    return pimpl_->DmaTransmit(
+        buff, size, start_callback, end_callback, callback_context);
 }
 
-UartHandler::Result UartHandler::FlushRx()
+UartHandler::Result
+UartHandler::DmaReceive(uint8_t*                              buff,
+                        size_t                                size,
+                        UartHandler::StartCallbackFunctionPtr start_callback,
+                        UartHandler::EndCallbackFunctionPtr   end_callback,
+                        void*                                 callback_context)
 {
-    return pimpl_->FlushRx();
+    return pimpl_->DmaReceive(
+        buff, size, start_callback, end_callback, callback_context);
 }
 
-UartHandler::Result UartHandler::PollTx(uint8_t* buff, size_t size)
+UartHandler::Result UartHandler::DmaTransmitAndReceive(
+    uint8_t*                              rx_buff,
+    uint8_t*                              tx_buff,
+    size_t                                size,
+    UartHandler::StartCallbackFunctionPtr start_callback,
+    UartHandler::EndCallbackFunctionPtr   end_callback,
+    void*                                 callback_context)
 {
-    return pimpl_->PollTx(buff, size);
+    return pimpl_->DmaTransmitAndReceive(
+        rx_buff, tx_buff, size, start_callback, end_callback, callback_context);
 }
 
-uint8_t UartHandler::PopRx()
+UartHandler::Result UartHandler::BlockingTransmitAndReceive(uint8_t* tx_buff,
+                                                            uint8_t* rx_buff,
+                                                            size_t   size,
+                                                            uint32_t timeout)
 {
-    return pimpl_->PopRx();
-}
-
-size_t UartHandler::Readable()
-{
-    return pimpl_->Readable();
+    return pimpl_->BlockingTransmitAndReceive(tx_buff, rx_buff, size, timeout);
 }
 
 int UartHandler::CheckError()
 {
     return pimpl_->CheckError();
+}
+
+// ========= wrappers and stubs to be deprecated  =========
+
+int UartHandler::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
+{
+    return pimpl_->BlockingReceive(buff, size, timeout) == Result::ERR;
+}
+
+UartHandler::Result UartHandler::StartRx()
+{
+    return Result::OK;
+}
+
+bool UartHandler::RxActive()
+{
+    return true;
+}
+
+UartHandler::Result UartHandler::FlushRx()
+{
+    return Result::OK;
+}
+
+UartHandler::Result UartHandler::PollTx(uint8_t* buff, size_t size)
+{
+    return pimpl_->BlockingTransmit(buff, size, 10);
+}
+
+// this almost certainly doesn't work...
+void    scb(void* c) {}
+void    ecb(void* c, UartHandler::Result r) {}
+uint8_t UartHandler::PopRx()
+{
+    uint8_t buff;
+    void*   p = 0;
+    pimpl_->DmaReceive(&buff, 1, scb, ecb, p);
+    return buff;
+}
+
+size_t UartHandler::Readable()
+{
+    return 1;
 }
