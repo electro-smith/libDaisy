@@ -175,11 +175,11 @@ class UartHandler
     \param callback_context A pointer that will be passed back to you in the callbacks.     
     \return Whether the transmit was successful or not
     */
-    Result DmaTransmit(uint8_t*                            buff,
-                       size_t                              size,
-                       SpiHandle::StartCallbackFunctionPtr start_callback,
-                       SpiHandle::EndCallbackFunctionPtr   end_callback,
-                       void*                               callback_context);
+    Result DmaTransmit(uint8_t*                              buff,
+                       size_t                                size,
+                       UartHandler::StartCallbackFunctionPtr start_callback,
+                       UartHandler::EndCallbackFunctionPtr   end_callback,
+                       void*                                 callback_context);
 
     /** DMA-based receive 
     \param *buff input buffer
@@ -191,11 +191,11 @@ class UartHandler
     \param callback_context A pointer that will be passed back to you in the callbacks.    
     \return Whether the receive was successful or not
     */
-    Result DmaReceive(uint8_t*                            buff,
-                      size_t                              size,
-                      SpiHandle::StartCallbackFunctionPtr start_callback,
-                      SpiHandle::EndCallbackFunctionPtr   end_callback,
-                      void*                               callback_context);
+    Result DmaReceive(uint8_t*                              buff,
+                      size_t                                size,
+                      UartHandler::StartCallbackFunctionPtr start_callback,
+                      UartHandler::EndCallbackFunctionPtr   end_callback,
+                      void*                                 callback_context);
 
     /** DMA-based transmit and receive 
     \param tx_buff  the transmit buffer
@@ -209,12 +209,12 @@ class UartHandler
     \return Whether the receive was successful or not
     */
     Result
-    DmaTransmitAndReceive(uint8_t*                            tx_buff,
-                          uint8_t*                            rx_buff,
-                          size_t                              size,
-                          SpiHandle::StartCallbackFunctionPtr start_callback,
-                          SpiHandle::EndCallbackFunctionPtr   end_callback,
-                          void*                               callback_context);
+    DmaTransmitAndReceive(uint8_t*                              tx_buff,
+                          uint8_t*                              rx_buff,
+                          size_t                                size,
+                          UartHandler::StartCallbackFunctionPtr start_callback,
+                          UartHandler::EndCallbackFunctionPtr   end_callback,
+                          void* callback_context);
 
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();

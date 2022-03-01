@@ -1,6 +1,8 @@
 #include <stm32h7xx_hal.h>
 #include "per/uart.h"
 #include "util/ringbuffer.h"
+#include "util/scopedirqblocker.h"
+
 extern "C"
 {
 #include "util/hal_map.h"
@@ -446,13 +448,6 @@ void UartHandler::Impl::DmaTransferFinished(UART_HandleTypeDef* huart,
         }
 }
 
-
-int UartHandler::Impl::CheckError()
-{
-    return HAL_UART_GetError(&huart_);
-}
-
-
 bool UartHandler::Impl::IsDmaBusy()
 {
     return dma_active_peripheral_ >= 0;
@@ -658,6 +653,9 @@ UartHandler::Result UartHandler::Impl::StartDmaRxTx(
     UartHandler::EndCallbackFunctionPtr   end_callback,
     void*                                 callback_context)
 {
+    // this is a stub for now
+    // only USART has TransmitReceiveDMA, but huart is uart not usart
+    /*
     while(HAL_UART_GetState(&huart_) != HAL_UART_STATE_READY) {};
 
     if(InitDma() != UartHandler::Result::OK)
@@ -676,7 +674,7 @@ UartHandler::Result UartHandler::Impl::StartDmaRxTx(
     if(start_callback)
         start_callback(callback_context);
 
-    if(HAL_UART_TransmitReceive_DMA(&huart_, tx_buff, rx_buff, size) != HAL_OK)
+    if(HAL_USART_TransmitReceive_DMA(&huart_, tx_buff, rx_buff, size) != HAL_OK)
     {
         dma_active_peripheral_ = -1;
         next_end_callback_     = NULL;
@@ -685,6 +683,7 @@ UartHandler::Result UartHandler::Impl::StartDmaRxTx(
             end_callback(callback_context, UartHandler::Result::ERR);
         return UartHandler::Result::ERR;
     }
+    */
     return UartHandler::Result::OK;
 }
 
