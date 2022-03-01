@@ -90,26 +90,26 @@ class UartHandler::Impl
 
     Result StartDmaTx(uint8_t*                            buff,
                       size_t                              size,
-                      SpiHandle::StartCallbackFunctionPtr start_callback,
-                      SpiHandle::EndCallbackFunctionPtr   end_callback,
+                      UartHandler::StartCallbackFunctionPtr start_callback,
+                      UartHandler::EndCallbackFunctionPtr   end_callback,
                       void*                               callback_context);
 
     Result StartDmaRx(uint8_t*                            buff,
                       size_t                              size,
-                      SpiHandle::StartCallbackFunctionPtr start_callback,
-                      SpiHandle::EndCallbackFunctionPtr   end_callback,
+                      UartHandler::StartCallbackFunctionPtr start_callback,
+                      UartHandler::EndCallbackFunctionPtr   end_callback,
                       void*                               callback_context);
     Result StartDmaRxTx(uint8_t*                            tx_buff,
                         uint8_t*                            rx_buff,
                         size_t                              size,
-                        SpiHandle::StartCallbackFunctionPtr start_callback,
-                        SpiHandle::EndCallbackFunctionPtr   end_callback,
+                        UartHandler::StartCallbackFunctionPtr start_callback,
+                        UartHandler::EndCallbackFunctionPtr   end_callback,
                         void*                               callback_context);
 
     static void GlobalInit();
     static bool IsDmaBusy();
     static void DmaTransferFinished(SPI_HandleTypeDef* hspi,
-                                    SpiHandle::Result  result);
+                                    UartHandler::Result  result);
 
     static void QueueDmaTransfer(size_t spi_idx, const SpiDmaJob& job);
     static bool IsDmaTransferQueuedFor(size_t spi_idx);
@@ -137,7 +137,7 @@ class UartHandler::Impl
     UartHandler::Config config_;
 
     // DMA stuff
-    static constexpr uint8_t kNumUartWithDma = ;
+    static constexpr uint8_t kNumUartWithDma = 8;
     static volatile int8_t   dma_active_peripheral_;
     static UartDmaJob        queued_dma_transfers_[kNumUartWithDma];
     static UartHandler::EndCallbackFunctionPtr next_end_callback_;
@@ -174,6 +174,14 @@ UartHandler::Impl* MapInstanceToHandle(USART_TypeDef* instance)
 
     /* error */
     return NULL;
+}
+
+void UartHandler::Impl::GlobalInit()
+{
+    // init the scheduler queue
+    dma_active_peripheral_ = -1;
+    for(int per = 0; per < kNumSpiWithDma; per++)
+        queued_dma_transfers_[per] = UartHandler::Impl::SpiDmaJob();
 }
 
 UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
@@ -275,6 +283,409 @@ UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
 #endif
 
     return Result::OK;
+}
+
+
+UartHandler::Result UartHandler::Impl::SetDmaPeripheral()
+{
+    switch(config_.periph)
+    {
+        case UartHandler::Config::Peripheral::USART_1:
+            hdma_rx_.Init.Request = DMA_REQUEST_USART1_RX;
+            hdma_tx_.Init.Request = DMA_REQUEST_USART1_TX;
+            break;
+        case UartHandler::Config::Peripheral::USART_2:
+            hdma_rx_.Init.Request = DMA_REQUEST_USART2_RX;
+            hdma_tx_.Init.Request = DMA_REQUEST_USART2_TX;
+            break;
+        case UartHandler::Config::Peripheral::USART_3:
+            hdma_rx_.Init.Request = DMA_REQUEST_USART3_RX;
+            hdma_tx_.Init.Request = DMA_REQUEST_USART3_TX;
+            break;
+        case UartHandler::Config::Peripheral::UART_4:
+            hdma_rx_.Init.Request = DMA_REQUEST_UART4_RX;
+            hdma_tx_.Init.Request = DMA_REQUEST_UART4_TX;
+            break;
+        case UartHandler::Config::Peripheral::UART_5:
+            hdma_rx_.Init.Request = DMA_REQUEST_UART5_RX;
+            hdma_tx_.Init.Request = DMA_REQUEST_UART5_TX;
+            break;
+        case UartHandler::Config::Peripheral::USART_6:
+            hdma_rx_.Init.Request = DMA_REQUEST_USART6_RX;
+            hdma_tx_.Init.Request = DMA_REQUEST_USART6_TX;
+            break;
+        case UartHandler::Config::Peripheral::UART_7:
+            hdma_rx_.Init.Request = DMA_REQUEST_UART7_RX;
+            hdma_tx_.Init.Request = DMA_REQUEST_UART7_TX;
+            break;
+        case UartHandler::Config::Peripheral::UART_8:
+            hdma_rx_.Init.Request = DMA_REQUEST_UART8_RX;
+            hdma_tx_.Init.Request = DMA_REQUEST_UART8_TX;
+            break;
+
+        // LPUART1 is on BDMA_REQUEST_LPUART1_RX/TX
+        default: return UartHandler::Result::ERR;
+    }
+    return UartHandler::Result::OK;
+}
+
+UartHandler::Result UartHandler::Impl::InitDma()
+{
+    hdma_rx_.Instance                 = DMA1_Stream5;
+    hdma_rx_.Init.PeriphInc           = DMA_PINC_DISABLE;
+    hdma_rx_.Init.MemInc              = DMA_MINC_ENABLE;
+    hdma_rx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_rx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+    hdma_rx_.Init.Mode                = DMA_CIRCULAR;
+    hdma_rx_.Init.Priority            = DMA_PRIORITY_LOW;
+    hdma_rx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    hdma_rx_.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+    hdma_rx_.Init.MemBurst            = DMA_MBURST_SINGLE;
+    hdma_rx_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
+
+    hdma_tx_.Instance                 = DMA2_Stream4;
+    hdma_tx_.Init.PeriphInc           = DMA_PINC_DISABLE;
+    hdma_tx_.Init.MemInc              = DMA_MINC_ENABLE;
+    hdma_tx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_tx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+    hdma_tx_.Init.Mode                = DMA_CIRCULAR;
+    hdma_tx_.Init.Priority            = DMA_PRIORITY_LOW;
+    hdma_tx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    hdma_tx_.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+    hdma_tx_.Init.MemBurst            = DMA_MBURST_SINGLE;
+    hdma_tx_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
+    SetDmaPeripheral();
+
+    hdma_rx_.Init.Direction = DMA_PERIPH_TO_MEMORY;
+    hdma_tx_.Init.Direction = DMA_MEMORY_TO_PERIPH;
+
+    if(HAL_DMA_Init(&hdma_rx_) != HAL_OK)
+    {
+        Error_Handler();
+        return UartHandler::Result::ERR;
+    }
+    if(HAL_DMA_Init(&hdma_tx_) != HAL_OK)
+    {
+        Error_Handler();
+        return UartHandler::Result::ERR;
+    }
+
+    __HAL_LINKDMA(&hspi_, hdmarx, hdma_rx_);
+    __HAL_LINKDMA(&hspi_, hdmatx, hdma_tx_);
+
+    return UartHandler::Result::OK;
+}
+
+
+void UartHandler::Impl::DmaTransferFinished(SPI_HandleTypeDef* hspi,
+                                          UartHandler::Result  result)
+{
+    ScopedIrqBlocker block;
+
+    // on an error, reinit the peripheral to clear any flags
+    if(result != UartHandler::Result::OK)
+        HAL_SPI_Init(hspi);
+
+    dma_active_peripheral_ = -1;
+
+    if(next_end_callback_ != nullptr)
+    {
+        // the callback may setup another transmission, hence we shouldn't reset this to
+        // nullptr after the callback - it might overwrite the new transmission.
+        auto callback      = next_end_callback_;
+        next_end_callback_ = nullptr;
+        // make the callback
+        callback(next_callback_context_, result);
+    }
+
+    // the callback could have started a new transmission right away...
+    if(IsDmaBusy())
+        return;
+
+    // dma is still idle. Check if another SPI peripheral waits for a job.
+    for(int per = 0; per < kNumSpiWithDma; per++)
+        if(IsDmaTransferQueuedFor(per))
+        {
+            UartHandler::Result result;
+            if(queued_dma_transfers_[per].direction
+               == UartHandler::DmaDirection::TX)
+            {
+                result = spi_handles[per].StartDmaTx(
+                    queued_dma_transfers_[per].data_tx,
+                    queued_dma_transfers_[per].size,
+                    queued_dma_transfers_[per].start_callback,
+                    queued_dma_transfers_[per].end_callback,
+                    queued_dma_transfers_[per].callback_context);
+            }
+            else if(queued_dma_transfers_[per].direction
+                    == UartHandler::DmaDirection::RX)
+            {
+                result = spi_handles[per].StartDmaRx(
+                    queued_dma_transfers_[per].data_rx,
+                    queued_dma_transfers_[per].size,
+                    queued_dma_transfers_[per].start_callback,
+                    queued_dma_transfers_[per].end_callback,
+                    queued_dma_transfers_[per].callback_context);
+            }
+            else
+            {
+                result = spi_handles[per].StartDmaRxTx(
+                    queued_dma_transfers_[per].data_rx,
+                    queued_dma_transfers_[per].data_tx,
+                    queued_dma_transfers_[per].size,
+                    queued_dma_transfers_[per].start_callback,
+                    queued_dma_transfers_[per].end_callback,
+                    queued_dma_transfers_[per].callback_context);
+            }
+            if(result == UartHandler::Result::OK)
+            {
+                // remove the job from the queue
+                queued_dma_transfers_[per].Invalidate();
+                return;
+            }
+        }
+}
+
+
+int UartHandler::Impl::CheckError()
+{
+    return HAL_UART_GetError(&huart_);
+}
+
+
+bool UartHandler::Impl::IsDmaBusy()
+{
+    return dma_active_peripheral_ >= 0;
+}
+
+bool UartHandler::Impl::IsDmaTransferQueuedFor(size_t spi_idx)
+{
+    return queued_dma_transfers_[spi_idx].IsValidJob();
+}
+
+void UartHandler::Impl::QueueDmaTransfer(size_t spi_idx, const SpiDmaJob& job)
+{
+    // wait for any previous job on this peripheral to finish
+    // and the queue position to become free
+    while(IsDmaTransferQueuedFor(spi_idx))
+    {
+        continue;
+    };
+
+    // queue the job
+    ScopedIrqBlocker block;
+    queued_dma_transfers_[spi_idx] = job;
+}
+
+
+UartHandler::Result
+UartHandler::Impl::DmaTransmit(uint8_t*                            buff,
+                             size_t                              size,
+                             UartHandler::StartCallbackFunctionPtr start_callback,
+                             UartHandler::EndCallbackFunctionPtr   end_callback,
+                             void* callback_context)
+{
+    // if dma is currently running - queue a job
+    if(IsDmaBusy())
+    {
+        SpiDmaJob job;
+        job.data_tx          = buff;
+        job.size             = size;
+        job.direction        = UartHandler::DmaDirection::TX;
+        job.start_callback   = start_callback;
+        job.end_callback     = end_callback;
+        job.callback_context = callback_context;
+
+        const int spi_idx = int(config_.periph);
+
+        // queue a job (blocks until the queue position is free)
+        QueueDmaTransfer(spi_idx, job);
+        // TODO: the user can't tell if he got returned "OK"
+        // because the transfer was executed or because it was queued...
+        // should we change that?
+        return UartHandler::Result::OK;
+    }
+
+    return StartDmaTx(
+        buff, size, start_callback, end_callback, callback_context);
+}
+
+UartHandler::Result
+UartHandler::Impl::StartDmaTx(uint8_t*                            buff,
+                            size_t                              size,
+                            UartHandler::StartCallbackFunctionPtr start_callback,
+                            UartHandler::EndCallbackFunctionPtr   end_callback,
+                            void* callback_context)
+{
+    while(HAL_SPI_GetState(&hspi_) != HAL_SPI_STATE_READY) {};
+
+    if(InitDma() != UartHandler::Result::OK)
+    {
+        if(end_callback)
+            end_callback(callback_context, UartHandler::Result::ERR);
+        return UartHandler::Result::ERR;
+    }
+
+    ScopedIrqBlocker block;
+
+    dma_active_peripheral_ = int(config_.periph);
+    next_end_callback_     = end_callback;
+    next_callback_context_ = callback_context;
+
+    if(start_callback)
+        start_callback(callback_context);
+
+    if(HAL_SPI_Transmit_DMA(&hspi_, buff, size) != HAL_OK)
+    {
+        dma_active_peripheral_ = -1;
+        next_end_callback_     = NULL;
+        next_callback_context_ = NULL;
+        if(end_callback)
+            end_callback(callback_context, UartHandler::Result::ERR);
+        return UartHandler::Result::ERR;
+    }
+    return UartHandler::Result::OK;
+}
+
+UartHandler::Result
+UartHandler::Impl::DmaReceive(uint8_t*                            buff,
+                            size_t                              size,
+                            UartHandler::StartCallbackFunctionPtr start_callback,
+                            UartHandler::EndCallbackFunctionPtr   end_callback,
+                            void* callback_context)
+{
+    // if dma is currently running - queue a job
+    if(IsDmaBusy())
+    {
+        SpiDmaJob job;
+        job.data_rx          = buff;
+        job.size             = size;
+        job.direction        = UartHandler::DmaDirection::RX;
+        job.start_callback   = start_callback;
+        job.end_callback     = end_callback;
+        job.callback_context = callback_context;
+
+        const int spi_idx = int(config_.periph);
+
+        // queue a job (blocks until the queue position is free)
+        QueueDmaTransfer(spi_idx, job);
+        // TODO: the user can't tell if he got returned "OK"
+        // because the transfer was executed or because it was queued...
+        // should we change that?
+        return UartHandler::Result::OK;
+    }
+
+    return StartDmaRx(
+        buff, size, start_callback, end_callback, callback_context);
+}
+
+UartHandler::Result
+UartHandler::Impl::StartDmaRx(uint8_t*                            buff,
+                            size_t                              size,
+                            UartHandler::StartCallbackFunctionPtr start_callback,
+                            UartHandler::EndCallbackFunctionPtr   end_callback,
+                            void* callback_context)
+{
+    while(HAL_SPI_GetState(&hspi_) != HAL_SPI_STATE_READY) {};
+
+    if(InitDma() != UartHandler::Result::OK)
+    {
+        if(end_callback)
+            end_callback(callback_context, UartHandler::Result::ERR);
+        return UartHandler::Result::ERR;
+    }
+
+    ScopedIrqBlocker block;
+
+    dma_active_peripheral_ = int(config_.periph);
+    next_end_callback_     = end_callback;
+    next_callback_context_ = callback_context;
+
+    if(start_callback)
+        start_callback(callback_context);
+
+    if(HAL_SPI_Receive_DMA(&hspi_, buff, size) != HAL_OK)
+    {
+        dma_active_peripheral_ = -1;
+        next_end_callback_     = NULL;
+        next_callback_context_ = NULL;
+        if(end_callback)
+            end_callback(callback_context, UartHandler::Result::ERR);
+        return UartHandler::Result::ERR;
+    }
+    return UartHandler::Result::OK;
+}
+
+UartHandler::Result UartHandler::Impl::DmaTransmitAndReceive(
+    uint8_t*                            tx_buff,
+    uint8_t*                            rx_buff,
+    size_t                              size,
+    UartHandler::StartCallbackFunctionPtr start_callback,
+    UartHandler::EndCallbackFunctionPtr   end_callback,
+    void*                               callback_context)
+{
+    // if dma is currently running - queue a job
+    if(IsDmaBusy())
+    {
+        SpiDmaJob job;
+        job.data_rx          = rx_buff;
+        job.data_tx          = tx_buff;
+        job.size             = size;
+        job.direction        = UartHandler::DmaDirection::RX_TX;
+        job.start_callback   = start_callback;
+        job.end_callback     = end_callback;
+        job.callback_context = callback_context;
+
+        const int spi_idx = int(config_.periph);
+
+        // queue a job (blocks until the queue position is free)
+        QueueDmaTransfer(spi_idx, job);
+        // TODO: the user can't tell if he got returned "OK"
+        // because the transfer was executed or because it was queued...
+        // should we change that?
+        return UartHandler::Result::OK;
+    }
+
+    return StartDmaRxTx(
+        rx_buff, tx_buff, size, start_callback, end_callback, callback_context);
+}
+
+UartHandler::Result UartHandler::Impl::StartDmaRxTx(
+    uint8_t*                            rx_buff,
+    uint8_t*                            tx_buff,
+    size_t                              size,
+    UartHandler::StartCallbackFunctionPtr start_callback,
+    UartHandler::EndCallbackFunctionPtr   end_callback,
+    void*                               callback_context)
+{
+    while(HAL_SPI_GetState(&hspi_) != HAL_SPI_STATE_READY) {};
+
+    if(InitDma() != UartHandler::Result::OK)
+    {
+        if(end_callback)
+            end_callback(callback_context, UartHandler::Result::ERR);
+        return UartHandler::Result::ERR;
+    }
+
+    ScopedIrqBlocker block;
+
+    dma_active_peripheral_ = int(config_.periph);
+    next_end_callback_     = end_callback;
+    next_callback_context_ = callback_context;
+
+    if(start_callback)
+        start_callback(callback_context);
+
+    if(HAL_SPI_TransmitReceive_DMA(&hspi_, tx_buff, rx_buff, size) != HAL_OK)
+    {
+        dma_active_peripheral_ = -1;
+        next_end_callback_     = NULL;
+        next_callback_context_ = NULL;
+        if(end_callback)
+            end_callback(callback_context, UartHandler::Result::ERR);
+        return UartHandler::Result::ERR;
+    }
+    return UartHandler::Result::OK;
 }
 
 int UartHandler::Impl::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
@@ -718,6 +1129,11 @@ void UART_IRQHandler(UartHandler::Impl* handle)
 }
 
 // HAL Interrupts.
+extern "C" void dsy_spi_global_init()
+{
+    UartHandler::Impl::GlobalInit();
+}
+
 extern "C"
 {
     void USART1_IRQHandler() { UART_IRQHandler(&uart_handles[0]); }

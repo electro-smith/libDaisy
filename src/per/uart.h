@@ -218,6 +218,12 @@ class UartHandler
     Impl* pimpl_;
 };
 
+extern "C"
+{
+    /** internal. Used for global init. */
+    void dsy_spi_global_init();
+};
+
 /** @} */
 } // namespace daisy
 
