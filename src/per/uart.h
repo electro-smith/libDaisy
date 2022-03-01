@@ -77,7 +77,7 @@ class UartHandler
 
         Config()
         {
-            // user must init periph, pin_config, and periph
+            // user must init periph, pin_config, and mode
             stopbits   = StopBits::BITS_1;
             parity     = Parity::NONE;
             wordlength = WordLength::BITS_8;
