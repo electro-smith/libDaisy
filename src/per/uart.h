@@ -122,48 +122,33 @@ class UartHandler
     /** A callback to be executed after a dma transfer is completed. */
     typedef void (*EndCallbackFunctionPtr)(void* context, Result result);
 
-    /** Reads the amount of bytes in blocking mode with a 10ms timeout.
-    \param *buff Buffer  to read to
-    \param size Buff size
-    \param timeout How long to timeout for (10ms?)
-    \return Data received
-     */
-    int PollReceive(uint8_t* buff, size_t size, uint32_t timeout);
-
-    /** Starts a DMA Receive callback to fill a buffer of specified size.
-    Data is populated into a FIFO queue, and can be queried with the
-    functions below.
-    Size of the buffer is internally fixed to 256.
-    Variable message lengths are transferred to the FIFO queue 
-    anytime there is 1 byte-period without incoming data
-    \return OK or ERROR
+    /** Blocking transmit 
+    \param buff input buffer
+    \param size  buffer size
+    \param timeout how long in milliseconds the function will wait 
+                   before returning without successful communication
     */
-    Result StartRx();
+    Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout = 100);
 
-    /** \return whether Rx DMA is listening or not. */
-    bool RxActive();
-
-    /** Flushes the Receive Queue
-    \return OK or ERROR
+    /** Polling Receive
+    \param buffer input buffer
+    \param size  buffer size
+    \param timeout How long to timeout for in milliseconds
+    \return Whether the receive was successful or not
     */
-    Result FlushRx();
+    Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
 
-    /** Sends an amount of data in blocking mode.
-    \param *buff Buffer of data to send
-    \param size Buffer size
-    \return OK or ERROR
-     */
-    Result PollTx(uint8_t* buff, size_t size);
-
-    /** Pops the oldest byte from the FIFO. 
-    \return Popped byte
-     */
-    uint8_t PopRx();
-
-    /** Checks if there are any unread bytes in the FIFO
-    \return 1 or 0 ??
-     */
-    size_t Readable();
+    /** Blocking transmit and receive
+    \param tx_buff the transmit buffer
+    \param rx_buff the receive buffer
+    \param size the length of the transaction
+    \param timeout how long in milliseconds the function will wait 
+                   before returning without successful communication
+    */
+    Result BlockingTransmitAndReceive(uint8_t* tx_buff,
+                                      uint8_t* rx_buff,
+                                      size_t   size,
+                                      uint32_t timeout = 100);
 
     /** DMA-based transmit 
     \param *buff input buffer
@@ -215,6 +200,48 @@ class UartHandler
                           UartHandler::StartCallbackFunctionPtr start_callback,
                           UartHandler::EndCallbackFunctionPtr   end_callback,
                           void* callback_context);
+
+    /** Will be deprecated soon! Wrapper for BlockingTransmit for now
+    Reads the amount of bytes in blocking mode with a 10ms timeout.
+    \param *buff Buffer  to read to
+    \param size Buff size
+    \param timeout How long to timeout for (10ms?)
+    \return Data received
+     */
+    int PollReceive(uint8_t* buff, size_t size, uint32_t timeout);
+
+    /** Will be deprecated soon! For now it does nothing.
+        \return OK
+    */
+    Result StartRx();
+
+    /** \return whether Rx DMA is listening or not. */
+    bool RxActive();
+
+    /** Flushes the Receive Queue
+        \return OK or ERROR
+    */
+    Result FlushRx();
+
+    /** Will be deprecated soon! Wrapper for BlockingTransmit for now.
+        Sends an amount of data in blocking mode.
+        \param *buff Buffer of data to send
+        \param size Buffer size
+        \return OK or ERROR
+     */
+    Result PollTx(uint8_t* buff, size_t size);
+
+    /** Will be deprecated soon! Wrapper for DmaReceive for now
+        Pops the oldest byte from the FIFO. 
+        \return Popped byte
+     */
+    uint8_t PopRx();
+
+    /** Will be deprecated soon! 
+        Checks if there are any unread bytes in the FIFO
+        \return 1 or 0 ??
+     */
+    size_t Readable();
 
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
