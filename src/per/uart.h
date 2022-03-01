@@ -104,6 +104,13 @@ class UartHandler
         ERR /**< & */
     };
 
+    enum class DmaDirection
+    {
+        RX,    /**< & */
+        TX,    /**< & */
+        RX_TX, /**< & */
+    };
+
     /** Initializes the UART Peripheral */
     Result Init(const Config& config);
 
@@ -221,7 +228,7 @@ class UartHandler
 extern "C"
 {
     /** internal. Used for global init. */
-    void dsy_spi_global_init();
+    void dsy_uart_global_init();
 };
 
 /** @} */
