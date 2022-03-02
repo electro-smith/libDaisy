@@ -106,8 +106,8 @@ class UartHandler
 
     enum class DmaDirection
     {
-        RX,    /**< & */
-        TX    /**< & */
+        RX, /**< & */
+        TX  /**< & */
     };
 
     /** Initializes the UART Peripheral */
