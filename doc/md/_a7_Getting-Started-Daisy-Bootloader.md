@@ -64,7 +64,7 @@ For a starting point, you can look through the linkers provided in libDaisy's `c
 
 ## Detailed Behavior
 
-Once flashed, the bootloader has a grace period of 2.5 seconds on startup indicated by sinusoidal LED blinks. During this time, it will listen for DFU transactions over USB and search any connected media for valid binaries. You can extend this period indefinitely by pressing the BOOT button (the bootloader will acknowledge the extension with a few rapid blinks).
+Once flashed, the bootloader has a grace period of 2.5 seconds on startup indicated by sinusoidal LED blinks. During this time, it will listen for DFU transactions over USB and search any connected media for valid binaries. Once this period elapses, the bootloader will attempt to load a program and jump to it. If no program is present, it will simply wait in the grace period until a DFU trnasaction occurs. You can extend the grace period indefinitely by pressing the BOOT button (the bootloader will acknowledge the extension with a few rapid blinks).
 
 Programs are stored on the QSPI flash chip that comes with every Daisy. The first four 64kB sectors are left untouched, though these may be used in the future for additional features. Sectors are erased in 64kB chunks, so if you plan to use the space beyond the program, ensure that the first address lies on a 64k boundary beyond the size of the program code. In the STM32H7's address space, QSPI flash lies at address `0x90000000`, so programs are stored at `0x90040000`.
 
