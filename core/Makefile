@@ -310,9 +310,14 @@ debug:
 debug_client:
 	ddd --eval-command="target remote localhost:3333" --debugger $(GDB) $(TARGET_ELF)
 
+ifeq ($(APP_TYPE), BOOT_NONE)
 program:
 	$(OCD) -s $(OCD_DIR) $(OCDFLAGS) \
 		-c "program ./build/$(TARGET).elf verify reset exit"
+else
+program:
+	$(error Cannot program via openocd with an app type of "$(APP_TYPE)". Try program-dfu instead)
+endif
 
 #######################################
 # dfu-util
