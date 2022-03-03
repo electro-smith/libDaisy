@@ -86,7 +86,7 @@ class UartHandler::Impl
 
     void UARTRxComplete();
 
-    static constexpr uint8_t      kNumUartWithDma = 8;
+    static constexpr uint8_t      kNumUartWithDma = 4;
     static volatile int8_t        dma_active_peripheral_;
     static UartDmaJob             queued_dma_transfers_[kNumUartWithDma];
     static EndCallbackFunctionPtr next_end_callback_;
@@ -277,24 +277,24 @@ UartHandler::Result UartHandler::Impl::InitDma()
     hdma_rx_.Init.MemInc              = DMA_MINC_ENABLE;
     hdma_rx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
     hdma_rx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-    hdma_rx_.Init.Mode                = DMA_CIRCULAR;
+    hdma_rx_.Init.Mode                = DMA_NORMAL;
     hdma_rx_.Init.Priority            = DMA_PRIORITY_LOW;
     hdma_rx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-    hdma_rx_.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-    hdma_rx_.Init.MemBurst            = DMA_MBURST_SINGLE;
-    hdma_rx_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
+    // hdma_rx_.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+    // hdma_rx_.Init.MemBurst    = DMA_MBURST_SINGLE;
+    // hdma_rx_.Init.PeriphBurst = DMA_PBURST_SINGLE;
 
     hdma_tx_.Instance                 = DMA2_Stream4;
     hdma_tx_.Init.PeriphInc           = DMA_PINC_DISABLE;
     hdma_tx_.Init.MemInc              = DMA_MINC_ENABLE;
     hdma_tx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
     hdma_tx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-    hdma_tx_.Init.Mode                = DMA_CIRCULAR;
+    hdma_tx_.Init.Mode                = DMA_NORMAL;
     hdma_tx_.Init.Priority            = DMA_PRIORITY_LOW;
     hdma_tx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
-    hdma_tx_.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-    hdma_tx_.Init.MemBurst            = DMA_MBURST_SINGLE;
-    hdma_tx_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
+    // hdma_tx_.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
+    // hdma_tx_.Init.MemBurst            = DMA_MBURST_SINGLE;
+    // hdma_tx_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
     SetDmaPeripheral();
 
     hdma_rx_.Init.Direction = DMA_PERIPH_TO_MEMORY;
@@ -786,8 +786,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
         Error_Handler();
     }
 
-    /* USER CODE BEGIN USART1_MspInit 1 */
     __HAL_UART_ENABLE_IT(&handle->huart_, UART_IT_IDLE);
+    // __HAL_UART_ENABLE_IT(&handle->huart_, DMA_IT_TE);
 }
 
 void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
@@ -883,7 +883,7 @@ void HalUartDmaRxStreamCallback(void)
         HAL_DMA_IRQHandler(
             &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_rx_);
 }
-extern "C" void DMA1_Stream5_IRQHandler()
+extern "C" void DMA1_Stream5_IRQHandler(void)
 {
     HalUartDmaRxStreamCallback();
 }
@@ -895,9 +895,18 @@ void HalUartDmaTxStreamCallback(void)
         HAL_DMA_IRQHandler(
             &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_tx_);
 }
-extern "C" void DMA2_Stream4_IRQHandler()
+extern "C" void DMA2_Stream4_IRQHandler(void)
 {
     HalUartDmaTxStreamCallback();
+}
+
+void HAL_UART_TxHalfCpltCallback(UART_HandleTypeDef* huart)
+{
+    UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
+}
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef* huart)
+{
+    UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
 }
 
 extern "C" void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart)
