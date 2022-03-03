@@ -4,9 +4,6 @@ CHIPSET ?= stm32h7x
 
 TARGET_BIN=$(TARGET).bin
 TARGET_ELF=$(TARGET).elf
-BOOT_BIN ?= $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
-FLASH_ADDRESS ?= 0x08000000
-QSPI_ADDRESS  ?= 0x90040000
 
 # If you have the arm-none-eabi- toolchain located in a particular place, but not installed for the entire system, add the path here:
 # GCC_PATH=
@@ -213,6 +210,47 @@ endif
 LDFLAGS ?=
 LDFLAGS += $(MCU) --specs=nano.specs --specs=nosys.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -Wl,--print-memory-usage
 
+
+#######################################
+# Boot Management
+#######################################
+
+INTERNAL_ADDRESS = 0x08000000
+QSPI_ADDRESS ?= 0x90040000
+
+DAISY_PID = a360
+STM_PID = df11
+
+BOOT_BIN ?= $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
+APP_TYPE ?= BOOT_NONE
+
+ifeq ($(APP_TYPE), BOOT_NONE)
+
+LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
+USBPID = $(STM_PID)
+FLASH_ADDRESS ?= $(INTERNAL_ADDRESS)
+
+else ifeq ($(APP_TYPE), BOOT_SRAM)
+
+LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_sram.lds
+USBPID = $(DAISY_PID)
+FLASH_ADDRESS ?= $(QSPI_ADDRESS)
+C_DEFS += -DBOOT_APP
+
+else ifeq ($(APP_TYPE), BOOT_QSPI)
+
+LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_qspi.lds
+USBPID = $(DAISY_PID)
+FLASH_ADDRESS ?= $(QSPI_ADDRESS)
+C_DEFS += -DBOOT_APP
+
+else
+
+$(error Unkown app type "$(APP_TYPE)")
+
+endif
+
+
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
 
@@ -286,13 +324,10 @@ program:
 #######################################
 
 program-dfu:
-	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
-
-program-app:
-	dfu-util -a 0 -s $(QSPI_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:a360
+	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:$(USBPID)
 
 program-boot:
-	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BOOT_BIN) -d ,0483:df11
+	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BOOT_BIN) -d ,0483:$(USBPID)
 
 #######################################
 # dependencies
