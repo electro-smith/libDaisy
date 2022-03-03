@@ -46,7 +46,10 @@ Memory region         Used Size  Region Size  %age Used
    QSPIFLASH:       46000 B      7936 KB      0.57%
 ~~~
 
+## Flashing with the bootloader
+
 With your program compiled, you have a few options available for programming it using the bootloader:
+
 ### DFU
 If the bootloader's LED is pulsing in the grace period, and the Daisy is connected to your computer via USB, you can run `make program-dfu`. The `APP_TYPE` will automatically adjust the DFU command to write to the correct address. Note that you'll have to change the app type back to `BOOT_NONE` or remove it to flash non-bootloader programs.
 
