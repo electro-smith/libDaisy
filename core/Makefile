@@ -190,26 +190,6 @@ CPPFLAGS += \
 C_STANDARD = -std=gnu11
 CPP_STANDARD ?= -std=gnu++14
 
-#######################################
-# LDFLAGS
-#######################################
-# link script
-LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
-
-# libraries
-
-LIBS += -ldaisy -lc -lm -lnosys
-LIBDIR += -L$(LIBDAISY_DIR)/build
-#LIBDIR = -L./VisualGDB/Release
-
-ifdef DAISYSP_DIR
-LIBS += -ldaisysp
-LIBDIR += -L $(DAISYSP_DIR)/build
-endif
-
-LDFLAGS ?=
-LDFLAGS += $(MCU) --specs=nano.specs --specs=nosys.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -Wl,--print-memory-usage
-
 
 #######################################
 # Boot Management
@@ -250,6 +230,21 @@ $(error Unkown app type "$(APP_TYPE)")
 
 endif
 
+#######################################
+# LDFLAGS
+#######################################
+# libraries
+LIBS += -ldaisy -lc -lm -lnosys
+LIBDIR += -L$(LIBDAISY_DIR)/build
+#LIBDIR = -L./VisualGDB/Release
+
+ifdef DAISYSP_DIR
+LIBS += -ldaisysp
+LIBDIR += -L $(DAISYSP_DIR)/build
+endif
+
+LDFLAGS ?=
+LDFLAGS += $(MCU) --specs=nano.specs --specs=nosys.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -Wl,--print-memory-usage
 
 # default action: build all
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
