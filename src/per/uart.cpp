@@ -84,9 +84,7 @@ class UartHandler::Impl
 
     Result DeInitPins();
 
-    void UARTRxComplete();
-
-    static constexpr uint8_t      kNumUartWithDma = 4;
+    static constexpr uint8_t      kNumUartWithDma = 9;
     static volatile int8_t        dma_active_peripheral_;
     static UartDmaJob             queued_dma_transfers_[kNumUartWithDma];
     static EndCallbackFunctionPtr next_end_callback_;
@@ -277,12 +275,13 @@ UartHandler::Result UartHandler::Impl::InitDma()
     hdma_rx_.Init.MemInc              = DMA_MINC_ENABLE;
     hdma_rx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
     hdma_rx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-    hdma_rx_.Init.Mode                = DMA_NORMAL;
-    hdma_rx_.Init.Priority            = DMA_PRIORITY_LOW;
+    hdma_rx_.Init.Mode                = DMA_CIRCULAR;
+    hdma_rx_.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
     hdma_rx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    hdma_rx_.Init.Direction           = DMA_PERIPH_TO_MEMORY;
     // hdma_rx_.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
-    // hdma_rx_.Init.MemBurst    = DMA_MBURST_SINGLE;
-    // hdma_rx_.Init.PeriphBurst = DMA_PBURST_SINGLE;
+    // hdma_rx_.Init.MemBurst            = DMA_MBURST_SINGLE;
+    // hdma_rx_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
 
     hdma_tx_.Instance                 = DMA2_Stream4;
     hdma_tx_.Init.PeriphInc           = DMA_PINC_DISABLE;
@@ -290,15 +289,14 @@ UartHandler::Result UartHandler::Impl::InitDma()
     hdma_tx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
     hdma_tx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
     hdma_tx_.Init.Mode                = DMA_NORMAL;
-    hdma_tx_.Init.Priority            = DMA_PRIORITY_LOW;
+    hdma_tx_.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
     hdma_tx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    hdma_tx_.Init.Direction           = DMA_MEMORY_TO_PERIPH;
     // hdma_tx_.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
     // hdma_tx_.Init.MemBurst            = DMA_MBURST_SINGLE;
     // hdma_tx_.Init.PeriphBurst         = DMA_PBURST_SINGLE;
     SetDmaPeripheral();
 
-    hdma_rx_.Init.Direction = DMA_PERIPH_TO_MEMORY;
-    hdma_tx_.Init.Direction = DMA_MEMORY_TO_PERIPH;
 
     if(HAL_DMA_Init(&hdma_rx_) != HAL_OK)
     {
@@ -442,14 +440,14 @@ UartHandler::Result UartHandler::Impl::StartDmaTx(
 {
     while(HAL_UART_GetState(&huart_) != HAL_UART_STATE_READY) {};
 
-    if(InitDma() != UartHandler::Result::OK)
-    {
-        if(end_callback)
-            end_callback(callback_context, UartHandler::Result::ERR);
-        return UartHandler::Result::ERR;
-    }
+    // if(InitDma() != UartHandler::Result::OK)
+    // {
+    //     if(end_callback)
+    //         end_callback(callback_context, UartHandler::Result::ERR);
+    //     return UartHandler::Result::ERR;
+    // }
 
-    ScopedIrqBlocker block;
+    // ScopedIrqBlocker block;
 
     dma_active_peripheral_ = int(config_.periph);
     next_end_callback_     = end_callback;
@@ -467,6 +465,7 @@ UartHandler::Result UartHandler::Impl::StartDmaTx(
             end_callback(callback_context, UartHandler::Result::ERR);
         return UartHandler::Result::ERR;
     }
+    // __HAL_UART_ENABLE_IT(&huart_, UART_IT_TXE);
     return UartHandler::Result::OK;
 }
 
@@ -511,12 +510,12 @@ UartHandler::Result UartHandler::Impl::StartDmaRx(
 {
     while(HAL_UART_GetState(&huart_) != HAL_UART_STATE_READY) {};
 
-    if(InitDma() != UartHandler::Result::OK)
-    {
-        if(end_callback)
-            end_callback(callback_context, UartHandler::Result::ERR);
-        return UartHandler::Result::ERR;
-    }
+    // if(InitDma() != UartHandler::Result::OK)
+    // {
+    //     if(end_callback)
+    //         end_callback(callback_context, UartHandler::Result::ERR);
+    //     return UartHandler::Result::ERR;
+    // }
 
     ScopedIrqBlocker block;
 
@@ -731,7 +730,17 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
     dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.rx.port);
     dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.tx.port);
 
-    //enable the clock for our periph
+    if(handle->InitPins() == UartHandler::Result::ERR)
+    {
+        Error_Handler();
+    }
+
+    // if(handle->InitDma() == UartHandler::Result::ERR)
+    // {
+    //     Error_Handler();
+    // }
+    
+    // enable our periph's clock, and the interrupts
     switch(handle->config_.periph)
     {
         case UartHandler::Config::Peripheral::USART_1:
@@ -781,12 +790,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
             break;
     }
 
-    if(handle->InitPins() == UartHandler::Result::ERR)
-    {
-        Error_Handler();
-    }
-
-    __HAL_UART_ENABLE_IT(&handle->huart_, UART_IT_IDLE);
+    // __HAL_UART_ENABLE_IT(&handle->huart_, UART_IT_IDLE);
     // __HAL_UART_ENABLE_IT(&handle->huart_, DMA_IT_TE);
 }
 
@@ -829,6 +833,7 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
     handle->DeInitPins();
 
     HAL_DMA_DeInit(uartHandle->hdmarx);
+    HAL_DMA_DeInit(uartHandle->hdmatx);
 
     IRQn_Type types[] = {USART1_IRQn,
                          USART2_IRQn,
@@ -849,12 +854,12 @@ void UART_IRQHandler(UartHandler::Impl* handle)
     HAL_UART_IRQHandler(&handle->huart_);
     //        if(__HAL_UART_GET_FLAG(&huart, UART_FLAG_IDLE))
     //        {
-    if((handle->huart_.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
-    {
-        HAL_UART_RxCpltCallback(&handle->huart_);
-        //__HAL_UART_CLEAR_IDLEFLAG(&huart);
-        handle->huart_.Instance->ICR = UART_FLAG_IDLE;
-    }
+    // if((handle->huart_.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
+    // {
+        // HAL_UART_RxCpltCallback(&handle->huart_);
+        // __HAL_UART_CLEAR_IDLEFLAG(&handle->huart_);
+        // handle->huart_.Instance->ICR = UART_FLAG_IDLE;
+    // }
 }
 
 // HAL Interrupts.
@@ -878,8 +883,8 @@ extern "C"
 
 void HalUartDmaRxStreamCallback(void)
 {
-    ScopedIrqBlocker block;
-    if(UartHandler::Impl::dma_active_peripheral_ >= 0)
+    // ScopedIrqBlocker block;
+    // if(UartHandler::Impl::dma_active_peripheral_ >= 0)
         HAL_DMA_IRQHandler(
             &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_rx_);
 }
@@ -890,8 +895,8 @@ extern "C" void DMA1_Stream5_IRQHandler(void)
 
 void HalUartDmaTxStreamCallback(void)
 {
-    ScopedIrqBlocker block;
-    if(UartHandler::Impl::dma_active_peripheral_ >= 0)
+    // ScopedIrqBlocker block;
+    // if(UartHandler::Impl::dma_active_peripheral_ >= 0)
         HAL_DMA_IRQHandler(
             &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_tx_);
 }
