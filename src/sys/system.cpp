@@ -221,7 +221,7 @@ void System::Init(const System::Config& config)
     dsy_dma_init();
     dsy_i2c_global_init();
     dsy_spi_global_init();
-    // dsy_uart_global_init();
+    dsy_uart_global_init();
 
     // Initialize Caches
     if(config.use_dcache)

@@ -283,8 +283,8 @@ UartHandler::Result UartHandler::Impl::InitDma()
     hdma_rx_.Init.MemInc              = DMA_MINC_ENABLE;
     hdma_rx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
     hdma_rx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-    hdma_rx_.Init.Mode                = DMA_CIRCULAR;
-    hdma_rx_.Init.Priority            = DMA_PRIORITY_LOW;
+    hdma_rx_.Init.Mode                = DMA_NORMAL;
+    hdma_rx_.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
     hdma_rx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
     hdma_rx_.Init.Direction           = DMA_PERIPH_TO_MEMORY;
     // hdma_rx_.Init.FIFOThreshold       = DMA_FIFO_THRESHOLD_FULL;
@@ -311,14 +311,14 @@ UartHandler::Result UartHandler::Impl::InitDma()
         Error_Handler();
         return UartHandler::Result::ERR;
     }
-    // if(HAL_DMA_Init(&hdma_tx_) != HAL_OK)
-    // {
-    //     Error_Handler();
-    //     return UartHandler::Result::ERR;
-    // }
+    if(HAL_DMA_Init(&hdma_tx_) != HAL_OK)
+    {
+        Error_Handler();
+        return UartHandler::Result::ERR;
+    }
 
     __HAL_LINKDMA(&huart_, hdmarx, hdma_rx_);
-    // __HAL_LINKDMA(&huart_, hdmatx, hdma_tx_);
+    __HAL_LINKDMA(&huart_, hdmatx, hdma_tx_);
 
     return UartHandler::Result::OK;
 }
@@ -516,31 +516,31 @@ UartHandler::Result UartHandler::Impl::StartDmaRx(
     UartHandler::EndCallbackFunctionPtr   end_callback,
     void*                                 callback_context)
 {
-    // while(HAL_UART_GetState(&huart_) != HAL_UART_STATE_READY) {};
+    while(HAL_UART_GetState(&huart_) != HAL_UART_STATE_READY) {};
 
-    // if(InitDma() != UartHandler::Result::OK)
-    // {
-    //     if(end_callback)
-    //         end_callback(callback_context, UartHandler::Result::ERR);
-    //     return UartHandler::Result::ERR;
-    // }
+    if(InitDma() != UartHandler::Result::OK)
+    {
+        if(end_callback)
+            end_callback(callback_context, UartHandler::Result::ERR);
+        return UartHandler::Result::ERR;
+    }
 
-    // ScopedIrqBlocker block;
+    ScopedIrqBlocker block;
 
-    // dma_active_peripheral_ = int(config_.periph);
-    // next_end_callback_     = end_callback;
-    // next_callback_context_ = callback_context;
+    dma_active_peripheral_ = int(config_.periph);
+    next_end_callback_     = end_callback;
+    next_callback_context_ = callback_context;
 
-    // if(start_callback)
-    //     start_callback(callback_context);
+    if(start_callback)
+        start_callback(callback_context);
 
     if(HAL_UART_Receive_DMA(&huart_, test_buffer, size) != HAL_OK)
     {
-        // dma_active_peripheral_ = -1;
-        // next_end_callback_     = NULL;
-        // next_callback_context_ = NULL;
-        // if(end_callback)
-        //     end_callback(callback_context, UartHandler::Result::ERR);
+        dma_active_peripheral_ = -1;
+        next_end_callback_     = NULL;
+        next_callback_context_ = NULL;
+        if(end_callback)
+            end_callback(callback_context, UartHandler::Result::ERR);
         return UartHandler::Result::ERR;
     }
     return UartHandler::Result::OK;
@@ -774,11 +774,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
         Error_Handler();
     }
 
-    if(handle->InitDma() == UartHandler::Result::ERR)
-    {
-        Error_Handler();
-    }
-
     // Disable HalfTransfer Interrupt
     ((DMA_Stream_TypeDef*)handle->hdma_rx_.Instance)->CR &= ~(DMA_SxCR_HTIE);
 
@@ -871,7 +866,7 @@ void UART_IRQHandler(UartHandler::Impl* handle)
 // HAL Interrupts.
 extern "C" void dsy_uart_global_init()
 {
-    // UartHandler::Impl::GlobalInit();
+    UartHandler::Impl::GlobalInit();
 }
 
 extern "C"
@@ -889,16 +884,13 @@ extern "C"
 
 void HalUartDmaRxStreamCallback(void)
 {
-    HAL_DMA_IRQHandler(&uart_handles[0].hdma_rx_);
-
-    // ScopedIrqBlocker block;
-    // if(UartHandler::Impl::dma_active_peripheral_ >= 0)
-    // HAL_DMA_IRQHandler(
-    //     &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_rx_);
+    ScopedIrqBlocker block;
+    if(UartHandler::Impl::dma_active_peripheral_ >= 0)
+    HAL_DMA_IRQHandler(
+        &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_rx_);
 }
 extern "C" void DMA1_Stream5_IRQHandler(void)
 {
-    // HalUartDmaRxStreamCallback();
     HAL_DMA_IRQHandler(&uart_handles[0].hdma_rx_);
 }
 
@@ -909,10 +901,10 @@ void HalUartDmaTxStreamCallback(void)
         HAL_DMA_IRQHandler(
             &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_tx_);
 }
-// extern "C" void DMA2_Stream4_IRQHandler(void)
-// {
-//     HalUartDmaTxStreamCallback();
-// }
+extern "C" void DMA2_Stream4_IRQHandler(void)
+{
+    HalUartDmaTxStreamCallback();
+}
 
 // void HAL_UART_TxHalfCpltCallback(UART_HandleTypeDef* huart)
 // {
@@ -932,13 +924,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
     if(__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))
     {
-        // UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
+        UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
     }
 }
 
 void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
 {
-    // UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::ERR);
+    UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::ERR);
 }
 
 void HAL_UART_AbortCpltCallback(UART_HandleTypeDef* huart)
