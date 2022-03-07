@@ -215,8 +215,6 @@ class UartHandler
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
 
-    uint8_t GetTestBuffer(uint8_t idx);
-
     class Impl; /**< & */
 
   private:

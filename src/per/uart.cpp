@@ -10,9 +10,6 @@ extern "C"
 
 using namespace daisy;
 
-#define UART_RX_BUFF_SIZE 256
-static uint8_t DMA_BUFFER_MEM_SECTION  test_buffer[UART_RX_BUFF_SIZE];
-
 static void Error_Handler()
 {
     asm("bkpt 255");
@@ -97,7 +94,6 @@ class UartHandler::Impl
     UART_HandleTypeDef huart_;
     DMA_HandleTypeDef  hdma_rx_;
     DMA_HandleTypeDef  hdma_tx_;
-
 };
 
 
@@ -141,10 +137,6 @@ void UartHandler::Impl::GlobalInit()
 UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
 {
     config_ = config;
-
-    for(int i = 0; i < 256; i++){
-        test_buffer[i] = 0;
-    }
 
     USART_TypeDef* periph;
     switch(config_.periph)
@@ -534,7 +526,7 @@ UartHandler::Result UartHandler::Impl::StartDmaRx(
     if(start_callback)
         start_callback(callback_context);
 
-    if(HAL_UART_Receive_DMA(&huart_, test_buffer, size) != HAL_OK)
+    if(HAL_UART_Receive_DMA(&huart_, buff, size) != HAL_OK)
     {
         dma_active_peripheral_ = -1;
         next_end_callback_     = NULL;
@@ -886,8 +878,8 @@ void HalUartDmaRxStreamCallback(void)
 {
     ScopedIrqBlocker block;
     if(UartHandler::Impl::dma_active_peripheral_ >= 0)
-    HAL_DMA_IRQHandler(
-        &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_rx_);
+        HAL_DMA_IRQHandler(
+            &uart_handles[UartHandler::Impl::dma_active_peripheral_].hdma_rx_);
 }
 extern "C" void DMA1_Stream5_IRQHandler(void)
 {
@@ -1040,9 +1032,4 @@ uint8_t UartHandler::PopRx()
 size_t UartHandler::Readable()
 {
     return 1;
-}
-
-uint8_t UartHandler::GetTestBuffer(uint8_t idx)
-{
-    return test_buffer[idx];
 }
