@@ -31,8 +31,8 @@ extern "C"
         // DMA1_Stream5_IRQn and DMA2_Stream4_IRQn interrupt configuration for uart rx and tx
         HAL_NVIC_SetPriority(DMA1_Stream5_IRQn, 0, 0);
         HAL_NVIC_EnableIRQ(DMA1_Stream5_IRQn);
-        HAL_NVIC_SetPriority(DMA2_Stream4_IRQn, 0, 0);
-        HAL_NVIC_EnableIRQ(DMA2_Stream4_IRQn);
+        // HAL_NVIC_SetPriority(DMA2_Stream4_IRQn, 0, 0);
+        // HAL_NVIC_EnableIRQ(DMA2_Stream4_IRQn);
         // DMA1_Stream6_IRQn interrupt configuration for I2C
         HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 0, 0);
         HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);
