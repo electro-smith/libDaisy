@@ -447,7 +447,7 @@ UartHandler::Result UartHandler::Impl::StartDmaTx(
         return UartHandler::Result::ERR;
     }
 
-    ScopedIrqBlocker block;
+    // ScopedIrqBlocker block;
 
     dma_active_peripheral_ = int(config_.periph);
     next_end_callback_     = end_callback;
@@ -477,25 +477,25 @@ UartHandler::Result UartHandler::Impl::DmaReceive(
     void*                                 callback_context)
 {
     // if dma is currently running - queue a job
-    // if(IsDmaBusy())
-    // {
-    //     UartDmaJob job;
-    //     job.data_rx          = buff;
-    //     job.size             = size;
-    //     job.direction        = UartHandler::DmaDirection::RX;
-    //     job.start_callback   = start_callback;
-    //     job.end_callback     = end_callback;
-    //     job.callback_context = callback_context;
+    if(IsDmaBusy())
+    {
+        UartDmaJob job;
+        job.data_rx          = buff;
+        job.size             = size;
+        job.direction        = UartHandler::DmaDirection::RX;
+        job.start_callback   = start_callback;
+        job.end_callback     = end_callback;
+        job.callback_context = callback_context;
 
-    //     const int uart_idx = int(config_.periph);
+        const int uart_idx = int(config_.periph);
 
-    //     // queue a job (blocks until the queue position is free)
-    //     QueueDmaTransfer(uart_idx, job);
-    //     // TODO: the user can't tell if he got returned "OK"
-    //     // because the transfer was executed or because it was queued...
-    //     // should we change that?
-    //     return UartHandler::Result::OK;
-    // }
+        // queue a job (blocks until the queue position is free)
+        QueueDmaTransfer(uart_idx, job);
+        // TODO: the user can't tell if he got returned "OK"
+        // because the transfer was executed or because it was queued...
+        // should we change that?
+        return UartHandler::Result::OK;
+    }
 
     return StartDmaRx(
         buff, size, start_callback, end_callback, callback_context);
@@ -517,7 +517,7 @@ UartHandler::Result UartHandler::Impl::StartDmaRx(
         return UartHandler::Result::ERR;
     }
 
-    ScopedIrqBlocker block;
+    // ScopedIrqBlocker block;
 
     dma_active_peripheral_ = int(config_.periph);
     next_end_callback_     = end_callback;
