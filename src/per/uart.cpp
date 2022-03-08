@@ -465,7 +465,6 @@ UartHandler::Result UartHandler::Impl::StartDmaTx(
             end_callback(callback_context, UartHandler::Result::ERR);
         return UartHandler::Result::ERR;
     }
-    // __HAL_UART_ENABLE_IT(&huart_, UART_IT_TXE);
     return UartHandler::Result::OK;
 }
 
@@ -517,7 +516,7 @@ UartHandler::Result UartHandler::Impl::StartDmaRx(
         return UartHandler::Result::ERR;
     }
 
-    // ScopedIrqBlocker block;
+    ScopedIrqBlocker block;
 
     dma_active_peripheral_ = int(config_.periph);
     next_end_callback_     = end_callback;
@@ -766,9 +765,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
         Error_Handler();
     }
 
-    // Disable HalfTransfer Interrupt
-    ((DMA_Stream_TypeDef*)handle->hdma_rx_.Instance)->CR &= ~(DMA_SxCR_HTIE);
-
     // enable the interrupts
     IRQn_Type types[] = {USART1_IRQn,
                          USART2_IRQn,
@@ -782,9 +778,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 
     HAL_NVIC_SetPriority(types[(int)handle->config_.periph], 0, 0);
     HAL_NVIC_EnableIRQ(types[(int)handle->config_.periph]);
-
-    __HAL_UART_ENABLE_IT(&handle->huart_, UART_IT_IDLE);
-    // __HAL_UART_ENABLE_IT(&handle->huart_, DMA_IT_TE);
 }
 
 void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
@@ -845,11 +838,6 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 void UART_IRQHandler(UartHandler::Impl* handle)
 {
     HAL_UART_IRQHandler(&handle->huart_);
-    if((handle->huart_.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
-    {
-        HAL_UART_RxCpltCallback(&handle->huart_);
-        handle->huart_.Instance->ICR = UART_FLAG_IDLE;
-    }
 }
 
 // HAL Interrupts.
@@ -880,8 +868,7 @@ void HalUartDmaRxStreamCallback(void)
 }
 extern "C" void DMA1_Stream5_IRQHandler(void)
 {
-    HAL_DMA_IRQHandler(&uart_handles[0].hdma_rx_);
-    // HalUartDmaRxStreamCallback();
+    HalUartDmaRxStreamCallback();
 }
 
 void HalUartDmaTxStreamCallback(void)
@@ -911,8 +898,7 @@ extern "C" void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart)
     UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
 }
 
-// this one is not behaving itself...
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
+extern "C" void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
     UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
 }
