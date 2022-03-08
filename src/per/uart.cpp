@@ -447,7 +447,7 @@ UartHandler::Result UartHandler::Impl::StartDmaTx(
         return UartHandler::Result::ERR;
     }
 
-    // ScopedIrqBlocker block;
+    ScopedIrqBlocker block;
 
     dma_active_peripheral_ = int(config_.periph);
     next_end_callback_     = end_callback;
@@ -845,12 +845,9 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 void UART_IRQHandler(UartHandler::Impl* handle)
 {
     HAL_UART_IRQHandler(&handle->huart_);
-    //        if(__HAL_UART_GET_FLAG(&huart, UART_FLAG_IDLE))
-    //        {
     if((handle->huart_.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
     {
         HAL_UART_RxCpltCallback(&handle->huart_);
-        // __HAL_UART_CLEAR_IDLEFLAG(&handle->huart_);
         handle->huart_.Instance->ICR = UART_FLAG_IDLE;
     }
 }
@@ -884,6 +881,7 @@ void HalUartDmaRxStreamCallback(void)
 extern "C" void DMA1_Stream5_IRQHandler(void)
 {
     HAL_DMA_IRQHandler(&uart_handles[0].hdma_rx_);
+    // HalUartDmaRxStreamCallback();
 }
 
 void HalUartDmaTxStreamCallback(void)
@@ -902,40 +900,39 @@ extern "C" void DMA2_Stream4_IRQHandler(void)
 // {
 //     UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
 // }
+
 // void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef* huart)
 // {
 //     UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
 // }
 
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart)
+extern "C" void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart)
 {
     UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
 }
 
+// this one is not behaving itself...
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
-    if(__HAL_UART_GET_FLAG(huart, UART_FLAG_IDLE))
-    {
-        UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
-    }
+    UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
 }
 
-void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
+extern "C" void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
 {
     UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::ERR);
 }
 
-void HAL_UART_AbortCpltCallback(UART_HandleTypeDef* huart)
+extern "C" void HAL_UART_AbortCpltCallback(UART_HandleTypeDef* huart)
 {
     //    asm("bkpt 255");
 }
 
-void HAL_UART_AbortTransmitCpltCallback(UART_HandleTypeDef* huart)
+extern "C" void HAL_UART_AbortTransmitCpltCallback(UART_HandleTypeDef* huart)
 {
     //    asm("bkpt 255");
 }
 
-void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
+extern "C" void HAL_UART_AbortReceiveCpltCallback(UART_HandleTypeDef* huart)
 {
     //    asm("bkpt 255");
 }
