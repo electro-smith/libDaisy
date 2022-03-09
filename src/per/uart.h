@@ -170,50 +170,51 @@ class UartHandler
                       UartHandler::EndCallbackFunctionPtr   end_callback,
                       void*                                 callback_context);
 
-    /** Will be deprecated soon! Wrapper for BlockingTransmit for now
-    Reads the amount of bytes in blocking mode with a 10ms timeout.
-    \param *buff Buffer  to read to
-    \param size Buff size
-    \param timeout How long to timeout for (10ms?)
-    \return Data received
-     */
-    int PollReceive(uint8_t* buff, size_t size, uint32_t timeout);
-
-    /** Will be deprecated soon! For now it does nothing.
-        \return OK
-    */
-    Result StartRx();
-
-    /** \return whether Rx DMA is listening or not. */
-    bool RxActive();
-
-    /** Flushes the Receive Queue
-        \return OK or ERROR
-    */
-    Result FlushRx();
-
-    /** Will be deprecated soon! Wrapper for BlockingTransmit for now.
-        Sends an amount of data in blocking mode.
-        \param *buff Buffer of data to send
-        \param size Buffer size
-        \return OK or ERROR
-     */
-    Result PollTx(uint8_t* buff, size_t size);
-
-    /** Will be deprecated soon! Wrapper for DmaReceive for now
-        Pops the oldest byte from the FIFO. 
-        \return Popped byte
-     */
-    uint8_t PopRx();
-
-    /** Will be deprecated soon! 
-        Checks if there are any unread bytes in the FIFO
-        \return 1 or 0 ??
-     */
-    size_t Readable();
-
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
+
+    /** Start the DMA Receive with a double buffered FIFO
+        \return OK or ERR
+    */
+    Result DmaReceiveFifo();
+
+    /** Flush all of the data from the fifo
+        \return OK or ERR
+    */
+    Result FlushFifo();
+
+    /** Get the top item off of the FIFO
+        \return Top item from the FIFO
+    */
+    uint8_t PopFifo();
+
+    /** How much data is in the FIFO
+        \return number of elements ready to pop from FIFO
+    */
+    size_t ReadableFifo();
+
+    /** Will be deprecated soon! Wrapper for BlockingTransmit */
+    int PollReceive(uint8_t* buff, size_t size, uint32_t timeout);
+
+    /** Will be deprecated soon! Wrapper for BlockingTransmit */
+    Result PollTx(uint8_t* buff, size_t size);
+
+    /** Will be deprecated soon! Wrapper for DmaReceiveFifo */
+    Result StartRx();
+
+    /** Will be deprecated soon! 
+        \return true. New DMA will always restart itself.
+    */
+    bool RxActive() { return true; }
+
+    /** Will be deprecated soon! Wrapper for FlushFifo */
+    Result FlushRx();
+
+    /** Will be deprecated soon! Wrapper PopFifo */
+    uint8_t PopRx();
+
+    /** Will be deprecated soon!  Wrapper for ReadableFifo */
+    size_t Readable();
 
     class Impl; /**< & */
 
