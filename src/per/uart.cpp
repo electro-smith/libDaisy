@@ -352,7 +352,7 @@ void UartHandler::Impl::HandleFifo()
     size_t len, cur_pos;
 
     //get current write pointer
-    cur_pos = (UART_RX_BUFF_SIZE - ((DMA_Stream_TypeDef*)huart_.Instance)->NDTR)
+    cur_pos = (UART_RX_BUFF_SIZE - ((DMA_Stream_TypeDef*)huart_.hdmarx->Instance)->NDTR)
               & (UART_RX_BUFF_SIZE - 1);
 
     //calculate how far the DMA write pointer has moved
