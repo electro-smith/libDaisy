@@ -1,8 +1,8 @@
-#include "daisy_pod.h"
+#include "daisy_seed.h"
 
 using namespace daisy;
 
-DaisyPod    hw;
+DaisySeed    hw;
 UartHandler uart;
 
 #define BUFF_SIZE 256
