@@ -81,6 +81,8 @@ class UartHandler::Impl
     static void QueueDmaTransfer(size_t uart_idx, const UartDmaJob& job);
     static bool IsDmaTransferQueuedFor(size_t uart_idx);
 
+    static void DmaReceiveFifoEndCallback(void* context, Result res);
+
     Result SetDmaPeripheral();
 
     Result InitDma();
@@ -359,22 +361,14 @@ void UartHandler::Impl::HandleFifo()
     //calculate how far the DMA write pointer has moved
     len = (cur_pos - rx_last_pos_ + UART_RX_BUFF_SIZE) % UART_RX_BUFF_SIZE;
 
-    //check message size
-    if(len <= UART_RX_BUFF_SIZE)
-    {
-        dma_fifo_rx_->Advance(len);
-        rx_last_pos_ = cur_pos;
+    dma_fifo_rx_->Advance(len);
+    rx_last_pos_ = cur_pos;
 
-        // Copy to queue fifo we don't want to use primary fifo to avoid
-        // changes to the buffer while its being processed
-        uint8_t processbuf[256];
-        dma_fifo_rx_->ImmediateRead(processbuf, len);
-        queue_rx_.Overwrite(processbuf, len);
-    }
-    else
-    {
-        while(true) {}
-    }
+    // Copy to queue fifo we don't want to use primary fifo to avoid
+    // changes to the buffer while its being processed
+    uint8_t processbuf[256];
+    dma_fifo_rx_->ImmediateRead(processbuf, len);
+    queue_rx_.Overwrite(processbuf, len);
 }
 
 void UartHandler::Impl::DmaTransferFinished(UART_HandleTypeDef* huart,
@@ -619,14 +613,38 @@ UartHandler::Result UartHandler::Impl::BlockingTransmit(uint8_t* buff,
     return Result::OK;
 }
 
+//gets called if the buffer is overrun, transfer buffers and restart DMA
+void UartHandler::Impl::DmaReceiveFifoEndCallback(void*               context,
+                                                  UartHandler::Result res)
+{
+    // when the DMA hits the end in circular mode, it's considered an ERROR
+    // for some reason it sometimes comes up as OK as well though
+    // for now we'll catch the errors and just reset
+    if(res == UartHandler::Result::OK || res == UartHandler::Result::ERR)
+    {
+        UartHandler::Impl* handle = (UartHandler::Impl*)context;
+
+        // copy rx buffer to queue buffer
+        handle->dma_fifo_rx_->Advance(UART_RX_BUFF_SIZE - 1);
+        handle->rx_last_pos_ = UART_RX_BUFF_SIZE - 1;
+        uint8_t processbuf[256];
+        handle->dma_fifo_rx_->ImmediateRead(processbuf, UART_RX_BUFF_SIZE - 1);
+        handle->queue_rx_.Overwrite(processbuf, UART_RX_BUFF_SIZE - 1);
+
+        HAL_UART_Init(&handle->huart_);
+
+        handle->DmaReceiveFifo();
+    }
+}
+
 UartHandler::Result UartHandler::Impl::DmaReceiveFifo()
 {
     using_fifo_ = true;
     return DmaReceive((uint8_t*)dma_fifo_rx_->GetMutableBuffer(),
                       UART_RX_BUFF_SIZE,
                       NULL,
-                      NULL,
-                      NULL);
+                      UartHandler::Impl::DmaReceiveFifoEndCallback,
+                      (void*)this);
 }
 
 UartHandler::Result UartHandler::Impl::FlushFifo()
