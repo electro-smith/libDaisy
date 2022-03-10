@@ -352,7 +352,8 @@ void UartHandler::Impl::HandleFifo()
     size_t len, cur_pos;
 
     //get current write pointer
-    cur_pos = (UART_RX_BUFF_SIZE - ((DMA_Stream_TypeDef*)huart_.hdmarx->Instance)->NDTR)
+    cur_pos = (UART_RX_BUFF_SIZE
+               - ((DMA_Stream_TypeDef*)huart_.hdmarx->Instance)->NDTR)
               & (UART_RX_BUFF_SIZE - 1);
 
     //calculate how far the DMA write pointer has moved
@@ -931,14 +932,10 @@ void UART_IRQHandler(UartHandler::Impl* handle)
 {
     HAL_UART_IRQHandler(&handle->huart_);
 
-    // if(__HAL_UART_GET_FLAG(&handle->huart_, UART_FLAG_IDLE) && handle->using_fifo_)
-    if((handle->huart_.Instance->ISR & UART_FLAG_IDLE) == UART_FLAG_IDLE)
+    if(__HAL_UART_GET_FLAG(&handle->huart_, UART_FLAG_IDLE)
+       && handle->using_fifo_)
     {
-        if(__HAL_UART_GET_FLAG(&handle->huart_, UART_FLAG_IDLE))
-        {
-            handle->HandleFifo();
-        }
-
+        handle->HandleFifo();
         handle->huart_.Instance->ICR = UART_FLAG_IDLE;
     }
 }
