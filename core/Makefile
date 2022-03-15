@@ -198,7 +198,9 @@ CPP_STANDARD ?= -std=gnu++14
 INTERNAL_ADDRESS = 0x08000000
 QSPI_ADDRESS ?= 0x90040000
 
-DAISY_PID = a360
+# For the time being, we'll keep the Daisy Bootloader's PID as df11
+# DAISY_PID = a360
+DAISY_PID = df11
 STM_PID = df11
 
 BOOT_BIN ?= $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
