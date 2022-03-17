@@ -92,6 +92,9 @@ class AdcHandle
     void
     Init(AdcChannelConfig *cfg, size_t num_channels, OverSampling ovs = OVS_32);
 
+    /** @brief Deinitializes the ADC peripheral */
+    void DeInit();;
+
     /** Starts reading from the ADC */
     void Start();
 

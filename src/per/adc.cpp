@@ -162,7 +162,7 @@ static int get_num_mux_pins_required(int num_mux_ch)
         return 0;
 }
 static void
-                      write_mux_value(uint8_t chn, uint8_t idx, uint8_t num_mux_pins_to_write);
+write_mux_value(uint8_t chn, uint8_t idx, uint8_t num_mux_pins_to_write);
 static const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin);
 
 static const uint32_t adc_channel_from_pin(dsy_gpio_pin* pin)
@@ -387,6 +387,14 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
             Error_Handler();
         }
     }
+}
+
+
+void AdcHandle::DeInit()
+{
+    // First ensure ADC is stopped
+    Stop();
+    HAL_ADC_DeInit(&adc.hadc1);
 }
 
 void AdcHandle::Start()
