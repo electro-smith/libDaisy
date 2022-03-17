@@ -3,11 +3,22 @@
 #define DSY_MAX11300_H
 
 #include "daisy_core.h"
-#include "per/spi.h"
+#include "per/spiMultislave.h"
 #include "sys/system.h"
 #include <cstring>
 
-// Some register definitions
+
+namespace daisy
+{
+/** @addtogroup device
+ *  @{
+ */
+
+/** @addtogroup MAX11300
+ *  @{
+ */
+
+//MAX11300 register definitions
 #define MAX11300_DEVICE_ID 0x00
 #define MAX11300_DEVCTL 0x10
 #define MAX11300_FUNC_BASE 0x20
@@ -15,132 +26,10 @@
 #define MAX11300_GPODAT 0x0d
 #define MAX11300_ADCDAT_BASE 0x40
 #define MAX11300_DACDAT_BASE 0x60
+#define MAX11300_TRANSPORT_BUFFER_LENGTH 41
 
-namespace daisy
+namespace MAX11300Types
 {
-/** @addtogroup dac
-    @{
-    */
-
-class BlockingSpiTransport
-{
-  public:
-    /**
-     * Transport configuration struct for the MAX11300
-     */
-    struct Config
-    {
-        SpiHandle::Config spi_config; /**< & */
-
-        /**
-         * Default configuration for the MAX11300 using the SPI_1 peripheral
-         * and its default pinout.
-         */
-        void Defaults()
-        {
-            spi_config.periph         = SpiHandle::Config::Peripheral::SPI_1;
-            spi_config.mode           = SpiHandle::Config::Mode::MASTER;
-            spi_config.direction      = SpiHandle::Config::Direction::TWO_LINES;
-            spi_config.datasize       = 8;
-            spi_config.clock_polarity = SpiHandle::Config::ClockPolarity::LOW;
-            spi_config.clock_phase    = SpiHandle::Config::ClockPhase::ONE_EDGE;
-            spi_config.nss            = SpiHandle::Config::NSS::HARD_OUTPUT;
-            spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_2;
-            spi_config.pin_config.nss = {DSY_GPIOG, 10};  // Pin 7
-            spi_config.pin_config.sclk = {DSY_GPIOG, 11}; // Pin 8
-            spi_config.pin_config.miso = {DSY_GPIOB, 4};  // Pin 9
-            spi_config.pin_config.mosi = {DSY_GPIOB, 5};  // Pin 10
-        }
-    };
-
-    enum class Result
-    {
-        OK, /**< & */
-        ERR /**< & */
-    };
-
-    void Init(Config config)
-    {
-        spi_.Init(config.spi_config);
-        next_tx_ = System::GetUs();
-        ready_   = true;
-    }
-
-    bool Ready() { return ready_; }
-
-    BlockingSpiTransport::Result
-    Transmit(uint8_t* buff, size_t size, uint32_t wait_us)
-    {
-        if(wait_us > 0)
-        {
-            uint32_t ts = System::GetUs();
-            // Since this is a transaction which requires a delay
-            // we check if enough time has elapsed, if not, we simply
-            // return "OK".
-            if(ts < next_tx_)
-            {
-                // Check if the clock rolled over, the max wait time is 20*40us
-                if((next_tx_ - ts) > (20 * 40))
-                {
-                    next_tx_ = ts + wait_us;
-                    return Result::OK;
-                }
-                else
-                {
-                    return Result::OK;
-                }
-            }
-        }
-
-        if(spi_.BlockingTransmit(buff, size) == SpiHandle::Result::ERR)
-        {
-            return Result::ERR;
-        }
-
-        if(wait_us > 0)
-        {
-            // Reset next_tx timestamp
-            next_tx_ = System::GetUs() + wait_us;
-        }
-        return Result::OK;
-    }
-
-    BlockingSpiTransport::Result
-    TransmitAndReceive(uint8_t* tx_buff, uint8_t* rx_buff, size_t size)
-    {
-        if(spi_.BlockingTransmitAndReceive(tx_buff, rx_buff, size)
-           == SpiHandle::Result::ERR)
-        {
-            return Result::ERR;
-        }
-
-        return Result::OK;
-    }
-
-  private:
-    SpiHandle spi_;
-    uint32_t  next_tx_;
-    bool      ready_ = false;
-};
-
-/**
- * @brief Device Driver for the MAX11300 20 port ADC/DAC/GPIO device.
- * @author sam.braam
- * @date Oct. 2021
- * 
- * This is a highly opinionated driver implementation for the MAX11300
- * DAC/ADC/GPIO device.  
- * 
- * This implemetation has been designed for use in the context of Eurorack
- * modular systems. There are a number of features the MAX11300 offers
- * which are not exposed, as well as a number of configuration decisions 
- * that were made in order to simplify usage and improve ergonomics, 
- * even at the cost of flexibility.
-*/
-template <typename Transport>
-class MAX11300Driver
-{
-  public:
     /**
     * Represents a pin/port on the MAX11300, of which there are 20.
     */
@@ -203,13 +92,6 @@ class MAX11300Driver
         NEGATIVE_10_TO_0 = 0x0300,
     };
 
-
-    struct Config
-    {
-        typename Transport::Config transport_config;
-        void                       Defaults() { transport_config.Defaults(); }
-    };
-
     /**
      * Indicates the success or failure of an operation within this class
      */
@@ -219,9 +101,180 @@ class MAX11300Driver
         ERR /**< & */
     };
 
+    /** a callback type used by the transport layer */
+    typedef void (*TransportCallbackFunctionPtr)(void*             context,
+                                                 SpiHandle::Result result);
 
-    MAX11300Driver<Transport>(){};
-    ~MAX11300Driver<Transport>(){};
+    /** A dma buffer that the user must put in non-cached memory. */
+    struct DmaBuffer
+    {
+        uint8_t rx_buffer[MAX11300_TRANSPORT_BUFFER_LENGTH];
+        uint8_t tx_buffer[MAX11300_TRANSPORT_BUFFER_LENGTH];
+    };
+
+    /** A function called when all MAX11300s have been updated */
+    typedef void (*UpdateCompleteCallbackFunctionPtr)(void* context);
+
+} // namespace MAX11300Types
+
+class MAX11300MultiSlaveSpiTransport
+{
+  public:
+    /**
+     * Transport configuration struct for the MAX11300
+     */
+    template <size_t numDevices>
+    struct Config
+    {
+        struct PinConfig
+        {
+            dsy_gpio_pin nss[numDevices] = {{DSY_GPIOG, 10}}; // Pin 7
+            dsy_gpio_pin mosi            = {DSY_GPIOB, 5};    // Pin 10
+            dsy_gpio_pin miso            = {DSY_GPIOB, 4};    // Pin 9
+            dsy_gpio_pin sclk            = {DSY_GPIOG, 11};   // Pin 8
+        } pin_config;
+
+        SpiHandle::Config::Peripheral periph
+            = SpiHandle::Config::Peripheral::SPI_1;
+        SpiHandle::Config::BaudPrescaler baud_prescaler
+            = SpiHandle::Config::BaudPrescaler::PS_8;
+    };
+
+    enum class Result
+    {
+        OK, /**< & */
+        ERR /**< & */
+    };
+
+    template <size_t num_devices>
+    Result Init(Config<num_devices> config)
+    {
+        MultiSlaveSpiHandle::Config spi_config;
+        spi_config.pin_config.mosi = config.pin_config.mosi;
+        spi_config.pin_config.miso = config.pin_config.miso;
+        spi_config.pin_config.sclk = config.pin_config.sclk;
+        const auto clamped_num_devices
+            = std::min(num_devices, MultiSlaveSpiHandle::max_num_devices_);
+        for(size_t i = 0; i < clamped_num_devices; i++)
+            spi_config.pin_config.nss[i] = config.pin_config.nss[i];
+        spi_config.periph         = config.periph;
+        spi_config.direction      = SpiHandle::Config::Direction::TWO_LINES;
+        spi_config.datasize       = 8;
+        spi_config.clock_polarity = SpiHandle::Config::ClockPolarity::LOW;
+        spi_config.clock_phase    = SpiHandle::Config::ClockPhase::ONE_EDGE;
+        spi_config.baud_prescaler = config.baud_prescaler;
+        // not using clamped value here on purpose to escalate errors from SPI init
+        spi_config.num_devices = num_devices;
+        num_devices_           = num_devices;
+
+        const auto result = spi_.Init(spi_config);
+
+        ready_ = result == SpiHandle::Result::OK;
+        return ready_ ? Result::OK : Result::ERR;
+    }
+
+    bool Ready() { return ready_; }
+
+    Result TransmitBlocking(size_t device_index, uint8_t* buff, size_t size)
+    {
+        if(spi_.BlockingTransmit(device_index, buff, size)
+           == SpiHandle::Result::ERR)
+        {
+            return Result::ERR;
+        }
+        return Result::OK;
+    }
+
+    Result
+    TransmitDma(size_t                                      device_index,
+                uint8_t*                                    buff,
+                size_t                                      size,
+                MAX11300Types::TransportCallbackFunctionPtr complete_callback,
+                void*                                       callback_context)
+    {
+        if(spi_.DmaTransmit(device_index,
+                            buff,
+                            size,
+                            nullptr, // start callback
+                            complete_callback,
+                            callback_context)
+           == SpiHandle::Result::ERR)
+        {
+            return Result::ERR;
+        }
+        return Result::OK;
+    }
+
+    Result TransmitAndReceiveBlocking(size_t   device_index,
+                                      uint8_t* tx_buff,
+                                      uint8_t* rx_buff,
+                                      size_t   size)
+    {
+        if(spi_.BlockingTransmitAndReceive(device_index, tx_buff, rx_buff, size)
+           == SpiHandle::Result::ERR)
+        {
+            return Result::ERR;
+        }
+
+        return Result::OK;
+    }
+
+    Result TransmitAndReceiveDma(
+        size_t                                      device_index,
+        uint8_t*                                    tx_buff,
+        uint8_t*                                    rx_buff,
+        size_t                                      size,
+        MAX11300Types::TransportCallbackFunctionPtr complete_callback,
+        void*                                       callback_context)
+    {
+        if(spi_.DmaTransmitAndReceive(device_index,
+                                      tx_buff,
+                                      rx_buff,
+                                      size,
+                                      nullptr, // start callback
+                                      complete_callback,
+                                      callback_context)
+           == SpiHandle::Result::ERR)
+        {
+            return Result::ERR;
+        }
+        return Result::OK;
+    }
+
+    size_t GetNumDevices() const { return num_devices_; }
+
+  private:
+    MultiSlaveSpiHandle spi_;
+    size_t              num_devices_ = 0;
+    bool                ready_       = false;
+};
+
+/**
+ * @brief Device Driver for the MAX11300 20 port ADC/DAC/GPIO device.
+ * @author sam.braam
+ * @date Oct. 2021
+ * 
+ * This is a highly opinionated driver implementation for the MAX11300
+ * DAC/ADC/GPIO device.  
+ * 
+ * This implemetation has been designed for use in the context of Eurorack
+ * modular systems. There are a number of features the MAX11300 offers
+ * which are not exposed, as well as a number of configuration decisions 
+ * that were made in order to simplify usage and improve ergonomics, 
+ * even at the cost of flexibility.
+*/
+template <typename Transport, size_t num_devices>
+class MAX11300Driver
+{
+  public:
+    struct Config
+    {
+        typename Transport::template Config<num_devices> transport_config;
+        void Defaults() { transport_config = decltype(transport_config){}; }
+    };
+
+    MAX11300Driver(){};
+    ~MAX11300Driver(){};
 
     /**
      * Initialize the MAX11300 
@@ -231,168 +284,213 @@ class MAX11300Driver
      * intitalizes all pins by default to High-Z mode.
      * 
      * \param config - The MAX11300 configuration
+     * \param dma_buffer a buffer in DMA-accessible memory. 
+     *                   Allocate it like this: `MAX11300DmaBuffer DMA_BUFFER_MEM_SECTION myBuffer;`
      */
-    Result Init(Config config)
+    MAX11300Types::Result Init(Config                    config,
+                               MAX11300Types::DmaBuffer* dma_buffer)
     {
-        transport_.Init(config.transport_config);
+        dma_buffer_                       = dma_buffer;
+        update_complete_callback_         = nullptr;
+        update_complete_callback_context_ = nullptr;
+        run_                              = false;
 
-        // First, let's verify the SPI comms, and chip presence.  The DEVID register
-        // is a fixed, read-only value we can compare against to ensure we're connected.
-        if(ReadRegister(MAX11300_DEVICE_ID) != 0x0424)
+        if(transport_.Init(config.transport_config) != Transport::Result::OK)
+            return MAX11300Types::Result::ERR;
+
+        sequencer_.Invalidate();
+
+        for(size_t device_index = 0; device_index < transport_.GetNumDevices();
+            device_index++)
         {
-            return Result::ERR;
+            // First, let's verify the SPI comms, and chip presence.  The DEVID register
+            // is a fixed, read-only value we can compare against to ensure we're connected.
+            if(ReadRegister(device_index, MAX11300_DEVICE_ID) != 0x0424)
+            {
+                return MAX11300Types::Result::ERR;
+            }
+
+            // Init routine (roughly) as per the datasheet pp. 49
+            // These settings were chosen as best applicable for use in a Eurorack context.
+            // Should the need for more configurability arise, this would be the spot to do it.
+
+            // Setup the device...
+            uint16_t devctl = 0x0000;
+            // 1:0 ADCCTL[1:0] - ADC conversion mode selection = 11: Continuous sweep
+            devctl = devctl | 0x0003;
+            // 3:2 DACCTL[1:0] - DAC mode selection = 00: Sequential Update mode for DAC-configured ports.
+            devctl = devctl | 0x0000;
+            // 5:4 ADCCONV[1:0] - ADC conversion rate selection = 11: ADC conversion rate of 400ksps
+            devctl = devctl | 0x0030;
+            // 6 DACREF - DAC voltage reference selection = 1: Internal reference voltage
+            devctl = devctl | 0x0040;
+            // 7 THSHDN  - Thermal shutdown enable = 1: Thermal shutdown function enabled.
+            devctl = devctl | 0x0080;
+            // 10:8 TMPCTL[2:0] - Temperature monitor selection = 001: Internal temperature monitor enabled
+            devctl = devctl | 0x0100;
+            // 11 TMPPER - Temperature conversion time control = 0 (Default)
+            // 12 RS_CANCEL - Temperature sensor series resistor cancellation mode = 0 (Default)
+            // 13 LPEN - Power mode selection = 0 (Default)
+            // 14 BRST - Serial interface burst-mode selection = 1: Contextual address incrementing mode
+            devctl = devctl | 0x4000;
+            // 15 RESET - Soft reset control = 0 (Default)
+
+            // Write the device configuration
+            if(WriteRegister(device_index, MAX11300_DEVCTL, devctl)
+               == MAX11300Types::Result::ERR)
+            {
+                return MAX11300Types::Result::ERR;
+            }
+            // Verify our configuration was written...
+            if(ReadRegister(device_index, MAX11300_DEVCTL) != devctl)
+            {
+                return MAX11300Types::Result::ERR;
+            }
+
+            // Add a delay as recommended in the datasheet.
+            DelayUs(200);
+
+            // Set all pins to the default high impedance state...
+            for(uint8_t i = 0; i <= MAX11300Types::Pin::PIN_19; i++)
+            {
+                PinConfig pin_cfg;
+                pin_cfg.Defaults();
+                devices_[device_index].pin_configurations_[i] = pin_cfg;
+                SetPinConfig(device_index, static_cast<MAX11300Types::Pin>(i));
+            }
         }
 
-        // Init routine (roughly) as per the datasheet pp. 49
-        // These settings were chosen as best applicable for use in a Eurorack context.
-        // Should the need for more configurability arise, this would be the spot to do it.
-
-        // Setup the device...
-        uint16_t devctl = 0x0000;
-        // 1:0 ADCCTL[1:0] - ADC conversion mode selection = 11: Continuous sweep
-        devctl = devctl | 0x0003;
-        // 3:2 DACCTL[1:0] - DAC mode selection = 01: Immediate Update mode for DAC-configured ports.
-        devctl = devctl | 0x0004;
-        // 5:4 ADCCONV[1:0] - ADC conversion rate selection = 11: ADC conversion rate of 400ksps
-        devctl = devctl | 0x0030;
-        // 6 DACREF - DAC voltage reference selection = 1: Internal reference voltage
-        devctl = devctl | 0x0040;
-        // 7 THSHDN  - Thermal shutdown enable = 1: Thermal shutdown function enabled.
-        devctl = devctl | 0x0080;
-        // 10:8 TMPCTL[2:0] - Temperature monitor selection = 001: Internal temperature monitor enabled
-        devctl = devctl | 0x0100;
-        // 11 TMPPER - Temperature conversion time control = 0 (Default)
-        // 12 RS_CANCEL - Temperature sensor series resistor cancellation mode = 0 (Default)
-        // 13 LPEN - Power mode selection = 0 (Default)
-        // 14 BRST - Serial interface burst-mode selection = 1: Contextual address incrementing mode
-        devctl = devctl | 0x4000;
-        // 15 RESET - Soft reset control = 0 (Default)
-
-        // Write the device configuration
-        if(WriteRegister(MAX11300_DEVCTL, devctl) == Result::ERR)
-        {
-            return Result::ERR;
-        }
-        // Verify our configuration was written...
-        if(ReadRegister(MAX11300_DEVCTL) != devctl)
-        {
-            return Result::ERR;
-        }
-
-        // Add a delay as recommended in the datasheet.
-        DelayUs(200);
-
-        // Set all pins to the default high impedance state...
-        for(uint8_t i = 0; i <= Pin::PIN_19; i++)
-        {
-            PinConfig pin_cfg;
-            pin_cfg.Defaults();
-            pin_configurations_[i] = pin_cfg;
-            SetPinConfig(static_cast<Pin>(i));
-        }
-
-        return Result::OK;
+        return MAX11300Types::Result::OK;
     }
 
-    Result ConfigurePinAsDigitalRead(Pin pin, float threshold_voltage)
+    MAX11300Types::Result ConfigurePinAsDigitalRead(size_t device_index,
+                                                    MAX11300Types::Pin pin,
+                                                    float threshold_voltage)
     {
+        auto& device = devices_[device_index];
+
         if(threshold_voltage > 5.0f)
             threshold_voltage = 5.0f;
 
         if(threshold_voltage < 0.0f)
             threshold_voltage = 0.0f;
 
-        pin_configurations_[pin].Defaults();
-        pin_configurations_[pin].mode      = PinMode::GPI;
-        pin_configurations_[pin].threshold = threshold_voltage;
+        device.pin_configurations_[pin].Defaults();
+        device.pin_configurations_[pin].mode      = PinMode::GPI;
+        device.pin_configurations_[pin].threshold = threshold_voltage;
 
-        return SetPinConfig(pin);
+        return SetPinConfig(device_index, pin);
     }
 
-    Result ConfigurePinAsDigitalWrite(Pin pin, float output_voltage)
+    MAX11300Types::Result ConfigurePinAsDigitalWrite(size_t device_index,
+                                                     MAX11300Types::Pin pin,
+                                                     float output_voltage)
     {
+        auto& device = devices_[device_index];
+
         if(output_voltage > 5.0f)
             output_voltage = 5.0f;
 
         if(output_voltage < 0.0f)
             output_voltage = 0.0f;
 
-        pin_configurations_[pin].Defaults();
-        pin_configurations_[pin].mode      = PinMode::GPO;
-        pin_configurations_[pin].threshold = output_voltage;
+        device.pin_configurations_[pin].Defaults();
+        device.pin_configurations_[pin].mode      = PinMode::GPO;
+        device.pin_configurations_[pin].threshold = output_voltage;
 
-        return SetPinConfig(pin);
+        return SetPinConfig(device_index, pin);
     }
 
-    Result ConfigurePinAsAnalogRead(Pin pin, AdcVoltageRange range)
+    MAX11300Types::Result
+    ConfigurePinAsAnalogRead(size_t                         device_index,
+                             MAX11300Types::Pin             pin,
+                             MAX11300Types::AdcVoltageRange range)
     {
-        pin_configurations_[pin].Defaults();
-        pin_configurations_[pin].mode      = PinMode::ANALOG_IN;
-        pin_configurations_[pin].range.adc = range;
+        auto& device = devices_[device_index];
 
-        return SetPinConfig(pin);
+        device.pin_configurations_[pin].Defaults();
+        device.pin_configurations_[pin].mode      = PinMode::ANALOG_IN;
+        device.pin_configurations_[pin].range.adc = range;
+
+        return SetPinConfig(device_index, pin);
     }
 
-    Result ConfigurePinAsAnalogWrite(Pin pin, DacVoltageRange range)
+    MAX11300Types::Result
+    ConfigurePinAsAnalogWrite(size_t                         device_index,
+                              MAX11300Types::Pin             pin,
+                              MAX11300Types::DacVoltageRange range)
     {
-        pin_configurations_[pin].Defaults();
-        pin_configurations_[pin].mode      = PinMode::ANALOG_OUT;
-        pin_configurations_[pin].range.dac = range;
+        auto& device = devices_[device_index];
 
-        return SetPinConfig(pin);
+        device.pin_configurations_[pin].Defaults();
+        device.pin_configurations_[pin].mode      = PinMode::ANALOG_OUT;
+        device.pin_configurations_[pin].range.dac = range;
+
+        return SetPinConfig(device_index, pin);
     }
 
 
-    Result DisablePin(Pin pin)
+    MAX11300Types::Result DisablePin(size_t device_index, Pin pin)
     {
-        PinConfig pin_config = GetPinConfig(pin);
-        pin_configurations_[pin].Defaults();
-        SetPinConfig(pin_config);
+        auto& device = devices_[device_index];
+        device.pin_configurations_[pin].Defaults();
+        return SetPinConfig(device_index, pin);
     }
 
     /**
      * Read the raw 12 bit (0-4095) value of a given ANALOG_IN (ADC) pin.
      * 
-     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the value
      * \return - The raw, 12 bit value of the given ANALOG_IN (ADC) pin.
      */
-    uint16_t ReadAnalogPinRaw(Pin pin) const
+    uint16_t ReadAnalogPinRaw(size_t device_index, MAX11300Types::Pin pin) const
     {
-        if(pin_configurations_[pin].value == nullptr)
+        auto& device = devices_[device_index];
+
+        if(device.pin_configurations_[pin].value == nullptr)
         {
             return 0;
         }
-        return __builtin_bswap16(*pin_configurations_[pin].value);
+        return __builtin_bswap16(*device.pin_configurations_[pin].value);
     }
 
     /**
      * Read the value of a given ADC pin in volts.
      * 
-     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the voltage
      * \return - The value of the given ANALOG_IN (ADC) pin in volts
      */
-    float ReadAnalogPinVolts(Pin pin) const
+    float ReadAnalogPinVolts(size_t device_index, MAX11300Types::Pin pin) const
     {
+        auto& device = devices_[device_index];
+
         return MAX11300Driver::TwelveBitUintToVolts(
-            ReadAnalogPinRaw(pin), pin_configurations_[pin].range.adc);
+            ReadAnalogPinRaw(device_index, pin),
+            device.pin_configurations_[pin].range.adc);
     }
 
     /**
      * Write a raw 12 bit (0-4095) value to a given ANALOG_OUT (DAC) pin
      * 
-     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the value
+     * \param raw_value - the 12-bit code to write to the given Pin
      */
-    void WriteAnalogPinRaw(Pin pin, uint16_t raw_value)
+    void WriteAnalogPinRaw(size_t             device_index,
+                           MAX11300Types::Pin pin,
+                           uint16_t           raw_value)
     {
-        if(pin_configurations_[pin].value != nullptr)
+        auto& device = devices_[device_index];
+
+        if(device.pin_configurations_[pin].value != nullptr)
         {
-            *pin_configurations_[pin].value = __builtin_bswap16(raw_value);
+            *device.pin_configurations_[pin].value
+                = __builtin_bswap16(raw_value);
         }
     }
 
@@ -400,200 +498,169 @@ class MAX11300Driver
      * Write a voltage value, within the bounds of the configured volatge range, 
      * to a given ANALOG_OUT (DAC) pin.
      * 
-     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the voltage
+     * \param voltage - Target voltage
      */
-    void WriteAnalogPinVolts(Pin pin, float voltage)
+    void WriteAnalogPinVolts(size_t             device_index,
+                             MAX11300Types::Pin pin,
+                             float              voltage)
     {
-        PinConfig pin_config = pin_configurations_[pin];
+        auto& device = devices_[device_index];
+
+        auto pin_config = device.pin_configurations_[pin];
         return WriteAnalogPinRaw(
-            pin, MAX11300Driver::VoltsTo12BitUint(voltage, pin_config.range));
+            device_index,
+            pin,
+            MAX11300Driver::VoltsTo12BitUint(voltage, pin_config.range));
     }
 
     /**
      * Read the state of a GPI pin
      * 
-     * *note this read is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this read is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to read the value
      * \return - The boolean state of the pin
      */
-    bool ReadDigitalPin(Pin pin) const
+    bool ReadDigitalPin(size_t device_index, MAX11300Types::Pin pin) const
     {
-        if(pin > Pin::PIN_15)
+        auto& device = devices_[device_index];
+
+        if(pin > MAX11300Types::Pin::PIN_15)
         {
-            return static_cast<bool>((gpi_buffer_[4] >> (pin - 16)) & 1);
+            return static_cast<bool>((device.gpi_buffer_[4] >> (pin - 16)) & 1);
         }
-        else if(pin > Pin::PIN_7)
+        else if(pin > MAX11300Types::Pin::PIN_7)
         {
-            return static_cast<bool>((gpi_buffer_[1] >> (pin - 8)) & 1);
+            return static_cast<bool>((device.gpi_buffer_[1] >> (pin - 8)) & 1);
         }
         else
         {
-            return static_cast<bool>((gpi_buffer_[2] >> pin) & 1);
+            return static_cast<bool>((device.gpi_buffer_[2] >> pin) & 1);
         }
     }
 
     /**
      * Write a digital state to the given GPO pin
      * 
-     * *note this write is local, call MAX11300::Update() to sync with the MAX11300
+     * *note this write is local, call MAX11300::Start() to sync with the MAX11300
      * 
      * \param pin - The pin of which to write the value
      * \param value - the boolean state to write
      */
-    void WriteDigitalPin(Pin pin, bool value)
+    void
+    WriteDigitalPin(size_t device_index, MAX11300Types::Pin pin, bool value)
     {
+        auto& device = devices_[device_index];
+
         // (void) pin;
         // (void) value;
         if(value)
         {
-            if(pin > Pin::PIN_15)
+            if(pin > MAX11300Types::Pin::PIN_15)
             {
-                gpo_buffer_[4] |= (1 << (pin - 16));
+                device.gpo_buffer_[4] |= (1 << (pin - 16));
             }
-            else if(pin > Pin::PIN_7)
+            else if(pin > MAX11300Types::Pin::PIN_7)
             {
-                gpo_buffer_[1] |= (1 << (pin - 8));
+                device.gpo_buffer_[1] |= (1 << (pin - 8));
             }
             else
             {
-                gpo_buffer_[2] |= (1 << pin);
+                device.gpo_buffer_[2] |= (1 << pin);
             }
         }
         else
         {
-            if(pin > Pin::PIN_15)
+            if(pin > MAX11300Types::Pin::PIN_15)
             {
-                gpo_buffer_[4] &= ~(1 << (pin - 16));
+                device.gpo_buffer_[4] &= ~(1 << (pin - 16));
             }
-            else if(pin > Pin::PIN_7)
+            else if(pin > MAX11300Types::Pin::PIN_7)
             {
-                gpo_buffer_[1] &= ~(1 << (pin - 8));
+                device.gpo_buffer_[1] &= ~(1 << (pin - 8));
             }
             else
             {
-                gpo_buffer_[2] &= ~(1 << pin);
+                device.gpo_buffer_[2] &= ~(1 << pin);
             }
         }
     }
 
     /**
-     * Update and synchronize the MAX11300 - This method does the following:
+     * Starts to update and synchronize the MAX11300 - This method does the following:
      * 
-     * - Write all current ANALOG_OUT (DAC) values to the MAX11300
+     * - Write all current ANALOG_OUT (DAC) values to all MAX11300s
      * - Read all current ANALOG_IN (ADC) values to memory
-     * - Write all GPO states to the MAX11300
+     * - Write all GPO states to all MAX11300s
      * - Read all GPI states to memory
+     * - call the provided callback function when complete (from an interrupt)
+     * - repeat
      * 
-     * TODO - Provide more info on usage location and the side-effects of blocking...
+     * The driver can be stopped by calling Stop().
+     * @see Stop()
      * 
+     * \param complete_callback An optional callback function that's called after each successful update
+     *                          Keep this callback function simple and fast, it's called from an interrupt.
+     * \param complete_callback_context An optional context pointer provided to the complete_callback
      */
-    Result Update()
+    MAX11300Types::Result
+    Start(MAX11300Types::UpdateCompleteCallbackFunctionPtr complete_callback
+          = nullptr,
+          void* complete_callback_context = nullptr)
     {
-        // Check first if were ready to TX/RX
-        if(!transport_.Ready())
-            return Result::OK;
-
-        if(dac_pin_count_ > 0)
+        if(sequencer_.IsBusy() && run_)
         {
-            // This is a burst transaction utilizing the contextual addressing
-            // scheme of the MAX11300. See the datasheet @ pp. 30
-            //
-            // We've prefixed the dac_buffer_ to point at the first dac pin to be written to.
-            // Subsequent DAC pins are written in their absolute order (0-19) if configured as such.
-            // For example:
-            // [1st_dac_pin_addr],[1st_dac_pin_msb],[1st_dac_pin_lsb],[2nd_dac_pin_msb],[2nd_dac_pin_lsb]...
-            //
-            // The size of the transaction is determined by the number of configured dac pins,
-            // plus one byte for the initial pin address.
-            //
-            // The datasheet recommends waiting 80us between DAC updates, in practice the appears to be
-            // per configured DAC pin. Here we inform the transport to wait at least N uS before transmitting
-            // again.
-            size_t tx_size = (dac_pin_count_ * 2) + 1;
-            if(transport_.Transmit(dac_buffer_, tx_size, (dac_pin_count_ * 40))
-               != Transport::Result::OK)
-            {
-                return Result::ERR;
-            }
+            // When the sequencer is currently busy, we can just return right away, and only
+            // update the callbacks
+            update_complete_callback_         = complete_callback;
+            update_complete_callback_context_ = complete_callback_context;
+            return MAX11300Types::Result::OK;
         }
 
-        if(adc_pin_count_ > 0)
-        {
-            // Reading ADC pins is a burst transaction approximately the same as the DAC transaction
-            // as described above...
-            size_t size = (adc_pin_count_ * 2) + 1;
+        run_                              = true;
+        update_complete_callback_         = complete_callback;
+        update_complete_callback_context_ = complete_callback_context;
 
-            uint8_t tx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
-            tx_buff[0]                                   = adc_buffer_[0];
-            if(transport_.TransmitAndReceive(tx_buff, adc_buffer_, size)
-               != Transport::Result::OK)
-            {
-                adc_buffer_[0] = tx_buff[0];
-                return Result::ERR;
-            }
-            adc_buffer_[0] = tx_buff[0];
-        }
+        sequencer_.current_device_ = 0;
+        sequencer_.current_step_   = UpdateSequencer::first_step_;
+        ContinueUpdate();
 
-        if(gpo_pin_count_ > 0)
-        {
-            // Writing GPO pins is a single 5 byte transaction, with the first byte being the
-            // the GPO data register, and the subsequent 4 bytes containing the state of the
-            // GPO ports to be written.
-            if(transport_.Transmit(gpo_buffer_, sizeof(gpo_buffer_), 0)
-               != Transport::Result::OK)
-            {
-                return Result::ERR;
-            }
-        }
-
-        if(gpi_pin_count_ > 0)
-        {
-            // Reading GPI pins is a single, 5 byte, full-duplex transaction with the first
-            // and only TX byte being the GPI register.
-            uint8_t tx_buff[sizeof(gpi_buffer_)] = {};
-            tx_buff[0]                           = gpi_buffer_[0];
-            if(transport_.TransmitAndReceive(
-                   tx_buff, gpi_buffer_, sizeof(gpi_buffer_))
-               != Transport::Result::OK)
-            {
-                gpi_buffer_[0] = tx_buff[0];
-                return Result::ERR;
-            }
-            gpi_buffer_[0] = tx_buff[0];
-        }
-
-        return Result::OK;
+        return MAX11300Types::Result::OK;
     }
+
+    /** Call this to stop the auto updating, but complete the current update. */
+    void Stop() { run_ = false; }
 
     /**
      * A utility funtion for converting a voltage (float) value, bound to a given
      * voltage range, to the first 12 bits (0-4095) of an unsigned 16 bit integer value. 
      * 
      * \param volts the voltage to convert
-     * \param range the MAX11300::DacVoltageRange to constrain to
+     * \param range the MAX11300Types::DacVoltageRange to constrain to
      * \return the voltage as 12 bit unsigned integer
      */
-    static uint16_t VoltsTo12BitUint(float volts, DacVoltageRange range)
+    static uint16_t VoltsTo12BitUint(float                          volts,
+                                     MAX11300Types::DacVoltageRange range)
     {
         float vmax    = 0;
         float vmin    = 0;
         float vscaler = 0;
         switch(range)
         {
-            case DacVoltageRange::NEGATIVE_10_TO_0:
+            case MAX11300Types::DacVoltageRange::NEGATIVE_10_TO_0:
                 vmin    = -10;
                 vmax    = 0;
                 vscaler = 4095.0f / (vmax - vmin);
                 break;
-            case DacVoltageRange::NEGATIVE_5_TO_5:
+            case MAX11300Types::DacVoltageRange::NEGATIVE_5_TO_5:
                 vmin    = -5;
                 vmax    = 5;
                 vscaler = 4095.0f / (vmax - vmin);
                 break;
-            case DacVoltageRange::ZERO_TO_10:
+            case MAX11300Types::DacVoltageRange::ZERO_TO_10:
                 vmin    = 0;
                 vmax    = 10;
                 vscaler = 4095.0f / (vmax - vmin);
@@ -615,32 +682,33 @@ class MAX11300Driver
      * scaled and bound to the given voltage range.
      * 
      * \param value the 12 bit value to convert
-     * \param range the MAX11300::AdcVoltageRange to constrain to
+     * \param range the MAX11300Types::AdcVoltageRange to constrain to
      * \return the value as a float voltage constrained to the given voltage range
      */
-    static float TwelveBitUintToVolts(uint16_t value, AdcVoltageRange range)
+    static float TwelveBitUintToVolts(uint16_t                       value,
+                                      MAX11300Types::AdcVoltageRange range)
     {
         float vmax    = 0;
         float vmin    = 0;
         float vscaler = 0;
         switch(range)
         {
-            case AdcVoltageRange::NEGATIVE_10_TO_0:
+            case MAX11300Types::AdcVoltageRange::NEGATIVE_10_TO_0:
                 vmin    = -10;
                 vmax    = 0;
                 vscaler = (vmax - vmin) / 4095;
                 break;
-            case AdcVoltageRange::NEGATIVE_5_TO_5:
+            case MAX11300Types::AdcVoltageRange::NEGATIVE_5_TO_5:
                 vmin    = -5;
                 vmax    = 5;
                 vscaler = (vmax - vmin) / 4095;
                 break;
-            case AdcVoltageRange::ZERO_TO_10:
+            case MAX11300Types::AdcVoltageRange::ZERO_TO_10:
                 vmin    = 0;
                 vmax    = 10;
                 vscaler = (vmax - vmin) / 4095;
                 break;
-            case AdcVoltageRange::ZERO_TO_2P5:
+            case MAX11300Types::AdcVoltageRange::ZERO_TO_2P5:
                 vmin    = 0;
                 vmax    = 2.5;
                 vscaler = (vmax - vmin) / 4095;
@@ -677,8 +745,8 @@ class MAX11300Driver
         PinMode mode; /**< & */
         union
         {
-            AdcVoltageRange adc;
-            DacVoltageRange dac;
+            MAX11300Types::AdcVoltageRange adc;
+            MAX11300Types::DacVoltageRange dac;
         } range; /**< & */
         /**
          * This is a voltage value used as follows:
@@ -698,7 +766,7 @@ class MAX11300Driver
         void Defaults()
         {
             mode      = PinMode::NONE;
-            range.adc = AdcVoltageRange::ZERO_TO_10;
+            range.adc = MAX11300Types::AdcVoltageRange::ZERO_TO_10;
             threshold = 0.0f;
             value     = nullptr;
         }
@@ -710,14 +778,16 @@ class MAX11300Driver
      * \param pin - The pin to configure
      * \return - OK if the configuration was successfully applied
      */
-    Result SetPinConfig(Pin pin)
+    MAX11300Types::Result SetPinConfig(size_t             device_index,
+                                       MAX11300Types::Pin pin)
     {
         uint16_t pin_func_cfg = 0x0000;
+        auto&    device       = devices_[device_index];
 
-        if(pin_configurations_[pin].mode != PinMode::NONE)
+        if(device.pin_configurations_[pin].mode != PinMode::NONE)
         {
             // Set the pin to high impedance mode before changing (as per the datasheet).
-            WriteRegister(MAX11300_FUNC_BASE + pin, 0x0000);
+            WriteRegister(device_index, MAX11300_FUNC_BASE + pin, 0x0000);
             // According to the datasheet, the amount of time necessary for the pin to
             // switch to high impedance mode depends on the prior configuration.
             // The worst case recommended wait time seems to be 1ms.
@@ -725,129 +795,137 @@ class MAX11300Driver
         }
 
         // Apply the pin configuration
-        pin_func_cfg = pin_func_cfg
-                       | static_cast<uint16_t>(pin_configurations_[pin].mode);
+        pin_func_cfg
+            = pin_func_cfg
+              | static_cast<uint16_t>(device.pin_configurations_[pin].mode);
 
-        if(pin_configurations_[pin].mode == PinMode::ANALOG_OUT)
+        if(device.pin_configurations_[pin].mode == PinMode::ANALOG_OUT)
         {
-            pin_func_cfg
-                |= static_cast<uint16_t>(pin_configurations_[pin].range.dac);
+            pin_func_cfg |= static_cast<uint16_t>(
+                device.pin_configurations_[pin].range.dac);
         }
-        else if(pin_configurations_[pin].mode == PinMode::ANALOG_IN)
+        else if(device.pin_configurations_[pin].mode == PinMode::ANALOG_IN)
         {
             // In ADC mode we'll average 128 samples per Update
-            pin_func_cfg
-                = pin_func_cfg | 0x00e0
-                  | static_cast<uint16_t>(pin_configurations_[pin].range.adc);
+            pin_func_cfg = pin_func_cfg | 0x00e0
+                           | static_cast<uint16_t>(
+                               device.pin_configurations_[pin].range.adc);
         }
-        else if(pin_configurations_[pin].mode == PinMode::GPI)
+        else if(device.pin_configurations_[pin].mode == PinMode::GPI)
         {
             // The DAC data register for that port needs to be set to the value corresponding to the
             // intended input threshold voltage. Any input voltage above that programmed threshold is
             // reported as a logic one. The input voltage must be between 0V and 5V.
             //  It may take up to 1ms for the threshold voltage to be effective
-            WriteRegister((MAX11300_DACDAT_BASE + pin),
+            WriteRegister(device_index,
+                          (MAX11300_DACDAT_BASE + pin),
                           MAX11300Driver::VoltsTo12BitUint(
-                              pin_configurations_[pin].threshold,
-                              pin_configurations_[pin].range.dac));
+                              device.pin_configurations_[pin].threshold,
+                              device.pin_configurations_[pin].range.dac));
         }
-        else if(pin_configurations_[pin].mode == PinMode::GPO)
+        else if(device.pin_configurations_[pin].mode == PinMode::GPO)
         {
             // The port’s DAC data register needs to be set first. It may require up to 1ms for the
             // port to be ready to produce the desired logic one level.
-            WriteRegister((MAX11300_DACDAT_BASE + pin),
+            WriteRegister(device_index,
+                          (MAX11300_DACDAT_BASE + pin),
                           MAX11300Driver::VoltsTo12BitUint(
-                              pin_configurations_[pin].threshold,
-                              pin_configurations_[pin].range.dac));
+                              device.pin_configurations_[pin].threshold,
+                              device.pin_configurations_[pin].range.dac));
         }
 
         // Write the configuration now...
-        if(WriteRegister(MAX11300_FUNC_BASE + pin, pin_func_cfg) != Result::OK)
+        if(WriteRegister(device_index, MAX11300_FUNC_BASE + pin, pin_func_cfg)
+           != MAX11300Types::Result::OK)
         {
-            return Result::ERR;
+            return MAX11300Types::Result::ERR;
         }
 
         // Wait for 1ms as per the datasheet
         DelayUs(1000);
 
         // Verify our configuration was written
-        if(ReadRegister(MAX11300_FUNC_BASE + pin) != pin_func_cfg)
+        if(ReadRegister(device_index, MAX11300_FUNC_BASE + pin) != pin_func_cfg)
         {
-            return Result::ERR;
+            return MAX11300Types::Result::ERR;
         }
 
         // Update and re-index the pin configuration now...
-        UpdatePinConfig();
+        UpdatePinConfig(device_index);
 
-        return Result::OK;
+        return MAX11300Types::Result::OK;
     }
 
     /**
      * Updates all pin configurations and ensures correct pointer assignment, and addressing
      */
-    Result UpdatePinConfig()
+    MAX11300Types::Result UpdatePinConfig(size_t device_index)
     {
+        // TODO
+        auto& device = devices_[device_index];
+
         // Zero everything out...
-        std::memset(dac_buffer_, 0, sizeof(dac_buffer_));
-        std::memset(adc_buffer_, 0, sizeof(adc_buffer_));
-        std::memset(gpi_buffer_, 0, sizeof(gpi_buffer_));
-        std::memset(gpo_buffer_, 0, sizeof(gpo_buffer_));
+        std::memset(device.dac_buffer_, 0, sizeof(device.dac_buffer_));
+        std::memset(device.adc_buffer_, 0, sizeof(device.adc_buffer_));
+        std::memset(device.gpi_buffer_, 0, sizeof(device.gpi_buffer_));
+        std::memset(device.gpo_buffer_, 0, sizeof(device.gpo_buffer_));
 
-        dac_pin_count_ = 0;
-        adc_pin_count_ = 0;
-        gpi_pin_count_ = 0;
-        gpo_pin_count_ = 0;
+        device.dac_pin_count_ = 0;
+        device.adc_pin_count_ = 0;
+        device.gpi_pin_count_ = 0;
+        device.gpo_pin_count_ = 0;
 
-        for(uint8_t i = 0; i <= Pin::PIN_19; i++)
+        for(uint8_t i = 0; i <= MAX11300Types::Pin::PIN_19; i++)
         {
-            Pin pin = static_cast<Pin>(i);
+            MAX11300Types::Pin pin = static_cast<MAX11300Types::Pin>(i);
 
             // Always reset the value pointer first...
-            pin_configurations_[i].value = nullptr;
+            device.pin_configurations_[i].value = nullptr;
 
-            if(pin_configurations_[i].mode == PinMode::ANALOG_OUT)
+            if(device.pin_configurations_[i].mode == PinMode::ANALOG_OUT)
             {
-                dac_pin_count_++;
-                if(dac_pin_count_ == 1)
+                device.dac_pin_count_++;
+                if(device.dac_pin_count_ == 1)
                 {
                     // If this is the first pin of this type, we need to set
                     // the initial address of the dac_buffer_ to point at this pin.
                     // The ordering of subsequent pins is known by the MAX11300.
-                    dac_buffer_[0] = (MAX11300_DACDAT_BASE + pin) << 1;
+                    device.dac_buffer_[0] = (MAX11300_DACDAT_BASE + pin) << 1;
                 }
                 // set the pin_config.value to a pointer at the appropriate
                 // index of the dac_buffer...
-                pin_configurations_[i].value = reinterpret_cast<uint16_t*>(
-                    &dac_buffer_[(2 * dac_pin_count_) - 1]);
+                device.pin_configurations_[i].value
+                    = reinterpret_cast<uint16_t*>(
+                        &device.dac_buffer_[(2 * device.dac_pin_count_) - 1]);
             }
-            else if(pin_configurations_[i].mode == PinMode::ANALOG_IN)
+            else if(device.pin_configurations_[i].mode == PinMode::ANALOG_IN)
             {
-                adc_pin_count_++;
-                if(adc_pin_count_ == 1)
+                device.adc_pin_count_++;
+                if(device.adc_pin_count_ == 1)
                 {
                     // If this is the first pin of this type, we need to set
                     // the initial address of the adc_buffer_ to point at this pin.
                     // The ordering of subsequent pins is known by the MAX11300.
-                    adc_buffer_[0] = ((MAX11300_ADCDAT_BASE + pin) << 1) | 1;
+                    device.adc_first_adress
+                        = ((MAX11300_ADCDAT_BASE + pin) << 1) | 1;
                 }
                 // set the pin_config.value to a pointer at the appropriate
                 // index of the adc_buffer...
-                pin_configurations_[i].value = reinterpret_cast<uint16_t*>(
-                    &adc_buffer_[(2 * adc_pin_count_) - 1]);
+                device.pin_configurations_[i].value
+                    = reinterpret_cast<uint16_t*>(
+                        &device.adc_buffer_[(2 * device.adc_pin_count_) - 1]);
             }
-            else if(pin_configurations_[i].mode == PinMode::GPI)
+            else if(device.pin_configurations_[i].mode == PinMode::GPI)
             {
-                gpi_pin_count_++;
-                gpi_buffer_[0] = (MAX11300_GPIDAT << 1) | 1;
+                device.gpi_pin_count_++;
             }
-            else if(pin_configurations_[i].mode == PinMode::GPO)
+            else if(device.pin_configurations_[i].mode == PinMode::GPO)
             {
-                gpo_pin_count_++;
-                gpo_buffer_[0] = (MAX11300_GPODAT << 1);
+                device.gpo_pin_count_++;
             }
         }
 
-        return Result::OK;
+        return MAX11300Types::Result::OK;
     }
 
     // This is just a wrapper for System::DelayUs to allow it to be
@@ -865,10 +943,10 @@ class MAX11300Driver
      * \param address - the register address to read
      * \return the value at the given register as returned by the MAX11300 
      */
-    uint16_t ReadRegister(uint8_t address)
+    uint16_t ReadRegister(size_t device_index, uint8_t address)
     {
         uint16_t val = 0;
-        ReadRegister(address, &val, 1);
+        ReadRegister(device_index, address, &val, 1);
         return val;
     }
 
@@ -879,17 +957,21 @@ class MAX11300Driver
      * \param size - the number of bytes to read
      * \return OK if the transaction was successful 
      */
-    Result ReadRegister(uint8_t address, uint16_t* values, size_t size)
+    MAX11300Types::Result ReadRegister(size_t    device_index,
+                                       uint8_t   address,
+                                       uint16_t* values,
+                                       size_t    size)
     {
-        size_t  rx_length                            = (size * 2) + 1;
-        uint8_t rx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
-        uint8_t tx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
-        tx_buff[0]                                   = (address << 1) | 1;
+        size_t  rx_length                                 = (size * 2) + 1;
+        uint8_t rx_buff[MAX11300_TRANSPORT_BUFFER_LENGTH] = {};
+        uint8_t tx_buff[MAX11300_TRANSPORT_BUFFER_LENGTH] = {};
+        tx_buff[0]                                        = (address << 1) | 1;
 
-        if(transport_.TransmitAndReceive(tx_buff, rx_buff, rx_length)
+        if(transport_.TransmitAndReceiveBlocking(
+               device_index, tx_buff, rx_buff, rx_length)
            != Transport::Result::OK)
         {
-            return Result::ERR;
+            return MAX11300Types::Result::ERR;
         }
 
         size_t rx_idx = 1;
@@ -899,7 +981,7 @@ class MAX11300Driver
                                               + rx_buff[rx_idx + 1]);
             rx_idx    = rx_idx + 2;
         }
-        return Result::OK;
+        return MAX11300Types::Result::OK;
     }
 
     /**
@@ -908,9 +990,10 @@ class MAX11300Driver
      * \param value - the value to write at the given register
      * \return OK if the transaction was successful 
      */
-    Result WriteRegister(uint8_t address, uint16_t value)
+    MAX11300Types::Result
+    WriteRegister(size_t device_index, uint8_t address, uint16_t value)
     {
-        return WriteRegister(address, &value, 1);
+        return WriteRegister(device_index, address, &value, 1);
     }
 
     /**
@@ -920,11 +1003,14 @@ class MAX11300Driver
      * \param size - the number of bytes to written
      * \return OK if the transaction was successful 
      */
-    Result WriteRegister(uint8_t address, uint16_t* values, size_t size)
+    MAX11300Types::Result WriteRegister(size_t    device_index,
+                                        uint8_t   address,
+                                        uint16_t* values,
+                                        size_t    size)
     {
-        size_t  tx_size                              = (size * 2) + 1;
-        uint8_t tx_buff[MAX_TRANSPORT_BUFFER_LENGTH] = {};
-        tx_buff[0]                                   = (address << 1);
+        size_t  tx_size                                   = (size * 2) + 1;
+        uint8_t tx_buff[MAX11300_TRANSPORT_BUFFER_LENGTH] = {};
+        tx_buff[0]                                        = (address << 1);
 
         size_t tx_idx = 1;
         for(size_t i = 0; i < size; i++)
@@ -933,12 +1019,13 @@ class MAX11300Driver
             tx_buff[tx_idx++] = static_cast<uint8_t>(values[i]);
         }
 
-        if(transport_.Transmit(tx_buff, tx_size, 0) == Transport::Result::OK)
+        if(transport_.TransmitBlocking(device_index, tx_buff, tx_size)
+           == Transport::Result::OK)
         {
-            return Result::OK;
+            return MAX11300Types::Result::OK;
         }
 
-        return Result::ERR;
+        return MAX11300Types::Result::ERR;
     }
 
 
@@ -949,38 +1036,261 @@ class MAX11300Driver
      * \param value - the value to apply to the read value atop the given mask
      * \return OK if the transaction was successful
      */
-    Result
-    ReadModifyWriteRegister(uint8_t address, uint16_t mask, uint16_t value)
+    MAX11300Types::Result ReadModifyWriteRegister(size_t   device_index,
+                                                  uint8_t  address,
+                                                  uint16_t mask,
+                                                  uint16_t value)
     {
-        uint16_t reg = ReadRegister(address);
+        uint16_t reg = ReadRegister(device_index, address);
         reg          = (reg & ~mask) | (uint16_t)(value);
-        return WriteRegister(address, reg);
+        return WriteRegister(device_index, address, reg);
     }
 
-    static const size_t MAX_TRANSPORT_BUFFER_LENGTH = 41;
+    void ContinueUpdate()
+    {
+        // read results from the transmission that was just completed
+        switch(sequencer_.current_step_)
+        {
+            case UpdateSequencer::Step::start:
+                sequencer_.current_device_ = 0;
+                sequencer_.current_step_   = UpdateSequencer::Step::updateDac;
+                break;
+            case UpdateSequencer::Step::updateDac:
+                // nothing to read back; we only sent data
+                sequencer_.current_step_ = UpdateSequencer::Step::updateAdc;
+                break;
+            case UpdateSequencer::Step::updateAdc:
+            {
+                // read back rx data
+                const size_t size
+                    = (devices_[sequencer_.current_device_].adc_pin_count_ * 2)
+                      + 1;
+                memcpy(devices_[sequencer_.current_device_].adc_buffer_,
+                       dma_buffer_->rx_buffer,
+                       size);
+                sequencer_.current_step_ = UpdateSequencer::Step::updateGpo;
+            }
+            break;
+            case UpdateSequencer::Step::updateGpo:
+                // nothing to read back; we only sent data
+                sequencer_.current_step_ = UpdateSequencer::Step::updateGpi;
+                break;
+            case UpdateSequencer::Step::updateGpi:
+            {
+                // read back rx data
+                const size_t size
+                    = sizeof(devices_[sequencer_.current_device_].gpi_buffer_);
+                memcpy(devices_[sequencer_.current_device_].gpi_buffer_,
+                       dma_buffer_->rx_buffer,
+                       size);
 
-    PinConfig pin_configurations_[20];
+                sequencer_.current_device_++;
+                sequencer_.current_step_ = UpdateSequencer::Step::updateDac;
+            }
+            break;
+        }
 
-    uint8_t dac_pin_count_;
+        bool done = false;
+        while(!done)
+        {
+            if(sequencer_.current_device_ >= num_devices)
+            {
+                sequencer_.Invalidate();
+                if(update_complete_callback_)
+                    update_complete_callback_(
+                        update_complete_callback_context_);
+                // retrigger if not stopped
+                if(run_)
+                {
+                    sequencer_.current_device_ = 0;
+                    sequencer_.current_step_ = UpdateSequencer::Step::updateDac;
+                }
+                else
+                    return; // all devices complete, no retriggering
+            }
 
-    uint8_t adc_pin_count_;
+            auto& device = devices_[sequencer_.current_device_];
 
-    uint8_t gpi_pin_count_;
+            switch(sequencer_.current_step_)
+            {
+                case UpdateSequencer::Step::updateDac:
+                    if(device.dac_pin_count_ > 0)
+                    {
+                        // This is a burst transaction utilizing the contextual addressing
+                        // scheme of the MAX11300. See the datasheet @ pp. 30
+                        //
+                        // We've prefixed the dac_buffer_ to point at the first dac pin to be written to.
+                        // Subsequent DAC pins are written in their absolute order (0-19) if configured as such.
+                        // For example:
+                        // [1st_dac_pin_addr],[1st_dac_pin_msb],[1st_dac_pin_lsb],[2nd_dac_pin_msb],[2nd_dac_pin_lsb]...
+                        //
+                        // The size of the transaction is determined by the number of configured dac pins,
+                        // plus one byte for the initial pin address.
+                        size_t tx_size = (device.dac_pin_count_ * 2) + 1;
+                        memcpy(dma_buffer_->tx_buffer,
+                               device.dac_buffer_,
+                               tx_size);
+                        transport_.TransmitDma(sequencer_.current_device_,
+                                               dma_buffer_->tx_buffer,
+                                               tx_size,
+                                               &DmaCompleteCallback,
+                                               this);
+                        done = true;
+                    }
+                    else
+                    {
+                        sequencer_.current_step_
+                            = UpdateSequencer::Step::updateAdc;
+                        done = false; // cycle again
+                    }
+                    break;
+                case UpdateSequencer::Step::updateAdc:
+                    if(device.adc_pin_count_ > 0)
+                    {
+                        // Reading ADC pins is a burst transaction approximately the same as the DAC transaction
+                        // as described above...
+                        size_t size = (device.adc_pin_count_ * 2) + 1;
+                        dma_buffer_->tx_buffer[0] = device.adc_first_adress;
+                        // clear the rest of the buffer (it may contain stuff from a previous transaction)
+                        for(size_t i = 1; i < size; i++)
+                            dma_buffer_->tx_buffer[i] = 0x00;
+                        transport_.TransmitAndReceiveDma(
+                            sequencer_.current_device_,
+                            dma_buffer_->tx_buffer,
+                            dma_buffer_->rx_buffer,
+                            size,
+                            &DmaCompleteCallback,
+                            this);
+                        done = true;
+                    }
+                    else
+                    {
+                        sequencer_.current_step_
+                            = UpdateSequencer::Step::updateGpo;
+                        done = false; // cycle again
+                    }
+                    break;
+                case UpdateSequencer::Step::updateGpo:
+                    if(device.gpo_pin_count_ > 0)
+                    {
+                        // Writing GPO pins is a single 5 byte transaction, with the first byte being the
+                        // the GPO data register, and the subsequent 4 bytes containing the state of the
+                        // GPO ports to be written.
+                        memcpy(dma_buffer_->tx_buffer,
+                               device.gpo_buffer_,
+                               sizeof(device.gpo_buffer_));
+                        dma_buffer_->tx_buffer[0] = (MAX11300_GPODAT << 1);
+                        transport_.TransmitDma(sequencer_.current_device_,
+                                               dma_buffer_->tx_buffer,
+                                               sizeof(device.gpo_buffer_),
+                                               &DmaCompleteCallback,
+                                               this);
+                        done = true;
+                    }
+                    else
+                    {
+                        sequencer_.current_step_
+                            = UpdateSequencer::Step::updateGpi;
+                        done = false; // cycle again
+                    }
+                    break;
 
-    uint8_t gpo_pin_count_;
+                case UpdateSequencer::Step::updateGpi:
+                    if(device.gpi_pin_count_ > 0)
+                    {
+                        // Reading GPI pins is a single, 5 byte, full-duplex transaction with the first
+                        // and only TX byte being the GPI register.
+                        dma_buffer_->tx_buffer[0] = (MAX11300_GPIDAT << 1) | 1;
+                        // clear the rest of the buffer (it may contain stuff from a previous transaction)
+                        for(size_t i = 1; i < sizeof(device.gpi_buffer_); i++)
+                            dma_buffer_->tx_buffer[i] = 0x00;
+                        transport_.TransmitAndReceiveDma(
+                            sequencer_.current_device_,
+                            dma_buffer_->tx_buffer,
+                            dma_buffer_->rx_buffer,
+                            sizeof(device.gpi_buffer_),
+                            &DmaCompleteCallback,
+                            this);
+                        done = true;
+                    }
+                    else
+                    {
+                        sequencer_.current_step_
+                            = UpdateSequencer::Step::updateDac;
+                        sequencer_
+                            .current_device_++; // go to next chip in sequence
+                        done = false;           // cycle again
+                    }
+                    break;
+                default: break;
+            }
+        }
+    }
 
-    uint8_t dac_buffer_[41];
+    static void DmaCompleteCallback(void* context, SpiHandle::Result result)
+    {
+        auto& driver = *reinterpret_cast<MAX11300Driver*>(context);
+        if(result == SpiHandle::Result::OK)
+        {
+            driver.ContinueUpdate();
+        }
+        else
+        {
+            driver.sequencer_.Invalidate();
+        }
+    }
 
-    uint8_t adc_buffer_[41];
+    MAX11300Types::DmaBuffer* dma_buffer_;
 
-    uint8_t gpi_buffer_[5];
+    struct Device
+    {
+        PinConfig pin_configurations_[20];
+        uint8_t   dac_pin_count_;
+        uint8_t   adc_pin_count_;
+        uint8_t   gpi_pin_count_;
+        uint8_t   gpo_pin_count_;
+        uint8_t   dac_buffer_[41];
+        uint8_t   adc_first_adress;
+        uint8_t   adc_buffer_[41];
+        uint8_t   gpi_buffer_[5];
+        uint8_t   gpo_buffer_[5];
+    };
+    Device devices_[num_devices];
 
-    uint8_t gpo_buffer_[5];
+    struct UpdateSequencer
+    {
+        size_t current_device_ = 0;
+        enum class Step
+        {
+            start = 0,
+            updateDac,
+            updateAdc,
+            updateGpo,
+            updateGpi,
+        };
+        static constexpr auto first_step_   = Step::start;
+        static constexpr auto last_step_    = Step::updateGpi;
+        Step                  current_step_ = first_step_;
+        bool IsBusy() const { return current_device_ < num_devices; }
+        void Invalidate()
+        {
+            current_device_ = num_devices;
+            current_step_   = first_step_;
+        }
+    } sequencer_;
 
     Transport transport_;
-};
 
-using MAX11300 = daisy::MAX11300Driver<BlockingSpiTransport>;
+    MAX11300Types::UpdateCompleteCallbackFunctionPtr update_complete_callback_;
+    void* update_complete_callback_context_;
+    bool  run_;
+};
+template <size_t num_devices = 1>
+using MAX11300
+    = daisy::MAX11300Driver<MAX11300MultiSlaveSpiTransport, num_devices>;
+
+/** @} */
+/** @} */
 
 }; // namespace daisy
 

@@ -6,7 +6,7 @@ namespace daisy
 {
 /** @brief A menu page for small screens
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  * 
  *  This class builds upon the menu logic of AbstractMenu and adds 
  *  drawing routines that are suitable for small screens.

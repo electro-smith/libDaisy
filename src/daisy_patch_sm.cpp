@@ -282,7 +282,7 @@ namespace patch_sm
         codec.Init(i2c2);
 
         AudioHandle::Config audio_config;
-        audio_config.blocksize  = 4;
+        audio_config.blocksize  = 48;
         audio_config.samplerate = SaiHandle::Config::SampleRate::SAI_48KHZ;
         audio_config.postgain   = 1.f;
         audio.Init(audio_config, sai_1_handle);

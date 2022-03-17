@@ -7,7 +7,7 @@ namespace daisy
 {
 /** @brief A queue that holds user input events in the UI system.
  *  @author jelliesen
- *  @addtogroup ui 
+ *  @ingroup ui 
  * 
  * A queue that holds user interface events such as button presses or encoder turns.
  * The queue can be filled from hardware drivers and read from a UI object.

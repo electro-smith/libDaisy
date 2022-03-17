@@ -5,20 +5,17 @@
 #include "daisy_core.h"
 #include "per/gpio.h"
 
-/** @addtogroup lcd
-    @{
-    */
 
+namespace daisy
+{
 /**
    @brief Device Driver for 16x2 LCD panel. \n 
    HD44780 with 4 data lines. \n
    Example product: https://www.adafruit.com/product/181
    @author StaffanMelin
    @date March 2021
+   @ingroup device
 */
-
-namespace daisy
-{
 class LcdHD44780
 {
   public:
@@ -77,4 +74,3 @@ class LcdHD44780
 } // namespace daisy
 
 #endif
-/** @} */

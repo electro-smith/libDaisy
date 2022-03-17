@@ -75,6 +75,15 @@ class UartHandler
             dsy_gpio_pin rx; /**< & */
         } pin_config;        /**< & */
 
+        Config()
+        {
+            // user must init periph, pin_config, and periph
+            stopbits   = StopBits::BITS_1;
+            parity     = Parity::NONE;
+            wordlength = WordLength::BITS_8;
+            baudrate   = 4800;
+        }
+
         Peripheral periph;
         StopBits   stopbits;
         Parity     parity;

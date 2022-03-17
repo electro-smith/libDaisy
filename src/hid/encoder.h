@@ -53,6 +53,7 @@ class Encoder
     inline void SetUpdateRate(float update_rate) {}
 
   private:
+    uint32_t last_update_;
     Switch   sw_;
     dsy_gpio hw_a_, hw_b_;
     uint8_t  a_, b_;

@@ -35,8 +35,14 @@ jobs:
       uses: fiam/arm-none-eabi-gcc@v1
       with:
         release: '9-2019-q4'
+    - name: Setup python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
     - name: Build Library
       run: make -j
+    - name: Build Examples
+      run: ./ci/build_examples.py -f core doc src tests
 
   build-cmake:
     runs-on: ubuntu-latest

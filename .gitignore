@@ -130,4 +130,5 @@ vs/*.log
 
 tests/libDaisy_gtest
 tests/build/bin/
+examples/*/build/
 

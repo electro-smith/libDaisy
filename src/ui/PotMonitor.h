@@ -7,7 +7,7 @@ namespace daisy
 {
 /** @brief A potentiometer monitor that generates events in a UiEventQueue
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  * 
  *  This class monitors a number of potentiometers and detects pot movements.
  *  When a movement is detected, an event is added to a UiEventQueue.

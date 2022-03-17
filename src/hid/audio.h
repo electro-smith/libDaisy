@@ -5,6 +5,20 @@
 
 namespace daisy
 {
+/** @brief Audio Engine Handle
+ *  @ingroup audio 
+ *  @details This class allows for higher level access to an audio engine.
+ *           If you're using a SOM like the DaisySeed or DaisyPatchSM (or any 
+ *            board that includes one of those objects) then the intialization
+ *            is already taken  care of.
+ *           If you're setting up your own custom hardware, or need to make changes
+ *           you will have to take the following steps:
+ *             1. Create and Initialize an SaiHandle or two depending on your requirements
+ *             2. Initialize the Audio Handle with the desired settings and the Initialized SaiHandle
+ *             3. If the connected codec requires special configuration or initialization, do so
+ *             4. Write a callback method using either the AudioCallback or the InterleavingAudioCallback format
+ *             5. Start the Audio using one of the StartAudio function
+ */
 class AudioHandle
 {
   public:
@@ -26,17 +40,17 @@ class AudioHandle
     /** Non-Interleaving input buffer
      * Buffer arranged by float[chn][sample] 
      * const so that the user can't modify the input
-    */
+     */
     typedef const float* const* InputBuffer;
 
     /** Non-Interleaving output buffer
      * Arranged by float[chn][sample] 
-    */
+     */
     typedef float** OutputBuffer;
 
     /** Type for a Non-Interleaving audio callback 
-   * Non-Interleaving audio callbacks in daisy will be of this type
-  */
+     * Non-Interleaving audio callbacks in daisy will be of this type
+     */
     typedef void (*AudioCallback)(InputBuffer  in,
                                   OutputBuffer out,
                                   size_t       size);
@@ -53,8 +67,8 @@ class AudioHandle
     typedef float* InterleavingOutputBuffer;
 
     /** Interleaving Audio Callback 
-   * Interleaving audio callbacks in daisy must be of this type
-  */
+     * Interleaving audio callbacks in daisy must be of this type
+     */
     typedef void (*InterleavingAudioCallback)(InterleavingInputBuffer  in,
                                               InterleavingOutputBuffer out,
                                               size_t                   size);

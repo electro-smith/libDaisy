@@ -93,6 +93,7 @@ class Switch
     inline void SetUpdateRate(float update_rate) {}
 
   private:
+    uint32_t last_update_;
     Type     t_;
     dsy_gpio hw_gpio_;
     uint8_t  state_;

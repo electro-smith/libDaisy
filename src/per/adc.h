@@ -10,7 +10,7 @@
 
 namespace daisy
 {
-/** @addtogroup analog_digital_conversion
+/** @addtogroup per_analog
     @{
 */
 
@@ -19,7 +19,15 @@ using a struct like this allows us to add more configuration
 later without breaking existing functionality.
 */
 
-/** Configuration Structure for a given channel */
+/** @brief   Configuration Structure for an ADC Channel 
+ *  @details This can be used to configure a a single input, 
+ *           or a multiplexed input, allowing up to 8 inputs on 
+ *           one channel.
+ *  @note    Sharing data lines to multiple muxes _is_ possible, but
+ *           each channel sharing data lines must be set to the maximum
+ *           number of channels, even if some multiplexers have fewer
+ *           inputs connected.
+*/
 struct AdcChannelConfig
 {
     /** Which pin to use for multiplexing */
@@ -60,7 +68,7 @@ struct AdcChannelConfig
 };
 
 /**
-   Handler for analog to digital conversion
+   @brief Handler for analog to digital conversion
 */
 class AdcHandle
 {
