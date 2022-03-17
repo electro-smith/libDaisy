@@ -49,9 +49,6 @@ class UartHandler::Impl
     Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout);
     Result BlockingReceive(uint8_t* buff, size_t size, uint32_t timeout);
 
-    UartHandler::Result StopRx();
-
-    bool RxActive();
     Result DmaTransmit(uint8_t*                 buff,
                        size_t                   size,
                        StartCallbackFunctionPtr start_callback,
@@ -349,25 +346,6 @@ UartHandler::Result UartHandler::Impl::InitDma()
     }
 
     return UartHandler::Result::OK;
-}
-UartHandler::Result UartHandler::Impl::StopRx()
-{
-    if(!rx_active_)
-    {
-        HAL_UART_DMAStop(&huart_);
-        HAL_UART_Abort(&huart_);
-        HAL_NVIC_DisableIRQ(USART1_IRQn);
-        __HAL_UART_CLEAR_FEFLAG(&huart_);
-        __HAL_UART_DISABLE_IT(&huart_, UART_IT_IDLE);
-        __HAL_UART_DISABLE_IT(&huart_, UART_IT_FE);
-        rx_last_pos_ = 0;
-        dma_fifo_rx_->Init();
-    }
-#ifdef UART_RX_DOUBLE_BUFFER
-    queue_rx_.Init();
-#endif
-    rx_active_ = false;
-    return Result::OK;
 }
 
 // formerly known as "UARTRxComplete()"
@@ -1086,12 +1064,6 @@ UartHandler::DmaTransmit(uint8_t*                              buff,
         buff, size, start_callback, end_callback, callback_context);
 }
 
-UartHandler::Result UartHandler::StopRx()
-{
-    return pimpl_->StopRx();
-}
-
-bool UartHandler::RxActive()
 UartHandler::Result
 UartHandler::DmaReceive(uint8_t*                              buff,
                         size_t                                size,

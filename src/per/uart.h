@@ -170,10 +170,6 @@ class UartHandler
                       UartHandler::EndCallbackFunctionPtr   end_callback,
                       void*                                 callback_context);
 
-    Result StopRx();
-
-    /** \return whether Rx DMA is listening or not. */
-    bool RxActive();
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
 
