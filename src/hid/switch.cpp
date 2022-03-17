@@ -8,6 +8,7 @@ void Switch::Init(dsy_gpio_pin pin,
                   Pull         pu)
 {
     last_update_ = System::GetNow();
+    updated_     = false;
     state_       = 0x00;
     t_           = t;
     // Flip may seem opposite to logical direction,
@@ -33,9 +34,12 @@ void Switch::Debounce()
 {
     // update no faster than 1kHz
     uint32_t now = System::GetNow();
+    updated_     = false;
+
     if(now - last_update_ >= 1)
     {
         last_update_ = now;
+        updated_     = true;
 
         // shift over, and introduce new state.
         state_

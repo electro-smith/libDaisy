@@ -8,6 +8,7 @@ void Encoder::Init(dsy_gpio_pin a,
                    float        update_rate)
 {
     last_update_ = System::GetNow();
+    updated_     = false;
 
     // Init GPIO for A, and B
     hw_a_.pin  = a;
@@ -29,9 +30,12 @@ void Encoder::Debounce()
 {
     // update no faster than 1kHz
     uint32_t now = System::GetNow();
+    updated_     = false;
+
     if(now - last_update_ >= 1)
     {
         last_update_ = now;
+        updated_     = true;
 
         // Shift Button states to debounce
         a_ = (a_ << 1) | dsy_gpio_read(&hw_a_);
