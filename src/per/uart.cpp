@@ -38,6 +38,8 @@ class UartHandler::Impl
 
     UartHandler::Result StartRx();
 
+    UartHandler::Result StopRx();
+
     bool RxActive();
 
     UartHandler::Result FlushRx();
@@ -214,6 +216,25 @@ UartHandler::Result UartHandler::Impl::StartRx()
     if(status == 0)
         rx_active_ = true;
     return rx_active_ ? Result::OK : Result::ERR;
+}
+UartHandler::Result UartHandler::Impl::StopRx()
+{
+    if(!rx_active_)
+    {
+        HAL_UART_DMAStop(&huart_);
+        HAL_UART_Abort(&huart_);
+        HAL_NVIC_DisableIRQ(USART1_IRQn);
+        __HAL_UART_CLEAR_FEFLAG(&huart_);
+        __HAL_UART_DISABLE_IT(&huart_, UART_IT_IDLE);
+        __HAL_UART_DISABLE_IT(&huart_, UART_IT_FE);
+        rx_last_pos_ = 0;
+        dma_fifo_rx_->Init();
+    }
+#ifdef UART_RX_DOUBLE_BUFFER
+    queue_rx_.Init();
+#endif
+    rx_active_ = false;
+    return Result::OK;
 }
 
 bool UartHandler::Impl::RxActive()
@@ -685,6 +706,11 @@ int UartHandler::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
 UartHandler::Result UartHandler::StartRx()
 {
     return pimpl_->StartRx();
+}
+
+UartHandler::Result UartHandler::StopRx()
+{
+    return pimpl_->StopRx();
 }
 
 bool UartHandler::RxActive()

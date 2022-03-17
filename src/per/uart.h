@@ -119,6 +119,8 @@ class UartHandler
     */
     Result StartRx();
 
+    Result StopRx();
+
     /** \return whether Rx DMA is listening or not. */
     bool RxActive();
 
