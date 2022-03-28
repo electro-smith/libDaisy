@@ -85,7 +85,7 @@ class UartHandler::Impl
 
     Result SetDmaPeripheral();
 
-    Result InitDma();
+    Result InitDma(bool rx, bool tx);
 
     Result InitPins();
 
@@ -298,7 +298,7 @@ UartHandler::Result UartHandler::Impl::SetDmaPeripheral()
     return UartHandler::Result::OK;
 }
 
-UartHandler::Result UartHandler::Impl::InitDma()
+UartHandler::Result UartHandler::Impl::InitDma(bool rx, bool tx)
 {
     hdma_rx_.Instance                 = DMA1_Stream5;
     hdma_rx_.Init.PeriphInc           = DMA_PINC_DISABLE;
@@ -321,20 +321,25 @@ UartHandler::Result UartHandler::Impl::InitDma()
     hdma_tx_.Init.Direction           = DMA_MEMORY_TO_PERIPH;
     SetDmaPeripheral();
 
-    if(HAL_DMA_Init(&hdma_rx_) != HAL_OK)
+    if(rx)
     {
-        Error_Handler();
-        return UartHandler::Result::ERR;
-    }
-    if(HAL_DMA_Init(&hdma_tx_) != HAL_OK)
-    {
-        Error_Handler();
-        return UartHandler::Result::ERR;
+        if(HAL_DMA_Init(&hdma_rx_) != HAL_OK)
+        {
+            Error_Handler();
+            return UartHandler::Result::ERR;
+        }
+        __HAL_LINKDMA(&huart_, hdmarx, hdma_rx_);
     }
 
-    __HAL_LINKDMA(&huart_, hdmarx, hdma_rx_);
-    __HAL_LINKDMA(&huart_, hdmatx, hdma_tx_);
-
+    if(tx)
+    {
+        if(HAL_DMA_Init(&hdma_tx_) != HAL_OK)
+        {
+            Error_Handler();
+            return UartHandler::Result::ERR;
+        }
+        __HAL_LINKDMA(&huart_, hdmatx, hdma_tx_);
+    }
 
     if(using_fifo_)
     {
@@ -495,7 +500,7 @@ UartHandler::Result UartHandler::Impl::StartDmaTx(
 {
     while(HAL_UART_GetState(&huart_) != HAL_UART_STATE_READY) {};
 
-    if(InitDma() != UartHandler::Result::OK)
+    if(InitDma(false, true) != UartHandler::Result::OK)
     {
         if(end_callback)
             end_callback(callback_context, UartHandler::Result::ERR);
@@ -564,7 +569,7 @@ UartHandler::Result UartHandler::Impl::StartDmaRx(
 {
     while(HAL_UART_GetState(&huart_) != HAL_UART_STATE_READY) {};
 
-    if(InitDma() != UartHandler::Result::OK)
+    if(InitDma(true, false) != UartHandler::Result::OK)
     {
         if(end_callback)
             end_callback(callback_context, UartHandler::Result::ERR);
