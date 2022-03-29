@@ -4,7 +4,6 @@
 // Setup:
 // * Insert an SD card into a connected SDMMC receptacle
 //
-
 #include "daisy_seed.h"
 #include "wav_copy_class.h"
 
