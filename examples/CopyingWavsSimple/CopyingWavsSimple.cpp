@@ -21,7 +21,7 @@ FIL file;
 uint8_t data_buffer[DATA_BUFFER_LEN];
 
 // Change this to the file you'd like to copy
-#define FILE_NAME "spook.wav"
+#define FILE_NAME "my_wav.wav"
 
 // You can find the information on the QSPI's length
 // in the linker scripts, among other places
