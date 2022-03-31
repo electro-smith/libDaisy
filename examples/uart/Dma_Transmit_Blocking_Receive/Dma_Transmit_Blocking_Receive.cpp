@@ -13,7 +13,6 @@ bool dma_ready = true;
 // dma end callback, will start a new DMA transfer
 void RestartUart(void* state, UartHandler::Result res)
 {
-    // uart.DmaTransmit(buff, 256, NULL, RestartUart, NULL);
     dma_ready = true;
 }
 
@@ -42,7 +41,7 @@ int main(void)
     while(1)
     {
         // blocking rx
-        uart.PollReceive(rx, 4, 1000);
+        uart.BlockingReceive(rx, 4, 1000);
 
         if(dma_ready)
         {
