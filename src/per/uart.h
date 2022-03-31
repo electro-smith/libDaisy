@@ -136,7 +136,8 @@ class UartHandler
     \param timeout How long to timeout for in milliseconds
     \return Whether the receive was successful or not
     */
-    Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout = 100);
+    Result
+    BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout = 100);
 
     /** DMA-based transmit 
     \param *buff input buffer

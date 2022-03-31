@@ -45,6 +45,7 @@ class UartHandler::Impl
             {
                 return data_rx != nullptr;
             }
+            return false;
         }
         void Invalidate() { data_rx = data_tx = nullptr; }
     };
