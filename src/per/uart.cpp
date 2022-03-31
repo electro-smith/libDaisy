@@ -37,7 +37,14 @@ class UartHandler::Impl
 
         bool IsValidJob() const
         {
-            return data_rx != nullptr && data_tx != nullptr;
+            if(direction == DmaDirection::TX)
+            {
+                return data_tx != nullptr;
+            }
+            else if(direction == DmaDirection::RX)
+            {
+                return data_rx != nullptr;
+            }
         }
         void Invalidate() { data_rx = data_tx = nullptr; }
     };

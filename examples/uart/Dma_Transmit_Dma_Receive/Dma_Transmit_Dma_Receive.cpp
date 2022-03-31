@@ -11,16 +11,15 @@ UartHandler uart;
 uint8_t DMA_BUFFER_MEM_SECTION rx_buff[4];
 uint8_t DMA_BUFFER_MEM_SECTION tx_buff[10];
 
-
 void RestartUartTx(void* state, UartHandler::Result res);
 
 void RestartUartRx(void* state, UartHandler::Result res){
-    uart.DmaTransmit(tx_buff, 10, NULL, RestartUartTx, NULL);
 }
 
 void RestartUartTx(void* state, UartHandler::Result res)
 {
     uart.DmaReceive(rx_buff, 4, NULL, RestartUartRx, NULL);
+    uart.DmaTransmit(tx_buff, 10, NULL, RestartUartTx, NULL);
 }
 
 int main(void)
@@ -44,7 +43,7 @@ int main(void)
     // initialize the UART peripheral, and start reading
     uart.Init(uart_conf);
 
-    uart.DmaReceive(rx_buff, 4, NULL, RestartUartRx, NULL);
+    uart.DmaReceive(rx_buff, 4, NULL, NULL, NULL);
     uart.DmaTransmit(tx_buff, 10, NULL, RestartUartTx, NULL);
     while(1)
     {
