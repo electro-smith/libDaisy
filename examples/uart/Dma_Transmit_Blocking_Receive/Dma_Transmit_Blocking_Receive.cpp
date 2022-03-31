@@ -8,10 +8,13 @@ UartHandler uart;
 // buffer to send from
 uint8_t DMA_BUFFER_MEM_SECTION buff[256];
 
+bool dma_ready = true;
+
 // dma end callback, will start a new DMA transfer
 void RestartUart(void* state, UartHandler::Result res)
 {
-    uart.DmaTransmit(buff, 256, NULL, RestartUart, NULL);
+    // uart.DmaTransmit(buff, 256, NULL, RestartUart, NULL);
+    dma_ready = true;
 }
 
 int main(void)
@@ -34,13 +37,18 @@ int main(void)
 
     // initialize the UART peripheral, and start reading
     uart.Init(uart_conf);
-    uart.DmaTransmit(buff, 256, NULL, RestartUart, NULL);
 
     uint8_t rx[4] = {0,0,0,0};
     while(1)
     {
         // blocking rx
         uart.PollReceive(rx, 4, 1000);
+
+        if(dma_ready)
+        {
+            uart.DmaTransmit(buff, 256, NULL, RestartUart, NULL);
+            dma_ready = false;
+        }
 
         // clear the display
         hw.display.Fill(false);
