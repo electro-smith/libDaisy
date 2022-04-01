@@ -29,6 +29,9 @@
 
 ### Features
 
+* uart: Adds DMA RX and TX modes, similar to how they work on the I2C and SPI.
+* uart: Update function names to be more in line with the new DMA / Blocking scheme. The old methods are wrappers for the new ones for now.
+* uart: Adds examples for common modes of communication, both DMA, blocking, FIFO, and mixed.
 * spi: `SpiHandle` now has callbacks before and after a DMA transaction starts (can be used for software driven chip select)
 * spi: `SpiHandle` now supports simultaneous transmit and receive with DMA using `SpiHandle::DmaTransmitAndReceive()`
 * spi: added `MultiSlaveSpiHandle` that allows to connect to multiple SPI slave devices on a shared bus
