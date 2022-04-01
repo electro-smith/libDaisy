@@ -92,6 +92,9 @@ class UiPage
     /** Returns true if the page is currently active on a UI - it may not be visible, though. */
     bool IsActive() { return parent_ != nullptr; }
 
+    /** Returns true if an event is being processed. */
+    virtual bool OnUserInteraction() { return true; }
+
     /** Closes the current page. This calls the parent UI and asks it to Remove this page
      *  from the page stack.
      */
