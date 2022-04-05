@@ -1,11 +1,11 @@
 # Project Name
-TARGET = WavCopy
+TARGET = CopyingWavs
 
+# This is necessary if we want to use FatFS in our code
 USE_FATFS = 1
 
 # Sources
-CPP_SOURCES = CopyingWavs.cpp \
-wav_copy_class.cpp
+CPP_SOURCES = CopyingWavs.cpp
 
 # Library Locations
 LIBDAISY_DIR = ../..
