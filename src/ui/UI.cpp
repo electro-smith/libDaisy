@@ -60,11 +60,10 @@ void UI::Process()
             lastEventTime_        = currentTimeInMs;
             UiEventQueue::Event e = eventQueue_->GetAndRemoveNextEvent();
             if(e.type != UiEventQueue::Event::EventType::invalid)
-                ProcessEvent(e);
-            
-            for(int32_t i = pages_.GetNumElements() - 1; i >= 0; i--)
             {
-                pages_[i]->OnUserInteraction();
+                ProcessEvent(e);
+                for(int32_t i = pages_.GetNumElements() - 1; i >= 0; i--)
+                    pages_[i]->OnUserInteraction();
             }
         }
     }
