@@ -334,7 +334,7 @@ QSPIHandle::Result QSPIHandle::Impl::Erase(uint32_t start_addr,
     uint32_t block_size = IS25LP080D_SECTOR_SIZE; // 4kB blocks for now.
     // 64kB chunks for now.
     start_addr = start_addr - (start_addr % block_size);
-    while(end_addr >= start_addr)
+    while(end_addr > start_addr)
     {
         block_addr = start_addr & 0x0FFFFFFF;
         if(EraseSector(block_addr) != QSPIHandle::Result::OK)

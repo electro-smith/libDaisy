@@ -109,6 +109,7 @@ max11300driver.Stop();
   * Shared IRQHandlers for the USB HS peripheral have been moved to sys/system.cpp
 * driver: made MAX11300 getter functions `const`
 * cmake: changed optimization to `-O0` for Debug builds
+* qspi: fixed bug causing one sector erase beyond the given end address
 
 ### Other
 
