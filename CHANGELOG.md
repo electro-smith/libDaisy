@@ -26,6 +26,8 @@
 
 ### Other
 
+* gatein: added invert parameter for reading from different input circuits from the GateIn class.
+
 ### Migrating
 
 #### SPI
