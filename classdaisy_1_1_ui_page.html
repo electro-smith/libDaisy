@@ -128,6 +128,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2af031d1b92672e255e106168a477dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf73666aa856dc693ea3322f945afe40"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_ui_page.html#adf73666aa856dc693ea3322f945afe40">IsActive</a> ()</td></tr>
 <tr class="separator:adf73666aa856dc693ea3322f945afe40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2bfd4235b5e704c93350162b5ab1b5b"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_ui_page.html#af2bfd4235b5e704c93350162b5ab1b5b">OnUserInteraction</a> ()</td></tr>
+<tr class="separator:af2bfd4235b5e704c93350162b5ab1b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39c00309eabce1b4884a5edebcbea88d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_ui_page.html#a39c00309eabce1b4884a5edebcbea88d">Close</a> ()</td></tr>
 <tr class="separator:a39c00309eabce1b4884a5edebcbea88d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf7bcbc672d7f800a40def846911f42b"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_ui_page.html#aaf7bcbc672d7f800a40def846911f42b">OnOkayButton</a> (uint8_t numberOfPresses, bool isRetriggering)</td></tr>
@@ -991,6 +993,32 @@ Friends</h2></td></tr>
 <p >Called when the page is added to the <a class="el" href="classdaisy_1_1_u_i.html" title="A generic UI system.">UI</a>. </p>
 
 <p>Reimplemented in <a class="el" href="classdaisy_1_1_abstract_menu.html#a06b043e4750bb1408cded6960efb5372">daisy::AbstractMenu</a>.</p>
+
+</div>
+</div>
+<a id="af2bfd4235b5e704c93350162b5ab1b5b" name="af2bfd4235b5e704c93350162b5ab1b5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2bfd4235b5e704c93350162b5ab1b5b">&#9670;&nbsp;</a></span>OnUserInteraction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void daisy::UiPage::OnUserInteraction </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Called on any user input event, after the respective callback has completed. OnUserInteraction will be invoked for all pages in the page stack and can be used to track general user activity. </p>
 
 </div>
 </div>

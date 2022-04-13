@@ -1,5 +1,6 @@
 var NAVTREEINDEX6 =
 {
+"daisy__seed_8h.html#a7281b26bb898e64d3e043b4fcf2cc63a":[15,0,1,13,3],
 "daisy__seed_8h.html#a75aabcb0c2a5c960ca4314a2bbc37b7c":[15,0,1,13,18],
 "daisy__seed_8h.html#a7fd62bfbc31e32771fea715a130284c6":[15,0,1,13,28],
 "daisy__seed_8h.html#a80c26164f1fa4dffba4dbbf10439bf92":[15,0,1,13,13],
@@ -248,6 +249,5 @@ var NAVTREEINDEX6 =
 "globals_vars.html":[15,1,2],
 "globals_w.html":[15,1,0,18],
 "gpio_8h.html":[15,0,1,2,2],
-"gpio_8h.html#a6b2452c29cb76513b1d8af8726820bce":[15,0,1,2,2,1],
-"gpio_8h_source.html":[15,0,1,2,2]
+"gpio_8h.html#a6b2452c29cb76513b1d8af8726820bce":[15,0,1,2,2,1]
 };

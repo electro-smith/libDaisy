@@ -1,5 +1,6 @@
 var NAVTREEINDEX10 =
 {
+"structdaisy_1_1_midi_event.html#a7fd8633bad4e22a3a6855ad7b1857dc8":[4,0,1,4,0,20,21],
 "structdaisy_1_1_midi_event.html#a8a909f5a769eedf0eed5ee54890c5fa5":[4,0,1,4,0,20,0],
 "structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76":[4,0,1,4,0,20,23],
 "structdaisy_1_1_midi_event.html#a95ed496b1b526f640376d5819131d064":[4,0,1,4,0,20,4],
@@ -248,6 +249,5 @@ var NAVTREEINDEX10 =
 "structdaisy_1_1_uart_handler_1_1_config.html#a308b7817c645e6af7d8115da1e5beb94a115d1573a9cbee16d05e279a4d2b8876":[4,0,2,0,3,0,3,2],
 "structdaisy_1_1_uart_handler_1_1_config.html#a308b7817c645e6af7d8115da1e5beb94a7d79b1b4569953571af8eddc164131db":[4,0,2,0,3,0,3,3],
 "structdaisy_1_1_uart_handler_1_1_config.html#a308b7817c645e6af7d8115da1e5beb94aaa433221191fb734ebd8acbba94e4db2":[4,0,2,0,3,0,3,0],
-"structdaisy_1_1_uart_handler_1_1_config.html#a3b30e6ff02efbb4829b888f7d93091ea":[4,0,2,0,3,0,7],
-"structdaisy_1_1_uart_handler_1_1_config.html#a490845e58271053432b93ec8cc56798e":[4,0,2,0,3,0,12]
+"structdaisy_1_1_uart_handler_1_1_config.html#a3b30e6ff02efbb4829b888f7d93091ea":[4,0,2,0,3,0,7]
 };

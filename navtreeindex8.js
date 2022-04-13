@@ -1,5 +1,6 @@
 var NAVTREEINDEX8 =
 {
+"group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45afb2f72454a51663d2093d251757e4d1c":[4,0,1,4,0,24,0],
 "group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a09f31e6b22e89d20b9a9912a39be26e7":[4,0,1,4,0,23,5],
 "group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a19c6d1c07df0cf836fd7ef333b3081bd":[4,0,1,4,0,23,1],
 "group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a1d841bd69c010006dcd3f90059bda305":[4,0,1,4,0,23,3],
@@ -248,6 +249,5 @@ var NAVTREEINDEX8 =
 "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md16":[6,3],
 "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md17":[6,3,0],
 "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md18":[6,3,1],
-"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md19":[6,3,2],
-"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md20":[6,4]
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md19":[6,3,2]
 };

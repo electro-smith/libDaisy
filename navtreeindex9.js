@@ -1,5 +1,6 @@
 var NAVTREEINDEX9 =
 {
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md20":[6,4],
 "md_doc_md__a3__getting__started__audio.html":[7],
 "md_doc_md__a3__getting__started__audio.html#autotoc_md22":[7,0],
 "md_doc_md__a3__getting__started__audio.html#autotoc_md23":[7,0,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX9 =
 "structdaisy_1_1_midi_event.html#a51bf39a73e3d521f93e0a940d3dead96":[4,0,1,4,0,20,1],
 "structdaisy_1_1_midi_event.html#a5459a58fc45bcdc76a01f0e32888e017":[4,0,1,4,0,20,17],
 "structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1":[4,0,1,4,0,20,26],
-"structdaisy_1_1_midi_event.html#a6981641c0057f45e3a8556a55948b9fc":[4,0,1,4,0,20,24],
-"structdaisy_1_1_midi_event.html#a7fd8633bad4e22a3a6855ad7b1857dc8":[4,0,1,4,0,20,21]
+"structdaisy_1_1_midi_event.html#a6981641c0057f45e3a8556a55948b9fc":[4,0,1,4,0,20,24]
 };

@@ -23,6 +23,7 @@ var classdaisy_1_1_ui_page =
     [ "OnPotActivityChanged", "classdaisy_1_1_ui_page.html#af12bbe9c41837380045941b076c48e96", null ],
     [ "OnPotMoved", "classdaisy_1_1_ui_page.html#af62d35877c8c619ccd7f96330728ba33", null ],
     [ "OnShow", "classdaisy_1_1_ui_page.html#ae4ae7ffa4f9ee0c576b4a507afd74f37", null ],
+    [ "OnUserInteraction", "classdaisy_1_1_ui_page.html#af2bfd4235b5e704c93350162b5ab1b5b", null ],
     [ "OnValueEncoderActivityChanged", "classdaisy_1_1_ui_page.html#ae8a488bbdec533d3cd113f4a49edc43f", null ],
     [ "OnValueEncoderTurned", "classdaisy_1_1_ui_page.html#a75c788f49da60e4e5305e39adf81e976", null ],
     [ "OnValuePotActivityChanged", "classdaisy_1_1_ui_page.html#aebb65bc4b0ec7b40028467d50ca6f4a5", null ],
