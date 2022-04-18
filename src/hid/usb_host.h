@@ -31,9 +31,46 @@ class USBHostHandle
         ERR
     };
 
-    /** Configuration structure for interfacing with MSD Driver */
+    /** @brief User defineable callback for USB Connection */
+    typedef void (*ConnectCallback)(void* data);
+
+    /** @brief User defineable callback for USB Disconnection */
+    typedef void (*DisconnectCallback)(void* data);
+
+    /** @brief User defineable callback upon completion of class initialization 
+     *  For example, when a USB drive is connected and the mass storage class 
+     *  initialization has finished, this callback will fire.
+     * 
+     *  @param userdata a pointer to some arbitrary data for use by the user.
+     *   this is supplied in the Config struct. Can be used to avoid globals.
+     * 
+     *  @todo At some point this may be replaced for individual callbacks
+     *   for each supported USB Host class.
+     */
+    typedef void (*ClassActiveCallback)(void* userdata);
+
+    /** @brief User defineable callback for USB Unrecoverable Error 
+     *  @todo add some sort of feedback about the type of error, etc.
+     *   if possible
+    */
+    typedef void (*ErrorCallback)(void* data);
+
+    /** @brief Configuration structure for interfacing with MSD Driver */
     struct Config
     {
+        Config()
+        : connect_callback(nullptr),
+          disconnect_callback(nullptr),
+          class_active_callback(nullptr),
+          error_callback(nullptr),
+          userdata(nullptr)
+        {
+        }
+        ConnectCallback     connect_callback;
+        DisconnectCallback  disconnect_callback;
+        ClassActiveCallback class_active_callback;
+        ErrorCallback       error_callback;
+        void*               userdata;
     };
 
     /** Initializes the USB drivers and starts timeout.

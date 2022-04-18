@@ -26,6 +26,8 @@ class USBHostHandle::Impl
     void Process();
     bool GetReady();
 
+    inline Config &GetConfig() { return config_; }
+
   private:
     Config config_;
 };
@@ -106,18 +108,44 @@ bool USBHostHandle::GetPresent()
 // This isn't super useful for our typical code structure
 static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
 {
+    auto &conf = msd_impl.GetConfig();
     switch(id)
     {
         case HOST_USER_SELECT_CONFIGURATION: break;
-
+        case HOST_USER_CLASS_ACTIVE:
+            Appli_state = APPLICATION_READY;
+            if(conf.class_active_callback)
+            {
+                auto cb = (conf.class_active_callback);
+                cb(conf.userdata);
+            }
+            break;
+        case HOST_USER_CLASS_SELECTED: break;
+        case HOST_USER_CONNECTION:
+            Appli_state = APPLICATION_START;
+            if(conf.connect_callback)
+            {
+                auto cb = (conf.connect_callback);
+                cb(conf.userdata);
+            }
+            break;
         case HOST_USER_DISCONNECTION:
             Appli_state = APPLICATION_DISCONNECT;
+            if(conf.disconnect_callback)
+            {
+                auto cb = (conf.disconnect_callback);
+                cb(conf.userdata);
+            }
             break;
+        case HOST_USER_UNRECOVERED_ERROR:
+            if(conf.error_callback)
+            {
+                auto cb = (conf.error_callback);
+                cb(conf.userdata);
+            }
+            break;
+        default: 
 
-        case HOST_USER_CLASS_ACTIVE: Appli_state = APPLICATION_READY; break;
-
-        case HOST_USER_CONNECTION: Appli_state = APPLICATION_START; break;
-
-        default: break;
+        break;
     }
 }
