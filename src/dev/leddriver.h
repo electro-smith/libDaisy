@@ -166,7 +166,7 @@ class LedDriverPca9685
   private:
     void ContinueTransmission()
     {
-        current_driver_idx_++;
+        current_driver_idx_ = current_driver_idx_ + 1;
         if(current_driver_idx_ >= numDrivers)
         {
             current_driver_idx_ = -1;

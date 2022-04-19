@@ -15,6 +15,7 @@
             },
             "preLaunchTask": "build-libDaisy-tests",
             "osx": {
+                "type": "lldb",
                 "MIMode": "lldb",
             },
             "windows": {
