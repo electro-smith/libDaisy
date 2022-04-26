@@ -23,6 +23,7 @@
 
 * logger: Added 10ms delay at the end of `StartLog` function. Without this, messages immediatly following the `StartLog` function were getting missed when `wait_for_pc` is set to `true`.
 * testing: debugging configuration now uses `lldb` debugging extension to support unit test debugging on macOS with Apple Silicon
+* driver: oled_ssd130x.h - Add the SpiHandle:Config struct to SSD130x4WireTransport:Config to allow full access to the SPI peripheral configuration.
 
 ### Other
 
