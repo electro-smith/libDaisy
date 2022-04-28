@@ -640,3 +640,38 @@ TEST_F(MidiTest, badData)
     }
     EXPECT_FALSE(midi.HasEvents());
 }
+
+// send some status bytes without data between valid messages with running status
+TEST_F(MidiTest, runningStatusAndStatusBytes)
+{
+    uint8_t noteon            = 0x90;
+    uint8_t running_status[6] = {0x40, 100, 0x40, 0x01, 0x40, 100};
+    uint8_t status_bytes[3]   = {0x90, 0x91, 0xB3};
+
+    Parse(&noteon, 1);
+    for(int i = 0; i < 3; i++)
+    {
+        MidiEvent   event   = ParseAndPop(&running_status[i * 2], 2);
+        NoteOnEvent noEvent = event.AsNoteOn();
+        EXPECT_EQ(event.type, NoteOn);
+        EXPECT_EQ(noEvent.channel, 0);
+        EXPECT_EQ(noEvent.note, 0x40);
+        EXPECT_EQ(noEvent.velocity, running_status[i * 2 + 1]);
+    }
+
+    Parse(status_bytes, 3);
+    EXPECT_FALSE(midi.HasEvents());
+
+    Parse(&noteon, 1);
+    for(int i = 0; i < 3; i++)
+    {
+        MidiEvent   event   = ParseAndPop(&running_status[i * 2], 2);
+        NoteOnEvent noEvent = event.AsNoteOn();
+        EXPECT_EQ(event.type, NoteOn);
+        EXPECT_EQ(noEvent.channel, 0);
+        EXPECT_EQ(noEvent.note, 0x40);
+        EXPECT_EQ(noEvent.velocity, running_status[i * 2 + 1]);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+}

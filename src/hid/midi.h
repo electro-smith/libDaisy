@@ -253,6 +253,7 @@ class MidiHandler
                 {
                     // invalid message go back to start ;p
                     pstate_ = ParserEmpty;
+                    Parse(byte);
                 }
                 break;
             case ParserHasData0:
@@ -269,6 +270,12 @@ class MidiHandler
 
                     // At this point the message is valid, and we can add this MidiEvent to the queue
                     event_q_.Write(incoming_message_);
+                }
+                else
+                {
+                    // invalid message go back to start ;p
+                    pstate_ = ParserEmpty;
+                    Parse(byte);
                 }
                 // Regardless, of whether the data was valid or not we go back to empty
                 // because either the message is queued for handling or its not.
