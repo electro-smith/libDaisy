@@ -188,6 +188,7 @@ CPPFLAGS += \
 -fshort-enums \
 -fno-move-loop-invariants \
 -fno-unwind-tables \
+-fno-rtti \
 -Wno-register
 
 C_STANDARD = -std=gnu11
