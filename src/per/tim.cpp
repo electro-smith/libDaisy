@@ -164,9 +164,9 @@ TimerHandle::Result TimerHandle::Impl::Stop()
 
 TimerHandle::Result TimerHandle::Impl::SetPeriod(uint32_t ticks)
 {
-    config_.period = ticks;
+    config_.period                = ticks;
     tim_hal_handle_.Instance->ARR = ticks;
-    tim_hal_handle_.Init.Period = ticks;
+    tim_hal_handle_.Init.Period   = ticks;
     return Result::OK;
 }
 
