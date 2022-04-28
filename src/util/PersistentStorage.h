@@ -101,7 +101,7 @@ class PersistentStorage
     /** Restores the settings stored in the QSPI */
     void RestoreDefaults()
     {
-        *settings_ = default_settings_;
+        settings_ = default_settings_;
         state_     = State::FACTORY;
         StoreSettingsIfChanged();
     }
