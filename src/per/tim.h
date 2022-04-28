@@ -58,6 +58,13 @@ class TimerHandle
 
         Peripheral periph;
         CounterDir dir;
+        uint32_t   period;
+
+        /* @brief Constructor for default states */
+        Config()
+        : periph(Peripheral::TIM_2), dir(CounterDir::UP), period(0xffffffff)
+        {
+        }
     };
 
     /** Return values for TIM funcitons. */
@@ -66,6 +73,8 @@ class TimerHandle
         OK,
         ERR,
     };
+
+    typedef void (*PeriodElapsedCallback)(void* data);
 
     TimerHandle() : pimpl_(nullptr) {}
     TimerHandle(const TimerHandle& other) = default;
@@ -136,6 +145,8 @@ class TimerHandle
 
     /** Stay within this function for del microseconds */
     void DelayUs(uint32_t del);
+
+    void SetCallback(PeriodElapsedCallback cb, void* data = nullptr);
 
     class Impl;
 
