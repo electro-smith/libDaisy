@@ -25,7 +25,6 @@ typedef enum
 class USBHostHandle
 {
   public:
-
     /** @brief return codes from the USB Processing 
      *  can be used to check the state of USB while running
      *  outside of what may be happening with the limited user callbacks.

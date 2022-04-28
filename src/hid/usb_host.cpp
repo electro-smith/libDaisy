@@ -35,7 +35,8 @@ class USBHostHandle::Impl
     /** @brief Maps ST Middleware USBH_StatusTypeDef to USBHostHandle::Result codes */
     Result ConvertStatus(USBH_StatusTypeDef sta)
     {
-        if (sta != USBH_OK) {
+        if(sta != USBH_OK)
+        {
             return Result::FAIL;
         }
         switch(sta)
@@ -67,12 +68,12 @@ USBHostHandle::Result USBHostHandle::Impl::Init(USBHostHandle::Config config)
         return ConvertStatus(sta);
     }
     sta = USBH_RegisterClass(&hUsbHostHS, USBH_MSC_CLASS);
-    if (sta != USBH_OK)
+    if(sta != USBH_OK)
     {
         return ConvertStatus(sta);
     }
     sta = USBH_Start(&hUsbHostHS);
-    if (sta != USBH_OK)
+    if(sta != USBH_OK)
     {
         return ConvertStatus(sta);
     }
@@ -124,7 +125,8 @@ USBHostHandle::Result USBHostHandle::Process()
     return pimpl_->Process();
 }
 
-USBHostHandle::Result USBHostHandle::ReEnumerate() {
+USBHostHandle::Result USBHostHandle::ReEnumerate()
+{
     return pimpl_->ReEnumerate();
 }
 
