@@ -68,6 +68,24 @@ static void Error_Handler()
 
 static TimerHandle::Impl tim_handles[4];
 
+/** @brief returns a poitner to the private implementation object associated
+ *   with the peripheral instance (register base address)
+ *  @return Pointer to global tim_handle object or NULL
+ */
+static TimerHandle::Impl* get_tim_impl_from_instance(TIM_TypeDef* per_instance)
+{
+    /** Check each impl */
+    for(int i = 0; i < 4; i++)
+    {
+        TimerHandle::Impl* p = &tim_handles[i];
+        if(p->tim_hal_handle_.Instance == per_instance)
+        {
+            return p;
+        }
+    }
+    return NULL;
+}
+
 // TIM functions
 
 TimerHandle::Result TimerHandle::Impl::Init(const TimerHandle::Config& config)
@@ -230,28 +248,53 @@ extern "C"
 {
     void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     {
+        TimerHandle::Impl* impl
+            = get_tim_impl_from_instance(tim_baseHandle->Instance);
+        TimerHandle::Config cfg = impl->GetConfig();
         if(tim_baseHandle->Instance == TIM2)
         {
             __HAL_RCC_TIM2_CLK_ENABLE();
+            if(cfg.enable_irq)
+            {
+                HAL_NVIC_SetPriority(TIM2_IRQn, 0x0f, 0);
+                HAL_NVIC_EnableIRQ(TIM2_IRQn);
+            }
         }
         else if(tim_baseHandle->Instance == TIM3)
         {
             __HAL_RCC_TIM3_CLK_ENABLE();
+            if(cfg.enable_irq)
+            {
+                HAL_NVIC_SetPriority(TIM3_IRQn, 0x0f, 0);
+                HAL_NVIC_EnableIRQ(TIM3_IRQn);
+            }
         }
         else if(tim_baseHandle->Instance == TIM4)
         {
             __HAL_RCC_TIM4_CLK_ENABLE();
+            if(cfg.enable_irq)
+            {
+                HAL_NVIC_SetPriority(TIM4_IRQn, 0x0f, 0);
+                HAL_NVIC_EnableIRQ(TIM4_IRQn);
+            }
         }
         else if(tim_baseHandle->Instance == TIM5)
         {
             __HAL_RCC_TIM5_CLK_ENABLE();
             /** @todo make this conditional based on user config */
-            HAL_NVIC_SetPriority(TIM5_IRQn, 0x0f, 0);
-            HAL_NVIC_EnableIRQ(TIM5_IRQn);
+            if(cfg.enable_irq)
+            {
+                HAL_NVIC_SetPriority(TIM5_IRQn, 0x0f, 0);
+                HAL_NVIC_EnableIRQ(TIM5_IRQn);
+            }
         }
         else if(tim_baseHandle->Instance == TIM6)
         {
             __HAL_RCC_TIM6_CLK_ENABLE();
+            /** DAC Peripheral shares IRQ with TIM6
+             *  and is implemented as part of DAC
+             *  callback structure.
+             */
         }
     }
 
@@ -260,22 +303,30 @@ extern "C"
         if(tim_baseHandle->Instance == TIM2)
         {
             __HAL_RCC_TIM2_CLK_DISABLE();
+            HAL_NVIC_DisableIRQ(TIM2_IRQn);
         }
         else if(tim_baseHandle->Instance == TIM3)
         {
             __HAL_RCC_TIM3_CLK_DISABLE();
+            HAL_NVIC_DisableIRQ(TIM3_IRQn);
         }
         else if(tim_baseHandle->Instance == TIM4)
         {
             __HAL_RCC_TIM4_CLK_DISABLE();
+            HAL_NVIC_DisableIRQ(TIM4_IRQn);
         }
         else if(tim_baseHandle->Instance == TIM5)
         {
             __HAL_RCC_TIM5_CLK_DISABLE();
+            HAL_NVIC_DisableIRQ(TIM5_IRQn);
         }
         else if(tim_baseHandle->Instance == TIM6)
         {
             __HAL_RCC_TIM6_CLK_DISABLE();
+            /** DAC Peripheral shares IRQ with TIM6
+             *  and is implemented as part of DAC
+             *  callback structure.
+             */
         }
     }
 }

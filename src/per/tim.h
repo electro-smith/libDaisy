@@ -56,13 +56,21 @@ class TimerHandle
             DOWN,
         };
 
-        Peripheral periph;
-        CounterDir dir;
+        Peripheral periph; /**< Hardware Peripheral */
+        CounterDir dir; /**< Counter direction */
+
+        /** @brief period in ticks at TIM frequency that counter will reset based on dir
+         *  @note TIM3 and TIM4 are both 16-bit timers. So the period maximum is 0xffff.
+        */
         uint32_t   period;
+        bool       enable_irq; /**< Enable interrupt for user based callback */
 
         /* @brief Constructor for default states */
         Config()
-        : periph(Peripheral::TIM_2), dir(CounterDir::UP), period(0xffffffff)
+        : periph(Peripheral::TIM_2),
+          dir(CounterDir::UP),
+          period(0xffffffff),
+          enable_irq(false)
         {
         }
     };
@@ -77,7 +85,7 @@ class TimerHandle
     typedef void (*PeriodElapsedCallback)(void* data);
 
     TimerHandle() : pimpl_(nullptr) {}
-    TimerHandle(const TimerHandle& other) = default;
+    TimerHandle(const TimerHandle& other)            = default;
     TimerHandle& operator=(const TimerHandle& other) = default;
     ~TimerHandle() {}
 
