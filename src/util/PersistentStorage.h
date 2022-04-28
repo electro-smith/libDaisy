@@ -102,7 +102,7 @@ class PersistentStorage
     void RestoreDefaults()
     {
         settings_ = default_settings_;
-        state_     = State::FACTORY;
+        state_    = State::FACTORY;
         StoreSettingsIfChanged();
     }
 
