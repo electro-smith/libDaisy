@@ -25,10 +25,22 @@ typedef enum
 class USBHostHandle
 {
   public:
-    enum Result
+
+    /** @brief return codes from the USB Processing 
+     *  can be used to check the state of USB while running
+     *  outside of what may be happening with the limited user callbacks.
+     * 
+     *  At this time, these correlate directly to the ST Middleware
+     *  USBH_StatusTypeDef codes
+     */
+    enum class Result
     {
-        OK = 0,
-        ERR
+        OK,
+        BUSY,
+        FAIL,
+        NOT_SUPPORTED,
+        UNRECOVERED_ERROR,
+        ERROR_SPEED_UNKNOWN,
     };
 
     /** @brief User defineable callback for USB Connection */
@@ -87,7 +99,10 @@ class USBHostHandle
     /** Manages usb host functionality
      * 
      */
-    void Process();
+    Result Process();
+
+    /** Forces USB host to re-enumerate device */
+    Result ReEnumerate();
 
     /** Returns true if a Mass Storage Device is connected
      *  and ready for communicaton
