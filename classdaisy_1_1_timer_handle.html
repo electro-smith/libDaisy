@@ -111,7 +111,7 @@ $(document).ready(function(){initNavTree('classdaisy_1_1_timer_handle.html','');
 <p ><a class="el" href="classdaisy_1_1_daisy_seed.html" title="This is the higher-level interface for the Daisy board.   All basic peripheral configuration/initiali...">DaisySeed</a>, and many internal peripherals utilize TIM2 for timing/delay purposes. It is configured to be at the maximum frequency: typically 200MHz or 240MHz (boost) for measuring/delaying for very short periods.</p>
 <p >The GetUs/GetMs functions are available for convenience (and backwards compatibility), but to avoid wrapping errors on math when doing time-delta calculations, using ticks is recommended. The data can be converted to the final time-base after getting the difference in ticks. (Using <a class="el" href="classdaisy_1_1_timer_handle.html#a279bb0b7fb44ce22e9d80a21e918849f" title="Returns the frequency of each tick of the timer in Hz.">GetFreq()</a> can be used for these time-base calculations).</p>
 <p >User callbacks can be set, and changed at any point during operation. However, the <a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#ad596ac4c02799e9bfd637bfaec82d41f">Config::enable_irq</a> must be set to true when initializing for the interrupts to turn on and function.</p>
-<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd><p class="startdd">Fix issues with realtime getters, and wrapping of the timer(s).</p><ul>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd><p class="startdd">Fix issues with realtime getters, and wrapping of the timer(s).</p><ul>
 <li>This very noticeable with default settings for the 16-bit counters. </li>
 </ul>
 <p class="interdd">Other General purpose timers </p>

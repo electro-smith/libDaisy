@@ -1,5 +1,14 @@
 var NAVTREEINDEX9 =
 {
+"md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md7":[5,3,1],
+"md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md8":[5,3,2],
+"md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md9":[5,3,3],
+"md_doc_md__a2__getting__started__serial__printing.html":[6],
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md13":[6,0],
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md14":[6,1],
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md15":[6,2],
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md16":[6,3],
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md17":[6,3,0],
 "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md18":[6,3,1],
 "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md19":[6,3,2],
 "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md20":[6,4],
@@ -240,14 +249,5 @@ var NAVTREEINDEX9 =
 "structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#ae430b77c7c2b347299811a30bde18653":[4,0,4,5,1,0,0,3],
 "structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html":[15,0,0,0,0],
 "structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html#ab59d03f73464aee18ca8914ab8c91a13":[15,0,0,0,0,1],
-"structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html#abdc1eea126a4dca4ecc83c41ed988758":[15,0,0,0,0,0],
-"structdaisy_1_1_m_t_c_quarter_frame_event.html":[4,0,1,4,0,9],
-"structdaisy_1_1_m_t_c_quarter_frame_event.html#a31b934d70fcc769db539a0e282a98340":[4,0,1,4,0,9,0],
-"structdaisy_1_1_m_t_c_quarter_frame_event.html#acce45e382b1aff05a0398cd9eda94ea3":[4,0,1,4,0,9,1],
-"structdaisy_1_1_mcp23017_transport_1_1_config.html":[15,0,0,49,0],
-"structdaisy_1_1_mcp23017_transport_1_1_config.html#a7e3f0fc7e8055b00f35b8ed6f6d56812":[15,0,0,49,0,1],
-"structdaisy_1_1_mcp23017_transport_1_1_config.html#a93ffff5585df2c31e5742c9b5689c372":[15,0,0,49,0,2],
-"structdaisy_1_1_mcp23017_transport_1_1_config.html#ae460de7aa31660f54a29902c07f7f5ee":[15,0,0,49,0,0],
-"structdaisy_1_1_mcp23_x17_1_1_config.html":[15,0,0,50,0],
-"structdaisy_1_1_mcp23_x17_1_1_config.html#accd4bb2b6a802eacfa941f9a78b69915":[15,0,0,50,0,0]
+"structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html#abdc1eea126a4dca4ecc83c41ed988758":[15,0,0,0,0,0]
 };

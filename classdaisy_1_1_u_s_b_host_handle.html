@@ -113,14 +113,35 @@ $(document).ready(function(){initNavTree('classdaisy_1_1_u_s_b_host_handle.html'
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_u_s_b_host_handle_1_1_config.html">Config</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration structure for interfacing with MSD Driver.  <a href="structdaisy_1_1_u_s_b_host_handle_1_1_config.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a52910b035d1149aebb0bef2054b20113"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113">Result</a> { <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113a516c3a4bca0728e61e4ea8e114ce29cc">OK</a> = 0
-, <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113a46307bfbb479c39a0d0393f23e2667c2">ERR</a>
+<tr class="memitem:a52910b035d1149aebb0bef2054b20113"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113">Result</a> { <br />
+&#160;&#160;<a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113ae0aa021e21dddbd6d8cecec71e9cf564">OK</a>
+, <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113a802706a9238e2928077f97736854bad4">BUSY</a>
+, <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113ac2759effffc94bb9acc71d69fe3e8a1f">FAIL</a>
+, <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113a5343bcd21aad65124478a61831f6949e">NOT_SUPPORTED</a>
+, <br />
+&#160;&#160;<a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113afa82888fbd6d765071e644258483d9f0">UNRECOVERED_ERROR</a>
+, <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113acb2fa42fb45da8593f07308e7323defd">ERROR_SPEED_UNKNOWN</a>
+<br />
  }</td></tr>
+<tr class="memdesc:a52910b035d1149aebb0bef2054b20113"><td class="mdescLeft">&#160;</td><td class="mdescRight">return codes from the USB Processing can be used to check the state of USB while running outside of what may be happening with the limited user callbacks.  <a href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113">More...</a><br /></td></tr>
 <tr class="separator:a52910b035d1149aebb0bef2054b20113"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a271a5fe3869cae850c6422a964c8e005"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a271a5fe3869cae850c6422a964c8e005">ConnectCallback</a>) (void *data)</td></tr>
+<tr class="memdesc:a271a5fe3869cae850c6422a964c8e005"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defineable callback for USB Connection.  <a href="classdaisy_1_1_u_s_b_host_handle.html#a271a5fe3869cae850c6422a964c8e005">More...</a><br /></td></tr>
+<tr class="separator:a271a5fe3869cae850c6422a964c8e005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a906b4c9eded70d661f9670ec0f04cd25"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a906b4c9eded70d661f9670ec0f04cd25">DisconnectCallback</a>) (void *data)</td></tr>
+<tr class="memdesc:a906b4c9eded70d661f9670ec0f04cd25"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defineable callback for USB Disconnection.  <a href="classdaisy_1_1_u_s_b_host_handle.html#a906b4c9eded70d661f9670ec0f04cd25">More...</a><br /></td></tr>
+<tr class="separator:a906b4c9eded70d661f9670ec0f04cd25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fad5644a1e1b85f2cbfc27780f65058"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a4fad5644a1e1b85f2cbfc27780f65058">ClassActiveCallback</a>) (void *userdata)</td></tr>
+<tr class="memdesc:a4fad5644a1e1b85f2cbfc27780f65058"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defineable callback upon completion of class initialization For example, when a USB drive is connected and the mass storage class initialization has finished, this callback will fire.  <a href="classdaisy_1_1_u_s_b_host_handle.html#a4fad5644a1e1b85f2cbfc27780f65058">More...</a><br /></td></tr>
+<tr class="separator:a4fad5644a1e1b85f2cbfc27780f65058"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3762ad32c165180cad9acd5d108a81bc"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a3762ad32c165180cad9acd5d108a81bc">ErrorCallback</a>) (void *data)</td></tr>
+<tr class="memdesc:a3762ad32c165180cad9acd5d108a81bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">User defineable callback for USB Unrecoverable Error.  <a href="classdaisy_1_1_u_s_b_host_handle.html#a3762ad32c165180cad9acd5d108a81bc">More...</a><br /></td></tr>
+<tr class="separator:a3762ad32c165180cad9acd5d108a81bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -128,8 +149,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aaf6e11074b3f982dc723bb014ceb1390"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb7c3bbcfa35120d737cd97de448986a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#acb7c3bbcfa35120d737cd97de448986a">Deinit</a> ()</td></tr>
 <tr class="separator:acb7c3bbcfa35120d737cd97de448986a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a457c949aeba24327775640e98d7983fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a457c949aeba24327775640e98d7983fd">Process</a> ()</td></tr>
-<tr class="separator:a457c949aeba24327775640e98d7983fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23eacd86f01a56142e60108ba8a381a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a23eacd86f01a56142e60108ba8a381a8">Process</a> ()</td></tr>
+<tr class="separator:a23eacd86f01a56142e60108ba8a381a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a369f062c8add67f2f6963bb87286d6ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a369f062c8add67f2f6963bb87286d6ed">ReEnumerate</a> ()</td></tr>
+<tr class="separator:a369f062c8add67f2f6963bb87286d6ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9fa7017546be9ab038a5100b7f7483e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#ac9fa7017546be9ab038a5100b7f7483e">GetReady</a> ()</td></tr>
 <tr class="separator:ac9fa7017546be9ab038a5100b7f7483e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3efc40d3a6a6ef516328e1744640d887"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a3efc40d3a6a6ef516328e1744640d887">GetPresent</a> ()</td></tr>
@@ -141,21 +164,109 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0120e222d56d7546d28810c55fe562b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html">USBHostHandle</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a0120e222d56d7546d28810c55fe562b2">operator=</a> (const <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html">USBHostHandle</a> &amp;other)=default</td></tr>
 <tr class="separator:a0120e222d56d7546d28810c55fe562b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a4fad5644a1e1b85f2cbfc27780f65058" name="a4fad5644a1e1b85f2cbfc27780f65058"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fad5644a1e1b85f2cbfc27780f65058">&#9670;&nbsp;</a></span>ClassActiveCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* daisy::USBHostHandle::ClassActiveCallback) (void *userdata)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>User defineable callback upon completion of class initialization For example, when a USB drive is connected and the mass storage class initialization has finished, this callback will fire. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">userdata</td><td>a pointer to some arbitrary data for use by the user. this is supplied in the <a class="el" href="structdaisy_1_1_u_s_b_host_handle_1_1_config.html" title="Configuration structure for interfacing with MSD Driver.">Config</a> struct. Can be used to avoid globals.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000002">Todo:</a></b></dt><dd>At some point this may be replaced for individual callbacks for each supported USB Host class. </dd></dl>
+
+</div>
+</div>
+<a id="a271a5fe3869cae850c6422a964c8e005" name="a271a5fe3869cae850c6422a964c8e005"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a271a5fe3869cae850c6422a964c8e005">&#9670;&nbsp;</a></span>ConnectCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* daisy::USBHostHandle::ConnectCallback) (void *data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>User defineable callback for USB Connection. </p>
+
+</div>
+</div>
+<a id="a906b4c9eded70d661f9670ec0f04cd25" name="a906b4c9eded70d661f9670ec0f04cd25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a906b4c9eded70d661f9670ec0f04cd25">&#9670;&nbsp;</a></span>DisconnectCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* daisy::USBHostHandle::DisconnectCallback) (void *data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>User defineable callback for USB Disconnection. </p>
+
+</div>
+</div>
+<a id="a3762ad32c165180cad9acd5d108a81bc" name="a3762ad32c165180cad9acd5d108a81bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3762ad32c165180cad9acd5d108a81bc">&#9670;&nbsp;</a></span>ErrorCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* daisy::USBHostHandle::ErrorCallback) (void *data)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>User defineable callback for USB Unrecoverable Error. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>add some sort of feedback about the type of error, etc. if possible </dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a52910b035d1149aebb0bef2054b20113" name="a52910b035d1149aebb0bef2054b20113"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a52910b035d1149aebb0bef2054b20113">&#9670;&nbsp;</a></span>Result</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113">daisy::USBHostHandle::Result</a></td>
+          <td class="memname">enum class <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113">daisy::USBHostHandle::Result</a></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+
+<p>return codes from the USB Processing can be used to check the state of USB while running outside of what may be happening with the limited user callbacks. </p>
+<p >At this time, these correlate directly to the ST Middleware USBH_StatusTypeDef codes </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a52910b035d1149aebb0bef2054b20113a516c3a4bca0728e61e4ea8e114ce29cc" name="a52910b035d1149aebb0bef2054b20113a516c3a4bca0728e61e4ea8e114ce29cc"></a>OK&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a52910b035d1149aebb0bef2054b20113a46307bfbb479c39a0d0393f23e2667c2" name="a52910b035d1149aebb0bef2054b20113a46307bfbb479c39a0d0393f23e2667c2"></a>ERR&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a52910b035d1149aebb0bef2054b20113ae0aa021e21dddbd6d8cecec71e9cf564" name="a52910b035d1149aebb0bef2054b20113ae0aa021e21dddbd6d8cecec71e9cf564"></a>OK&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a52910b035d1149aebb0bef2054b20113a802706a9238e2928077f97736854bad4" name="a52910b035d1149aebb0bef2054b20113a802706a9238e2928077f97736854bad4"></a>BUSY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a52910b035d1149aebb0bef2054b20113ac2759effffc94bb9acc71d69fe3e8a1f" name="a52910b035d1149aebb0bef2054b20113ac2759effffc94bb9acc71d69fe3e8a1f"></a>FAIL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a52910b035d1149aebb0bef2054b20113a5343bcd21aad65124478a61831f6949e" name="a52910b035d1149aebb0bef2054b20113a5343bcd21aad65124478a61831f6949e"></a>NOT_SUPPORTED&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a52910b035d1149aebb0bef2054b20113afa82888fbd6d765071e644258483d9f0" name="a52910b035d1149aebb0bef2054b20113afa82888fbd6d765071e644258483d9f0"></a>UNRECOVERED_ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a52910b035d1149aebb0bef2054b20113acb2fa42fb45da8593f07308e7323defd" name="a52910b035d1149aebb0bef2054b20113acb2fa42fb45da8593f07308e7323defd"></a>ERROR_SPEED_UNKNOWN&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -318,14 +429,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a457c949aeba24327775640e98d7983fd" name="a457c949aeba24327775640e98d7983fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a457c949aeba24327775640e98d7983fd">&#9670;&nbsp;</a></span>Process()</h2>
+<a id="a23eacd86f01a56142e60108ba8a381a8" name="a23eacd86f01a56142e60108ba8a381a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23eacd86f01a56142e60108ba8a381a8">&#9670;&nbsp;</a></span>Process()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::USBHostHandle::Process </td>
+          <td class="memname"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113">Result</a> daisy::USBHostHandle::Process </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -333,6 +444,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Manages usb host functionality </p>
+
+</div>
+</div>
+<a id="a369f062c8add67f2f6963bb87286d6ed" name="a369f062c8add67f2f6963bb87286d6ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a369f062c8add67f2f6963bb87286d6ed">&#9670;&nbsp;</a></span>ReEnumerate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113">Result</a> daisy::USBHostHandle::ReEnumerate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Forces USB host to re-enumerate device </p>
 
 </div>
 </div>

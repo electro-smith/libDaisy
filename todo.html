@@ -99,12 +99,12 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 <dt>Member <a class="el" href="classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a98b18eb67cd50f7620c3ec404e0e7a81">daisy::patch_sm::DaisyPatchSM::WriteCvOut</a>  (const int channel, float voltage)</dt>
 <dd><a class="anchor" id="_todo000001"></a>Add Calibration to CV Outputs </dd>
 <dt>Class <a class="el" href="classdaisy_1_1_persistent_storage.html">daisy::PersistentStorage&lt; SettingStruct &gt;</a>  </dt>
-<dd><p class="startdd"><a class="anchor" id="_todo000004"></a>- Make <a class="el" href="classdaisy_1_1_persistent_storage.html#a2223d78897ec8511e961bb5803b7b8b4">Save()</a> non-blocking </p>
+<dd><p class="startdd"><a class="anchor" id="_todo000006"></a>- Make <a class="el" href="classdaisy_1_1_persistent_storage.html#a2223d78897ec8511e961bb5803b7b8b4">Save()</a> non-blocking </p>
 <p class="interdd"></p>
 <p class="enddd">- Add wear leveling </p>
 </dd>
 <dt>Class <a class="el" href="classdaisy_1_1_timer_handle.html">daisy::TimerHandle</a>  </dt>
-<dd><p class="startdd"><a class="anchor" id="_todo000002"></a>Fix issues with realtime getters, and wrapping of the timer(s).</p><ul>
+<dd><p class="startdd"><a class="anchor" id="_todo000004"></a>Fix issues with realtime getters, and wrapping of the timer(s).</p><ul>
 <li>This very noticeable with default settings for the 16-bit counters. </li>
 </ul>
 <p class="interdd"></p>
@@ -122,10 +122,14 @@ $(document).ready(function(){initNavTree('todo.html',''); initResizable(); });
 <p class="enddd">Advanced timers (TIM1/TIM8)  </p>
 </dd>
 <dt>Member <a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7b">daisy::TimerHandle::Config::CounterDir</a>  </dt>
-<dd><a class="anchor" id="_todo000003"></a>Add support for the various <br  />
+<dd><a class="anchor" id="_todo000005"></a>Add support for the various <br  />
  versions of Up/Down counters.  </dd>
+<dt>Member <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a4fad5644a1e1b85f2cbfc27780f65058">daisy::USBHostHandle::ClassActiveCallback</a>  )(void *userdata)</dt>
+<dd><a class="anchor" id="_todo000002"></a>At some point this may be replaced for individual callbacks for each supported USB Host class.  </dd>
+<dt>Member <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a3762ad32c165180cad9acd5d108a81bc">daisy::USBHostHandle::ErrorCallback</a>  )(void *data)</dt>
+<dd><a class="anchor" id="_todo000003"></a>add some sort of feedback about the type of error, etc. if possible  </dd>
 <dt>Member <a class="el" href="classdaisy_1_1_voct_calibration.html#ad793014c6d82e680aa337fb23e13608d">daisy::VoctCalibration::Record</a>  (float val1V, float val3V)</dt>
-<dd><a class="anchor" id="_todo000005"></a>Add some sort of range validation. Originally we had a check for a valid range on the input, but given that the input circuit or the <a class="el" href="classdaisy_1_1_analog_control.html" title="Hardware Interface for control inputs   Primarily designed for ADC input controls such as   potentiom...">AnalogControl</a> configuration can have a drastic effect on input, that could cause unintentional failure to calibrate, it was removed. </dd>
+<dd><a class="anchor" id="_todo000007"></a>Add some sort of range validation. Originally we had a check for a valid range on the input, but given that the input circuit or the <a class="el" href="classdaisy_1_1_analog_control.html" title="Hardware Interface for control inputs   Primarily designed for ADC input controls such as   potentiom...">AnalogControl</a> configuration can have a drastic effect on input, that could cause unintentional failure to calibrate, it was removed. </dd>
 </dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

@@ -1,7 +1,7 @@
 var usb__host_8h =
 [
     [ "daisy::USBHostHandle", "classdaisy_1_1_u_s_b_host_handle.html", "classdaisy_1_1_u_s_b_host_handle" ],
-    [ "daisy::USBHostHandle::Config", "structdaisy_1_1_u_s_b_host_handle_1_1_config.html", null ],
+    [ "daisy::USBHostHandle::Config", "structdaisy_1_1_u_s_b_host_handle_1_1_config.html", "structdaisy_1_1_u_s_b_host_handle_1_1_config" ],
     [ "ApplicationTypeDef", "usb__host_8h.html#a521c3cc3f26ece5409f24e8b5764fa8d", [
       [ "APPLICATION_IDLE", "usb__host_8h.html#a521c3cc3f26ece5409f24e8b5764fa8da294e63a4cafd2173599821ff7e303ccf", null ],
       [ "APPLICATION_START", "usb__host_8h.html#a521c3cc3f26ece5409f24e8b5764fa8da87f3cbfcc2efbe6338aca825d084801c", null ],

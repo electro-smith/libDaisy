@@ -1,5 +1,14 @@
 var NAVTREEINDEX8 =
 {
+"group__midi__events.html#ga4f648ead175d62e97ceb4d3b49f692f5":[4,0,1,4,0,23],
+"group__midi__events.html#gaaf09bb687034c8776ca0c68ed3ed4179":[4,0,1,4,0,22],
+"group__midi__events.html#gaf9da54b73be4dec526670bd6c53ad98a":[4,0,1,4,0,21],
+"group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45a0938e387061dc2b77911c1a128b8ba02":[4,0,1,4,0,24,3],
+"group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45a2eb09ebb3ba848fe764c2a70a8bccc06":[4,0,1,4,0,24,1],
+"group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45a51ff911624e8d6e5a76ce0433d00130f":[4,0,1,4,0,24,7],
+"group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45a7bf17dfa0bcaed34dde4279c7d9c8f9c":[4,0,1,4,0,24,6],
+"group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45a8361fbf1bffde824dc04af5e9a478e67":[4,0,1,4,0,24,2],
+"group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45ad64c430420659a465fefd49438ecd1fa":[4,0,1,4,0,24,8],
 "group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45ae4621bb0596a2aa6412e6bed132d03ef":[4,0,1,4,0,24,4],
 "group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45aeac3f9db3a5e741f739a858c71c242a0":[4,0,1,4,0,24,5],
 "group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45afb2f72454a51663d2093d251757e4d1c":[4,0,1,4,0,24,0],
@@ -240,14 +249,5 @@ var NAVTREEINDEX8 =
 "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md3":[5,1],
 "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md4":[5,2],
 "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md5":[5,3],
-"md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md6":[5,3,0],
-"md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md7":[5,3,1],
-"md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md8":[5,3,2],
-"md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md9":[5,3,3],
-"md_doc_md__a2__getting__started__serial__printing.html":[6],
-"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md13":[6,0],
-"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md14":[6,1],
-"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md15":[6,2],
-"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md16":[6,3],
-"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md17":[6,3,0]
+"md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md6":[5,3,0]
 };
