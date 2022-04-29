@@ -10,6 +10,9 @@ var structdaisy_1_1_timer_handle_1_1_config =
       [ "TIM_4", "structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaac9136368e302d247b27e74dd7726ec1f", null ],
       [ "TIM_5", "structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaa6840481ce38511a53a7e49e81c02a936", null ]
     ] ],
+    [ "Config", "structdaisy_1_1_timer_handle_1_1_config.html#ab16930ef8452a8b0dc78ff46918a94a5", null ],
     [ "dir", "structdaisy_1_1_timer_handle_1_1_config.html#a431b23e53eedab70c3582535ebb866a2", null ],
+    [ "enable_irq", "structdaisy_1_1_timer_handle_1_1_config.html#ad596ac4c02799e9bfd637bfaec82d41f", null ],
+    [ "period", "structdaisy_1_1_timer_handle_1_1_config.html#a80d102d9f279eed83f2fb22323a5d4b7", null ],
     [ "periph", "structdaisy_1_1_timer_handle_1_1_config.html#a8221f500730fb53dcef869678a2634ba", null ]
 ];

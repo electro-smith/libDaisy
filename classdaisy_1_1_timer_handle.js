@@ -1,6 +1,7 @@
 var classdaisy_1_1_timer_handle =
 [
     [ "Config", "structdaisy_1_1_timer_handle_1_1_config.html", "structdaisy_1_1_timer_handle_1_1_config" ],
+    [ "PeriodElapsedCallback", "classdaisy_1_1_timer_handle.html#a31742af4d164ed7787ffba2c95158ef9", null ],
     [ "Result", "classdaisy_1_1_timer_handle.html#a7425f809b115688f70d7a12acd5a16c7", [
       [ "OK", "classdaisy_1_1_timer_handle.html#a7425f809b115688f70d7a12acd5a16c7ae0aa021e21dddbd6d8cecec71e9cf564", null ],
       [ "ERR", "classdaisy_1_1_timer_handle.html#a7425f809b115688f70d7a12acd5a16c7acd22bad976363fdd1bfbf6759fede482", null ]
@@ -19,6 +20,7 @@ var classdaisy_1_1_timer_handle =
     [ "GetUs", "classdaisy_1_1_timer_handle.html#aa22a2290d5fb0cc957dc5b06ce21789b", null ],
     [ "Init", "classdaisy_1_1_timer_handle.html#ace505f2c685767f7e9dbb39172646c4e", null ],
     [ "operator=", "classdaisy_1_1_timer_handle.html#a5e883d1f86de26c5bf0b4af485053bdc", null ],
+    [ "SetCallback", "classdaisy_1_1_timer_handle.html#a6a3a083902c7b5fbfc431242d60571f4", null ],
     [ "SetPeriod", "classdaisy_1_1_timer_handle.html#a0e11c2b05fbd0c6e1cac5d3babe79453", null ],
     [ "SetPrescaler", "classdaisy_1_1_timer_handle.html#aeab69c0b8cd73cf438bc056786cc00f6", null ],
     [ "Start", "classdaisy_1_1_timer_handle.html#a1016ea27b193aeb40f1d9d199dcbc2e1", null ],

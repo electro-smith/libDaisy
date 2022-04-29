@@ -1,5 +1,7 @@
 var NAVTREEINDEX9 =
 {
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md18":[6,3,1],
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md19":[6,3,2],
 "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md20":[6,4],
 "md_doc_md__a3__getting__started__audio.html":[7],
 "md_doc_md__a3__getting__started__audio.html#autotoc_md22":[7,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX9 =
 "structdaisy_1_1_mcp23017_transport_1_1_config.html#a93ffff5585df2c31e5742c9b5689c372":[15,0,0,49,0,2],
 "structdaisy_1_1_mcp23017_transport_1_1_config.html#ae460de7aa31660f54a29902c07f7f5ee":[15,0,0,49,0,0],
 "structdaisy_1_1_mcp23_x17_1_1_config.html":[15,0,0,50,0],
-"structdaisy_1_1_mcp23_x17_1_1_config.html#accd4bb2b6a802eacfa941f9a78b69915":[15,0,0,50,0,0],
-"structdaisy_1_1_midi_event.html":[4,0,1,4,0,20],
-"structdaisy_1_1_midi_event.html#a08f868f8613fb38af27b3bfe10fea60c":[4,0,1,4,0,20,2]
+"structdaisy_1_1_mcp23_x17_1_1_config.html#accd4bb2b6a802eacfa941f9a78b69915":[15,0,0,50,0,0]
 };

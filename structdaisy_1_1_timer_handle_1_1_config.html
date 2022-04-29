@@ -94,12 +94,19 @@ $(document).ready(function(){initNavTree('structdaisy_1_1_timer_handle_1_1_confi
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structdaisy_1_1_timer_handle_1_1_config-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">daisy::TimerHandle::Config Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
+<p>Configuration struct for the Peripheral.  
+ <a href="structdaisy_1_1_timer_handle_1_1_config.html#details">More...</a></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p >Configuration struct for the Peripheral. </p>
+<dl class="section note"><dt>Note</dt><dd>These settings are used during initialization and changing them afterwards may not have the desired effect. </dd></dl>
+</div>
 <p><code>#include &lt;<a class="el" href="tim_8h_source.html">tim.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
@@ -109,11 +116,18 @@ Public Types</h2></td></tr>
 , <a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaac9136368e302d247b27e74dd7726ec1f">TIM_4</a>
 , <a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaa6840481ce38511a53a7e49e81c02a936">TIM_5</a>
  }</td></tr>
+<tr class="memdesc:a907160c00bf0cad7ec645368bd4f5bca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardware Timer to configure, and use.  <a href="structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bca">More...</a><br /></td></tr>
 <tr class="separator:a907160c00bf0cad7ec645368bd4f5bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0dd9b7de7144428da36ab1e140081e7b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7b">CounterDir</a> { <a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7bafbaedde498cdead4f2780217646e9ba1">UP</a> = 0
 , <a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7bac4e0e4e3118472beeb2ae75827450f1f">DOWN</a>
  }</td></tr>
+<tr class="memdesc:a0dd9b7de7144428da36ab1e140081e7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Direction of the auto-reload counter.  <a href="structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7b">More...</a><br /></td></tr>
 <tr class="separator:a0dd9b7de7144428da36ab1e140081e7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ab16930ef8452a8b0dc78ff46918a94a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#ab16930ef8452a8b0dc78ff46918a94a5">Config</a> ()</td></tr>
+<tr class="separator:ab16930ef8452a8b0dc78ff46918a94a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -121,6 +135,11 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a8221f500730fb53dcef869678a2634ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a431b23e53eedab70c3582535ebb866a2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7b">CounterDir</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#a431b23e53eedab70c3582535ebb866a2">dir</a></td></tr>
 <tr class="separator:a431b23e53eedab70c3582535ebb866a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80d102d9f279eed83f2fb22323a5d4b7"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#a80d102d9f279eed83f2fb22323a5d4b7">period</a></td></tr>
+<tr class="memdesc:a80d102d9f279eed83f2fb22323a5d4b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">period in ticks at TIM frequency that counter will reset based on dir  <a href="structdaisy_1_1_timer_handle_1_1_config.html#a80d102d9f279eed83f2fb22323a5d4b7">More...</a><br /></td></tr>
+<tr class="separator:a80d102d9f279eed83f2fb22323a5d4b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad596ac4c02799e9bfd637bfaec82d41f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_timer_handle_1_1_config.html#ad596ac4c02799e9bfd637bfaec82d41f">enable_irq</a></td></tr>
+<tr class="separator:ad596ac4c02799e9bfd637bfaec82d41f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a0dd9b7de7144428da36ab1e140081e7b" name="a0dd9b7de7144428da36ab1e140081e7b"></a>
@@ -142,8 +161,10 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Direction of the auto-reload counter. TODO: Add support for the various <br  />
- versions of Up/Down counters. </p>
+
+<p>Direction of the auto-reload counter. </p>
+<dl class="todo"><dt><b><a class="el" href="todo.html#_todo000003">Todo:</a></b></dt><dd>Add support for the various <br  />
+ versions of Up/Down counters. </dd></dl>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0dd9b7de7144428da36ab1e140081e7bafbaedde498cdead4f2780217646e9ba1" name="a0dd9b7de7144428da36ab1e140081e7bafbaedde498cdead4f2780217646e9ba1"></a>UP&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a0dd9b7de7144428da36ab1e140081e7bac4e0e4e3118472beeb2ae75827450f1f" name="a0dd9b7de7144428da36ab1e140081e7bac4e0e4e3118472beeb2ae75827450f1f"></a>DOWN&#160;</td><td class="fielddoc"></td></tr>
@@ -170,7 +191,8 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Hardwaare Timer to configure, and use. </p>
+
+<p>Hardware Timer to configure, and use. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a907160c00bf0cad7ec645368bd4f5bcaa848c6355c514c385d53dde45615d0411" name="a907160c00bf0cad7ec645368bd4f5bcaa848c6355c514c385d53dde45615d0411"></a>TIM_2&#160;</td><td class="fielddoc"><p >32-bit counter </p>
 </td></tr>
@@ -181,6 +203,32 @@ Public Attributes</h2></td></tr>
 <tr><td class="fieldname"><a id="a907160c00bf0cad7ec645368bd4f5bcaa6840481ce38511a53a7e49e81c02a936" name="a907160c00bf0cad7ec645368bd4f5bcaa6840481ce38511a53a7e49e81c02a936"></a>TIM_5&#160;</td><td class="fielddoc"><p >32-bit counter </p>
 </td></tr>
 </table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ab16930ef8452a8b0dc78ff46918a94a5" name="ab16930ef8452a8b0dc78ff46918a94a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab16930ef8452a8b0dc78ff46918a94a5">&#9670;&nbsp;</a></span>Config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">daisy::TimerHandle::Config::Config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -196,6 +244,39 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p >Counter direction </p>
+
+</div>
+</div>
+<a id="ad596ac4c02799e9bfd637bfaec82d41f" name="ad596ac4c02799e9bfd637bfaec82d41f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad596ac4c02799e9bfd637bfaec82d41f">&#9670;&nbsp;</a></span>enable_irq</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool daisy::TimerHandle::Config::enable_irq</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Enable interrupt for user based callback </p>
+
+</div>
+</div>
+<a id="a80d102d9f279eed83f2fb22323a5d4b7" name="a80d102d9f279eed83f2fb22323a5d4b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80d102d9f279eed83f2fb22323a5d4b7">&#9670;&nbsp;</a></span>period</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t daisy::TimerHandle::Config::period</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>period in ticks at TIM frequency that counter will reset based on dir </p>
+<dl class="section note"><dt>Note</dt><dd>TIM3 and TIM4 are both 16-bit timers. So the period maximum is 0xffff. </dd></dl>
 
 </div>
 </div>
@@ -210,6 +291,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p >Hardware Peripheral </p>
 
 </div>
 </div>

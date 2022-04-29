@@ -1,5 +1,7 @@
 var NAVTREEINDEX6 =
 {
+"daisy__seed_8h.html#a6e78356e396ec657b08e6d83ffcbe6ce":[16,0,1,13,41],
+"daisy__seed_8h.html#a6f220b3aa5f87c3d6d0875b16343ba8a":[16,0,1,13,20],
 "daisy__seed_8h.html#a7281b26bb898e64d3e043b4fcf2cc63a":[16,0,1,13,3],
 "daisy__seed_8h.html#a75aabcb0c2a5c960ca4314a2bbc37b7c":[16,0,1,13,18],
 "daisy__seed_8h.html#a7fd62bfbc31e32771fea715a130284c6":[16,0,1,13,28],
@@ -134,8 +136,8 @@ var NAVTREEINDEX6 =
 "functions_enum.html":[15,3,4],
 "functions_eval.html":[15,3,5],
 "functions_f.html":[15,3,0,6],
-"functions_func.html":[15,3,1,0],
 "functions_func.html":[15,3,1],
+"functions_func.html":[15,3,1,0],
 "functions_func_a.html":[15,3,1,1],
 "functions_func_b.html":[15,3,1,2],
 "functions_func_c.html":[15,3,1,3],
@@ -247,7 +249,5 @@ var NAVTREEINDEX6 =
 "globals_s.html":[16,1,0,16],
 "globals_u.html":[16,1,0,17],
 "globals_vars.html":[16,1,2],
-"globals_w.html":[16,1,0,18],
-"gpio_8h.html":[16,0,1,2,2],
-"gpio_8h.html#a6b2452c29cb76513b1d8af8726820bce":[16,0,1,2,2,1]
+"globals_w.html":[16,1,0,18]
 };
