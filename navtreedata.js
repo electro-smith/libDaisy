@@ -25,10 +25,10 @@
 var NAVTREE =
 [
   [ "libDaisy", "index.html", [
-    [ "Setting Up Your Development Environment", "index.html#autotoc_md56", null ],
-    [ "Using libDaisy", "index.html#autotoc_md57", null ],
-    [ "Development", "index.html#autotoc_md58", null ],
-    [ "Troubleshooting", "index.html#autotoc_md59", null ],
+    [ "Setting Up Your Development Environment", "index.html#autotoc_md66", null ],
+    [ "Using libDaisy", "index.html#autotoc_md67", null ],
+    [ "Development", "index.html#autotoc_md68", null ],
+    [ "Troubleshooting", "index.html#autotoc_md69", null ],
     [ "API Documentation", "modules.html", "modules" ],
     [ "Getting Started - GPIO", "md_doc_md__a1__getting__started__g_p_i_o.html", [
       [ "The CPP Objects Used", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md2", null ],
@@ -86,14 +86,26 @@ var NAVTREE =
       [ "Class Design with Large Memory", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md46", null ],
       [ "Future Work", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md47", null ]
     ] ],
-    [ "Development - Unit-Testing", "md_doc_md__b1__development__unit__testing.html", [
-      [ "Why write tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md49", null ],
-      [ "How to run tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md50", [
-        [ "From the commandline", "md_doc_md__b1__development__unit__testing.html#autotoc_md51", null ],
-        [ "From Visual Studio Code", "md_doc_md__b1__development__unit__testing.html#autotoc_md52", null ]
+    [ "Getting Started - Daisy Bootloader", "md_doc_md__a7__getting__started__daisy__bootloader.html", [
+      [ "Advantages of the Daisy bootloader", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md49", null ],
+      [ "Flashing the bootloader", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md50", null ],
+      [ "Generating programs for the bootloader", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md51", null ],
+      [ "Flashing with the bootloader", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md52", [
+        [ "DFU", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md53", null ],
+        [ "SD Card", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md54", null ],
+        [ "USB Drive", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md55", null ]
       ] ],
-      [ "Getting started with unit testing", "md_doc_md__b1__development__unit__testing.html#autotoc_md53", null ],
-      [ "Drawbacks & things to watch out for", "md_doc_md__b1__development__unit__testing.html#autotoc_md54", null ]
+      [ "Custom linkers", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md56", null ],
+      [ "Detailed Behavior", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md57", null ]
+    ] ],
+    [ "Development - Unit-Testing", "md_doc_md__b1__development__unit__testing.html", [
+      [ "Why write tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md59", null ],
+      [ "How to run tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md60", [
+        [ "From the commandline", "md_doc_md__b1__development__unit__testing.html#autotoc_md61", null ],
+        [ "From Visual Studio Code", "md_doc_md__b1__development__unit__testing.html#autotoc_md62", null ]
+      ] ],
+      [ "Getting started with unit testing", "md_doc_md__b1__development__unit__testing.html#autotoc_md63", null ],
+      [ "Drawbacks & things to watch out for", "md_doc_md__b1__development__unit__testing.html#autotoc_md64", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
@@ -145,8 +157,8 @@ var NAVTREEINDEX =
 "gpio_8h_source.html",
 "group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45afb2f72454a51663d2093d251757e4d1c",
 "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md20",
-"structdaisy_1_1_midi_event.html#a7fd8633bad4e22a3a6855ad7b1857dc8",
-"structdaisy_1_1_uart_handler_1_1_config.html#a308b7817c645e6af7d8115da1e5beb94a7d79b1b4569953571af8eddc164131db"
+"structdaisy_1_1_midi_event.html#a0a901876c13206b6edfe51a22dbf26c0",
+"structdaisy_1_1_u_i_1_1_special_control_ids.html#ab8a09fcf60b2035f04fab95c3bda2e60"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
