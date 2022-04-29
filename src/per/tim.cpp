@@ -36,8 +36,23 @@ class TimerHandle::Impl
     void DelayMs(uint32_t del);
     void DelayUs(uint32_t del);
 
+    void SetCallback(TimerHandle::PeriodElapsedCallback cb, void* data)
+    {
+        if(cb)
+        {
+            callback_ = cb;
+            cb_data_  = data;
+        }
+    }
+
+    void InternalCallback();
+
+
     TimerHandle::Config config_;
     TIM_HandleTypeDef   tim_hal_handle_;
+
+    TimerHandle::PeriodElapsedCallback callback_;
+    void*                              cb_data_;
 };
 
 // Error Handler
@@ -52,6 +67,24 @@ static void Error_Handler()
 // Global References
 
 static TimerHandle::Impl tim_handles[4];
+
+/** @brief returns a poitner to the private implementation object associated
+ *   with the peripheral instance (register base address)
+ *  @return Pointer to global tim_handle object or NULL
+ */
+static TimerHandle::Impl* get_tim_impl_from_instance(TIM_TypeDef* per_instance)
+{
+    /** Check each impl */
+    for(int i = 0; i < 4; i++)
+    {
+        TimerHandle::Impl* p = &tim_handles[i];
+        if(p->tim_hal_handle_.Instance == per_instance)
+        {
+            return p;
+        }
+    }
+    return NULL;
+}
 
 // TIM functions
 
@@ -76,9 +109,9 @@ TimerHandle::Result TimerHandle::Impl::Init(const TimerHandle::Config& config)
     // Default to longest period (16-bit timers handled separaately for clarity,
     // though 16-bit timers extra bits are probably don't care.
     if(tim_hal_handle_.Instance == TIM2 || tim_hal_handle_.Instance == TIM5)
-        tim_hal_handle_.Init.Period = 0xffffffff;
+        tim_hal_handle_.Init.Period = config_.period;
     else
-        tim_hal_handle_.Init.Period = 0xffff;
+        tim_hal_handle_.Init.Period = (uint16_t)config_.period;
 
     // Default Clock Division as none.
     tim_hal_handle_.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -126,9 +159,18 @@ TimerHandle::Result TimerHandle::Impl::DeInit()
 
 TimerHandle::Result TimerHandle::Impl::Start()
 {
-    return HAL_TIM_Base_Start(&tim_hal_handle_) == HAL_OK
-               ? TimerHandle::Result::OK
-               : TimerHandle::Result::ERR;
+    if(tim_hal_handle_.Instance == TIM5)
+    {
+        return HAL_TIM_Base_Start_IT(&tim_hal_handle_) == HAL_OK
+                   ? TimerHandle::Result::OK
+                   : TimerHandle::Result::ERR;
+    }
+    else
+    {
+        return HAL_TIM_Base_Start(&tim_hal_handle_) == HAL_OK
+                   ? TimerHandle::Result::OK
+                   : TimerHandle::Result::ERR;
+    }
 }
 
 TimerHandle::Result TimerHandle::Impl::Stop()
@@ -140,7 +182,9 @@ TimerHandle::Result TimerHandle::Impl::Stop()
 
 TimerHandle::Result TimerHandle::Impl::SetPeriod(uint32_t ticks)
 {
+    config_.period                = ticks;
     tim_hal_handle_.Instance->ARR = ticks;
+    tim_hal_handle_.Init.Period   = ticks;
     return Result::OK;
 }
 
@@ -191,30 +235,66 @@ void TimerHandle::Impl::DelayUs(uint32_t del)
     DelayTick(del * (GetFreq() / 1000000));
 }
 
+void TimerHandle::Impl::InternalCallback()
+{
+    if(callback_)
+    {
+        callback_(cb_data_);
+    }
+}
+
 // HAL Functions
 extern "C"
 {
     void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     {
+        TimerHandle::Impl* impl
+            = get_tim_impl_from_instance(tim_baseHandle->Instance);
+        TimerHandle::Config cfg = impl->GetConfig();
         if(tim_baseHandle->Instance == TIM2)
         {
             __HAL_RCC_TIM2_CLK_ENABLE();
+            if(cfg.enable_irq)
+            {
+                HAL_NVIC_SetPriority(TIM2_IRQn, 0x0f, 0);
+                HAL_NVIC_EnableIRQ(TIM2_IRQn);
+            }
         }
         else if(tim_baseHandle->Instance == TIM3)
         {
             __HAL_RCC_TIM3_CLK_ENABLE();
+            if(cfg.enable_irq)
+            {
+                HAL_NVIC_SetPriority(TIM3_IRQn, 0x0f, 0);
+                HAL_NVIC_EnableIRQ(TIM3_IRQn);
+            }
         }
         else if(tim_baseHandle->Instance == TIM4)
         {
             __HAL_RCC_TIM4_CLK_ENABLE();
+            if(cfg.enable_irq)
+            {
+                HAL_NVIC_SetPriority(TIM4_IRQn, 0x0f, 0);
+                HAL_NVIC_EnableIRQ(TIM4_IRQn);
+            }
         }
         else if(tim_baseHandle->Instance == TIM5)
         {
             __HAL_RCC_TIM5_CLK_ENABLE();
+            /** @todo make this conditional based on user config */
+            if(cfg.enable_irq)
+            {
+                HAL_NVIC_SetPriority(TIM5_IRQn, 0x0f, 0);
+                HAL_NVIC_EnableIRQ(TIM5_IRQn);
+            }
         }
         else if(tim_baseHandle->Instance == TIM6)
         {
             __HAL_RCC_TIM6_CLK_ENABLE();
+            /** DAC Peripheral shares IRQ with TIM6
+             *  and is implemented as part of DAC
+             *  callback structure.
+             */
         }
     }
 
@@ -223,27 +303,66 @@ extern "C"
         if(tim_baseHandle->Instance == TIM2)
         {
             __HAL_RCC_TIM2_CLK_DISABLE();
+            HAL_NVIC_DisableIRQ(TIM2_IRQn);
         }
         else if(tim_baseHandle->Instance == TIM3)
         {
             __HAL_RCC_TIM3_CLK_DISABLE();
+            HAL_NVIC_DisableIRQ(TIM3_IRQn);
         }
         else if(tim_baseHandle->Instance == TIM4)
         {
             __HAL_RCC_TIM4_CLK_DISABLE();
+            HAL_NVIC_DisableIRQ(TIM4_IRQn);
         }
         else if(tim_baseHandle->Instance == TIM5)
         {
             __HAL_RCC_TIM5_CLK_DISABLE();
+            HAL_NVIC_DisableIRQ(TIM5_IRQn);
         }
         else if(tim_baseHandle->Instance == TIM6)
         {
             __HAL_RCC_TIM6_CLK_DISABLE();
+            /** DAC Peripheral shares IRQ with TIM6
+             *  and is implemented as part of DAC
+             *  callback structure.
+             */
         }
     }
 }
 
 // ISRs and event handlers
+
+/** @todo make flexible for other periphs */
+extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
+{
+    if(htim->Instance == TIM5)
+    {
+        tim_handles[(int)TimerHandle::Config::Peripheral::TIM_5]
+            .InternalCallback();
+    }
+}
+
+extern "C" void TIM2_IRQHandler(void)
+{
+    HAL_TIM_IRQHandler(&tim_handles[(int)TimerHandle::Config::Peripheral::TIM_2]
+                            .tim_hal_handle_);
+}
+extern "C" void TIM3_IRQHandler(void)
+{
+    HAL_TIM_IRQHandler(&tim_handles[(int)TimerHandle::Config::Peripheral::TIM_3]
+                            .tim_hal_handle_);
+}
+extern "C" void TIM4_IRQHandler(void)
+{
+    HAL_TIM_IRQHandler(&tim_handles[(int)TimerHandle::Config::Peripheral::TIM_4]
+                            .tim_hal_handle_);
+}
+extern "C" void TIM5_IRQHandler(void)
+{
+    HAL_TIM_IRQHandler(&tim_handles[(int)TimerHandle::Config::Peripheral::TIM_5]
+                            .tim_hal_handle_);
+}
 
 // Interface
 
@@ -316,6 +435,11 @@ void TimerHandle::DelayMs(uint32_t del)
 void TimerHandle::DelayUs(uint32_t del)
 {
     pimpl_->DelayUs(del);
+}
+
+void TimerHandle::SetCallback(PeriodElapsedCallback cb, void* data)
+{
+    pimpl_->SetCallback(cb, data);
 }
 
 
