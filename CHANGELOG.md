@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+### Features
+
+* tim: `TimHandle` now has callbacks each time the Period has elapsed. These can be enabled with `TimeHandle::Config::enable_irq` at Init time.
+* bootloader: Working with the bootloader has been simplified. See [the new guide for updates on usage](https://electro-smith.github.io/libDaisy/md_doc_md__a7__getting__started__daisy__bootloader.html)
+* usb: `USBHost` class has added support for user callbacks on device connection, disconnection, and when the MSC class becomes active.
+
+### Bug Fixes
+
+* util: PersistentStorage class had a bug where calling the `RestoreDefaults` function would cause a crash
+* usb: LL HAL files for USB were updated to prevent timing issues when running with optimization
+
+### Other
+
+* build: core/Makefile has had the `-fnortti` flag added to match libDaisy's Makefile
+* bootloader: local version of daisy bootloader has been updated to improve stability
+
 ## v5.0.0
 
 ### Breaking Changes
