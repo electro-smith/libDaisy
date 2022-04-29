@@ -1,6 +1,7 @@
 # Getting Started - Daisy Bootloader
 
-In the context of embedded applications, a bootloader is a small program that runs on bootup and manages loading and even updating target applications. The update routine of the STM32H7's bootloader can be accessed on the Daisy by resetting the device with the BOOT button held down. Trouble is, the built-in bootloader can only reprogram the chip's internal flash (a meager 128kB). With this setup, it's not so easy to store larger programs in non-volatile memory, and it's even harder to get them running. That's where the Daisy bootloader comes in.
+In the context of embedded applications, a bootloader is a small program that runs on bootup and manages loading and even updating target applications. The update routine of the STM32H7's system bootloader can be accessed on the Daisy by resetting the device with the BOOT button held down.
+However, the built-in bootloader can only reprogram the chip's internal flash (128kB). With this setup, it's not so easy to store larger programs in non-volatile memory, and it's even harder to get them running. That's where the Daisy bootloader comes in.
 
 ## Advantages of the Daisy bootloader
 
@@ -13,12 +14,14 @@ With the latest version of libDaisy, you should be able to flash the bootloader 
 ## Generating programs for the bootloader
 
 To generate programs that can run from the bootloader, you only need one additional line in your makefile:
+
 ~~~makefile
 APP_TYPE = BOOT_SRAM
 ~~~
 
 The valid `APP_TYPE`s are `BOOT_SRAM` (runs program on the internal SRAM), `BOOT_QSPI` (runs programs on the QSPI flash chip), and `BOOT_NONE` (which just behaves like normal and is unable to run from the bootloader). Once you've added the desired app type, you'll need to recompile your project. It should be obvious from the memory usage output where your program will run. For example, when compiling for SRAM, you might see something like:
-~~~
+
+~~~sh
 Memory region         Used Size  Region Size  %age Used
        FLASH:          0 GB       128 KB      0.00%
      DTCMRAM:        7440 B       128 KB      5.68%
@@ -30,10 +33,12 @@ Memory region         Used Size  Region Size  %age Used
        SDRAM:          0 GB        64 MB      0.00%
    QSPIFLASH:          0 GB      7936 KB      0.00%
 ~~~
+
 Notice the zero bytes used in FLASH, which is the chip's internal flash storage. Since the bootloader lives there, any program that you intend to run with it can't use that region.
 
 Compiling for QSPI will move the program over into the QSPIFLASH region:
-~~~
+
+~~~sh
 Memory region         Used Size  Region Size  %age Used
        FLASH:          0 GB       128 KB      0.00%
      DTCMRAM:          0 GB       128 KB      0.00%
@@ -51,13 +56,18 @@ Memory region         Used Size  Region Size  %age Used
 With your program compiled, you have a few options available for programming it using the bootloader:
 
 ### DFU
+
 If the bootloader's LED is pulsing in the grace period, and the Daisy is connected to your computer via USB, you can run `make program-dfu`. The `APP_TYPE` will automatically adjust the DFU command to write to the correct address. Note that you'll have to change the app type back to `BOOT_NONE` or remove it to flash non-bootloader programs.
 
 ### SD Card
-If your Daisy device has a micro SD card slot, you can just drag and drop the `.bin` file generated in your project's build folder onto the card. If you then plug it into the Daisy and restart it, the bootloader will automatically flash it to the QSPI chip.
+
+If your Daisy is connected to a micro SD card slot, you can just drag and drop the `.bin` file generated in your project's build folder onto the card. If you then plug it into the Daisy and restart it, the bootloader will automatically flash it to the QSPI chip.
+
+At this time, the SD card needs to be fully wired up with all of the 4-bit data lines connected.
 
 ### USB Drive
-If your Daisy device has a USB port (and it's connected to the USB Hi-Speed pins), you can follow the same process as SD cards above. Note that the Micro USB port integrated on the Daisy seed does not use the STM32H7's Hi-Speed pins, so don't try jury rigging a USB drive into it!
+
+If your Daisy's external USB pins (D29 and D30) are connected to a USB port, you can follow the same process as SD cards above.
 
 ## Custom linkers
 
