@@ -265,7 +265,7 @@ class MidiHandler
                     if(running_status_ == NoteOn
                        && incoming_message_.data[1] == 0)
                     {
-                        incoming_message_.type = running_status_ = NoteOff;
+                        incoming_message_.type = NoteOff;
                     }
 
                     // At this point the message is valid, and we can add this MidiEvent to the queue

@@ -675,3 +675,35 @@ TEST_F(MidiTest, runningStatusAndStatusBytes)
 
     EXPECT_FALSE(midi.HasEvents());
 }
+
+// send running status noteons alternating between velocity 100 and 0
+TEST_F(MidiTest, mayoTest)
+{
+    uint8_t buff[60]
+        = {145, 48,  100, 48, 0,   48, 100, 48, 0,   48, 100, 48, 0,   48, 100,
+           48,  0,   145, 48, 100, 48, 0,   48, 100, 48, 0,   48, 100, 48, 0,
+           48,  100, 145, 48, 0,   48, 100, 48, 0,   48, 100, 48, 0,   48, 100,
+           48,  0,   145, 48, 100, 48, 0,   48, 100, 48, 0,   48, 100, 48, 0};
+
+    Parse(buff, 60);
+    for(int i = 0; i < 14; i++)
+    {
+        MidiEvent on  = midi.PopEvent();
+        MidiEvent off = midi.PopEvent();
+
+        EXPECT_EQ(on.type, NoteOn);
+        EXPECT_EQ(off.type, NoteOff);
+
+        NoteOnEvent  noOn  = on.AsNoteOn();
+        NoteOffEvent noOff = off.AsNoteOff();
+
+        EXPECT_EQ(noOn.channel, 1);
+        EXPECT_EQ(noOff.channel, 1);
+        EXPECT_EQ(noOn.note, 48);
+        EXPECT_EQ(noOff.note, 48);
+        EXPECT_EQ(noOn.velocity, 100);
+        EXPECT_EQ(noOff.velocity, 0);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
