@@ -425,7 +425,7 @@ USBH_StatusTypeDef  USBH_Stop(USBH_HandleTypeDef *phost)
   */
 USBH_StatusTypeDef USBH_ReEnumerate(USBH_HandleTypeDef *phost)
 {
-  if (USBH_IsPortEnabled(phost))
+  //if (USBH_IsPortEnabled(phost))
   {
     phost->device.is_ReEnumerated = 1U;
 

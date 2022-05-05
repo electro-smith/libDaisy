@@ -1,0 +1,10 @@
+# Manually Changes
+
+## USBH ReEnumerate
+
+In order to prevent a semi-rare bug where removing a USB drive would not result in the "Disconnect_Callback" being called appropriately, the USBH_ReEnumerate() function in usbh_core.c was edited.
+
+The edit removes the check for  USBH_IsPortEnabled() before ttriggering a disconnection/reinitialization.
+
+This will allow reconnection via ReEnumeration when this bug takes place. Otherwise, a power cycle/reset was necessary to restore USB Host functionality to the application.
+
