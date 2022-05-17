@@ -155,6 +155,11 @@ class MidiHandler
     */
     void Parse(uint8_t byte)
     {
+        // reset parser when status byte is received
+        if((byte & kStatusByteMask) && pstate_ != ParserSysEx) 
+        {
+            pstate_ = ParserEmpty;
+        }
         switch(pstate_)
         {
             case ParserEmpty:
@@ -253,7 +258,6 @@ class MidiHandler
                 {
                     // invalid message go back to start ;p
                     pstate_ = ParserEmpty;
-                    Parse(byte);
                 }
                 break;
             case ParserHasData0:
@@ -275,7 +279,6 @@ class MidiHandler
                 {
                     // invalid message go back to start ;p
                     pstate_ = ParserEmpty;
-                    Parse(byte);
                 }
                 // Regardless, of whether the data was valid or not we go back to empty
                 // because either the message is queued for handling or its not.
