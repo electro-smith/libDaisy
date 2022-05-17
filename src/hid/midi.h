@@ -156,7 +156,7 @@ class MidiHandler
     void Parse(uint8_t byte)
     {
         // reset parser when status byte is received
-        if((byte & kStatusByteMask) && pstate_ != ParserSysEx) 
+        if((byte & kStatusByteMask) && pstate_ != ParserSysEx)
         {
             pstate_ = ParserEmpty;
         }
