@@ -707,3 +707,80 @@ TEST_F(MidiTest, mayoTest)
 
     EXPECT_FALSE(midi.HasEvents());
 }
+
+// send running status messages with one data byte
+TEST_F(MidiTest, singleByteRunningStatusTest)
+{
+    // == Channel Pressure ==
+    uint8_t status = 0xD3; // channel pressure, channel 3
+    Parse(&status, 1);
+
+    for(uint8_t i = 0; i < 128; i++)
+    {
+        MidiEvent ev  = ParseAndPop(&i, 1);
+
+        EXPECT_EQ(ev.type, ChannelPressure);
+
+        ChannelPressureEvent  chPressure  = ev.AsChannelPressure();
+
+        EXPECT_EQ(chPressure.channel, 3);
+        EXPECT_EQ(chPressure.pressure, i);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+
+    // == Program Change ==
+    status = 0xC3; // program change, channel 3
+    Parse(&status, 1);
+
+    for(uint8_t i = 0; i < 128; i++)
+    {
+        MidiEvent ev  = ParseAndPop(&i, 1);
+
+        EXPECT_EQ(ev.type, ProgramChange);
+
+        ProgramChangeEvent  progChange  = ev.AsProgramChange();
+
+        EXPECT_EQ(progChange.channel, 3);
+        EXPECT_EQ(progChange.program, i);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+
+    // == MTC Quarter Frame ==
+    status = 0xF1; // quarter frame
+    Parse(&status, 1);
+
+    for(uint8_t i = 0; i < 128; i++)
+    {
+        MidiEvent ev  = ParseAndPop(&i, 1);
+
+        EXPECT_EQ(ev.type, SystemCommon);
+        EXPECT_EQ(ev.sc_type, MTCQuarterFrame);
+
+        MTCQuarterFrameEvent  qfEv  = ev.AsMTCQuarterFrame();
+
+        EXPECT_EQ(qfEv.value, i & 0x0F);
+        EXPECT_EQ(qfEv.message_type, (i & 0x70) >> 4);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+
+    // == Song Select ==
+    status = 0xF3; // song select
+    Parse(&status, 1);
+
+    for(uint8_t i = 0; i < 128; i++)
+    {
+        MidiEvent ev  = ParseAndPop(&i, 1);
+
+        EXPECT_EQ(ev.type, SystemCommon);
+        EXPECT_EQ(ev.sc_type, SongSelect);
+
+        SongSelectEvent  songSel  = ev.AsSongSelect();
+
+        EXPECT_EQ(songSel.song, i);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
