@@ -342,9 +342,8 @@ extern "C"
 
 extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 {
-    TimerHandle::Impl* impl
-        = get_tim_impl_from_instance(htim->Instance);
-    if (impl)
+    TimerHandle::Impl* impl = get_tim_impl_from_instance(htim->Instance);
+    if(impl)
         impl->InternalCallback();
 }
 
