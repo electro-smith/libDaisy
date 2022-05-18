@@ -340,14 +340,12 @@ extern "C"
 
 // ISRs and event handlers
 
-/** @todo make flexible for other periphs */
 extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 {
-    if(htim->Instance == TIM5)
-    {
-        tim_handles[(int)TimerHandle::Config::Peripheral::TIM_5]
-            .InternalCallback();
-    }
+    TimerHandle::Impl* impl
+        = get_tim_impl_from_instance(htim->Instance);
+    if (impl)
+        impl->InternalCallback();
 }
 
 extern "C" void TIM2_IRQHandler(void)
