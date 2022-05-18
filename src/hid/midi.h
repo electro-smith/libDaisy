@@ -155,6 +155,11 @@ class MidiHandler
     */
     void Parse(uint8_t byte)
     {
+        // reset parser when status byte is received
+        if((byte & kStatusByteMask) && pstate_ != ParserSysEx)
+        {
+            pstate_ = ParserEmpty;
+        }
         switch(pstate_)
         {
             case ParserEmpty:
@@ -264,11 +269,16 @@ class MidiHandler
                     if(running_status_ == NoteOn
                        && incoming_message_.data[1] == 0)
                     {
-                        incoming_message_.type = running_status_ = NoteOff;
+                        incoming_message_.type = NoteOff;
                     }
 
                     // At this point the message is valid, and we can add this MidiEvent to the queue
                     event_q_.Write(incoming_message_);
+                }
+                else
+                {
+                    // invalid message go back to start ;p
+                    pstate_ = ParserEmpty;
                 }
                 // Regardless, of whether the data was valid or not we go back to empty
                 // because either the message is queued for handling or its not.
