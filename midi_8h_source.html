@@ -220,175 +220,185 @@ $(document).ready(function(){initNavTree('midi_8h_source.html',''); initResizabl
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="classdaisy_1_1_midi_handler.html#a8dbf957100cc91a0c28c04340b218e32">  156</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_midi_handler.html#a8dbf957100cc91a0c28c04340b218e32">Parse</a>(uint8_t <span class="keywordtype">byte</span>)</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    {</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="keywordflow">switch</span>(pstate_)</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        {</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            <span class="keywordflow">case</span> ParserEmpty:</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                <span class="comment">// check byte for valid Status Byte</span></div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                <span class="keywordflow">if</span>(<span class="keywordtype">byte</span> &amp; kStatusByteMask)</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>                {</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                    <span class="comment">// Get MessageType, and Channel</span></div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a4116a938a5978cf20e11b0d7dc022deb">channel</a> = <span class="keywordtype">byte</span> &amp; kChannelMask;</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a>    = <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="group__midi__events.html#gaaf09bb687034c8776ca0c68ed3ed4179">MidiMessageType</a><span class="keyword">&gt;</span>(</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>                        (<span class="keywordtype">byte</span> &amp; kMessageMask) &gt;&gt; 4);</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                    <span class="comment">// Validate, and move on.</span></div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                    <span class="keywordflow">if</span>(incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a> &lt; <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a462782a09a7554ea61fcf5a901b745e1">MessageLast</a>)</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                    {</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                        pstate_ = ParserHasStatus;</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                        <span class="comment">// Mark this status byte as running_status</span></div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                        running_status_ = incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a>;</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                        <span class="keywordflow">if</span>(running_status_ == <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a211055e6e972c4c9adb11f128aeee32e">SystemCommon</a>)</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                        {</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                            incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a4116a938a5978cf20e11b0d7dc022deb">channel</a> = 0;</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                            <span class="comment">//system real time = 1111 1xxx</span></div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                            <span class="keywordflow">if</span>(<span class="keywordtype">byte</span> &amp; 0x08)</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                            {</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                                incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a> = <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a5b11a7cc1fb889b396a43a2bf7ca77a9">SystemRealTime</a>;</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                                running_status_        = <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a5b11a7cc1fb889b396a43a2bf7ca77a9">SystemRealTime</a>;</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                                incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a6981641c0057f45e3a8556a55948b9fc">srt_type</a></div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                                    = <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="group__midi__events.html#ga3069be23e98a0299bbfa8f1759754d45">SystemRealTimeType</a><span class="keyword">&gt;</span>(</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>                                        <span class="keywordtype">byte</span> &amp; kSystemRealTimeMask);</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                                <span class="comment">//short circuit to start</span></div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                                pstate_ = ParserEmpty;</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                                event_q_.Write(incoming_message_);</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                            }</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                            <span class="comment">//system common</span></div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                            <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                            {</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                                incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76">sc_type</a></div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                                    = <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="group__midi__events.html#ga4f648ead175d62e97ceb4d3b49f692f5">SystemCommonType</a><span class="keyword">&gt;</span>(<span class="keywordtype">byte</span></div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                                                                    &amp; 0x07);</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                                <span class="comment">//sysex</span></div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                                <span class="keywordflow">if</span>(incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76">sc_type</a> == <a class="code hl_enumvalue" href="group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a22d3dbb96afe5ec810fc6de987200a9c">SystemExclusive</a>)</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                                {</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                                    pstate_ = ParserSysEx;</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1">sysex_message_len</a> = 0;</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                                }</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>                                <span class="comment">//short circuit</span></div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                                <span class="keywordflow">else</span> <span class="keywordflow">if</span>(incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76">sc_type</a> &gt; <a class="code hl_enumvalue" href="group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a1d841bd69c010006dcd3f90059bda305">SongSelect</a>)</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                                {</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                                    pstate_ = ParserEmpty;</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                                    event_q_.Write(incoming_message_);</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>                                }</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                            }</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>                        }</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>                    }</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                    <span class="comment">// Else we&#39;ll keep waiting for a valid incoming status byte</span></div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                }</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                {</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                    <span class="comment">// Handle as running status</span></div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a>    = running_status_;</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[0] = <span class="keywordtype">byte</span> &amp; kDataByteMask;</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                    pstate_                   = ParserHasData0;</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>                }</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>            <span class="keywordflow">case</span> ParserHasStatus:</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>                <span class="keywordflow">if</span>((<span class="keywordtype">byte</span> &amp; kStatusByteMask) == 0)</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                {</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[0] = <span class="keywordtype">byte</span> &amp; kDataByteMask;</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                    <span class="keywordflow">if</span>(running_status_ == <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a7c94d1043d8e491a9ccb6c45df7867a4">ChannelPressure</a></div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                       || running_status_ == <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a27e60326355eedaf215c23c4527ce627">ProgramChange</a></div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                       || incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76">sc_type</a> == <a class="code hl_enumvalue" href="group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a19c6d1c07df0cf836fd7ef333b3081bd">MTCQuarterFrame</a></div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                       || incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76">sc_type</a> == <a class="code hl_enumvalue" href="group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a1d841bd69c010006dcd3f90059bda305">SongSelect</a>)</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                    {</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>                        <span class="comment">//these are just one data byte, so we short circuit back to start</span></div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                        pstate_ = ParserEmpty;</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>                        event_q_.Write(incoming_message_);</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>                    }</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>                    <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>                    {</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>                        pstate_ = ParserHasData0;</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>                    }</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>                    <span class="comment">//ChannelModeMessages (reserved Control Changes)</span></div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>                    <span class="keywordflow">if</span>(running_status_ == <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a0b1ada1624d07a8111c54257702313df">ControlChange</a></div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>                       &amp;&amp; incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[0] &gt; 119)</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                    {</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>                        incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a> = <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179aba56f28826879526f991c5f75c0d072c">ChannelMode</a>;</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                        running_status_        = <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179aba56f28826879526f991c5f75c0d072c">ChannelMode</a>;</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                        incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a7fd8633bad4e22a3a6855ad7b1857dc8">cm_type</a></div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                            = <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="group__midi__events.html#gaf9da54b73be4dec526670bd6c53ad98a">ChannelModeType</a><span class="keyword">&gt;</span>(</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>                                incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[0] - 120);</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>                    }</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                }</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                {</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>                    <span class="comment">// invalid message go back to start ;p</span></div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>                    pstate_ = ParserEmpty;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="comment">// reset parser when status byte is received</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keywordflow">if</span>((<span class="keywordtype">byte</span> &amp; kStatusByteMask) &amp;&amp; pstate_ != ParserSysEx)</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        {</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            pstate_ = ParserEmpty;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        }</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <span class="keywordflow">switch</span>(pstate_)</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        {</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            <span class="keywordflow">case</span> ParserEmpty:</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                <span class="comment">// check byte for valid Status Byte</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>                <span class="keywordflow">if</span>(<span class="keywordtype">byte</span> &amp; kStatusByteMask)</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>                {</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                    <span class="comment">// Get MessageType, and Channel</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a4116a938a5978cf20e11b0d7dc022deb">channel</a> = <span class="keywordtype">byte</span> &amp; kChannelMask;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a>    = <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="group__midi__events.html#gaaf09bb687034c8776ca0c68ed3ed4179">MidiMessageType</a><span class="keyword">&gt;</span>(</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                        (<span class="keywordtype">byte</span> &amp; kMessageMask) &gt;&gt; 4);</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                    <span class="comment">// Validate, and move on.</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                    <span class="keywordflow">if</span>(incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a> &lt; <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a462782a09a7554ea61fcf5a901b745e1">MessageLast</a>)</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                    {</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                        pstate_ = ParserHasStatus;</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                        <span class="comment">// Mark this status byte as running_status</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                        running_status_ = incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a>;</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                        <span class="keywordflow">if</span>(running_status_ == <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a211055e6e972c4c9adb11f128aeee32e">SystemCommon</a>)</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                        {</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                            incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a4116a938a5978cf20e11b0d7dc022deb">channel</a> = 0;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                            <span class="comment">//system real time = 1111 1xxx</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                            <span class="keywordflow">if</span>(<span class="keywordtype">byte</span> &amp; 0x08)</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>                            {</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                                incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a> = <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a5b11a7cc1fb889b396a43a2bf7ca77a9">SystemRealTime</a>;</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                                running_status_        = <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a5b11a7cc1fb889b396a43a2bf7ca77a9">SystemRealTime</a>;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                                incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a6981641c0057f45e3a8556a55948b9fc">srt_type</a></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                                    = <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="group__midi__events.html#ga3069be23e98a0299bbfa8f1759754d45">SystemRealTimeType</a><span class="keyword">&gt;</span>(</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                                        <span class="keywordtype">byte</span> &amp; kSystemRealTimeMask);</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                                <span class="comment">//short circuit to start</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                                pstate_ = ParserEmpty;</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                                event_q_.Write(incoming_message_);</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                            }</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                            <span class="comment">//system common</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                            {</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                                incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76">sc_type</a></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                                    = <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="group__midi__events.html#ga4f648ead175d62e97ceb4d3b49f692f5">SystemCommonType</a><span class="keyword">&gt;</span>(<span class="keywordtype">byte</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                                                                    &amp; 0x07);</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                                <span class="comment">//sysex</span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>                                <span class="keywordflow">if</span>(incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76">sc_type</a> == <a class="code hl_enumvalue" href="group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a22d3dbb96afe5ec810fc6de987200a9c">SystemExclusive</a>)</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                                {</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                                    pstate_ = ParserSysEx;</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1">sysex_message_len</a> = 0;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                                }</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>                                <span class="comment">//short circuit</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                                <span class="keywordflow">else</span> <span class="keywordflow">if</span>(incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76">sc_type</a> &gt; <a class="code hl_enumvalue" href="group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a1d841bd69c010006dcd3f90059bda305">SongSelect</a>)</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>                                {</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>                                    pstate_ = ParserEmpty;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                                    event_q_.Write(incoming_message_);</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                                }</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                            }</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                        }</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                    }</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>                    <span class="comment">// Else we&#39;ll keep waiting for a valid incoming status byte</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                }</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>                {</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                    <span class="comment">// Handle as running status</span></div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a>    = running_status_;</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[0] = <span class="keywordtype">byte</span> &amp; kDataByteMask;</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                    pstate_                   = ParserHasData0;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                }</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>            <span class="keywordflow">case</span> ParserHasStatus:</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>                <span class="keywordflow">if</span>((<span class="keywordtype">byte</span> &amp; kStatusByteMask) == 0)</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                {</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[0] = <span class="keywordtype">byte</span> &amp; kDataByteMask;</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>                    <span class="keywordflow">if</span>(running_status_ == <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a7c94d1043d8e491a9ccb6c45df7867a4">ChannelPressure</a></div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                       || running_status_ == <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a27e60326355eedaf215c23c4527ce627">ProgramChange</a></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>                       || incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76">sc_type</a> == <a class="code hl_enumvalue" href="group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a19c6d1c07df0cf836fd7ef333b3081bd">MTCQuarterFrame</a></div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>                       || incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76">sc_type</a> == <a class="code hl_enumvalue" href="group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a1d841bd69c010006dcd3f90059bda305">SongSelect</a>)</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>                    {</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>                        <span class="comment">//these are just one data byte, so we short circuit back to start</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>                        pstate_ = ParserEmpty;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>                        event_q_.Write(incoming_message_);</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>                    }</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>                    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>                    {</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>                        pstate_ = ParserHasData0;</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                    }</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>                    <span class="comment">//ChannelModeMessages (reserved Control Changes)</span></div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                    <span class="keywordflow">if</span>(running_status_ == <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a0b1ada1624d07a8111c54257702313df">ControlChange</a></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>                       &amp;&amp; incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[0] &gt; 119)</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>                    {</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>                        incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a> = <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179aba56f28826879526f991c5f75c0d072c">ChannelMode</a>;</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>                        running_status_        = <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179aba56f28826879526f991c5f75c0d072c">ChannelMode</a>;</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                        incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a7fd8633bad4e22a3a6855ad7b1857dc8">cm_type</a></div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                            = <span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="group__midi__events.html#gaf9da54b73be4dec526670bd6c53ad98a">ChannelModeType</a><span class="keyword">&gt;</span>(</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>                                incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[0] - 120);</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>                    }</div>
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>                }</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>            <span class="keywordflow">case</span> ParserHasData0:</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>                <span class="keywordflow">if</span>((<span class="keywordtype">byte</span> &amp; kStatusByteMask) == 0)</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>                {</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[1] = <span class="keywordtype">byte</span> &amp; kDataByteMask;</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>                    <span class="comment">//velocity 0 NoteOns are NoteOffs</span></div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                    <span class="keywordflow">if</span>(running_status_ == <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a9a64652b06f5ea678d94472ecd77d3ee">NoteOn</a></div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                       &amp;&amp; incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[1] == 0)</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                    {</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                        incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a> = running_status_ = <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a1b12be0cc7d773bce8e9a29a6bb6f503">NoteOff</a>;</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                    }</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                    <span class="comment">// At this point the message is valid, and we can add this MidiEvent to the queue</span></div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>                    event_q_.Write(incoming_message_);</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                }</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                <span class="comment">// Regardless, of whether the data was valid or not we go back to empty</span></div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                <span class="comment">// because either the message is queued for handling or its not.</span></div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                pstate_ = ParserEmpty;</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>            <span class="keywordflow">case</span> ParserSysEx:</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                <span class="comment">// end of sysex</span></div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                <span class="keywordflow">if</span>(<span class="keywordtype">byte</span> == 0xf7)</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                {</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>                <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>                {</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>                    <span class="comment">// invalid message go back to start ;p</span></div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>                    pstate_ = ParserEmpty;</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>                }</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>            <span class="keywordflow">case</span> ParserHasData0:</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                <span class="keywordflow">if</span>((<span class="keywordtype">byte</span> &amp; kStatusByteMask) == 0)</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[1] = <span class="keywordtype">byte</span> &amp; kDataByteMask;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> </div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                    <span class="comment">//velocity 0 NoteOns are NoteOffs</span></div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                    <span class="keywordflow">if</span>(running_status_ == <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a9a64652b06f5ea678d94472ecd77d3ee">NoteOn</a></div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                       &amp;&amp; incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670">data</a>[1] == 0)</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>                    {</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                        incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91">type</a> = <a class="code hl_enumvalue" href="group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a1b12be0cc7d773bce8e9a29a6bb6f503">NoteOff</a>;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                    }</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> </div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                    <span class="comment">// At this point the message is valid, and we can add this MidiEvent to the queue</span></div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                    event_q_.Write(incoming_message_);</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                }</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                {</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                    <span class="comment">// invalid message go back to start ;p</span></div>
 <div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>                    pstate_ = ParserEmpty;</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                    event_q_.Write(incoming_message_);</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                }</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                <span class="keywordflow">else</span> <span class="keywordflow">if</span>(incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1">sysex_message_len</a> &lt; <a class="code hl_define" href="midi_8h.html#a02f1ba6b22046642cb6f52e3fab60241">SYSEX_BUFFER_LEN</a>)</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                {</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                    incoming_message_</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>                        .<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a3832d8ac412e42359eff562b56362cbb">sysex_data</a>[incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1">sysex_message_len</a>]</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>                        = byte;</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1">sysex_message_len</a>++;</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                }</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>            <span class="keywordflow">default</span>: <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        }</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    }</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> </div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    <span class="keyword">enum</span> ParserState</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    {</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        ParserEmpty,</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        ParserHasStatus,</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>        ParserHasData0,</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        ParserSysEx,</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    };</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    UartHandler                uart_;</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    ParserState                pstate_;</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    MidiEvent                  incoming_message_;</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    RingBuffer&lt;MidiEvent, 256&gt; event_q_;</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    uint32_t                   last_read_; <span class="comment">// time of last byte</span></div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    <a class="code hl_enumeration" href="group__midi__events.html#gaaf09bb687034c8776ca0c68ed3ed4179">MidiMessageType</a>            running_status_;</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>    Config                     config_;</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    Transport                  transport_;</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span> </div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    <span class="comment">// Masks to check for message type, and byte content</span></div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    <span class="keyword">const</span> uint8_t kStatusByteMask     = 0x80;</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    <span class="keyword">const</span> uint8_t kMessageMask        = 0x70;</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    <span class="keyword">const</span> uint8_t kDataByteMask       = 0x7F;</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    <span class="keyword">const</span> uint8_t kSystemCommonMask   = 0xF0;</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    <span class="keyword">const</span> uint8_t kChannelMask        = 0x0F;</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    <span class="keyword">const</span> uint8_t kRealTimeMask       = 0xF8;</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    <span class="keyword">const</span> uint8_t kSystemRealTimeMask = 0x07;</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>};</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                }</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                <span class="comment">// Regardless, of whether the data was valid or not we go back to empty</span></div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                <span class="comment">// because either the message is queued for handling or its not.</span></div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                pstate_ = ParserEmpty;</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>            <span class="keywordflow">case</span> ParserSysEx:</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>                <span class="comment">// end of sysex</span></div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>                <span class="keywordflow">if</span>(<span class="keywordtype">byte</span> == 0xf7)</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                {</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                    pstate_ = ParserEmpty;</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>                    event_q_.Write(incoming_message_);</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                }</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>                <span class="keywordflow">else</span> <span class="keywordflow">if</span>(incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1">sysex_message_len</a> &lt; <a class="code hl_define" href="midi_8h.html#a02f1ba6b22046642cb6f52e3fab60241">SYSEX_BUFFER_LEN</a>)</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>                {</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                    incoming_message_</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                        .<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a3832d8ac412e42359eff562b56362cbb">sysex_data</a>[incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1">sysex_message_len</a>]</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>                        = byte;</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                    incoming_message_.<a class="code hl_variable" href="structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1">sysex_message_len</a>++;</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                }</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>            <span class="keywordflow">default</span>: <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>        }</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    }</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <span class="keyword">enum</span> ParserState</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    {</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        ParserEmpty,</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        ParserHasStatus,</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        ParserHasData0,</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>        ParserSysEx,</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    };</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    UartHandler                uart_;</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    ParserState                pstate_;</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    MidiEvent                  incoming_message_;</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    RingBuffer&lt;MidiEvent, 256&gt; event_q_;</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    uint32_t                   last_read_; <span class="comment">// time of last byte</span></div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    <a class="code hl_enumeration" href="group__midi__events.html#gaaf09bb687034c8776ca0c68ed3ed4179">MidiMessageType</a>            running_status_;</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    Config                     config_;</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    Transport                  transport_;</div>
 <div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> </div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno"><a class="line" href="group__midi.html#gaaa674dd8cc356904785b384ed493b201">  328</a></span><span class="keyword">using </span><a class="code hl_class" href="classdaisy_1_1_midi_handler.html">MidiUartHandler</a> = <a class="code hl_class" href="classdaisy_1_1_midi_handler.html">MidiHandler&lt;MidiUartTransport&gt;</a>;</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno"><a class="line" href="group__midi.html#gaae7397a71c41654e7d4236b47185ced1">  329</a></span><span class="keyword">using </span><a class="code hl_class" href="classdaisy_1_1_midi_handler.html">MidiUsbHandler</a>  = <a class="code hl_class" href="classdaisy_1_1_midi_handler.html">MidiHandler&lt;MidiUsbTransport&gt;</a>;</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>} <span class="comment">// namespace daisy</span></div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>    <span class="comment">// Masks to check for message type, and byte content</span></div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>    <span class="keyword">const</span> uint8_t kStatusByteMask     = 0x80;</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>    <span class="keyword">const</span> uint8_t kMessageMask        = 0x70;</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    <span class="keyword">const</span> uint8_t kDataByteMask       = 0x7F;</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    <span class="keyword">const</span> uint8_t kSystemCommonMask   = 0xF0;</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>    <span class="keyword">const</span> uint8_t kChannelMask        = 0x0F;</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    <span class="keyword">const</span> uint8_t kRealTimeMask       = 0xF8;</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    <span class="keyword">const</span> uint8_t kSystemRealTimeMask = 0x07;</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>};</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span> </div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno"><a class="line" href="group__midi.html#gaaa674dd8cc356904785b384ed493b201">  338</a></span><span class="keyword">using </span><a class="code hl_class" href="classdaisy_1_1_midi_handler.html">MidiUartHandler</a> = <a class="code hl_class" href="classdaisy_1_1_midi_handler.html">MidiHandler&lt;MidiUartTransport&gt;</a>;</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno"><a class="line" href="group__midi.html#gaae7397a71c41654e7d4236b47185ced1">  339</a></span><span class="keyword">using </span><a class="code hl_class" href="classdaisy_1_1_midi_handler.html">MidiUsbHandler</a>  = <a class="code hl_class" href="classdaisy_1_1_midi_handler.html">MidiHandler&lt;MidiUsbTransport&gt;</a>;</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>} <span class="comment">// namespace daisy</span></div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_midi_event_8h_html"><div class="ttname"><a href="_midi_event_8h.html">MidiEvent.h</a></div></div>
 <div class="ttc" id="aclassdaisy_1_1_midi_handler_html"><div class="ttname"><a href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler</a></div><div class="ttdoc">Simple MIDI Handler   Parses bytes from an input into valid MidiEvents.   The MidiEvents fill a FIFO ...</div><div class="ttdef"><b>Definition:</b> midi.h:82</div></div>
 <div class="ttc" id="aclassdaisy_1_1_midi_handler_html_a28d650f767ca99afaa79e39664fcb4c2"><div class="ttname"><a href="classdaisy_1_1_midi_handler.html#a28d650f767ca99afaa79e39664fcb4c2">daisy::MidiHandler::StartReceive</a></div><div class="ttdeci">void StartReceive()</div><div class="ttdef"><b>Definition:</b> midi.h:107</div></div>
