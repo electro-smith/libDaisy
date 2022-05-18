@@ -160,7 +160,7 @@ TimerHandle::Result TimerHandle::Impl::DeInit()
 
 TimerHandle::Result TimerHandle::Impl::Start()
 {
-    if (config_.enable_irq)
+    if(config_.enable_irq)
     {
         return HAL_TIM_Base_Start_IT(&tim_hal_handle_) == HAL_OK
                    ? TimerHandle::Result::OK
