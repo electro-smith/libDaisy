@@ -13,9 +13,7 @@ var dir_cb086a600609e95706fd4a65b75c05ff =
     [ "parameter.h", "parameter_8h.html", null ],
     [ "rgb_led.h", "rgb__led_8h.html", "rgb__led_8h" ],
     [ "switch.h", "switch_8h.html", "switch_8h" ],
-    [ "switch3.h", "switch3_8h.html", [
-      [ "daisy::Switch3", "classdaisy_1_1_switch3.html", "classdaisy_1_1_switch3" ]
-    ] ],
+    [ "switch3.h", "switch3_8h.html", "switch3_8h" ],
     [ "usb.h", "usb_8h.html", "usb_8h" ],
     [ "usb_host.h", "usb__host_8h.html", "usb__host_8h" ],
     [ "usb_midi.h", "usb__midi_8h.html", "usb__midi_8h" ],

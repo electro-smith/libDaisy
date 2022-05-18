@@ -27,12 +27,12 @@ var menudata={children:[
 {text:"API Documentation",url:"modules.html"},
 {text:"Related Pages",url:"pages.html"},
 {text:"Additional Resources",url:"usergroup0.html",children:[
-{text:"Electrosmith Website",url:"https://electro-smith.com/"},
-{text:"Daisy Seed Product Page",url:"https://electro-smith.com/daisy/daisy"},
-{text:"Daisy Web Programmer",url:"https://electro-smith.github.io/Programmer/"},
-{text:"Daisy Seed Datasheet",url:"https://static1.squarespace.com/static/58d03fdc1b10e3bf442567b8/t/61ba1bf5214a31356d23d73d/1639586811625/Daisy_Seed_datasheet.pdf"},
-{text:"DaisySP DSP Library Documentation",url:"https://electro-smith.github.io/DaisySP/"},
-{text:"Daisy Forum",url:"https://forum.electro-smith.com/"}]},
+{text:"Electrosmith Website",url:"^https://electro-smith.com/"},
+{text:"Daisy Seed Product Page",url:"^https://electro-smith.com/daisy/daisy"},
+{text:"Daisy Web Programmer",url:"^https://electro-smith.github.io/Programmer/"},
+{text:"Daisy Seed Datasheet",url:"^https://static1.squarespace.com/static/58d03fdc1b10e3bf442567b8/t/61ba1bf5214a31356d23d73d/1639586811625/Daisy_Seed_datasheet.pdf"},
+{text:"DaisySP DSP Library Documentation",url:"^https://electro-smith.github.io/DaisySP/"},
+{text:"Daisy Forum",url:"^https://forum.electro-smith.com/"}]},
 {text:"Classes",url:"annotated.html",children:[
 {text:"Class List",url:"annotated.html"},
 {text:"Class Index",url:"classes.html"},

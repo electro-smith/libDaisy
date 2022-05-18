@@ -1,7 +1,5 @@
 var NAVTREEINDEX10 =
 {
-"structdaisy_1_1_m_t_c_quarter_frame_event.html":[4,0,1,4,0,9],
-"structdaisy_1_1_m_t_c_quarter_frame_event.html#a31b934d70fcc769db539a0e282a98340":[4,0,1,4,0,9,0],
 "structdaisy_1_1_m_t_c_quarter_frame_event.html#acce45e382b1aff05a0398cd9eda94ea3":[4,0,1,4,0,9,1],
 "structdaisy_1_1_mcp23017_transport_1_1_config.html":[15,0,0,49,0],
 "structdaisy_1_1_mcp23017_transport_1_1_config.html#a7e3f0fc7e8055b00f35b8ed6f6d56812":[15,0,0,49,0,1],
@@ -249,5 +247,7 @@ var NAVTREEINDEX10 =
 "structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7bac4e0e4e3118472beeb2ae75827450f1f":[15,0,0,97,0,0,1],
 "structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7bafbaedde498cdead4f2780217646e9ba1":[15,0,0,97,0,0,0],
 "structdaisy_1_1_timer_handle_1_1_config.html#a431b23e53eedab70c3582535ebb866a2":[15,0,0,97,0,3],
-"structdaisy_1_1_timer_handle_1_1_config.html#a80d102d9f279eed83f2fb22323a5d4b7":[15,0,0,97,0,5]
+"structdaisy_1_1_timer_handle_1_1_config.html#a80d102d9f279eed83f2fb22323a5d4b7":[15,0,0,97,0,5],
+"structdaisy_1_1_timer_handle_1_1_config.html#a8221f500730fb53dcef869678a2634ba":[15,0,0,97,0,6],
+"structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bca":[15,0,0,97,0,1]
 };

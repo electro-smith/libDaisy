@@ -61,8 +61,6 @@ var NAVTREEINDEX9 =
 "midi_8h.html#a1e52176e4f92572132c9ea700e70ad9d":[16,0,1,1,8,2],
 "midi_8h_source.html":[16,0,1,1,8],
 "modules.html":[4],
-"namespacedaisy.html":[4,0,6,0],
-"namespacedaisy_1_1_m_a_x11300_types.html":[4,0,4,5,0],
 "oled__display_8h.html":[16,0,1,1,0,2],
 "oled__display_8h.html#a17ac7515457b57899f133df8f905f485":[16,0,1,1,0,2,1],
 "oled__display_8h_source.html":[16,0,1,1,0,2],
@@ -249,5 +247,7 @@ var NAVTREEINDEX9 =
 "structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#ae430b77c7c2b347299811a30bde18653":[4,0,4,5,1,0,0,3],
 "structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html":[15,0,0,0,0],
 "structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html#ab59d03f73464aee18ca8914ab8c91a13":[15,0,0,0,0,1],
-"structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html#abdc1eea126a4dca4ecc83c41ed988758":[15,0,0,0,0,0]
+"structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html#abdc1eea126a4dca4ecc83c41ed988758":[15,0,0,0,0,0],
+"structdaisy_1_1_m_t_c_quarter_frame_event.html":[4,0,1,4,0,9],
+"structdaisy_1_1_m_t_c_quarter_frame_event.html#a31b934d70fcc769db539a0e282a98340":[4,0,1,4,0,9,0]
 };
