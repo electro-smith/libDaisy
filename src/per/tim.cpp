@@ -2,6 +2,7 @@
 #include "util/hal_map.h"
 #include "sys/system.h"
 
+
 // To save from digging in reference manual here are some notes:
 //
 // The following TIMs are on APB1 Clock (RM0433 Rev7 - pg 458):
@@ -250,7 +251,13 @@ extern "C"
     {
         TimerHandle::Impl* impl
             = get_tim_impl_from_instance(tim_baseHandle->Instance);
-        TimerHandle::Config cfg = impl->GetConfig();
+        /** In the case of TIM6 (DAC usage) there will be no impl.
+         *  The preceding enable_irq checks should be false
+         *  since the default constructor sets it that way 
+         */
+        TimerHandle::Config cfg;
+        if(impl)
+            cfg = impl->GetConfig();
         if(tim_baseHandle->Instance == TIM2)
         {
             __HAL_RCC_TIM2_CLK_ENABLE();
