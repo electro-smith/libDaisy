@@ -24,7 +24,7 @@ int main(void)
 	spi_conf.periph = SpiHandle::Config::Peripheral::SPI_2; // Use the SPI_2 Peripheral
 
 	// Pins to use. These must be available on the selected peripheral
-	spi_conf.pin_config.sclk = Pin(PORTG, 3); // Use pin PG3 as SCLK
+	spi_conf.pin_config.sclk = Pin(PORTD, 3); // Use pin PG3 as SCLK
 	spi_conf.pin_config.miso = Pin(); // We won't need this
 	spi_conf.pin_config.mosi = Pin(PORTC, 3); // Use PC3 as MOSI
 	spi_conf.pin_config.nss = Pin(PORTB, 4); // use PB4 as NSS
