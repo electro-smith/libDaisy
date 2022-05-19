@@ -86,14 +86,14 @@ Defaults to `SpiHandle::Config::ClockPhase::ONE_EDGE`.
 `spi_conf.nss`
 Slave select mode. Must be set by the user.
 
-- `SpiHandle::Config::NSS::SOFT`. Slave select is handled in software. You can ignore this pin.
+- `SpiHandle::Config::NSS::SOFT`. Slave select is handled in software. You can ignore the NSS pin.
 - `SpiHandle::Config::NSS::HARD_INPUT`. We're using the NSS pin and we're a slave.
 - `SpiHandle::Config::NSS::HARD_OUTPUT`. We're using the NSS pin and we're the master.
 
 `spi_conf.baud_prescaler`
 Division of the default clock rate. 
-The clock rate is always x. 
-So with a prescaler of 16 for example, the final clock rate is x / 16 = y.
+The clock rate is always 25MHz. 
+So with a prescaler of 4 for example, the final clock rate is 25MHz / 4 = 6.25MHz.
 
 Defaults to `SpiHandle::Config::BaudPrescaler::PS_8`
 
@@ -126,7 +126,7 @@ Send / receive data using DMA (Direct Memory Access).
 This allows the hardware to handle the transmission in the background while the code is doing other things.
 i.e. it is non blocking.
 
-You can also pass along a callback to be called when the transfer starts, when the transfer is over, and a pointer to some data to send those callbacks.
+You can also pass along a callback to be called when the transfer starts, another for when the transfer is over, and a pointer to some data to send those callbacks.
 
 **Note:** Your buffer has to be in the DMA section of memory. 
 It must be in a non-local scope.
