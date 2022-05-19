@@ -12,6 +12,7 @@
 
 * util: PersistentStorage class had a bug where calling the `RestoreDefaults` function would cause a crash
 * usb: LL HAL files for USB were updated to prevent timing issues when running with optimization
+* spi: Add IRQ handlers for SPI2-5. These should work with DMA now.
 
 ### Other
 
