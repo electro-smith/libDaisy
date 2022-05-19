@@ -35,17 +35,17 @@ The peripheral to be used. Must be specified by the user. For example `SpiHandle
 The Daisy has 6 different SPI peripherals available, each of which uses different pins. Refer to the pinout diagram for more details.
 
 `spi_conf.mode`
-Master or slave. The master is in charge (sets the clock, and NSS), the slaves follow. Most of the time the Daisy will be the master.
-- `SpiHandle::Config::Mode::MASTER`. We're the master.
-- `SpiHandle::Config::Mode::SLAVE`. We're a slave.
+Master or slave. The main device is in charge of the bus (sets the clock, and NSS), the other devices follow along. Most of the time the Daisy will be in charge of the bus.
+- `SpiHandle::Config::Mode::MASTER`. The Daisy runs the bus.
+- `SpiHandle::Config::Mode::SLAVE`. The Daisy follows another device.
 
 `spi_conf.pin_config`
 The pins to be used by this SPI peripheral. These will have to match the peripheral you choose. Must be specified by the user.
 
-- `spi_conf.pin_config.miso`: Master In Slave Out: The master reads from this pin, and the slaves write to it.
-- `spi_conf.pin_config.mosi`: Master Out Slave In The master writes to this pin, and the slaves read from it.
-- `spi_conf.pin_config.sclk`: Serial Clock. The master outputs a clock signal on this pin.
-- `spi_conf.pin_config.nss`: Slave Select. The master uses this to indicate data is being sent. Usually active low.
+- `spi_conf.pin_config.miso`: Main In Serial Out: The main device reads from this pin, and the others write to it.
+- `spi_conf.pin_config.mosi`: Main Out Serial In: The main device writes to this pin, and the others read from it.
+- `spi_conf.pin_config.sclk`: Serial Clock. The main device outputs a clock signal on this pin.
+- `spi_conf.pin_config.nss`: Serial Select. The main device uses this to indicate data is being sent. Usually active low.
 
 If you're not using a pin (e.g. software NSS, or simplex communication) you can set it to `Pin()`.
 
@@ -53,8 +53,8 @@ If you're not using a pin (e.g. software NSS, or simplex communication) you can 
 Which direction data will travel. Must be specified by the user.
 
 - `SpiHandle::Config::Direction::TWO_LINES`. Data goes both ways. Each line only goes one direction. i.e. MOSI -> MISO and MISO <- MOSI. This is full duplex. 
-- `SpiHandle::Config::Direction::TWO_LINES_TX_ONLY`. We'll only send data. If we're master: MOSI->. If we're slave MISO->. This is simplex TX.
-- `SpiHandle::Config::Direction::TWO_LINES_RX_ONLY`. We'll only read data. If we're master MISO<-. If we're slave MOSI<-. This is simplex RX.
+- `SpiHandle::Config::Direction::TWO_LINES_TX_ONLY`. The Daisy will only send data. If Daisy's the main device: MOSI->. If the Daisy's a follower MISO->. This is simplex TX.
+- `SpiHandle::Config::Direction::TWO_LINES_RX_ONLY`. The Daisy will only read data. If Daisy;s the main device MISO<-. If Daisy's a follower MOSI<-. This is simplex RX.
 - `SpiHandle::Config::Direction::ONE_LINE`. Data goes both ways over one line. i.e. MOSI <-> MISO. This is half duplex.
 
 `spi_conf.data_size`
@@ -84,11 +84,11 @@ Again, if the polarity is low, the second edge is when the clock goes high.
 Defaults to `SpiHandle::Config::ClockPhase::ONE_EDGE`.
 
 `spi_conf.nss`
-Slave select mode. Must be set by the user.
+Serial select mode. Must be set by the user.
 
-- `SpiHandle::Config::NSS::SOFT`. Slave select is handled in software. You can ignore the NSS pin.
-- `SpiHandle::Config::NSS::HARD_INPUT`. We're using the NSS pin and we're a slave.
-- `SpiHandle::Config::NSS::HARD_OUTPUT`. We're using the NSS pin and we're the master.
+- `SpiHandle::Config::NSS::SOFT`. Serial select is handled in software. You can ignore the NSS pin.
+- `SpiHandle::Config::NSS::HARD_INPUT`. The NSS pin is in use, and the Daisy is a follower.
+- `SpiHandle::Config::NSS::HARD_OUTPUT`. The NSS pin is in use, and the Daisy is a leader.
 
 `spi_conf.baud_prescaler`
 Division of the default clock rate. 
