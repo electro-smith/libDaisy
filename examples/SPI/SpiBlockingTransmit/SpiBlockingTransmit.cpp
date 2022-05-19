@@ -1,3 +1,13 @@
+/**
+ * @author beserge
+ * @brief 
+ * @date 2022-05-19
+ * 
+ * SPI Blocking Transmit Example
+ * Shows how to transmit some data over SPI on the Daisy Seed in a blocking manner.
+ * This means the code will wait while the transmission is occurring.
+ */
+
 #include "daisy_seed.h"
 
 using namespace daisy;

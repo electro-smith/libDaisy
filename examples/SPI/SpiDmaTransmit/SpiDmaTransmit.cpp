@@ -1,3 +1,14 @@
+/**
+ * @author beserge
+ * @brief 
+ * @date 2022-05-19
+ * 
+ * SPI DMA Transmit
+ * Shows how to transmit some data over SPI on the Daisy Patch SM using DMA.
+ * (DMA = Direct Memory Access). This method is non-blocking, meaning the hardware will
+ * handle the transfer in the background, and the code is free to continue on.
+ */
+
 #include "daisy_patch_sm.h"
 
 using namespace daisy;
