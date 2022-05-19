@@ -126,23 +126,21 @@ Send / receive data using DMA (Direct Memory Access).
 This allows the hardware to handle the transmission in the background while the code is doing other things.
 i.e. it is non blocking.
 
-You can also pass along a callback to be called when the transfer is over, and a pointer to some data to send that callback.
+You can also pass along a callback to be called when the transfer starts, when the transfer is over, and a pointer to some data to send those callbacks.
 
 **Note:** Your buffer has to be in the DMA section of memory. 
-It must also be allocated somewhere it won't be destroyed while the peripheral is using it. e.g. the global scope, or the main function.
-
-static?
+It must be in a non-local scope.
 
 ```cpp
-// send 4 bytes. No callback or callback data.
+// send 4 bytes. No callbacks or callback data.
 uint8_t DMA_BUFFER_MEM_SECTION buffer[4] = {0, 1, 2, 3};
-spi_handle.DmaTransmit(buffer, 4, NULL, NULL);
+spi_handle.DmaTransmit(buffer, 4, NULL, NULL, NULL);
 ```
 
 ```cpp
-// receive 4 bytes. No callback or callback data.
+// receive 4 bytes. No callbacks or callback data.
 uint8_t DMA_BUFFER_MEM_SECTION buffer[4];
-spi_handle.DmaReceive(buffer, 4, NULL, NULL);
+spi_handle.DmaReceive(buffer, 4, NULL, NULL, NULL);
 ```
 
 ```cpp
