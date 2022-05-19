@@ -1083,6 +1083,26 @@ extern "C" void SPI1_IRQHandler(void)
     HAL_SPI_IRQHandler(&spi_handles[0].hspi_);
 }
 
+extern "C" void SPI2_IRQHandler(void)
+{
+    HAL_SPI_IRQHandler(&spi_handles[1].hspi_);
+}
+
+extern "C" void SPI3_IRQHandler(void)
+{
+    HAL_SPI_IRQHandler(&spi_handles[2].hspi_);
+}
+
+extern "C" void SPI4_IRQHandler(void)
+{
+    HAL_SPI_IRQHandler(&spi_handles[3].hspi_);
+}
+
+extern "C" void SPI5_IRQHandler(void)
+{
+    HAL_SPI_IRQHandler(&spi_handles[4].hspi_);
+}
+
 void HalSpiDmaRxStreamCallback(void)
 {
     ScopedIrqBlocker block;
