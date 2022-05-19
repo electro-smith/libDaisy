@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libdaisy", "libdaisy.vcxproj", "{1B07A9D3-1E1B-488A-9817-4B13EECA191C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libdaisy", "visual_studio\libdaisy.vcxproj", "{1B07A9D3-1E1B-488A-9817-4B13EECA191C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{56504D40-757A-47E1-A461-FFDDDC8AC2D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
