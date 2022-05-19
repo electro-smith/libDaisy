@@ -1,6 +1,16 @@
-# SPI Examples
+# SPI
 
-## How To Use SPI
+SPI stands for Serial Peripheral Interface, and is a way for devices to talk to one another.
+The protocol is used with one device as the main device or the leader.
+All other devices are followers.
+
+There are four pins generally used:
+- MOSI: Main Out Serial In
+- MISO: Main In Serial Out
+- SCLK: Serial Clock
+- NSS: Serial Select (Chip Select)
+
+## How to Use SPI
 
 First create your SpiHandle object and a Config struct to configure it.
 Set any configurations you want to change in the config object, then initialize the spi peripheral with it.
