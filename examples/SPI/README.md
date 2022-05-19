@@ -128,12 +128,19 @@ i.e. it is non blocking.
 
 You can also pass along a callback to be called when the transfer starts, another for when the transfer is over, and a pointer to some data to send those callbacks.
 
-**Note:** Your buffer has to be in the DMA section of memory. 
-It must be in a non-local scope.
+**Note:** Your buffer has to be in the DMA section of memory, as well as in a global scope.
 
 ```cpp
-// send 4 bytes. No callbacks or callback data.
-uint8_t DMA_BUFFER_MEM_SECTION buffer[4] = {0, 1, 2, 3};
+// buffer for sending data
+uint8_t DMA_BUFFER_MEM_SECTION buffer[4];
+
+// fill the buffer 0, 1, 2, 3
+for(uint8_t i = 0; i < 4; i++)
+{
+    buffer[i] = i;
+}
+
+// transmit the data
 spi_handle.DmaTransmit(buffer, 4, NULL, NULL, NULL);
 ```
 
@@ -145,7 +152,15 @@ spi_handle.DmaReceive(buffer, 4, NULL, NULL, NULL);
 
 ```cpp
 // send and receive 4 bytes. No callbacks or callback data.
-uint8_t DMA_BUFFER_MEM_SECTION tx_buffer[4] = {0, 1, 2, 3};
+uint8_t DMA_BUFFER_MEM_SECTION tx_buffer[4];
 uint8_t DMA_BUFFER_MEM_SECTION rx_buffer[4];
+
+// fill the TX buffer 0, 1, 2, 3
+for(uint8_t i = 0; i < 4; i++)
+{
+   tx_buffer[i] = i;
+}
+
+// transmit and receive
 spi_handle.DmaTransmitAndReceive(tx_buffer, rx_buffer, 4, NULL, NULL, NULL);
 ```
