@@ -30,10 +30,10 @@ int main(void)
 	spi_conf.periph = SpiHandle::Config::Peripheral::SPI_1; // Use the SPI_1 Peripheral
 
 	// Pins to use. These must be available on the selected peripheral
-	spi_conf.pin_config.sclk = Pin(PORTG, 11); // Use pin PG11 as SCLK
+	spi_conf.pin_config.sclk = seed::D8; // Use pin D8 as SCLK
 	spi_conf.pin_config.miso = Pin(); // We won't need this
-	spi_conf.pin_config.mosi = Pin(PORTB, 5); // Use PB5 as MOSI
-	spi_conf.pin_config.nss = Pin(PORTG, 10); // use PG10 as NSS
+	spi_conf.pin_config.mosi = seed::D10; // Use D10 as MOSI
+	spi_conf.pin_config.nss = seed::D7; // use D7 as NSS
 
 	// data will flow from master to slave over just the MOSI line
 	spi_conf.direction = SpiHandle::Config::Direction::TWO_LINES_TX_ONLY;

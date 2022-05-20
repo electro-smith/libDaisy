@@ -35,10 +35,10 @@ int main(void)
 	spi_conf.periph = SpiHandle::Config::Peripheral::SPI_2; // Use the SPI_2 Peripheral
 
 	// Pins to use. These must be available on the selected peripheral
-	spi_conf.pin_config.sclk = Pin(PORTD, 3); // Use pin PG3 as SCLK
+	spi_conf.pin_config.sclk = DaisyPatchSM::D10; // Use pin D10 as SCLK
 	spi_conf.pin_config.miso = Pin(); // We won't need this
-	spi_conf.pin_config.mosi = Pin(PORTC, 3); // Use PC3 as MOSI
-	spi_conf.pin_config.nss = Pin(PORTB, 4); // use PB4 as NSS
+	spi_conf.pin_config.mosi = DaisyPatchSM::D9; // Use D9 as MOSI
+	spi_conf.pin_config.nss = DaisyPatchSM::D1; // use D1 as NSS
 
 	// data will flow from master to slave over just the MOSI line
 	spi_conf.direction = SpiHandle::Config::Direction::TWO_LINES_TX_ONLY;
