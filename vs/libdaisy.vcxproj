@@ -88,18 +88,20 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|VisualGDB'">
     <ClCompile>
-      <AdditionalIncludeDirectories>Drivers/CMSIS/Device/ST/STM32H7xx/Include;Drivers/STM32H7xx_HAL_Driver/Inc;Drivers/CMSIS/Include;Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;Middlewares/ST/STM32_USB_Device_Library/Core/Inc;Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;Middlewares/Third_Party/FatFs/src;src;src/sys;src/usbd;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Drivers/CMSIS/Device/ST/STM32H7xx/Include;Drivers/STM32H7xx_HAL_Driver/Inc;Drivers/CMSIS/Include;Drivers/STM32H7xx_HAL_Driver/Inc/Legacy;Middlewares/ST/STM32_USB_Device_Library/Core/Inc;Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;Middlewares/Third_Party/FatFs/src;src;src/sys;src/usbd;../src;../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../Drivers/CMSIS/Include;../Drivers/CMSIS/DSP/Include;../Drivers/CMSIS/RTOS2/Include;../Drivers/STM32H7xx_HAL_Driver/Inc;../src/sys;../Middlewares/Third_Party/FatFs/src;../Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc;../Middlewares/ST/STM32_USB_Device_Library/Core/Inc;../src/usbd;../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../src/usbh;%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG=1;RELEASE=1;__FPU_PRESENT=1;STM32H750xx;%(ClCompile.PreprocessorDefinitions)</PreprocessorDefinitions>
       <InlineFunctions>true</InlineFunctions>
       <WarningLevel>All</WarningLevel>
       <CLanguageStandard>GNU11</CLanguageStandard>
       <CPPLanguageStandard>GNUPP14</CPPLanguageStandard>
+      <AdditionalOptions />
     </ClCompile>
     <Link>
-      <AdditionalLinkerInputs>;%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
-      <LibrarySearchDirectories>;%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
-      <AdditionalLibraryNames>;%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
+      <AdditionalLinkerInputs>%(Link.AdditionalLinkerInputs)</AdditionalLinkerInputs>
+      <LibrarySearchDirectories>%(Link.LibrarySearchDirectories)</LibrarySearchDirectories>
+      <AdditionalLibraryNames>%(Link.AdditionalLibraryNames)</AdditionalLibraryNames>
       <LinkerScript>core/STM32H750IB_flash.lds</LinkerScript>
+      <AdditionalOptions />
     </Link>
     <ToolchainSettingsContainer>
       <InstructionSet>THUMB</InstructionSet>
