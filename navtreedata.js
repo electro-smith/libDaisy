@@ -25,10 +25,10 @@
 var NAVTREE =
 [
   [ "libDaisy", "index.html", [
-    [ "Setting Up Your Development Environment", "index.html#autotoc_md66", null ],
-    [ "Using libDaisy", "index.html#autotoc_md67", null ],
-    [ "Development", "index.html#autotoc_md68", null ],
-    [ "Troubleshooting", "index.html#autotoc_md69", null ],
+    [ "Setting Up Your Development Environment", "index.html#autotoc_md71", null ],
+    [ "Using libDaisy", "index.html#autotoc_md72", null ],
+    [ "Development", "index.html#autotoc_md73", null ],
+    [ "Troubleshooting", "index.html#autotoc_md74", null ],
     [ "API Documentation", "modules.html", "modules" ],
     [ "Getting Started - GPIO", "md_doc_md__a1__getting__started__g_p_i_o.html", [
       [ "The CPP Objects Used", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md2", null ],
@@ -98,14 +98,21 @@ var NAVTREE =
       [ "Custom linkers", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md56", null ],
       [ "Detailed Behavior", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md57", null ]
     ] ],
-    [ "Development - Unit-Testing", "md_doc_md__b1__development__unit__testing.html", [
-      [ "Why write tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md59", null ],
-      [ "How to run tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md60", [
-        [ "From the commandline", "md_doc_md__b1__development__unit__testing.html#autotoc_md61", null ],
-        [ "From Visual Studio Code", "md_doc_md__b1__development__unit__testing.html#autotoc_md62", null ]
+    [ "SPI", "md_doc_md__a8__getting__started__s_p_i.html", [
+      [ "How to Use SPI", "md_doc_md__a8__getting__started__s_p_i.html#autotoc_md59", [
+        [ "Configuration", "md_doc_md__a8__getting__started__s_p_i.html#autotoc_md60", null ]
       ] ],
-      [ "Getting started with unit testing", "md_doc_md__b1__development__unit__testing.html#autotoc_md63", null ],
-      [ "Drawbacks & things to watch out for", "md_doc_md__b1__development__unit__testing.html#autotoc_md64", null ]
+      [ "Blocking Transmit and Receive", "md_doc_md__a8__getting__started__s_p_i.html#autotoc_md61", null ],
+      [ "DMA Transmit and Receive", "md_doc_md__a8__getting__started__s_p_i.html#autotoc_md62", null ]
+    ] ],
+    [ "Development - Unit-Testing", "md_doc_md__b1__development__unit__testing.html", [
+      [ "Why write tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md64", null ],
+      [ "How to run tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md65", [
+        [ "From the commandline", "md_doc_md__b1__development__unit__testing.html#autotoc_md66", null ],
+        [ "From Visual Studio Code", "md_doc_md__b1__development__unit__testing.html#autotoc_md67", null ]
+      ] ],
+      [ "Getting started with unit testing", "md_doc_md__b1__development__unit__testing.html#autotoc_md68", null ],
+      [ "Drawbacks & things to watch out for", "md_doc_md__b1__development__unit__testing.html#autotoc_md69", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
@@ -157,8 +164,8 @@ var NAVTREEINDEX =
 "globals_n.html",
 "group__midi__events.html#ga4f648ead175d62e97ceb4d3b49f692f5",
 "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md7",
-"structdaisy_1_1_m_t_c_quarter_frame_event.html#acce45e382b1aff05a0398cd9eda94ea3",
-"structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaa069b86aefb75f0c622fc14d8e28db631"
+"structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html",
+"structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7bafbaedde498cdead4f2780217646e9ba1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
