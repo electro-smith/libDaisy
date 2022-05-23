@@ -18,6 +18,7 @@
 
 * build: core/Makefile has had the `-fnortti` flag added to match libDaisy's Makefile
 * bootloader: local version of daisy bootloader has been updated to improve stability
+* spi: Added examples for blocking TX and DMA TX, added a writeup explaining how to use the SPI on the Daisy
 
 ## v5.0.0
 
