@@ -22,8 +22,9 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{1B07A9D3-1E1B-488A-9817-4B13EECA191C}</ProjectGuid>
     <BSP_ID>com.sysprogs.arm.stm32</BSP_ID>
-    <BSP_VERSION>2018.12R2</BSP_VERSION>
+    <BSP_VERSION>2020.10</BSP_VERSION>
     <InPlaceBSPSubdir />
+    <RelativeBSPPath />
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|VisualGDB'">
@@ -893,5 +894,8 @@
     <ClInclude Include="..\src\util\WaveTableLoader.h" />
     <ClInclude Include="..\src\util\WavWriter.h" />
     <ClInclude Include="..\src\util\wav_format.h" />
+    <None Include="stm32.props" />
+    <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c" />
+    <None Include="stm32.xml" />
   </ItemGroup>
 </Project>

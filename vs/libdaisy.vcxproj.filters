@@ -274,6 +274,12 @@
     <Filter Include="visual_studio\.visualgdb\CodeDB\libdaisy-Debug-VisualGDB">
       <UniqueIdentifier>{417a105c-1189-4631-9917-169952296e9d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Device-specific files">
+      <UniqueIdentifier>{7e24d97c-fddd-4158-998c-dc06d504af24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VisualGDB settings">
+      <UniqueIdentifier>{6bfdedfe-f60e-4fb0-bd68-7dbb52605191}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\cmake\default_build.cmake">
@@ -2600,5 +2606,14 @@
     </ClInclude>
     <None Include="..\CMakeLists.txt" />
     <None Include="..\Makefile" />
+    <None Include="stm32.props">
+      <Filter>Device-specific files</Filter>
+    </None>
+    <ClCompile Include="$(BSP_ROOT)\STM32H7xxxx\StartupFiles\startup_stm32h750xx.c">
+      <Filter>Device-specific files</Filter>
+    </ClCompile>
+    <None Include="stm32.xml">
+      <Filter>VisualGDB settings</Filter>
+    </None>
   </ItemGroup>
 </Project>
