@@ -77,11 +77,12 @@ class UartHandler
 
         Config()
         {
-            // user must init periph, pin_config, and periph
+            // user must init periph, pin_config, and mode
             stopbits   = StopBits::BITS_1;
             parity     = Parity::NONE;
             wordlength = WordLength::BITS_8;
             baudrate   = 4800;
+            // baudrate   = 31250;
         }
 
         Peripheral periph;
@@ -104,62 +105,128 @@ class UartHandler
         ERR /**< & */
     };
 
+    enum class DmaDirection
+    {
+        RX, /**< & */
+        TX  /**< & */
+    };
+
     /** Initializes the UART Peripheral */
     Result Init(const Config& config);
 
     /** Returns the current config. */
     const Config& GetConfig() const;
 
-    /** Reads the amount of bytes in blocking mode with a 10ms timeout.
-    \param *buff Buffer  to read to
-    \param size Buff size
-    \param timeout How long to timeout for (10ms?)
-    \return Data received
-     */
-    int PollReceive(uint8_t* buff, size_t size, uint32_t timeout);
+    /** A callback to be executed right before a dma transfer is started. */
+    typedef void (*StartCallbackFunctionPtr)(void* context);
+    /** A callback to be executed after a dma transfer is completed. */
+    typedef void (*EndCallbackFunctionPtr)(void* context, Result result);
 
-    /** Starts a DMA Receive callback to fill a buffer of specified size.
-    Data is populated into a FIFO queue, and can be queried with the
-    functions below.
-    Size of the buffer is internally fixed to 256.
-    Variable message lengths are transferred to the FIFO queue 
-    anytime there is 1 byte-period without incoming data
-    \return OK or ERROR
+    /** Blocking transmit 
+    \param buff input buffer
+    \param size  buffer size
+    \param timeout how long in milliseconds the function will wait 
+                   before returning without successful communication
     */
-    Result StartRx();
+    Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout = 100);
 
-    /** \return whether Rx DMA is listening or not. */
-    bool RxActive();
-
-    /** Flushes the Receive Queue
-    \return OK or ERROR
+    /** Polling Receive
+    \param buffer input buffer
+    \param size  buffer size
+    \param timeout How long to timeout for in milliseconds
+    \return Whether the receive was successful or not
     */
-    Result FlushRx();
+    Result
+    BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout = 100);
 
-    /** Sends an amount of data in blocking mode.
-    \param *buff Buffer of data to send
-    \param size Buffer size
-    \return OK or ERROR
-     */
-    Result PollTx(uint8_t* buff, size_t size);
+    /** DMA-based transmit 
+    \param *buff input buffer
+    \param size  buffer size
+    \param start_callback   A callback to execute when the transfer starts, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param end_callback     A callback to execute when the transfer finishes, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param callback_context A pointer that will be passed back to you in the callbacks.     
+    \return Whether the transmit was successful or not
+    */
+    Result DmaTransmit(uint8_t*                              buff,
+                       size_t                                size,
+                       UartHandler::StartCallbackFunctionPtr start_callback,
+                       UartHandler::EndCallbackFunctionPtr   end_callback,
+                       void*                                 callback_context);
 
-    /** Pops the oldest byte from the FIFO. 
-    \return Popped byte
-     */
-    uint8_t PopRx();
-
-    /** Checks if there are any unread bytes in the FIFO
-    \return 1 or 0 ??
-     */
-    size_t Readable();
+    /** DMA-based receive 
+    \param *buff input buffer
+    \param size  buffer size
+    \param start_callback   A callback to execute when the transfer starts, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param end_callback     A callback to execute when the transfer finishes, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param callback_context A pointer that will be passed back to you in the callbacks.    
+    \return Whether the receive was successful or not
+    */
+    Result DmaReceive(uint8_t*                              buff,
+                      size_t                                size,
+                      UartHandler::StartCallbackFunctionPtr start_callback,
+                      UartHandler::EndCallbackFunctionPtr   end_callback,
+                      void*                                 callback_context);
 
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
+
+    /** Start the DMA Receive with a double buffered FIFO
+        \return OK or ERR
+    */
+    Result DmaReceiveFifo();
+
+    /** Flush all of the data from the fifo
+        \return OK or ERR
+    */
+    Result FlushFifo();
+
+    /** Get the top item off of the FIFO
+        \return Top item from the FIFO
+    */
+    uint8_t PopFifo();
+
+    /** How much data is in the FIFO
+        \return number of elements ready to pop from FIFO
+    */
+    size_t ReadableFifo();
+
+    /** Will be deprecated soon! Wrapper for BlockingTransmit */
+    int PollReceive(uint8_t* buff, size_t size, uint32_t timeout);
+
+    /** Will be deprecated soon! Wrapper for BlockingTransmit */
+    Result PollTx(uint8_t* buff, size_t size);
+
+    /** Will be deprecated soon! Wrapper for DmaReceiveFifo */
+    Result StartRx();
+
+    /** Will be deprecated soon! 
+        \return true. New DMA will always restart itself.
+    */
+    bool RxActive() { return true; }
+
+    /** Will be deprecated soon! Wrapper for FlushFifo */
+    Result FlushRx();
+
+    /** Will be deprecated soon! Wrapper PopFifo */
+    uint8_t PopRx();
+
+    /** Will be deprecated soon!  Wrapper for ReadableFifo */
+    size_t Readable();
 
     class Impl; /**< & */
 
   private:
     Impl* pimpl_;
+};
+
+extern "C"
+{
+    /** internal. Used for global init. */
+    void dsy_uart_global_init();
 };
 
 /** @} */
