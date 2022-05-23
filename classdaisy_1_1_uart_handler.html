@@ -117,6 +117,14 @@ Public Types</h2></td></tr>
 , <a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237acd22bad976363fdd1bfbf6759fede482">ERR</a>
  }</td></tr>
 <tr class="separator:ac45c7ac82e6f0328b4e7b03fd12e7237"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbdfbf1dfaab99cf76ac7ca36d22cf00"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#adbdfbf1dfaab99cf76ac7ca36d22cf00">DmaDirection</a> { <a class="el" href="classdaisy_1_1_uart_handler.html#adbdfbf1dfaab99cf76ac7ca36d22cf00af9c24782c24c237d16e79f18e2fa9046">RX</a>
+, <a class="el" href="classdaisy_1_1_uart_handler.html#adbdfbf1dfaab99cf76ac7ca36d22cf00a869036c9d97cf6593c6f1c2ccfd99a49">TX</a>
+ }</td></tr>
+<tr class="separator:adbdfbf1dfaab99cf76ac7ca36d22cf00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67b4d9b8492cff01abcd79b57cacebec"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec">StartCallbackFunctionPtr</a>) (void *context)</td></tr>
+<tr class="separator:a67b4d9b8492cff01abcd79b57cacebec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1bdc706fd2e8994889a713bb0ac72c67"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a1bdc706fd2e8994889a713bb0ac72c67">EndCallbackFunctionPtr</a>) (void *context, <a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> result)</td></tr>
+<tr class="separator:a1bdc706fd2e8994889a713bb0ac72c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -130,24 +138,99 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa25c871d2fb9d382ef779ba92b4d2ada"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62a56c23285f8c6106a45ae2547e423d"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structdaisy_1_1_uart_handler_1_1_config.html">Config</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a62a56c23285f8c6106a45ae2547e423d">GetConfig</a> () const</td></tr>
 <tr class="separator:a62a56c23285f8c6106a45ae2547e423d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c5ad164edfdc32a8f01d9044657b9ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a1c5ad164edfdc32a8f01d9044657b9ed">BlockingTransmit</a> (uint8_t *buff, size_t size, uint32_t timeout=100)</td></tr>
+<tr class="separator:a1c5ad164edfdc32a8f01d9044657b9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae17dba49d39995a4aa3eaa3c809b66d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#aae17dba49d39995a4aa3eaa3c809b66d">BlockingReceive</a> (uint8_t *buffer, uint16_t size, uint32_t timeout=100)</td></tr>
+<tr class="separator:aae17dba49d39995a4aa3eaa3c809b66d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4565d3868c0d92e6955da3416c309cad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a4565d3868c0d92e6955da3416c309cad">DmaTransmit</a> (uint8_t *buff, size_t size, <a class="el" href="classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec">UartHandler::StartCallbackFunctionPtr</a> start_callback, <a class="el" href="classdaisy_1_1_uart_handler.html#a1bdc706fd2e8994889a713bb0ac72c67">UartHandler::EndCallbackFunctionPtr</a> end_callback, void *callback_context)</td></tr>
+<tr class="separator:a4565d3868c0d92e6955da3416c309cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd959cfbc7efbc2a0357185da61a4ba6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#afd959cfbc7efbc2a0357185da61a4ba6">DmaReceive</a> (uint8_t *buff, size_t size, <a class="el" href="classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec">UartHandler::StartCallbackFunctionPtr</a> start_callback, <a class="el" href="classdaisy_1_1_uart_handler.html#a1bdc706fd2e8994889a713bb0ac72c67">UartHandler::EndCallbackFunctionPtr</a> end_callback, void *callback_context)</td></tr>
+<tr class="separator:afd959cfbc7efbc2a0357185da61a4ba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada2266b23e77dde305b229b7814604fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ada2266b23e77dde305b229b7814604fe">CheckError</a> ()</td></tr>
+<tr class="separator:ada2266b23e77dde305b229b7814604fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07c27d8f78518caed8bc2485986b456a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a07c27d8f78518caed8bc2485986b456a">DmaReceiveFifo</a> ()</td></tr>
+<tr class="separator:a07c27d8f78518caed8bc2485986b456a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e2b04c72be034995175ec3d1229815d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a4e2b04c72be034995175ec3d1229815d">FlushFifo</a> ()</td></tr>
+<tr class="separator:a4e2b04c72be034995175ec3d1229815d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2dcb235ccfbf9a16d059edaf4e6499a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ae2dcb235ccfbf9a16d059edaf4e6499a">PopFifo</a> ()</td></tr>
+<tr class="separator:ae2dcb235ccfbf9a16d059edaf4e6499a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3af4732fb0a31c38d182248e80413a2"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ac3af4732fb0a31c38d182248e80413a2">ReadableFifo</a> ()</td></tr>
+<tr class="separator:ac3af4732fb0a31c38d182248e80413a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9641f3808cf70559d3d988f5ae8e254c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a9641f3808cf70559d3d988f5ae8e254c">PollReceive</a> (uint8_t *buff, size_t size, uint32_t timeout)</td></tr>
 <tr class="separator:a9641f3808cf70559d3d988f5ae8e254c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9505926532bf44f70216b52d45db549a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a9505926532bf44f70216b52d45db549a">PollTx</a> (uint8_t *buff, size_t size)</td></tr>
+<tr class="separator:a9505926532bf44f70216b52d45db549a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24098e17a8be0b1b2a229f1959c941db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a24098e17a8be0b1b2a229f1959c941db">StartRx</a> ()</td></tr>
 <tr class="separator:a24098e17a8be0b1b2a229f1959c941db"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeeb804c58c2ccf574142b2a030d2d83b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#aeeb804c58c2ccf574142b2a030d2d83b">RxActive</a> ()</td></tr>
 <tr class="separator:aeeb804c58c2ccf574142b2a030d2d83b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8282a20746be60a208cde90a8eea1529"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a8282a20746be60a208cde90a8eea1529">FlushRx</a> ()</td></tr>
 <tr class="separator:a8282a20746be60a208cde90a8eea1529"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9505926532bf44f70216b52d45db549a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a9505926532bf44f70216b52d45db549a">PollTx</a> (uint8_t *buff, size_t size)</td></tr>
-<tr class="separator:a9505926532bf44f70216b52d45db549a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae28345bdf7d66aa891bbde3cf8c68057"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ae28345bdf7d66aa891bbde3cf8c68057">PopRx</a> ()</td></tr>
 <tr class="separator:ae28345bdf7d66aa891bbde3cf8c68057"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4b8cad10b4f9a9520d2248c567babcc1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a4b8cad10b4f9a9520d2248c567babcc1">Readable</a> ()</td></tr>
 <tr class="separator:a4b8cad10b4f9a9520d2248c567babcc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada2266b23e77dde305b229b7814604fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ada2266b23e77dde305b229b7814604fe">CheckError</a> ()</td></tr>
-<tr class="separator:ada2266b23e77dde305b229b7814604fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a1bdc706fd2e8994889a713bb0ac72c67" name="a1bdc706fd2e8994889a713bb0ac72c67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1bdc706fd2e8994889a713bb0ac72c67">&#9670;&nbsp;</a></span>EndCallbackFunctionPtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* daisy::UartHandler::EndCallbackFunctionPtr) (void *context, <a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> result)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >A callback to be executed after a dma transfer is completed. </p>
+
+</div>
+</div>
+<a id="a67b4d9b8492cff01abcd79b57cacebec" name="a67b4d9b8492cff01abcd79b57cacebec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67b4d9b8492cff01abcd79b57cacebec">&#9670;&nbsp;</a></span>StartCallbackFunctionPtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* daisy::UartHandler::StartCallbackFunctionPtr) (void *context)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >A callback to be executed right before a dma transfer is started. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="adbdfbf1dfaab99cf76ac7ca36d22cf00" name="adbdfbf1dfaab99cf76ac7ca36d22cf00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbdfbf1dfaab99cf76ac7ca36d22cf00">&#9670;&nbsp;</a></span>DmaDirection</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="classdaisy_1_1_uart_handler.html#adbdfbf1dfaab99cf76ac7ca36d22cf00">daisy::UartHandler::DmaDirection</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="adbdfbf1dfaab99cf76ac7ca36d22cf00af9c24782c24c237d16e79f18e2fa9046" name="adbdfbf1dfaab99cf76ac7ca36d22cf00af9c24782c24c237d16e79f18e2fa9046"></a>RX&#160;</td><td class="fielddoc"><p >&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="adbdfbf1dfaab99cf76ac7ca36d22cf00a869036c9d97cf6593c6f1c2ccfd99a49" name="adbdfbf1dfaab99cf76ac7ca36d22cf00a869036c9d97cf6593c6f1c2ccfd99a49"></a>TX&#160;</td><td class="fielddoc"><p >&amp; </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="ac45c7ac82e6f0328b4e7b03fd12e7237" name="ac45c7ac82e6f0328b4e7b03fd12e7237"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac45c7ac82e6f0328b4e7b03fd12e7237">&#9670;&nbsp;</a></span>Result</h2>
 
@@ -230,6 +313,91 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="aae17dba49d39995a4aa3eaa3c809b66d" name="aae17dba49d39995a4aa3eaa3c809b66d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae17dba49d39995a4aa3eaa3c809b66d">&#9670;&nbsp;</a></span>BlockingReceive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::BlockingReceive </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>100</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Polling Receive </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>input buffer </td></tr>
+    <tr><td class="paramname">size</td><td>buffer size </td></tr>
+    <tr><td class="paramname">timeout</td><td>How long to timeout for in milliseconds </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the receive was successful or not </dd></dl>
+
+</div>
+</div>
+<a id="a1c5ad164edfdc32a8f01d9044657b9ed" name="a1c5ad164edfdc32a8f01d9044657b9ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c5ad164edfdc32a8f01d9044657b9ed">&#9670;&nbsp;</a></span>BlockingTransmit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::BlockingTransmit </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>timeout</em> = <code>100</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Blocking transmit </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buff</td><td>input buffer </td></tr>
+    <tr><td class="paramname">size</td><td>buffer size </td></tr>
+    <tr><td class="paramname">timeout</td><td>how long in milliseconds the function will wait before returning without successful communication </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ada2266b23e77dde305b229b7814604fe" name="ada2266b23e77dde305b229b7814604fe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ada2266b23e77dde305b229b7814604fe">&#9670;&nbsp;</a></span>CheckError()</h2>
 
@@ -248,6 +416,158 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="afd959cfbc7efbc2a0357185da61a4ba6" name="afd959cfbc7efbc2a0357185da61a4ba6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd959cfbc7efbc2a0357185da61a4ba6">&#9670;&nbsp;</a></span>DmaReceive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::DmaReceive </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec">UartHandler::StartCallbackFunctionPtr</a>&#160;</td>
+          <td class="paramname"><em>start_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classdaisy_1_1_uart_handler.html#a1bdc706fd2e8994889a713bb0ac72c67">UartHandler::EndCallbackFunctionPtr</a>&#160;</td>
+          <td class="paramname"><em>end_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>callback_context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >DMA-based receive </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">*buff</td><td>input buffer </td></tr>
+    <tr><td class="paramname">size</td><td>buffer size </td></tr>
+    <tr><td class="paramname">start_callback</td><td>A callback to execute when the transfer starts, or NULL. The callback is called from an interrupt, so keep it fast. </td></tr>
+    <tr><td class="paramname">end_callback</td><td>A callback to execute when the transfer finishes, or NULL. The callback is called from an interrupt, so keep it fast. </td></tr>
+    <tr><td class="paramname">callback_context</td><td>A pointer that will be passed back to you in the callbacks. <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the receive was successful or not </dd></dl>
+
+</div>
+</div>
+<a id="a07c27d8f78518caed8bc2485986b456a" name="a07c27d8f78518caed8bc2485986b456a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07c27d8f78518caed8bc2485986b456a">&#9670;&nbsp;</a></span>DmaReceiveFifo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::DmaReceiveFifo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Start the DMA Receive with a double buffered <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> </p><dl class="section return"><dt>Returns</dt><dd>OK or ERR </dd></dl>
+
+</div>
+</div>
+<a id="a4565d3868c0d92e6955da3416c309cad" name="a4565d3868c0d92e6955da3416c309cad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4565d3868c0d92e6955da3416c309cad">&#9670;&nbsp;</a></span>DmaTransmit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::DmaTransmit </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec">UartHandler::StartCallbackFunctionPtr</a>&#160;</td>
+          <td class="paramname"><em>start_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classdaisy_1_1_uart_handler.html#a1bdc706fd2e8994889a713bb0ac72c67">UartHandler::EndCallbackFunctionPtr</a>&#160;</td>
+          <td class="paramname"><em>end_callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>callback_context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >DMA-based transmit </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">*buff</td><td>input buffer </td></tr>
+    <tr><td class="paramname">size</td><td>buffer size </td></tr>
+    <tr><td class="paramname">start_callback</td><td>A callback to execute when the transfer starts, or NULL. The callback is called from an interrupt, so keep it fast. </td></tr>
+    <tr><td class="paramname">end_callback</td><td>A callback to execute when the transfer finishes, or NULL. The callback is called from an interrupt, so keep it fast. </td></tr>
+    <tr><td class="paramname">callback_context</td><td>A pointer that will be passed back to you in the callbacks. <br  />
+ </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the transmit was successful or not </dd></dl>
+
+</div>
+</div>
+<a id="a4e2b04c72be034995175ec3d1229815d" name="a4e2b04c72be034995175ec3d1229815d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e2b04c72be034995175ec3d1229815d">&#9670;&nbsp;</a></span>FlushFifo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::FlushFifo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Flush all of the data from the fifo </p><dl class="section return"><dt>Returns</dt><dd>OK or ERR </dd></dl>
+
+</div>
+</div>
 <a id="a8282a20746be60a208cde90a8eea1529" name="a8282a20746be60a208cde90a8eea1529"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8282a20746be60a208cde90a8eea1529">&#9670;&nbsp;</a></span>FlushRx()</h2>
 
@@ -262,7 +582,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Flushes the Receive Queue </p><dl class="section return"><dt>Returns</dt><dd>OK or ERROR </dd></dl>
+<p >Will be deprecated soon! Wrapper for FlushFifo </p>
 
 </div>
 </div>
@@ -360,15 +680,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Reads the amount of bytes in blocking mode with a 10ms timeout. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">*buff</td><td>Buffer to read to </td></tr>
-    <tr><td class="paramname">size</td><td>Buff size </td></tr>
-    <tr><td class="paramname">timeout</td><td>How long to timeout for (10ms?) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Data received </dd></dl>
+<p >Will be deprecated soon! Wrapper for BlockingTransmit </p>
 
 </div>
 </div>
@@ -397,14 +709,25 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Sends an amount of data in blocking mode. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">*buff</td><td>Buffer of data to send </td></tr>
-    <tr><td class="paramname">size</td><td>Buffer size </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>OK or ERROR </dd></dl>
+<p >Will be deprecated soon! Wrapper for BlockingTransmit </p>
+
+</div>
+</div>
+<a id="ae2dcb235ccfbf9a16d059edaf4e6499a" name="ae2dcb235ccfbf9a16d059edaf4e6499a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2dcb235ccfbf9a16d059edaf4e6499a">&#9670;&nbsp;</a></span>PopFifo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t daisy::UartHandler::PopFifo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Get the top item off of the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> </p><dl class="section return"><dt>Returns</dt><dd>Top item from the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> </dd></dl>
 
 </div>
 </div>
@@ -422,7 +745,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Pops the oldest byte from the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a>. </p><dl class="section return"><dt>Returns</dt><dd>Popped byte </dd></dl>
+<p >Will be deprecated soon! Wrapper PopFifo </p>
 
 </div>
 </div>
@@ -440,7 +763,25 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Checks if there are any unread bytes in the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> </p><dl class="section return"><dt>Returns</dt><dd>1 or 0 ?? </dd></dl>
+<p >Will be deprecated soon! Wrapper for ReadableFifo </p>
+
+</div>
+</div>
+<a id="ac3af4732fb0a31c38d182248e80413a2" name="ac3af4732fb0a31c38d182248e80413a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3af4732fb0a31c38d182248e80413a2">&#9670;&nbsp;</a></span>ReadableFifo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t daisy::UartHandler::ReadableFifo </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >How much data is in the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> </p><dl class="section return"><dt>Returns</dt><dd>number of elements ready to pop from <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> </dd></dl>
 
 </div>
 </div>
@@ -449,6 +790,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool daisy::UartHandler::RxActive </td>
@@ -457,8 +801,13 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>whether Rx DMA is listening or not. </dd></dl>
+<p >Will be deprecated soon! </p><dl class="section return"><dt>Returns</dt><dd>true. New DMA will always restart itself. </dd></dl>
 
 </div>
 </div>
@@ -476,7 +825,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Starts a DMA Receive callback to fill a buffer of specified size. Data is populated into a <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> queue, and can be queried with the functions below. Size of the buffer is internally fixed to 256. Variable message lengths are transferred to the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> queue anytime there is 1 byte-period without incoming data </p><dl class="section return"><dt>Returns</dt><dd>OK or ERROR </dd></dl>
+<p >Will be deprecated soon! Wrapper for DmaReceiveFifo </p>
 
 </div>
 </div>

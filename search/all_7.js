@@ -121,6 +121,6 @@ var searchData=
   ['gppu_5fa_118',['GPPU_A',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46a8f5c96f20d4ff1ba9935f0f10bbf0dac',1,'daisy']]],
   ['gppu_5fb_119',['GPPU_B',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46ad4296604bacc90df6b4ce96d179e37ad',1,'daisy']]],
   ['graphics_5fcommon_2eh_120',['graphics_common.h',['../graphics__common_8h.html',1,'']]],
-  ['green_121',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]],
-  ['green_122',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color']]]
+  ['green_121',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color']]],
+  ['green_122',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]]
 ];

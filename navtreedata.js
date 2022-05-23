@@ -160,12 +160,12 @@ var NAVTREEINDEX =
 "classdaisy_1_1_m_a_x11300_driver.html#ad96dbcf4028a2aed29de10bf117a7d06",
 "classdaisy_1_1_rectangle.html#a5fe610247716deabd714b4ba58435e7d",
 "classdaisy_1_1_u_i.html#ac1ffddf7c1b8d91c41077441c455163a",
-"daisy__seed_8h.html#a31ebf5a51ae77a84e166b062c7cca2c0",
-"globals_n.html",
-"group__midi__events.html#ga4f648ead175d62e97ceb4d3b49f692f5",
-"md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md7",
-"structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html",
-"structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7bafbaedde498cdead4f2780217646e9ba1"
+"daisy__petal_8h_source.html",
+"globals_defs_s.html",
+"group__logging__macros.html#ga46e54be278e44eab5725a9c5d0927f0d",
+"mcp23x17_8h.html#a8f8fe174eb9db8e8a38e8c08155f1f46ad4296604bacc90df6b4ce96d179e37ad",
+"structdaisy_1_1_local_control_event.html#a8e06e46b93b109b4eae6b6b92f78292d",
+"structdaisy_1_1_system_1_1_config.html#a100d6b1e0b41cf2bf17ecffe28fabfa7"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
