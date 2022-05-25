@@ -11,6 +11,7 @@
 #include "per/gpio.h"
 #include "per/tim.h"
 #include "dev/leddriver.h"
+#include "dev/mpr121.h"
 #include "dev/sdram.h"
 #include "dev/sr_4021.h"
 #include "hid/audio.h"
