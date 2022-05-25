@@ -144,7 +144,7 @@ class QSPIHandle
     /**  
          Erases a single sector of the chip.  
         TODO: Document the size of this function. 
-        \param addr Address of sector to erase
+        \param address Address of sector to erase
         \return Result::OK or Result::ERR
         */
     Result EraseSector(uint32_t address);

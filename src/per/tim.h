@@ -6,7 +6,7 @@
 
 namespace daisy
 {
-/** Hardare timer peripheral support.
+/** @brief Hardare timer peripheral support.
  ** 
  ** Supports general-function TIM peripherals:
  ** - TIM2, TIM3, TIM4, TIM5
@@ -20,24 +20,30 @@ namespace daisy
  ** recommended. The data can be converted to the final time-base after getting the difference in ticks.
  ** (Using GetFreq() can be used for these time-base calculations).
  **
- ** TODO:
- ** - Fix issues with realtime getters, and wrapping of the timer(s).
+ ** User callbacks can be set, and changed at any point during operation. However,
+ ** the Config::enable_irq must be set to true when initializing for the interrupts
+ ** to turn on and function.
+ **
+ ** @todo Fix issues with realtime getters, and wrapping of the timer(s).
  **     - This very noticeable with default settings for the 16-bit counters.
- ** - Dispatch periodic callback(s)
- ** - Other General purpose timers
- ** - Non-internal clock sources
- ** - Use of the four-tim channels per tim
+ ** @todo Other General purpose timers
+ ** @todo Non-internal clock sources
+ ** @todo Use of the four-tim channels per tim
  **     - PWM, etc.
  **     - InputCapture/OutputCompare, etc.
- ** - HRTIM
- ** - Advanced timers (TIM1/TIM8)
+ ** @todo HRTIM
+ ** @todo Advanced timers (TIM1/TIM8)
  ** */
 class TimerHandle
 {
   public:
+    /** @brief Configuration struct for the Peripheral
+     *  @note These settings are used during initialization
+     *   and changing them afterwards may not have the desired effect.
+     */
     struct Config
     {
-        /** Hardwaare Timer to configure, and use. */
+        /** @brief Hardware Timer to configure, and use. */
         enum class Peripheral
         {
             TIM_2 = 0, /**< 32-bit counter */
@@ -46,8 +52,8 @@ class TimerHandle
             TIM_5,     /**< 32-bit counter*/
         };
 
-        /** Direction of the auto-reload counter. 
-         ** TODO: Add support for the various  
+        /** @brief Direction of the auto-reload counter. 
+         ** @todo Add support for the various  
          ** versions of Up/Down counters.
          ** */
         enum class CounterDir
@@ -56,32 +62,54 @@ class TimerHandle
             DOWN,
         };
 
-        Peripheral periph;
-        CounterDir dir;
+        Peripheral periph; /**< Hardware Peripheral */
+        CounterDir dir;    /**< Counter direction */
+
+        /** @brief period in ticks at TIM frequency that counter will reset based on dir
+         *  @note TIM3 and TIM4 are both 16-bit timers. So the period maximum is 0xffff.
+        */
+        uint32_t period;
+        bool     enable_irq; /**< Enable interrupt for user based callback */
+
+        /* @brief Constructor for default states */
+        Config()
+        : periph(Peripheral::TIM_2),
+          dir(CounterDir::UP),
+          period(0xffffffff),
+          enable_irq(false)
+        {
+        }
     };
 
-    /** Return values for TIM funcitons. */
+    /** @brief Return values for TIM funcitons. */
     enum class Result
     {
         OK,
         ERR,
     };
 
+    /** @brief User Callback type that will fire at the end of each timer 
+     *   period. This requires that Config::enable_irq is true before Init
+     *  @param data pointer to arbitrary user-provided data
+    */
+    typedef void (*PeriodElapsedCallback)(void* data);
+
     TimerHandle() : pimpl_(nullptr) {}
     TimerHandle(const TimerHandle& other) = default;
     TimerHandle& operator=(const TimerHandle& other) = default;
     ~TimerHandle() {}
 
-    /** Initializes the timer according to the configuration */
+    /** @brief Initializes the timer according to the configuration */
     Result Init(const Config& config);
 
-    /** Deinitializes the timer */
+    /** @brief Deinitializes the timer */
     Result DeInit();
 
-    /** Returns a const reference to the Config struct */
+    /** @brief Returns a const reference to the Config struct */
     const Config& GetConfig() const;
 
-    /** Sets the period of the Timer.
+    /** @brief Sets the period of the Timer.
+     * 
      ** This is the number of ticks it takes before it wraps back around.
      ** For self-managed timing, this can be left at the default. (0xffff for 16-bit
      ** and 0xffffffff for 32-bit timers). 
@@ -89,7 +117,8 @@ class TimerHandle
      ** */
     Result SetPeriod(uint32_t ticks);
 
-    /** Sets the Prescalar applied to the TIM peripheral. 
+    /** @brief Sets the Prescalar applied to the TIM peripheral. 
+     * 
      ** This can be any number up to 0xffff 
      ** This will adjust the rate of ticks:
      ** Calculated as APBN_Freq / prescalar per tick
@@ -99,43 +128,51 @@ class TimerHandle
      ** */
     Result SetPrescaler(uint32_t val);
 
-    /** Starts the TIM peripheral specified by Config */
+    /** @brief Starts the TIM peripheral specified by Config */
     Result Start();
 
-    /** Stops the TIM peripheral specified by Config */
+    /** @brief Stops the TIM peripheral specified by Config */
     Result Stop();
 
-    /** Returns the frequency of each tick of the timer in Hz */
+    /** @brief Returns the frequency of each tick of the timer in Hz */
     uint32_t GetFreq();
 
-    /** Returns the number of counter position. 
+    /** @brief Returns the number of counter position. 
+     * 
      ** This increments according to Config::CounterDir, 
      ** and wraps around at the specified period (maxing out 
      ** at 2^16 or 2^32 depending on the chosen TIM peripheral. */
     uint32_t GetTick();
 
-    /** Returns the ticks scaled as milliseconds 
+    /** @brief Returns the ticks scaled as milliseconds 
      **
      ** Use care when using for measurements and ensure that 
      ** the TIM period can handle the maximum desired measurement.
      ***/
     uint32_t GetMs();
 
-    /** Returns the ticks scaled as microseconds 
+    /** @brief Returns the ticks scaled as microseconds 
      **
      ** Use care when using for measurements and ensure that 
      ** the TIM period can handle the maximum desired measurement.
      ***/
     uint32_t GetUs();
 
-    /** Stay within this function for del ticks */
+    /** @brief Stay within this function for del ticks */
     void DelayTick(uint32_t del);
 
-    /** Stay within this function for del milliseconds */
+    /** @brief Stay within this function for del milliseconds */
     void DelayMs(uint32_t del);
 
-    /** Stay within this function for del microseconds */
+    /** @brief Stay within this function for del microseconds */
     void DelayUs(uint32_t del);
+
+    /** @brief Sets the PeriodElapsedCallback that will fire 
+     *   whenever the timer reaches the end of it's period.
+     *  @param cb user callback
+     *  @param data optional pointer to arbitrary data (defaults to nullptr)
+    */
+    void SetCallback(PeriodElapsedCallback cb, void* data = nullptr);
 
     class Impl;
 

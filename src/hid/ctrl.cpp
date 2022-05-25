@@ -10,10 +10,10 @@ void AnalogControl::Init(uint16_t *adcptr,
                          bool      invert,
                          float     slew_seconds)
 {
-    val_          = 0.0f;
-    raw_          = adcptr;
-    samplerate_   = sr;
-    coeff_        = 1.0f / (slew_seconds * samplerate_ * 0.5f);
+    val_        = 0.0f;
+    raw_        = adcptr;
+    samplerate_ = sr;
+    SetCoeff(1.0f / (slew_seconds * samplerate_ * 0.5f));
     scale_        = 1.0f;
     offset_       = 0.0f;
     flip_         = flip;
@@ -27,7 +27,7 @@ void AnalogControl::InitBipolarCv(uint16_t *adcptr, float sr)
     val_        = 0.0f;
     raw_        = adcptr;
     samplerate_ = sr;
-    coeff_      = 1.0f / (0.002f * samplerate_ * 0.5f);
+    SetCoeff(1.0f / (0.002f * samplerate_ * 0.5f));
     scale_      = 2.0f;
     offset_     = 0.5f;
     flip_       = false;
@@ -50,5 +50,5 @@ void AnalogControl::SetSampleRate(float sample_rate)
 {
     samplerate_ = sample_rate;
     float slew  = is_bipolar_ ? .002f : slew_seconds_;
-    coeff_      = 1.0f / (slew * samplerate_ * 0.5f);
+    SetCoeff(1.0f / (slew * samplerate_ * 0.5f));
 }

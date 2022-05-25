@@ -33,7 +33,7 @@ class Encoder
     void Debounce();
 
     /** Returns +1 if the encoder was turned clockwise, -1 if it was turned counter-clockwise, or 0 if it was not just turned. */
-    inline int32_t Increment() const { return inc_; }
+    inline int32_t Increment() const { return updated_ ? inc_ : 0; }
 
     /** Returns true if the encoder was just pressed. */
     inline bool RisingEdge() const { return sw_.RisingEdge(); }
@@ -53,6 +53,8 @@ class Encoder
     inline void SetUpdateRate(float update_rate) {}
 
   private:
+    uint32_t last_update_;
+    bool     updated_;
     Switch   sw_;
     dsy_gpio hw_a_, hw_b_;
     uint8_t  a_, b_;

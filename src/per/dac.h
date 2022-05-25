@@ -6,12 +6,13 @@
 
 namespace daisy
 {
-/** DAC handle for Built-in DAC Peripheral 
+/** @brief DAC handle for Built-in DAC Peripheral 
+ *  @ingroup per_analog
  ** 
  ** For now only Normal Mode is supported,
  ** Sample and hold mode provides reduced power consumption, but requires a bit more setup.
  **
- ** For now connecting the DAC through other internal periphearls is also not supported.
+ ** For now connecting the DAC through other internal peripherals is also not supported.
  **
  ** Since the DAC channels have dedicated pins we don't need to pass in a pin config like with
  ** other modules. However, it is still important to not try to use the DAC pins for anything else.
@@ -85,7 +86,7 @@ class DacHandle
     DacHandle &operator=(const DacHandle &other) = default;
 
     /** Callback for DMA transfers. This is called every time half 
-     ** of the samples of the buffer are transmitted, and the buffer is readdy
+     ** of the samples of the buffer are transmitted, and the buffer is ready
      ** to be filled again.
      ** 
      ** The data is organized in arrays per channel, for example if both channels are in use:

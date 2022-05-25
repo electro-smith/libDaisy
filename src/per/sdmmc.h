@@ -11,7 +11,7 @@ TODO:
 
 namespace daisy
 {
-/** @addtogroup other
+/** @ingroup peripheral
     @{
     */
 

@@ -6,9 +6,7 @@
 
 /* TODO:
 - Add documentation
-- Add reception
 - Add IT
-- Add DMA
 */
 
 namespace daisy
@@ -86,6 +84,15 @@ class SpiHandle
             dsy_gpio_pin nss;  /**< & */
         } pin_config;
 
+        Config()
+        {
+            // user must specify periph, mode, direction, nss, and pin_config
+            datasize       = 8;
+            clock_polarity = ClockPolarity::LOW;
+            clock_phase    = ClockPhase::ONE_EDGE;
+            baud_prescaler = BaudPrescaler::PS_8;
+        }
+
         Peripheral    periph;
         Mode          mode;
         Direction     direction;
@@ -109,8 +116,9 @@ class SpiHandle
 
     enum class DmaDirection
     {
-        RX, /**< & */
-        TX, /**< & */
+        RX,    /**< & */
+        TX,    /**< & */
+        RX_TX, /**< & */
     };
 
     /** Initializes handler */
@@ -119,57 +127,90 @@ class SpiHandle
     /** Returns the current config. */
     const Config& GetConfig() const;
 
-    /** A callback to be executed when a dma transfer is complete. */
-    typedef void (*CallbackFunctionPtr)(void* context, Result result);
+    /** A callback to be executed right before a dma transfer is started. */
+    typedef void (*StartCallbackFunctionPtr)(void* context);
+    /** A callback to be executed after a dma transfer is completed. */
+    typedef void (*EndCallbackFunctionPtr)(void* context, Result result);
 
 
     /** Blocking transmit 
-    \param *buff input buffer
+    \param buff input buffer
     \param size  buffer size
+    \param timeout how long in milliseconds the function will wait 
+                   before returning without successful communication
     */
     Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout = 100);
 
+    /** Polling Receive
+    \param buffer input buffer
+    \param size  buffer size
+    \param timeout How long to timeout for in milliseconds
+    \return Whether the receive was successful or not
+    */
+    Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
+
     /** Blocking transmit and receive
-    \param *tx_buff the transmit buffer
-    \param *rx_buff the receive buffer
+    \param tx_buff the transmit buffer
+    \param rx_buff the receive buffer
     \param size the length of the transaction
+    \param timeout how long in milliseconds the function will wait 
+                   before returning without successful communication
     */
     Result BlockingTransmitAndReceive(uint8_t* tx_buff,
                                       uint8_t* rx_buff,
                                       size_t   size,
                                       uint32_t timeout = 100);
 
-    /** Polling Receive
-    \param *buff input buffer
-    \param size  buffer size
-    \param timeout How long to timeout for
-    \return Whether the receive was successful or not
-    */
-    Result BlockingReceive(uint8_t* buffer, uint16_t size, uint32_t timeout);
-
     /** DMA-based transmit 
     \param *buff input buffer
     \param size  buffer size
-    \param callback     A callback to execute when the transfer finishes, or NULL.
-    \param callback_context A pointer that will be passed back to you in the callback.    
+    \param start_callback   A callback to execute when the transfer starts, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param end_callback     A callback to execute when the transfer finishes, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param callback_context A pointer that will be passed back to you in the callbacks.     
     \return Whether the transmit was successful or not
     */
-    Result DmaTransmit(uint8_t*            buff,
-                       size_t              size,
-                       CallbackFunctionPtr callback,
-                       void*               callback_context);
+    Result DmaTransmit(uint8_t*                            buff,
+                       size_t                              size,
+                       SpiHandle::StartCallbackFunctionPtr start_callback,
+                       SpiHandle::EndCallbackFunctionPtr   end_callback,
+                       void*                               callback_context);
 
     /** DMA-based receive 
     \param *buff input buffer
     \param size  buffer size
-    \param callback     A callback to execute when the transfer finishes, or NULL.
-    \param callback_context A pointer that will be passed back to you in the callback.    
+    \param start_callback   A callback to execute when the transfer starts, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param end_callback     A callback to execute when the transfer finishes, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param callback_context A pointer that will be passed back to you in the callbacks.    
     \return Whether the receive was successful or not
     */
-    Result DmaReceive(uint8_t*                       buff,
-                      size_t                         size,
-                      SpiHandle::CallbackFunctionPtr callback,
-                      void*                          callback_context);
+    Result DmaReceive(uint8_t*                            buff,
+                      size_t                              size,
+                      SpiHandle::StartCallbackFunctionPtr start_callback,
+                      SpiHandle::EndCallbackFunctionPtr   end_callback,
+                      void*                               callback_context);
+
+    /** DMA-based transmit and receive 
+    \param tx_buff  the transmit buffer
+    \param rx_buff  the receive buffer
+    \param size     buffer size
+    \param start_callback   A callback to execute when the transfer starts, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param end_callback     A callback to execute when the transfer finishes, or NULL.
+                            The callback is called from an interrupt, so keep it fast.
+    \param callback_context A pointer that will be passed back to you in the callbacks.    
+    \return Whether the receive was successful or not
+    */
+    Result
+    DmaTransmitAndReceive(uint8_t*                            tx_buff,
+                          uint8_t*                            rx_buff,
+                          size_t                              size,
+                          SpiHandle::StartCallbackFunctionPtr start_callback,
+                          SpiHandle::EndCallbackFunctionPtr   end_callback,
+                          void*                               callback_context);
 
     /** \return the result of HAL_SPI_GetError() to the user. */
     int CheckError();

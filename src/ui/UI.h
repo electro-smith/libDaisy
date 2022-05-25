@@ -9,7 +9,7 @@ class UI;
 
 /** @brief The type of arrow button in the UI system.
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  */
 enum class ArrowButtonType
 {
@@ -25,7 +25,7 @@ enum class ArrowButtonType
 
 /** @brief A descriptor for a canvas in the UI system.
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  * 
  *  A descriptor for a generic display / led / output device 
  *  that's used in the UI system.
@@ -69,7 +69,7 @@ class OneBitGraphicsLookAndFeel;
 
 /** @brief The base class for a page in the UI system.
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  */
 class UiPage
 {
@@ -91,6 +91,11 @@ class UiPage
 
     /** Returns true if the page is currently active on a UI - it may not be visible, though. */
     bool IsActive() { return parent_ != nullptr; }
+
+    /** Called on any user input event, after the respective callback has completed.
+     * OnUserInteraction will be invoked for all pages in the page stack and can be used to 
+     * track general user activity. */
+    virtual void OnUserInteraction() {}
 
     /** Closes the current page. This calls the parent UI and asks it to Remove this page
      *  from the page stack.
@@ -336,7 +341,7 @@ class UiPage
 
 /** @brief A generic UI system
  *  @author jelliesen
- *  @addtogroup ui
+ *  @ingroup ui
  *
  *  This system allows you to create complex and dynamic user interfaces 
  *  with menus, pages and dialogs. It holds a stack of pages. Each page 

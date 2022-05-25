@@ -12,6 +12,7 @@ extern "C"
 {
     extern void dsy_i2c_global_init();
     extern void dsy_spi_global_init();
+    extern void dsy_uart_global_init();
 }
 
 // Jump related stuff
@@ -119,9 +120,79 @@ extern "C"
     // TODO: Add some real handling to the HardFaultHandler
     void HardFault_Handler()
     {
-#ifdef DEBUG
-        asm("bkpt 255");
-#endif
+        // Grab an instance of the SCB so we can `p/x *scb` from the debugger
+        SCB_Type* scb = SCB;
+        (void)(scb);
+
+        // Identify hardfault type
+        if(SCB->HFSR & SCB_HFSR_FORCED_Msk)
+        {
+            // Forced hardfault
+
+            // Copy faults for easy debugging
+            size_t mmu_fault = (SCB->CFSR >> 0) & 0xFF;
+            (void)(mmu_fault);
+            size_t bus_fault = (SCB->CFSR >> 8) & 0xFF;
+            (void)(bus_fault);
+            size_t usage_fault = (SCB->CFSR >> 16) & 0xFFFF;
+            (void)(usage_fault);
+
+            // Check for memory manger faults
+            if(SCB->CFSR & SCB_CFSR_MMARVALID_Msk)
+                __asm("BKPT #0");
+            if(SCB->CFSR & SCB_CFSR_MLSPERR_Msk)
+                __asm("BKPT #0");
+            if(SCB->CFSR & SCB_CFSR_MSTKERR_Msk)
+                __asm("BKPT #0");
+            if(SCB->CFSR & SCB_CFSR_MUNSTKERR_Msk)
+                __asm("BKPT #0");
+            if(SCB->CFSR & SCB_CFSR_DACCVIOL_Msk)
+                __asm("BKPT #0");
+            if(SCB->CFSR & SCB_CFSR_IACCVIOL_Msk)
+                __asm("BKPT #0");
+
+            // Check for bus faults
+            if(SCB->CFSR & SCB_CFSR_BFARVALID_Msk)
+                __asm("BKPT #0");
+            if(SCB->CFSR & SCB_CFSR_LSPERR_Msk)
+                __asm("BKPT #0");
+            if(SCB->CFSR & SCB_CFSR_STKERR_Msk)
+                __asm("BKPT #0");
+            if(SCB->CFSR & SCB_CFSR_UNSTKERR_Msk)
+                __asm("BKPT #0");
+            if(SCB->CFSR & SCB_CFSR_IMPRECISERR_Msk)
+                __asm("BKPT #0");
+            if(SCB->CFSR & SCB_CFSR_PRECISERR_Msk)
+                __asm("BKPT #0");
+            if(SCB->CFSR & SCB_CFSR_IBUSERR_Msk)
+                __asm("BKPT #0");
+
+            // Check for usage faults
+            if(SCB->CFSR & SCB_CFSR_DIVBYZERO_Msk)
+                __asm("BKPT 0");
+            if(SCB->CFSR & SCB_CFSR_UNALIGNED_Msk)
+                __asm("BKPT 0");
+            if(SCB->CFSR & SCB_CFSR_NOCP_Msk)
+                __asm("BKPT 0");
+            if(SCB->CFSR & SCB_CFSR_INVPC_Msk)
+                __asm("BKPT 0");
+            if(SCB->CFSR & SCB_CFSR_INVSTATE_Msk)
+                __asm("BKPT 0");
+            if(SCB->CFSR & SCB_CFSR_UNDEFINSTR_Msk)
+                __asm("BKPT 0");
+
+            __asm("BKPT #0");
+        }
+        else if(SCB->HFSR & SCB_HFSR_VECTTBL_Msk)
+        {
+            // Vector table bus fault
+
+            __asm("BKPT #0");
+        }
+
+        __asm("BKPT #0");
+        while(1)
+            ;
     }
 }
 
@@ -150,6 +221,7 @@ void System::Init(const System::Config& config)
     dsy_dma_init();
     dsy_i2c_global_init();
     dsy_spi_global_init();
+    dsy_uart_global_init();
 
     // Initialize Caches
     if(config.use_dcache)
