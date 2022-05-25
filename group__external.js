@@ -222,5 +222,81 @@ var group__external =
       [ "WriteExternalRegister", "classdaisy_1_1_icm20948.html#a68eb0bc1315aeb0cadfe8d2e6490fb5e", null ],
       [ "WriteGyroRange", "classdaisy_1_1_icm20948.html#a7b93d916dde52f0005cacc41e3a3e2e0", null ],
       [ "WriteMagRegister", "classdaisy_1_1_icm20948.html#a18a60316287c902849d219090b705d43", null ]
-    ] ]
+    ] ],
+    [ "daisy::Mpr121I2CTransport", "classdaisy_1_1_mpr121_i2_c_transport.html", [
+      [ "Config", "structdaisy_1_1_mpr121_i2_c_transport_1_1_config.html", [
+        [ "Config", "structdaisy_1_1_mpr121_i2_c_transport_1_1_config.html#a10ce49ddd1d0f6d1459079bb8fa5eee3", null ],
+        [ "dev_addr", "structdaisy_1_1_mpr121_i2_c_transport_1_1_config.html#a6f8b25d36a9a5b2c496cca6f4ef8e193", null ],
+        [ "mode", "structdaisy_1_1_mpr121_i2_c_transport_1_1_config.html#a129251f16ded292d06ea40ed3b33ccfc", null ],
+        [ "periph", "structdaisy_1_1_mpr121_i2_c_transport_1_1_config.html#a07d425140eda0eae1cebf3c6743de9b6", null ],
+        [ "scl", "structdaisy_1_1_mpr121_i2_c_transport_1_1_config.html#a0d7c2c2c6443ba8bdb5dbbd1fd390289", null ],
+        [ "sda", "structdaisy_1_1_mpr121_i2_c_transport_1_1_config.html#a0276e08101dcc3c65153367dba880010", null ],
+        [ "speed", "structdaisy_1_1_mpr121_i2_c_transport_1_1_config.html#a74c4e8b11ada7fa42c0481d7aab53df7", null ]
+      ] ],
+      [ "Mpr121I2CTransport", "classdaisy_1_1_mpr121_i2_c_transport.html#a38f985567ef23c8f1e03d829a6fb5aaf", null ],
+      [ "~Mpr121I2CTransport", "classdaisy_1_1_mpr121_i2_c_transport.html#ae9488da639f811e781e6180cc188b426", null ],
+      [ "Init", "classdaisy_1_1_mpr121_i2_c_transport.html#a4038e5bc1ba98d6a0968f43dc5c8259b", null ],
+      [ "Read", "classdaisy_1_1_mpr121_i2_c_transport.html#aa95902f995e64b0e2d44cfef43ef290e", null ],
+      [ "Write", "classdaisy_1_1_mpr121_i2_c_transport.html#afccd8ca8d49cb011e60d4848fd620aa5", null ]
+    ] ],
+    [ "daisy::Mpr121< Transport >", "classdaisy_1_1_mpr121.html", [
+      [ "Config", "structdaisy_1_1_mpr121_1_1_config.html", [
+        [ "Config", "structdaisy_1_1_mpr121_1_1_config.html#aeb8034eea18b68c566a9f6112b52aaaf", null ],
+        [ "release_threshold", "structdaisy_1_1_mpr121_1_1_config.html#a0c336f8c4c4d0ce11dfcc442ae1297a8", null ],
+        [ "touch_threshold", "structdaisy_1_1_mpr121_1_1_config.html#a925455dfebac239fda1afee837f603fd", null ],
+        [ "transport_config", "structdaisy_1_1_mpr121_1_1_config.html#a3515dea6b34471ce900b5ebfa497638e", null ]
+      ] ],
+      [ "RegMap", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798", [
+        [ "MPR121_TOUCHSTATUS_L", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798af072087bd77d996459c508e7ddb85b95", null ],
+        [ "MPR121_TOUCHSTATUS_H", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a807ad93180b47f0ee90d21e60a0ae82f", null ],
+        [ "MPR121_FILTDATA_0L", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a8963e3a75478e33f625eba239dc67629", null ],
+        [ "MPR121_FILTDATA_0H", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798aeed0c3e4600908f4cddff2c247af16e3", null ],
+        [ "MPR121_BASELINE_0", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798ac9a7569eb76aee36336844091bd389a7", null ],
+        [ "MPR121_MHDR", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a1b7901e6413893cffd5b831ee3b9f961", null ],
+        [ "MPR121_NHDR", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a5c72f34b039b1abe28927e46a4ac17b3", null ],
+        [ "MPR121_NCLR", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a7a1cfb7091401bf95a1b0d7ca6d52235", null ],
+        [ "MPR121_FDLR", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a41acf682bc02d2cfe0a460e145aa5973", null ],
+        [ "MPR121_MHDF", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a91a86c1b1a7a4159d953d38cefe723ee", null ],
+        [ "MPR121_NHDF", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a5fedb837a5080779850e4fc15285ec24", null ],
+        [ "MPR121_NCLF", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798aa611799214b98edcc33e88b6943c8ba6", null ],
+        [ "MPR121_FDLF", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a29c75502d048ce04b44b8390f44d807c", null ],
+        [ "MPR121_NHDT", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a046176439ef7ecd2533d6feeb59eb376", null ],
+        [ "MPR121_NCLT", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798afb8ee1195d5b5359d4c6671885676997", null ],
+        [ "MPR121_FDLT", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a94d3b11b9138f6f4213fadcf760524fe", null ],
+        [ "MPR121_TOUCHTH_0", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a5fe6816a59778b37eedab9fae0452796", null ],
+        [ "MPR121_RELEASETH_0", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a98d7dbbd774fe8b1d46ed4d96dbd7754", null ],
+        [ "MPR121_DEBOUNCE", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a1976a8eee3617dcca3c098bdc191a7e4", null ],
+        [ "MPR121_CONFIG1", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798ad91f34027ed9461e9309b693980b7e84", null ],
+        [ "MPR121_CONFIG2", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798ad59b4469cede1a44e95539bdd8edb361", null ],
+        [ "MPR121_CHARGECURR_0", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798afc5b099316181762cef4e012f48177b0", null ],
+        [ "MPR121_CHARGETIME_1", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798abe3fe67998f7b3f714d2f3ba68ef20bc", null ],
+        [ "MPR121_ECR", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798ae108af091b897029733e3b43059eccdc", null ],
+        [ "MPR121_AUTOCONFIG0", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a84473ee45de5bde4197837b2555724fe", null ],
+        [ "MPR121_AUTOCONFIG1", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798abaf3232cc07540fb422a930ab9d350e7", null ],
+        [ "MPR121_UPLIMIT", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798ae65f5c099d28098af1cae01c71f0d38b", null ],
+        [ "MPR121_LOWLIMIT", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a969b21bef0f769d9b6e235493d2875e6", null ],
+        [ "MPR121_TARGETLIMIT", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a5f8308d4c03ec3a7875380bc61e138e6", null ],
+        [ "MPR121_GPIODIR", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a24f6b298916b55dd96bbf3507ed2d6bb", null ],
+        [ "MPR121_GPIOEN", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a8ef0b8cc6813a612b38a6b22d88d1a48", null ],
+        [ "MPR121_GPIOSET", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798adb795aae4ef37404efa3c2ce81995b28", null ],
+        [ "MPR121_GPIOCLR", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a20a180b8ae26a5da2ac8459261d813af", null ],
+        [ "MPR121_GPIOTOGGLE", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798afb31150b6e7796dfa003f189cafe3bd6", null ],
+        [ "MPR121_SOFTRESET", "classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a372b6ae6ff09c8e4cab72046ca1800de", null ]
+      ] ],
+      [ "Result", "classdaisy_1_1_mpr121.html#ab886fbf5c32dfc9c2caba579f5b465fb", [
+        [ "OK", "classdaisy_1_1_mpr121.html#ab886fbf5c32dfc9c2caba579f5b465fba6fa03b25040e3cdd7ff52469f04a4b3d", null ],
+        [ "ERR", "classdaisy_1_1_mpr121.html#ab886fbf5c32dfc9c2caba579f5b465fbae1569ff69794f09d1ec4568a16873fea", null ]
+      ] ],
+      [ "Mpr121", "classdaisy_1_1_mpr121.html#a423dfd228ca7e1304bf449f0559cba84", null ],
+      [ "~Mpr121", "classdaisy_1_1_mpr121.html#a59148bf6436c900157138b850d161ef3", null ],
+      [ "BaselineData", "classdaisy_1_1_mpr121.html#aa4a18eda90de8fdc384d1e4405478f36", null ],
+      [ "FilteredData", "classdaisy_1_1_mpr121.html#a5dd0cbce7221b3a46f8fe0ecd5d07663", null ],
+      [ "Init", "classdaisy_1_1_mpr121.html#ac99982dd29c485b9af192ff20f8048fe", null ],
+      [ "ReadRegister16", "classdaisy_1_1_mpr121.html#ae89924aa405ee5ae5f2c5b40cccf86a9", null ],
+      [ "ReadRegister8", "classdaisy_1_1_mpr121.html#a7ba853b16da4d77f5f3637feaf5b63b8", null ],
+      [ "SetThresholds", "classdaisy_1_1_mpr121.html#aa8abce9cdda9b9eb3811b54ecf7dcd85", null ],
+      [ "Touched", "classdaisy_1_1_mpr121.html#ac33bae09e5cfcee374106ddda72c4733", null ],
+      [ "WriteRegister", "classdaisy_1_1_mpr121.html#a00965d1f368fe6acb6e9c3c2be5b04d7", null ]
+    ] ],
+    [ "daisy::Mpr121I2C", "group__external.html#gadff605cfc4e7944ed1eb8b5bc68cf4b8", null ]
 ];

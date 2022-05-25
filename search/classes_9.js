@@ -14,6 +14,8 @@ var searchData=
   ['midiuarttransport_11',['MidiUartTransport',['../classdaisy_1_1_midi_uart_transport.html',1,'daisy']]],
   ['midiusbtransport_12',['MidiUsbTransport',['../classdaisy_1_1_midi_usb_transport.html',1,'daisy']]],
   ['monomodeonevent_13',['MonoModeOnEvent',['../structdaisy_1_1_mono_mode_on_event.html',1,'daisy']]],
-  ['mtcquarterframeevent_14',['MTCQuarterFrameEvent',['../structdaisy_1_1_m_t_c_quarter_frame_event.html',1,'daisy']]],
-  ['multislavespihandle_15',['MultiSlaveSpiHandle',['../classdaisy_1_1_multi_slave_spi_handle.html',1,'daisy']]]
+  ['mpr121_14',['Mpr121',['../classdaisy_1_1_mpr121.html',1,'daisy']]],
+  ['mpr121i2ctransport_15',['Mpr121I2CTransport',['../classdaisy_1_1_mpr121_i2_c_transport.html',1,'daisy']]],
+  ['mtcquarterframeevent_16',['MTCQuarterFrameEvent',['../structdaisy_1_1_m_t_c_quarter_frame_event.html',1,'daisy']]],
+  ['multislavespihandle_17',['MultiSlaveSpiHandle',['../classdaisy_1_1_multi_slave_spi_handle.html',1,'daisy']]]
 ];

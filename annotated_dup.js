@@ -67,6 +67,8 @@ var annotated_dup =
       [ "MidiUartTransport", "classdaisy_1_1_midi_uart_transport.html", "classdaisy_1_1_midi_uart_transport" ],
       [ "MidiUsbTransport", "classdaisy_1_1_midi_usb_transport.html", "classdaisy_1_1_midi_usb_transport" ],
       [ "MonoModeOnEvent", "structdaisy_1_1_mono_mode_on_event.html", "structdaisy_1_1_mono_mode_on_event" ],
+      [ "Mpr121", "classdaisy_1_1_mpr121.html", "classdaisy_1_1_mpr121" ],
+      [ "Mpr121I2CTransport", "classdaisy_1_1_mpr121_i2_c_transport.html", "classdaisy_1_1_mpr121_i2_c_transport" ],
       [ "MTCQuarterFrameEvent", "structdaisy_1_1_m_t_c_quarter_frame_event.html", "structdaisy_1_1_m_t_c_quarter_frame_event" ],
       [ "MultiSlaveSpiHandle", "classdaisy_1_1_multi_slave_spi_handle.html", "classdaisy_1_1_multi_slave_spi_handle" ],
       [ "NoteOffEvent", "structdaisy_1_1_note_off_event.html", "structdaisy_1_1_note_off_event" ],
