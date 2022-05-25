@@ -12,8 +12,9 @@
 * bootloader: Working with the bootloader has been simplified. See [the new guide for updates on usage](https://electro-smith.github.io/libDaisy/md_doc_md__a7__getting__started__daisy__bootloader.html)
 * usb: `USBHost` class has added support for user callbacks on device connection, disconnection, and when the MSC class becomes active.
 * uart: Adds DMA RX and TX modes, similar to how they work on the I2C and SPI.
-* uart: Update function names to be more in line with the new DMA / Blocking scheme. The old methods are wrappers for the new ones for now.
-* uart: Adds examples for common modes of communication, both DMA, blocking, FIFO, and mixed.
+* uart: Update function names to be more in line with the new DMA / Blocking scheme. 
+  * The old methods are wrappers for the new ones to preserve backwards compatibility, but **will be removed in a future version**.
+  * Affected functions: `PollReceive`, `PollTx`, `StartRx`, `RxActive`, `FlushRx`, `PopRx`, `Readable`
 
 ### Bug Fixes
 
@@ -27,6 +28,7 @@
 * build: core/Makefile has had the `-fnortti` flag added to match libDaisy's Makefile
 * bootloader: local version of daisy bootloader has been updated to improve stability
 * spi: Added examples for blocking TX and DMA TX, added a writeup explaining how to use the SPI on the Daisy
+* uart: Adds examples for common modes of communication, both DMA, blocking, FIFO, and mixed.
 
 ## v5.0.0
 
