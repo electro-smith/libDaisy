@@ -1,5 +1,16 @@
 namespace daisy
 {
+/** @addtogroup midi MIDI
+ *  @ingroup human_interface
+ *  @ingroup libdaisy
+ *  @brief MIDI handlers, transports, and message types
+ *  @{
+ */
+
+/** @defgroup midi_events MIDI_EVENTS 
+ *  @{
+*/
+
 /** Parsed from the Status Byte, these are the common Midi Messages that can be handled. \n
 At this time only 3-byte messages are correctly parsed into MidiEvents.
 */
@@ -118,6 +129,15 @@ struct PitchBendEvent
 {
     int     channel; /**< & */
     int16_t value;   /**< & */
+};
+/** Struct containing channel mode event for a given channel.
+Can be made from MidiEvent
+*/
+struct ChannelModeEvent
+{
+    int             channel;    /**< & */
+    ChannelModeType event_type; /**< & */
+    int16_t         value;      /**< & */
 };
 /** Struct containing sysex data.
 Can be made from MidiEvent
@@ -291,6 +311,18 @@ struct MidiEvent
         m.value   = ((uint16_t)data[1] << 7) + (data[0] - 8192);
         return m;
     }
+
+    ChannelModeEvent AsChannelMode()
+    {
+        ChannelModeEvent m;
+
+        m.channel    = channel;
+        m.event_type = (ChannelModeType)(data[0] - 120);
+        m.value      = data[1];
+
+        return m;
+    }
+
     SystemExclusiveEvent AsSystemExclusive()
     {
         SystemExclusiveEvent m;
@@ -377,4 +409,8 @@ struct MidiEvent
         return m;
     }
 };
+
+/** @} */ // End midi_events
+
+/** @} */ // End midi
 } //namespace daisy

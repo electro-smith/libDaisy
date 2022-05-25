@@ -8,6 +8,7 @@ namespace daisy
 {
 /** 
  * This class is for drawing to a monochrome OLED display. 
+ * @ingroup device
 */
 template <typename DisplayDriver>
 class OledDisplay : public OneBitGraphicsDisplayImpl<OledDisplay<DisplayDriver>>
@@ -56,7 +57,6 @@ class OledDisplay : public OneBitGraphicsDisplayImpl<OledDisplay<DisplayDriver>>
     void SendCommand(uint8_t cmd) { driver_.SendCommand(cmd); };
     void SendData(uint8_t* buff, size_t size) { driver_.SendData(buff, size); };
 };
-/** @} */
 
 } // namespace daisy
 

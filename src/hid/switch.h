@@ -67,10 +67,13 @@ class Switch
     void Debounce();
 
     /** \return true if a button was just pressed. */
-    inline bool RisingEdge() const { return state_ == 0x7f; }
+    inline bool RisingEdge() const { return updated_ ? state_ == 0x7f : false; }
 
     /** \return true if the button was just released */
-    inline bool FallingEdge() const { return state_ == 0x80; }
+    inline bool FallingEdge() const
+    {
+        return updated_ ? state_ == 0x80 : false;
+    }
 
     /** \return true if the button is held down (or if the toggle is on) */
     inline bool Pressed() const { return state_ == 0xff; }
@@ -93,6 +96,8 @@ class Switch
     inline void SetUpdateRate(float update_rate) {}
 
   private:
+    uint32_t last_update_;
+    bool     updated_;
     Type     t_;
     dsy_gpio hw_gpio_;
     uint8_t  state_;

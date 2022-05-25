@@ -28,21 +28,26 @@ extern "C"
         // DMA1_Stream4_IRQn interrupt configuration
         HAL_NVIC_SetPriority(DMA1_Stream4_IRQn, 0, 0);
         HAL_NVIC_EnableIRQ(DMA1_Stream4_IRQn);
-        // DMA1_Stream5_IRQn interrupt configuration
+        // DMA1_Stream5_IRQn and DMA2_Stream4_IRQn interrupt configuration for uart rx and tx
         HAL_NVIC_SetPriority(DMA1_Stream5_IRQn, 0, 0);
         HAL_NVIC_EnableIRQ(DMA1_Stream5_IRQn);
+        HAL_NVIC_SetPriority(DMA2_Stream4_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(DMA2_Stream4_IRQn);
         // DMA1_Stream6_IRQn interrupt configuration for I2C
         HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 0, 0);
         HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);
-        // DMA1_Stream7_IRQn interrupt configuration for SPI
-        HAL_NVIC_SetPriority(DMA1_Stream7_IRQn, 0, 0);
-        HAL_NVIC_EnableIRQ(DMA1_Stream7_IRQn);
         // DMA2_Stream0_IRQn, interrupt configuration for DAC Ch1
         HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
         HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
         // DMA2_Stream1_IRQn, interrupt configuration for DAC Ch2
         HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 0, 0);
         HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
+
+        // DMA2_Stream2_IRQn and DMA2_Stream3_IRQn interrupt configuration for SPI
+        HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
+        HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(DMA2_Stream3_IRQn);
     }
 
     void dsy_dma_deinit(void)
@@ -62,14 +67,19 @@ extern "C"
         HAL_NVIC_DisableIRQ(DMA1_Stream3_IRQn);
         // DMA1_Stream4_IRQn interrupt configuration
         HAL_NVIC_DisableIRQ(DMA1_Stream4_IRQn);
-        // DMA1_Stream5_IRQn interrupt configuration
+        // DMA1_Stream5_IRQn and DMA2_Stream4_IRQn interrupt configuration for uart rx and tx
         HAL_NVIC_DisableIRQ(DMA1_Stream5_IRQn);
+        HAL_NVIC_DisableIRQ(DMA2_Stream4_IRQn);
         // DMA1_Stream6_IRQn interrupt configuration for I2C
         HAL_NVIC_DisableIRQ(DMA1_Stream6_IRQn);
         // DMA2_Stream0_IRQn, interrupt configuration for DAC Ch1
         HAL_NVIC_DisableIRQ(DMA2_Stream0_IRQn);
         // DMA2_Stream1_IRQn, interrupt configuration for DAC Ch2
         HAL_NVIC_DisableIRQ(DMA2_Stream1_IRQn);
+
+        // DMA2_Stream2_IRQn and DMA2_Stream3_IRQn interrupt configuration for SPI
+        HAL_NVIC_DisableIRQ(DMA2_Stream2_IRQn);
+        HAL_NVIC_DisableIRQ(DMA2_Stream3_IRQn);
     }
 
     void dsy_dma_clear_cache_for_buffer(uint8_t* buffer, size_t size)

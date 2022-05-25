@@ -55,12 +55,12 @@ class DaisyVersio
     void DelayMs(size_t del);
 
     /** Starts the callback
-    \cb Interleaved callback function
+    \param cb Interleaved callback function
     */
     void StartAudio(AudioHandle::InterleavingAudioCallback cb);
 
     /** Starts the callback
-    \cb Non-interleaved callback function
+    \param cb Non-interleaved callback function
     */
     void StartAudio(AudioHandle::AudioCallback cb);
 

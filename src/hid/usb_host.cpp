@@ -22,12 +22,34 @@ class USBHostHandle::Impl
 
     Result Init(Config config);
     Result Deinit();
+    Result Process();
+    Result ReEnumerate();
 
-    void Process();
     bool GetReady();
+
+    inline Config &GetConfig() { return config_; }
 
   private:
     Config config_;
+
+    /** @brief Maps ST Middleware USBH_StatusTypeDef to USBHostHandle::Result codes */
+    Result ConvertStatus(USBH_StatusTypeDef sta)
+    {
+        if(sta != USBH_OK)
+        {
+            return Result::FAIL;
+        }
+        switch(sta)
+        {
+            case USBH_OK: return Result::OK;
+            case USBH_BUSY: return Result::BUSY;
+            case USBH_NOT_SUPPORTED: return Result::NOT_SUPPORTED;
+            case USBH_UNRECOVERED_ERROR: return Result::UNRECOVERED_ERROR;
+            case USBH_ERROR_SPEED_UNKNOWN: return Result::ERROR_SPEED_UNKNOWN;
+            case USBH_FAIL:
+            default: return Result::FAIL;
+        }
+    }
 };
 
 // Global dfu handle
@@ -39,19 +61,23 @@ USBHostHandle::Result USBHostHandle::Impl::Init(USBHostHandle::Config config)
 {
     config_ = config;
     /* Init host Library, add supported class and start the library. */
-    if(USBH_Init(&hUsbHostHS, USBH_UserProcess, HOST_HS) != USBH_OK)
+    USBH_StatusTypeDef sta;
+    sta = USBH_Init(&hUsbHostHS, USBH_UserProcess, HOST_HS);
+    if(sta != USBH_OK)
     {
-        return Result::ERR;
+        return ConvertStatus(sta);
     }
-    if(USBH_RegisterClass(&hUsbHostHS, USBH_MSC_CLASS) != USBH_OK)
+    sta = USBH_RegisterClass(&hUsbHostHS, USBH_MSC_CLASS);
+    if(sta != USBH_OK)
     {
-        return Result::ERR;
+        return ConvertStatus(sta);
     }
-    if(USBH_Start(&hUsbHostHS) != USBH_OK)
+    sta = USBH_Start(&hUsbHostHS);
+    if(sta != USBH_OK)
     {
-        return Result::ERR;
+        return ConvertStatus(sta);
     }
-    return Result::OK;
+    return ConvertStatus(sta);
 }
 
 USBHostHandle::Result USBHostHandle::Impl::Deinit()
@@ -61,9 +87,14 @@ USBHostHandle::Result USBHostHandle::Impl::Deinit()
     return Result::OK;
 }
 
-void USBHostHandle::Impl::Process()
+USBHostHandle::Result USBHostHandle::Impl::Process()
 {
-    USBH_Process(&hUsbHostHS);
+    return ConvertStatus(USBH_Process(&hUsbHostHS));
+}
+
+USBHostHandle::Result USBHostHandle::Impl::ReEnumerate()
+{
+    return ConvertStatus(USBH_ReEnumerate(&hUsbHostHS));
 }
 
 bool USBHostHandle::Impl::GetReady()
@@ -89,9 +120,14 @@ bool USBHostHandle::GetReady()
     return pimpl_->GetReady();
 }
 
-void USBHostHandle::Process()
+USBHostHandle::Result USBHostHandle::Process()
 {
-    pimpl_->Process();
+    return pimpl_->Process();
+}
+
+USBHostHandle::Result USBHostHandle::ReEnumerate()
+{
+    return pimpl_->ReEnumerate();
 }
 
 bool USBHostHandle::GetPresent()
@@ -106,18 +142,42 @@ bool USBHostHandle::GetPresent()
 // This isn't super useful for our typical code structure
 static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
 {
+    auto &conf = msd_impl.GetConfig();
     switch(id)
     {
         case HOST_USER_SELECT_CONFIGURATION: break;
-
+        case HOST_USER_CLASS_ACTIVE:
+            Appli_state = APPLICATION_READY;
+            if(conf.class_active_callback)
+            {
+                auto cb = (conf.class_active_callback);
+                cb(conf.userdata);
+            }
+            break;
+        case HOST_USER_CLASS_SELECTED: break;
+        case HOST_USER_CONNECTION:
+            Appli_state = APPLICATION_START;
+            if(conf.connect_callback)
+            {
+                auto cb = (conf.connect_callback);
+                cb(conf.userdata);
+            }
+            break;
         case HOST_USER_DISCONNECTION:
             Appli_state = APPLICATION_DISCONNECT;
+            if(conf.disconnect_callback)
+            {
+                auto cb = (conf.disconnect_callback);
+                cb(conf.userdata);
+            }
             break;
-
-        case HOST_USER_CLASS_ACTIVE: Appli_state = APPLICATION_READY; break;
-
-        case HOST_USER_CONNECTION: Appli_state = APPLICATION_START; break;
-
+        case HOST_USER_UNRECOVERED_ERROR:
+            if(conf.error_callback)
+            {
+                auto cb = (conf.error_callback);
+                cb(conf.userdata);
+            }
+            break;
         default: break;
     }
 }

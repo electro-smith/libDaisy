@@ -21,6 +21,8 @@ class MidiUsbTransport::Impl
     void MidiToUsb(uint8_t* buffer, size_t length);
 
   private:
+    void MidiToUsbSingle(uint8_t* buffer, size_t length);
+
     /** USB Handle for CDC transfers 
          */
     UsbHandle usb_handle_;
@@ -63,8 +65,9 @@ void ReceiveCallback(uint8_t* buffer, uint32_t* length)
     {
         for(uint16_t i = 0; i < *length; i += 4)
         {
-            uint8_t packet_length = *length - i >= 4 ? 4 : *length - i;
-            midi_usb_handle.UsbToMidi(buffer, packet_length);
+            size_t  remaining_bytes = *length - i;
+            uint8_t packet_length   = remaining_bytes > 4 ? 4 : remaining_bytes;
+            midi_usb_handle.UsbToMidi(buffer + i, packet_length);
         }
     }
 }
@@ -135,41 +138,126 @@ void MidiUsbTransport::Impl::UsbToMidi(uint8_t* buffer, uint8_t length)
     }
 }
 
-void MidiUsbTransport::Impl::MidiToUsb(uint8_t* buffer, size_t size)
+void MidiUsbTransport::Impl::MidiToUsbSingle(uint8_t* buffer, size_t size)
 {
-    size_t i             = 0;
-    int    currentStatus = buffer[i] & 0xF0;
-    while(i < size)
-    {
-        if(currentStatus > 0x7 && currentStatus < 0xF)
-        {
-            // This is the code index number in the given ^ state
-            tx_buffer_[tx_ptr_++] = currentStatus >> 4;
-            for(int j = 0; j < midi_message_size_[currentStatus]; j++)
-            {
-                // If the user tries to send an invalid message or
-                // the buffer overflows, then we exit. This does
-                // not account for user-generated running messages!
-                if(i < size && tx_ptr_ < kBufferSize)
-                    tx_buffer_[tx_ptr_++] = buffer[i++];
-                else
-                    break;
-            }
+    if(size == 0)
+        return;
 
-            // Filling extra bytes with zero
-            for(int j = 0; j < 3 - midi_message_size_[currentStatus]; j++)
-            {
-                if(tx_ptr_ < kBufferSize)
-                    tx_buffer_[tx_ptr_++] = 0;
-                else
-                    break;
-            }
+    // Channel voice messages
+    if((buffer[0] & 0xF0) != 0xF0)
+    {
+        // Check message validity
+        if((buffer[0] & 0xF0) == 0xC0 || (buffer[0] & 0xF0) == 0xD0)
+        {
+            if(size != 2)
+                return; // error
         }
         else
         {
-            // Scan for valid MIDI message statuses
-            currentStatus = buffer[i++] & 0xF0;
+            if(size != 3)
+                return; //error
         }
+
+        // CIN is the same as status byte for channel voice messages
+        tx_buffer_[tx_ptr_ + 0] = (buffer[0] & 0xF0) >> 4;
+        tx_buffer_[tx_ptr_ + 1] = buffer[0];
+        tx_buffer_[tx_ptr_ + 2] = buffer[1];
+        tx_buffer_[tx_ptr_ + 3] = size == 3 ? buffer[2] : 0;
+
+        tx_ptr_ += 4;
+    }
+    else // buffer[0] & 0xF0 == 0xF0 aka System common or realtime
+    {
+        if(0xF2 == buffer[0])
+        // three byte message
+        {
+            if(size != 3)
+                return; // error
+
+            tx_buffer_[tx_ptr_ + 0] = 0x03;
+            tx_buffer_[tx_ptr_ + 1] = buffer[0];
+            tx_buffer_[tx_ptr_ + 2] = buffer[1];
+            tx_buffer_[tx_ptr_ + 3] = buffer[2];
+
+            tx_ptr_ += 4;
+        }
+        if(0xF1 == buffer[0] || 0xF3 == buffer[0])
+        // two byte messages
+        {
+            if(size != 2)
+                return; // error
+
+            tx_buffer_[tx_ptr_ + 0] = 0x02;
+            tx_buffer_[tx_ptr_ + 1] = buffer[0];
+            tx_buffer_[tx_ptr_ + 2] = buffer[1];
+            tx_buffer_[tx_ptr_ + 3] = 0;
+
+            tx_ptr_ += 4;
+        }
+        else if(0xF4 <= buffer[0])
+        // one byte message
+        {
+            if(size != 1)
+                return; // error
+
+            tx_buffer_[tx_ptr_ + 0] = 0x05;
+            tx_buffer_[tx_ptr_ + 1] = buffer[0];
+            tx_buffer_[tx_ptr_ + 2] = 0;
+            tx_buffer_[tx_ptr_ + 3] = 0;
+
+            tx_ptr_ += 4;
+        }
+        else // sysex
+        {
+            size_t i = 0;
+            // Sysex messages are split up into several 4 bytes packets
+            // first ones use CIN 0x04
+            // but packet containing the SysEx stop byte use a different CIN
+            for(i = 0; i + 3 < size; i += 3, tx_ptr_ += 4)
+            {
+                tx_buffer_[tx_ptr_]     = 0x04;
+                tx_buffer_[tx_ptr_ + 1] = buffer[i];
+                tx_buffer_[tx_ptr_ + 2] = buffer[i + 1];
+                tx_buffer_[tx_ptr_ + 3] = buffer[i + 2];
+            }
+
+            // Fill CIN for terminating bytes
+            // 0x05 for 1 remaining byte
+            // 0x06 for 2
+            // 0x07 for 3
+            tx_buffer_[tx_ptr_] = 0x05 + (size - i - 1);
+            tx_ptr_++;
+            for(; i < size; ++i, ++tx_ptr_)
+                tx_buffer_[tx_ptr_] = buffer[i];
+            for(; (tx_ptr_ % 4) != 0; ++tx_ptr_)
+                tx_buffer_[tx_ptr_] = 0;
+        }
+    }
+}
+
+void MidiUsbTransport::Impl::MidiToUsb(uint8_t* buffer, size_t size)
+{
+    // We'll assume your message starts with a status byte!
+    size_t status_index = 0;
+    while(status_index < size)
+    {
+        // Search for next status byte or end
+        size_t next_status = status_index;
+        for(size_t j = status_index + 1; j < size; j++)
+        {
+            if(buffer[j] & 0x80)
+            {
+                next_status = j;
+                break;
+            }
+        }
+        if(next_status == status_index)
+        {
+            // Either we're at the end or it's malformed
+            next_status = size;
+        }
+        MidiToUsbSingle(buffer + status_index, next_status - status_index);
+        status_index = next_status;
     }
 }
 

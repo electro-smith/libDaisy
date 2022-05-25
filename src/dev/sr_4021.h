@@ -8,7 +8,7 @@ namespace daisy
 {
 /** @brief Device Driver for CD4021 shift register
  ** @author shensley
- ** @addtogroup shiftregister
+ ** @ingroup shiftregister
  **
  ** CD4021B-Q1: CMOS 8-STAGE STATIC SHIFT REGISTER
  ** 
