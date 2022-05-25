@@ -11,7 +11,7 @@ var searchData=
   ['_5fa4_5fgetting_2dstarted_2dadcs_2emd_8',['_a4_Getting-Started-ADCs.md',['../__a4___getting-_started-_a_d_cs_8md.html',1,'']]],
   ['_5fa6_5fgetting_2dstarted_2dexternal_2dsdram_2emd_9',['_a6_Getting-Started-External-SDRAM.md',['../__a6___getting-_started-_external-_s_d_r_a_m_8md.html',1,'']]],
   ['_5fa7_5fgetting_2dstarted_2ddaisy_2dbootloader_2emd_10',['_a7_Getting-Started-Daisy-Bootloader.md',['../__a7___getting-_started-_daisy-_bootloader_8md.html',1,'']]],
-  ['_5fa8_5fgetting_5fstarted_2dspi_2emd_11',['_a8_Getting_Started-SPI.md',['../__a8___getting___started-_s_p_i_8md.html',1,'']]],
+  ['_5fa8_5fgetting_2dstarted_2dspi_2emd_11',['_a8_Getting-Started-SPI.md',['../__a8___getting-_started-_s_p_i_8md.html',1,'']]],
   ['_5fb1_5fdevelopment_2dunit_2dtesting_2emd_12',['_b1_Development-Unit-Testing.md',['../__b1___development-_unit-_testing_8md.html',1,'']]],
   ['_5fcode_5fpage_13',['_CODE_PAGE',['../ffconf_8h.html#aaf9b5cee569d93f1ebe43ea70916569f',1,'ffconf.h']]],
   ['_5fffconf_14',['_FFCONF',['../ffconf_8h.html#a45082af332369ed49492446a2d4d4c5a',1,'ffconf.h']]],
