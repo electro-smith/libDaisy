@@ -13,6 +13,8 @@ var dir_79aff18505430beab4d731f694f82366 =
     [ "max11300.h", "max11300_8h.html", "max11300_8h" ],
     [ "mcp23x17.h", "mcp23x17_8h.html", "mcp23x17_8h" ],
     [ "mpr121.h", "mpr121_8h.html", "mpr121_8h" ],
+    [ "neopixel.h", "neopixel_8h.html", "neopixel_8h" ],
+    [ "neotrellis.h", "neotrellis_8h.html", "neotrellis_8h" ],
     [ "oled_ssd130x.h", "oled__ssd130x_8h.html", "oled__ssd130x_8h" ],
     [ "sdram.h", "sdram_8h.html", "sdram_8h" ],
     [ "sr_4021.h", "sr__4021_8h.html", "sr__4021_8h" ],

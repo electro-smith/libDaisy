@@ -1,11 +1,10 @@
 var searchData=
 [
-  ['oleddisplay_0',['OledDisplay',['../classdaisy_1_1_oled_display.html',1,'daisy']]],
-  ['oleddisplay_3c_20daisy_3a_3assd130xdriver_20_3e_1',['OledDisplay&lt; daisy::SSD130xDriver &gt;',['../classdaisy_1_1_oled_display.html',1,'daisy']]],
-  ['omnimodeoffevent_2',['OmniModeOffEvent',['../structdaisy_1_1_omni_mode_off_event.html',1,'daisy']]],
-  ['omnimodeonevent_3',['OmniModeOnEvent',['../structdaisy_1_1_omni_mode_on_event.html',1,'daisy']]],
-  ['onebitgraphicsdisplay_4',['OneBitGraphicsDisplay',['../classdaisy_1_1_one_bit_graphics_display.html',1,'daisy']]],
-  ['onebitgraphicsdisplayimpl_5',['OneBitGraphicsDisplayImpl',['../classdaisy_1_1_one_bit_graphics_display_impl.html',1,'daisy']]],
-  ['onebitgraphicsdisplayimpl_3c_20oleddisplay_3c_20daisy_3a_3assd130xdriver_20_3e_20_3e_6',['OneBitGraphicsDisplayImpl&lt; OledDisplay&lt; daisy::SSD130xDriver &gt; &gt;',['../classdaisy_1_1_one_bit_graphics_display_impl.html',1,'daisy']]],
-  ['onebitgraphicsdisplayimpl_3c_20oleddisplay_3c_20displaydriver_20_3e_20_3e_7',['OneBitGraphicsDisplayImpl&lt; OledDisplay&lt; DisplayDriver &gt; &gt;',['../classdaisy_1_1_one_bit_graphics_display_impl.html',1,'daisy']]]
+  ['neopixel_0',['NeoPixel',['../classdaisy_1_1_neo_pixel.html',1,'daisy']]],
+  ['neopixel_3c_20neopixeli2ctransport_20_3e_1',['NeoPixel&lt; NeoPixelI2CTransport &gt;',['../classdaisy_1_1_neo_pixel.html',1,'daisy']]],
+  ['neopixeli2ctransport_2',['NeoPixelI2CTransport',['../classdaisy_1_1_neo_pixel_i2_c_transport.html',1,'daisy']]],
+  ['neotrellis_3',['NeoTrellis',['../classdaisy_1_1_neo_trellis.html',1,'daisy']]],
+  ['neotrellisi2ctransport_4',['NeoTrellisI2CTransport',['../classdaisy_1_1_neo_trellis_i2_c_transport.html',1,'daisy']]],
+  ['noteoffevent_5',['NoteOffEvent',['../structdaisy_1_1_note_off_event.html',1,'daisy']]],
+  ['noteonevent_6',['NoteOnEvent',['../structdaisy_1_1_note_on_event.html',1,'daisy']]]
 ];

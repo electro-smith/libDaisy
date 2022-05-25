@@ -18,5 +18,5 @@ var structdaisy_1_1_q_s_p_i_handle_1_1_config =
     [ "io3", "structdaisy_1_1_q_s_p_i_handle_1_1_config.html#a6bf52222414a30b9e4c8e6a67a4f7af5", null ],
     [ "mode", "structdaisy_1_1_q_s_p_i_handle_1_1_config.html#afdc7da23330ec0d348b5cb365e574c08", null ],
     [ "ncs", "structdaisy_1_1_q_s_p_i_handle_1_1_config.html#aad2784e493e6c5b49ae76df1280490ff", null ],
-    [ "pin_config", "structdaisy_1_1_q_s_p_i_handle_1_1_config.html#a36831863fc76af817b00598c0c686709", null ]
+    [ "pin_config", "structdaisy_1_1_q_s_p_i_handle_1_1_config.html#a42e7b1145af0b23da20796801b05ee95", null ]
 ];

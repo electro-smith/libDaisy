@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['periodelapsedcallback_0',['PeriodElapsedCallback',['../classdaisy_1_1_timer_handle.html#a31742af4d164ed7787ffba2c95158ef9',1,'daisy::TimerHandle']]]
+  ['outputbuffer_0',['OutputBuffer',['../classdaisy_1_1_audio_handle.html#aa0728b1916a1a1c569e601f27224a3a1',1,'daisy::AudioHandle']]]
 ];

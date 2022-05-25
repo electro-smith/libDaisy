@@ -18,7 +18,7 @@ var structdaisy_1_1_i2_c_handle_1_1_config =
     [ "address", "structdaisy_1_1_i2_c_handle_1_1_config.html#a9830c26219602f876bd0db150dab5a02", null ],
     [ "mode", "structdaisy_1_1_i2_c_handle_1_1_config.html#a4ea7f774e5aaf99e868cd341ac8183c3", null ],
     [ "periph", "structdaisy_1_1_i2_c_handle_1_1_config.html#aa56d0330fdf37d13b2fea52f02c8f616", null ],
-    [ "pin_config", "structdaisy_1_1_i2_c_handle_1_1_config.html#aef775ee57bf4b336017e9d9f5c666980", null ],
+    [ "pin_config", "structdaisy_1_1_i2_c_handle_1_1_config.html#ac57cd01109e756b4b0a5b5858e216ee3", null ],
     [ "scl", "structdaisy_1_1_i2_c_handle_1_1_config.html#a168960729dc107c030c3a7cfe5c4b138", null ],
     [ "sda", "structdaisy_1_1_i2_c_handle_1_1_config.html#a8d0a82df1f49113e5e4e2aff071e16e3", null ],
     [ "speed", "structdaisy_1_1_i2_c_handle_1_1_config.html#a7795ab9b3b85bd2f51950b6985a31b97", null ]

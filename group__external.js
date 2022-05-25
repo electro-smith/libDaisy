@@ -370,5 +370,216 @@ var group__external =
       [ "Touched", "classdaisy_1_1_mpr121.html#ac33bae09e5cfcee374106ddda72c4733", null ],
       [ "WriteRegister", "classdaisy_1_1_mpr121.html#a00965d1f368fe6acb6e9c3c2be5b04d7", null ]
     ] ],
+    [ "daisy::NeoPixelI2CTransport", "classdaisy_1_1_neo_pixel_i2_c_transport.html", [
+      [ "Config", "structdaisy_1_1_neo_pixel_i2_c_transport_1_1_config.html", [
+        [ "Config", "structdaisy_1_1_neo_pixel_i2_c_transport_1_1_config.html#a46b9918d07bcf6755e0b18dbd3a74e9f", null ],
+        [ "address", "structdaisy_1_1_neo_pixel_i2_c_transport_1_1_config.html#a4e923ce24423129aeb5f4f6da4e318a1", null ],
+        [ "periph", "structdaisy_1_1_neo_pixel_i2_c_transport_1_1_config.html#a079df385d992018d3dd91e0ba0e574c3", null ],
+        [ "scl", "structdaisy_1_1_neo_pixel_i2_c_transport_1_1_config.html#a805c5ff2daee5bf272b97cb202ddba2c", null ],
+        [ "sda", "structdaisy_1_1_neo_pixel_i2_c_transport_1_1_config.html#a1ed8c7da7c5796171a6b1fbac06eabd9", null ],
+        [ "speed", "structdaisy_1_1_neo_pixel_i2_c_transport_1_1_config.html#a87e19b1180c6450aaab7cfc383c67d72", null ]
+      ] ],
+      [ "NeoPixelI2CTransport", "classdaisy_1_1_neo_pixel_i2_c_transport.html#ae85b5d747ecbe451dbe308b36868e58b", null ],
+      [ "~NeoPixelI2CTransport", "classdaisy_1_1_neo_pixel_i2_c_transport.html#aaccf8d062eecbba52cca528cfdd3d22d", null ],
+      [ "GetError", "classdaisy_1_1_neo_pixel_i2_c_transport.html#a6d55044b883904848def9eb2c7881e93", null ],
+      [ "Init", "classdaisy_1_1_neo_pixel_i2_c_transport.html#a8c9aa0f692fbef7a313877fb4ea3d453", null ],
+      [ "Read", "classdaisy_1_1_neo_pixel_i2_c_transport.html#a85e51e2e596f772b25b9966d884fcd4a", null ],
+      [ "Read8", "classdaisy_1_1_neo_pixel_i2_c_transport.html#a521e325e0931543e3a28563543e85875", null ],
+      [ "ReadLen", "classdaisy_1_1_neo_pixel_i2_c_transport.html#ac55451524996bd07b4870a8e98dc948b", null ],
+      [ "Write", "classdaisy_1_1_neo_pixel_i2_c_transport.html#a8a01db260c9beb5b4d3cbb9cd4abc7d9", null ],
+      [ "Write8", "classdaisy_1_1_neo_pixel_i2_c_transport.html#ab728ac755f0fb48303721f6e8a74da4e", null ],
+      [ "WriteLen", "classdaisy_1_1_neo_pixel_i2_c_transport.html#a144a7c40f053c6f35b715a62f3dc6f11", null ]
+    ] ],
+    [ "daisy::NeoPixel< Transport >", "classdaisy_1_1_neo_pixel.html", [
+      [ "Config", "structdaisy_1_1_neo_pixel_1_1_config.html", [
+        [ "Config", "structdaisy_1_1_neo_pixel_1_1_config.html#ab14b524c8d0d3379dbacaccfb8afacf0", null ],
+        [ "numLEDs", "structdaisy_1_1_neo_pixel_1_1_config.html#aefd7dda2b4d64d348c1ccf805e20bb68", null ],
+        [ "output_pin", "structdaisy_1_1_neo_pixel_1_1_config.html#aeb4a2381c06f5484a8c5cfa3ac1e1b0f", null ],
+        [ "transport_config", "structdaisy_1_1_neo_pixel_1_1_config.html#a757434d2bccf3cd4326293aa1090e511", null ],
+        [ "type", "structdaisy_1_1_neo_pixel_1_1_config.html#a9b25cee8aa170fe8f65bded88a55c815", null ]
+      ] ],
+      [ "neoPixelType", "classdaisy_1_1_neo_pixel.html#aaf6a3f2fd53db7ef4caf78733014e77d", null ],
+      [ "ModAddReg", "classdaisy_1_1_neo_pixel.html#aa85935e2b18e71704d67c5cdda2df878", [
+        [ "SEESAW_NEOPIXEL_STATUS", "classdaisy_1_1_neo_pixel.html#aa85935e2b18e71704d67c5cdda2df878ae7d19575693671570af757bee729703b", null ],
+        [ "SEESAW_NEOPIXEL_PIN", "classdaisy_1_1_neo_pixel.html#aa85935e2b18e71704d67c5cdda2df878a204d6f3e606b954a913f12eeda5c11ff", null ],
+        [ "SEESAW_NEOPIXEL_SPEED", "classdaisy_1_1_neo_pixel.html#aa85935e2b18e71704d67c5cdda2df878ae2a34f983bf6d649b0b37bc14a47b121", null ],
+        [ "SEESAW_NEOPIXEL_BUF_LENGTH", "classdaisy_1_1_neo_pixel.html#aa85935e2b18e71704d67c5cdda2df878a7db07a19f1c83e31bb0bf8ffa228e866", null ],
+        [ "SEESAW_NEOPIXEL_BUF", "classdaisy_1_1_neo_pixel.html#aa85935e2b18e71704d67c5cdda2df878aece795799b42de6b878d325d0b6dbd38", null ],
+        [ "SEESAW_NEOPIXEL_SHOW", "classdaisy_1_1_neo_pixel.html#aa85935e2b18e71704d67c5cdda2df878a0ba069e40db57794cf4a28f50c3e275f", null ]
+      ] ],
+      [ "ModBaseAdd", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3bef", [
+        [ "SEESAW_STATUS_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befa14ac93b5ab639a0e15411f9c743b37c4", null ],
+        [ "SEESAW_GPIO_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befadda07af6856b228a73e22dca7da9a12c", null ],
+        [ "SEESAW_SERCOM0_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befa653206e2988877b1c4420e955f2d646c", null ],
+        [ "SEESAW_TIMER_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befabc0edeffe2c7a0f6f5fdecd9e6c41107", null ],
+        [ "SEESAW_ADC_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befab2e30770660420d289650a372059467d", null ],
+        [ "SEESAW_DAC_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befa9952803be238e90ee8737ab79b3890ed", null ],
+        [ "SEESAW_INTERRUPT_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befa6e5bb555003d07ee5caae840294c0f94", null ],
+        [ "SEESAW_DAP_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befab2cb47bc2c6788ce9bab8b4925892886", null ],
+        [ "SEESAW_EEPROM_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befafe0b10808eadded45a49dd785fb96ca2", null ],
+        [ "SEESAW_NEOPIXEL_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befa876738339d77d2b4c617a2f692589390", null ],
+        [ "SEESAW_TOUCH_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befa435c5590c1d7d1cfd048966bc74a1d2b", null ],
+        [ "SEESAW_KEYPAD_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befa1b4d900fad9ba13f1e1f8323532773c2", null ],
+        [ "SEESAW_ENCODER_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befab1f20d7fa1d95fb6835484c0c71b0605", null ],
+        [ "SEESAW_SPECTRUM_BASE", "classdaisy_1_1_neo_pixel.html#a05ba8bfa35fcf36a10dbb06dfb1c3befa28757163e598e556ad35371f0285cc0a", null ]
+      ] ],
+      [ "Result", "classdaisy_1_1_neo_pixel.html#afc73663368350e83adc8a99817f98dab", [
+        [ "OK", "classdaisy_1_1_neo_pixel.html#afc73663368350e83adc8a99817f98daba01f73b19bab2a683589e7757f0eb3fdc", null ],
+        [ "ERR", "classdaisy_1_1_neo_pixel.html#afc73663368350e83adc8a99817f98daba29caa0b3a47a4f0e4bd6504c36438377", null ]
+      ] ],
+      [ "StatAddReg", "classdaisy_1_1_neo_pixel.html#ae8c5611d43b53c821488a4e5b762b7d1", [
+        [ "SEESAW_STATUS_HW_ID", "classdaisy_1_1_neo_pixel.html#ae8c5611d43b53c821488a4e5b762b7d1ae295f23040ed1755e4d99115a0dc8d65", null ],
+        [ "SEESAW_STATUS_VERSION", "classdaisy_1_1_neo_pixel.html#ae8c5611d43b53c821488a4e5b762b7d1a6b1ef0df7bf8109ae4196c04e9ac8505", null ],
+        [ "SEESAW_STATUS_OPTIONS", "classdaisy_1_1_neo_pixel.html#ae8c5611d43b53c821488a4e5b762b7d1a214185dbcaaabf27a6d4d57555224489", null ],
+        [ "SEESAW_STATUS_TEMP", "classdaisy_1_1_neo_pixel.html#ae8c5611d43b53c821488a4e5b762b7d1a5f277abe97124bfbdc92d46364b915ea", null ],
+        [ "SEESAW_STATUS_SWRST", "classdaisy_1_1_neo_pixel.html#ae8c5611d43b53c821488a4e5b762b7d1a7940039e96f9941a887480ca3fbeb60f", null ]
+      ] ],
+      [ "NeoPixel", "classdaisy_1_1_neo_pixel.html#aa41002f13ecdb49d982f21b378e6e23a", null ],
+      [ "~NeoPixel", "classdaisy_1_1_neo_pixel.html#a19c887f017f21b1cdf700d156e93b85d", null ],
+      [ "CanShow", "classdaisy_1_1_neo_pixel.html#a99fc758fb450c80343b95420c6592afa", null ],
+      [ "Clear", "classdaisy_1_1_neo_pixel.html#a8b116f7bf64327e51410a11455cf12c3", null ],
+      [ "Color", "classdaisy_1_1_neo_pixel.html#a9108cc1982e0238bcb4bc49a53b6fca3", null ],
+      [ "Color", "classdaisy_1_1_neo_pixel.html#acd72cdae401cc660cbedde6c0a641504", null ],
+      [ "GetPixelColor", "classdaisy_1_1_neo_pixel.html#ad233a7a44ceca2c89aef9aafd328a31b", null ],
+      [ "GetPixels", "classdaisy_1_1_neo_pixel.html#ad10ff8167814f76e1fb3be7f215baf74", null ],
+      [ "GetTransportError", "classdaisy_1_1_neo_pixel.html#acf0fd44fec307b75dcfb28afa30538b6", null ],
+      [ "Init", "classdaisy_1_1_neo_pixel.html#a597e94d940bb0746d15b0c1669eff2ae", null ],
+      [ "NumPixels", "classdaisy_1_1_neo_pixel.html#a0d55c790450250f60c240d297c40bf1f", null ],
+      [ "Read8", "classdaisy_1_1_neo_pixel.html#a9c8c82427371f672b3f8f8a7ba25ad5f", null ],
+      [ "ReadLen", "classdaisy_1_1_neo_pixel.html#a7749453367c03ba2118b197cffe3c187", null ],
+      [ "SetBrightness", "classdaisy_1_1_neo_pixel.html#a9191052295b62ef5f4c0e52585c416b0", null ],
+      [ "SetPin", "classdaisy_1_1_neo_pixel.html#a7665573b58aa4f6a53bfcef6c65f8757", null ],
+      [ "SetPixelColor", "classdaisy_1_1_neo_pixel.html#af3f3b8d35d190ffc7cefe689ff15ae5e", null ],
+      [ "SetPixelColor", "classdaisy_1_1_neo_pixel.html#aba8e7b08e8f6126a34a3d0da252b7960", null ],
+      [ "SetPixelColor", "classdaisy_1_1_neo_pixel.html#a9ed0843e42a63d9650b652e93da858c2", null ],
+      [ "Show", "classdaisy_1_1_neo_pixel.html#a0e05f30968513eb931b87aa03e596622", null ],
+      [ "SWReset", "classdaisy_1_1_neo_pixel.html#ac8afed18a175b01a127f049856889bd8", null ],
+      [ "UpdateLength", "classdaisy_1_1_neo_pixel.html#aa1ff6bded0f7dc85cb5fbf089f62f398", null ],
+      [ "UpdateType", "classdaisy_1_1_neo_pixel.html#a53c6d62a3d5214c58bdfc7121bb64674", null ],
+      [ "Write", "classdaisy_1_1_neo_pixel.html#a371c68602f4be7aa1db7099e3a998b4a", null ],
+      [ "Write8", "classdaisy_1_1_neo_pixel.html#ad42911368e610e159f28110f85ace083", null ],
+      [ "begun", "classdaisy_1_1_neo_pixel.html#a3ef27df2c5db0805b8da5a96ace14394", null ],
+      [ "bOffset", "classdaisy_1_1_neo_pixel.html#a403ecb32d1a3550e856bbfb750796947", null ],
+      [ "brightness", "classdaisy_1_1_neo_pixel.html#a2a07973ed7af8eff8ee9031d6daeae14", null ],
+      [ "endTime", "classdaisy_1_1_neo_pixel.html#a65b5307ddc399e44c04a299d1309cb78", null ],
+      [ "gOffset", "classdaisy_1_1_neo_pixel.html#a9fb74a30da250dc0ac0faad6761c0ef2", null ],
+      [ "is800KHz", "classdaisy_1_1_neo_pixel.html#acc516db091e391ad46e8b72c29c01ec2", null ],
+      [ "numBytes", "classdaisy_1_1_neo_pixel.html#ade28d3c9507267156409491943144b12", null ],
+      [ "numLEDs", "classdaisy_1_1_neo_pixel.html#a86295dae28472abb978cc4933e3c3bad", null ],
+      [ "pin", "classdaisy_1_1_neo_pixel.html#a5ebb9803eb16e2d8f5baf3e2cd794236", null ],
+      [ "pixels", "classdaisy_1_1_neo_pixel.html#a39d3f96cc03a21023d2932ffb9655cfa", null ],
+      [ "pixelsd", "classdaisy_1_1_neo_pixel.html#aca4305f3168366e769cd31d9322a9a1d", null ],
+      [ "rOffset", "classdaisy_1_1_neo_pixel.html#a5dc6778be3278c19b0c3175fed30d988", null ],
+      [ "type", "classdaisy_1_1_neo_pixel.html#af3637a3c0b830f68755315d558c5f202", null ],
+      [ "wOffset", "classdaisy_1_1_neo_pixel.html#aa8e62362c5652dd43c4418857ce8c9ca", null ]
+    ] ],
+    [ "daisy::NeoTrellisI2CTransport", "classdaisy_1_1_neo_trellis_i2_c_transport.html", [
+      [ "Config", "structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html", [
+        [ "Config", "structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#a60556e52b033f81831b4b8ec43b7d0d9", null ],
+        [ "address", "structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#a84f92212e2e732c74a9bfb89f85118e8", null ],
+        [ "periph", "structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#a30b84a65c6e28b1838d7536c78fcdb19", null ],
+        [ "scl", "structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#acec420c950ea14c1fe0ae358e7578be3", null ],
+        [ "sda", "structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#a65146322b1ea8590e25abdfcd2f8b159", null ],
+        [ "speed", "structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#a58eb60473ecc33d01fa04720d47bc275", null ]
+      ] ],
+      [ "NeoTrellisI2CTransport", "classdaisy_1_1_neo_trellis_i2_c_transport.html#a022bc6731db0ea60423c55887de97627", null ],
+      [ "~NeoTrellisI2CTransport", "classdaisy_1_1_neo_trellis_i2_c_transport.html#a3dc86fbcc81dbdb01289c46bbea12360", null ],
+      [ "GetError", "classdaisy_1_1_neo_trellis_i2_c_transport.html#a272066a25d7f383e9de3fe785980d7d6", null ],
+      [ "Init", "classdaisy_1_1_neo_trellis_i2_c_transport.html#a5c82812bec22d8ef70df345f7d5b853f", null ],
+      [ "Read", "classdaisy_1_1_neo_trellis_i2_c_transport.html#aab55ca305e93d3777632c65321becd22", null ],
+      [ "Read8", "classdaisy_1_1_neo_trellis_i2_c_transport.html#ac8ecb136d2f865d63ea0bd01c72da3c3", null ],
+      [ "ReadLen", "classdaisy_1_1_neo_trellis_i2_c_transport.html#aeb052ab80fb5e310c2440d83e677af78", null ],
+      [ "Write", "classdaisy_1_1_neo_trellis_i2_c_transport.html#a3adcc698ec848707b171c36c60b24935", null ],
+      [ "Write8", "classdaisy_1_1_neo_trellis_i2_c_transport.html#a310748cfd04c3cced531e4d8e0b77047", null ]
+    ] ],
+    [ "daisy::NeoTrellis< Transport >", "classdaisy_1_1_neo_trellis.html", [
+      [ "Config", "structdaisy_1_1_neo_trellis_1_1_config.html", [
+        [ "Config", "structdaisy_1_1_neo_trellis_1_1_config.html#a68ff905c87df6e5c2fcf291c60669eb9", null ],
+        [ "pixels_conf", "structdaisy_1_1_neo_trellis_1_1_config.html#a32a6648d37036a0cf8e7a02a6da3d0a9", null ],
+        [ "transport_config", "structdaisy_1_1_neo_trellis_1_1_config.html#ac1692712d2c3db385345a0fa86cd2a79", null ]
+      ] ],
+      [ "keyEvent", "uniondaisy_1_1_neo_trellis_1_1key_event.html", [
+        [ "Bit", "structdaisy_1_1_neo_trellis_1_1key_event_1_1_bit.html", [
+          [ "EDGE", "structdaisy_1_1_neo_trellis_1_1key_event_1_1_bit.html#a9b958e8d1f48ed61865de6907f5c90a6", null ],
+          [ "NUM", "structdaisy_1_1_neo_trellis_1_1key_event_1_1_bit.html#a359e8e4339eaac2087504b1fc08badab", null ]
+        ] ],
+        [ "bit", "uniondaisy_1_1_neo_trellis_1_1key_event.html#ae6f6b283b6ef4a29e5a57e772d53faab", null ],
+        [ "reg", "uniondaisy_1_1_neo_trellis_1_1key_event.html#a03c1734baa89ec838aba7f5e103d5ecd", null ]
+      ] ],
+      [ "keyEventRaw", "uniondaisy_1_1_neo_trellis_1_1key_event_raw.html", [
+        [ "bit", "uniondaisy_1_1_neo_trellis_1_1key_event_raw.html#af9ce51a13b9dc999abb73fb98c43f5f7", null ],
+        [ "EDGE", "uniondaisy_1_1_neo_trellis_1_1key_event_raw.html#a8647a512438543149457a5e81a7eb14d", null ],
+        [ "NUM", "uniondaisy_1_1_neo_trellis_1_1key_event_raw.html#a980465e2ba7cc84a68873b833c9055d1", null ],
+        [ "reg", "uniondaisy_1_1_neo_trellis_1_1key_event_raw.html#a429c5998f3484a24ceed27640a8313f6", null ]
+      ] ],
+      [ "keyState", "uniondaisy_1_1_neo_trellis_1_1key_state.html", [
+        [ "ACTIVE", "uniondaisy_1_1_neo_trellis_1_1key_state.html#aa367b20ed8ba2821c3de0a230ac917a6", null ],
+        [ "bit", "uniondaisy_1_1_neo_trellis_1_1key_state.html#a185201f539d871e30b2ceafee50b87f1", null ],
+        [ "reg", "uniondaisy_1_1_neo_trellis_1_1key_state.html#ab8bd361a78f11e8ef821ad5958a5d68e", null ],
+        [ "STATE", "uniondaisy_1_1_neo_trellis_1_1key_state.html#a0e5950baf19bbe6ec35f5354a9ae02e1", null ]
+      ] ],
+      [ "TrellisCallback", "classdaisy_1_1_neo_trellis.html#a183c34e627e82aff208d4be0a0352510", null ],
+      [ "KeypadEdge", "classdaisy_1_1_neo_trellis.html#a08d0cfd62e053922653a0b9e78ed29c0", [
+        [ "HIGH", "classdaisy_1_1_neo_trellis.html#a08d0cfd62e053922653a0b9e78ed29c0a2d79f1fd0188fd02bfe2062ac398b284", null ],
+        [ "LOW", "classdaisy_1_1_neo_trellis.html#a08d0cfd62e053922653a0b9e78ed29c0af4ccfedff592f55c151895a2e74f3192", null ],
+        [ "FALLING", "classdaisy_1_1_neo_trellis.html#a08d0cfd62e053922653a0b9e78ed29c0abfe713a40082eedd9c5f3a885974d254", null ],
+        [ "RISING", "classdaisy_1_1_neo_trellis.html#a08d0cfd62e053922653a0b9e78ed29c0af843fdfbc06dd0b7a40b927d3c03521b", null ]
+      ] ],
+      [ "KeypadFuncAddRegs", "classdaisy_1_1_neo_trellis.html#ad233d51152b75b4cbec60411971a9db6", [
+        [ "SEESAW_KEYPAD_STATUS", "classdaisy_1_1_neo_trellis.html#ad233d51152b75b4cbec60411971a9db6ace27a71eda5f3ab25d69d5c614a74cc3", null ],
+        [ "SEESAW_KEYPAD_EVENT", "classdaisy_1_1_neo_trellis.html#ad233d51152b75b4cbec60411971a9db6a33537938f4c7182096b900b4d8d2fd89", null ],
+        [ "SEESAW_KEYPAD_INTENSET", "classdaisy_1_1_neo_trellis.html#ad233d51152b75b4cbec60411971a9db6a7132ec292e389d784d8523a013b6eda5", null ],
+        [ "SEESAW_KEYPAD_INTENCLR", "classdaisy_1_1_neo_trellis.html#ad233d51152b75b4cbec60411971a9db6aa663d58db13dc7d24a747cd0c0cfafda", null ],
+        [ "SEESAW_KEYPAD_COUNT", "classdaisy_1_1_neo_trellis.html#ad233d51152b75b4cbec60411971a9db6af6f41d576533e764a7fc006bc12fa8f8", null ],
+        [ "SEESAW_KEYPAD_FIFO", "classdaisy_1_1_neo_trellis.html#ad233d51152b75b4cbec60411971a9db6a6297e62f156b1cfc5ff861c2be525ed6", null ]
+      ] ],
+      [ "ModuleBaseAddress", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfaf", [
+        [ "SEESAW_STATUS_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafa86b5f3d1587fd2afa8701e3502e8516d", null ],
+        [ "SEESAW_GPIO_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafa4520484b60a351b8265b64f7992d40fd", null ],
+        [ "SEESAW_SERCOM0_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafabe6bac130ed8966cfced1734b43a555f", null ],
+        [ "SEESAW_TIMER_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafa6f8cf83118cc2f3b111cbb0a5effef91", null ],
+        [ "SEESAW_ADC_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafa57cfd048b8d488334eca492b765f6d32", null ],
+        [ "SEESAW_DAC_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafa8d452277f6c26ce713743bd07ce4a769", null ],
+        [ "SEESAW_INTERRUPT_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafa06ebe6be60007345989d6564a0fe30ae", null ],
+        [ "SEESAW_DAP_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafa5be8bf916993c05048c08df9b9849702", null ],
+        [ "SEESAW_EEPROM_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafaddc4ae01636b4d74b064c78642275e89", null ],
+        [ "SEESAW_NEOPIXEL_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafac4eec17c2feb6a7399cba20cbf197281", null ],
+        [ "SEESAW_TOUCH_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafa2783d7f9aa6930a91163aae955e80dea", null ],
+        [ "SEESAW_KEYPAD_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafad6361c6969630db188ad1f94e074116f", null ],
+        [ "SEESAW_ENCODER_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafa697a05e52e345821c76a2646242be93d", null ],
+        [ "SEESAW_SPECTRUM_BASE", "classdaisy_1_1_neo_trellis.html#a3b99334c07392818ffcc518aa344cfafa564d7b3366b9192dd7db46cbfbc80dda", null ]
+      ] ],
+      [ "Result", "classdaisy_1_1_neo_trellis.html#aad11f0a1a3948a419dc8f58f241feacd", [
+        [ "OK", "classdaisy_1_1_neo_trellis.html#aad11f0a1a3948a419dc8f58f241feacdadc9324570bc564591f51a2ceb7c2dc64", null ],
+        [ "ERR", "classdaisy_1_1_neo_trellis.html#aad11f0a1a3948a419dc8f58f241feacdabffc97750e56af71d678a5b6ae6b8c25", null ]
+      ] ],
+      [ "StatusFuncAddRegs", "classdaisy_1_1_neo_trellis.html#af147efe4392e071419f7ae71ee29b0d3", [
+        [ "SEESAW_STATUS_HW_ID", "classdaisy_1_1_neo_trellis.html#af147efe4392e071419f7ae71ee29b0d3ae097c9ece1cc4e638ba52b70eb82e7c7", null ],
+        [ "SEESAW_STATUS_VERSION", "classdaisy_1_1_neo_trellis.html#af147efe4392e071419f7ae71ee29b0d3aac68ba13b8afdd62b2f4aff33d7aa587", null ],
+        [ "SEESAW_STATUS_OPTIONS", "classdaisy_1_1_neo_trellis.html#af147efe4392e071419f7ae71ee29b0d3afdbf82a2d9aa8a56bd54d71c4389baa7", null ],
+        [ "SEESAW_STATUS_TEMP", "classdaisy_1_1_neo_trellis.html#af147efe4392e071419f7ae71ee29b0d3a5b1367d171c3c1d3ab6456ad242a8c8c", null ],
+        [ "SEESAW_STATUS_SWRST", "classdaisy_1_1_neo_trellis.html#af147efe4392e071419f7ae71ee29b0d3a2b95a9e1f1392f691e4a6da2bbedc27d", null ]
+      ] ],
+      [ "NeoTrellis", "classdaisy_1_1_neo_trellis.html#ab801ae76792ceebf83705e93317ab4d9", null ],
+      [ "~NeoTrellis", "classdaisy_1_1_neo_trellis.html#a3b18ee0070030255af6d75616c9a32dd", null ],
+      [ "ActivateKey", "classdaisy_1_1_neo_trellis.html#a91052004261ec22cacd14861deaf1723", null ],
+      [ "EnableKeypadInterrupt", "classdaisy_1_1_neo_trellis.html#aa56e8b196d3b2c63a8f7f0f707ca70d8", null ],
+      [ "GetFalling", "classdaisy_1_1_neo_trellis.html#ad58a3d1295d39e222a0b2087226217b4", null ],
+      [ "GetKeypadCount", "classdaisy_1_1_neo_trellis.html#ae403558d9f3f74dd3361f07470042556", null ],
+      [ "GetRising", "classdaisy_1_1_neo_trellis.html#a11f397683b704a327ebe189d144207d1", null ],
+      [ "GetState", "classdaisy_1_1_neo_trellis.html#af57234defce72070c5bb5cc5bd4dd990", null ],
+      [ "GetTransportError", "classdaisy_1_1_neo_trellis.html#af132d30ed0ee269f29f785e9995604a2", null ],
+      [ "Init", "classdaisy_1_1_neo_trellis.html#a3b1d59ec7eb519021b9f210d68ceb376", null ],
+      [ "Process", "classdaisy_1_1_neo_trellis.html#abffb6f619af2359307b5635babe023b9", null ],
+      [ "Read8", "classdaisy_1_1_neo_trellis.html#a9cb47f7b2a46bb73b196d078b971020b", null ],
+      [ "ReadKeypad", "classdaisy_1_1_neo_trellis.html#ad8124f8933fd9894ddcd54ca6e6df15a", null ],
+      [ "ReadLen", "classdaisy_1_1_neo_trellis.html#a5f1a25ea0f51d749c420cbd6c502605a", null ],
+      [ "RegisterCallback", "classdaisy_1_1_neo_trellis.html#ab8560c44784f6eca6807693db0b2535d", null ],
+      [ "SetKeypadEvent", "classdaisy_1_1_neo_trellis.html#a9f9d8b34ba47241767af0596d906968b", null ],
+      [ "SWReset", "classdaisy_1_1_neo_trellis.html#ae052cf27a7ad81a8c63f6cc70080ac66", null ],
+      [ "UnregisterCallback", "classdaisy_1_1_neo_trellis.html#a225ba959691d43790280be96c3b1ac5e", null ],
+      [ "Write8", "classdaisy_1_1_neo_trellis.html#a44fb6268b8e48d1251699e88ecce9a40", null ],
+      [ "pixels", "classdaisy_1_1_neo_trellis.html#a3a394cd04738f34e23963f0948cf1fc3", null ]
+    ] ],
     [ "daisy::Mpr121I2C", "group__external.html#gadff605cfc4e7944ed1eb8b5bc68cf4b8", null ]
 ];

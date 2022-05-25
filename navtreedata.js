@@ -159,15 +159,16 @@ var NAVTREEINDEX =
 "classdaisy_1_1_daisy_petal.html#a927afd75574f8fdd509e23a38c176ed9",
 "classdaisy_1_1_f_i_f_o_base.html#a555fde0e5465b79ea0d0914134283dc2",
 "classdaisy_1_1_logger.html#aa6626e0cc32e5d8a4259168bc05fc8bbaa780ef7c66df2e6d1534b89087c5485c",
-"classdaisy_1_1_parameter.html",
-"classdaisy_1_1_stack_base.html#afb33382096c3e4f80d410916220191e8",
-"classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a4aab04f876942ec6a167de9edb81f5f0",
-"functions_eval.html",
-"group__flash.html#ga525e6ee5ad4e5e709ae37a2953c5e0da",
-"group__utility.html#gada224179f745219e3eccd36b137b1dd8",
-"midi_8h.html#a02f1ba6b22046642cb6f52e3fab60241",
-"structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html",
-"structdaisy_1_1_system_1_1_config.html#a100d6b1e0b41cf2bf17ecffe28fabfa7a312f419b9d3802380ef1ba781585f516"
+"classdaisy_1_1_neo_pixel.html#aa41002f13ecdb49d982f21b378e6e23a",
+"classdaisy_1_1_rectangle.html#ad1b0efb38cb1e4b0c18530b420475e19",
+"classdaisy_1_1_u_s_b_host_handle.html#ac9fa7017546be9ab038a5100b7f7483e",
+"daisy__seed_8h.html#a6e78356e396ec657b08e6d83ffcbe6ce",
+"globals.html",
+"group__flash.html#gae9a145c8cae5e554e7c7938902e89f20",
+"logger_8h.html#a134c045cf9a5d26679149bcac73b386f",
+"sai_8h.html#a7f3786a46694133b154eca4c53cf0be4",
+"structdaisy_1_1_midi_uart_transport_1_1_config.html#acf3aaf63941621f4dc93aa42026293bf",
+"structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaa848c6355c514c385d53dde45615d0411"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
