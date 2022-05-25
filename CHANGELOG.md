@@ -8,7 +8,7 @@
 
 ### Features
 
-* tim: `TimHandle` now has callbacks each time the Period has elapsed. These can be enabled with `TimeHandle::Config::enable_irq` at Init time.
+* tim: `TimerHandle` now has callbacks each time the Period has elapsed. These can be enabled with `TimerHandle::Config::enable_irq` at Init time.
 * bootloader: Working with the bootloader has been simplified. See [the new guide for updates on usage](https://electro-smith.github.io/libDaisy/md_doc_md__a7__getting__started__daisy__bootloader.html)
 * usb: `USBHost` class has added support for user callbacks on device connection, disconnection, and when the MSC class becomes active.
 * uart: Adds DMA RX and TX modes, similar to how they work on the I2C and SPI.
