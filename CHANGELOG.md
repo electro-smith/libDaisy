@@ -1,6 +1,6 @@
 # libDaisy Changelog
 
-## Unreleased
+## v5.1.0
 
 ### Features
 
@@ -16,6 +16,7 @@
 * util: PersistentStorage class had a bug where calling the `RestoreDefaults` function would cause a crash
 * usb: LL HAL files for USB were updated to prevent timing issues when running with optimization
 * spi: Add IRQ handlers for SPI2-5. These should work with DMA now.
+* midi: bugs related to running status bytes for note off, and single data-byte messages have been resolved
 
 ### Other
 
