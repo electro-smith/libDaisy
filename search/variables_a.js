@@ -12,5 +12,7 @@ var searchData=
   ['local_5fcontrol_5fon_9',['local_control_on',['../structdaisy_1_1_local_control_event.html#a9febcef5c8243aa4939057caec3a0621',1,'daisy::LocalControlEvent']]],
   ['logblocknbr_10',['LogBlockNbr',['../struct_d_s_y___s_d___card_info_type_def.html#a83eb54ea440525359ef09e5751741037',1,'DSY_SD_CardInfoTypeDef']]],
   ['logblocksize_11',['LogBlockSize',['../struct_d_s_y___s_d___card_info_type_def.html#aad9fe6b0ee0775a2eb950198b761b5ec',1,'DSY_SD_CardInfoTypeDef']]],
-  ['lr_5fswap_12',['lr_swap',['../structdaisy_1_1_wm8731_1_1_config.html#ab4f7715d2649dc0e73aad513a9ac9326',1,'daisy::Wm8731::Config']]]
+  ['lp_12',['lp',['../structdaisy_1_1_tlv493d_1_1_access_mode__t.html#a7f344c1a0bbb88419b51b492a92722a2',1,'daisy::Tlv493d::AccessMode_t']]],
+  ['lpperiod_13',['lpPeriod',['../structdaisy_1_1_tlv493d_1_1_access_mode__t.html#ad1aeb074ba90a35535656633028b2c78',1,'daisy::Tlv493d::AccessMode_t']]],
+  ['lr_5fswap_14',['lr_swap',['../structdaisy_1_1_wm8731_1_1_config.html#ab4f7715d2649dc0e73aad513a9ac9326',1,'daisy::Wm8731::Config']]]
 ];

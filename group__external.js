@@ -581,5 +581,102 @@ var group__external =
       [ "Write8", "classdaisy_1_1_neo_trellis.html#a44fb6268b8e48d1251699e88ecce9a40", null ],
       [ "pixels", "classdaisy_1_1_neo_trellis.html#a3a394cd04738f34e23963f0948cf1fc3", null ]
     ] ],
+    [ "daisy::Tlv493dI2CTransport", "classdaisy_1_1_tlv493d_i2_c_transport.html", [
+      [ "Config", "structdaisy_1_1_tlv493d_i2_c_transport_1_1_config.html", [
+        [ "Config", "structdaisy_1_1_tlv493d_i2_c_transport_1_1_config.html#a40838aea9f3e1677c74ff98a759cf464", null ],
+        [ "address", "structdaisy_1_1_tlv493d_i2_c_transport_1_1_config.html#a7bee7815474a3e662c0c28edf7935b28", null ],
+        [ "periph", "structdaisy_1_1_tlv493d_i2_c_transport_1_1_config.html#ac7eaa413abcdfbebc3e94610561a6410", null ],
+        [ "scl", "structdaisy_1_1_tlv493d_i2_c_transport_1_1_config.html#a2263b3d6675048f9b943dddf6d329e0d", null ],
+        [ "sda", "structdaisy_1_1_tlv493d_i2_c_transport_1_1_config.html#a6e762e3e996721f300f002344753f2a2", null ],
+        [ "speed", "structdaisy_1_1_tlv493d_i2_c_transport_1_1_config.html#a42bef4f93adfee472ee2d65f595dd598", null ]
+      ] ],
+      [ "Tlv493dI2CTransport", "classdaisy_1_1_tlv493d_i2_c_transport.html#a1d1ebfbae9f7adc9e18126e012a96a88", null ],
+      [ "~Tlv493dI2CTransport", "classdaisy_1_1_tlv493d_i2_c_transport.html#a05168e21580b908652932e953bf15013", null ],
+      [ "GetAddress", "classdaisy_1_1_tlv493d_i2_c_transport.html#a773f1da2950ab3fea96bcc7bf0e8554b", null ],
+      [ "GetError", "classdaisy_1_1_tlv493d_i2_c_transport.html#af2ee1e2103b6e55a4f5dff411ffd91cd", null ],
+      [ "Init", "classdaisy_1_1_tlv493d_i2_c_transport.html#af72585ffc69c5aadefe327ea424309b0", null ],
+      [ "Read", "classdaisy_1_1_tlv493d_i2_c_transport.html#aab39a053d2e2b59cba8baf13d6d1275d", null ],
+      [ "Write", "classdaisy_1_1_tlv493d_i2_c_transport.html#a331e5521caaecf8c35e4701aee7de5cb", null ],
+      [ "WriteAddress", "classdaisy_1_1_tlv493d_i2_c_transport.html#a540dbb6c523acb010c5c40033eef5562", null ]
+    ] ],
+    [ "daisy::Tlv493d< Transport >", "classdaisy_1_1_tlv493d.html", [
+      [ "AccessMode_t", "structdaisy_1_1_tlv493d_1_1_access_mode__t.html", [
+        [ "fast", "structdaisy_1_1_tlv493d_1_1_access_mode__t.html#a8dac34f8a040726e0ec04759165cff8f", null ],
+        [ "lp", "structdaisy_1_1_tlv493d_1_1_access_mode__t.html#a7f344c1a0bbb88419b51b492a92722a2", null ],
+        [ "lpPeriod", "structdaisy_1_1_tlv493d_1_1_access_mode__t.html#ad1aeb074ba90a35535656633028b2c78", null ],
+        [ "measurementTime", "structdaisy_1_1_tlv493d_1_1_access_mode__t.html#a7899f7a1fc68175e24d947a47e089a46", null ]
+      ] ],
+      [ "Config", "structdaisy_1_1_tlv493d_1_1_config.html", [
+        [ "Config", "structdaisy_1_1_tlv493d_1_1_config.html#a1fb7d86703e4032e8d33a9a1c74aa835", null ],
+        [ "transport_config", "structdaisy_1_1_tlv493d_1_1_config.html#af40ba68de859b630444c428e2b4a0f74", null ]
+      ] ],
+      [ "RegMask_t", "structdaisy_1_1_tlv493d_1_1_reg_mask__t.html", [
+        [ "bitMask", "structdaisy_1_1_tlv493d_1_1_reg_mask__t.html#af48a99c0819ad94029dbd9013f4a25ab", null ],
+        [ "byteAdress", "structdaisy_1_1_tlv493d_1_1_reg_mask__t.html#a976311fa433c43525bf9cf9b3d9b028f", null ],
+        [ "rw", "structdaisy_1_1_tlv493d_1_1_reg_mask__t.html#a3914e04c88276908f21fed1db9b7e4fa", null ],
+        [ "shift", "structdaisy_1_1_tlv493d_1_1_reg_mask__t.html#a2a4e889d529ac949c802f37913911c27", null ]
+      ] ],
+      [ "AccessMode_e", "classdaisy_1_1_tlv493d.html#a4e647f10dce86b4de6e6f0d641e2ede6", [
+        [ "POWERDOWNMODE", "classdaisy_1_1_tlv493d.html#a4e647f10dce86b4de6e6f0d641e2ede6a2870fe22ee25f2773ee5cd05873305e3", null ],
+        [ "FASTMODE", "classdaisy_1_1_tlv493d.html#a4e647f10dce86b4de6e6f0d641e2ede6a4bed5f55fbe620410869919603eb60c4", null ],
+        [ "LOWPOWERMODE", "classdaisy_1_1_tlv493d.html#a4e647f10dce86b4de6e6f0d641e2ede6a848750e11e5f9711389c1db64a730e42", null ],
+        [ "ULTRALOWPOWERMODE", "classdaisy_1_1_tlv493d.html#a4e647f10dce86b4de6e6f0d641e2ede6a212714c6d655c69789926d4d0a3a53e5", null ],
+        [ "MASTERCONTROLLEDMODE", "classdaisy_1_1_tlv493d.html#a4e647f10dce86b4de6e6f0d641e2ede6a036f72b8fd690b08274fb05195f3d1d4", null ]
+      ] ],
+      [ "Registers_e", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086", [
+        [ "R_BX1", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a267d3094f4353c32c09ea0b81d1d0e22", null ],
+        [ "R_BX2", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086af98b9d1b04e29ba369b315f03dac1177", null ],
+        [ "R_BY1", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a9e8fada1704a7b4bca3ff02cfaeb82f1", null ],
+        [ "R_BY2", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a46868d1dddf998e83cfcf49eec64b0e1", null ],
+        [ "R_BZ1", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086af761631af5f6822b3e76b7b3782ccb83", null ],
+        [ "R_BZ2", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a26b5db30cb0ea0a095bf3fa5e9373a69", null ],
+        [ "R_TEMP1", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a67efb90d05c62ec4973b7e06ec9032c2", null ],
+        [ "R_TEMP2", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a5c6ef1f94c456ba96d8022392bd0c921", null ],
+        [ "R_FRAMECOUNTER", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086adc318c3342d9593f36b55d676d1ed7c2", null ],
+        [ "R_CHANNEL", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a2a0743850cb0b12e75ed96759d69e979", null ],
+        [ "R_POWERDOWNFLAG", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a2f601f4e173b7aca37ee6449157d703b", null ],
+        [ "R_RES1", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a9ba8b6b863b09233e1148de06f55cea0", null ],
+        [ "R_RES2", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a269e6dd58934b759bd4d074aa2c568c1", null ],
+        [ "R_RES3", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086afa01c24ba084240ad0f6dddb54e2aec1", null ],
+        [ "W_PARITY", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086af596fdb37481fa47942d027e0d6f2f47", null ],
+        [ "W_ADDR", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086adddcc9b39eb5e11ea2a43f57e07472be", null ],
+        [ "W_INT", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a01d94f1dfc3ffab0cd67308de31a59d6", null ],
+        [ "W_FAST", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086ac87580fd23fdfb98c10ba7aff7c341c1", null ],
+        [ "W_LOWPOWER", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a133dbd9b2f39d7cf1026e6d16588de47", null ],
+        [ "W_TEMP_NEN", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086ac3389a4e73cde0e3520f2eba46d6f06c", null ],
+        [ "W_LP_PERIOD", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086aa547efb631743933724ce8f8a5eade90", null ],
+        [ "W_PARITY_EN", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a2aa45b3ddf669ce14869c40280b1c80f", null ],
+        [ "W_RES1", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086ad4fcaa1a5e7fd4c32bf4d2f9be7ec584", null ],
+        [ "W_RES2", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a6fbc2678928b5a1ffb66c70287fae052", null ],
+        [ "W_RES3", "classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a3f56318525bc332bb1bddb8fe620a9dc", null ]
+      ] ],
+      [ "Result", "classdaisy_1_1_tlv493d.html#a3a70517c2f74f3ac8b4bc12dd8bd6836", [
+        [ "OK", "classdaisy_1_1_tlv493d.html#a3a70517c2f74f3ac8b4bc12dd8bd6836ab5285f8242fae2379792885bfb802562", null ],
+        [ "ERR", "classdaisy_1_1_tlv493d.html#a3a70517c2f74f3ac8b4bc12dd8bd6836aa6c9f5da639f56b5c0d9d5010dc5d466", null ]
+      ] ],
+      [ "Tlv493d", "classdaisy_1_1_tlv493d.html#a3dd5c11952c7739dafa604f604200e8a", null ],
+      [ "~Tlv493d", "classdaisy_1_1_tlv493d.html#aca120bae83e55c83cf20d5f6da48e18b", null ],
+      [ "CalcParity", "classdaisy_1_1_tlv493d.html#a207f66d10448cd4a180fc9c1334eaad0", null ],
+      [ "ConcatResults", "classdaisy_1_1_tlv493d.html#abe703bf1282ecef167a6b81ec33cfd3f", null ],
+      [ "EnableTemp", "classdaisy_1_1_tlv493d.html#a92f9b3a3fb70e56ac453cf50ad31f738", null ],
+      [ "GetAmount", "classdaisy_1_1_tlv493d.html#a6c9a0a34e2d285ab60e4fba4ee5d1b43", null ],
+      [ "GetAzimuth", "classdaisy_1_1_tlv493d.html#aa713a376a66ded3678e4baaf614986b2", null ],
+      [ "GetMeasurementDelay", "classdaisy_1_1_tlv493d.html#aa332d4a915bc1e14eaa4623a5b32726d", null ],
+      [ "GetPolar", "classdaisy_1_1_tlv493d.html#a86b05ab9fc785bd5f30cc4a328b69821", null ],
+      [ "GetRegBits", "classdaisy_1_1_tlv493d.html#a7e53905218e11d4b16fd1eed3b464344", null ],
+      [ "GetTemp", "classdaisy_1_1_tlv493d.html#a4708e59eb868b4e64c69b0250a4cd082", null ],
+      [ "GetX", "classdaisy_1_1_tlv493d.html#a123966384097da28ce481e646e652ea4", null ],
+      [ "GetY", "classdaisy_1_1_tlv493d.html#a0579bf94f72401d85047b2f06fb0c5a6", null ],
+      [ "GetZ", "classdaisy_1_1_tlv493d.html#a4d3cf1c90e96ac371c41d497545d8cef", null ],
+      [ "Init", "classdaisy_1_1_tlv493d.html#ab32b6b2d1d32ce7d50f7e3210003f10b", null ],
+      [ "ReadOut", "classdaisy_1_1_tlv493d.html#ac2ac2ef4689e1b66faae9920b10eb055", null ],
+      [ "SetAccessMode", "classdaisy_1_1_tlv493d.html#adffa8bbf61fb813e4e5afc5994ac7316", null ],
+      [ "SetInterrupt", "classdaisy_1_1_tlv493d.html#a10c8eb11494135a3530b185503b6ab51", null ],
+      [ "SetRegBits", "classdaisy_1_1_tlv493d.html#a5fa69cf9112e5c9ecd3992365a803004", null ],
+      [ "UpdateData", "classdaisy_1_1_tlv493d.html#a19381f44d82cf0c8a4a19d5c567581ca", null ],
+      [ "WriteOut", "classdaisy_1_1_tlv493d.html#ac49c4c1e25ef72971564dfef3f540e48", null ],
+      [ "accModes", "classdaisy_1_1_tlv493d.html#ab5d7017876c6adbd2dfb1af576360d7b", null ],
+      [ "RegMasks", "classdaisy_1_1_tlv493d.html#a62c6342362ff4c6bba74c7a186771244", null ]
+    ] ],
     [ "daisy::Mpr121I2C", "group__external.html#gadff605cfc4e7944ed1eb8b5bc68cf4b8", null ]
 ];

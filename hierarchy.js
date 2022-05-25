@@ -1,5 +1,6 @@
 var hierarchy =
 [
+    [ "daisy::Tlv493d< Transport >::AccessMode_t", "structdaisy_1_1_tlv493d_1_1_access_mode__t.html", null ],
     [ "daisy::AdcChannelConfig", "structdaisy_1_1_adc_channel_config.html", null ],
     [ "daisy::AdcHandle", "classdaisy_1_1_adc_handle.html", null ],
     [ "daisy::Ak4556", "classdaisy_1_1_ak4556.html", null ],
@@ -53,6 +54,8 @@ var hierarchy =
     [ "daisy::SSD130xI2CTransport::Config", "structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html", null ],
     [ "daisy::System::Config", "structdaisy_1_1_system_1_1_config.html", null ],
     [ "daisy::TimerHandle::Config", "structdaisy_1_1_timer_handle_1_1_config.html", null ],
+    [ "daisy::Tlv493d< Transport >::Config", "structdaisy_1_1_tlv493d_1_1_config.html", null ],
+    [ "daisy::Tlv493dI2CTransport::Config", "structdaisy_1_1_tlv493d_i2_c_transport_1_1_config.html", null ],
     [ "daisy::UartHandler::Config", "structdaisy_1_1_uart_handler_1_1_config.html", null ],
     [ "daisy::USBHostHandle::Config", "structdaisy_1_1_u_s_b_host_handle_1_1_config.html", null ],
     [ "daisy::WavWriter< transfer_size >::Config", "structdaisy_1_1_wav_writer_1_1_config.html", null ],
@@ -160,6 +163,7 @@ var hierarchy =
     [ "daisy::QSPIHandle", "classdaisy_1_1_q_s_p_i_handle.html", null ],
     [ "daisy::Random", "classdaisy_1_1_random.html", null ],
     [ "daisy::Rectangle", "classdaisy_1_1_rectangle.html", null ],
+    [ "daisy::Tlv493d< Transport >::RegMask_t", "structdaisy_1_1_tlv493d_1_1_reg_mask__t.html", null ],
     [ "daisy::ResetAllControllersEvent", "structdaisy_1_1_reset_all_controllers_event.html", null ],
     [ "daisy::RgbLed", "classdaisy_1_1_rgb_led.html", null ],
     [ "daisy::RingBuffer< T, size >", "classdaisy_1_1_ring_buffer.html", null ],
@@ -193,6 +197,8 @@ var hierarchy =
     [ "daisy::System", "classdaisy_1_1_system.html", null ],
     [ "daisy::SystemExclusiveEvent", "structdaisy_1_1_system_exclusive_event.html", null ],
     [ "daisy::TimerHandle", "classdaisy_1_1_timer_handle.html", null ],
+    [ "daisy::Tlv493d< Transport >", "classdaisy_1_1_tlv493d.html", null ],
+    [ "daisy::Tlv493dI2CTransport", "classdaisy_1_1_tlv493d_i2_c_transport.html", null ],
     [ "daisy::UartHandler", "classdaisy_1_1_uart_handler.html", null ],
     [ "daisy::UI", "classdaisy_1_1_u_i.html", null ],
     [ "daisy::UiCanvasDescriptor", "structdaisy_1_1_ui_canvas_descriptor.html", null ],

@@ -18,5 +18,6 @@ var dir_79aff18505430beab4d731f694f82366 =
     [ "oled_ssd130x.h", "oled__ssd130x_8h.html", "oled__ssd130x_8h" ],
     [ "sdram.h", "sdram_8h.html", "sdram_8h" ],
     [ "sr_4021.h", "sr__4021_8h.html", "sr__4021_8h" ],
-    [ "sr_595.h", "sr__595_8h.html", "sr__595_8h" ]
+    [ "sr_595.h", "sr__595_8h.html", "sr__595_8h" ],
+    [ "tlv493d.h", "tlv493d_8h.html", "tlv493d_8h" ]
 ];

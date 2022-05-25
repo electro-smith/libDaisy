@@ -87,7 +87,10 @@ var searchData=
   ['loggerimpl_3c_20logger_5fsemihost_20_3e_84',['LoggerImpl&lt; LOGGER_SEMIHOST &gt;',['../classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___s_e_m_i_h_o_s_t_01_4.html',1,'daisy']]],
   ['loggerstaticmembers_85',['LoggerStaticMembers',['../group__logger__statics.html',1,'']]],
   ['logging_86',['LOGGING',['../group__hid__logging.html',1,'']]],
-  ['low_87',['LOW',['../structdaisy_1_1_spi_handle_1_1_config.html#a1d8556f306b61df88d6f08ebd6b9ba24a41bc94cbd8eebea13ce0491b2ac11b88',1,'daisy::SpiHandle::Config::LOW()'],['../classdaisy_1_1_g_p_i_o.html#ab46ae5f22fd6af1e941fa05252a832f3a41bc94cbd8eebea13ce0491b2ac11b88',1,'daisy::GPIO::LOW()'],['../classdaisy_1_1_neo_trellis.html#a08d0cfd62e053922653a0b9e78ed29c0af4ccfedff592f55c151895a2e74f3192',1,'daisy::NeoTrellis::LOW()']]],
-  ['lpuart_5f1_88',['LPUART_1',['../structdaisy_1_1_uart_handler_1_1_config.html#ad8a5646b09e2110234e724afeaade9dcaaeb2cd01489a7c6b4fecc99d504f3621',1,'daisy::UartHandler::Config']]],
-  ['lr_5fswap_89',['lr_swap',['../structdaisy_1_1_wm8731_1_1_config.html#ab4f7715d2649dc0e73aad513a9ac9326',1,'daisy::Wm8731::Config']]]
+  ['low_87',['LOW',['../classdaisy_1_1_g_p_i_o.html#ab46ae5f22fd6af1e941fa05252a832f3a41bc94cbd8eebea13ce0491b2ac11b88',1,'daisy::GPIO::LOW()'],['../classdaisy_1_1_neo_trellis.html#a08d0cfd62e053922653a0b9e78ed29c0af4ccfedff592f55c151895a2e74f3192',1,'daisy::NeoTrellis::LOW()'],['../structdaisy_1_1_spi_handle_1_1_config.html#a1d8556f306b61df88d6f08ebd6b9ba24a41bc94cbd8eebea13ce0491b2ac11b88',1,'daisy::SpiHandle::Config::LOW()']]],
+  ['lowpowermode_88',['LOWPOWERMODE',['../classdaisy_1_1_tlv493d.html#a4e647f10dce86b4de6e6f0d641e2ede6a848750e11e5f9711389c1db64a730e42',1,'daisy::Tlv493d']]],
+  ['lp_89',['lp',['../structdaisy_1_1_tlv493d_1_1_access_mode__t.html#a7f344c1a0bbb88419b51b492a92722a2',1,'daisy::Tlv493d::AccessMode_t']]],
+  ['lpperiod_90',['lpPeriod',['../structdaisy_1_1_tlv493d_1_1_access_mode__t.html#ad1aeb074ba90a35535656633028b2c78',1,'daisy::Tlv493d::AccessMode_t']]],
+  ['lpuart_5f1_91',['LPUART_1',['../structdaisy_1_1_uart_handler_1_1_config.html#ad8a5646b09e2110234e724afeaade9dcaaeb2cd01489a7c6b4fecc99d504f3621',1,'daisy::UartHandler::Config']]],
+  ['lr_5fswap_92',['lr_swap',['../structdaisy_1_1_wm8731_1_1_config.html#ab4f7715d2649dc0e73aad513a9ac9326',1,'daisy::Wm8731::Config']]]
 ];

@@ -1,9 +1,20 @@
 var searchData=
 [
-  ['wave_5fformat_5falaw_0',['WAVE_FORMAT_ALAW',['../namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81a3acc0b2fc5be903510f16678a7463ab5',1,'daisy']]],
-  ['wave_5fformat_5fextensible_1',['WAVE_FORMAT_EXTENSIBLE',['../namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81a453bcc501a4a9f771411f1d224bf8d86',1,'daisy']]],
-  ['wave_5fformat_5fieee_5ffloat_2',['WAVE_FORMAT_IEEE_FLOAT',['../namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81afd2f9c63c6525b757a425e258cc390d9',1,'daisy']]],
-  ['wave_5fformat_5fpcm_3',['WAVE_FORMAT_PCM',['../namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81aa828e8210777458f6b2ff0d91de35ff8',1,'daisy']]],
-  ['wave_5fformat_5fulaw_4',['WAVE_FORMAT_ULAW',['../namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81a563fb05a62d62e03a6821f7e80c69997',1,'daisy']]],
-  ['white_5',['WHITE',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a83ee753e5244371af742fc0f6a831826',1,'daisy::Color']]]
+  ['w_5faddr_0',['W_ADDR',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086adddcc9b39eb5e11ea2a43f57e07472be',1,'daisy::Tlv493d']]],
+  ['w_5ffast_1',['W_FAST',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086ac87580fd23fdfb98c10ba7aff7c341c1',1,'daisy::Tlv493d']]],
+  ['w_5fint_2',['W_INT',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a01d94f1dfc3ffab0cd67308de31a59d6',1,'daisy::Tlv493d']]],
+  ['w_5flowpower_3',['W_LOWPOWER',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a133dbd9b2f39d7cf1026e6d16588de47',1,'daisy::Tlv493d']]],
+  ['w_5flp_5fperiod_4',['W_LP_PERIOD',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086aa547efb631743933724ce8f8a5eade90',1,'daisy::Tlv493d']]],
+  ['w_5fparity_5',['W_PARITY',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086af596fdb37481fa47942d027e0d6f2f47',1,'daisy::Tlv493d']]],
+  ['w_5fparity_5fen_6',['W_PARITY_EN',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a2aa45b3ddf669ce14869c40280b1c80f',1,'daisy::Tlv493d']]],
+  ['w_5fres1_7',['W_RES1',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086ad4fcaa1a5e7fd4c32bf4d2f9be7ec584',1,'daisy::Tlv493d']]],
+  ['w_5fres2_8',['W_RES2',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a6fbc2678928b5a1ffb66c70287fae052',1,'daisy::Tlv493d']]],
+  ['w_5fres3_9',['W_RES3',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a3f56318525bc332bb1bddb8fe620a9dc',1,'daisy::Tlv493d']]],
+  ['w_5ftemp_5fnen_10',['W_TEMP_NEN',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086ac3389a4e73cde0e3520f2eba46d6f06c',1,'daisy::Tlv493d']]],
+  ['wave_5fformat_5falaw_11',['WAVE_FORMAT_ALAW',['../namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81a3acc0b2fc5be903510f16678a7463ab5',1,'daisy']]],
+  ['wave_5fformat_5fextensible_12',['WAVE_FORMAT_EXTENSIBLE',['../namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81a453bcc501a4a9f771411f1d224bf8d86',1,'daisy']]],
+  ['wave_5fformat_5fieee_5ffloat_13',['WAVE_FORMAT_IEEE_FLOAT',['../namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81afd2f9c63c6525b757a425e258cc390d9',1,'daisy']]],
+  ['wave_5fformat_5fpcm_14',['WAVE_FORMAT_PCM',['../namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81aa828e8210777458f6b2ff0d91de35ff8',1,'daisy']]],
+  ['wave_5fformat_5fulaw_15',['WAVE_FORMAT_ULAW',['../namespacedaisy.html#ac4aa183da4cc8c253afebd7ae0713f81a563fb05a62d62e03a6821f7e80c69997',1,'daisy']]],
+  ['white_16',['WHITE',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a83ee753e5244371af742fc0f6a831826',1,'daisy::Color']]]
 ];
