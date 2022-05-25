@@ -8,5 +8,10 @@ var searchData=
   ['gate_5fout_5',['gate_out',['../classdaisy_1_1_daisy_field.html#a440d34e6818110884df7689b45926073',1,'daisy::DaisyField']]],
   ['gate_5fout_5f1_6',['gate_out_1',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ae05ee45a0637e24b1678a134635ab92a',1,'daisy::patch_sm::DaisyPatchSM']]],
   ['gate_5fout_5f2_7',['gate_out_2',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ab5fbf53674c3fd6799647335fb88dbe6',1,'daisy::patch_sm::DaisyPatchSM']]],
-  ['gate_5foutput_8',['gate_output',['../classdaisy_1_1_daisy_patch.html#a91a7d7e5aae230d58794b63c78f2cfda',1,'daisy::DaisyPatch']]]
+  ['gate_5foutput_8',['gate_output',['../classdaisy_1_1_daisy_patch.html#a91a7d7e5aae230d58794b63c78f2cfda',1,'daisy::DaisyPatch']]],
+  ['gesture_5fmode_9',['gesture_mode',['../structdaisy_1_1_apds9960_1_1_config.html#ae8ae6e88599c1502d8b3526a478cfae2',1,'daisy::Apds9960::Config']]],
+  ['gesturedimensions_10',['gestureDimensions',['../structdaisy_1_1_apds9960_1_1_config.html#af099413639a7e25b9d954cd1fc51b011',1,'daisy::Apds9960::Config']]],
+  ['gesturefifothresh_11',['gestureFifoThresh',['../structdaisy_1_1_apds9960_1_1_config.html#ad4d79096c4adec916ba725bf312dc63a',1,'daisy::Apds9960::Config']]],
+  ['gesturegain_12',['gestureGain',['../structdaisy_1_1_apds9960_1_1_config.html#a5af9a73697058989566f3ae3e2467b8c',1,'daisy::Apds9960::Config']]],
+  ['gestureproximitythresh_13',['gestureProximityThresh',['../structdaisy_1_1_apds9960_1_1_config.html#a6d4db5a3e13472af303da39b3a117025',1,'daisy::Apds9960::Config']]]
 ];

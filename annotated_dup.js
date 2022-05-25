@@ -14,6 +14,8 @@ var annotated_dup =
       [ "AllNotesOffEvent", "structdaisy_1_1_all_notes_off_event.html", "structdaisy_1_1_all_notes_off_event" ],
       [ "AllSoundOffEvent", "structdaisy_1_1_all_sound_off_event.html", "structdaisy_1_1_all_sound_off_event" ],
       [ "AnalogControl", "classdaisy_1_1_analog_control.html", "classdaisy_1_1_analog_control" ],
+      [ "Apds9960", "classdaisy_1_1_apds9960.html", "classdaisy_1_1_apds9960" ],
+      [ "Apds9960I2CTransport", "classdaisy_1_1_apds9960_i2_c_transport.html", "classdaisy_1_1_apds9960_i2_c_transport" ],
       [ "AudioHandle", "classdaisy_1_1_audio_handle.html", "classdaisy_1_1_audio_handle" ],
       [ "ButtonMonitor", "classdaisy_1_1_button_monitor.html", "classdaisy_1_1_button_monitor" ],
       [ "ChannelModeEvent", "structdaisy_1_1_channel_mode_event.html", "structdaisy_1_1_channel_mode_event" ],

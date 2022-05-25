@@ -1,5 +1,6 @@
 var dir_79aff18505430beab4d731f694f82366 =
 [
+    [ "apds9960.h", "apds9960_8h.html", "apds9960_8h" ],
     [ "codec_ak4556.h", "codec__ak4556_8h.html", "codec__ak4556_8h" ],
     [ "codec_pcm3060.h", "codec__pcm3060_8h.html", "codec__pcm3060_8h" ],
     [ "codec_wm8731.h", "codec__wm8731_8h.html", "codec__wm8731_8h" ],

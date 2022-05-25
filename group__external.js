@@ -1,5 +1,77 @@
 var group__external =
 [
+    [ "daisy::Apds9960I2CTransport", "classdaisy_1_1_apds9960_i2_c_transport.html", [
+      [ "Config", "structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html", [
+        [ "Config", "structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html#a753b56324f7e8d5733a4b56b30779e46", null ],
+        [ "periph", "structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html#acfcb28d34bcd73bc33075e7fcbbff243", null ],
+        [ "scl", "structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html#a19aca0bbb0d3386d5808506c6d8e0743", null ],
+        [ "sda", "structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html#a776e12358363059e096dd614fa9bb4d6", null ],
+        [ "speed", "structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html#a33d3e4f8290feaeafaf6129817623b88", null ]
+      ] ],
+      [ "Apds9960I2CTransport", "classdaisy_1_1_apds9960_i2_c_transport.html#ae66cf279d0ba86f9b7a274882ba6def5", null ],
+      [ "~Apds9960I2CTransport", "classdaisy_1_1_apds9960_i2_c_transport.html#ab519448fee61a5627d697473c86673cf", null ],
+      [ "Init", "classdaisy_1_1_apds9960_i2_c_transport.html#a4b1d6f0db098b9f5c94575dfac6e5ca4", null ],
+      [ "Read", "classdaisy_1_1_apds9960_i2_c_transport.html#a9f07b5e8204c1f09403f000ff0a063ff", null ],
+      [ "Write", "classdaisy_1_1_apds9960_i2_c_transport.html#a4ec1ad4c1f5e9f41a0e29dc99990ba27", null ]
+    ] ],
+    [ "daisy::Apds9960< Transport >", "classdaisy_1_1_apds9960.html", [
+      [ "Config", "structdaisy_1_1_apds9960_1_1_config.html", [
+        [ "Config", "structdaisy_1_1_apds9960_1_1_config.html#a5db9e59b5a046396e2766351ed318ac3", null ],
+        [ "adcGain", "structdaisy_1_1_apds9960_1_1_config.html#adcbb5e6fa46f8999f940b9c632ef6a08", null ],
+        [ "color_mode", "structdaisy_1_1_apds9960_1_1_config.html#a1f83a8dbf530eac100a9630a7c07e2c1", null ],
+        [ "gesture_mode", "structdaisy_1_1_apds9960_1_1_config.html#ae8ae6e88599c1502d8b3526a478cfae2", null ],
+        [ "gestureDimensions", "structdaisy_1_1_apds9960_1_1_config.html#af099413639a7e25b9d954cd1fc51b011", null ],
+        [ "gestureFifoThresh", "structdaisy_1_1_apds9960_1_1_config.html#ad4d79096c4adec916ba725bf312dc63a", null ],
+        [ "gestureGain", "structdaisy_1_1_apds9960_1_1_config.html#a5af9a73697058989566f3ae3e2467b8c", null ],
+        [ "gestureProximityThresh", "structdaisy_1_1_apds9960_1_1_config.html#a6d4db5a3e13472af303da39b3a117025", null ],
+        [ "integrationTimeMs", "structdaisy_1_1_apds9960_1_1_config.html#a2560738f0883253326b9500c9d0fefdb", null ],
+        [ "prox_mode", "structdaisy_1_1_apds9960_1_1_config.html#aa56d3a53b14c4d8acbae0aaf351f0eeb", null ],
+        [ "transport_config", "structdaisy_1_1_apds9960_1_1_config.html#acb84c708c86fdabccfc5055db562bb7a", null ]
+      ] ],
+      [ "Result", "classdaisy_1_1_apds9960.html#ab80195f03d28d8e36ed5e062155b8b8f", [
+        [ "OK", "classdaisy_1_1_apds9960.html#ab80195f03d28d8e36ed5e062155b8b8fa231df5312c9cbc855db3db3d900c7fea", null ],
+        [ "ERR", "classdaisy_1_1_apds9960.html#ab80195f03d28d8e36ed5e062155b8b8fab033e21f5fc24789692f8bdb9ad29c4e", null ]
+      ] ],
+      [ "Apds9960", "classdaisy_1_1_apds9960.html#a53dfea112994e3ed75ccd9a89c1a7130", null ],
+      [ "~Apds9960", "classdaisy_1_1_apds9960.html#acec4425dd3cec71c596466d17c61be24", null ],
+      [ "CalculateColorTemperature", "classdaisy_1_1_apds9960.html#ac748831e91a37b0d6d85ece3a710d636", null ],
+      [ "CalculateLux", "classdaisy_1_1_apds9960.html#a5c3c109e9a369437bd5eda93f4ec10c7", null ],
+      [ "ClearInterrupt", "classdaisy_1_1_apds9960.html#ac180a968be71261dd2b384c672a14b6f", null ],
+      [ "ColorDataReady", "classdaisy_1_1_apds9960.html#a7639be829aba496cf74e64464f4da1ce", null ],
+      [ "Enable", "classdaisy_1_1_apds9960.html#a68130f4d2185e6a5385e525e01f86eb2", null ],
+      [ "enable", "classdaisy_1_1_apds9960.html#ab4bceba1c9fdc2d0f3fa65391c66829a", null ],
+      [ "EnableColor", "classdaisy_1_1_apds9960.html#a591c47b814ea1c5d23e2bd46e453f76b", null ],
+      [ "EnableGesture", "classdaisy_1_1_apds9960.html#abb956ec839bfa597606ea0f3a6e73ff5", null ],
+      [ "EnableProximity", "classdaisy_1_1_apds9960.html#a86baa5728de80adce3eb81f9c7865e01", null ],
+      [ "GestureValid", "classdaisy_1_1_apds9960.html#aae52cd4ddc4eb3df943090035ef1d991", null ],
+      [ "GetADCIntegrationTime", "classdaisy_1_1_apds9960.html#a8badd2d777f8316695706b5b195685e8", null ],
+      [ "GetColorData", "classdaisy_1_1_apds9960.html#aeb823302fccd5b31520eed11c7c03196", null ],
+      [ "GetColorDataBlue", "classdaisy_1_1_apds9960.html#a6b5e2f6ac6350b4e9834d937a2d7142c", null ],
+      [ "GetColorDataClear", "classdaisy_1_1_apds9960.html#ad0b636fbd35b228687ce4ae75a787cf1", null ],
+      [ "GetColorDataGreen", "classdaisy_1_1_apds9960.html#a042054a5767dc2e875acb90c19036ad5", null ],
+      [ "GetColorDataRed", "classdaisy_1_1_apds9960.html#aad785640d44f79c4f6a61efb8a0c5bed", null ],
+      [ "GetProxGain", "classdaisy_1_1_apds9960.html#ae41b5876e5b8d8ebe5cb7a818977e089", null ],
+      [ "Init", "classdaisy_1_1_apds9960.html#a3f4e889772c6170099623fc62b04dce6", null ],
+      [ "Read16R", "classdaisy_1_1_apds9960.html#a099b346f98b398a252868c1d250c0a35", null ],
+      [ "Read8", "classdaisy_1_1_apds9960.html#a5cd389597fe2f129725ca356999005c2", null ],
+      [ "ReadGesture", "classdaisy_1_1_apds9960.html#a2223fb264bb7284f6a294a311f0fa490", null ],
+      [ "ReadProximity", "classdaisy_1_1_apds9960.html#a9a6ceec95f3c07ccdffe0dbeefe8b73b", null ],
+      [ "ResetCounts", "classdaisy_1_1_apds9960.html#a30065fbd4498c53073e95ea6e1142c22", null ],
+      [ "SetADCGain", "classdaisy_1_1_apds9960.html#a25b3ecd642bb7918fd1af80c4269851b", null ],
+      [ "SetADCIntegrationTime", "classdaisy_1_1_apds9960.html#a156ad026074df9939292be7155bd4de5", null ],
+      [ "SetColorInterrupt", "classdaisy_1_1_apds9960.html#a3bb1a90fd6838df8349b983bf090e9dd", null ],
+      [ "SetGestureDimensions", "classdaisy_1_1_apds9960.html#a52a083d0ee8ead33d27047f25a9bb770", null ],
+      [ "SetGestureFIFOThreshold", "classdaisy_1_1_apds9960.html#a124ffff67a1e7d8f6e49729c3450515f", null ],
+      [ "SetGestureGain", "classdaisy_1_1_apds9960.html#ad451a1d1472e6622fdc893e7002521a3", null ],
+      [ "SetGestureOffset", "classdaisy_1_1_apds9960.html#acdae6871ac644aace21d226c8ff85e1c", null ],
+      [ "SetGestureProximityThreshold", "classdaisy_1_1_apds9960.html#a7fbdc06defefb2ae19af9d781e6b771a", null ],
+      [ "SetIntLimits", "classdaisy_1_1_apds9960.html#a3e2dfaffe42d0bc1482da0d0e0fbad92", null ],
+      [ "SetLED", "classdaisy_1_1_apds9960.html#ad938cafd3f89e17bbf983a6d9fd7e0b3", null ],
+      [ "SetProxGain", "classdaisy_1_1_apds9960.html#aa4267e573b82f14d7950ebe1f179db0e", null ],
+      [ "SetProximityInterrupt", "classdaisy_1_1_apds9960.html#a3cf8c7053b967952b70d4da945ea3fc9", null ],
+      [ "SetProxPulse", "classdaisy_1_1_apds9960.html#aa19e474f6dd88346a0b5b845ce1df78a", null ],
+      [ "Write8", "classdaisy_1_1_apds9960.html#a14b108aefad148115abb00fb86417148", null ]
+    ] ],
     [ "daisy::Dps310I2CTransport", "classdaisy_1_1_dps310_i2_c_transport.html", [
       [ "Config", "structdaisy_1_1_dps310_i2_c_transport_1_1_config.html", [
         [ "Config", "structdaisy_1_1_dps310_i2_c_transport_1_1_config.html#a2754612c7105b68f86d6d4e5886b6e33", null ],
