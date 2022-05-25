@@ -1,5 +1,9 @@
 # libDaisy Changelog
 
+## Unreleased
+
+<!-- Add New Changes Entries Here -->
+
 ## v5.1.0
 
 ### Features
