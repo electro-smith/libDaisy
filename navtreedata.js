@@ -134,7 +134,7 @@ var NAVTREE =
         [ "Variables", "functions_vars.html", "functions_vars" ],
         [ "Typedefs", "functions_type.html", null ],
         [ "Enumerations", "functions_enum.html", null ],
-        [ "Enumerator", "functions_eval.html", null ],
+        [ "Enumerator", "functions_eval.html", "functions_eval" ],
         [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ],
@@ -157,16 +157,16 @@ var NAVTREEINDEX =
 "_abstract_menu_8h.html",
 "classdaisy_1_1_dac_handle.html#a30248a4615012854c7271b510ba7803cac8cf6eea8f096ed51160b484d97c5bbd",
 "classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428ca883aebb89ab52e6e78a50c760c9aa099",
-"classdaisy_1_1_icm20948.html#ab572f660202da841e20e8bcd63663c75",
-"classdaisy_1_1_one_bit_graphics_display_impl.html#a3db8f23c875296a365c17dfd90acc50e",
-"classdaisy_1_1_stack_base.html#a9258967ba9f613b9759b20b888ea3b48",
-"classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a4209445a7e828b5f42993a7426271f5a",
-"functions_func_f.html",
-"group__flash.html#ga7f93a22b18a56f3850a795b30bc80dd1",
-"i2c_8h.html#ae0b19c7433a9a4943496c1223cd410b2",
-"qspi_8h.html#a60e1f5f509302b4539a5153c90880d68",
-"structdaisy_1_1_note_off_event.html",
-"structdaisy_1_1_ui_canvas_descriptor.html#a467cc6b1c0e64d27a392c65ac977abb3"
+"classdaisy_1_1_g_p_i_o.html#af853f20a7e4f4d4f337c30fe1d6f1827a9fdc84240088be4e2d30979a2cef2b78",
+"classdaisy_1_1_mcp23_x17.html#af0124ec7feb2c9f69d7097d5a0f11806",
+"classdaisy_1_1_sai_handle.html#a49d32d4b42f809606145e93761268e06",
+"classdaisy_1_1_ui_page.html#adf73666aa856dc693ea3322f945afe40",
+"dps310_8h.html#aeebd8a048ab661e5d140f08395dc8243",
+"group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gaea7ecc4e322ff749af69f9062a01093c",
+"group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a9a64652b06f5ea678d94472ecd77d3ee",
+"mcp23x17_8h.html#a8f8fe174eb9db8e8a38e8c08155f1f46a8f5c96f20d4ff1ba9935f0f10bbf0dac",
+"structdaisy_1_1_i2_c_handle_1_1_config.html#a4ea7f774e5aaf99e868cd341ac8183c3",
+"structdaisy_1_1_spi_handle_1_1_config.html#a035f8343e15d67d087f019f6256a0e81"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

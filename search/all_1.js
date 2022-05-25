@@ -36,7 +36,7 @@ var searchData=
   ['addencoderturned_33',['AddEncoderTurned',['../classdaisy_1_1_ui_event_queue.html#a9eba0d7df62a90bd4c53477888df4131',1,'daisy::UiEventQueue']]],
   ['addpotactivitychanged_34',['AddPotActivityChanged',['../classdaisy_1_1_ui_event_queue.html#ae2bc1fcca7860baeb01f6a261c584ac8',1,'daisy::UiEventQueue']]],
   ['addpotmoved_35',['AddPotMoved',['../classdaisy_1_1_ui_event_queue.html#ab0f7863e0e1dabf7d2e13b7651ca7b77',1,'daisy::UiEventQueue']]],
-  ['address_36',['address',['../structdaisy_1_1_i2_c_handle_1_1_config.html#a9830c26219602f876bd0db150dab5a02',1,'daisy::I2CHandle::Config::address()'],['../structdaisy_1_1_icm20948_i2_c_transport_1_1_config.html#ac10af2c097005b1d92d97dc6f9f69852',1,'daisy::Icm20948I2CTransport::Config::address()']]],
+  ['address_36',['address',['../structdaisy_1_1_dps310_i2_c_transport_1_1_config.html#a8dc4cc50e4b2c0824bc84abb3fd1ab0d',1,'daisy::Dps310I2CTransport::Config::address()'],['../structdaisy_1_1_icm20948_i2_c_transport_1_1_config.html#ac10af2c097005b1d92d97dc6f9f69852',1,'daisy::Icm20948I2CTransport::Config::address()'],['../structdaisy_1_1_i2_c_handle_1_1_config.html#a9830c26219602f876bd0db150dab5a02',1,'daisy::I2CHandle::Config::address()']]],
   ['advance_37',['Advance',['../classdaisy_1_1_ring_buffer.html#ae916dcd391cdfedb7d58079cfe533e84',1,'daisy::RingBuffer']]],
   ['ak09916_5fcntl2_38',['AK09916_CNTL2',['../icm20948_8h.html#aa523000feb252cc32d4f55cb53141823',1,'icm20948.h']]],
   ['ak09916_5fcntl3_39',['AK09916_CNTL3',['../icm20948_8h.html#a4a9c5724302517baef6582eb148671bd',1,'icm20948.h']]],

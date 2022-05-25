@@ -176,6 +176,13 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class that handles initializing all of the hardware specific to the Desmodus Versio hardware. <br  />
  Helper funtions are also in place to provide easy access to built-in controls and peripherals.  <a href="classdaisy_1_1_daisy_versio.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_dps310.html">Dps310</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device support for DPS310 Barometric Pressure and Altitude Sensor.  <a href="classdaisy_1_1_dps310.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_dps310_i2_c_transport.html">Dps310I2CTransport</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_dps310_spi_transport.html">Dps310SpiTransport</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_encoder.html">Encoder</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic Class for handling Quadrature Encoders <br  />
  Inspired/influenced by Mutable Instruments (pichenettes) <a class="el" href="classdaisy_1_1_encoder.html" title="Generic Class for handling Quadrature Encoders   Inspired/influenced by Mutable Instruments (pichenet...">Encoder</a> classes.  <a href="classdaisy_1_1_encoder.html#details">More...</a><br /></td></tr>
@@ -396,6 +403,10 @@ Example product: <a href="https://www.adafruit.com/product/181">https://www.adaf
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a9994aaf433cf88a003f500778c3a8d0b"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a9994aaf433cf88a003f500778c3a8d0b">Dps310I2C</a> = <a class="el" href="classdaisy_1_1_dps310.html">Dps310</a>&lt; <a class="el" href="classdaisy_1_1_dps310_i2_c_transport.html">Dps310I2CTransport</a> &gt;</td></tr>
+<tr class="separator:a9994aaf433cf88a003f500778c3a8d0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab9c1174c76a1cc25300c457b1d6045a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#aab9c1174c76a1cc25300c457b1d6045a">Dps310Spi</a> = <a class="el" href="classdaisy_1_1_dps310.html">Dps310</a>&lt; <a class="el" href="classdaisy_1_1_dps310_spi_transport.html">Dps310SpiTransport</a> &gt;</td></tr>
+<tr class="separator:aab9c1174c76a1cc25300c457b1d6045a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3a583bc1f8dd6f54b4104e4cbff44c1"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#aa3a583bc1f8dd6f54b4104e4cbff44c1">Icm20948I2C</a> = <a class="el" href="classdaisy_1_1_icm20948.html">Icm20948</a>&lt; <a class="el" href="classdaisy_1_1_icm20948_i2_c_transport.html">Icm20948I2CTransport</a> &gt;</td></tr>
 <tr class="separator:aa3a583bc1f8dd6f54b4104e4cbff44c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0240cd43a07ff5691b41ff2269d29a0d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a0240cd43a07ff5691b41ff2269d29a0d">Icm20948Spi</a> = <a class="el" href="classdaisy_1_1_icm20948.html">Icm20948</a>&lt; <a class="el" href="classdaisy_1_1_icm20948_spi_transport.html">Icm20948SpiTransport</a> &gt;</td></tr>
@@ -629,6 +640,34 @@ Variables</h2></td></tr>
 <div class="textblock"><p >Hardware defines and helpers for daisy field platform. </p>
 <p >Copyright (C) Johannes Elliesen, 2021 </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a9994aaf433cf88a003f500778c3a8d0b" name="a9994aaf433cf88a003f500778c3a8d0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9994aaf433cf88a003f500778c3a8d0b">&#9670;&nbsp;</a></span>Dps310I2C</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacedaisy.html#a9994aaf433cf88a003f500778c3a8d0b">daisy::Dps310I2C</a> = typedef <a class="el" href="classdaisy_1_1_dps310.html">Dps310</a>&lt;<a class="el" href="classdaisy_1_1_dps310_i2_c_transport.html">Dps310I2CTransport</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aab9c1174c76a1cc25300c457b1d6045a" name="aab9c1174c76a1cc25300c457b1d6045a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab9c1174c76a1cc25300c457b1d6045a">&#9670;&nbsp;</a></span>Dps310Spi</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacedaisy.html#aab9c1174c76a1cc25300c457b1d6045a">daisy::Dps310Spi</a> = typedef <a class="el" href="classdaisy_1_1_dps310.html">Dps310</a>&lt;<a class="el" href="classdaisy_1_1_dps310_spi_transport.html">Dps310SpiTransport</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aa3a583bc1f8dd6f54b4104e4cbff44c1" name="aa3a583bc1f8dd6f54b4104e4cbff44c1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa3a583bc1f8dd6f54b4104e4cbff44c1">&#9670;&nbsp;</a></span>Icm20948I2C</h2>
 

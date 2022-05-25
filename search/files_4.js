@@ -11,5 +11,6 @@ var searchData=
   ['daisy_5fseed_2eh_8',['daisy_seed.h',['../daisy__seed_8h.html',1,'']]],
   ['daisy_5fversio_2eh_9',['daisy_versio.h',['../daisy__versio_8h.html',1,'']]],
   ['display_2eh_10',['display.h',['../display_8h.html',1,'']]],
-  ['dma_2eh_11',['dma.h',['../dma_8h.html',1,'']]]
+  ['dma_2eh_11',['dma.h',['../dma_8h.html',1,'']]],
+  ['dps310_2eh_12',['dps310.h',['../dps310_8h.html',1,'']]]
 ];

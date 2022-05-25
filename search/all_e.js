@@ -15,11 +15,12 @@ var searchData=
   ['noteoffevent_12',['NoteOffEvent',['../structdaisy_1_1_note_off_event.html',1,'daisy']]],
   ['noteon_13',['NoteOn',['../group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a9a64652b06f5ea678d94472ecd77d3ee',1,'daisy']]],
   ['noteonevent_14',['NoteOnEvent',['../structdaisy_1_1_note_on_event.html',1,'daisy']]],
-  ['nss_15',['nss',['../structdaisy_1_1_spi_handle_1_1_config.html#a636ef18d574ac72ee1b2770e8989bc42',1,'daisy::SpiHandle::Config::nss()'],['../structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a8002eed9d6318c93bb1a87de02e6d0dc',1,'daisy::MultiSlaveSpiHandle::Config::nss()'],['../structdaisy_1_1_spi_handle_1_1_config.html#a4f16b1422469399d116457cf83dc6258',1,'daisy::SpiHandle::Config::nss()'],['../structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#a0cec49607adbb7f7c4a96bfc00b190a2',1,'daisy::MAX11300MultiSlaveSpiTransport::Config::PinConfig::nss()'],['../structdaisy_1_1_icm20948_spi_transport_1_1_config.html#aa739d6c3ab8b8e406ba3dfacd85f5626',1,'daisy::Icm20948SpiTransport::Config::nss()']]],
+  ['nss_15',['nss',['../structdaisy_1_1_spi_handle_1_1_config.html#a4f16b1422469399d116457cf83dc6258',1,'daisy::SpiHandle::Config']]],
   ['nss_16',['NSS',['../structdaisy_1_1_spi_handle_1_1_config.html#a1832b92ab9f6dcacb9c010c4c77c844e',1,'daisy::SpiHandle::Config']]],
-  ['num_5fchannels_17',['num_channels',['../structdaisy_1_1_mono_mode_on_event.html#a000e23868355edbb3d3ba5b378535d03',1,'daisy::MonoModeOnEvent']]],
-  ['num_5fdevices_18',['num_devices',['../structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a2400853acec103058b771d0287a0c79a',1,'daisy::MultiSlaveSpiHandle::Config']]],
-  ['num_5ffinished_5fchecks_19',['NUM_FINISHED_CHECKS',['../icm20948_8h.html#ac14a90b5a4b8373e05ed83a8464b98e4',1,'icm20948.h']]],
-  ['num_5fpins_20',['NUM_PINS',['../class_shift_register595.html#a2e0140c5d6cac8821d558b2683f7a134a831131c4aff6b1c4ab21fa12d9c47a38',1,'ShiftRegister595']]],
-  ['numitems_5f_21',['numItems_',['../classdaisy_1_1_abstract_menu.html#a1899339a8e663bc883317df8fca87395',1,'daisy::AbstractMenu']]]
+  ['nss_17',['nss',['../structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a8002eed9d6318c93bb1a87de02e6d0dc',1,'daisy::MultiSlaveSpiHandle::Config::nss()'],['../structdaisy_1_1_spi_handle_1_1_config.html#a636ef18d574ac72ee1b2770e8989bc42',1,'daisy::SpiHandle::Config::nss()'],['../structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#a0cec49607adbb7f7c4a96bfc00b190a2',1,'daisy::MAX11300MultiSlaveSpiTransport::Config::PinConfig::nss()'],['../structdaisy_1_1_icm20948_spi_transport_1_1_config.html#aa739d6c3ab8b8e406ba3dfacd85f5626',1,'daisy::Icm20948SpiTransport::Config::nss()'],['../structdaisy_1_1_dps310_spi_transport_1_1_config.html#abd0257a223fc9e66455116e7dcf2544c',1,'daisy::Dps310SpiTransport::Config::nss()']]],
+  ['num_5fchannels_18',['num_channels',['../structdaisy_1_1_mono_mode_on_event.html#a000e23868355edbb3d3ba5b378535d03',1,'daisy::MonoModeOnEvent']]],
+  ['num_5fdevices_19',['num_devices',['../structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a2400853acec103058b771d0287a0c79a',1,'daisy::MultiSlaveSpiHandle::Config']]],
+  ['num_5ffinished_5fchecks_20',['NUM_FINISHED_CHECKS',['../icm20948_8h.html#ac14a90b5a4b8373e05ed83a8464b98e4',1,'icm20948.h']]],
+  ['num_5fpins_21',['NUM_PINS',['../class_shift_register595.html#a2e0140c5d6cac8821d558b2683f7a134a831131c4aff6b1c4ab21fa12d9c47a38',1,'ShiftRegister595']]],
+  ['numitems_5f_22',['numItems_',['../classdaisy_1_1_abstract_menu.html#a1899339a8e663bc883317df8fca87395',1,'daisy::AbstractMenu']]]
 ];
