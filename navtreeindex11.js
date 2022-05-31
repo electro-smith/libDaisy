@@ -1,5 +1,6 @@
 var NAVTREEINDEX11 =
 {
+"i2c_8h.html":[17,0,1,2,3],
 "i2c_8h.html#ae0b19c7433a9a4943496c1223cd410b2":[17,0,1,2,3,2],
 "i2c_8h_source.html":[17,0,1,2,3],
 "icm20948_8h.html":[17,0,1,0,7],
@@ -248,6 +249,5 @@ var NAVTREEINDEX11 =
 "neopixel_8h.html#a4ee056fd3d7b09538908b35643a2508a":[17,0,1,0,13,35],
 "neopixel_8h.html#a59561d96a0f8a526ee3448e7b104d8b3":[17,0,1,0,13,33],
 "neopixel_8h.html#a5b49f89982b6e60d20f7aaab79030d54":[17,0,1,0,13,4],
-"neopixel_8h.html#a71f7c6e45f4c63fceca6b5b73c7a7c9d":[17,0,1,0,13,25],
-"neopixel_8h.html#a722066abc60b560235b3b22082c2e68e":[17,0,1,0,13,15]
+"neopixel_8h.html#a71f7c6e45f4c63fceca6b5b73c7a7c9d":[17,0,1,0,13,25]
 };

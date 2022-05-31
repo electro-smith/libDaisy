@@ -2,7 +2,9 @@ var group__audio =
 [
     [ "daisy::AudioHandle", "classdaisy_1_1_audio_handle.html", [
       [ "Config", "structdaisy_1_1_audio_handle_1_1_config.html", [
+        [ "Config", "structdaisy_1_1_audio_handle_1_1_config.html#a2543a29b73eb254e003f33502d88e991", null ],
         [ "blocksize", "structdaisy_1_1_audio_handle_1_1_config.html#a7e23631311ab3151daa7b4f5a49a897c", null ],
+        [ "output_compensation", "structdaisy_1_1_audio_handle_1_1_config.html#a53848d6e1333445bcc8899039cb58a9a", null ],
         [ "postgain", "structdaisy_1_1_audio_handle_1_1_config.html#ab43119a5a246e3855730972314b416a4", null ],
         [ "samplerate", "structdaisy_1_1_audio_handle_1_1_config.html#a744d708032c448f1eec1a78a9a45e7c6", null ]
       ] ],
@@ -29,6 +31,7 @@ var group__audio =
       [ "Init", "classdaisy_1_1_audio_handle.html#af4e61088880609884a50b830c2a50af6", null ],
       [ "operator=", "classdaisy_1_1_audio_handle.html#acb96a37114aaee60b18b29f7b788b139", null ],
       [ "SetBlockSize", "classdaisy_1_1_audio_handle.html#a93bf9a68619280b2524d8a8894c4dff9", null ],
+      [ "SetOutputCompensation", "classdaisy_1_1_audio_handle.html#ad35fbe0d71e89dbaccd362c02261ad8a", null ],
       [ "SetPostGain", "classdaisy_1_1_audio_handle.html#af958fe1518bf32d93cfc5278a1736789", null ],
       [ "SetSampleRate", "classdaisy_1_1_audio_handle.html#a66f20f5f6f2d2b49a80a25678869a47a", null ],
       [ "Start", "classdaisy_1_1_audio_handle.html#a068984ea4ad72f6d0be070fb8ddd346e", null ],

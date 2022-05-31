@@ -1,5 +1,8 @@
 var NAVTREEINDEX13 =
 {
+"structdaisy_1_1_icm20948_spi_transport_1_1_config.html#aa739d6c3ab8b8e406ba3dfacd85f5626":[4,1,6,0,3],
+"structdaisy_1_1_icm20948_spi_transport_1_1_config.html#acf895a37cbbfab785b358762adc84c6e":[4,1,6,0,2],
+"structdaisy_1_1_lcd_h_d44780_1_1_config.html":[4,0,4,6,0],
 "structdaisy_1_1_lcd_h_d44780_1_1_config.html#a0b9ecb68b0a054367066fc21b9dfb346":[4,0,4,6,0,2],
 "structdaisy_1_1_lcd_h_d44780_1_1_config.html#a2aa888857c52cf6c9cbae72c67ab5c14":[4,0,4,6,0,3],
 "structdaisy_1_1_lcd_h_d44780_1_1_config.html#a2c6c623ffd463f0de93f2eb6706cffd3":[4,0,4,6,0,7],
@@ -246,8 +249,5 @@ var NAVTREEINDEX13 =
 "structdaisy_1_1_shift_register4021_1_1_config.html#a72204442078e6c1cc46406ee69ca4c6b":[4,0,4,0,0,0,1],
 "structdaisy_1_1_shift_register4021_1_1_config.html#a784eb15848ab91c5664f139706dd0131":[4,0,4,0,0,0,0],
 "structdaisy_1_1_song_position_pointer_event.html":[4,0,1,4,0,10],
-"structdaisy_1_1_song_position_pointer_event.html#ab1bc48e1adf7a2ab0ff9451be4d7fe72":[4,0,1,4,0,10,0],
-"structdaisy_1_1_song_select_event.html":[4,0,1,4,0,11],
-"structdaisy_1_1_song_select_event.html#ab8348fcb912c6ba63200a15eb0386975":[4,0,1,4,0,11,0],
-"structdaisy_1_1_spi_handle_1_1_config.html":[4,0,2,0,1,0]
+"structdaisy_1_1_song_position_pointer_event.html#ab1bc48e1adf7a2ab0ff9451be4d7fe72":[4,0,1,4,0,10,0]
 };

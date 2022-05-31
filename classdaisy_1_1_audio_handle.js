@@ -24,6 +24,7 @@ var classdaisy_1_1_audio_handle =
     [ "Init", "classdaisy_1_1_audio_handle.html#af4e61088880609884a50b830c2a50af6", null ],
     [ "operator=", "classdaisy_1_1_audio_handle.html#acb96a37114aaee60b18b29f7b788b139", null ],
     [ "SetBlockSize", "classdaisy_1_1_audio_handle.html#a93bf9a68619280b2524d8a8894c4dff9", null ],
+    [ "SetOutputCompensation", "classdaisy_1_1_audio_handle.html#ad35fbe0d71e89dbaccd362c02261ad8a", null ],
     [ "SetPostGain", "classdaisy_1_1_audio_handle.html#af958fe1518bf32d93cfc5278a1736789", null ],
     [ "SetSampleRate", "classdaisy_1_1_audio_handle.html#a66f20f5f6f2d2b49a80a25678869a47a", null ],
     [ "Start", "classdaisy_1_1_audio_handle.html#a068984ea4ad72f6d0be070fb8ddd346e", null ],

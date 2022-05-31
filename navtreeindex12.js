@@ -1,5 +1,6 @@
 var NAVTREEINDEX12 =
 {
+"neopixel_8h.html#a722066abc60b560235b3b22082c2e68e":[17,0,1,0,13,15],
 "neopixel_8h.html#a7b6b551a990b498bed36aadba4a498d5":[17,0,1,0,13,23],
 "neopixel_8h.html#a7d6aaa56c8e2603312cba8dbdf9c5661":[17,0,1,0,13,21],
 "neopixel_8h.html#a9129664a08911b56227dd641116f105f":[17,0,1,0,13,3],
@@ -160,9 +161,11 @@ var NAVTREEINDEX12 =
 "structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html#a776e12358363059e096dd614fa9bb4d6":[4,1,0,0,3],
 "structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html#acfcb28d34bcd73bc33075e7fcbbff243":[4,1,0,0,1],
 "structdaisy_1_1_audio_handle_1_1_config.html":[4,0,1,0,0,0],
-"structdaisy_1_1_audio_handle_1_1_config.html#a744d708032c448f1eec1a78a9a45e7c6":[4,0,1,0,0,0,2],
-"structdaisy_1_1_audio_handle_1_1_config.html#a7e23631311ab3151daa7b4f5a49a897c":[4,0,1,0,0,0,0],
-"structdaisy_1_1_audio_handle_1_1_config.html#ab43119a5a246e3855730972314b416a4":[4,0,1,0,0,0,1],
+"structdaisy_1_1_audio_handle_1_1_config.html#a2543a29b73eb254e003f33502d88e991":[4,0,1,0,0,0,0],
+"structdaisy_1_1_audio_handle_1_1_config.html#a53848d6e1333445bcc8899039cb58a9a":[4,0,1,0,0,0,2],
+"structdaisy_1_1_audio_handle_1_1_config.html#a744d708032c448f1eec1a78a9a45e7c6":[4,0,1,0,0,0,4],
+"structdaisy_1_1_audio_handle_1_1_config.html#a7e23631311ab3151daa7b4f5a49a897c":[4,0,1,0,0,0,1],
+"structdaisy_1_1_audio_handle_1_1_config.html#ab43119a5a246e3855730972314b416a4":[4,0,1,0,0,0,3],
 "structdaisy_1_1_channel_mode_event.html":[4,0,1,4,0,7],
 "structdaisy_1_1_channel_mode_event.html#a950dda368088b6b2263da8de10984aba":[4,0,1,4,0,7,2],
 "structdaisy_1_1_channel_mode_event.html#ac4448faf5f246b35970e3524a8926fa0":[4,0,1,4,0,7,1],
@@ -246,8 +249,5 @@ var NAVTREEINDEX12 =
 "structdaisy_1_1_icm20948_spi_transport_1_1_config.html#a0970eb6a982a799564185a87aef6be58":[4,1,6,0,1],
 "structdaisy_1_1_icm20948_spi_transport_1_1_config.html#a22c73f2afaf0943392a63cf4e6e0d07c":[4,1,6,0,5],
 "structdaisy_1_1_icm20948_spi_transport_1_1_config.html#a287d67a07a3ff84245f8a6a082024107":[4,1,6,0,0],
-"structdaisy_1_1_icm20948_spi_transport_1_1_config.html#a9aae63f1fe0a46f021345f89e29c84ca":[4,1,6,0,4],
-"structdaisy_1_1_icm20948_spi_transport_1_1_config.html#aa739d6c3ab8b8e406ba3dfacd85f5626":[4,1,6,0,3],
-"structdaisy_1_1_icm20948_spi_transport_1_1_config.html#acf895a37cbbfab785b358762adc84c6e":[4,1,6,0,2],
-"structdaisy_1_1_lcd_h_d44780_1_1_config.html":[4,0,4,6,0]
+"structdaisy_1_1_icm20948_spi_transport_1_1_config.html#a9aae63f1fe0a46f021345f89e29c84ca":[4,1,6,0,4]
 };

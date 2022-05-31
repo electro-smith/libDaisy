@@ -167,6 +167,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a93bf9a68619280b2524d8a8894c4dff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af958fe1518bf32d93cfc5278a1736789"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_audio_handle.html#afd70b35cda9ec575d62d4abdcc453c30">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_audio_handle.html#af958fe1518bf32d93cfc5278a1736789">SetPostGain</a> (float val)</td></tr>
 <tr class="separator:af958fe1518bf32d93cfc5278a1736789"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad35fbe0d71e89dbaccd362c02261ad8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_audio_handle.html#afd70b35cda9ec575d62d4abdcc453c30">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_audio_handle.html#ad35fbe0d71e89dbaccd362c02261ad8a">SetOutputCompensation</a> (float val)</td></tr>
+<tr class="separator:ad35fbe0d71e89dbaccd362c02261ad8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a068984ea4ad72f6d0be070fb8ddd346e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_audio_handle.html#afd70b35cda9ec575d62d4abdcc453c30">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_audio_handle.html#a068984ea4ad72f6d0be070fb8ddd346e">Start</a> (<a class="el" href="classdaisy_1_1_audio_handle.html#a10a5b51605fba6bb19ab3f05394da38f">AudioCallback</a> callback)</td></tr>
 <tr class="separator:a068984ea4ad72f6d0be070fb8ddd346e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9d2bf9d2dd2256af4d77da403873b9fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_audio_handle.html#afd70b35cda9ec575d62d4abdcc453c30">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_audio_handle.html#a9d2bf9d2dd2256af4d77da403873b9fc">Start</a> (<a class="el" href="classdaisy_1_1_audio_handle.html#a125528dd20d6657e53ab78341cbdbb91">InterleavingAudioCallback</a> callback)</td></tr>
@@ -593,6 +595,31 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Sets the block size after initialization, and updates the internal configuration struct. Get BlockSize and other details via the GetConfig </p>
+
+</div>
+</div>
+<a id="ad35fbe0d71e89dbaccd362c02261ad8a" name="ad35fbe0d71e89dbaccd362c02261ad8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad35fbe0d71e89dbaccd362c02261ad8a">&#9670;&nbsp;</a></span>SetOutputCompensation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_audio_handle.html#afd70b35cda9ec575d62d4abdcc453c30">Result</a> daisy::AudioHandle::SetOutputCompensation </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>val</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Sets an additional amount of gain compensation to perform at the end of the callback Useful if the hardware input/output levels are not equal.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">val</td><td>To calcuate the value, measure the input signal, then measure the output signal (with this set to default value of 1.0). Then calculate val as: val = 1 / (vout / vin); </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

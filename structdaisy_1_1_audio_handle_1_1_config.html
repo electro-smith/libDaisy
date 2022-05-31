@@ -93,6 +93,7 @@ $(document).ready(function(){initNavTree('structdaisy_1_1_audio_handle_1_1_confi
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structdaisy_1_1_audio_handle_1_1_config-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">daisy::AudioHandle::Config Struct Reference</div></div>
@@ -103,6 +104,11 @@ $(document).ready(function(){initNavTree('structdaisy_1_1_audio_handle_1_1_confi
 </div>
 <p><code>#include &lt;<a class="el" href="audio_8h_source.html">audio.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a2543a29b73eb254e003f33502d88e991"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_audio_handle_1_1_config.html#a2543a29b73eb254e003f33502d88e991">Config</a> ()</td></tr>
+<tr class="separator:a2543a29b73eb254e003f33502d88e991"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a7e23631311ab3151daa7b4f5a49a897c"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_audio_handle_1_1_config.html#a7e23631311ab3151daa7b4f5a49a897c">blocksize</a></td></tr>
@@ -111,7 +117,36 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a744d708032c448f1eec1a78a9a45e7c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab43119a5a246e3855730972314b416a4"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_audio_handle_1_1_config.html#ab43119a5a246e3855730972314b416a4">postgain</a></td></tr>
 <tr class="separator:ab43119a5a246e3855730972314b416a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53848d6e1333445bcc8899039cb58a9a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_audio_handle_1_1_config.html#a53848d6e1333445bcc8899039cb58a9a">output_compensation</a></td></tr>
+<tr class="separator:a53848d6e1333445bcc8899039cb58a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a2543a29b73eb254e003f33502d88e991" name="a2543a29b73eb254e003f33502d88e991"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2543a29b73eb254e003f33502d88e991">&#9670;&nbsp;</a></span>Config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">daisy::AudioHandle::Config::Config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p >Sets default values for config struct </p>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a7e23631311ab3151daa7b4f5a49a897c" name="a7e23631311ab3151daa7b4f5a49a897c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7e23631311ab3151daa7b4f5a49a897c">&#9670;&nbsp;</a></span>blocksize</h2>
@@ -124,6 +159,22 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p >number of samples to process per callback Sample rate of audio </p>
+
+</div>
+</div>
+<a id="a53848d6e1333445bcc8899039cb58a9a" name="a53848d6e1333445bcc8899039cb58a9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53848d6e1333445bcc8899039cb58a9a">&#9670;&nbsp;</a></span>output_compensation</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float daisy::AudioHandle::Config::output_compensation</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >factor for additional one-sided compensation to audio path for hardware that may have unequal input/output ranges </p>
 
 </div>
 </div>
@@ -138,6 +189,7 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p >factor for adjustment before and after callback for hardware that may have extra headroom </p>
 
 </div>
 </div>

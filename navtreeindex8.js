@@ -1,5 +1,6 @@
 var NAVTREEINDEX8 =
 {
+"classes.html":[16,1],
 "codec__ak4556_8h.html":[17,0,1,0,1],
 "codec__ak4556_8h.html#adc8294fd3d5cb20619380f160bbb4c2c":[17,0,1,0,1,1],
 "codec__ak4556_8h_source.html":[17,0,1,0,1],
@@ -248,6 +249,5 @@ var NAVTREEINDEX8 =
 "functions_func_d.html":[16,3,1,4],
 "functions_func_e.html":[16,3,1,5],
 "functions_func_f.html":[16,3,1,6],
-"functions_func_g.html":[16,3,1,7],
-"functions_func_h.html":[16,3,1,8]
+"functions_func_g.html":[16,3,1,7]
 };
