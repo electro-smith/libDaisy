@@ -2,7 +2,9 @@
 
 ## Unreleased
 
-<!-- Add New Changes Entries Here -->
+### Features
+
+* audio: added `output_compensation` value to config struct to allow for post-scaling of uneven audio passthru levels.
 
 ## v5.1.0
 
