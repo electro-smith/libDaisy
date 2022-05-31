@@ -95,7 +95,7 @@ class AudioHandle
     AudioHandle() : pimpl_(nullptr) {}
     ~AudioHandle() {}
 
-    AudioHandle(const AudioHandle& other)            = default;
+    AudioHandle(const AudioHandle& other) = default;
     AudioHandle& operator=(const AudioHandle& other) = default;
 
     /** Initializes audio to run using a single SAI configured in Stereo I2S mode. */

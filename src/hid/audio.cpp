@@ -31,7 +31,7 @@ class AudioHandle::Impl
     // Interface
     AudioHandle::Result Init(const AudioHandle::Config config, SaiHandle sai);
     AudioHandle::Result
-    Init(const AudioHandle::Config config, SaiHandle sai1, SaiHandle sai2);
+                        Init(const AudioHandle::Config config, SaiHandle sai1, SaiHandle sai2);
     AudioHandle::Result DeInit();
     AudioHandle::Result Start(AudioHandle::AudioCallback callback);
     AudioHandle::Result Start(AudioHandle::InterleavingAudioCallback callback);
