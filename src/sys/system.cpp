@@ -12,7 +12,6 @@ extern "C"
 {
     extern void dsy_i2c_global_init();
     extern void dsy_spi_global_init();
-    extern void dsy_uart_global_init();
 }
 
 // Jump related stuff
@@ -221,7 +220,6 @@ void System::Init(const System::Config& config)
     dsy_dma_init();
     dsy_i2c_global_init();
     dsy_spi_global_init();
-    dsy_uart_global_init();
 
     // Initialize Caches
     if(config.use_dcache)
