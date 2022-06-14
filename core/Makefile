@@ -4,9 +4,6 @@ CHIPSET ?= stm32h7x
 
 TARGET_BIN=$(TARGET).bin
 TARGET_ELF=$(TARGET).elf
-BOOT_BIN ?= $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
-FLASH_ADDRESS ?= 0x08000000
-QSPI_ADDRESS  ?= 0x90040000
 
 # If you have the arm-none-eabi- toolchain located in a particular place, but not installed for the entire system, add the path here:
 # GCC_PATH=
@@ -188,19 +185,58 @@ CPPFLAGS += \
 -fshort-enums \
 -fno-move-loop-invariants \
 -fno-unwind-tables \
+-fno-rtti \
 -Wno-register
 
 C_STANDARD = -std=gnu11
 CPP_STANDARD ?= -std=gnu++14
 
+
+#######################################
+# Boot Management
+#######################################
+
+INTERNAL_ADDRESS = 0x08000000
+QSPI_ADDRESS ?= 0x90040000
+
+# For the time being, we'll keep the Daisy Bootloader's PID as df11
+# DAISY_PID = a360
+DAISY_PID = df11
+STM_PID = df11
+
+BOOT_BIN ?= $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
+APP_TYPE ?= BOOT_NONE
+
+ifeq ($(APP_TYPE), BOOT_NONE)
+
+LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
+USBPID = $(STM_PID)
+FLASH_ADDRESS ?= $(INTERNAL_ADDRESS)
+
+else ifeq ($(APP_TYPE), BOOT_SRAM)
+
+LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_sram.lds
+USBPID = $(DAISY_PID)
+FLASH_ADDRESS ?= $(QSPI_ADDRESS)
+C_DEFS += -DBOOT_APP
+
+else ifeq ($(APP_TYPE), BOOT_QSPI)
+
+LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_qspi.lds
+USBPID = $(DAISY_PID)
+FLASH_ADDRESS ?= $(QSPI_ADDRESS)
+C_DEFS += -DBOOT_APP
+
+else
+
+$(error Unkown app type "$(APP_TYPE)")
+
+endif
+
 #######################################
 # LDFLAGS
 #######################################
-# link script
-LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
-
 # libraries
-
 LIBS += -ldaisy -lc -lm -lnosys
 LIBDIR += -L$(LIBDAISY_DIR)/build
 #LIBDIR = -L./VisualGDB/Release
@@ -277,22 +313,24 @@ debug:
 debug_client:
 	ddd --eval-command="target remote localhost:3333" --debugger $(GDB) $(TARGET_ELF)
 
+ifeq ($(APP_TYPE), BOOT_NONE)
 program:
 	$(OCD) -s $(OCD_DIR) $(OCDFLAGS) \
 		-c "program ./build/$(TARGET).elf verify reset exit"
+else
+program:
+	$(error Cannot program via openocd with an app type of "$(APP_TYPE)". Try program-dfu instead)
+endif
 
 #######################################
 # dfu-util
 #######################################
 
 program-dfu:
-	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
-
-program-app:
-	dfu-util -a 0 -s $(QSPI_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:df11
+	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:$(USBPID)
 
 program-boot:
-	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BOOT_BIN) -d ,0483:df11
+	dfu-util -a 0 -s $(INTERNAL_ADDRESS):leave -D $(BOOT_BIN) -d ,0483:$(STM_PID)
 
 #######################################
 # dependencies

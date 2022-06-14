@@ -330,11 +330,11 @@ TEST_F(MidiTest, allNotesOff)
     {
         uint8_t          msg[]    = {(uint8_t)(0x80 + (3 << 4) + chn), 123, 0};
         MidiEvent        event    = ParseAndPop(msg, 3);
-        AllNotesOffEvent anoEvent = event.AsAllNotesOff();
+        AllNotesOffEvent allOnEvent = event.AsAllNotesOff();
 
         EXPECT_EQ((uint8_t)event.type, ChannelMode);
         EXPECT_EQ((uint8_t)event.cm_type, AllNotesOff);
-        EXPECT_EQ((uint8_t)anoEvent.channel, chn);
+        EXPECT_EQ((uint8_t)allOnEvent.channel, chn);
     }
     EXPECT_FALSE(midi.HasEvents());
 }
@@ -573,22 +573,22 @@ TEST_F(MidiTest, runningStatus)
     //NoteOn with status bit
     uint8_t     msgs[]  = {0x90, 0x10, 0x0f};
     MidiEvent   event   = ParseAndPop(msgs, 3);
-    NoteOnEvent noEvent = event.AsNoteOn();
+    NoteOnEvent onEvent = event.AsNoteOn();
     EXPECT_EQ(event.type, NoteOn);
-    EXPECT_EQ(noEvent.channel, 0);
-    EXPECT_EQ(noEvent.note, 0x10);
-    EXPECT_EQ(noEvent.velocity, 0x0f);
+    EXPECT_EQ(onEvent.channel, 0);
+    EXPECT_EQ(onEvent.note, 0x10);
+    EXPECT_EQ(onEvent.velocity, 0x0f);
 
     //running status
     for(uint8_t i = 1; i < 20; i++)
     {
         msgs[0] = msgs[1]   = i;
         MidiEvent   event   = ParseAndPop(msgs, 2);
-        NoteOnEvent noEvent = event.AsNoteOn();
+        NoteOnEvent onEvent = event.AsNoteOn();
         EXPECT_EQ(event.type, NoteOn);
-        EXPECT_EQ(noEvent.channel, 0);
-        EXPECT_EQ(noEvent.note, i);
-        EXPECT_EQ(noEvent.velocity, i);
+        EXPECT_EQ(onEvent.channel, 0);
+        EXPECT_EQ(onEvent.note, i);
+        EXPECT_EQ(onEvent.velocity, i);
     }
 
     EXPECT_FALSE(midi.HasEvents());
@@ -638,5 +638,149 @@ TEST_F(MidiTest, badData)
         msgs[1] = i;
         Parse(msgs, 2);
     }
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+// send some status bytes without data between valid messages with running status
+TEST_F(MidiTest, runningStatusAndStatusBytes)
+{
+    uint8_t noteon            = 0x90;
+    uint8_t running_status[6] = {0x40, 100, 0x40, 0x01, 0x40, 100};
+    uint8_t status_bytes[3]   = {0x90, 0x91, 0xB3};
+
+    Parse(&noteon, 1);
+    for(int i = 0; i < 3; i++)
+    {
+        MidiEvent   event   = ParseAndPop(&running_status[i * 2], 2);
+        NoteOnEvent onEvent = event.AsNoteOn();
+        EXPECT_EQ(event.type, NoteOn);
+        EXPECT_EQ(onEvent.channel, 0);
+        EXPECT_EQ(onEvent.note, 0x40);
+        EXPECT_EQ(onEvent.velocity, running_status[i * 2 + 1]);
+    }
+
+    Parse(status_bytes, 3);
+    EXPECT_FALSE(midi.HasEvents());
+
+    Parse(&noteon, 1);
+    for(int i = 0; i < 3; i++)
+    {
+        MidiEvent   event   = ParseAndPop(&running_status[i * 2], 2);
+        NoteOnEvent onEvent = event.AsNoteOn();
+        EXPECT_EQ(event.type, NoteOn);
+        EXPECT_EQ(onEvent.channel, 0);
+        EXPECT_EQ(onEvent.note, 0x40);
+        EXPECT_EQ(onEvent.velocity, running_status[i * 2 + 1]);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+// send running status noteons alternating between velocity 100 and 0
+TEST_F(MidiTest, mayoTest)
+{
+    uint8_t buff[60]
+        = {145, 48,  100, 48, 0,   48, 100, 48, 0,   48, 100, 48, 0,   48, 100,
+           48,  0,   145, 48, 100, 48, 0,   48, 100, 48, 0,   48, 100, 48, 0,
+           48,  100, 145, 48, 0,   48, 100, 48, 0,   48, 100, 48, 0,   48, 100,
+           48,  0,   145, 48, 100, 48, 0,   48, 100, 48, 0,   48, 100, 48, 0};
+
+    Parse(buff, 60);
+    for(int i = 0; i < 14; i++)
+    {
+        MidiEvent on  = midi.PopEvent();
+        MidiEvent off = midi.PopEvent();
+
+        EXPECT_EQ(on.type, NoteOn);
+        EXPECT_EQ(off.type, NoteOff);
+
+        NoteOnEvent  noOn  = on.AsNoteOn();
+        NoteOffEvent noOff = off.AsNoteOff();
+
+        EXPECT_EQ(noOn.channel, 1);
+        EXPECT_EQ(noOff.channel, 1);
+        EXPECT_EQ(noOn.note, 48);
+        EXPECT_EQ(noOff.note, 48);
+        EXPECT_EQ(noOn.velocity, 100);
+        EXPECT_EQ(noOff.velocity, 0);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+// send running status messages with one data byte
+TEST_F(MidiTest, singleByteRunningStatusTest)
+{
+    // == Channel Pressure ==
+    uint8_t status = 0xD3; // channel pressure, channel 3
+    Parse(&status, 1);
+
+    for(uint8_t i = 0; i < 128; i++)
+    {
+        MidiEvent ev  = ParseAndPop(&i, 1);
+
+        EXPECT_EQ(ev.type, ChannelPressure);
+
+        ChannelPressureEvent  chPressure  = ev.AsChannelPressure();
+
+        EXPECT_EQ(chPressure.channel, 3);
+        EXPECT_EQ(chPressure.pressure, i);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+
+    // == Program Change ==
+    status = 0xC3; // program change, channel 3
+    Parse(&status, 1);
+
+    for(uint8_t i = 0; i < 128; i++)
+    {
+        MidiEvent ev  = ParseAndPop(&i, 1);
+
+        EXPECT_EQ(ev.type, ProgramChange);
+
+        ProgramChangeEvent  progChange  = ev.AsProgramChange();
+
+        EXPECT_EQ(progChange.channel, 3);
+        EXPECT_EQ(progChange.program, i);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+
+    // == MTC Quarter Frame ==
+    status = 0xF1; // quarter frame
+    Parse(&status, 1);
+
+    for(uint8_t i = 0; i < 128; i++)
+    {
+        MidiEvent ev  = ParseAndPop(&i, 1);
+
+        EXPECT_EQ(ev.type, SystemCommon);
+        EXPECT_EQ(ev.sc_type, MTCQuarterFrame);
+
+        MTCQuarterFrameEvent  qfEv  = ev.AsMTCQuarterFrame();
+
+        EXPECT_EQ(qfEv.value, i & 0x0F);
+        EXPECT_EQ(qfEv.message_type, (i & 0x70) >> 4);
+    }
+
+    EXPECT_FALSE(midi.HasEvents());
+
+    // == Song Select ==
+    status = 0xF3; // song select
+    Parse(&status, 1);
+
+    for(uint8_t i = 0; i < 128; i++)
+    {
+        MidiEvent ev  = ParseAndPop(&i, 1);
+
+        EXPECT_EQ(ev.type, SystemCommon);
+        EXPECT_EQ(ev.sc_type, SongSelect);
+
+        SongSelectEvent  songSel  = ev.AsSongSelect();
+
+        EXPECT_EQ(songSel.song, i);
+    }
+
     EXPECT_FALSE(midi.HasEvents());
 }

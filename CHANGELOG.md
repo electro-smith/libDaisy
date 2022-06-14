@@ -2,6 +2,38 @@
 
 ## Unreleased
 
+### Features
+
+* audio: added `output_compensation` value to config struct to allow for post-scaling of uneven audio passthru levels.
+
+## v5.1.0
+
+### Features
+
+* tim: `TimerHandle` now has callbacks each time the Period has elapsed. These can be enabled with `TimerHandle::Config::enable_irq` at Init time.
+* bootloader: Working with the bootloader has been simplified. See [the new guide for updates on usage](https://electro-smith.github.io/libDaisy/md_doc_md__a7__getting__started__daisy__bootloader.html)
+* usb: `USBHost` class has added support for user callbacks on device connection, disconnection, and when the MSC class becomes active.
+* uart: Adds DMA RX and TX modes, similar to how they work on the I2C and SPI.
+* uart: Update function names to be more in line with the new DMA / Blocking scheme. 
+  * The old methods are wrappers for the new ones to preserve backwards compatibility, but **will be removed in a future version**.
+  * Affected functions: `PollReceive`, `PollTx`, `StartRx`, `RxActive`, `FlushRx`, `PopRx`, `Readable`
+
+### Bug Fixes
+
+* util: PersistentStorage class had a bug where calling the `RestoreDefaults` function would cause a crash
+* usb: LL HAL files for USB were updated to prevent timing issues when running with optimization
+* spi: Add IRQ handlers for SPI2-5. These should work with DMA now.
+* midi: bugs related to running status bytes for note off, and single data-byte messages have been resolved
+
+### Other
+
+* build: core/Makefile has had the `-fnortti` flag added to match libDaisy's Makefile
+* bootloader: local version of daisy bootloader has been updated to improve stability
+* spi: Added examples for blocking TX and DMA TX, added a writeup explaining how to use the SPI on the Daisy
+* uart: Adds examples for common modes of communication, both DMA, blocking, FIFO, and mixed.
+
+## v5.0.0
+
 ### Breaking Changes
 
 * driver: MAX11300 driver interface changed considerably
@@ -18,13 +50,22 @@
 * driver: MAX11300 now updates the chips continuously until manually stopped
 * driver: MAX11300 can now call a user-provided callback after an update is complete
 * debugging: added additional debugging aids to the HardFault handler
+* gatein: added invert init parameter for reading from different input circuits from the GateIn class.
+* ui: added `OnUserInteraction` virtual function to UI framework to allow for tracking user activity
 
 ### Bug Fixes
 
 * logger: Added 10ms delay at the end of `StartLog` function. Without this, messages immediatly following the `StartLog` function were getting missed when `wait_for_pc` is set to `true`.
 * testing: debugging configuration now uses `lldb` debugging extension to support unit test debugging on macOS with Apple Silicon
+* driver: oled_ssd130x.h - Add the SpiHandle:Config struct to SSD130x4WireTransport:Config to allow full access to the SPI peripheral configuration.
+* hid: fixed issue in `AnalogControl` where computed coeff could be out of range with certain block sizes
+* driver: added missing alternate function pin mappings for SPI2, and UART for pins available on the patch_sm hardware 
+* usb: fixed issue with MIDI output from USB
+* driver: fixed off-by-one error in qspi erase function.
 
 ### Other
+
+* driver: improved debouncing for `Switch`, and `Encoder` classes (limiting debouncing to 1kHz max frequency internally).
 
 ### Migrating
 
@@ -109,6 +150,7 @@ max11300driver.Stop();
   * Shared IRQHandlers for the USB HS peripheral have been moved to sys/system.cpp
 * driver: made MAX11300 getter functions `const`
 * cmake: changed optimization to `-O0` for Debug builds
+* qspi: fixed bug causing one sector erase beyond the given end address
 
 ### Other
 

@@ -155,6 +155,11 @@ class MidiHandler
     */
     void Parse(uint8_t byte)
     {
+        // reset parser when status byte is received
+        if((byte & kStatusByteMask) && pstate_ != ParserSysEx)
+        {
+            pstate_ = ParserEmpty;
+        }
         switch(pstate_)
         {
             case ParserEmpty:
@@ -217,7 +222,21 @@ class MidiHandler
                     // Handle as running status
                     incoming_message_.type    = running_status_;
                     incoming_message_.data[0] = byte & kDataByteMask;
-                    pstate_                   = ParserHasData0;
+                    //check for single byte running status, really this only applies to channel pressure though
+                    if(running_status_ == ChannelPressure
+                       || running_status_ == ProgramChange
+                       || incoming_message_.sc_type == MTCQuarterFrame
+                       || incoming_message_.sc_type == SongSelect)
+                    {
+                        //Send the single byte update
+                        pstate_ = ParserEmpty;
+                        event_q_.Write(incoming_message_);
+                    }
+                    else
+                    {
+                        pstate_
+                            = ParserHasData0; //we need to get the 2nd byte yet.
+                    }
                 }
                 break;
             case ParserHasStatus:
@@ -264,11 +283,16 @@ class MidiHandler
                     if(running_status_ == NoteOn
                        && incoming_message_.data[1] == 0)
                     {
-                        incoming_message_.type = running_status_ = NoteOff;
+                        incoming_message_.type = NoteOff;
                     }
 
                     // At this point the message is valid, and we can add this MidiEvent to the queue
                     event_q_.Write(incoming_message_);
+                }
+                else
+                {
+                    // invalid message go back to start ;p
+                    pstate_ = ParserEmpty;
                 }
                 // Regardless, of whether the data was valid or not we go back to empty
                 // because either the message is queued for handling or its not.

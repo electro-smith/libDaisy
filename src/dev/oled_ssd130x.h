@@ -17,6 +17,11 @@ class SSD130xI2CTransport
   public:
     struct Config
     {
+        Config()
+        {
+            // Intialize using defaults
+            Defaults();
+        }
         I2CHandle::Config i2c_config;
         uint8_t           i2c_address;
         void              Defaults()
@@ -62,6 +67,12 @@ class SSD130x4WireSpiTransport
   public:
     struct Config
     {
+        Config()
+        {
+            // Initialize using defaults
+            Defaults();
+        }
+        SpiHandle::Config spi_config;
         struct
         {
             dsy_gpio_pin dc;    /**< & */
@@ -69,6 +80,22 @@ class SSD130x4WireSpiTransport
         } pin_config;
         void Defaults()
         {
+            // SPI peripheral config
+            spi_config.periph = SpiHandle::Config::Peripheral::SPI_1;
+            spi_config.mode   = SpiHandle::Config::Mode::MASTER;
+            spi_config.direction
+                = SpiHandle::Config::Direction::TWO_LINES_TX_ONLY;
+            spi_config.datasize       = 8;
+            spi_config.clock_polarity = SpiHandle::Config::ClockPolarity::LOW;
+            spi_config.clock_phase    = SpiHandle::Config::ClockPhase::ONE_EDGE;
+            spi_config.nss            = SpiHandle::Config::NSS::HARD_OUTPUT;
+            spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_8;
+            // SPI pin config
+            spi_config.pin_config.sclk = {DSY_GPIOG, 11};
+            spi_config.pin_config.miso = {DSY_GPIOX, 0};
+            spi_config.pin_config.mosi = {DSY_GPIOB, 5};
+            spi_config.pin_config.nss  = {DSY_GPIOG, 10};
+            // SSD130x control pin config
             pin_config.dc    = {DSY_GPIOB, 4};
             pin_config.reset = {DSY_GPIOB, 15};
         }
@@ -82,23 +109,9 @@ class SSD130x4WireSpiTransport
         pin_reset_.mode = DSY_GPIO_MODE_OUTPUT_PP;
         pin_reset_.pin  = config.pin_config.reset;
         dsy_gpio_init(&pin_reset_);
+
         // Initialize SPI
-        SpiHandle::Config spi_config;
-        spi_config.periph    = SpiHandle::Config::Peripheral::SPI_1;
-        spi_config.mode      = SpiHandle::Config::Mode::MASTER;
-        spi_config.direction = SpiHandle::Config::Direction::TWO_LINES_TX_ONLY;
-        spi_config.datasize  = 8;
-        spi_config.clock_polarity = SpiHandle::Config::ClockPolarity::LOW;
-        spi_config.clock_phase    = SpiHandle::Config::ClockPhase::ONE_EDGE;
-        spi_config.nss            = SpiHandle::Config::NSS::HARD_OUTPUT;
-        spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_8;
-
-        spi_config.pin_config.sclk = {DSY_GPIOG, 11};
-        spi_config.pin_config.miso = {DSY_GPIOX, 0};
-        spi_config.pin_config.mosi = {DSY_GPIOB, 5};
-        spi_config.pin_config.nss  = {DSY_GPIOG, 10};
-
-        spi_.Init(spi_config);
+        spi_.Init(config.spi_config);
 
         // Reset and Configure OLED.
         dsy_gpio_write(&pin_reset_, 0);
