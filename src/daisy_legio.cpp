@@ -172,7 +172,6 @@ float DaisyLegio::GetKnobValue(int idx) {
 
 void DaisyLegio::UpdateExample() {
     encoder.Debounce();
-    for(size_t i = 0; i < LED_LAST; i++) {
-        SetLed(i, sw[i].Read()/2.0, controls[i].Value(), controls[i+2].Value());
-    }
+    SetLed(LED_LEFT, sw[SW_LEFT].Read()/2.0, controls[CONTROL_PITCH].Value(), controls[CONTROL_KNOB_TOP].Value());
+    SetLed(LED_RIGHT, sw[SW_RIGHT].Read()/2.0, controls[CONTROL_KNOB_BOTTOM].Value(), gate.State() ? 1.0 : 0.0);
 }
