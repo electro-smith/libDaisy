@@ -241,6 +241,7 @@
     <ClCompile Include="src\daisy_pod.cpp" />
     <ClCompile Include="src\daisy_seed.cpp" />
     <ClCompile Include="src\daisy_versio.cpp" />
+    <ClCompile Include="src\daisy_legio.cpp" />
     <ClCompile Include="src\dev\codec_ak4556.cpp" />
     <ClCompile Include="src\dev\codec_pcm3060.cpp" />
     <ClCompile Include="src\dev\codec_wm8731.cpp" />
@@ -436,6 +437,7 @@
     <ClInclude Include="src\daisy_pod.h" />
     <ClInclude Include="src\daisy_seed.h" />
     <ClInclude Include="src\daisy_versio.h" />
+    <ClInclude Include="src\daisy_legio.h" />
     <ClInclude Include="src\dev\codec_ak4556.h" />
     <ClInclude Include="src\dev\codec_pcm3060.h" />
     <ClInclude Include="src\dev\codec_wm8731.h" />
