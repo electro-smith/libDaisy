@@ -1,5 +1,6 @@
 var NAVTREEINDEX13 =
 {
+"structdaisy_1_1_icm20948_spi_transport_1_1_config.html#a9aae63f1fe0a46f021345f89e29c84ca":[4,1,6,0,4],
 "structdaisy_1_1_icm20948_spi_transport_1_1_config.html#aa739d6c3ab8b8e406ba3dfacd85f5626":[4,1,6,0,3],
 "structdaisy_1_1_icm20948_spi_transport_1_1_config.html#acf895a37cbbfab785b358762adc84c6e":[4,1,6,0,2],
 "structdaisy_1_1_lcd_h_d44780_1_1_config.html":[4,0,4,6,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX13 =
 "structdaisy_1_1_shift_register4021_1_1_config.html#a2a05cd559028325fc59ae9108672d045":[4,0,4,0,0,0,2],
 "structdaisy_1_1_shift_register4021_1_1_config.html#a72204442078e6c1cc46406ee69ca4c6b":[4,0,4,0,0,0,1],
 "structdaisy_1_1_shift_register4021_1_1_config.html#a784eb15848ab91c5664f139706dd0131":[4,0,4,0,0,0,0],
-"structdaisy_1_1_song_position_pointer_event.html":[4,0,1,4,0,10],
-"structdaisy_1_1_song_position_pointer_event.html#ab1bc48e1adf7a2ab0ff9451be4d7fe72":[4,0,1,4,0,10,0]
+"structdaisy_1_1_song_position_pointer_event.html":[4,0,1,4,0,10]
 };

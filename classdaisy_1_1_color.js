@@ -17,5 +17,6 @@ var classdaisy_1_1_color =
     [ "Green", "classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2", null ],
     [ "Init", "classdaisy_1_1_color.html#a44cd04ee19a41442be79ec47711a2bf5", null ],
     [ "Init", "classdaisy_1_1_color.html#a0ebd169976dd93434e4523697b16559b", null ],
+    [ "operator*", "classdaisy_1_1_color.html#a9e2f3c918aef976e859e03f6028db5d9", null ],
     [ "Red", "classdaisy_1_1_color.html#ab645aa34a553a044e9c901546e78ed8f", null ]
 ];
