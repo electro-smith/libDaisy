@@ -105,7 +105,8 @@ class DaisyLegio
     void ProcessAnalogControls();
 
     /** Does what it says */
-    inline void ProcessAllControls() {
+    inline void ProcessAllControls()
+    {
         ProcessDigitalControls();
         ProcessAnalogControls();
     }

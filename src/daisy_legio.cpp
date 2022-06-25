@@ -23,7 +23,8 @@ using namespace daisy;
 #define PIN_ADC_CV0 19
 #define PIN_ADC_CV1 21
 
-void DaisyLegio::Init(bool boost) {
+void DaisyLegio::Init(bool boost)
+{
     // seed init
     seed.Configure();
     seed.Init(boost);
@@ -38,11 +39,9 @@ void DaisyLegio::Init(bool boost) {
     uint8_t adc_pin[]     = {PIN_ADC_PITCH0, PIN_ADC_CV0, PIN_ADC_CV1};
 
     // push-button encoder
-    encoder.Init(
-        seed.GetPin(PIN_ENC_A),
-        seed.GetPin(PIN_ENC_B),
-        seed.GetPin(PIN_SW_ENC)
-    );
+    encoder.Init(seed.GetPin(PIN_ENC_A),
+                 seed.GetPin(PIN_ENC_B),
+                 seed.GetPin(PIN_SW_ENC));
 
     // gate CV gate
     dsy_gpio_pin gate_gpio = seed.GetPin(PIN_TRIG_GATE);
@@ -77,60 +76,73 @@ void DaisyLegio::Init(bool boost) {
     }
 }
 
-void DaisyLegio::SetHidUpdateRates() {
+void DaisyLegio::SetHidUpdateRates()
+{
     for(size_t i = 0; i < CONTROL_LAST; i++)
     {
         controls[i].SetSampleRate(AudioCallbackRate());
     }
 }
 
-void DaisyLegio::StartAudio(AudioHandle::InterleavingAudioCallback cb) {
+void DaisyLegio::StartAudio(AudioHandle::InterleavingAudioCallback cb)
+{
     seed.StartAudio(cb);
 }
 
-void DaisyLegio::StartAudio(AudioHandle::AudioCallback cb) {
+void DaisyLegio::StartAudio(AudioHandle::AudioCallback cb)
+{
     seed.StartAudio(cb);
 }
 
-void DaisyLegio::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb) {
+void DaisyLegio::ChangeAudioCallback(AudioHandle::InterleavingAudioCallback cb)
+{
     seed.ChangeAudioCallback(cb);
 }
 
-void DaisyLegio::ChangeAudioCallback(AudioHandle::AudioCallback cb) {
+void DaisyLegio::ChangeAudioCallback(AudioHandle::AudioCallback cb)
+{
     seed.ChangeAudioCallback(cb);
 }
 
-void DaisyLegio::StopAudio() {
+void DaisyLegio::StopAudio()
+{
     seed.StopAudio();
 }
 
-void DaisyLegio::SetAudioBlockSize(size_t size) {
+void DaisyLegio::SetAudioBlockSize(size_t size)
+{
     seed.SetAudioBlockSize(size);
     SetHidUpdateRates();
 }
 
-size_t DaisyLegio::AudioBlockSize() {
+size_t DaisyLegio::AudioBlockSize()
+{
     return seed.AudioBlockSize();
 }
 
-void DaisyLegio::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate) {
+void DaisyLegio::SetAudioSampleRate(SaiHandle::Config::SampleRate samplerate)
+{
     seed.SetAudioSampleRate(samplerate);
     SetHidUpdateRates();
 }
 
-float DaisyLegio::AudioSampleRate() {
+float DaisyLegio::AudioSampleRate()
+{
     return seed.AudioSampleRate();
 }
 
-float DaisyLegio::AudioCallbackRate() {
+float DaisyLegio::AudioCallbackRate()
+{
     return seed.AudioCallbackRate();
 }
 
-void DaisyLegio::StartAdc() {
+void DaisyLegio::StartAdc()
+{
     seed.adc.Start();
 }
 
-void DaisyLegio::StopAdc() {
+void DaisyLegio::StopAdc()
+{
     seed.adc.Stop();
 }
 
@@ -139,7 +151,8 @@ void DaisyLegio::ProcessDigitalControls()
     encoder.Debounce();
 }
 
-void DaisyLegio::ProcessAnalogControls() {
+void DaisyLegio::ProcessAnalogControls()
+{
     for(size_t i = 0; i < CONTROL_LAST; i++)
     {
         controls[i].Process();
@@ -151,27 +164,38 @@ bool DaisyLegio::Gate()
     return !gate.State();
 }
 
-void DaisyLegio::SetLed(size_t idx, float red, float green, float blue) {
+void DaisyLegio::SetLed(size_t idx, float red, float green, float blue)
+{
     leds[idx].Set(red, green, blue);
 }
 
-void DaisyLegio::DelayMs(size_t del) {
+void DaisyLegio::DelayMs(size_t del)
+{
     seed.DelayMs(del);
 }
 
-void DaisyLegio::UpdateLeds() {
+void DaisyLegio::UpdateLeds()
+{
     for(size_t i = 0; i < LED_LAST; i++)
     {
         leds[i].Update();
     }
 }
 
-float DaisyLegio::GetKnobValue(int idx) {
+float DaisyLegio::GetKnobValue(int idx)
+{
     return controls[idx].Value();
 }
 
-void DaisyLegio::UpdateExample() {
+void DaisyLegio::UpdateExample()
+{
     encoder.Debounce();
-    SetLed(LED_LEFT, sw[SW_LEFT].Read()/2.0, controls[CONTROL_PITCH].Value(), controls[CONTROL_KNOB_TOP].Value());
-    SetLed(LED_RIGHT, sw[SW_RIGHT].Read()/2.0, controls[CONTROL_KNOB_BOTTOM].Value(), gate.State() ? 1.0 : 0.0);
+    SetLed(LED_LEFT,
+           sw[SW_LEFT].Read() / 2.0,
+           controls[CONTROL_PITCH].Value(),
+           controls[CONTROL_KNOB_TOP].Value());
+    SetLed(LED_RIGHT,
+           sw[SW_RIGHT].Read() / 2.0,
+           controls[CONTROL_KNOB_BOTTOM].Value(),
+           gate.State() ? 1.0 : 0.0);
 }
