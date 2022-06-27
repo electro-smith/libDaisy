@@ -3,18 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libdaisy", "libdaisy.vcxproj", "{1B07A9D3-1E1B-488A-9817-4B13EECA191C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{56504D40-757A-47E1-A461-FFDDDC8AC2D4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libdaisy", "vs\libdaisy.vcxproj", "{1B07A9D3-1E1B-488A-9817-4B13EECA191C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|VisualGDB = Debug|VisualGDB
+		Debug|x64 = Debug|x64
 		Release|VisualGDB = Release|VisualGDB
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{1B07A9D3-1E1B-488A-9817-4B13EECA191C}.Debug|VisualGDB.ActiveCfg = Debug|VisualGDB
 		{1B07A9D3-1E1B-488A-9817-4B13EECA191C}.Debug|VisualGDB.Build.0 = Debug|VisualGDB
+		{1B07A9D3-1E1B-488A-9817-4B13EECA191C}.Debug|x64.ActiveCfg = Debug|x64
+		{1B07A9D3-1E1B-488A-9817-4B13EECA191C}.Debug|x64.Build.0 = Debug|x64
 		{1B07A9D3-1E1B-488A-9817-4B13EECA191C}.Release|VisualGDB.ActiveCfg = Release|VisualGDB
 		{1B07A9D3-1E1B-488A-9817-4B13EECA191C}.Release|VisualGDB.Build.0 = Release|VisualGDB
+		{1B07A9D3-1E1B-488A-9817-4B13EECA191C}.Release|x64.ActiveCfg = Release|x64
+		{1B07A9D3-1E1B-488A-9817-4B13EECA191C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
