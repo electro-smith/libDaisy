@@ -472,6 +472,9 @@
     <ClCompile Include="src\daisy_versio.cpp">
       <Filter>boards</Filter>
     </ClCompile>
+    <ClCompile Include="src\daisy_legio.cpp">
+      <Filter>boards</Filter>
+    </ClCompile>
     <ClCompile Include="src\dev\codec_pcm3060.cpp">
       <Filter>dev</Filter>
     </ClCompile>
@@ -1093,6 +1096,9 @@
       <Filter>hid</Filter>
     </ClInclude>
     <ClInclude Include="src\daisy_versio.h">
+      <Filter>boards</Filter>
+    </ClInclude>
+    <ClInclude Include="src\daisy_legio.h">
       <Filter>boards</Filter>
     </ClInclude>
     <ClInclude Include="src\dev\codec_pcm3060.h">
