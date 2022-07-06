@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['gate_0',['gate',['../classdaisy_1_1_daisy_versio.html#ab35b4fd55a051a19cd49834b8c215978',1,'daisy::DaisyVersio']]],
-  ['gate_1',['Gate',['../classdaisy_1_1_daisy_versio.html#ac23598501407665871cd4819fbdb458a',1,'daisy::DaisyVersio']]],
+  ['gate_0',['Gate',['../classdaisy_1_1_daisy_legio.html#a54315942160892a09d86ffb9bfc79c32',1,'daisy::DaisyLegio::Gate()'],['../classdaisy_1_1_daisy_versio.html#ac23598501407665871cd4819fbdb458a',1,'daisy::DaisyVersio::Gate()']]],
+  ['gate_1',['gate',['../classdaisy_1_1_daisy_legio.html#afa36273607d588bf3ad7ff0b633499ac',1,'daisy::DaisyLegio::gate()'],['../classdaisy_1_1_daisy_versio.html#ab35b4fd55a051a19cd49834b8c215978',1,'daisy::DaisyVersio::gate()']]],
   ['gate_5fin_2',['gate_in',['../classdaisy_1_1_daisy_field.html#a4991b0aa3dab1d2b4903439c1a0a696f',1,'daisy::DaisyField']]],
-  ['gate_5fin_5f1_3',['GATE_IN_1',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953a138c883ebb829ee5d7752a7685b04747',1,'daisy::DaisyPatch']]],
-  ['gate_5fin_5f1_4',['gate_in_1',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a48ab5b7d4172faa5e2437e697c10d15d',1,'daisy::patch_sm::DaisyPatchSM']]],
+  ['gate_5fin_5f1_3',['gate_in_1',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a48ab5b7d4172faa5e2437e697c10d15d',1,'daisy::patch_sm::DaisyPatchSM']]],
+  ['gate_5fin_5f1_4',['GATE_IN_1',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953a138c883ebb829ee5d7752a7685b04747',1,'daisy::DaisyPatch']]],
   ['gate_5fin_5f2_5',['GATE_IN_2',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953aeb1a7f107d3bea8644640cf6b8a3f6ef',1,'daisy::DaisyPatch']]],
   ['gate_5fin_5f2_6',['gate_in_2',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ad4544dab2ba44d8c21695937359487dd',1,'daisy::patch_sm::DaisyPatchSM']]],
   ['gate_5fin_5flast_7',['GATE_IN_LAST',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953ad276bd6100dc0a8ef5c4b9aa307f45cc',1,'daisy::DaisyPatch']]],
@@ -69,7 +69,7 @@ var searchData=
   ['getitem_66',['GetItem',['../classdaisy_1_1_abstract_menu.html#a392708efb15c47c025877d7c2ab992d1',1,'daisy::AbstractMenu']]],
   ['getkeypadcount_67',['GetKeypadCount',['../classdaisy_1_1_neo_trellis.html#ae403558d9f3f74dd3361f07470042556',1,'daisy::NeoTrellis']]],
   ['getknob_68',['GetKnob',['../classdaisy_1_1_daisy_field.html#af0da2f4da0a9847d10c8f6eefa33d440',1,'daisy::DaisyField']]],
-  ['getknobvalue_69',['GetKnobValue',['../classdaisy_1_1_daisy_field.html#afefabf8c0833d51594c9d38e143cd951',1,'daisy::DaisyField::GetKnobValue()'],['../classdaisy_1_1_daisy_patch.html#a3e1fc433ce10bc0f3df3bd23d20ea587',1,'daisy::DaisyPatch::GetKnobValue()'],['../classdaisy_1_1_daisy_petal.html#a1e0156fca684721f0ae445b8e4c2ebd7',1,'daisy::DaisyPetal::GetKnobValue()'],['../classdaisy_1_1_daisy_pod.html#a8c4ae1af60b078bb71e6b86a3cf8cf5a',1,'daisy::DaisyPod::GetKnobValue()'],['../classdaisy_1_1_daisy_versio.html#a5f662a5029b088ae95df2b65007461d9',1,'daisy::DaisyVersio::GetKnobValue()']]],
+  ['getknobvalue_69',['GetKnobValue',['../classdaisy_1_1_daisy_field.html#afefabf8c0833d51594c9d38e143cd951',1,'daisy::DaisyField::GetKnobValue()'],['../classdaisy_1_1_daisy_legio.html#a0599908962bad905a78abaac4137cd91',1,'daisy::DaisyLegio::GetKnobValue()'],['../classdaisy_1_1_daisy_patch.html#a3e1fc433ce10bc0f3df3bd23d20ea587',1,'daisy::DaisyPatch::GetKnobValue()'],['../classdaisy_1_1_daisy_petal.html#a1e0156fca684721f0ae445b8e4c2ebd7',1,'daisy::DaisyPetal::GetKnobValue()'],['../classdaisy_1_1_daisy_pod.html#a8c4ae1af60b078bb71e6b86a3cf8cf5a',1,'daisy::DaisyPod::GetKnobValue()'],['../classdaisy_1_1_daisy_versio.html#a5f662a5029b088ae95df2b65007461d9',1,'daisy::DaisyVersio::GetKnobValue()']]],
   ['getlengthsamps_70',['GetLengthSamps',['../classdaisy_1_1_wav_writer.html#a206a8f590464470bc63a3ac514bd3d87',1,'daisy::WavWriter']]],
   ['getlengthseconds_71',['GetLengthSeconds',['../classdaisy_1_1_wav_writer.html#ac5dc6ea46305e49415d18fe971b92d35',1,'daisy::WavWriter']]],
   ['getlooping_72',['GetLooping',['../classdaisy_1_1_wav_player.html#ab4a32e794f0cdc07adab9204fc5c8a80',1,'daisy::WavPlayer']]],

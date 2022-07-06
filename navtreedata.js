@@ -156,20 +156,20 @@ var NAVTREEINDEX =
 [
 "_abstract_menu_8h.html",
 "classdaisy_1_1_apds9960.html#a3e2dfaffe42d0bc1482da0d0e0fbad92",
-"classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682add3683515df29d7a38efde9933530895",
-"classdaisy_1_1_f_i_f_o_base.html#a3ccb5edfd63ba0f9793b015213601e91",
-"classdaisy_1_1_logger.html#a6189e1a0ce4afd0cd9b4440e03e3e6ec",
-"classdaisy_1_1_neo_pixel.html#a9fb74a30da250dc0ac0faad6761c0ef2",
-"classdaisy_1_1_rectangle.html#ac9867ca9a299dba683fc8eb18d4a8576",
-"classdaisy_1_1_tlv493d.html#ab5d7017876c6adbd2dfb1af576360d7b",
-"classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#af650ccd5833d6a1c4b8c03ee7e8c7671",
-"functions_func_g.html",
-"group__flash.html#ga7d41c156bf7cc13fbefd7ab284cc37e6",
-"hierarchy.html",
-"neopixel_8h.html#a71f7c6e45f4c63fceca6b5b73c7a7c9d",
-"structdaisy_1_1_icm20948_spi_transport_1_1_config.html#a9aae63f1fe0a46f021345f89e29c84ca",
-"structdaisy_1_1_song_position_pointer_event.html#ab1bc48e1adf7a2ab0ff9451be4d7fe72",
-"uniondaisy_1_1_neo_trellis_1_1key_state.html#a0e5950baf19bbe6ec35f5354a9ae02e1"
+"classdaisy_1_1_daisy_patch.html#af99999edc9794d9a9ddcced92f0154e9",
+"classdaisy_1_1_dps310_i2_c_transport.html#a40162180243c83a1e86cd28c22ba1d0d",
+"classdaisy_1_1_icm20948_i2_c_transport.html#a7b5d7f8e3ff614f44b8eede5b881f00a",
+"classdaisy_1_1_multi_slave_spi_handle.html#ab2455acb7a9503d845df7ec55fff51bb",
+"classdaisy_1_1_q_s_p_i_handle.html#aac911aafbe4840fa80c4181982a4c72e",
+"classdaisy_1_1_timer_handle.html#a31742af4d164ed7787ffba2c95158ef9",
+"classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a20debb020afaf6ee3888aa3ea1891a29",
+"flash___i_s25_l_p080_d_8h.html#a8a9ee23be3785c756f80ca25b7a2e775",
+"group__flash.html#ga3b7e0d2d5d8c080c64110cd29f6ca4ad",
+"group__utility.html#ga8d8655b2e25c2da93fcb1cd9a493bdd4",
+"md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md51",
+"structdaisy_1_1_fat_f_s_interface_1_1_config.html#aa749d7b2739147217cfbc38c99462334a9fd09442cf8e39f248d0984128076185",
+"structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html#a51b14efb0b5e7871328f53407377b67a",
+"structdsy__gpio.html#a12e4d73b334e9caedb135224bd288384"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

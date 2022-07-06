@@ -65,6 +65,7 @@ var hierarchy =
     [ "daisy::AbstractMenu::CustomItem", "classdaisy_1_1_abstract_menu_1_1_custom_item.html", null ],
     [ "daisy::DacHandle", "classdaisy_1_1_dac_handle.html", null ],
     [ "daisy::DaisyField", "classdaisy_1_1_daisy_field.html", null ],
+    [ "daisy::DaisyLegio", "classdaisy_1_1_daisy_legio.html", null ],
     [ "daisy::DaisyPatch", "classdaisy_1_1_daisy_patch.html", null ],
     [ "daisy::patch_sm::DaisyPatchSM", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html", null ],
     [ "daisy::DaisyPetal", "classdaisy_1_1_daisy_petal.html", null ],

@@ -9,6 +9,7 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     [ "daisy.h", "daisy_8h.html", null ],
     [ "daisy_core.h", "daisy__core_8h.html", "daisy__core_8h" ],
     [ "daisy_field.h", "daisy__field_8h.html", "daisy__field_8h" ],
+    [ "daisy_legio.h", "daisy__legio_8h.html", null ],
     [ "daisy_patch.h", "daisy__patch_8h.html", "daisy__patch_8h" ],
     [ "daisy_patch_sm.h", "daisy__patch__sm_8h.html", null ],
     [ "daisy_petal.h", "daisy__petal_8h.html", "daisy__petal_8h" ],

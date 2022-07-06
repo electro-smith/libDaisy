@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['gate_0',['gate',['../classdaisy_1_1_daisy_versio.html#ab35b4fd55a051a19cd49834b8c215978',1,'daisy::DaisyVersio']]],
+  ['gate_0',['gate',['../classdaisy_1_1_daisy_legio.html#afa36273607d588bf3ad7ff0b633499ac',1,'daisy::DaisyLegio::gate()'],['../classdaisy_1_1_daisy_versio.html#ab35b4fd55a051a19cd49834b8c215978',1,'daisy::DaisyVersio::gate()']]],
   ['gate_5fin_1',['gate_in',['../classdaisy_1_1_daisy_field.html#a4991b0aa3dab1d2b4903439c1a0a696f',1,'daisy::DaisyField']]],
   ['gate_5fin_5f1_2',['gate_in_1',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a48ab5b7d4172faa5e2437e697c10d15d',1,'daisy::patch_sm::DaisyPatchSM']]],
   ['gate_5fin_5f2_3',['gate_in_2',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ad4544dab2ba44d8c21695937359487dd',1,'daisy::patch_sm::DaisyPatchSM']]],

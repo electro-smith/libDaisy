@@ -25,6 +25,7 @@ var annotated_dup =
       [ "CpuLoadMeter", "classdaisy_1_1_cpu_load_meter.html", "classdaisy_1_1_cpu_load_meter" ],
       [ "DacHandle", "classdaisy_1_1_dac_handle.html", "classdaisy_1_1_dac_handle" ],
       [ "DaisyField", "classdaisy_1_1_daisy_field.html", "classdaisy_1_1_daisy_field" ],
+      [ "DaisyLegio", "classdaisy_1_1_daisy_legio.html", "classdaisy_1_1_daisy_legio" ],
       [ "DaisyPatch", "classdaisy_1_1_daisy_patch.html", "classdaisy_1_1_daisy_patch" ],
       [ "DaisyPetal", "classdaisy_1_1_daisy_petal.html", "classdaisy_1_1_daisy_petal" ],
       [ "DaisyPod", "classdaisy_1_1_daisy_pod.html", "classdaisy_1_1_daisy_pod" ],
