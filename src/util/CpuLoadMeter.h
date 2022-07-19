@@ -8,10 +8,10 @@ namespace daisy
 /** @brief CPU load metering
  *  @author jelliesen
  *  @addtogroup utility
- * 
+ *
  *  To measure the CPU load of your audio processing, create a CpuLoadMeter
  *  and initialize it with your block size and sample rate.
- *  Then at the beginning of the audio callback, call `OnBlockStart()`, 
+ *  Then at the beginning of the audio callback, call `OnBlockStart()`,
  *  and at the end of the audio callback, call `OnBlockEnd()`.
  *  You can then read out the minimum, maximum and average CPU load.
  */

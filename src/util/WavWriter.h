@@ -5,11 +5,11 @@
 namespace daisy
 {
 /** Audio Recording Module
- ** 
- ** Record audio into a working buffer that is gradually written to a WAV file on an SD Card. 
  **
- ** Recordings are made with floating point input, and will be converted to the 
- ** specified bits per sample internally 
+ ** Record audio into a working buffer that is gradually written to a WAV file on an SD Card.
+ **
+ ** Recordings are made with floating point input, and will be converted to the
+ ** specified bits per sample internally
  **
  ** For now only 16-bit and 32-bit (signed int) formats are supported
  ** f32 and s24 formats will be added next
@@ -18,7 +18,7 @@ namespace daisy
  ** effect on the performance of the streaming behavior of the WavWriter.
  ** Memory use can be calculated as: (2 * transfer_size) bytes
  ** Performance optimal with sizes: 16384, 32768
- ** 
+ **
  ** To use:
  ** 1. Create a WavWriter<size> object (e.g. WavWriter<32768> writer)
  ** 2. Configure the settings as desired by creating a WavWriter<32768>::Config struct and setting the settings.
@@ -27,7 +27,7 @@ namespace daisy
  ** 5. Write to it within your audio callback using: writer.Sample(value)
  ** 6. Fill the Wav File on the SD Card with data from your main loop by running: writer.Write()
  ** 7. When finished with the recording finalize, and close the file with: writer.SaveFile();
- ** 
+ **
  ** */
 template <size_t transfer_size>
 class WavWriter
@@ -52,7 +52,7 @@ class WavWriter
         int32_t bitspersample;
     };
 
-    /** State of the internal Writing mechanism. 
+    /** State of the internal Writing mechanism.
 	 ** When the buffer is a certain amount full one section will write its contents
 	 ** while the other is still being written to. This is performed circularly
 	 ** so that audio will be uninterrupted during writing. */
@@ -87,8 +87,8 @@ class WavWriter
     }
 
     /** Records the current sample into the working buffer,
-     ** queues writes to media when necessary. 
-     ** 
+     ** queues writes to media when necessary.
+     **
      ** \param in should be a pointer to an array of samples */
     void Sample(const float *in)
     {

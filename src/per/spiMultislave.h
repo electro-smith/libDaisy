@@ -12,10 +12,10 @@ namespace daisy
 @{
 */
 
-/**  
+/**
  * Handler for a serial peripheral interface that connects to multiple devices on one bus
  * such that up to 4 devices can share the same MOSI, MISO and SCLK pins.
- * Each device has its own NSS/CS pin which is software driven by the MultiSlaveSpiHandle. 
+ * Each device has its own NSS/CS pin which is software driven by the MultiSlaveSpiHandle.
  */
 class MultiSlaveSpiHandle
 {
@@ -49,7 +49,7 @@ class MultiSlaveSpiHandle
     /** Returns the current config. */
     const Config& GetConfig() const { return config_; }
 
-    /** Blocking transmit 
+    /** Blocking transmit
      * \param device_index the index of the device
      * \param buff input buffer
      * \param size  buffer size
@@ -85,13 +85,13 @@ class MultiSlaveSpiHandle
                                                  size_t   size,
                                                  uint32_t timeout = 100);
 
-    /** DMA-based transmit 
+    /** DMA-based transmit
      * \param device_index  the index of the device
      * \param buff          transmit buffer
      * \param size          buffer size
      * \param start_callback   A callback to execute when the transfer starts, or NULL.
      * \param end_callback     A callback to execute when the transfer finishes, or NULL.
-     * \param callback_context A pointer that will be passed back to you in the callbacks.     
+     * \param callback_context A pointer that will be passed back to you in the callbacks.
      * \return Whether the transmit was successful or not
      */
     SpiHandle::Result
@@ -102,13 +102,13 @@ class MultiSlaveSpiHandle
                 SpiHandle::EndCallbackFunctionPtr   end_callback,
                 void*                               callback_context);
 
-    /** DMA-based receive 
+    /** DMA-based receive
      * \param device_index  the index of the device
      * \param buff          receive buffer
      * \param size          buffer size
      * \param start_callback   A callback to execute when the transfer starts, or NULL.
      * \param end_callback     A callback to execute when the transfer finishes, or NULL.
-     * \param callback_context A pointer that will be passed back to you in the callbacks.    
+     * \param callback_context A pointer that will be passed back to you in the callbacks.
      * \return Whether the receive was successful or not
      */
     SpiHandle::Result
@@ -119,14 +119,14 @@ class MultiSlaveSpiHandle
                SpiHandle::EndCallbackFunctionPtr   end_callback,
                void*                               callback_context);
 
-    /** DMA-based transmit and receive 
+    /** DMA-based transmit and receive
      * \param device_index the index of the device
      * \param tx_buff      the transmit buffer
      * \param rx_buff      the receive buffer
      * \param size         buffer size
      * \param start_callback   A callback to execute when the transfer starts, or NULL.
      * \param end_callback     A callback to execute when the transfer finishes, or NULL.
-     * \param callback_context A pointer that will be passed back to you in the callbacks.    
+     * \param callback_context A pointer that will be passed back to you in the callbacks.
      * \return Whether the receive was successful or not
      */
     SpiHandle::Result

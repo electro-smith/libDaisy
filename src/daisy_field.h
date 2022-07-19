@@ -86,7 +86,7 @@ class DaisyField
     /**Initializes the Daisy Field, and all of its hardware.*/
     void Init(bool boost = false);
 
-    /** 
+    /**
     Wait some ms before going on.
     \param del Delay time in ms.
     */
@@ -143,7 +143,7 @@ class DaisyField
     void StopAdc();
 
     /** Turns on the built-in 12-bit DAC on the Daisy Seed */
-    /** **This is now deprecated and does nothing.** 
+    /** **This is now deprecated and does nothing.**
      ** The polling use of the DACs now handles starting the tranmission.  */
     void StartDac();
 

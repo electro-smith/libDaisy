@@ -103,7 +103,7 @@ TEST_F(util_Stack, e_removeByIndex)
     EXPECT_TRUE(stack_.Remove(1));
     // cannot remove at index 2 (only two items left)
     EXPECT_FALSE(stack_.Remove(2));
-    
+
     // values are correct
     EXPECT_EQ(stack_[0], 1);
     EXPECT_EQ(stack_[1], 3);
@@ -123,7 +123,7 @@ TEST_F(util_Stack, f_removeByValue)
     EXPECT_EQ(stack_.RemoveAllEqualTo(2), 1);
     // remove all values "2" => no items removed
     EXPECT_EQ(stack_.RemoveAllEqualTo(2), 0);
-    
+
     // values are correct
     EXPECT_EQ(stack_[0], 1);
     EXPECT_EQ(stack_[1], 3);
@@ -133,7 +133,7 @@ TEST_F(util_Stack, g_passByReference)
 {
     stack_.PushBack(1);
     EXPECT_EQ(stack_[0], 1);
-    
+
     // operator[] passes by reference so that we can modify the values
     // like a plain old C-array.
     stack_[0] = 4;
@@ -143,7 +143,7 @@ TEST_F(util_Stack, g_passByReference)
 TEST_F(util_Stack, h_contains)
 {
     stack_.PushBack({1, 2, 3});
-    
+
     EXPECT_TRUE(stack_.Contains(1));
     EXPECT_TRUE(stack_.Contains(2));
     EXPECT_TRUE(stack_.Contains(3));
@@ -153,7 +153,7 @@ TEST_F(util_Stack, h_contains)
 TEST_F(util_Stack, i_countEqualTo)
 {
     stack_.PushBack({1, 2, 2});
-    
+
     EXPECT_EQ(stack_.CountEqualTo(1), 1u);
     EXPECT_EQ(stack_.CountEqualTo(2), 2u);
     EXPECT_EQ(stack_.CountEqualTo(3), 0u);

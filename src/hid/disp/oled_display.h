@@ -6,8 +6,8 @@
 
 namespace daisy
 {
-/** 
- * This class is for drawing to a monochrome OLED display. 
+/**
+ * This class is for drawing to a monochrome OLED display.
  * @ingroup device
 */
 template <typename DisplayDriver>
@@ -27,7 +27,7 @@ class OledDisplay : public OneBitGraphicsDisplayImpl<OledDisplay<DisplayDriver>>
     uint16_t Height() const override { return driver_.Height(); }
     uint16_t Width() const override { return driver_.Width(); }
 
-    /** 
+    /**
     Fills the entire display with either on/off.
     \param on Sets on or off.
     */
@@ -44,8 +44,8 @@ class OledDisplay : public OneBitGraphicsDisplayImpl<OledDisplay<DisplayDriver>>
         driver_.DrawPixel(x, y, on);
     }
 
-    /** 
-    Writes the current display buffer to the OLED device using SPI or I2C depending on 
+    /**
+    Writes the current display buffer to the OLED device using SPI or I2C depending on
     how the object was initialized.
     */
     void Update() override { driver_.Update(); }

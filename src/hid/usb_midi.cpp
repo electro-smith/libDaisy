@@ -23,7 +23,7 @@ class MidiUsbTransport::Impl
   private:
     void MidiToUsbSingle(uint8_t* buffer, size_t length);
 
-    /** USB Handle for CDC transfers 
+    /** USB Handle for CDC transfers
          */
     UsbHandle usb_handle_;
     Config    config_;

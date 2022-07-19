@@ -7,7 +7,7 @@ namespace daisy
  *  gateway that internally points to one of the four I2C peripherals
  *  after it was initialised. It can then be copied and passed around.
  *  Use an I2CHandle like this:
- *  
+ *
  *      // setup the configuration
  *      I2CHandle::Config i2c_conf;
  *      i2c_conf.periph = I2CHandle::Config::Peripheral::I2C_1;
@@ -91,7 +91,7 @@ class I2CHandle
 
     /** Transmits data and blocks until the transmission is complete.
      *  Use this for smaller transmissions of a few bytes.
-     * 
+     *
      *  \param address      The slave device address. Unused in slave mode.
      *  \param data         A pointer to the data to be sent.
      *  \param size         The size of the data to be sent, in bytes.
@@ -104,7 +104,7 @@ class I2CHandle
 
     /** Receives data and blocks until the reception is complete.
      *  Use this for smaller transmissions of a few bytes.
-     * 
+     *
      *  \param address      The slave device address. Unused in slave mode.
      *  \param data         A pointer to the data to be received.
      *  \param size         The size of the data to be received, in bytes.
@@ -119,23 +119,23 @@ class I2CHandle
     typedef void (*CallbackFunctionPtr)(void* context, Result result);
 
     /** Transmits data with a DMA and returns immediately. Use this for larger transmissions.
-     *  The pointer to data must be located in the D2 memory domain by adding the 
+     *  The pointer to data must be located in the D2 memory domain by adding the
      *  `DMA_BUFFER_MEM_SECTION` attribute like this:
      *      uint8_t DMA_BUFFER_MEM_SECTION my_buffer[100];
-     *  If that is not possible for some reason, you MUST clear the cachelines spanning the size of 
-     *  the buffer, before initiating the dma transfer by calling 
+     *  If that is not possible for some reason, you MUST clear the cachelines spanning the size of
+     *  the buffer, before initiating the dma transfer by calling
      *  `dsy_dma_clear_cache_for_buffer(buffer, size);`
-     * 
+     *
      *  A single DMA is shared across I2C1, I2C2 and I2C3. I2C4 has no DMA support (yet).
      *  If the DMA is busy with another transfer, the job will be queued and executed later.
      *  If there is a job waiting to be executed for this I2C peripheral, this function
      *  will block until the queue is free and the job can be queued.
-     * 
+     *
      *  \param address      The slave device address. Unused in slave mode.
      *  \param data         A pointer to the data to be sent.
      *  \param size         The size of the data to be sent, in bytes.
      *  \param callback     A callback to execute when the transfer finishes, or NULL.
-     *  \param callback_context A pointer that will be passed back to you in the callback.      
+     *  \param callback_context A pointer that will be passed back to you in the callback.
      */
     Result TransmitDma(uint16_t            address,
                        uint8_t*            data,
@@ -144,23 +144,23 @@ class I2CHandle
                        void*               callback_context);
 
     /** Receives data with a DMA and returns immediately. Use this for larger transmissions.
-     *  The pointer to data must be located in the D2 memory domain by adding the 
+     *  The pointer to data must be located in the D2 memory domain by adding the
      *  `DMA_BUFFER_MEM_SECTION` attribute like this:
      *      uint8_t DMA_BUFFER_MEM_SECTION my_buffer[100];
-     *  If that is not possible for some reason, you MUST clear the cachelines spanning the size of 
-     *  the buffer, before initiating the dma transfer by calling 
+     *  If that is not possible for some reason, you MUST clear the cachelines spanning the size of
+     *  the buffer, before initiating the dma transfer by calling
      *  `dsy_dma_clear_cache_for_buffer(buffer, size);`
-     * 
+     *
      *  A single DMA is shared across I2C, I2C2 and I2C3. I2C4 has no DMA support (yet).
      *  If the DMA is busy with another transfer, the job will be queued and executed later.
      *  If there is a job waiting to be executed for this I2C peripheral, this function
      *  will block until the queue is free and the job can be queued.
-     * 
+     *
      *  \param address      The slave device address. Unused in slave mode.
      *  \param data         A pointer to the data buffer.
      *  \param size         The size of the data to be received, in bytes.
      *  \param callback     A callback to execute when the transfer finishes, or NULL.
-     *  \param callback_context A pointer that will be passed back to you in the callback.      
+     *  \param callback_context A pointer that will be passed back to you in the callback.
      */
     Result ReceiveDma(uint16_t            address,
                       uint8_t*            data,
@@ -168,9 +168,9 @@ class I2CHandle
                       CallbackFunctionPtr callback,
                       void*               callback_context);
 
-    /** Reads an amount of data from a specific memory address. 
-    *   This method will return an error if the I2C peripheral is in slave mode. 
-    * 
+    /** Reads an amount of data from a specific memory address.
+    *   This method will return an error if the I2C peripheral is in slave mode.
+    *
     * \param address            The slave device address.
     * \param mem_address        Pointer to data containing the address to read from device.
     * \param mem_address_size   Size of the memory address in bytes.
@@ -185,9 +185,9 @@ class I2CHandle
                              uint16_t data_size,
                              uint32_t timeout);
 
-    /** Writes an amount of data from a specific memory address. 
-    *   This method will return an error if the I2C peripheral is in slave mode. 
-    * 
+    /** Writes an amount of data from a specific memory address.
+    *   This method will return an error if the I2C peripheral is in slave mode.
+    *
     * \param address            The slave device address.
     * \param mem_address        Pointer to data containing the address to write to device.
     * \param mem_address_size   Size of the memory address in bytes.

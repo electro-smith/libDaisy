@@ -8,7 +8,7 @@ namespace daisy
 /** @brief A potentiometer monitor that generates events in a UiEventQueue
  *  @author jelliesen
  *  @ingroup ui
- * 
+ *
  *  This class monitors a number of potentiometers and detects pot movements.
  *  When a movement is detected, an event is added to a UiEventQueue.
  *  Pots can be either "idle" or "moving" in which case different dead bands
@@ -18,9 +18,9 @@ namespace daisy
  *  template argument `numPots`. Each of the pots is identified by an ID number from
  *  `0 .. numPots - 1`. This number will also be used when events are posted to the
  *  UiEventQueue. It's suggested to define an enum in your project like this:
- *  
+ *
  *      enum PotId { potA = 0, potB = 1, potC = 2 };
- * 
+ *
  *  In different projects, diffent ways of reading the potentiometer positions will be
  *  used. That's why this class uses a generic backend that you'll have to write.
  *  The BackendType class will provide the source data for each potentiometer.

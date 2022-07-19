@@ -10,7 +10,7 @@
 namespace daisy
 {
 /**
-   @brief This is the higher-level interface for the Daisy board. \n 
+   @brief This is the higher-level interface for the Daisy board. \n
     All basic peripheral configuration/initialization is setup here. \n
 
    @ingroup boards
@@ -21,12 +21,12 @@ class DaisySeed
     DaisySeed() {}
     ~DaisySeed() {}
 
-    /** This function used to provide a pre-initialization configuraiton 
+    /** This function used to provide a pre-initialization configuraiton
      *  it has since been deprecated, and does nothing.
      */
     void Configure();
 
-    /** 
+    /**
     Initializes the Daisy Seed and the following peripherals:
     SDRAM, QSPI, 24-bit 48kHz Audio via AK4556, Internal USB,
     as well as the built-in LED and Testpoint.
@@ -37,18 +37,18 @@ class DaisySeed
     */
     void Init(bool boost = false);
 
-    /** 
+    /**
     Deinitializes all peripherals automatically handled by `Init`.
     */
     void DeInit();
 
-    /** 
+    /**
     Wait some ms before going on.
     \param del Delay time in ms.
     */
     void DelayMs(size_t del);
 
-    /** 
+    /**
     Returns the gpio_pin corresponding to the index 0-31.
     For the given GPIO on the Daisy Seed (labeled 1-32 in docs).
     */
@@ -141,7 +141,7 @@ class DaisySeed
     dsy_gpio           led, testpoint;
     System             system;
 
-    /** Internal indices for DaisySeed-equivalent devices 
+    /** Internal indices for DaisySeed-equivalent devices
      *  This shouldn't have any effect on user-facing code,
      *  and only needs to be checked to properly initialize
      *  the onboard-circuits.
@@ -174,7 +174,7 @@ class DaisySeed
     float callback_rate_;
 };
 
-/** seed namespace contains pinout constants for addressing 
+/** seed namespace contains pinout constants for addressing
  * the pins on the Daisy Seed SOM.
  */
 namespace seed

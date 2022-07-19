@@ -13,7 +13,7 @@ const size_t kMaxSr595DaisyChain
     */
 
 /**
-   @brief Device Driver for 8-bit shift register. \n 
+   @brief Device Driver for 8-bit shift register. \n
    CD74HC595 - 8-bit serial to parallel output shift
    @author shensley
    @date May 2020
@@ -22,7 +22,7 @@ class ShiftRegister595
 {
   public:
     /** The following pins correspond to the hardware connections
-    to the 595. 
+    to the 595.
   */
     enum Pins
     {
@@ -34,7 +34,7 @@ class ShiftRegister595
     ShiftRegister595() {}
     ~ShiftRegister595() {}
 
-    /** 
+    /**
     Initializes the GPIO, and data for the ShiftRegister
      * \param pin_cfg is an array of dsy_gpio_pin corresponding the the Pins enum above.
      * \param num_daisy_chained (default = 1) is the number of 595 devices daisy chained together.

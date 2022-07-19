@@ -63,7 +63,7 @@ int main(void)
     midi.StartReceive();
     hw.StartAdc();
     hw.StartAudio(AudioCallback);
-    
+
     for(;;)
     {
         midi.Listen();

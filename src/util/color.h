@@ -1,4 +1,4 @@
-/* 
+/*
 TODO:
 - Add Blend(), Scale(), etc.
 - I'd also like to change the way the Color names are accessed.
@@ -39,7 +39,7 @@ class Color
         LAST    /**< & */
     };
 
-    /** Initializes the Color with a given preset. 
+    /** Initializes the Color with a given preset.
     \param c Color to init to
     */
     void Init(PresetColor c);

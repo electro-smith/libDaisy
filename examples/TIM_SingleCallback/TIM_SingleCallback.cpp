@@ -1,7 +1,7 @@
-/** TIM Single Callback 
+/** TIM Single Callback
  *  Example of setting up and using a TIM peripheral
  *  to generate periodic callbacks
- * 
+ *
  *  To demonstrate, the LED will be toggled from the callback
  */
 #include "daisy_seed.h"
@@ -12,7 +12,7 @@ using namespace daisy;
 DaisySeed hw;
 
 /** This is our Timer-generated callback
- * 
+ *
  *  Once the timer has been configured, and started, this function will be called
  *  at the end of each timer period.
  */
@@ -29,9 +29,9 @@ int main(void)
     /** Initialize Daisy Seed */
     hw.Init();
 
-    /** Create Handle and config 
+    /** Create Handle and config
      *  We'll use TIM5 here, but TIM3, and TIM4 are also available
-     *  At this time, TIM2 is used by the System class for sub-millisecond time/delay functions 
+     *  At this time, TIM2 is used by the System class for sub-millisecond time/delay functions
      */
     TimerHandle         tim5;
     TimerHandle::Config tim_cfg;

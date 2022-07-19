@@ -25,7 +25,7 @@ struct WavFileInfo
     char              name[WAV_FILENAME_MAX]; /**< Wav filename */
 };
 
-/* 
+/*
 TODO:
 - Make template-y to reduce memory usage.
 */
@@ -62,7 +62,7 @@ class WavPlayer
     /** Resets the playback position to the beginning of the file immediately */
     void Restart();
 
-    /** Sets whether or not the current file will repeat after completing playback. 
+    /** Sets whether or not the current file will repeat after completing playback.
     \param loop To loop or not to loop.
     */
     inline void SetLooping(bool loop) { looping_ = loop; }

@@ -58,13 +58,13 @@ namespace MAX11300Types
     };
 
     /**
-     * Pins of the MAX11300 configured for AnalogRead may be defined to 
-     * operate within several pre-defined voltage ranges (assuming the power supply 
+     * Pins of the MAX11300 configured for AnalogRead may be defined to
+     * operate within several pre-defined voltage ranges (assuming the power supply
      * requirements for the range is met).
-     * 
+     *
      * Pins configiured for DigitalRead are 0-5V only, and do not tolerate negative
      * voltages.
-     * 
+     *
      * WARNING, when a pin is configured as DigitalRead and a voltage lower than
      * -250mV is applied, the codes read from ALL other pins confiured as
      * AnalogRead will become unusuably corrupted.
@@ -78,10 +78,10 @@ namespace MAX11300Types
     };
 
     /**
-     * Pins of the MAX11300 configured for AnalogWrite may be defined to 
-     * operate within several pre-defined voltage ranges (assuming the power supply 
+     * Pins of the MAX11300 configured for AnalogWrite may be defined to
+     * operate within several pre-defined voltage ranges (assuming the power supply
      * requirements for the range is met).
-     * 
+     *
      * Pins configiured for DigitalWrite are 0-5V only, and do not produce negative
      * voltages.
      */
@@ -253,14 +253,14 @@ class MAX11300MultiSlaveSpiTransport
  * @brief Device Driver for the MAX11300 20 port ADC/DAC/GPIO device.
  * @author sam.braam
  * @date Oct. 2021
- * 
+ *
  * This is a highly opinionated driver implementation for the MAX11300
- * DAC/ADC/GPIO device.  
- * 
+ * DAC/ADC/GPIO device.
+ *
  * This implemetation has been designed for use in the context of Eurorack
  * modular systems. There are a number of features the MAX11300 offers
- * which are not exposed, as well as a number of configuration decisions 
- * that were made in order to simplify usage and improve ergonomics, 
+ * which are not exposed, as well as a number of configuration decisions
+ * that were made in order to simplify usage and improve ergonomics,
  * even at the cost of flexibility.
 */
 template <typename Transport, size_t num_devices>
@@ -277,14 +277,14 @@ class MAX11300Driver
     ~MAX11300Driver(){};
 
     /**
-     * Initialize the MAX11300 
-     * 
+     * Initialize the MAX11300
+     *
      * This method verifies SPI connectivity, configures the chip to
-     * operate within the scope of this implementation, and 
+     * operate within the scope of this implementation, and
      * intitalizes all pins by default to High-Z mode.
-     * 
+     *
      * \param config - The MAX11300 configuration
-     * \param dma_buffer a buffer in DMA-accessible memory. 
+     * \param dma_buffer a buffer in DMA-accessible memory.
      *                   Allocate it like this: `MAX11300DmaBuffer DMA_BUFFER_MEM_SECTION myBuffer;`
      */
     MAX11300Types::Result Init(Config                    config,
@@ -439,9 +439,9 @@ class MAX11300Driver
 
     /**
      * Read the raw 12 bit (0-4095) value of a given ANALOG_IN (ADC) pin.
-     * 
+     *
      * *note this read is local, call MAX11300::Start() to sync with the MAX11300
-     * 
+     *
      * \param pin - The pin of which to read the value
      * \return - The raw, 12 bit value of the given ANALOG_IN (ADC) pin.
      */
@@ -458,9 +458,9 @@ class MAX11300Driver
 
     /**
      * Read the value of a given ADC pin in volts.
-     * 
+     *
      * *note this read is local, call MAX11300::Start() to sync with the MAX11300
-     * 
+     *
      * \param pin - The pin of which to read the voltage
      * \return - The value of the given ANALOG_IN (ADC) pin in volts
      */
@@ -475,9 +475,9 @@ class MAX11300Driver
 
     /**
      * Write a raw 12 bit (0-4095) value to a given ANALOG_OUT (DAC) pin
-     * 
+     *
      * *note this write is local, call MAX11300::Start() to sync with the MAX11300
-     * 
+     *
      * \param pin - The pin of which to write the value
      * \param raw_value - the 12-bit code to write to the given Pin
      */
@@ -495,11 +495,11 @@ class MAX11300Driver
     }
 
     /**
-     * Write a voltage value, within the bounds of the configured volatge range, 
+     * Write a voltage value, within the bounds of the configured volatge range,
      * to a given ANALOG_OUT (DAC) pin.
-     * 
+     *
      * *note this write is local, call MAX11300::Start() to sync with the MAX11300
-     * 
+     *
      * \param pin - The pin of which to write the voltage
      * \param voltage - Target voltage
      */
@@ -518,9 +518,9 @@ class MAX11300Driver
 
     /**
      * Read the state of a GPI pin
-     * 
+     *
      * *note this read is local, call MAX11300::Start() to sync with the MAX11300
-     * 
+     *
      * \param pin - The pin of which to read the value
      * \return - The boolean state of the pin
      */
@@ -544,9 +544,9 @@ class MAX11300Driver
 
     /**
      * Write a digital state to the given GPO pin
-     * 
+     *
      * *note this write is local, call MAX11300::Start() to sync with the MAX11300
-     * 
+     *
      * \param pin - The pin of which to write the value
      * \param value - the boolean state to write
      */
@@ -591,17 +591,17 @@ class MAX11300Driver
 
     /**
      * Starts to update and synchronize the MAX11300 - This method does the following:
-     * 
+     *
      * - Write all current ANALOG_OUT (DAC) values to all MAX11300s
      * - Read all current ANALOG_IN (ADC) values to memory
      * - Write all GPO states to all MAX11300s
      * - Read all GPI states to memory
      * - call the provided callback function when complete (from an interrupt)
      * - repeat
-     * 
+     *
      * The driver can be stopped by calling Stop().
      * @see Stop()
-     * 
+     *
      * \param complete_callback An optional callback function that's called after each successful update
      *                          Keep this callback function simple and fast, it's called from an interrupt.
      * \param complete_callback_context An optional context pointer provided to the complete_callback
@@ -636,8 +636,8 @@ class MAX11300Driver
 
     /**
      * A utility funtion for converting a voltage (float) value, bound to a given
-     * voltage range, to the first 12 bits (0-4095) of an unsigned 16 bit integer value. 
-     * 
+     * voltage range, to the first 12 bits (0-4095) of an unsigned 16 bit integer value.
+     *
      * \param volts the voltage to convert
      * \param range the MAX11300Types::DacVoltageRange to constrain to
      * \return the voltage as 12 bit unsigned integer
@@ -678,9 +678,9 @@ class MAX11300Driver
 
     /**
      * A utility funtion for converting the first 12 bits (0-4095) of an unsigned
-     * 16 bit integer value, to a voltage (float) value. The voltage value is 
+     * 16 bit integer value, to a voltage (float) value. The voltage value is
      * scaled and bound to the given voltage range.
-     * 
+     *
      * \param value the 12 bit value to convert
      * \param range the MAX11300Types::AdcVoltageRange to constrain to
      * \return the value as a float voltage constrained to the given voltage range
@@ -723,8 +723,8 @@ class MAX11300Driver
 
   private:
     /**
-     * Pins/ports of the MAX11300 are freely configurable to function as 
-     * ANALOG_IN (ADC), ANALOG_OUT (DAC), GPI, or GPO.  
+     * Pins/ports of the MAX11300 are freely configurable to function as
+     * ANALOG_IN (ADC), ANALOG_OUT (DAC), GPI, or GPO.
      * This enum describes these modes.
      */
     enum class PinMode
@@ -738,7 +738,7 @@ class MAX11300Driver
 
     /**
      * The PinConfig struct holds the necessary information needed to configure a
-     * pin/port of the MAX11300, as well as a pointer to the stateful pin data.  
+     * pin/port of the MAX11300, as well as a pointer to the stateful pin data.
      */
     struct PinConfig
     {
@@ -750,13 +750,13 @@ class MAX11300Driver
         } range; /**< & */
         /**
          * This is a voltage value used as follows:
-         * 
+         *
          *  GPI - Defines what input voltage constituates a logical 1
          *  GPO - The output voltage of the pin at logical 1
          */
         float threshold;
         /**
-         * In the case of ANALOG_IN or ANALOG_OUT modes, this points to the 
+         * In the case of ANALOG_IN or ANALOG_OUT modes, this points to the
          * current 12 bit value of the pin.
          */
         uint16_t* value;
@@ -774,7 +774,7 @@ class MAX11300Driver
 
     /**
      * Apply the current configuration to the given pin
-     * 
+     *
      * \param pin - The pin to configure
      * \return - OK if the configuration was successfully applied
      */
@@ -941,7 +941,7 @@ class MAX11300Driver
     /**
      * Read the value of a single register address from the MAX11300
      * \param address - the register address to read
-     * \return the value at the given register as returned by the MAX11300 
+     * \return the value at the given register as returned by the MAX11300
      */
     uint16_t ReadRegister(size_t device_index, uint8_t address)
     {
@@ -953,9 +953,9 @@ class MAX11300Driver
     /**
      * Read the values, starting at the given address, from the MAX11300.
      * \param address - the register address to begin from
-     * \param values - a pointer to which the values from the MAX11300 will be written 
+     * \param values - a pointer to which the values from the MAX11300 will be written
      * \param size - the number of bytes to read
-     * \return OK if the transaction was successful 
+     * \return OK if the transaction was successful
      */
     MAX11300Types::Result ReadRegister(size_t    device_index,
                                        uint8_t   address,
@@ -988,7 +988,7 @@ class MAX11300Driver
      * Write a value to a single register address of the MAX11300
      * \param address - the register address to write to
      * \param value - the value to write at the given register
-     * \return OK if the transaction was successful 
+     * \return OK if the transaction was successful
      */
     MAX11300Types::Result
     WriteRegister(size_t device_index, uint8_t address, uint16_t value)
@@ -999,9 +999,9 @@ class MAX11300Driver
     /**
      * Write the values, starting at the given address, to the MAX11300.
      * \param address - the register address to begin from
-     * \param values - a pointer to which the values to be written to the MAX11300 will be read 
+     * \param values - a pointer to which the values to be written to the MAX11300 will be read
      * \param size - the number of bytes to written
-     * \return OK if the transaction was successful 
+     * \return OK if the transaction was successful
      */
     MAX11300Types::Result WriteRegister(size_t    device_index,
                                         uint8_t   address,

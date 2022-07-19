@@ -69,13 +69,13 @@ SECTIONS
     The variables placed here will also need to fit inside of the flash in order to initialize.
   */
 
-/** Usage: \n 
+/** Usage: \n
   E.g. int DSY_SDRAM_DATA initialized_var = 1; */
 #define DSY_SDRAM_DATA __attribute__((section(".sdram_data")))
 
 
-/** Variables placed here will not be initialized. \n 
-    Usage \n 
+/** Variables placed here will not be initialized. \n
+    Usage \n
     E.g. int DSY_SDRAM_BSS uninitialized_var;
 */
 #define DSY_SDRAM_BSS __attribute__((section(".sdram_bss")))

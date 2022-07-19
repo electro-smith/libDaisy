@@ -11,7 +11,7 @@ namespace daisy
  ** @ingroup shiftregister
  **
  ** CD4021B-Q1: CMOS 8-STAGE STATIC SHIFT REGISTER
- ** 
+ **
  ** Supply Voltage: 3V to 18V
  ** Clock Freq: 3MHz at 5V (less at 3v3) -> 8.5MHz at 15V
  ** Pin Descriptions:
@@ -21,14 +21,14 @@ namespace daisy
  ** - P/!S               - 9
  ** - Q[6-8]             - 2, 12, 3
  **
- ** Driver has support for daisy chaining and running up to 2 same-sized 
- ** chains in parallel from a single set of clk/latch pins to reduce 
+ ** Driver has support for daisy chaining and running up to 2 same-sized
+ ** chains in parallel from a single set of clk/latch pins to reduce
  ** pin/code overhead when using multiple devices.
  **
- ** When dealing with multiple parallel/daisy-chained devices the 
+ ** When dealing with multiple parallel/daisy-chained devices the
  ** states of all inputs will be filled in the following order (example uses two chained and two parallel):
  ** data[chain0,parallel0], data[chain1,parallel0], data[chain0,parallel1], data[chain1,parallel1];
- ** 
+ **
  ** When combining multiple daisy chained and parallel devices the number of devices chained should match
  ** for each parallel device chain.
  **
@@ -98,10 +98,10 @@ class ShiftRegister4021
         }
     }
 
-    /** returns the last read state of the input at the index. 
+    /** returns the last read state of the input at the index.
      ** true indicates the pin is held HIGH.
-     ** 
-     ** See above for the layout of data when using multiple 
+     **
+     ** See above for the layout of data when using multiple
      ** devices in series or parallel.
      ***/
     inline bool State(int index) const { return states_[index]; }

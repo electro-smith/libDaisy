@@ -7,8 +7,8 @@
     @{
 */
 
-/** Utility for displaying fonts on OLED displays \n 
-Migrated to work with libdaisy from stm32-ssd1306 
+/** Utility for displaying fonts on OLED displays \n
+Migrated to work with libdaisy from stm32-ssd1306
 @author afiskon on github.
 */
 

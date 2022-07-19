@@ -21,7 +21,7 @@ class MappedValue
     /** Resets the value to its default. */
     virtual void ResetToDefault() = 0;
 
-    /** Returns the 0..1 normalized representation of the value, 
+    /** Returns the 0..1 normalized representation of the value,
      *  e.g. to display a slider/knob on a UI. */
     virtual float GetAs0to1() const = 0;
 
@@ -29,7 +29,7 @@ class MappedValue
     virtual void SetFrom0to1(float normalizedValue0to1) = 0;
 
     /** Steps the value up by whatever is appropriate. This function can be used
-     *  to increment/decrement the value with buttons/encoders while making use 
+     *  to increment/decrement the value with buttons/encoders while making use
      *  of the specific mapping. */
     virtual void Step(int16_t numStepsUp, bool useCoarseStepSize) = 0;
 };
@@ -46,7 +46,7 @@ class MappedFloatValue : public MappedValue
     {
         /** The value is mapped linearly between min and max. */
         lin,
-        /** The value is mapped logarithmically. Note that the valid 
+        /** The value is mapped logarithmically. Note that the valid
          *  values must be strictly larger than zero, so: min > 0, max > 0
          */
         log,
@@ -62,7 +62,7 @@ class MappedFloatValue : public MappedValue
      *                      `min`, `max` and ``defaultValue` must be > 0
      * @param unitStr       A string for the unit, e.g. "Hz"
      * @param numDecimals   Controls the number of decimals in `AppendToString()`
-     * @param forceSign     Controls whether `AppendToString()` always prints the sign, 
+     * @param forceSign     Controls whether `AppendToString()` always prints the sign,
      *                      even for positive numbers
     */
     MappedFloatValue(float       min,
@@ -138,7 +138,7 @@ class MappedIntValue : public MappedValue
      * @param stepSizeFine    A fine step size to use in the `Step()` function
      * @param stepSizeCoarse  A coarse step size to use in the `Step()` function
      * @param unitStr         A string for the unit, e.g. "Hz"
-     * @param forceSign       Controls whether `AppendToString()` always prints the sign, 
+     * @param forceSign       Controls whether `AppendToString()` always prints the sign,
      *                        even for positive numbers
      */
     MappedIntValue(int         min,

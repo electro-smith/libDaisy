@@ -70,7 +70,7 @@ void copy_wav(const char* filename)
     UINT data_read;
     WAV_FormatTypeDef wav_header;
 
-    // This will populate the wav_header struct with all the data we 
+    // This will populate the wav_header struct with all the data we
     // need to parse the wav file. Currently, the code doesn't actually use this header,
     // but you could write code that converts from the
     // several possible WAV storage types to int16_t or float for consistency.
@@ -92,7 +92,7 @@ void copy_wav(const char* filename)
         // This avoids attempted writes beyond the QSPI's address space
         if (current_qspi_offset >= QSPI_LEN)
             break;
-        
+
         // The QSPI chip must be erased before any writes can be made,
         // and it can only be erased in certain sizes (4K, 32K, 64K, and full chip erase).
         // 64K is the fastest per byte without being too large, so that's what we'll use.

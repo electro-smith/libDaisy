@@ -9,26 +9,26 @@
 
 namespace daisy
 {
-/** 
+/**
  *  @addtogroup hid_logging LOGGING
  *  @brief Intefaces for Logging over USB, etc.
  *  @ingroup human_interface
  *  @ingroup libdaisy
- * 
+ *
  *  The following is a short example of using the DaisySeed::Logger
  *  to print to a serial port.
  *  @include SerialPrint.cpp
  *  @{
  */
 
-/** @defgroup logging_macros LoggerHelperMacros 
+/** @defgroup logging_macros LoggerHelperMacros
  *  @{ */
 /** Logger configuration
  */
 #define LOGGER_NEWLINE "\r\n" /**< custom newline character sequence */
 #define LOGGER_BUFFER 128     /**< size in bytes */
 
-/** 
+/**
  * Helper macros for string concatenation and macro expansion
  */
 #define PPCAT_NX(A, B) A##B          /**< non-expanding concatenation */
@@ -43,7 +43,7 @@ namespace daisy
 #define FLT_FMT(_n) STRINGIZE(PPCAT(PPCAT(%c%d.%0, _n), d))
 // clang-format on
 
-/** Floating point output variable preprocessing 
+/** Floating point output variable preprocessing
  * Note: uses truncation instead of rounding -> the last digit may be off
  */
 #define FLT_VAR(_n, _x)                   \
@@ -62,10 +62,10 @@ namespace daisy
 /**   @brief Interface for simple USB logging
  *    @author Alexander Petrov-Savchenko (axp@soft-amp.com)
  *    @date November 2020
- *    
+ *
  *    Simple Example:
  *    @include SerialPrint.cpp
- * 
+ *
  */
 template <LoggerDestination dest = LOGGER_INTERNAL>
 class Logger
@@ -83,7 +83,7 @@ class Logger
      */
     static void PrintLine(const char* format, ...);
 
-    /**  Start the logging session. 
+    /**  Start the logging session.
      * \param wait_for_pc block until remote terminal is ready
      */
     static void StartLog(bool wait_for_pc = false);
@@ -102,7 +102,7 @@ class Logger
     enum LoggerConsts
     {
         LOGGER_SYNC_OUT = 0,
-        LOGGER_SYNC_IN  = 2 /**< successfully transmit this many packets 
+        LOGGER_SYNC_IN  = 2 /**< successfully transmit this many packets
                              * before switching to blocking transfers */
     };
 

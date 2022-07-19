@@ -26,18 +26,18 @@ enum class ArrowButtonType
 /** @brief A descriptor for a canvas in the UI system.
  *  @author jelliesen
  *  @ingroup ui
- * 
- *  A descriptor for a generic display / led / output device 
+ *
+ *  A descriptor for a generic display / led / output device
  *  that's used in the UI system.
  */
 struct UiCanvasDescriptor
 {
-    /** An id number to tell apart various types of canvases that 
+    /** An id number to tell apart various types of canvases that
      *  are used concurrently in your system. */
     uint8_t id_;
 
-    /** A pointer to some object that allows to draw to the canvas. 
-     *  In your UI pages, you will use the id_ to identify which canvas this is, 
+    /** A pointer to some object that allows to draw to the canvas.
+     *  In your UI pages, you will use the id_ to identify which canvas this is,
      *  and then cast this pointer to whatever object it represents, e.g. OledDisplay.
      */
     void* handle_;
@@ -45,10 +45,10 @@ struct UiCanvasDescriptor
     /** The desired update rate in ms */
     uint32_t updateRateMs_;
 
-    /** The desired timeout in ms before a display will shut off. 
+    /** The desired timeout in ms before a display will shut off.
      *  This defaults to 0, which will keep the display on all the time.
      *  Nonzero values are useful for displays that can suffer from burn-in,
-     *  such as OLEDs. 
+     *  such as OLEDs.
      */
     uint32_t screenSaverTimeOut = 0;
 
@@ -58,7 +58,7 @@ struct UiCanvasDescriptor
     using ClearFuncPtr = void (*)(const UiCanvasDescriptor& canvasToClear);
     ClearFuncPtr clearFunction_;
 
-    /** A function to call when all UIPages have finished the drawing procedure 
+    /** A function to call when all UIPages have finished the drawing procedure
      *  and the results can be flushed out to the device.
      */
     using FlushFuncPtr = void (*)(const UiCanvasDescriptor& canvasToFlush);
@@ -93,7 +93,7 @@ class UiPage
     bool IsActive() { return parent_ != nullptr; }
 
     /** Called on any user input event, after the respective callback has completed.
-     * OnUserInteraction will be invoked for all pages in the page stack and can be used to 
+     * OnUserInteraction will be invoked for all pages in the page stack and can be used to
      * track general user activity. */
     virtual void OnUserInteraction() {}
 
@@ -107,7 +107,7 @@ class UiPage
      *  						It will be 1 on the first call and increasing by 1
      *  						with each successive call. A button down event is
      *  						signaled by numberOfButtonPresses == 0.
-     *  @param isRetriggering   True if the button is auto-retriggering (due to being 
+     *  @param isRetriggering   True if the button is auto-retriggering (due to being
      *                          held down)
      *  @returns	false, if you want the event to be passed on to the page below.
      */
@@ -123,7 +123,7 @@ class UiPage
      *  						It will be 1 on the first call and increasing by 1
      *  						with each successive call. A button down event is
      *  						signaled by numberOfButtonPresses == 0.
-     *  @param isRetriggering   True if the button is auto-retriggering (due to being 
+     *  @param isRetriggering   True if the button is auto-retriggering (due to being
      *                          held down)
      *  @returns	false, if you want the event to be passed on to the page below.
      */
@@ -140,7 +140,7 @@ class UiPage
      *  						It will be 1 on the first call and increasing by 1
      *  						with each successive call. A button down event is
      *  						signaled by numberOfButtonPresses == 0.
-     *  @param isRetriggering   True if the button is auto-retriggering (due to being 
+     *  @param isRetriggering   True if the button is auto-retriggering (due to being
      *                          held down)
      *  @returns	false, if you want the event to be passed on to the page below.
      */
@@ -159,7 +159,7 @@ class UiPage
      *  						It will be 1 on the first call and increasing by 1
      *  						with each successive call. A button down event is
      *  						signaled by numberOfButtonPresses == 0.
-     *  @param isRetriggering   True if the button is auto-retriggering (due to being 
+     *  @param isRetriggering   True if the button is auto-retriggering (due to being
      *                          held down)
      *  @returns	false, if you want the event to be passed on to the page below.
      */
@@ -177,7 +177,7 @@ class UiPage
      *  						It will be 1 on the first call and increasing by 1
      *  						with each successive call. A button down event is
      *  						signaled by numberOfButtonPresses == 0.
-     *  @param isRetriggering   True if the button is auto-retriggering (due to being 
+     *  @param isRetriggering   True if the button is auto-retriggering (due to being
      *                          held down)
      *  @returns	false, if you want the event to be passed on to the page below.
      */
@@ -251,7 +251,7 @@ class UiPage
         return true;
     }
 
-    /** Called when the user starts or stops turning an encoder that is not the menu 
+    /** Called when the user starts or stops turning an encoder that is not the menu
      *  encoder or the value encoder.
      *  @param encoderID			The ID of the affected encoder.
      *  @param isCurrentlyActive	True, if the user currently moves this encoder.
@@ -323,7 +323,7 @@ class UiPage
     /** Called when the page is no longer the topmost page in the page stack. */
     virtual void OnFocusLost(){};
 
-    /** Called to make the UIPage repaint everything on a canvas. 
+    /** Called to make the UIPage repaint everything on a canvas.
      *  Check the ID to determine which display this corresponds to.
      *  Cast the handle to the corresponding type and do your draw operations on it.
      */
@@ -343,19 +343,19 @@ class UiPage
  *  @author jelliesen
  *  @ingroup ui
  *
- *  This system allows you to create complex and dynamic user interfaces 
- *  with menus, pages and dialogs. It holds a stack of pages. Each page 
+ *  This system allows you to create complex and dynamic user interfaces
+ *  with menus, pages and dialogs. It holds a stack of pages. Each page
  *  can react to user input on buttons, potentiometers, and encoders
  *  while drawing to one or multiple displays, leds or other output devices.
- * 
+ *
  *  User input is consumed from a UiEventQueue and distributed to the pages
- *  from the top down. If a page doesn't handle an event, it will be 
+ *  from the top down. If a page doesn't handle an event, it will be
  *  forwarded to the next page below.
- * 
- *  Pages are drawn from the bottom up. Multiple abstract canvases can be 
- *  used for the drawing, where each canvas could be a graphics display, 
- *  LEDs, alphanumeric displays, etc. The UI system makes sure that drawing 
- *  is executed with a constant refresh rate that can be individually 
+ *
+ *  Pages are drawn from the bottom up. Multiple abstract canvases can be
+ *  used for the drawing, where each canvas could be a graphics display,
+ *  LEDs, alphanumeric displays, etc. The UI system makes sure that drawing
+ *  is executed with a constant refresh rate that can be individually
  *  specified for each canvas.
  */
 class UI
@@ -366,7 +366,7 @@ class UI
 
     /** Contains information about the control IDs used for special functions
      *  such as arrow buttons, okay/cancel, function buttons, value sliders, etc.
-     *  If such a control is available, set the corresponding variable to 
+     *  If such a control is available, set the corresponding variable to
      *  the control ID that's used when events are pushed to the UiEventQueue.
      *  If such a control is not available, use UiEventQueue::invalidButtonId,
      *  UiEventQueue::invalidEncoderId or UiEventQueue::invalidPotId.
@@ -395,11 +395,11 @@ class UI
      *  @param inputQueue           The UiEventQueue to read user input events from.
      *  @param specialControlIds    Information about the control IDs used for special buttons/encoders/pots.
      *  @param canvases             A list of UiCanvasDescriptor that define which canvases to use.
-     *  @param primaryOneBitGraphicsDisplayId 
-     *                              The ID of a OneBitGraphicsDisplay canvas that should be used as the 
+     *  @param primaryOneBitGraphicsDisplayId
+     *                              The ID of a OneBitGraphicsDisplay canvas that should be used as the
      *                              main display. Menus will draw to this canvas. If no such dispaly is available,
      *                              use Ui::invalidCanvasId.
-     * 
+     *
      */
     void Init(UiEventQueue&                             inputQueue,
               const SpecialControlIds&                  specialControlIds,
@@ -430,7 +430,7 @@ class UI
     /** Called to close a page. */
     void ClosePage(UiPage& page);
 
-    /** If this UI has a canvas that uses a OneBitGraphicsDisplay AND this canvas should be used 
+    /** If this UI has a canvas that uses a OneBitGraphicsDisplay AND this canvas should be used
      *  as the main display for menus, etc. then this function returns the canvas ID of this display.
      *  If no such canvas exists, this function returns UI::invalidCanvasId.
      */

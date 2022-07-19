@@ -23,7 +23,7 @@ extern "C"
 #define IS25LP064A_SECTOR_ERASE_MAX_TIME 400 /**< & */
 
     /**
-     * @brief  IS25LP08D Commands  
+     * @brief  IS25LP08D Commands
      */
 
     /** @addtogroup flash
@@ -111,8 +111,8 @@ extern "C"
 #define ENTER_QUAD_CMD 0x35
 #define EXIT_QUAD_CMD 0xF5 /**< & */
 
-    /** 
-                      * @brief  IS25LP08D Registers  
+    /**
+                      * @brief  IS25LP08D Registers
                       */
     /* Status Register */
 #define IS25LP064A_SR_WIP ((uint8_t)0x01)  /*!< Write in progress */

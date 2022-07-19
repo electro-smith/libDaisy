@@ -79,7 +79,7 @@ extern "C"
 #define DEVICE_HS 1 /**< & */
 
     /**
-  * @} 
+  * @}
   */
 
 /** @defgroup USBD_CONF_Exported_Macros USBD_CONF_Exported_Macros

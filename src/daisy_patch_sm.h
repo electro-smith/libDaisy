@@ -6,13 +6,13 @@ namespace daisy
 {
 namespace patch_sm
 {
-    /** Accessors for the Analog Controls. 
+    /** Accessors for the Analog Controls.
      *  These cover the 8x Bipolar CV inputs
      *  as well as the 4x 0-3V3 ADC inputs on
-     *  the hardware 
-     * 
+     *  the hardware
+     *
      *  When reading a value with DaisyPatchSM::GetAdcValue()
-     * 
+     *
      *  patch.GetAdcValue(patch_sm::CV_1);
      */
     enum
@@ -44,9 +44,9 @@ namespace patch_sm
     /** @brief Board support file for DaisyPatchSM hardware
      *  @author shensley
      *  @ingroup boards
-     * 
+     *
      *  Daisy Patch SM is a complete Eurorack module DSP engine.
-     *  Based on the Daisy Seed, with circuits added for 
+     *  Based on the Daisy Seed, with circuits added for
      *  interfacing directly with eurorack modular synthesizers.
      */
     class DaisyPatchSM
@@ -86,12 +86,12 @@ namespace patch_sm
         /** Stops the transmission of audio. */
         void StopAudio();
 
-        /** Sets the number of samples processed in an audio callback. 
+        /** Sets the number of samples processed in an audio callback.
          *  This will only take effect on the next invocation of `StartAudio`
          */
         void SetAudioBlockSize(size_t size);
 
-        /** Sets the samplerate for the audio engine 
+        /** Sets the samplerate for the audio engine
          *  This will set it to the closest valid samplerate. Options being:
          *  8kHz, 16kHz, 32kHz, 48kHz, and 96kHz
          */
@@ -108,8 +108,8 @@ namespace patch_sm
         /** Returns the rate at which the audio callback will be called in Hz */
         float AudioCallbackRate();
 
-        /** Starts the Control ADCs 
-         * 
+        /** Starts the Control ADCs
+         *
          *  This is started automatically when Init() is called.
          */
         void StartAdc();
@@ -120,7 +120,7 @@ namespace patch_sm
         /** Reads and filters all of the analog control inputs */
         void ProcessAnalogControls();
 
-        /** Reads and debounces any of the digital control inputs 
+        /** Reads and debounces any of the digital control inputs
          *  This does nothing on this board at this time.
          */
         void ProcessDigitalControls();
@@ -138,39 +138,39 @@ namespace patch_sm
         /** Returns the STM32 port/pin combo for the desired pin (or an invalid pin for HW only pins)
          *
          *  Macros at top of file can be used in place of separate arguments (i.e. GetPin(A4), etc.)
-         * 
+         *
          *  \param bank should be one of the PinBank options above
          *  \param idx pin number between 1 and 10 for each of the pins on each header.
          */
         dsy_gpio_pin GetPin(const PinBank bank, const int idx);
 
-        /** Starts the DAC for the CV Outputs 
-         * 
-         *  By default this starts by running the 
-         *  internal callback at 48kHz, which will 
-         *  update the values based on the SetCvOut 
+        /** Starts the DAC for the CV Outputs
+         *
+         *  By default this starts by running the
+         *  internal callback at 48kHz, which will
+         *  update the values based on the SetCvOut
          *  function.
-         * 
+         *
          *  This is started automatically when Init() is called.
          */
         void StartDac(DacHandle::DacCallback callback = nullptr);
 
-        /** Stop the DAC from updating. 
-         *  This will suspend the CV Outputs from changing 
+        /** Stop the DAC from updating.
+         *  This will suspend the CV Outputs from changing
          */
         void StopDac();
 
-        /** Sets specified DAC channel to the target voltage. 
-         *  This may not be 100% accurate without calibration. 
-         *  
+        /** Sets specified DAC channel to the target voltage.
+         *  This may not be 100% accurate without calibration.
+         *
          *  \todo Add Calibration to CV Outputs
-         * 
+         *
          *  \param channel desired channel to update. 0 is both, otherwise 1 or 2 are valid.
          *  \param voltage value in Volts that you'd like to write to the DAC. The valid range is 0-5V.
          */
         void WriteCvOut(const int channel, float voltage);
 
-        /** Here are some wrappers around libDaisy Static functions 
+        /** Here are some wrappers around libDaisy Static functions
          *  to provide simpler syntax to those who prefer it. */
 
         /** Delays for a specified number of milliseconds */
@@ -213,28 +213,28 @@ namespace patch_sm
             Log::StartLog(wait_for_pc);
         }
 
-        /** @brief Tests entirety of SDRAM for validity 
-         *         This will wipe contents of SDRAM when testing. 
-         * 
-         *  @note   If using the SDRAM for the default bss, or heap, 
-         *          and using constructors as initializers do not 
-         *          call this function. Otherwise, it could 
+        /** @brief Tests entirety of SDRAM for validity
+         *         This will wipe contents of SDRAM when testing.
+         *
+         *  @note   If using the SDRAM for the default bss, or heap,
+         *          and using constructors as initializers do not
+         *          call this function. Otherwise, it could
          *          overwrite changes performed by constructors.
-         * 
+         *
          *  \retval returns true if SDRAM is okay, otherwise false
          */
         bool ValidateSDRAM();
 
-        /** @brief Tests the QSPI for validity 
-         *         This will wipe contents of QSPI when testing. 
-         * 
+        /** @brief Tests the QSPI for validity
+         *         This will wipe contents of QSPI when testing.
+         *
          *  @note  If called with quick = false, this will erase all memory
          *         the "quick" test starts 0x400000 bytes into the memory and
          *         test 16kB of data
-         * 
+         *
          *  \param quick if this is true the test will only test a small piece of the QSPI
          *               checking the entire 8MB can take roughly over a minute.
-         * 
+         *
          *  \retval returns true if SDRAM is okay, otherwise false
          */
         bool ValidateQSPI(bool quick = true);

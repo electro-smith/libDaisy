@@ -8,7 +8,7 @@
 
 namespace daisy
 {
-/** @brief USB Transport for MIDI 
+/** @brief USB Transport for MIDI
  *  @ingroup midi
  */
 class MidiUsbTransport

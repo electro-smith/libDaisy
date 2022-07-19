@@ -7,12 +7,12 @@ namespace daisy
 /**
  * @brief Driver for the TI PCM3060 Audio Codec.
  * @addtogroup codec
- * 
+ *
  * For now this is a limited interface that uses I2C to communicate with the PCM3060
  * The device can also be accessed with SPI, which is not yet supported.
- * 
- * For now all registers are set to their defaults, and the Init function will 
- * perform a MRST and SRST before setting the format to 24bit LJ, and disabling 
+ *
+ * For now all registers are set to their defaults, and the Init function will
+ * perform a MRST and SRST before setting the format to 24bit LJ, and disabling
  * power save for both the ADC and DAC.
  *
  */
@@ -28,7 +28,7 @@ class Pcm3060
     Pcm3060() {}
     ~Pcm3060() {}
 
-    /** Initializes the PCM3060 in 24-bit MSB aligned I2S mode, and disables powersave 
+    /** Initializes the PCM3060 in 24-bit MSB aligned I2S mode, and disables powersave
      * \param i2c Initialized I2CHandle configured at 400kHz or less
      */
     Result Init(I2CHandle i2c);

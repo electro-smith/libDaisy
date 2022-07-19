@@ -7,8 +7,8 @@
 
 namespace daisy
 {
-/** 
-    @brief Generic Class for handling Quadrature Encoders \n 
+/**
+    @brief Generic Class for handling Quadrature Encoders \n
     Inspired/influenced by Mutable Instruments (pichenettes) Encoder classes
     @author Stephen Hensley
     @date December 2019

@@ -69,7 +69,7 @@ enum class MCPMode : uint8_t
 /**
  * Barebones driver for MCP23017 I2C 16-Bit I/O Expander
  * For now it supports only polling approach.
- * 
+ *
  * Usage:
  *  Mcp23017 mcp;
  *  mcp.Init();
@@ -181,11 +181,11 @@ class Mcp23X17
 
     /**
 	 * Controls the pins direction on a whole port at once.
-	 * 
+	 *
 	 * directions: 0 - output, 1 - input
 	 * pullups: 0 - disabled, 1 - enabled
 	 * inverted: 0 - false/normal, 1 - true/inverted
-	 * 
+	 *
 	 * See "3.5.1 I/O Direction register".
 	 */
     void PortMode(MCPPort port,
@@ -199,9 +199,9 @@ class Mcp23X17
     }
 
     /**
-	 * Controls a single pin direction. 
+	 * Controls a single pin direction.
 	 * Pin 0-7 for port A, 8-15 fo port B.
-	 * 
+	 *
 	 * 1 = Pin is configured as an input.
 	 * 0 = Pin is configured as an output.
 	 *
@@ -243,10 +243,10 @@ class Mcp23X17
     /**
 	 * Writes a single pin state.
 	 * Pin 0-7 for port A, 8-15 for port B.
-	 * 
+	 *
 	 * 1 = Logic-high
 	 * 0 = Logic-low
-	 * 
+	 *
 	 * See "3.5.10 Port register".
 	 */
     void WritePin(uint8_t pin, uint8_t state)
@@ -275,10 +275,10 @@ class Mcp23X17
     /**
 	 * Reads a single pin state.
 	 * Pin 0-7 for port A, 8-15 for port B.
-	 * 
+	 *
 	 * 1 = Logic-high
 	 * 0 = Logic-low
-	 * 
+	 *
 	 * See "3.5.10 Port register".
 	 */
     uint8_t ReadPin(uint8_t pin)
@@ -302,10 +302,10 @@ class Mcp23X17
 
     /**
 	 * Writes pins state to a whole port.
-	 * 
+	 *
 	 * 1 = Logic-high
 	 * 0 = Logic-low
-	 * 
+	 *
 	 * See "3.5.10 Port register".
 	 */
     void WritePort(MCPPort port, uint8_t value)
@@ -315,10 +315,10 @@ class Mcp23X17
 
     /**
 	 * Reads pins state for a whole port.
-	 * 
+	 *
 	 * 1 = Logic-high
 	 * 0 = Logic-low
-	 * 
+	 *
 	 * See "3.5.10 Port register".
 	 */
     uint8_t ReadPort(MCPPort port)
@@ -328,10 +328,10 @@ class Mcp23X17
 
     /**
 	 * Writes pins state to both ports.
-	 * 
+	 *
 	 * 1 = Logic-high
 	 * 0 = Logic-low
-	 * 
+	 *
 	 * See "3.5.10 Port register".
 	 */
     void Write(uint16_t value)
@@ -341,11 +341,11 @@ class Mcp23X17
     }
 
     /**
-	 * Reads pins state for both ports. 
-	 * 
+	 * Reads pins state for both ports.
+	 *
 	 * 1 = Logic-high
 	 * 0 = Logic-low
-	 * 
+	 *
 	 * See "3.5.10 Port register".
 	 */
     uint16_t Read()
@@ -359,7 +359,7 @@ class Mcp23X17
 
     /**
      * @brief Fetches pin state from the result of recent Read() call. Useful to preserve unneeded reads
-     * 
+     *
      * @param id pin ID
      * @return uint8_t pin state: 0x00 or 0xFF
      */

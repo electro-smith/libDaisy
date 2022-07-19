@@ -19,9 +19,9 @@ using a struct like this allows us to add more configuration
 later without breaking existing functionality.
 */
 
-/** @brief   Configuration Structure for an ADC Channel 
- *  @details This can be used to configure a a single input, 
- *           or a multiplexed input, allowing up to 8 inputs on 
+/** @brief   Configuration Structure for an ADC Channel
+ *  @details This can be used to configure a a single input,
+ *           or a multiplexed input, allowing up to 8 inputs on
  *           one channel.
  *  @note    Sharing data lines to multiple muxes _is_ possible, but
  *           each channel sharing data lines must be set to the maximum
@@ -39,12 +39,12 @@ struct AdcChannelConfig
         MUX_SEL_LAST, /**< & */
     };
 
-    /** Initializes a single ADC pin as an ADC. 
+    /** Initializes a single ADC pin as an ADC.
     \param pin Pin to init.
      */
     void InitSingle(dsy_gpio_pin pin);
 
-    /** 
+    /**
     Initializes a single ADC pin as a Multiplexed ADC.
     Requires a CD405X Multiplexer connected to the pin.
     You only need to supply the mux pins that are required,
@@ -91,7 +91,7 @@ class AdcHandle
 
     AdcHandle() {}
     ~AdcHandle() {}
-    /** 
+    /**
     Initializes the ADC with the pins passed in.
     \param *cfg an array of AdcChannelConfig of the desired channel
     \param num_channels number of ADC channels to initialize
@@ -106,7 +106,7 @@ class AdcHandle
     /** Stops reading from the ADC */
     void Stop();
 
-    /** 
+    /**
     Single channel getter
     \param chn channel to get
     \return Converted value
@@ -120,7 +120,7 @@ class AdcHandle
     */
     uint16_t *GetPtr(uint8_t chn) const;
 
-    /** 
+    /**
     Get floating point from single channel
     \param chn Channel to get from
     \return Floating point converted value
@@ -128,7 +128,7 @@ class AdcHandle
     float GetFloat(uint8_t chn) const;
 
     /**
-       Getters for multiplexed inputs on a single channel (up to 8 per ADC input). 
+       Getters for multiplexed inputs on a single channel (up to 8 per ADC input).
        \param chn Channel to get from
        \param idx &
        \return data
@@ -144,7 +144,7 @@ class AdcHandle
     uint16_t *GetMuxPtr(uint8_t chn, uint8_t idx) const;
 
     /**
-       Getters for multiplexed inputs on a single channel (up to 8 per ADC input). 
+       Getters for multiplexed inputs on a single channel (up to 8 per ADC input).
        \param chn Channel to get from
        \param idx &
        \return Floating point data

@@ -216,7 +216,7 @@ namespace patch_sm
         }
     }
 
-    /** Actual DaisyPatchSM implementation 
+    /** Actual DaisyPatchSM implementation
  *  With the pimpl model in place, we can/should probably
  *  move the rest of the implementation to the Impl class
  */

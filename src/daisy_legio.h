@@ -4,7 +4,7 @@
 namespace daisy
 {
 /**
-    @brief Class that handles initializing all of the hardware specific to the Virt Iter Legio hardware. \n 
+    @brief Class that handles initializing all of the hardware specific to the Virt Iter Legio hardware. \n
     Helper funtions are also in place to provide easy access to built-in controls and peripherals.
     @author Eris Fairbanks, Olivia Artz Modular + Noise Engineering
     @date June 2022
@@ -42,7 +42,7 @@ class DaisyLegio
     /**Initializes the Legio, and all of its hardware.*/
     void Init(bool boost = false);
 
-    /** 
+    /**
     Wait some ms before going on.
     \param del Delay time in ms.
     */

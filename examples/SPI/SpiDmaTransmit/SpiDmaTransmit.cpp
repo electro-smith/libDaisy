@@ -1,8 +1,8 @@
 /**
  * @author beserge
- * @brief 
+ * @brief
  * @date 2022-05-19
- * 
+ *
  * SPI DMA Transmit
  * Shows how to transmit some data over SPI on the Daisy Patch SM using DMA.
  * (DMA = Direct Memory Access). This method is non-blocking, meaning the hardware will
@@ -50,7 +50,7 @@ int main(void)
 	spi_handle.Init(spi_conf);
 
 	// loop forever
-	while(1) 
+	while(1)
 	{
 		// Use DMA to Transmit those 4 bytes. We don't have to wait for this to complete, we could go on and do other things here
 		// We won't use the callback or callback data features either, so we'll set them to NULL

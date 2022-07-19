@@ -11,7 +11,7 @@ using namespace daisy;
 static constexpr size_t num_devices = 2;
 
 /**
- * This is a mock transport implementation with hooks for verifying the 
+ * This is a mock transport implementation with hooks for verifying the
  * SPI transactions invoked by the driver at the byte level. All calls from
  * the MAX11300 driver (our system-under-test) to the transport will be
  * examined during the test to verify that the driver sent the correct
@@ -146,14 +146,14 @@ using MAX11300Test = daisy::MAX11300Driver<TestTransport, num_devices>;
  * It manages some common setup/teardown and provides basic testing functions for each
  * test case. This helps keep the test cases small and readable by extracting commonly used
  * "helper" code out of the test cases.
- * 
+ *
  * Internally, it holds a buffer of expected SPI transactions. The individual test cases
  * can fill that buffer with expected transactions and eventually call some function on the
  * MAX11300 driver (our SUT). The SUT will execute and call its transport layer to send and
  * receive data via SPI. We use a mocked transport layer that doesn't actually use a hardware
  * SPI - instead it refers to the buffer of expected SPI transactions; comparing the actual
  * transaction to the expected transaction and failing the test if there's a mismatch.
- * 
+ *
  * For that reason, all test cases look like this:
  * - init the driver (this is done implicitly at the start of each test when the
  *   googletest framework executes SetUp() here in the fixture base class):
@@ -175,7 +175,7 @@ class MAX11300TestFixture : public ::testing::Test
   public:
     /**
      * This struct holds a TX SPI transaction with which the contents of "buff" will be
-     * compared, byte for byte, with the output of the driver. If these do not match, 
+     * compared, byte for byte, with the output of the driver. If these do not match,
      * The test will fail.
      */
     struct TxTransaction
@@ -188,9 +188,9 @@ class MAX11300TestFixture : public ::testing::Test
 
     /**
      * This struct holds a TXRX SPI transaction with which the contents of "tx_buff" will be
-     * compared, byte for byte, with the tx_buffer of the SPI transaction.  If these do not match, 
+     * compared, byte for byte, with the tx_buffer of the SPI transaction.  If these do not match,
      * The test will fail.
-     * 
+     *
      * Bytes added to the "rx_buff" will be interpreted by the driver, as if they were received
      * by the MAX11300 device itself, and can be used to further verify driver behavior.
      */
@@ -204,10 +204,10 @@ class MAX11300TestFixture : public ::testing::Test
     };
 
     /**
-     * Pins/ports of the MAX11300 are freely configurable to function as 
-     * ANALOG_IN (ADC), ANALOG_OUT (DAC), GPI, or GPO.  
+     * Pins/ports of the MAX11300 are freely configurable to function as
+     * ANALOG_IN (ADC), ANALOG_OUT (DAC), GPI, or GPO.
      * This enum describes these modes.
-     * We don't use the same enum from the actual driver code, so that we 
+     * We don't use the same enum from the actual driver code, so that we
      * don't end up testing the code with itself.
      */
     enum class PinMode

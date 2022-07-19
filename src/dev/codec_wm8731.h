@@ -6,14 +6,14 @@
 namespace daisy
 {
 /** Device driver for Cirrus (Wolfsen) WM8731 Audio Codec
- ** 
- ** Currently only two-wire (I2C) interface format is supported, 
+ **
+ ** Currently only two-wire (I2C) interface format is supported,
  ** and only a limited set of features are configurable:
  ** * Line inputs/outputs
  ** * audio format/word length
  ** * 48kHZ
  **
- ** Support for headphones, microphone, and full functionality 
+ ** Support for headphones, microphone, and full functionality
  ** still needs to be added.
  **
  ** Use the Driver like this (this will be compatible with the Daisy Seed audio/sai config):
@@ -27,8 +27,8 @@ namespace daisy
         i2c_config.pin_config.sda = {DSY_GPIOB, 9};
         i2c1_handle.Init(i2c_config);
         codec_cfg.Defaults(); // MCU is master, 24-bit,  MSB LJ
-        codec.Init(codec_cfg, i2c1_handle); 
- ** 
+        codec.Init(codec_cfg, i2c1_handle);
+ **
  ***/
 class Wm8731
 {
@@ -40,8 +40,8 @@ class Wm8731
         ERR,
     };
 
-    /** Configuration struct for use in initializing the device. 
-     ** For now, only 48kHz is supported. 
+    /** Configuration struct for use in initializing the device.
+     ** For now, only 48kHz is supported.
      ** USB Mode is also not yet supported. */
     struct Config
     {
@@ -72,8 +72,8 @@ class Wm8731
         /** Sets whether the left/right channels are swapped or not. */
         bool lr_swap;
 
-        /** Set true if tied high, and false if tied low. 
-         ** determines the I2C address for communicating 
+        /** Set true if tied high, and false if tied low.
+         ** determines the I2C address for communicating
          ** with the device */
         bool csb_pin_state;
 
@@ -81,10 +81,10 @@ class Wm8731
         WordLength wl;
 
         /** Sets the following config:
-         ** MCU is master = true 
+         ** MCU is master = true
          ** L/R Swap = false
          ** CSB Pin state = false
-         ** Format = MSB First LJ 
+         ** Format = MSB First LJ
          ** WordLength = 24-bit  */
         void Defaults()
         {

@@ -7,16 +7,16 @@
 
 namespace daisy
 {
-/** @brief General Purpose I/O control 
+/** @brief General Purpose I/O control
  *  @details peripheral control over a single GPIO
  *  @ingroup peripheral
- *   
+ *
  *  Button Input (with internal Pullup resistor)
- *  @include GPIO_Input.cpp 
- * 
+ *  @include GPIO_Input.cpp
+ *
  *  Output Example (perfect for blinking an LED)
  *  @include GPIO_Output.cpp
- * 
+ *
 */
 class GPIO
 {
@@ -30,13 +30,13 @@ class GPIO
         ANALOG,    /**< Analog for connection to ADC or DAC peripheral */
     };
 
-    /** @brief Configures whether an internal Pull up or Pull down resistor is used. 
-     *  
+    /** @brief Configures whether an internal Pull up or Pull down resistor is used.
+     *
      * Internal Pull up/down resistors are typically 40k ohms, and will be between
      * 30k and 50k
-     * 
+     *
      * When the Pin is configured in Analog mode, the pull up/down resistors are
-     * disabled by hardware. 
+     * disabled by hardware.
      */
     enum class Pull
     {
@@ -63,7 +63,7 @@ class GPIO
         Speed speed;
 
         /** Constructor with no arguments will prepare an invalid GPIO set as
-         *  an input, with no pullup. 
+         *  an input, with no pullup.
          */
         Config()
         : pin(), mode(Mode::INPUT), pull(Pull::NOPULL), speed(Speed::LOW)
@@ -73,19 +73,19 @@ class GPIO
 
     GPIO() {}
 
-    /** @brief Initialize the GPIO from a Config struct 
+    /** @brief Initialize the GPIO from a Config struct
      *  @param cfg reference to a Config struct populated with the desired settings
     */
     void Init(const Config &cfg);
 
-    /** @brief Initialize the GPIO with a Configuration struct, and explicit pin 
+    /** @brief Initialize the GPIO with a Configuration struct, and explicit pin
      *  @param p Pin specifying the physical connection on the hardware
-     *  @param cfg reference to a Config struct populated with the desired settings. 
+     *  @param cfg reference to a Config struct populated with the desired settings.
      *         Config::pin will be overwritten
     */
     void Init(Pin p, const Config &cfg);
 
-    /** @brief Explicity initialize all configuration for the GPIO 
+    /** @brief Explicity initialize all configuration for the GPIO
      *  @param p Pin specifying the physical connection on the hardware
      *  @param m Mode specifying the behavior of the GPIO (input, output, etc.). Defaults to Mode::INPUT
      *  @param pu Pull up/down state for the GPIO. Defaults to Pull::NOPULL
@@ -104,12 +104,12 @@ class GPIO
      */
     bool Read();
 
-    /** @brief Changes the state of the GPIO hardware when configured as an OUTPUT. 
+    /** @brief Changes the state of the GPIO hardware when configured as an OUTPUT.
      *  @param state setting true writes an output HIGH, while setting false writes an output LOW.
      */
     void Write(bool state);
 
-    /** @brief flips the current state of the GPIO. 
+    /** @brief flips the current state of the GPIO.
      *  If it was HIGH, it will go LOW, and vice versa.
      */
     void Toggle();
@@ -118,13 +118,13 @@ class GPIO
     Config &GetConfig() { return cfg_; }
 
   private:
-    /** This will internally be cast to the 
-     *  STM32H7 GPIO_Typedef* type, which 
+    /** This will internally be cast to the
+     *  STM32H7 GPIO_Typedef* type, which
      *  is just the base address to the
-     *  specified GPIO register. 
-     * 
+     *  specified GPIO register.
+     *
      *  This prevents us needing to have an internal
-     *  Impl class just to store the GPIO_Typedef* 
+     *  Impl class just to store the GPIO_Typedef*
      */
     uint32_t *GetGPIOBaseRegister();
 
@@ -140,10 +140,10 @@ class GPIO
 
 /** @ingroup peripheral
  *  @addtogroup DEPRECATED-OLD-GPIO
- * 
- *  @brief Deprecated C API for GPIO is staying in place for a 
+ *
+ *  @brief Deprecated C API for GPIO is staying in place for a
  *  few versions to support backwards compatibility.
- * 
+ *
  *  This should not be used for anything new.
  *  @deprecated These should only be used for casting to configs, and are planned to be reomved in a future version.
  *  @{
@@ -178,23 +178,23 @@ extern "C"
         dsy_gpio_pull pull; /**< & */
     } dsy_gpio;
 
-    /** Initializes the gpio with the settings configured. 
+    /** Initializes the gpio with the settings configured.
     \param *p Pin pointer
     */
     void dsy_gpio_init(const dsy_gpio *p);
 
-    /** Deinitializes the gpio pin 
+    /** Deinitializes the gpio pin
     \param *p Pin pointer
      */
     void dsy_gpio_deinit(const dsy_gpio *p);
 
-    /** 
+    /**
     Reads the state of the gpio pin
-    \param *p Pin pointer 
+    \param *p Pin pointer
     \return 1 if the pin is HIGH, and 0 if the pin is LOW */
     uint8_t dsy_gpio_read(const dsy_gpio *p);
 
-    /** 
+    /**
     Writes the state to the gpio pin
     Pin will be set to 3v3 when state is 1, and 0V when state is 0
     \param *p Pin pointer

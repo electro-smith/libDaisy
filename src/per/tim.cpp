@@ -253,7 +253,7 @@ extern "C"
             = get_tim_impl_from_instance(tim_baseHandle->Instance);
         /** In the case of TIM6 (DAC usage) there will be no impl.
          *  The preceding enable_irq checks should be false
-         *  since the default constructor sets it that way 
+         *  since the default constructor sets it that way
          */
         TimerHandle::Config cfg;
         if(impl)

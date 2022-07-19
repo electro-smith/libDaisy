@@ -13,7 +13,7 @@
     and won't need to be accessed directly often.
 */
 
-/* 
+/*
 This struct is identical to the struct provided as "HAL_SD_CardInfoTypeDef"
 I'm using this to allow users to link to the fatfs middleware without having to then link in the entire HAL to their project.
 */
@@ -110,7 +110,7 @@ void BSP_SD_GetCardInfo(BSP_SD_CardInfo *CardInfo);
 uint8_t BSP_SD_IsDetected(void);
 
 /** These functions can be modified in case the current settings (e.g. DMA stream)
-  need to be changed for specific application needs /n 
+  need to be changed for specific application needs /n
 
   Abort the callback */
 void BSP_SD_AbortCallback(void);

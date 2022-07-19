@@ -84,7 +84,7 @@ void Logger<dest>::TransmitBuf()
             tx_ptr_ = 0;
         }
         /** otherwise do not reset tx_ptr_
-         *  accumulate data while buffer size permits 
+         *  accumulate data while buffer size permits
          */
     }
 }

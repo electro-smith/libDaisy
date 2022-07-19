@@ -63,7 +63,7 @@ class LoggerImpl<LOGGER_INTERNAL>
     }
 
   protected:
-    /** USB Handle for CDC transfers 
+    /** USB Handle for CDC transfers
      */
     static UsbHandle usb_handle_;
 };
@@ -95,7 +95,7 @@ class LoggerImpl<LOGGER_EXTERNAL>
     }
 
   protected:
-    /** USB Handle for CDC transfers 
+    /** USB Handle for CDC transfers
      */
     static UsbHandle usb_handle_;
 };

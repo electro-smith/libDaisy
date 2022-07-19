@@ -9,41 +9,41 @@ namespace daisy
 /** @brief Base class for complex menus.
  *  @author jelliesen
  *  @ingroup ui
- * 
+ *
  * This is the base class for any form of UiPage that displays a menu with multiple items.
  * It handles all the logic behind a menu (selecting items, editing items, etc.) but doesn't
  * implement any form of drawing. Implement your own drawing routines by overriding
  * UiPage::Draw() or use `FullScreenItemMenu`
- * 
- * Vaious types of items can be added to the menu, e.g. 
+ *
+ * Vaious types of items can be added to the menu, e.g.
  * - Checkbox items to toggle something on/off,
  * - Generic action items that call a function when activated,
  * - Value editing items for editing int/float/enum values,
  * - Close items that close the menu when activated (useful when no cancel button is available),
- * - Custom items that do whatever you want them to do, by providing a CustomItem object that 
+ * - Custom items that do whatever you want them to do, by providing a CustomItem object that
  *   handles the item-specific functionality.
- * 
- * The Abstract Menu can work with a wide variety of physical controls, here are a couple 
+ *
+ * The Abstract Menu can work with a wide variety of physical controls, here are a couple
  * of combinations that are possible:
  * - 3 buttons: Left/Right to select and edit items, Ok to activate or enter/leave editing mode
- * - 5 buttons: Up/Down to select, Ok to activate/enter/leave, Cancel to close menu, function 
+ * - 5 buttons: Up/Down to select, Ok to activate/enter/leave, Cancel to close menu, function
  *              button to use coarse step size when editing
  * - 6 buttons: Left/Right to select, Up/Down to quickly edit selected items, Ok/Cancel to enter/leave
  * - 1 encoder with pushbutton
  * - 1 encoder for selecting items, another one for editing their values
  * - 1 encoder for selecting items and a value slider potentiometer for editing
  * - ... any other combination of the above
- * 
+ *
  * These are the controls that the AbstractMenu will react to and their associated function:
  * - Left/Right buttons: Select items when `Orientation::leftRightSelectUpDownModify`,
- *                       directly edit value of the selected item when 
+ *                       directly edit value of the selected item when
  *                       `Orientation::upDownSelectLeftRightModify`.
  * - Up/Down buttons: Select items when `Orientation::upDownSelectLeftRightModify`,
- *                    directly edit value of the selected item when 
+ *                    directly edit value of the selected item when
  *                    `Orientation::leftRightSelectUpDownModify`.
- * - Ok button: Activate the action of the selected item (if it has an action, e.g. 
- *              `ItemType::closeMenuItem`) otherwise enter/leave editing mode where the 
- *              arrow buttons used for selection will now edit the value instead (only 
+ * - Ok button: Activate the action of the selected item (if it has an action, e.g.
+ *              `ItemType::closeMenuItem`) otherwise enter/leave editing mode where the
+ *              arrow buttons used for selection will now edit the value instead (only
  *              possible if `allowEntering` is set to `true`).
  * - Cancel button: Closes the menu page or leaves editing mode
  * - Menu encoder: Selects items; edits item value when in editing mode
@@ -55,8 +55,8 @@ namespace daisy
 class AbstractMenu : public UiPage
 {
   public:
-    /** Controls which buttons are used to navigate back and forth between the menu 
-     *  items (selection buttons) and which buttons can be used to modify their value 
+    /** Controls which buttons are used to navigate back and forth between the menu
+     *  items (selection buttons) and which buttons can be used to modify their value
      *  directly without pressing the enter button first (modify buttons; these don't
      *  have to be available).
      *  @see AbstractMenuPage
@@ -83,7 +83,7 @@ class AbstractMenu : public UiPage
         valueItem,
         /** Displays a name and opens another UiPage when selected. */
         openUiPageItem,
-        /** Displays a text and closes the menu page when selected. This is useful when no cancel 
+        /** Displays a text and closes the menu page when selected. This is useful when no cancel
          *  button is available to close a menu and return to the page below. */
         closeMenuItem,
         /** A custom item. @see CustomItem */
@@ -170,7 +170,7 @@ class AbstractMenu : public UiPage
             struct
             {
                 /** The UiPage to open when the okay button is pressed.
-                 *  The object must stay alive longer than the MenuPage, 
+                 *  The object must stay alive longer than the MenuPage,
                  *  e.g. as a global variable. */
                 UiPage* pageToOpen;
             } asOpenUiPageItem;
@@ -178,7 +178,7 @@ class AbstractMenu : public UiPage
             /** Properties for type == ItemType::customItem */
             struct
             {
-                /** The CustomItem to display. The object provided here must 
+                /** The CustomItem to display. The object provided here must
                  *  stay alive longer than the MenuPage, e.g. as a global variable. */
                 CustomItem* itemObject;
             } asCustomItem;
@@ -215,16 +215,16 @@ class AbstractMenu : public UiPage
     /** Call this from your child class to initialize the menu. It's okay to
      *  re-initialize an AbstractMene multiple times, even while it's displayed
      *  on the UI.
-     * @param items             An array of ItemConfig that determine which items are 
+     * @param items             An array of ItemConfig that determine which items are
      *                          available in the menu.
      * @param numItems          The number of items in the `items` array.
-     * @param orientation       Controls which pair of arrow buttons are used for 
+     * @param orientation       Controls which pair of arrow buttons are used for
      *                          selection / editing
-     * @param allowEntering     Globally controls if the Ok button can enter items 
-     *                          for editing. If you have a physical controls that can edit 
-     *                          selected items directly (value slider, a second arrow button 
+     * @param allowEntering     Globally controls if the Ok button can enter items
+     *                          for editing. If you have a physical controls that can edit
+     *                          selected items directly (value slider, a second arrow button
      *                          pair, value encoder) you can set this to false, otherwise you
-     *                          set it to true so that the controls used for selecting items 
+     *                          set it to true so that the controls used for selecting items
      *                          can now also be used to edit the values.
      */
     void Init(const ItemConfig* items,
@@ -235,7 +235,7 @@ class AbstractMenu : public UiPage
     /** Returns the state of the function button. */
     bool IsFunctionButtonDown() const { return isFuncButtonDown_; }
 
-    /** The orientation of the menu. This is used to determine 
+    /** The orientation of the menu. This is used to determine
      *  which function the arrow keys will be assigned to. */
     Orientation orientation_ = Orientation::upDownSelectLeftRightModify;
     /** A list of items to include in the menu. */
@@ -244,10 +244,10 @@ class AbstractMenu : public UiPage
     uint16_t numItems_ = 0;
     /** The currently selected item index */
     int16_t selectedItemIdx_ = -1;
-    /** If true, the menu allows "entering" an item to modify 
+    /** If true, the menu allows "entering" an item to modify
      *  its value with the encoder / selection buttons. */
     bool allowEntering_ = true;
-    /** If true, the currently selected item index is 
+    /** If true, the currently selected item index is
      *  "entered" so that it can be edited with the encoder/
      *  selection buttons. */
     bool isEditing_ = false;

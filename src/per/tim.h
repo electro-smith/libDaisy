@@ -7,16 +7,16 @@
 namespace daisy
 {
 /** @brief Hardare timer peripheral support.
- ** 
+ **
  ** Supports general-function TIM peripherals:
  ** - TIM2, TIM3, TIM4, TIM5
  **
  ** DaisySeed, and many internal peripherals utilize TIM2 for timing/delay purposes.
- ** It is configured to be at the maximum frequency: typically 200MHz or 240MHz (boost) 
- ** for measuring/delaying for very short periods. 
+ ** It is configured to be at the maximum frequency: typically 200MHz or 240MHz (boost)
+ ** for measuring/delaying for very short periods.
  **
  ** The GetUs/GetMs functions are available for convenience (and backwards compatibility),
- ** but to avoid wrapping errors on math when doing time-delta calculations, using ticks is 
+ ** but to avoid wrapping errors on math when doing time-delta calculations, using ticks is
  ** recommended. The data can be converted to the final time-base after getting the difference in ticks.
  ** (Using GetFreq() can be used for these time-base calculations).
  **
@@ -52,8 +52,8 @@ class TimerHandle
             TIM_5,     /**< 32-bit counter*/
         };
 
-        /** @brief Direction of the auto-reload counter. 
-         ** @todo Add support for the various  
+        /** @brief Direction of the auto-reload counter.
+         ** @todo Add support for the various
          ** versions of Up/Down counters.
          ** */
         enum class CounterDir
@@ -88,7 +88,7 @@ class TimerHandle
         ERR,
     };
 
-    /** @brief User Callback type that will fire at the end of each timer 
+    /** @brief User Callback type that will fire at the end of each timer
      *   period. This requires that Config::enable_irq is true before Init
      *  @param data pointer to arbitrary user-provided data
     */
@@ -109,22 +109,22 @@ class TimerHandle
     const Config& GetConfig() const;
 
     /** @brief Sets the period of the Timer.
-     * 
+     *
      ** This is the number of ticks it takes before it wraps back around.
      ** For self-managed timing, this can be left at the default. (0xffff for 16-bit
-     ** and 0xffffffff for 32-bit timers). 
-     ** This can be changed "on-the-fly" 
+     ** and 0xffffffff for 32-bit timers).
+     ** This can be changed "on-the-fly"
      ** */
     Result SetPeriod(uint32_t ticks);
 
-    /** @brief Sets the Prescalar applied to the TIM peripheral. 
-     * 
-     ** This can be any number up to 0xffff 
+    /** @brief Sets the Prescalar applied to the TIM peripheral.
+     *
+     ** This can be any number up to 0xffff
      ** This will adjust the rate of ticks:
      ** Calculated as APBN_Freq / prescalar per tick
      ** where APBN is APB1 for Most general purpose timers,
-     ** and APB2 for HRTIM,a nd the advanced timers. 
-     ** This can be changed "on-the-fly" 
+     ** and APB2 for HRTIM,a nd the advanced timers.
+     ** This can be changed "on-the-fly"
      ** */
     Result SetPrescaler(uint32_t val);
 
@@ -137,23 +137,23 @@ class TimerHandle
     /** @brief Returns the frequency of each tick of the timer in Hz */
     uint32_t GetFreq();
 
-    /** @brief Returns the number of counter position. 
-     * 
-     ** This increments according to Config::CounterDir, 
-     ** and wraps around at the specified period (maxing out 
+    /** @brief Returns the number of counter position.
+     *
+     ** This increments according to Config::CounterDir,
+     ** and wraps around at the specified period (maxing out
      ** at 2^16 or 2^32 depending on the chosen TIM peripheral. */
     uint32_t GetTick();
 
-    /** @brief Returns the ticks scaled as milliseconds 
+    /** @brief Returns the ticks scaled as milliseconds
      **
-     ** Use care when using for measurements and ensure that 
+     ** Use care when using for measurements and ensure that
      ** the TIM period can handle the maximum desired measurement.
      ***/
     uint32_t GetMs();
 
-    /** @brief Returns the ticks scaled as microseconds 
+    /** @brief Returns the ticks scaled as microseconds
      **
-     ** Use care when using for measurements and ensure that 
+     ** Use care when using for measurements and ensure that
      ** the TIM period can handle the maximum desired measurement.
      ***/
     uint32_t GetUs();
@@ -167,7 +167,7 @@ class TimerHandle
     /** @brief Stay within this function for del microseconds */
     void DelayUs(uint32_t del);
 
-    /** @brief Sets the PeriodElapsedCallback that will fire 
+    /** @brief Sets the PeriodElapsedCallback that will fire
      *   whenever the timer reaches the end of it's period.
      *  @param cb user callback
      *  @param data optional pointer to arbitrary data (defaults to nullptr)

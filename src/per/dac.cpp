@@ -169,7 +169,7 @@ DacHandle::Impl::Start(uint16_t *buffer, size_t size, DacHandle::DacCallback cb)
     return Result::OK;
 }
 
-/** Not fully implemented -- I had the intention of setting up both DACs to work from a single callback, which 
+/** Not fully implemented -- I had the intention of setting up both DACs to work from a single callback, which
  ** it seems like will require a bit more setup in the Init (basically set it to dual mode). */
 DacHandle::Result DacHandle::Impl::Start(uint16_t *             buffer_1,
                                          uint16_t *             buffer_2,

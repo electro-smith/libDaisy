@@ -18,7 +18,7 @@ const uint32_t kWavFileSubChunk1Id = 0x20746d66; /**< "fmt " */
 const uint32_t kWavFileSubChunk2Id = 0x61746164; /**< "data" */
 
 /** Standard Format codes for the waveform data.
- ** 
+ **
  ** According to spec, extensible should be used whenever:
  ** * PCM data has more than 16 bits/sample
  ** * The number of channels is more than 2

@@ -1,5 +1,5 @@
 /*
-  
+
 Project: LCD library for Electrosmith's Daisy Seed
 Description: LCD class for a 16x2 LCD using the Hitachi HD44780 driver chip
 Author: Staffan Melin, staffan.melin@oscillator.se

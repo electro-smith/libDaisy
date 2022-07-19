@@ -1,4 +1,4 @@
-/**	
+/**
  * Copyright (C) Johannes Elliesen, 2021
  */
 
@@ -481,7 +481,7 @@ class FixedCapStrBase
 /** @brief A safe and convenient statically allocated string with constexpr powers
  *  @author jelliesen
  *  @addtogroup utility
- * 
+ *
  * This string class is statically allocated. All of its functions can be evaluated at compile time
  * through the power of constexpr.
  */

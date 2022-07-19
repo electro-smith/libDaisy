@@ -1,8 +1,8 @@
 /**
  * @author beserge
- * @brief 
+ * @brief
  * @date 2022-05-19
- * 
+ *
  * SPI Blocking Transmit Example
  * Shows how to transmit some data over SPI on the Daisy Seed in a blocking manner.
  * This means the code will wait while the transmission is occurring.
@@ -45,7 +45,7 @@ int main(void)
 	spi_handle.Init(spi_conf);
 
 	// loop forever
-	while(1) 
+	while(1)
 	{
 		// put these four bytes in a buffer
 		uint8_t buffer[4] = {0, 1, 2, 3};

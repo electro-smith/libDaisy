@@ -16,8 +16,8 @@
 
 namespace daisy
 {
-/** @addtogroup external 
-    @{ 
+/** @addtogroup external
+    @{
 */
 
 /** I2C Transport for Dps310 */
@@ -517,8 +517,8 @@ class Dps310
     }
 
 
-    /** Read the XYZ data from the sensor and store in the internal 
-        raw_pressure, raw_temperature, _pressure and _temperature variables. 
+    /** Read the XYZ data from the sensor and store in the internal
+        raw_pressure, raw_temperature, _pressure and _temperature variables.
     */
     void Process(void)
     {

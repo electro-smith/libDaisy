@@ -8,7 +8,7 @@ namespace daisy
 /** @brief A button monitor that generates events in a UiEventQueue
  *  @author jelliesen
  *  @ingroup ui
- * 
+ *
  *  This class monitors a number of buttons and detects changes in their state.
  *  When a change is detected, an event is added to a UiEventQueue. If required, software
  *  debouncing can be applied.
@@ -17,9 +17,9 @@ namespace daisy
  *  template argument `numButtons`. Each of the buttons is identified by an ID number from
  *  `0 .. numButtons - 1`. This number will also be used when events are posted to the
  *  UiEventQueue. It's suggested to define an enum in your project like this:
- *  
+ *
  *      enum ButtonId { bttnOkay = 0, bttnCancel = 1, bttnStart = 2 };
- * 
+ *
  *  In different projects, diffent ways of reading the button states will be
  *  used. That's why this class uses a generic backend that you'll have to write.
  *  The BackendType class will provide the source data for each button or switch.

@@ -53,8 +53,8 @@
 
 namespace daisy
 {
-/** @addtogroup external 
-    @{ 
+/** @addtogroup external
+    @{
 */
 
 /** I2C Transport for NeoPixel */
@@ -319,7 +319,7 @@ class NeoPixel
     */
     Result GetTransportError() { return transport_.GetError() ? ERR : OK; }
 
-    /** Perform a software reset. 
+    /** Perform a software reset.
         This resets all seesaw registers to their default values.
         This is called automatically from Init().
     */
