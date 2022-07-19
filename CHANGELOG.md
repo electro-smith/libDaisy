@@ -6,6 +6,10 @@
 
 * audio: added `output_compensation` value to config struct to allow for post-scaling of uneven audio passthru levels.
 
+### Bug Fixes
+
+* driver: Fixed a compiler error in `Max11300Driver::WriteAnalogPinVolts()`
+
 ## v5.1.0
 
 ### Features
