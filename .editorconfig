@@ -1,0 +1,25 @@
+# EditorConfig auto-configures your text editor to
+# use repository-enforced formatting settings.
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+# Unix-style newlines with a newline ending for
+# some non-code files
+[{CHANGELOG.md,README.md,examples/README.md}]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+
+# Unix-style newlines with a newline ending
+# and 4 space indentation on C / C++ files in
+#   - tests (non-recursively)
+#   - src (recursively)
+#   - examples (recursively)
+[{tests/*,src/**,examples/**}.{c,cpp,c++,h,hpp,h++,ipp,i++}]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 4
