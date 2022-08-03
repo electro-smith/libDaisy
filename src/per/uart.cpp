@@ -636,16 +636,8 @@ void UartHandler::Impl::DmaReceiveFifoEndCallback(void*               context,
     if(res == UartHandler::Result::OK || res == UartHandler::Result::ERR)
     {
         UartHandler::Impl* handle = (UartHandler::Impl*)context;
-
-        // copy rx buffer to queue buffer
-        handle->dma_fifo_rx_->Advance(UART_RX_BUFF_SIZE - 1);
-        handle->rx_last_pos_ = UART_RX_BUFF_SIZE - 1;
-        uint8_t processbuf[256];
-        handle->dma_fifo_rx_->ImmediateRead(processbuf, UART_RX_BUFF_SIZE - 1);
-        handle->queue_rx_.Overwrite(processbuf, UART_RX_BUFF_SIZE - 1);
-
+        handle->HandleFifo();
         HAL_UART_Init(&handle->huart_);
-
         handle->DmaReceiveFifo();
     }
 }
