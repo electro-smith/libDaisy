@@ -2,9 +2,24 @@
 
 ## Unreleased
 
+## v5.2.0
+
 ### Features
 
+* board: added board support for Noise Engineering legio platform
 * audio: added `output_compensation` value to config struct to allow for post-scaling of uneven audio passthru levels.
+* util: added a multiply operator to the Color class for scaling a color by a single factor.
+* device: Added ICM20948 sensor device driver
+* device: Added DPS310 device driver
+* device: Added MPR121 device driver
+* device: Added APDS9960 device driver
+* device: Added TLV493D device driver.
+* device: Added neotrellis driver
+* device: Added neopixel driver
+
+### Bug fixes
+
+* uart: fixed bug with fifo-dma-receive mode that would result in erratic reads over time. Fixes issues with UART (TRS/DIN) MIDI parsing
 
 ## v5.1.0
 
