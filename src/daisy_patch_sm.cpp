@@ -374,6 +374,10 @@ namespace patch_sm
     {
         audio.SetBlockSize(size);
         callback_rate_ = AudioSampleRate() / AudioBlockSize();
+        for(size_t i = 0; i < ADC_LAST; i++)
+        {
+            controls[i].SetSampleRate(callback_rate_);
+        }
     }
 
     void DaisyPatchSM::SetAudioSampleRate(float sr)
@@ -398,6 +402,10 @@ namespace patch_sm
         }
         audio.SetSampleRate(sai_sr);
         callback_rate_ = AudioSampleRate() / AudioBlockSize();
+        for(size_t i = 0; i < ADC_LAST; i++)
+        {
+            controls[i].SetSampleRate(callback_rate_);
+        }
     }
 
     void
@@ -405,6 +413,10 @@ namespace patch_sm
     {
         audio.SetSampleRate(sample_rate);
         callback_rate_ = AudioSampleRate() / AudioBlockSize();
+        for(size_t i = 0; i < ADC_LAST; i++)
+        {
+            controls[i].SetSampleRate(callback_rate_);
+        }
     }
 
     size_t DaisyPatchSM::AudioBlockSize()
