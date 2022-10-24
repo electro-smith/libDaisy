@@ -82,15 +82,14 @@ var hierarchy =
     [ "daisy::Encoder", "classdaisy_1_1_encoder.html", null ],
     [ "daisy::FatFSInterface", "classdaisy_1_1_fat_f_s_interface.html", null ],
     [ "daisy::FIFOBase< T >", "classdaisy_1_1_f_i_f_o_base.html", [
+      [ "daisy::FIFO< Event, 256 >", "classdaisy_1_1_f_i_f_o.html", null ],
       [ "daisy::FIFO< T, capacity >", "classdaisy_1_1_f_i_f_o.html", null ]
     ] ],
-    [ "daisy::FIFOBase< Event >", "classdaisy_1_1_f_i_f_o_base.html", [
-      [ "daisy::FIFO< Event, 256 >", "classdaisy_1_1_f_i_f_o.html", null ]
-    ] ],
-    [ "daisy::FixedCapStrBase< CharType >", "classdaisy_1_1_fixed_cap_str_base.html", null ],
-    [ "daisy::FixedCapStrBase< char >", "classdaisy_1_1_fixed_cap_str_base.html", [
+    [ "daisy::FIFOBase< Event >", "classdaisy_1_1_f_i_f_o_base.html", null ],
+    [ "daisy::FixedCapStrBase< CharType >", "classdaisy_1_1_fixed_cap_str_base.html", [
       [ "daisy::FixedCapStr< capacity, CharType >", "classdaisy_1_1_fixed_cap_str.html", null ]
     ] ],
+    [ "daisy::FixedCapStrBase< char >", "classdaisy_1_1_fixed_cap_str_base.html", null ],
     [ "FontDef", "struct_font_def.html", null ],
     [ "daisy::GateIn", "classdaisy_1_1_gate_in.html", null ],
     [ "daisy::GPIO", "classdaisy_1_1_g_p_i_o.html", null ],
@@ -146,10 +145,10 @@ var hierarchy =
       [ "daisy::OneBitGraphicsDisplayImpl< OledDisplay< DisplayDriver > >", "classdaisy_1_1_one_bit_graphics_display_impl.html", [
         [ "daisy::OledDisplay< DisplayDriver >", "classdaisy_1_1_oled_display.html", null ]
       ] ],
-      [ "daisy::OneBitGraphicsDisplayImpl< OledDisplay< daisy::SSD130xDriver > >", "classdaisy_1_1_one_bit_graphics_display_impl.html", [
+      [ "daisy::OneBitGraphicsDisplayImpl< OledDisplay< daisy::SSD130xDriver > >", "classdaisy_1_1_one_bit_graphics_display_impl.html", null ],
+      [ "daisy::OneBitGraphicsDisplayImpl< ChildType >", "classdaisy_1_1_one_bit_graphics_display_impl.html", [
         [ "daisy::OledDisplay< daisy::SSD130xDriver >", "classdaisy_1_1_oled_display.html", null ]
-      ] ],
-      [ "daisy::OneBitGraphicsDisplayImpl< ChildType >", "classdaisy_1_1_one_bit_graphics_display_impl.html", null ]
+      ] ]
     ] ],
     [ "daisy::Parameter", "classdaisy_1_1_parameter.html", null ],
     [ "daisy::Pcm3060", "classdaisy_1_1_pcm3060.html", null ],
@@ -185,14 +184,12 @@ var hierarchy =
     [ "daisy::SSD130xDriver< width, height, Transport >", "classdaisy_1_1_s_s_d130x_driver.html", null ],
     [ "daisy::SSD130xI2CTransport", "classdaisy_1_1_s_s_d130x_i2_c_transport.html", null ],
     [ "daisy::StackBase< T >", "classdaisy_1_1_stack_base.html", [
+      [ "daisy::Stack< daisy::UiPage *, kMaxNumPages >", "classdaisy_1_1_stack.html", null ],
+      [ "daisy::Stack< daisy::UiCanvasDescriptor, kMaxNumCanvases >", "classdaisy_1_1_stack.html", null ],
       [ "daisy::Stack< T, capacity >", "classdaisy_1_1_stack.html", null ]
     ] ],
-    [ "daisy::StackBase< daisy::UiCanvasDescriptor >", "classdaisy_1_1_stack_base.html", [
-      [ "daisy::Stack< daisy::UiCanvasDescriptor, kMaxNumCanvases >", "classdaisy_1_1_stack.html", null ]
-    ] ],
-    [ "daisy::StackBase< daisy::UiPage * >", "classdaisy_1_1_stack_base.html", [
-      [ "daisy::Stack< daisy::UiPage *, kMaxNumPages >", "classdaisy_1_1_stack.html", null ]
-    ] ],
+    [ "daisy::StackBase< daisy::UiCanvasDescriptor >", "classdaisy_1_1_stack_base.html", null ],
+    [ "daisy::StackBase< daisy::UiPage * >", "classdaisy_1_1_stack_base.html", null ],
     [ "daisy::Switch", "classdaisy_1_1_switch.html", null ],
     [ "daisy::Switch3", "classdaisy_1_1_switch3.html", null ],
     [ "daisy::System", "classdaisy_1_1_system.html", null ],
