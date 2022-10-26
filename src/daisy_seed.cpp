@@ -14,7 +14,7 @@ using namespace daisy;
 #define SEED_TEST_POINT_PIN 14
 
 #ifndef SEED_REV2
-const dsy_gpio_pin seedgpio[31] = {
+const dsy_gpio_pin seedgpio[33] = {
     // GPIO 1-8
     //{DSY_GPIOA, 8}, // removed on Rev4
     {DSY_GPIOB, 12},
@@ -42,7 +42,7 @@ const dsy_gpio_pin seedgpio[31] = {
     {DSY_GPIOC, 1},
     {DSY_GPIOC, 4},
     {DSY_GPIOA, 5},
-    // GPIO 17-24
+    // GPIO 25-31
     {DSY_GPIOA, 4},
     {DSY_GPIOA, 1},
     {DSY_GPIOA, 0},
@@ -51,6 +51,10 @@ const dsy_gpio_pin seedgpio[31] = {
     {DSY_GPIOA, 2},
     {DSY_GPIOB, 14},
     {DSY_GPIOB, 15},
+
+    // Seed2DFM exclusive pins
+    {DSY_GPIOC, 2},
+    {DSY_GPIOC, 3},
 };
 #else
 const dsy_gpio_port seed_ports[32] = {
@@ -159,7 +163,7 @@ void DaisySeed::DeInit()
 dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
 {
     dsy_gpio_pin p;
-    pin_idx = pin_idx < 32 ? pin_idx : 0;
+    pin_idx = pin_idx < sizeof(seedgpio) / sizeof(seedgpio[0]) ? pin_idx : 0;
 #ifndef SEED_REV2
     p = seedgpio[pin_idx];
 #else
