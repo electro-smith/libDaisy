@@ -324,7 +324,7 @@ void System::ResetToBootloader(BootloaderMode mode)
         // be initialized. If the bootloader is <= v5, then it will not
         // be initialized, but a failed write will not cause a fault.
 
-        boot_info.type = mode == BootloaderMode::DAISY ?
+        boot_info.status = mode == BootloaderMode::DAISY ?
             BootInfo::Type::INVALID :
             BootInfo::Type::SKIP_TIMEOUT;
     }
@@ -353,7 +353,7 @@ System::BootInfo::Version System::GetBootloaderVersion()
     if (region == MemoryRegion::INTERNAL_FLASH)
         return BootInfo::Version::NONE;
 
-    for (int i = 0; i < BootInfo::Version::LAST; i++)
+    for (int i = 0; i < (int) BootInfo::Version::LAST; i++)
     {
         if (boot_info.version == (BootInfo::Version) i)
             return (BootInfo::Version) i;

@@ -112,7 +112,7 @@ void DaisySeed::Init(bool boost)
     auto memory = System::GetProgramMemoryRegion();
     auto boot_version = System::GetBootloaderVersion();
 
-    if(boot_version == System::B0otInfo::Version::LT_v6_0 &&
+    if(boot_version == System::BootInfo::Version::LT_v6_0 &&
             memory != System::MemoryRegion::INTERNAL_FLASH)
     {
         syscfg.skip_clocks = true;
@@ -123,7 +123,7 @@ void DaisySeed::Init(bool boost)
     if(memory != System::MemoryRegion::QSPI)
         qspi.Init(qspi_config);
 
-    if(boot_version == System::B0otInfo::Version::LT_v6_0 &&
+    if(boot_version == System::BootInfo::Version::LT_v6_0 &&
             memory == System::MemoryRegion::INTERNAL_FLASH)
     {
         dsy_gpio_init(&led);
