@@ -16,7 +16,7 @@ extern "C"
 }
 
 // boot info struct declared in persistent backup SRAM
-volatile daisy::System::BootInfo __attribute__((section(".backup_sram"))) boot_info;
+volatile daisy::System::BootInfo __attribute__((section(".backup_sram"))) daisy::boot_info;
 
 // Jump related stuff
 #define u32 uint32_t
