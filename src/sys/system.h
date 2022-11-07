@@ -73,17 +73,20 @@ class System
     };
 
     /** Bootloader struct for controlling bootloading parameters */
-    struct BootInfo {
-        enum class Type: uint32_t {
-            INVALID = 0x00000000,
-            JUMP = 0xDEADBEEF,
+    struct BootInfo
+    {
+        enum class Type : uint32_t
+        {
+            INVALID      = 0x00000000,
+            JUMP         = 0xDEADBEEF,
             SKIP_TIMEOUT = 0x5AFEB007,
         } status;
         uint32_t data;
-        enum class Version: uint32_t {
+        enum class Version : uint32_t
+        {
             LT_v6_0 = 0, // Less than v6.0
-            NONE, // No bootloader present
-            v6_0, // v6.0 or greater
+            NONE,        // No bootloader present
+            v6_0,        // v6.0 or greater
             LAST
         } version;
     };
@@ -150,7 +153,8 @@ class System
      * is used, this will return to it and skip the
      * timeout window
     */
-    enum BootloaderMode {
+    enum BootloaderMode
+    {
         STM = 0,
         DAISY,
         DAISY_SKIP_TIMEOUT

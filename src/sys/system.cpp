@@ -16,7 +16,8 @@ extern "C"
 }
 
 // boot info struct declared in persistent backup SRAM
-volatile daisy::System::BootInfo __attribute__((section(".backup_sram"))) daisy::boot_info;
+volatile daisy::System::BootInfo __attribute__((section(".backup_sram")))
+daisy::boot_info;
 
 // Jump related stuff
 #define u32 uint32_t
@@ -299,7 +300,7 @@ void System::DelayTicks(uint32_t delay_ticks)
 
 void System::ResetToBootloader(BootloaderMode mode)
 {
-    if (mode == BootloaderMode::STM)
+    if(mode == BootloaderMode::STM)
     {
         // Initialize Boot Pin
         dsy_gpio_pin bootpin = {DSY_GPIOG, 3};
@@ -314,19 +315,20 @@ void System::ResetToBootloader(BootloaderMode mode)
         // wait a few ms for cap to charge
         HAL_Delay(10);
     }
-    else if (mode == BootloaderMode::DAISY || mode == BootloaderMode::DAISY_SKIP_TIMEOUT)
+    else if(mode == BootloaderMode::DAISY
+            || mode == BootloaderMode::DAISY_SKIP_TIMEOUT)
     {
         auto region = GetProgramMemoryRegion();
-        if (region == MemoryRegion::INTERNAL_FLASH)
+        if(region == MemoryRegion::INTERNAL_FLASH)
             return; // Cannot return to Daisy bootloader if it's not present!
 
         // Coming from a bootloaded program, the backup SRAM will already
         // be initialized. If the bootloader is <= v5, then it will not
         // be initialized, but a failed write will not cause a fault.
 
-        boot_info.status = mode == BootloaderMode::DAISY ?
-            BootInfo::Type::INVALID :
-            BootInfo::Type::SKIP_TIMEOUT;
+        boot_info.status = mode == BootloaderMode::DAISY
+                               ? BootInfo::Type::INVALID
+                               : BootInfo::Type::SKIP_TIMEOUT;
     }
     else
     {
@@ -343,27 +345,28 @@ void System::ResetToBootloader(BootloaderMode mode)
 void System::InitBackupSram()
 {
     PWR->CR1 |= PWR_CR1_DBP;
-    while((PWR->CR1 & PWR_CR1_DBP) == RESET);
+    while((PWR->CR1 & PWR_CR1_DBP) == RESET)
+        ;
     __HAL_RCC_BKPRAM_CLK_ENABLE();
 }
 
 System::BootInfo::Version System::GetBootloaderVersion()
 {
     auto region = GetProgramMemoryRegion();
-    if (region == MemoryRegion::INTERNAL_FLASH)
+    if(region == MemoryRegion::INTERNAL_FLASH)
         return BootInfo::Version::NONE;
 
-    for (int i = 0; i < (int) BootInfo::Version::LAST; i++)
+    for(int i = 0; i < (int)BootInfo::Version::LAST; i++)
     {
-        if (boot_info.version == (BootInfo::Version) i)
-            return (BootInfo::Version) i;
+        if(boot_info.version == (BootInfo::Version)i)
+            return (BootInfo::Version)i;
     }
 
     // Otherwise, the version may be higher than this
     // version of the library knows about. In that case,
     // expecting backwards compatibility, we'll say it's
     // at least the latest version.
-    return (BootInfo::Version) ((int) BootInfo::Version::LAST - 1);
+    return (BootInfo::Version)((int)BootInfo::Version::LAST - 1);
 }
 
 void System::ConfigureClocks()
