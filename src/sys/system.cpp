@@ -531,6 +531,16 @@ void System::ConfigureMpu()
     MPU_InitStruct.BaseAddress  = 0xC0000000;
     HAL_MPU_ConfigRegion(&MPU_InitStruct);
 
+    // Configure the backup SRAM region as non-cacheable
+    MPU_InitStruct.IsCacheable  = MPU_ACCESS_NOT_CACHEABLE;
+    MPU_InitStruct.IsBufferable = MPU_ACCESS_NOT_BUFFERABLE;
+    MPU_InitStruct.IsShareable  = MPU_ACCESS_SHAREABLE;
+    MPU_InitStruct.Number       = MPU_REGION_NUMBER2;
+    MPU_InitStruct.TypeExtField = MPU_TEX_LEVEL1;
+    MPU_InitStruct.Size         = MPU_REGION_SIZE_4KB;
+    MPU_InitStruct.BaseAddress  = 0x38800000;
+    HAL_MPU_ConfigRegion(&MPU_InitStruct);
+
     HAL_MPU_Enable(MPU_PRIVILEGED_DEFAULT);
 }
 

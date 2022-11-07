@@ -123,8 +123,9 @@ void DaisySeed::Init(bool boost)
     if(memory != System::MemoryRegion::QSPI)
         qspi.Init(qspi_config);
 
-    if(boot_version == System::BootInfo::Version::LT_v6_0 &&
-            memory == System::MemoryRegion::INTERNAL_FLASH)
+    if(boot_version != System::BootInfo::Version::LT_v6_0 ||
+            (boot_version == System::BootInfo::Version::LT_v6_0 &&
+            memory == System::MemoryRegion::INTERNAL_FLASH))
     {
         dsy_gpio_init(&led);
         dsy_gpio_init(&testpoint);
