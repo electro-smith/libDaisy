@@ -135,7 +135,7 @@ class Mcp23017Transport
     {
         uint8_t data[2];
         i2c_.ReadDataAtAddress(
-            i2c_address_, static_cast<uint8_t>(reg), 1, data, 1, timeout);
+            i2c_address_, static_cast<uint8_t>(reg), 1, data, 2, timeout);
 
         portA = data[0];
         portB = data[1];
