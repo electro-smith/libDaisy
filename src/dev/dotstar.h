@@ -5,19 +5,12 @@
 #include "per/i2c.h"
 #include "per/spi.h"
 
-
-// DotStar color ordering permutations
-// Offset:            R          G          B
-#define DOTSTAR_RGB ((0 << 4) | (1 << 2) | (2))
-#define DOTSTAR_RBG ((0 << 4) | (2 << 2) | (1))
-#define DOTSTAR_GRB ((1 << 4) | (0 << 2) | (2))
-#define DOTSTAR_GBR ((2 << 4) | (0 << 2) | (1))
-#define DOTSTAR_BRG ((1 << 4) | (2 << 2) | (0))
-#define DOTSTAR_BGR ((2 << 4) | (1 << 2) | (0))
-
 namespace daisy
 {
 
+/**
+ * \brief SPI Transport for DotStars 
+ */
 class DotStarSpiTransport
 {
   public:
@@ -56,49 +49,74 @@ class DotStarSpiTransport
         spi_.Init(spi_cfg);
     };
 
-    void Write(uint8_t *data, size_t size)
+    bool Write(uint8_t *data, size_t size)
     {
-        if(spi_.BlockingTransmit(data, size) != SpiHandle::Result::OK)
-        {
-            // TODO: Error handling
-        }
+        return spi_.BlockingTransmit(data, size) == SpiHandle::Result::OK;
     };
 
   private:
     SpiHandle spi_;
 };
 
+
+/** \brief Device support for Adafruit DotStar LEDs (APA102) 
+    @author ndonald2
+    @date November 2022 
+*/
 template <typename Transport>
 class DotStar
 {
   public:
+    enum class Result
+    {
+        OK,
+        ERR_INVALID_ARGUMENT,
+        ERR_TRANSPORT
+    };
+
     struct Config
     {
+        enum ColorOrder : uint8_t
+        {
+            //      R          G          B
+            RGB = ((0 << 4) | (1 << 2) | (2)),
+            RBG = ((0 << 4) | (2 << 2) | (1)),
+            GRB = ((1 << 4) | (0 << 2) | (2)),
+            GBR = ((2 << 4) | (0 << 2) | (1)),
+            BRG = ((1 << 4) | (2 << 2) | (0)),
+            BGR = ((2 << 4) | (1 << 2) | (0)),
+        };
+
         typename Transport::Config transport_config;
+        ColorOrder                 color_order;
         uint16_t                   num_pixels;
-        // TODO: color ordering
 
         void Defaults()
         {
             transport_config.Defaults();
-            num_pixels = 1;
+            color_order = ColorOrder::RGB;
+            num_pixels  = 1;
         };
     };
 
     DotStar(){};
     ~DotStar(){};
 
-    void Init(Config &config)
+    Result Init(Config &config)
     {
         if(config.num_pixels > kMaxNumPixels)
         {
-            // TODO: Error Handling
-            return;
+            return Result::ERR_INVALID_ARGUMENT;
         }
         transport_.Init(config.transport_config);
         num_pixels_ = config.num_pixels;
+        // first color byte is always global brightness (hence +1 offset)
+        r_offset = ((config.color_order >> 4) & 0b11) + 1;
+        g_offset = ((config.color_order >> 2) & 0b11) + 1;
+        b_offset = (config.color_order & 0b11) + 1;
         SetAllGlobalBrightness(15);
         Clear();
+        return Result::OK;
     };
 
     /**
@@ -126,15 +144,15 @@ class DotStar
      * \param idx Index of the pixel for which to set global brightness
      * \param b 5-bit global brightness setting (0 - 31)
      */
-    void SetPixelGlobalBrightness(uint16_t idx, uint16_t b)
+    Result SetPixelGlobalBrightness(uint16_t idx, uint16_t b)
     {
         if(idx >= num_pixels_)
         {
-            // TODO: return error
-            return;
+            return Result::ERR_INVALID_ARGUMENT;
         }
         uint8_t *pixel = (uint8_t *)(&pixels_[idx]);
         pixel[0]       = 0xE0 | std::min(b, (uint16_t)31);
+        return Result::OK;
     };
 
     void SetPixelColor(uint16_t idx, const Color &color)
@@ -142,18 +160,17 @@ class DotStar
         SetPixelColor(idx, color.Red8(), color.Green8(), color.Blue8());
     }
 
-    void SetPixelColor(uint16_t idx, uint8_t r, uint8_t g, uint8_t b)
+    Result SetPixelColor(uint16_t idx, uint8_t r, uint8_t g, uint8_t b)
     {
         if(idx >= num_pixels_)
         {
-            // TODO: Return error
-            return;
+            return Result::ERR_INVALID_ARGUMENT;
         }
-        // TODO: Handle color ordering
-        uint8_t *pixel = (uint8_t *)(&pixels_[idx]);
-        pixel[1]       = r;
-        pixel[2]       = b;
-        pixel[3]       = g;
+        uint8_t *pixel  = (uint8_t *)(&pixels_[idx]);
+        pixel[r_offset] = r;
+        pixel[b_offset] = b;
+        pixel[g_offset] = g;
+        return Result::OK;
     };
 
     /** \brief Clears all current color data. Does not reset global brightnesses.
@@ -167,16 +184,26 @@ class DotStar
     };
 
     /** \brief Write current color data to LEDs */
-    void Show()
+    Result Show()
     {
         uint8_t sf[4] = {0x00, 0x00, 0x00, 0x00};
         uint8_t ef[4] = {0xFF, 0xFF, 0xFF, 0xFF};
-        transport_.Write(sf, 4);
+        if(!transport_.Write(sf, 4))
+        {
+            return Result::ERR_TRANSPORT;
+        }
         for(uint16_t i = 0; i < num_pixels_; i++)
         {
-            transport_.Write((uint8_t *)&pixels_[i], 4);
+            if(!transport_.Write((uint8_t *)&pixels_[i], 4))
+            {
+                return Result::ERR_TRANSPORT;
+            }
         }
-        transport_.Write(ef, 4);
+        if(!transport_.Write(ef, 4))
+        {
+            return Result::ERR_TRANSPORT;
+        }
+        return Result::OK;
     };
 
   private:
@@ -184,6 +211,7 @@ class DotStar
     Transport           transport_;
     uint16_t            num_pixels_;
     uint32_t            pixels_[kMaxNumPixels];
+    uint8_t             r_offset, g_offset, b_offset;
 };
 
 using DotStarSpi = DotStar<DotStarSpiTransport>;
