@@ -9,7 +9,7 @@ namespace daisy
 {
 
 /**
- * \brief SPI Transport for DotStars 
+ * \brief SPI Transport for DotStars
  */
 class DotStarSpiTransport
 {
@@ -17,16 +17,16 @@ class DotStarSpiTransport
     struct Config
     {
         SpiHandle::Config::Peripheral    periph;
-        SpiHandle::Config::BaudPrescaler prescale;
+        SpiHandle::Config::BaudPrescaler baud_prescaler;
         Pin                              clk_pin;
         Pin                              data_pin;
 
         void Defaults()
         {
-            periph   = SpiHandle::Config::Peripheral::SPI_1;
-            prescale = SpiHandle::Config::BaudPrescaler::PS_4;
-            clk_pin  = Pin(PORTG, 11);
-            data_pin = Pin(PORTB, 5);
+            periph         = SpiHandle::Config::Peripheral::SPI_1;
+            baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_4;
+            clk_pin        = Pin(PORTG, 11);
+            data_pin       = Pin(PORTB, 5);
         };
     };
 
@@ -40,7 +40,7 @@ class DotStarSpiTransport
         spi_cfg.clock_phase     = SpiHandle::Config::ClockPhase::ONE_EDGE;
         spi_cfg.datasize        = 8;
         spi_cfg.nss             = SpiHandle::Config::NSS::SOFT;
-        spi_cfg.baud_prescaler  = config.prescale;
+        spi_cfg.baud_prescaler  = config.baud_prescaler;
         spi_cfg.pin_config.sclk = config.clk_pin;
         spi_cfg.pin_config.mosi = config.data_pin;
         spi_cfg.pin_config.miso = Pin();
@@ -59,9 +59,9 @@ class DotStarSpiTransport
 };
 
 
-/** \brief Device support for Adafruit DotStar LEDs (APA102) 
-    @author ndonald2
-    @date November 2022 
+/** \brief Device support for Adafruit DotStar LEDs (APA102)
+    \author ndonald2
+    \date November 2022
 */
 template <typename Transport>
 class DotStar
@@ -87,9 +87,10 @@ class DotStar
             BGR = ((2 << 4) | (1 << 2) | (0)),
         };
 
-        typename Transport::Config transport_config;
-        ColorOrder                 color_order;
-        uint16_t                   num_pixels;
+        typename Transport::Config
+                   transport_config; /**< Transport-specific configuration */
+        ColorOrder color_order;      /**< Pixel color channel ordering */
+        uint16_t   num_pixels;       /**< Number of pixels/LEDs (max 64) */
 
         void Defaults()
         {
@@ -122,7 +123,8 @@ class DotStar
     /**
      * \brief Set global brightness for all pixels
      * \details "Global brighntess" for the APA120 device sets the
-     *          equivalent constant current for the LEDs. See datasheet
+     *          equivalent constant current for the LEDs, not a pre-multiplied PWM
+     *          brightness scaling for the pixel's RGB value. See APA102 datasheet
      *          for details.
      *
      * \param b 5-bit global brightness setting (0 - 31)
@@ -155,11 +157,37 @@ class DotStar
         return Result::OK;
     };
 
+    /**
+     * \brief Sets color of a single pixel
+     *
+     * \param idx Index of the pixel
+     * \param color Color object to apply to the pixel
+     */
     void SetPixelColor(uint16_t idx, const Color &color)
     {
         SetPixelColor(idx, color.Red8(), color.Green8(), color.Blue8());
     }
 
+    /**
+     * \brief Sets color of a single pixel
+     * \param color 32-bit integer representing 24-bit RGB color. MSB ignored.
+     */
+    void SetPixelColor(uint16_t idx, uint32_t color)
+    {
+        uint8_t r = (color >> 16) & 0xFF;
+        uint8_t g = (color >> 8) & 0xFF;
+        uint8_t b = color & 0xFF;
+        SetPixelColor(idx, r, g, b);
+    }
+
+    /**
+     * \brief Sets color of a single pixel
+     *
+     * \param idx Index of the pixel
+     * \param r 8-bit red value to apply to pixel
+     * \param g 8-bit green value to apply to pixel
+     * \param b 8-bit blue value to apply to pixel
+     */
     Result SetPixelColor(uint16_t idx, uint8_t r, uint8_t g, uint8_t b)
     {
         if(idx >= num_pixels_)
@@ -173,17 +201,57 @@ class DotStar
         return Result::OK;
     };
 
-    /** \brief Clears all current color data. Does not reset global brightnesses.
+    /**
+     * \brief Fills all pixels with color
+     * \param color Color with which to fill all pixels
+     */
+    void Fill(const Color &color)
+    {
+        for(uint16_t i = 0; i < num_pixels_; i++)
+        {
+            SetPixelColor(i, color);
+        }
+    }
+
+    /**
+     * \brief Fills all pixels with color
+     * \param color 32-bit integer representing 24-bit RGB color. MSB ignored.
+     */
+    void Fill(uint32_t color)
+    {
+        for(uint16_t i = 0; i < num_pixels_; i++)
+        {
+            SetPixelColor(i, color);
+        }
+    }
+
+    /**
+     * \brief Fill all pixels with color
+     * \param r 8-bit red value to apply to pixels
+     * \param g 8-bit green value to apply to pixels
+     * \param b 8-bit blue value to apply to pixels
+     */
+    void Fill(uint8_t r, uint8_t g, uint8_t b)
+    {
+        for(uint16_t i = 0; i < num_pixels_; i++)
+        {
+            SetPixelColor(i, r, g, b);
+        }
+    }
+
+    /** \brief Clears all current color data.
+     *         Does not reset global brightnesses.
+     *         Does not write pixel buffer data to LEDs.
      */
     void Clear()
     {
         for(uint16_t i = 0; i < num_pixels_; i++)
         {
-            SetPixelColor(i, 0, 0, 0);
+            SetPixelColor(i, 0);
         }
     };
 
-    /** \brief Write current color data to LEDs */
+    /** \brief Writes current pixel buffer data to LEDs */
     Result Show()
     {
         uint8_t sf[4] = {0x00, 0x00, 0x00, 0x00};
