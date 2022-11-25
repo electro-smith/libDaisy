@@ -1,6 +1,6 @@
 #pragma once
-#ifndef DSY_APA120_H
-#define DSY_APA120_H
+#ifndef DSY_DOTSTAR_H
+#define DSY_DOTSTAR_H
 
 #include "per/i2c.h"
 #include "per/spi.h"
