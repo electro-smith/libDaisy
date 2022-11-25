@@ -101,6 +101,14 @@ class DotStar
         Clear();
     };
 
+    /**
+     * \brief Set global brightness for all pixels
+     * \details "Global brighntess" for the APA120 device sets the
+     *          equivalent constant current for the LEDs. See datasheet
+     *          for details.
+     *
+     * \param b 5-bit global brightness setting (0 - 31)
+     */
     void SetAllGlobalBrightness(uint16_t b)
     {
         for(uint16_t i = 0; i < num_pixels_; i++)
@@ -109,6 +117,15 @@ class DotStar
         }
     };
 
+    /**
+     * \brief Set global brightness for a single pixel
+     * \details "Global brighntess" for the APA120 device sets the
+     *          equivalent constant current for the LEDs. See datasheet
+     *          for details.
+     *
+     * \param idx Index of the pixel for which to set global brightness
+     * \param b 5-bit global brightness setting (0 - 31)
+     */
     void SetPixelGlobalBrightness(uint16_t idx, uint16_t b)
     {
         if(idx >= num_pixels_)
@@ -139,14 +156,13 @@ class DotStar
         pixel[3]       = g;
     };
 
-    /** \brief Clears all current color data. Does not reset global brightness per pixel.
+    /** \brief Clears all current color data. Does not reset global brightnesses.
      */
     void Clear()
     {
         for(uint16_t i = 0; i < num_pixels_; i++)
         {
-            uint8_t *pixel = (uint8_t *)(&pixels_[i]);
-            pixel[1] = pixel[2] = pixel[3] = 0;
+            SetPixelColor(i, 0, 0, 0);
         }
     };
 
