@@ -108,7 +108,7 @@ class DotStar
           return;
         }
         b = std::min(b, (uint16_t)31);
-        uint8_t *pixel = (uint8_t*)(&transmut_buf.pixels[idx]);
+        uint8_t *pixel = (uint8_t*)(&pixels_[idx]);
         pixel[0] = 0xE0 | b;
     };
 
@@ -120,7 +120,7 @@ class DotStar
             return;
         }
         // TODO: Handle color ordering
-        uint8_t *pixel = (uint8_t*)(&transmut_buf.pixels[idx]);
+        uint8_t *pixel = (uint8_t*)(&pixels_[idx]);
         pixel[1] = r;
         pixel[2] = b;
         pixel[3] = g;
@@ -132,7 +132,7 @@ class DotStar
     {
         for(uint16_t i = 0; i < kNumPixels; i++)
         {
-            uint8_t *pixel = (uint8_t*)(&transmut_buf.pixels[i]);
+            uint8_t *pixel = (uint8_t*)(&pixels_[i]);
             pixel[1] = pixel[2] = pixel[3] = 0;
         }
     };
@@ -140,26 +140,18 @@ class DotStar
     /** \brief Write current color data to LEDs */
     void Show()
     {
-      transport_.Write((uint8_t*)&transmut_buf.sf, 4);
+      uint8_t sf[4] = {0x00, 0x00, 0x00, 0x00};
+      uint8_t ef[4] = {0xFF, 0xFF, 0xFF, 0xFF};
+      transport_.Write(sf, 4);
       for (uint16_t i=0; i<kNumPixels; i++) {
-        transport_.Write((uint8_t*)&transmut_buf.pixels[i], 4);
+        transport_.Write((uint8_t*)&pixels_[i], 4);
       }
-      // transport_.Write((uint8_t*)&transmut_buf, sizeof(transmut_buf));
-      transport_.Write((uint8_t*)&transmut_buf.ef, 4);
+      transport_.Write(ef, 4);
     };
 
   private:
     Transport transport_;
-
-    // I don't think we need __attribute__((packed)) here
-    // because the frames are 32-bit. It could be added to
-    // be safer, but that leads to warnings about unaligned
-    // pointers/indexing.
-    struct {
-      const uint32_t sf = 0x00000000;
-      uint32_t pixels[kNumPixels];
-      const uint32_t ef = 0xFFFFFFFF;
-    } transmut_buf;
+    uint32_t pixels_[kNumPixels];
 };
 
 template<size_t kNumPixels>
