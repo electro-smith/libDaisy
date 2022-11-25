@@ -25,6 +25,7 @@ class Color
   public:
     Color() {}
     ~Color() {}
+
     /** List of colors that have a preset RGB value */
     enum PresetColor
     {
@@ -60,6 +61,10 @@ class Color
 
     /** Returns the 0-1 value for Blue */
     inline float Blue() const { return blue_; }
+
+    inline uint8_t Red8() const { return red_ * 255; }
+    inline uint8_t Green8() const { return green_ * 255; }
+    inline uint8_t Blue8() const { return blue_ * 255; }
 
     /** Returns a scaled color by a float */
     Color operator*(float scale)

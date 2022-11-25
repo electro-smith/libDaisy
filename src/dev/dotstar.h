@@ -68,7 +68,6 @@ class DotStarSpiTransport
     SpiHandle spi_;
 };
 
-
 template <typename Transport>
 class DotStar
 {
@@ -91,10 +90,10 @@ class DotStar
 
     void Init(Config &config)
     {
-        if (config.num_pixels > kMaxNumPixels)
+        if(config.num_pixels > kMaxNumPixels)
         {
-          // TODO: Error Handling
-          return;
+            // TODO: Error Handling
+            return;
         }
         transport_.Init(config.transport_config);
         num_pixels_ = config.num_pixels;
@@ -120,6 +119,11 @@ class DotStar
         uint8_t *pixel = (uint8_t *)(&pixels_[idx]);
         pixel[0]       = 0xE0 | std::min(b, (uint16_t)31);
     };
+
+    void SetPixelColor(uint16_t idx, const Color &color)
+    {
+        SetPixelColor(idx, color.Red8(), color.Green8(), color.Blue8());
+    }
 
     void SetPixelColor(uint16_t idx, uint8_t r, uint8_t g, uint8_t b)
     {
