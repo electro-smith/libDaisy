@@ -58,9 +58,10 @@ class DotStarSpiTransport
 
     void Write(uint8_t *data, size_t size)
     {
-      if(spi_.BlockingTransmit(data, size) != SpiHandle::Result::OK) {
-        printf("uh oh");
-      }
+        if(spi_.BlockingTransmit(data, size) != SpiHandle::Result::OK)
+        {
+            // TODO: Error handling
+        }
     };
 
   private:
@@ -68,18 +69,20 @@ class DotStarSpiTransport
 };
 
 
-template <typename Transport, size_t kNumPixels>
+template <typename Transport>
 class DotStar
 {
   public:
     struct Config
     {
         typename Transport::Config transport_config;
+        uint16_t                   num_pixels;
         // TODO: color ordering
 
         void Defaults()
         {
             transport_config.Defaults();
+            num_pixels = 1;
         };
     };
 
@@ -88,14 +91,20 @@ class DotStar
 
     void Init(Config &config)
     {
+        if (config.num_pixels > kMaxNumPixels)
+        {
+          // TODO: Error Handling
+          return;
+        }
         transport_.Init(config.transport_config);
+        num_pixels_ = config.num_pixels;
         SetAllGlobalBrightness(15);
         Clear();
     };
 
     void SetAllGlobalBrightness(uint16_t b)
     {
-        for(uint16_t i = 0; i < kNumPixels; i++)
+        for(uint16_t i = 0; i < num_pixels_; i++)
         {
             SetPixelGlobalBrightness(i, b);
         }
@@ -103,36 +112,36 @@ class DotStar
 
     void SetPixelGlobalBrightness(uint16_t idx, uint16_t b)
     {
-        if (idx >= kNumPixels) {
-          // TODO: return error
-          return;
+        if(idx >= num_pixels_)
+        {
+            // TODO: return error
+            return;
         }
-        b = std::min(b, (uint16_t)31);
-        uint8_t *pixel = (uint8_t*)(&pixels_[idx]);
-        pixel[0] = 0xE0 | b;
+        uint8_t *pixel = (uint8_t *)(&pixels_[idx]);
+        pixel[0]       = 0xE0 | std::min(b, (uint16_t)31);
     };
 
     void SetPixelColor(uint16_t idx, uint8_t r, uint8_t g, uint8_t b)
     {
-        if(idx >= kNumPixels)
+        if(idx >= num_pixels_)
         {
             // TODO: Return error
             return;
         }
         // TODO: Handle color ordering
-        uint8_t *pixel = (uint8_t*)(&pixels_[idx]);
-        pixel[1] = r;
-        pixel[2] = b;
-        pixel[3] = g;
+        uint8_t *pixel = (uint8_t *)(&pixels_[idx]);
+        pixel[1]       = r;
+        pixel[2]       = b;
+        pixel[3]       = g;
     };
 
     /** \brief Clears all current color data. Does not reset global brightness per pixel.
      */
     void Clear()
     {
-        for(uint16_t i = 0; i < kNumPixels; i++)
+        for(uint16_t i = 0; i < num_pixels_; i++)
         {
-            uint8_t *pixel = (uint8_t*)(&pixels_[i]);
+            uint8_t *pixel = (uint8_t *)(&pixels_[i]);
             pixel[1] = pixel[2] = pixel[3] = 0;
         }
     };
@@ -140,22 +149,24 @@ class DotStar
     /** \brief Write current color data to LEDs */
     void Show()
     {
-      uint8_t sf[4] = {0x00, 0x00, 0x00, 0x00};
-      uint8_t ef[4] = {0xFF, 0xFF, 0xFF, 0xFF};
-      transport_.Write(sf, 4);
-      for (uint16_t i=0; i<kNumPixels; i++) {
-        transport_.Write((uint8_t*)&pixels_[i], 4);
-      }
-      transport_.Write(ef, 4);
+        uint8_t sf[4] = {0x00, 0x00, 0x00, 0x00};
+        uint8_t ef[4] = {0xFF, 0xFF, 0xFF, 0xFF};
+        transport_.Write(sf, 4);
+        for(uint16_t i = 0; i < num_pixels_; i++)
+        {
+            transport_.Write((uint8_t *)&pixels_[i], 4);
+        }
+        transport_.Write(ef, 4);
     };
 
   private:
-    Transport transport_;
-    uint32_t pixels_[kNumPixels];
+    static const size_t kMaxNumPixels = 64;
+    Transport           transport_;
+    uint16_t            num_pixels_;
+    uint32_t            pixels_[kMaxNumPixels];
 };
 
-template<size_t kNumPixels>
-using DotStarSpi = DotStar<DotStarSpiTransport, kNumPixels>;
+using DotStarSpi = DotStar<DotStarSpiTransport>;
 
 } // namespace daisy
 
