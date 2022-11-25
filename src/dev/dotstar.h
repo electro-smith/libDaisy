@@ -43,7 +43,7 @@ class DotStarSpiTransport
         spi_cfg.periph    = config.periph;
         spi_cfg.mode      = SpiHandle::Config::Mode::MASTER;
         spi_cfg.direction = SpiHandle::Config::Direction::TWO_LINES_TX_ONLY;
-        spi_cfg.clock_polarity  = SpiHandle::Config::ClockPolarity::HIGH;
+        spi_cfg.clock_polarity  = SpiHandle::Config::ClockPolarity::LOW;
         spi_cfg.clock_phase     = SpiHandle::Config::ClockPhase::ONE_EDGE;
         spi_cfg.datasize        = 8;
         spi_cfg.nss             = SpiHandle::Config::NSS::SOFT;
