@@ -152,8 +152,8 @@ class SSD130x4WireSoftSpiTransport
         }
         struct
         {
-            uint32_t sclk_delay;
-            dsy_gpio_pin sclk; 
+            uint32_t     sclk_delay;
+            dsy_gpio_pin sclk;
             dsy_gpio_pin mosi;
             dsy_gpio_pin dc;
             dsy_gpio_pin reset;
@@ -162,11 +162,11 @@ class SSD130x4WireSoftSpiTransport
         {
             pin_config.sclk_delay = 0; // fast as possible?!
             // SPI peripheral config
-            pin_config.sclk = {DSY_GPIOD, 3},  /**< D10 - SPI2 SCK  */
-            pin_config.mosi = {DSY_GPIOC, 3},  /**< D9  - SPI2 MOSI */
+            pin_config.sclk = {DSY_GPIOD, 3}; /**< D10 - SPI2 SCK  */
+            pin_config.mosi = {DSY_GPIOC, 3}; /**< D9  - SPI2 MOSI */
             // SSD130x control pin config
-            pin_config.dc    = {DSY_GPIOC, 11};  //D2
-            pin_config.reset = {DSY_GPIOC, 10};  //D3
+            pin_config.dc    = {DSY_GPIOC, 11}; //D2
+            pin_config.reset = {DSY_GPIOC, 10}; //D3
         }
     };
     void Init(const Config& config)
@@ -175,8 +175,8 @@ class SSD130x4WireSoftSpiTransport
         pin_sclk_.mode = DSY_GPIO_MODE_OUTPUT_PP;
         pin_sclk_.pin  = config.pin_config.sclk;
         dsy_gpio_init(&pin_sclk_);
-        dsy_gpio_write(&pin_sclk_, 1);  //ClockPolarity::LOW
-        clk_delay = config.pin_config.sclk_delay;
+        dsy_gpio_write(&pin_sclk_, 1); //ClockPolarity::LOW
+        clk_delay      = config.pin_config.sclk_delay;
         pin_mosi_.mode = DSY_GPIO_MODE_OUTPUT_PP;
         pin_mosi_.pin  = config.pin_config.mosi;
         dsy_gpio_init(&pin_mosi_);
@@ -209,21 +209,14 @@ class SSD130x4WireSoftSpiTransport
     };
 
   private:
-
     void SoftSpiTransmit(uint8_t val)
     {
         // bit flip
-        val = 
-            ((val & 0x01) << 7) | 
-            ((val & 0x02) << 5) | 
-            ((val & 0x04) << 3) | 
-            ((val & 0x08) << 1) | 
-            ((val & 0x10) >> 1) | 
-            ((val & 0x20) >> 3) | 
-            ((val & 0x40) >> 5) | 
-            ((val & 0x80) >> 7);
+        val = ((val & 0x01) << 7) | ((val & 0x02) << 5) | ((val & 0x04) << 3)
+              | ((val & 0x08) << 1) | ((val & 0x10) >> 1) | ((val & 0x20) >> 3)
+              | ((val & 0x40) >> 5) | ((val & 0x80) >> 7);
 
-        for (uint8_t bit = 0u; bit < 8u; bit++)
+        for(uint8_t bit = 0u; bit < 8u; bit++)
         {
             dsy_gpio_write(&pin_mosi_, ((val & (1 << bit)) ? 1 : 0));
 
@@ -237,11 +230,11 @@ class SSD130x4WireSoftSpiTransport
         }
     }
 
-    uint32_t  clk_delay;
-    dsy_gpio  pin_sclk_;
-    dsy_gpio  pin_mosi_;
-    dsy_gpio  pin_reset_;
-    dsy_gpio  pin_dc_;
+    uint32_t clk_delay;
+    dsy_gpio pin_sclk_;
+    dsy_gpio pin_mosi_;
+    dsy_gpio pin_reset_;
+    dsy_gpio pin_dc_;
 };
 
 

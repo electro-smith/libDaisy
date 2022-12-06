@@ -26,26 +26,30 @@ MyDisplay display;
 
 int main(void)
 {
-	// Initialize the hardware
-	hw.Init();
+    // Initialize the hardware
+    hw.Init();
 
-	MyDisplay::Config display_config;
-	display_config.driver_config.transport_config.pin_config.sclk = DaisyPatchSM::D10;
-	display_config.driver_config.transport_config.pin_config.sclk_delay = 0;
-	display_config.driver_config.transport_config.pin_config.mosi = DaisyPatchSM::D9;
-	display_config.driver_config.transport_config.pin_config.dc = DaisyPatchSM::D2;
-	display_config.driver_config.transport_config.pin_config.reset = DaisyPatchSM::D3;
+    MyDisplay::Config display_config;
+    display_config.driver_config.transport_config.pin_config.sclk
+        = DaisyPatchSM::D10;
+    display_config.driver_config.transport_config.pin_config.sclk_delay = 0;
+    display_config.driver_config.transport_config.pin_config.mosi
+        = DaisyPatchSM::D9;
+    display_config.driver_config.transport_config.pin_config.dc
+        = DaisyPatchSM::D2;
+    display_config.driver_config.transport_config.pin_config.reset
+        = DaisyPatchSM::D3;
     display.Init(display_config);
 
-	char tmp[64];
+    char tmp[64];
 
-	// loop forever
-	while(1) 
-	{
-		display.Fill(false);
-		display.SetCursor(0,0);
-		sprintf(tmp, "%d", System::GetUs());
-		display.WriteString(tmp, Font_6x8, true);
-		display.Update();
-	}
+    // loop forever
+    while(1)
+    {
+        display.Fill(false);
+        display.SetCursor(0, 0);
+        sprintf(tmp, "%d", System::GetUs());
+        display.WriteString(tmp, Font_6x8, true);
+        display.Update();
+    }
 }
