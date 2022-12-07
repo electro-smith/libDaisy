@@ -10,38 +10,32 @@
 using namespace daisy;
 
 /** Hardware object for communicating with Daisy */
-DaisySeed   hw;
-TimerHandle tim;
+DaisySeed hw;
 
 int main(void)
 {
     /** Initialize hardware */
     hw.Init();
 
-    /** Set up TIM for PWM 
-     *  800kHz clock rate, w/ 8-bit resolution
-     *  = about 3.125kHz refresh rate
-     * 
-     *  Typical uses could work with much slower timers, or higher resolution
-     */
+    /** Configure frequency (800kHz) */
+    auto tim_target_freq = 800000;
+    auto tim_base_freq   = System::GetPClk2Freq();
+
     TimerHandle::Config tim_cfg;
-    tim_cfg.periph = TimerHandle::Config::Peripheral::TIM_3;
-    tim_cfg.period = 65536; /**< Not correct for 800kHz */
-    tim.Init(tim_cfg);
-    tim.SetPeriod(65536);
-    tim.SetPrescaler(1);
+    TimerHandle         timer;
+    tim_cfg.periph     = TimerHandle::Config::Peripheral::TIM_3;
+    tim_cfg.period     = tim_base_freq / tim_target_freq;
+    timer.Init(tim_cfg);
 
     TimChannel::Config chn_cfg;
-    chn_cfg.tim  = &tim;
-    chn_cfg.chn  = TimChannel::Config::Channel::THREE;
-    chn_cfg.mode = TimChannel::Config::Mode::PWM_GENERATION;
+    chn_cfg.tim  = &timer;
+    chn_cfg.chn  = TimChannel::Config::Channel::FOUR;
+    chn_cfg.mode = TimChannel::Config::Mode::PWM;
     chn_cfg.pin  = seed::D17;
     TimChannel pwm;
     /** Initialize PWM */
     pwm.Init(chn_cfg);
-    tim.SetPeriod(65536);
-    tim.SetPrescaler(1);
-    tim.Start();
+    timer.Start();
     pwm.Start();
 
     /** Step through some brightness values */

@@ -36,7 +36,7 @@ class TimChannel
         {
             INPUT_CAPTURE,
             OUTPUT_COMPARE,
-            PWM_GENERATION,
+            PWM,
             ONE_PULSE,
         };
 

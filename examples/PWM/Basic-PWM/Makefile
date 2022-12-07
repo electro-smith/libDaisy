@@ -4,6 +4,9 @@ TARGET = basic-pwm
 # Sources
 CPP_SOURCES = basic-pwm.cpp
 
+DEBUG=1
+OPT=-O0
+
 # Library Locations
 LIBDAISY_DIR = ../../..
 
