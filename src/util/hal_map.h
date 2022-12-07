@@ -1,6 +1,9 @@
 #pragma once
 #ifndef DSY_HAL_MAP_H
 #define DSY_HAL_MAP_H
+#ifdef __cplusplus
+extern "C" {
+#endif
 #include "stm32h7xx_hal.h"
 #include "daisy_core.h"
 
@@ -29,6 +32,10 @@ uint16_t dsy_hal_map_get_pin(const dsy_gpio_pin *p);
 /** \param  port port clock to enable
 */
 void dsy_hal_map_gpio_clk_enable(dsy_gpio_port port);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 /** @} */
