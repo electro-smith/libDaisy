@@ -17,8 +17,8 @@ int main(void)
     /** Initialize hardware */
     hw.Init();
 
-    /** Configure frequency (800kHz) */
-    auto tim_target_freq = 800000;
+    /** Configure frequency (12kHz) */
+    auto tim_target_freq = 12000;
     auto tim_base_freq   = System::GetPClk2Freq();
 
     TimerHandle::Config tim_cfg;
@@ -39,16 +39,17 @@ int main(void)
     pwm.Start();
 
     /** Step through some brightness values */
-    int vals[8];
-    for(int i = 0; i < 8; i++)
-        vals[i] = i * (tim_cfg.period / 8);
+    int vals[32];
+    for(int i = 0; i < 32; i++)
+        vals[i] = i * (tim_cfg.period / 32);
 
     while(1)
     {
-        for(int i = 0; i < 8; i++)
+        /* ~30Hz animation of our little 32-frame ramp wave. */
+        for(int i = 0; i < 32; i++)
         {
             pwm.SetPwm(vals[i]);
-            System::Delay(250);
+            System::Delay(33);
         }
     }
 }
