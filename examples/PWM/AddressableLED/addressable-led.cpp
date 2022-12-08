@@ -18,11 +18,13 @@ DaisySeed                       hw;
 const size_t                    kOutBufferSize = 512;
 uint32_t DMA_BUFFER_MEM_SECTION outbuffer[kOutBufferSize];
 
-const int kOneTime  = 2;
+const int kOneTime  = 20;
 const int kZeroTime = 8;
 
 const int kNumLeds = 12;
 uint8_t   led_data[kNumLeds][3]; /**< RGB data */
+
+const size_t kOutDataSize = kNumLeds * 3 * 8;
 uint32_t DMA_BUFFER_MEM_SECTION
     output_data[kNumLeds * 3
                 * 8]; /**< PWM lengths data, one "duration" per bit */
@@ -39,8 +41,6 @@ static void populate_bits(uint8_t color_val, uint32_t *buff)
 static void fill_led_data()
 {
     /** TODO fix these to be accurate for necessary timing */
-    const uint32_t one_time  = 2;
-    const uint32_t zero_time = 10;
     for(int i = 0; i < kNumLeds; i++)
     {
         /** Grab G, R, B for filling bytes */
@@ -103,19 +103,49 @@ int main(void)
     /** Initialize PWM */
     pwm.Init(chn_cfg);
     timer.Start();
-    pwm.Start();
-    System::Delay(1000);
-    pwm.StartDma(outbuffer, kOutBufferSize, nullptr);
-    bool led_state = true;
+    //pwm.Start();
+    // System::Delay(1000);
+    // pwm.StartDma(outbuffer, kOutBufferSize, nullptr);
+    // bool led_state = true;
+
+    uint32_t now, tled;
+    now = tled = System::GetNow();
 
     while(1)
     {
-        System::Delay(2000);
-        hw.SetLed(led_state);
-        if(led_state)
-            led_state = false;
-        else
-            led_state = true;
-        pwm.StartDma(outbuffer, kOutBufferSize, nullptr);
+        // System::Delay(2000);
+        // hw.SetLed(led_state);
+        // if(led_state)
+        //     led_state = false;
+        // else
+        //     led_state = true;
+        // pwm.StartDma(outbuffer, kOutBufferSize, nullptr);
+
+        now = System::GetNow();
+        if(now - tled > 33)
+        {
+            tled = now;
+
+            /* Lets set some LED stuff */
+            for(int i = 0; i < kNumLeds; i++)
+            {
+                float bright = (float)(now & 1023) / 1023.f;
+                set_led_f(i, bright, bright, bright);
+            }
+            fill_led_data();
+
+            /** And transmit */
+            pwm.Start();
+            pwm.StartDma(output_data, kOutDataSize, nullptr);
+            /** when its done..... 
+             *  we need to set pwm to 0% or pull low for >=80us
+             *  this is hacky, gross, and would be the perfect thing to setup in the callback...
+             * 
+             *  It should _never_ take more than 1ms nevermind 3..
+             *  You'd need at least 36 LEDs for it to be 1ms of transmission.
+             */
+            System::Delay(3);
+            pwm.Stop();
+        }
     }
 }

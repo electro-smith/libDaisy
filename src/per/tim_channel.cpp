@@ -129,8 +129,83 @@ static TIM_HandleTypeDef globaltim;
 
 void TimChannel::StartDma(void* data, size_t size, void* callback)
 {
-    timhdma.Instance       = DMA2_Stream5;
-    timhdma.Init.Request   = DMA_REQUEST_TIM3_CH4;
+    timhdma.Instance = DMA2_Stream5;
+
+
+    /** kind of nuts to set this.... */
+    switch(cfg_.tim->GetConfig().periph)
+    {
+        case TimerHandle::Config::Peripheral::TIM_2:
+            switch(cfg_.chn)
+            {
+                case TimChannel::Config::Channel::ONE:
+                    timhdma.Init.Request = DMA_REQUEST_TIM2_CH1;
+                    break;
+                case TimChannel::Config::Channel::TWO:
+                    timhdma.Init.Request = DMA_REQUEST_TIM2_CH2;
+                    break;
+                case TimChannel::Config::Channel::THREE:
+                    timhdma.Init.Request = DMA_REQUEST_TIM2_CH3;
+                    break;
+                case TimChannel::Config::Channel::FOUR:
+                    timhdma.Init.Request = DMA_REQUEST_TIM2_CH4;
+                    break;
+            }
+            break;
+        case TimerHandle::Config::Peripheral::TIM_3:
+            switch(cfg_.chn)
+            {
+                case TimChannel::Config::Channel::ONE:
+                    timhdma.Init.Request = DMA_REQUEST_TIM3_CH1;
+                    break;
+                case TimChannel::Config::Channel::TWO:
+                    timhdma.Init.Request = DMA_REQUEST_TIM3_CH2;
+                    break;
+                case TimChannel::Config::Channel::THREE:
+                    timhdma.Init.Request = DMA_REQUEST_TIM3_CH3;
+                    break;
+                case TimChannel::Config::Channel::FOUR:
+                    timhdma.Init.Request = DMA_REQUEST_TIM3_CH4;
+                    break;
+            }
+            break;
+        case TimerHandle::Config::Peripheral::TIM_4:
+            switch(cfg_.chn)
+            {
+                case TimChannel::Config::Channel::ONE:
+                    timhdma.Init.Request = DMA_REQUEST_TIM4_CH1;
+                    break;
+                case TimChannel::Config::Channel::TWO:
+                    timhdma.Init.Request = DMA_REQUEST_TIM4_CH2;
+                    break;
+                case TimChannel::Config::Channel::THREE:
+                    timhdma.Init.Request = DMA_REQUEST_TIM4_CH3;
+                    break;
+                case TimChannel::Config::Channel::FOUR:
+                    timhdma.Init.Request
+                        = DMA_REQUEST_TIM4_UP; /**< TIM4_CH4 DMA Rq doesn't exist?*/
+                    break;
+            }
+            break;
+        case TimerHandle::Config::Peripheral::TIM_5:
+            switch(cfg_.chn)
+            {
+                case TimChannel::Config::Channel::ONE:
+                    timhdma.Init.Request = DMA_REQUEST_TIM5_CH1;
+                    break;
+                case TimChannel::Config::Channel::TWO:
+                    timhdma.Init.Request = DMA_REQUEST_TIM5_CH2;
+                    break;
+                case TimChannel::Config::Channel::THREE:
+                    timhdma.Init.Request = DMA_REQUEST_TIM5_CH3;
+                    break;
+                case TimChannel::Config::Channel::FOUR:
+                    timhdma.Init.Request = DMA_REQUEST_TIM5_CH4;
+                    break;
+            }
+            break;
+    }
+
     timhdma.Init.Direction = DMA_MEMORY_TO_PERIPH;
 
     timhdma.Init.PeriphInc           = DMA_PINC_DISABLE;
@@ -142,14 +217,28 @@ void TimChannel::StartDma(void* data, size_t size, void* callback)
     timhdma.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
     timhdma.Init.MemBurst            = DMA_MBURST_SINGLE;
     timhdma.Init.PeriphBurst         = DMA_PBURST_SINGLE;
-
     if(HAL_DMA_Init(&timhdma) != HAL_OK)
     {
         // something bad
     }
     SetInstance(&globaltim, cfg_.tim->GetConfig().periph);
-    __HAL_LINKDMA(&globaltim, hdma[TIM_DMA_ID_CC4], timhdma);
-    HAL_TIM_PWM_Start_DMA(&globaltim, GetHalChannel(cfg_.chn), (uint32_t*)data, size);
+    switch(cfg_.chn)
+    {
+        case TimChannel::Config::Channel::ONE:
+            __HAL_LINKDMA(&globaltim, hdma[TIM_DMA_ID_CC1], timhdma);
+            break;
+        case TimChannel::Config::Channel::TWO:
+            __HAL_LINKDMA(&globaltim, hdma[TIM_DMA_ID_CC2], timhdma);
+            break;
+        case TimChannel::Config::Channel::THREE:
+            __HAL_LINKDMA(&globaltim, hdma[TIM_DMA_ID_CC3], timhdma);
+            break;
+        case TimChannel::Config::Channel::FOUR:
+            __HAL_LINKDMA(&globaltim, hdma[TIM_DMA_ID_CC4], timhdma);
+            break;
+    }
+    HAL_TIM_PWM_Start_DMA(
+        &globaltim, GetHalChannel(cfg_.chn), (uint32_t*)data, size);
 }
 
 
