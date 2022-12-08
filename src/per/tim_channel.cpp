@@ -3,6 +3,7 @@
 
 namespace daisy
 {
+static DMA_HandleTypeDef timhdma;
 
 /** Pin Mappings:
      *  TODO: Make a map
@@ -37,17 +38,6 @@ namespace daisy
 static uint32_t SetInstance(TIM_HandleTypeDef*              tim,
                             TimerHandle::Config::Peripheral dsy_periph)
 {
-    /** If getting a new TIM_Handle from HAL is problematic 
-     *  we can add some (not-ideal) method of getting the HAL
-     *  object out of the TIM implementation for channel config.
-     *  
-     *  However, I think this should be okay because the instance is already
-     *  initialized
-     * 
-     *  We're also going to prepopulate the AF number here sincde it's 
-     *  linked to the peripheral.
-     *  Based on map above, only TIM2 uses AF1, otherwise AF2
-     */
     uint32_t af_value;
     switch(dsy_periph)
     {
@@ -111,7 +101,7 @@ void TimChannel::Init(const TimChannel::Config& cfg)
     HAL_GPIO_Init(port, &gpio_init);
 }
 
-TimChannel::Config& TimChannel::GetConfig()
+const TimChannel::Config& TimChannel::GetConfig() const
 {
     return cfg_;
 }
@@ -135,7 +125,41 @@ void TimChannel::SetPwm(uint32_t val)
     SetInstance(&tim, cfg_.tim->GetConfig().periph);
     __HAL_TIM_SET_COMPARE(&tim, GetHalChannel(cfg_.chn), val);
 }
+static TIM_HandleTypeDef globaltim;
 
-void TimChannel::StartDma(void* data, size_t size, void* callback) {}
+void TimChannel::StartDma(void* data, size_t size, void* callback)
+{
+    timhdma.Instance       = DMA2_Stream5;
+    timhdma.Init.Request   = DMA_REQUEST_TIM3_CH4;
+    timhdma.Init.Direction = DMA_MEMORY_TO_PERIPH;
+
+    timhdma.Init.PeriphInc           = DMA_PINC_DISABLE;
+    timhdma.Init.MemInc              = DMA_MINC_ENABLE;
+    timhdma.Init.PeriphDataAlignment = DMA_PDATAALIGN_WORD;
+    timhdma.Init.MemDataAlignment    = DMA_MDATAALIGN_WORD;
+    timhdma.Init.Mode                = DMA_NORMAL;
+    timhdma.Init.Priority            = DMA_PRIORITY_LOW;
+    timhdma.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    timhdma.Init.MemBurst            = DMA_MBURST_SINGLE;
+    timhdma.Init.PeriphBurst         = DMA_PBURST_SINGLE;
+
+    if(HAL_DMA_Init(&timhdma) != HAL_OK)
+    {
+        // something bad
+    }
+    SetInstance(&globaltim, cfg_.tim->GetConfig().periph);
+    __HAL_LINKDMA(&globaltim, hdma[TIM_DMA_ID_CC4], timhdma);
+    HAL_TIM_PWM_Start_DMA(&globaltim, GetHalChannel(cfg_.chn), (uint32_t*)data, size);
+}
+
+
+extern "C" void DMA2_Stream5_IRQHandler(void)
+{
+    // DMA_HandleTypeDef timhdma;
+    // timhdma.Instance = DMA2_Stream5;
+    HAL_DMA_IRQHandler(&timhdma);
+}
+
+extern "C" void DMAMUX1_OVR_IRQHandler(void) {}
 
 } // namespace daisy

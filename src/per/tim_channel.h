@@ -44,8 +44,7 @@ class TimChannel
         Channel      chn;
         Mode         mode;
         Pin          pin;
-
-        Config() : tim(nullptr), chn(Channel::ONE) {}
+        Config() : tim(nullptr), chn(Channel::ONE), mode(Mode::PWM) {}
     };
 
     TimChannel() {}
@@ -67,7 +66,7 @@ class TimChannel
      */
     void StartDma(void* data, size_t size, void* callback);
 
-    Config& GetConfig();
+    const Config& GetConfig() const;
 
   private:
     Config cfg_;
