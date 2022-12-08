@@ -34,7 +34,7 @@
                 "${workspaceRoot}"
             ],
             // Here's where you can put the path to the program you want to debug:
-            "executable": "${workspaceRoot}/examples/PWM/DMA-PWM/build/dma-pwm.elf",
+            "executable": "${workspaceRoot}/examples/PWM/AddressableLED/build/addressable-led.elf",
             "interface": "swd",
             "openOCDLaunchCommands": [
                 "init",
