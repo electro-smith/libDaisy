@@ -78,7 +78,9 @@ void TimChannel::Init(const TimChannel::Config& cfg)
     TIM_OC_InitTypeDef sConfigOC = {0};
     sConfigOC.OCMode             = TIM_OCMODE_PWM1;
     sConfigOC.Pulse              = 0;
-    sConfigOC.OCPolarity         = TIM_OCPOLARITY_HIGH;
+    sConfigOC.OCPolarity         = cfg.polarity == Config::Polarity::HIGH
+                                       ? TIM_OCPOLARITY_HIGH
+                                       : TIM_OCPOLARITY_LOW;
     sConfigOC.OCFastMode         = TIM_OCFAST_DISABLE;
     auto              chn        = GetHalChannel(cfg.chn);
     TIM_HandleTypeDef tim;
@@ -96,7 +98,7 @@ void TimChannel::Init(const TimChannel::Config& cfg)
     gpio_init.Pin              = pin;
     gpio_init.Mode             = GPIO_MODE_AF_PP;
     gpio_init.Pull             = GPIO_NOPULL;
-    gpio_init.Speed            = GPIO_SPEED_MEDIUM;
+    gpio_init.Speed            = GPIO_SPEED_LOW;
     gpio_init.Alternate        = af_value;
     HAL_GPIO_Init(port, &gpio_init);
 }
@@ -125,12 +127,19 @@ void TimChannel::SetPwm(uint32_t val)
     SetInstance(&tim, cfg_.tim->GetConfig().periph);
     __HAL_TIM_SET_COMPARE(&tim, GetHalChannel(cfg_.chn), val);
 }
-static TIM_HandleTypeDef globaltim;
+static TIM_HandleTypeDef               globaltim;
+TimChannel::EndTransmissionFunctionPtr globalcb;
+void*                                  globalcb_context;
 
-void TimChannel::StartDma(void* data, size_t size, void* callback)
+void TimChannel::StartDma(void*                                  data,
+                          size_t                                 size,
+                          TimChannel::EndTransmissionFunctionPtr callback,
+                          void*                                  cb_context)
 {
     timhdma.Instance = DMA2_Stream5;
 
+    globalcb         = callback;
+    globalcb_context = cb_context;
 
     /** kind of nuts to set this.... */
     switch(cfg_.tim->GetConfig().periph)
@@ -248,6 +257,16 @@ extern "C" void DMA2_Stream5_IRQHandler(void)
     // timhdma.Instance = DMA2_Stream5;
     HAL_DMA_IRQHandler(&timhdma);
 }
+
+
+extern "C" void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef* htim)
+{
+    if(globalcb)
+    {
+        globalcb(globalcb_context);
+    }
+}
+
 
 extern "C" void DMAMUX1_OVR_IRQHandler(void) {}
 

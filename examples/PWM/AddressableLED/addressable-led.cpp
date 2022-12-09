@@ -18,10 +18,22 @@ DaisySeed                       hw;
 const size_t                    kOutBufferSize = 512;
 uint32_t DMA_BUFFER_MEM_SECTION outbuffer[kOutBufferSize];
 
+// const size_t kTickPeriod = 36;
+// const int kOneTime  = kTickPeriod - 20;
+// const int kZeroTime = kTickPeriod - 8;
+const size_t kTickPeriod = 29;
+// const size_t kTickPeriod = 59;
 const int kOneTime  = 20;
 const int kZeroTime = 8;
 
-const int kNumLeds = 12;
+
+/** both the same for now*/
+// const int kZeroTime = 14;
+// const int kOneTime  = 21;
+// const int kZeroTime = 2 * (kTickPeriod / 3);
+// const int kOneTime  = kTickPeriod / 3;
+
+const int kNumLeds = 4;
 uint8_t   led_data[kNumLeds][3]; /**< RGB data */
 
 const size_t kOutDataSize = kNumLeds * 3 * 8;
@@ -30,11 +42,11 @@ uint32_t DMA_BUFFER_MEM_SECTION
                 * 8]; /**< PWM lengths data, one "duration" per bit */
 
 /** buff expects that 8 elements are available for the one 8-bit color val*/
-static void populate_bits(uint8_t color_val, uint32_t *buff)
+static void populate_bits(uint8_t color_val, uint32_t* buff)
 {
     for(int i = 0; i < 8; i++)
     {
-        buff[i] = (color_val & i) > 0 ? kOneTime : kZeroTime;
+        buff[7 - i] = (color_val & i) > 0 ? kOneTime : kZeroTime;
     }
 }
 
@@ -66,6 +78,13 @@ static void set_led_f(int index, float r, float g, float b)
     set_led(index, r * 255, g * 255, b * 255);
 }
 
+void EndOfLeds(void* context)
+{
+    TimChannel* pwm = (TimChannel*)context;
+    pwm->SetPwm(0);
+    // pwm->Stop();
+}
+
 int main(void)
 {
     /** Initialize hardware */
@@ -75,6 +94,7 @@ int main(void)
     TimerHandle::Config tim_cfg;
     TimerHandle         timer;
     tim_cfg.periph = TimerHandle::Config::Peripheral::TIM_4;
+    tim_cfg.dir    = TimerHandle::Config::CounterDir::UP;
     timer.Init(tim_cfg);
 
     /** Generate period for timer 
@@ -88,10 +108,11 @@ int main(void)
     timer.SetPeriod(period);
 
     TimChannel::Config chn_cfg;
-    chn_cfg.tim  = &timer;
-    chn_cfg.chn  = TimChannel::Config::Channel::ONE;
-    chn_cfg.mode = TimChannel::Config::Mode::PWM;
-    chn_cfg.pin  = seed::D13;
+    chn_cfg.tim      = &timer;
+    chn_cfg.chn      = TimChannel::Config::Channel::ONE;
+    chn_cfg.mode     = TimChannel::Config::Mode::PWM;
+    chn_cfg.polarity = TimChannel::Config::Polarity::HIGH;
+    chn_cfg.pin      = seed::D13;
     TimChannel pwm;
     /** Fill Buffer */
     for(size_t i = 0; i < kOutBufferSize; i++)
@@ -102,50 +123,60 @@ int main(void)
     }
     /** Initialize PWM */
     pwm.Init(chn_cfg);
+    pwm.SetPwm(0);
+    pwm.Start();
     timer.Start();
-    //pwm.Start();
-    // System::Delay(1000);
-    // pwm.StartDma(outbuffer, kOutBufferSize, nullptr);
-    // bool led_state = true;
 
     uint32_t now, tled;
     now = tled = System::GetNow();
 
+    float gbright = 0;
+
     while(1)
     {
-        // System::Delay(2000);
-        // hw.SetLed(led_state);
-        // if(led_state)
-        //     led_state = false;
-        // else
-        //     led_state = true;
-        // pwm.StartDma(outbuffer, kOutBufferSize, nullptr);
-
         now = System::GetNow();
+        //if(now - tled > 33)
         if(now - tled > 33)
         {
             tled = now;
+            // gbright += 0.0005f;
+            // if(gbright > 0.5f)
+            // {
+            //     gbright = 0.f;
+            // }
+            // gbright += 0.001;
+            // if(gbright > 1.f)
+            // {
+            //     gbright = 0.f;
+            // }
+
+            gbright = 0.03f;
 
             /* Lets set some LED stuff */
             for(int i = 0; i < kNumLeds; i++)
             {
-                float bright = (float)(now & 1023) / 1023.f;
-                set_led_f(i, bright, bright, bright);
+                // float bright = (float)(now & 1023) / 1023.f;
+                // float bright = (now & 1023) > 511 ? 0.33f : 0.f;
+                switch(i)
+                {
+                    case 0: set_led_f(i, gbright, 0.f, 0.f); break;
+                    case 1: set_led_f(i, 0.f, gbright, 0.f); break;
+                    case 2: set_led_f(i, 0.f, 0.f, gbright); break;
+                    default: set_led_f(i, gbright, gbright, gbright); break;
+                }
+                // switch(i)
+                // {
+                //     case 0: set_led(i, gbright, 0, 0); break;
+                //     case 1: set_led(i, 0, gbright, 0); break;
+                //     case 2: set_led(i, 0, 0, gbright); break;
+                //     default: set_led(i, gbright, gbright, gbright); break;
+                // }
             }
             fill_led_data();
 
             /** And transmit */
             pwm.Start();
-            pwm.StartDma(output_data, kOutDataSize, nullptr);
-            /** when its done..... 
-             *  we need to set pwm to 0% or pull low for >=80us
-             *  this is hacky, gross, and would be the perfect thing to setup in the callback...
-             * 
-             *  It should _never_ take more than 1ms nevermind 3..
-             *  You'd need at least 36 LEDs for it to be 1ms of transmission.
-             */
-            System::Delay(3);
-            pwm.Stop();
+            pwm.StartDma(output_data, kOutDataSize, EndOfLeds, (void*)&pwm);
         }
     }
 }

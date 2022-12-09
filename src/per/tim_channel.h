@@ -40,11 +40,24 @@ class TimChannel
             ONE_PULSE,
         };
 
+        enum class Polarity
+        {
+            HIGH,
+            LOW
+        };
+
         TimerHandle* tim;
         Channel      chn;
         Mode         mode;
+        Polarity     polarity;
         Pin          pin;
-        Config() : tim(nullptr), chn(Channel::ONE), mode(Mode::PWM) {}
+        Config()
+        : tim(nullptr),
+          chn(Channel::ONE),
+          mode(Mode::PWM),
+          polarity(Polarity::LOW)
+        {
+        }
     };
 
     TimChannel() {}
@@ -59,12 +72,21 @@ class TimChannel
     /** Stops the PWM output on the given channel's pin */
     void Stop();
 
+    /** Sets the immediate PWM value, based on the current TIM period. 
+     *  For example, if period is 256, then a val of 128 will be 50% pulsewidth
+     */
     void SetPwm(uint32_t val);
+
+    typedef void (*EndTransmissionFunctionPtr)(void* context);
+
 
     /** Starts the DMA for the given buffer, calling the callback 
      *  when the transmission is complete.
      */
-    void StartDma(void* data, size_t size, void* callback);
+    void StartDma(void*                      data,
+                  size_t                     size,
+                  EndTransmissionFunctionPtr callback   = nullptr,
+                  void*                      cb_context = nullptr);
 
     const Config& GetConfig() const;
 
