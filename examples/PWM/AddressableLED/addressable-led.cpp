@@ -46,7 +46,7 @@ static void populate_bits(uint8_t color_val, uint32_t* buff)
 {
     for(int i = 0; i < 8; i++)
     {
-        buff[7 - i] = (color_val & i) > 0 ? kOneTime : kZeroTime;
+        buff[i] = (color_val & (1 << (7 - i))) > 0 ? kOneTime : kZeroTime;
     }
 }
 
@@ -111,7 +111,7 @@ int main(void)
     chn_cfg.tim      = &timer;
     chn_cfg.chn      = TimChannel::Config::Channel::ONE;
     chn_cfg.mode     = TimChannel::Config::Mode::PWM;
-    chn_cfg.polarity = TimChannel::Config::Polarity::HIGH;
+    chn_cfg.polarity = TimChannel::Config::Polarity::LOW;
     chn_cfg.pin      = seed::D13;
     TimChannel pwm;
     /** Fill Buffer */
@@ -144,13 +144,14 @@ int main(void)
             // {
             //     gbright = 0.f;
             // }
-            // gbright += 0.001;
-            // if(gbright > 1.f)
-            // {
-            //     gbright = 0.f;
-            // }
+            gbright += 0.01;
+            if(gbright > 0.5f)
+            {
+                gbright = 0.f;
+            }
 
-            gbright = 0.03f;
+            // gbright = 0.03f;
+            // gbright = 1;
 
             /* Lets set some LED stuff */
             for(int i = 0; i < kNumLeds; i++)
@@ -160,8 +161,8 @@ int main(void)
                 switch(i)
                 {
                     case 0: set_led_f(i, gbright, 0.f, 0.f); break;
-                    case 1: set_led_f(i, 0.f, gbright, 0.f); break;
-                    case 2: set_led_f(i, 0.f, 0.f, gbright); break;
+                    case 1: set_led_f(i, 0.f, 0.f, gbright); break;
+                    case 2: set_led_f(i, 0.f, gbright, 0.f); break;
                     default: set_led_f(i, gbright, gbright, gbright); break;
                 }
                 // switch(i)
