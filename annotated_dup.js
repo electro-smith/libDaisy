@@ -108,6 +108,7 @@ var annotated_dup =
       [ "SongPositionPointerEvent", "structdaisy_1_1_song_position_pointer_event.html", "structdaisy_1_1_song_position_pointer_event" ],
       [ "SongSelectEvent", "structdaisy_1_1_song_select_event.html", "structdaisy_1_1_song_select_event" ],
       [ "SpiHandle", "classdaisy_1_1_spi_handle.html", "classdaisy_1_1_spi_handle" ],
+      [ "SSD130x4WireSoftSpiTransport", "classdaisy_1_1_s_s_d130x4_wire_soft_spi_transport.html", "classdaisy_1_1_s_s_d130x4_wire_soft_spi_transport" ],
       [ "SSD130x4WireSpiTransport", "classdaisy_1_1_s_s_d130x4_wire_spi_transport.html", "classdaisy_1_1_s_s_d130x4_wire_spi_transport" ],
       [ "SSD130xDriver", "classdaisy_1_1_s_s_d130x_driver.html", "classdaisy_1_1_s_s_d130x_driver" ],
       [ "SSD130xI2CTransport", "classdaisy_1_1_s_s_d130x_i2_c_transport.html", "classdaisy_1_1_s_s_d130x_i2_c_transport" ],

@@ -5,7 +5,7 @@ var searchData=
   ['regmasks_2',['RegMasks',['../classdaisy_1_1_tlv493d.html#a62c6342362ff4c6bba74c7a186771244',1,'daisy::Tlv493d']]],
   ['relcardadd_3',['RelCardAdd',['../struct_d_s_y___s_d___card_info_type_def.html#a5c530fb4ff9a3032125d75a44e9b0a0a',1,'DSY_SD_CardInfoTypeDef']]],
   ['release_5fthreshold_4',['release_threshold',['../structdaisy_1_1_mpr121_1_1_config.html#a0c336f8c4c4d0ce11dfcc442ae1297a8',1,'daisy::Mpr121::Config']]],
-  ['reset_5',['reset',['../structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a3040b9e73290c3c0d562169b5f630c0e',1,'daisy::SSD130x4WireSpiTransport::Config']]],
+  ['reset_5',['reset',['../structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#af882736a325872cbb3814e8b25805742',1,'daisy::SSD130x4WireSoftSpiTransport::Config::reset()'],['../structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a3040b9e73290c3c0d562169b5f630c0e',1,'daisy::SSD130x4WireSpiTransport::Config::reset()']]],
   ['rightbttnid_6',['rightBttnId',['../structdaisy_1_1_u_i_1_1_special_control_ids.html#a8a771125e84075486d861414aec5bdb5',1,'daisy::UI::SpecialControlIds']]],
   ['ring_5fled_7',['ring_led',['../classdaisy_1_1_daisy_petal.html#a24abaac2327c0057f99b5d5a4f15bd5a',1,'daisy::DaisyPetal']]],
   ['roffset_8',['rOffset',['../classdaisy_1_1_neo_pixel.html#a5dc6778be3278c19b0c3175fed30d988',1,'daisy::NeoPixel']]],

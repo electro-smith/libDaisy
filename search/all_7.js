@@ -5,8 +5,8 @@ var searchData=
   ['gate_5fin_2',['gate_in',['../classdaisy_1_1_daisy_field.html#a4991b0aa3dab1d2b4903439c1a0a696f',1,'daisy::DaisyField']]],
   ['gate_5fin_5f1_3',['gate_in_1',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a48ab5b7d4172faa5e2437e697c10d15d',1,'daisy::patch_sm::DaisyPatchSM']]],
   ['gate_5fin_5f1_4',['GATE_IN_1',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953a138c883ebb829ee5d7752a7685b04747',1,'daisy::DaisyPatch']]],
-  ['gate_5fin_5f2_5',['GATE_IN_2',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953aeb1a7f107d3bea8644640cf6b8a3f6ef',1,'daisy::DaisyPatch']]],
-  ['gate_5fin_5f2_6',['gate_in_2',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ad4544dab2ba44d8c21695937359487dd',1,'daisy::patch_sm::DaisyPatchSM']]],
+  ['gate_5fin_5f2_5',['gate_in_2',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ad4544dab2ba44d8c21695937359487dd',1,'daisy::patch_sm::DaisyPatchSM']]],
+  ['gate_5fin_5f2_6',['GATE_IN_2',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953aeb1a7f107d3bea8644640cf6b8a3f6ef',1,'daisy::DaisyPatch']]],
   ['gate_5fin_5flast_7',['GATE_IN_LAST',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953ad276bd6100dc0a8ef5c4b9aa307f45cc',1,'daisy::DaisyPatch']]],
   ['gate_5finput_8',['gate_input',['../classdaisy_1_1_daisy_patch.html#aa2a65b214c0c247dd246428962ccd060',1,'daisy::DaisyPatch']]],
   ['gate_5fout_9',['gate_out',['../classdaisy_1_1_daisy_field.html#a440d34e6818110884df7689b45926073',1,'daisy::DaisyField']]],
@@ -160,6 +160,6 @@ var searchData=
   ['gppu_5fa_157',['GPPU_A',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46a8f5c96f20d4ff1ba9935f0f10bbf0dac',1,'daisy']]],
   ['gppu_5fb_158',['GPPU_B',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46ad4296604bacc90df6b4ce96d179e37ad',1,'daisy']]],
   ['graphics_5fcommon_2eh_159',['graphics_common.h',['../graphics__common_8h.html',1,'']]],
-  ['green_160',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]],
-  ['green_161',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color']]]
+  ['green_160',['GREEN',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color']]],
+  ['green_161',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]]
 ];
