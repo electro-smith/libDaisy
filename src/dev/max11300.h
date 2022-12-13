@@ -513,7 +513,7 @@ class MAX11300Driver
         return WriteAnalogPinRaw(
             device_index,
             pin,
-            MAX11300Driver::VoltsTo12BitUint(voltage, pin_config.range));
+            MAX11300Driver::VoltsTo12BitUint(voltage, pin_config.range.dac));
     }
 
     /**

@@ -21,6 +21,10 @@
 
 * uart: fixed bug with fifo-dma-receive mode that would result in erratic reads over time. Fixes issues with UART (TRS/DIN) MIDI parsing
 
+### Bug Fixes
+
+* driver: Fixed a compiler error in `Max11300Driver::WriteAnalogPinVolts()`
+
 ## v5.1.0
 
 ### Features
