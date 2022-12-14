@@ -1,6 +1,17 @@
 # libDaisy Changelog
 
-## Unreleased
+## v5.3.0
+
+### Features
+
+* driver: Software SPI transport `SSD130x4WireSoftSpiTransport` added for the OLED Display driver. (#551)
+
+### Bug Fixes
+
+* driver: Fixed a compiler error in `Max11300Driver::WriteAnalogPinVolts()`
+* driver: Fixed error reading multiple registers at once from the MPC23x17 GPIO expanders (#550)
+* seed: Fixed out of range pin definitions for extra GPIO on the Daisy Seed2 DFM (#544)
+* patchsm: Fixed issue where updating the audio callback params didn't update control samplerate (#543)
 
 ## v5.2.0
 
@@ -20,10 +31,6 @@
 ### Bug fixes
 
 * uart: fixed bug with fifo-dma-receive mode that would result in erratic reads over time. Fixes issues with UART (TRS/DIN) MIDI parsing
-
-### Bug Fixes
-
-* driver: Fixed a compiler error in `Max11300Driver::WriteAnalogPinVolts()`
 
 ## v5.1.0
 
