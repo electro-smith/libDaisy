@@ -30,61 +30,41 @@ int main(void)
     /** Initialize our hardware */
     hw.Init();
 
-    /** Configuration for both SAI peripherals */
-    SaiHandle::Config sai_config[2];
-
-    /** This is setup for the Daisy Seed 2 DFM, (or the rev4 Daisy Seed) */
-    sai_config[0].pin_config.sa   = Pin(PORTE, 6);
-    sai_config[0].pin_config.sb   = Pin(PORTE, 3); //{DSY_GPIOE, 3};
-    sai_config[0].pin_config.fs   = Pin(PORTE, 4); //{DSY_GPIOE, 4};
-    sai_config[0].pin_config.mclk = Pin(PORTE, 2); //{DSY_GPIOE, 2};
-    sai_config[0].pin_config.sck  = Pin(PORTE, 5); //{DSY_GPIOE, 5};
-    sai_config[0].a_dir           = SaiHandle::Config::Direction::TRANSMIT;
-    sai_config[0].b_dir           = SaiHandle::Config::Direction::RECEIVE;
-    sai_config[0].periph          = SaiHandle::Config::Peripheral::SAI_1;
-    sai_config[0].sr              = SaiHandle::Config::SampleRate::SAI_48KHZ;
-    sai_config[0].bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
-    sai_config[0].a_sync          = SaiHandle::Config::Sync::MASTER;
-    sai_config[0].b_sync          = SaiHandle::Config::Sync::SLAVE;
-
     /** Configure the SAI2 peripheral for our secondary codec. */
-    sai_config[1].periph          = SaiHandle::Config::Peripheral::SAI_2;
-    sai_config[1].sr              = SaiHandle::Config::SampleRate::SAI_48KHZ;
-    sai_config[1].bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
-    sai_config[1].a_sync          = SaiHandle::Config::Sync::SLAVE;
-    sai_config[1].b_sync          = SaiHandle::Config::Sync::MASTER;
-    sai_config[1].a_dir           = SaiHandle::Config::Direction::TRANSMIT;
-    sai_config[1].b_dir           = SaiHandle::Config::Direction::RECEIVE;
-    sai_config[1].pin_config.fs   = seed::D27;
-    sai_config[1].pin_config.mclk = seed::D24;
-    sai_config[1].pin_config.sck  = seed::D28;
-    sai_config[1].pin_config.sb   = seed::D25;
-    sai_config[1].pin_config.sa   = seed::D26;
+    SaiHandle         external_sai_handle;
+    SaiHandle::Config external_sai_cfg;
+    external_sai_cfg.periph          = SaiHandle::Config::Peripheral::SAI_2;
+    external_sai_cfg.sr              = SaiHandle::Config::SampleRate::SAI_48KHZ;
+    external_sai_cfg.bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
+    external_sai_cfg.a_sync          = SaiHandle::Config::Sync::SLAVE;
+    external_sai_cfg.b_sync          = SaiHandle::Config::Sync::MASTER;
+    external_sai_cfg.a_dir           = SaiHandle::Config::Direction::TRANSMIT;
+    external_sai_cfg.b_dir           = SaiHandle::Config::Direction::RECEIVE;
+    external_sai_cfg.pin_config.fs   = seed::D27;
+    external_sai_cfg.pin_config.mclk = seed::D24;
+    external_sai_cfg.pin_config.sck  = seed::D28;
+    external_sai_cfg.pin_config.sb   = seed::D25;
+    external_sai_cfg.pin_config.sa   = seed::D26;
 
-    /** Initialize the SAI handles */
-    SaiHandle sai_handle[2];
-    sai_handle[0].Init(sai_config[0]);
-    sai_handle[1].Init(sai_config[1]);
+    /** Initialize the SAI new handle */
+    external_sai_handle.Init(external_sai_cfg);
 
-    /** Flick the PCM3060 Deemphasis pin on the Daisy Seed2 DFM 
-     *  TODO: add this to the seed Init (it should only have to happen once period.)
-     */
-    GPIO deemp;
-    Pin  deemp_pin(PORTB, 11);
-    deemp.Init(deemp_pin, GPIO::Mode::OUTPUT);
-    deemp.Write(0);
-
-    AudioHandle::Config audio_cfg;
-    audio_cfg.blocksize  = 48;
-    audio_cfg.samplerate = SaiHandle::Config::SampleRate::SAI_48KHZ;
-    /** Default eurorack circuit has an extra 6dB headroom 
+    /** Reconfigure Audio for two codecs 
+     * 
+     *  Default eurorack circuit has an extra 6dB headroom 
      *  so the 0.5 here makes it so that a -1 to 1 audio signal
      *  will correspond to a -5V to 5V (10Vpp) audio signal.
      *  Audio will clip at -2 to 2, and result 20Vpp output.
      */
-    audio_cfg.postgain = 0.5f;
-    hw.audio_handle.Init(audio_cfg, sai_handle[0], sai_handle[1]);
+    AudioHandle::Config audio_cfg;
+    audio_cfg.blocksize  = 48;
+    audio_cfg.samplerate = SaiHandle::Config::SampleRate::SAI_48KHZ;
+    audio_cfg.postgain   = 0.5f;
 
+    /** Initialize for two SAIs, including the built-in SAI that is 
+     *  configured during hw.Init()
+     */
+    hw.audio_handle.Init(audio_cfg, hw.AudioSaiHandle(), external_sai_handle);
 
     /** Finally start the audio */
     hw.StartAudio(AudioCallback);
