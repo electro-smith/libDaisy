@@ -95,7 +95,7 @@ class UartHandler
 
 
     UartHandler() : pimpl_(nullptr) {}
-    UartHandler(const UartHandler& other) = default;
+    UartHandler(const UartHandler& other)            = default;
     UartHandler& operator=(const UartHandler& other) = default;
 
     /** Return values for Uart functions. */
@@ -121,6 +121,17 @@ class UartHandler
     typedef void (*StartCallbackFunctionPtr)(void* context);
     /** A callback to be executed after a dma transfer is completed. */
     typedef void (*EndCallbackFunctionPtr)(void* context, Result result);
+
+    /** A callback to be executed when using circular/listening mode 
+     *  includes a callback context, as well as the data to be handled
+     *  This fires either after half of the size of the user-defined buffer 
+     *  has been transferred from peripheral to memory, or after an IDLE frame
+     *  is detected.
+     */
+    typedef void (*CircularRxCallbackFunctionPtr)(uint8_t* data,
+                                                  size_t   size,
+                                                  void*    context,
+                                                  Result   result);
 
     /** Blocking transmit 
     \param buff input buffer
@@ -170,6 +181,25 @@ class UartHandler
                       UartHandler::StartCallbackFunctionPtr start_callback,
                       UartHandler::EndCallbackFunctionPtr   end_callback,
                       void*                                 callback_context);
+
+    /** Starts the DMA Reception in "Listen" mode. 
+     *  In this mode the DMA is configured for circular 
+     *  behavior, and the IDLE interrupt is enabled.
+     * 
+     *  At TC, HT, and IDLE interrupts data must be processed.
+     * 
+     *  Size must be set so that at maximum bandwidth, the software
+     *  has time to process N bytes before the next circular IRQ is fired
+     * 
+     *  @param buff buffer of data accessible by DMA.
+     *  @param size size of buffer
+     *  @param cb callback that happens containing new bytes to process in software
+     *  @param callback_context pointer to user-defined data accessible from callback 
+     */
+    Result DmaListen(uint8_t*                      buff,
+                     size_t                        size,
+                     CircularRxCallbackFunctionPtr cb,
+                     void*                         callback_context);
 
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
