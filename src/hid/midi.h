@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "per/uart.h"
 #include "util/ringbuffer.h"
+#include "util/FIFO.h"
 #include "hid/MidiEvent.h"
 #include "hid/usb_midi.h"
 #include "sys/system.h"
@@ -17,6 +18,8 @@ namespace daisy
 {
 /** @brief   Transport layer for sending and receiving MIDI data over UART 
  *  @details This is the mode of communication used for TRS and DIN MIDI
+ *           There is an additional 2kB of RAM data used within this class
+ *           for processing bulk data from the UART peripheral
  *  @ingroup midi
 */
 class MidiUartTransport
@@ -58,15 +61,47 @@ class MidiUartTransport
         uart_.Init(uart_config);
     }
 
-    inline void    StartRx() { uart_.StartRx(); }
-    inline size_t  Readable() { return uart_.Readable(); }
-    inline uint8_t Rx() { return uart_.PopRx(); }
-    inline bool    RxActive() { return uart_.RxActive(); }
-    inline void    FlushRx() { uart_.FlushRx(); }
-    inline void    Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
+    inline void StartRx()
+    {
+        uart_.DmaListenStart(
+            rx_buffer, kDataSize, MidiUartTransport::rxCallback, this);
+    }
+    //inline size_t  Readable() { return uart_.Readable(); }
+    // inline uint8_t Rx() { return uart_.PopRx(); }
+    // inline bool    RxActive() { return uart_.RxActive(); }
+    // inline void    FlushRx() { uart_.FlushRx(); }
+
+    inline size_t  Readable() { return fifo_.GetNumElements(); }
+    inline uint8_t Rx() { return fifo_.PopFront(); }
+    inline bool    RxActive() { return uart_.IsListening(); }
+    inline void    FlushRx() { fifo_.Clear(); }
+
+    inline void Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
+
+    static constexpr size_t  kDataSize = 1024;
+    UartHandler              uart_;
+    uint8_t                  rx_buffer[kDataSize];
+    FIFO<uint8_t, kDataSize> fifo_;
+
+
+    static void rxCallback(uint8_t*            data,
+                           size_t              size,
+                           void*               context,
+                           UartHandler::Result res)
+    {
+        /** Internally Handle Filling the parser */
+        MidiUartTransport* transport
+            = reinterpret_cast<MidiUartTransport*>(context);
+        // if(transport)
+        {
+            for(size_t i = 0; i < size; i++)
+            {
+                transport->fifo_.PushBack(data[i]);
+            }
+        }
+    }
 
   private:
-    UartHandler uart_;
 };
 
 /** 
@@ -98,7 +133,7 @@ class MidiHandler
 
         transport_.Init(config_.transport_config);
 
-        event_q_.Init();
+        //event_q_.Init();
         incoming_message_.type = MessageLast;
         pstate_                = ParserEmpty;
     }
@@ -131,13 +166,15 @@ class MidiHandler
     /** Checks if there are unhandled messages in the queue 
     \return True if there are events to be handled, else false.
      */
-    bool HasEvents() const { return event_q_.readable(); }
+    //bool HasEvents() const { return event_q_.readable(); }
+    bool HasEvents() const { return event_q_.GetNumElements() > 0; }
 
 
     /** Pops the oldest unhandled MidiEvent from the internal queue
     \return The event to be handled
      */
-    MidiEvent PopEvent() { return event_q_.Read(); }
+    // MidiEvent PopEvent() { return event_q_.Read(); }
+    MidiEvent PopEvent() { return event_q_.PopFront(); }
 
     /** SendMessage
     Send raw bytes as message
@@ -192,7 +229,8 @@ class MidiHandler
 
                                 //short circuit to start
                                 pstate_ = ParserEmpty;
-                                event_q_.Write(incoming_message_);
+                                // event_q_.Write(incoming_message_);
+                                 event_q_.PushBack(incoming_message_);
                             }
                             //system common
                             else
@@ -210,7 +248,8 @@ class MidiHandler
                                 else if(incoming_message_.sc_type > SongSelect)
                                 {
                                     pstate_ = ParserEmpty;
-                                    event_q_.Write(incoming_message_);
+                                    // event_q_.Write(incoming_message_);
+                                    event_q_.PushBack(incoming_message_);
                                 }
                             }
                         }
@@ -230,7 +269,8 @@ class MidiHandler
                     {
                         //Send the single byte update
                         pstate_ = ParserEmpty;
-                        event_q_.Write(incoming_message_);
+                        //event_q_.Write(incoming_message_);
+                        event_q_.PushBack(incoming_message_);
                     }
                     else
                     {
@@ -250,7 +290,8 @@ class MidiHandler
                     {
                         //these are just one data byte, so we short circuit back to start
                         pstate_ = ParserEmpty;
-                        event_q_.Write(incoming_message_);
+                        //event_q_.Write(incoming_message_);
+                        event_q_.PushBack(incoming_message_);
                     }
                     else
                     {
@@ -287,7 +328,8 @@ class MidiHandler
                     }
 
                     // At this point the message is valid, and we can add this MidiEvent to the queue
-                    event_q_.Write(incoming_message_);
+                    //event_q_.Write(incoming_message_);
+                    event_q_.PushBack(incoming_message_);
                 }
                 else
                 {
@@ -303,7 +345,8 @@ class MidiHandler
                 if(byte == 0xf7)
                 {
                     pstate_ = ParserEmpty;
-                    event_q_.Write(incoming_message_);
+                    //event_q_.Write(incoming_message_);
+                    event_q_.PushBack(incoming_message_);
                 }
                 else if(incoming_message_.sysex_message_len < SYSEX_BUFFER_LEN)
                 {
@@ -325,14 +368,15 @@ class MidiHandler
         ParserHasData0,
         ParserSysEx,
     };
-    UartHandler                uart_;
-    ParserState                pstate_;
-    MidiEvent                  incoming_message_;
-    RingBuffer<MidiEvent, 256> event_q_;
-    uint32_t                   last_read_; // time of last byte
-    MidiMessageType            running_status_;
-    Config                     config_;
-    Transport                  transport_;
+    UartHandler uart_;
+    ParserState pstate_;
+    MidiEvent   incoming_message_;
+    //RingBuffer<MidiEvent, 256> event_q_;
+    FIFO<MidiEvent, 256> event_q_;
+    uint32_t             last_read_; // time of last byte
+    MidiMessageType      running_status_;
+    Config               config_;
+    Transport            transport_;
 
     // Masks to check for message type, and byte content
     const uint8_t kStatusByteMask     = 0x80;

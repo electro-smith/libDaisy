@@ -196,10 +196,16 @@ class UartHandler
      *  @param cb callback that happens containing new bytes to process in software
      *  @param callback_context pointer to user-defined data accessible from callback 
      */
-    Result DmaListen(uint8_t*                      buff,
+    Result DmaListenStart(uint8_t*                      buff,
                      size_t                        size,
                      CircularRxCallbackFunctionPtr cb,
                      void*                         callback_context);
+    
+    /** Stops the DMA Reception during listen mode */
+    Result DmaListenStop();
+
+    /** Returns whether listen the DmaListen mode is active or not */
+    bool IsListening() const;
 
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
