@@ -76,6 +76,12 @@ int main(void)
             {
                 case NoteOn:
                     // Do something on Note On events
+                    {
+                        uint8_t bytes[3] = {0x90, 0x00, 0x00};
+                        bytes[1] = msg.data[0];
+                        bytes[2] = msg.data[1];
+                        midi.SendMessage(bytes, 3);
+                    }
                     break;
                 default: break;
             }
@@ -91,7 +97,7 @@ int main(void)
             if(!event_log.IsEmpty())
             {
                 auto msg = event_log.PopFront();
-                char outstr[64];
+                char outstr[128];
                 char type_str[16];
                 GetMidiTypeAsString(msg, type_str);
                 sprintf(outstr,
