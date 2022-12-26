@@ -34,8 +34,8 @@ class MidiUartTransport
         Config()
         {
             periph = UartHandler::Config::Peripheral::USART_1;
-            rx     = {DSY_GPIOB, 7};
-            tx     = {DSY_GPIOB, 6};
+            rx     = Pin(GPIOPort::PORTB, 15);
+            tx     = Pin(GPIOPort::PORTB, 14);
         }
     };
 
