@@ -66,10 +66,6 @@ class MidiUartTransport
         uart_.DmaListenStart(
             rx_buffer, kDataSize, MidiUartTransport::rxCallback, this);
     }
-    //inline size_t  Readable() { return uart_.Readable(); }
-    // inline uint8_t Rx() { return uart_.PopRx(); }
-    // inline bool    RxActive() { return uart_.RxActive(); }
-    // inline void    FlushRx() { uart_.FlushRx(); }
 
     inline size_t  Readable() { return fifo_.GetNumElements(); }
     inline uint8_t Rx() { return fifo_.PopFront(); }
