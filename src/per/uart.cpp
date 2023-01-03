@@ -15,8 +15,8 @@ using namespace daisy;
 #define UART_RX_BUFF_SIZE 256
 
 // the fifo buffer to be DMA read into
-typedef RingBuffer<uint8_t, UART_RX_BUFF_SIZE> UartRingBuffer;
-static UartRingBuffer DMA_BUFFER_MEM_SECTION   uart_dma_fifo;
+// typedef RingBuffer<uint8_t, UART_RX_BUFF_SIZE> UartRingBuffer;
+// static UartRingBuffer DMA_BUFFER_MEM_SECTION   uart_dma_fifo;
 
 static void Error_Handler()
 {
@@ -119,7 +119,7 @@ class UartHandler::Impl
     static void QueueDmaTransfer(size_t uart_idx, const UartDmaJob& job);
     static bool IsDmaTransferQueuedFor(size_t uart_idx);
 
-    static void DmaReceiveFifoEndCallback(void* context, Result res);
+    // static void DmaReceiveFifoEndCallback(void* context, Result res);
 
     Result SetDmaPeripheral();
 
@@ -128,16 +128,6 @@ class UartHandler::Impl
     Result InitPins();
 
     Result DeInitPins();
-
-    void HandleFifo();
-
-    Result DmaReceiveFifo();
-
-    Result FlushFifo();
-
-    uint8_t PopFifo();
-
-    size_t ReadableFifo();
 
     int CheckError();
 
@@ -162,11 +152,6 @@ class UartHandler::Impl
     UART_HandleTypeDef huart_;
     DMA_HandleTypeDef  hdma_rx_;
     DMA_HandleTypeDef  hdma_tx_;
-
-    bool            using_fifo_;
-    UartRingBuffer* dma_fifo_rx_; // pointer to FIFO DMA reads into
-    UartRingBuffer  queue_rx_;    // double buffer ( user reads from )
-    size_t          rx_last_pos_;
 };
 
 
@@ -263,16 +248,14 @@ UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
         default: return Result::ERR;
     }
 
-    huart_.Instance          = periph;
-    huart_.Init.BaudRate     = config.baudrate;
-    huart_.Init.WordLength   = wordlen;
-    huart_.Init.StopBits     = stop_bits;
-    huart_.Init.Parity       = parity;
-    huart_.Init.Mode         = mode;
-    huart_.Init.HwFlowCtl    = UART_HWCONTROL_NONE;
-    huart_.Init.OverSampling = UART_OVERSAMPLING_16;
-    //huart_.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
-    //huart_.Init.ClockPrescaler         = UART_PRESCALER_DIV1;
+    huart_.Instance                    = periph;
+    huart_.Init.BaudRate               = config.baudrate;
+    huart_.Init.WordLength             = wordlen;
+    huart_.Init.StopBits               = stop_bits;
+    huart_.Init.Parity                 = parity;
+    huart_.Init.Mode                   = mode;
+    huart_.Init.HwFlowCtl              = UART_HWCONTROL_NONE;
+    huart_.Init.OverSampling           = UART_OVERSAMPLING_16;
     huart_.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
     huart_.Init.ClockPrescaler         = UART_PRESCALER_DIV2;
     huart_.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
@@ -296,13 +279,7 @@ UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
         return Result::ERR;
     }
 
-    // Fifo stuff
-    using_fifo_  = false;
-    dma_fifo_rx_ = &uart_dma_fifo;
-    dma_fifo_rx_->Init();
-    queue_rx_.Init();
-
-    /** New listener mode to replacde old "Fifo" stuff */
+    /** New listener mode to replace old "Fifo" stuff */
     listener_mode_ = false;
 
     return Result::OK;
@@ -359,7 +336,7 @@ UartHandler::Result UartHandler::Impl::InitDma(bool rx, bool tx)
     hdma_rx_.Init.MemInc              = DMA_MINC_ENABLE;
     hdma_rx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
     hdma_rx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-    hdma_rx_.Init.Mode                = using_fifo_ ? DMA_CIRCULAR : DMA_NORMAL;
+    hdma_rx_.Init.Mode                = DMA_NORMAL;
     hdma_rx_.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
     hdma_rx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
     hdma_rx_.Init.Direction           = DMA_PERIPH_TO_MEMORY;
@@ -395,39 +372,7 @@ UartHandler::Result UartHandler::Impl::InitDma(bool rx, bool tx)
         __HAL_LINKDMA(&huart_, hdmatx, hdma_tx_);
     }
 
-    if(using_fifo_)
-    {
-        // Disable HalfTransfer Interrupt
-        ((DMA_Stream_TypeDef*)hdma_rx_.Instance)->CR &= ~(DMA_SxCR_HTIE);
-
-        //enable idle interrupts
-        __HAL_UART_ENABLE_IT(&huart_, UART_IT_IDLE);
-    }
-
     return UartHandler::Result::OK;
-}
-
-// formerly known as "UARTRxComplete()"
-void UartHandler::Impl::HandleFifo()
-{
-    size_t len, cur_pos;
-
-    //get current write pointer
-    cur_pos = (UART_RX_BUFF_SIZE
-               - ((DMA_Stream_TypeDef*)huart_.hdmarx->Instance)->NDTR)
-              & (UART_RX_BUFF_SIZE - 1);
-
-    //calculate how far the DMA write pointer has moved
-    len = (cur_pos - rx_last_pos_ + UART_RX_BUFF_SIZE) % UART_RX_BUFF_SIZE;
-
-    dma_fifo_rx_->Advance(len);
-    rx_last_pos_ = cur_pos;
-
-    // Copy to queue fifo we don't want to use primary fifo to avoid
-    // changes to the buffer while its being processed
-    uint8_t processbuf[256];
-    dma_fifo_rx_->ImmediateRead(processbuf, len);
-    queue_rx_.Overwrite(processbuf, len);
 }
 
 void UartHandler::Impl::DmaTransferFinished(UART_HandleTypeDef* huart,
@@ -562,8 +507,6 @@ UartHandler::Impl::DmaListenStart(uint8_t* buff,
 
     /** Initialize DMA Rx i
      *  TODO: Update when dynamic DMA Stream acquisition is added
-     * 
-     * 
      */
     hdma_rx_.Instance                 = DMA1_Stream5;
     hdma_rx_.Init.PeriphInc           = DMA_PINC_DISABLE;
@@ -583,7 +526,7 @@ UartHandler::Impl::DmaListenStart(uint8_t* buff,
     // enable idle interrupts so that TC, HT, and IDLE are triggers
     __HAL_UART_ENABLE_IT(&huart_, UART_IT_IDLE);
 
-    /** */
+    /** cache maintanence to allow memory from cache-able regions  */
     dsy_dma_invalidate_cache_for_buffer(buff, size);
     if(HAL_UART_Receive_DMA(&huart_, buff, size) != HAL_OK)
         return UartHandler::Result::ERR;
@@ -736,48 +679,6 @@ UartHandler::Result UartHandler::Impl::BlockingTransmit(uint8_t* buff,
         return Result::ERR;
     }
     return Result::OK;
-}
-
-//gets called if the buffer is overrun, transfer buffers and restart DMA
-void UartHandler::Impl::DmaReceiveFifoEndCallback(void*               context,
-                                                  UartHandler::Result res)
-{
-    // when the DMA hits the end in circular mode, it's considered an ERROR
-    // for some reason it sometimes comes up as OK as well though
-    // for now we'll catch the errors and just reset
-    if(res == UartHandler::Result::OK || res == UartHandler::Result::ERR)
-    {
-        UartHandler::Impl* handle = (UartHandler::Impl*)context;
-        handle->HandleFifo();
-        HAL_UART_Init(&handle->huart_);
-        handle->DmaReceiveFifo();
-    }
-}
-
-UartHandler::Result UartHandler::Impl::DmaReceiveFifo()
-{
-    using_fifo_ = true;
-    return DmaReceive((uint8_t*)dma_fifo_rx_->GetMutableBuffer(),
-                      UART_RX_BUFF_SIZE,
-                      NULL,
-                      UartHandler::Impl::DmaReceiveFifoEndCallback,
-                      (void*)this);
-}
-
-UartHandler::Result UartHandler::Impl::FlushFifo()
-{
-    queue_rx_.Flush();
-    return Result::OK;
-}
-
-uint8_t UartHandler::Impl::PopFifo()
-{
-    return queue_rx_.Read();
-}
-
-size_t UartHandler::Impl::ReadableFifo()
-{
-    return queue_rx_.readable();
 }
 
 int UartHandler::Impl::CheckError()
@@ -1064,6 +965,10 @@ extern "C" void dsy_uart_global_init()
 
 /** static handler for Listener Mode of Rx to handle
  *  non-aligned transfers during DMA Reception.
+ * 
+ *  this is the equivalent of what the old FifoHandler stuff
+ *  did, but removes all of the fifo'ing, and replaces it with a user
+ *  callback. The MIDI UART Transport is an example of how this might be used.
  */
 static void UART_CheckRxListener(UartHandler::Impl* handle)
 {
@@ -1126,24 +1031,13 @@ void UART_IRQHandler(UartHandler::Impl* handle)
 {
     HAL_UART_IRQHandler(&handle->huart_);
 
-    if(__HAL_UART_GET_FLAG(&handle->huart_, UART_FLAG_IDLE)
-       && handle->using_fifo_)
+    if(handle->listener_mode_
+       && __HAL_UART_GET_FLAG(&handle->huart_, UART_FLAG_IDLE))
     {
-        // handle->HandleFifo();
+        /** find position, and call callback */
+        UART_CheckRxListener(handle);
+        /** Clear IDLE Interrupt flag */
         handle->huart_.Instance->ICR = UART_FLAG_IDLE;
-    }
-    else
-    {
-        /** TODO: remove above^ -- if using_fifo_ is false 
-         *  and this IRQ is still enabled we're using the new "DmaListenStart"
-        */
-        if(handle->listener_mode_
-           && __HAL_UART_GET_FLAG(&handle->huart_, UART_FLAG_IDLE))
-        {
-            /** find position, and call callback */
-            UART_CheckRxListener(handle);
-            handle->huart_.Instance->ICR = UART_FLAG_IDLE;
-        }
     }
 }
 
@@ -1333,26 +1227,6 @@ bool UartHandler::IsListening() const
     return pimpl_->IsListening();
 }
 
-UartHandler::Result UartHandler::DmaReceiveFifo()
-{
-    return pimpl_->DmaReceiveFifo();
-}
-
-UartHandler::Result UartHandler::FlushFifo()
-{
-    return pimpl_->FlushFifo();
-}
-
-uint8_t UartHandler::PopFifo()
-{
-    return pimpl_->PopFifo();
-}
-
-size_t UartHandler::ReadableFifo()
-{
-    return pimpl_->ReadableFifo();
-}
-
 int UartHandler::CheckError()
 {
     return pimpl_->CheckError();
@@ -1368,24 +1242,4 @@ int UartHandler::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
 UartHandler::Result UartHandler::PollTx(uint8_t* buff, size_t size)
 {
     return pimpl_->BlockingTransmit(buff, size, 10);
-}
-
-uint8_t UartHandler::PopRx()
-{
-    return pimpl_->PopFifo();
-}
-
-UartHandler::Result UartHandler::StartRx()
-{
-    return pimpl_->DmaReceiveFifo();
-}
-
-UartHandler::Result UartHandler::FlushRx()
-{
-    return pimpl_->FlushFifo();
-}
-
-size_t UartHandler::Readable()
-{
-    return pimpl_->ReadableFifo();
 }
