@@ -66,7 +66,7 @@ int main(void)
     // initialize the UART peripheral, and start reading
     uart.Init(uart_conf);
     //uart.DmaReceive(buff, 3, NULL, RestartUart, NULL);
-    uart.DmaListen(dma_buffer, 1024, myMidiCallback, nullptr);
+    uart.DmaListenStart(dma_buffer, 1024, myMidiCallback, nullptr);
 
     while(1)
     {
