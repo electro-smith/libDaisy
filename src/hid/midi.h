@@ -226,7 +226,7 @@ class MidiHandler
                                 //short circuit to start
                                 pstate_ = ParserEmpty;
                                 // event_q_.Write(incoming_message_);
-                                 event_q_.PushBack(incoming_message_);
+                                event_q_.PushBack(incoming_message_);
                             }
                             //system common
                             else
