@@ -80,16 +80,26 @@ class MidiUartTransport
     FIFO<uint8_t, kDataSize> fifo_;
 
 
+    /** Static callback for Uart MIDI that occurs when
+     *  new data is available from the peripheral.
+     *  The new data is transferred from the peripheral to the
+     *  MIDI instance's byte FIFO that feeds the MIDI parser.
+     * 
+     *  TODO: Handle UartHandler errors better/at all.
+     *  (If there is a UART error, there's not really any recovery
+     *  option at the moment)
+     */
     static void rxCallback(uint8_t*            data,
                            size_t              size,
                            void*               context,
                            UartHandler::Result res)
     {
-        /** Internally Handle Filling the parser */
+        /** Read context as transport type */
         MidiUartTransport* transport
             = reinterpret_cast<MidiUartTransport*>(context);
-        // if(transport)
+        if(res == UartHandler::Result::OK)
         {
+            /** Internally Handle Filling the parser */
             for(size_t i = 0; i < size; i++)
             {
                 transport->fifo_.PushBack(data[i]);
