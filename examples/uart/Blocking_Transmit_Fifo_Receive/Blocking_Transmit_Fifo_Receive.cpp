@@ -1,9 +1,34 @@
+/** TODO fix / remove this example 
+ *  anticipated issue that it only shows 1 byte every 100ms
+ *  which may be misleading to user
+ *  
+ *  also, it should probably use serial print to pipe out
+ *  data instead of the patch's display.
+ */
 #include "daisy_patch.h"
 
 using namespace daisy;
 
+/** Consts */
+const size_t kUartBufferSize = 512;
+
+/** Globals */
 DaisyPatch  hw;
 UartHandler uart;
+uint8_t     uart_buffer[kUartBufferSize];
+char        receive_str[kUartBufferSize];
+
+/** Happens automatically whenever transaction completes */
+void uartCallback(uint8_t*            data,
+                  size_t              size,
+                  void*               context,
+                  UartHandler::Result res)
+{
+    /** Clear receive_str */
+    std::fill(&receive_str[0], &receive_str[kUartBufferSize - 1], 0);
+    /** Copy new data into the receive str */
+    std::copy(&data[0], &data[size - 1], &receive_str[0]);
+}
 
 int main(void)
 {
@@ -19,20 +44,15 @@ int main(void)
 
     // initialize the UART peripheral, and start reading
     uart.Init(uart_conf);
-    uart.DmaReceiveFifo();
+    uart.DmaListenStart(uart_buffer, kUartBufferSize, uartCallback, nullptr);
 
-    uint8_t pop = 0;
+    uint8_t pop  = 0;
     uint8_t send = 0;
     while(1)
     {
         // send the data in a blocking fashion
         uart.BlockingTransmit(&send, 1);
         send++;
-
-        // if there's data, pop it from the FIFO
-		if(uart.ReadableFifo()){
-			pop = uart.PopFifo();
-		}	
 
         // clear the display
         hw.display.Fill(false);
@@ -43,10 +63,10 @@ int main(void)
         hw.display.SetCursor(0, 0);
         hw.display.WriteString(cstr, Font_7x10, true);
 
-        // draw the receive buffer contents
-        sprintf(cstr, "%d", pop);
+        // draw the latest receive buffer contents
+        sprintf(receive_str, "%d", pop);
         hw.display.SetCursor(0, 12);
-        hw.display.WriteString(cstr, Font_7x10, true);
+        hw.display.WriteString(receive_str, Font_7x10, true);
 
         // update the display
         hw.display.Update();
