@@ -92,7 +92,7 @@ class UartHandler
 
 
     UartHandler() : pimpl_(nullptr) {}
-    UartHandler(const UartHandler& other)            = default;
+    UartHandler(const UartHandler& other) = default;
     UartHandler& operator=(const UartHandler& other) = default;
 
     /** Return values for Uart functions. */
@@ -199,10 +199,10 @@ class UartHandler
      *  @param callback_context pointer to user-defined data accessible from callback 
      */
     Result DmaListenStart(uint8_t*                      buff,
-                     size_t                        size,
-                     CircularRxCallbackFunctionPtr cb,
-                     void*                         callback_context);
-    
+                          size_t                        size,
+                          CircularRxCallbackFunctionPtr cb,
+                          void*                         callback_context);
+
     /** Stops the DMA Reception during listen mode */
     Result DmaListenStop();
 
