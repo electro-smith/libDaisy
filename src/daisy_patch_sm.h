@@ -142,7 +142,7 @@ namespace patch_sm
          *  \param bank should be one of the PinBank options above
          *  \param idx pin number between 1 and 10 for each of the pins on each header.
          */
-        dsy_gpio_pin GetPin(const PinBank bank, const int idx);
+        Pin GetPin(const PinBank bank, const int idx);
 
         /** Starts the DAC for the CV Outputs 
          * 
@@ -258,14 +258,14 @@ namespace patch_sm
         /** Pin Accessors for the DaisyPatchSM hardware
          *  Used for initializing various GPIO, etc.
          */
-        static const dsy_gpio_pin A1, A2, A3, A4, A5;
-        static const dsy_gpio_pin A6, A7, A8, A9, A10;
-        static const dsy_gpio_pin B1, B2, B3, B4, B5;
-        static const dsy_gpio_pin B6, B7, B8, B9, B10;
-        static const dsy_gpio_pin C1, C2, C3, C4, C5;
-        static const dsy_gpio_pin C6, C7, C8, C9, C10;
-        static const dsy_gpio_pin D1, D2, D3, D4, D5;
-        static const dsy_gpio_pin D6, D7, D8, D9, D10;
+        static const Pin A1, A2, A3, A4, A5;
+        static const Pin A6, A7, A8, A9, A10;
+        static const Pin B1, B2, B3, B4, B5;
+        static const Pin B6, B7, B8, B9, B10;
+        static const Pin C1, C2, C3, C4, C5;
+        static const Pin C6, C7, C8, C9, C10;
+        static const Pin D1, D2, D3, D4, D5;
+        static const Pin D6, D7, D8, D9, D10;
         class Impl;
 
       private:
