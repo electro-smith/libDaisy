@@ -91,30 +91,38 @@ extern "C"
 
     /** USB IRQ Handlers since they are shared resources for multiple classes */
     extern HCD_HandleTypeDef hhcd_USB_OTG_HS;
+#ifdef USE_STM32_USB_DEVICE
     extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
+#endif
 
     void OTG_HS_EP1_OUT_IRQHandler(void)
     {
         if(hhcd_USB_OTG_HS.Instance)
             HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
+#ifdef USE_STM32_USB_DEVICE
         if(hpcd_USB_OTG_HS.Instance)
             HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+#endif
     }
 
     void OTG_HS_EP1_IN_IRQHandler(void)
     {
         if(hhcd_USB_OTG_HS.Instance)
             HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
+#ifdef USE_STM32_USB_DEVICE
         if(hpcd_USB_OTG_HS.Instance)
             HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+#endif
     }
 
     void OTG_HS_IRQHandler(void)
     {
         if(hhcd_USB_OTG_HS.Instance)
             HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
+#ifdef USE_STM32_USB_DEVICE
         if(hpcd_USB_OTG_HS.Instance)
             HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+#endif
     }
 
     // TODO: Add some real handling to the HardFaultHandler

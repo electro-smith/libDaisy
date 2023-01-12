@@ -8,17 +8,10 @@ hid/audio \
 per/gpio \
 per/sai \
 per/sdmmc \
-util/bsp_sd_diskio \
 util/hal_map \
 util/oled_fonts \
-util/sd_diskio \
 util/unique_id \
-util/usbh_diskio \
 sys/system_stm32h7xx \
-usbd/usbd_cdc_if \
-usbd/usbd_desc \
-usbd/usbd_conf \
-usbh/usbh_conf
 
 CPP_MODULES = \
 daisy_seed \
@@ -29,7 +22,6 @@ daisy_field \
 daisy_versio \
 daisy_legio \
 daisy_patch_sm \
-sys/fatfs \
 sys/system \
 dev/sr_595 \
 dev/codec_ak4556 \
@@ -44,11 +36,7 @@ hid/led \
 hid/parameter \
 hid/rgb_led \
 hid/switch \
-hid/usb \
-hid/usb_midi \
-hid/wavplayer \
 hid/logger \
-hid/usb_host \
 per/adc \
 per/dac \
 per/gpio \
@@ -64,7 +52,6 @@ ui/AbstractMenu \
 ui/FullScreenItemMenu \
 util/color \
 util/MappedValue \
-util/WaveTableLoader \
 
 ######################################
 # building variables
@@ -199,23 +186,6 @@ Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_usart.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_usb.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_utils.c 
 
-# Middleware sources
-C_SOURCES += \
-Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c \
-Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
-Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
-Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
-Middlewares/Third_Party/FatFs/src/diskio.c \
-Middlewares/Third_Party/FatFs/src/ff.c \
-Middlewares/Third_Party/FatFs/src/ff_gen_drv.c  \
-Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_bot.c \
-Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_scsi.c \
-Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc.c \
-Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.c \
-Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.c \
-Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.c \
-Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_pipes.c
-
 # C++ Source
 CPP_SOURCES += $(addsuffix .cpp, $(addprefix $(MODULE_DIR)/, $(CPP_MODULES)))
 
@@ -287,20 +257,13 @@ C_DEFS =  \
 # ^ added for easy startup access
 
 
-C_INCLUDES = \
+C_INCLUDES += \
 -I$(MODULE_DIR) \
 -I$(MODULE_DIR)/sys \
--I$(MODULE_DIR)/usbd \
--I$(MODULE_DIR)/usbh \
 -IDrivers/CMSIS/Include \
 -IDrivers/CMSIS/Device/ST/STM32H7xx/Include \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
 -IDrivers/STM32H7xx_HAL_Driver/Inc/Legacy \
--IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc \
--IMiddlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc \
--IMiddlewares/ST/STM32_USB_Host_Library/Core/Inc \
--IMiddlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc \
--IMiddlewares/Third_Party/FatFs/src \
 -I$(MODULE_DIR) \
 -I. 
 

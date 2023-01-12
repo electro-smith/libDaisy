@@ -155,12 +155,78 @@ FATFS_SOURCES += \
 	$(FATFS_DIR)/diskio.c \
 	$(FATFS_DIR)/ff.c \
 	$(FATFS_DIR)/ff_gen_drv.c \
-	$(FATFS_DIR)/option/ccsbcs.c
+	$(FATFS_DIR)/option/ccsbcs.c \
+	$(LIBDAISY_DIR)/src/sys/fatfs.cpp \
 
 ifeq ($(USE_FATFS),1)
-C_SOURCES += $(FATFS_SOURCES)
-endif
+
+C_DEFS += -DUSE_FATFS
+C_SOURCES += $(FATFS_SOURCES) \
+$(LIBDAISY_DIR)/src/util/usbh_diskio.c \
+$(LIBDAISY_DIR)/src/util/sd_diskio.c \
+$(LIBDAISY_DIR)/src/util/bsp_sd_diskio.c \
+
 C_INCLUDES += -I$(FATFS_DIR)
+endif
+
+# Middleware sources
+
+USE_STM32_USB_HOST ?= 1
+
+ifeq ($(USE_STM32_USB_HOST),1)
+
+CPP_SOURCES += \
+$(LIBDAISY_DIR)/src/hid/wavplayer.cpp \
+$(LIBDAISY_DIR)/src/util/WaveTableLoader.cpp \
+#$(LIBDAISY_DIR)/src/hid/usb_host.cpp
+
+C_SOURCES += \
+$(LIBDAISY_DIR)/src/usbh/usbh_conf.c \
+
+C_INCLUDES += \
+-I$(MODULE_DIR)/usbh \
+-I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Core/Inc \
+-I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc \
+-I$(LIBDAISY_DIR)/Middlewares/Third_Party/FatFs/src \
+
+C_SOURCES += \
+$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_bot.c \
+$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_scsi.c \
+$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc.c \
+$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.c \
+$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.c \
+$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.c \
+$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_pipes.c
+
+endif
+
+USE_STM32_USB_DEVICE ?= 1
+
+ifeq ($(USE_STM32_USB_DEVICE),1)
+
+C_DEFS += -DUSE_STM32_USB_DEVICE
+
+CPP_SOURCES += \
+$(LIBDAISY_DIR)/src/hid/usb.cpp \
+$(LIBDAISY_DIR)/src/hid/usb_midi.cpp \
+
+C_MODULES += \
+$(LIBDAISY_DIR)/src/usbd/usbd_cdc_if.c \
+$(LIBDAISY_DIR)/src/usbd/usbd_desc.c \
+$(LIBDAISY_DIR)/src/usbd/usbd_conf.c \
+
+C_INCLUDES += \
+-I$(MODULE_DIR)/usbd \
+-I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc \
+-I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc \
+
+C_SOURCES += \
+$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c \
+$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
+$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
+$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
+
+endif
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
@@ -327,7 +393,7 @@ endif
 #######################################
 
 program-dfu:
-	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:$(USBPID)
+	dfu-util -a 0 -s $(FLASH_ADDRESS):leave -D $(BUILD_DIR)/$(TARGET_BIN) -d ,0483:$(USBPID) -t 2048
 
 program-boot:
 	dfu-util -a 0 -s $(INTERNAL_ADDRESS):leave -D $(BOOT_BIN) -d ,0483:$(STM_PID)

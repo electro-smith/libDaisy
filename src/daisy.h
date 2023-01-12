@@ -38,7 +38,6 @@
 #include "hid/disp/display.h"
 #include "hid/disp/oled_display.h"
 #include "hid/disp/graphics_common.h"
-#include "hid/wavplayer.h"
 #include "hid/led.h"
 #include "hid/rgb_led.h"
 #include "dev/sr_595.h"
@@ -68,7 +67,12 @@
 #include "util/PersistentStorage.h"
 #include "util/Stack.h"
 #include "util/VoctCalibration.h"
+
+#ifdef USE_FATFS
+#include "hid/wavplayer.h"
 #include "util/WaveTableLoader.h"
 #include "util/WavWriter.h"
+#endif
+
 #endif
 #endif
