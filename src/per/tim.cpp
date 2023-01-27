@@ -2,6 +2,7 @@
 #include "util/hal_map.h"
 #include "sys/system.h"
 
+
 // To save from digging in reference manual here are some notes:
 //
 // The following TIMs are on APB1 Clock (RM0433 Rev7 - pg 458):
@@ -159,7 +160,7 @@ TimerHandle::Result TimerHandle::Impl::DeInit()
 
 TimerHandle::Result TimerHandle::Impl::Start()
 {
-    if(tim_hal_handle_.Instance == TIM5)
+    if(config_.enable_irq)
     {
         return HAL_TIM_Base_Start_IT(&tim_hal_handle_) == HAL_OK
                    ? TimerHandle::Result::OK
@@ -250,7 +251,13 @@ extern "C"
     {
         TimerHandle::Impl* impl
             = get_tim_impl_from_instance(tim_baseHandle->Instance);
-        TimerHandle::Config cfg = impl->GetConfig();
+        /** In the case of TIM6 (DAC usage) there will be no impl.
+         *  The preceding enable_irq checks should be false
+         *  since the default constructor sets it that way 
+         */
+        TimerHandle::Config cfg;
+        if(impl)
+            cfg = impl->GetConfig();
         if(tim_baseHandle->Instance == TIM2)
         {
             __HAL_RCC_TIM2_CLK_ENABLE();
@@ -333,14 +340,11 @@ extern "C"
 
 // ISRs and event handlers
 
-/** @todo make flexible for other periphs */
 extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
 {
-    if(htim->Instance == TIM5)
-    {
-        tim_handles[(int)TimerHandle::Config::Peripheral::TIM_5]
-            .InternalCallback();
-    }
+    TimerHandle::Impl* impl = get_tim_impl_from_instance(htim->Instance);
+    if(impl)
+        impl->InternalCallback();
 }
 
 extern "C" void TIM2_IRQHandler(void)

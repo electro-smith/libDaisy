@@ -26,9 +26,28 @@ class AudioHandle
     /** TODO: Figure out how to get samplerate in here. */
     struct Config
     {
-        size_t                        blocksize;
+        /** number of samples to process per callback */
+        size_t blocksize;
+
+        /**< Sample rate of audio */
         SaiHandle::Config::SampleRate samplerate;
-        float                         postgain;
+
+        /** factor for adjustment before and after callback for hardware that may have extra headroom */
+        float postgain;
+
+        /** factor for additional one-sided compensation to audio path for hardware that may
+         *  have unequal input/output ranges
+         */
+        float output_compensation;
+
+        /** Sets default values for config struct */
+        Config()
+        : blocksize(48),
+          samplerate(SaiHandle::Config::SampleRate::SAI_48KHZ),
+          postgain(1.f),
+          output_compensation(1.f)
+        {
+        }
     };
 
     enum class Result
@@ -116,6 +135,14 @@ class AudioHandle
      ** 
      ** \param val Gain adjustment amount. The hardware will clip at the reciprical of this value. */
     Result SetPostGain(float val);
+
+    /** Sets an additional amount of gain compensation to perform at the end of the callback
+     ** Useful if the hardware input/output levels are not equal.
+     **
+     ** \param val To calcuate the value, measure the input signal, then measure the output signal
+     ** (with this set to default value of 1.0).
+     ** Then calculate val as: val = 1 / (vout / vin); */
+    Result SetOutputCompensation(float val);
 
     /** Starts the Audio using the non-interleaving callback. */
     Result Start(AudioCallback callback);

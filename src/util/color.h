@@ -61,6 +61,14 @@ class Color
     /** Returns the 0-1 value for Blue */
     inline float Blue() const { return blue_; }
 
+    /** Returns a scaled color by a float */
+    Color operator*(float scale)
+    {
+        Color c;
+        c.Init(red_ * scale, green_ * scale, blue_ * scale);
+        return c;
+    }
+
   private:
     static const float standard_colors[LAST][3];
     float              red_, green_, blue_;
