@@ -47,10 +47,10 @@ SYSTEM_FILES_DIR ?= \
 # source
 ######################################
 
-CPP_SOURCES ?= 
+CPP_SOURCES ?=
 
 C_SOURCES += \
-$(SYSTEM_FILES_DIR)/startup_stm32h750xx.c
+$(SYSTEM_FILES_DIR)/startup_stm32h750xx.c \
 
 # Expose platform configuration to all compilation units (CMSIS DSP components)
 C_INCLUDES += -include stm32h7xx.h
@@ -68,13 +68,13 @@ PREFIX = arm-none-eabi-
 ifdef GCC_PATH
 CC = $(GCC_PATH)/$(PREFIX)gcc
 AS = $(GCC_PATH)/$(PREFIX)gcc -x assembler-with-cpp
-CXX = $(GCC_PATH)/$(PREFIX)g++ 
+CXX = $(GCC_PATH)/$(PREFIX)g++
 GDB = $(GCC_PATH)/$(PREFIX)gdb
 CP = $(GCC_PATH)/$(PREFIX)objcopy
 SZ = $(GCC_PATH)/$(PREFIX)size
 else
 CC = $(PREFIX)gcc
-CXX = $(PREFIX)g++ 
+CXX = $(PREFIX)g++
 GDB = $(PREFIX)gdb
 AS = $(PREFIX)gcc -x assembler-with-cpp
 CP = $(PREFIX)objcopy
@@ -124,7 +124,7 @@ endif
 # AS includes
 AS_INCLUDES =
 
-C_INCLUDES ?= 
+C_INCLUDES ?=
 
 C_INCLUDES += \
 -I$(LIBDAISY_DIR) \
@@ -139,6 +139,8 @@ C_INCLUDES += \
 -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc \
 -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Core/Inc \
 -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc \
+-I$(LIBDAISY_DIR)/Middlewares/Third_Party/tinyusb/config \
+-I$(LIBDAISY_DIR)/Middlewares/Third_Party/tinyusb/src \
 -I$(SYSTEM_FILES_DIR)/
 
 ifdef DAISYSP_DIR

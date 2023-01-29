@@ -3,6 +3,7 @@
 #include "usbd_desc.h"
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
+#include "device/usbd.h"
 
 using namespace daisy;
 
@@ -32,23 +33,24 @@ UsbHandle::ReceiveCallback rx_callback;
 static void InitFS()
 {
     rx_callback = DummyRxCallback;
-    if(USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS) != USBD_OK)
+    if(USBD_Init(&hUsbDeviceFS, NULL, DEVICE_FS) != USBD_OK)
     {
         UsbErrorHandler();
     }
-    if(USBD_RegisterClass(&hUsbDeviceFS, &USBD_CDC) != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
-    if(USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_Interface_fops_FS)
-       != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
-    if(USBD_Start(&hUsbDeviceFS) != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
+	tud_init(BOARD_TUD_RHPORT);
+    // if(USBD_RegisterClass(&hUsbDeviceFS, &USBD_CDC) != USBD_OK)
+    // {
+    //     UsbErrorHandler();
+    // }
+    // if(USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_Interface_fops_FS)
+    //    != USBD_OK)
+    // {
+    //     UsbErrorHandler();
+    // }
+    // if(USBD_Start(&hUsbDeviceFS) != USBD_OK)
+    // {
+    //     UsbErrorHandler();
+    // }
 }
 
 static void DeinitFS()
@@ -170,5 +172,8 @@ extern "C"
         HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
     }
 
-    void OTG_FS_IRQHandler(void) { HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS); }
+    void OTG_FS_IRQHandler(void)
+    {
+        tud_int_handler(BOARD_TUD_RHPORT);
+    }
 }
