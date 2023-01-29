@@ -112,9 +112,9 @@ class DotStar
         transport_.Init(config.transport_config);
         num_pixels_ = config.num_pixels;
         // first color byte is always global brightness (hence +1 offset)
-        r_offset = ((config.color_order >> 4) & 0b11) + 1;
-        g_offset = ((config.color_order >> 2) & 0b11) + 1;
-        b_offset = (config.color_order & 0b11) + 1;
+        r_offset_ = ((config.color_order >> 4) & 0b11) + 1;
+        g_offset_ = ((config.color_order >> 2) & 0b11) + 1;
+        b_offset_ = (config.color_order & 0b11) + 1;
         SetAllGlobalBrightness(15);
         Clear();
         return Result::OK;
@@ -157,6 +157,17 @@ class DotStar
         return Result::OK;
     };
 
+    uint16_t GetPixelColor(uint16_t idx)
+    {
+        if (idx >= num_pixels_) return 0;
+        uint32_t c = 0;
+        const uint8_t* pixel = (uint8_t *)&pixels_[idx];
+        c = c | (pixel[r_offset_] << 16);
+        c = c | (pixel[g_offset_] << 8);
+        c = c | pixel[b_offset_];
+        return c;
+    }
+
     /**
      * \brief Sets color of a single pixel
      *
@@ -195,9 +206,9 @@ class DotStar
             return Result::ERR_INVALID_ARGUMENT;
         }
         uint8_t *pixel  = (uint8_t *)(&pixels_[idx]);
-        pixel[r_offset] = r;
-        pixel[b_offset] = b;
-        pixel[g_offset] = g;
+        pixel[r_offset_] = r;
+        pixel[b_offset_] = b;
+        pixel[g_offset_] = g;
         return Result::OK;
     };
 
@@ -279,7 +290,7 @@ class DotStar
     Transport           transport_;
     uint16_t            num_pixels_;
     uint32_t            pixels_[kMaxNumPixels];
-    uint8_t             r_offset, g_offset, b_offset;
+    uint8_t             r_offset_, g_offset_, b_offset_;
 };
 
 using DotStarSpi = DotStar<DotStarSpiTransport>;
