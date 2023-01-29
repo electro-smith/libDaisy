@@ -3,7 +3,7 @@
 #include "usbd_desc.h"
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
-#include "device/usbd.h"
+#include "tusb.h"
 
 using namespace daisy;
 
@@ -33,6 +33,8 @@ UsbHandle::ReceiveCallback rx_callback;
 static void InitFS()
 {
     rx_callback = DummyRxCallback;
+    // BUG: this can't be called multiple times. Need to have
+    // a check to ensure it's not been called before.
     if(USBD_Init(&hUsbDeviceFS, NULL, DEVICE_FS) != USBD_OK)
     {
         UsbErrorHandler();
@@ -126,7 +128,10 @@ void UsbHandle::DeInit(UsbPeriph dev)
 
 UsbHandle::Result UsbHandle::TransmitInternal(uint8_t* buff, size_t size)
 {
-    return CDC_Transmit_FS(buff, size) == USBD_OK ? Result::OK : Result::ERR;
+    // return CDC_Transmit_FS(buff, size) == USBD_OK ? Result::OK : Result::ERR;
+    auto ret = tud_cdc_write(buff, size) == size ? Result::OK : Result::ERR;
+    tud_cdc_write_flush();
+    return ret;
 }
 UsbHandle::Result UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
 {
