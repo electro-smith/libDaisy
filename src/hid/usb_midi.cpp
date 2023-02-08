@@ -23,7 +23,7 @@ class MidiUsbTransport::Impl
   private:
     void MidiToUsbSingle(uint8_t* buffer, size_t length);
 
-    /** USB Handle for CDC transfers 
+    /** USB Handle for CDC transfers
          */
     UsbHandle usb_handle_;
     Config    config_;
@@ -97,11 +97,24 @@ void MidiUsbTransport::Impl::Init(Config config)
 
 void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
 {
+    UsbHandle::Result result;
+    int               attempt_count = config_.tx_retry_count;
+    bool              should_retry;
+
     MidiToUsb(buffer, size);
-    if(config_.periph == Config::EXTERNAL)
-        usb_handle_.TransmitExternal(tx_buffer_, tx_ptr_);
-    else
-        usb_handle_.TransmitInternal(tx_buffer_, tx_ptr_);
+    do
+    {
+        if(config_.periph == Config::EXTERNAL)
+            result = usb_handle_.TransmitExternal(tx_buffer_, tx_ptr_);
+        else
+            result = usb_handle_.TransmitInternal(tx_buffer_, tx_ptr_);
+
+        should_retry = (result == UsbHandle::Result::ERR) && attempt_count--;
+
+        if(should_retry)
+            System::DelayUs(100);
+    } while(should_retry);
+
     tx_ptr_ = 0;
 }
 
