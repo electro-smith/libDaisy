@@ -41,8 +41,8 @@ namespace patch_sm
             DUMMYPIN,        /**< B2  - Audio Out Left*/
             DUMMYPIN,        /**< B3  - Audio In Right */
             DUMMYPIN,        /**< B4  - Audio In Left */
-            {DSY_GPIOC, 13}, /**< B5  - GATE OUT 1 */
-            {DSY_GPIOC, 14}, /**< B6  - GATE OUT 2 */
+            {DSY_GPIOC, 14}, /**< B5  - GATE OUT 1 */
+            {DSY_GPIOC, 13}, /**< B6  - GATE OUT 2 */
             {DSY_GPIOB, 8},  /**< B7  - I2C1 SCL */
             {DSY_GPIOB, 9},  /**< B8  - I2C1 SDA */
             {DSY_GPIOG, 14}, /**< B9  - GATE IN 2 */
@@ -216,7 +216,7 @@ namespace patch_sm
         }
     }
 
-    /** Actual DaisyPatchSM implementation 
+    /** Actual DaisyPatchSM implementation
  *  With the pimpl model in place, we can/should probably
  *  move the rest of the implementation to the Impl class
  */
@@ -331,12 +331,12 @@ namespace patch_sm
 
         gate_out_1.mode = DSY_GPIO_MODE_OUTPUT_PP;
         gate_out_1.pull = DSY_GPIO_NOPULL;
-        gate_out_1.pin  = B6;
+        gate_out_1.pin  = B5;
         dsy_gpio_init(&gate_out_1);
 
         gate_out_2.mode = DSY_GPIO_MODE_OUTPUT_PP;
         gate_out_2.pull = DSY_GPIO_NOPULL;
-        gate_out_2.pin  = B5;
+        gate_out_2.pin  = B6;
         dsy_gpio_init(&gate_out_2);
 
         /** DAC init */
