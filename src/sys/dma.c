@@ -48,6 +48,10 @@ extern "C"
         HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
         HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 0, 0);
         HAL_NVIC_EnableIRQ(DMA2_Stream3_IRQn);
+
+        // DMA2_Stream5 used for TIM Channel operation
+        HAL_NVIC_SetPriority(DMA2_Stream5_IRQn, 0, 0);
+        HAL_NVIC_EnableIRQ(DMA2_Stream5_IRQn);
     }
 
     void dsy_dma_deinit(void)
