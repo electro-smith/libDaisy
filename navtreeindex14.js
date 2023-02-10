@@ -1,5 +1,7 @@
 var NAVTREEINDEX14 =
 {
+"structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#a407208ebf6efb96a495b7ffb0dca7934":[16,0,0,103,0,4],
+"structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#a54c84e1f05573803c9196b54ec89c897":[16,0,0,103,0,6],
 "structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#a9518cb4063728948abcd2e59b878692a":[16,0,0,103,0,2],
 "structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#ab96fc6bc46066a9248add9a536ec554c":[16,0,0,103,0,3],
 "structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#af882736a325872cbb3814e8b25805742":[16,0,0,103,0,5],
@@ -247,7 +249,5 @@ var NAVTREEINDEX14 =
 "structdaisy_1_1_wav_writer_1_1_config.html#a143f2278359597869a0de80cc8edba86":[16,0,0,127,0,2],
 "structdaisy_1_1_wav_writer_1_1_config.html#af9ffa3fe0d56cfc55521a33569d45632":[16,0,0,127,0,1],
 "structdaisy_1_1_wm8731_1_1_config.html":[16,0,0,128,0],
-"structdaisy_1_1_wm8731_1_1_config.html#a34027e7604b8cfc9649d4eb972665f99":[16,0,0,128,0,6],
-"structdaisy_1_1_wm8731_1_1_config.html#a37915e9bbce58b19d2ae1c7ebb9c2aa3":[16,0,0,128,0,2],
-"structdaisy_1_1_wm8731_1_1_config.html#a6b83d4a8f2c0fc7a247d6071df07834b":[16,0,0,128,0,3]
+"structdaisy_1_1_wm8731_1_1_config.html#a34027e7604b8cfc9649d4eb972665f99":[16,0,0,128,0,6]
 };

@@ -168,8 +168,8 @@ var NAVTREEINDEX =
 "group__utility.html#ga84fa96a230dacebf9c960e17f277e4ad",
 "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md47",
 "structdaisy_1_1_dps310_spi_transport_1_1_config.html#abd0257a223fc9e66455116e7dcf2544c",
-"structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#a9518cb4063728948abcd2e59b878692a",
-"structdaisy_1_1_wm8731_1_1_config.html#a91edb01dd260a86a27fc80705a627435"
+"structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#a407208ebf6efb96a495b7ffb0dca7934",
+"structdaisy_1_1_wm8731_1_1_config.html#a37915e9bbce58b19d2ae1c7ebb9c2aa3"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

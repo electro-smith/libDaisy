@@ -128,10 +128,12 @@ var NAVTREEINDEX13 =
 "structdaisy_1_1_midi_uart_transport_1_1_config.html#a84c3f711773c994ae22fbb3969573a11":[4,0,1,4,1,0,2],
 "structdaisy_1_1_midi_uart_transport_1_1_config.html#acf3aaf63941621f4dc93aa42026293bf":[4,0,1,4,1,0,0],
 "structdaisy_1_1_midi_usb_transport_1_1_config.html":[4,0,1,4,3,0],
-"structdaisy_1_1_midi_usb_transport_1_1_config.html#a311d07b4a6ee2ec3f5df578e95b6b124":[4,0,1,4,3,0,1],
+"structdaisy_1_1_midi_usb_transport_1_1_config.html#a311d07b4a6ee2ec3f5df578e95b6b124":[4,0,1,4,3,0,2],
+"structdaisy_1_1_midi_usb_transport_1_1_config.html#a4f3333af23786bc6f4f9040722b2c5e9":[4,0,1,4,3,0,3],
 "structdaisy_1_1_midi_usb_transport_1_1_config.html#ac2c6a3bd5bb0b444072cf7ebd8454b61":[4,0,1,4,3,0,0],
 "structdaisy_1_1_midi_usb_transport_1_1_config.html#ac2c6a3bd5bb0b444072cf7ebd8454b61a04b6299ba514b1f29d9c01c989677852":[4,0,1,4,3,0,0,1],
 "structdaisy_1_1_midi_usb_transport_1_1_config.html#ac2c6a3bd5bb0b444072cf7ebd8454b61a7823cd640b9527fc8a9e6a767d08a992":[4,0,1,4,3,0,0,0],
+"structdaisy_1_1_midi_usb_transport_1_1_config.html#acb8a68dec27a0685a753252e0974fd83":[4,0,1,4,3,0,1],
 "structdaisy_1_1_mono_mode_on_event.html":[4,0,1,4,0,18],
 "structdaisy_1_1_mono_mode_on_event.html#a000e23868355edbb3d3ba5b378535d03":[4,0,1,4,0,18,1],
 "structdaisy_1_1_mono_mode_on_event.html#a98685d31207264f56110f6cf14e96e6c":[4,0,1,4,0,18,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX13 =
 "structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html":[16,0,0,103,0],
 "structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#a0e59a703a862b53bfb19cd022ade99e2":[16,0,0,103,0,1],
 "structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#a0e6385a90de1a3e4ffaa4023b3d9a83b":[16,0,0,103,0,0],
-"structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#a21662ebfa665bc9c4e8e8c73278de342":[16,0,0,103,0,7],
-"structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#a407208ebf6efb96a495b7ffb0dca7934":[16,0,0,103,0,4],
-"structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#a54c84e1f05573803c9196b54ec89c897":[16,0,0,103,0,6]
+"structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html#a21662ebfa665bc9c4e8e8c73278de342":[16,0,0,103,0,7]
 };

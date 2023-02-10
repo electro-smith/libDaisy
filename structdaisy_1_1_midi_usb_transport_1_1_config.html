@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('structdaisy_1_1_midi_usb_transport_1_1
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structdaisy_1_1_midi_usb_transport_1_1_config-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">daisy::MidiUsbTransport::Config Struct Reference</div></div>
@@ -116,10 +117,17 @@ Public Types</h2></td></tr>
  }</td></tr>
 <tr class="separator:ac2c6a3bd5bb0b444072cf7ebd8454b61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:acb8a68dec27a0685a753252e0974fd83"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_usb_transport_1_1_config.html#acb8a68dec27a0685a753252e0974fd83">Config</a> ()</td></tr>
+<tr class="separator:acb8a68dec27a0685a753252e0974fd83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a311d07b4a6ee2ec3f5df578e95b6b124"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdaisy_1_1_midi_usb_transport_1_1_config.html#ac2c6a3bd5bb0b444072cf7ebd8454b61">Periph</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_usb_transport_1_1_config.html#a311d07b4a6ee2ec3f5df578e95b6b124">periph</a></td></tr>
 <tr class="separator:a311d07b4a6ee2ec3f5df578e95b6b124"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f3333af23786bc6f4f9040722b2c5e9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_usb_transport_1_1_config.html#a4f3333af23786bc6f4f9040722b2c5e9">tx_retry_count</a></td></tr>
+<tr class="separator:a4f3333af23786bc6f4f9040722b2c5e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="ac2c6a3bd5bb0b444072cf7ebd8454b61" name="ac2c6a3bd5bb0b444072cf7ebd8454b61"></a>
@@ -140,6 +148,32 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="acb8a68dec27a0685a753252e0974fd83" name="acb8a68dec27a0685a753252e0974fd83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb8a68dec27a0685a753252e0974fd83">&#9670;&#160;</a></span>Config()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">daisy::MidiUsbTransport::Config::Config </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a311d07b4a6ee2ec3f5df578e95b6b124" name="a311d07b4a6ee2ec3f5df578e95b6b124"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a311d07b4a6ee2ec3f5df578e95b6b124">&#9670;&#160;</a></span>periph</h2>
@@ -152,6 +186,23 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4f3333af23786bc6f4f9040722b2c5e9" name="a4f3333af23786bc6f4f9040722b2c5e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f3333af23786bc6f4f9040722b2c5e9">&#9670;&#160;</a></span>tx_retry_count</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t daisy::MidiUsbTransport::Config::tx_retry_count</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>When sending MIDI messages immediately back-to-back in user code, sometimes the USB CDC driver is still "busy".</p>
+<p>This option configures the number of times to retry a Tx after delaying for 100 microseconds (default = 3 retries).</p>
+<p>If you set this to zero, Tx will not retry so the attempt will block for slightly less time, but transmit can fail if the Tx state is busy. </p>
 
 </div>
 </div>
