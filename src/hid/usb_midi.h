@@ -8,7 +8,7 @@
 
 namespace daisy
 {
-/** @brief USB Transport for MIDI 
+/** @brief USB Transport for MIDI
  *  @ingroup midi
  */
 class MidiUsbTransport
@@ -26,6 +26,20 @@ class MidiUsbTransport
         };
 
         Periph periph;
+
+        /**
+         * When sending MIDI messages immediately back-to-back in user code,
+         * sometimes the USB CDC driver is still "busy".
+         *
+         * This option configures the number of times to retry a Tx after
+         * delaying for 100 microseconds (default = 3 retries).
+         *
+         * If you set this to zero, Tx will not retry so the attempt will block
+         * for slightly less time, but transmit can fail if the Tx state is busy.
+         */
+        uint8_t tx_retry_count;
+
+        Config() : periph(INTERNAL), tx_retry_count(3) {}
     };
 
     void Init(Config config);
