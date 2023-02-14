@@ -122,6 +122,7 @@ class PersistentStorage
 
         void *data_ptr = qspi_.GetData(address_offset_);
 
+#if !UNIT_TEST
         // Caching behavior is different when running programs outside internal flash
         // so we need to explicitly invalidate the QSPI mapped memory to ensure we are
         // comparing the local settings with the most recently persisted settings.
@@ -130,6 +131,7 @@ class PersistentStorage
         {
             dsy_dma_invalidate_cache_for_buffer((uint8_t *)data_ptr, sizeof(s));
         }
+#endif
 
         // Only actually save if the new data is different
         // Use the `==operator` in custom SettingStruct to fine tune
