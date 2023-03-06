@@ -13,6 +13,24 @@
 
 using namespace daisy;
 
+/** 6x 8mm */
+// #define MYPIN D11
+// #define MYCHN THREE
+// #define MYTIM TIM_4
+// #define MYCNT 6
+
+/** 4x 5mm */
+#define MYPIN D16
+#define MYCHN FOUR
+#define MYTIM TIM_5
+#define MYCNT 4
+
+/** 29x SMT */
+// #define MYPIN D19
+// #define MYCHN ONE
+// #define MYTIM TIM_3
+// #define MYCNT 29 
+
 /** Hardware object for communicating with Daisy */
 DaisySeed                       hw;
 const size_t                    kOutBufferSize = 512;
@@ -21,7 +39,7 @@ uint32_t DMA_BUFFER_MEM_SECTION outbuffer[kOutBufferSize];
 // const size_t kTickPeriod = 36;
 // const int kOneTime  = kTickPeriod - 20;
 // const int kZeroTime = kTickPeriod - 8;
-const size_t kTickPeriod = 29;
+const size_t kTickPeriod = 6;
 // const size_t kTickPeriod = 59;
 const int kOneTime  = 20;
 const int kZeroTime = 8;
@@ -33,7 +51,8 @@ const int kZeroTime = 8;
 // const int kZeroTime = 2 * (kTickPeriod / 3);
 // const int kOneTime  = kTickPeriod / 3;
 
-const int kNumLeds = 4;
+//const int kNumLeds = 4;
+const int kNumLeds = MYCNT;
 uint8_t   led_data[kNumLeds][3]; /**< RGB data */
 
 const size_t kOutDataSize = kNumLeds * 3 * 8;
@@ -93,7 +112,9 @@ int main(void)
     /** Initialize timer */
     TimerHandle::Config tim_cfg;
     TimerHandle         timer;
-    tim_cfg.periph = TimerHandle::Config::Peripheral::TIM_4;
+    tim_cfg.periph = TimerHandle::Config::Peripheral::MYTIM;
+    //tim_cfg.periph = TimerHandle::Config::Peripheral::TIM_3;
+    //tim_cfg.periph = TimerHandle::Config::Peripheral::TIM_5;
     tim_cfg.dir    = TimerHandle::Config::CounterDir::UP;
     timer.Init(tim_cfg);
 
@@ -109,10 +130,13 @@ int main(void)
 
     TimChannel::Config chn_cfg;
     chn_cfg.tim      = &timer;
-    chn_cfg.chn      = TimChannel::Config::Channel::ONE;
+    //chn_cfg.chn      = TimChannel::Config::Channel::ONE;
+    chn_cfg.chn      = TimChannel::Config::Channel::MYCHN;
     chn_cfg.mode     = TimChannel::Config::Mode::PWM;
     chn_cfg.polarity = TimChannel::Config::Polarity::LOW;
-    chn_cfg.pin      = seed::D13;
+    //chn_cfg.pin      = seed::D13;
+    chn_cfg.pin      = seed::MYPIN;
+    //chn_cfg.pin      = seed::D16;
     TimChannel pwm;
     /** Fill Buffer */
     for(size_t i = 0; i < kOutBufferSize; i++)
@@ -158,7 +182,7 @@ int main(void)
             {
                 // float bright = (float)(now & 1023) / 1023.f;
                 // float bright = (now & 1023) > 511 ? 0.33f : 0.f;
-                switch(i)
+                switch(i % 4)
                 {
                     case 0: set_led_f(i, gbright, 0.f, 0.f); break;
                     case 1: set_led_f(i, 0.f, 0.f, gbright); break;
