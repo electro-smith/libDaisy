@@ -149,15 +149,19 @@ class MidiHandler
 
     void SendNoteOn(uint8_t channel, uint8_t note, uint8_t velocity)
     {
-        // this is going to go out of scope before the tx finishes...
-        uint8_t bytes[3] = {0x80 | channel, note, velocity};
+        uint8_t bytes[3] = {0x90 | channel, note, velocity};
         transport_.Tx(bytes, 3);
     }
 
     void SendNoteOff(uint8_t channel, uint8_t note, uint8_t velocity)
     {
-        // this is going to go out of scope before the tx finishes...
-        uint8_t bytes[3] = {0x90 | channel, note, velocity};
+        uint8_t bytes[3] = {0x80 | channel, note, velocity};
+        transport_.Tx(bytes, 3);
+    }
+
+    void SendCC(uint8_t channel, uint8_t control_number, uint8_t value)
+    {
+        uint8_t bytes[3] = {0xB0 | channel, control_number, value};
         transport_.Tx(bytes, 3);
     }
 

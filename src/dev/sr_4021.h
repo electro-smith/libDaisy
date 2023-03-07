@@ -151,7 +151,7 @@ class ShiftRegister4021
     uint32_t             last_update_[kTotalStates];
     bool                 updated_[kTotalStates];
     uint8_t              dbc_state_[kTotalStates];
-    bool                 flip_ = false; // maybe we'll need this later idk
+    bool                 flip_ = true; // maybe we'll need this later idk
     float                rising_edge_time_[kTotalStates]; // may be needed for time held ms later
 
 };
