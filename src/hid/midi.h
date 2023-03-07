@@ -147,6 +147,20 @@ class MidiHandler
         transport_.Tx(bytes, size);
     }
 
+    void SendNoteOn(uint8_t channel, uint8_t note, uint8_t velocity)
+    {
+        // this is going to go out of scope before the tx finishes...
+        uint8_t bytes[3] = {0x80 | channel, note, velocity};
+        transport_.Tx(bytes, 3);
+    }
+
+    void SendNoteOff(uint8_t channel, uint8_t note, uint8_t velocity)
+    {
+        // this is going to go out of scope before the tx finishes...
+        uint8_t bytes[3] = {0x90 | channel, note, velocity};
+        transport_.Tx(bytes, 3);
+    }
+
     /** Feed in bytes to state machine from a queue.
     Populates internal FIFO queue with MIDI Messages
     For example with uart:

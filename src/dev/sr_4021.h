@@ -75,6 +75,27 @@ class ShiftRegister4021
         }
     }
 
+    // borrowed from the switch class
+    void Debounce(uint32_t idx)
+    {
+        // update no faster than 1kHz
+        uint32_t now = System::GetNow();
+        updated_[idx]     = false;
+
+        if(now - last_update_[idx] >= 1)
+        {
+            last_update_[idx] = now;
+            updated_[idx]     = true;
+
+            // shift over, and introduce new state.
+            dbc_state_[idx]
+                = (dbc_state_[idx] << 1) | (flip_ ? !states_[idx] : states_[idx]);
+            // Set time at which button was pressed
+            if(dbc_state_[idx] == 0x7f)
+                rising_edge_time_[idx] = System::GetNow();
+        }
+    }
+
     /** Reads the states of all pins on the connected device(s) */
     void Update()
     {
@@ -92,6 +113,7 @@ class ShiftRegister4021
                 idx = (8 * num_daisychained - 1) - i;
                 idx += (8 * num_daisychained * j);
                 states_[idx] = dsy_gpio_read(&data_[j]);
+                Debounce(idx);
             }
             dsy_gpio_write(&clk_, 1);
             System::DelayTicks(1);
@@ -108,6 +130,15 @@ class ShiftRegister4021
 
     inline const Config& GetConfig() const { return config_; }
 
+    /** \return true if a button was just pressed. */
+    inline bool RisingEdge(uint32_t idx) const { return updated_[idx] ? dbc_state_[idx] == 0x7f : false; }
+
+    /** \return true if the button was just released */
+    inline bool FallingEdge(uint32_t idx) const
+    {
+        return updated_[idx] ? dbc_state_[idx] == 0x80 : false;
+    }
+
   private:
     static constexpr int kTotalStates = 8 * num_daisychained * num_parallel;
     Config               config_;
@@ -115,6 +146,14 @@ class ShiftRegister4021
     dsy_gpio             clk_;
     dsy_gpio             latch_;
     dsy_gpio             data_[num_parallel];
+
+    // debounce
+    uint32_t             last_update_[kTotalStates];
+    bool                 updated_[kTotalStates];
+    uint8_t              dbc_state_[kTotalStates];
+    bool                 flip_ = false; // maybe we'll need this later idk
+    float                rising_edge_time_[kTotalStates]; // may be needed for time held ms later
+
 };
 
 } // namespace daisy

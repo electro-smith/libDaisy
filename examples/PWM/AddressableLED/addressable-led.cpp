@@ -20,16 +20,16 @@ using namespace daisy;
 // #define MYCNT 6
 
 /** 4x 5mm */
-#define MYPIN D16
-#define MYCHN FOUR
-#define MYTIM TIM_5
-#define MYCNT 4
+// #define MYPIN D16
+// #define MYCHN FOUR
+// #define MYTIM TIM_5
+// #define MYCNT 4
 
 /** 29x SMT */
-// #define MYPIN D19
-// #define MYCHN ONE
-// #define MYTIM TIM_3
-// #define MYCNT 29 
+#define MYPIN D19
+#define MYCHN ONE
+#define MYTIM TIM_3
+#define MYCNT 29 
 
 /** Hardware object for communicating with Daisy */
 DaisySeed                       hw;
