@@ -9,12 +9,12 @@ using namespace daisy;
 
 namespace daisy
 {
-    template <typename T>
-    T clamp(T in, T low, T high)
-    {
-        return (in < low) ? low : (high < in) ? high : in;
-    }
+template <typename T>
+T clamp(T in, T low, T high)
+{
+    return (in < low) ? low : (high < in) ? high : in;
 }
+} // namespace daisy
 
 const float Color::standard_colors[Color::LAST][3] = {
     {1.0f, 0.0f, 0.0f},   // RED
