@@ -59,9 +59,9 @@ class DotStarSpiTransport
 };
 
 
-/** \brief Device support for Adafruit DotStar LEDs (APA102)
-    \author ndonald2
-    \date November 2022
+/** \brief Device support for Adafruit DotStar LEDs (Opsco SK9822)
+    \author Nick Donaldson
+    \date March 2023
 */
 template <typename Transport>
 class DotStar
