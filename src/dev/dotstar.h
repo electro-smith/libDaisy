@@ -123,9 +123,9 @@ class DotStar
 
     /**
      * \brief Set global brightness for all pixels
-     * \details "Global brighntess" for the APA120 device sets the
+     * \details "Global brightness" for the SK9822 device sets the
      *          equivalent constant current for the LEDs, not a pre-multiplied PWM
-     *          brightness scaling for the pixel's RGB value. See APA102 datasheet
+     *          brightness scaling for the pixel's RGB value. See SK9822 datasheet
      *          for details.
      * \warning Recommend not going above 10, especially for SK9822-EC20 which may
      *          overheat if you do.
@@ -142,7 +142,7 @@ class DotStar
 
     /**
      * \brief Set global brightness for a single pixel
-     * \details "Global brighntess" for the APA120 device sets the
+     * \details "Global brightness" for the SK9822 device sets the
      *          equivalent constant current for the LEDs. See datasheet
      *          for details.
      * \warning Recommend not going above 10, especially for SK9822-EC20 which may
