@@ -115,7 +115,9 @@ class DotStar
         r_offset_ = ((config.color_order >> 4) & 0b11) + 1;
         g_offset_ = ((config.color_order >> 2) & 0b11) + 1;
         b_offset_ = (config.color_order & 0b11) + 1;
-        SetAllGlobalBrightness(15);
+        // Minimum brightness by default. These LEDs can
+        // be very current hungry. See datasheet for details.
+        SetAllGlobalBrightness(1);
         Clear();
         return Result::OK;
     };
@@ -126,6 +128,8 @@ class DotStar
      *          equivalent constant current for the LEDs, not a pre-multiplied PWM
      *          brightness scaling for the pixel's RGB value. See APA102 datasheet
      *          for details.
+     * \warning Recommend not going above 10, especially for SK9822-EC20 which may
+     *          overheat if you do.
      *
      * \param b 5-bit global brightness setting (0 - 31)
      */
@@ -142,6 +146,8 @@ class DotStar
      * \details "Global brighntess" for the APA120 device sets the
      *          equivalent constant current for the LEDs. See datasheet
      *          for details.
+     * \warning Recommend not going above 10, especially for SK9822-EC20 which may
+     *          overheat if you do.
      *
      * \param idx Index of the pixel for which to set global brightness
      * \param b 5-bit global brightness setting (0 - 31)
@@ -159,12 +165,13 @@ class DotStar
 
     uint16_t GetPixelColor(uint16_t idx)
     {
-        if (idx >= num_pixels_) return 0;
-        uint32_t c = 0;
-        const uint8_t* pixel = (uint8_t *)&pixels_[idx];
-        c = c | (pixel[r_offset_] << 16);
-        c = c | (pixel[g_offset_] << 8);
-        c = c | pixel[b_offset_];
+        if(idx >= num_pixels_)
+            return 0;
+        uint32_t       c     = 0;
+        const uint8_t *pixel = (uint8_t *)&pixels_[idx];
+        c                    = c | (pixel[r_offset_] << 16);
+        c                    = c | (pixel[g_offset_] << 8);
+        c                    = c | pixel[b_offset_];
         return c;
     }
 
@@ -205,7 +212,7 @@ class DotStar
         {
             return Result::ERR_INVALID_ARGUMENT;
         }
-        uint8_t *pixel  = (uint8_t *)(&pixels_[idx]);
+        uint8_t *pixel   = (uint8_t *)(&pixels_[idx]);
         pixel[r_offset_] = r;
         pixel[b_offset_] = b;
         pixel[g_offset_] = g;
