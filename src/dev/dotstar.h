@@ -7,7 +7,6 @@
 
 namespace daisy
 {
-
 /**
  * \brief SPI Transport for DotStars
  */
