@@ -28,6 +28,7 @@ class MidiUartTransport
     MidiUartTransport() {}
     ~MidiUartTransport() {}
 
+    /** @brief Configuration structure for UART MIDI */
     struct Config
     {
         UartHandler::Config::Peripheral periph;
@@ -42,6 +43,7 @@ class MidiUartTransport
         }
     };
 
+    /** @brief Initialization of UART using config struct */
     inline void Init(Config config)
     {
         UartHandler::Config uart_config;
@@ -61,23 +63,36 @@ class MidiUartTransport
         uart_.Init(uart_config);
     }
 
+    /** @brief Start the UART peripheral in listening mode. This will fill an internal data structure in the background */
     inline void StartRx()
     {
         uart_.DmaListenStart(
             rx_buffer, kDataSize, MidiUartTransport::rxCallback, this);
     }
 
+    /** @brief returns the number of bytes ready to parse */
     inline size_t  Readable() { return fifo_.GetNumElements(); }
+
+    /** @brief returns the oldest byte ready for parsing at the front of the FIFO */
     inline uint8_t Rx() { return fifo_.PopFront(); }
+
+    /** @brief returns whether the UART peripheral is actively listening in the background or not */
     inline bool    RxActive() { return uart_.IsListening(); }
+
+    /** @brief Clears the UART FIFO, invalidating all unparsed data. */
     inline void    FlushRx() { fifo_.Clear(); }
 
+    /** @brief sends the buffer of bytes out of the UART peripheral */
     inline void Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
 
-    static constexpr size_t  kDataSize = 1024;
-    UartHandler              uart_;
-    uint8_t                  rx_buffer[kDataSize];
-    FIFO<uint8_t, kDataSize> fifo_;
+    /** This size determines the maximum Rx bytes readable by the UART in the background 
+     *  These will fill a software FIFO that can be parsed. The FIFO is twice the size of the
+     *  Rx buffer.
+     */
+    static constexpr size_t      kDataSize = 256;
+    UartHandler                  uart_;
+    uint8_t                      rx_buffer[kDataSize];
+    FIFO<uint8_t, kDataSize * 2> fifo_;
 
 
     /** Static callback for Uart MIDI that occurs when
@@ -102,7 +117,13 @@ class MidiUartTransport
             /** Internally Handle Filling the parser */
             for(size_t i = 0; i < size; i++)
             {
-                transport->fifo_.PushBack(data[i]);
+                bool overflow;
+                overflow = !transport->fifo_.PushBack(data[i]);
+                if(overflow)
+                {
+                    /** let's do something */
+                    transport->fifo_.Clear();
+                }
             }
         }
     }
