@@ -50,6 +50,7 @@
 #include "dev/mcp23x17.h"
 #include "dev/max11300.h"
 #include "dev/tlv493d.h"
+#include "dev/dotstar.h"
 #include "dev/neopixel.h"
 #include "dev/neotrellis.h"
 #include "dev/icm20948.h"
