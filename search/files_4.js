@@ -13,5 +13,6 @@ var searchData=
   ['daisy_5fversio_2eh_10',['daisy_versio.h',['../daisy__versio_8h.html',1,'']]],
   ['display_2eh_11',['display.h',['../display_8h.html',1,'']]],
   ['dma_2eh_12',['dma.h',['../dma_8h.html',1,'']]],
-  ['dps310_2eh_13',['dps310.h',['../dps310_8h.html',1,'']]]
+  ['dotstar_2eh_13',['dotstar.h',['../dotstar_8h.html',1,'']]],
+  ['dps310_2eh_14',['dps310.h',['../dps310_8h.html',1,'']]]
 ];

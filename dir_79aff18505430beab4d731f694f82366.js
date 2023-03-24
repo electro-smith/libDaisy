@@ -4,6 +4,7 @@ var dir_79aff18505430beab4d731f694f82366 =
     [ "codec_ak4556.h", "codec__ak4556_8h.html", "codec__ak4556_8h" ],
     [ "codec_pcm3060.h", "codec__pcm3060_8h.html", "codec__pcm3060_8h" ],
     [ "codec_wm8731.h", "codec__wm8731_8h.html", "codec__wm8731_8h" ],
+    [ "dotstar.h", "dotstar_8h.html", "dotstar_8h" ],
     [ "dps310.h", "dps310_8h.html", "dps310_8h" ],
     [ "flash_IS25LP064A.h", "flash___i_s25_l_p064_a_8h.html", "flash___i_s25_l_p064_a_8h" ],
     [ "flash_IS25LP080D.h", "flash___i_s25_l_p080_d_8h.html", "flash___i_s25_l_p080_d_8h" ],

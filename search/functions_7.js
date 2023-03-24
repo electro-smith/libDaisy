@@ -80,7 +80,7 @@ var searchData=
   ['getpclk1freq_77',['GetPClk1Freq',['../classdaisy_1_1_system.html#a43b38c779eed65816b35e5ec3edb5634',1,'daisy::System']]],
   ['getpclk2freq_78',['GetPClk2Freq',['../classdaisy_1_1_system.html#a84bfce9e2ad676568e31811e8b9803e5',1,'daisy::System']]],
   ['getpin_79',['GetPin',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a2cb2af471a74e90cb05fc13be1461819',1,'daisy::patch_sm::DaisyPatchSM::GetPin()'],['../classdaisy_1_1_daisy_seed.html#ab50d750ccf424a9ca8537b696afb99a2',1,'daisy::DaisySeed::GetPin()'],['../classdaisy_1_1_mcp23_x17.html#a60f0fa9de95c2c651e6a4aec047ab283',1,'daisy::Mcp23X17::GetPin()']]],
-  ['getpixelcolor_80',['GetPixelColor',['../classdaisy_1_1_neo_pixel.html#ad233a7a44ceca2c89aef9aafd328a31b',1,'daisy::NeoPixel']]],
+  ['getpixelcolor_80',['GetPixelColor',['../classdaisy_1_1_dot_star.html#a84ac865ec82b4196c1e971b9def03f42',1,'daisy::DotStar::GetPixelColor()'],['../classdaisy_1_1_neo_pixel.html#ad233a7a44ceca2c89aef9aafd328a31b',1,'daisy::NeoPixel::GetPixelColor(uint16_t n) const']]],
   ['getpixels_81',['GetPixels',['../classdaisy_1_1_neo_pixel.html#ad10ff8167814f76e1fb3be7f215baf74',1,'daisy::NeoPixel']]],
   ['getpolar_82',['GetPolar',['../classdaisy_1_1_tlv493d.html#a86b05ab9fc785bd5f30cc4a328b69821',1,'daisy::Tlv493d']]],
   ['getpresent_83',['GetPresent',['../classdaisy_1_1_u_s_b_host_handle.html#a3efc40d3a6a6ef516328e1744640d887',1,'daisy::USBHostHandle']]],
@@ -123,5 +123,6 @@ var searchData=
   ['gety_120',['GetY',['../classdaisy_1_1_tlv493d.html#a0579bf94f72401d85047b2f06fb0c5a6',1,'daisy::Tlv493d::GetY()'],['../classdaisy_1_1_rectangle.html#a26a426b03d17f06130d0d511187ada7d',1,'daisy::Rectangle::GetY()']]],
   ['getz_121',['GetZ',['../classdaisy_1_1_tlv493d.html#a4d3cf1c90e96ac371c41d497545d8cef',1,'daisy::Tlv493d']]],
   ['gpio_122',['GPIO',['../classdaisy_1_1_g_p_i_o.html#a6726cb4b7a9c3f18289399376d7ca8bc',1,'daisy::GPIO']]],
-  ['green_123',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]]
+  ['green_123',['Green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color']]],
+  ['green8_124',['Green8',['../classdaisy_1_1_color.html#ab40634a2125bf70108d660cfdd277c10',1,'daisy::Color']]]
 ];

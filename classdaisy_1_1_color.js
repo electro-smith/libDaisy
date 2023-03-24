@@ -14,9 +14,12 @@ var classdaisy_1_1_color =
     [ "Color", "classdaisy_1_1_color.html#a6b1f926235cab78e9d4cb75e86c4c2ee", null ],
     [ "~Color", "classdaisy_1_1_color.html#adae628d437cdb54da339dc432d81f633", null ],
     [ "Blue", "classdaisy_1_1_color.html#a9270f936191af9fcd59dad58a8ab0387", null ],
+    [ "Blue8", "classdaisy_1_1_color.html#accf8376e816af404457c61ec6ddd9ab4", null ],
     [ "Green", "classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2", null ],
+    [ "Green8", "classdaisy_1_1_color.html#ab40634a2125bf70108d660cfdd277c10", null ],
     [ "Init", "classdaisy_1_1_color.html#a44cd04ee19a41442be79ec47711a2bf5", null ],
     [ "Init", "classdaisy_1_1_color.html#a0ebd169976dd93434e4523697b16559b", null ],
     [ "operator*", "classdaisy_1_1_color.html#a9e2f3c918aef976e859e03f6028db5d9", null ],
-    [ "Red", "classdaisy_1_1_color.html#ab645aa34a553a044e9c901546e78ed8f", null ]
+    [ "Red", "classdaisy_1_1_color.html#ab645aa34a553a044e9c901546e78ed8f", null ],
+    [ "Red8", "classdaisy_1_1_color.html#af39d1a11445e8bfff1ea2bd6e9ec7748", null ]
 ];

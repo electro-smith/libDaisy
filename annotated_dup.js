@@ -31,6 +31,8 @@ var annotated_dup =
       [ "DaisyPod", "classdaisy_1_1_daisy_pod.html", "classdaisy_1_1_daisy_pod" ],
       [ "DaisySeed", "classdaisy_1_1_daisy_seed.html", "classdaisy_1_1_daisy_seed" ],
       [ "DaisyVersio", "classdaisy_1_1_daisy_versio.html", "classdaisy_1_1_daisy_versio" ],
+      [ "DotStar", "classdaisy_1_1_dot_star.html", "classdaisy_1_1_dot_star" ],
+      [ "DotStarSpiTransport", "classdaisy_1_1_dot_star_spi_transport.html", "classdaisy_1_1_dot_star_spi_transport" ],
       [ "Dps310", "classdaisy_1_1_dps310.html", "classdaisy_1_1_dps310" ],
       [ "Dps310I2CTransport", "classdaisy_1_1_dps310_i2_c_transport.html", "classdaisy_1_1_dps310_i2_c_transport" ],
       [ "Dps310SpiTransport", "classdaisy_1_1_dps310_spi_transport.html", "classdaisy_1_1_dps310_spi_transport" ],
