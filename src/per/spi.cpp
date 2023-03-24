@@ -275,7 +275,7 @@ SpiHandle::Result SpiHandle::Impl::Init(const Config& config)
     hspi_.Init.MasterSSIdleness        = SPI_MASTER_SS_IDLENESS_00CYCLE;
     hspi_.Init.MasterInterDataIdleness = SPI_MASTER_INTERDATA_IDLENESS_00CYCLE;
     hspi_.Init.MasterReceiverAutoSusp  = SPI_MASTER_RX_AUTOSUSP_DISABLE;
-    hspi_.Init.MasterKeepIOState       = SPI_MASTER_KEEP_IO_STATE_DISABLE;
+    hspi_.Init.MasterKeepIOState       = SPI_MASTER_KEEP_IO_STATE_ENABLE;
     hspi_.Init.IOSwap                  = SPI_IO_SWAP_DISABLE;
     if(HAL_SPI_Init(&hspi_) != HAL_OK)
     {
