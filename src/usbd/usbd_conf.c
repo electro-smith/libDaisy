@@ -78,10 +78,10 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef *pcdHandle)
         /* USER CODE END USB_OTG_FS_MspInit 0 */
 
         __HAL_RCC_GPIOA_CLK_ENABLE();
-        /**USB_OTG_FS GPIO Configuration    
+        /**USB_OTG_FS GPIO Configuration
     PA12     ------> USB_OTG_FS_DP
     PA11     ------> USB_OTG_FS_DM
-    PA9     ------> USB_OTG_FS_VBUS 
+    PA9     ------> USB_OTG_FS_VBUS
     */
         GPIO_InitStruct.Pin       = GPIO_PIN_12 | GPIO_PIN_11;
         GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
@@ -116,9 +116,9 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef *pcdHandle)
         /* USER CODE END USB_OTG_HS_MspInit 0 */
 
         __HAL_RCC_GPIOB_CLK_ENABLE();
-        /**USB_OTG_HS GPIO Configuration    
+        /**USB_OTG_HS GPIO Configuration
     PB14     ------> USB_OTG_HS_DM
-    PB15     ------> USB_OTG_HS_DP 
+    PB15     ------> USB_OTG_HS_DP
     */
         GPIO_InitStruct.Pin       = GPIO_PIN_14 | GPIO_PIN_15;
         GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
@@ -153,10 +153,10 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef *pcdHandle)
         /* Peripheral clock disable */
         __HAL_RCC_USB_OTG_FS_CLK_DISABLE();
 
-        /**USB_OTG_FS GPIO Configuration    
+        /**USB_OTG_FS GPIO Configuration
     PA12     ------> USB_OTG_FS_DP
     PA11     ------> USB_OTG_FS_DM
-    PA9     ------> USB_OTG_FS_VBUS 
+    PA9     ------> USB_OTG_FS_VBUS
     */
         HAL_GPIO_DeInit(GPIOA, GPIO_PIN_12 | GPIO_PIN_11 | GPIO_PIN_9);
 
@@ -179,9 +179,9 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef *pcdHandle)
         /* Peripheral clock disable */
         __HAL_RCC_USB_OTG_HS_CLK_DISABLE();
 
-        /**USB_OTG_HS GPIO Configuration    
+        /**USB_OTG_HS GPIO Configuration
     PB14     ------> USB_OTG_HS_DM
-    PB15     ------> USB_OTG_HS_DP 
+    PB15     ------> USB_OTG_HS_DP
     */
         HAL_GPIO_DeInit(GPIOB, GPIO_PIN_14 | GPIO_PIN_15);
 
@@ -705,7 +705,7 @@ USBD_StatusTypeDef USBD_LL_SetUSBAddress(USBD_HandleTypeDef *pdev,
   * @param  pdev: Device handle
   * @param  ep_addr: Endpoint number
   * @param  pbuf: Pointer to data to be sent
-  * @param  size: Data size    
+  * @param  size: Data size
   * @retval USBD status
   */
 USBD_StatusTypeDef USBD_LL_Transmit(USBD_HandleTypeDef *pdev,

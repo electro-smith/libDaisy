@@ -4,7 +4,7 @@
 namespace daisy
 {
 /**
-    @brief Class that handles initializing all of the hardware specific to the Desmodus Versio hardware. \n 
+    @brief Class that handles initializing all of the hardware specific to the Desmodus Versio hardware. \n
     Helper funtions are also in place to provide easy access to built-in controls and peripherals.
     @author Ankoor Apte, Noise Engineering
     @date October 2020
@@ -48,7 +48,7 @@ class DaisyVersio
     /**Initializes the Versio, and all of its hardware.*/
     void Init(bool boost = false);
 
-    /** 
+    /**
     Wait some ms before going on.
     \param del Delay time in ms.
     */

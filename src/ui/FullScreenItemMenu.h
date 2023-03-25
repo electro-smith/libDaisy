@@ -7,17 +7,17 @@ namespace daisy
 /** @brief A menu page for small screens
  *  @author jelliesen
  *  @ingroup ui
- * 
- *  This class builds upon the menu logic of AbstractMenu and adds 
+ *
+ *  This class builds upon the menu logic of AbstractMenu and adds
  *  drawing routines that are suitable for small screens.
- * 
- *  By default, it will paint to the canvas returned by 
- *  `UI::GetPrimaryOneBitGraphicsDisplayId()`. It can also be 
+ *
+ *  By default, it will paint to the canvas returned by
+ *  `UI::GetPrimaryOneBitGraphicsDisplayId()`. It can also be
  *  configured to paint to a different canvas.
- * 
+ *
  *  Each item will occupy the entire display.
  *  FullScreenItemMenu uses the LookAndFeel system to draw draw the
- *  items. This means that you can create your own graphics design 
+ *  items. This means that you can create your own graphics design
  *  by creating your own LookAndFeel based on the OneBitGraphicsLookAndFeel
  *  class and apply that either globally (UI::SetOneBitGraphicsLookAndFeel())
  *  or to this page only (UiPage::SetOneBitGraphicsLookAndFeel()).
@@ -25,18 +25,18 @@ namespace daisy
 class FullScreenItemMenu : public AbstractMenu
 {
   public:
-    /** Call this to initialize the menu. It's okay to re-initialize a 
+    /** Call this to initialize the menu. It's okay to re-initialize a
      *  FullScreenItemMenu multiple times, even while it's displayed on the UI.
-     * @param items             An array of ItemConfig that determine which items are 
+     * @param items             An array of ItemConfig that determine which items are
      *                          available in the menu.
      * @param numItems          The number of items in the `items` array.
-     * @param orientation       Controls which pair of arrow buttons are used for 
+     * @param orientation       Controls which pair of arrow buttons are used for
      *                          selection / editing
-     * @param allowEntering     Globally controls if the Ok button can enter items 
-     *                          for editing. If you have a physical controls that can edit 
-     *                          selected items directly (value slider, a second arrow button 
+     * @param allowEntering     Globally controls if the Ok button can enter items
+     *                          for editing. If you have a physical controls that can edit
+     *                          selected items directly (value slider, a second arrow button
      *                          pair, value encoder) you can set this to false, otherwise you
-     *                          set it to true so that the controls used for selecting items 
+     *                          set it to true so that the controls used for selecting items
      *                          can now also be used to edit the values.
      */
     void Init(const AbstractMenu::ItemConfig* items,

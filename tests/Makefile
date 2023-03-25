@@ -1,14 +1,14 @@
 ### Based on: https://gist.github.com/mauriciopoppe/de8908f67923091982c8c8136a063ea6
 ### Thanks!
 
-CXX ?= clang++ 
+CXX ?= clang++
 
 # path #
 SRC_PATH = .
 BUILD_PATH = build
 BIN_PATH = $(BUILD_PATH)/bin
 
-# executable # 
+# executable #
 BIN_NAME = libDaisy_gtest
 
 # extensions #

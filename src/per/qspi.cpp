@@ -982,28 +982,28 @@ extern "C" void QUADSPI_IRQHandler(void)
 
 /* HAL Overwrite Implementation */
 
-/**QUADSPI GPIO Configuration    
+/**QUADSPI GPIO Configuration
     On Daisy Rev3:
     PG6     ------> QUADSPI_BK1_NCS
     PF8     ------> QUADSPI_BK1_IO0
     PF9     ------> QUADSPI_BK1_IO1
     PF7     ------> QUADSPI_BK1_IO2
     PF6     ------> QUADSPI_BK1_IO3
-    PB2     ------> QUADSPI_CLK 
+    PB2     ------> QUADSPI_CLK
     On Daisy Seed:
     PG6     ------> QUADSPI_BK1_NCS
     PF8     ------> QUADSPI_BK1_IO0
     PF9     ------> QUADSPI_BK1_IO1
     PF7     ------> QUADSPI_BK1_IO2
     PF6     ------> QUADSPI_BK1_IO3
-    PF10    ------> QUADSPI_CLK 
+    PF10    ------> QUADSPI_CLK
     On Audio BB:
     PG6     ------> QUADSPI_BK1_NCS
     PF8     ------> QUADSPI_BK1_IO0
     PF9     ------> QUADSPI_BK1_IO1
     PE2     ------> QUADSPI_BK1_IO2
     PF6     ------> QUADSPI_BK1_IO3
-    PF10    ------> QUADSPI_CLK 
+    PF10    ------> QUADSPI_CLK
     */
 //enum
 //{

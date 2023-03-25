@@ -8,7 +8,7 @@ These examples are meant to serve a few purposes:
 
 These should not be considered replacements for, unit tests, but rather as a form of integration tests.
 
-To keep this lightweight, we won't include the standard debug files (vscode, or elsewhere), etc. 
+To keep this lightweight, we won't include the standard debug files (vscode, or elsewhere), etc.
 
 All wiring information for required external circuits, or wiring should be included in the opening comments of the source file.
 

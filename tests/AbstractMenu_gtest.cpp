@@ -5,7 +5,7 @@
 
 using namespace daisy;
 
-/** Exposes some of the internals of AbstractMenu to make them 
+/** Exposes some of the internals of AbstractMenu to make them
  *  accessible from unit tests.
  */
 class ExposedAbstractMenu : public AbstractMenu
@@ -119,7 +119,7 @@ class ExposedAbstractMenu : public AbstractMenu
         testObject.callbackFunctionCalled_ = true;
     }
 
-    /** A MappedIntValue that exposes calls to its functions so 
+    /** A MappedIntValue that exposes calls to its functions so
      *  that unit tests can observer when the Abstractmenu calls them.
     */
     class ExposedMappedIntValue : public MappedIntValue

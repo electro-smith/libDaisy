@@ -368,7 +368,7 @@ class SSD130xDriver
     };
 
     /**
-     * Update the display 
+     * Update the display
     */
     void Update()
     {
@@ -395,59 +395,59 @@ class SSD130xDriver
 };
 
 /**
- * A driver for the SSD1306/SSD1309 128x64 OLED displays connected via 4 wire SPI  
+ * A driver for the SSD1306/SSD1309 128x64 OLED displays connected via 4 wire SPI
  */
 using SSD130x4WireSpi128x64Driver
     = daisy::SSD130xDriver<128, 64, SSD130x4WireSpiTransport>;
 
 /**
- * A driver for the SSD1306/SSD1309 128x32 OLED displays connected via 4 wire SPI  
+ * A driver for the SSD1306/SSD1309 128x32 OLED displays connected via 4 wire SPI
  */
 using SSD130x4WireSpi128x32Driver
     = daisy::SSD130xDriver<128, 32, SSD130x4WireSpiTransport>;
 
 /**
- * A driver for the SSD1306/SSD1309 98x16 OLED displays connected via 4 wire SPI  
+ * A driver for the SSD1306/SSD1309 98x16 OLED displays connected via 4 wire SPI
  */
 using SSD130x4WireSpi98x16Driver
     = daisy::SSD130xDriver<98, 16, SSD130x4WireSpiTransport>;
 
 /**
- * A driver for the SSD1306/SSD1309 64x48 OLED displays connected via 4 wire SPI  
+ * A driver for the SSD1306/SSD1309 64x48 OLED displays connected via 4 wire SPI
  */
 using SSD130x4WireSpi64x48Driver
     = daisy::SSD130xDriver<64, 48, SSD130x4WireSpiTransport>;
 
 /**
- * A driver for the SSD1306/SSD1309 64x32 OLED displays connected via 4 wire SPI  
+ * A driver for the SSD1306/SSD1309 64x32 OLED displays connected via 4 wire SPI
  */
 using SSD130x4WireSpi64x32Driver
     = daisy::SSD130xDriver<64, 32, SSD130x4WireSpiTransport>;
 
 /**
- * A driver for the SSD1306/SSD1309 128x64 OLED displays connected via I2C  
+ * A driver for the SSD1306/SSD1309 128x64 OLED displays connected via I2C
  */
 using SSD130xI2c128x64Driver
     = daisy::SSD130xDriver<128, 64, SSD130xI2CTransport>;
 
 /**
- * A driver for the SSD1306/SSD1309 128x32 OLED displays connected via I2C  
+ * A driver for the SSD1306/SSD1309 128x32 OLED displays connected via I2C
  */
 using SSD130xI2c128x32Driver
     = daisy::SSD130xDriver<128, 32, SSD130xI2CTransport>;
 
 /**
- * A driver for the SSD1306/SSD1309 98x16 OLED displays connected via I2C  
+ * A driver for the SSD1306/SSD1309 98x16 OLED displays connected via I2C
  */
 using SSD130xI2c98x16Driver = daisy::SSD130xDriver<98, 16, SSD130xI2CTransport>;
 
 /**
- * A driver for the SSD1306/SSD1309 64x48 OLED displays connected via I2C  
+ * A driver for the SSD1306/SSD1309 64x48 OLED displays connected via I2C
  */
 using SSD130xI2c64x48Driver = daisy::SSD130xDriver<64, 48, SSD130xI2CTransport>;
 
 /**
- * A driver for the SSD1306/SSD1309 64x32 OLED displays connected via I2C  
+ * A driver for the SSD1306/SSD1309 64x32 OLED displays connected via I2C
  */
 using SSD130xI2c64x32Driver = daisy::SSD130xDriver<64, 32, SSD130xI2CTransport>;
 

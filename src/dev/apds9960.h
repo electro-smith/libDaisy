@@ -63,8 +63,8 @@
 
 namespace daisy
 {
-/** @addtogroup external 
-    @{ 
+/** @addtogroup external
+    @{
 */
 
 /** I2C Transport for APDS9960 */
@@ -272,7 +272,7 @@ class Apds9960
     }
 
     /** Sets gesture sensor offset
-        \param  offset_up Up offset  
+        \param  offset_up Up offset
         \param  offset_down Down offset
         \param  offset_left Left offset
         \param  offset_right Right offset
@@ -322,7 +322,7 @@ class Apds9960
         Write8(APDS9960_GPENTH, thresh);
     }
 
-    /** Enables the device / Disables the device 
+    /** Enables the device / Disables the device
         (putting it in lower power sleep mode)
         \param  en Enable
     */
@@ -333,7 +333,7 @@ class Apds9960
     }
 
     /** Enable gesture readings
-        \param  en Enable    
+        \param  en Enable
     */
     void EnableGesture(bool en)
     {
@@ -575,7 +575,7 @@ class Apds9960
         \param  r Red value
         \param  g Green value
         \param  b Blue value
-        
+
         \return Color temperature
     */
     uint16_t CalculateColorTemperature(uint16_t r, uint16_t g, uint16_t b)

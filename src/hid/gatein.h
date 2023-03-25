@@ -14,12 +14,12 @@ namespace daisy
 class GateIn
 {
   public:
-    /** GateIn 
-    Constructor 
+    /** GateIn
+    Constructor
     */
     GateIn() {}
     /** GateIn~
-    Destructor 
+    Destructor
     */
     ~GateIn() {}
 

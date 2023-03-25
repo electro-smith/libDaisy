@@ -7,8 +7,8 @@ namespace daisy
 {
 /** @brief A queue that holds user input events in the UI system.
  *  @author jelliesen
- *  @ingroup ui 
- * 
+ *  @ingroup ui
+ *
  * A queue that holds user interface events such as button presses or encoder turns.
  * The queue can be filled from hardware drivers and read from a UI object.
  * Access to the queue is protected by a ScopedIrqBlocker - that means it's safe to add
@@ -68,7 +68,7 @@ class UiEventQueue
                 uint16_t id;
                 /** The number of successive button presses (e.g. double click). */
                 uint16_t numSuccessivePresses;
-                /** True if the event was generated because a button was retriggered 
+                /** True if the event was generated because a button was retriggered
                  *  automatically while being held down. */
                 bool isRetriggering;
             } asButtonPressed;

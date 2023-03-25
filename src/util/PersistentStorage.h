@@ -8,30 +8,30 @@ namespace daisy
 {
 /** @brief Non Volatile storage class for persistent settings on an external flash device.
  *  @author shensley
- * 
- *  Storage occupied by the struct will be one word larger than 
+ *
+ *  Storage occupied by the struct will be one word larger than
  *  the SettingStruct used. The extra word is used to store the
  *  state of the data, and whether it's been overwritten or not.
- * 
+ *
  *  \todo - Make Save() non-blocking
  *  \todo - Add wear leveling
- * 
+ *
  **/
 template <typename SettingStruct>
 class PersistentStorage
 {
   public:
-    /** State of the storage. 
+    /** State of the storage.
      *  When created, prior to initialiation, the state will be Unknown
-     *  
+     *
      *  During initialization, the state will be changed to either FACTORY,
-     *  or USER. 
-     * 
+     *  or USER.
+     *
      *  If this is the first time these settings are being written to the
      *  target address, the defaults will be written to that location,
      *  and the state will be set to FACTORY.
-     * 
-     *  Once the first user-trigger save has been made, the state will be 
+     *
+     *  Once the first user-trigger save has been made, the state will be
      *  updated to USER to indicate that the defaults have overwritten.
      */
     enum class State
@@ -41,7 +41,7 @@ class PersistentStorage
         USER    = 2,
     };
 
-    /** Constructor for storage class 
+    /** Constructor for storage class
      *  \param qspi reference to the hardware qspi peripheral.
      */
     PersistentStorage(QSPIHandle &qspi)

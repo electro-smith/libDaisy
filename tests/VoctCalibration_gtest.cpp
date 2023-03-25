@@ -64,7 +64,7 @@ TEST(util_VoctCalibration, c_postCalibrationProcessing)
     EXPECT_FLOAT_EQ(testValues[3], octMidiNotes[3]);
 }
 
-TEST(util_VoctCalibration, d_manualValueSetting) 
+TEST(util_VoctCalibration, d_manualValueSetting)
 {
 
     VoctCalibration cal;

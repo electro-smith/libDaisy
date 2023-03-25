@@ -12,7 +12,7 @@
 
 namespace daisy
 {
-/** 
+/**
  * This interface is used as a base class for all types of 1bit-per-pixel
  * graphics displays.
 */
@@ -34,7 +34,7 @@ class OneBitGraphicsDisplay
     size_t CurrentX() { return currentX_; };
     size_t CurrentY() { return currentY_; };
 
-    /** 
+    /**
     Fills the entire display with either on/off.
     \param on Sets on or off.
     */
@@ -126,7 +126,7 @@ class OneBitGraphicsDisplay
         DrawArc(x, y, radius, 0, 360, on);
     };
 
-    /** 
+    /**
     Writes the character with the specific FontDef
     to the display buffer at the current Cursor position.
     \param ch character to be written
@@ -136,7 +136,7 @@ class OneBitGraphicsDisplay
     */
     virtual char WriteChar(char ch, FontDef font, bool on) = 0;
 
-    /** 
+    /**
     Similar to WriteChar, except it will handle an entire String.
     Wrapping does not happen automatically, so the width
     of the string must be kept within the dimensions of the screen.
@@ -147,7 +147,7 @@ class OneBitGraphicsDisplay
     */
     virtual char WriteString(const char* str, FontDef font, bool on) = 0;
 
-    /** 
+    /**
     Similar to WriteString but justified within a bounding box.
     \param str          string to be written
     \param font         font to use
@@ -163,7 +163,7 @@ class OneBitGraphicsDisplay
                                          bool           on)
         = 0;
 
-    /** 
+    /**
     Moves the 'Cursor' position used for WriteChar, and WriteStr to the specified coordinate.
     \param x x pos
     \param y y pos
@@ -174,8 +174,8 @@ class OneBitGraphicsDisplay
         currentY_ = (y >= Height()) ? Height() - 1 : y;
     }
 
-    /** 
-    Writes the current display buffer to the OLED device using SPI or I2C depending on 
+    /**
+    Writes the current display buffer to the OLED device using SPI or I2C depending on
     how the object was initialized.
     */
     virtual void Update() = 0;
@@ -186,30 +186,30 @@ class OneBitGraphicsDisplay
 };
 
 /** This class is intended as a intermediary class for your actual implementation of the OneBitGraphicsDisplay
- *  interface. It uses the CRTP design pattern where the template argument is the child class. It provides 
+ *  interface. It uses the CRTP design pattern where the template argument is the child class. It provides
  *  implementations for most of the functions, except DrawPixel(), Update() and Fill(), which you'll have
  *  to provide in your child class.
- *  The main goal of this class is to provide common drawing functions without relying on massive amounts of 
+ *  The main goal of this class is to provide common drawing functions without relying on massive amounts of
  *  virtual function calls that would result in a performance loss. To achieve this, any drawing function that
  *  is implemented here and internally calls other drawing functions (e.g. DrawRect() which internally calls
- *  DrawPixel() and DrawLine()) makes these calls via the qualified name of these functions to explicitly 
+ *  DrawPixel() and DrawLine()) makes these calls via the qualified name of these functions to explicitly
  *  suppress the virtual dispatch mechanism like this:
- * 
+ *
  *      ChildType::DrawPixel(...); // no virtual function call; direct call into the child class function
- *  
- *  To create a custom OneBitGraphicsDisplay implementation, you can 
+ *
+ *  To create a custom OneBitGraphicsDisplay implementation, you can
  *  A) inherit from OneBitGraphicsDisplay directly and provide all the drawing functions yourself
  *  B) Inherit from OneBitGraphicsDisplayImpl and only provide DrawPixel(), Fill() and Update()
  *     like this:
- *  
- *      class MyDisplayClass : public OneBitGraphicsDisplayImpl<MyDisplayClass> 
+ *
+ *      class MyDisplayClass : public OneBitGraphicsDisplayImpl<MyDisplayClass>
  *      {
  *      public:
  *          void Fill() override { ... };
  *          void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on) override { ... };
  *          void Update() override { ... }
  *      };
- *  
+ *
  */
 template <class ChildType>
 class OneBitGraphicsDisplayImpl : public OneBitGraphicsDisplay

@@ -122,7 +122,7 @@ SECTIONS
 		PROVIDE(__bss_end__ = _ebss);
 	} > SRAM
 
-	PROVIDE(end = .); 
+	PROVIDE(end = .);
 
 	.dtcmram_bss (NOLOAD) :
 	{

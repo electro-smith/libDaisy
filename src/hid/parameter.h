@@ -39,7 +39,7 @@ class Parameter
     */
     float Process();
 
-    /** 
+    /**
     \return the current value from the parameter without processing another sample.
     this is useful if you need to use the value multiple times, and don't store
 

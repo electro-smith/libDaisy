@@ -11,7 +11,7 @@ namespace daisy
 */
 
 /**
-Utility Ring Buffer \n 
+Utility Ring Buffer \n
 imported from pichenettes/stmlib
 */
 template <typename T, size_t size>
@@ -48,7 +48,7 @@ class RingBuffer
         Overwrite(v);
     }
 
-    /** Writes the new element to the ring buffer, overwriting unread data if necessary. 
+    /** Writes the new element to the ring buffer, overwriting unread data if necessary.
     \param v Value to overwrite
      */
     inline void Overwrite(T v)
@@ -82,7 +82,7 @@ class RingBuffer
     /** Flushes unread elements from the ring buffer */
     inline void Flush() { write_ptr_ = read_ptr_; }
 
-    /** Read enough samples to make it possible to read 1 sample. 
+    /** Read enough samples to make it possible to read 1 sample.
     \param n Size of T ?
      */
     inline void Swallow(size_t n)
@@ -96,7 +96,7 @@ class RingBuffer
 
     /** Reads a number of elements into a buffer immediately
     \param destination buffer to write to
-    \param num_elements number of elements in buffer    
+    \param num_elements number of elements in buffer
      */
     inline void ImmediateRead(T* destination, size_t num_elements)
     {
@@ -116,7 +116,7 @@ class RingBuffer
         read_ptr_ = (r + num_elements) % size;
     }
 
-    /** Overwrites a number of elements using the source buffer as input. 
+    /** Overwrites a number of elements using the source buffer as input.
     \param source Input buffer
     \param num_elements Number of elements in source
      */

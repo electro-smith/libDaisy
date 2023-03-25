@@ -7,7 +7,7 @@
 namespace daisy
 {
 /**
-    @brief Class that handles initializing all of the hardware specific to the Daisy Patch Board. \n 
+    @brief Class that handles initializing all of the hardware specific to the Daisy Patch Board. \n
     Helper funtions are also in place to provide easy access to built-in controls and peripherals.
     @author Stephen Hensley
     @date November 2019
@@ -43,7 +43,7 @@ class DaisyPatch
     /** Initializes the daisy seed, and patch hardware.*/
     void Init(bool boost = false);
 
-    /** 
+    /**
     Wait some ms before going on.
     \param del Delay time in ms.
     */

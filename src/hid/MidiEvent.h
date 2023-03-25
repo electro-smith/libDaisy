@@ -7,7 +7,7 @@ namespace daisy
  *  @{
  */
 
-/** @defgroup midi_events MIDI_EVENTS 
+/** @defgroup midi_events MIDI_EVENTS
  *  @{
 */
 
@@ -200,7 +200,7 @@ struct AllNotesOffEvent
 {
     int channel; /**< & */
 };
-/** Struct containing OmniModeOffEvent data. 
+/** Struct containing OmniModeOffEvent data.
  * Can be made from MidiEvent
 */
 struct OmniModeOffEvent

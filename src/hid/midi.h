@@ -15,7 +15,7 @@
 
 namespace daisy
 {
-/** @brief   Transport layer for sending and receiving MIDI data over UART 
+/** @brief   Transport layer for sending and receiving MIDI data over UART
  *  @details This is the mode of communication used for TRS and DIN MIDI
  *  @ingroup midi
 */
@@ -69,9 +69,9 @@ class MidiUartTransport
     UartHandler uart_;
 };
 
-/** 
-    @brief Simple MIDI Handler \n 
-    Parses bytes from an input into valid MidiEvents. \n 
+/**
+    @brief Simple MIDI Handler \n
+    Parses bytes from an input into valid MidiEvents. \n
     The MidiEvents fill a FIFO queue that the user can pop messages from.
     @author shensley
     @date March 2020
@@ -89,7 +89,7 @@ class MidiHandler
         typename Transport::Config transport_config;
     };
 
-    /** Initializes the MidiHandler 
+    /** Initializes the MidiHandler
      *  \param config Configuration structure used to define specifics to the MIDI Handler.
      */
     void Init(Config config)
@@ -128,7 +128,7 @@ class MidiHandler
         }
     }
 
-    /** Checks if there are unhandled messages in the queue 
+    /** Checks if there are unhandled messages in the queue
     \return True if there are events to be handled, else false.
      */
     bool HasEvents() const { return event_q_.readable(); }
@@ -345,7 +345,7 @@ class MidiHandler
 };
 
 /**
- *  @{ 
+ *  @{
  *  @ingroup midi
  *  @brief shorthand accessors for MIDI Handlers
  * */

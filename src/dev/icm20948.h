@@ -72,8 +72,8 @@
 
 namespace daisy
 {
-/** @addtogroup external 
-    @{ 
+/** @addtogroup external
+    @{
 */
 
 /** I2C Transport for Icm20948 */

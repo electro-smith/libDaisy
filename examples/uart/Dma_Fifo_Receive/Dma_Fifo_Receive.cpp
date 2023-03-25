@@ -29,7 +29,7 @@ int main(void)
 		if(uart.ReadableFifo()){
 			pop = uart.PopFifo();
 			hw.seed.SetLed(false);
-		}	
+		}
 		else{
 			hw.seed.SetLed(true);
 		}
@@ -47,7 +47,7 @@ int main(void)
         sprintf(cstr, "%d", pop);
         hw.display.SetCursor(0, 12);
         hw.display.WriteString(cstr, Font_7x10, true);
-        
+
 		// update the display
 		hw.display.Update();
 

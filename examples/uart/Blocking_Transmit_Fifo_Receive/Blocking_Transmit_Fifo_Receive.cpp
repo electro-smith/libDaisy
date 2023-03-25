@@ -32,7 +32,7 @@ int main(void)
         // if there's data, pop it from the FIFO
 		if(uart.ReadableFifo()){
 			pop = uart.PopFifo();
-		}	
+		}
 
         // clear the display
         hw.display.Fill(false);

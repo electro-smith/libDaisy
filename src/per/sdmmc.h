@@ -1,5 +1,5 @@
 /*
-TODO: 
+TODO:
 - Implement configuration (currently all settings are fixed).
 */
 #pragma once
@@ -17,7 +17,7 @@ namespace daisy
 
 /** Configuration for interfacing with SD cards.
  *  Currently only supports operation using FatFS filesystem
- * 
+ *
  *  Only SDMMC1 is supported at this time.
  *
  *  Pins are fixed to the following:
@@ -45,8 +45,8 @@ class SdmmcHandler
         BITS_4, /**< 4-bits of parallel data for each clock pulse */
     };
 
-    /** 
-    Sets the desired clock speed of the SD card bus. \n 
+    /**
+    Sets the desired clock speed of the SD card bus. \n
     Initialization is always done at or below 400kHz, and then the user speed is set.
     */
     enum class Speed
@@ -78,7 +78,7 @@ class SdmmcHandler
     ~SdmmcHandler() {}
 
     /** Configures the SDMMC Peripheral with the user defined settings.
-     * Initialization does not happen immediatly and will be called by the 
+     * Initialization does not happen immediatly and will be called by the
      * filesystem (i.e. FatFS).
      */
     Result Init(const Config& cfg);

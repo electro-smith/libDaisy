@@ -24,8 +24,8 @@
 
 namespace daisy
 {
-/** @addtogroup external 
-    @{ 
+/** @addtogroup external
+    @{
 */
 
 /** I2C Transport for NeoTrellis */
@@ -305,7 +305,7 @@ class NeoTrellis
     */
     Result GetTransportError() { return transport_.GetError() ? ERR : OK; }
 
-    /** Perform a software reset. 
+    /** Perform a software reset.
         This resets all seesaw registers to their default values.
         This is called automatically from Init().
     */
@@ -329,9 +329,9 @@ class NeoTrellis
             NEO_TRELLIS_KEY(NEO_TRELLIS_XY(xkey, ykey)), edge, enable);
     }
 
-    /** read all events currently stored in the seesaw fifo and call any callbacks.  
+    /** read all events currently stored in the seesaw fifo and call any callbacks.
         \param polling pass true if the interrupt pin is not being used, false if
-        it is. Defaults to true. 
+        it is. Defaults to true.
     */
     void Process(bool polling = true)
     {

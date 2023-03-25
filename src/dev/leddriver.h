@@ -12,20 +12,20 @@ namespace daisy
 {
 /** LED driver for one or multiple PCA9685 12bit PWM chips connected to
  * a single I2C peripheral.
- * It includes gamma correction from 8bit brightness values but it 
+ * It includes gamma correction from 8bit brightness values but it
  * can also be supplied with raw 12bit values.
  * This driver uses two buffers - one for drawing, one for transmitting.
  * Multiple LedDriverPca9685 instances can be used at the same time.
  * \param numDrivers    The number of PCA9685 driver attached to the I2C
  *                      peripheral.
- * \param persistentBufferContents If set to true, the current draw buffer 
- *                      contents will be copied to the next draw buffer 
+ * \param persistentBufferContents If set to true, the current draw buffer
+ *                      contents will be copied to the next draw buffer
  *                      during SwapBuffersAndTransmit(). Use this, if you plan
- *                      to write single leds at a time. 
- *                      If you will alway update all leds before calling 
+ *                      to write single leds at a time.
+ *                      If you will alway update all leds before calling
  *                      SwapBuffersAndTransmit(), you can set this to false
  *                      and safe some cycles.
- * 
+ *
  *  @ingroup device
  */
 template <int numDrivers, bool persistentBufferContents = true>
@@ -50,13 +50,13 @@ class LedDriverPca9685
     /** Buffer type for the entire DMA buffer. */
     using DmaBuffer = PCA9685TransmitBuffer[numDrivers];
 
-    /** Initialises the driver. 
+    /** Initialises the driver.
      * \param i2c           The I2C peripheral to use.
      * \param addresses     An array of addresses for each of the driver chips.
-     * \param dma_buffer_a  The first buffer for the DMA. This must be placed in 
+     * \param dma_buffer_a  The first buffer for the DMA. This must be placed in
      *                      D2 memory by adding the DMA_BUFFER_MEM_SECTION attribute
      *                      like this: `LedDriverPca9685<2>::DmaBuffer DMA_BUFFER_MEM_SECTION bufferA;`
-     * \param dma_buffer_b  The second buffer for the DMA. This must be placed in 
+     * \param dma_buffer_b  The second buffer for the DMA. This must be placed in
      *                      D2 memory by adding the DMA_BUFFER_MEM_SECTION attribute
      *                      like this: `LedDriverPca9685<2>::DmaBuffer DMA_BUFFER_MEM_SECTION bufferB;`
      * \param oe_pin        If the output enable pin is used, supply its configuration here.

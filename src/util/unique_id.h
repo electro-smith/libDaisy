@@ -19,7 +19,7 @@ extern "C"
     @date May 2020
     */
 
-    /** fills the three pointer arguments with the unique ID of the MCU. 
+    /** fills the three pointer arguments with the unique ID of the MCU.
     \param *w0 First pointer
     \param *w1 Second pointer
     \param *w2 Third pointer

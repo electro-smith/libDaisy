@@ -322,14 +322,14 @@ void System::ConfigureClocks()
     RCC_ClkInitTypeDef       RCC_ClkInitStruct   = {0};
     RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
 
-    /** Supply configuration update enable 
+    /** Supply configuration update enable
   */
     HAL_PWREx_ConfigSupply(PWR_LDO_SUPPLY);
 
-    /** Configure the main internal regulator output voltage 
+    /** Configure the main internal regulator output voltage
      ** and set PLLN value, and flash-latency.
      **
-     ** See page 159 of Reference manual for VOS/Freq relationship 
+     ** See page 159 of Reference manual for VOS/Freq relationship
      ** and table for flash latency.
      */
 
@@ -350,10 +350,10 @@ void System::ConfigureClocks()
     }
 
     while(!__HAL_PWR_GET_FLAG(PWR_FLAG_VOSRDY)) {}
-    /** Macro to configure the PLL clock source 
+    /** Macro to configure the PLL clock source
   */
     __HAL_RCC_PLL_PLLSOURCE_CONFIG(RCC_PLLSOURCE_HSE);
-    /** Initializes the CPU, AHB and APB busses clocks 
+    /** Initializes the CPU, AHB and APB busses clocks
   */
     RCC_OscInitStruct.OscillatorType
         = RCC_OSCILLATORTYPE_HSI48 | RCC_OSCILLATORTYPE_HSE;
@@ -374,7 +374,7 @@ void System::ConfigureClocks()
     {
         Error_Handler();
     }
-    /** Initializes the CPU, AHB and APB busses clocks 
+    /** Initializes the CPU, AHB and APB busses clocks
   */
     RCC_ClkInitStruct.ClockType
         = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_PCLK1

@@ -9,8 +9,8 @@
 
 namespace daisy
 {
-/** @addtogroup external 
-    @{ 
+/** @addtogroup external
+    @{
 */
 
 /** I2C Transport for MPR121 */

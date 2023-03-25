@@ -11,1193 +11,1193 @@ void Reset_Handler();
 void Default_Handler();
 //#define DEBUG_DEFAULT_INTERRUPT_HANDLERS
 #ifdef DEBUG_DEFAULT_INTERRUPT_HANDLERS
-void __attribute__ ((weak)) NMI_Handler() 
+void __attribute__ ((weak)) NMI_Handler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void NMI_Handler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) HardFault_Handler() 
+void __attribute__ ((weak)) HardFault_Handler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void HardFault_Handler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) MemManage_Handler() 
+void __attribute__ ((weak)) MemManage_Handler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void MemManage_Handler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) BusFault_Handler() 
+void __attribute__ ((weak)) BusFault_Handler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void BusFault_Handler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) UsageFault_Handler() 
+void __attribute__ ((weak)) UsageFault_Handler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void UsageFault_Handler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SVC_Handler() 
+void __attribute__ ((weak)) SVC_Handler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SVC_Handler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DebugMon_Handler() 
+void __attribute__ ((weak)) DebugMon_Handler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DebugMon_Handler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) PendSV_Handler() 
+void __attribute__ ((weak)) PendSV_Handler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void PendSV_Handler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SysTick_Handler() 
+void __attribute__ ((weak)) SysTick_Handler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SysTick_Handler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) WWDG_IRQHandler() 
+void __attribute__ ((weak)) WWDG_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void WWDG_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) PVD_AVD_IRQHandler() 
+void __attribute__ ((weak)) PVD_AVD_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void PVD_AVD_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TAMP_STAMP_IRQHandler() 
+void __attribute__ ((weak)) TAMP_STAMP_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TAMP_STAMP_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) RTC_WKUP_IRQHandler() 
+void __attribute__ ((weak)) RTC_WKUP_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void RTC_WKUP_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) FLASH_IRQHandler() 
+void __attribute__ ((weak)) FLASH_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void FLASH_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) RCC_IRQHandler() 
+void __attribute__ ((weak)) RCC_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void RCC_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) EXTI0_IRQHandler() 
+void __attribute__ ((weak)) EXTI0_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void EXTI0_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) EXTI1_IRQHandler() 
+void __attribute__ ((weak)) EXTI1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void EXTI1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) EXTI2_IRQHandler() 
+void __attribute__ ((weak)) EXTI2_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void EXTI2_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) EXTI3_IRQHandler() 
+void __attribute__ ((weak)) EXTI3_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void EXTI3_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) EXTI4_IRQHandler() 
+void __attribute__ ((weak)) EXTI4_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void EXTI4_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA1_Stream0_IRQHandler() 
+void __attribute__ ((weak)) DMA1_Stream0_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA1_Stream0_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA1_Stream1_IRQHandler() 
+void __attribute__ ((weak)) DMA1_Stream1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA1_Stream1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA1_Stream2_IRQHandler() 
+void __attribute__ ((weak)) DMA1_Stream2_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA1_Stream2_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA1_Stream3_IRQHandler() 
+void __attribute__ ((weak)) DMA1_Stream3_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA1_Stream3_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA1_Stream4_IRQHandler() 
+void __attribute__ ((weak)) DMA1_Stream4_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA1_Stream4_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA1_Stream5_IRQHandler() 
+void __attribute__ ((weak)) DMA1_Stream5_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA1_Stream5_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA1_Stream6_IRQHandler() 
+void __attribute__ ((weak)) DMA1_Stream6_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA1_Stream6_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) ADC_IRQHandler() 
+void __attribute__ ((weak)) ADC_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void ADC_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) FDCAN1_IT0_IRQHandler() 
+void __attribute__ ((weak)) FDCAN1_IT0_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void FDCAN1_IT0_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) FDCAN2_IT0_IRQHandler() 
+void __attribute__ ((weak)) FDCAN2_IT0_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void FDCAN2_IT0_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) FDCAN1_IT1_IRQHandler() 
+void __attribute__ ((weak)) FDCAN1_IT1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void FDCAN1_IT1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) FDCAN2_IT1_IRQHandler() 
+void __attribute__ ((weak)) FDCAN2_IT1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void FDCAN2_IT1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) EXTI9_5_IRQHandler() 
+void __attribute__ ((weak)) EXTI9_5_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void EXTI9_5_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM1_BRK_IRQHandler() 
+void __attribute__ ((weak)) TIM1_BRK_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM1_BRK_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM1_UP_IRQHandler() 
+void __attribute__ ((weak)) TIM1_UP_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM1_UP_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM1_TRG_COM_IRQHandler() 
+void __attribute__ ((weak)) TIM1_TRG_COM_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM1_TRG_COM_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM1_CC_IRQHandler() 
+void __attribute__ ((weak)) TIM1_CC_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM1_CC_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM2_IRQHandler() 
+void __attribute__ ((weak)) TIM2_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM2_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM3_IRQHandler() 
+void __attribute__ ((weak)) TIM3_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM3_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM4_IRQHandler() 
+void __attribute__ ((weak)) TIM4_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM4_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) I2C1_EV_IRQHandler() 
+void __attribute__ ((weak)) I2C1_EV_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void I2C1_EV_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) I2C1_ER_IRQHandler() 
+void __attribute__ ((weak)) I2C1_ER_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void I2C1_ER_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) I2C2_EV_IRQHandler() 
+void __attribute__ ((weak)) I2C2_EV_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void I2C2_EV_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) I2C2_ER_IRQHandler() 
+void __attribute__ ((weak)) I2C2_ER_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void I2C2_ER_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SPI1_IRQHandler() 
+void __attribute__ ((weak)) SPI1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SPI1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SPI2_IRQHandler() 
+void __attribute__ ((weak)) SPI2_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SPI2_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) USART1_IRQHandler() 
+void __attribute__ ((weak)) USART1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void USART1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) USART2_IRQHandler() 
+void __attribute__ ((weak)) USART2_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void USART2_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) USART3_IRQHandler() 
+void __attribute__ ((weak)) USART3_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void USART3_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) EXTI15_10_IRQHandler() 
+void __attribute__ ((weak)) EXTI15_10_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void EXTI15_10_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) RTC_Alarm_IRQHandler() 
+void __attribute__ ((weak)) RTC_Alarm_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void RTC_Alarm_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM8_BRK_TIM12_IRQHandler() 
+void __attribute__ ((weak)) TIM8_BRK_TIM12_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM8_BRK_TIM12_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM8_UP_TIM13_IRQHandler() 
+void __attribute__ ((weak)) TIM8_UP_TIM13_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM8_UP_TIM13_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM8_TRG_COM_TIM14_IRQHandler() 
+void __attribute__ ((weak)) TIM8_TRG_COM_TIM14_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM8_TRG_COM_TIM14_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM8_CC_IRQHandler() 
+void __attribute__ ((weak)) TIM8_CC_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM8_CC_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA1_Stream7_IRQHandler() 
+void __attribute__ ((weak)) DMA1_Stream7_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA1_Stream7_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) FMC_IRQHandler() 
+void __attribute__ ((weak)) FMC_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void FMC_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SDMMC1_IRQHandler() 
+void __attribute__ ((weak)) SDMMC1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SDMMC1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM5_IRQHandler() 
+void __attribute__ ((weak)) TIM5_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM5_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SPI3_IRQHandler() 
+void __attribute__ ((weak)) SPI3_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SPI3_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) UART4_IRQHandler() 
+void __attribute__ ((weak)) UART4_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void UART4_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) UART5_IRQHandler() 
+void __attribute__ ((weak)) UART5_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void UART5_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM6_DAC_IRQHandler() 
+void __attribute__ ((weak)) TIM6_DAC_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM6_DAC_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM7_IRQHandler() 
+void __attribute__ ((weak)) TIM7_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM7_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA2_Stream0_IRQHandler() 
+void __attribute__ ((weak)) DMA2_Stream0_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA2_Stream0_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA2_Stream1_IRQHandler() 
+void __attribute__ ((weak)) DMA2_Stream1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA2_Stream1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA2_Stream2_IRQHandler() 
+void __attribute__ ((weak)) DMA2_Stream2_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA2_Stream2_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA2_Stream3_IRQHandler() 
+void __attribute__ ((weak)) DMA2_Stream3_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA2_Stream3_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA2_Stream4_IRQHandler() 
+void __attribute__ ((weak)) DMA2_Stream4_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA2_Stream4_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) ETH_IRQHandler() 
+void __attribute__ ((weak)) ETH_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void ETH_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) ETH_WKUP_IRQHandler() 
+void __attribute__ ((weak)) ETH_WKUP_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void ETH_WKUP_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) FDCAN_CAL_IRQHandler() 
+void __attribute__ ((weak)) FDCAN_CAL_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void FDCAN_CAL_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA2_Stream5_IRQHandler() 
+void __attribute__ ((weak)) DMA2_Stream5_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA2_Stream5_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA2_Stream6_IRQHandler() 
+void __attribute__ ((weak)) DMA2_Stream6_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA2_Stream6_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA2_Stream7_IRQHandler() 
+void __attribute__ ((weak)) DMA2_Stream7_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA2_Stream7_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) USART6_IRQHandler() 
+void __attribute__ ((weak)) USART6_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void USART6_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) I2C3_EV_IRQHandler() 
+void __attribute__ ((weak)) I2C3_EV_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void I2C3_EV_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) I2C3_ER_IRQHandler() 
+void __attribute__ ((weak)) I2C3_ER_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void I2C3_ER_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) OTG_HS_EP1_OUT_IRQHandler() 
+void __attribute__ ((weak)) OTG_HS_EP1_OUT_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void OTG_HS_EP1_OUT_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) OTG_HS_EP1_IN_IRQHandler() 
+void __attribute__ ((weak)) OTG_HS_EP1_IN_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void OTG_HS_EP1_IN_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) OTG_HS_WKUP_IRQHandler() 
+void __attribute__ ((weak)) OTG_HS_WKUP_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void OTG_HS_WKUP_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) OTG_HS_IRQHandler() 
+void __attribute__ ((weak)) OTG_HS_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void OTG_HS_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DCMI_IRQHandler() 
+void __attribute__ ((weak)) DCMI_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DCMI_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) CRYP_IRQHandler() 
+void __attribute__ ((weak)) CRYP_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void CRYP_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) HASH_RNG_IRQHandler() 
+void __attribute__ ((weak)) HASH_RNG_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void HASH_RNG_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) FPU_IRQHandler() 
+void __attribute__ ((weak)) FPU_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void FPU_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) UART7_IRQHandler() 
+void __attribute__ ((weak)) UART7_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void UART7_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) UART8_IRQHandler() 
+void __attribute__ ((weak)) UART8_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void UART8_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SPI4_IRQHandler() 
+void __attribute__ ((weak)) SPI4_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SPI4_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SPI5_IRQHandler() 
+void __attribute__ ((weak)) SPI5_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SPI5_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SPI6_IRQHandler() 
+void __attribute__ ((weak)) SPI6_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SPI6_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SAI1_IRQHandler() 
+void __attribute__ ((weak)) SAI1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SAI1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) LTDC_IRQHandler() 
+void __attribute__ ((weak)) LTDC_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void LTDC_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) LTDC_ER_IRQHandler() 
+void __attribute__ ((weak)) LTDC_ER_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void LTDC_ER_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMA2D_IRQHandler() 
+void __attribute__ ((weak)) DMA2D_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMA2D_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SAI2_IRQHandler() 
+void __attribute__ ((weak)) SAI2_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SAI2_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) QUADSPI_IRQHandler() 
+void __attribute__ ((weak)) QUADSPI_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void QUADSPI_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) LPTIM1_IRQHandler() 
+void __attribute__ ((weak)) LPTIM1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void LPTIM1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) CEC_IRQHandler() 
+void __attribute__ ((weak)) CEC_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void CEC_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) I2C4_EV_IRQHandler() 
+void __attribute__ ((weak)) I2C4_EV_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void I2C4_EV_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) I2C4_ER_IRQHandler() 
+void __attribute__ ((weak)) I2C4_ER_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void I2C4_ER_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SPDIF_RX_IRQHandler() 
+void __attribute__ ((weak)) SPDIF_RX_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SPDIF_RX_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) OTG_FS_EP1_OUT_IRQHandler() 
+void __attribute__ ((weak)) OTG_FS_EP1_OUT_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void OTG_FS_EP1_OUT_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) OTG_FS_EP1_IN_IRQHandler() 
+void __attribute__ ((weak)) OTG_FS_EP1_IN_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void OTG_FS_EP1_IN_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) OTG_FS_WKUP_IRQHandler() 
+void __attribute__ ((weak)) OTG_FS_WKUP_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void OTG_FS_WKUP_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) OTG_FS_IRQHandler() 
+void __attribute__ ((weak)) OTG_FS_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void OTG_FS_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMAMUX1_OVR_IRQHandler() 
+void __attribute__ ((weak)) DMAMUX1_OVR_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMAMUX1_OVR_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) HRTIM1_Master_IRQHandler() 
+void __attribute__ ((weak)) HRTIM1_Master_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void HRTIM1_Master_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) HRTIM1_TIMA_IRQHandler() 
+void __attribute__ ((weak)) HRTIM1_TIMA_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void HRTIM1_TIMA_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) HRTIM1_TIMB_IRQHandler() 
+void __attribute__ ((weak)) HRTIM1_TIMB_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void HRTIM1_TIMB_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) HRTIM1_TIMC_IRQHandler() 
+void __attribute__ ((weak)) HRTIM1_TIMC_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void HRTIM1_TIMC_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) HRTIM1_TIMD_IRQHandler() 
+void __attribute__ ((weak)) HRTIM1_TIMD_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void HRTIM1_TIMD_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) HRTIM1_TIME_IRQHandler() 
+void __attribute__ ((weak)) HRTIM1_TIME_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void HRTIM1_TIME_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) HRTIM1_FLT_IRQHandler() 
+void __attribute__ ((weak)) HRTIM1_FLT_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void HRTIM1_FLT_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DFSDM1_FLT0_IRQHandler() 
+void __attribute__ ((weak)) DFSDM1_FLT0_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DFSDM1_FLT0_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DFSDM1_FLT1_IRQHandler() 
+void __attribute__ ((weak)) DFSDM1_FLT1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DFSDM1_FLT1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DFSDM1_FLT2_IRQHandler() 
+void __attribute__ ((weak)) DFSDM1_FLT2_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DFSDM1_FLT2_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DFSDM1_FLT3_IRQHandler() 
+void __attribute__ ((weak)) DFSDM1_FLT3_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DFSDM1_FLT3_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SAI3_IRQHandler() 
+void __attribute__ ((weak)) SAI3_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SAI3_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SWPMI1_IRQHandler() 
+void __attribute__ ((weak)) SWPMI1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SWPMI1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM15_IRQHandler() 
+void __attribute__ ((weak)) TIM15_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM15_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM16_IRQHandler() 
+void __attribute__ ((weak)) TIM16_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM16_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) TIM17_IRQHandler() 
+void __attribute__ ((weak)) TIM17_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void TIM17_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) MDIOS_WKUP_IRQHandler() 
+void __attribute__ ((weak)) MDIOS_WKUP_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void MDIOS_WKUP_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) MDIOS_IRQHandler() 
+void __attribute__ ((weak)) MDIOS_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void MDIOS_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) JPEG_IRQHandler() 
+void __attribute__ ((weak)) JPEG_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void JPEG_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) MDMA_IRQHandler() 
+void __attribute__ ((weak)) MDMA_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void MDMA_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SDMMC2_IRQHandler() 
+void __attribute__ ((weak)) SDMMC2_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SDMMC2_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) HSEM1_IRQHandler() 
+void __attribute__ ((weak)) HSEM1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void HSEM1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) ADC3_IRQHandler() 
+void __attribute__ ((weak)) ADC3_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void ADC3_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) DMAMUX2_OVR_IRQHandler() 
+void __attribute__ ((weak)) DMAMUX2_OVR_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void DMAMUX2_OVR_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) BDMA_Channel0_IRQHandler() 
+void __attribute__ ((weak)) BDMA_Channel0_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void BDMA_Channel0_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) BDMA_Channel1_IRQHandler() 
+void __attribute__ ((weak)) BDMA_Channel1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void BDMA_Channel1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) BDMA_Channel2_IRQHandler() 
+void __attribute__ ((weak)) BDMA_Channel2_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void BDMA_Channel2_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) BDMA_Channel3_IRQHandler() 
+void __attribute__ ((weak)) BDMA_Channel3_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void BDMA_Channel3_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) BDMA_Channel4_IRQHandler() 
+void __attribute__ ((weak)) BDMA_Channel4_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void BDMA_Channel4_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) BDMA_Channel5_IRQHandler() 
+void __attribute__ ((weak)) BDMA_Channel5_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void BDMA_Channel5_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) BDMA_Channel6_IRQHandler() 
+void __attribute__ ((weak)) BDMA_Channel6_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void BDMA_Channel6_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) BDMA_Channel7_IRQHandler() 
+void __attribute__ ((weak)) BDMA_Channel7_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void BDMA_Channel7_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) COMP1_IRQHandler() 
+void __attribute__ ((weak)) COMP1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void COMP1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) LPTIM2_IRQHandler() 
+void __attribute__ ((weak)) LPTIM2_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void LPTIM2_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) LPTIM3_IRQHandler() 
+void __attribute__ ((weak)) LPTIM3_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void LPTIM3_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) LPTIM4_IRQHandler() 
+void __attribute__ ((weak)) LPTIM4_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void LPTIM4_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) LPTIM5_IRQHandler() 
+void __attribute__ ((weak)) LPTIM5_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void LPTIM5_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) LPUART1_IRQHandler() 
+void __attribute__ ((weak)) LPUART1_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void LPUART1_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) CRS_IRQHandler() 
+void __attribute__ ((weak)) CRS_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void CRS_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) ECC_IRQHandler() 
+void __attribute__ ((weak)) ECC_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void ECC_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) SAI4_IRQHandler() 
+void __attribute__ ((weak)) SAI4_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void SAI4_IRQHandler();
 	asm("bkpt 255");
 }
 
-void __attribute__ ((weak)) WAKEUP_PIN_IRQHandler() 
+void __attribute__ ((weak)) WAKEUP_PIN_IRQHandler()
 {
-	//If you hit the breakpoint below, one of the interrupts was unhandled in your code. 
+	//If you hit the breakpoint below, one of the interrupts was unhandled in your code.
 	//Define the following function in your code to handle it:
 	//	extern "C" void WAKEUP_PIN_IRQHandler();
 	asm("bkpt 255");
@@ -1355,7 +1355,7 @@ void SAI4_IRQHandler()                __attribute__ ((weak, alias ("Default_Hand
 void WAKEUP_PIN_IRQHandler()          __attribute__ ((weak, alias ("Default_Handler")));
 #endif
 
-void * g_pfnVectors[0xa6] __attribute__ ((section (".isr_vector"), used)) = 
+void * g_pfnVectors[0xa6] __attribute__ ((section (".isr_vector"), used)) =
 {
 	&_estack,
 	&Reset_Handler,
