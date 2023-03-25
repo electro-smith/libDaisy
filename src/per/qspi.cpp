@@ -49,7 +49,7 @@ class QSPIHandle::Impl
 
     QSPIHandle::Result Erase(uint32_t start_addr, uint32_t end_addr);
 
-    QSPIHandle::Result EraseSector(uint32_t address);
+    QSPIHandle::Result EraseCmd(uint32_t address, uint32_t instruction);
 
     uint32_t GetPin(size_t pin);
 
@@ -330,39 +330,49 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
 QSPIHandle::Result QSPIHandle::Impl::Erase(uint32_t start_addr,
                                            uint32_t end_addr)
 {
-    uint32_t block_addr;
-    uint32_t block_size = IS25LP080D_SECTOR_SIZE; // 4kB blocks for now.
-    // 64kB chunks for now.
-    start_addr = start_addr - (start_addr % block_size);
-    while(end_addr > start_addr)
+    if((end_addr - start_addr) >= IS25LP080D_BLOCK_SIZE)
     {
-        block_addr = start_addr & 0x0FFFFFFF;
-        if(EraseSector(block_addr) != QSPIHandle::Result::OK)
+        uint32_t block_addr;
+        uint32_t block_size = IS25LP080D_BLOCK_SIZE;
+        start_addr          = start_addr - (start_addr % block_size);
+        while(end_addr > start_addr)
         {
-            ERR_RECOVERY(Status::E_HAL_ERROR);
+            block_addr = start_addr & 0x0FFFFFFF;
+            if(EraseCmd(block_addr, BLOCK_ERASE_CMD) != QSPIHandle::Result::OK)
+            {
+                ERR_RECOVERY(Status::E_HAL_ERROR);
+            }
+            start_addr += block_size;
         }
-        start_addr += block_size;
+    }
+    else
+    {
+        uint32_t block_addr;
+        uint32_t block_size = IS25LP080D_SECTOR_SIZE; // 4kB blocks for now.
+        // 64kB chunks for now.
+        start_addr = start_addr - (start_addr % block_size);
+        while(end_addr > start_addr)
+        {
+            block_addr = start_addr & 0x0FFFFFFF;
+            if(EraseCmd(block_addr, SECTOR_ERASE_CMD) != QSPIHandle::Result::OK)
+            {
+                ERR_RECOVERY(Status::E_HAL_ERROR);
+            }
+            start_addr += block_size;
+        }
     }
     return QSPIHandle::Result::OK;
 }
 
 
-QSPIHandle::Result QSPIHandle::Impl::EraseSector(uint32_t address)
+QSPIHandle::Result QSPIHandle::Impl::EraseCmd(uint32_t address,
+                                              uint32_t instruction
+                                              = SECTOR_ERASE_CMD)
 {
-    uint8_t             use_qpi = 0;
     QSPI_CommandTypeDef s_command;
-    if(use_qpi)
-    {
-        s_command.InstructionMode = QSPI_INSTRUCTION_4_LINES;
-        s_command.Instruction     = SECTOR_ERASE_QPI_CMD;
-        s_command.AddressMode     = QSPI_ADDRESS_4_LINES;
-    }
-    else
-    {
-        s_command.InstructionMode = QSPI_INSTRUCTION_1_LINE;
-        s_command.Instruction     = SECTOR_ERASE_CMD;
-        s_command.AddressMode     = QSPI_ADDRESS_1_LINE;
-    }
+    s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
+    s_command.Instruction       = instruction;
+    s_command.AddressMode       = QSPI_ADDRESS_1_LINE;
     s_command.AddressSize       = QSPI_ADDRESS_24_BITS;
     s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
     s_command.DataMode          = QSPI_DATA_NONE;
@@ -898,7 +908,7 @@ QSPIHandle::Result QSPIHandle::Erase(uint32_t start_addr, uint32_t end_addr)
 
 QSPIHandle::Result QSPIHandle::EraseSector(uint32_t address)
 {
-    return pimpl_->EraseSector(address);
+    return pimpl_->EraseCmd(address, SECTOR_ERASE_CMD);
 }
 
 void* QSPIHandle::GetData(uint32_t offset)
