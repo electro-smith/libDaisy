@@ -1,5 +1,11 @@
 # libDaisy Changelog
 
+## Unreleased
+
+### Bug Fixes
+
+* patchsm: Corrected gate out pin assignment confusion added by (#417) as noted by [apbianco](https://forum.electro-smith.com/u/apbianco) and [tele_player](https://forum.electro-smith.com/u/tele_player)
+
 ## v5.3.0
 
 ### Features

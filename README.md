@@ -28,8 +28,8 @@
     <a href="https://opensource.org/licenses/MIT">
       <img src="https://img.shields.io/badge/license-MIT-yellow">
     </a>
-    <a href="https://join.slack.com/t/es-daisy/shared_invite/zt-f9cfm1g4-DgdCok1h1Rj4fpX90~IOww">
-        <img src="https://img.shields.io/badge/join-us%20on%20slack-gray.svg?longCache=true&logo=slack&colorB=purple">
+    <a href="https://discord.gg/ByHBnMtQTR">
+        <img src="https://img.shields.io/badge/join-us%20on%20discord-gray.svg?longCache=true&logo=discord&colorB=purple">
     </a>
     <a href="https://forum.electro-smith.com/">
         <img src="https://img.shields.io/badge/chat-daisy%20forum-orange">
@@ -148,7 +148,7 @@ Here are some ways to get support and connect with other users and developers:
 
 - Make a [GitHub Issue](https://github.com/electro-smith/libdaisy/issues)
 
-- Join the [Daisy Slack Workspace](https://join.slack.com/t/es-daisy/shared_invite/zt-f9cfm1g4-DgdCok1h1Rj4fpX90~IOww)
+- Join the [Daisy Discord Server](https://discord.gg/ByHBnMtQTR)
 
 ## License
 

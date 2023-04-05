@@ -65,7 +65,7 @@ int main(void) {
 }
 ```
 
-If you haven't followed the guides on [setting up your development enviornment](https://github.com/electro-smith/DaisyWiki/wiki/1.-Setting-Up-Your-Development-Environment) and [creating a new project](https://github.com/electro-smith/DaisyWiki/wiki/How-To:-Create-a-New-Project) now would be a perfect time to catch up, and create a new project to work with the GPIO.
+If you haven't followed the guides on [setting up your development environment](https://github.com/electro-smith/DaisyWiki/wiki/1.-Setting-Up-Your-Development-Environment) and [creating a new project](https://github.com/electro-smith/DaisyWiki/wiki/How-To:-Create-a-New-Project) now would be a perfect time to catch up, and create a new project to work with the GPIO.
 
 Compiling this example, you might get a warning, for an "unused variable button_state", but we'll get to using that shortly!
 

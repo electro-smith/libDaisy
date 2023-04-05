@@ -2,6 +2,7 @@
 
 #include "daisy_core.h"
 #include "per/qspi.h"
+#include "sys/dma.h"
 
 namespace daisy
 {
@@ -118,11 +119,24 @@ class PersistentStorage
         SaveStruct s;
         s.storage_state = state_;
         s.user_data     = settings_;
+
+        void *data_ptr = qspi_.GetData(address_offset_);
+
+#if !UNIT_TEST
+        // Caching behavior is different when running programs outside internal flash
+        // so we need to explicitly invalidate the QSPI mapped memory to ensure we are
+        // comparing the local settings with the most recently persisted settings.
+        if(System::GetProgramMemoryRegion()
+           != System::MemoryRegion::INTERNAL_FLASH)
+        {
+            dsy_dma_invalidate_cache_for_buffer((uint8_t *)data_ptr, sizeof(s));
+        }
+#endif
+
         // Only actually save if the new data is different
         // Use the `==operator` in custom SettingStruct to fine tune
         // what may or may not trigger the erase/save.
-        auto storage_data
-            = reinterpret_cast<SaveStruct *>(qspi_.GetData(address_offset_));
+        auto storage_data = reinterpret_cast<SaveStruct *>(data_ptr);
         if(settings_ != storage_data->user_data)
         {
             qspi_.Erase(address_offset_, address_offset_ + sizeof(s));
