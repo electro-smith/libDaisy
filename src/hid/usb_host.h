@@ -115,8 +115,14 @@ class USBHostHandle
      */
     bool GetPresent();
 
+    /** @brief Returns if the HAL detects that the port is enabled */
+    bool IsPortEnabled();
+
+    /** @brief Returns if the ST Middleware detects a connected device */
+    bool IsDeviceConnected();
+
     USBHostHandle() : pimpl_(nullptr) {}
-    USBHostHandle(const USBHostHandle& other) = default;
+    USBHostHandle(const USBHostHandle& other)            = default;
     USBHostHandle& operator=(const USBHostHandle& other) = default;
 
     class Impl; /**< & */
