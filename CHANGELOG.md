@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Features
+
+* board: added official support for new Daisy Seed2 DFM hardware (built in compatibility with DaisySeed class).
+* examples: added a number of minimal examples for the Seed/Seed2DFM
+* gatein: added new Init function that is compatible with newer C++ `Pin` type.
+
 ### Bug Fixes
 
 * patchsm: Corrected gate out pin assignment confusion added by (#417) as noted by [apbianco](https://forum.electro-smith.com/u/apbianco) and [tele_player](https://forum.electro-smith.com/u/tele_player)
