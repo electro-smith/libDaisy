@@ -26,10 +26,11 @@ int main(void)
     hw.Init();
 
     /** Initialize the SDMMC Hardware 
-     *  For this example we'll use the defaults:
-     *  Fast (50MHz), 4-bit, w/out power save settings
+     *  For this example we'll use:
+     *  Medium (25MHz), 4-bit, w/out power save settings
      */
     SdmmcHandler::Config sd_cfg;
+    sd_cfg.speed = SdmmcHandler::Speed::STANDARD;
     sdmmc.Init(sd_cfg);
 
     /** Setup our interface to the FatFS middleware */
