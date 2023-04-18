@@ -2874,6 +2874,22 @@ void arm_rfft_fast_f32(
   q31_t * pDst,
   uint32_t blockSize);
 
+  /**
+  @brief         Elementwise floating-point clipping
+  @param[in]     pSrc          points to input values
+  @param[out]    pDst          points to output clipped values
+  @param[in]     low           lower bound
+  @param[in]     high          higher bound
+  @param[in]     numSamples    number of samples to clip
+  @return        none
+ */
+
+void arm_clip_f32(const float32_t * pSrc, 
+  float32_t * pDst, 
+  float32_t low, 
+  float32_t high, 
+  uint32_t numSamples);
+
 
   /**
    * @brief  Copies the elements of a floating-point vector.
