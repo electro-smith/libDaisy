@@ -34,6 +34,7 @@
 #include "per/sdmmc.h"
 #include "per/spi.h"
 #include "per/spiMultislave.h"
+#include "per/tim_channel.h"
 #include "per/rng.h"
 #include "hid/disp/display.h"
 #include "hid/disp/oled_display.h"

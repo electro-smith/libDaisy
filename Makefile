@@ -58,6 +58,7 @@ per/qspi \
 per/spi \
 per/spiMultislave \
 per/tim \
+per/tim_channel \
 per/uart \
 ui/UI \
 ui/AbstractMenu \
@@ -69,8 +70,8 @@ util/WaveTableLoader \
 ######################################
 # building variables
 ######################################
-DEBUG = 0
-OPT = -O3
+DEBUG = 1
+OPT = -O0
 
 #######################################
 # paths

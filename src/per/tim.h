@@ -123,7 +123,7 @@ class TimerHandle
      ** This will adjust the rate of ticks:
      ** Calculated as APBN_Freq / prescalar per tick
      ** where APBN is APB1 for Most general purpose timers,
-     ** and APB2 for HRTIM,a nd the advanced timers. 
+     ** and APB2 for HRTIM, and the advanced timers. 
      ** This can be changed "on-the-fly" 
      ** */
     Result SetPrescaler(uint32_t val);
