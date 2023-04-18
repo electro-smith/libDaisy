@@ -97,6 +97,13 @@ class DaisySeed
     /** Returns the rate in Hz that the Audio callback is called */
     float AudioCallbackRate() const;
 
+    /** Returns the SAI Handle for the Daisy Seed 
+     *  This can be useful when adding a secondary codec,
+     *  the result of this function can be passed to the audio reinit 
+     *  with an SAI2 configuration
+     */
+    const SaiHandle& AudioSaiHandle() const;
+
     /** Sets the state of the built in LED
      */
     void SetLed(bool state);
@@ -155,6 +162,11 @@ class DaisySeed
          *  This is a pin-compatible version of the Daisy Seed
          *  that uses the WM8731 codec instead of the AK4430 */
         DAISY_SEED_1_1,
+        /** Daisy Seed 2 DFM is a software compatible version of the
+         *  original Daisy Seed that has improvements for manufacturing,
+         *  as well as an improved audio codec (PCM3060)
+         */
+        DAISY_SEED_2_DFM,
     };
 
     /** Returns the BoardVersion detected during intiialization */
@@ -172,6 +184,8 @@ class DaisySeed
     void ConfigureDac();
     //void     ConfigureI2c();
     float callback_rate_;
+
+    SaiHandle sai_1_handle_;
 };
 
 /** seed namespace contains pinout constants for addressing 

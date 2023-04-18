@@ -239,6 +239,11 @@ void DaisySeed::SetTestPoint(bool state)
     dsy_gpio_write(&testpoint, state);
 }
 
+const SaiHandle& DaisySeed::AudioSaiHandle() const
+{
+    return sai_1_handle_;
+}
+
 // Private Implementation
 
 void DaisySeed::ConfigureQspi()
@@ -291,6 +296,19 @@ void DaisySeed::ConfigureAudio()
             codec.Init(codec_cfg, i2c_handle);
         }
         break;
+        case BoardVersion::DAISY_SEED_2_DFM:
+        {
+            // Data Line Directions
+            sai_config.a_dir         = SaiHandle::Config::Direction::TRANSMIT;
+            sai_config.pin_config.sa = {DSY_GPIOE, 6};
+            sai_config.b_dir         = SaiHandle::Config::Direction::RECEIVE;
+            sai_config.pin_config.sb = {DSY_GPIOE, 3};
+            /** PCM3060 disable deemphasis pin */
+            GPIO deemp;
+            deemp.Init(Pin(PORTB, 11), GPIO::Mode::OUTPUT);
+            deemp.Write(0);
+        }
+        break;
         case BoardVersion::DAISY_SEED:
         default:
         {
@@ -307,15 +325,14 @@ void DaisySeed::ConfigureAudio()
     }
 
     // Then Initialize
-    SaiHandle sai_1_handle;
-    sai_1_handle.Init(sai_config);
+    sai_1_handle_.Init(sai_config);
 
     // Audio
     AudioHandle::Config audio_config;
     audio_config.blocksize  = 48;
     audio_config.samplerate = SaiHandle::Config::SampleRate::SAI_48KHZ;
     audio_config.postgain   = 1.f;
-    audio_handle.Init(audio_config, sai_1_handle);
+    audio_handle.Init(audio_config, sai_1_handle_);
 }
 void DaisySeed::ConfigureDac()
 {
@@ -337,13 +354,19 @@ DaisySeed::BoardVersion DaisySeed::CheckBoardVersion()
      *  * PD3 tied to gnd is Daisy Seed v1.1 (aka Daisy Seed rev5)
      *  * PD4 tied to gnd reserved for future hardware
      */
-    dsy_gpio pincheck;
-    pincheck.mode = DSY_GPIO_MODE_INPUT;
-    pincheck.pull = DSY_GPIO_PULLUP;
-    pincheck.pin  = {DSY_GPIOD, 3};
-    dsy_gpio_init(&pincheck);
-    if(!dsy_gpio_read(&pincheck))
+
+    /** Initialize GPIO */
+    GPIO s2dfm_gpio, seed_1_1_gpio;
+    Pin  seed_1_1_pin(PORTD, 3);
+    Pin  s2dfm_pin(PORTD, 4);
+    seed_1_1_gpio.Init(seed_1_1_pin, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
+    s2dfm_gpio.Init(s2dfm_pin, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
+
+    /** Perform Check */
+    if(!seed_1_1_gpio.Read())
         return BoardVersion::DAISY_SEED_1_1;
+    else if(!s2dfm_gpio.Read())
+        return BoardVersion::DAISY_SEED_2_DFM;
     else
         return BoardVersion::DAISY_SEED;
 }
