@@ -1,5 +1,8 @@
 var NAVTREEINDEX15 =
 {
+"structdaisy_1_1_uart_handler_1_1_config.html#ac48641737eaf10a6d0c78172aff2762a":[4,0,2,0,3,0,8],
+"structdaisy_1_1_uart_handler_1_1_config.html#ad8a5646b09e2110234e724afeaade9dc":[4,0,2,0,3,0,2],
+"structdaisy_1_1_uart_handler_1_1_config.html#ad8a5646b09e2110234e724afeaade9dca05b18660004df34c2a19fcfbf21e7aeb":[4,0,2,0,3,0,2,5],
 "structdaisy_1_1_uart_handler_1_1_config.html#ad8a5646b09e2110234e724afeaade9dca27b66bbe32ce6d57ebece7c40d354734":[4,0,2,0,3,0,2,4],
 "structdaisy_1_1_uart_handler_1_1_config.html#ad8a5646b09e2110234e724afeaade9dca44cfad46b564b8fec2b21d42789827a8":[4,0,2,0,3,0,2,2],
 "structdaisy_1_1_uart_handler_1_1_config.html#ad8a5646b09e2110234e724afeaade9dca65abfaa613d04c94c5a5cf14671d2a24":[4,0,2,0,3,0,2,1],

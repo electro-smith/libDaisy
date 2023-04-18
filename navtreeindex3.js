@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"classdaisy_1_1_dps310.html#a711b21ddb3d3c70d4849b1b784930d97":[4,1,4,23],
+"classdaisy_1_1_dps310.html#a8037a8a10e239c5cca75b9e6f380771f":[4,1,4,14],
 "classdaisy_1_1_dps310.html#a8227bd52a9d2ef66dc95f5648dde5204":[4,1,4,26],
 "classdaisy_1_1_dps310.html#a8febd2b5861c6cb052fc3d693a66165b":[4,1,4,16],
 "classdaisy_1_1_dps310.html#a91ee65deaeec2dfaf85fcb9652b2705d":[4,1,4,22],
@@ -182,9 +184,10 @@ var NAVTREEINDEX3 =
 "classdaisy_1_1_g_p_i_o.html#af853f20a7e4f4d4f337c30fe1d6f1827a9fdc84240088be4e2d30979a2cef2b78":[4,0,2,3,1,2],
 "classdaisy_1_1_g_p_i_o.html#af853f20a7e4f4d4f337c30fe1d6f1827aa84cc046d48610b05c21fd3670d0c829":[4,0,2,3,1,0],
 "classdaisy_1_1_gate_in.html":[4,0,1,1,2],
-"classdaisy_1_1_gate_in.html#a08f75c6621307249de3107df96cfab2d":[4,0,1,1,2,3],
+"classdaisy_1_1_gate_in.html#a08f75c6621307249de3107df96cfab2d":[4,0,1,1,2,4],
 "classdaisy_1_1_gate_in.html#a0ee9c8b8015845e9ac290f1de287ce03":[4,0,1,1,2,0],
-"classdaisy_1_1_gate_in.html#a6a9bac9fe44985baa7097bd47a90a40f":[4,0,1,1,2,4],
+"classdaisy_1_1_gate_in.html#a6a9bac9fe44985baa7097bd47a90a40f":[4,0,1,1,2,5],
+"classdaisy_1_1_gate_in.html#a965077b2d1bffa4d103b4d497e64a7b6":[4,0,1,1,2,3],
 "classdaisy_1_1_gate_in.html#af38fd662789d9d746f184703a2998f80":[4,0,1,1,2,1],
 "classdaisy_1_1_gate_in.html#af9c75a81b23b1b268ca2eeeadd004c0c":[4,0,1,1,2,2],
 "classdaisy_1_1_i2_c_handle.html":[16,0,0,40],
@@ -246,8 +249,5 @@ var NAVTREEINDEX3 =
 "classdaisy_1_1_icm20948.html#a8009866648c8e00c1b36a4d70268a2b5":[4,1,7,11],
 "classdaisy_1_1_icm20948.html#a842415a6f1b60caf440240fcaf8ad9f1":[4,1,7,34],
 "classdaisy_1_1_icm20948.html#a86a114e9816e873fb93307d60bbdd173":[4,1,7,14],
-"classdaisy_1_1_icm20948.html#a8950d4b910aada48b53e7d160448d331":[4,1,7,2],
-"classdaisy_1_1_icm20948.html#a8950d4b910aada48b53e7d160448d331a4775f76bfcd5a898915cbdf30a8f2bf1":[4,1,7,2,4],
-"classdaisy_1_1_icm20948.html#a8950d4b910aada48b53e7d160448d331a5259b12f9eae2f505720ef7f2be2c6eb":[4,1,7,2,2],
-"classdaisy_1_1_icm20948.html#a8950d4b910aada48b53e7d160448d331ab835b6195dc4c88df427a9a303834bce":[4,1,7,2,5]
+"classdaisy_1_1_icm20948.html#a8950d4b910aada48b53e7d160448d331":[4,1,7,2]
 };

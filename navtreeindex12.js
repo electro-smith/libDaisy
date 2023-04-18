@@ -1,5 +1,8 @@
 var NAVTREEINDEX12 =
 {
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md15":[6,2],
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md16":[6,3],
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md17":[6,3,0],
 "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md18":[6,3,1],
 "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md19":[6,3,2],
 "md_doc_md__a2__getting__started__serial__printing.html#autotoc_md20":[6,4],
@@ -246,8 +249,5 @@ var NAVTREEINDEX12 =
 "structdaisy_1_1_audio_handle_1_1_config.html#a53848d6e1333445bcc8899039cb58a9a":[4,0,1,0,0,0,2],
 "structdaisy_1_1_audio_handle_1_1_config.html#a744d708032c448f1eec1a78a9a45e7c6":[4,0,1,0,0,0,4],
 "structdaisy_1_1_audio_handle_1_1_config.html#a7e23631311ab3151daa7b4f5a49a897c":[4,0,1,0,0,0,1],
-"structdaisy_1_1_audio_handle_1_1_config.html#ab43119a5a246e3855730972314b416a4":[4,0,1,0,0,0,3],
-"structdaisy_1_1_channel_mode_event.html":[4,0,1,4,0,7],
-"structdaisy_1_1_channel_mode_event.html#a950dda368088b6b2263da8de10984aba":[4,0,1,4,0,7,2],
-"structdaisy_1_1_channel_mode_event.html#ac4448faf5f246b35970e3524a8926fa0":[4,0,1,4,0,7,1]
+"structdaisy_1_1_audio_handle_1_1_config.html#ab43119a5a246e3855730972314b416a4":[4,0,1,0,0,0,3]
 };

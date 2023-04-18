@@ -1,5 +1,8 @@
 var NAVTREEINDEX13 =
 {
+"structdaisy_1_1_channel_mode_event.html":[4,0,1,4,0,7],
+"structdaisy_1_1_channel_mode_event.html#a950dda368088b6b2263da8de10984aba":[4,0,1,4,0,7,2],
+"structdaisy_1_1_channel_mode_event.html#ac4448faf5f246b35970e3524a8926fa0":[4,0,1,4,0,7,1],
 "structdaisy_1_1_channel_mode_event.html#afe4040c2cec193d3d4184ae68709298e":[4,0,1,4,0,7,0],
 "structdaisy_1_1_channel_pressure_event.html":[4,0,1,4,0,5],
 "structdaisy_1_1_channel_pressure_event.html#a505820e0e31ea3302ab17cd50adaa622":[4,0,1,4,0,5,0],
@@ -246,8 +249,5 @@ var NAVTREEINDEX13 =
 "structdaisy_1_1_note_on_event.html#a5ca9bb0235042964923ce1ebdf0c7321":[4,0,1,4,0,1,0],
 "structdaisy_1_1_note_on_event.html#ab457a7574235f856d5e2d16ae51b3a20":[4,0,1,4,0,1,1],
 "structdaisy_1_1_oled_display_1_1_config.html":[4,0,4,8,0],
-"structdaisy_1_1_oled_display_1_1_config.html#aa05c5992eba4992253bd198cdcbc1589":[4,0,4,8,0,0],
-"structdaisy_1_1_omni_mode_off_event.html":[4,0,1,4,0,16],
-"structdaisy_1_1_omni_mode_off_event.html#a4b7980c7513829edc53a42910fa4fc8e":[4,0,1,4,0,16,0],
-"structdaisy_1_1_omni_mode_on_event.html":[4,0,1,4,0,17]
+"structdaisy_1_1_oled_display_1_1_config.html#aa05c5992eba4992253bd198cdcbc1589":[4,0,4,8,0,0]
 };

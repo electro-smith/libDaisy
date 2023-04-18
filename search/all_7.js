@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['gate_0',['Gate',['../classdaisy_1_1_daisy_legio.html#a54315942160892a09d86ffb9bfc79c32',1,'daisy::DaisyLegio::Gate()'],['../classdaisy_1_1_daisy_versio.html#ac23598501407665871cd4819fbdb458a',1,'daisy::DaisyVersio::Gate()']]],
-  ['gate_1',['gate',['../classdaisy_1_1_daisy_legio.html#afa36273607d588bf3ad7ff0b633499ac',1,'daisy::DaisyLegio::gate()'],['../classdaisy_1_1_daisy_versio.html#ab35b4fd55a051a19cd49834b8c215978',1,'daisy::DaisyVersio::gate()']]],
+  ['gate_0',['gate',['../classdaisy_1_1_daisy_legio.html#afa36273607d588bf3ad7ff0b633499ac',1,'daisy::DaisyLegio::gate()'],['../classdaisy_1_1_daisy_versio.html#ab35b4fd55a051a19cd49834b8c215978',1,'daisy::DaisyVersio::gate()']]],
+  ['gate_1',['Gate',['../classdaisy_1_1_daisy_legio.html#a54315942160892a09d86ffb9bfc79c32',1,'daisy::DaisyLegio::Gate()'],['../classdaisy_1_1_daisy_versio.html#ac23598501407665871cd4819fbdb458a',1,'daisy::DaisyVersio::Gate()']]],
   ['gate_5fin_2',['gate_in',['../classdaisy_1_1_daisy_field.html#a4991b0aa3dab1d2b4903439c1a0a696f',1,'daisy::DaisyField']]],
   ['gate_5fin_5f1_3',['GATE_IN_1',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953a138c883ebb829ee5d7752a7685b04747',1,'daisy::DaisyPatch']]],
   ['gate_5fin_5f1_4',['gate_in_1',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a48ab5b7d4172faa5e2437e697c10d15d',1,'daisy::patch_sm::DaisyPatchSM']]],

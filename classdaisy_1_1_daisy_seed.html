@@ -124,6 +124,7 @@ $(document).ready(function(){initNavTree('classdaisy_1_1_daisy_seed.html',''); i
 Public Types</h2></td></tr>
 <tr class="memitem:a59363a85e54eebb334d8663a215e5f12"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12">BoardVersion</a> { <a class="el" href="classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12ac113cc49a549c400b771fceba91db4ea">DAISY_SEED</a>
 , <a class="el" href="classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12a361e807a05cc81f75a417932d23ea9ea">DAISY_SEED_1_1</a>
+, <a class="el" href="classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12a9eaa506a9def7d174cd1e7e197c5a68a">DAISY_SEED_2_DFM</a>
  }</td></tr>
 <tr class="separator:a59363a85e54eebb334d8663a215e5f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -161,6 +162,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a46bed248004f30e6ebc80150ac434199"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4371fdb2a7d75a9b3c85cf177d72a428"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_seed.html#a4371fdb2a7d75a9b3c85cf177d72a428">AudioCallbackRate</a> () const</td></tr>
 <tr class="separator:a4371fdb2a7d75a9b3c85cf177d72a428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a288887961639f9ae02b6e646630e5857"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classdaisy_1_1_sai_handle.html">SaiHandle</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_seed.html#a288887961639f9ae02b6e646630e5857">AudioSaiHandle</a> () const</td></tr>
+<tr class="separator:a288887961639f9ae02b6e646630e5857"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4501329b4a5a5cfb9e3cd6003fcda6f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_seed.html#ac4501329b4a5a5cfb9e3cd6003fcda6f">SetLed</a> (bool state)</td></tr>
 <tr class="separator:ac4501329b4a5a5cfb9e3cd6003fcda6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a213214b79bb612175f2e82241887d42e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_daisy_seed.html#a213214b79bb612175f2e82241887d42e">SetTestPoint</a> (bool state)</td></tr>
@@ -229,6 +232,8 @@ Public Attributes</h2></td></tr>
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a59363a85e54eebb334d8663a215e5f12ac113cc49a549c400b771fceba91db4ea" name="a59363a85e54eebb334d8663a215e5f12ac113cc49a549c400b771fceba91db4ea"></a>DAISY_SEED&#160;</td><td class="fielddoc"><p>Daisy Seed Rev4 This is the original Daisy Seed </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a59363a85e54eebb334d8663a215e5f12a361e807a05cc81f75a417932d23ea9ea" name="a59363a85e54eebb334d8663a215e5f12a361e807a05cc81f75a417932d23ea9ea"></a>DAISY_SEED_1_1&#160;</td><td class="fielddoc"><p>Daisy Seed 1.1 (aka Daisy Seed Rev5) This is a pin-compatible version of the Daisy Seed that uses the WM8731 codec instead of the AK4430 </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a59363a85e54eebb334d8663a215e5f12a9eaa506a9def7d174cd1e7e197c5a68a" name="a59363a85e54eebb334d8663a215e5f12a9eaa506a9def7d174cd1e7e197c5a68a"></a>DAISY_SEED_2_DFM&#160;</td><td class="fielddoc"><p>Daisy Seed 2 DFM is a software compatible version of the original Daisy Seed that has improvements for manufacturing, as well as an improved audio codec (PCM3060) </p>
 </td></tr>
 </table>
 
@@ -319,6 +324,24 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Returns the rate in Hz that the Audio callback is called </p>
+
+</div>
+</div>
+<a id="a288887961639f9ae02b6e646630e5857" name="a288887961639f9ae02b6e646630e5857"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a288887961639f9ae02b6e646630e5857">&#9670;&#160;</a></span>AudioSaiHandle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classdaisy_1_1_sai_handle.html">SaiHandle</a> &amp; daisy::DaisySeed::AudioSaiHandle </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns the SAI Handle for the Daisy Seed This can be useful when adding a secondary codec, the result of this function can be passed to the audio reinit with an SAI2 configuration </p>
 
 </div>
 </div>

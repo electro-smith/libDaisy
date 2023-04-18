@@ -2,12 +2,14 @@ var classdaisy_1_1_daisy_seed =
 [
     [ "BoardVersion", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12", [
       [ "DAISY_SEED", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12ac113cc49a549c400b771fceba91db4ea", null ],
-      [ "DAISY_SEED_1_1", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12a361e807a05cc81f75a417932d23ea9ea", null ]
+      [ "DAISY_SEED_1_1", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12a361e807a05cc81f75a417932d23ea9ea", null ],
+      [ "DAISY_SEED_2_DFM", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12a9eaa506a9def7d174cd1e7e197c5a68a", null ]
     ] ],
     [ "DaisySeed", "classdaisy_1_1_daisy_seed.html#a671bb71c41a15f613506e897ac7470f1", null ],
     [ "~DaisySeed", "classdaisy_1_1_daisy_seed.html#a75954c1d7a9cf7e89bb67a485c516553", null ],
     [ "AudioBlockSize", "classdaisy_1_1_daisy_seed.html#a46bed248004f30e6ebc80150ac434199", null ],
     [ "AudioCallbackRate", "classdaisy_1_1_daisy_seed.html#a4371fdb2a7d75a9b3c85cf177d72a428", null ],
+    [ "AudioSaiHandle", "classdaisy_1_1_daisy_seed.html#a288887961639f9ae02b6e646630e5857", null ],
     [ "AudioSampleRate", "classdaisy_1_1_daisy_seed.html#a4e95aadd1c473237e45c1882a140fc33", null ],
     [ "ChangeAudioCallback", "classdaisy_1_1_daisy_seed.html#ab2ca28523aaff8d1edcb9bee4f3d3c3c", null ],
     [ "ChangeAudioCallback", "classdaisy_1_1_daisy_seed.html#a335cf6197a54b87fb76b85dc44248523", null ],

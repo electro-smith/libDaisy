@@ -157,19 +157,19 @@ var NAVTREEINDEX =
 "_abstract_menu_8h.html",
 "classdaisy_1_1_apds9960.html#a3e2dfaffe42d0bc1482da0d0e0fbad92",
 "classdaisy_1_1_daisy_patch.html#aefa3638dd587fe20c48bbdfba3cd72b3abd85d3626ac80d244f744f96df92b58a",
-"classdaisy_1_1_dps310.html#a8227bd52a9d2ef66dc95f5648dde5204",
-"classdaisy_1_1_icm20948.html#a8950d4b910aada48b53e7d160448d331acb1e75dab685c5cf29a9a5e14da2b8e9",
-"classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798abe3fe67998f7b3f714d2f3ba68ef20bc",
-"classdaisy_1_1_persistent_storage.html#ad573b53a242aae9743eea18b93f6e39d",
-"classdaisy_1_1_switch3.html#a4fd5caa658851e7732d9a9e3cc200556",
-"classdaisy_1_1_wav_writer.html#ab6477ad91d6d9f4804ac9150edd33e1babb1ca97ec761fc37101737ba0aa2e7c5",
-"ffconf_8h.html#abf97f960987a4a2be3b876cc45612b06",
-"group__flash.html#ga0d3427e598b9356bb127f4b90c29e0ad",
-"group__utility.html#ga0486e06b5a59ffb7579cf6cb29037bc8",
-"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md18",
-"structdaisy_1_1_channel_mode_event.html#afe4040c2cec193d3d4184ae68709298e",
-"structdaisy_1_1_omni_mode_on_event.html#ac4e3c2e5d0050beaf6d74f2013739bd5",
-"structdaisy_1_1_uart_handler_1_1_config.html#ad8a5646b09e2110234e724afeaade9dca27b66bbe32ce6d57ebece7c40d354734"
+"classdaisy_1_1_dps310.html#a711b21ddb3d3c70d4849b1b784930d97",
+"classdaisy_1_1_icm20948.html#a8950d4b910aada48b53e7d160448d331a4775f76bfcd5a898915cbdf30a8f2bf1",
+"classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a98d7dbbd774fe8b1d46ed4d96dbd7754",
+"classdaisy_1_1_persistent_storage.html#ad48f55bcb2a8b6959c0f4cf7822b0efaa2e40ad879e955201df4dedbf8d479a12",
+"classdaisy_1_1_switch.html#aef37136dd1b4cd077ef82a0f62bcfa3da6a67d181b4de52438ae5109bd9cfec63",
+"classdaisy_1_1_wav_writer.html#a9c03052fee69006c6f021391ecc93f20",
+"ffconf_8h.html#aaab0313f867bb008b64236239f5c2660",
+"group__flash.html#ga04fd60926b738c3e978ee46725b3b341",
+"group__ui.html#ggac734c565c1dc55cbf6b74ea942f40c1ca7c4f29407893c334a6cb7a87bf045c0d",
+"md_doc_md__a2__getting__started__serial__printing.html#autotoc_md15",
+"structdaisy_1_1_channel_mode_event.html",
+"structdaisy_1_1_omni_mode_off_event.html",
+"structdaisy_1_1_uart_handler_1_1_config.html#ac48641737eaf10a6d0c78172aff2762a"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
