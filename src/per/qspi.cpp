@@ -330,7 +330,8 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
 QSPIHandle::Result QSPIHandle::Impl::Erase(uint32_t start_addr,
                                            uint32_t end_addr)
 {
-    if((end_addr - start_addr) >= IS25LP080D_BLOCK_SIZE)
+    if((end_addr - start_addr) >= IS25LP080D_BLOCK_SIZE
+       && ((end_addr - start_addr) % IS25LP080D_BLOCK_SIZE) == 0)
     {
         uint32_t block_addr;
         uint32_t block_size = IS25LP080D_BLOCK_SIZE;
