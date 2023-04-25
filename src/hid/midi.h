@@ -16,7 +16,8 @@
 
 namespace daisy
 {
-/** @brief   Transport layer for sending and receiving MIDI data over UART 
+
+/** @brief   Transport layer for sending and receiving MIDI data over UART
  *  @details This is the mode of communication used for TRS and DIN MIDI
  *           There is an additional 2kB of RAM data used within this class
  *           for processing bulk data from the UART peripheral
@@ -25,6 +26,9 @@ namespace daisy
 class MidiUartTransport
 {
   public:
+
+    typedef void(*MidiRxParseCallback)(uint8_t *data, size_t size, void *context);
+
     MidiUartTransport() {}
     ~MidiUartTransport() {}
 
@@ -64,76 +68,64 @@ class MidiUartTransport
     }
 
     /** @brief Start the UART peripheral in listening mode. This will fill an internal data structure in the background */
-    inline void StartRx()
+    inline void StartRx(MidiRxParseCallback parse_callback, void *context)
     {
+        parse_context_ = context;
+        parse_callback_ = parse_callback;
         uart_.DmaListenStart(
             rx_buffer, kDataSize, MidiUartTransport::rxCallback, this);
     }
 
-    /** @brief returns the number of bytes ready to parse */
-    inline size_t  Readable() { return fifo_.GetNumElements(); }
-
-    /** @brief returns the oldest byte ready for parsing at the front of the FIFO */
-    inline uint8_t Rx() { return fifo_.PopFront(); }
-
     /** @brief returns whether the UART peripheral is actively listening in the background or not */
-    inline bool    RxActive() { return uart_.IsListening(); }
+    inline bool RxActive() { return uart_.IsListening(); }
 
-    /** @brief Clears the UART FIFO, invalidating all unparsed data. */
-    inline void    FlushRx() { fifo_.Clear(); }
+    /** @brief This is a no-op for UART transport - Rx is via DMA callback with circular buffer */
+    inline void FlushRx() {}
 
     /** @brief sends the buffer of bytes out of the UART peripheral */
     inline void Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
 
-    /** This size determines the maximum Rx bytes readable by the UART in the background 
+    /** This size determines the maximum Rx bytes readable by the UART in the background
      *  These will fill a software FIFO that can be parsed. The FIFO is twice the size of the
      *  Rx buffer.
      */
-    static constexpr size_t      kDataSize = 256;
-    UartHandler                  uart_;
-    uint8_t                      rx_buffer[kDataSize];
-    FIFO<uint8_t, kDataSize * 2> fifo_;
+    private:
+        static constexpr size_t      kDataSize = 256;
+        UartHandler                  uart_;
+        uint8_t                      rx_buffer[kDataSize];
+        void*                        parse_context_;
+        MidiRxParseCallback          parse_callback_;
 
-
-    /** Static callback for Uart MIDI that occurs when
-     *  new data is available from the peripheral.
-     *  The new data is transferred from the peripheral to the
-     *  MIDI instance's byte FIFO that feeds the MIDI parser.
-     * 
-     *  TODO: Handle UartHandler errors better/at all.
-     *  (If there is a UART error, there's not really any recovery
-     *  option at the moment)
-     */
-    static void rxCallback(uint8_t*            data,
-                           size_t              size,
-                           void*               context,
-                           UartHandler::Result res)
-    {
-        /** Read context as transport type */
-        MidiUartTransport* transport
-            = reinterpret_cast<MidiUartTransport*>(context);
-        if(res == UartHandler::Result::OK)
+        /** Static callback for Uart MIDI that occurs when
+         *  new data is available from the peripheral.
+         *  The new data is transferred from the peripheral to the
+         *  MIDI instance's byte FIFO that feeds the MIDI parser.
+         *
+         *  TODO: Handle UartHandler errors better/at all.
+         *  (If there is a UART error, there's not really any recovery
+         *  option at the moment)
+         */
+        static void rxCallback(uint8_t*            data,
+                               size_t              size,
+                               void*               context,
+                               UartHandler::Result res)
         {
-            /** Internally Handle Filling the parser */
-            for(size_t i = 0; i < size; i++)
+            /** Read context as transport type */
+            MidiUartTransport* transport
+                = reinterpret_cast<MidiUartTransport*>(context);
+            if(res == UartHandler::Result::OK)
             {
-                bool overflow;
-                overflow = !transport->fifo_.PushBack(data[i]);
-                if(overflow)
+                if (transport->parse_callback_)
                 {
-                    /** let's do something */
-                    transport->fifo_.Clear();
+                    transport->parse_callback_(data, size, transport->parse_context_);
                 }
             }
         }
-    }
-
-  private:
 };
 
-/** 
-    @brief Simple MIDI Handler \n 
-    Parses bytes from an input into valid MidiEvents. \n 
+/**
+    @brief Simple MIDI Handler \n
+    Parses bytes from an input into valid MidiEvents. \n
     The MidiEvents fill a FIFO queue that the user can pop messages from.
     @author shensley
     @date March 2020
@@ -151,7 +143,7 @@ class MidiHandler
         typename Transport::Config transport_config;
     };
 
-    /** Initializes the MidiHandler 
+    /** Initializes the MidiHandler
      *  \param config Configuration structure used to define specifics to the MIDI Handler.
      */
     void Init(Config config)
@@ -166,19 +158,14 @@ class MidiHandler
     }
 
     /** Starts listening on the selected input mode(s). MidiEvent Queue will begin to fill, and can be checked with HasEvents() */
-    void StartReceive() { transport_.StartRx(); }
+    void StartReceive()
+    {
+        transport_.StartRx(MidiHandler::ParseCallback, this);
+    }
 
     /** Start listening */
     void Listen()
     {
-        uint32_t now;
-        now = System::GetNow();
-        while(transport_.Readable())
-        {
-            last_read_ = now;
-            Parse(transport_.Rx());
-        }
-
         // In case of UART Error, (particularly
         //  overrun error), UART disables itself.
         // Flush the buff, and restart.
@@ -190,7 +177,7 @@ class MidiHandler
         }
     }
 
-    /** Checks if there are unhandled messages in the queue 
+    /** Checks if there are unhandled messages in the queue
     \return True if there are events to be handled, else false.
      */
     //bool HasEvents() const { return event_q_.readable(); }
@@ -256,7 +243,6 @@ class MidiHandler
 
                                 //short circuit to start
                                 pstate_ = ParserEmpty;
-                                // event_q_.Write(incoming_message_);
                                 event_q_.PushBack(incoming_message_);
                             }
                             //system common
@@ -275,7 +261,6 @@ class MidiHandler
                                 else if(incoming_message_.sc_type > SongSelect)
                                 {
                                     pstate_ = ParserEmpty;
-                                    // event_q_.Write(incoming_message_);
                                     event_q_.PushBack(incoming_message_);
                                 }
                             }
@@ -296,7 +281,6 @@ class MidiHandler
                     {
                         //Send the single byte update
                         pstate_ = ParserEmpty;
-                        //event_q_.Write(incoming_message_);
                         event_q_.PushBack(incoming_message_);
                     }
                     else
@@ -317,7 +301,6 @@ class MidiHandler
                     {
                         //these are just one data byte, so we short circuit back to start
                         pstate_ = ParserEmpty;
-                        //event_q_.Write(incoming_message_);
                         event_q_.PushBack(incoming_message_);
                     }
                     else
@@ -355,7 +338,6 @@ class MidiHandler
                     }
 
                     // At this point the message is valid, and we can add this MidiEvent to the queue
-                    //event_q_.Write(incoming_message_);
                     event_q_.PushBack(incoming_message_);
                 }
                 else
@@ -372,7 +354,6 @@ class MidiHandler
                 if(byte == 0xf7)
                 {
                     pstate_ = ParserEmpty;
-                    //event_q_.Write(incoming_message_);
                     event_q_.PushBack(incoming_message_);
                 }
                 else if(incoming_message_.sysex_message_len < SYSEX_BUFFER_LEN)
@@ -395,10 +376,8 @@ class MidiHandler
         ParserHasData0,
         ParserSysEx,
     };
-    UartHandler uart_;
-    ParserState pstate_;
-    MidiEvent   incoming_message_;
-    //RingBuffer<MidiEvent, 256> event_q_;
+    ParserState          pstate_;
+    MidiEvent            incoming_message_;
     FIFO<MidiEvent, 256> event_q_;
     uint32_t             last_read_; // time of last byte
     MidiMessageType      running_status_;
@@ -413,10 +392,19 @@ class MidiHandler
     const uint8_t kChannelMask        = 0x0F;
     const uint8_t kRealTimeMask       = 0xF8;
     const uint8_t kSystemRealTimeMask = 0x07;
+
+    static void ParseCallback(uint8_t *data, size_t size, void *context)
+    {
+        MidiHandler *handler = reinterpret_cast<MidiHandler*>(context);
+        for (size_t i = 0; i < size; i++)
+        {
+            handler->Parse(data[i]);
+        }
+    }
 };
 
 /**
- *  @{ 
+ *  @{
  *  @ingroup midi
  *  @brief shorthand accessors for MIDI Handlers
  * */
