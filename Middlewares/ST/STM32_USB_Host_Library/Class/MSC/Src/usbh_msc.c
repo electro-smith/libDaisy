@@ -677,6 +677,13 @@ static USBH_StatusTypeDef USBH_MSC_RdWrProcess(USBH_HandleTypeDef *phost, uint8_
       break;
 
   }
+
+  if(error == USBH_BUSY)
+  {
+    void USBH_MSC_Yield();
+    USBH_MSC_Yield();
+  }
+
   return error;
 }
 
