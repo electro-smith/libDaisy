@@ -3,7 +3,8 @@
 #include <stdint.h>
 
 #ifndef UNIT_TEST // provide dummy implementation for unit tests
-extern "C" {
+extern "C"
+{
 #include <cmsis_gcc.h>
 }
 
