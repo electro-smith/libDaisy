@@ -4,15 +4,23 @@
   * @author  MCD Application Team
   * @brief   OPAMP HAL module driver. 
   *          This file provides firmware functions to manage the following 
-  *          functionalities of the operational amplifier(s) peripheral: 
-  *           + OPAMP configuration
-  *           + OPAMP calibration
-  *          Thanks to
+  *          functionalities of the operational amplifier(s) peripheral:
   *           + Initialization and de-initialization functions
   *           + IO operation functions
   *           + Peripheral Control functions
   *           + Peripheral State functions
-  *         
+  *
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
   @verbatim
 ================================================================================
           ##### OPAMP Peripheral Features #####
@@ -71,14 +79,14 @@
       (##) Gain of x-1, x-3, x-7 or x-15 for inverting mode with:
       (+++) VINM0 node for input signal and VINP0 for bias.
       (+++) VINM0 node for input signal and VINP0 for bias voltage, VINM1 node for filtering.
-        
+
        (#) The OPAMPs inverting input can be selected according to the Reference Manual 
            "OPAMP functional description" chapter.
-       
+
        (#) The OPAMPs non inverting input can be selected according to the Reference Manual 
            "OPAMP functional description" chapter.
-       
-     
+
+
             ##### How to use this driver #####
 ================================================================================
   [..] 
@@ -100,26 +108,26 @@
 
     *** Running mode ***
     ============================================
-      
+
     [..]  To use the OPAMP, perform the following steps:
-            
+
       (#) Fill in the HAL_OPAMP_MspInit() to
       (++) Enable the OPAMP Peripheral clock using macro __HAL_RCC_OPAMP_CLK_ENABLE()
       (++) Configure the OPAMP input AND output in analog mode using 
            HAL_GPIO_Init() to map the OPAMP output to the GPIO pin.
-  
+
       (#) Registrate Callbacks
       (++) The compilation define  USE_HAL_OPAMP_REGISTER_CALLBACKS when set to 1
            allows the user to configure dynamically the driver callbacks.
 
-      (++) Use Functions @ref HAL_OPAMP_RegisterCallback() to register a user callback,
+      (++) Use Functions HAL_OPAMP_RegisterCallback() to register a user callback,
            it allows to register following callbacks:
       (+++) MspInitCallback         : OPAMP MspInit.  
       (+++) MspDeInitCallback       : OPAMP MspDeInit.
            This function takes as parameters the HAL peripheral handle, the Callback ID
            and a pointer to the user callback function.
 
-      (++) Use function @ref HAL_OPAMP_UnRegisterCallback() to reset a callback to the default
+      (++) Use function HAL_OPAMP_UnRegisterCallback() to reset a callback to the default
            weak (surcharged) function. It allows to reset following callbacks:
       (+++) MspInitCallback         : OPAMP MspInit.  
       (+++) MspDeInitCallback       : OPAMP MspDeInit.
@@ -132,11 +140,11 @@
       (++) Select either factory or user defined trimming mode.
       (++) If the user-defined trimming mode is enabled, select PMOS & NMOS trimming values
           (typically values set by HAL_OPAMP_SelfCalibrate function).
-      
+
       (#) Enable the OPAMP using HAL_OPAMP_Start() function.
-           
+
       (#) Disable the OPAMP using HAL_OPAMP_Stop() function.
-      
+
       (#) Lock the OPAMP in running mode using HAL_OPAMP_Lock() function.
           Caution: On STM32H7, HAL OPAMP lock is software lock only (not 
           hardware lock as on some other STM32 devices)
@@ -151,7 +159,7 @@
 
       (#) Configure the OPAMP using HAL_OPAMP_Init() function:
       (++) As in configure case, select first the parameters you wish to modify.
-      
+
       (#) Change from high speed mode to normal power mode (& vice versa) requires  
           first HAL_OPAMP_DeInit() (force OPAMP OFF) and then HAL_OPAMP_Init(). 
           In other words, of OPAMP is ON, HAL_OPAMP_Init can NOT change power mode
@@ -160,8 +168,8 @@
   @endverbatim
   ******************************************************************************
     Table 1.  OPAMPs inverting/non-inverting inputs for the STM32H7 devices:
-     
-    +------------------------------------------------------------------------|     
+
+    +------------------------------------------------------------------------|
     |                 |         | OPAMP1               | OPAMP2              |
     |-----------------|---------|----------------------|---------------------|
     | Inverting Input | VM_SEL  |   VINM0-> PC5        |    VINM0-> PE8      |
@@ -175,16 +183,16 @@
     |  Non Inverting  | VP_SEL  |                      |                     |
     |                 |         |  VP0 -> PB0 (GPIO)   |  VP0 -> PE9 (GPIO)  |
     |                 |         |  Internal:           |  Internal:          |
-    |    Input        |         |    DAC1_int          |   DAC2_int          |
-    |                 |         |    ADC1_IN8          |    COMP2_INP        |
-    |                 |         |    ADC2_IN8          |                     |
+    |    Input        |         |    DAC1_CH1_int      |   DAC1_CH2_int      |
+    |                 |         |    ADC1_IN8          |   DAC2_CH1_int      |
+    |                 |         |    ADC2_IN8          |   COMP2_INP         |
     |                 |         |    COMP1_INP         |                     |
     +------------------------------------------------------------------------|
-    
-           
+
+
    [..] Table 2.  OPAMPs outputs for the STM32H7 devices:
 
-    +-------------------------------------------------------------------------     
+    +-------------------------------------------------------------------------
     |                 |        | OPAMP1                | OPAMP2              |
     |-----------------|--------|-----------------------|---------------------|
     | Output          |  VOUT  |  PC4                  |  PE7                |
@@ -193,18 +201,6 @@
     |                 |        |   COMP1_INN7 if       |                     |
     |                 |        |  connected internally |                     |
     |-----------------|--------|-----------------------|---------------------|
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
   */
 
 /* Includes ------------------------------------------------------------------*/
@@ -231,10 +227,6 @@
 /* CSR register reset value */ 
 #define OPAMP_CSR_RESET_VALUE             0x00000000U
 
-
-#define OPAMP_CSR_RESET_BITS    (OPAMP_CSR_OPAMPxEN | OPAMP_CSR_OPAHSM  | OPAMP_CSR_VMSEL  \
-                                 | OPAMP_CSR_PGGAIN | OPAMP_CSR_VMSEL | OPAMP_CSR_VPSEL  \
-                                 | OPAMP_CSR_CALON  | OPAMP_CSR_USERTRIM)
 /* CSR Init masks */
 
 #define OPAMP_CSR_INIT_MASK_PGA (OPAMP_CSR_OPAHSM | OPAMP_CSR_VMSEL | OPAMP_CSR_PGGAIN | OPAMP_CSR_PGGAIN  \
@@ -262,7 +254,7 @@
 /** @defgroup OPAMP_Exported_Functions_Group1 Initialization and de-initialization functions 
  *  @brief    Initialization and Configuration functions 
  *
-@verbatim    
+@verbatim
   ==============================================================================
               ##### Initialization and de-initialization functions #####
   ==============================================================================
@@ -453,12 +445,9 @@ HAL_StatusTypeDef HAL_OPAMP_DeInit(OPAMP_HandleTypeDef *hopamp)
     /* Check the parameter */
     assert_param(IS_OPAMP_ALL_INSTANCE(hopamp->Instance));
 
-    /* Set OPAMP_CSR register to reset value */ 
-    /* OPAMP shall be disabled first separately */
-  
-    CLEAR_BIT(hopamp->Instance->CSR, OPAMP_CSR_OPAMPxEN);
-    MODIFY_REG(hopamp->Instance->CSR, OPAMP_CSR_RESET_BITS, OPAMP_CSR_RESET_VALUE);
-    
+    /* Set OPAMP_CSR register to reset value */
+    WRITE_REG(hopamp->Instance->CSR, OPAMP_CSR_RESET_VALUE);
+
     /* DeInit the low level hardware */   
 #if (USE_HAL_OPAMP_REGISTER_CALLBACKS == 1)
     if(hopamp->MspDeInitCallback == NULL)
@@ -536,7 +525,6 @@ __weak void HAL_OPAMP_MspDeInit(OPAMP_HandleTypeDef *hopamp)
   * @param  hopamp OPAMP handle
   * @retval HAL status
   */
-
 HAL_StatusTypeDef HAL_OPAMP_Start(OPAMP_HandleTypeDef *hopamp)
 { 
   HAL_StatusTypeDef status = HAL_OK;
@@ -630,7 +618,6 @@ HAL_StatusTypeDef HAL_OPAMP_Stop(OPAMP_HandleTypeDef *hopamp)
   * @retval Updated offset trimming values (PMOS & NMOS), user trimming is enabled
   * @retval HAL status
   */
-
 HAL_StatusTypeDef HAL_OPAMP_SelfCalibrate(OPAMP_HandleTypeDef *hopamp)
 { 
 
@@ -915,7 +902,6 @@ HAL_StatusTypeDef HAL_OPAMP_Lock(OPAMP_HandleTypeDef *hopamp)
   *         or OPAMP_FACTORYTRIMMING_DUMMY if trimming value is not available
   *
   */
-
 HAL_OPAMP_TrimmingValueTypeDef HAL_OPAMP_GetTrimOffset (OPAMP_HandleTypeDef *hopamp, uint32_t trimmingoffset)
 {
   HAL_OPAMP_TrimmingValueTypeDef trimmingvalue;
@@ -978,14 +964,148 @@ HAL_OPAMP_TrimmingValueTypeDef HAL_OPAMP_GetTrimOffset (OPAMP_HandleTypeDef *hop
   return trimmingvalue;
 }
 
+#if (USE_HAL_OPAMP_REGISTER_CALLBACKS == 1)
+/**
+  * @brief  Register a User OPAMP Callback
+  *         To be used instead of the weak (surcharged) predefined callback 
+  * @param hopamp  OPAMP handle
+  * @param CallbackId  ID of the callback to be registered
+  *        This parameter can be one of the following values:
+  *          @arg @ref HAL_OPAMP_MSPINIT_CB_ID       OPAMP MspInit callback ID 
+  *          @arg @ref HAL_OPAMP_MSPDEINIT_CB_ID     OPAMP MspDeInit callback ID  
+  * @param pCallback  pointer to the Callback function
+  * @retval status
+  */
+HAL_StatusTypeDef HAL_OPAMP_RegisterCallback (OPAMP_HandleTypeDef *hopamp, HAL_OPAMP_CallbackIDTypeDef CallbackId, pOPAMP_CallbackTypeDef pCallback)
+{
+  HAL_StatusTypeDef status = HAL_OK;
+  
+  if(pCallback == NULL)
+  {
+    return HAL_ERROR;
+  }
+
+  /* Process locked */
+  __HAL_LOCK(hopamp);
+  
+  if(hopamp->State == HAL_OPAMP_STATE_READY)
+  {
+    switch (CallbackId)
+    {
+    case HAL_OPAMP_MSPINIT_CB_ID :
+      hopamp->MspInitCallback = pCallback;
+      break;
+    case HAL_OPAMP_MSPDEINIT_CB_ID :
+      hopamp->MspDeInitCallback = pCallback;
+      break;
+    default :
+      /* update return status */
+      status =  HAL_ERROR;
+      break;
+    }
+  }
+  else if (hopamp->State == HAL_OPAMP_STATE_RESET)
+  {
+    switch (CallbackId)
+    {
+    case HAL_OPAMP_MSPINIT_CB_ID :
+      hopamp->MspInitCallback = pCallback;
+      break;
+    case HAL_OPAMP_MSPDEINIT_CB_ID :
+      hopamp->MspDeInitCallback = pCallback;
+      break;
+    default :
+      /* update return status */
+      status =  HAL_ERROR;
+      break;
+    }
+  }
+  else
+  {
+    /* update return status */
+    status =  HAL_ERROR;
+  }
+
+  /* Release Lock */
+  __HAL_UNLOCK(hopamp);
+  return status;
+}
+
+/**
+  * @brief  Unregister a User OPAMP Callback
+  *         OPAMP Callback is redirected to the weak (surcharged) predefined callback 
+  * @param hopamp  OPAMP handle
+  * @param CallbackId  ID of the callback to be unregistered
+  *        This parameter can be one of the following values:
+  *          @arg @ref HAL_OPAMP_MSPINIT_CB_ID    OPAMP MSP Init Callback ID
+  *          @arg @ref HAL_OPAMP_MSPDEINIT_CB_ID  OPAMP MSP DeInit Callback ID
+  *          @arg @ref HAL_OPAMP_ALL_CB_ID        OPAMP All Callbacks
+  * @retval status
+  */
+HAL_StatusTypeDef HAL_OPAMP_UnRegisterCallback (OPAMP_HandleTypeDef *hopamp, HAL_OPAMP_CallbackIDTypeDef CallbackId)
+{
+  HAL_StatusTypeDef status = HAL_OK;
+
+  /* Process locked */
+  __HAL_LOCK(hopamp);
+  
+  if(hopamp->State == HAL_OPAMP_STATE_READY)
+  {
+    switch (CallbackId)
+    {     
+    case HAL_OPAMP_MSPINIT_CB_ID :
+      hopamp->MspInitCallback = HAL_OPAMP_MspInit;
+      break;
+    case HAL_OPAMP_MSPDEINIT_CB_ID :
+      hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
+      break;
+    case HAL_OPAMP_ALL_CB_ID :
+      hopamp->MspInitCallback = HAL_OPAMP_MspInit;
+      hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
+      break;
+    default :
+      /* update return status */
+      status =  HAL_ERROR;
+      break;
+    }
+  }
+  else if (hopamp->State == HAL_OPAMP_STATE_RESET)
+  {
+    switch (CallbackId)
+    {
+    case HAL_OPAMP_MSPINIT_CB_ID :
+      hopamp->MspInitCallback = HAL_OPAMP_MspInit;
+      break;
+    case HAL_OPAMP_MSPDEINIT_CB_ID :
+      hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
+      break;
+    default :
+      /* update return status */
+      status =  HAL_ERROR;
+      break;
+    }
+  }
+  else
+  {
+    /* update return status */
+    status =  HAL_ERROR;
+  }
+
+  /* Release Lock */
+  __HAL_UNLOCK(hopamp);
+  return status;
+}
+
+#endif /* USE_HAL_OPAMP_REGISTER_CALLBACKS */
+
 /**
   * @}
   */
 
 
 /** @defgroup OPAMP_Exported_Functions_Group4 Peripheral State functions 
- *  @brief   Peripheral State functions 
- *
+  *  @brief   Peripheral State functions 
+  *
 @verbatim   
  ===============================================================================
                       ##### Peripheral State functions #####
@@ -1013,7 +1133,7 @@ HAL_OPAMP_StateTypeDef HAL_OPAMP_GetState(OPAMP_HandleTypeDef *hopamp)
   /* Check the parameter */
   assert_param(IS_OPAMP_ALL_INSTANCE(hopamp->Instance));
 
- /* Return OPAMP handle state */
+  /* Return OPAMP handle state */
   return hopamp->State;
 }
 
@@ -1021,147 +1141,9 @@ HAL_OPAMP_StateTypeDef HAL_OPAMP_GetState(OPAMP_HandleTypeDef *hopamp)
   * @}
   */
 
-#if (USE_HAL_OPAMP_REGISTER_CALLBACKS == 1)
-/**
-  * @brief  Register a User OPAMP Callback
-  *         To be used instead of the weak (surcharged) predefined callback 
-  * @param hopamp  OPAMP handle
-  * @param CallbackId  ID of the callback to be registered
-  *        This parameter can be one of the following values:
-  *          @arg @ref HAL_OPAMP_MSP_INIT_CB_ID       OPAMP MspInit callback ID 
-  *          @arg @ref HAL_OPAMP_MSP_DEINIT_CB_ID     OPAMP MspDeInit callback ID  
-  * @param pCallback  pointer to the Callback function
-  * @retval status
-  */
-HAL_StatusTypeDef HAL_OPAMP_RegisterCallback (OPAMP_HandleTypeDef *hopamp, HAL_OPAMP_CallbackIDTypeDef CallbackId, pOPAMP_CallbackTypeDef pCallback)
-{
-  HAL_StatusTypeDef status = HAL_OK;
-  
-  if(pCallback == NULL)
-  {
-    return HAL_ERROR;
-  }
-
-  /* Process locked */
-  __HAL_LOCK(hopamp);
-  
-  if(hopamp->State == HAL_OPAMP_STATE_READY)
-  {
-    switch (CallbackId)
-    {
-    case HAL_OPAMP_MSP_INIT_CB_ID :
-      hopamp->MspInitCallback = pCallback;
-      break;
-    case HAL_OPAMP_MSP_DEINIT_CB_ID :
-      hopamp->MspDeInitCallback = pCallback;
-      break;
-    default :
-      /* update return status */
-      status =  HAL_ERROR;
-      break;
-    }
-  }
-  else if (hopamp->State == HAL_OPAMP_STATE_RESET)
-  {
-    switch (CallbackId)
-    {
-    case HAL_OPAMP_MSP_INIT_CB_ID :
-      hopamp->MspInitCallback = pCallback;
-      break;
-    case HAL_OPAMP_MSP_DEINIT_CB_ID :
-      hopamp->MspDeInitCallback = pCallback;
-      break;
-    default :
-      /* update return status */
-      status =  HAL_ERROR;
-      break;
-    }
-  }
-  else
-  {
-    /* update return status */
-    status =  HAL_ERROR;
-  }
-
-  /* Release Lock */
-  __HAL_UNLOCK(hopamp);
-  return status;
-}
-
-/**
-  * @brief  Unregister a User OPAMP Callback
-  *         OPAMP Callback is redirected to the weak (surcharged) predefined callback 
-  * @param hopamp  OPAMP handle
-  * @param CallbackId  ID of the callback to be unregistered
-  *        This parameter can be one of the following values:
-  *          @arg @ref HAL_OPAMP_MSP_INIT_CB_ID              OPAMP MSP Init Callback ID
-  *          @arg @ref HAL_OPAMP_MSP_DEINIT_CB_ID            OPAMP MSP DeInit Callback ID
-  *          @arg @ref HAL_OPAMP_ALL_CB_ID                   OPAMP All Callbacks
-  * @retval status
-  */
-
-HAL_StatusTypeDef HAL_OPAMP_UnRegisterCallback (OPAMP_HandleTypeDef *hopamp, HAL_OPAMP_CallbackIDTypeDef CallbackId)
-{
-  HAL_StatusTypeDef status = HAL_OK;
-
-  /* Process locked */
-  __HAL_LOCK(hopamp);
-  
-  if(hopamp->State == HAL_OPAMP_STATE_READY)
-  {
-    switch (CallbackId)
-    {     
-      case HAL_OPAMP_MSP_INIT_CB_ID :
-      hopamp->MspInitCallback = HAL_OPAMP_MspInit;
-      break;
-    case HAL_OPAMP_MSP_DEINIT_CB_ID :
-      hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
-      break;
-    case HAL_OPAMP_ALL_CB_ID :
-      hopamp->MspInitCallback = HAL_OPAMP_MspInit;
-      hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
-      break;
-    default :
-      /* update return status */
-      status =  HAL_ERROR;
-      break;
-    }
-  }
-  else if (hopamp->State == HAL_OPAMP_STATE_RESET)
-  {
-    switch (CallbackId)
-    {
-    case HAL_OPAMP_MSP_INIT_CB_ID :
-      hopamp->MspInitCallback = HAL_OPAMP_MspInit;
-      break;
-    case HAL_OPAMP_MSP_DEINIT_CB_ID :
-      hopamp->MspDeInitCallback = HAL_OPAMP_MspDeInit;
-      break;
-    default :
-      /* update return status */
-      status =  HAL_ERROR;
-      break;
-    }
-  }
-  else
-  {
-    /* update return status */
-    status =  HAL_ERROR;
-  }
-
-  /* Release Lock */
-  __HAL_UNLOCK(hopamp);
-  return status;
-}
-
-#endif /* USE_HAL_OPAMP_REGISTER_CALLBACKS */
-  /**
-  * @}
-  */ 
-  
 /**
   * @}
-  */  
+  */
 #endif /* HAL_OPAMP_MODULE_ENABLED */
 /**
   * @}
@@ -1171,4 +1153,3 @@ HAL_StatusTypeDef HAL_OPAMP_UnRegisterCallback (OPAMP_HandleTypeDef *hopamp, HAL
   * @}
   */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
