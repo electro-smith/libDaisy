@@ -132,7 +132,7 @@ C_INCLUDES += \
 -I$(LIBDAISY_DIR)/src/sys \
 -I$(LIBDAISY_DIR)/src/usbd \
 -I$(LIBDAISY_DIR)/src/usbh \
--I$(LIBDAISY_DIR)/Drivers/CMSIS/Include/ \
+-I$(LIBDAISY_DIR)/Drivers/CMSIS/Core/Include/ \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/DSP/Include \
 -I$(LIBDAISY_DIR)/Drivers/CMSIS/Device/ST/STM32H7xx/Include \
 -I$(LIBDAISY_DIR)/Drivers/STM32H7xx_HAL_Driver/Inc/ \
