@@ -26,7 +26,7 @@ class GPIO
     {
         INPUT,     /**< Input for reading state of pin */
         OUTPUT,    /**< Output w/ push-pull configuration */
-        OUTPUT_OD, /**< Output w/ open-drain configuration */
+        OPEN_DRAIN,/**< Output w/ open-drain configuration */
         ANALOG,    /**< Analog for connection to ADC or DAC peripheral */
     };
 
