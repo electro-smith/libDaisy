@@ -30,7 +30,7 @@ class Led
     \param invert will set whether to internally invert the brightness due to hardware config.
         \param samplerate sets the rate at which 'Update()' will be called (used for software PWM)
     */
-    void Init(dsy_gpio_pin pin, bool invert, float samplerate = 1000.0f);
+    void Init(Pin pin, bool invert, float samplerate = 1000.0f);
 
     /** 
     Sets the brightness of the Led.
@@ -56,7 +56,7 @@ class Led
     float    pwm_;
     float    samplerate_;
     bool     invert_, on_, off_;
-    dsy_gpio hw_pin_;
+    GPIO     hw_pin_;
 };
 
 } // namespace daisy

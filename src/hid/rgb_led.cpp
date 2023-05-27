@@ -1,8 +1,8 @@
 #include "hid/rgb_led.h"
 using namespace daisy;
-void RgbLed::Init(dsy_gpio_pin red,
-                  dsy_gpio_pin green,
-                  dsy_gpio_pin blue,
+void RgbLed::Init(Pin red,
+                  Pin green,
+                  Pin blue,
                   bool         invert)
 {
     r_.Init(red, invert);
