@@ -2,26 +2,26 @@
 
 using namespace daisy;
 
-#define PIN_SW_ENC 1
-#define PIN_TRIG_GATE 18
-#define PIN_TOGGLE3_RIGHT_A 30
-#define PIN_TOGGLE3_RIGHT_B 29
-#define PIN_TOGGLE3_LEFT_A 17
-#define PIN_TOGGLE3_LEFT_B 15
-#define PIN_ENC_A 2
-#define PIN_ENC_B 3
+constexpr Pin PIN_SW_ENC          = seed::D1;
+constexpr Pin PIN_TRIG_GATE       = seed::D18;
+constexpr Pin PIN_TOGGLE3_RIGHT_A = seed::D30;
+constexpr Pin PIN_TOGGLE3_RIGHT_B = seed::D29;
+constexpr Pin PIN_TOGGLE3_LEFT_A  = seed::D17;
+constexpr Pin PIN_TOGGLE3_LEFT_B  = seed::D15;
+constexpr Pin PIN_ENC_A           = seed::D2;
+constexpr Pin PIN_ENC_B           = seed::D3;
 
-#define PIN_LED_LEFT_R 28
-#define PIN_LED_LEFT_G 6
-#define PIN_LED_LEFT_B 5
-#define PIN_LED_RIGHT_R 26
-#define PIN_LED_RIGHT_G 25
-#define PIN_LED_RIGHT_B 24
+constexpr Pin PIN_LED_LEFT_R  = seed::D28;
+constexpr Pin PIN_LED_LEFT_G  = seed::D6;
+constexpr Pin PIN_LED_LEFT_B  = seed::D5;
+constexpr Pin PIN_LED_RIGHT_R = seed::D26;
+constexpr Pin PIN_LED_RIGHT_G = seed::D25;
+constexpr Pin PIN_LED_RIGHT_B = seed::D24;
 
-#define PIN_ADC_PITCH0 22
-#define PIN_ADC_PITCH1 23
-#define PIN_ADC_CV0 19
-#define PIN_ADC_CV1 21
+constexpr Pin PIN_ADC_PITCH0 = seed::D22;
+constexpr Pin PIN_ADC_PITCH1 = seed::D23;
+constexpr Pin PIN_ADC_CV0    = seed::D19;
+constexpr Pin PIN_ADC_CV1    = seed::D21;
 
 void DaisyLegio::Init(bool boost)
 {
@@ -31,33 +31,30 @@ void DaisyLegio::Init(bool boost)
     seed.SetAudioBlockSize(48);
     float blockrate_ = seed.AudioSampleRate() / (float)seed.AudioBlockSize();
 
-    uint8_t toggle_pina[] = {PIN_TOGGLE3_LEFT_A, PIN_TOGGLE3_RIGHT_A};
-    uint8_t toggle_pinb[] = {PIN_TOGGLE3_LEFT_B, PIN_TOGGLE3_RIGHT_B};
-    uint8_t ledr_pin[]    = {PIN_LED_LEFT_R, PIN_LED_RIGHT_R};
-    uint8_t ledg_pin[]    = {PIN_LED_LEFT_G, PIN_LED_RIGHT_G};
-    uint8_t ledb_pin[]    = {PIN_LED_LEFT_B, PIN_LED_RIGHT_B};
-    uint8_t adc_pin[]     = {PIN_ADC_PITCH0, PIN_ADC_CV0, PIN_ADC_CV1};
+    Pin toggle_pina[] = {PIN_TOGGLE3_LEFT_A, PIN_TOGGLE3_RIGHT_A};
+    Pin toggle_pinb[] = {PIN_TOGGLE3_LEFT_B, PIN_TOGGLE3_RIGHT_B};
+    Pin ledr_pin[]    = {PIN_LED_LEFT_R, PIN_LED_RIGHT_R};
+    Pin ledg_pin[]    = {PIN_LED_LEFT_G, PIN_LED_RIGHT_G};
+    Pin ledb_pin[]    = {PIN_LED_LEFT_B, PIN_LED_RIGHT_B};
+    Pin adc_pin[]     = {PIN_ADC_PITCH0, PIN_ADC_CV0, PIN_ADC_CV1};
 
     // push-button encoder
-    encoder.Init(seed.GetPin(PIN_ENC_A),
-                 seed.GetPin(PIN_ENC_B),
-                 seed.GetPin(PIN_SW_ENC));
+    encoder.Init(PIN_ENC_A, PIN_ENC_B, PIN_SW_ENC);
 
     // gate CV gate
-    dsy_gpio_pin gate_gpio = seed.GetPin(PIN_TRIG_GATE);
-    gate.Init(&gate_gpio, false);
+    gate.Init(PIN_TRIG_GATE, false);
 
     // 3-position switches
     for(size_t i = 0; i < SW_LAST; i++)
     {
-        sw[i].Init(seed.GetPin(toggle_pina[i]), seed.GetPin(toggle_pinb[i]));
+        sw[i].Init(toggle_pina[i], toggle_pinb[i]);
     }
 
     // ADC
     AdcChannelConfig adc_cfg[CONTROL_LAST];
     for(size_t i = 0; i < CONTROL_LAST; i++)
     {
-        adc_cfg[i].InitSingle(seed.GetPin(adc_pin[i]));
+        adc_cfg[i].InitSingle(adc_pin[i]);
     }
     seed.adc.Init(adc_cfg, CONTROL_LAST);
 
@@ -69,10 +66,7 @@ void DaisyLegio::Init(bool boost)
     // RGB LEDs
     for(size_t i = 0; i < LED_LAST; i++)
     {
-        dsy_gpio_pin r = seed.GetPin(ledr_pin[i]);
-        dsy_gpio_pin g = seed.GetPin(ledg_pin[i]);
-        dsy_gpio_pin b = seed.GetPin(ledb_pin[i]);
-        leds[i].Init(r, g, b, true);
+        leds[i].Init(ledr_pin[i], ledg_pin[i], ledb_pin[i], true);
     }
 }
 
