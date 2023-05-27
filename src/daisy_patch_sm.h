@@ -141,6 +141,7 @@ namespace patch_sm
          * 
          *  \param bank should be one of the PinBank options above
          *  \param idx pin number between 1 and 10 for each of the pins on each header.
+         *  \deprecated please use the Pin definitions in daisy::patch_sm instead
          */
         dsy_gpio_pin GetPin(const PinBank bank, const int idx);
 
@@ -255,17 +256,6 @@ namespace patch_sm
         GateIn        gate_in_1, gate_in_2;
         dsy_gpio      gate_out_1, gate_out_2;
 
-        /** Pin Accessors for the DaisyPatchSM hardware
-         *  Used for initializing various GPIO, etc.
-         */
-        static const dsy_gpio_pin A1, A2, A3, A4, A5;
-        static const dsy_gpio_pin A6, A7, A8, A9, A10;
-        static const dsy_gpio_pin B1, B2, B3, B4, B5;
-        static const dsy_gpio_pin B6, B7, B8, B9, B10;
-        static const dsy_gpio_pin C1, C2, C3, C4, C5;
-        static const dsy_gpio_pin C6, C7, C8, C9, C10;
-        static const dsy_gpio_pin D1, D2, D3, D4, D5;
-        static const dsy_gpio_pin D6, D7, D8, D9, D10;
         class Impl;
 
       private:
@@ -277,6 +267,52 @@ namespace patch_sm
         Impl* pimpl_;
     };
 
+    /** Pin Accessors for the DaisyPatchSM hardware
+     *  Used for initializing various GPIO, etc. 
+     */
+    constexpr Pin A1  = Pin(PORTX, 0);  /**< A1  - -12V Power Input */
+    constexpr Pin A2  = Pin(PORTA, 1);  /**< A2  - UART1 Rx */
+    constexpr Pin A3  = Pin(PORTA, 0);  /**< A3  - UART1 Tx */
+    constexpr Pin A4  = Pin(PORTX, 0);  /**< A4  - GND */
+    constexpr Pin A5  = Pin(PORTX, 0);  /**< A5  - +12V Power Input */
+    constexpr Pin A6  = Pin(PORTX, 0);  /**< A6  - +5V Power Output */
+    constexpr Pin A7  = Pin(PORTX, 0);  /**< A7  - GND */
+    constexpr Pin A8  = Pin(PORTB, 14); /**< A8  - USB DM */
+    constexpr Pin A9  = Pin(PORTB, 15); /**< A9  - USB DP */
+    constexpr Pin A10 = Pin(PORTX, 0);  /**< A10 - +3V3 Power Output */
+
+    constexpr Pin B1  = Pin(PORTX, 0);  /**< B1  - Audio Out Right */
+    constexpr Pin B2  = Pin(PORTX, 0);  /**< B2  - Audio Out Left*/
+    constexpr Pin B3  = Pin(PORTX, 0);  /**< B3  - Audio In Right */
+    constexpr Pin B4  = Pin(PORTX, 0);  /**< B4  - Audio In Left */
+    constexpr Pin B5  = Pin(PORTC, 14); /**< B5  - GATE OUT 1 */
+    constexpr Pin B6  = Pin(PORTC, 13); /**< B6  - GATE OUT 2 */
+    constexpr Pin B7  = Pin(PORTB, 8);  /**< B7  - I2C1 SCL */
+    constexpr Pin B8  = Pin(PORTB, 9);  /**< B8  - I2C1 SDA */
+    constexpr Pin B9  = Pin(PORTG, 14); /**< B9  - GATE IN 2 */
+    constexpr Pin B10 = Pin(PORTG, 13); /**< B10 - GATE IN 1 */
+
+    constexpr Pin C1  = Pin(PORTA, 5);  /**< C1  - CV Out 2 */
+    constexpr Pin C2  = Pin(PORTA, 7);  /**< C2  - CV In 4 */
+    constexpr Pin C3  = Pin(PORTA, 2);  /**< C3  - CV In 3 */
+    constexpr Pin C4  = Pin(PORTA, 6);  /**< C4  - CV In 2 */
+    constexpr Pin C5  = Pin(PORTA, 3);  /**< C5  - CV In 1 */
+    constexpr Pin C6  = Pin(PORTB, 1);  /**< C6  - CV In 5 */
+    constexpr Pin C7  = Pin(PORTC, 4);  /**< C7  - CV In 6 */
+    constexpr Pin C8  = Pin(PORTC, 0);  /**< C8  - CV In 7 */
+    constexpr Pin C9  = Pin(PORTC, 1);  /**< C9  - CV In 8 */
+    constexpr Pin C10 = Pin(PORTA, 4);  /**< C10 - CV Out 1 */
+
+    constexpr Pin D1  = Pin(PORTB, 4);  /**< D1  - SPI2 CS */
+    constexpr Pin D2  = Pin(PORTC, 11); /**< D2  - SDMMC D3 */
+    constexpr Pin D3  = Pin(PORTC, 10); /**< D3  - SDMMC D2*/
+    constexpr Pin D4  = Pin(PORTC, 9);  /**< D4  - SDMMC D1*/
+    constexpr Pin D5  = Pin(PORTC, 8);  /**< D5  - SDMMC D0 */
+    constexpr Pin D6  = Pin(PORTC, 12); /**< D6  - SDMMC CK */
+    constexpr Pin D7  = Pin(PORTD, 2);  /**< D7  - SDMMC CMD */
+    constexpr Pin D8  = Pin(PORTC, 2);  /**< D8  - SPI2 MISO */
+    constexpr Pin D9  = Pin(PORTC, 3);  /**< D9  - SPI2 MOSI */
+    constexpr Pin D10 = Pin(PORTD, 3);  /**< D10 - SPI2 SCK  */
 } // namespace patch_sm
 
 } // namespace daisy
