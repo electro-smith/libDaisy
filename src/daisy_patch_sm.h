@@ -251,10 +251,10 @@ namespace patch_sm
         DacHandle   dac;
 
         /** Dedicated Function Pins */
-        dsy_gpio      user_led;
+        GPIO          user_led;
         AnalogControl controls[ADC_LAST];
         GateIn        gate_in_1, gate_in_2;
-        dsy_gpio      gate_out_1, gate_out_2;
+        GPIO          gate_out_1, gate_out_2;
 
 
         /** Pin Accessors for the DaisyPatchSM hardware

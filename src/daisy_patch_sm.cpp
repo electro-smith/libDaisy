@@ -321,23 +321,13 @@ namespace patch_sm
         }
 
         /** Fixed-function Digital I/O */
-        user_led.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        user_led.pull = DSY_GPIO_NOPULL;
-        user_led.pin  = PIN_USER_LED;
-        dsy_gpio_init(&user_led);
+        user_led.Init(PIN_USER_LED, GPIO::Mode::OUTPUT);
         //gate_in_1.Init((dsy_gpio_pin *)&DaisyPatchSM::B10);
         gate_in_1.Init(B10);
         gate_in_2.Init(B9);
 
-        gate_out_1.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        gate_out_1.pull = DSY_GPIO_NOPULL;
-        gate_out_1.pin  = B5;
-        dsy_gpio_init(&gate_out_1);
-
-        gate_out_2.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        gate_out_2.pull = DSY_GPIO_NOPULL;
-        gate_out_2.pin  = B6;
-        dsy_gpio_init(&gate_out_2);
+        gate_out_1.Init(B5, GPIO::Mode::OUTPUT);
+        gate_out_2.Init(B6, GPIO::Mode::OUTPUT);
 
         /** DAC init */
         pimpl_->InitDac();
@@ -464,7 +454,7 @@ namespace patch_sm
         pimpl_->WriteCvOut(channel, voltage);
     }
 
-    void DaisyPatchSM::SetLed(bool state) { dsy_gpio_write(&user_led, state); }
+    void DaisyPatchSM::SetLed(bool state) { user_led.Write(state); }
 
     bool DaisyPatchSM::ValidateSDRAM()
     {
