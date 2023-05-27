@@ -286,10 +286,7 @@ void DaisyPatch::InitEncoder()
 void DaisyPatch::InitGates()
 {
     // Gate Output
-    gate_output.pin  = PIN_GATE_OUT;
-    gate_output.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    gate_output.pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&gate_output);
+    gate_output.Init(PIN_GATE_OUT, GPIO::Mode::OUTPUT);
 
     // Gate Inputs
     gate_input[GATE_IN_1].Init(PIN_GATE_IN_1);
