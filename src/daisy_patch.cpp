@@ -1,5 +1,4 @@
 #include "daisy_patch.h"
-#include "dev/codec_ak4556.h"
 
 using namespace daisy;
 
@@ -216,8 +215,7 @@ void DaisyPatch::InitAudio()
 
     // Reset Pin for AK4556
     // Built-in AK4556 was reset during Seed Init
-    dsy_gpio_pin codec_reset_pin = PIN_AK4556_RESET;
-    Ak4556::Init(codec_reset_pin);
+    codec.Init(PIN_AK4556_RESET);
 
     // Reinit Audio for _both_ codecs...
     AudioHandle::Config cfg;

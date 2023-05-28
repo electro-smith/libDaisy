@@ -147,6 +147,7 @@ class DaisySeed
     UsbHandle          usb_handle; /**< & */
     GPIO               led, testpoint;
     System             system;
+    Ak4556             codec;
 
     /** Internal indices for DaisySeed-equivalent devices 
      *  This shouldn't have any effect on user-facing code,

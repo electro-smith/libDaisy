@@ -1,10 +1,5 @@
 #include "daisy_seed.h"
 
-extern "C"
-{
-#include "dev/codec_ak4556.h"
-}
-
 using namespace daisy;
 
 constexpr GPIOPort SEED_LED_PORT = PORTC;
@@ -320,7 +315,7 @@ void DaisySeed::ConfigureAudio()
             sai_config.pin_config.sb = Pin(PORTE, 3);
 
             constexpr Pin codec_reset_pin = Pin(PORTB, 11);
-            Ak4556::Init(codec_reset_pin);
+            codec.Init(codec_reset_pin);
         }
         break;
     }

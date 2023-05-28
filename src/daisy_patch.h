@@ -115,6 +115,7 @@ class DaisyPatch
        Helper functions above provide easier access to much of what they are capable of.
     */
     DaisySeed       seed;                             /**< Seed object */
+    Ak4556          codec;                            /**< Patch's second CODEC */
     Encoder         encoder;                          /**< Encoder object */
     AnalogControl   controls[CTRL_LAST];              /**< Array of controls*/
     GateIn          gate_input[GATE_IN_LAST];         /**< Gate inputs  */
