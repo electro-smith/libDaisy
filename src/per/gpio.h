@@ -73,6 +73,9 @@ class GPIO
 
     GPIO() {}
 
+    /** @brief Initialize the GPIO using the internal Config struct */
+    void Init();
+
     /** @brief Initialize the GPIO from a Config struct 
      *  @param cfg reference to a Config struct populated with the desired settings
     */

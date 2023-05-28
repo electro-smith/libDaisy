@@ -8,6 +8,11 @@ void GPIO::Init(const Config &cfg)
     /** Copy Config */
     cfg_ = cfg;
 
+    Init();
+}
+
+void GPIO::Init()
+{
     if(!cfg_.pin.IsValid())
         return;
 
@@ -142,7 +147,7 @@ extern "C"
 
     void dsy_gpio_init(const dsy_gpio *p)
     {
-        GPIO_TypeDef *   port;
+        GPIO_TypeDef    *port;
         GPIO_InitTypeDef ginit;
         switch(p->mode)
         {
