@@ -28,14 +28,14 @@ class MidiUartTransport
     struct Config
     {
         UartHandler::Config::Peripheral periph;
-        dsy_gpio_pin                    rx;
-        dsy_gpio_pin                    tx;
+        Pin                             rx;
+        Pin                             tx;
 
         Config()
         {
             periph = UartHandler::Config::Peripheral::USART_1;
-            rx     = {DSY_GPIOB, 7};
-            tx     = {DSY_GPIOB, 6};
+            rx     = Pin(PORTB, 7);
+            tx     = Pin(PORTB, 6);
         }
     };
 
