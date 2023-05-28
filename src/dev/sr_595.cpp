@@ -1,5 +1,7 @@
 #include <algorithm>
 #include "dev/sr_595.h"
+namespace daisy
+{
 void ShiftRegister595::Init(dsy_gpio_pin *pin_cfg, size_t num_daisy_chained)
 {
     // Initialize Pins as outputs
@@ -41,3 +43,5 @@ void ShiftRegister595::Write()
     }
     dsy_gpio_write(&pin_[PIN_LATCH], 1);
 }
+
+} // namespace daisy

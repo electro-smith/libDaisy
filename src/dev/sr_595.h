@@ -5,6 +5,8 @@
 #include "daisy_core.h"
 #include "per/gpio.h"
 
+namespace daisy
+{
 const size_t kMaxSr595DaisyChain
     = 16; /**< Maximum Number of chained devices Connect device's QH' pin to the next chips serial input*/
 
@@ -56,6 +58,7 @@ class ShiftRegister595
     uint8_t  state_[kMaxSr595DaisyChain];
     size_t   num_devices_;
 };
+} // namespace daisy
 
 #endif
 /** @} */
