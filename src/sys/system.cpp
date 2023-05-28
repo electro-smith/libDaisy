@@ -297,14 +297,13 @@ void System::DelayTicks(uint32_t delay_ticks)
 void System::ResetToBootloader()
 {
     // Initialize Boot Pin
-    dsy_gpio_pin bootpin = {DSY_GPIOG, 3};
-    dsy_gpio     pin;
-    pin.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    pin.pin  = bootpin;
-    dsy_gpio_init(&pin);
+    constexpr Pin bootpin = Pin(PORTG, 3);
+
+    GPIO pin;
+    pin.Init(bootpin, GPIO::Mode::OUTPUT);
 
     // Pull Pin HIGH
-    dsy_gpio_write(&pin, 1);
+    pin.Write(1);
 
     // wait a few ms for cap to charge
     HAL_Delay(10);
@@ -414,9 +413,9 @@ void System::ConfigureClocks()
     // New Timing
     PeriphClkInitStruct.PLL2.PLL2N     = 12; // Max supported freq of FMC;
     PeriphClkInitStruct.PLL2.PLL2M     = 1;
-    PeriphClkInitStruct.PLL2.PLL2P     = 8; // 25MHz
-    PeriphClkInitStruct.PLL2.PLL2Q     = 2; // 100MHz
-    PeriphClkInitStruct.PLL2.PLL2R     = 1; // 200MHz
+    PeriphClkInitStruct.PLL2.PLL2P     = 8;  // 25MHz
+    PeriphClkInitStruct.PLL2.PLL2Q     = 2;  // 100MHz
+    PeriphClkInitStruct.PLL2.PLL2R     = 1;  // 200MHz
     PeriphClkInitStruct.PLL2.PLL2FRACN = 4096;
 
 
