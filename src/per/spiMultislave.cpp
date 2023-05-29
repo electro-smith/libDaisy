@@ -29,7 +29,7 @@ SpiHandle::Result MultiSlaveSpiHandle::Init(const Config& config)
     spi_config.pin_config.miso = config.pin_config.miso;
     spi_config.pin_config.mosi = config.pin_config.mosi;
     spi_config.pin_config.sclk = config.pin_config.sclk;
-    spi_config.pin_config.nss = {DSY_GPIOX, 0}; // we'll drive this by ourselves
+    spi_config.pin_config.nss  = Pin(PORTX, 0); // we'll drive this by ourselves
     return spiHandle_.Init(spi_config);
 }
 

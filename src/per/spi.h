@@ -78,10 +78,10 @@ class SpiHandle
 
         struct
         {
-            dsy_gpio_pin sclk; /**< & */
-            dsy_gpio_pin miso; /**< & */
-            dsy_gpio_pin mosi; /**< & */
-            dsy_gpio_pin nss;  /**< & */
+            Pin sclk; /**< & */
+            Pin miso; /**< & */
+            Pin mosi; /**< & */
+            Pin nss;  /**< & */
         } pin_config;
 
         Config()
