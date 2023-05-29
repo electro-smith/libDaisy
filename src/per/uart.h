@@ -71,8 +71,8 @@ class UartHandler
 
         struct
         {
-            dsy_gpio_pin tx; /**< & */
-            dsy_gpio_pin rx; /**< & */
+            Pin tx; /**< & */
+            Pin rx; /**< & */
         } pin_config;        /**< & */
 
         Config()

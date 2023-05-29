@@ -32,6 +32,24 @@ constexpr GPIO_TypeDef *GetHALPort(Pin p)
         default: return NULL;
     }
 }
+inline void GPIOClockEnable(Pin p)
+{
+    switch(p.port)
+    {
+        case PORTA: __HAL_RCC_GPIOA_CLK_ENABLE(); return;
+        case PORTB: __HAL_RCC_GPIOB_CLK_ENABLE(); return;
+        case PORTC: __HAL_RCC_GPIOC_CLK_ENABLE(); return;
+        case PORTD: __HAL_RCC_GPIOD_CLK_ENABLE(); return;
+        case PORTE: __HAL_RCC_GPIOE_CLK_ENABLE(); return;
+        case PORTF: __HAL_RCC_GPIOF_CLK_ENABLE(); return;
+        case PORTG: __HAL_RCC_GPIOG_CLK_ENABLE(); return;
+        case PORTH: __HAL_RCC_GPIOH_CLK_ENABLE(); return;
+        case PORTI: __HAL_RCC_GPIOI_CLK_ENABLE(); return;
+        case PORTJ: __HAL_RCC_GPIOJ_CLK_ENABLE(); return;
+        case PORTK: __HAL_RCC_GPIOK_CLK_ENABLE(); return;
+        default: return;
+    }
+}
 } // namespace daisy
 
 extern "C"
