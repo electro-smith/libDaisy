@@ -4,10 +4,8 @@
 #include "stm32h7xx_hal.h"
 #include "dev/flash_IS25LP080D.h"
 #include "dev/flash_IS25LP064A.h"
-extern "C"
-{
 #include "util/hal_map.h"
-}
+
 
 // TODO: Add handling for alternate device types,
 //        This will be a thing much sooner than anticipated
@@ -93,14 +91,14 @@ class QSPIHandle::Impl
     Status             status_;
 
     static constexpr size_t pin_count_
-        = sizeof(QSPIHandle::Config::pin_config) / sizeof(dsy_gpio_pin);
+        = sizeof(QSPIHandle::Config::pin_config) / sizeof(Pin);
     // Data structure for easy hal initialization
-    dsy_gpio_pin* pin_config_arr_[pin_count_] = {&config_.pin_config.io0,
-                                                 &config_.pin_config.io1,
-                                                 &config_.pin_config.io2,
-                                                 &config_.pin_config.io3,
-                                                 &config_.pin_config.clk,
-                                                 &config_.pin_config.ncs};
+    Pin* pin_config_arr_[pin_count_] = {&config_.pin_config.io0,
+                                        &config_.pin_config.io1,
+                                        &config_.pin_config.io2,
+                                        &config_.pin_config.io3,
+                                        &config_.pin_config.clk,
+                                        &config_.pin_config.ncs};
 };
 
 
@@ -254,7 +252,7 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
     NumOfPage                = size / flash_page_size;
     NumOfSingle              = size % flash_page_size;
 
-    if(Addr == 0) /*!< Address is QSPI_PAGESIZE aligned  */
+    if(Addr == 0)          /*!< Address is QSPI_PAGESIZE aligned  */
     {
         if(NumOfPage == 0) /*!< NumByteToWrite < QSPI_PAGESIZE */
         {
@@ -276,7 +274,7 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
                 WritePage(address, QSPI_DataNum, buffer, false);
         }
     }
-    else /*!< Address is not QSPI_PAGESIZE aligned  */
+    else                   /*!< Address is not QSPI_PAGESIZE aligned  */
     {
         if(NumOfPage == 0) /*!< Size < QSPI_PAGESIZE */
         {
@@ -836,15 +834,15 @@ uint8_t QSPIHandle::Impl::GetStatusRegister()
 
 uint32_t QSPIHandle::Impl::GetPin(size_t pin)
 {
-    dsy_gpio_pin* p = pin_config_arr_[pin];
-    return dsy_hal_map_get_pin(p);
+    Pin* p = pin_config_arr_[pin];
+    return GetHALPin(*p);
 }
 
 
 GPIO_TypeDef* QSPIHandle::Impl::GetPort(size_t pin)
 {
-    dsy_gpio_pin* p = pin_config_arr_[pin];
-    return dsy_hal_map_get_port(p);
+    Pin* p = pin_config_arr_[pin];
+    return GetHALPort(*p);
 }
 
 
@@ -924,11 +922,11 @@ extern "C" void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
         __HAL_RCC_GPIOB_CLK_ENABLE();
         // Seems the same for all pin outs so far.
         uint8_t       af_config[qspi_impl.GetNumPins()] = {GPIO_AF10_QUADSPI,
-                                                     GPIO_AF10_QUADSPI,
-                                                     GPIO_AF9_QUADSPI,
-                                                     GPIO_AF9_QUADSPI,
-                                                     GPIO_AF9_QUADSPI,
-                                                     GPIO_AF10_QUADSPI};
+                                                           GPIO_AF10_QUADSPI,
+                                                           GPIO_AF9_QUADSPI,
+                                                           GPIO_AF9_QUADSPI,
+                                                           GPIO_AF9_QUADSPI,
+                                                           GPIO_AF10_QUADSPI};
         GPIO_TypeDef* port;
         for(uint8_t i = 0; i < qspi_impl.GetNumPins(); i++)
         {
