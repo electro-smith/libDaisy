@@ -39,7 +39,7 @@ class ShiftRegister595
 
     /** 
     Initializes the GPIO, and data for the ShiftRegister
-     * \param pin_cfg is an array of dsy_gpio_pin corresponding the the Pins enum above.
+     * \param pin_cfg is an array of Pin corresponding the the Pins enum above.
      * \param num_daisy_chained (default = 1) is the number of 595 devices daisy chained together.
      */
     void Init(Pin *pin_cfg, size_t num_daisy_chained = 1);

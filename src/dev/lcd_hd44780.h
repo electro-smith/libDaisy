@@ -31,7 +31,7 @@ class LcdHD44780
 
     /** 
     Initializes the LCD.
-     * \param config is a struct that sets cursor on/off, cursor blink on/off and the dsy_gpio_pin's that connects to the LCD.
+     * \param config is a struct that sets cursor on/off, cursor blink on/off and the Pin's that connects to the LCD.
      */
     void Init(const Config &config);
 
