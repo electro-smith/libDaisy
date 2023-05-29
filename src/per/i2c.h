@@ -56,8 +56,8 @@ class I2CHandle
         Peripheral periph; /**< & */
         struct
         {
-            dsy_gpio_pin scl; /**< & */
-            dsy_gpio_pin sda; /**< & */
+            Pin scl; /**< & */
+            Pin sda; /**< & */
         } pin_config;         /**< & */
 
         Speed speed; /**< & */
