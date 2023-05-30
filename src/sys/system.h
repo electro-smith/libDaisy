@@ -86,7 +86,8 @@ class System
         {
             LT_v6_0 = 0, // Less than v6.0
             NONE,        // No bootloader present
-            v6_0,        // v6.0 or greater
+            v6_0,        // v6.0
+            v6_1,        // v6.1 or greater
             LAST
         } version;
     };
