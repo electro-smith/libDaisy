@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 #if defined(_MSC_VER)
-#define FORCE_INLINE __forceinline                         /**< & */
+#define FORCE_INLINE __forceinline /**< & */
 #elif defined(__clang__)
 #define FORCE_INLINE inline __attribute__((always_inline)) /**< & */
 #pragma clang diagnostic ignored "-Wduplicate-decl-specifier"

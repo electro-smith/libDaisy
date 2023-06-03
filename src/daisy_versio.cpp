@@ -46,12 +46,12 @@ void DaisyVersio::Init(bool boost)
     constexpr Pin ledg_pin[] = {PIN_LED0_G, PIN_LED1_G, PIN_LED2_G, PIN_LED3_G};
     constexpr Pin ledb_pin[] = {PIN_LED0_B, PIN_LED1_B, PIN_LED2_B, PIN_LED3_B};
     constexpr Pin adc_pin[]  = {PIN_ADC_CV0,
-                                PIN_ADC_CV1,
-                                PIN_ADC_CV2,
-                                PIN_ADC_CV3,
-                                PIN_ADC_CV4,
-                                PIN_ADC_CV5,
-                                PIN_ADC_CV6};
+                               PIN_ADC_CV1,
+                               PIN_ADC_CV2,
+                               PIN_ADC_CV3,
+                               PIN_ADC_CV4,
+                               PIN_ADC_CV5,
+                               PIN_ADC_CV6};
 
     // gate in and momentary switch
     tap.Init(PIN_SW);
