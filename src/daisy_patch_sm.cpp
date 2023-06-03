@@ -7,28 +7,115 @@ namespace patch_sm
 {
     /** Const definitions */
     constexpr Pin DUMMYPIN        = Pin(PORTX, 0);
-    constexpr Pin PIN_ADC_CTRL_1  = C5;
-    constexpr Pin PIN_ADC_CTRL_2  = C4;
-    constexpr Pin PIN_ADC_CTRL_3  = C3;
-    constexpr Pin PIN_ADC_CTRL_4  = C2;
-    constexpr Pin PIN_ADC_CTRL_5  = C6;
-    constexpr Pin PIN_ADC_CTRL_6  = C7;
-    constexpr Pin PIN_ADC_CTRL_7  = C8;
-    constexpr Pin PIN_ADC_CTRL_8  = C9;
-    constexpr Pin PIN_ADC_CTRL_9  = A2;
-    constexpr Pin PIN_ADC_CTRL_10 = A3;
-    constexpr Pin PIN_ADC_CTRL_11 = D9;
-    constexpr Pin PIN_ADC_CTRL_12 = D8;
+    constexpr Pin PIN_ADC_CTRL_1  = DaisyPatchSM::C5;
+    constexpr Pin PIN_ADC_CTRL_2  = DaisyPatchSM::C4;
+    constexpr Pin PIN_ADC_CTRL_3  = DaisyPatchSM::C3;
+    constexpr Pin PIN_ADC_CTRL_4  = DaisyPatchSM::C2;
+    constexpr Pin PIN_ADC_CTRL_5  = DaisyPatchSM::C6;
+    constexpr Pin PIN_ADC_CTRL_6  = DaisyPatchSM::C7;
+    constexpr Pin PIN_ADC_CTRL_7  = DaisyPatchSM::C8;
+    constexpr Pin PIN_ADC_CTRL_8  = DaisyPatchSM::C9;
+    constexpr Pin PIN_ADC_CTRL_9  = DaisyPatchSM::A2;
+    constexpr Pin PIN_ADC_CTRL_10 = DaisyPatchSM::A3;
+    constexpr Pin PIN_ADC_CTRL_11 = DaisyPatchSM::D9;
+    constexpr Pin PIN_ADC_CTRL_12 = DaisyPatchSM::D8;
     constexpr Pin PIN_USER_LED    = Pin(PORTC, 7);
 
-    /** This is an adapter for the new Pin mapping system in the namespace so that
+    /** @note This is an adapter for the new Pin mapping system in the class so that
      *  GetPin still works. If GetPin is removed (i.e. the next major version), this should also be removed 
     */
-    constexpr Pin kPinMap[4][10]
-        = {{A1, A2, A3, A4, A5, A6, A7, A8, A9, A10},  // Bank A
-           {B1, B2, B3, B4, B5, B6, B7, B8, B9, B10},  // Bank B
-           {C1, C2, C3, C4, C5, C6, C7, C8, C9, C10},  // Bank C
-           {D1, D2, D3, D4, D5, D6, D7, D8, D9, D10}}; // Bank D
+    constexpr Pin kPinMap[4][10] =
+        // Bank A
+        {{DaisyPatchSM::A1,
+          DaisyPatchSM::A2,
+          DaisyPatchSM::A3,
+          DaisyPatchSM::A4,
+          DaisyPatchSM::A5,
+          DaisyPatchSM::A6,
+          DaisyPatchSM::A7,
+          DaisyPatchSM::A8,
+          DaisyPatchSM::A9,
+          DaisyPatchSM::A10},
+
+         // Bank B
+         {DaisyPatchSM::B1,
+          DaisyPatchSM::B2,
+          DaisyPatchSM::B3,
+          DaisyPatchSM::B4,
+          DaisyPatchSM::B5,
+          DaisyPatchSM::B6,
+          DaisyPatchSM::B7,
+          DaisyPatchSM::B8,
+          DaisyPatchSM::B9,
+          DaisyPatchSM::B10},
+
+         // Bank C
+         {DaisyPatchSM::C1,
+          DaisyPatchSM::C2,
+          DaisyPatchSM::C3,
+          DaisyPatchSM::C4,
+          DaisyPatchSM::C5,
+          DaisyPatchSM::C6,
+          DaisyPatchSM::C7,
+          DaisyPatchSM::C8,
+          DaisyPatchSM::C9,
+          DaisyPatchSM::C10},
+
+         // Bank D
+         {DaisyPatchSM::D1,
+          DaisyPatchSM::D2,
+          DaisyPatchSM::D3,
+          DaisyPatchSM::D4,
+          DaisyPatchSM::D5,
+          DaisyPatchSM::D6,
+          DaisyPatchSM::D7,
+          DaisyPatchSM::D8,
+          DaisyPatchSM::D9,
+          DaisyPatchSM::D10}};
+
+    constexpr Pin DaisyPatchSM::A1;
+    constexpr Pin DaisyPatchSM::A2;
+    constexpr Pin DaisyPatchSM::A3;
+    constexpr Pin DaisyPatchSM::A4;
+    constexpr Pin DaisyPatchSM::A5;
+    constexpr Pin DaisyPatchSM::A6;
+    constexpr Pin DaisyPatchSM::A7;
+    constexpr Pin DaisyPatchSM::A8;
+    constexpr Pin DaisyPatchSM::A9;
+    constexpr Pin DaisyPatchSM::A10;
+
+    constexpr Pin DaisyPatchSM::B1;
+    constexpr Pin DaisyPatchSM::B2;
+    constexpr Pin DaisyPatchSM::B3;
+    constexpr Pin DaisyPatchSM::B4;
+    constexpr Pin DaisyPatchSM::B5;
+    constexpr Pin DaisyPatchSM::B6;
+    constexpr Pin DaisyPatchSM::B7;
+    constexpr Pin DaisyPatchSM::B8;
+    constexpr Pin DaisyPatchSM::B9;
+    constexpr Pin DaisyPatchSM::B10;
+
+    constexpr Pin DaisyPatchSM::C1;
+    constexpr Pin DaisyPatchSM::C2;
+    constexpr Pin DaisyPatchSM::C3;
+    constexpr Pin DaisyPatchSM::C4;
+    constexpr Pin DaisyPatchSM::C5;
+    constexpr Pin DaisyPatchSM::C6;
+    constexpr Pin DaisyPatchSM::C7;
+    constexpr Pin DaisyPatchSM::C8;
+    constexpr Pin DaisyPatchSM::C9;
+    constexpr Pin DaisyPatchSM::C10;
+
+    constexpr Pin DaisyPatchSM::D1;
+    constexpr Pin DaisyPatchSM::D2;
+    constexpr Pin DaisyPatchSM::D3;
+    constexpr Pin DaisyPatchSM::D4;
+    constexpr Pin DaisyPatchSM::D5;
+    constexpr Pin DaisyPatchSM::D6;
+    constexpr Pin DaisyPatchSM::D7;
+    constexpr Pin DaisyPatchSM::D8;
+    constexpr Pin DaisyPatchSM::D9;
+    constexpr Pin DaisyPatchSM::D10;
 
     /** outside of class static buffer(s) for DMA access */
     uint16_t DMA_BUFFER_MEM_SECTION dsy_patch_sm_dac_buffer[2][48];
@@ -281,10 +368,7 @@ namespace patch_sm
         audio.ChangeCallback(cb);
     }
 
-    void DaisyPatchSM::StopAudio()
-    {
-        audio.Stop();
-    }
+    void DaisyPatchSM::StopAudio() { audio.Stop(); }
 
     void DaisyPatchSM::SetAudioBlockSize(size_t size)
     {
@@ -340,25 +424,13 @@ namespace patch_sm
         return audio.GetConfig().blocksize;
     }
 
-    float DaisyPatchSM::AudioSampleRate()
-    {
-        return audio.GetSampleRate();
-    }
+    float DaisyPatchSM::AudioSampleRate() { return audio.GetSampleRate(); }
 
-    float DaisyPatchSM::AudioCallbackRate()
-    {
-        return callback_rate_;
-    }
+    float DaisyPatchSM::AudioCallbackRate() { return callback_rate_; }
 
-    void DaisyPatchSM::StartAdc()
-    {
-        adc.Start();
-    }
+    void DaisyPatchSM::StartAdc() { adc.Start(); }
 
-    void DaisyPatchSM::StopAdc()
-    {
-        adc.Stop();
-    }
+    void DaisyPatchSM::StopAdc() { adc.Stop(); }
 
     void DaisyPatchSM::ProcessAnalogControls()
     {
@@ -370,10 +442,7 @@ namespace patch_sm
 
     void DaisyPatchSM::ProcessDigitalControls() {}
 
-    float DaisyPatchSM::GetAdcValue(int idx)
-    {
-        return controls[idx].Value();
-    }
+    float DaisyPatchSM::GetAdcValue(int idx) { return controls[idx].Value(); }
 
     dsy_gpio_pin DaisyPatchSM::GetPin(const PinBank bank, const int idx)
     {
@@ -388,20 +457,14 @@ namespace patch_sm
         pimpl_->StartDac(callback);
     }
 
-    void DaisyPatchSM::StopDac()
-    {
-        pimpl_->StopDac();
-    }
+    void DaisyPatchSM::StopDac() { pimpl_->StopDac(); }
 
     void DaisyPatchSM::WriteCvOut(const int channel, float voltage)
     {
         pimpl_->WriteCvOut(channel, voltage);
     }
 
-    void DaisyPatchSM::SetLed(bool state)
-    {
-        dsy_gpio_write(&user_led, state);
-    }
+    void DaisyPatchSM::SetLed(bool state) { dsy_gpio_write(&user_led, state); }
 
     bool DaisyPatchSM::ValidateSDRAM()
     {
