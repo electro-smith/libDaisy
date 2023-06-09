@@ -9,7 +9,8 @@
 namespace daisy
 {
 
-/** @brief   Parser class for parsing raw byte streams into MIDI messages
+/** @brief   Utility class for parsing raw byte streams into MIDI messages
+ *  @details Implemented as a state machine designed to parse one byte at a time
  *  @ingroup midi
  */
 class MidiParser
@@ -25,7 +26,7 @@ class MidiParser
 
     /**
      * @brief Parse one MIDI byte. If the byte completes a parsed event,
-     *        its value will be assigned to the dereferenced ouptut pointer.
+     *        its value will be assigned to the dereferenced output pointer.
      *        Otherwise, status is preserved in anticipation of the next sequential
      *        byte. Return value indicates if a new event was parsed or not.
      *
