@@ -41,6 +41,7 @@ hid/ctrl \
 hid/encoder \
 hid/gatein \
 hid/led \
+hid/midi_parser \
 hid/parameter \
 hid/rgb_led \
 hid/switch \
