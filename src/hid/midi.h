@@ -12,6 +12,7 @@
 #include "util/FIFO.h"
 #include "hid/MidiEvent.h"
 #include "hid/usb_midi.h"
+#include "sys/dma.h"
 #include "sys/system.h"
 
 namespace daisy
@@ -68,10 +69,12 @@ class MidiUartTransport
     }
 
     /** @brief Start the UART peripheral in listening mode. This will fill an internal data structure in the background */
-    inline void StartRx(MidiRxParseCallback parse_callback, void *context)
+    inline void StartRx(MidiRxParseCallback parse_callback, void* context)
     {
-        parse_context_ = context;
+        parse_context_  = context;
         parse_callback_ = parse_callback;
+        dsy_dma_clear_cache_for_buffer((uint8_t*)this,
+                                       sizeof(MidiUartTransport));
         uart_.DmaListenStart(
             rx_buffer, kDataSize, MidiUartTransport::rxCallback, this);
     }
