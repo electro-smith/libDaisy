@@ -57,7 +57,7 @@ class QSPIHandle::Impl
 
     QSPI_HandleTypeDef* GetHalHandle();
 
-    size_t GetNumPins() { return pin_count_; }
+    constexpr size_t GetNumPins() { return pin_count_; }
 
     Status GetStatus() { return status_; }
 

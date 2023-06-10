@@ -95,7 +95,7 @@ TimerHandle::Result TimerHandle::Impl::Init(const TimerHandle::Config& config)
     if(tim_idx >= 4)
         return TimerHandle::Result::ERR;
     config_                             = config;
-    constexpr TIM_TypeDef* instances[4] = {TIM2, TIM3, TIM4, TIM5};
+    TIM_TypeDef* instances[4] = {TIM2, TIM3, TIM4, TIM5};
 
     // HAL Initialization
     tim_hal_handle_.Instance = instances[tim_idx];

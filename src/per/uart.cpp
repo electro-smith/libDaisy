@@ -163,15 +163,15 @@ static UartHandler::Impl uart_handles[9];
 
 UartHandler::Impl* MapInstanceToHandle(USART_TypeDef* instance)
 {
-    constexpr USART_TypeDef* instances[9] = {USART1,
-                                             USART2,
-                                             USART3,
-                                             UART4,
-                                             UART5,
-                                             USART6,
-                                             UART7,
-                                             UART8,
-                                             LPUART1}; // map HAL instances
+    USART_TypeDef* instances[9] = {USART1,
+                                   USART2,
+                                   USART3,
+                                   UART4,
+                                   UART5,
+                                   USART6,
+                                   UART7,
+                                   UART8,
+                                   LPUART1}; // map HAL instances
     for(int i = 0; i < 9; i++)
     {
         if(instance == instances[i])

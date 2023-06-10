@@ -228,8 +228,7 @@ I2CHandle::Result I2CHandle::Impl::Init(const I2CHandle::Config& config)
         return I2CHandle::Result::ERR;
 
     config_ = config;
-    constexpr I2C_TypeDef* instances[4]
-        = {I2C1, I2C2, I2C3, I2C4}; // map HAL instances
+    I2C_TypeDef* instances[4] = {I2C1, I2C2, I2C3, I2C4}; // map HAL instances
     i2c_hal_handle_.Instance = instances[i2cIdx];
 
     // Set Generic Parameters

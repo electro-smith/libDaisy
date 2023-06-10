@@ -121,7 +121,7 @@ static SpiHandle::Impl spi_handles[6];
 SpiHandle::Impl* MapInstanceToHandle(SPI_TypeDef* instance)
 {
     // map HAL instances
-    constexpr SPI_TypeDef* instances[6] = {SPI1, SPI2, SPI3, SPI4, SPI5, SPI6};
+    SPI_TypeDef* instances[6] = {SPI1, SPI2, SPI3, SPI4, SPI5, SPI6};
 
     for(int i = 0; i < 6; i++)
     {

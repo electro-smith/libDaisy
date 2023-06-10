@@ -88,8 +88,8 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
     buff_size_ = 0;
     config_    = config;
 
-    constexpr SAI_Block_TypeDef* a_instances[2] = {SAI1_Block_A, SAI2_Block_A};
-    constexpr SAI_Block_TypeDef* b_instances[2] = {SAI1_Block_B, SAI2_Block_B};
+    SAI_Block_TypeDef* a_instances[2] = {SAI1_Block_A, SAI2_Block_A};
+    SAI_Block_TypeDef* b_instances[2] = {SAI1_Block_B, SAI2_Block_B};
 
     sai_a_handle_.Instance = a_instances[sai_idx];
     sai_b_handle_.Instance = b_instances[sai_idx];
