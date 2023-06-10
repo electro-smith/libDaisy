@@ -206,10 +206,6 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
 
 SaiHandle::Result SaiHandle::Impl::DeInit()
 {
-    // Must have been initialized before deinitialization
-    if(&config_ == nullptr)
-        return Result::ERR;
-
     DeInitDma(PeripheralBlock::BLOCK_A);
     DeInitDma(PeripheralBlock::BLOCK_B);
 
