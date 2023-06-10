@@ -4,7 +4,8 @@ if (${DAISYSP_DIR})
   set(DAISYSP_LIB DaisySP)
 endif()
 
-set(LINKER_SCRIPT ${LIBDAISY_DIR}/core/STM32H750IB_flash.lds)
+set(DAISY_STORAGE flash CACHE STRING "Select the storage destination of the executable.")
+set(LINKER_SCRIPT ${LIBDAISY_DIR}/core/STM32H750IB_${DAISY_STORAGE}.lds)
 
 add_executable(${FIRMWARE_NAME} ${FIRMWARE_SOURCES})
 
