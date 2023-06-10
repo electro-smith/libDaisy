@@ -32,6 +32,14 @@ target_link_options(${FIRMWARE_NAME} PUBLIC
     LINKER:--warn-common
 )
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_options(${FIRMWARE_NAME} PUBLIC
+        LINKER:--warn-section-align
+        LINKER:--print-memory-usage
+    )
+endif()
+
+
 add_custom_command(TARGET ${FIRMWARE_NAME} POST_BUILD
     COMMAND ${CMAKE_OBJCOPY}
     ARGS -O ihex
