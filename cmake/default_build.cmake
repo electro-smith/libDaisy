@@ -22,13 +22,13 @@ set_target_properties(${FIRMWARE_NAME} PROPERTIES
 )
 
 target_link_options(${FIRMWARE_NAME} PUBLIC
-    -T ${LINKER_SCRIPT}
-    -Wl,-Map=${FIRMWARE_NAME}.map,--cref
-    -Wl,--check-sections
-    -Wl,--unresolved-symbols=report-all
-    -Wl,--warn-common
-    -Wl,--warn-section-align
-    -Wl,--print-memory-usage
+    LINKER:-T,${LINKER_SCRIPT}
+    LINKER:-Map=${FIRMWARE_NAME}.map
+    LINKER:--cref    
+    LINKER:--gc-sections
+    LINKER:--check-sections
+    LINKER:--unresolved-symbols=report-all
+    LINKER:--warn-common
 )
 
 add_custom_command(TARGET ${FIRMWARE_NAME} POST_BUILD
