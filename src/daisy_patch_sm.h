@@ -260,16 +260,16 @@ namespace patch_sm
         /** Pin Accessors for the DaisyPatchSM hardware
          *  Used for initializing various GPIO, etc. 
          */
-        constexpr static Pin A1  = Pin(PORTX, 0);  /**< A1  - -12V Power Input */
-        constexpr static Pin A2  = Pin(PORTA, 1);  /**< A2  - UART1 Rx */
-        constexpr static Pin A3  = Pin(PORTA, 0);  /**< A3  - UART1 Tx */
-        constexpr static Pin A4  = Pin(PORTX, 0);  /**< A4  - GND */
-        constexpr static Pin A5  = Pin(PORTX, 0);  /**< A5  - +12V Power Input */
-        constexpr static Pin A6  = Pin(PORTX, 0);  /**< A6  - +5V Power Output */
-        constexpr static Pin A7  = Pin(PORTX, 0);  /**< A7  - GND */
+        constexpr static Pin A1  = Pin(PORTX, 0); /**< A1  - -12V Power Input */
+        constexpr static Pin A2  = Pin(PORTA, 1); /**< A2  - UART1 Rx */
+        constexpr static Pin A3  = Pin(PORTA, 0); /**< A3  - UART1 Tx */
+        constexpr static Pin A4  = Pin(PORTX, 0); /**< A4  - GND */
+        constexpr static Pin A5  = Pin(PORTX, 0); /**< A5  - +12V Power Input */
+        constexpr static Pin A6  = Pin(PORTX, 0); /**< A6  - +5V Power Output */
+        constexpr static Pin A7  = Pin(PORTX, 0); /**< A7  - GND */
         constexpr static Pin A8  = Pin(PORTB, 14); /**< A8  - USB DM */
         constexpr static Pin A9  = Pin(PORTB, 15); /**< A9  - USB DP */
-        constexpr static Pin A10 = Pin(PORTX, 0);  /**< A10 - +3V3 Power Output */
+        constexpr static Pin A10 = Pin(PORTX, 0);  /**< A10 - +3V3 Power Out */
 
         constexpr static Pin B1  = Pin(PORTX, 0);  /**< B1  - Audio Out Right */
         constexpr static Pin B2  = Pin(PORTX, 0);  /**< B2  - Audio Out Left*/
@@ -282,16 +282,16 @@ namespace patch_sm
         constexpr static Pin B9  = Pin(PORTG, 14); /**< B9  - GATE IN 2 */
         constexpr static Pin B10 = Pin(PORTG, 13); /**< B10 - GATE IN 1 */
 
-        constexpr static Pin C1  = Pin(PORTA, 5);  /**< C1  - CV Out 2 */
-        constexpr static Pin C2  = Pin(PORTA, 7);  /**< C2  - CV In 4 */
-        constexpr static Pin C3  = Pin(PORTA, 2);  /**< C3  - CV In 3 */
-        constexpr static Pin C4  = Pin(PORTA, 6);  /**< C4  - CV In 2 */
-        constexpr static Pin C5  = Pin(PORTA, 3);  /**< C5  - CV In 1 */
-        constexpr static Pin C6  = Pin(PORTB, 1);  /**< C6  - CV In 5 */
-        constexpr static Pin C7  = Pin(PORTC, 4);  /**< C7  - CV In 6 */
-        constexpr static Pin C8  = Pin(PORTC, 0);  /**< C8  - CV In 7 */
-        constexpr static Pin C9  = Pin(PORTC, 1);  /**< C9  - CV In 8 */
-        constexpr static Pin C10 = Pin(PORTA, 4);  /**< C10 - CV Out 1 */
+        constexpr static Pin C1  = Pin(PORTA, 5); /**< C1  - CV Out 2 */
+        constexpr static Pin C2  = Pin(PORTA, 7); /**< C2  - CV In 4 */
+        constexpr static Pin C3  = Pin(PORTA, 2); /**< C3  - CV In 3 */
+        constexpr static Pin C4  = Pin(PORTA, 6); /**< C4  - CV In 2 */
+        constexpr static Pin C5  = Pin(PORTA, 3); /**< C5  - CV In 1 */
+        constexpr static Pin C6  = Pin(PORTB, 1); /**< C6  - CV In 5 */
+        constexpr static Pin C7  = Pin(PORTC, 4); /**< C7  - CV In 6 */
+        constexpr static Pin C8  = Pin(PORTC, 0); /**< C8  - CV In 7 */
+        constexpr static Pin C9  = Pin(PORTC, 1); /**< C9  - CV In 8 */
+        constexpr static Pin C10 = Pin(PORTA, 4); /**< C10 - CV Out 1 */
 
         constexpr static Pin D1  = Pin(PORTB, 4);  /**< D1  - SPI2 CS */
         constexpr static Pin D2  = Pin(PORTC, 11); /**< D2  - SDMMC D3 */
