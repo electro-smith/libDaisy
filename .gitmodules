@@ -2,5 +2,11 @@
 	path = tests/googletest
 	url = https://github.com/google/googletest.git
 [submodule "Drivers/CMSIS/DSP"]
-	path = Drivers/CMSIS/DSP
+	path = Drivers/CMSIS-DSP
 	url = https://github.com/ARM-software/CMSIS-DSP/
+[submodule "Drivers/CMSIS_5"]
+	path = Drivers/CMSIS_5
+	url = https://github.com/ARM-software/CMSIS_5
+[submodule "Drivers/CMSIS-Device/ST/STM32H7xx"]
+	path = Drivers/CMSIS-Device/ST/STM32H7xx
+	url = https://github.com/STMicroelectronics/cmsis_device_h7/

@@ -301,8 +301,8 @@ C_INCLUDES = \
 -I$(MODULE_DIR)/sys \
 -I$(MODULE_DIR)/usbd \
 -I$(MODULE_DIR)/usbh \
--IDrivers/CMSIS/Core/Include \
--IDrivers/CMSIS/Device/ST/STM32H7xx/Include \
+-IDrivers/CMSIS_5/CMSIS/Core/Include \
+-IDrivers/CMSIS-Device/ST/STM32H7xx/Include \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
 -IDrivers/STM32H7xx_HAL_Driver/Inc/Legacy \
 -IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc \

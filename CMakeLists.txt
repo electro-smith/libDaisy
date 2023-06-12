@@ -207,8 +207,8 @@ add_library(${TARGET} STATIC
 
 target_include_directories(${TARGET} PUBLIC
     ${MODULE_DIR}
-    Drivers/CMSIS/Core/Include
-    Drivers/CMSIS/Device/ST/STM32H7xx/Include
+    Drivers/CMSIS_5/CMSIS/Core/Include
+    Drivers/CMSIS-Device/ST/STM32H7xx/Include
     Drivers/STM32H7xx_HAL_Driver/Inc
     Drivers/STM32H7xx_HAL_Driver/Inc/Legacy
     Middlewares/ST/STM32_USB_Device_Library/Core/Inc

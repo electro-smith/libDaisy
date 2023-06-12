@@ -167,7 +167,7 @@
     <ClCompile Include="src\util\WaveTableLoader.cpp">
       <Filter>util</Filter>
     </ClCompile>
-    <ClCompile Include="Drivers\CMSIS\Core\Template\ARMv8-M\main_s.c">
+    <ClCompile Include="Drivers\CMSIS_5\CMSIS\Core\Template\ARMv8-M\main_s.c">
       <Filter>CMSIS</Filter>
     </ClCompile>
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_spi.c">
@@ -568,7 +568,7 @@
     <ClInclude Include="Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h">
       <Filter>Middleware_USB</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Device\ST\STM32H7xx\Include\stm32h750xx.h">
+    <ClInclude Include="Drivers\CMSIS-Device\ST\STM32H7xx\Include\stm32h750xx.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
     <ClInclude Include="src\daisy.h" />
@@ -753,94 +753,94 @@
     <ClInclude Include="src\util\WavWriter.h">
       <Filter>util</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\cachel1_armv7.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\cachel1_armv7.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_armcc.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\cmsis_armcc.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_armclang.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\cmsis_armclang.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_armclang_ltm.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\cmsis_armclang_ltm.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_compiler.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\cmsis_compiler.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_gcc.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\cmsis_gcc.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_iccarm.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\cmsis_iccarm.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\cmsis_version.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\cmsis_version.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_armv81mml.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_armv81mml.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_armv8mbl.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_armv8mbl.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_armv8mml.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_armv8mml.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm0.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_cm0.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm0plus.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_cm0plus.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm1.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_cm1.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm23.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_cm23.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm3.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_cm3.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm33.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_cm33.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm35p.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_cm35p.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm4.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_cm4.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm55.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_cm55.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm7.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_cm7.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_cm85.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_cm85.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_sc000.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_sc000.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_sc300.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_sc300.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\core_starmc1.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\core_starmc1.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\mpu_armv7.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\mpu_armv7.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\mpu_armv8.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\mpu_armv8.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\pac_armv81.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\pac_armv81.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\pmu_armv8.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\pmu_armv8.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
-    <ClInclude Include="Drivers\CMSIS\Core\Include\tz_context.h">
+    <ClInclude Include="Drivers\CMSIS_5\CMSIS\Core\Include\tz_context.h">
       <Filter>CMSIS</Filter>
     </ClInclude>
     <ClInclude Include="Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_ll_tim.h">
