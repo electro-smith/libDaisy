@@ -235,7 +235,7 @@
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_rcc.c" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_rng.c" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_rtc.c" />
-    <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_sdmmc.c" />
+    <ClCompile Include="Drivers\Patched\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_sdmmc.c" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_spi.c" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_swpmi.c" />
     <ClCompile Include="Drivers\STM32H7xx_HAL_Driver\Src\stm32h7xx_ll_tim.c" />

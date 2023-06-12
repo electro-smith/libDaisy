@@ -200,7 +200,7 @@ Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_pwr.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_rcc.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_rng.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_rtc.c \
-Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_sdmmc.c \
+Drivers/Patched/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_sdmmc.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_spi.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_swpmi.c \
 Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_tim.c \
