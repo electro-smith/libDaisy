@@ -85,11 +85,8 @@ class MidiUartTransport
     /** @brief sends the buffer of bytes out of the UART peripheral */
     inline void Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
 
-    /** This size determines the maximum Rx bytes readable by the UART in the background
-     *  These will fill a software FIFO that can be parsed. The FIFO is twice the size of the
-     *  Rx buffer.
-     */
     private:
+        /** This size determines the maximum Rx bytes readable by the UART in the background */
         static constexpr size_t      kDataSize = 256;
         UartHandler                  uart_;
         uint8_t                      rx_buffer[kDataSize];
@@ -176,14 +173,12 @@ class MidiHandler
     /** Checks if there are unhandled messages in the queue
     \return True if there are events to be handled, else false.
      */
-    //bool HasEvents() const { return event_q_.readable(); }
     bool HasEvents() const { return event_q_.GetNumElements() > 0; }
 
 
     /** Pops the oldest unhandled MidiEvent from the internal queue
     \return The event to be handled
      */
-    // MidiEvent PopEvent() { return event_q_.Read(); }
     MidiEvent PopEvent() { return event_q_.PopFront(); }
 
     /** SendMessage
