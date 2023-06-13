@@ -24,8 +24,9 @@ namespace daisy
 class MidiUartTransport
 {
   public:
-
-    typedef void(*MidiRxParseCallback)(uint8_t *data, size_t size, void *context);
+    typedef void (*MidiRxParseCallback)(uint8_t* data,
+                                        size_t   size,
+                                        void*    context);
 
     MidiUartTransport() {}
     ~MidiUartTransport() {}
@@ -79,7 +80,8 @@ class MidiUartTransport
         uart_.Init(uart_config);
     }
 
-    /** @brief Start the UART peripheral in listening mode. This will fill an internal data structure in the background */
+    /** @brief Start the UART peripheral in listening mode.
+     *  This will fill an internal data structure in the background */
     inline void StartRx(MidiRxParseCallback parse_callback, void* context)
     {
         parse_context_  = context;
@@ -99,14 +101,14 @@ class MidiUartTransport
     /** @brief sends the buffer of bytes out of the UART peripheral */
     inline void Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
 
-    private:
-        UartHandler                  uart_;
-        uint8_t*                     rx_buffer;
-        size_t                       rx_buffer_size;
-        void*                        parse_context_;
-        MidiRxParseCallback          parse_callback_;
+  private:
+    UartHandler         uart_;
+    uint8_t*            rx_buffer;
+    size_t              rx_buffer_size;
+    void*               parse_context_;
+    MidiRxParseCallback parse_callback_;
 
-        /** Static callback for Uart MIDI that occurs when
+    /** Static callback for Uart MIDI that occurs when
          *  new data is available from the peripheral.
          *  The new data is transferred from the peripheral to the
          *  MIDI instance's byte FIFO that feeds the MIDI parser.
@@ -115,22 +117,23 @@ class MidiUartTransport
          *  (If there is a UART error, there's not really any recovery
          *  option at the moment)
          */
-        static void rxCallback(uint8_t*            data,
-                               size_t              size,
-                               void*               context,
-                               UartHandler::Result res)
+    static void rxCallback(uint8_t*            data,
+                           size_t              size,
+                           void*               context,
+                           UartHandler::Result res)
+    {
+        /** Read context as transport type */
+        MidiUartTransport* transport
+            = reinterpret_cast<MidiUartTransport*>(context);
+        if(res == UartHandler::Result::OK)
         {
-            /** Read context as transport type */
-            MidiUartTransport* transport
-                = reinterpret_cast<MidiUartTransport*>(context);
-            if(res == UartHandler::Result::OK)
+            if(transport->parse_callback_)
             {
-                if (transport->parse_callback_)
-                {
-                    transport->parse_callback_(data, size, transport->parse_context_);
-                }
+                transport->parse_callback_(
+                    data, size, transport->parse_context_);
             }
         }
+    }
 };
 
 /**
@@ -163,7 +166,8 @@ class MidiHandler
         parser_.Init();
     }
 
-    /** Starts listening on the selected input mode(s). MidiEvent Queue will begin to fill, and can be checked with HasEvents() */
+    /** Starts listening on the selected input mode(s).
+     * MidiEvent Queue will begin to fill, and can be checked with HasEvents() */
     void StartReceive()
     {
         transport_.StartRx(MidiHandler::ParseCallback, this);
@@ -223,7 +227,7 @@ class MidiHandler
     MidiParser           parser_;
     FIFO<MidiEvent, 256> event_q_;
 
-    static void ParseCallback(uint8_t *data, size_t size, void *context)
+    static void ParseCallback(uint8_t* data, size_t size, void* context)
     {
         MidiHandler* handler = reinterpret_cast<MidiHandler*>(context);
         for(size_t i = 0; i < size; i++)

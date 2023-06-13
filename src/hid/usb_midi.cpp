@@ -17,9 +17,9 @@ class MidiUsbTransport::Impl
         parse_context_  = context;
     }
 
-    bool    RxActive() { return rx_active_; }
-    void    FlushRx() { rx_buffer_.Flush(); }
-    void    Tx(uint8_t* buffer, size_t size);
+    bool RxActive() { return rx_active_; }
+    void FlushRx() { rx_buffer_.Flush(); }
+    void Tx(uint8_t* buffer, size_t size);
 
     void UsbToMidi(uint8_t* buffer, uint8_t length);
     void MidiToUsb(uint8_t* buffer, size_t length);
@@ -37,8 +37,8 @@ class MidiUsbTransport::Impl
     bool                    rx_active_;
     // This corresponds to 256 midi messages
     RingBuffer<uint8_t, kBufferSize> rx_buffer_;
-    MidiRxParseCallback     parse_callback_;
-    void*                   parse_context_;
+    MidiRxParseCallback              parse_callback_;
+    void*                            parse_context_;
 
     // simple, self-managed buffer
     uint8_t tx_buffer_[kBufferSize];
@@ -285,12 +285,11 @@ void MidiUsbTransport::Impl::MidiToUsb(uint8_t* buffer, size_t size)
 
 void MidiUsbTransport::Impl::Parse()
 {
-    if (parse_callback_)
+    if(parse_callback_)
     {
-        // TODO: this is inefficient
         uint8_t bytes[kBufferSize];
-        size_t i = 0;
-        while (!rx_buffer_.isEmpty())
+        size_t  i = 0;
+        while(!rx_buffer_.isEmpty())
         {
             bytes[i++] = rx_buffer_.Read();
         }
@@ -308,7 +307,7 @@ void MidiUsbTransport::Init(MidiUsbTransport::Config config)
     pimpl_->Init(config);
 }
 
-void MidiUsbTransport::StartRx(MidiRxParseCallback callback, void *context)
+void MidiUsbTransport::StartRx(MidiRxParseCallback callback, void* context)
 {
     pimpl_->StartRx(callback, context);
 }

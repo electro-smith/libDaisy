@@ -14,8 +14,9 @@ namespace daisy
 class MidiUsbTransport
 {
   public:
-
-    typedef void(*MidiRxParseCallback)(uint8_t *data, size_t size, void *context);
+    typedef void (*MidiRxParseCallback)(uint8_t* data,
+                                        size_t   size,
+                                        void*    context);
 
     struct Config
     {
@@ -44,16 +45,16 @@ class MidiUsbTransport
 
     void Init(Config config);
 
-    void    StartRx(MidiRxParseCallback callback, void* context);
-    bool    RxActive();
-    void    FlushRx();
-    void    Tx(uint8_t* buffer, size_t size);
+    void StartRx(MidiRxParseCallback callback, void* context);
+    bool RxActive();
+    void FlushRx();
+    void Tx(uint8_t* buffer, size_t size);
 
     class Impl;
 
     MidiUsbTransport() : pimpl_(nullptr) {}
     ~MidiUsbTransport() {}
-    MidiUsbTransport(const MidiUsbTransport& other) = default;
+    MidiUsbTransport(const MidiUsbTransport& other)            = default;
     MidiUsbTransport& operator=(const MidiUsbTransport& other) = default;
 
   private:

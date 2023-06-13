@@ -19,10 +19,7 @@ class MidiParser
     MidiParser(){};
     ~MidiParser() {}
 
-    inline void Init()
-    {
-        Reset();
-    }
+    inline void Init() { Reset(); }
 
     /**
      * @brief Parse one MIDI byte. If the byte completes a parsed event,
@@ -43,7 +40,6 @@ class MidiParser
     void Reset();
 
   private:
-
     enum ParserState
     {
         ParserEmpty,
@@ -52,9 +48,9 @@ class MidiParser
         ParserSysEx,
     };
 
-    ParserState          pstate_;
-    MidiEvent            incoming_message_;
-    MidiMessageType      running_status_;
+    ParserState     pstate_;
+    MidiEvent       incoming_message_;
+    MidiMessageType running_status_;
 
     // Masks to check for message type, and byte content
     const uint8_t kStatusByteMask     = 0x80;
@@ -64,6 +60,6 @@ class MidiParser
     const uint8_t kSystemRealTimeMask = 0x07;
 };
 
-}
+} // namespace daisy
 
 #endif
