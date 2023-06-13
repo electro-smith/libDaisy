@@ -37,12 +37,23 @@ class MidiUartTransport
         dsy_gpio_pin                    rx;
         dsy_gpio_pin                    tx;
 
-        Config()
-        {
-            periph = UartHandler::Config::Peripheral::USART_1;
-            rx     = {DSY_GPIOB, 7};
-            tx     = {DSY_GPIOB, 6};
-        }
+        /** Pointer to buffer for DMA UART rx byte transfer in background.
+         *
+         *  @details By default this uses a shared buffer in DMA_BUFFER_MEM_SECTION,
+         *           which can only be utilized for a single UART peripheral. To
+         *           use MIDI with multiple UART peripherals, you must provide your own
+         *           buffer, allocated to a DMA-capable memory section.
+         */
+        uint8_t* rx_buffer;
+
+        /** Size in bytes of rx_buffer.
+         *
+         *  @details This size determines the maximum Rx bytes readable by the UART in the background.
+         *           By default it's set to the size of the default shared rx_buffer.
+         */
+        size_t rx_buffer_size;
+
+        Config();
     };
 
     /** @brief Initialization of UART using config struct */
@@ -62,6 +73,9 @@ class MidiUartTransport
         uart_config.pin_config.rx = config.rx;
         uart_config.pin_config.tx = config.tx;
 
+        rx_buffer      = config.rx_buffer;
+        rx_buffer_size = config.rx_buffer_size;
+
         uart_.Init(uart_config);
     }
 
@@ -73,7 +87,7 @@ class MidiUartTransport
         dsy_dma_clear_cache_for_buffer((uint8_t*)this,
                                        sizeof(MidiUartTransport));
         uart_.DmaListenStart(
-            rx_buffer, kDataSize, MidiUartTransport::rxCallback, this);
+            rx_buffer, rx_buffer_size, MidiUartTransport::rxCallback, this);
     }
 
     /** @brief returns whether the UART peripheral is actively listening in the background or not */
@@ -86,10 +100,9 @@ class MidiUartTransport
     inline void Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
 
     private:
-        /** This size determines the maximum Rx bytes readable by the UART in the background */
-        static constexpr size_t      kDataSize = 256;
         UartHandler                  uart_;
-        uint8_t                      rx_buffer[kDataSize];
+        uint8_t*                     rx_buffer;
+        size_t                       rx_buffer_size;
         void*                        parse_context_;
         MidiRxParseCallback          parse_callback_;
 
