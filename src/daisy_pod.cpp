@@ -5,25 +5,26 @@
 #define SAMPLE_RATE 48014.f
 #endif
 
+using namespace daisy;
 
 // # Rev3 and Rev4 with newest pinout.
 // Compatible with Seed Rev3 and Rev4
-#define SW_1_PIN 27
-#define SW_2_PIN 28
+constexpr Pin SW_1_PIN = seed::D27;
+constexpr Pin SW_2_PIN = seed::D28;
 
-#define ENC_A_PIN 26
-#define ENC_B_PIN 25
-#define ENC_CLICK_PIN 13
+constexpr Pin ENC_A_PIN     = seed::D26;
+constexpr Pin ENC_B_PIN     = seed::D25;
+constexpr Pin ENC_CLICK_PIN = seed::D13;
 
-#define LED_1_R_PIN 20
-#define LED_1_G_PIN 19
-#define LED_1_B_PIN 18
-#define LED_2_R_PIN 17
-#define LED_2_G_PIN 24
-#define LED_2_B_PIN 23
+constexpr Pin LED_1_R_PIN = seed::D20;
+constexpr Pin LED_1_G_PIN = seed::D19;
+constexpr Pin LED_1_B_PIN = seed::D18;
+constexpr Pin LED_2_R_PIN = seed::D17;
+constexpr Pin LED_2_G_PIN = seed::D24;
+constexpr Pin LED_2_B_PIN = seed::D23;
 
-#define KNOB_1_PIN 21
-#define KNOB_2_PIN 15
+constexpr Pin KNOB_1_PIN = seed::D21;
+constexpr Pin KNOB_2_PIN = seed::D15;
 
 /*
 // Leaving in place until older hardware is totally deprecated.
@@ -203,9 +204,9 @@ void DaisyPod::UpdateLeds()
 void DaisyPod::InitButtons()
 {
     // button1
-    button1.Init(seed.GetPin(SW_1_PIN));
+    button1.Init(SW_1_PIN);
     // button2
-    button2.Init(seed.GetPin(SW_2_PIN));
+    button2.Init(SW_2_PIN);
 
     buttons[BUTTON_1] = &button1;
     buttons[BUTTON_2] = &button2;
@@ -213,28 +214,16 @@ void DaisyPod::InitButtons()
 
 void DaisyPod::InitEncoder()
 {
-    dsy_gpio_pin a, b, click;
-    a     = seed.GetPin(ENC_A_PIN);
-    b     = seed.GetPin(ENC_B_PIN);
-    click = seed.GetPin(ENC_CLICK_PIN);
-    encoder.Init(a, b, click);
+    encoder.Init(ENC_A_PIN, ENC_B_PIN, ENC_CLICK_PIN);
 }
 
 void DaisyPod::InitLeds()
 {
     // LEDs are just going to be on/off for now.
     // TODO: Add PWM support
-    dsy_gpio_pin rpin, gpin, bpin;
+    led1.Init(LED_1_R_PIN, LED_1_G_PIN, LED_1_B_PIN, true);
 
-    rpin = seed.GetPin(LED_1_R_PIN);
-    gpin = seed.GetPin(LED_1_G_PIN);
-    bpin = seed.GetPin(LED_1_B_PIN);
-    led1.Init(rpin, gpin, bpin, true);
-
-    rpin = seed.GetPin(LED_2_R_PIN);
-    gpin = seed.GetPin(LED_2_G_PIN);
-    bpin = seed.GetPin(LED_2_B_PIN);
-    led2.Init(rpin, gpin, bpin, true);
+    led2.Init(LED_2_R_PIN, LED_2_G_PIN, LED_2_B_PIN, true);
 
     ClearLeds();
     UpdateLeds();
@@ -243,8 +232,8 @@ void DaisyPod::InitKnobs()
 {
     // Configure the ADC channels using the desired pin
     AdcChannelConfig knob_init[KNOB_LAST];
-    knob_init[KNOB_1].InitSingle(seed.GetPin(KNOB_1_PIN));
-    knob_init[KNOB_2].InitSingle(seed.GetPin(KNOB_2_PIN));
+    knob_init[KNOB_1].InitSingle(KNOB_1_PIN);
+    knob_init[KNOB_2].InitSingle(KNOB_2_PIN);
     // Initialize with the knob init struct w/ 2 members
     // Set Oversampling to 32x
     seed.adc.Init(knob_init, KNOB_LAST);
