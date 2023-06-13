@@ -1,9 +1,9 @@
 var searchData=
 [
   ['i2c_5f_0',['i2c_',['../classdaisy_1_1_mcp23017_transport.html#ad9db1017b4ae9e60e7259d6e01eca8fb',1,'daisy::Mcp23017Transport']]],
-  ['i2c_5faddress_1',['i2c_address',['../structdaisy_1_1_mcp23017_transport_1_1_config.html#a7e3f0fc7e8055b00f35b8ed6f6d56812',1,'daisy::Mcp23017Transport::Config::i2c_address()'],['../structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html#a4ab21336ab0b2e121284265d2902091d',1,'daisy::SSD130xI2CTransport::Config::i2c_address()']]],
+  ['i2c_5faddress_1',['i2c_address',['../structdaisy_1_1_mcp23017_transport_1_1_config.html#a7e3f0fc7e8055b00f35b8ed6f6d56812',1,'daisy::Mcp23017Transport::Config::i2c_address'],['../structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html#a4ab21336ab0b2e121284265d2902091d',1,'daisy::SSD130xI2CTransport::Config::i2c_address']]],
   ['i2c_5faddress_5f_2',['i2c_address_',['../classdaisy_1_1_mcp23017_transport.html#a6cf7f2391a2ebe2ace9f77ae24b9fef6',1,'daisy::Mcp23017Transport']]],
-  ['i2c_5fconfig_3',['i2c_config',['../structdaisy_1_1_mcp23017_transport_1_1_config.html#a93ffff5585df2c31e5742c9b5689c372',1,'daisy::Mcp23017Transport::Config::i2c_config()'],['../structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html#aa87b410e13f44b509f5f41db8d6a140a',1,'daisy::SSD130xI2CTransport::Config::i2c_config()']]],
+  ['i2c_5fconfig_3',['i2c_config',['../structdaisy_1_1_mcp23017_transport_1_1_config.html#a93ffff5585df2c31e5742c9b5689c372',1,'daisy::Mcp23017Transport::Config::i2c_config'],['../structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html#aa87b410e13f44b509f5f41db8d6a140a',1,'daisy::SSD130xI2CTransport::Config::i2c_config']]],
   ['id_5f_4',['id_',['../structdaisy_1_1_ui_canvas_descriptor.html#a320db46cd7de450d1201f33c6a3b5300',1,'daisy::UiCanvasDescriptor']]],
   ['impl_5f_5',['impl_',['../group__logger__statics.html#ga40f66abb6093e8358937fdcf184eda5d',1,'daisy::Logger']]],
   ['integrationtimems_6',['integrationTimeMs',['../structdaisy_1_1_apds9960_1_1_config.html#a2560738f0883253326b9500c9d0fefdb',1,'daisy::Apds9960::Config']]],

@@ -11,5 +11,5 @@ var searchData=
   ['ssd130xi2c64x32driver_8',['SSD130xI2c64x32Driver',['../namespacedaisy.html#a8aa6a733725c92ec32701dacc75092fe',1,'daisy']]],
   ['ssd130xi2c64x48driver_9',['SSD130xI2c64x48Driver',['../namespacedaisy.html#a76096dc3b21d044b66782f18906fe46d',1,'daisy']]],
   ['ssd130xi2c98x16driver_10',['SSD130xI2c98x16Driver',['../namespacedaisy.html#acd406732d55384b504529db2e83602b6',1,'daisy']]],
-  ['startcallbackfunctionptr_11',['StartCallbackFunctionPtr',['../classdaisy_1_1_spi_handle.html#ac2f47ed26b7630dd193c59204a72daa1',1,'daisy::SpiHandle::StartCallbackFunctionPtr()'],['../classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec',1,'daisy::UartHandler::StartCallbackFunctionPtr()']]]
+  ['startcallbackfunctionptr_11',['StartCallbackFunctionPtr',['../classdaisy_1_1_spi_handle.html#ac2f47ed26b7630dd193c59204a72daa1',1,'daisy::SpiHandle::StartCallbackFunctionPtr'],['../classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec',1,'daisy::UartHandler::StartCallbackFunctionPtr']]]
 ];

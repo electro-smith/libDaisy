@@ -182,7 +182,7 @@ var NAVTREEINDEX8 =
 "daisy__seed_8h_source.html":[17,0,1,14],
 "daisy__versio_8h.html":[17,0,1,15],
 "daisy__versio_8h_source.html":[17,0,1,15],
-"deprecated.html":[14],
+"deprecated.html":[13],
 "dir_220d2bd384b446346a1cdcf02b1b2295.html":[17,0,1,3],
 "dir_68267d1309a1af8e8297ef4c3efbcdba.html":[17,0,1],
 "dir_7637c9fbe5b3e67e4deba77cb5e5d012.html":[17,0,1,2],

@@ -30,7 +30,7 @@ var searchData=
   ['openpage_27',['OpenPage',['../classdaisy_1_1_u_i.html#acec12dd1310939a703562c0d5e75e2aa',1,'daisy::UI']]],
   ['operator_20const_20char_20_2a_28',['operator const char *',['../classdaisy_1_1_mapped_string_list_value.html#a9a8c4bb7628d5a62d29c0a3f70c82e05',1,'daisy::MappedStringListValue']]],
   ['operator_20const_20chartype_20_2a_29',['operator const CharType *',['../classdaisy_1_1_fixed_cap_str_base.html#a2b6b40ed7b200e5c8cb072b182eaa4dc',1,'daisy::FixedCapStrBase']]],
-  ['operator_20dsy_5fgpio_5fpin_30',['operator dsy_gpio_pin',['../structdaisy_1_1_pin.html#a6ce1d205dd2c40d8c6a7b10991549f2e',1,'daisy::Pin']]],
+  ['operator_20dsy_5fgpio_5fpin_30',['operator dsy_gpio_pin',['../structdaisy_1_1_pin.html#ae4b23ddfd692db5f51aca7227db3fe36',1,'daisy::Pin']]],
   ['operator_20float_31',['operator float',['../classdaisy_1_1_mapped_float_value.html#ae7cf1241c7cfb7dbfbba31add296847a',1,'daisy::MappedFloatValue']]],
   ['operator_20int_32',['operator int',['../classdaisy_1_1_mapped_string_list_value.html#ae7e1e3bd0628c7cf7223add1a6351982',1,'daisy::MappedStringListValue::operator int()'],['../classdaisy_1_1_mapped_int_value.html#a2dcef638461541abfd3682eade5f779a',1,'daisy::MappedIntValue::operator int()']]],
   ['operator_21_3d_33',['operator!=',['../structdaisy_1_1_pin.html#a61f0a2333599cbfb4ba48e3d5af57ae0',1,'daisy::Pin::operator!=()'],['../classdaisy_1_1_rectangle.html#a2aa575526fad150118a17950e4491f15',1,'daisy::Rectangle::operator!=()'],['../classdaisy_1_1_fixed_cap_str_base.html#ae93a7e57e3c3a77d4d5e8200d53b200c',1,'daisy::FixedCapStrBase::operator!=()']]],
