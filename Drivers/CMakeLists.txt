@@ -152,3 +152,8 @@ target_link_libraries(STM32H7XX_HAL_DRIVER PUBLIC CMSIS_DEVICE_H7)
 target_compile_options(STM32H7XX_HAL_DRIVER PRIVATE
     -Wno-unused-but-set-variable
 )
+
+target_compile_definitions(STM32H7XX_HAL_DRIVER PRIVATE
+  USE_HAL_DRIVER
+  USE_FULL_LL_DRIVER
+)

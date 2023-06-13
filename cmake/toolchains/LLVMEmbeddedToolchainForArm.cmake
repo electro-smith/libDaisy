@@ -9,7 +9,7 @@ set(TOOLCHAIN arm-none-eabi)
 if(NOT DEFINED TOOLCHAIN_PREFIX)
     message(STATUS "Please specify the TOOLCHAIN_PREFIX !\n For example: -DTOOLCHAIN_PREFIX=\"path/to/LLVMEmbeddedToolchainForArm\"")
 endif()
-set(TOOLCHAIN_BIN_DIR ${TOOLCHAIN_PREFIX}/bin)
+cmake_path(SET TOOLCHAIN_BIN_DIR ${TOOLCHAIN_PREFIX}/bin)
 
 if(WIN32)
     set(TOOLCHAIN_EXT ".exe" )
