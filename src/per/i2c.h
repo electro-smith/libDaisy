@@ -56,9 +56,9 @@ class I2CHandle
         Peripheral periph; /**< & */
         struct
         {
-            Pin scl; /**< & */
-            Pin sda; /**< & */
-        } pin_config;         /**< & */
+            Pin scl;  /**< & */
+            Pin sda;  /**< & */
+        } pin_config; /**< & */
 
         Speed speed; /**< & */
         Mode  mode;  /**< & */

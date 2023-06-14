@@ -38,7 +38,7 @@ void Switch::Debounce()
 
         // shift over, and introduce new state.
         const bool new_val = hw_gpio_.Read();
-        state_ = (state_ << 1) | (flip_ ? !new_val : new_val);
+        state_             = (state_ << 1) | (flip_ ? !new_val : new_val);
         // Set time at which button was pressed
         if(state_ == 0x7f)
             rising_edge_time_ = System::GetNow();

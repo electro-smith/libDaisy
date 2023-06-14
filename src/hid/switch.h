@@ -41,7 +41,11 @@ class Switch
     \param pol switch polarity -- Default: POLARITY_INVERTED
     \param pu switch pull up/down -- Default: PULL_UP
     */
-    void Init(Pin pin, float update_rate, Type t, Polarity pol, GPIO::Pull pu = GPIO::Pull::PULLUP);
+    void Init(Pin        pin,
+              float      update_rate,
+              Type       t,
+              Polarity   pol,
+              GPIO::Pull pu = GPIO::Pull::PULLUP);
 
     /**
        Simplified Init.
@@ -71,7 +75,7 @@ class Switch
 
     /** \return true if the button is held down, without debouncing */
     inline bool RawState()
-    {   
+    {
         const bool raw = hw_gpio_.Read();
         return flip_ ? !raw : raw;
     }

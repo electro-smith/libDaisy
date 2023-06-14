@@ -32,9 +32,9 @@ Based on: HD44780-Stm32HAL by Olivier Van den Eede (https://github.com/4ilo/HD44
 #define OPT_B 0x01 // Turn on cursor blink
 
 #define FUNCTION_SET 0x20
-#define OPT_DL 0x10         // Set interface data length
-#define OPT_N 0x08          // Set number of display lines
-#define OPT_F 0x04          // Set alternate font
+#define OPT_DL 0x10 // Set interface data length
+#define OPT_N 0x08  // Set number of display lines
+#define OPT_F 0x04  // Set alternate font
 #define SETCGRAM_ADDR 0x040
 #define SET_DDRAM_ADDR 0x80 // Set DDRAM address
 

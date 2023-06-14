@@ -818,8 +818,7 @@ static pin_alt_spi* pins_periphs_spi[] = {
     spi6_pins_sclk, spi6_pins_miso, spi6_pins_mosi, spi6_pins_nss,
 };
 
-SpiHandle::Result
-checkPinMatchSpi(GPIO_InitTypeDef* init, Pin pin, int p_num)
+SpiHandle::Result checkPinMatchSpi(GPIO_InitTypeDef* init, Pin pin, int p_num)
 {
     for(int i = 0; i < 3; i++)
     {

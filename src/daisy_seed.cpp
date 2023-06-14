@@ -106,7 +106,7 @@ void DaisySeed::Init(bool boost)
     led_config.pin  = Pin(SEED_LED_PORT, SEED_LED_PIN);
     led_config.mode = GPIO::Mode::OUTPUT;
 
-    testpoint_config.pin = Pin(SEED_TEST_POINT_PORT, SEED_TEST_POINT_PIN);
+    testpoint_config.pin  = Pin(SEED_TEST_POINT_PORT, SEED_TEST_POINT_PIN);
     testpoint_config.mode = GPIO::Mode::OUTPUT;
 
     auto memory = System::GetProgramMemoryRegion();
@@ -235,7 +235,7 @@ void DaisySeed::SetTestPoint(bool state)
     testpoint.Write(state);
 }
 
-const SaiHandle& DaisySeed::AudioSaiHandle() const
+const SaiHandle &DaisySeed::AudioSaiHandle() const
 {
     return sai_1_handle_;
 }

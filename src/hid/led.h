@@ -51,12 +51,12 @@ class Led
     inline void SetSampleRate(float sample_rate) { samplerate_ = sample_rate; }
 
   private:
-    size_t   pwm_cnt_, pwm_thresh_;
-    float    bright_;
-    float    pwm_;
-    float    samplerate_;
-    bool     invert_, on_, off_;
-    GPIO     hw_pin_;
+    size_t pwm_cnt_, pwm_thresh_;
+    float  bright_;
+    float  pwm_;
+    float  samplerate_;
+    bool   invert_, on_, off_;
+    GPIO   hw_pin_;
 };
 
 } // namespace daisy

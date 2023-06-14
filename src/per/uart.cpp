@@ -964,42 +964,15 @@ void UART_IRQHandler(UartHandler::Impl* handle)
 
 extern "C"
 {
-    void USART1_IRQHandler()
-    {
-        UART_IRQHandler(&uart_handles[0]);
-    }
-    void USART2_IRQHandler()
-    {
-        UART_IRQHandler(&uart_handles[1]);
-    }
-    void USART3_IRQHandler()
-    {
-        UART_IRQHandler(&uart_handles[2]);
-    }
-    void UART4_IRQHandler()
-    {
-        UART_IRQHandler(&uart_handles[3]);
-    }
-    void UART5_IRQHandler()
-    {
-        UART_IRQHandler(&uart_handles[4]);
-    }
-    void USART6_IRQHandler()
-    {
-        UART_IRQHandler(&uart_handles[5]);
-    }
-    void UART7_IRQHandler()
-    {
-        UART_IRQHandler(&uart_handles[6]);
-    }
-    void UART8_IRQHandler()
-    {
-        UART_IRQHandler(&uart_handles[7]);
-    }
-    void LPUART1_IRQHandler()
-    {
-        UART_IRQHandler(&uart_handles[8]);
-    }
+    void USART1_IRQHandler() { UART_IRQHandler(&uart_handles[0]); }
+    void USART2_IRQHandler() { UART_IRQHandler(&uart_handles[1]); }
+    void USART3_IRQHandler() { UART_IRQHandler(&uart_handles[2]); }
+    void UART4_IRQHandler() { UART_IRQHandler(&uart_handles[3]); }
+    void UART5_IRQHandler() { UART_IRQHandler(&uart_handles[4]); }
+    void USART6_IRQHandler() { UART_IRQHandler(&uart_handles[5]); }
+    void UART7_IRQHandler() { UART_IRQHandler(&uart_handles[6]); }
+    void UART8_IRQHandler() { UART_IRQHandler(&uart_handles[7]); }
+    void LPUART1_IRQHandler() { UART_IRQHandler(&uart_handles[8]); }
 }
 
 void HalUartDmaRxStreamCallback(void)

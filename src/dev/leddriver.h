@@ -64,9 +64,9 @@ class LedDriverPca9685
     */
     void Init(I2CHandle i2c,
               const uint8_t (&addresses)[numDrivers],
-              DmaBuffer    dma_buffer_a,
-              DmaBuffer    dma_buffer_b,
-              Pin oe_pin = Pin(PORTX, 0))
+              DmaBuffer dma_buffer_a,
+              DmaBuffer dma_buffer_b,
+              Pin       oe_pin = Pin(PORTX, 0))
     {
         i2c_             = i2c;
         draw_buffer_     = dma_buffer_a;

@@ -230,10 +230,10 @@ void SaiHandle::Impl::InitDma(PeripheralBlock block)
         hsai = &sai_a_handle_;
         hdma = &sai_a_dma_handle_;
         dir  = config_.a_dir == Config::Direction::RECEIVE
-                   ? DMA_PERIPH_TO_MEMORY
-                   : DMA_MEMORY_TO_PERIPH;
-        req  = sai_idx == int(Config::Peripheral::SAI_1) ? DMA_REQUEST_SAI1_A
-                                                         : DMA_REQUEST_SAI2_A;
+                  ? DMA_PERIPH_TO_MEMORY
+                  : DMA_MEMORY_TO_PERIPH;
+        req = sai_idx == int(Config::Peripheral::SAI_1) ? DMA_REQUEST_SAI1_A
+                                                        : DMA_REQUEST_SAI2_A;
 
         if(sai_idx == int(Config::Peripheral::SAI_1))
             hdma->Instance = DMA1_Stream0;
@@ -245,10 +245,10 @@ void SaiHandle::Impl::InitDma(PeripheralBlock block)
         hsai = &sai_b_handle_;
         hdma = &sai_b_dma_handle_;
         dir  = config_.b_dir == Config::Direction::RECEIVE
-                   ? DMA_PERIPH_TO_MEMORY
-                   : DMA_MEMORY_TO_PERIPH;
-        req  = sai_idx == int(Config::Peripheral::SAI_1) ? DMA_REQUEST_SAI1_B
-                                                         : DMA_REQUEST_SAI2_B;
+                  ? DMA_PERIPH_TO_MEMORY
+                  : DMA_MEMORY_TO_PERIPH;
+        req = sai_idx == int(Config::Peripheral::SAI_1) ? DMA_REQUEST_SAI1_B
+                                                        : DMA_REQUEST_SAI2_B;
 
         if(sai_idx == int(Config::Peripheral::SAI_1))
             hdma->Instance = DMA1_Stream1;
@@ -365,10 +365,10 @@ void SaiHandle::Impl::InitPins()
     GPIO_InitTypeDef GPIO_InitStruct;
     GPIO_TypeDef*    port;
     Pin              cfg[] = {config_.pin_config.fs,
-                              config_.pin_config.mclk,
-                              config_.pin_config.sck,
-                              config_.pin_config.sa,
-                              config_.pin_config.sb};
+                 config_.pin_config.mclk,
+                 config_.pin_config.sck,
+                 config_.pin_config.sa,
+                 config_.pin_config.sb};
     // Special Case checks
     Pin sck_af_pin = Pin(PORTA, 2);
     is_master      = (config_.a_sync == Config::Sync::MASTER

@@ -27,6 +27,7 @@ class Ak4556
     /** Deinitialization function for Ak4556 
      ** */
     void DeInit();
+
   private:
     GPIO reset_;
 };

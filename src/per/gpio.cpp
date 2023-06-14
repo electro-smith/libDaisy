@@ -147,7 +147,7 @@ extern "C"
 
     void dsy_gpio_init(const dsy_gpio *p)
     {
-        GPIO_TypeDef    *port;
+        GPIO_TypeDef *   port;
         GPIO_InitTypeDef ginit;
         switch(p->mode)
         {

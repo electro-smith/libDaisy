@@ -71,9 +71,9 @@ class UartHandler
 
         struct
         {
-            Pin tx; /**< & */
-            Pin rx; /**< & */
-        } pin_config;        /**< & */
+            Pin tx;   /**< & */
+            Pin rx;   /**< & */
+        } pin_config; /**< & */
 
         Config()
         {

@@ -252,7 +252,7 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
     NumOfPage                = size / flash_page_size;
     NumOfSingle              = size % flash_page_size;
 
-    if(Addr == 0)          /*!< Address is QSPI_PAGESIZE aligned  */
+    if(Addr == 0) /*!< Address is QSPI_PAGESIZE aligned  */
     {
         if(NumOfPage == 0) /*!< NumByteToWrite < QSPI_PAGESIZE */
         {
@@ -274,7 +274,7 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
                 WritePage(address, QSPI_DataNum, buffer, false);
         }
     }
-    else                   /*!< Address is not QSPI_PAGESIZE aligned  */
+    else /*!< Address is not QSPI_PAGESIZE aligned  */
     {
         if(NumOfPage == 0) /*!< Size < QSPI_PAGESIZE */
         {
@@ -922,11 +922,11 @@ extern "C" void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
         __HAL_RCC_GPIOB_CLK_ENABLE();
         // Seems the same for all pin outs so far.
         uint8_t       af_config[qspi_impl.GetNumPins()] = {GPIO_AF10_QUADSPI,
-                                                           GPIO_AF10_QUADSPI,
-                                                           GPIO_AF9_QUADSPI,
-                                                           GPIO_AF9_QUADSPI,
-                                                           GPIO_AF9_QUADSPI,
-                                                           GPIO_AF10_QUADSPI};
+                                                     GPIO_AF10_QUADSPI,
+                                                     GPIO_AF9_QUADSPI,
+                                                     GPIO_AF9_QUADSPI,
+                                                     GPIO_AF9_QUADSPI,
+                                                     GPIO_AF10_QUADSPI};
         GPIO_TypeDef* port;
         for(uint8_t i = 0; i < qspi_impl.GetNumPins(); i++)
         {
