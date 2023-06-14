@@ -71,6 +71,7 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/ui/UI.cpp
     ${MODULE_DIR}/util/color.cpp
     ${MODULE_DIR}/util/WaveTableLoader.cpp
+    ${MODULE_DIR}/util/MappedValue.cpp
     core/startup_stm32h750xx.c
 )
 

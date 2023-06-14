@@ -18,6 +18,7 @@ else()
 endif()
 
 include(stm32h750xx)
+link_libraries(semihost)
 
 set(CMAKE_ASM_FLAGS "-x assembler-with-cpp" CACHE INTERNAL "ASM Compiler options")
 
