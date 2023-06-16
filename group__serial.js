@@ -199,6 +199,7 @@ var group__serial =
         [ "tx", "structdaisy_1_1_uart_handler_1_1_config.html#aede71d4e3449591e661b0decfeecd993", null ],
         [ "wordlength", "structdaisy_1_1_uart_handler_1_1_config.html#a563a78c968ce1adbcc05585c617a5eec", null ]
       ] ],
+      [ "CircularRxCallbackFunctionPtr", "classdaisy_1_1_uart_handler.html#a95993666d3498111f123382022967946", null ],
       [ "EndCallbackFunctionPtr", "classdaisy_1_1_uart_handler.html#a1bdc706fd2e8994889a713bb0ac72c67", null ],
       [ "StartCallbackFunctionPtr", "classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec", null ],
       [ "DmaDirection", "classdaisy_1_1_uart_handler.html#adbdfbf1dfaab99cf76ac7ca36d22cf00", [
@@ -214,22 +215,16 @@ var group__serial =
       [ "BlockingReceive", "classdaisy_1_1_uart_handler.html#aae17dba49d39995a4aa3eaa3c809b66d", null ],
       [ "BlockingTransmit", "classdaisy_1_1_uart_handler.html#a1c5ad164edfdc32a8f01d9044657b9ed", null ],
       [ "CheckError", "classdaisy_1_1_uart_handler.html#ada2266b23e77dde305b229b7814604fe", null ],
+      [ "DmaListenStart", "classdaisy_1_1_uart_handler.html#a4dc3e5abdb8cd03db80eaef2b2332876", null ],
+      [ "DmaListenStop", "classdaisy_1_1_uart_handler.html#ab46af079191f4ece2c046ac9b9eded4a", null ],
       [ "DmaReceive", "classdaisy_1_1_uart_handler.html#afd959cfbc7efbc2a0357185da61a4ba6", null ],
-      [ "DmaReceiveFifo", "classdaisy_1_1_uart_handler.html#a07c27d8f78518caed8bc2485986b456a", null ],
       [ "DmaTransmit", "classdaisy_1_1_uart_handler.html#a4565d3868c0d92e6955da3416c309cad", null ],
-      [ "FlushFifo", "classdaisy_1_1_uart_handler.html#a4e2b04c72be034995175ec3d1229815d", null ],
-      [ "FlushRx", "classdaisy_1_1_uart_handler.html#a8282a20746be60a208cde90a8eea1529", null ],
       [ "GetConfig", "classdaisy_1_1_uart_handler.html#a62a56c23285f8c6106a45ae2547e423d", null ],
       [ "Init", "classdaisy_1_1_uart_handler.html#aa25c871d2fb9d382ef779ba92b4d2ada", null ],
+      [ "IsListening", "classdaisy_1_1_uart_handler.html#a47f395c1ae6530b8b497c8fd76cb6d59", null ],
       [ "operator=", "classdaisy_1_1_uart_handler.html#ae66075f4115e163b12fffae1b9896f42", null ],
       [ "PollReceive", "classdaisy_1_1_uart_handler.html#a9641f3808cf70559d3d988f5ae8e254c", null ],
-      [ "PollTx", "classdaisy_1_1_uart_handler.html#a9505926532bf44f70216b52d45db549a", null ],
-      [ "PopFifo", "classdaisy_1_1_uart_handler.html#ae2dcb235ccfbf9a16d059edaf4e6499a", null ],
-      [ "PopRx", "classdaisy_1_1_uart_handler.html#ae28345bdf7d66aa891bbde3cf8c68057", null ],
-      [ "Readable", "classdaisy_1_1_uart_handler.html#a4b8cad10b4f9a9520d2248c567babcc1", null ],
-      [ "ReadableFifo", "classdaisy_1_1_uart_handler.html#ac3af4732fb0a31c38d182248e80413a2", null ],
-      [ "RxActive", "classdaisy_1_1_uart_handler.html#aeeb804c58c2ccf574142b2a030d2d83b", null ],
-      [ "StartRx", "classdaisy_1_1_uart_handler.html#a24098e17a8be0b1b2a229f1959c941db", null ]
+      [ "PollTx", "classdaisy_1_1_uart_handler.html#a9505926532bf44f70216b52d45db549a", null ]
     ] ],
     [ "daisy::dsy_spi_global_init", "group__serial.html#ga6d59bd4c60c6568d42ded1cbad96d8fd", null ],
     [ "daisy::dsy_uart_global_init", "group__serial.html#ga37eef21ee03ddb02591affa3708f28b1", null ]

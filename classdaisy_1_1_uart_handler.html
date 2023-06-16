@@ -132,6 +132,8 @@ Public Types</h2></td></tr>
 <tr class="separator:a67b4d9b8492cff01abcd79b57cacebec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1bdc706fd2e8994889a713bb0ac72c67"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a1bdc706fd2e8994889a713bb0ac72c67">EndCallbackFunctionPtr</a>) (void *context, <a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> result)</td></tr>
 <tr class="separator:a1bdc706fd2e8994889a713bb0ac72c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95993666d3498111f123382022967946"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a95993666d3498111f123382022967946">CircularRxCallbackFunctionPtr</a>) (uint8_t *data, size_t size, void *context, <a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> result)</td></tr>
+<tr class="separator:a95993666d3498111f123382022967946"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -153,32 +155,44 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4565d3868c0d92e6955da3416c309cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd959cfbc7efbc2a0357185da61a4ba6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#afd959cfbc7efbc2a0357185da61a4ba6">DmaReceive</a> (uint8_t *buff, size_t size, <a class="el" href="classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec">UartHandler::StartCallbackFunctionPtr</a> start_callback, <a class="el" href="classdaisy_1_1_uart_handler.html#a1bdc706fd2e8994889a713bb0ac72c67">UartHandler::EndCallbackFunctionPtr</a> end_callback, void *callback_context)</td></tr>
 <tr class="separator:afd959cfbc7efbc2a0357185da61a4ba6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dc3e5abdb8cd03db80eaef2b2332876"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a4dc3e5abdb8cd03db80eaef2b2332876">DmaListenStart</a> (uint8_t *buff, size_t size, <a class="el" href="classdaisy_1_1_uart_handler.html#a95993666d3498111f123382022967946">CircularRxCallbackFunctionPtr</a> cb, void *callback_context)</td></tr>
+<tr class="separator:a4dc3e5abdb8cd03db80eaef2b2332876"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab46af079191f4ece2c046ac9b9eded4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ab46af079191f4ece2c046ac9b9eded4a">DmaListenStop</a> ()</td></tr>
+<tr class="separator:ab46af079191f4ece2c046ac9b9eded4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47f395c1ae6530b8b497c8fd76cb6d59"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a47f395c1ae6530b8b497c8fd76cb6d59">IsListening</a> () const</td></tr>
+<tr class="separator:a47f395c1ae6530b8b497c8fd76cb6d59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada2266b23e77dde305b229b7814604fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ada2266b23e77dde305b229b7814604fe">CheckError</a> ()</td></tr>
 <tr class="separator:ada2266b23e77dde305b229b7814604fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07c27d8f78518caed8bc2485986b456a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a07c27d8f78518caed8bc2485986b456a">DmaReceiveFifo</a> ()</td></tr>
-<tr class="separator:a07c27d8f78518caed8bc2485986b456a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e2b04c72be034995175ec3d1229815d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a4e2b04c72be034995175ec3d1229815d">FlushFifo</a> ()</td></tr>
-<tr class="separator:a4e2b04c72be034995175ec3d1229815d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2dcb235ccfbf9a16d059edaf4e6499a"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ae2dcb235ccfbf9a16d059edaf4e6499a">PopFifo</a> ()</td></tr>
-<tr class="separator:ae2dcb235ccfbf9a16d059edaf4e6499a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3af4732fb0a31c38d182248e80413a2"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ac3af4732fb0a31c38d182248e80413a2">ReadableFifo</a> ()</td></tr>
-<tr class="separator:ac3af4732fb0a31c38d182248e80413a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9641f3808cf70559d3d988f5ae8e254c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a9641f3808cf70559d3d988f5ae8e254c">PollReceive</a> (uint8_t *buff, size_t size, uint32_t timeout)</td></tr>
 <tr class="separator:a9641f3808cf70559d3d988f5ae8e254c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9505926532bf44f70216b52d45db549a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a9505926532bf44f70216b52d45db549a">PollTx</a> (uint8_t *buff, size_t size)</td></tr>
 <tr class="separator:a9505926532bf44f70216b52d45db549a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24098e17a8be0b1b2a229f1959c941db"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a24098e17a8be0b1b2a229f1959c941db">StartRx</a> ()</td></tr>
-<tr class="separator:a24098e17a8be0b1b2a229f1959c941db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeeb804c58c2ccf574142b2a030d2d83b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#aeeb804c58c2ccf574142b2a030d2d83b">RxActive</a> ()</td></tr>
-<tr class="separator:aeeb804c58c2ccf574142b2a030d2d83b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8282a20746be60a208cde90a8eea1529"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a8282a20746be60a208cde90a8eea1529">FlushRx</a> ()</td></tr>
-<tr class="separator:a8282a20746be60a208cde90a8eea1529"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae28345bdf7d66aa891bbde3cf8c68057"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#ae28345bdf7d66aa891bbde3cf8c68057">PopRx</a> ()</td></tr>
-<tr class="separator:ae28345bdf7d66aa891bbde3cf8c68057"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b8cad10b4f9a9520d2248c567babcc1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_uart_handler.html#a4b8cad10b4f9a9520d2248c567babcc1">Readable</a> ()</td></tr>
-<tr class="separator:a4b8cad10b4f9a9520d2248c567babcc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a95993666d3498111f123382022967946" name="a95993666d3498111f123382022967946"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95993666d3498111f123382022967946">&#9670;&#160;</a></span>CircularRxCallbackFunctionPtr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* daisy::UartHandler::CircularRxCallbackFunctionPtr) (uint8_t *data, size_t size, void *context, <a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> result)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A callback to be executed when using circular/listening mode includes a callback context, as well as the data to be handled This fires either after half of the size of the user-defined buffer has been transferred from peripheral to memory, or after an IDLE frame is detected.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>byte-buffer to fill with data </td></tr>
+    <tr><td class="paramname">size</td><td>size of the "data" byte buffer </td></tr>
+    <tr><td class="paramname">context</td><td>user-defined context variable to pass state to the callback </td></tr>
+    <tr><td class="paramname">result</td><td>state of the UART Handler result, should be OK if things are OK. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a1bdc706fd2e8994889a713bb0ac72c67" name="a1bdc706fd2e8994889a713bb0ac72c67"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1bdc706fd2e8994889a713bb0ac72c67">&#9670;&#160;</a></span>EndCallbackFunctionPtr</h2>
 
@@ -190,7 +204,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>A callback to be executed after a dma transfer is completed. </p>
+<p>A callback to be executed after a standard dma transfer is completed. </p>
 
 </div>
 </div>
@@ -205,7 +219,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>A callback to be executed right before a dma transfer is started. </p>
+<p>A callback to be executed right before a standard dma transfer is started. </p>
 
 </div>
 </div>
@@ -423,6 +437,76 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a4dc3e5abdb8cd03db80eaef2b2332876" name="a4dc3e5abdb8cd03db80eaef2b2332876"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dc3e5abdb8cd03db80eaef2b2332876">&#9670;&#160;</a></span>DmaListenStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::DmaListenStart </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>buff</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classdaisy_1_1_uart_handler.html#a95993666d3498111f123382022967946">CircularRxCallbackFunctionPtr</a>&#160;</td>
+          <td class="paramname"><em>cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>callback_context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Starts the DMA Reception in "Listen" mode. In this mode the DMA is configured for circular behavior, and the IDLE interrupt is enabled.</p>
+<p>At TC, HT, and IDLE interrupts data must be processed.</p>
+<p>Size must be set so that at maximum bandwidth, the software has time to process N bytes before the next circular IRQ is fired</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buff</td><td>buffer of data accessible by DMA. </td></tr>
+    <tr><td class="paramname">size</td><td>size of buffer </td></tr>
+    <tr><td class="paramname">cb</td><td>callback that happens containing new bytes to process in software </td></tr>
+    <tr><td class="paramname">callback_context</td><td>pointer to user-defined data accessible from callback </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab46af079191f4ece2c046ac9b9eded4a" name="ab46af079191f4ece2c046ac9b9eded4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab46af079191f4ece2c046ac9b9eded4a">&#9670;&#160;</a></span>DmaListenStop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::DmaListenStop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Stops the DMA Reception during listen mode </p>
+
+</div>
+</div>
 <a id="afd959cfbc7efbc2a0357185da61a4ba6" name="afd959cfbc7efbc2a0357185da61a4ba6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afd959cfbc7efbc2a0357185da61a4ba6">&#9670;&#160;</a></span>DmaReceive()</h2>
 
@@ -478,24 +562,6 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the receive was successful or not </dd></dl>
-
-</div>
-</div>
-<a id="a07c27d8f78518caed8bc2485986b456a" name="a07c27d8f78518caed8bc2485986b456a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a07c27d8f78518caed8bc2485986b456a">&#9670;&#160;</a></span>DmaReceiveFifo()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::DmaReceiveFifo </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Start the DMA Receive with a double buffered <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> </p><dl class="section return"><dt>Returns</dt><dd>OK or ERR </dd></dl>
 
 </div>
 </div>
@@ -557,42 +623,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a4e2b04c72be034995175ec3d1229815d" name="a4e2b04c72be034995175ec3d1229815d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e2b04c72be034995175ec3d1229815d">&#9670;&#160;</a></span>FlushFifo()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::FlushFifo </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Flush all of the data from the fifo </p><dl class="section return"><dt>Returns</dt><dd>OK or ERR </dd></dl>
-
-</div>
-</div>
-<a id="a8282a20746be60a208cde90a8eea1529" name="a8282a20746be60a208cde90a8eea1529"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8282a20746be60a208cde90a8eea1529">&#9670;&#160;</a></span>FlushRx()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::FlushRx </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Will be deprecated soon! Wrapper for FlushFifo </p>
-
-</div>
-</div>
 <a id="a62a56c23285f8c6106a45ae2547e423d" name="a62a56c23285f8c6106a45ae2547e423d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a62a56c23285f8c6106a45ae2547e423d">&#9670;&#160;</a></span>GetConfig()</h2>
 
@@ -627,6 +657,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Initializes the UART Peripheral </p>
+
+</div>
+</div>
+<a id="a47f395c1ae6530b8b497c8fd76cb6d59" name="a47f395c1ae6530b8b497c8fd76cb6d59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47f395c1ae6530b8b497c8fd76cb6d59">&#9670;&#160;</a></span>IsListening()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool daisy::UartHandler::IsListening </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Returns whether listen the DmaListen mode is active or not </p>
 
 </div>
 </div>
@@ -717,122 +765,6 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Will be deprecated soon! Wrapper for BlockingTransmit </p>
-
-</div>
-</div>
-<a id="ae2dcb235ccfbf9a16d059edaf4e6499a" name="ae2dcb235ccfbf9a16d059edaf4e6499a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2dcb235ccfbf9a16d059edaf4e6499a">&#9670;&#160;</a></span>PopFifo()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t daisy::UartHandler::PopFifo </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Get the top item off of the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> </p><dl class="section return"><dt>Returns</dt><dd>Top item from the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> </dd></dl>
-
-</div>
-</div>
-<a id="ae28345bdf7d66aa891bbde3cf8c68057" name="ae28345bdf7d66aa891bbde3cf8c68057"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae28345bdf7d66aa891bbde3cf8c68057">&#9670;&#160;</a></span>PopRx()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t daisy::UartHandler::PopRx </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Will be deprecated soon! Wrapper PopFifo </p>
-
-</div>
-</div>
-<a id="a4b8cad10b4f9a9520d2248c567babcc1" name="a4b8cad10b4f9a9520d2248c567babcc1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b8cad10b4f9a9520d2248c567babcc1">&#9670;&#160;</a></span>Readable()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t daisy::UartHandler::Readable </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Will be deprecated soon! Wrapper for ReadableFifo </p>
-
-</div>
-</div>
-<a id="ac3af4732fb0a31c38d182248e80413a2" name="ac3af4732fb0a31c38d182248e80413a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3af4732fb0a31c38d182248e80413a2">&#9670;&#160;</a></span>ReadableFifo()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t daisy::UartHandler::ReadableFifo </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>How much data is in the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> </p><dl class="section return"><dt>Returns</dt><dd>number of elements ready to pop from <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> </dd></dl>
-
-</div>
-</div>
-<a id="aeeb804c58c2ccf574142b2a030d2d83b" name="aeeb804c58c2ccf574142b2a030d2d83b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeeb804c58c2ccf574142b2a030d2d83b">&#9670;&#160;</a></span>RxActive()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool daisy::UartHandler::RxActive </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Will be deprecated soon! </p><dl class="section return"><dt>Returns</dt><dd>true. New DMA will always restart itself. </dd></dl>
-
-</div>
-</div>
-<a id="a24098e17a8be0b1b2a229f1959c941db" name="a24098e17a8be0b1b2a229f1959c941db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24098e17a8be0b1b2a229f1959c941db">&#9670;&#160;</a></span>StartRx()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classdaisy_1_1_uart_handler.html#ac45c7ac82e6f0328b4e7b03fd12e7237">Result</a> daisy::UartHandler::StartRx </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Will be deprecated soon! Wrapper for DmaReceiveFifo </p>
 
 </div>
 </div>

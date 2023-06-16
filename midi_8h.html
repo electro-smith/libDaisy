@@ -108,10 +108,13 @@ $(document).ready(function(){initNavTree('midi_8h.html',''); initResizable(); })
 <div class="contents">
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
 <code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;algorithm&gt;</code><br />
 <code>#include &quot;<a class="el" href="uart_8h_source.html">per/uart.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ringbuffer_8h_source.html">util/ringbuffer.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_midi_event_8h_source.html">hid/MidiEvent.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_f_i_f_o_8h_source.html">util/FIFO.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="midi__parser_8h_source.html">hid/midi_parser.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="usb__midi_8h_source.html">hid/usb_midi.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="dma_8h_source.html">sys/dma.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="system_8h_source.html">sys/system.h</a>&quot;</code><br />
 </div>
 <p><a href="midi_8h_source.html">Go to the source code of this file.</a></p>
@@ -122,11 +125,12 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transport layer for sending and receiving MIDI data over UART.  <a href="classdaisy_1_1_midi_uart_transport.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_uart_transport_1_1_config.html">daisy::MidiUartTransport::Config</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration structure for UART MIDI.  <a href="structdaisy_1_1_midi_uart_transport_1_1_config.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler&lt; Transport &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Simple MIDI Handler <br  />
- Parses bytes from an input into valid MidiEvents. <br  />
- The MidiEvents fill a <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> queue that the user can pop messages from.  <a href="classdaisy_1_1_midi_handler.html#details">More...</a><br /></td></tr>
+Parses bytes from an input into valid MidiEvents. <br  />
+The MidiEvents fill a <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> queue that the user can pop messages from.  <a href="classdaisy_1_1_midi_handler.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_handler_1_1_config.html">daisy::MidiHandler&lt; Transport &gt;::Config</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,8 +145,6 @@ Namespaces</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:a1e52176e4f92572132c9ea700e70ad9d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="midi_8h.html#a1e52176e4f92572132c9ea700e70ad9d">DSY_MIDI_H</a></td></tr>
 <tr class="separator:a1e52176e4f92572132c9ea700e70ad9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02f1ba6b22046642cb6f52e3fab60241"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="midi_8h.html#a02f1ba6b22046642cb6f52e3fab60241">SYSEX_BUFFER_LEN</a>&#160;&#160;&#160;128</td></tr>
-<tr class="separator:a02f1ba6b22046642cb6f52e3fab60241"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -163,20 +165,6 @@ Typedefs</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define DSY_MIDI_H</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a02f1ba6b22046642cb6f52e3fab60241" name="a02f1ba6b22046642cb6f52e3fab60241"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02f1ba6b22046642cb6f52e3fab60241">&#9670;&#160;</a></span>SYSEX_BUFFER_LEN</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SYSEX_BUFFER_LEN&#160;&#160;&#160;128</td>
         </tr>
       </table>
 </div><div class="memdoc">

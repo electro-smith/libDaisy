@@ -25,7 +25,7 @@ var structdaisy_1_1_midi_event =
     [ "data", "structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670", null ],
     [ "sc_type", "structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76", null ],
     [ "srt_type", "structdaisy_1_1_midi_event.html#a6981641c0057f45e3a8556a55948b9fc", null ],
-    [ "sysex_data", "structdaisy_1_1_midi_event.html#a3832d8ac412e42359eff562b56362cbb", null ],
+    [ "sysex_data", "structdaisy_1_1_midi_event.html#a7a51f09a3214731e5c02b6bf72985ac9", null ],
     [ "sysex_message_len", "structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1", null ],
     [ "type", "structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91", null ]
 ];

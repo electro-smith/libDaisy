@@ -108,14 +108,14 @@ $(document).ready(function(){initNavTree('classdaisy_1_1_midi_handler.html','');
 <div class="contents">
 
 <p>Simple MIDI Handler <br  />
- Parses bytes from an input into valid MidiEvents. <br  />
- The MidiEvents fill a <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> queue that the user can pop messages from.  
+Parses bytes from an input into valid MidiEvents. <br  />
+The MidiEvents fill a <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> queue that the user can pop messages from.  
  <a href="classdaisy_1_1_midi_handler.html#details">More...</a></p>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Transport&gt;<br />
 class daisy::MidiHandler&lt; Transport &gt;</div><p>Simple MIDI Handler <br  />
- Parses bytes from an input into valid MidiEvents. <br  />
- The MidiEvents fill a <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> queue that the user can pop messages from. </p>
+Parses bytes from an input into valid MidiEvents. <br  />
+The MidiEvents fill a <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> queue that the user can pop messages from. </p>
 <dl class="section author"><dt>Author</dt><dd>shensley </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>March 2020 </dd></dl>
 </div>
@@ -256,7 +256,7 @@ template&lt;typename Transport &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Initializes the <a class="el" href="classdaisy_1_1_midi_handler.html" title="Simple MIDI Handler   Parses bytes from an input into valid MidiEvents.   The MidiEvents fill a FIFO ...">MidiHandler</a> </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Initializes the <a class="el" href="classdaisy_1_1_midi_handler.html" title="Simple MIDI Handler  Parses bytes from an input into valid MidiEvents.  The MidiEvents fill a FIFO qu...">MidiHandler</a> </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">config</td><td>Configuration structure used to define specifics to the MIDI Handler. </td></tr>
   </table>
@@ -318,9 +318,11 @@ template&lt;typename Transport &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Feed in bytes to state machine from a queue. Populates internal <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> queue with MIDI Messages For example with uart: midi.Parse(uart.PopRx()); </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Feed in bytes to parser state machine from an external source. Populates internal <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> queue with MIDI Messages.</p>
+<dl class="section note"><dt>Note</dt><dd>Normally application code won't need to use this method directly. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">byte</td><td>&amp; </td></tr>
+    <tr><td class="paramname">byte</td><td>MIDI byte to be parsed </td></tr>
   </table>
   </dd>
 </dl>

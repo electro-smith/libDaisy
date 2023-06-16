@@ -69,6 +69,7 @@ var annotated_dup =
       [ "Mcp23X17", "classdaisy_1_1_mcp23_x17.html", "classdaisy_1_1_mcp23_x17" ],
       [ "MidiEvent", "structdaisy_1_1_midi_event.html", "structdaisy_1_1_midi_event" ],
       [ "MidiHandler", "classdaisy_1_1_midi_handler.html", "classdaisy_1_1_midi_handler" ],
+      [ "MidiParser", "classdaisy_1_1_midi_parser.html", "classdaisy_1_1_midi_parser" ],
       [ "MidiUartTransport", "classdaisy_1_1_midi_uart_transport.html", "classdaisy_1_1_midi_uart_transport" ],
       [ "MidiUsbTransport", "classdaisy_1_1_midi_usb_transport.html", "classdaisy_1_1_midi_usb_transport" ],
       [ "MonoModeOnEvent", "structdaisy_1_1_mono_mode_on_event.html", "structdaisy_1_1_mono_mode_on_event" ],

@@ -38,7 +38,7 @@ var group__midi__events =
       [ "value", "structdaisy_1_1_channel_mode_event.html#a950dda368088b6b2263da8de10984aba", null ]
     ] ],
     [ "daisy::SystemExclusiveEvent", "structdaisy_1_1_system_exclusive_event.html", [
-      [ "data", "structdaisy_1_1_system_exclusive_event.html#a784689ef707c6a80e2b90b7996887e9b", null ],
+      [ "data", "structdaisy_1_1_system_exclusive_event.html#ab93fc459d6ccd356113d077f67e08109", null ],
       [ "length", "structdaisy_1_1_system_exclusive_event.html#a975aabec2f3903d767b50652a877d2b0", null ]
     ] ],
     [ "daisy::MTCQuarterFrameEvent", "structdaisy_1_1_m_t_c_quarter_frame_event.html", [
@@ -105,7 +105,7 @@ var group__midi__events =
       [ "data", "structdaisy_1_1_midi_event.html#acec5e71c5a91871bdeb46f6e39125670", null ],
       [ "sc_type", "structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76", null ],
       [ "srt_type", "structdaisy_1_1_midi_event.html#a6981641c0057f45e3a8556a55948b9fc", null ],
-      [ "sysex_data", "structdaisy_1_1_midi_event.html#a3832d8ac412e42359eff562b56362cbb", null ],
+      [ "sysex_data", "structdaisy_1_1_midi_event.html#a7a51f09a3214731e5c02b6bf72985ac9", null ],
       [ "sysex_message_len", "structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1", null ],
       [ "type", "structdaisy_1_1_midi_event.html#aeb9a8c018a3f54c7cafd11b6f8e63e91", null ]
     ] ],

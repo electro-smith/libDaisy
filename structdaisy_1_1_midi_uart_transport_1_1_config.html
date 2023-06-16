@@ -107,6 +107,11 @@ $(document).ready(function(){initNavTree('structdaisy_1_1_midi_uart_transport_1_
 </div><!--header-->
 <div class="contents">
 
+<p>Configuration structure for UART MIDI.  
+ <a href="structdaisy_1_1_midi_uart_transport_1_1_config.html#details">More...</a></p>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Configuration structure for UART MIDI. </p>
+</div>
 <p><code>#include &lt;<a class="el" href="midi_8h_source.html">midi.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -122,6 +127,10 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a84c3f711773c994ae22fbb3969573a11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1637525e57e5aa3773d32d3f619f71f0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_uart_transport_1_1_config.html#a1637525e57e5aa3773d32d3f619f71f0">tx</a></td></tr>
 <tr class="separator:a1637525e57e5aa3773d32d3f619f71f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef5688ab3707e03afb90a53356386d6c"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_uart_transport_1_1_config.html#aef5688ab3707e03afb90a53356386d6c">rx_buffer</a></td></tr>
+<tr class="separator:aef5688ab3707e03afb90a53356386d6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9c46f68be9880b9f0479f8162f77007"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_uart_transport_1_1_config.html#ac9c46f68be9880b9f0479f8162f77007">rx_buffer_size</a></td></tr>
+<tr class="separator:ac9c46f68be9880b9f0479f8162f77007"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acf3aaf63941621f4dc93aa42026293bf" name="acf3aaf63941621f4dc93aa42026293bf"></a>
@@ -129,9 +138,6 @@ Public Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">daisy::MidiUartTransport::Config::Config </td>
@@ -140,11 +146,6 @@ Public Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 </div>
@@ -175,6 +176,38 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="aef5688ab3707e03afb90a53356386d6c" name="aef5688ab3707e03afb90a53356386d6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef5688ab3707e03afb90a53356386d6c">&#9670;&#160;</a></span>rx_buffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t* daisy::MidiUartTransport::Config::rx_buffer</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pointer to buffer for DMA UART rx byte transfer in background.</p>
+<p>By default this uses a shared buffer in DMA_BUFFER_MEM_SECTION, which can only be utilized for a single UART peripheral. To use MIDI with multiple UART peripherals, you must provide your own buffer, allocated to a DMA-capable memory section. </p>
+
+</div>
+</div>
+<a id="ac9c46f68be9880b9f0479f8162f77007" name="ac9c46f68be9880b9f0479f8162f77007"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9c46f68be9880b9f0479f8162f77007">&#9670;&#160;</a></span>rx_buffer_size</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t daisy::MidiUartTransport::Config::rx_buffer_size</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Size in bytes of rx_buffer.</p>
+<p>This size determines the maximum Rx bytes readable by the UART in the background. By default it's set to the size of the default shared rx_buffer (256 bytes). While much smaller sizes can be used, data can get missed if the buffer is too small. </p>
 
 </div>
 </div>

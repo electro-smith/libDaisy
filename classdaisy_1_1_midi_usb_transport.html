@@ -101,6 +101,7 @@ $(document).ready(function(){initNavTree('classdaisy_1_1_midi_usb_transport.html
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classdaisy_1_1_midi_usb_transport-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">daisy::MidiUsbTransport Class Reference<div class="ingroups"><a class="el" href="group__libdaisy.html">LIBDAISY</a> &raquo; <a class="el" href="group__human__interface.html">HUMAN_INTERFACE</a> &raquo; <a class="el" href="group__midi.html">MIDI</a></div></div></div>
@@ -119,18 +120,17 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_usb_transport_1_1_config.html">Config</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ad4ea4fdde06e5e46f5f1054a878558aa"><td class="memItemLeft" align="right" valign="top">typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#ad4ea4fdde06e5e46f5f1054a878558aa">MidiRxParseCallback</a>) (uint8_t *data, size_t size, void *context)</td></tr>
+<tr class="separator:ad4ea4fdde06e5e46f5f1054a878558aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6feaa01b40329b31042c2d681bd31956"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#a6feaa01b40329b31042c2d681bd31956">~MidiUsbTransport</a> ()</td></tr>
-<tr class="separator:a6feaa01b40329b31042c2d681bd31956"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11cf837f61be46669ced0fe3345d9625"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#a11cf837f61be46669ced0fe3345d9625">Init</a> (<a class="el" href="structdaisy_1_1_midi_usb_transport_1_1_config.html">Config</a> config)</td></tr>
 <tr class="separator:a11cf837f61be46669ced0fe3345d9625"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15246033ff7a78e47c37b2ade7769705"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#a15246033ff7a78e47c37b2ade7769705">StartRx</a> ()</td></tr>
-<tr class="separator:a15246033ff7a78e47c37b2ade7769705"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a826d042793bbbf38f5b19aab51207702"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#a826d042793bbbf38f5b19aab51207702">Readable</a> ()</td></tr>
-<tr class="separator:a826d042793bbbf38f5b19aab51207702"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a641c315e8d73411a3c7a2a8087b8f834"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#a641c315e8d73411a3c7a2a8087b8f834">Rx</a> ()</td></tr>
-<tr class="separator:a641c315e8d73411a3c7a2a8087b8f834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb4a68d5ec0eafb2b0093128d5f90529"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#adb4a68d5ec0eafb2b0093128d5f90529">StartRx</a> (<a class="el" href="classdaisy_1_1_midi_usb_transport.html#ad4ea4fdde06e5e46f5f1054a878558aa">MidiRxParseCallback</a> callback, void *context)</td></tr>
+<tr class="separator:adb4a68d5ec0eafb2b0093128d5f90529"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abaea457dd71e7e143f7c5f5045de2b42"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#abaea457dd71e7e143f7c5f5045de2b42">RxActive</a> ()</td></tr>
 <tr class="separator:abaea457dd71e7e143f7c5f5045de2b42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4509734f8dee64bc260a1a5e940b4b9c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#a4509734f8dee64bc260a1a5e940b4b9c">FlushRx</a> ()</td></tr>
@@ -139,14 +139,31 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a997a09de379d7d9275bbb06b255ef711"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f04168895972a3bb8d98670ca9ca6b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#a7f04168895972a3bb8d98670ca9ca6b0">MidiUsbTransport</a> ()</td></tr>
 <tr class="separator:a7f04168895972a3bb8d98670ca9ca6b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6feaa01b40329b31042c2d681bd31956"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#a6feaa01b40329b31042c2d681bd31956">~MidiUsbTransport</a> ()</td></tr>
+<tr class="separator:a6feaa01b40329b31042c2d681bd31956"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace2a362aa40470215a9c77994937352f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#ace2a362aa40470215a9c77994937352f">MidiUsbTransport</a> (const <a class="el" href="classdaisy_1_1_midi_usb_transport.html">MidiUsbTransport</a> &amp;other)=default</td></tr>
 <tr class="separator:ace2a362aa40470215a9c77994937352f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbf0c10b19ceb4c6d4f293c5bea5ec0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_midi_usb_transport.html">MidiUsbTransport</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#afbf0c10b19ceb4c6d4f293c5bea5ec0e">operator=</a> (const <a class="el" href="classdaisy_1_1_midi_usb_transport.html">MidiUsbTransport</a> &amp;other)=default</td></tr>
 <tr class="separator:afbf0c10b19ceb4c6d4f293c5bea5ec0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="ad4ea4fdde06e5e46f5f1054a878558aa" name="ad4ea4fdde06e5e46f5f1054a878558aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4ea4fdde06e5e46f5f1054a878558aa">&#9670;&#160;</a></span>MidiRxParseCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(* daisy::MidiUsbTransport::MidiRxParseCallback) (uint8_t *data, size_t size, void *context)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6feaa01b40329b31042c2d681bd31956" name="a6feaa01b40329b31042c2d681bd31956"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6feaa01b40329b31042c2d681bd31956">&#9670;&#160;</a></span>~MidiUsbTransport()</h2>
+<a id="a7f04168895972a3bb8d98670ca9ca6b0" name="a7f04168895972a3bb8d98670ca9ca6b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f04168895972a3bb8d98670ca9ca6b0">&#9670;&#160;</a></span>MidiUsbTransport() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -155,7 +172,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">daisy::MidiUsbTransport::~MidiUsbTransport </td>
+          <td class="memname">daisy::MidiUsbTransport::MidiUsbTransport </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -170,8 +187,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7f04168895972a3bb8d98670ca9ca6b0" name="a7f04168895972a3bb8d98670ca9ca6b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f04168895972a3bb8d98670ca9ca6b0">&#9670;&#160;</a></span>MidiUsbTransport() <span class="overload">[1/2]</span></h2>
+<a id="a6feaa01b40329b31042c2d681bd31956" name="a6feaa01b40329b31042c2d681bd31956"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6feaa01b40329b31042c2d681bd31956">&#9670;&#160;</a></span>~MidiUsbTransport()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -180,7 +197,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">daisy::MidiUsbTransport::MidiUsbTransport </td>
+          <td class="memname">daisy::MidiUsbTransport::~MidiUsbTransport </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -283,40 +300,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a826d042793bbbf38f5b19aab51207702" name="a826d042793bbbf38f5b19aab51207702"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a826d042793bbbf38f5b19aab51207702">&#9670;&#160;</a></span>Readable()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t daisy::MidiUsbTransport::Readable </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a641c315e8d73411a3c7a2a8087b8f834" name="a641c315e8d73411a3c7a2a8087b8f834"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a641c315e8d73411a3c7a2a8087b8f834">&#9670;&#160;</a></span>Rx()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">uint8_t daisy::MidiUsbTransport::Rx </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="abaea457dd71e7e143f7c5f5045de2b42" name="abaea457dd71e7e143f7c5f5045de2b42"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abaea457dd71e7e143f7c5f5045de2b42">&#9670;&#160;</a></span>RxActive()</h2>
 
@@ -334,8 +317,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a15246033ff7a78e47c37b2ade7769705" name="a15246033ff7a78e47c37b2ade7769705"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15246033ff7a78e47c37b2ade7769705">&#9670;&#160;</a></span>StartRx()</h2>
+<a id="adb4a68d5ec0eafb2b0093128d5f90529" name="adb4a68d5ec0eafb2b0093128d5f90529"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb4a68d5ec0eafb2b0093128d5f90529">&#9670;&#160;</a></span>StartRx()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -343,8 +326,19 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void daisy::MidiUsbTransport::StartRx </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classdaisy_1_1_midi_usb_transport.html#ad4ea4fdde06e5e46f5f1054a878558aa">MidiRxParseCallback</a>&#160;</td>
+          <td class="paramname"><em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>context</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

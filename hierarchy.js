@@ -87,9 +87,11 @@ var hierarchy =
     [ "daisy::Encoder", "classdaisy_1_1_encoder.html", null ],
     [ "daisy::FatFSInterface", "classdaisy_1_1_fat_f_s_interface.html", null ],
     [ "daisy::FIFOBase< T >", "classdaisy_1_1_f_i_f_o_base.html", [
+      [ "daisy::FIFO< daisy::MidiEvent, 256 >", "classdaisy_1_1_f_i_f_o.html", null ],
       [ "daisy::FIFO< Event, 256 >", "classdaisy_1_1_f_i_f_o.html", null ],
       [ "daisy::FIFO< T, capacity >", "classdaisy_1_1_f_i_f_o.html", null ]
     ] ],
+    [ "daisy::FIFOBase< daisy::MidiEvent >", "classdaisy_1_1_f_i_f_o_base.html", null ],
     [ "daisy::FIFOBase< Event >", "classdaisy_1_1_f_i_f_o_base.html", null ],
     [ "daisy::FixedCapStrBase< CharType >", "classdaisy_1_1_fixed_cap_str_base.html", [
       [ "daisy::FixedCapStr< capacity, CharType >", "classdaisy_1_1_fixed_cap_str.html", null ]
@@ -130,6 +132,7 @@ var hierarchy =
     [ "daisy::MidiEvent", "structdaisy_1_1_midi_event.html", null ],
     [ "daisy::MidiHandler< Transport >", "classdaisy_1_1_midi_handler.html", null ],
     [ "daisy::MidiHandler< MidiUartTransport >", "classdaisy_1_1_midi_handler.html", null ],
+    [ "daisy::MidiParser", "classdaisy_1_1_midi_parser.html", null ],
     [ "daisy::MidiUartTransport", "classdaisy_1_1_midi_uart_transport.html", null ],
     [ "daisy::MidiUsbTransport", "classdaisy_1_1_midi_usb_transport.html", null ],
     [ "daisy::MonoModeOnEvent", "structdaisy_1_1_mono_mode_on_event.html", null ],
@@ -172,7 +175,6 @@ var hierarchy =
     [ "daisy::ResetAllControllersEvent", "structdaisy_1_1_reset_all_controllers_event.html", null ],
     [ "daisy::RgbLed", "classdaisy_1_1_rgb_led.html", null ],
     [ "daisy::RingBuffer< T, size >", "classdaisy_1_1_ring_buffer.html", null ],
-    [ "daisy::RingBuffer< daisy::MidiEvent, 256 >", "classdaisy_1_1_ring_buffer.html", null ],
     [ "daisy::RingBuffer< T, 0 >", "classdaisy_1_1_ring_buffer_3_01_t_00_010_01_4.html", null ],
     [ "daisy::SaiHandle", "classdaisy_1_1_sai_handle.html", null ],
     [ "daisy::ScopedIrqBlocker", "classdaisy_1_1_scoped_irq_blocker.html", null ],

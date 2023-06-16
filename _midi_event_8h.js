@@ -1,5 +1,6 @@
 var _midi_event_8h =
 [
+    [ "SYSEX_BUFFER_LEN", "_midi_event_8h.html#a02f1ba6b22046642cb6f52e3fab60241", null ],
     [ "ChannelModeType", "_midi_event_8h.html#gaf9da54b73be4dec526670bd6c53ad98a", [
       [ "AllSoundOff", "_midi_event_8h.html#ggaf9da54b73be4dec526670bd6c53ad98aa5b987ffb2be39ffa56bba82bd4d01151", null ],
       [ "ResetAllControllers", "_midi_event_8h.html#ggaf9da54b73be4dec526670bd6c53ad98aa16372b6654282e39482508fd9dd45752", null ],
