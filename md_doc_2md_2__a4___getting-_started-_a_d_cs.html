@@ -160,7 +160,7 @@ A Single Input</h1>
 <div class="line">  <a class="code hl_struct" href="structdaisy_1_1_adc_channel_config.html">AdcChannelConfig</a> adc_config;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Set up the ADC config with a connection to pin A0</span></div>
-<div class="line">  adc_config.<a class="code hl_function" href="structdaisy_1_1_adc_channel_config.html#a53cd44a415eef197bc2f575f91d6d6af">InitSingle</a>(A0);</div>
+<div class="line">  adc_config.<a class="code hl_function" href="structdaisy_1_1_adc_channel_config.html#ab0e0e90dbe85b179b09f384b9895123d">InitSingle</a>(A0);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Initialize the ADC peripheral with that configuration</span></div>
 <div class="line">  hw.<a class="code hl_variable" href="classdaisy_1_1_daisy_seed.html#a62f0206b9421868f6afba7b81e0b26f2">adc</a>.<a class="code hl_function" href="classdaisy_1_1_adc_handle.html#ab93340170ed44feced69fcdafc6c13ed">Init</a>(&amp;adc_config, 1);</div>
@@ -191,7 +191,7 @@ A Single Input</h1>
 <div class="ttc" id="anamespacedaisy_1_1seed_html"><div class="ttname"><a href="namespacedaisy_1_1seed.html">daisy::seed</a></div><div class="ttdef"><b>Definition</b> daisy_seed.h:195</div></div>
 <div class="ttc" id="anamespacedaisy_html"><div class="ttname"><a href="namespacedaisy.html">daisy</a></div><div class="ttdoc">Hardware defines and helpers for daisy field platform.</div><div class="ttdef"><b>Definition</b> index.h:2</div></div>
 <div class="ttc" id="astructdaisy_1_1_adc_channel_config_html"><div class="ttname"><a href="structdaisy_1_1_adc_channel_config.html">daisy::AdcChannelConfig</a></div><div class="ttdoc">Configuration Structure for an ADC Channel.</div><div class="ttdef"><b>Definition</b> adc.h:32</div></div>
-<div class="ttc" id="astructdaisy_1_1_adc_channel_config_html_a53cd44a415eef197bc2f575f91d6d6af"><div class="ttname"><a href="structdaisy_1_1_adc_channel_config.html#a53cd44a415eef197bc2f575f91d6d6af">daisy::AdcChannelConfig::InitSingle</a></div><div class="ttdeci">void InitSingle(dsy_gpio_pin pin)</div></div>
+<div class="ttc" id="astructdaisy_1_1_adc_channel_config_html_ab0e0e90dbe85b179b09f384b9895123d"><div class="ttname"><a href="structdaisy_1_1_adc_channel_config.html#ab0e0e90dbe85b179b09f384b9895123d">daisy::AdcChannelConfig::InitSingle</a></div><div class="ttdeci">void InitSingle(dsy_gpio_pin pin, ConversionSpeed speed=SPEED_8CYCLES_5)</div></div>
 </div><!-- fragment --><p>To find out more about the serial printing, and what software to use, see our <a class="el" href="md_doc_2md_2__a2___getting-_started-_serial-_printing.html">tutorial on working with Serial Printing</a>.</p>
 <p>With the above program, you should see a number printing that moves from 0 to 65536 as you rotate the pot. Now, pots, and electronics aren't perfect. So there's a chance that this may not reach those extremes, or it might reach them slightly before the edges of the potentiometer's range. This will largely depend on the potentiometer you're using.</p>
 <p>Now that's great and all, but it would be nicer to work with a number that is scaled between 0 and 1 instead (since that's more useful for doing other things).</p>
@@ -213,9 +213,9 @@ Multiple Inputs</h1>
 <div class="line"><span class="keyword">const</span> <span class="keywordtype">int</span> num_adc_channels = 2;</div>
 <div class="line"><a class="code hl_struct" href="structdaisy_1_1_adc_channel_config.html">AdcChannelConfig</a> my_adc_config[num_adc_channels];</div>
 <div class="line"><span class="comment">// Initialize the first one connected to A0</span></div>
-<div class="line">my_adc_config[0].<a class="code hl_function" href="structdaisy_1_1_adc_channel_config.html#a53cd44a415eef197bc2f575f91d6d6af">InitSingle</a>(A0);</div>
+<div class="line">my_adc_config[0].<a class="code hl_function" href="structdaisy_1_1_adc_channel_config.html#ab0e0e90dbe85b179b09f384b9895123d">InitSingle</a>(A0);</div>
 <div class="line"><span class="comment">// Initialize the second one connected to A4</span></div>
-<div class="line">my_adc_config[1].<a class="code hl_function" href="structdaisy_1_1_adc_channel_config.html#a53cd44a415eef197bc2f575f91d6d6af">InitSingle</a>(A4);</div>
+<div class="line">my_adc_config[1].<a class="code hl_function" href="structdaisy_1_1_adc_channel_config.html#ab0e0e90dbe85b179b09f384b9895123d">InitSingle</a>(A4);</div>
 </div><!-- fragment --><p>And finally when we go to initialize the ADC itself, we can now omit the <code>&amp;</code> that we had to use before because it's an array of objects, and we want to make sure to update the total count that we passed in before:</p>
 <div class="fragment"><div class="line">hw.<a class="code hl_variable" href="classdaisy_1_1_daisy_seed.html#a62f0206b9421868f6afba7b81e0b26f2">adc</a>.<a class="code hl_function" href="classdaisy_1_1_adc_handle.html#ab93340170ed44feced69fcdafc6c13ed">Init</a>(my_adc_config, num_adc_channels);</div>
 </div><!-- fragment --><p>Now you can read from either input. If you want to read the pot connected to A0 you would use <code>hw.adc.Get(0)</code>, or <code>hw.adc.GetFloat(0)</code>, and if you want to read from the pot connected to A4, you would use <code>hw.adc.Get(1)</code>, or <code>hw.adc.GetFloat(1)</code>.</p>
@@ -234,7 +234,7 @@ Order To Chaos - Naming ADC Channels</h1>
 <p>Now you can make your code much easier to read - and maintain, should you decide to change the hardware connections later:</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="structdaisy_1_1_adc_channel_config.html">AdcChannelConfig</a> my_adc_config[NUM_ADC_CHANNELS];</div>
 <div class="line"><span class="comment">// ...</span></div>
-<div class="line">my_adc_config[pitchCv].<a class="code hl_function" href="structdaisy_1_1_adc_channel_config.html#a53cd44a415eef197bc2f575f91d6d6af">InitSingle</a>(A0);</div>
+<div class="line">my_adc_config[pitchCv].<a class="code hl_function" href="structdaisy_1_1_adc_channel_config.html#ab0e0e90dbe85b179b09f384b9895123d">InitSingle</a>(A0);</div>
 <div class="line"><span class="comment">// ...</span></div>
 <div class="line">hw.<a class="code hl_variable" href="classdaisy_1_1_daisy_seed.html#a62f0206b9421868f6afba7b81e0b26f2">adc</a>.<a class="code hl_function" href="classdaisy_1_1_adc_handle.html#ab93340170ed44feced69fcdafc6c13ed">Init</a>(my_adc_config, NUM_ADC_CHANNELS);</div>
 <div class="line"><span class="comment">// ...</span></div>

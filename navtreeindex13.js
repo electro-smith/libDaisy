@@ -1,5 +1,15 @@
 var NAVTREEINDEX13 =
 {
+"structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html#a33d3e4f8290feaeafaf6129817623b88":[4,1,0,0,4],
+"structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html#a753b56324f7e8d5733a4b56b30779e46":[4,1,0,0,0],
+"structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html#a776e12358363059e096dd614fa9bb4d6":[4,1,0,0,3],
+"structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html#acfcb28d34bcd73bc33075e7fcbbff243":[4,1,0,0,1],
+"structdaisy_1_1_audio_handle_1_1_config.html":[4,0,1,0,0,0],
+"structdaisy_1_1_audio_handle_1_1_config.html#a2543a29b73eb254e003f33502d88e991":[4,0,1,0,0,0,0],
+"structdaisy_1_1_audio_handle_1_1_config.html#a53848d6e1333445bcc8899039cb58a9a":[4,0,1,0,0,0,2],
+"structdaisy_1_1_audio_handle_1_1_config.html#a744d708032c448f1eec1a78a9a45e7c6":[4,0,1,0,0,0,4],
+"structdaisy_1_1_audio_handle_1_1_config.html#a7e23631311ab3151daa7b4f5a49a897c":[4,0,1,0,0,0,1],
+"structdaisy_1_1_audio_handle_1_1_config.html#ab43119a5a246e3855730972314b416a4":[4,0,1,0,0,0,3],
 "structdaisy_1_1_channel_mode_event.html":[4,0,1,4,0,7],
 "structdaisy_1_1_channel_mode_event.html#a950dda368088b6b2263da8de10984aba":[4,0,1,4,0,7,2],
 "structdaisy_1_1_channel_mode_event.html#ac4448faf5f246b35970e3524a8926fa0":[4,0,1,4,0,7,1],
@@ -239,15 +249,5 @@ var NAVTREEINDEX13 =
 "structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#a60556e52b033f81831b4b8ec43b7d0d9":[4,1,12,0,0],
 "structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#a65146322b1ea8590e25abdfcd2f8b159":[4,1,12,0,4],
 "structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#a84f92212e2e732c74a9bfb89f85118e8":[4,1,12,0,1],
-"structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#acec420c950ea14c1fe0ae358e7578be3":[4,1,12,0,3],
-"structdaisy_1_1_note_off_event.html":[4,0,1,4,0,0],
-"structdaisy_1_1_note_off_event.html#a76253736b9fe792133ab5613761f3017":[4,0,1,4,0,0,0],
-"structdaisy_1_1_note_off_event.html#a889c129b1e9c3b56cef43cc383036c3c":[4,0,1,4,0,0,1],
-"structdaisy_1_1_note_off_event.html#a9880e1c6eab10114affe27c1ec5e9419":[4,0,1,4,0,0,2],
-"structdaisy_1_1_note_on_event.html":[4,0,1,4,0,1],
-"structdaisy_1_1_note_on_event.html#a35cf35e69cd28f75c11d4cc0f8245988":[4,0,1,4,0,1,2],
-"structdaisy_1_1_note_on_event.html#a5ca9bb0235042964923ce1ebdf0c7321":[4,0,1,4,0,1,0],
-"structdaisy_1_1_note_on_event.html#ab457a7574235f856d5e2d16ae51b3a20":[4,0,1,4,0,1,1],
-"structdaisy_1_1_oled_display_1_1_config.html":[4,0,4,8,0],
-"structdaisy_1_1_oled_display_1_1_config.html#aa05c5992eba4992253bd198cdcbc1589":[4,0,4,8,0,0]
+"structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#acec420c950ea14c1fe0ae358e7578be3":[4,1,12,0,3]
 };
