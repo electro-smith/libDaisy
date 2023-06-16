@@ -14,7 +14,6 @@
 
 namespace daisy
 {
-
 /** @brief   Transport layer for sending and receiving MIDI data over UART
  *  @details This is the mode of communication used for TRS and DIN MIDI
  *           There is an additional 2kB of RAM data used within this class

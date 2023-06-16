@@ -37,7 +37,7 @@ bool MidiParser::Parse(uint8_t byte, MidiEvent* event_out)
                         //sysex
                         if(incoming_message_.sc_type == SystemExclusive)
                         {
-                            pstate_ = ParserSysEx;
+                            pstate_                             = ParserSysEx;
                             incoming_message_.sysex_message_len = 0;
                         }
                         //short circuit

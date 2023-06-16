@@ -8,7 +8,6 @@
 
 namespace daisy
 {
-
 /** @brief   Utility class for parsing raw byte streams into MIDI messages
  *  @details Implemented as a state machine designed to parse one byte at a time
  *  @ingroup midi
