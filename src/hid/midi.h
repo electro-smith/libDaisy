@@ -50,7 +50,8 @@ class MidiUartTransport
         /** Size in bytes of rx_buffer.
          *
          *  @details This size determines the maximum Rx bytes readable by the UART in the background.
-         *           By default it's set to the size of the default shared rx_buffer.
+         *           By default it's set to the size of the default shared rx_buffer (256 bytes).
+         *           While much smaller sizes can be used, data can get missed if the buffer is too small.
          */
         size_t rx_buffer_size;
 
