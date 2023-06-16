@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <algorithm>
 #include "per/uart.h"
 #include "util/ringbuffer.h"
 #include "util/FIFO.h"
@@ -75,6 +76,9 @@ class MidiUartTransport
 
         rx_buffer      = config.rx_buffer;
         rx_buffer_size = config.rx_buffer_size;
+
+        /** zero the buffer to ensure emptiness regardless of source memory */
+        std::fill(rx_buffer, rx_buffer + rx_buffer_size, 0);
 
         uart_.Init(uart_config);
     }
