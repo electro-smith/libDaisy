@@ -363,8 +363,6 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     }
     // Configure Regular Channel
     // Configure Shared settings for all channels.
-    //sConfig.SamplingTime = ADC_SAMPLETIME_8CYCLES_5;
-    //sConfig.SamplingTime = ADC_SAMPLETIME_64CYCLES_5;
     sConfig.SingleDiff   = ADC_SINGLE_ENDED;
     sConfig.OffsetNumber = ADC_OFFSET_NONE;
     sConfig.Offset       = 0;
