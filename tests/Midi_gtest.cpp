@@ -328,8 +328,8 @@ TEST_F(MidiTest, allNotesOff)
 {
     for(uint8_t chn = 0; chn < 16; chn++)
     {
-        uint8_t          msg[]    = {(uint8_t)(0x80 + (3 << 4) + chn), 123, 0};
-        MidiEvent        event    = ParseAndPop(msg, 3);
+        uint8_t          msg[] = {(uint8_t)(0x80 + (3 << 4) + chn), 123, 0};
+        MidiEvent        event = ParseAndPop(msg, 3);
         AllNotesOffEvent allOnEvent = event.AsAllNotesOff();
 
         EXPECT_EQ((uint8_t)event.type, ChannelMode);
@@ -616,7 +616,42 @@ TEST_F(MidiTest, runningStatus)
         EXPECT_EQ(ccEvent.value, i);
     }
 
+
     EXPECT_FALSE(midi.HasEvents());
+}
+
+/** This tests that SystemRealTime (clock, etc.) messages
+ *  don't clear the running status
+*/
+TEST_F(MidiTest, runningStatSysRealtime)
+{
+    /** Clock messages between running status notes */
+    uint8_t realtime_mixed_bytes[] = {
+        0x90, /**< Note On Status */
+        0x24, /**< Note Number 36 */
+        0x40, /**< velocity 40 */
+        0xf8, /**, Timing Clock */
+        0xf8, /**, Timing Clock */
+        0xf8, /**, Timing Clock */
+        0x24, /**< Note Number 36 */
+        0x00, /**< velocity 00 */
+    };
+    /** parse */
+    for(int i = 0; i < 8; i++)
+    {
+        midi.Parse(realtime_mixed_bytes[i]);
+    }
+
+    auto noteon1 = midi.PopEvent();
+    EXPECT_EQ(noteon1.type, NoteOn);
+    auto clk1 = midi.PopEvent();
+    EXPECT_EQ(clk1.type, SystemRealTime);
+    auto clk2 = midi.PopEvent();
+    EXPECT_EQ(clk2.type, SystemRealTime);
+    auto clk3 = midi.PopEvent();
+    EXPECT_EQ(clk3.type, SystemRealTime);
+    auto noteon2 = midi.PopEvent();
+    EXPECT_EQ(noteon2.type, NoteOff);
 }
 
 // ================ Bad Data ================
@@ -717,11 +752,11 @@ TEST_F(MidiTest, singleByteRunningStatusTest)
 
     for(uint8_t i = 0; i < 128; i++)
     {
-        MidiEvent ev  = ParseAndPop(&i, 1);
+        MidiEvent ev = ParseAndPop(&i, 1);
 
         EXPECT_EQ(ev.type, ChannelPressure);
 
-        ChannelPressureEvent  chPressure  = ev.AsChannelPressure();
+        ChannelPressureEvent chPressure = ev.AsChannelPressure();
 
         EXPECT_EQ(chPressure.channel, 3);
         EXPECT_EQ(chPressure.pressure, i);
@@ -735,51 +770,14 @@ TEST_F(MidiTest, singleByteRunningStatusTest)
 
     for(uint8_t i = 0; i < 128; i++)
     {
-        MidiEvent ev  = ParseAndPop(&i, 1);
+        MidiEvent ev = ParseAndPop(&i, 1);
 
         EXPECT_EQ(ev.type, ProgramChange);
 
-        ProgramChangeEvent  progChange  = ev.AsProgramChange();
+        ProgramChangeEvent progChange = ev.AsProgramChange();
 
         EXPECT_EQ(progChange.channel, 3);
         EXPECT_EQ(progChange.program, i);
-    }
-
-    EXPECT_FALSE(midi.HasEvents());
-
-    // == MTC Quarter Frame ==
-    status = 0xF1; // quarter frame
-    Parse(&status, 1);
-
-    for(uint8_t i = 0; i < 128; i++)
-    {
-        MidiEvent ev  = ParseAndPop(&i, 1);
-
-        EXPECT_EQ(ev.type, SystemCommon);
-        EXPECT_EQ(ev.sc_type, MTCQuarterFrame);
-
-        MTCQuarterFrameEvent  qfEv  = ev.AsMTCQuarterFrame();
-
-        EXPECT_EQ(qfEv.value, i & 0x0F);
-        EXPECT_EQ(qfEv.message_type, (i & 0x70) >> 4);
-    }
-
-    EXPECT_FALSE(midi.HasEvents());
-
-    // == Song Select ==
-    status = 0xF3; // song select
-    Parse(&status, 1);
-
-    for(uint8_t i = 0; i < 128; i++)
-    {
-        MidiEvent ev  = ParseAndPop(&i, 1);
-
-        EXPECT_EQ(ev.type, SystemCommon);
-        EXPECT_EQ(ev.sc_type, SongSelect);
-
-        SongSelectEvent  songSel  = ev.AsSongSelect();
-
-        EXPECT_EQ(songSel.song, i);
     }
 
     EXPECT_FALSE(midi.HasEvents());

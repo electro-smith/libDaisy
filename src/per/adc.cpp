@@ -149,7 +149,8 @@ static dsy_adc adc;
 
 // Begin AdcChannelConfig Implementations
 
-void AdcChannelConfig::InitSingle(Pin pin)
+void AdcChannelConfig::InitSingle(Pin                               pin,
+                                  AdcChannelConfig::ConversionSpeed speed)
 {
     GPIO::Config& pin_config = pin_.GetConfig();
 
@@ -157,12 +158,14 @@ void AdcChannelConfig::InitSingle(Pin pin)
     mux_channels_   = 0;
     pin_config.mode = GPIO::Mode::ANALOG;
     pin_config.pull = GPIO::Pull::NOPULL;
+    speed_          = speed;
 }
-void AdcChannelConfig::InitMux(Pin    adc_pin,
-                               size_t mux_channels,
-                               Pin    mux_0,
-                               Pin    mux_1,
-                               Pin    mux_2)
+void AdcChannelConfig::InitMux(Pin                               adc_pin,
+                               size_t                            mux_channels,
+                               Pin                               mux_0,
+                               Pin                               mux_1,
+                               Pin                               mux_2,
+                               AdcChannelConfig::ConversionSpeed speed)
 {
     size_t pins_to_init;
 
@@ -187,6 +190,7 @@ void AdcChannelConfig::InitMux(Pin    adc_pin,
         mux_pin_config.mode = GPIO::Mode::OUTPUT;
         mux_pin_config.pull = GPIO::Pull::NOPULL;
     }
+    speed_ = speed;
 }
 
 // Begin AdcHandle Implementations
@@ -318,13 +322,41 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
     }
     // Configure Regular Channel
     // Configure Shared settings for all channels.
-    sConfig.SamplingTime = ADC_SAMPLETIME_8CYCLES_5;
     sConfig.SingleDiff   = ADC_SINGLE_ENDED;
     sConfig.OffsetNumber = ADC_OFFSET_NONE;
     sConfig.Offset       = 0;
     for(uint8_t i = 0; i < adc.channels; i++)
     {
         AdcChannelConfig& cfg = adc.pin_cfg[i];
+
+        /** Handle per-channel conversions */
+        switch(cfg.speed_)
+        {
+            case AdcChannelConfig::SPEED_1CYCLES_5:
+                sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+                break;
+            case AdcChannelConfig::SPEED_2CYCLES_5:
+                sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;
+                break;
+            case AdcChannelConfig::SPEED_8CYCLES_5:
+                sConfig.SamplingTime = ADC_SAMPLETIME_8CYCLES_5;
+                break;
+            case AdcChannelConfig::SPEED_16CYCLES_5:
+                sConfig.SamplingTime = ADC_SAMPLETIME_16CYCLES_5;
+                break;
+            case AdcChannelConfig::SPEED_32CYCLES_5:
+                sConfig.SamplingTime = ADC_SAMPLETIME_32CYCLES_5;
+                break;
+            case AdcChannelConfig::SPEED_64CYCLES_5:
+                sConfig.SamplingTime = ADC_SAMPLETIME_64CYCLES_5;
+                break;
+            case AdcChannelConfig::SPEED_387CYCLES_5:
+                sConfig.SamplingTime = ADC_SAMPLETIME_387CYCLES_5;
+                break;
+            case AdcChannelConfig::SPEED_810CYCLES_5:
+                sConfig.SamplingTime = ADC_SAMPLETIME_810CYCLES_5;
+                break;
+        }
 
         // init ADC pin
         cfg.pin_.Init();

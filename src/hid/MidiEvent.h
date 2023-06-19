@@ -1,3 +1,6 @@
+// TODO: make this adjustable
+#define SYSEX_BUFFER_LEN 128
+
 namespace daisy
 {
 /** @addtogroup midi MIDI
@@ -7,7 +10,7 @@ namespace daisy
  *  @{
  */
 
-/** @defgroup midi_events MIDI_EVENTS 
+/** @defgroup midi_events MIDI_EVENTS
  *  @{
 */
 
@@ -200,7 +203,7 @@ struct AllNotesOffEvent
 {
     int channel; /**< & */
 };
-/** Struct containing OmniModeOffEvent data. 
+/** Struct containing OmniModeOffEvent data.
  * Can be made from MidiEvent
 */
 struct OmniModeOffEvent

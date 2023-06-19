@@ -1,7 +1,5 @@
 /* 
 TODO
-- UART1 defaults to DMA, add flexible config for DMA on all periphs
-- Transmit function improvements.
 - Overflow handling, etc. for Rx Queue.
 */
 
@@ -81,8 +79,7 @@ class UartHandler
             stopbits   = StopBits::BITS_1;
             parity     = Parity::NONE;
             wordlength = WordLength::BITS_8;
-            baudrate   = 4800;
-            // baudrate   = 31250;
+            baudrate   = 31250;
         }
 
         Peripheral periph;
@@ -117,10 +114,26 @@ class UartHandler
     /** Returns the current config. */
     const Config& GetConfig() const;
 
-    /** A callback to be executed right before a dma transfer is started. */
+    /** A callback to be executed right before a standard dma transfer is started. */
     typedef void (*StartCallbackFunctionPtr)(void* context);
-    /** A callback to be executed after a dma transfer is completed. */
+    /** A callback to be executed after a standard dma transfer is completed. */
     typedef void (*EndCallbackFunctionPtr)(void* context, Result result);
+
+    /** A callback to be executed when using circular/listening mode 
+     *  includes a callback context, as well as the data to be handled
+     *  This fires either after half of the size of the user-defined buffer 
+     *  has been transferred from peripheral to memory, or after an IDLE frame
+     *  is detected.
+     * 
+     *  @param data byte-buffer to fill with data
+     *  @param size size of the "data" byte buffer 
+     *  @param context user-defined context variable to pass state to the callback
+     *  @param result state of the UART Handler result, should be OK if things are OK.
+     */
+    typedef void (*CircularRxCallbackFunctionPtr)(uint8_t* data,
+                                                  size_t   size,
+                                                  void*    context,
+                                                  Result   result);
 
     /** Blocking transmit 
     \param buff input buffer
@@ -171,51 +184,39 @@ class UartHandler
                       UartHandler::EndCallbackFunctionPtr   end_callback,
                       void*                                 callback_context);
 
+    /** Starts the DMA Reception in "Listen" mode. 
+     *  In this mode the DMA is configured for circular 
+     *  behavior, and the IDLE interrupt is enabled.
+     * 
+     *  At TC, HT, and IDLE interrupts data must be processed.
+     * 
+     *  Size must be set so that at maximum bandwidth, the software
+     *  has time to process N bytes before the next circular IRQ is fired
+     * 
+     *  @param buff buffer of data accessible by DMA.
+     *  @param size size of buffer
+     *  @param cb callback that happens containing new bytes to process in software
+     *  @param callback_context pointer to user-defined data accessible from callback 
+     */
+    Result DmaListenStart(uint8_t*                      buff,
+                          size_t                        size,
+                          CircularRxCallbackFunctionPtr cb,
+                          void*                         callback_context);
+
+    /** Stops the DMA Reception during listen mode */
+    Result DmaListenStop();
+
+    /** Returns whether listen the DmaListen mode is active or not */
+    bool IsListening() const;
+
     /** \return the result of HAL_UART_GetError() to the user. */
     int CheckError();
-
-    /** Start the DMA Receive with a double buffered FIFO
-        \return OK or ERR
-    */
-    Result DmaReceiveFifo();
-
-    /** Flush all of the data from the fifo
-        \return OK or ERR
-    */
-    Result FlushFifo();
-
-    /** Get the top item off of the FIFO
-        \return Top item from the FIFO
-    */
-    uint8_t PopFifo();
-
-    /** How much data is in the FIFO
-        \return number of elements ready to pop from FIFO
-    */
-    size_t ReadableFifo();
 
     /** Will be deprecated soon! Wrapper for BlockingTransmit */
     int PollReceive(uint8_t* buff, size_t size, uint32_t timeout);
 
     /** Will be deprecated soon! Wrapper for BlockingTransmit */
     Result PollTx(uint8_t* buff, size_t size);
-
-    /** Will be deprecated soon! Wrapper for DmaReceiveFifo */
-    Result StartRx();
-
-    /** Will be deprecated soon! 
-        \return true. New DMA will always restart itself.
-    */
-    bool RxActive() { return true; }
-
-    /** Will be deprecated soon! Wrapper for FlushFifo */
-    Result FlushRx();
-
-    /** Will be deprecated soon! Wrapper PopFifo */
-    uint8_t PopRx();
-
-    /** Will be deprecated soon!  Wrapper for ReadableFifo */
-    size_t Readable();
 
     class Impl; /**< & */
 
