@@ -23,8 +23,6 @@ extern "C"
     }
 
     CDC_ReceiveCallback rxcallback;
-
-    uint8_t usbd_mode = USBD_MODE_CDC;
 }
 
 UsbHandle::ReceiveCallback rx_callback;

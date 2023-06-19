@@ -13,3 +13,6 @@
 [submodule "Drivers/STM32H7xx_HAL_Driver"]
 	path = Drivers/STM32H7xx_HAL_Driver
 	url = https://github.com/STMicroelectronics/stm32h7xx_hal_driver
+[submodule "Middlewares/ST/STM32_USB_Device_Library"]
+	path = Middlewares/ST/STM32_USB_Device_Library
+	url = https://github.com/STMicroelectronics/stm32_mw_usb_device
