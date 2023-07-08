@@ -289,7 +289,7 @@ C_DEFS =  \
 # ^ added for easy startup access
 
 
-C_INCLUDES = \
+C_INCLUDES += \
 -I$(MODULE_DIR) \
 -I$(MODULE_DIR)/sys \
 -I$(MODULE_DIR)/usbd \
