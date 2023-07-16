@@ -37,6 +37,6 @@ void Color::Init(PresetColor c)
 void Color::Init(float red, float green, float blue)
 {
     red_   = clamp(red, 0.0f, 1.0f);
-    green_ = clamp(red, 0.0f, 1.0f);
+    green_ = clamp(green, 0.0f, 1.0f);
     blue_  = clamp(blue, 0.0f, 1.0f);
 }
