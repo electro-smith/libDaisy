@@ -4,3 +4,4 @@
 #include "util/MappedValue.cpp"
 #include "util/oled_fonts.c"
 #include "per/qspi.cpp"
+#include "hid/midi_parser.cpp"

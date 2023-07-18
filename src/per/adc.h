@@ -39,10 +39,24 @@ struct AdcChannelConfig
         MUX_SEL_LAST, /**< & */
     };
 
+    /** \brief per channel conversion speed added to fixed time based on bitdepth, etc. */
+    enum ConversionSpeed
+    {
+        SPEED_1CYCLES_5,
+        SPEED_2CYCLES_5,
+        SPEED_8CYCLES_5,
+        SPEED_16CYCLES_5,
+        SPEED_32CYCLES_5,
+        SPEED_64CYCLES_5,
+        SPEED_387CYCLES_5,
+        SPEED_810CYCLES_5,
+    };
+
     /** Initializes a single ADC pin as an ADC. 
     \param pin Pin to init.
+    \param speed conversion speed for this pin defaults to 8.5 cycles
      */
-    void InitSingle(dsy_gpio_pin pin);
+    void InitSingle(dsy_gpio_pin pin, ConversionSpeed speed = SPEED_8CYCLES_5);
 
     /** 
     Initializes a single ADC pin as a Multiplexed ADC.
@@ -50,21 +64,24 @@ struct AdcChannelConfig
     You only need to supply the mux pins that are required,
     e.g. a 4052 mux would only require mux_0 and mux_1.
     Internal Callbacks handle the pin addressing.
+    \param adc_pin &
     \param mux_channels must be 1-8
     \param mux_0 First mux pin
     \param mux_1 Second mux pin
     \param mux_2 Third mux pin
-    \param adc_pin &
+    \param speed conversion speed for this pin defaults to 8.5 cycles
     */
-    void InitMux(dsy_gpio_pin adc_pin,
-                 size_t       mux_channels,
-                 dsy_gpio_pin mux_0,
-                 dsy_gpio_pin mux_1 = {DSY_GPIOX, 0},
-                 dsy_gpio_pin mux_2 = {DSY_GPIOX, 0});
+    void InitMux(dsy_gpio_pin    adc_pin,
+                 size_t          mux_channels,
+                 dsy_gpio_pin    mux_0,
+                 dsy_gpio_pin    mux_1 = {DSY_GPIOX, 0},
+                 dsy_gpio_pin    mux_2 = {DSY_GPIOX, 0},
+                 ConversionSpeed speed = SPEED_8CYCLES_5);
 
-    dsy_gpio pin_;                   /**< & */
-    dsy_gpio mux_pin_[MUX_SEL_LAST]; /**< & */
-    uint8_t  mux_channels_;          /**< & */
+    dsy_gpio        pin_;                   /**< & */
+    dsy_gpio        mux_pin_[MUX_SEL_LAST]; /**< & */
+    uint8_t         mux_channels_;          /**< & */
+    ConversionSpeed speed_;
 };
 
 /**

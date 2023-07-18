@@ -4,28 +4,29 @@
 using namespace daisy;
 
 // Hardware Definitions
-#define PIN_ENC_CLICK 0
-#define PIN_ENC_B 11
-#define PIN_ENC_A 12
-#define PIN_OLED_DC 9
-#define PIN_OLED_RESET 30
-#define PIN_MIDI_OUT 13
-#define PIN_MIDI_IN 14
-#define PIN_GATE_OUT 17
-#define PIN_GATE_IN_1 20
-#define PIN_GATE_IN_2 19
-#define PIN_SAI_SCK_A 28
-#define PIN_SAI2_FS_A 27
-#define PIN_SAI2_SD_A 26
-#define PIN_SAI2_SD_B 25
-#define PIN_SAI2_MCLK 24
+constexpr Pin PIN_ENC_CLICK  = seed::D0;
+constexpr Pin PIN_ENC_B      = seed::D11;
+constexpr Pin PIN_ENC_A      = seed::D12;
+constexpr Pin PIN_OLED_DC    = seed::D9;
+constexpr Pin PIN_OLED_RESET = seed::D30;
+constexpr Pin PIN_MIDI_OUT   = seed::D13;
+constexpr Pin PIN_MIDI_IN    = seed::D14;
+constexpr Pin PIN_GATE_OUT   = seed::D17;
+constexpr Pin PIN_GATE_IN_1  = seed::D20;
+constexpr Pin PIN_GATE_IN_2  = seed::D19;
+constexpr Pin PIN_SAI_SCK_A  = seed::D28;
+constexpr Pin PIN_SAI2_FS_A  = seed::D27;
+constexpr Pin PIN_SAI2_SD_A  = seed::D26;
+constexpr Pin PIN_SAI2_SD_B  = seed::D25;
+constexpr Pin PIN_SAI2_MCLK  = seed::D24;
 
-#define PIN_AK4556_RESET 29
+constexpr Pin PIN_AK4556_RESET = seed::D29;
 
-#define PIN_CTRL_1 15
-#define PIN_CTRL_2 16
-#define PIN_CTRL_3 21
-#define PIN_CTRL_4 18
+constexpr Pin PIN_CTRL_1 = seed::D15;
+constexpr Pin PIN_CTRL_2 = seed::D16;
+constexpr Pin PIN_CTRL_3 = seed::D21;
+constexpr Pin PIN_CTRL_4 = seed::D18;
+
 
 void DaisyPatch::Init(bool boost)
 {
@@ -174,15 +175,15 @@ void DaisyPatch::InitAudio()
     // Internal Codec
     if(seed.CheckBoardVersion() == DaisySeed::BoardVersion::DAISY_SEED_1_1)
     {
-        sai_config[0].pin_config.sa = {DSY_GPIOE, 6};
-        sai_config[0].pin_config.sb = {DSY_GPIOE, 3};
+        sai_config[0].pin_config.sa = Pin(PORTE, 6);
+        sai_config[0].pin_config.sb = Pin(PORTE, 3);
         sai_config[0].a_dir         = SaiHandle::Config::Direction::RECEIVE;
         sai_config[0].b_dir         = SaiHandle::Config::Direction::TRANSMIT;
     }
     else
     {
-        sai_config[0].pin_config.sa = {DSY_GPIOE, 6};
-        sai_config[0].pin_config.sb = {DSY_GPIOE, 3};
+        sai_config[0].pin_config.sa = Pin(PORTE, 6);
+        sai_config[0].pin_config.sb = Pin(PORTE, 3);
         sai_config[0].a_dir         = SaiHandle::Config::Direction::TRANSMIT;
         sai_config[0].b_dir         = SaiHandle::Config::Direction::RECEIVE;
     }
@@ -191,9 +192,9 @@ void DaisyPatch::InitAudio()
     sai_config[0].bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
     sai_config[0].a_sync          = SaiHandle::Config::Sync::MASTER;
     sai_config[0].b_sync          = SaiHandle::Config::Sync::SLAVE;
-    sai_config[0].pin_config.fs   = {DSY_GPIOE, 4};
-    sai_config[0].pin_config.mclk = {DSY_GPIOE, 2};
-    sai_config[0].pin_config.sck  = {DSY_GPIOE, 5};
+    sai_config[0].pin_config.fs   = Pin(PORTE, 4);
+    sai_config[0].pin_config.mclk = Pin(PORTE, 2);
+    sai_config[0].pin_config.sck  = Pin(PORTE, 5);
 
     // External Codec
     sai_config[1].periph          = SaiHandle::Config::Peripheral::SAI_2;
@@ -203,11 +204,11 @@ void DaisyPatch::InitAudio()
     sai_config[1].b_sync          = SaiHandle::Config::Sync::MASTER;
     sai_config[1].a_dir           = SaiHandle::Config::Direction::TRANSMIT;
     sai_config[1].b_dir           = SaiHandle::Config::Direction::RECEIVE;
-    sai_config[1].pin_config.fs   = seed.GetPin(27);
-    sai_config[1].pin_config.mclk = seed.GetPin(24);
-    sai_config[1].pin_config.sck  = seed.GetPin(28);
-    sai_config[1].pin_config.sb   = seed.GetPin(25);
-    sai_config[1].pin_config.sa   = seed.GetPin(26);
+    sai_config[1].pin_config.fs   = seed::D27;
+    sai_config[1].pin_config.mclk = seed::D24;
+    sai_config[1].pin_config.sck  = seed::D28;
+    sai_config[1].pin_config.sb   = seed::D25;
+    sai_config[1].pin_config.sa   = seed::D26;
 
     SaiHandle sai_handle[2];
     sai_handle[0].Init(sai_config[0]);
@@ -215,7 +216,7 @@ void DaisyPatch::InitAudio()
 
     // Reset Pin for AK4556
     // Built-in AK4556 was reset during Seed Init
-    dsy_gpio_pin codec_reset_pin = seed.GetPin(PIN_AK4556_RESET);
+    dsy_gpio_pin codec_reset_pin = PIN_AK4556_RESET;
     Ak4556::Init(codec_reset_pin);
 
     // Reinit Audio for _both_ codecs...
@@ -231,10 +232,10 @@ void DaisyPatch::InitControls()
     AdcChannelConfig cfg[CTRL_LAST];
 
     // Init ADC channels with Pins
-    cfg[CTRL_1].InitSingle(seed.GetPin(PIN_CTRL_1));
-    cfg[CTRL_2].InitSingle(seed.GetPin(PIN_CTRL_2));
-    cfg[CTRL_3].InitSingle(seed.GetPin(PIN_CTRL_3));
-    cfg[CTRL_4].InitSingle(seed.GetPin(PIN_CTRL_4));
+    cfg[CTRL_1].InitSingle(PIN_CTRL_1);
+    cfg[CTRL_2].InitSingle(PIN_CTRL_2);
+    cfg[CTRL_3].InitSingle(PIN_CTRL_3);
+    cfg[CTRL_4].InitSingle(PIN_CTRL_4);
 
     // Initialize ADC
     seed.adc.Init(cfg, CTRL_LAST);
@@ -250,10 +251,9 @@ void DaisyPatch::InitDisplay()
 {
     OledDisplay<SSD130x4WireSpi128x64Driver>::Config display_config;
 
-    display_config.driver_config.transport_config.pin_config.dc
-        = seed.GetPin(PIN_OLED_DC);
+    display_config.driver_config.transport_config.pin_config.dc = PIN_OLED_DC;
     display_config.driver_config.transport_config.pin_config.reset
-        = seed.GetPin(PIN_OLED_RESET);
+        = PIN_OLED_RESET;
 
     display.Init(display_config);
 }
@@ -280,23 +280,18 @@ void DaisyPatch::InitCvOutputs()
 
 void DaisyPatch::InitEncoder()
 {
-    encoder.Init(seed.GetPin(PIN_ENC_A),
-                 seed.GetPin(PIN_ENC_B),
-                 seed.GetPin(PIN_ENC_CLICK));
+    encoder.Init(PIN_ENC_A, PIN_ENC_B, PIN_ENC_CLICK);
 }
 
 void DaisyPatch::InitGates()
 {
     // Gate Output
-    gate_output.pin  = seed.GetPin(PIN_GATE_OUT);
+    gate_output.pin  = PIN_GATE_OUT;
     gate_output.mode = DSY_GPIO_MODE_OUTPUT_PP;
     gate_output.pull = DSY_GPIO_NOPULL;
     dsy_gpio_init(&gate_output);
 
     // Gate Inputs
-    dsy_gpio_pin pin;
-    pin = seed.GetPin(PIN_GATE_IN_1);
-    gate_input[GATE_IN_1].Init(&pin);
-    pin = seed.GetPin(PIN_GATE_IN_2);
-    gate_input[GATE_IN_2].Init(&pin);
+    gate_input[GATE_IN_1].Init(PIN_GATE_IN_1);
+    gate_input[GATE_IN_2].Init(PIN_GATE_IN_2);
 }

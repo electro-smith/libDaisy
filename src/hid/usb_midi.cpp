@@ -10,15 +10,20 @@ class MidiUsbTransport::Impl
   public:
     void Init(Config config);
 
-    void    StartRx() { rx_active_ = true; }
-    size_t  Readable() { return rx_buffer_.readable(); }
-    uint8_t Rx() { return rx_buffer_.Read(); }
-    bool    RxActive() { return rx_active_; }
-    void    FlushRx() { rx_buffer_.Flush(); }
-    void    Tx(uint8_t* buffer, size_t size);
+    void StartRx(MidiRxParseCallback callback, void* context)
+    {
+        rx_active_      = true;
+        parse_callback_ = callback;
+        parse_context_  = context;
+    }
+
+    bool RxActive() { return rx_active_; }
+    void FlushRx() { rx_buffer_.Flush(); }
+    void Tx(uint8_t* buffer, size_t size);
 
     void UsbToMidi(uint8_t* buffer, uint8_t length);
     void MidiToUsb(uint8_t* buffer, size_t length);
+    void Parse();
 
   private:
     void MidiToUsbSingle(uint8_t* buffer, size_t length);
@@ -32,6 +37,8 @@ class MidiUsbTransport::Impl
     bool                    rx_active_;
     // This corresponds to 256 midi messages
     RingBuffer<uint8_t, kBufferSize> rx_buffer_;
+    MidiRxParseCallback              parse_callback_;
+    void*                            parse_context_;
 
     // simple, self-managed buffer
     uint8_t tx_buffer_[kBufferSize];
@@ -68,6 +75,7 @@ void ReceiveCallback(uint8_t* buffer, uint32_t* length)
             size_t  remaining_bytes = *length - i;
             uint8_t packet_length   = remaining_bytes > 4 ? 4 : remaining_bytes;
             midi_usb_handle.UsbToMidi(buffer + i, packet_length);
+            midi_usb_handle.Parse();
         }
     }
 }
@@ -275,6 +283,20 @@ void MidiUsbTransport::Impl::MidiToUsb(uint8_t* buffer, size_t size)
     }
 }
 
+void MidiUsbTransport::Impl::Parse()
+{
+    if(parse_callback_)
+    {
+        uint8_t bytes[kBufferSize];
+        size_t  i = 0;
+        while(!rx_buffer_.isEmpty())
+        {
+            bytes[i++] = rx_buffer_.Read();
+        }
+        parse_callback_(bytes, i, parse_context_);
+    }
+}
+
 ////////////////////////////////////////////////
 // MidiUsbTransport -> MidiUsbTransport::Impl
 ////////////////////////////////////////////////
@@ -285,19 +307,9 @@ void MidiUsbTransport::Init(MidiUsbTransport::Config config)
     pimpl_->Init(config);
 }
 
-void MidiUsbTransport::StartRx()
+void MidiUsbTransport::StartRx(MidiRxParseCallback callback, void* context)
 {
-    pimpl_->StartRx();
-}
-
-size_t MidiUsbTransport::Readable()
-{
-    return pimpl_->Readable();
-}
-
-uint8_t MidiUsbTransport::Rx()
-{
-    return pimpl_->Rx();
+    pimpl_->StartRx(callback, context);
 }
 
 bool MidiUsbTransport::RxActive()

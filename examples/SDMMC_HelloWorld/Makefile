@@ -4,9 +4,6 @@ TARGET = SDMMC_HelloWorld
 # Sources
 CPP_SOURCES = SDMMC_HelloWorld.cpp
 
-DEBUG=1
-OPT=-Og
-
 # USE_FATFS is required when linking the FatFS middleware to your project
 USE_FATFS = 1
 
