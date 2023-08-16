@@ -4,6 +4,8 @@ TARGET = dma-pwm
 # Sources
 CPP_SOURCES = dma-pwm.cpp
 
+APP_TYPE=BOOT_SRAM
+
 DEBUG=1
 OPT=-O0
 

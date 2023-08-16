@@ -82,6 +82,7 @@ void TimChannel::Init(const TimChannel::Config& cfg)
                                        ? TIM_OCPOLARITY_HIGH
                                        : TIM_OCPOLARITY_LOW;
     sConfigOC.OCFastMode         = TIM_OCFAST_DISABLE;
+    // sConfigOC.OCIdleState         = TIM_OCIDLESTATE_RESET;
     auto              chn        = GetHalChannel(cfg.chn);
     TIM_HandleTypeDef tim;
     auto              af_value = SetInstance(&tim, cfg.tim->GetConfig().periph);
@@ -261,10 +262,61 @@ extern "C" void DMA2_Stream5_IRQHandler(void)
 
 extern "C" void HAL_TIM_PWM_PulseFinishedCallback(TIM_HandleTypeDef* htim)
 {
+    // HAL_TIM_OC_Stop(htim, TIM_CHANNEL_3);
+    // HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_1);
+    // HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_2);
+    // HAL_TIM_PWM_Stop_DMA(htim, TIM_CHANNEL_3);
+    // HAL_TIM_PWM_Stop_IT(htim, TIM_CHANNEL_3);
+
+    // htim->Instance->CCMR3 |= (TIM_CCMR1_OC1M_2 | TIM_CCMR1_OC1M_1);
+    // htim->Instance->CCR3 = 0;
+
+
+//     #define __HAL_TIM_SET_COMPARE(__HANDLE__, __CHANNEL__, __COMPARE__) \
+//   (((__CHANNEL__) == TIM_CHANNEL_1) ? ((__HANDLE__)->Instance->CCR1 = (__COMPARE__)) :\
+//    ((__CHANNEL__) == TIM_CHANNEL_2) ? ((__HANDLE__)->Instance->CCR2 = (__COMPARE__)) :\
+//    ((__CHANNEL__) == TIM_CHANNEL_3) ? ((__HANDLE__)->Instance->CCR3 = (__COMPARE__)) :\
+//    ((__CHANNEL__) == TIM_CHANNEL_4) ? ((__HANDLE__)->Instance->CCR4 = (__COMPARE__)) :\
+//    ((__CHANNEL__) == TIM_CHANNEL_5) ? ((__HANDLE__)->Instance->CCR5 = (__COMPARE__)) :\
+//    ((__HANDLE__)->Instance->CCR6 = (__COMPARE__)))
+
+
+//     TIM_HandleTypeDef tim;
+//     SetInstance(&tim, cfg_.tim->GetConfig().periph);
+//     __HAL_TIM_SET_COMPARE(&tim, GetHalChannel(cfg_.chn), val);
+
+
     if(globalcb)
     {
         globalcb(globalcb_context);
     }
+    // #if TIM_CH == TIM_CHANNEL_1
+    //     __HAL_TIM_DISABLE_DMA(htim, TIM_DMA_CC1);
+    //     (void) HAL_DMA_Abort_IT(htim->hdma[TIM_DMA_ID_CC1]);
+    // #endif
+    // #if TIM_CH == TIM_CHANNEL_2
+    //         __HAL_TIM_DISABLE_DMA(htim, TIM_DMA_CC2);
+    //         (void) HAL_DMA_Abort_IT(htim->hdma[TIM_DMA_ID_CC2]);
+    // #endif
+    // #if TIM_CH == TIM_CHANNEL_3
+    //         __HAL_TIM_DISABLE_DMA(htim, TIM_DMA_CC3);
+    //         (void) HAL_DMA_Abort_IT(htim->hdma[TIM_DMA_ID_CC3]);
+    // #endif
+    // #if TIM_CH == TIM_CHANNEL_4
+    //         __HAL_TIM_DISABLE_DMA(htim, TIM_DMA_CC4);
+    //         (void) HAL_DMA_Abort_IT(htim->hdma[TIM_DMA_ID_CC4]);
+    // #endif
+    // if (IS_TIM_BREAK_INSTANCE(htim->Instance) != RESET) {
+    //     /* Disable the Main Output */
+    //     __HAL_TIM_MOE_DISABLE(htim);
+    // }
+    // /* Disable the Peripheral */
+    // __HAL_TIM_DISABLE(htim);
+    // /* Set the TIM channel state */
+    // TIM_CHANNEL_STATE_SET(htim, TIM_CH, HAL_TIM_CHANNEL_STATE_READY);
+    // ARGB_LOC_ST = ARGB_READY;
+
+    // htim->Channel = HAL_TIM_ACTIVE_CHANNEL_CLEARED;
 }
 
 

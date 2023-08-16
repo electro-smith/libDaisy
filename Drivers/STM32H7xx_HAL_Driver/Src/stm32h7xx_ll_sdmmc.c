@@ -578,10 +578,14 @@ uint32_t SDMMC_CmdReadMultiBlock(SDMMC_TypeDef *SDMMCx, uint32_t ReadAdd)
   sdmmc_cmdinit.Response         = SDMMC_RESPONSE_SHORT;
   sdmmc_cmdinit.WaitForInterrupt = SDMMC_WAIT_NO;
   sdmmc_cmdinit.CPSM             = SDMMC_CPSM_ENABLE;
+
+  __set_PRIMASK(1); // disable interrupts (I added)
   (void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
   /* Check for error conditions */
   errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_READ_MULT_BLOCK, SDMMC_CMDTIMEOUT);
+
+  __set_PRIMASK(0); // enable interrupts (I added)
 
   return errorstate;
 }

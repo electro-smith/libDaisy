@@ -72,6 +72,11 @@ class ShiftRegister4021
         for(size_t i = 0; i < kTotalStates; i++)
         {
             states_[i] = false;
+            last_update_[i] = 0;
+            updated_[i] = 0;
+            dbc_state_[i] = 0;
+            rising_edge_time_[i] = 0;
+
         }
     }
 
@@ -91,7 +96,7 @@ class ShiftRegister4021
             dbc_state_[idx]
                 = (dbc_state_[idx] << 1) | (flip_ ? !states_[idx] : states_[idx]);
             // Set time at which button was pressed
-            if(dbc_state_[idx] == 0x7f)
+            if(dbc_state_[idx] == 0x7fff)
                 rising_edge_time_[idx] = System::GetNow();
         }
     }
@@ -131,12 +136,12 @@ class ShiftRegister4021
     inline const Config& GetConfig() const { return config_; }
 
     /** \return true if a button was just pressed. */
-    inline bool RisingEdge(uint32_t idx) const { return updated_[idx] ? dbc_state_[idx] == 0x7f : false; }
+    inline bool RisingEdge(uint32_t idx) const { return updated_[idx] ? dbc_state_[idx] == 0x7fff : false; }
 
     /** \return true if the button was just released */
     inline bool FallingEdge(uint32_t idx) const
     {
-        return updated_[idx] ? dbc_state_[idx] == 0x80 : false;
+        return updated_[idx] ? dbc_state_[idx] == 0xF000 : false;
     }
 
   private:
@@ -150,7 +155,7 @@ class ShiftRegister4021
     // debounce
     uint32_t             last_update_[kTotalStates];
     bool                 updated_[kTotalStates];
-    uint8_t              dbc_state_[kTotalStates];
+    uint16_t             dbc_state_[kTotalStates];
     bool                 flip_ = true; // maybe we'll need this later idk
     float                rising_edge_time_[kTotalStates]; // may be needed for time held ms later
 

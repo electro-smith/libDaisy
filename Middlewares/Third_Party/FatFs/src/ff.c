@@ -3548,7 +3548,10 @@ FRESULT f_read (
 					}
 				}
 				if (clst < 2) ABORT(fs, FR_INT_ERR);
-				if (clst == 0xFFFFFFFF) ABORT(fs, FR_DISK_ERR);
+				if (clst == 0xFFFFFFFF)
+				{
+					ABORT(fs, FR_DISK_ERR);
+				}
 				fp->clust = clst;				/* Update current cluster */
 			}
 			sect = clust2sect(fs, fp->clust);	/* Get current sector */
@@ -3559,7 +3562,10 @@ FRESULT f_read (
 				if (csect + cc > fs->csize) {	/* Clip at cluster boundary */
 					cc = fs->csize - csect;
 				}
-				if (disk_read(fs->drv, rbuff, sect, cc) != RES_OK) ABORT(fs, FR_DISK_ERR);
+				if (disk_read(fs->drv, rbuff, sect, cc) != RES_OK) 
+				{
+					ABORT(fs, FR_DISK_ERR);
+				}
 #if !_FS_READONLY && _FS_MINIMIZE <= 2			/* Replace one of the read sectors with cached data if it contains a dirty sector */
 #if _FS_TINY
 				if (fs->wflag && fs->winsect - sect < cc) {
@@ -3578,11 +3584,17 @@ FRESULT f_read (
 			if (fp->sect != sect) {			/* Load data sector if not in cache */
 #if !_FS_READONLY
 				if (fp->flag & FA_DIRTY) {		/* Write-back dirty sector cache */
-					if (disk_write(fs->drv, fp->buf, fp->sect, 1) != RES_OK) ABORT(fs, FR_DISK_ERR);
+					if (disk_write(fs->drv, fp->buf, fp->sect, 1) != RES_OK)
+					{
+						ABORT(fs, FR_DISK_ERR);
+					}
 					fp->flag &= (BYTE)~FA_DIRTY;
 				}
 #endif
-				if (disk_read(fs->drv, fp->buf, sect, 1) != RES_OK)	ABORT(fs, FR_DISK_ERR);	/* Fill sector cache */
+				if (disk_read(fs->drv, fp->buf, sect, 1) != RES_OK)
+				{
+					ABORT(fs, FR_DISK_ERR);	/* Fill sector cache */
+				}
 			}
 #endif
 			fp->sect = sect;
@@ -3654,7 +3666,10 @@ FRESULT f_write (
 				}
 				if (clst == 0) break;		/* Could not allocate a new cluster (disk full) */
 				if (clst == 1) ABORT(fs, FR_INT_ERR);
-				if (clst == 0xFFFFFFFF) ABORT(fs, FR_DISK_ERR);
+				if (clst == 0xFFFFFFFF)
+				{
+					ABORT(fs, FR_DISK_ERR);
+				}
 				fp->clust = clst;			/* Update current cluster */
 				if (fp->obj.sclust == 0) fp->obj.sclust = clst;	/* Set start cluster if the first write */
 			}
@@ -3662,7 +3677,10 @@ FRESULT f_write (
 			if (fs->winsect == fp->sect && sync_window(fs) != FR_OK) ABORT(fs, FR_DISK_ERR);	/* Write-back sector cache */
 #else
 			if (fp->flag & FA_DIRTY) {		/* Write-back sector cache */
-				if (disk_write(fs->drv, fp->buf, fp->sect, 1) != RES_OK) ABORT(fs, FR_DISK_ERR);
+				if (disk_write(fs->drv, fp->buf, fp->sect, 1) != RES_OK)
+				{
+					ABORT(fs, FR_DISK_ERR);
+				}
 				fp->flag &= (BYTE)~FA_DIRTY;
 			}
 #endif
@@ -3674,7 +3692,11 @@ FRESULT f_write (
 				if (csect + cc > fs->csize) {	/* Clip at cluster boundary */
 					cc = fs->csize - csect;
 				}
-				if (disk_write(fs->drv, wbuff, sect, cc) != RES_OK) ABORT(fs, FR_DISK_ERR);
+				DRESULT dbg_res = disk_write(fs->drv, wbuff, sect, cc);
+				if (dbg_res != RES_OK)
+				{
+					ABORT(fs, FR_DISK_ERR);
+				}
 #if _FS_MINIMIZE <= 2
 #if _FS_TINY
 				if (fs->winsect - sect < cc) {	/* Refill sector cache if it gets invalidated by the direct write */
@@ -3699,9 +3721,10 @@ FRESULT f_write (
 #else
 			if (fp->sect != sect && 		/* Fill sector cache with file data */
 				fp->fptr < fp->obj.objsize &&
-				disk_read(fs->drv, fp->buf, sect, 1) != RES_OK) {
+				disk_read(fs->drv, fp->buf, sect, 1) != RES_OK) 
+				{
 					ABORT(fs, FR_DISK_ERR);
-			}
+				}
 #endif
 			fp->sect = sect;
 		}

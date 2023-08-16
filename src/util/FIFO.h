@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <initializer_list>
+#include "util/scopedirqblocker.h"
 
 namespace daisy
 {
@@ -48,13 +49,20 @@ class FIFOBase
         success */
     bool PushBack(const T& elementToAdd)
     {
+        ScopedIrqBlocker block; // disable interrupts (I added)
+
         if(!IsFull())
         {
             buffer_[bufferIn_++] = elementToAdd;
             if(bufferIn_ >= bufferSize_)
                 bufferIn_ -= bufferSize_;
+            
+            // __set_PRIMASK(0); // enable interrupts (I added)
             return true;
         }
+
+        // __set_PRIMASK(0); // enable interrupts (I added)
+
         return false;
     }
 
@@ -100,16 +108,25 @@ class FIFOBase
     /** removes and returns an element from the front of the buffer */
     T PopFront()
     {
+        ScopedIrqBlocker block; // disable interrupts (I added)
+
         if(IsEmpty())
+        {
+            // __set_PRIMASK(0); // enable interrupts (I added)
             return T();
+        }
         else
         {
             const auto result = buffer_[bufferOut_];
             bufferOut_++;
             if(bufferOut_ >= bufferSize_)
                 bufferOut_ -= bufferSize_;
+            
+            // __set_PRIMASK(0); // enable interrupts (I added)
             return result;
         }
+
+        // __set_PRIMASK(0); // enable interrupts (I added)
     }
 
     /** returns a copy of the first element */
@@ -170,9 +187,14 @@ class FIFOBase
     /** returns the number of elements in the buffer */
     size_t GetNumElements() const
     {
+        ScopedIrqBlocker block; // disable interrupts (I added)
+
         int32_t numElements = bufferIn_ - bufferOut_;
         if(numElements < 0)
             numElements += bufferSize_;
+
+        // __set_PRIMASK(0); // enable interrupts (I added)
+
         return size_t(numElements);
     }
 
@@ -202,8 +224,13 @@ class FIFOBase
      *  and returns true if successful */
     bool Remove(size_t idx)
     {
+        ScopedIrqBlocker block; // disable interrupts (I added)
+
         if(idx >= GetNumElements())
+        {
+            // __set_PRIMASK(0); // enable interrupts (I added)
             return false;
+        }
 
         size_t index = bufferOut_ + idx;
         if(index >= bufferSize_)
@@ -227,6 +254,8 @@ class FIFOBase
         if(nextBufferIn < 0)
             nextBufferIn += bufferSize_;
         bufferIn_ = size_t(nextBufferIn);
+
+        // __set_PRIMASK(0); // enable interrupts (I added)
 
         return true;
     }
@@ -257,26 +286,42 @@ class FIFOBase
     /** returns the element "idx" positions behind the first element */
     T& operator[](size_t idx)
     {
+        ScopedIrqBlocker block; // disable interrupts (I added)
+
         if(idx >= GetNumElements())
+        {
             // invalid, but better not pass a temporary T() object as a reference...
+            // __set_PRIMASK(0); // enable interrupts (I added)
             return buffer_[0];
+        }
 
         size_t index = bufferOut_ + idx;
         if(index >= bufferSize_)
             index -= bufferSize_;
+
+        // __set_PRIMASK(0); // enable interrupts (I added)
+
         return buffer_[index];
     }
 
     /** returns the element "idx" positions behind the first element */
     const T& operator[](size_t idx) const
     {
+        ScopedIrqBlocker block; // disable interrupts (I added)
+
         if(idx >= GetNumElements())
+        {
             // invalid, but better not pass a temporary T() object as a reference...
+            // __set_PRIMASK(0); // enable interrupts (I added)
             return buffer_[0];
+        }
 
         size_t index = bufferOut_ + idx;
         if(index >= bufferSize_)
             index -= bufferSize_;
+        
+        // __set_PRIMASK(0); // enable interrupts (I added)
+        
         return buffer_[index];
     }
 

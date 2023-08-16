@@ -13,23 +13,36 @@
 
 using namespace daisy;
 
+// prev
+// #define ONETIME 20
+// #define ZEROTIME 8
+
 /** 6x 8mm */
-// #define MYPIN D11
-// #define MYCHN THREE
-// #define MYTIM TIM_4
-// #define MYCNT 6
+#define MYPIN D11
+#define MYCHN THREE
+#define MYTIM TIM_4
+#define MYCNT 6
+#define ONETIME 31
+#define ZEROTIME 13
+#define TPF 833332
 
 /** 4x 5mm */
 // #define MYPIN D16
 // #define MYCHN FOUR
 // #define MYTIM TIM_5
-// #define MYCNT 4
+// #define MYCNT 5
+// #define ONETIME 31
+// #define ZEROTIME 13
+// #define TPF 833332
 
 /** 29x SMT */
-#define MYPIN D19
-#define MYCHN ONE
-#define MYTIM TIM_3
-#define MYCNT 29 
+// #define MYPIN D19
+// #define MYCHN ONE
+// #define MYTIM TIM_3
+// #define MYCNT 29 
+// #define ONETIME 31
+// #define ZEROTIME 13
+// #define TPF 833332
 
 /** Hardware object for communicating with Daisy */
 DaisySeed                       hw;
@@ -39,10 +52,10 @@ uint32_t DMA_BUFFER_MEM_SECTION outbuffer[kOutBufferSize];
 // const size_t kTickPeriod = 36;
 // const int kOneTime  = kTickPeriod - 20;
 // const int kZeroTime = kTickPeriod - 8;
-const size_t kTickPeriod = 6;
+// const size_t kTickPeriod = 6;
 // const size_t kTickPeriod = 59;
-const int kOneTime  = 20;
-const int kZeroTime = 8;
+const int kOneTime  = ONETIME;
+const int kZeroTime = ZEROTIME;
 
 
 /** both the same for now*/
@@ -52,7 +65,7 @@ const int kZeroTime = 8;
 // const int kOneTime  = kTickPeriod / 3;
 
 //const int kNumLeds = 4;
-const int kNumLeds = MYCNT;
+const int kNumLeds = MYCNT + 1;
 uint8_t   led_data[kNumLeds][3]; /**< RGB data */
 
 const size_t kOutDataSize = kNumLeds * 3 * 8;
@@ -109,6 +122,11 @@ int main(void)
     /** Initialize hardware */
     hw.Init();
 
+    for(int i = 0; i < kNumLeds * 3 * 8; i++)
+    {
+        output_data[i] = 0;
+    }
+
     /** Initialize timer */
     TimerHandle::Config tim_cfg;
     TimerHandle         timer;
@@ -123,7 +141,7 @@ int main(void)
      */
     uint32_t prescaler         = 8;
     uint32_t tickspeed         = (System::GetPClk2Freq() * 2) / prescaler;
-    uint32_t target_pulse_freq = 833333; /**< 1.2 microsecond symbol length */
+    uint32_t target_pulse_freq = TPF; /**< 1.2 microsecond symbol length */
     uint32_t period            = (tickspeed / target_pulse_freq) - 1;
     timer.SetPrescaler(prescaler - 1); /**< ps=0 is divide by 1 and so on.*/
     timer.SetPeriod(period);

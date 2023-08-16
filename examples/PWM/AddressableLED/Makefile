@@ -4,6 +4,8 @@ TARGET = addressable-led
 # Sources
 CPP_SOURCES = addressable-led.cpp
 
+APP_TYPE=BOOT_SRAM
+
 DEBUG=1
 OPT=-O0
 

@@ -117,7 +117,7 @@ TimerHandle::Result TimerHandle::Impl::Init(const TimerHandle::Config& config)
     // Default Clock Division as none.
     tim_hal_handle_.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
 
-    tim_hal_handle_.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+    tim_hal_handle_.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
 
     // This function will call MspInit below
     if(HAL_TIM_Base_Init(&tim_hal_handle_) != HAL_OK)
@@ -269,6 +269,9 @@ extern "C"
         }
         else if(tim_baseHandle->Instance == TIM3)
         {
+            // volatile uint32_t ar = __HAL_TIM_GET_AUTORELOAD(tim_baseHandle);
+            // __HAL_TIM_SET_COUNTER(tim_baseHandle, 0);
+
             __HAL_RCC_TIM3_CLK_ENABLE();
             if(cfg.enable_irq)
             {
@@ -287,6 +290,10 @@ extern "C"
         }
         else if(tim_baseHandle->Instance == TIM5)
         {
+            // volatile uint32_t ctr = __HAL_TIM_GET_COUNTER(tim_baseHandle);
+            // __HAL_TIM_SET_COUNTER(tim_baseHandle, 0);
+            // TIM5_EGR.UG = 1;
+
             __HAL_RCC_TIM5_CLK_ENABLE();
             /** @todo make this conditional based on user config */
             if(cfg.enable_irq)
