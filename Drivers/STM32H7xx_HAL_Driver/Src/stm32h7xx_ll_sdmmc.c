@@ -569,6 +569,9 @@ uint32_t SDMMC_CmdReadSingleBlock(SDMMC_TypeDef *SDMMCx, uint32_t ReadAdd)
   */
 uint32_t SDMMC_CmdReadMultiBlock(SDMMC_TypeDef *SDMMCx, uint32_t ReadAdd)
 {
+  uint32_t maskReg = SDMMCx->MASK; /* I added */
+  SDMMCx->MASK = 0;                /* I added */
+
   SDMMC_CmdInitTypeDef  sdmmc_cmdinit;
   uint32_t errorstate;
 
@@ -579,14 +582,15 @@ uint32_t SDMMC_CmdReadMultiBlock(SDMMC_TypeDef *SDMMCx, uint32_t ReadAdd)
   sdmmc_cmdinit.WaitForInterrupt = SDMMC_WAIT_NO;
   sdmmc_cmdinit.CPSM             = SDMMC_CPSM_ENABLE;
 
-  __set_PRIMASK(1); // disable interrupts (I added)
+  // __set_PRIMASK(1); // disable interrupts (I added)
   (void)SDMMC_SendCommand(SDMMCx, &sdmmc_cmdinit);
 
   /* Check for error conditions */
   errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_READ_MULT_BLOCK, SDMMC_CMDTIMEOUT);
 
-  __set_PRIMASK(0); // enable interrupts (I added)
-
+  // __set_PRIMASK(0); // enable interrupts (I added)
+  SDMMCx->MASK = maskReg; // I added
+  
   return errorstate;
 }
 
@@ -621,6 +625,9 @@ uint32_t SDMMC_CmdWriteSingleBlock(SDMMC_TypeDef *SDMMCx, uint32_t WriteAdd)
   */
 uint32_t SDMMC_CmdWriteMultiBlock(SDMMC_TypeDef *SDMMCx, uint32_t WriteAdd)
 {
+  uint32_t maskReg = SDMMCx->MASK; /* I added */
+  SDMMCx->MASK = 0;                /* I added */
+
   SDMMC_CmdInitTypeDef  sdmmc_cmdinit;
   uint32_t errorstate;
 
@@ -634,6 +641,8 @@ uint32_t SDMMC_CmdWriteMultiBlock(SDMMC_TypeDef *SDMMCx, uint32_t WriteAdd)
 
   /* Check for error conditions */
   errorstate = SDMMC_GetCmdResp1(SDMMCx, SDMMC_CMD_WRITE_MULT_BLOCK, SDMMC_CMDTIMEOUT);
+
+  SDMMCx->MASK = maskReg; /* I added */
 
   return errorstate;
 }

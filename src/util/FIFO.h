@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <initializer_list>
-#include "util/scopedirqblocker.h"
+// #include "util/ScopedIrqBlocker.h"
 
 namespace daisy
 {
@@ -49,7 +49,7 @@ class FIFOBase
         success */
     bool PushBack(const T& elementToAdd)
     {
-        ScopedIrqBlocker block; // disable interrupts (I added)
+        // ScopedIrqBlocker block; // disable interrupts (I added)
 
         if(!IsFull())
         {
@@ -108,7 +108,7 @@ class FIFOBase
     /** removes and returns an element from the front of the buffer */
     T PopFront()
     {
-        ScopedIrqBlocker block; // disable interrupts (I added)
+        // ScopedIrqBlocker block; // disable interrupts (I added)
 
         if(IsEmpty())
         {
@@ -187,7 +187,7 @@ class FIFOBase
     /** returns the number of elements in the buffer */
     size_t GetNumElements() const
     {
-        ScopedIrqBlocker block; // disable interrupts (I added)
+        // ScopedIrqBlocker block; // disable interrupts (I added)
 
         int32_t numElements = bufferIn_ - bufferOut_;
         if(numElements < 0)
@@ -224,7 +224,7 @@ class FIFOBase
      *  and returns true if successful */
     bool Remove(size_t idx)
     {
-        ScopedIrqBlocker block; // disable interrupts (I added)
+        // ScopedIrqBlocker block; // disable interrupts (I added)
 
         if(idx >= GetNumElements())
         {
@@ -286,7 +286,7 @@ class FIFOBase
     /** returns the element "idx" positions behind the first element */
     T& operator[](size_t idx)
     {
-        ScopedIrqBlocker block; // disable interrupts (I added)
+        // ScopedIrqBlocker block; // disable interrupts (I added)
 
         if(idx >= GetNumElements())
         {
@@ -307,7 +307,7 @@ class FIFOBase
     /** returns the element "idx" positions behind the first element */
     const T& operator[](size_t idx) const
     {
-        ScopedIrqBlocker block; // disable interrupts (I added)
+        // ScopedIrqBlocker block; // disable interrupts (I added)
 
         if(idx >= GetNumElements())
         {
