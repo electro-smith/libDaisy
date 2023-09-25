@@ -62,6 +62,7 @@ class FIFOBase
         }
 
         // __set_PRIMASK(0); // enable interrupts (I added)
+        // __asm("BKPT #0");
 
         return false;
     }
@@ -113,6 +114,7 @@ class FIFOBase
         if(IsEmpty())
         {
             // __set_PRIMASK(0); // enable interrupts (I added)
+            // __asm("BKPT #0");
             return T();
         }
         else
