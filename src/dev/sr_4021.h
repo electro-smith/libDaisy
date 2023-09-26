@@ -71,12 +71,12 @@ class ShiftRegister4021
         // Init States
         for(size_t i = 0; i < kTotalStates; i++)
         {
+            fallen[i] = false;
+            risen[i] = false;
             states_[i] = false;
             last_update_[i] = 0;
             updated_[i] = 0;
             dbc_state_[i] = 0;
-            rising_edge_time_[i] = 0;
-
         }
     }
 
@@ -92,12 +92,12 @@ class ShiftRegister4021
             last_update_[idx] = now;
             updated_[idx]     = true;
 
-            // shift over, and introduce new state.
-            dbc_state_[idx]
-                = (dbc_state_[idx] << 1) | (flip_ ? !states_[idx] : states_[idx]);
-            // Set time at which button was pressed
-            if(dbc_state_[idx] == 0x7fff)
-                rising_edge_time_[idx] = System::GetNow();
+            dbc_state_[idx] += states_[idx] * 2;
+
+            if(dbc_state_[idx] > 0)
+                dbc_state_[idx] -= 1;
+            if(dbc_state_[idx] > 20)
+                dbc_state_[idx] = 20;
         }
     }
 
@@ -131,17 +131,34 @@ class ShiftRegister4021
      ** See above for the layout of data when using multiple 
      ** devices in series or parallel.
      ***/
-    inline bool State(int index) const { return states_[index]; }
+    inline bool State(int idx) const { return dbc_state_[idx] < 10; }
 
     inline const Config& GetConfig() const { return config_; }
 
     /** \return true if a button was just pressed. */
-    inline bool RisingEdge(uint32_t idx) const { return updated_[idx] ? dbc_state_[idx] == 0x7fff : false; }
+    inline bool RisingEdge(uint32_t idx) 
+    { 
+        if(!risen[idx] && State(idx) && updated_[idx])
+        {
+            risen[idx] = true;
+            fallen[idx] = false;
+            return true;
+        }
+
+        return false;
+    }
 
     /** \return true if the button was just released */
-    inline bool FallingEdge(uint32_t idx) const
+    inline bool FallingEdge(uint32_t idx)
     {
-        return updated_[idx] ? dbc_state_[idx] == 0xF000 : false;
+        if(!fallen[idx] && !State(idx) && updated_[idx])
+        {
+            fallen[idx] = true;
+            risen[idx] = false;
+            return true;
+        }
+
+        return false;
     }
 
   private:
@@ -152,12 +169,14 @@ class ShiftRegister4021
     dsy_gpio             latch_;
     dsy_gpio             data_[num_parallel];
 
+
     // debounce
+    bool risen[kTotalStates];
+    bool fallen[kTotalStates];
     uint32_t             last_update_[kTotalStates];
     bool                 updated_[kTotalStates];
     uint16_t             dbc_state_[kTotalStates];
     bool                 flip_ = true; // maybe we'll need this later idk
-    float                rising_edge_time_[kTotalStates]; // may be needed for time held ms later
 
 };
 
