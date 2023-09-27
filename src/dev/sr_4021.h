@@ -133,6 +133,8 @@ class ShiftRegister4021
      ***/
     inline bool State(int idx) const { return dbc_state_[idx] < 10; }
 
+    inline bool RawState(int idx) const { return states_[idx]; }
+
     inline const Config& GetConfig() const { return config_; }
 
     /** \return true if a button was just pressed. */
