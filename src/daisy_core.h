@@ -117,7 +117,7 @@ FORCE_INLINE int8_t f2s8(float x)
     \param x Number to be scaled.
     \return Scaled number.
 */
-FORCE_INLINE float s162f(int16_t x)
+FORCE_INLINE float s162f(int32_t x)
 {
     return (float)x * S162F_SCALE;
 }
@@ -125,7 +125,7 @@ FORCE_INLINE float s162f(int16_t x)
 /**
     Converts float to Signed 16-bit
 */
-FORCE_INLINE int16_t f2s16(float x)
+FORCE_INLINE int32_t f2s16(float x)
 {
     x = x <= FBIPMIN ? FBIPMIN : x;
     x = x >= FBIPMAX ? FBIPMAX : x;
