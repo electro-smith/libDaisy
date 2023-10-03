@@ -43,6 +43,7 @@ class ShiftRegister4021
         dsy_gpio_pin clk;   /**< Clock pin to attach to pin 10 of device(s) */
         dsy_gpio_pin latch; /**< Latch pin to attach to pin 9 of device(s) */
         dsy_gpio_pin data[num_parallel]; /**< Data Pin(s) */
+        int dbc_size;
     };
 
     ShiftRegister4021() {}
@@ -96,8 +97,8 @@ class ShiftRegister4021
 
             if(dbc_state_[idx] > 0)
                 dbc_state_[idx] -= 1;
-            if(dbc_state_[idx] > 20)
-                dbc_state_[idx] = 20;
+            if(dbc_state_[idx] > config_.dbc_size * 2)
+                dbc_state_[idx] = config_.dbc_size * 2;
         }
     }
 
@@ -131,7 +132,7 @@ class ShiftRegister4021
      ** See above for the layout of data when using multiple 
      ** devices in series or parallel.
      ***/
-    inline bool State(int idx) const { return dbc_state_[idx] < 10; }
+    inline bool State(int idx) const { return dbc_state_[idx] < config_.dbc_size; }
 
     inline bool RawState(int idx) const { return states_[idx]; }
 
