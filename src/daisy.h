@@ -1,6 +1,10 @@
 #ifndef DSY_LIBDAISY_H
 #define DSY_LIBDAISY_H
 
+// #define DSY_USE_SPI 1
+// #define DSY_USE_I2C 1
+// #define DSY_USE_UART 1
+
 #include <stdint.h>
 #include "daisy_core.h"
 #include "version.h"
@@ -17,9 +21,13 @@
 #include "hid/audio.h"
 #include "util/unique_id.h"
 #ifdef __cplusplus
+#ifdef DSY_USE_I2C
 #include "per/i2c.h"
+#endif
 #include "per/adc.h"
+#ifdef DSY_USE_UART
 #include "per/uart.h"
+#endif
 #include "hid/midi.h"
 #include "hid/encoder.h"
 #include "hid/switch.h"
@@ -32,7 +40,9 @@
 #include "hid/usb_host.h"
 #include "per/sai.h"
 #include "per/sdmmc.h"
+#ifdef DSY_USE_SPI
 #include "per/spi.h"
+#endif
 #include "per/spiMultislave.h"
 #include "per/rng.h"
 #include "hid/disp/display.h"

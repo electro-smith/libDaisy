@@ -29,17 +29,22 @@ extern "C"
 }
 
 UsbHandle::ReceiveCallback rx_callback;
+uint8_t                    usb_fs_hw_initialized = 0;
 
 static void InitFS()
 {
     rx_callback = DummyRxCallback;
     // BUG: this can't be called multiple times. Need to have
     // a check to ensure it's not been called before.
-    if(USBD_Init(&hUsbDeviceFS, NULL, DEVICE_FS) != USBD_OK)
+    if(usb_fs_hw_initialized == 0)
     {
-        UsbErrorHandler();
+        usb_fs_hw_initialized = 1;
+        if(USBD_Init(&hUsbDeviceFS, NULL, DEVICE_FS) != USBD_OK)
+        {
+            UsbErrorHandler();
+        }
     }
-	tud_init(BOARD_TUD_RHPORT);
+    tud_init(BOARD_TUD_RHPORT);
     // if(USBD_RegisterClass(&hUsbDeviceFS, &USBD_CDC) != USBD_OK)
     // {
     //     UsbErrorHandler();
@@ -154,6 +159,11 @@ void UsbHandle::SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev)
             break;
         default: break;
     }
+}
+
+void UsbHandle::RunTask()
+{
+    tud_task();
 }
 
 // Static Function Implementation

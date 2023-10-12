@@ -2,6 +2,7 @@
 #include "usbd_cdc.h"
 #include "hid/usb_midi.h"
 #include <cassert>
+#include "tusb.h"
 
 using namespace daisy;
 
@@ -108,22 +109,23 @@ void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
     UsbHandle::Result result;
     int               attempt_count = config_.tx_retry_count;
     bool              should_retry;
+    tud_midi_stream_write(0, buffer, size);
 
-    MidiToUsb(buffer, size);
-    do
-    {
-        if(config_.periph == Config::EXTERNAL)
-            result = usb_handle_.TransmitExternal(tx_buffer_, tx_ptr_);
-        else
-            result = usb_handle_.TransmitInternal(tx_buffer_, tx_ptr_);
+    // MidiToUsb(buffer, size);
+    // do
+    // {
+    //     if(config_.periph == Config::EXTERNAL)
+    //         result = usb_handle_.TransmitExternal(tx_buffer_, tx_ptr_);
+    //     else
+    //         result = usb_handle_.TransmitInternal(tx_buffer_, tx_ptr_);
 
-        should_retry = (result == UsbHandle::Result::ERR) && attempt_count--;
+    //     should_retry = (result == UsbHandle::Result::ERR) && attempt_count--;
 
-        if(should_retry)
-            System::DelayUs(100);
-    } while(should_retry);
+    //     if(should_retry)
+    //         System::DelayUs(100);
+    // } while(should_retry);
 
-    tx_ptr_ = 0;
+    // tx_ptr_ = 0;
 }
 
 void MidiUsbTransport::Impl::UsbToMidi(uint8_t* buffer, uint8_t length)

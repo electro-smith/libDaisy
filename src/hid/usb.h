@@ -10,7 +10,7 @@ namespace daisy
 */
 
 {
-/** 
+/**
     @brief Interface for initializing and using the USB Peripherals on the daisy
     @author Stephen Hensley
     @date December 2019
@@ -51,7 +51,7 @@ class UsbHandle
      */
     void DeInit(UsbPeriph dev);
 
-    /** Transmits a buffer of 'size' bytes from the on board USB FS port. 
+    /** Transmits a buffer of 'size' bytes from the on board USB FS port.
     \param buff Buffer to transmit
     \param size Buffer size
      */
@@ -68,6 +68,13 @@ class UsbHandle
     \param dev Device to set callback for
      */
     void SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev);
+
+    /** Calls the underlying dispatching task
+     *  Without an RTOS the tinyusb middleware
+     *  requires that this function be called regularly as all
+     *  callbacks are dispatched from within.
+     */
+    static void RunTask();
 
   private:
 };
