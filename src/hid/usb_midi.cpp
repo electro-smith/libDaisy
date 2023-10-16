@@ -106,9 +106,9 @@ void MidiUsbTransport::Impl::Init(Config config)
 
 void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
 {
-    UsbHandle::Result result;
-    int               attempt_count = config_.tx_retry_count;
-    bool              should_retry;
+    // UsbHandle::Result result;
+    // int               attempt_count = config_.tx_retry_count;
+    // bool              should_retry;
     tud_midi_stream_write(0, buffer, size);
 
     // MidiToUsb(buffer, size);

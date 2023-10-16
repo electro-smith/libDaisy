@@ -367,7 +367,7 @@ extern "C"
     96000 // 24bit/96kHz is the best quality for full-speed, high-speed is needed beyond this
 #endif
 #define CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_TX 1
-#define CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_RX 1 // Changed
+#define CFG_TUD_AUDIO_FUNC_1_N_CHANNELS_RX 2 // Changed
 
 // 16bit in 16bit slots
 #define CFG_TUD_AUDIO_FUNC_1_FORMAT_1_N_BYTES_PER_SAMPLE_TX 2
