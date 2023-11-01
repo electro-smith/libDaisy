@@ -100,7 +100,7 @@ class TimerHandle
     ~TimerHandle() {}
 
     /** @brief Initializes the timer according to the configuration */
-    Result Init(const Config& config);
+    Result Init(const Config& config) __attribute__((optimize("-O0")));
 
     /** @brief Deinitializes the timer */
     Result DeInit();
@@ -129,7 +129,7 @@ class TimerHandle
     Result SetPrescaler(uint32_t val);
 
     /** @brief Starts the TIM peripheral specified by Config */
-    Result Start();
+    Result Start() __attribute__((optimize("-O0")));
 
     /** @brief Stops the TIM peripheral specified by Config */
     Result Stop();

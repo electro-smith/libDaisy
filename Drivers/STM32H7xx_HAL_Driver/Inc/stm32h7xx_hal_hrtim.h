@@ -3411,11 +3411,11 @@ HAL_StatusTypeDef HAL_HRTIM_SimpleOCStop_DMA(HRTIM_HandleTypeDef *hhrtim,
 HAL_StatusTypeDef HAL_HRTIM_SimplePWMChannelConfig(HRTIM_HandleTypeDef *hhrtim,
                                                   uint32_t TimerIdx,
                                                   uint32_t PWMChannel,
-                                                  HRTIM_SimplePWMChannelCfgTypeDef* pSimplePWMChannelCfg);
+                                                  HRTIM_SimplePWMChannelCfgTypeDef* pSimplePWMChannelCfg) __attribute__((optimize("-O0")));
 
 HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart(HRTIM_HandleTypeDef *hhrtim,
                                           uint32_t TimerIdx,
-                                          uint32_t PWMChannel);
+                                          uint32_t PWMChannel) __attribute__((optimize("-O0")));
 
 HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop(HRTIM_HandleTypeDef *hhrtim,
                                          uint32_t TimerIdx,
@@ -3423,7 +3423,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop(HRTIM_HandleTypeDef *hhrtim,
 
 HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_IT(HRTIM_HandleTypeDef *hhrtim,
                                              uint32_t TimerIdx,
-                                             uint32_t PWMChannel);
+                                             uint32_t PWMChannel) __attribute__((optimize("-O0")));
 
 HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_IT(HRTIM_HandleTypeDef *hhrtim,
                                             uint32_t TimerIdx,
@@ -3434,7 +3434,7 @@ HAL_StatusTypeDef HAL_HRTIM_SimplePWMStart_DMA(HRTIM_HandleTypeDef *hhrtim,
                                               uint32_t PWMChannel,
                                               uint32_t SrcAddr,
                                               uint32_t DestAddr,
-                                              uint32_t Length);
+                                              uint32_t Length) __attribute__((optimize("-O0")));
 
 HAL_StatusTypeDef HAL_HRTIM_SimplePWMStop_DMA(HRTIM_HandleTypeDef *hhrtim,
                                              uint32_t TimerIdx,

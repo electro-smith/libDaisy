@@ -64,10 +64,10 @@ class TimChannel
     ~TimChannel() {}
 
     /** Initializes the GPIO Pin and sets up PWM for the given channel */
-    void Init(const Config& cfg);
+    void Init(const Config& cfg) __attribute__((optimize("-O0")));
 
     /** Starts the PWM output on the given channel's pin */
-    void Start();
+    void Start() __attribute__((optimize("-O0")));
 
     /** Stops the PWM output on the given channel's pin */
     void Stop();
@@ -86,7 +86,7 @@ class TimChannel
     void StartDma(void*                      data,
                   size_t                     size,
                   EndTransmissionFunctionPtr callback   = nullptr,
-                  void*                      cb_context = nullptr);
+                  void*                      cb_context = nullptr) __attribute__((optimize("-O0")));
 
     const Config& GetConfig() const;
 
