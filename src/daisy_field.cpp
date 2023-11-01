@@ -32,40 +32,40 @@
 //#define CV3_ADC_PIN 23 /**< & */
 //#define CV4_ADC_PIN 22 /**< & */
 
+using namespace daisy;
+
 // Rev2 Pins
-#define PIN_GATE_IN 0
-#define PIN_SPI_CS 7
-#define PIN_SPI_SCK 8
-#define PIN_OLED_CMD 9
-#define PIN_SPI_MOSI 10
-#define PIN_I2C_SCL 11
-#define PIN_I2C_SDA 12
-#define PIN_MIDI_OUT 13
-#define PIN_MIDI_IN 14
-#define PIN_GATE_OUT 15
-#define PIN_ADC_POT_MUX 16
-#define PIN_ADC_CV_1 17
-#define PIN_ADC_CV_2 18
-#define PIN_MUX_SEL_2 19
-#define PIN_MUX_SEL_1 20
-#define PIN_MUX_SEL_0 21
-#define PIN_CD4021_D1 26
-#define PIN_CD4021_CS 27
-#define PIN_CD4021_CLK 28
-#define PIN_SW_2 29
-#define PIN_SW_1 30
+constexpr Pin PIN_GATE_IN     = seed::D0;
+constexpr Pin PIN_SPI_CS      = seed::D7;
+constexpr Pin PIN_SPI_SCK     = seed::D8;
+constexpr Pin PIN_OLED_CMD    = seed::D9;
+constexpr Pin PIN_SPI_MOSI    = seed::D10;
+constexpr Pin PIN_I2C_SCL     = seed::D11;
+constexpr Pin PIN_I2C_SDA     = seed::D12;
+constexpr Pin PIN_MIDI_OUT    = seed::D13;
+constexpr Pin PIN_MIDI_IN     = seed::D14;
+constexpr Pin PIN_GATE_OUT    = seed::D15;
+constexpr Pin PIN_ADC_POT_MUX = seed::D16;
+constexpr Pin PIN_ADC_CV_1    = seed::D17;
+constexpr Pin PIN_ADC_CV_2    = seed::D18;
+constexpr Pin PIN_MUX_SEL_2   = seed::D19;
+constexpr Pin PIN_MUX_SEL_1   = seed::D20;
+constexpr Pin PIN_MUX_SEL_0   = seed::D21;
+constexpr Pin PIN_CD4021_D1   = seed::D26;
+constexpr Pin PIN_CD4021_CS   = seed::D27;
+constexpr Pin PIN_CD4021_CLK  = seed::D28;
+constexpr Pin PIN_SW_2        = seed::D29;
+constexpr Pin PIN_SW_1        = seed::D30;
 
 // IT LOOKS LIKE THESE MAY NEED TO GET SWAPPED.....
-#define PIN_DAC_2 22    // Jumped on Rev2 from 24
-#define PIN_DAC_1 23    // Jumped on Rev2 from 25
-#define PIN_ADC_CV_4 24 // Jumped on Rev2 from 22
-#define PIN_ADC_CV_3 25 // Jumped on Rev2 from 23
-
-using namespace daisy;
+constexpr Pin PIN_DAC_2    = seed::D22; // Jumped on Rev2 from 24
+constexpr Pin PIN_DAC_1    = seed::D23; // Jumped on Rev2 from 25
+constexpr Pin PIN_ADC_CV_4 = seed::D24; // Jumped on Rev2 from 22
+constexpr Pin PIN_ADC_CV_3 = seed::D25; // Jumped on Rev2 from 23
 
 static constexpr I2CHandle::Config field_led_i2c_config
     = {I2CHandle::Config::Peripheral::I2C_1,
-       {{DSY_GPIOB, 8}, {DSY_GPIOB, 9}},
+       {Pin(PORTB, 8), Pin(PORTB, 9)},
        I2CHandle::Config::Speed::I2C_1MHZ};
 
 static LedDriverPca9685<2, true>::DmaBuffer DMA_BUFFER_MEM_SECTION
@@ -79,31 +79,30 @@ void DaisyField::Init(bool boost)
     seed.SetAudioBlockSize(48);
 
     // Switches
-    uint8_t sw_pin[]  = {PIN_SW_1, PIN_SW_2};
-    uint8_t adc_pin[] = {PIN_ADC_CV_1,
-                         PIN_ADC_CV_2,
-                         PIN_ADC_CV_3,
-                         PIN_ADC_CV_4,
-                         PIN_ADC_POT_MUX};
+    Pin sw_pin[]  = {PIN_SW_1, PIN_SW_2};
+    Pin adc_pin[] = {PIN_ADC_CV_1,
+                     PIN_ADC_CV_2,
+                     PIN_ADC_CV_3,
+                     PIN_ADC_CV_4,
+                     PIN_ADC_POT_MUX};
 
     for(size_t i = 0; i < SW_LAST; i++)
     {
-        dsy_gpio_pin p = seed.GetPin(sw_pin[i]);
-        sw[i].Init(p);
+        sw[i].Init(sw_pin[i]);
     }
 
     // ADCs
     AdcChannelConfig adc_cfg[CV_LAST + 1];
     for(size_t i = 0; i < CV_LAST; i++)
     {
-        adc_cfg[i].InitSingle(seed.GetPin(adc_pin[i]));
+        adc_cfg[i].InitSingle(adc_pin[i]);
     }
     // POT MUX
-    adc_cfg[CV_LAST].InitMux(seed.GetPin(PIN_ADC_POT_MUX),
-                             8,
-                             seed.GetPin(PIN_MUX_SEL_0),
-                             seed.GetPin(PIN_MUX_SEL_1),
-                             seed.GetPin(PIN_MUX_SEL_2));
+    adc_cfg[CV_LAST].InitMux(PIN_ADC_POT_MUX, // Pin
+                             8,               // Channels
+                             PIN_MUX_SEL_0,
+                             PIN_MUX_SEL_1,
+                             PIN_MUX_SEL_2);
     seed.adc.Init(adc_cfg, 5);
 
     // Order of pots on the hardware connected to mux.
@@ -119,18 +118,17 @@ void DaisyField::Init(bool boost)
 
     // Keyboard
     ShiftRegister4021<2>::Config keyboard_cfg;
-    keyboard_cfg.clk     = seed.GetPin(PIN_CD4021_CLK);
-    keyboard_cfg.latch   = seed.GetPin(PIN_CD4021_CS);
-    keyboard_cfg.data[0] = seed.GetPin(PIN_CD4021_D1);
+    keyboard_cfg.clk     = PIN_CD4021_CLK;
+    keyboard_cfg.latch   = PIN_CD4021_CS;
+    keyboard_cfg.data[0] = PIN_CD4021_D1;
     keyboard_sr_.Init(keyboard_cfg);
 
     // OLED
     OledDisplay<SSD130x4WireSpi128x64Driver>::Config display_config;
 
-    display_config.driver_config.transport_config.pin_config.dc
-        = seed.GetPin(PIN_OLED_CMD);
+    display_config.driver_config.transport_config.pin_config.dc = PIN_OLED_CMD;
     display_config.driver_config.transport_config.pin_config.reset
-        = {DSY_GPIOX, 0}; // Not a real pin...
+        = Pin(PORTX, 0); // Not a real pin...
 
     display.Init(display_config);
 
@@ -142,13 +140,11 @@ void DaisyField::Init(bool boost)
     led_driver.Init(i2c, addr, field_led_dma_buffer_a, field_led_dma_buffer_b);
 
     // Gate In
-    dsy_gpio_pin gate_in_pin;
-    gate_in_pin = seed.GetPin(PIN_GATE_IN);
-    gate_in.Init(&gate_in_pin);
+    gate_in.Init(PIN_GATE_IN);
     // Gate Out
     gate_out.mode = DSY_GPIO_MODE_OUTPUT_PP;
     gate_out.pull = DSY_GPIO_NOPULL;
-    gate_out.pin  = seed.GetPin(PIN_GATE_OUT);
+    gate_out.pin  = PIN_GATE_OUT;
     dsy_gpio_init(&gate_out);
 
     //midi

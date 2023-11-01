@@ -25,23 +25,21 @@ int main(void)
     /** Initialize our hardware */
     hw.Init();
 
-    System::Delay(2000);
-
     /** Initialize the SDMMC Hardware 
-     *  For this example we'll use the defaults:
-     *  Fast (50MHz), 4-bit, w/out power save settings
+     *  For this example we'll use:
+     *  Medium (25MHz), 4-bit, w/out power save settings
      */
     SdmmcHandler::Config sd_cfg;
-    sd_cfg.Defaults();
-    sd_cfg.width = SdmmcHandler::BusWidth::BITS_4;
     sd_cfg.speed = SdmmcHandler::Speed::STANDARD;
     sdmmc.Init(sd_cfg);
 
     /** Setup our interface to the FatFS middleware */
-    fsi.Init(FatFSInterface::Config::MEDIA_SD);
+    FatFSInterface::Config fsi_config;
+    fsi_config.media = FatFSInterface::Config::MEDIA_SD;
+    fsi.Init(fsi_config);
 
     /** Get the reference to the FATFS Filesystem for use in mounting the hardware. */
-    //FATFS& fs = fsi.GetSDFileSystem();
+    FATFS& fs = fsi.GetSDFileSystem();
 
     /** default to a known error 
      *  by the end of the next if-statement it should be FR_OK
@@ -51,9 +49,7 @@ int main(void)
     /** mount the filesystem to the root directory 
      *  fsi.GetSDPath can be used when mounting multiple filesystems on different media
      */
-    // if(f_mount(&, fsi.GetSDPath(), 1) == FR_OK)
-    f_mount(&fsi.GetSDFileSystem(),fsi.GetSDPath(),1);
-
+    if(f_mount(&fs, "/", 0) == FR_OK)
     {
         if(f_open(&file, "helloworld.txt", (FA_CREATE_ALWAYS | FA_WRITE))
            == FR_OK)

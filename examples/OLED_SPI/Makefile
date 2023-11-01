@@ -1,13 +1,13 @@
 # Project Name
-TARGET = Dma_Receive
+TARGET = OledSPI
 
 # Sources
-CPP_SOURCES = Dma_Receive.cpp
+CPP_SOURCES = OledSPI.cpp
 
 # Library Locations
-LIBDAISY_DIR = ../../..
+LIBDAISY_DIR = ../../
 
-OPT=-O0
+#APP_TYPE = BOOT_SRAM
 
 # Core location, and generic Makefile.
 SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
