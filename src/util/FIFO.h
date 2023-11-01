@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <stdint.h>
 #include <stddef.h>
 #include <initializer_list>
@@ -44,6 +45,31 @@ class FIFOBase
 
     /** Removes all elements from the FIFO */
     void Clear() { bufferIn_ = bufferOut_ = 0; }
+
+    size_t MassPushBack(T* buff, size_t size)
+    {
+        const size_t capacity = bufferSize_ - GetNumElements();
+        if(size > capacity)
+            size = capacity;
+
+        const size_t rem = bufferSize_ - bufferIn_;
+
+        // Over the end
+        if(size > rem)
+        {
+            std::copy(&buff[0], &buff[rem], &buffer_[bufferIn_]);
+            std::copy(&buff[rem], &buff[size], &buffer_[0]);            
+        }
+        else
+        {
+            std::copy(&buff[0], &buff[size], &buffer_[bufferIn_]);
+        }
+
+        bufferIn_ += size;
+        if(bufferIn_ >= bufferSize_)
+            bufferIn_ -= bufferSize_;
+        return size;
+    }
 
     /** Adds an element to the back of the buffer, returning true on
         success */
@@ -104,6 +130,20 @@ class FIFOBase
         if(idx < 0)
             idx += bufferSize_;
         return buffer_[idx];
+    }
+
+    // pop and throw away lots of samples
+    void PopFrontMany(size_t number)
+    {
+        const size_t capacity = bufferSize_ - GetNumElements();
+        const size_t rem = bufferSize_ - bufferOut_;
+
+        if(number >= capacity)
+            bufferOut_ = bufferIn_;
+        else if(number >= rem)
+            bufferOut_ = number - rem;
+        else
+            bufferOut_ += number;
     }
 
     /** removes and returns an element from the front of the buffer */
@@ -369,8 +409,8 @@ class FIFO : public FIFOBase<T>
         return *this;
     }
 
-  private:
     T buffer_[capacity + 1];
+  private:
 };
 
 } // namespace daisy
