@@ -85,7 +85,7 @@ class ShiftRegister4021
     void Debounce(uint32_t idx)
     {
         // update no faster than 1kHz
-        uint32_t now = System::GetNow();
+        const uint32_t now = System::GetNow();
         updated_[idx]     = false;
 
         if(now - last_update_[idx] >= 1)
@@ -139,12 +139,12 @@ class ShiftRegister4021
     inline const Config& GetConfig() const { return config_; }
 
     /** \return true if a button was just pressed. */
-    inline bool RisingEdge(uint32_t idx) 
+    inline bool RisingEdge(uint32_t idx) __attribute__((optimize("-O0")))
     { 
         if(!risen[idx] && State(idx) && updated_[idx])
         {
             risen[idx] = true;
-            fallen[idx] = false;
+            // fallen[idx] = false;
             return true;
         }
 
@@ -152,11 +152,11 @@ class ShiftRegister4021
     }
 
     /** \return true if the button was just released */
-    inline bool FallingEdge(uint32_t idx)
+    inline bool FallingEdge(uint32_t idx)  __attribute__((optimize("-O0")))
     {
-        if(!fallen[idx] && !State(idx) && updated_[idx])
+        if(risen[idx] && !State(idx) && updated_[idx])
         {
-            fallen[idx] = true;
+            // fallen[idx] = true;
             risen[idx] = false;
             return true;
         }
