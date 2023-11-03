@@ -229,13 +229,9 @@ class MidiHandler
     }
 
     /** Feed in bytes to state machine from a queue.
-    Populates internal FIFO queue with MIDI Messages
-    For example with uart:
-    midi.Parse(uart.PopRx());
-    \param byte &
-    /** Feed in bytes to parser state machine from an external source.
-        Populates internal FIFO queue with MIDI Messages.
-
+        Populates internal FIFO queue with MIDI Messages
+        For example with uart:
+        midi.Parse(uart.PopRx());
         \note  Normally application code won't need to use this method directly.
         \param byte MIDI byte to be parsed
     */
