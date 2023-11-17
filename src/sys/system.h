@@ -88,6 +88,7 @@ class System
             NONE,        // No bootloader present
             v6_0,        // v6.0
             v6_1,        // v6.1 or greater
+            vC6_2,       // chompi v6.2
             LAST
         } version;
     };
