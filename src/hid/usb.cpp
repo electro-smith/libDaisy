@@ -30,6 +30,7 @@ extern "C"
 
 UsbHandle::ReceiveCallback rx_callback;
 uint8_t                    usb_fs_hw_initialized = 0;
+uint8_t                    usb_hs_hw_initialized = 0;
 
 static void InitFS()
 {
@@ -71,23 +72,36 @@ static void DeinitFS()
 static void InitHS()
 {
     // HS as FS
-    if(USBD_Init(&hUsbDeviceHS, &HS_Desc, DEVICE_HS) != USBD_OK)
+    // if(USBD_Init(&hUsbDeviceHS, &HS_Desc, DEVICE_HS) != USBD_OK)
+    // {
+    //     UsbErrorHandler();
+    // }
+    // a check to ensure it's not been called before.
+    rx_callback = DummyRxCallback;
+    if(usb_hs_hw_initialized == 0)
     {
-        UsbErrorHandler();
+        usb_hs_hw_initialized = 1;
+        if(USBD_Init(&hUsbDeviceHS, NULL, DEVICE_HS) != USBD_OK)
+        {
+            UsbErrorHandler();
+        }
     }
-    if(USBD_RegisterClass(&hUsbDeviceHS, &USBD_CDC) != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
-    if(USBD_CDC_RegisterInterface(&hUsbDeviceHS, &USBD_Interface_fops_HS)
-       != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
-    if(USBD_Start(&hUsbDeviceHS) != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
+    tud_init(1);
+
+
+    // if(USBD_RegisterClass(&hUsbDeviceHS, &USBD_CDC) != USBD_OK)
+    // {
+    //     UsbErrorHandler();
+    // }
+    // if(USBD_CDC_RegisterInterface(&hUsbDeviceHS, &USBD_Interface_fops_HS)
+    //    != USBD_OK)
+    // {
+    //     UsbErrorHandler();
+    // }
+    // if(USBD_Start(&hUsbDeviceHS) != USBD_OK)
+    // {
+    //     UsbErrorHandler();
+    // }
 }
 
 static void DeinitHS()
@@ -134,13 +148,21 @@ void UsbHandle::DeInit(UsbPeriph dev)
 UsbHandle::Result UsbHandle::TransmitInternal(uint8_t* buff, size_t size)
 {
     // return CDC_Transmit_FS(buff, size) == USBD_OK ? Result::OK : Result::ERR;
-    auto ret = tud_cdc_write(buff, size) == size ? Result::OK : Result::ERR;
+    // auto ret = tud_cdc_write(buff, size) == size ? Result::OK : Result::ERR;
+    // tud_cdc_write_flush();
+    auto ret
+        = tud_cdc_write(buff, size) == size ? Result::OK : Result::ERR;
     tud_cdc_write_flush();
     return ret;
 }
 UsbHandle::Result UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
 {
-    return CDC_Transmit_HS(buff, size) == USBD_OK ? Result::OK : Result::ERR;
+    auto ret
+        = tud_cdc_write(buff, size) == size ? Result::OK : Result::ERR;
+    tud_cdc_write_flush();
+    return ret;
+
+    // return CDC_Transmit_HS(buff, size) == USBD_OK ? Result::OK : Result::ERR;
 }
 
 void UsbHandle::SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev)
