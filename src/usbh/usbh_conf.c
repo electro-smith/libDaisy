@@ -36,10 +36,7 @@
 /* USER CODE END PV */
 
 HCD_HandleTypeDef hhcd_USB_OTG_HS;
-static void              Error_Handler(void)
-{
-    while(1) {}
-}
+void              Error_Handler(void);
 
 /* USER CODE BEGIN 0 */
 

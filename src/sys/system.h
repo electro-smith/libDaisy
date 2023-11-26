@@ -58,9 +58,7 @@ class System
         bool       skip_clocks;
     };
 
-    /** Describes the different regions of memory available to the Daisy
-     * 
-     */
+    /** Describes the different regions of memory available to the Daisy */
     enum MemoryRegion
     {
         INTERNAL_FLASH = 0,
@@ -72,6 +70,26 @@ class System
         SDRAM,
         QSPI,
         INVALID_ADDRESS,
+    };
+
+    /** Bootloader struct for controlling bootloading parameters */
+    struct BootInfo
+    {
+        enum class Type : uint32_t
+        {
+            INVALID      = 0x00000000,
+            JUMP         = 0xDEADBEEF,
+            SKIP_TIMEOUT = 0x5AFEB007,
+        } status;
+        uint32_t data;
+        enum class Version : uint32_t
+        {
+            LT_v6_0 = 0, // Less than v6.0
+            NONE,        // No bootloader present
+            v6_0,        // v6.0
+            v6_1,        // v6.1 or greater
+            LAST
+        } version;
     };
 
     System() {}
@@ -127,9 +145,31 @@ class System
      ** \param delay_ticks Time to ddelay in microseconds */
     static void DelayTicks(uint32_t delay_ticks);
 
-    /** Triggers a reset of the seed and starts in bootloarder
+    /** Specify how the Daisy should return to the bootloader
+     * \param STM return to the STM32-provided
+     * bootloader to program internal flash
+     * \param DAISY if the Daisy bootloader is used,
+     * this will return to it
+     * \param DAISY_NO_TIMEOUT if the Daisy bootloader
+     * is used, this will return to it and skip the
+     * timeout window
+    */
+    enum BootloaderMode
+    {
+        STM = 0,
+        DAISY,
+        DAISY_SKIP_TIMEOUT
+    };
+
+    /** Triggers a reset of the seed and starts in bootloader
      ** mode to allow firmware update. */
-    static void ResetToBootloader();
+    static void ResetToBootloader(BootloaderMode mode = BootloaderMode::STM);
+
+    /** Initializes the backup SRAM */
+    static void InitBackupSram();
+
+    /** Checks Daisy Bootloader version, if present. */
+    static BootInfo::Version GetBootloaderVersion();
 
     /** Returns the tick rate in Hz with which GetTick() is incremented. */
     static uint32_t GetTickFreq();
@@ -193,6 +233,9 @@ class System
      ** Maybe this whole class should be static.. */
     static TimerHandle tim_;
 };
+
+extern volatile daisy::System::BootInfo boot_info;
+
 } // namespace daisy
 
 #else // ifndef UNIT_TEST

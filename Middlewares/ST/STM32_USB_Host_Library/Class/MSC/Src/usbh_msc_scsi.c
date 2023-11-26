@@ -6,12 +6,13 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2015 STMicroelectronics.
-  * All rights reserved.
+  * <h2><center>&copy; Copyright (c) 2015 STMicroelectronics.
+  * All rights reserved.</center></h2>
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * This software component is licensed by ST under Ultimate Liberty license
+  * SLA0044, the "License"; You may not use this file except in compliance with
+  * the License. You may obtain a copy of the License at:
+  *                      www.st.com/SLA0044
   *
   ******************************************************************************
   */
@@ -102,19 +103,19 @@ EndBSPDependencies */
 USBH_StatusTypeDef USBH_MSC_SCSI_TestUnitReady(USBH_HandleTypeDef *phost,
                                                uint8_t lun)
 {
-  USBH_StatusTypeDef    error = USBH_FAIL;
+  USBH_StatusTypeDef    error = USBH_FAIL ;
   MSC_HandleTypeDef *MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;
 
   switch (MSC_Handle->hbot.cmd_state)
   {
     case BOT_CMD_SEND:
 
-      /*Prepare the CBW and relevant field*/
+      /*Prepare the CBW and relevent field*/
       MSC_Handle->hbot.cbw.field.DataTransferLength = DATA_LEN_MODE_TEST_UNIT_READY;
       MSC_Handle->hbot.cbw.field.Flags = USB_EP_DIR_OUT;
       MSC_Handle->hbot.cbw.field.CBLength = CBW_LENGTH;
 
-      (void)USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_CB_LENGTH);
+      USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_CB_LENGTH);
       MSC_Handle->hbot.cbw.field.CB[0]  = OPCODE_TEST_UNIT_READY;
 
       MSC_Handle->hbot.state = BOT_SEND_CBW;
@@ -145,19 +146,19 @@ USBH_StatusTypeDef USBH_MSC_SCSI_ReadCapacity(USBH_HandleTypeDef *phost,
                                               uint8_t lun,
                                               SCSI_CapacityTypeDef *capacity)
 {
-  USBH_StatusTypeDef    error = USBH_BUSY;
+  USBH_StatusTypeDef    error = USBH_BUSY ;
   MSC_HandleTypeDef *MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;
 
   switch (MSC_Handle->hbot.cmd_state)
   {
     case BOT_CMD_SEND:
 
-      /*Prepare the CBW and relevant field*/
+      /*Prepare the CBW and relevent field*/
       MSC_Handle->hbot.cbw.field.DataTransferLength = DATA_LEN_READ_CAPACITY10;
       MSC_Handle->hbot.cbw.field.Flags = USB_EP_DIR_IN;
       MSC_Handle->hbot.cbw.field.CBLength = CBW_LENGTH;
 
-      (void)USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_CB_LENGTH);
+      USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_CB_LENGTH);
       MSC_Handle->hbot.cbw.field.CB[0]  = OPCODE_READ_CAPACITY10;
 
       MSC_Handle->hbot.state = BOT_SEND_CBW;
@@ -207,12 +208,12 @@ USBH_StatusTypeDef USBH_MSC_SCSI_Inquiry(USBH_HandleTypeDef *phost, uint8_t lun,
   {
     case BOT_CMD_SEND:
 
-      /*Prepare the CBW and relevant field*/
+      /*Prepare the CBW and relevent field*/
       MSC_Handle->hbot.cbw.field.DataTransferLength = DATA_LEN_INQUIRY;
       MSC_Handle->hbot.cbw.field.Flags = USB_EP_DIR_IN;
       MSC_Handle->hbot.cbw.field.CBLength = CBW_LENGTH;
 
-      (void)USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_LENGTH);
+      USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_LENGTH);
       MSC_Handle->hbot.cbw.field.CB[0]  = OPCODE_INQUIRY;
       MSC_Handle->hbot.cbw.field.CB[1]  = (lun << 5);
       MSC_Handle->hbot.cbw.field.CB[2]  = 0U;
@@ -233,7 +234,7 @@ USBH_StatusTypeDef USBH_MSC_SCSI_Inquiry(USBH_HandleTypeDef *phost, uint8_t lun,
 
       if (error == USBH_OK)
       {
-        (void)USBH_memset(inquiry, 0, sizeof(SCSI_StdInquiryDataTypeDef));
+        USBH_memset(inquiry, 0, sizeof(SCSI_StdInquiryDataTypeDef));
         /*assign Inquiry Data */
         inquiry->DeviceType = MSC_Handle->hbot.pbuf[0] & 0x1FU;
         inquiry->PeripheralQualifier = MSC_Handle->hbot.pbuf[0] >> 5U;
@@ -247,9 +248,9 @@ USBH_StatusTypeDef USBH_MSC_SCSI_Inquiry(USBH_HandleTypeDef *phost, uint8_t lun,
           inquiry->RemovableMedia = 0U;
         }
 
-        (void)USBH_memcpy(inquiry->vendor_id, &MSC_Handle->hbot.pbuf[8], 8U);
-        (void)USBH_memcpy(inquiry->product_id, &MSC_Handle->hbot.pbuf[16], 16U);
-        (void)USBH_memcpy(inquiry->revision_id, &MSC_Handle->hbot.pbuf[32], 4U);
+        USBH_memcpy(inquiry->vendor_id, &MSC_Handle->hbot.pbuf[8], 8U);
+        USBH_memcpy(inquiry->product_id, &MSC_Handle->hbot.pbuf[16], 16U);
+        USBH_memcpy(inquiry->revision_id, &MSC_Handle->hbot.pbuf[32], 4U);
       }
       break;
 
@@ -272,19 +273,19 @@ USBH_StatusTypeDef USBH_MSC_SCSI_RequestSense(USBH_HandleTypeDef *phost,
                                               uint8_t lun,
                                               SCSI_SenseTypeDef *sense_data)
 {
-  USBH_StatusTypeDef    error = USBH_FAIL;
+  USBH_StatusTypeDef    error = USBH_FAIL ;
   MSC_HandleTypeDef *MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;
 
   switch (MSC_Handle->hbot.cmd_state)
   {
     case BOT_CMD_SEND:
 
-      /*Prepare the CBW and relevant field*/
+      /*Prepare the CBW and relevent field*/
       MSC_Handle->hbot.cbw.field.DataTransferLength = DATA_LEN_REQUEST_SENSE;
       MSC_Handle->hbot.cbw.field.Flags = USB_EP_DIR_IN;
       MSC_Handle->hbot.cbw.field.CBLength = CBW_LENGTH;
 
-      (void)USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_CB_LENGTH);
+      USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_CB_LENGTH);
       MSC_Handle->hbot.cbw.field.CB[0]  = OPCODE_REQUEST_SENSE;
       MSC_Handle->hbot.cbw.field.CB[1]  = (lun << 5);
       MSC_Handle->hbot.cbw.field.CB[2]  = 0U;
@@ -333,7 +334,7 @@ USBH_StatusTypeDef USBH_MSC_SCSI_Write(USBH_HandleTypeDef *phost,
                                        uint8_t *pbuf,
                                        uint32_t length)
 {
-  USBH_StatusTypeDef    error = USBH_FAIL;
+  USBH_StatusTypeDef    error = USBH_FAIL ;
 
   MSC_HandleTypeDef *MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;
 
@@ -341,12 +342,12 @@ USBH_StatusTypeDef USBH_MSC_SCSI_Write(USBH_HandleTypeDef *phost,
   {
     case BOT_CMD_SEND:
 
-      /*Prepare the CBW and relevant field*/
+      /*Prepare the CBW and relevent field*/
       MSC_Handle->hbot.cbw.field.DataTransferLength = length * MSC_Handle->unit[0].capacity.block_size;
       MSC_Handle->hbot.cbw.field.Flags = USB_EP_DIR_OUT;
       MSC_Handle->hbot.cbw.field.CBLength = CBW_LENGTH;
 
-      (void)USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_CB_LENGTH);
+      USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_CB_LENGTH);
       MSC_Handle->hbot.cbw.field.CB[0]  = OPCODE_WRITE10;
 
       /*logical block address*/
@@ -357,8 +358,8 @@ USBH_StatusTypeDef USBH_MSC_SCSI_Write(USBH_HandleTypeDef *phost,
 
 
       /*Transfer length */
-      MSC_Handle->hbot.cbw.field.CB[7]  = (((uint8_t *)(void *)&length)[1]);
-      MSC_Handle->hbot.cbw.field.CB[8]  = (((uint8_t *)(void *)&length)[0]);
+      MSC_Handle->hbot.cbw.field.CB[7]  = (((uint8_t *)(void *)&length)[1]) ;
+      MSC_Handle->hbot.cbw.field.CB[8]  = (((uint8_t *)(void *)&length)[0]) ;
 
 
       MSC_Handle->hbot.state = BOT_SEND_CBW;
@@ -394,19 +395,19 @@ USBH_StatusTypeDef USBH_MSC_SCSI_Read(USBH_HandleTypeDef *phost,
                                       uint8_t *pbuf,
                                       uint32_t length)
 {
-  USBH_StatusTypeDef    error = USBH_FAIL;
+  USBH_StatusTypeDef    error = USBH_FAIL ;
   MSC_HandleTypeDef *MSC_Handle = (MSC_HandleTypeDef *) phost->pActiveClass->pData;
 
   switch (MSC_Handle->hbot.cmd_state)
   {
     case BOT_CMD_SEND:
 
-      /*Prepare the CBW and relevant field*/
+      /*Prepare the CBW and relevent field*/
       MSC_Handle->hbot.cbw.field.DataTransferLength = length * MSC_Handle->unit[0].capacity.block_size;
       MSC_Handle->hbot.cbw.field.Flags = USB_EP_DIR_IN;
       MSC_Handle->hbot.cbw.field.CBLength = CBW_LENGTH;
 
-      (void)USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_CB_LENGTH);
+      USBH_memset(MSC_Handle->hbot.cbw.field.CB, 0, CBW_CB_LENGTH);
       MSC_Handle->hbot.cbw.field.CB[0]  = OPCODE_READ10;
 
       /*logical block address*/
@@ -417,8 +418,8 @@ USBH_StatusTypeDef USBH_MSC_SCSI_Read(USBH_HandleTypeDef *phost,
 
 
       /*Transfer length */
-      MSC_Handle->hbot.cbw.field.CB[7]  = (((uint8_t *)(void *)&length)[1]);
-      MSC_Handle->hbot.cbw.field.CB[8]  = (((uint8_t *)(void *)&length)[0]);
+      MSC_Handle->hbot.cbw.field.CB[7]  = (((uint8_t *)(void *)&length)[1]) ;
+      MSC_Handle->hbot.cbw.field.CB[8]  = (((uint8_t *)(void *)&length)[0]) ;
 
 
       MSC_Handle->hbot.state = BOT_SEND_CBW;
@@ -458,6 +459,8 @@ USBH_StatusTypeDef USBH_MSC_SCSI_Read(USBH_HandleTypeDef *phost,
 /**
   * @}
   */
+
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
 
 
 

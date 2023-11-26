@@ -41,10 +41,10 @@
 PCD_HandleTypeDef hpcd_USB_OTG_FS;
 PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
-void Error_Handler(void)
-{
-    while(1) {}
-}
+// void Error_Handler(void)
+// {
+//     while(1) {}
+// }
 
 /* External functions --------------------------------------------------------*/
 
