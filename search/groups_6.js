@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['human_5finterface_0',['HUMAN_INTERFACE',['../group__human__interface.html',1,'']]]
+  ['gpio_0',['DEPRECATED-OLD-GPIO',['../group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html',1,'']]]
 ];

@@ -24,7 +24,6 @@
 */
 var menudata={children:[
 {text:"Introduction",url:"index.html"},
-{text:"API Documentation",url:"modules.html"},
 {text:"Related Pages",url:"pages.html"},
 {text:"Additional Resources",url:"usergroup0.html",children:[
 {text:"Electrosmith Website",url:"^https://electro-smith.com/"},

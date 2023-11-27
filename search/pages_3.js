@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['spi_0',['SPI',['../md_doc_2md_2__a8___getting-_started-_s_p_i.html',1,'']]]
+  ['external_20sdram_0',['Getting Started - External SDRAM',['../md_doc_2md_2__a6___getting-_started-_external-_s_d_r_a_m.html',1,'']]]
 ];

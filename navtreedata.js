@@ -29,7 +29,6 @@ var NAVTREE =
     [ "Using libDaisy", "index.html#autotoc_md72", null ],
     [ "Development", "index.html#autotoc_md73", null ],
     [ "Troubleshooting", "index.html#autotoc_md74", null ],
-    [ "API Documentation", "modules.html", "modules" ],
     [ "Getting Started - GPIO", "md_doc_2md_2__a1___getting-_started-_g_p_i_o.html", [
       [ "The CPP Objects Used", "md_doc_2md_2__a1___getting-_started-_g_p_i_o.html#autotoc_md2", null ],
       [ "The Hardware Connections", "md_doc_2md_2__a1___getting-_started-_g_p_i_o.html#autotoc_md3", null ],
@@ -155,21 +154,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_menu_8h.html",
-"classdaisy_1_1_apds9960.html#a3cf8c7053b967952b70d4da945ea3fc9",
-"classdaisy_1_1_daisy_patch.html#aefa3638dd587fe20c48bbdfba3cd72b3a97da9bc7e7650022b0109eba62759e5a",
-"classdaisy_1_1_dps310.html#a5efac61910adc2f4b8f3f7a93ff3a23e",
-"classdaisy_1_1_icm20948.html#a8950d4b910aada48b53e7d160448d331",
-"classdaisy_1_1_mpr121.html#ad38b500b5c9dfe9cb9a7764714a53798a8963e3a75478e33f625eba239dc67629",
-"classdaisy_1_1_persistent_storage.html#a250a8352eb62ed2db360d89c06d4aa17",
-"classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51aec89c3f7c267f0eaacd65441ef854bca",
-"classdaisy_1_1_wav_writer.html#a9c03052fee69006c6f021391ecc93f20",
-"ffconf_8h.html#aaab0313f867bb008b64236239f5c2660",
-"group__flash.html#ga04fd60926b738c3e978ee46725b3b341",
-"group__ui.html#ggac734c565c1dc55cbf6b74ea942f40c1ca7c4f29407893c334a6cb7a87bf045c0d",
-"md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md15",
-"structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html",
-"structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html#a60556e52b033f81831b4b8ec43b7d0d9",
-"structdaisy_1_1_uart_handler_1_1_config.html#a490845e58271053432b93ec8cc56798e"
+"classdaisy_1_1_fixed_cap_str_base.html#a688c94fe6ed65f138675b9b2168a1d5d",
+"classdaisy_1_1_sai_handle.html#ae81d7a93aa5f48f643ac157f612c21cd",
+"dir_b976535e247876b3fcfe2d2f736f9267.html",
+"globals_p.html",
+"midi_8h.html#a1e52176e4f92572132c9ea700e70ad9d",
+"structdaisy_1_1_timer_handle_1_1_config.html#a80d102d9f279eed83f2fb22323a5d4b7"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

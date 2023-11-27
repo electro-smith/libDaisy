@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['deprecated_20list_0',['Deprecated List',['../deprecated.html',1,'']]],
-  ['development_20_2d_20unit_2dtesting_1',['Development - Unit-Testing',['../md_doc_2md_2__b1___development-_unit-_testing.html',1,'']]]
+  ['adcs_0',['Getting Started - ADCs',['../md_doc_2md_2__a4___getting-_started-_a_d_cs.html',1,'']]],
+  ['audio_1',['Getting Started - Audio',['../md_doc_2md_2__a3___getting-_started-_audio.html',1,'']]]
 ];
