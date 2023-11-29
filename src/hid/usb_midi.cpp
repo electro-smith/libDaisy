@@ -124,6 +124,11 @@ void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
     } while(should_retry);
 
     tx_ptr_ = 0;
+
+    if(result == UsbHandle::Result::ERR)
+    {
+        Init(config_);
+    }
 }
 
 void MidiUsbTransport::Impl::UsbToMidi(uint8_t* buffer, uint8_t length)
