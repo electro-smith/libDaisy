@@ -309,11 +309,11 @@ WARNINGS += -Wall -Wno-attributes -Wno-strict-aliasing -Wno-maybe-uninitialized 
 CPP_WARNINGS += -Wno-register
 
 # compile gcc flags
-ASFLAGS = $(MCU) $(AS_INCLUDES) $(AS_DEFS) -ggdb $(WARNINGS) $(OPT) -fdata-sections -ffunction-sections
-
-CFLAGS = $(MCU) $(C_INCLUDES) $(C_DEFS) -ggdb $(WARNINGS) $(OPT) -fasm -fdata-sections -ffunction-sections
+ASFLAGS += $(MCU) $(AS_INCLUDES) $(AS_DEFS) $(WARNINGS) $(OPT) -fdata-sections -ffunction-sections
+CFLAGS += $(MCU) $(C_INCLUDES) $(C_DEFS) $(WARNINGS) $(OPT) -fasm -fdata-sections -ffunction-sections
 
 ifeq ($(DEBUG), 1)
+ASFLAGS += -g -ggdb
 CFLAGS += -g -ggdb
 OPT = -O0
 C_DEFS += -DDEBUG=1
@@ -325,7 +325,7 @@ CFLAGS += \
 -finline-functions
 
 # C++ Flags
-CPPFLAGS = $(CFLAGS) $(CPP_WARNINGS)
+CPPFLAGS += $(CFLAGS) $(CPP_WARNINGS)
 CPPFLAGS += \
 -fno-exceptions \
 -fno-rtti 
