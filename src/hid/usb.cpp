@@ -90,6 +90,29 @@ static void DeinitHS()
 }
 
 
+void UsbHandle::Reset()
+{
+    // HS as FS
+    if(USBD_Init(&hUsbDeviceHS, &HS_Desc, DEVICE_HS) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+    if(USBD_RegisterClass(&hUsbDeviceHS, &USBD_CDC) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+    if(USBD_CDC_RegisterInterface(&hUsbDeviceHS, &USBD_Interface_fops_HS)
+       != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+    if(USBD_Start(&hUsbDeviceHS) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+}
+
+
 void UsbHandle::Init(UsbPeriph dev)
 {
     switch(dev)

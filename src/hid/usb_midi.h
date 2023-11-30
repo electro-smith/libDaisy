@@ -45,10 +45,12 @@ class MidiUsbTransport
 
     void Init(Config config);
 
+    void Reset();
+
     void StartRx(MidiRxParseCallback callback, void* context);
     bool RxActive();
     void FlushRx();
-    void Tx(uint8_t* buffer, size_t size);
+    bool Tx(uint8_t* buffer, size_t size);
 
     class Impl;
 

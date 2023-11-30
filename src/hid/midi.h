@@ -58,6 +58,8 @@ class MidiUartTransport
         Config();
     };
 
+    void Reset() {}
+
     /** @brief Initialization of UART using config struct */
     inline void Init(Config config)
     {
@@ -103,7 +105,7 @@ class MidiUartTransport
     inline void FlushRx() {}
 
     /** @brief sends the buffer of bytes out of the UART peripheral */
-    inline void Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
+    inline bool Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); return false; }
 
   private:
     UartHandler         uart_;
@@ -170,6 +172,8 @@ class MidiHandler
         parser_.Init();
     }
 
+    inline void ResetTransport() { transport_.Reset(); }
+
     /** Starts listening on the selected input mode(s).
      * MidiEvent Queue will begin to fill, and can be checked with HasEvents() */
     void StartReceive()
@@ -210,22 +214,22 @@ class MidiHandler
         transport_.Tx(bytes, size);
     }
 
-    void SendNoteOn(uint8_t channel, uint8_t note, uint8_t velocity)
+    bool SendNoteOn(uint8_t channel, uint8_t note, uint8_t velocity)
     {
         uint8_t bytes[3] = {(uint8_t)(0x90 | channel), note, velocity};
-        transport_.Tx(bytes, 3);
+        return transport_.Tx(bytes, 3);
     }
 
-    void SendNoteOff(uint8_t channel, uint8_t note, uint8_t velocity)
+    bool SendNoteOff(uint8_t channel, uint8_t note, uint8_t velocity)
     {
         uint8_t bytes[3] = {(uint8_t)(0x80 | channel), note, velocity};
-        transport_.Tx(bytes, 3);
+        return transport_.Tx(bytes, 3);
     }
 
-    void SendCC(uint8_t channel, uint8_t control_number, uint8_t value)
+    bool SendCC(uint8_t channel, uint8_t control_number, uint8_t value)
     {
         uint8_t bytes[3] = {(uint8_t)(0xB0 | channel), control_number, value};
-        transport_.Tx(bytes, 3);
+        return transport_.Tx(bytes, 3);
     }
 
     /** Feed in bytes to state machine from a queue.

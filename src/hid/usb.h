@@ -46,6 +46,8 @@ class UsbHandle
      */
     void Init(UsbPeriph dev);
 
+    void Reset();
+
     /** Deinitializes the specified peripheral(s)
     \param dev Device to deinitialize
      */

@@ -10,6 +10,8 @@ class MidiUsbTransport::Impl
   public:
     void Init(Config config);
 
+    void Reset();
+
     void StartRx(MidiRxParseCallback callback, void* context)
     {
         rx_active_      = true;
@@ -19,7 +21,7 @@ class MidiUsbTransport::Impl
 
     bool RxActive() { return rx_active_; }
     void FlushRx() { rx_buffer_.Flush(); }
-    void Tx(uint8_t* buffer, size_t size);
+    bool Tx(uint8_t* buffer, size_t size);
 
     void UsbToMidi(uint8_t* buffer, uint8_t length);
     void MidiToUsb(uint8_t* buffer, size_t length);
@@ -80,6 +82,12 @@ void ReceiveCallback(uint8_t* buffer, uint32_t* length)
     }
 }
 
+void MidiUsbTransport::Impl::Reset()
+{
+    // TODO: implement
+    usb_handle_.Reset();
+}
+
 void MidiUsbTransport::Impl::Init(Config config)
 {
     // Borrowed from logger
@@ -103,7 +111,7 @@ void MidiUsbTransport::Impl::Init(Config config)
     usb_handle_.SetReceiveCallback(ReceiveCallback, periph);
 }
 
-void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
+bool MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
 {
     UsbHandle::Result result;
     int               attempt_count = config_.tx_retry_count;
@@ -124,6 +132,8 @@ void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
     } while(should_retry);
 
     tx_ptr_ = 0;
+
+    return result != UsbHandle::Result::ERR;
 }
 
 void MidiUsbTransport::Impl::UsbToMidi(uint8_t* buffer, uint8_t length)
@@ -307,6 +317,12 @@ void MidiUsbTransport::Init(MidiUsbTransport::Config config)
     pimpl_->Init(config);
 }
 
+void MidiUsbTransport::Reset()
+{
+    pimpl_ = &midi_usb_handle;
+    pimpl_->Reset();
+}
+
 void MidiUsbTransport::StartRx(MidiRxParseCallback callback, void* context)
 {
     pimpl_->StartRx(callback, context);
@@ -322,7 +338,7 @@ void MidiUsbTransport::FlushRx()
     pimpl_->FlushRx();
 }
 
-void MidiUsbTransport::Tx(uint8_t* buffer, size_t size)
+bool MidiUsbTransport::Tx(uint8_t* buffer, size_t size)
 {
-    pimpl_->Tx(buffer, size);
+    return pimpl_->Tx(buffer, size);
 }
