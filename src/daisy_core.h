@@ -230,7 +230,7 @@ FORCE_INLINE dsy_gpio_pin dsy_pin(dsy_gpio_port port, uint8_t pin)
  * 
  *  Please use Pin struct instead.
  */
-FORCE_INLINE uint8_t dsy_pin_cmp(dsy_gpio_pin *a, dsy_gpio_pin *b)
+FORCE_INLINE uint8_t dsy_pin_cmp(const dsy_gpio_pin *a, const dsy_gpio_pin *b)
 {
     return ((a->port == b->port) && (a->pin == b->pin));
 }
