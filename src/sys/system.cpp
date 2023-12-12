@@ -316,7 +316,8 @@ void System::ResetToBootloader(BootloaderMode mode)
         HAL_Delay(10);
     }
     else if(mode == BootloaderMode::DAISY
-            || mode == BootloaderMode::DAISY_SKIP_TIMEOUT)
+            || mode == BootloaderMode::DAISY_SKIP_TIMEOUT
+            || mode == BootloaderMode::DAISY_INFINITE_TIMEOUT)
     {
         auto region = GetProgramMemoryRegion();
         if(region == MemoryRegion::INTERNAL_FLASH)
@@ -325,10 +326,20 @@ void System::ResetToBootloader(BootloaderMode mode)
         // Coming from a bootloaded program, the backup SRAM will already
         // be initialized. If the bootloader is <= v5, then it will not
         // be initialized, but a failed write will not cause a fault.
-
-        boot_info.status = mode == BootloaderMode::DAISY
-                               ? BootInfo::Type::INVALID
-                               : BootInfo::Type::SKIP_TIMEOUT;
+        switch (mode)
+        {
+            case BootloaderMode::DAISY_SKIP_TIMEOUT:
+                boot_info.status = BootInfo::Type::SKIP_TIMEOUT;
+                break;
+            case BootloaderMode::DAISY_INFINITE_TIMEOUT:
+                boot_info.status = BootInfo::Type::INF_TIMEOUT;
+                break;
+            default:
+                // this is technically valid, just means no
+                // special behavior applied on boot
+                boot_info.status = BootInfo::Type::INVALID;
+                break;
+        }
     }
     else
     {
