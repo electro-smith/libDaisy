@@ -53,25 +53,25 @@ QSPI_ADDRESS ?= 0x90040000
 DAISY_PID = df11
 STM_PID = df11
 
-BOOT_BIN ?= $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
+BOOT_BIN ?= $(wildcard $(RESOURCE_DIR)/dsy_bootloader*)
 APP_TYPE ?= BOOT_NONE
 
 ifeq ($(APP_TYPE), BOOT_NONE)
 
-LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_flash.lds
+LDSCRIPT ?= $(RESOURCE_DIR)/STM32H750IB_flash.lds
 USBPID = $(STM_PID)
 FLASH_ADDRESS ?= $(INTERNAL_ADDRESS)
 
 else ifeq ($(APP_TYPE), BOOT_SRAM)
 
-LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_sram.lds
+LDSCRIPT ?= $(RESOURCE_DIR)/STM32H750IB_sram.lds
 USBPID = $(DAISY_PID)
 FLASH_ADDRESS ?= $(QSPI_ADDRESS)
 C_DEFS += -DBOOT_APP
 
 else ifeq ($(APP_TYPE), BOOT_QSPI)
 
-LDSCRIPT ?= $(SYSTEM_FILES_DIR)/STM32H750IB_qspi.lds
+LDSCRIPT ?= $(RESOURCE_DIR)/STM32H750IB_qspi.lds
 USBPID = $(DAISY_PID)
 FLASH_ADDRESS ?= $(QSPI_ADDRESS)
 C_DEFS += -DBOOT_APP
@@ -90,16 +90,11 @@ LIBS += -ldaisy -lc -lm -lnosys
 LIBDIR += -L $(RESOURCE_DIR)
 #LIBDIR = -L./VisualGDB/Release
 
-ifdef DAISYSP_DIR
 LIBS += -ldaisysp
 LIBDIR += -L $(RESOURCE_DIR)
-endif
 
-
-ifeq ($(USE_DAISYSP_LGPL),1)
 LIBS += -ldaisysp-lgpl
 LIBDIR += -L $(RESOURCE_DIR)
-endif
 
 LDFLAGS ?=
 LDFLAGS += $(MCU) --specs=nano.specs --specs=nosys.specs -T$(LDSCRIPT) $(LIBDIR) $(LIBS) -Wl,-Map=$(RESOURCE_DIR)/$(TARGET).map,--cref -Wl,--gc-sections -Wl,--print-memory-usage

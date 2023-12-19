@@ -38,35 +38,30 @@ mkdir -p lgpl/
 mkdir -p lgpl/resource
 
 # copy .a files
-cp $DAISYSP_DIR/build/libdaisysp.a lgpl/resource
-cp $DAISYSP_DIR/DaisySP-LGPL/build/libdaisysp-lgpl.a lgpl/resource
-cp $LIBDAISY_DIR/build/libdaisy.a lgpl/resource
+cp $DAISYSP_DIR/build/libdaisysp.a lgpl/resource || { echo 'Invalid libDaisy location. Try -l flag' ; exit 1; }
+cp $DAISYSP_DIR/DaisySP-LGPL/build/libdaisysp-lgpl.a lgpl/resource || { echo 'Invalid DaisySP location. Try -d flag' ; exit 1; }
+cp $LIBDAISY_DIR/build/libdaisy.a lgpl/resource || { echo 'Invalid DaisySP location. Try -d flag' ; exit 1; }
+
+# copy bootloader files
+cp $LIBDAISY_DIR/core/dsy_bootloader* lgpl/resource || { echo 'Invalid libDaisy location. Try -l flag' ; exit 1; }
+cp $LIBDAISY_DIR/core/STM32H750IB_flash.lds lgpl/resource || { echo 'Invalid libDaisy location. Try -l flag' ; exit 1; }
+cp $LIBDAISY_DIR/core/STM32H750IB_sram.lds lgpl/resource || { echo 'Invalid libDaisy location. Try -l flag' ; exit 1; }
+cp $LIBDAISY_DIR/core/STM32H750IB_qspi.lds lgpl/resource || { echo 'Invalid libDaisy location. Try -l flag' ; exit 1; }
+
+# copy and prepend vars to local makefile
+cp $LIBDAISY_DIR/core/Makefile_LGPL lgpl/Makefile || { echo 'Invalid libDaisy location. Try -l flag' ; exit 1; }
+
+prepend="# Project Name\nTARGET = $PROJECT\n"
+sed -i -e "1i $prepend" lgpl/Makefile
 
 # copy .o and .map files
 cp build/*.o lgpl/resource
 cp build/*.map lgpl/resource
 
-# create the local makefile
-makefile="# Project Name\n
-TARGET = $PROJECT\n
-\n
-USE_DAISYSP_LGPL = 1\n
-\n
-# Library Locations\n
-LIBDAISY_DIR ?= $LIBDAISY_DIR\n
-DAISYSP_DIR ?= $DAISYSP_DIR\n
-\n
-# Core location, and generic Makefile.\n
-SYSTEM_FILES_DIR = \$(LIBDAISY_DIR)/core\n
-include \$(SYSTEM_FILES_DIR)/Makefile_LGPL"
-
-echo -e $makefile > lgpl/Makefile
-
 # make a little readme
-
 readme="To rebuild with an updated or modified version of any of the static libraries:\n
-1. Build the library, for example DaisySP-LGPL\n
-2. Copy the generated .a file to the resources folder. In this case it would be libdaisy-lgpl.a\n
-3. Run the make command. Your .bin file will be in the build folder"
+1. Build the library you would like to replace, for example by running make inside of DaisySP-LGPL.\n
+2. Copy the generated .a file to the resources folder. In this case it would be libdaisy-lgpl.a \n
+3. Run the make command in this folder. Your .bin file will be in the build folder. "
 
 echo -e $readme > lgpl/Readme.md
