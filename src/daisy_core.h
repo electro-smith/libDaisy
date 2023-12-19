@@ -291,9 +291,10 @@ struct Pin
      *  This allows the new Pin type to be used in place of the older, dsy_gpio_pin
      *  type.
      */
-    operator dsy_gpio_pin() const
+    constexpr operator dsy_gpio_pin() const
     {
-        return dsy_pin(static_cast<dsy_gpio_port>(port), pin);
+        return dsy_gpio_pin{.port = static_cast<dsy_gpio_port>(port),
+                            .pin  = pin};
     }
 };
 

@@ -9,31 +9,31 @@ using namespace daisy;
 
 // Hardware related defines.
 // Switches
-#define SW_1_PIN 8
-#define SW_2_PIN 9
-#define SW_3_PIN 10
-#define SW_4_PIN 13
-#define SW_5_PIN 25
-#define SW_6_PIN 26
-#define SW_7_PIN 7
+constexpr Pin SW_1_PIN = seed::D8;
+constexpr Pin SW_2_PIN = seed::D9;
+constexpr Pin SW_3_PIN = seed::D10;
+constexpr Pin SW_4_PIN = seed::D13;
+constexpr Pin SW_5_PIN = seed::D25;
+constexpr Pin SW_6_PIN = seed::D26;
+constexpr Pin SW_7_PIN = seed::D7;
 
 // Encoder
-#define ENC_A_PIN 28
-#define ENC_B_PIN 27
-#define ENC_CLICK_PIN 14
+constexpr Pin ENC_A_PIN     = seed::D28;
+constexpr Pin ENC_B_PIN     = seed::D27;
+constexpr Pin ENC_CLICK_PIN = seed::D14;
 
 // Knobs
-#define PIN_EXPRESSION 15
-#define PIN_KNOB_1 16
-#define PIN_KNOB_2 19
-#define PIN_KNOB_3 17
-#define PIN_KNOB_4 20
-#define PIN_KNOB_5 18
-#define PIN_KNOB_6 21
+constexpr Pin PIN_EXPRESSION = seed::D15;
+constexpr Pin PIN_KNOB_1     = seed::D16;
+constexpr Pin PIN_KNOB_2     = seed::D19;
+constexpr Pin PIN_KNOB_3     = seed::D17;
+constexpr Pin PIN_KNOB_4     = seed::D20;
+constexpr Pin PIN_KNOB_5     = seed::D18;
+constexpr Pin PIN_KNOB_6     = seed::D21;
 
 static constexpr I2CHandle::Config petal_led_i2c_config
     = {I2CHandle::Config::Peripheral::I2C_1,
-       {{DSY_GPIOB, 8}, {DSY_GPIOB, 9}},
+       {Pin(PORTB, 8), Pin(PORTB, 9)},
        I2CHandle::Config::Speed::I2C_1MHZ};
 
 enum LedOrder
@@ -276,7 +276,7 @@ void DaisyPetal::InitSwitches()
     //
     //    buttons[BUTTON_1] = &button1;
     //    buttons[BUTTON_2] = &button2;
-    uint8_t pin_numbers[SW_LAST] = {
+    constexpr Pin pin_numbers[SW_LAST] = {
         SW_1_PIN,
         SW_2_PIN,
         SW_3_PIN,
@@ -288,17 +288,13 @@ void DaisyPetal::InitSwitches()
 
     for(size_t i = 0; i < SW_LAST; i++)
     {
-        switches[i].Init(seed.GetPin(pin_numbers[i]));
+        switches[i].Init(pin_numbers[i]);
     }
 }
 
 void DaisyPetal::InitEncoder()
 {
-    dsy_gpio_pin a, b, click;
-    a     = seed.GetPin(ENC_A_PIN);
-    b     = seed.GetPin(ENC_B_PIN);
-    click = seed.GetPin(ENC_CLICK_PIN);
-    encoder.Init(a, b, click);
+    encoder.Init(ENC_A_PIN, ENC_B_PIN, ENC_CLICK_PIN);
 }
 
 void DaisyPetal::InitLeds()
@@ -320,14 +316,14 @@ void DaisyPetal::InitAnalogControls()
     // KNOB_LAST + 1 because of Expression input
     AdcChannelConfig cfg[KNOB_LAST + 1];
     // Init with Single Pins
-    cfg[KNOB_1].InitSingle(seed.GetPin(PIN_KNOB_1));
-    cfg[KNOB_2].InitSingle(seed.GetPin(PIN_KNOB_2));
-    cfg[KNOB_3].InitSingle(seed.GetPin(PIN_KNOB_3));
-    cfg[KNOB_4].InitSingle(seed.GetPin(PIN_KNOB_4));
-    cfg[KNOB_5].InitSingle(seed.GetPin(PIN_KNOB_5));
-    cfg[KNOB_6].InitSingle(seed.GetPin(PIN_KNOB_6));
+    cfg[KNOB_1].InitSingle(PIN_KNOB_1);
+    cfg[KNOB_2].InitSingle(PIN_KNOB_2);
+    cfg[KNOB_3].InitSingle(PIN_KNOB_3);
+    cfg[KNOB_4].InitSingle(PIN_KNOB_4);
+    cfg[KNOB_5].InitSingle(PIN_KNOB_5);
+    cfg[KNOB_6].InitSingle(PIN_KNOB_6);
     // Special case for Expression
-    cfg[KNOB_LAST].InitSingle(seed.GetPin(PIN_EXPRESSION));
+    cfg[KNOB_LAST].InitSingle(PIN_EXPRESSION);
 
     seed.adc.Init(cfg, KNOB_LAST + 1);
     // Make an array of pointers to the knob.
