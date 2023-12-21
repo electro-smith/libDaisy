@@ -47,7 +47,7 @@ SYSTEM_FILES_DIR ?= \
 # source
 ######################################
 
-CPP_SOURCES ?= 
+CPP_SOURCES ?=
 
 C_SOURCES += \
 $(SYSTEM_FILES_DIR)/startup_stm32h750xx.c
@@ -68,13 +68,13 @@ PREFIX = arm-none-eabi-
 ifdef GCC_PATH
 CC = $(GCC_PATH)/$(PREFIX)gcc
 AS = $(GCC_PATH)/$(PREFIX)gcc -x assembler-with-cpp
-CXX = $(GCC_PATH)/$(PREFIX)g++ 
+CXX = $(GCC_PATH)/$(PREFIX)g++
 GDB = $(GCC_PATH)/$(PREFIX)gdb
 CP = $(GCC_PATH)/$(PREFIX)objcopy
 SZ = $(GCC_PATH)/$(PREFIX)size
 else
 CC = $(PREFIX)gcc
-CXX = $(PREFIX)g++ 
+CXX = $(PREFIX)g++
 GDB = $(PREFIX)gdb
 AS = $(PREFIX)gcc -x assembler-with-cpp
 CP = $(PREFIX)objcopy
@@ -124,7 +124,7 @@ endif
 # AS includes
 AS_INCLUDES =
 
-C_INCLUDES ?= 
+C_INCLUDES ?=
 
 C_INCLUDES += \
 -I$(LIBDAISY_DIR) \
@@ -204,7 +204,7 @@ QSPI_ADDRESS ?= 0x90040000
 DAISY_PID = df11
 STM_PID = df11
 
-BOOT_BIN ?= $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
+BOOT_BIN ?= $(SYSTEM_FILES_DIR)/dsy_bootloader_v6_2-intdfu-2000ms.bin
 APP_TYPE ?= BOOT_NONE
 
 ifeq ($(APP_TYPE), BOOT_NONE)
