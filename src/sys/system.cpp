@@ -326,7 +326,7 @@ void System::ResetToBootloader(BootloaderMode mode)
         // Coming from a bootloaded program, the backup SRAM will already
         // be initialized. If the bootloader is <= v5, then it will not
         // be initialized, but a failed write will not cause a fault.
-        switch (mode)
+        switch(mode)
         {
             case BootloaderMode::DAISY_SKIP_TIMEOUT:
                 boot_info.status = BootInfo::Type::SKIP_TIMEOUT;
