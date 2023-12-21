@@ -4,11 +4,11 @@
 
 ### Features
 
-* bootloader: added `System::BootloaderMode::DAISY` and `System::BootloaderMode::DAISY_SKIP_TIMEOUT` options to `System::ResetToBootloader` method for better firmware updating flexibility
+* bootloader: added `System::BootloaderMode::DAISY`, `System::BootloaderMode::DAISY_SKIP_TIMEOUT`, and `System::BootloaderMode::DAISY_INFINITE_TIMEOUT` options to `System::ResetToBootloader` method for better firmware updating flexibility.
 
 ### Bug fixes
 
-* bootloader: pins `D29` and `D30` are no longer stuck when using the Daisy bootloader
+* bootloader: pins `D0`, `D29` and `D30` are no longer stuck when using the Daisy bootloader
 
 ### Migrating
 
@@ -17,6 +17,43 @@
 * This version of libDaisy and greater will be compatible with any version of the Daisy bootloader, meaning you won't have to update the bootloader on your product if you want the latest changes to libDaisy.
 * However, for newer versions of the bootloader, you must use a compatible version of libDaisy.
   * Daisy bootloader v6.0 and up will only be compatible with libDaisy v5.3 and up.
+
+## v5.4.0
+
+### Features
+
+* adc: added ConversionSpeed configuration to the AdcChannelConfig (#579)
+* board: Updated Daisy board definitions to use new Pin system (#581)
+* board: added official support for new Daisy Seed2 DFM hardware (built in compatibility with DaisySeed class).
+* device: added driver for SK9822 (#574)
+* examples: added a number of minimal examples for the Seed/Seed2DFM
+* gatein: added new Init function that is compatible with newer C++ `Pin` type.
+
+### Bug Fixes
+
+* patchsm: Corrected gate out pin assignment confusion added by (#417) as noted by [apbianco](https://forum.electro-smith.com/u/apbianco) and [tele_player](https://forum.electro-smith.com/u/tele_player)
+* midi: improvements to UART transport stability, and fixes to parser (#566, #564, #583)
+* qspi: fixed memory cache invalidation for Persistent Storage (#572)
+* spi: fixed issue with unpredictable pin states at end of transmission (#553, #559)
+
+### Other
+
+* build: removed redundant compile-time def from CMake build (#565)
+* docs: use explicit grouping; omit comments from output (#563)
+* docs: fix typo in GPIO guide (#567)
+
+## v5.3.0
+
+### Features
+
+* driver: Software SPI transport `SSD130x4WireSoftSpiTransport` added for the OLED Display driver. (#551)
+
+### Bug Fixes
+
+* driver: Fixed a compiler error in `Max11300Driver::WriteAnalogPinVolts()`
+* driver: Fixed error reading multiple registers at once from the MPC23x17 GPIO expanders (#550)
+* seed: Fixed out of range pin definitions for extra GPIO on the Daisy Seed2 DFM (#544)
+* patchsm: Fixed issue where updating the audio callback params didn't update control samplerate (#543)
 
 ## v5.2.0
 

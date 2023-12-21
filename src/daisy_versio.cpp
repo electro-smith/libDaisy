@@ -2,33 +2,33 @@
 
 using namespace daisy;
 
-#define PIN_TRIG_IN 24
-#define PIN_SW 30
-#define PIN_TOGGLE3_0A 6
-#define PIN_TOGGLE3_0B 5
-#define PIN_TOGGLE3_1A 1
-#define PIN_TOGGLE3_1B 0
+constexpr Pin PIN_TRIG_IN    = seed::D24;
+constexpr Pin PIN_SW         = seed::D30;
+constexpr Pin PIN_TOGGLE3_0A = seed::D6;
+constexpr Pin PIN_TOGGLE3_0B = seed::D5;
+constexpr Pin PIN_TOGGLE3_1A = seed::D1;
+constexpr Pin PIN_TOGGLE3_1B = seed::D0;
 
-#define PIN_LED0_R 10
-#define PIN_LED0_G 3
-#define PIN_LED0_B 4
-#define PIN_LED1_R 12
-#define PIN_LED1_G 13
-#define PIN_LED1_B 11
-#define PIN_LED2_R 25
-#define PIN_LED2_G 26
-#define PIN_LED2_B 14
-#define PIN_LED3_R 29
-#define PIN_LED3_G 27
-#define PIN_LED3_B 15
+constexpr Pin PIN_LED0_R = seed::D10;
+constexpr Pin PIN_LED0_G = seed::D3;
+constexpr Pin PIN_LED0_B = seed::D4;
+constexpr Pin PIN_LED1_R = seed::D12;
+constexpr Pin PIN_LED1_G = seed::D13;
+constexpr Pin PIN_LED1_B = seed::D11;
+constexpr Pin PIN_LED2_R = seed::D25;
+constexpr Pin PIN_LED2_G = seed::D26;
+constexpr Pin PIN_LED2_B = seed::D14;
+constexpr Pin PIN_LED3_R = seed::D29;
+constexpr Pin PIN_LED3_G = seed::D27;
+constexpr Pin PIN_LED3_B = seed::D15;
 
-#define PIN_ADC_CV0 21
-#define PIN_ADC_CV1 22
-#define PIN_ADC_CV2 28
-#define PIN_ADC_CV3 23
-#define PIN_ADC_CV4 16
-#define PIN_ADC_CV5 17
-#define PIN_ADC_CV6 19
+constexpr Pin PIN_ADC_CV0 = seed::D21;
+constexpr Pin PIN_ADC_CV1 = seed::D22;
+constexpr Pin PIN_ADC_CV2 = seed::D28;
+constexpr Pin PIN_ADC_CV3 = seed::D23;
+constexpr Pin PIN_ADC_CV4 = seed::D16;
+constexpr Pin PIN_ADC_CV5 = seed::D17;
+constexpr Pin PIN_ADC_CV6 = seed::D19;
 
 
 void DaisyVersio::Init(bool boost)
@@ -40,36 +40,35 @@ void DaisyVersio::Init(bool boost)
     float blockrate_ = seed.AudioSampleRate() / (float)seed.AudioBlockSize();
 
     // pin numbers
-    uint8_t toggle_pina[] = {PIN_TOGGLE3_0A, PIN_TOGGLE3_1A};
-    uint8_t toggle_pinb[] = {PIN_TOGGLE3_0B, PIN_TOGGLE3_1B};
-    uint8_t ledr_pin[]    = {PIN_LED0_R, PIN_LED1_R, PIN_LED2_R, PIN_LED3_R};
-    uint8_t ledg_pin[]    = {PIN_LED0_G, PIN_LED1_G, PIN_LED2_G, PIN_LED3_G};
-    uint8_t ledb_pin[]    = {PIN_LED0_B, PIN_LED1_B, PIN_LED2_B, PIN_LED3_B};
-    uint8_t adc_pin[]     = {PIN_ADC_CV0,
-                         PIN_ADC_CV1,
-                         PIN_ADC_CV2,
-                         PIN_ADC_CV3,
-                         PIN_ADC_CV4,
-                         PIN_ADC_CV5,
-                         PIN_ADC_CV6};
+    constexpr Pin toggle_pina[] = {PIN_TOGGLE3_0A, PIN_TOGGLE3_1A};
+    constexpr Pin toggle_pinb[] = {PIN_TOGGLE3_0B, PIN_TOGGLE3_1B};
+    constexpr Pin ledr_pin[] = {PIN_LED0_R, PIN_LED1_R, PIN_LED2_R, PIN_LED3_R};
+    constexpr Pin ledg_pin[] = {PIN_LED0_G, PIN_LED1_G, PIN_LED2_G, PIN_LED3_G};
+    constexpr Pin ledb_pin[] = {PIN_LED0_B, PIN_LED1_B, PIN_LED2_B, PIN_LED3_B};
+    constexpr Pin adc_pin[]  = {PIN_ADC_CV0,
+                               PIN_ADC_CV1,
+                               PIN_ADC_CV2,
+                               PIN_ADC_CV3,
+                               PIN_ADC_CV4,
+                               PIN_ADC_CV5,
+                               PIN_ADC_CV6};
 
     // gate in and momentary switch
-    tap.Init(seed.GetPin(PIN_SW));
-    dsy_gpio_pin gate_gpio = seed.GetPin(PIN_TRIG_IN);
-    gate.Init(&gate_gpio);
+    tap.Init(PIN_SW);
+    gate.Init(PIN_TRIG_IN);
 
 
     // 3-position switches
     for(size_t i = 0; i < SW_LAST; i++)
     {
-        sw[i].Init(seed.GetPin(toggle_pina[i]), seed.GetPin(toggle_pinb[i]));
+        sw[i].Init(toggle_pina[i], toggle_pinb[i]);
     }
 
     // ADC
     AdcChannelConfig adc_cfg[KNOB_LAST];
     for(size_t i = 0; i < KNOB_LAST; i++)
     {
-        adc_cfg[i].InitSingle(seed.GetPin(adc_pin[i]));
+        adc_cfg[i].InitSingle(adc_pin[i]);
     }
     seed.adc.Init(adc_cfg, 7);
 
@@ -81,10 +80,7 @@ void DaisyVersio::Init(bool boost)
     // RGB LEDs
     for(size_t i = 0; i < LED_LAST; i++)
     {
-        dsy_gpio_pin r = seed.GetPin(ledr_pin[i]);
-        dsy_gpio_pin g = seed.GetPin(ledg_pin[i]);
-        dsy_gpio_pin b = seed.GetPin(ledb_pin[i]);
-        leds[i].Init(r, g, b, true);
+        leds[i].Init(ledr_pin[i], ledg_pin[i], ledb_pin[i], true);
     }
 }
 
