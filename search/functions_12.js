@@ -54,7 +54,7 @@ var searchData=
   ['resetat_5f_51',['ResetAt_',['../classdaisy_1_1_fixed_cap_str_base.html#aeada8ffe33966f911ed0c7af9d4c345d',1,'daisy::FixedCapStrBase']]],
   ['resetcounts_52',['ResetCounts',['../classdaisy_1_1_apds9960.html#a30065fbd4498c53073e95ea6e1142c22',1,'daisy::Apds9960']]],
   ['reseti2cmaster_53',['ResetI2CMaster',['../classdaisy_1_1_icm20948.html#a124bb4a956a4082ed8052d454cecc8ef',1,'daisy::Icm20948']]],
-  ['resettobootloader_54',['ResetToBootloader',['../classdaisy_1_1_system.html#ae7e0bb7a214d85ceaa2264f2d00afd5a',1,'daisy::System']]],
+  ['resettobootloader_54',['ResetToBootloader',['../classdaisy_1_1_system.html#af32588d03a6749e579214a30c1ca2fe3',1,'daisy::System']]],
   ['resettodefault_55',['resettodefault',['../classdaisy_1_1_mapped_value.html#a60288a18a6173903f3a7e4c5c9aebb84',1,'daisy::MappedValue::ResetToDefault()'],['../classdaisy_1_1_mapped_string_list_value.html#aa1edf81d83cf2ce90d56d0f36f7a50a9',1,'daisy::MappedStringListValue::ResetToDefault()'],['../classdaisy_1_1_mapped_int_value.html#a921f370452a295e5f52f0483b3559a83',1,'daisy::MappedIntValue::ResetToDefault()'],['../classdaisy_1_1_mapped_float_value.html#accc506533ee066815a8c78f3b7a6cbfc',1,'daisy::MappedFloatValue::ResetToDefault()']]],
   ['restart_56',['Restart',['../classdaisy_1_1_wav_player.html#ac3b2f9f9cdf18ea861be227dcffd5da9',1,'daisy::WavPlayer']]],
   ['restoredefaults_57',['RestoreDefaults',['../classdaisy_1_1_persistent_storage.html#ad573b53a242aae9743eea18b93f6e39d',1,'daisy::PersistentStorage']]],

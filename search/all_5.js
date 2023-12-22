@@ -6,7 +6,7 @@ var searchData=
   ['edge_3',['edge',['../uniondaisy_1_1_neo_trellis_1_1key_event_raw.html#a8647a512438543149457a5e81a7eb14d',1,'daisy::NeoTrellis::keyEventRaw::EDGE'],['../structdaisy_1_1_neo_trellis_1_1key_event_1_1_bit.html#a9b958e8d1f48ed61865de6907f5c90a6',1,'daisy::NeoTrellis::keyEvent::Bit::EDGE']]],
   ['empty_4',['Empty',['../classdaisy_1_1_fixed_cap_str_base.html#a88a73398547c84e073bc54853e504709',1,'daisy::FixedCapStrBase']]],
   ['en_5',['en',['../structdaisy_1_1_lcd_h_d44780_1_1_config.html#a88e0474def3c812d4475ab802eda8155',1,'daisy::LcdHD44780::Config']]],
-  ['enable_6',['enable',['../classdaisy_1_1_apds9960.html#a68130f4d2185e6a5385e525e01f86eb2',1,'daisy::Apds9960::Enable(bool en)'],['../classdaisy_1_1_apds9960.html#ab4bceba1c9fdc2d0f3fa65391c66829a',1,'daisy::Apds9960::enable(bool en=true)']]],
+  ['enable_6',['enable',['../classdaisy_1_1_apds9960.html#ab4bceba1c9fdc2d0f3fa65391c66829a',1,'daisy::Apds9960::enable(bool en=true)'],['../classdaisy_1_1_apds9960.html#a68130f4d2185e6a5385e525e01f86eb2',1,'daisy::Apds9960::Enable(bool en)']]],
   ['enable_5firq_7',['enable_irq',['../structdaisy_1_1_timer_handle_1_1_config.html#ad596ac4c02799e9bfd637bfaec82d41f',1,'daisy::TimerHandle::Config']]],
   ['enablecolor_8',['EnableColor',['../classdaisy_1_1_apds9960.html#a591c47b814ea1c5d23e2bd46e453f76b',1,'daisy::Apds9960']]],
   ['enabled_9',['ENABLED',['../classdaisy_1_1_dac_handle.html#a30248a4615012854c7271b510ba7803cac8cf6eea8f096ed51160b484d97c5bbd',1,'daisy::DacHandle']]],

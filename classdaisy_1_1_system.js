@@ -1,6 +1,13 @@
 var classdaisy_1_1_system =
 [
+    [ "BootInfo", "structdaisy_1_1_system_1_1_boot_info.html", "structdaisy_1_1_system_1_1_boot_info" ],
     [ "Config", "structdaisy_1_1_system_1_1_config.html", "structdaisy_1_1_system_1_1_config" ],
+    [ "BootloaderMode", "classdaisy_1_1_system.html#a4905063c9bf8da1453620ba435549437", [
+      [ "STM", "classdaisy_1_1_system.html#a4905063c9bf8da1453620ba435549437ac2a2f729f059f44e42712be16d49f487", null ],
+      [ "DAISY", "classdaisy_1_1_system.html#a4905063c9bf8da1453620ba435549437a1efb5034524dd9e8b4423bf431ad2c54", null ],
+      [ "DAISY_SKIP_TIMEOUT", "classdaisy_1_1_system.html#a4905063c9bf8da1453620ba435549437a943877ce80394807f6c6b6ffe4aeeee1", null ],
+      [ "DAISY_INFINITE_TIMEOUT", "classdaisy_1_1_system.html#a4905063c9bf8da1453620ba435549437ad290d37f421e5fbc5faae7975c16e766", null ]
+    ] ],
     [ "MemoryRegion", "classdaisy_1_1_system.html#aa40158e5b80587e80153b16ae22c6669", [
       [ "INTERNAL_FLASH", "classdaisy_1_1_system.html#aa40158e5b80587e80153b16ae22c6669aeeda8641a23188a815fd86a377be2af3", null ],
       [ "ITCMRAM", "classdaisy_1_1_system.html#aa40158e5b80587e80153b16ae22c6669ab703959029aeef3bb2207b6d2dc3cc87", null ],

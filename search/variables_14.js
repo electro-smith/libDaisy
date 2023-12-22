@@ -4,5 +4,6 @@ var searchData=
   ['valueencoderid_1',['valueEncoderId',['../structdaisy_1_1_u_i_1_1_special_control_ids.html#abb3ee25b5a9be3d686ac6d864cfb3633',1,'daisy::UI::SpecialControlIds']]],
   ['valuepotid_2',['valuePotId',['../structdaisy_1_1_u_i_1_1_special_control_ids.html#ab8a09fcf60b2035f04fab95c3bda2e60',1,'daisy::UI::SpecialControlIds']]],
   ['valuetomodify_3',['valuetomodify',['../structdaisy_1_1_abstract_menu_1_1_item_config.html#a486b6e91fe2d329846a3dd81572ceeb5',1,'daisy::AbstractMenu::ItemConfig::valueToModify'],['../structdaisy_1_1_abstract_menu_1_1_item_config.html#a90d6beb8e952dd0526a63c74c2d5f22d',1,'daisy::AbstractMenu::ItemConfig::valueToModify']]],
-  ['velocity_4',['velocity',['../structdaisy_1_1_note_off_event.html#a9880e1c6eab10114affe27c1ec5e9419',1,'daisy::NoteOffEvent::velocity'],['../structdaisy_1_1_note_on_event.html#a35cf35e69cd28f75c11d4cc0f8245988',1,'daisy::NoteOnEvent::velocity']]]
+  ['velocity_4',['velocity',['../structdaisy_1_1_note_off_event.html#a9880e1c6eab10114affe27c1ec5e9419',1,'daisy::NoteOffEvent::velocity'],['../structdaisy_1_1_note_on_event.html#a35cf35e69cd28f75c11d4cc0f8245988',1,'daisy::NoteOnEvent::velocity']]],
+  ['version_5',['version',['../structdaisy_1_1_system_1_1_boot_info.html#aecc949e707693c5c168b68f433114440',1,'daisy::System::BootInfo']]]
 ];

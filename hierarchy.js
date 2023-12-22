@@ -11,6 +11,7 @@ var hierarchy =
     [ "daisy::Apds9960I2CTransport", "classdaisy_1_1_apds9960_i2_c_transport.html", null ],
     [ "daisy::AudioHandle", "classdaisy_1_1_audio_handle.html", null ],
     [ "daisy::NeoTrellis< Transport >::keyEvent::Bit", "structdaisy_1_1_neo_trellis_1_1key_event_1_1_bit.html", null ],
+    [ "daisy::System::BootInfo", "structdaisy_1_1_system_1_1_boot_info.html", null ],
     [ "daisy::ButtonMonitor< BackendType, numButtons >", "classdaisy_1_1_button_monitor.html", null ],
     [ "daisy::ChannelModeEvent", "structdaisy_1_1_channel_mode_event.html", null ],
     [ "daisy::ChannelPressureEvent", "structdaisy_1_1_channel_pressure_event.html", null ],
