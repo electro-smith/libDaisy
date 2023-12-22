@@ -229,13 +229,22 @@ namespace patch_sm
         System::Config syscfg;
         syscfg.Boost();
 
-        auto memory = System::GetProgramMemoryRegion();
-        if(memory != System::MemoryRegion::INTERNAL_FLASH)
+        auto memory       = System::GetProgramMemoryRegion();
+        auto boot_version = System::GetBootloaderVersion();
+
+        // When using the bootloader prior to v6, clocks have been already configured
+        if(boot_version == System::BootInfo::Version::LT_v6_0
+           && memory != System::MemoryRegion::INTERNAL_FLASH)
+        {
             syscfg.skip_clocks = true;
+        }
 
         system.Init(syscfg);
         /** Memories */
-        if(memory == System::MemoryRegion::INTERNAL_FLASH)
+        // When using the bootloader priori to v6, SDRAM has been already configured
+        if(boot_version != System::BootInfo::Version::LT_v6_0
+           || (boot_version == System::BootInfo::Version::LT_v6_0
+               && memory == System::MemoryRegion::INTERNAL_FLASH))
         {
             /** FMC SDRAM */
             sdram.Init();
