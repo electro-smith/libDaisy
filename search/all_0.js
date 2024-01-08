@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['_5f_5fattribute_5f_5f_0',['__attribute__',['../classdaisy_1_1_ui_event_queue.html#a38f27e24c66d1f0f5104d3b89f7173f6',1,'daisy::UiEventQueue::__attribute__()'],['../classdaisy_1_1_led_driver_pca9685.html#a5c32363efc76d2d8d192d7989eb9ddc0',1,'daisy::LedDriverPca9685::__attribute__()']]],
+  ['_5f_5fattribute_5f_5f_0',['__attribute__',['../classdaisy_1_1_led_driver_pca9685.html#a5c32363efc76d2d8d192d7989eb9ddc0',1,'daisy::LedDriverPca9685::__attribute__()'],['../classdaisy_1_1_ui_event_queue.html#a38f27e24c66d1f0f5104d3b89f7173f6',1,'daisy::UiEventQueue::__attribute__()']]],
   ['_5f_5fdsy_5flogger_5fh_5f_5f_1',['__DSY_LOGGER_H__',['../logger_8h.html#a134c045cf9a5d26679149bcac73b386f',1,'logger.h']]],
   ['_5f_5fdsy_5flogger_5fimpl_5fh_2',['__DSY_LOGGER_IMPL_H',['../logger__impl_8h.html#a43b6b6c2a6d1a3e4bb1bc6f78f6c966e',1,'logger_impl.h']]],
   ['_5f_5fdsy_5fmidiusbtransport_5fh_5f_5f_3',['__DSY_MIDIUSBTRANSPORT_H__',['../usb__midi_8h.html#a271533fd70083fec8006daa385671553',1,'usb_midi.h']]],

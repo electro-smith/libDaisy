@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['master_0',['master',['../structdaisy_1_1_spi_handle_1_1_config.html#a00488576b0a4c1364cb2fd09164a30f7a89a1533c37ec9254f22b5e0f29c9c0ff',1,'daisy::SpiHandle::Config::MASTER'],['../structdaisy_1_1_sai_handle_1_1_config.html#a269af182475979f6845fb06ffa3c4055a89a1533c37ec9254f22b5e0f29c9c0ff',1,'daisy::SaiHandle::Config::MASTER']]],
+  ['master_0',['MASTER',['../structdaisy_1_1_sai_handle_1_1_config.html#a269af182475979f6845fb06ffa3c4055a89a1533c37ec9254f22b5e0f29c9c0ff',1,'daisy::SaiHandle::Config::MASTER'],['../structdaisy_1_1_spi_handle_1_1_config.html#a00488576b0a4c1364cb2fd09164a30f7a89a1533c37ec9254f22b5e0f29c9c0ff',1,'daisy::SpiHandle::Config::MASTER']]],
   ['mastercontrolledmode_1',['MASTERCONTROLLEDMODE',['../classdaisy_1_1_tlv493d.html#a4e647f10dce86b4de6e6f0d641e2ede6a036f72b8fd690b08274fb05195f3d1d4',1,'daisy::Tlv493d']]],
   ['media_5fsd_2',['MEDIA_SD',['../structdaisy_1_1_fat_f_s_interface_1_1_config.html#aa749d7b2739147217cfbc38c99462334a2ced0a5aac16ae040d7f6b032525fd5f',1,'daisy::FatFSInterface::Config']]],
   ['media_5fusb_3',['MEDIA_USB',['../structdaisy_1_1_fat_f_s_interface_1_1_config.html#aa749d7b2739147217cfbc38c99462334a9fd09442cf8e39f248d0984128076185',1,'daisy::FatFSInterface::Config']]],

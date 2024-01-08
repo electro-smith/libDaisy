@@ -14,6 +14,6 @@ var dps310_8h =
     [ "DPS310_TMPCFG", "dps310_8h.html#ac0151332992d110b8290a196f55c49a7", null ],
     [ "DPS310_TMPCOEFSRCE", "dps310_8h.html#af0d62aa1d041109b3d762e8e5b50749b", null ],
     [ "DSY_DPS310_H", "dps310_8h.html#a637c00e1b82862344052f34e030eb3c9", null ],
-    [ "Dps310I2C", "dps310_8h.html#a9994aaf433cf88a003f500778c3a8d0b", null ],
-    [ "Dps310Spi", "dps310_8h.html#aab9c1174c76a1cc25300c457b1d6045a", null ]
+    [ "Dps310I2C", "dps310_8h.html#a59b6de95739ecb88227e94f722b7f85f", null ],
+    [ "Dps310Spi", "dps310_8h.html#a4fd217710ea84ee20f4d8a5727901866", null ]
 ];

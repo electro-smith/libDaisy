@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['a_0',['a',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a47dabfb33a6efcaace04b05c97f5299da7fc56270e7a70fa81a5935b72eacbe29',1,'daisy::patch_sm::DaisyPatchSM::A'],['../namespacedaisy.html#a4d0fda25eb2fa3a27bec48dc5871486ba7fc56270e7a70fa81a5935b72eacbe29',1,'daisy::A']]],
+  ['a_0',['A',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a47dabfb33a6efcaace04b05c97f5299da7fc56270e7a70fa81a5935b72eacbe29',1,'daisy::patch_sm::DaisyPatchSM::A'],['../namespacedaisy.html#a4d0fda25eb2fa3a27bec48dc5871486ba7fc56270e7a70fa81a5935b72eacbe29',1,'daisy::A']]],
   ['activesensing_1',['ActiveSensing',['../group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45a7bf17dfa0bcaed34dde4279c7d9c8f9c',1,'daisy']]],
   ['adc_5f10_2',['ADC_10',['../namespacedaisy_1_1patch__sm.html#aaf24993b0ae9c0d2a0b96eecc664097eacdcdea42540db656629e78d2c942d7bc',1,'daisy::patch_sm']]],
   ['adc_5f11_3',['ADC_11',['../namespacedaisy_1_1patch__sm.html#aaf24993b0ae9c0d2a0b96eecc664097ead9665a8649d1e7c7d06e78c607d6d287',1,'daisy::patch_sm']]],

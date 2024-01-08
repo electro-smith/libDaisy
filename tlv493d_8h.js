@@ -18,5 +18,5 @@ var tlv493d_8h =
     [ "TLV493D_NUM_OF_REGMASKS", "tlv493d_8h.html#af45b03bd550c3a46044bb7e61b7955eb", null ],
     [ "TLV493D_TEMP_MULT", "tlv493d_8h.html#ad5972ae40a67ea23290b2ecdc20527fe", null ],
     [ "TLV493D_TEMP_OFFSET", "tlv493d_8h.html#aff250ce04ccd5a141c7212aa2822e3d9", null ],
-    [ "Tlv493dI2C", "tlv493d_8h.html#ae78fa2b9ba6838916c2f41bfd785e5a5", null ]
+    [ "Tlv493dI2C", "tlv493d_8h.html#a2e3037dad916f428cfa58da3fb50d12b", null ]
 ];

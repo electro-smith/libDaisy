@@ -58,5 +58,5 @@ var apds9960_8h =
     [ "APDS9960_UP", "apds9960_8h.html#a4a0d9d3f1c0d007ca0a3d84be470d93c", null ],
     [ "APDS9960_WTIME", "apds9960_8h.html#a2c55a2d2c3010f230e0fd3aa4c37357e", null ],
     [ "DSY_APDS9960_H", "apds9960_8h.html#a7eb318d9825f4076e8eeb3f4415a66c1", null ],
-    [ "Apds9960I2C", "apds9960_8h.html#aa78119114b351d56121271cd45e04a15", null ]
+    [ "Apds9960I2C", "apds9960_8h.html#a8365914aab3d12294c641e0fdd98db56", null ]
 ];

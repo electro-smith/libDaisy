@@ -6,5 +6,5 @@ var mpr121_8h =
     [ "MPR121_I2CADDR_DEFAULT", "mpr121_8h.html#aa4a9474e42d9c498f600c9ad8781f714", null ],
     [ "MPR121_RELEASE_THRESHOLD_DEFAULT", "mpr121_8h.html#af51b589d3c7f29cc43fff6f96715a0e9", null ],
     [ "MPR121_TOUCH_THRESHOLD_DEFAULT", "mpr121_8h.html#a4b3fd951704a4d69529cec6c8996a560", null ],
-    [ "Mpr121I2C", "mpr121_8h.html#gadff605cfc4e7944ed1eb8b5bc68cf4b8", null ]
+    [ "Mpr121I2C", "mpr121_8h.html#ga9453483585e7d7ccfaa60e3f60ab9574", null ]
 ];

@@ -21,7 +21,7 @@ var searchData=
   ['idle_18',['IDLE',['../classdaisy_1_1_wav_writer.html#a17e4799ade3a78bfb8cab25ac90f04ebaa5daf7f2ebbba4975d61dab1c40188c7',1,'daisy::WavWriter']]],
   ['indirect_5fpolling_19',['INDIRECT_POLLING',['../structdaisy_1_1_q_s_p_i_handle_1_1_config.html#a9641ed459b3ef3baca74ad0d49d78a83ae71fbe684d08ffd2e5b0e21b4a2fd74f',1,'daisy::QSPIHandle::Config']]],
   ['inf_5ftimeout_20',['INF_TIMEOUT',['../structdaisy_1_1_system_1_1_boot_info.html#a5652e419af695eee176680e14524ceccaac0d97cf8d0fe1f93f61f21954b2540c',1,'daisy::System::BootInfo']]],
-  ['input_21',['input',['../classdaisy_1_1_g_p_i_o.html#af853f20a7e4f4d4f337c30fe1d6f1827aa84cc046d48610b05c21fd3670d0c829',1,'daisy::GPIO::INPUT'],['../namespacedaisy.html#a58f4604034b789f798c3872963c10f50aa84cc046d48610b05c21fd3670d0c829',1,'daisy::INPUT']]],
+  ['input_21',['INPUT',['../classdaisy_1_1_g_p_i_o.html#af853f20a7e4f4d4f337c30fe1d6f1827aa84cc046d48610b05c21fd3670d0c829',1,'daisy::GPIO::INPUT'],['../namespacedaisy.html#a58f4604034b789f798c3872963c10f50aa84cc046d48610b05c21fd3670d0c829',1,'daisy::INPUT']]],
   ['input_5fpullup_22',['INPUT_PULLUP',['../namespacedaisy.html#a58f4604034b789f798c3872963c10f50ace9c2fb3e41547f8dfb11145f7485786',1,'daisy']]],
   ['intcap_5fa_23',['INTCAP_A',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46a5f5d8895c5e7c818cd46e3bab503fd29',1,'daisy']]],
   ['intcap_5fb_24',['INTCAP_B',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46afaf749c30bc70064eac7a489bdb663de',1,'daisy']]],
