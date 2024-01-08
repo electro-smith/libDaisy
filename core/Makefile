@@ -145,6 +145,14 @@ ifdef DAISYSP_DIR
 C_INCLUDES += -I$(DAISYSP_DIR)/Source
 endif
 
+ifeq ($(USE_DAISYSP_LGPL),1)
+C_INCLUDES += -I$(DAISYSP_DIR)/DaisySP-LGPL/Source
+
+C_DEFS +=  \
+-DUSE_DAISYSP_LGPL
+endif
+
+
 # Include FATFS files
 # This does not include the additional option files
 # for Japanese, Simplified/Traditional Chinese, or Korean
@@ -244,6 +252,12 @@ LIBDIR += -L$(LIBDAISY_DIR)/build
 ifdef DAISYSP_DIR
 LIBS += -ldaisysp
 LIBDIR += -L $(DAISYSP_DIR)/build
+endif
+
+
+ifeq ($(USE_DAISYSP_LGPL),1)
+LIBS += -ldaisysp-lgpl
+LIBDIR += -L $(DAISYSP_DIR)/DaisySP-LGPL/build
 endif
 
 LDFLAGS ?=
