@@ -1,6 +1,6 @@
 <!-- Banner -->
 <p align="center">
-    <a href=https://electrosmith.com/daisy>
+    <a href=https://electro-smith.com/daisy>
         <img width=15% src=https://raw.githubusercontent.com/electro-smith/daisysp/master/resources/assets/banner.png>
     </a>
 </p>
