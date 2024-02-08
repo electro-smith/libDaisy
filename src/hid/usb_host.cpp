@@ -8,7 +8,6 @@ using namespace daisy;
 
 extern "C"
 {
-    extern HCD_HandleTypeDef                  hhcd_USB_OTG_HS;
     USBH_HandleTypeDef DMA_BUFFER_MEM_SECTION hUsbHostHS;
 }
 
@@ -20,17 +19,23 @@ class USBHostHandle::Impl
     Impl() {}
     ~Impl() {}
 
-    Result Init(Config config);
+    Result Init(Config config, USBH_ClassTypeDef* pClass);
     Result Deinit();
     Result Process();
     Result ReEnumerate();
 
     bool GetReady();
 
-    inline Config &GetConfig() { return config_; }
+    inline Config& GetConfig(USBH_ClassTypeDef* pClass) {
+        for (uint32_t i = 0; i < hUsbHostHS.ClassNumber; ++i) {
+            if(hUsbHostHS.pClass[i] == pClass)
+                return config_[i];
+        }
+        return config_[0];
+    }
 
   private:
-    Config config_;
+    Config config_[USBH_MAX_NUM_SUPPORTED_CLASS];
 
     /** @brief Maps ST Middleware USBH_StatusTypeDef to USBHostHandle::Result codes */
     Result ConvertStatus(USBH_StatusTypeDef sta)
@@ -52,31 +57,38 @@ class USBHostHandle::Impl
     }
 };
 
-// Global dfu handle
-USBHostHandle::Impl msd_impl;
+// Global handle
+static USBHostHandle::Impl usbh_impl;
 
 static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id);
 
-USBHostHandle::Result USBHostHandle::Impl::Init(USBHostHandle::Config config)
+USBHostHandle::Result USBHostHandle::Impl::Init(USBHostHandle::Config config, USBH_ClassTypeDef* pClass)
 {
-    config_ = config;
     /* Init host Library, add supported class and start the library. */
     USBH_StatusTypeDef sta;
-    sta = USBH_Init(&hUsbHostHS, USBH_UserProcess, HOST_HS);
+    bool firstTime = (hUsbHostHS.ClassNumber == 0);
+    if(firstTime)
+    {
+        sta = USBH_Init(&hUsbHostHS, USBH_UserProcess, HOST_HS);
+        if(sta != USBH_OK)
+        {
+            return ConvertStatus(sta);
+        }
+    }
+    sta = USBH_RegisterClass(&hUsbHostHS, pClass);
     if(sta != USBH_OK)
     {
         return ConvertStatus(sta);
     }
-    sta = USBH_RegisterClass(&hUsbHostHS, USBH_MSC_CLASS);
-    if(sta != USBH_OK)
+    if(firstTime)
     {
-        return ConvertStatus(sta);
+        sta = USBH_Start(&hUsbHostHS);
+        if(sta != USBH_OK)
+        {
+            return ConvertStatus(sta);
+        }
     }
-    sta = USBH_Start(&hUsbHostHS);
-    if(sta != USBH_OK)
-    {
-        return ConvertStatus(sta);
-    }
+    config_[hUsbHostHS.ClassNumber] = config;
     return ConvertStatus(sta);
 }
 
@@ -99,15 +111,13 @@ USBHostHandle::Result USBHostHandle::Impl::ReEnumerate()
 
 bool USBHostHandle::Impl::GetReady()
 {
-    return (bool)USBH_MSC_IsReady(&hUsbHostHS);
+    return Appli_state == APPLICATION_READY;
 }
 
-// MSDHandle -> Impl
-
-USBHostHandle::Result USBHostHandle::Init(Config config)
+USBHostHandle::Result USBHostHandle::Init(Config config, USBH_ClassTypeDef* pClass)
 {
-    pimpl_ = &msd_impl;
-    return pimpl_->Init(config);
+    pimpl_ = &usbh_impl;
+    return pimpl_->Init(config, pClass);
 }
 
 USBHostHandle::Result USBHostHandle::Deinit()
@@ -115,10 +125,12 @@ USBHostHandle::Result USBHostHandle::Deinit()
     return pimpl_->Deinit();
 }
 
+#if 0
 bool USBHostHandle::GetReady()
 {
     return pimpl_->GetReady();
 }
+#endif
 
 USBHostHandle::Result USBHostHandle::Process()
 {
@@ -130,22 +142,30 @@ USBHostHandle::Result USBHostHandle::ReEnumerate()
     return pimpl_->ReEnumerate();
 }
 
+bool USBHostHandle::IsActiveClass(USBH_ClassTypeDef* pClass)
+{
+    return pClass == hUsbHostHS.pActiveClass;
+}
+
+#if 0
 bool USBHostHandle::GetPresent()
 {
     auto state = hUsbHostHS.gState;
     return (state != HOST_IDLE && state != HOST_ABORT_STATE
             && state != HOST_DEV_DISCONNECTED);
 }
+#endif
 
 // Shared USB IRQ Handlers are located in sys/System.cpp
 
 // This isn't super useful for our typical code structure
 static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
 {
-    auto &conf = msd_impl.GetConfig();
+    auto &conf = usbh_impl.GetConfig(phost->pActiveClass);
     switch(id)
     {
-        case HOST_USER_SELECT_CONFIGURATION: break;
+        case HOST_USER_SELECT_CONFIGURATION:
+            break;
         case HOST_USER_CLASS_ACTIVE:
             Appli_state = APPLICATION_READY;
             if(conf.class_active_callback)
@@ -154,7 +174,8 @@ static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
                 cb(conf.userdata);
             }
             break;
-        case HOST_USER_CLASS_SELECTED: break;
+        case HOST_USER_CLASS_SELECTED:
+            break;
         case HOST_USER_CONNECTION:
             Appli_state = APPLICATION_START;
             if(conf.connect_callback)
@@ -178,6 +199,7 @@ static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
                 cb(conf.userdata);
             }
             break;
-        default: break;
+        default:
+            break;
     }
 }

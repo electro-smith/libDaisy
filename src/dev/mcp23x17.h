@@ -3,6 +3,8 @@
 #include "per/gpio.h"
 #include "per/i2c.h"
 
+#undef SetBit
+
 namespace daisy
 {
 // Adapted from https://github.com/blemasle/arduino-mcp23017

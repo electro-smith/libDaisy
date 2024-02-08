@@ -3,6 +3,7 @@
 #define __DSY_MIDIUSBTRANSPORT_H__
 
 #include "hid/usb.h"
+#include "hid/usb_host.h"
 #include "sys/system.h"
 #include "util/ringbuffer.h"
 
@@ -23,7 +24,8 @@ class MidiUsbTransport
         enum Periph
         {
             INTERNAL = 0,
-            EXTERNAL
+            EXTERNAL,
+            HOST
         };
 
         Periph periph;
