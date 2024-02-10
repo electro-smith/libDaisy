@@ -196,18 +196,28 @@ void USBH_MIDI_SetReceiveCallback(USBH_HandleTypeDef *phost, USBH_MIDI_RxCallbac
 MIDI_ErrorTypeDef USBH_MIDI_Transmit(USBH_HandleTypeDef *phost, uint8_t* data, size_t len)
 {
     MIDI_HandleTypeDef *hMidi = (MIDI_HandleTypeDef*)phost->pActiveClass->pData;
-    // TODO - This is currently always a blocking write
-    while (len) {
-        size_t sz = (len <= hMidi->OutEpSize) ? len : hMidi->OutEpSize;
-        USBH_BulkSendData(phost, data, sz, hMidi->OutPipe, 1);
-        USBH_URBStateTypeDef txStatus;
-        do {
-            txStatus = USBH_LL_GetURBState(phost, hMidi->OutPipe);
-            if (txStatus == USBH_URB_ERROR || txStatus == USBH_URB_STALL) {
+    int numUrbs = 0;
+    // This only blocks if data won't fit into one URB
+    while(len)
+    {
+        USBH_URBStateTypeDef txStatus = USBH_LL_GetURBState(phost, hMidi->OutPipe);
+        while(txStatus != USBH_URB_IDLE && txStatus != USBH_URB_DONE)
+        {
+            if(txStatus == USBH_URB_ERROR || txStatus == USBH_URB_STALL)
+            {
+                USBH_ClrFeature(phost, hMidi->OutPipe);
                 return MIDI_ERROR;
             }
-        } while (txStatus != USBH_URB_DONE);
+            if(numUrbs == 0)
+                return MIDI_BUSY;
+
+            // Give previous URB time to complete
+            USBH_Delay(2);
+        }
+        size_t sz = (len <= hMidi->OutEpSize) ? len : hMidi->OutEpSize;
+        USBH_BulkSendData(phost, data, sz, hMidi->OutPipe, 1);
         len -= sz;
+        ++numUrbs;
     }
     return MIDI_OK;
 }

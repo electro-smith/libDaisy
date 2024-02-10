@@ -38,7 +38,7 @@ typedef enum {
 
 typedef enum {
     MIDI_OK,
-    MIDI_NOT_READY,
+    MIDI_BUSY,
     MIDI_ERROR
 } MIDI_ErrorTypeDef;
 

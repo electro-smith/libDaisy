@@ -142,7 +142,7 @@ void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
         {
             MIDI_ErrorTypeDef result;
             result = USBH_MIDI_Transmit(pUSB_Host, tx_buffer_, tx_ptr_);
-            should_retry = (result == MIDI_ERROR) && attempt_count--;
+            should_retry = (result == MIDI_BUSY) && attempt_count--;
         }
         else
         {
