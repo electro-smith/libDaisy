@@ -113,13 +113,17 @@ class USBHostHandle
      *  and ready for communicaton
      * 
      */
-    //bool GetReady();
+    bool GetReady();
 
     /** Run after the first `Process` call to detect if
      *  a device is present
      * 
      */
-    //bool GetPresent();
+    bool GetPresent();
+
+    /** Returns name of the connected devices if there is one
+     */
+    const char* GetProductName();
 
     USBHostHandle() : pimpl_(nullptr) {}
     USBHostHandle(const USBHostHandle& other) = default;

@@ -289,7 +289,6 @@ C_DEFS =  \
 -DDATA_IN_D2_SRAM
 # ^ added for easy startup access
 
-
 C_INCLUDES = \
 -I$(MODULE_DIR) \
 -I$(MODULE_DIR)/sys \

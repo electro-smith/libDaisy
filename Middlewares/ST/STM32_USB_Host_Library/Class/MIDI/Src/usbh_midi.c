@@ -128,7 +128,7 @@ static USBH_StatusTypeDef USBH_MIDI_InterfaceDeInit(USBH_HandleTypeDef *phost)
  */
 static USBH_StatusTypeDef USBH_MIDI_ClassRequest(USBH_HandleTypeDef *phost)
 {
-    phost->pUser(phost, HOST_USER_CLASS_ACTIVE);
+    phost->pUser(phost, HOST_CLASS_REQUEST);
     return USBH_OK;
 }
 
@@ -146,24 +146,31 @@ static USBH_StatusTypeDef USBH_MIDI_Process(USBH_HandleTypeDef *phost)
 
     switch (hMidi->state) {
         case MIDI_INIT:
+            USBH_UsrLog("MIDI state INIT");
             hMidi->state = MIDI_IDLE;
+            phost->pUser(phost, HOST_USER_CLASS_ACTIVE);
             break;
         case MIDI_IDLE:
+            USBH_UsrLog("MIDI state IDLE");
             USBH_BulkReceiveData(phost, hMidi->rxBuffer, USBH_MIDI_RX_BUF_SIZE, hMidi->InPipe);
             hMidi->state = MIDI_RX;
             break;
         case MIDI_RX:
+            //USBH_UsrLog("MIDI state RX");
             rxStatus = USBH_LL_GetURBState(phost, hMidi->InPipe);
             if (rxStatus == USBH_URB_DONE) {
                 size_t sz = USBH_LL_GetLastXferSize(phost, hMidi->InPipe);
                 hMidi->state = MIDI_IDLE;
-                hMidi->callback(hMidi->rxBuffer, sz, hMidi->pUser);
+                if (hMidi->callback) {
+                    hMidi->callback(hMidi->rxBuffer, sz, hMidi->pUser);
+                }
             } else if (rxStatus == USBH_URB_ERROR || rxStatus == USBH_URB_STALL) {
                 hMidi->state = MIDI_FAIL;
                 error = USBH_FAIL;
             }
             break;
         case MIDI_FAIL:
+            USBH_UsrLog("MIDI state FAIL");
             error = USBH_ClrFeature(phost, 0);
             if (error == USBH_OK) {
                 hMidi->state = MIDI_IDLE;

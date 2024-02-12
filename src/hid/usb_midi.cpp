@@ -40,9 +40,6 @@ class MidiUsbTransport::Impl
     UsbHandle usb_handle_;
     Config    config_;
 
-    // When transport is configured for USB host
-    USBHostHandle usbh_handle_;
-
     static constexpr size_t kBufferSize = 1024;
     bool                    rx_active_;
     // This corresponds to 256 midi messages
@@ -104,19 +101,17 @@ void MidiUsbTransport::Impl::Init(Config config)
      */
     // static_assert(1u == sizeof(MidiUsbTransport::Impl::usb_handle_), "UsbHandle is not static");
 
+    config_ = config;
+
     if(config_.periph == Config::HOST)
     {
-        // Assume that a USB midi host device was detected but check anyhow
-        if(usbh_handle_.IsActiveClass(USBH_MIDI_CLASS))
-        {
-            USBH_MIDI_SetReceiveCallback(pUSB_Host, HostReceiveCallback, nullptr);
-        }
+        rx_active_ = false;
+        USBH_MIDI_SetReceiveCallback(pUSB_Host, HostReceiveCallback, nullptr);
     }
     else
     {
         // This tells the USB middleware to send out MIDI descriptors instead of CDC
         usbd_mode = USBD_MODE_MIDI;
-        config_   = config;
 
         UsbHandle::UsbPeriph periph = UsbHandle::FS_INTERNAL;
         if(config_.periph == Config::EXTERNAL)

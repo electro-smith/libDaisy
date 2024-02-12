@@ -37,6 +37,7 @@ void GetMidiTypeAsString(MidiEvent& msg, char* str)
 DaisySeed       hw;
 MidiUsbHandler midi;
 USBHostHandle usbHost;
+bool deviceActive = false;
 
 /** FIFO to hold messages as we're ready to print them */
 FIFO<MidiEvent, 128> event_log;
@@ -44,21 +45,22 @@ FIFO<MidiEvent, 128> event_log;
 void USBH_MIDI_Connect(void* data)
 {
     hw.PrintLine("MIDI device connected");
-    MidiUsbHandler::Config midi_config;
-    midi_config.transport_config.periph = MidiUsbTransport::Config::Periph::HOST;
-    midi_config.transport_config.tx_retry_count = 3;
-    midi.Init(midi_config);
-    midi.StartReceive();
 }
 
 void USBH_MIDI_Disconnect(void* data)
 {
     hw.PrintLine("MIDI device disconnected");
+    deviceActive = false;
 }
 
 void USBH_MIDI_ClassActive(void* data)
 {
     hw.PrintLine("MIDI device class active");
+    MidiUsbHandler::Config midi_config;
+    midi_config.transport_config.periph = MidiUsbTransport::Config::Periph::HOST;
+    midi.Init(midi_config);
+    midi.StartReceive();
+    deviceActive = true;
 }
 
 void USBH_MIDI_Error(void* data)
@@ -71,7 +73,9 @@ int main(void)
     /** Initialize our hardware */
     hw.Init();
 
-    hw.StartLog();
+    hw.StartLog(true);
+
+    hw.PrintLine("MIDI USB Host start");
 
     /** Configure USB host */
     USBHostHandle::Config usbhConfig;
@@ -83,11 +87,27 @@ int main(void)
 
     uint32_t now      = System::GetNow();
     uint32_t log_time = System::GetNow();
+    uint32_t blink_time = 0;
+    bool ledState = false;
+
+    hw.PrintLine("MIDI USB Host initialized");
 
     /** Infinite Loop */
     while(1)
     {
         now = System::GetNow();
+
+        if (now > blink_time)
+        {
+            hw.SetLed(ledState);
+            ledState = !ledState;
+            blink_time = now + 200;
+        }
+        /** Run USB host process */
+        usbHost.Process();
+
+        if (!deviceActive)
+            continue;
 
         /** Process MIDI in the background */
         midi.Listen();
