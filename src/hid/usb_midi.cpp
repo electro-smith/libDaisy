@@ -89,6 +89,7 @@ void MidiUsbTransport::Impl::Init(Config config)
     // static_assert(1u == sizeof(MidiUsbTransport::Impl::usb_handle_), "UsbHandle is not static");
 
     // This tells the USB middleware to send out MIDI descriptors instead of CDC
+    usbd_mode = USBD_MODE_MIDI;
     config_ = config;
 
     UsbHandle::UsbPeriph periph = UsbHandle::FS_INTERNAL;
