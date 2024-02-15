@@ -40,7 +40,7 @@ class USBHostHandle
         FAIL,
         NOT_SUPPORTED,
         UNRECOVERED_ERROR,
-        ERROR_SPEED_UNKNOWN,
+        ERROR_SPEED_UNKNOWN
     };
 
     /** @brief User defineable callback for USB Connection */
@@ -85,11 +85,16 @@ class USBHostHandle
         void*               userdata;
     };
 
+    /**
+     * Register a USB class
+     */
+    Result RegisterClass(USBH_ClassTypeDef* pClass);
+
     /** Initializes the USB drivers and starts timeout.
      * 
      *  \param config Configuration struct for initialization
      */
-    Result Init(Config config, USBH_ClassTypeDef* usbClass);
+    Result Init(USBHostHandle::Config& config);
 
     /** Deinitializes USB host-related peripherals
      * 

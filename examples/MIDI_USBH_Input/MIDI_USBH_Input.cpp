@@ -37,35 +37,35 @@ void GetMidiTypeAsString(MidiEvent& msg, char* str)
 DaisySeed       hw;
 MidiUsbHandler midi;
 USBHostHandle usbHost;
-bool deviceActive = false;
 
 /** FIFO to hold messages as we're ready to print them */
 FIFO<MidiEvent, 128> event_log;
 
-void USBH_MIDI_Connect(void* data)
+void USBH_Connect(void* data)
 {
-    hw.PrintLine("MIDI device connected");
+    hw.PrintLine("device connected");
 }
 
-void USBH_MIDI_Disconnect(void* data)
+void USBH_Disconnect(void* data)
 {
-    hw.PrintLine("MIDI device disconnected");
-    deviceActive = false;
+    hw.PrintLine("device disconnected");
 }
 
-void USBH_MIDI_ClassActive(void* data)
+void USBH_ClassActive(void* data)
 {
-    hw.PrintLine("MIDI device class active");
-    MidiUsbHandler::Config midi_config;
-    midi_config.transport_config.periph = MidiUsbTransport::Config::Periph::HOST;
-    midi.Init(midi_config);
-    midi.StartReceive();
-    deviceActive = true;
+    if(usbHost.IsActiveClass(USBH_MIDI_CLASS))
+    {
+        hw.PrintLine("MIDI device class active");
+        MidiUsbHandler::Config midi_config;
+        midi_config.transport_config.periph = MidiUsbTransport::Config::Periph::HOST;
+        midi.Init(midi_config);
+        midi.StartReceive();
+    }
 }
 
-void USBH_MIDI_Error(void* data)
+void USBH_Error(void* data)
 {
-    hw.PrintLine("MIDI device error");
+    hw.PrintLine("USB device error");
 }
 
 int main(void)
@@ -79,11 +79,13 @@ int main(void)
 
     /** Configure USB host */
     USBHostHandle::Config usbhConfig;
-    usbhConfig.connect_callback = USBH_MIDI_Connect,
-    usbhConfig.disconnect_callback = USBH_MIDI_Disconnect,
-    usbhConfig.class_active_callback = USBH_MIDI_ClassActive,
-    usbhConfig.error_callback = USBH_MIDI_Error,
-    usbHost.Init(usbhConfig, USBH_MIDI_CLASS);
+    usbhConfig.connect_callback = USBH_Connect,
+    usbhConfig.disconnect_callback = USBH_Disconnect,
+    usbhConfig.class_active_callback = USBH_ClassActive,
+    usbhConfig.error_callback = USBH_Error,
+    usbHost.Init(usbhConfig);
+
+    usbHost.RegisterClass(USBH_MIDI_CLASS);
 
     uint32_t now      = System::GetNow();
     uint32_t log_time = System::GetNow();
@@ -106,57 +108,57 @@ int main(void)
         /** Run USB host process */
         usbHost.Process();
 
-        if (!deviceActive)
-            continue;
-
-        /** Process MIDI in the background */
-        midi.Listen();
-
-        /** Loop through any MIDI Events */
-        while(midi.HasEvents())
+        if(usbHost.IsActiveClass(USBH_MIDI_CLASS))
         {
-            MidiEvent msg = midi.PopEvent();
+            /** Process MIDI in the background */
+            midi.Listen();
 
-            /** Handle messages as they come in 
-             *  See DaisyExamples for some examples of this
-             */
-            switch(msg.type)
+            /** Loop through any MIDI Events */
+            while(midi.HasEvents())
             {
-                case NoteOn:
-                    // Do something on Note On events
-                    {
-                        uint8_t bytes[3] = {0x90, 0x00, 0x00};
-                        bytes[1] = msg.data[0];
-                        bytes[2] = msg.data[1];
-                        midi.SendMessage(bytes, 3);
-                    }
-                    break;
-                default: break;
+                MidiEvent msg = midi.PopEvent();
+
+                /** Handle messages as they come in 
+                 *  See DaisyExamples for some examples of this
+                 */
+                switch(msg.type)
+                {
+                    case NoteOn:
+                        // Do something on Note On events
+                        {
+                            uint8_t bytes[3] = {0x90, 0x00, 0x00};
+                            bytes[1] = msg.data[0];
+                            bytes[2] = msg.data[1];
+                            midi.SendMessage(bytes, 3);
+                        }
+                        break;
+                    default: break;
+                }
+
+                /** Regardless of message, let's add the message data to our queue to output */
+                event_log.PushBack(msg);
             }
 
-            /** Regardless of message, let's add the message data to our queue to output */
-            event_log.PushBack(msg);
-        }
-
-        /** Now separately, every 5ms we'll print the top message in our queue if there is one */
-        if(now - log_time > 5)
-        {
-            log_time = now;
-            if(!event_log.IsEmpty())
+            /** Now separately, every 5ms we'll print the top message in our queue if there is one */
+            if(now - log_time > 5)
             {
-                auto msg = event_log.PopFront();
-                char outstr[128];
-                char type_str[16];
-                GetMidiTypeAsString(msg, type_str);
-                sprintf(outstr,
-                        "time:\t%ld\ttype: %s\tChannel:  %d\tData MSB: "
-                        "%d\tData LSB: %d\n",
-                        now,
-                        type_str,
-                        msg.channel,
-                        msg.data[0],
-                        msg.data[1]);
-                hw.PrintLine(outstr);
+                log_time = now;
+                if(!event_log.IsEmpty())
+                {
+                    auto msg = event_log.PopFront();
+                    char outstr[128];
+                    char type_str[16];
+                    GetMidiTypeAsString(msg, type_str);
+                    sprintf(outstr,
+                            "time:\t%ld\ttype: %s\tChannel:  %d\tData MSB: "
+                            "%d\tData LSB: %d\n",
+                            now,
+                            type_str,
+                            msg.channel,
+                            msg.data[0],
+                            msg.data[1]);
+                    hw.PrintLine(outstr);
+                }
             }
         }
     }

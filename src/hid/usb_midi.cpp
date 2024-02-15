@@ -19,6 +19,7 @@ class MidiUsbTransport::Impl
 
     void StartRx(MidiRxParseCallback callback, void* context)
     {
+        FlushRx();
         rx_active_      = true;
         parse_callback_ = callback;
         parse_context_  = context;
@@ -102,10 +103,11 @@ void MidiUsbTransport::Impl::Init(Config config)
     // static_assert(1u == sizeof(MidiUsbTransport::Impl::usb_handle_), "UsbHandle is not static");
 
     config_ = config;
+    rx_active_ = false;
 
     if(config_.periph == Config::HOST)
     {
-        rx_active_ = false;
+        System::Delay(10);
         USBH_MIDI_SetReceiveCallback(pUSB_Host, HostReceiveCallback, nullptr);
     }
     else
@@ -119,7 +121,6 @@ void MidiUsbTransport::Impl::Init(Config config)
 
         usb_handle_.Init(periph);
 
-        rx_active_ = false;
         System::Delay(10);
         usb_handle_.SetReceiveCallback(ReceiveCallback, periph);
     }
