@@ -212,7 +212,7 @@ Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_utils.c
 
 # Middleware sources
 C_SOURCES += \
-Middlewares/ST/STM32_USB_Device_Library_Patched/Class/CDC/Src/usbd_cdc.c \
+Middlewares/Patched/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
@@ -308,7 +308,7 @@ C_INCLUDES = \
 -IDrivers/STM32H7xx_HAL_Driver/Inc \
 -IDrivers/STM32H7xx_HAL_Driver/Inc/Legacy \
 -IMiddlewares/ST/STM32_USB_Device_Library/Core/Inc \
--IMiddlewares/ST/STM32_USB_Device_Library_Patched/Class/CDC/Inc \
+-IMiddlewares/Patched/ST/STM32_USB_Device_Library/Class/CDC/Inc \
 -IMiddlewares/ST/STM32_USB_Host_Library/Core/Inc \
 -IMiddlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc \
 -IMiddlewares/Third_Party/FatFs/src \
