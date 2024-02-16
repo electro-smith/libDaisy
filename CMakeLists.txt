@@ -190,7 +190,7 @@ add_library(${TARGET} STATIC
     Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_usb.c
     Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_ll_utils.c
 
-    Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c
+    Middlewares/Patched/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c
     Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c
     Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c
     Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c
@@ -214,7 +214,7 @@ target_include_directories(${TARGET} PUBLIC
     Drivers/STM32H7xx_HAL_Driver/Inc
     Drivers/STM32H7xx_HAL_Driver/Inc/Legacy
     Middlewares/ST/STM32_USB_Device_Library/Core/Inc
-    Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc
+    Middlewares/Patched/ST/STM32_USB_Device_Library/Class/CDC/Inc
     Middlewares/ST/STM32_USB_Host_Library/Core/Inc
     Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc
     Middlewares/Third_Party/FatFs/src
