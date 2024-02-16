@@ -35,6 +35,7 @@ class USBHostHandle::Impl
         Result RegisterClass(USBH_ClassTypeDef* pClass);
         Result Init(USBHostHandle::Config& config);
         Result Deinit();
+        Result Reinit();
         Result Process();
         Result ReEnumerate();
 
@@ -90,6 +91,16 @@ USBHostHandle::Result USBHostHandle::Impl::Init(USBHostHandle::Config& config)
     return ConvertStatus(sta);
 }
 
+USBHostHandle::Result USBHostHandle::Impl::Reinit()
+{
+    uint32_t numClasses = hUsbHostHS.ClassNumber;
+    Deinit();
+    USBHostHandle::Result result = Init(config_);
+    // Restore registered class count
+    hUsbHostHS.ClassNumber = numClasses;
+    return result;
+}
+
 USBHostHandle::Result USBHostHandle::Impl::Deinit()
 {
     USBH_Stop(&hUsbHostHS);
@@ -99,22 +110,12 @@ USBHostHandle::Result USBHostHandle::Impl::Deinit()
 
 USBHostHandle::Result USBHostHandle::Impl::Process()
 {
-    USBHostHandle::Result result;
-
     // The USBH state machine seems to get wedged in the
     // abort state, re-initialize to try and clear it.
     if(hUsbHostHS.gState == HOST_ABORT_STATE)
-    {
-        uint32_t numClasses = hUsbHostHS.ClassNumber;
-        Deinit();
-        result = Init(config_);
-        // Restore registered class count
-        hUsbHostHS.ClassNumber = numClasses;
-    }
+        return Reinit();
     else
-        result = ConvertStatus(USBH_Process(&hUsbHostHS));
-
-    return result;
+        return ConvertStatus(USBH_Process(&hUsbHostHS));
 }
 
 USBHostHandle::Result USBHostHandle::Impl::ReEnumerate()
@@ -129,7 +130,6 @@ bool USBHostHandle::Impl::GetReady()
 
 USBHostHandle::Result USBHostHandle::RegisterClass(USBH_ClassTypeDef* pClass)
 {
-    pimpl_ = &usbh_impl;
     return pimpl_->RegisterClass(pClass);
 }
 

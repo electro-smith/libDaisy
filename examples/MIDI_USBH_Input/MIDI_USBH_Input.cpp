@@ -59,6 +59,8 @@ void USBH_ClassActive(void* data)
         MidiUsbHandler::Config midi_config;
         midi_config.transport_config.periph = MidiUsbTransport::Config::Periph::HOST;
         midi.Init(midi_config);
+        uint8_t reset = 0xFF;
+        midi.SendMessage(&reset, sizeof(reset));
         midi.StartReceive();
     }
 }
@@ -73,7 +75,7 @@ int main(void)
     /** Initialize our hardware */
     hw.Init();
 
-    hw.StartLog(true);
+    hw.StartLog();
 
     hw.PrintLine("MIDI USB Host start");
 
@@ -103,7 +105,10 @@ int main(void)
         {
             hw.SetLed(ledState);
             ledState = !ledState;
-            blink_time = now + 200;
+            if (usbHost.GetPresent())
+                blink_time = now + 400;
+            else
+                blink_time = now + 80;
         }
         /** Run USB host process */
         usbHost.Process();
