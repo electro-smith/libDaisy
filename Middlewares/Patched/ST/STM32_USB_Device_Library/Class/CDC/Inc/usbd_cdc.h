@@ -146,6 +146,7 @@ typedef struct
 extern USBD_ClassTypeDef USBD_CDC;
 #define USBD_CDC_CLASS &USBD_CDC
 
+// these are used to hack in an optional MIDI mode
 #define USBD_MODE_CDC  0
 #define USBD_MODE_MIDI 1
 extern uint8_t usbd_mode;
