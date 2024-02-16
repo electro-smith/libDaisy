@@ -166,13 +166,13 @@ class Mcp23X17
     {
         transport.Init(config.transport_config);
 
-        //BANK = 	0 : sequential register addresses
-        //MIRROR = 	0 : use configureInterrupt
-        //SEQOP = 	1 : sequential operation disabled, address pointer does not increment
-        //DISSLW = 	0 : slew rate enabled
-        //HAEN = 	0 : hardware address pin is always enabled on 23017
-        //ODR = 	0 : open drain output
-        //INTPOL = 	0 : interrupt active low
+        //BANK =     0 : sequential register addresses
+        //MIRROR =     0 : use configureInterrupt
+        //SEQOP =     1 : sequential operation disabled, address pointer does not increment
+        //DISSLW =     0 : slew rate enabled
+        //HAEN =     0 : hardware address pin is always enabled on 23017
+        //ODR =     0 : open drain output
+        //INTPOL =     0 : interrupt active low
         transport.WriteReg(MCPRegister::IOCON, 0b00100000);
 
         //enable all pull up resistors (will be effective for input pins only)
@@ -180,14 +180,14 @@ class Mcp23X17
     };
 
     /**
-	 * Controls the pins direction on a whole port at once.
-	 * 
-	 * directions: 0 - output, 1 - input
-	 * pullups: 0 - disabled, 1 - enabled
-	 * inverted: 0 - false/normal, 1 - true/inverted
-	 * 
-	 * See "3.5.1 I/O Direction register".
-	 */
+     * Controls the pins direction on a whole port at once.
+     * 
+     * directions: 0 - output, 1 - input
+     * pullups: 0 - disabled, 1 - enabled
+     * inverted: 0 - false/normal, 1 - true/inverted
+     * 
+     * See "3.5.1 I/O Direction register".
+     */
     void PortMode(MCPPort port,
                   uint8_t directions,
                   uint8_t pullups  = 0xFF,
@@ -199,14 +199,14 @@ class Mcp23X17
     }
 
     /**
-	 * Controls a single pin direction. 
-	 * Pin 0-7 for port A, 8-15 fo port B.
-	 * 
-	 * 1 = Pin is configured as an input.
-	 * 0 = Pin is configured as an output.
-	 *
-	 * See "3.5.1 I/O Direction register".
-	 */
+     * Controls a single pin direction. 
+     * Pin 0-7 for port A, 8-15 fo port B.
+     * 
+     * 1 = Pin is configured as an input.
+     * 0 = Pin is configured as an output.
+     *
+     * See "3.5.1 I/O Direction register".
+     */
     void PinMode(uint8_t pin, MCPMode mode, bool inverted)
     {
         MCPRegister iodirreg  = MCPRegister::IODIR_A;
@@ -241,14 +241,14 @@ class Mcp23X17
     }
 
     /**
-	 * Writes a single pin state.
-	 * Pin 0-7 for port A, 8-15 for port B.
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
+     * Writes a single pin state.
+     * Pin 0-7 for port A, 8-15 for port B.
+     * 
+     * 1 = Logic-high
+     * 0 = Logic-low
+     * 
+     * See "3.5.10 Port register".
+     */
     void WritePin(uint8_t pin, uint8_t state)
     {
         MCPRegister gpioreg = MCPRegister::GPIO_A;
@@ -273,14 +273,14 @@ class Mcp23X17
     }
 
     /**
-	 * Reads a single pin state.
-	 * Pin 0-7 for port A, 8-15 for port B.
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
+     * Reads a single pin state.
+     * Pin 0-7 for port A, 8-15 for port B.
+     * 
+     * 1 = Logic-high
+     * 0 = Logic-low
+     * 
+     * See "3.5.10 Port register".
+     */
     uint8_t ReadPin(uint8_t pin)
     {
         MCPRegister gpioreg = MCPRegister::GPIO_A;
@@ -301,39 +301,39 @@ class Mcp23X17
     }
 
     /**
-	 * Writes pins state to a whole port.
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
+     * Writes pins state to a whole port.
+     * 
+     * 1 = Logic-high
+     * 0 = Logic-low
+     * 
+     * See "3.5.10 Port register".
+     */
     void WritePort(MCPPort port, uint8_t value)
     {
         transport.WriteReg(MCPRegister::GPIO_A + port, value);
     }
 
     /**
-	 * Reads pins state for a whole port.
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
+     * Reads pins state for a whole port.
+     * 
+     * 1 = Logic-high
+     * 0 = Logic-low
+     * 
+     * See "3.5.10 Port register".
+     */
     uint8_t ReadPort(MCPPort port)
     {
         return transport.ReadReg(MCPRegister::GPIO_A + port);
     }
 
     /**
-	 * Writes pins state to both ports.
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
+     * Writes pins state to both ports.
+     * 
+     * 1 = Logic-high
+     * 0 = Logic-low
+     * 
+     * See "3.5.10 Port register".
+     */
     void Write(uint16_t value)
     {
         transport.WriteReg(
@@ -341,13 +341,13 @@ class Mcp23X17
     }
 
     /**
-	 * Reads pins state for both ports. 
-	 * 
-	 * 1 = Logic-high
-	 * 0 = Logic-low
-	 * 
-	 * See "3.5.10 Port register".
-	 */
+     * Reads pins state for both ports. 
+     * 
+     * 1 = Logic-high
+     * 0 = Logic-low
+     * 
+     * See "3.5.10 Port register".
+     */
     uint16_t Read()
     {
         uint8_t a = ReadPort(MCPPort::A);

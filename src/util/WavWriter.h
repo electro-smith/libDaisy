@@ -44,7 +44,7 @@ class WavWriter
     };
 
     /** Configuration structure for the wave writer.
-	 ** */
+     ** */
     struct Config
     {
         float   samplerate;
@@ -53,9 +53,9 @@ class WavWriter
     };
 
     /** State of the internal Writing mechanism. 
-	 ** When the buffer is a certain amount full one section will write its contents
-	 ** while the other is still being written to. This is performed circularly
-	 ** so that audio will be uninterrupted during writing. */
+     ** When the buffer is a certain amount full one section will write its contents
+     ** while the other is still being written to. This is performed circularly
+     ** so that audio will be uninterrupted during writing. */
     enum class BufferState
     {
         IDLE,
@@ -137,8 +137,8 @@ class WavWriter
     }
 
     /** Finalizes the writing of the WAV file.
-	 ** This overwrites the WAV Header with the correct
-	 ** final size, and closes the fptr. */
+     ** This overwrites the WAV Header with the correct
+     ** final size, and closes the fptr. */
     void SaveFile()
     {
         unsigned int bw = 0;

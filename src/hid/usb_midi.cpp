@@ -90,7 +90,7 @@ void MidiUsbTransport::Impl::Init(Config config)
 
     // This tells the USB middleware to send out MIDI descriptors instead of CDC
     usbd_mode = USBD_MODE_MIDI;
-    config_ = config;
+    config_   = config;
 
     UsbHandle::UsbPeriph periph = UsbHandle::FS_INTERNAL;
     if(config_.periph == Config::EXTERNAL)
