@@ -31,6 +31,7 @@ extern "C" {
 
 typedef enum {
     MIDI_INIT = 0,
+    MIDI_IDLE,
     MIDI_RX,
     MIDI_RX_POLL,
     MIDI_FAIL
