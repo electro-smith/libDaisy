@@ -196,6 +196,7 @@ class MidiHandler
      */
     bool HasEvents() const { return event_q_.GetNumElements() > 0; }
 
+    bool RxActive() { return transport_.RxActive(); }
 
     /** Pops the oldest unhandled MidiEvent from the internal queue
     \return The event to be handled

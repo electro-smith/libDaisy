@@ -59,8 +59,6 @@ void USBH_ClassActive(void* data)
         MidiUsbHandler::Config midi_config;
         midi_config.transport_config.periph = MidiUsbTransport::Config::Periph::HOST;
         midi.Init(midi_config);
-        uint8_t reset = 0xFF;
-        midi.SendMessage(&reset, sizeof(reset));
         midi.StartReceive();
     }
 }
@@ -113,7 +111,7 @@ int main(void)
         /** Run USB host process */
         usbHost.Process();
 
-        if(usbHost.IsActiveClass(USBH_MIDI_CLASS))
+        if(usbHost.IsActiveClass(USBH_MIDI_CLASS) && midi.RxActive())
         {
             /** Process MIDI in the background */
             midi.Listen();

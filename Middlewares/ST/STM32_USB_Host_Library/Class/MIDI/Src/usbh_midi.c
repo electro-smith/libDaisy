@@ -61,13 +61,10 @@ static USBH_StatusTypeDef USBH_MIDI_InterfaceInit(USBH_HandleTypeDef *phost)
         USBH_DbgLog("Cannot find interface for %s class.", phost->pActiveClass->Name);
         return USBH_FAIL;
     }
-
-#if 1
     status = USBH_SelectInterface(phost, interface);
     if (status != USBH_OK) {
         return USBH_FAIL;
     }
-#endif
 
     /* Find the endpoints */
     for (int ep = 0; ep < phost->device.CfgDesc.Itf_Desc[interface].bNumEndpoints; ++ep) {
@@ -98,7 +95,6 @@ static USBH_StatusTypeDef USBH_MIDI_InterfaceInit(USBH_HandleTypeDef *phost)
     MIDI_Handle->ep_addr = phost->device.CfgDesc.Itf_Desc[interface].Ep_Desc[0].bEndpointAddress;
     MIDI_Handle->state = MIDI_INIT;
     MIDI_Handle->error = MIDI_OK;
-
 
     return USBH_OK;
 }
@@ -192,7 +188,7 @@ static USBH_StatusTypeDef USBH_MIDI_Process(USBH_HandleTypeDef *phost)
             }
             break;
         case MIDI_FAIL:
-            error = USBH_ClrFeature(phost, hMidi->ep_addr);
+            //error = USBH_ClrFeature(phost, hMidi->ep_addr);
             hMidi->state = MIDI_IDLE;
             break;
     }
@@ -232,7 +228,6 @@ MIDI_ErrorTypeDef USBH_MIDI_Transmit(USBH_HandleTypeDef *phost, uint8_t* data, s
         {
             if(txStatus == USBH_URB_ERROR || txStatus == USBH_URB_STALL)
             {
-                USBH_ClrFeature(phost, hMidi->ep_addr);
                 return MIDI_ERROR;
             }
             if(numUrbs == 0)
