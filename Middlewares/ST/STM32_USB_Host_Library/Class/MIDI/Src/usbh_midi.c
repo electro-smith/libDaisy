@@ -188,7 +188,6 @@ static USBH_StatusTypeDef USBH_MIDI_Process(USBH_HandleTypeDef *phost)
             }
             break;
         case MIDI_FAIL:
-            //error = USBH_ClrFeature(phost, hMidi->ep_addr);
             hMidi->state = MIDI_IDLE;
             break;
     }
