@@ -1,10 +1,10 @@
 /** Example of setting reading MIDI Input via UART
- *  
- * 
+ *
+ *
  *  This can be used with any 5-pin DIN or TRS connector that has been wired up
  *  to one of the UART Rx pins on Daisy.
  *  This will use D14 as the UART 1 Rx pin
- * 
+ *
  *  This example will also log incoming messages to the serial port for general MIDI troubleshooting
  */
 #include "daisy_seed.h"
@@ -14,7 +14,7 @@ using namespace daisy;
 
 /** Fills string with string representation of MidiEvent::Type
  *  str needs to be at least 16 bytes long to store the data
- * TODO: Move this into MIDI lib or something 
+ * TODO: Move this into MIDI lib or something
 */
 void GetMidiTypeAsString(MidiEvent& msg, char* str)
 {
@@ -69,7 +69,7 @@ int main(void)
         {
             MidiEvent msg = midi.PopEvent();
 
-            /** Handle messages as they come in 
+            /** Handle messages as they come in
              *  See DaisyExamples for some examples of this
              */
             switch(msg.type)
