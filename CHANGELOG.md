@@ -1,16 +1,19 @@
 # libDaisy Changelog
 
-## Unreleased
+## v6.0.0
 
 ### Features
 
+* bootloader: Add local BootloaderBlink example for testing the bootloader and its various configs
+* bootloader: Add four bin variants: internal / external DFU, and 10ms / 2000ms timeouts
+* core: Add USE_DAISYSP_LGPL flag to core/Makefile for DaisySP_LGPL support.
 * bootloader: added `System::BootloaderMode::DAISY`, `System::BootloaderMode::DAISY_SKIP_TIMEOUT`, and `System::BootloaderMode::DAISY_INFINITE_TIMEOUT` options to `System::ResetToBootloader` method for better firmware updating flexibility.
 
 ### Bug fixes
 
+* Fix link to electro-smith website in README
 * bootloader: pins `D0`, `D29` and `D30` are no longer stuck when using the Daisy bootloader
-
-### Migrating
+* Color: Fixed bug with init not setting the green value correctly
 
 #### Bootloader
 
