@@ -21,6 +21,10 @@ set_target_properties(${FIRMWARE_NAME} PROPERTIES
     LINK_DEPENDS ${LINKER_SCRIPT}
 )
 
+target_compile_options(${FIRMWARE_NAME} PUBLIC
+    $<$<CONFIG:RELEASE>:-flto>
+)
+
 target_link_options(${FIRMWARE_NAME} PUBLIC
     LINKER:-T,${LINKER_SCRIPT}
     $<$<CONFIG:DEBUG>:LINKER:-Map=${FIRMWARE_NAME}.map>

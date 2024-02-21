@@ -4,7 +4,8 @@ project (libdaisy VERSION 1.0.0)
 
 set(TARGET daisy)
 
-set(MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
+cmake_path(SET MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
+list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 add_subdirectory(Drivers)
 add_subdirectory(Middlewares/ST)
