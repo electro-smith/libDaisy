@@ -24,10 +24,10 @@ class GPIO
     /** @brief Mode of operation for the specified GPIO */
     enum class Mode
     {
-        INPUT,     /**< Input for reading state of pin */
-        OUTPUT,    /**< Output w/ push-pull configuration */
-        OUTPUT_OD, /**< Output w/ open-drain configuration */
-        ANALOG,    /**< Analog for connection to ADC or DAC peripheral */
+        INPUT,      /**< Input for reading state of pin */
+        OUTPUT,     /**< Output w/ push-pull configuration */
+        OPEN_DRAIN, /**< Output w/ open-drain configuration */
+        ANALOG,     /**< Analog for connection to ADC or DAC peripheral */
     };
 
     /** @brief Configures whether an internal Pull up or Pull down resistor is used. 

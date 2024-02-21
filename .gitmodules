@@ -1,3 +1,18 @@
 [submodule "tests/googletest"]
 	path = tests/googletest
 	url = https://github.com/google/googletest.git
+[submodule "Drivers/CMSIS/DSP"]
+	path = Drivers/CMSIS-DSP
+	url = https://github.com/ARM-software/CMSIS-DSP/
+[submodule "Drivers/CMSIS_5"]
+	path = Drivers/CMSIS_5
+	url = https://github.com/ARM-software/CMSIS_5
+[submodule "Drivers/CMSIS-Device/ST/STM32H7xx"]
+	path = Drivers/CMSIS-Device/ST/STM32H7xx
+	url = https://github.com/STMicroelectronics/cmsis_device_h7/
+[submodule "Drivers/STM32H7xx_HAL_Driver"]
+	path = Drivers/STM32H7xx_HAL_Driver
+	url = https://github.com/STMicroelectronics/stm32h7xx_hal_driver
+[submodule "Middlewares/ST/STM32_USB_Device_Library"]
+	path = Middlewares/ST/STM32_USB_Device_Library
+	url = https://github.com/STMicroelectronics/stm32_mw_usb_device

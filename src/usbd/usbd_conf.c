@@ -711,7 +711,7 @@ USBD_StatusTypeDef USBD_LL_SetUSBAddress(USBD_HandleTypeDef *pdev,
 USBD_StatusTypeDef USBD_LL_Transmit(USBD_HandleTypeDef *pdev,
                                     uint8_t             ep_addr,
                                     uint8_t *           pbuf,
-                                    uint16_t            size)
+                                    uint32_t            size)
 {
     HAL_StatusTypeDef  hal_status = HAL_OK;
     USBD_StatusTypeDef usb_status = USBD_OK;
@@ -734,7 +734,7 @@ USBD_StatusTypeDef USBD_LL_Transmit(USBD_HandleTypeDef *pdev,
 USBD_StatusTypeDef USBD_LL_PrepareReceive(USBD_HandleTypeDef *pdev,
                                           uint8_t             ep_addr,
                                           uint8_t *           pbuf,
-                                          uint16_t            size)
+                                          uint32_t            size)
 {
     HAL_StatusTypeDef  hal_status = HAL_OK;
     USBD_StatusTypeDef usb_status = USBD_OK;

@@ -137,7 +137,7 @@ TEST(util_CpuLoadMeter, e_tolerateTickOverflow)
     meter.Init(48000.0f, 48); // 1kHz block rate
 
     // measure block with 50% load where the tick counter overflows
-    constexpr uint32_t counterMax = uint32_t(uint64_t(1ul << 32ul) - 1);
+    constexpr uint32_t counterMax = uint32_t(uint64_t(1ull << 32ul) - 1);
     constexpr uint32_t blockDurationInTicks
         = 1000; // 1kHz block rate and 1us tick
     constexpr uint32_t tickAtBlockStart = counterMax - blockDurationInTicks / 4;

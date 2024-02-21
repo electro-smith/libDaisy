@@ -3,7 +3,10 @@
 #include <stdint.h>
 
 #ifndef UNIT_TEST // provide dummy implementation for unit tests
+extern "C"
+{
 #include <cmsis_gcc.h>
+}
 
 namespace daisy
 {
