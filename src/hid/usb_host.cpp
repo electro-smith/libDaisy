@@ -26,52 +26,51 @@ ApplicationTypeDef Appli_state = APPLICATION_IDLE;
 
 class USBHostHandle::Impl
 {
-    public:
-        Impl() {
-            memset(&hUsbHostHS, 0, sizeof(hUsbHostHS));
-        }
-        ~Impl() {}
+  public:
+    Impl() { memset(&hUsbHostHS, 0, sizeof(hUsbHostHS)); }
+    ~Impl() {}
 
-        Result RegisterClass(USBH_ClassTypeDef* pClass);
-        Result Init(USBHostHandle::Config& config);
-        Result Deinit();
-        Result Reinit();
-        Result Process();
-        Result ReEnumerate();
+    Result RegisterClass(USBH_ClassTypeDef* pClass);
+    Result Init(USBHostHandle::Config& config);
+    Result Deinit();
+    Result Reinit();
+    Result Process();
+    Result ReEnumerate();
 
-        bool GetReady();
+    bool GetReady();
 
-        inline Config& GetConfig() { return config_; }
+    inline Config& GetConfig() { return config_; }
 
-    private:
-        Config config_;
+  private:
+    Config config_;
 
-        /** @brief Maps ST Middleware USBH_StatusTypeDef to USBHostHandle::Result codes */
-        Result ConvertStatus(USBH_StatusTypeDef sta)
+    /** @brief Maps ST Middleware USBH_StatusTypeDef to USBHostHandle::Result codes */
+    Result ConvertStatus(USBH_StatusTypeDef sta)
+    {
+        if(sta != USBH_OK)
         {
-            if(sta != USBH_OK)
-            {
-                return Result::FAIL;
-            }
-            switch(sta)
-            {
-                case USBH_OK: return Result::OK;
-                case USBH_BUSY: return Result::BUSY;
-                case USBH_NOT_SUPPORTED: return Result::NOT_SUPPORTED;
-                case USBH_UNRECOVERED_ERROR: return Result::UNRECOVERED_ERROR;
-                case USBH_ERROR_SPEED_UNKNOWN: return Result::ERROR_SPEED_UNKNOWN;
-                case USBH_FAIL:
-                default: return Result::FAIL;
-            }
+            return Result::FAIL;
         }
+        switch(sta)
+        {
+            case USBH_OK: return Result::OK;
+            case USBH_BUSY: return Result::BUSY;
+            case USBH_NOT_SUPPORTED: return Result::NOT_SUPPORTED;
+            case USBH_UNRECOVERED_ERROR: return Result::UNRECOVERED_ERROR;
+            case USBH_ERROR_SPEED_UNKNOWN: return Result::ERROR_SPEED_UNKNOWN;
+            case USBH_FAIL:
+            default: return Result::FAIL;
+        }
+    }
 };
 
 // Global handle
 static USBHostHandle::Impl usbh_impl;
 
-static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id);
+static void USBH_UserProcess(USBH_HandleTypeDef* phost, uint8_t id);
 
-USBHostHandle::Result USBHostHandle::Impl::RegisterClass(USBH_ClassTypeDef* pClass)
+USBHostHandle::Result
+USBHostHandle::Impl::RegisterClass(USBH_ClassTypeDef* pClass)
 {
     return ConvertStatus(USBH_RegisterClass(&hUsbHostHS, pClass));
 }
@@ -174,13 +173,12 @@ bool USBHostHandle::GetPresent()
 // Shared USB IRQ Handlers are located in sys/System.cpps
 
 // This isn't super useful for our typical code structure
-static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
+static void USBH_UserProcess(USBH_HandleTypeDef* phost, uint8_t id)
 {
-    auto &conf = usbh_impl.GetConfig();
+    auto& conf = usbh_impl.GetConfig();
     switch(id)
     {
-        case HOST_USER_SELECT_CONFIGURATION:
-            break;
+        case HOST_USER_SELECT_CONFIGURATION: break;
         case HOST_USER_CLASS_ACTIVE:
             Appli_state = APPLICATION_READY;
             if(conf.class_active_callback)
@@ -189,8 +187,7 @@ static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
                 cb(conf.userdata);
             }
             break;
-        case HOST_USER_CLASS_SELECTED:
-            break;
+        case HOST_USER_CLASS_SELECTED: break;
         case HOST_USER_CONNECTION:
             Appli_state = APPLICATION_START;
             if(conf.connect_callback)
@@ -214,7 +211,6 @@ static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
                 cb(conf.userdata);
             }
             break;
-        default:
-            break;
+        default: break;
     }
 }

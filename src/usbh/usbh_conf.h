@@ -127,10 +127,10 @@ extern "C"
     /* DEBUG macros */
 
 #if(USBH_DEBUG_LEVEL > 0U)
-extern void USBH_LogPrint(const char* format, ...);
-#define USBH_UsrLog(...)     \
-    do                       \
-    {                        \
+    extern void USBH_LogPrint(const char* format, ...);
+#define USBH_UsrLog(...)            \
+    do                              \
+    {                               \
         USBH_LogPrint(__VA_ARGS__); \
         USBH_LogPrint("\n");        \
     } while(0)
@@ -143,9 +143,9 @@ extern void USBH_LogPrint(const char* format, ...);
 
 #if(USBH_DEBUG_LEVEL > 1U)
 
-#define USBH_ErrLog(...)     \
-    do                       \
-    {                        \
+#define USBH_ErrLog(...)            \
+    do                              \
+    {                               \
         USBH_LogPrint("ERROR: ");   \
         USBH_LogPrint(__VA_ARGS__); \
         USBH_LogPrint("\n");        \
@@ -158,9 +158,9 @@ extern void USBH_LogPrint(const char* format, ...);
 #endif
 
 #if(USBH_DEBUG_LEVEL > 2U)
-#define USBH_DbgLog(...)     \
-    do                       \
-    {                        \
+#define USBH_DbgLog(...)            \
+    do                              \
+    {                               \
         USBH_LogPrint("DEBUG : ");  \
         USBH_LogPrint(__VA_ARGS__); \
         USBH_LogPrint("\n");        \

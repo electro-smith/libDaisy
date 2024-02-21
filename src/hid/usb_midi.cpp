@@ -4,7 +4,8 @@
 #include "hid/usb_midi.h"
 #include <cassert>
 
-extern "C" {
+extern "C"
+{
     extern USBH_HandleTypeDef hUsbHostHS;
 }
 
@@ -102,7 +103,7 @@ void MidiUsbTransport::Impl::Init(Config config)
      */
     // static_assert(1u == sizeof(MidiUsbTransport::Impl::usb_handle_), "UsbHandle is not static");
 
-    config_ = config;
+    config_    = config;
     rx_active_ = false;
 
     if(config_.periph == Config::HOST)
@@ -128,8 +129,8 @@ void MidiUsbTransport::Impl::Init(Config config)
 
 void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
 {
-    int               attempt_count = config_.tx_retry_count;
-    bool              should_retry;
+    int  attempt_count = config_.tx_retry_count;
+    bool should_retry;
 
     MidiToUsb(buffer, size);
     do
@@ -137,7 +138,7 @@ void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
         if(config_.periph == Config::HOST)
         {
             MIDI_ErrorTypeDef result;
-            result = USBH_MIDI_Transmit(pUSB_Host, tx_buffer_, tx_ptr_);
+            result       = USBH_MIDI_Transmit(pUSB_Host, tx_buffer_, tx_ptr_);
             should_retry = (result == MIDI_BUSY) && attempt_count--;
         }
         else
@@ -147,7 +148,8 @@ void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
                 result = usb_handle_.TransmitExternal(tx_buffer_, tx_ptr_);
             else
                 result = usb_handle_.TransmitInternal(tx_buffer_, tx_ptr_);
-            should_retry = (result == UsbHandle::Result::ERR) && attempt_count--;
+            should_retry
+                = (result == UsbHandle::Result::ERR) && attempt_count--;
         }
 
 
