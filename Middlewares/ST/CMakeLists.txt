@@ -1,13 +1,13 @@
 # USB Device Library
 add_library(STM32_USB_DEVICE_LIBRARY STATIC
-  STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c
-  STM32_USB_Device_Library/Core/Src/usbd_core.c
-  STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c
+  ../Patched/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c
+  STM32_USB_Device_Library/Core/Src/usbd_core.c  
+  STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c  
   STM32_USB_Device_Library/Core/Src/usbd_ioreq.c
 )
 target_include_directories(STM32_USB_DEVICE_LIBRARY PUBLIC
   STM32_USB_Device_Library/Core/Inc
-  STM32_USB_Device_Library/Class/CDC/Inc
+  ../Patched/ST/STM32_USB_Device_Library/Class/CDC/Inc
   ${MODULE_DIR}/usbd # for conf
 )
 target_link_libraries(STM32_USB_DEVICE_LIBRARY PUBLIC
