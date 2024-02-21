@@ -40,7 +40,7 @@ uint32_t Random::GetValue()
 
 float Random::GetFloat(float min, float max)
 {
-    float norm = (float)GetValue() / 0x7fffffff;
+    float norm = (float)GetValue() / (float)0xffffffff;
     return min + (norm * (max - min));
 }
 
