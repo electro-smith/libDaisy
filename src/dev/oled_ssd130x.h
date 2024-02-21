@@ -389,7 +389,7 @@ class SSD130xDriver
         }
     };
 
-  private:
+  protected:
     Transport transport_;
     uint8_t   buffer_[width * height / 8];
 };
