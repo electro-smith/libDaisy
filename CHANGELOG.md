@@ -1,5 +1,42 @@
 # libDaisy Changelog
 
+## Unreleased
+
+### Features
+
+### Bugfixes
+
+### Migrating
+
+
+## v7.0.0
+
+### Features
+- Update internal CMSIS and HAL.
+- Adds new HAL module support via `src/sys/stm32h7xx_hal_conf.h`
+  - Digital Temperature Sensor
+  - Filter Math Accelerator (FMAC)
+  - Octo-SPI Controller (OSPI)
+  - Digital Filter for Delta-Sigma Modulation
+  - CORDIC co-processor block
+- Moves relevant HAL, CMSIS, Middleware code to submodules:
+  - https://github.com/ARM-software/CMSIS_5
+  - https://github.com/STMicroelectronics/cmsis_device_h7
+  - https://github.com/STMicroelectronics/stm32h7xx_hal_driver
+  - https://github.com/ARM-software/CMSIS-DSP
+  - https://github.com/STMicroelectronics/stm32_mw_usb_device
+
+### Bugfixes
+- Very minor bugfix in CpuLoadMeter_gtest.cpp so that a number would no longer overflow when bitshifting left
+
+### Migrating
+- Updating an existing libDaisy install via `git pull` will require you to run `git restore . --recurse-submodules` before it will compile.
+  - Note, this will also undo any local changes you may have to the library. Make sure to stash those!
+- If you clone a fresh copy of libDaisy with `git clone https://www.github.com/electro-smith/libDaisy --recurse-submodules`, this will not be necessary
+- Breaking changes:
+  - `GPIO::Mode::OUTPUT_OD` renamed to `GPIO::Mode::OPEN_DRAIN` due to a name conflict collision
+  - Compiled code size has increased by up to 7%
+
 ## v6.0.0
 
 ### Features
