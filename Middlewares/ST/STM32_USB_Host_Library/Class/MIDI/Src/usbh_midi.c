@@ -80,6 +80,7 @@ static USBH_StatusTypeDef USBH_MIDI_InterfaceInit(USBH_HandleTypeDef *phost)
                     phost->device.address, phost->device.speed, USB_EP_TYPE_BULK,
                     MIDI_Handle->InEpSize);
             (void)USBH_LL_SetToggle(phost, MIDI_Handle->InPipe, 0U);
+            USBH_UsrLog("InEP[%d] %02x size=%u", ep, MIDI_Handle->InEp, MIDI_Handle->InEpSize);
         } else {
             MIDI_Handle->OutEp = phost->device.CfgDesc.Itf_Desc[interface].Ep_Desc[ep].bEndpointAddress;
             MIDI_Handle->OutEpSize = phost->device.CfgDesc.Itf_Desc[interface].Ep_Desc[ep].wMaxPacketSize & 0x03FFU;
@@ -89,10 +90,10 @@ static USBH_StatusTypeDef USBH_MIDI_InterfaceInit(USBH_HandleTypeDef *phost)
                     phost->device.address, phost->device.speed, USB_EP_TYPE_BULK,
                     MIDI_Handle->OutEpSize);
             (void)USBH_LL_SetToggle(phost, MIDI_Handle->OutPipe, 0U);
+            USBH_UsrLog("OutEP[%d] %02x size=%u", ep, MIDI_Handle->OutEp, MIDI_Handle->OutEpSize);
         }
     }
 
-    MIDI_Handle->ep_addr = phost->device.CfgDesc.Itf_Desc[interface].Ep_Desc[0].bEndpointAddress;
     MIDI_Handle->state = MIDI_INIT;
     MIDI_Handle->error = MIDI_OK;
 

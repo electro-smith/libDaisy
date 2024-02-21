@@ -55,7 +55,6 @@ typedef struct _MIDI_Process {
     uint8_t              OutPipe;
     uint8_t              OutEp;
     uint16_t             OutEpSize;
-    uint8_t              ep_addr;
     MIDI_StateTypeDef    state;
     MIDI_ErrorTypeDef    error;
     USBH_MIDI_RxCallback callback;
