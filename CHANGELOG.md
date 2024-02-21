@@ -1,5 +1,13 @@
 # libDaisy Changelog
 
+## Unreleased
+
+### Features
+
+### Bugfixes
+
+### Migrating
+
 ## v7.0.1
 
 ### Features
