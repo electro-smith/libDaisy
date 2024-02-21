@@ -5,7 +5,6 @@
 
 namespace daisy
 {
-
 /**
  * A driver implementation for SH1106 OLED displays
  */
@@ -45,8 +44,7 @@ using SH11064WireSpi128x64Driver
 /**
  * A driver for SH1106 128x64 OLED displays connected via I2C
  */
-using SH1106I2c128x64Driver
-    = SH1106Driver<128, 64, SSD130xI2CTransport>;
+using SH1106I2c128x64Driver = SH1106Driver<128, 64, SSD130xI2CTransport>;
 
 }; // namespace daisy
 
