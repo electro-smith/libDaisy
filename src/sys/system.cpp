@@ -298,7 +298,7 @@ void System::DelayTicks(uint32_t delay_ticks)
     tim_.DelayTick(delay_ticks);
 }
 
-void System::ResetToBootloader()
+void System::ResetToBootloader(BootloaderMode mode)
 {
     if(mode == BootloaderMode::STM)
     {
