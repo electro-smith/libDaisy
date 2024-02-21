@@ -30,7 +30,8 @@
 - Very minor bugfix in CpuLoadMeter_gtest.cpp so that a number would no longer overflow when bitshifting left
 
 ### Migrating
-- Updating an existing libDaisy install via `git pull` will require you to run `git submodule update` before it will compile.
+- Updating an existing libDaisy install via `git pull` will require you to run `git restore . --recurse-submodules` before it will compile.
+  - Note, this will also undo any local changes you may have to the library. Make sure to stash those!
 - If you clone a fresh copy of libDaisy with `git clone https://www.github.com/electro-smith/libDaisy --recurse-submodules`, this will not be necessary
 - Breaking changes:
   - `GPIO::Mode::OUTPUT_OD` renamed to `GPIO::Mode::OPEN_DRAIN` due to a name conflict collision
