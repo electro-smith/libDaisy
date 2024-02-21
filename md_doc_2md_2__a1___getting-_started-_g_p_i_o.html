@@ -176,7 +176,7 @@ Mode Argument</h2>
 <ul>
 <li><code>Mode::INPUT</code> - configures the pin as an input</li>
 <li><code>Mode::OUTPUT</code> - configures the pin as an output (in push pull configuration)</li>
-<li><code>Mode::OUTPUT_OD</code> - also an output, but the transistor connection to pull the signal to GND is not connected, this is less commonly used.</li>
+<li><code>Mode::OPEN_DRAIN</code> - also an output, but the transistor connection to pull the signal to GND is not connected, this is less commonly used.</li>
 <li><code>Mode::ANALOG</code> - configures the GPIO for connection to the ADC or DAC peripherals within the micro controller.</li>
 </ul>
 <p>If you only supply the <code>Pin</code> argument, the GPIO will default to <code>Mode::INPUT</code> configuration.</p>
