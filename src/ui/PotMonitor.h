@@ -30,8 +30,8 @@ namespace daisy
  *
  *      float GetPotValue(uint16_t potId);
  *
- *   @tparam BackendType 	The class type of the backend that will supply pot values.
- *   @tparam numPots 		The number of pots to monitor.
+ *   @tparam BackendType     The class type of the backend that will supply pot values.
+ *   @tparam numPots         The number of pots to monitor.
  */
 template <typename BackendType, uint32_t numPots>
 class PotMonitor
@@ -47,14 +47,14 @@ class PotMonitor
     }
 
     /** Initialises the PotMonitor.
-     * @param queueToAddEventsTo	The UiEventQueue to which events should be posted.
-     * @param backend				The backend that supplies the current value of each potentiometer.
-     * @param idleTimeoutMs   		When the pot is currently moving, but no event is generated over
-     *                      		"idleTimeoutMs", the pot enters the idle state.
-     * @param deadBandIdle 			The dead band that must be exceeded before a movement is detected
-     *                      		when the pot is currently idle.
-     * @param deadBand 				The dead band that must be exceeded before a movement is detected
-     *                      		when the pot is currently moving.
+     * @param queueToAddEventsTo    The UiEventQueue to which events should be posted.
+     * @param backend                The backend that supplies the current value of each potentiometer.
+     * @param idleTimeoutMs           When the pot is currently moving, but no event is generated over
+     *                              "idleTimeoutMs", the pot enters the idle state.
+     * @param deadBandIdle             The dead band that must be exceeded before a movement is detected
+     *                              when the pot is currently idle.
+     * @param deadBand                 The dead band that must be exceeded before a movement is detected
+     *                              when the pot is currently moving.
      */
     void Init(UiEventQueue& queueToAddEventsTo,
               BackendType&  backend,
@@ -91,7 +91,7 @@ class PotMonitor
     }
 
     /** Returns true, if the requested pot is currently being moved.
-     *  @param potId	The unique ID of the potentiometer (< numPots)
+     *  @param potId    The unique ID of the potentiometer (< numPots)
      */
     bool IsMoving(uint16_t potId) const
     {
@@ -103,7 +103,7 @@ class PotMonitor
 
     /** For a given potentiometer, this will return the last value that was
      *  posted to the UiEventQueue.
-     *  @param potId	The unique ID of the potentiometer (< numPots)
+     *  @param potId    The unique ID of the potentiometer (< numPots)
      */
     float GetCurrentPotValue(uint16_t potId) const
     {
@@ -123,9 +123,9 @@ class PotMonitor
     /** Process a potentiometer and detect movements - or
      *  flags the pot as "idle" when no movement is detected for
      *  a longer period of time.
-     *  @param id		    The unique ID of the potentiometer (< numPots)
-     *  @param value	    The new value in the range 0..1
-     *  @param timeDiffMs	The time in ms since the last call
+     *  @param id            The unique ID of the potentiometer (< numPots)
+     *  @param value        The new value in the range 0..1
+     *  @param timeDiffMs    The time in ms since the last call
      */
     void ProcessPot(uint16_t id, float value, uint32_t timeDiffMs)
     {

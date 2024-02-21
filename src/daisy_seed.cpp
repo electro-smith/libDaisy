@@ -109,17 +109,23 @@ void DaisySeed::Init(bool boost)
     testpoint_config.pin  = Pin(SEED_TEST_POINT_PORT, SEED_TEST_POINT_PIN);
     testpoint_config.mode = GPIO::Mode::OUTPUT;
 
-    auto memory = System::GetProgramMemoryRegion();
+    auto memory       = System::GetProgramMemoryRegion();
+    auto boot_version = System::GetBootloaderVersion();
 
-    if(memory != System::MemoryRegion::INTERNAL_FLASH)
+    if(boot_version == System::BootInfo::Version::LT_v6_0
+       && memory != System::MemoryRegion::INTERNAL_FLASH)
+    {
         syscfg.skip_clocks = true;
+    }
 
     system.Init(syscfg);
 
     if(memory != System::MemoryRegion::QSPI)
         qspi.Init(qspi_config);
 
-    if(memory == System::MemoryRegion::INTERNAL_FLASH)
+    if(boot_version != System::BootInfo::Version::LT_v6_0
+       || (boot_version == System::BootInfo::Version::LT_v6_0
+           && memory == System::MemoryRegion::INTERNAL_FLASH))
     {
         led.Init(led.GetConfig());
         testpoint.Init(testpoint.GetConfig());

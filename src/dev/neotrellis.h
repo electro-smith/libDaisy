@@ -430,8 +430,8 @@ class NeoTrellis
 
     /** activate or deactivate a key and edge on the keypad module
         \param      key the key number to activate
-        \param		edge the edge to trigger on
-        \param		enable passing true will enable the passed event, passing false will disable it.
+        \param        edge the edge to trigger on
+        \param        enable passing true will enable the passed event, passing false will disable it.
     */
     void SetKeypadEvent(uint8_t key, uint8_t edge, bool enable)
     {
