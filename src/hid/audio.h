@@ -30,7 +30,8 @@ class AudioHandle
         size_t blocksize = 48;
 
         /**< Sample rate of audio */
-        SaiHandle::Config::SampleRate samplerate = SaiHandle::Config::SampleRate::SAI_48KHZ;
+        SaiHandle::Config::SampleRate samplerate
+            = SaiHandle::Config::SampleRate::SAI_48KHZ;
 
         /** factor for adjustment before and after callback for hardware that may have extra headroom */
         float postgain = 1.f;
