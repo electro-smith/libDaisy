@@ -29,7 +29,7 @@ var searchData=
   ['boot_5finfo_26',['boot_info',['../namespacedaisy.html#aaf45d932af979bd96009924dff6ae8f1',1,'daisy']]],
   ['brightness_27',['brightness',['../classdaisy_1_1_neo_pixel.html#a2a07973ed7af8eff8ee9031d6daeae14',1,'daisy::NeoPixel']]],
   ['buff_5fstate_28',['buff_state',['../structdaisy_1_1_dac_handle_1_1_config.html#a75421caa8aebd5413f89654a58e39d31',1,'daisy::DacHandle::Config']]],
-  ['buffer_5f_29',['buffer_',['../classdaisy_1_1_fixed_cap_str_base.html#a60eb2c784956d413f50b0f468879d49f',1,'daisy::FixedCapStrBase']]],
+  ['buffer_5f_29',['buffer_',['../classdaisy_1_1_s_s_d130x_driver.html#af4d2d593d4667747b0df6f698c1048d5',1,'daisy::SSD130xDriver::buffer_'],['../classdaisy_1_1_fixed_cap_str_base.html#a60eb2c784956d413f50b0f468879d49f',1,'daisy::FixedCapStrBase::buffer_']]],
   ['button1_30',['button1',['../classdaisy_1_1_daisy_pod.html#a9e2edc159de61e03b99fa5cf0d91f79e',1,'daisy::DaisyPod']]],
   ['button2_31',['button2',['../classdaisy_1_1_daisy_pod.html#ac4a6df2ec7c2675f769d231e036231b9',1,'daisy::DaisyPod']]],
   ['buttons_32',['buttons',['../classdaisy_1_1_daisy_pod.html#adc40296adf43258c9ac99bcf45a3554e',1,'daisy::DaisyPod']]],

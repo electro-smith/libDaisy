@@ -88,7 +88,7 @@ var searchData=
   ['bsp_5fsd_5fwriteblocks_5fdma_85',['BSP_SD_WriteBlocks_DMA',['../group__utility.html#ga2f57e8a4a23c9ea770b9f9da5eab8e8f',1,'bsp_sd_diskio.h']]],
   ['bsp_5fsd_5fwritecpltcallback_86',['BSP_SD_WriteCpltCallback',['../group__utility.html#gafc4f1ecdf361e0c0808803167f31d61b',1,'bsp_sd_diskio.h']]],
   ['buff_5fstate_87',['buff_state',['../structdaisy_1_1_dac_handle_1_1_config.html#a75421caa8aebd5413f89654a58e39d31',1,'daisy::DacHandle::Config']]],
-  ['buffer_5f_88',['buffer_',['../classdaisy_1_1_fixed_cap_str_base.html#a60eb2c784956d413f50b0f468879d49f',1,'daisy::FixedCapStrBase']]],
+  ['buffer_5f_88',['buffer_',['../classdaisy_1_1_s_s_d130x_driver.html#af4d2d593d4667747b0df6f698c1048d5',1,'daisy::SSD130xDriver::buffer_'],['../classdaisy_1_1_fixed_cap_str_base.html#a60eb2c784956d413f50b0f468879d49f',1,'daisy::FixedCapStrBase::buffer_']]],
   ['bufferstate_89',['BufferState',['../classdaisy_1_1_dac_handle.html#a30248a4615012854c7271b510ba7803c',1,'daisy::DacHandle::BufferState'],['../classdaisy_1_1_wav_writer.html#a17e4799ade3a78bfb8cab25ac90f04eb',1,'daisy::WavWriter::BufferState']]],
   ['buswidth_90',['BusWidth',['../classdaisy_1_1_sdmmc_handler.html#a146e7b69e3d0c1a0c0fae316040d799b',1,'daisy::SdmmcHandler']]],
   ['busy_91',['BUSY',['../classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113a802706a9238e2928077f97736854bad4',1,'daisy::USBHostHandle']]],

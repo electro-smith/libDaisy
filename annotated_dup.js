@@ -107,6 +107,7 @@ var annotated_dup =
       [ "SaiHandle", "classdaisy_1_1_sai_handle.html", "classdaisy_1_1_sai_handle" ],
       [ "ScopedIrqBlocker", "classdaisy_1_1_scoped_irq_blocker.html", "classdaisy_1_1_scoped_irq_blocker" ],
       [ "SdmmcHandler", "classdaisy_1_1_sdmmc_handler.html", "classdaisy_1_1_sdmmc_handler" ],
+      [ "SH1106Driver", "classdaisy_1_1_s_h1106_driver.html", "classdaisy_1_1_s_h1106_driver" ],
       [ "ShiftRegister4021", "classdaisy_1_1_shift_register4021.html", "classdaisy_1_1_shift_register4021" ],
       [ "SongPositionPointerEvent", "structdaisy_1_1_song_position_pointer_event.html", "structdaisy_1_1_song_position_pointer_event" ],
       [ "SongSelectEvent", "structdaisy_1_1_song_select_event.html", "structdaisy_1_1_song_select_event" ],

@@ -190,7 +190,9 @@ var hierarchy =
     [ "daisy::SpiHandle", "classdaisy_1_1_spi_handle.html", null ],
     [ "daisy::SSD130x4WireSoftSpiTransport", "classdaisy_1_1_s_s_d130x4_wire_soft_spi_transport.html", null ],
     [ "daisy::SSD130x4WireSpiTransport", "classdaisy_1_1_s_s_d130x4_wire_spi_transport.html", null ],
-    [ "daisy::SSD130xDriver< width, height, Transport >", "classdaisy_1_1_s_s_d130x_driver.html", null ],
+    [ "daisy::SSD130xDriver< width, height, Transport >", "classdaisy_1_1_s_s_d130x_driver.html", [
+      [ "daisy::SH1106Driver< width, height, Transport >", "classdaisy_1_1_s_h1106_driver.html", null ]
+    ] ],
     [ "daisy::SSD130xI2CTransport", "classdaisy_1_1_s_s_d130x_i2_c_transport.html", null ],
     [ "daisy::StackBase< T >", "classdaisy_1_1_stack_base.html", [
       [ "daisy::Stack< daisy::UiPage *, kMaxNumPages >", "classdaisy_1_1_stack.html", null ],

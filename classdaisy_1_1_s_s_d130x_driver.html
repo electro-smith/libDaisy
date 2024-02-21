@@ -103,6 +103,7 @@ $(function(){initNavTree('classdaisy_1_1_s_s_d130x_driver.html',''); initResizab
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classdaisy_1_1_s_s_d130x_driver-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">daisy::SSD130xDriver&lt; width, height, Transport &gt; Class Template Reference</div></div>
 </div><!--header-->
@@ -112,6 +113,15 @@ $(function(){initNavTree('classdaisy_1_1_s_s_d130x_driver.html',''); initResizab
 class daisy::SSD130xDriver&lt; width, height, Transport &gt;</div><p>A driver implementation for the SSD1306/SSD1309 </p>
 </div>
 <p><code>#include &lt;<a class="el" href="oled__ssd130x_8h_source.html">oled_ssd130x.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for daisy::SSD130xDriver&lt; width, height, Transport &gt;:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="classdaisy_1_1_s_s_d130x_driver.png" usemap="#daisy::SSD130xDriver_3C_20width_2C_20height_2C_20Transport_20_3E_map" alt=""/>
+  <map id="daisy::SSD130xDriver_3C_20width_2C_20height_2C_20Transport_20_3E_map" name="daisy::SSD130xDriver_3C_20width_2C_20height_2C_20Transport_20_3E_map">
+<area href="classdaisy_1_1_s_h1106_driver.html" alt="daisy::SH1106Driver&lt; width, height, Transport &gt;" shape="rect" coords="0,56,295,80"/>
+  </map>
+</div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -132,6 +142,13 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a1abfa4aa65a905e9b1d97669bde5057b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a016333b71cda3956f8a47680b7ef6bf7" id="r_a016333b71cda3956f8a47680b7ef6bf7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a016333b71cda3956f8a47680b7ef6bf7">Update</a> ()</td></tr>
 <tr class="separator:a016333b71cda3956f8a47680b7ef6bf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a8e26388fbcd2a7aa46e7fd829c682b0e" id="r_a8e26388fbcd2a7aa46e7fd829c682b0e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">Transport</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a></td></tr>
+<tr class="separator:a8e26388fbcd2a7aa46e7fd829c682b0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4d2d593d4667747b0df6f698c1048d5" id="r_af4d2d593d4667747b0df6f698c1048d5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">uint8_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4d2d593d4667747b0df6f698c1048d5">buffer_</a> [width *<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">height</a>/8]</td></tr>
+<tr class="separator:af4d2d593d4667747b0df6f698c1048d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="aaf41184adec775e3b8340a1d6c2bf3e5" name="aaf41184adec775e3b8340a1d6c2bf3e5"></a>
@@ -300,6 +317,55 @@ template&lt;<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">size_t</
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="af4d2d593d4667747b0df6f698c1048d5" name="af4d2d593d4667747b0df6f698c1048d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4d2d593d4667747b0df6f698c1048d5">&#9670;&#160;</a></span>buffer_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">size_t</a> width, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">size_t</a> height, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">typename</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">Transport</a> &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">uint8_t</a> <a class="el" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver</a>&lt; width, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">height</a>, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">Transport</a> &gt;::buffer_[width *<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">height</a>/8]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8e26388fbcd2a7aa46e7fd829c682b0e" name="a8e26388fbcd2a7aa46e7fd829c682b0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e26388fbcd2a7aa46e7fd829c682b0e">&#9670;&#160;</a></span>transport_</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">size_t</a> width, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">size_t</a> height, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">typename</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">Transport</a> &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">Transport</a> <a class="el" href="classdaisy_1_1_s_s_d130x_driver.html">daisy::SSD130xDriver</a>&lt; width, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">height</a>, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">Transport</a> &gt;::transport_</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

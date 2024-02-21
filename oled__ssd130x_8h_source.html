@@ -395,98 +395,98 @@ $(function(){initNavTree('oled__ssd130x_8h_source.html',''); initResizable(); })
 <div class="foldopen" id="foldopen00253" data-start="{" data-end="}">
 <div class="line"><a id="l00253" name="l00253"></a><span class="lineno"><a class="line" href="classdaisy_1_1_s_s_d130x_driver.html#a47cb4fe280876881fc1f2eb7e3ae8809">  253</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_s_s_d130x_driver.html#a47cb4fe280876881fc1f2eb7e3ae8809">Init</a>(<a class="code hl_struct" href="structdaisy_1_1_s_s_d130x_driver_1_1_config.html">Config</a> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">config</a>)</div>
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    {</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        transport_.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">config</a>.transport_config);</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">config</a>.transport_config);</div>
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> </div>
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        <span class="comment">// Init routine...</span></div>
 <div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
 <div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        <span class="comment">// Display Off</span></div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        transport_.SendCommand(0xaE);</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xaE);</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        <span class="comment">// Dimension dependent commands...</span></div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        <span class="keywordflow">switch</span>(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">height</a>)</div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        {</div>
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>            <span class="keywordflow">case</span> 16:</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                <span class="comment">// Display Clock Divide Ratio</span></div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                transport_.SendCommand(0xD5);</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                transport_.SendCommand(0x60);</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xD5);</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x60);</div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                <span class="comment">// Multiplex Ratio</span></div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                transport_.SendCommand(0xA8);</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                transport_.SendCommand(0x0F);</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xA8);</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x0F);</div>
 <div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>                <span class="comment">// COM Pins</span></div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                transport_.SendCommand(0xDA);</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                transport_.SendCommand(0x02);</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xDA);</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x02);</div>
 <div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>            <span class="keywordflow">case</span> 32:</div>
 <div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                <span class="comment">// Display Clock Divide Ratio</span></div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                transport_.SendCommand(0xD5);</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                transport_.SendCommand(0x80);</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xD5);</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x80);</div>
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>                <span class="comment">// Multiplex Ratio</span></div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                transport_.SendCommand(0xA8);</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>                transport_.SendCommand(0x1F);</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xA8);</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x1F);</div>
 <div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>                <span class="comment">// COM Pins</span></div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                transport_.SendCommand(0xDA);</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xDA);</div>
 <div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                <span class="keywordflow">if</span>(width == 64)</div>
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                {</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                    transport_.SendCommand(0x12);</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                    <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x12);</div>
 <div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>                }</div>
 <div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>                <span class="keywordflow">else</span></div>
 <div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>                {</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                    transport_.SendCommand(0x02);</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                    <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x02);</div>
 <div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                }</div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>                <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>            <span class="keywordflow">case</span> 48:</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>                <span class="comment">// Display Clock Divide Ratio</span></div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                transport_.SendCommand(0xD5);</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                transport_.SendCommand(0x80);</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xD5);</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x80);</div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>                <span class="comment">// Multiplex Ratio</span></div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                transport_.SendCommand(0xA8);</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                transport_.SendCommand(0x2F);</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xA8);</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x2F);</div>
 <div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>                <span class="comment">// COM Pins</span></div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>                transport_.SendCommand(0xDA);</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                transport_.SendCommand(0x12);</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xDA);</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x12);</div>
 <div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>            <span class="keywordflow">default</span>: <span class="comment">// 128</span></div>
 <div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>                <span class="comment">// Display Clock Divide Ratio</span></div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>                transport_.SendCommand(0xD5);</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>                transport_.SendCommand(0x80);</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xD5);</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x80);</div>
 <div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>                <span class="comment">// Multiplex Ratio</span></div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>                transport_.SendCommand(0xA8);</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                transport_.SendCommand(0x3F);</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xA8);</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x3F);</div>
 <div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>                <span class="comment">// COM Pins</span></div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>                transport_.SendCommand(0xDA);</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>                transport_.SendCommand(0x12);</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xDA);</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>                <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x12);</div>
 <div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>                <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        }</div>
 <div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span> </div>
 <div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        <span class="comment">// Display Offset</span></div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        transport_.SendCommand(0xD3);</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>        transport_.SendCommand(0x00);</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xD3);</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x00);</div>
 <div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        <span class="comment">// Start Line Address</span></div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        transport_.SendCommand(0x40);</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x40);</div>
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        <span class="comment">// Normal Display</span></div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        transport_.SendCommand(0xA6);</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xA6);</div>
 <div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>        <span class="comment">// All On Resume</span></div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>        transport_.SendCommand(0xA4);</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xA4);</div>
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>        <span class="comment">// Charge Pump</span></div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>        transport_.SendCommand(0x8D);</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>        transport_.SendCommand(0x14);</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x8D);</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x14);</div>
 <div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>        <span class="comment">// Set Segment Remap</span></div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>        transport_.SendCommand(0xA1);</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xA1);</div>
 <div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>        <span class="comment">// COM Output Scan Direction</span></div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>        transport_.SendCommand(0xC8);</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xC8);</div>
 <div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>        <span class="comment">// Contrast Control</span></div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>        transport_.SendCommand(0x81);</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>        transport_.SendCommand(0x8F);</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x81);</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x8F);</div>
 <div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>        <span class="comment">// Pre Charge</span></div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>        transport_.SendCommand(0xD9);</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>        transport_.SendCommand(0x25);</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xD9);</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x25);</div>
 <div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>        <span class="comment">// VCOM Detect</span></div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>        transport_.SendCommand(0xDB);</div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>        transport_.SendCommand(0x34);</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xDB);</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x34);</div>
 <div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> </div>
 <div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span> </div>
 <div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>        <span class="comment">// Display On</span></div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>        transport_.SendCommand(0xAF); <span class="comment">//--turn on oled panel</span></div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>        <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xAF); <span class="comment">//--turn on oled panel</span></div>
 <div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    };</div>
 </div>
 <div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span> </div>
@@ -499,18 +499,18 @@ $(function(){initNavTree('oled__ssd130x_8h_source.html',''); initResizable(); })
 <div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>        <span class="keywordflow">if</span>(x &gt;= width || y &gt;= <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">height</a>)</div>
 <div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>            <span class="keywordflow">return</span>;</div>
 <div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>        <span class="keywordflow">if</span>(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">on</a>)</div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>            buffer_[x + (y / 8) * width] |= (1 &lt;&lt; (y % 8));</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>            <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#af4d2d593d4667747b0df6f698c1048d5">buffer_</a>[x + (y / 8) * width] |= (1 &lt;&lt; (y % 8));</div>
 <div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>        <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>            buffer_[x + (y / 8) * width] &amp;= ~(1 &lt;&lt; (y % 8));</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>            <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#af4d2d593d4667747b0df6f698c1048d5">buffer_</a>[x + (y / 8) * width] &amp;= ~(1 &lt;&lt; (y % 8));</div>
 <div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>    }</div>
 </div>
 <div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span> </div>
 <div class="foldopen" id="foldopen00362" data-start="{" data-end="}">
 <div class="line"><a id="l00362" name="l00362"></a><span class="lineno"><a class="line" href="classdaisy_1_1_s_s_d130x_driver.html#a1abfa4aa65a905e9b1d97669bde5057b">  362</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_s_s_d130x_driver.html#a1abfa4aa65a905e9b1d97669bde5057b">Fill</a>(<span class="keywordtype">bool</span> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">on</a>)</div>
 <div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>    {</div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>        <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a> = 0; <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a> &lt; <span class="keyword">sizeof</span>(buffer_); <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a>++)</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>        <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a> = 0; <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a> &lt; <span class="keyword">sizeof</span>(<a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#af4d2d593d4667747b0df6f698c1048d5">buffer_</a>); <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a>++)</div>
 <div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>        {</div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>            buffer_[<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a>] = <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">on</a> ? 0xff : 0x00;</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>            <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#af4d2d593d4667747b0df6f698c1048d5">buffer_</a>[<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a>] = <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">on</a> ? 0xff : 0x00;</div>
 <div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>        }</div>
 <div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    };</div>
 </div>
@@ -528,17 +528,17 @@ $(function(){initNavTree('oled__ssd130x_8h_source.html',''); initResizable(); })
 <div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        }</div>
 <div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        <span class="keywordflow">for</span>(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a> = 0; <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a> &lt; (<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">height</a> / 8); <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a>++)</div>
 <div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        {</div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>            transport_.SendCommand(0xB0 + <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a>);</div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>            transport_.SendCommand(0x00);</div>
-<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>            transport_.SendCommand(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">high_column_addr</a>);</div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>            transport_.SendData(&amp;buffer_[width * <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a>], width);</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>            <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0xB0 + <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a>);</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>            <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(0x00);</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>            <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendCommand(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">high_column_addr</a>);</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>            <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>.SendData(&amp;<a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#af4d2d593d4667747b0df6f698c1048d5">buffer_</a>[width * <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">i</a>], width);</div>
 <div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>        }</div>
 <div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>    };</div>
 </div>
 <div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span> </div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>  <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>    <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">Transport</a> transport_;</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>    <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">uint8_t</a>   buffer_[width * <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">height</a> / 8];</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>  <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno"><a class="line" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">  393</a></span>    <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">Transport</a> <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">transport_</a>;</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno"><a class="line" href="classdaisy_1_1_s_s_d130x_driver.html#af4d2d593d4667747b0df6f698c1048d5">  394</a></span>    <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">uint8_t</a>   <a class="code hl_variable" href="classdaisy_1_1_s_s_d130x_driver.html#af4d2d593d4667747b0df6f698c1048d5">buffer_</a>[width * <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">height</a> / 8];</div>
 <div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>};</div>
 </div>
 <div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span> </div>
@@ -595,7 +595,9 @@ $(function(){initNavTree('oled__ssd130x_8h_source.html',''); initResizable(); })
 <div class="ttc" id="aclassdaisy_1_1_s_s_d130x_driver_html_a1abfa4aa65a905e9b1d97669bde5057b"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_driver.html#a1abfa4aa65a905e9b1d97669bde5057b">daisy::SSD130xDriver::Fill</a></div><div class="ttdeci">void Fill(bool on)</div><div class="ttdef"><b>Definition</b> oled_ssd130x.h:362</div></div>
 <div class="ttc" id="aclassdaisy_1_1_s_s_d130x_driver_html_a295ff91cde15653954ad4b329766f93e"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_driver.html#a295ff91cde15653954ad4b329766f93e">daisy::SSD130xDriver::Width</a></div><div class="ttdeci">size_t Width() const</div><div class="ttdef"><b>Definition</b> oled_ssd130x.h:349</div></div>
 <div class="ttc" id="aclassdaisy_1_1_s_s_d130x_driver_html_a47cb4fe280876881fc1f2eb7e3ae8809"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_driver.html#a47cb4fe280876881fc1f2eb7e3ae8809">daisy::SSD130xDriver::Init</a></div><div class="ttdeci">void Init(Config config)</div><div class="ttdef"><b>Definition</b> oled_ssd130x.h:253</div></div>
+<div class="ttc" id="aclassdaisy_1_1_s_s_d130x_driver_html_a8e26388fbcd2a7aa46e7fd829c682b0e"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_driver.html#a8e26388fbcd2a7aa46e7fd829c682b0e">daisy::SSD130xDriver::transport_</a></div><div class="ttdeci">Transport transport_</div><div class="ttdef"><b>Definition</b> oled_ssd130x.h:393</div></div>
 <div class="ttc" id="aclassdaisy_1_1_s_s_d130x_driver_html_aaf41184adec775e3b8340a1d6c2bf3e5"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_driver.html#aaf41184adec775e3b8340a1d6c2bf3e5">daisy::SSD130xDriver::DrawPixel</a></div><div class="ttdeci">void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on)</div><div class="ttdef"><b>Definition</b> oled_ssd130x.h:352</div></div>
+<div class="ttc" id="aclassdaisy_1_1_s_s_d130x_driver_html_af4d2d593d4667747b0df6f698c1048d5"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_driver.html#af4d2d593d4667747b0df6f698c1048d5">daisy::SSD130xDriver::buffer_</a></div><div class="ttdeci">uint8_t buffer_[width *height/8]</div><div class="ttdef"><b>Definition</b> oled_ssd130x.h:394</div></div>
 <div class="ttc" id="aclassdaisy_1_1_s_s_d130x_i2_c_transport_html"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_i2_c_transport.html">daisy::SSD130xI2CTransport</a></div><div class="ttdef"><b>Definition</b> oled_ssd130x.h:16</div></div>
 <div class="ttc" id="aclassdaisy_1_1_s_s_d130x_i2_c_transport_html_aa9b9a2f7fae4b790ac84a53ba7aefd13"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_i2_c_transport.html#aa9b9a2f7fae4b790ac84a53ba7aefd13">daisy::SSD130xI2CTransport::Init</a></div><div class="ttdeci">void Init(const Config &amp;config)</div><div class="ttdef"><b>Definition</b> oled_ssd130x.h:37</div></div>
 <div class="ttc" id="aclassdaisy_1_1_s_s_d130x_i2_c_transport_html_ab2c26b2726b2c2e6e1bff68e0eb5f1cb"><div class="ttname"><a href="classdaisy_1_1_s_s_d130x_i2_c_transport.html#ab2c26b2726b2c2e6e1bff68e0eb5f1cb">daisy::SSD130xI2CTransport::SendData</a></div><div class="ttdeci">void SendData(uint8_t *buff, size_t size)</div><div class="ttdef"><b>Definition</b> oled_ssd130x.h:48</div></div>
