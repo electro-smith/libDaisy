@@ -40,8 +40,9 @@ target_link_options(${FIRMWARE_NAME} PUBLIC
 )
 
 add_custom_command(TARGET ${FIRMWARE_NAME} POST_BUILD
-    COMMAND ${CMAKE_OBJCOPY} -O ihex -S ${FIRMWARE_NAME}.elf ${FIRMWARE_NAME}.hex
+    COMMAND ${CMAKE_OBJCOPY} -O ihex -S $<TARGET_FILE:${FIRMWARE_NAME}> $<TARGET_FILE_DIR:${FIRMWARE_NAME}>/${FIRMWARE_NAME}.hex
     BYPRODUCTS ${FIRMWARE_NAME}.hex
+    DEPENDS ${FIRMWARE_NAME}
     COMMENT "Generating HEX image"
     VERBATIM
 )
@@ -50,9 +51,10 @@ option(DAISY_GENERATE_BIN "Sets whether or not to generate a raw binary image us
 
 if(DAISY_GENERATE_BIN)
     add_custom_command(TARGET ${FIRMWARE_NAME} POST_BUILD
-        COMMAND ${CMAKE_OBJCOPY} -O binary -S ${FIRMWARE_NAME}.elf ${FIRMWARE_NAME}.bin
+        COMMAND ${CMAKE_OBJCOPY} -O binary -S $<TARGET_FILE:${FIRMWARE_NAME}> $<TARGET_FILE_DIR:${FIRMWARE_NAME}>/${FIRMWARE_NAME}.bin
         BYPRODUCTS ${FIRMWARE_NAME}.bin
+        DEPENDS ${FIRMWARE_NAME}
         COMMENT "Generating binary image"
         VERBATIM
     )
-endif(DAISY_GENERATE_BIN)
+endif()
