@@ -20,25 +20,27 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: recursive
 
-    - name: Build
-      run: |
-        cd tests
-        make release
+    - name: Setup CMake
+      uses: lukka/get-cmake@latest
+
+    - name: Configure CMake
+      run: cmake -B build
+
+    - name: Build Tests
+      run: cmake --build build
     
     - name: Run Tests
-      run: |
-        cd tests/build/bin
-        ./libDaisy_gtest --gtest_output=xml:gtestresults.xml
+      run: ctest --test-dir build --output-junit gtestresults.xml
     
     - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v1
+      uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
       with:
-        files: tests/build/bin/**/*.xml
+        files: build/**/*.xml
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
 

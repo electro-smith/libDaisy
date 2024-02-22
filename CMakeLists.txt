@@ -1,107 +1,143 @@
 cmake_minimum_required(VERSION 3.20)
 cmake_policy(SET CMP0048 NEW)
-project (libdaisy VERSION 1.0.0)
+cmake_policy(SET CMP0135 NEW)
+
+if (DAISY_CROSSCOMPILING AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    include(cmake/toolchains/autodetect.cmake)
+endif()
+
+project(libdaisy VERSION 7.0.1)
+
+include(FetchContent)
+set(FETCHCONTENT_QUIET FALSE)
+
+option(DAISY_BUILD_EXAMPLES "Build all examples" OFF)
 
 set(TARGET daisy)
 
 cmake_path(SET MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
-list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
-add_subdirectory(Drivers)
-add_subdirectory(Middlewares/ST)
-add_subdirectory(Middlewares/Third_Party/FatFs)
+if(CMAKE_CROSSCOMPILING)
+    add_subdirectory(Drivers)
+    add_subdirectory(Middlewares/ST)
+    add_subdirectory(Middlewares/Third_Party/FatFs)
 
-add_library(${TARGET} STATIC
-    ${MODULE_DIR}/sys/dma.c
-    ${MODULE_DIR}/hid/audio.cpp
-    ${MODULE_DIR}/sys/fatfs.cpp
-    ${MODULE_DIR}/per/gpio.cpp
-    ${MODULE_DIR}/per/rng.cpp
-    ${MODULE_DIR}/per/sai.cpp
-    ${MODULE_DIR}/per/sdmmc.cpp
-    ${MODULE_DIR}/util/bsp_sd_diskio.c
-    ${MODULE_DIR}/util/hal_map.c
-    ${MODULE_DIR}/util/oled_fonts.c
-    ${MODULE_DIR}/util/sd_diskio.c
-    ${MODULE_DIR}/util/usbh_diskio.c
-    ${MODULE_DIR}/util/unique_id.c
-    ${MODULE_DIR}/sys/system_stm32h7xx.c
-    ${MODULE_DIR}/usbd/usbd_cdc_if.c
-    ${MODULE_DIR}/usbd/usbd_desc.c
-    ${MODULE_DIR}/usbd/usbd_conf.c
-    ${MODULE_DIR}/usbh/usbh_conf.c
-    ${MODULE_DIR}/daisy_seed.cpp
-    ${MODULE_DIR}/daisy_pod.cpp
-    ${MODULE_DIR}/daisy_patch.cpp
-    ${MODULE_DIR}/daisy_petal.cpp
-    ${MODULE_DIR}/daisy_field.cpp
-    ${MODULE_DIR}/daisy_versio.cpp
-    ${MODULE_DIR}/daisy_legio.cpp
-    ${MODULE_DIR}/daisy_patch_sm.cpp
-    ${MODULE_DIR}/sys/system.cpp
-    ${MODULE_DIR}/dev/sr_595.cpp
-    ${MODULE_DIR}/dev/codec_ak4556.cpp
-    ${MODULE_DIR}/dev/codec_pcm3060.cpp
-    ${MODULE_DIR}/dev/codec_wm8731.cpp
-    ${MODULE_DIR}/dev/lcd_hd44780.cpp
-    ${MODULE_DIR}/hid/ctrl.cpp
-    ${MODULE_DIR}/hid/encoder.cpp
-    ${MODULE_DIR}/hid/gatein.cpp
-    ${MODULE_DIR}/hid/led.cpp
-    ${MODULE_DIR}/hid/midi.cpp
-    ${MODULE_DIR}/hid/midi_parser.cpp
-    ${MODULE_DIR}/hid/parameter.cpp
-    ${MODULE_DIR}/hid/rgb_led.cpp
-    ${MODULE_DIR}/hid/switch.cpp
-    ${MODULE_DIR}/hid/usb.cpp
-    ${MODULE_DIR}/hid/usb_host.cpp
-    ${MODULE_DIR}/hid/usb_midi.cpp
-    ${MODULE_DIR}/hid/wavplayer.cpp
-    ${MODULE_DIR}/hid/logger.cpp
-    ${MODULE_DIR}/per/adc.cpp
-    ${MODULE_DIR}/per/dac.cpp
-    ${MODULE_DIR}/per/i2c.cpp
-    ${MODULE_DIR}/per/qspi.cpp
-    ${MODULE_DIR}/dev/sdram.cpp
-    ${MODULE_DIR}/per/spi.cpp
-    ${MODULE_DIR}/per/spiMultislave.cpp
-    ${MODULE_DIR}/per/tim.cpp
-    ${MODULE_DIR}/per/uart.cpp
-    ${MODULE_DIR}/ui/AbstractMenu.cpp
-    ${MODULE_DIR}/ui/FullScreenItemMenu.cpp
-    ${MODULE_DIR}/ui/UI.cpp
-    ${MODULE_DIR}/util/color.cpp
-    ${MODULE_DIR}/util/WaveTableLoader.cpp
-    core/startup_stm32h750xx.c
-)
+    add_library(${TARGET} STATIC
+        ${MODULE_DIR}/daisy_field.cpp
+        ${MODULE_DIR}/daisy_legio.cpp
+        ${MODULE_DIR}/daisy_patch_sm.cpp
+        ${MODULE_DIR}/daisy_patch.cpp
+        ${MODULE_DIR}/daisy_petal.cpp
+        ${MODULE_DIR}/daisy_pod.cpp
+        ${MODULE_DIR}/daisy_seed.cpp
+        ${MODULE_DIR}/daisy_versio.cpp
+        ${MODULE_DIR}/dev/codec_ak4556.cpp
+        ${MODULE_DIR}/dev/codec_pcm3060.cpp
+        ${MODULE_DIR}/dev/codec_wm8731.cpp
+        ${MODULE_DIR}/dev/lcd_hd44780.cpp
+        ${MODULE_DIR}/dev/sdram.cpp
+        ${MODULE_DIR}/dev/sr_595.cpp
+        ${MODULE_DIR}/hid/audio.cpp
+        ${MODULE_DIR}/hid/ctrl.cpp
+        ${MODULE_DIR}/hid/encoder.cpp
+        ${MODULE_DIR}/hid/gatein.cpp
+        ${MODULE_DIR}/hid/led.cpp
+        ${MODULE_DIR}/hid/logger.cpp
+        ${MODULE_DIR}/hid/midi_parser.cpp        
+        ${MODULE_DIR}/hid/midi.cpp
+        ${MODULE_DIR}/hid/parameter.cpp
+        ${MODULE_DIR}/hid/rgb_led.cpp
+        ${MODULE_DIR}/hid/switch.cpp
+        ${MODULE_DIR}/hid/usb_host.cpp
+        ${MODULE_DIR}/hid/usb_midi.cpp
+        ${MODULE_DIR}/hid/usb.cpp
+        ${MODULE_DIR}/hid/wavplayer.cpp
+        ${MODULE_DIR}/per/adc.cpp
+        ${MODULE_DIR}/per/dac.cpp
+        ${MODULE_DIR}/per/gpio.cpp
+        ${MODULE_DIR}/per/i2c.cpp
+        ${MODULE_DIR}/per/qspi.cpp
+        ${MODULE_DIR}/per/rng.cpp
+        ${MODULE_DIR}/per/sai.cpp
+        ${MODULE_DIR}/per/sdmmc.cpp
+        ${MODULE_DIR}/per/spi.cpp
+        ${MODULE_DIR}/per/spiMultislave.cpp
+        ${MODULE_DIR}/per/tim.cpp
+        ${MODULE_DIR}/per/uart.cpp
+        ${MODULE_DIR}/sys/dma.c
+        ${MODULE_DIR}/sys/fatfs.cpp
+        ${MODULE_DIR}/sys/system_stm32h7xx.c
+        ${MODULE_DIR}/sys/system.cpp
+        ${MODULE_DIR}/ui/AbstractMenu.cpp
+        ${MODULE_DIR}/ui/FullScreenItemMenu.cpp
+        ${MODULE_DIR}/ui/UI.cpp
+        ${MODULE_DIR}/usbd/usbd_cdc_if.c
+        ${MODULE_DIR}/usbd/usbd_conf.c
+        ${MODULE_DIR}/usbd/usbd_desc.c
+        ${MODULE_DIR}/usbh/usbh_conf.c
+        ${MODULE_DIR}/util/bsp_sd_diskio.c
+        ${MODULE_DIR}/util/color.cpp
+        ${MODULE_DIR}/util/hal_map.c
+        ${MODULE_DIR}/util/MappedValue.cpp
+        ${MODULE_DIR}/util/oled_fonts.c
+        ${MODULE_DIR}/util/sd_diskio.c
+        ${MODULE_DIR}/util/unique_id.c
+        ${MODULE_DIR}/util/usbh_diskio.c
+        ${MODULE_DIR}/util/WaveTableLoader.cpp
+        core/startup_stm32h750xx.c
+    )
 
-target_include_directories(${TARGET} PUBLIC
-    ${MODULE_DIR}
-)
+    target_include_directories(${TARGET} PUBLIC
+        ${MODULE_DIR}
+    )
 
-target_link_libraries(${TARGET} PUBLIC
-    CMSIS_CORE
-    CMSIS_DEVICE_H7
-    STM32H7XX_HAL_DRIVER
-    STM32_USB_DEVICE_LIBRARY
-    STM32_USB_HOST_LIBRARY
-    FatFs
-)
+    target_link_libraries(${TARGET} PUBLIC
+        CMSIS_CORE
+        CMSIS_DEVICE_H7
+        STM32H7XX_HAL_DRIVER
+        STM32_USB_DEVICE_LIBRARY
+        STM32_USB_HOST_LIBRARY
+        FatFs
+    )
 
-target_compile_options(${TARGET} PRIVATE
-    -Wall 
-    
-    # At same point this generator should be removed, but the clang build isn't there yet
-    $<$<CXX_COMPILER_ID:GNU>:-Werror>
-    
-    # These are explicitly for startup_stm32h750xx.c
-    $<$<CXX_COMPILER_ID:GNU>:-Wno-attributes>
-    $<$<CXX_COMPILER_ID:GNU>:-Wno-missing-attributes>
-)
+    target_compile_options(${TARGET} PRIVATE
+        -Wall
 
-set_target_properties(${TARGET} PROPERTIES
-  CXX_STANDARD 14
-  CXX_STANDARD_REQUIRED
-  C_STANDARD 11
-  C_STANDARD_REQUIRED
-)
+        # At same point this generator should be removed, but the clang build isn't there yet
+        $<$<CXX_COMPILER_ID:GNU>:-Werror>
+
+        # These are explicitly for startup_stm32h750xx.c
+        $<$<CXX_COMPILER_ID:GNU>:-Wno-attributes>
+        $<$<CXX_COMPILER_ID:GNU>:-Wno-missing-attributes>
+    )
+
+    set_target_properties(${TARGET} PROPERTIES
+        CXX_STANDARD 14
+        CXX_STANDARD_REQUIRED
+        C_STANDARD 11
+        C_STANDARD_REQUIRED
+    )
+
+    # Only build the examples when told to
+    if(DAISY_BUILD_EXAMPLES)
+        add_subdirectory(examples)
+    endif(DAISY_BUILD_EXAMPLES)
+
+else()
+    # if we're not cross-compiling, we can do unit tests
+    add_library(${TARGET} STATIC
+        ${MODULE_DIR}/hid/midi_parser.cpp
+        ${MODULE_DIR}/per/qspi.cpp
+        ${MODULE_DIR}/sys/system.cpp
+        ${MODULE_DIR}/ui/AbstractMenu.cpp
+        ${MODULE_DIR}/ui/UI.cpp
+        ${MODULE_DIR}/util/MappedValue.cpp
+        ${MODULE_DIR}/util/oled_fonts.c
+    )
+    target_include_directories(${TARGET} PUBLIC ${MODULE_DIR})
+    target_compile_definitions(${TARGET} PUBLIC UNIT_TEST)
+
+    enable_testing()
+    add_subdirectory(tests)
+    target_link_libraries(${TARGET} PUBLIC GTest::gtest_main)
+endif(CMAKE_CROSSCOMPILING)
