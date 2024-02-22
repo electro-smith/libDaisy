@@ -152,7 +152,7 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
     // Bitdepth / protocol (currently based on bitdepth..)
     // TODO probably split these up for better flexibility..
     // These are also currently fixed to be the same per block.
-    uint8_t  bd = SAI_PROTOCOL_DATASIZE_16BIT;
+    uint8_t  bd       = SAI_PROTOCOL_DATASIZE_16BIT;
     uint32_t protocol = SAI_I2S_STANDARD;
     switch(config.bit_depth)
     {
