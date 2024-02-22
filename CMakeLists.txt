@@ -2,8 +2,10 @@ cmake_minimum_required(VERSION 3.20)
 cmake_policy(SET CMP0048 NEW)
 cmake_policy(SET CMP0135 NEW)
 
-if (DAISY_CROSSCOMPILING AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-    include(cmake/toolchains/autodetect.cmake)
+set(CMAKE_CROSSCOMPILING TRUE CACHE BOOL "Set whether CMake is currently cross-compiling")
+
+if (CMAKE_CROSSCOMPILING AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    include(${CMAKE_CURRENT_LIST_DIR}/cmake/toolchains/autodetect.cmake)
 endif()
 
 project(libdaisy VERSION 7.0.1)

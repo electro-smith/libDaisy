@@ -69,7 +69,7 @@ jobs:
       uses: lukka/get-cmake@latest
 
     - name: Configure Library
-      run: cmake -B build -G Ninja -D DAISY_CROSSCOMPILING=YES
+      run: cmake -B build -G Ninja
 
     - name: Build Library
       run: cmake --build build
@@ -96,7 +96,7 @@ jobs:
           uses: lukka/get-cmake@latest
     
         - name: Configure Library
-          run: cmake -B build -G Ninja -D DAISY_CROSSCOMPILING=YES
+          run: cmake -B build -G Ninja
     
         - name: Build Library
           run: cmake --build build

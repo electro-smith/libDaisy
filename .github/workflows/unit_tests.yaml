@@ -28,7 +28,7 @@ jobs:
       uses: lukka/get-cmake@latest
 
     - name: Configure CMake
-      run: cmake -B build
+      run: cmake -B build -D CMAKE_CROSSCOMPILING=NO
 
     - name: Build Tests
       run: cmake --build build
