@@ -99,4 +99,4 @@ jobs:
           run: cmake -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D DAISY_BUILD_EXAMPLES=YES
     
         - name: Build All
-          run: cmake --build build
+          run: cmake --build build --verbose
