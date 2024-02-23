@@ -69,7 +69,7 @@ jobs:
       uses: lukka/get-cmake@latest
 
     - name: Configure Library
-      run: cmake -B build -G Ninja
+      run: cmake -B build -G Ninja -D DAISY_BUILD_EXAMPLES=YES
 
     - name: Build Library
       run: cmake --build build
@@ -95,8 +95,8 @@ jobs:
         - name: Setup CMake
           uses: lukka/get-cmake@latest
     
-        - name: Configure Library
-          run: cmake -B build -G Ninja
+        - name: Configure
+          run: cmake -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D DAISY_BUILD_EXAMPLES=YES
     
-        - name: Build Library
+        - name: Build All
           run: cmake --build build
