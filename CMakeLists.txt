@@ -2,17 +2,29 @@ cmake_minimum_required(VERSION 3.20)
 cmake_policy(SET CMP0048 NEW)
 cmake_policy(SET CMP0135 NEW)
 
+# Default to cross-compilation since this is an embedded platform framework
 set(CMAKE_CROSSCOMPILING TRUE CACHE BOOL "Set whether CMake is currently cross-compiling")
 
+# Set up our toolchain for cross-compilation if that's happening
 if (CMAKE_CROSSCOMPILING AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     include(${CMAKE_CURRENT_LIST_DIR}/cmake/toolchains/autodetect.cmake)
 endif()
 
-project(libdaisy VERSION 7.0.1)
+# Declare our project 
+project(libDaisy VERSION 7.0.1)
 
+# Append our /cmake to the module path
+# This allows us to use DaisyProject as `include(DaisyProject)`
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+if (NOT PROJECT_IS_TOP_LEVEL)
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} PARENT_SCOPE)
+endif()
+
+# Setup FetchContent
 include(FetchContent)
 set(FETCHCONTENT_QUIET FALSE)
 
+# Whether or not to build examples
 option(DAISY_BUILD_EXAMPLES "Build all examples" OFF)
 
 set(TARGET daisy)

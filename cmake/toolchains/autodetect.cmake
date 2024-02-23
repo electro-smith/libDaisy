@@ -1,7 +1,5 @@
 # Try to find/detect a valid embedded toolchain
 
-list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_LIST_DIR}")
-
 if(NOT DEFINED CMAKE_C_COMPILER)
   message(NOTICE "No compiler specified. Falling back to searching PATH...")
   find_program(CMAKE_C_COMPILER "arm-none-eabi-gcc")
