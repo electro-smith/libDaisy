@@ -5,11 +5,6 @@
 #include "util/ringbuffer.h"
 #include "util/scopedirqblocker.h"
 
-extern "C"
-{
-#include "util/hal_map.h"
-}
-
 using namespace daisy;
 
 #define UART_RX_BUFF_SIZE 256

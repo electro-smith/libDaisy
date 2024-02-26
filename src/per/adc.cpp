@@ -1,6 +1,5 @@
 #include <stm32h7xx_hal.h>
 #include "per/adc.h"
-#include "util/hal_map.h"
 
 using namespace daisy;
 

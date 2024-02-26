@@ -2,6 +2,7 @@
 #ifndef DSY_SAI_H
 #define DSY_SAI_H
 
+#include "util/hal_map.h"
 #include "daisy_core.h"
 
 namespace daisy

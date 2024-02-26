@@ -40,11 +40,4 @@ void Led::Update()
     if(pwm_ > 1.f)
         pwm_ -= 1.f;
     hw_pin_.Write(bright_ > pwm_ ? on_ : off_);
-
-    // Once we have a slower timer set up:
-    // Right now its too fast.
-
-    //    dsy_gpio_write(&hw_pin_,
-    //                   (dsy_tim_get_tick() & RESOLUTION_MAX) < pwm_thresh_ ? on_
-    //                                                                       : off_);
 }

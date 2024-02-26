@@ -1,15 +1,9 @@
 #include "per/spi.h"
 #include "util/scopedirqblocker.h"
 
-extern "C"
-{
-#include "util/hal_map.h"
-}
-
 // TODO
 // - fix up rest of lib so that we can add a spi_handle map to the hal map
 // - Add configuration for standard spi stuff.
-
 
 using namespace daisy;
 

@@ -1,7 +1,6 @@
 #include "per/i2c.h"
 #include "sys/system.h"
 #include "util/scopedirqblocker.h"
-#include "util/hal_map.h"
 
 namespace daisy
 {

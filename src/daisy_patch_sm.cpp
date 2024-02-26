@@ -331,7 +331,6 @@ namespace patch_sm
 
         /** Fixed-function Digital I/O */
         user_led.Init(PIN_USER_LED, GPIO::Mode::OUTPUT);
-        //gate_in_1.Init((dsy_gpio_pin *)&DaisyPatchSM::B10);
         gate_in_1.Init(B10);
         gate_in_2.Init(B9);
 

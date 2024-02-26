@@ -3,6 +3,7 @@
 #define DSY_SPI_H
 
 #include "daisy_core.h"
+#include "util/hal_map.h"
 
 /* TODO:
 - Add documentation

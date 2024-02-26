@@ -3,11 +3,6 @@
 #include "per/tim.h"
 #include "per/dac.h"
 
-extern "C"
-{
-#include "util/hal_map.h"
-}
-
 namespace daisy
 {
 /** Private Implementation class */

@@ -1,4 +1,5 @@
 #pragma once
+#include "util/hal_map.h"
 #include "daisy_core.h"
 
 namespace daisy
