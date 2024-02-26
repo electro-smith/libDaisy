@@ -9,9 +9,9 @@ constexpr GPIOPort SEED_TEST_POINT_PORT = PORTG;
 constexpr uint8_t  SEED_TEST_POINT_PIN  = 14;
 
 #ifndef SEED_REV2
-const dsy_gpio_pin seedgpio[33] = {
+const Pin seedgpio[33] = {
     // GPIO 1-8
-    //{DSY_GPIOA, 8}, // removed on Rev4
+    //{PORTA, 8}, // removed on Rev4
     Pin(PORTB, 12),
     Pin(PORTC, 11),
     Pin(PORTC, 10),
@@ -52,12 +52,10 @@ const dsy_gpio_pin seedgpio[33] = {
     Pin(PORTC, 3),
 };
 #else
-const dsy_gpio_port seed_ports[32] = {
-    DSY_GPIOA, DSY_GPIOB, DSY_GPIOC, DSY_GPIOC, DSY_GPIOC, DSY_GPIOC, DSY_GPIOD,
-    DSY_GPIOC, DSY_GPIOG, DSY_GPIOG, DSY_GPIOB, DSY_GPIOB, DSY_GPIOB, DSY_GPIOB,
-    DSY_GPIOB, DSY_GPIOB, DSY_GPIOC, DSY_GPIOA, DSY_GPIOA, DSY_GPIOB, DSY_GPIOA,
-    DSY_GPIOA, DSY_GPIOC, DSY_GPIOC, DSY_GPIOA, DSY_GPIOA, DSY_GPIOA, DSY_GPIOD,
-    DSY_GPIOG, DSY_GPIOA, DSY_GPIOB, DSY_GPIOB,
+const GPIOPort seed_ports[32] = {
+    PORTA, PORTB, PORTC, PORTC, PORTC, PORTC, PORTD, PORTC, PORTG, PORTG, PORTB,
+    PORTB, PORTB, PORTB, PORTB, PORTB, PORTC, PORTA, PORTA, PORTB, PORTA, PORTA,
+    PORTC, PORTC, PORTA, PORTA, PORTA, PORTD, PORTG, PORTA, PORTB, PORTB,
 };
 
 const uint8_t seed_pins[32] = {
@@ -65,23 +63,23 @@ const uint8_t seed_pins[32] = {
     0, 1,  3,  1,  7, 6, 1, 5,  5,  4,  0, 11, 9, 2, 14, 15,
 };
 
-const dsy_gpio_pin seedgpio[32] = {
-    {seed_ports[0], seed_pins[0]},   {seed_ports[1], seed_pins[1]},
-    {seed_ports[2], seed_pins[2]},   {seed_ports[3], seed_pins[3]},
-    {seed_ports[4], seed_pins[4]},   {seed_ports[5], seed_pins[5]},
-    {seed_ports[6], seed_pins[6]},   {seed_ports[7], seed_pins[7]},
-    {seed_ports[8], seed_pins[8]},   {seed_ports[9], seed_pins[9]},
-    {seed_ports[10], seed_pins[10]}, {seed_ports[11], seed_pins[11]},
-    {seed_ports[12], seed_pins[12]}, {seed_ports[13], seed_pins[13]},
-    {seed_ports[14], seed_pins[14]}, {seed_ports[15], seed_pins[15]},
-    {seed_ports[16], seed_pins[16]}, {seed_ports[17], seed_pins[17]},
-    {seed_ports[18], seed_pins[18]}, {seed_ports[19], seed_pins[19]},
-    {seed_ports[20], seed_pins[20]}, {seed_ports[21], seed_pins[21]},
-    {seed_ports[22], seed_pins[22]}, {seed_ports[23], seed_pins[23]},
-    {seed_ports[24], seed_pins[24]}, {seed_ports[25], seed_pins[25]},
-    {seed_ports[26], seed_pins[26]}, {seed_ports[27], seed_pins[27]},
-    {seed_ports[28], seed_pins[28]}, {seed_ports[29], seed_pins[29]},
-    {seed_ports[30], seed_pins[30]}, {seed_ports[31], seed_pins[31]},
+const Pin seedgpio[32] = {
+    Pin(seed_ports[0], seed_pins[0]),   Pin(seed_ports[1], seed_pins[1]),
+    Pin(seed_ports[2], seed_pins[2]),   Pin(seed_ports[3], seed_pins[3]),
+    Pin(seed_ports[4], seed_pins[4]),   Pin(seed_ports[5], seed_pins[5]),
+    Pin(seed_ports[6], seed_pins[6]),   Pin(seed_ports[7], seed_pins[7]),
+    Pin(seed_ports[8], seed_pins[8]),   Pin(seed_ports[9], seed_pins[9]),
+    Pin(seed_ports[10], seed_pins[10]), Pin(seed_ports[11], seed_pins[11]),
+    Pin(seed_ports[12], seed_pins[12]), Pin(seed_ports[13], seed_pins[13]),
+    Pin(seed_ports[14], seed_pins[14]), Pin(seed_ports[15], seed_pins[15]),
+    Pin(seed_ports[16], seed_pins[16]), Pin(seed_ports[17], seed_pins[17]),
+    Pin(seed_ports[18], seed_pins[18]), Pin(seed_ports[19], seed_pins[19]),
+    Pin(seed_ports[20], seed_pins[20]), Pin(seed_ports[21], seed_pins[21]),
+    Pin(seed_ports[22], seed_pins[22]), Pin(seed_ports[23], seed_pins[23]),
+    Pin(seed_ports[24], seed_pins[24]), Pin(seed_ports[25], seed_pins[25]),
+    Pin(seed_ports[26], seed_pins[26]), Pin(seed_ports[27], seed_pins[27]),
+    Pin(seed_ports[28], seed_pins[28]), Pin(seed_ports[29], seed_pins[29]),
+    Pin(seed_ports[30], seed_pins[30]), Pin(seed_ports[31], seed_pins[31]),
 };
 #endif
 
@@ -147,30 +145,21 @@ void DaisySeed::DeInit()
     // This is intended to be used by the bootloader, but
     // we don't want to reinitialize pretty much anything in the
     // target application, so...
-    // qspi.DeInit();
-    // sdram_handle.DeInit();
-    // dsy_gpio_deinit(&led);
-    // dsy_gpio_deinit(&testpoint);
-
-    // dsy_gpio_pin codec_reset_pin;
-    // codec_reset_pin = {DSY_GPIOB, 11};
-    // // Perhaps a bit unnecessary, but maybe we'll make
-    // // this non-static at some point
-    // Ak4556::DeInit(codec_reset_pin);
-    // audio_handle.DeInit();
 
     system.DeInit();
 }
 
-dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
+Pin DaisySeed::GetPin(uint8_t pin_idx)
 {
-    dsy_gpio_pin p;
+    Pin p;
     pin_idx = pin_idx < sizeof(seedgpio) / sizeof(seedgpio[0]) ? pin_idx : 0;
+
 #ifndef SEED_REV2
     p = seedgpio[pin_idx];
 #else
     p = {seed_ports[pin_idx], seed_pins[pin_idx]};
 #endif
+
     return p;
 }
 

@@ -52,7 +52,7 @@ class DaisySeed
     Returns the gpio_pin corresponding to the index 0-31.
     For the given GPIO on the Daisy Seed (labeled 1-32 in docs).
     */
-    static dsy_gpio_pin GetPin(uint8_t pin_idx);
+    static Pin GetPin(uint8_t pin_idx);
 
     /** Begins the audio for the seeds builtin audio.
     the specified callback will get called whenever
