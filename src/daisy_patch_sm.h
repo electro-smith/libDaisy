@@ -143,7 +143,7 @@ namespace patch_sm
          *  \param idx pin number between 1 and 10 for each of the pins on each header.
          *  \deprecated please use the Pin definitions in daisy::patch_sm instead
          */
-        dsy_gpio_pin GetPin(const PinBank bank, const int idx);
+        Pin GetPin(const PinBank bank, const int idx);
 
         /** Starts the DAC for the CV Outputs 
          * 

@@ -443,7 +443,7 @@ namespace patch_sm
 
     float DaisyPatchSM::GetAdcValue(int idx) { return controls[idx].Value(); }
 
-    dsy_gpio_pin DaisyPatchSM::GetPin(const PinBank bank, const int idx)
+    Pin DaisyPatchSM::GetPin(const PinBank bank, const int idx)
     {
         if(idx <= 0 || idx > 10)
             return DUMMYPIN;
