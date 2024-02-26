@@ -138,7 +138,6 @@ static USBH_StatusTypeDef USBH_MIDI_InterfaceDeInit(USBH_HandleTypeDef *phost)
 static USBH_StatusTypeDef USBH_MIDI_ClassRequest(USBH_HandleTypeDef *phost)
 {
     phost->pUser(phost, HOST_CLASS_REQUEST);
-    USBH_UsrLog("Speed=%d", USBH_LL_GetSpeed(phost));
     return USBH_OK;
 }
 
@@ -166,31 +165,36 @@ static USBH_StatusTypeDef USBH_MIDI_Process(USBH_HandleTypeDef *phost)
             hMidi->state = MIDI_RX;
             break;
         case MIDI_RX:
-            error = USBH_BulkReceiveData(phost, hMidi->rxBuffer, hMidi->InEpSize, hMidi->InPipe);
-            if (error == USBH_OK) {
-                hMidi->state = MIDI_RX_POLL;
-            } else {
-                USBH_UsrLog("BulkReceiveData->%d", error);
-                hMidi->state = MIDI_FAIL;
-                error = USBH_FAIL;
-            }
+            // Always returns USBH_OK, call USBH_LL_GetURBState() for status
+            USBH_BulkReceiveData(phost, hMidi->rxBuffer, hMidi->InEpSize, hMidi->InPipe);
+            hMidi->state = MIDI_RX_POLL;
             break;
         case MIDI_RX_POLL:
             rxStatus = USBH_LL_GetURBState(phost, hMidi->InPipe);
-            if (rxStatus == USBH_URB_DONE) {
+            if (rxStatus == USBH_URB_NOTREADY || rxStatus == USBH_URB_IDLE) {
+                hMidi->state = MIDI_RX_POLL;
+            } else if (rxStatus == USBH_URB_DONE) {
                 size_t sz = USBH_LL_GetLastXferSize(phost, hMidi->InPipe);
                 hMidi->state = MIDI_RX;
                 if (hMidi->callback) {
                     hMidi->callback(hMidi->rxBuffer, sz, hMidi->pUser);
                 }
-            } else if (rxStatus == USBH_URB_ERROR || rxStatus == USBH_URB_STALL) {
-                hMidi->state = MIDI_FAIL;
+            } else {
+                hMidi->state = MIDI_RX_ERROR;
                 error = USBH_FAIL;
             }
             break;
-        case MIDI_FAIL:
-            hMidi->state = MIDI_IDLE;
+        case MIDI_RX_ERROR:
+            error = USBH_ClrFeature(phost, hMidi->InEp);
+            if (error == USBH_FAIL) {
+                USBH_MIDI_InterfaceDeInit(phost);
+                hMidi->state = MIDI_FATAL_ERROR;
+            } else {
+                hMidi->state = MIDI_IDLE;
+            }
             break;
+        case MIDI_FATAL_ERROR:
+            return USBH_FAIL;
     }
     return error;
 }
@@ -228,6 +232,7 @@ MIDI_ErrorTypeDef USBH_MIDI_Transmit(USBH_HandleTypeDef *phost, uint8_t* data, s
         {
             if(txStatus == USBH_URB_ERROR || txStatus == USBH_URB_STALL)
             {
+                USBH_ClrFeature(phost, hMidi->OutEp);
                 return MIDI_ERROR;
             }
             if(numUrbs == 0)

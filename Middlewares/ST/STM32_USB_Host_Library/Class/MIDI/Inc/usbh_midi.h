@@ -34,7 +34,8 @@ typedef enum {
     MIDI_IDLE,
     MIDI_RX,
     MIDI_RX_POLL,
-    MIDI_FAIL
+    MIDI_RX_ERROR,
+    MIDI_FATAL_ERROR
 } MIDI_StateTypeDef;
 
 typedef enum {

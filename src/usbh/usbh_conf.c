@@ -217,6 +217,8 @@ USBH_StatusTypeDef USBH_LL_Init(USBH_HandleTypeDef *phost)
     /* Init USB_IP */
     if(phost->id == HOST_HS)
     {
+        memset(&hhcd_USB_OTG_HS, 0, sizeof(hhcd_USB_OTG_HS));
+
         /* Link the driver to the stack. */
         hhcd_USB_OTG_HS.pData = phost;
         phost->pData          = &hhcd_USB_OTG_HS;
@@ -224,7 +226,7 @@ USBH_StatusTypeDef USBH_LL_Init(USBH_HandleTypeDef *phost)
         hhcd_USB_OTG_HS.Instance               = USB_OTG_HS;
         hhcd_USB_OTG_HS.Init.Host_channels     = 16;
         hhcd_USB_OTG_HS.Init.speed             = HCD_SPEED_FULL;
-        hhcd_USB_OTG_HS.Init.dma_enable        = ENABLE;
+        hhcd_USB_OTG_HS.Init.dma_enable        = DISABLE;
         hhcd_USB_OTG_HS.Init.phy_itface        = USB_OTG_EMBEDDED_PHY;
         hhcd_USB_OTG_HS.Init.Sof_enable        = DISABLE;
         hhcd_USB_OTG_HS.Init.low_power_enable  = DISABLE;
