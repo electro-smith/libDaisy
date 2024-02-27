@@ -51,6 +51,7 @@ inline int I2c::initI2C_RW(int bus, int address, int dummy)
 	}
 	cfg.address = i2cAddress; // this seems unused anyhow
 	i2cAddress = address;
+	i2cHandle.Init(cfg);
 	return 0;
 }
 
