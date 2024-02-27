@@ -218,6 +218,52 @@ struct Pin
     constexpr bool operator!=(const Pin &rhs) const { return !operator==(rhs); }
 };
 
+
+/** Enums and a simple struct for defining a hardware pin on the MCU
+ *  These correlate with the stm32 datasheet, and are used to configure
+ *  the hardware.
+ * 
+ *  This along with the dsy_gpio_pin class should no longer be used.
+ *  They are available for backwards compatability. 
+ * 
+ *  Please use GPIOPort enum and the Pin struct instead.
+ */
+typedef enum
+{
+    DSY_GPIOA, /**< & */
+    DSY_GPIOB, /**< & */
+    DSY_GPIOC, /**< & */
+    DSY_GPIOD, /**< & */
+    DSY_GPIOE, /**< & */
+    DSY_GPIOF, /**< & */
+    DSY_GPIOG, /**< & */
+    DSY_GPIOH, /**< & */
+    DSY_GPIOI, /**< & */
+    DSY_GPIOJ, /**< & */
+    DSY_GPIOK, /**< & */
+    DSY_GPIOX, /** This is a non-existant port for unsupported bits of hardware. */
+    DSY_GPIO_LAST, /** Final enum member */
+} dsy_gpio_port;
+
+/** Hardware define pins 
+ *  
+ *  The dsy_gpio_pin struct should no longer be used, and is only available for
+ *  backwards compatability.
+ * 
+ *  Please use Pin struct instead.
+ */
+[[deprecated("Use daisy::Pin instead")]] typedef struct
+{
+    dsy_gpio_port port; /**< & */
+    uint8_t       pin;  /**< number 0-15 */
+
+    constexpr operator Pin() const
+    {
+        return Pin(static_cast<GPIOPort>(port), pin);
+    }
+
+} dsy_gpio_pin;
+
 } // namespace daisy
 
 #endif // __cplusplus
