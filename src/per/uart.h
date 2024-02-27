@@ -7,7 +7,10 @@ TODO
 #ifndef DSY_UART_H
 #define DSY_UART_H /**< macro */
 #include "daisy_core.h"
+
+#if !UNIT_TEST
 #include "util/hal_map.h"
+#endif
 
 namespace daisy
 {
