@@ -157,13 +157,14 @@ endif
 # This does not include the additional option files
 # for Japanese, Simplified/Traditional Chinese, or Korean
 # since they would add an additional 480kB or so of flash
-FATFS_DIR ?= $(LIBDAISY_DIR)/Middlewares/Third_Party/FatFs/src
+FATFS_DIR ?= $(LIBDAISY_DIR)/Middlewares/Third_Party/FatFs/source
 FATFS_SOURCES ?=
 FATFS_SOURCES += \
 	$(FATFS_DIR)/diskio.c \
 	$(FATFS_DIR)/ff.c \
 	$(FATFS_DIR)/ff_gen_drv.c \
-	$(FATFS_DIR)/option/ccsbcs.c
+	$(FATFS_DIR)/ffunicode.c \
+	$(FATFS_DIR)/ffsystem_baremetal.c
 
 ifeq ($(USE_FATFS),1)
 C_SOURCES += $(FATFS_SOURCES)
