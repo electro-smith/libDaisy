@@ -22,12 +22,16 @@ if(NOT PROJECT_IS_TOP_LEVEL)
 else()
     # Need to set sane default compile options for standalone library build
     add_compile_options(
+        $<$<CONFIG:Debug,RelWithDebInfo>:-ggdb3>
         $<$<CONFIG:Debug>:-Og>
         $<$<CONFIG:Release>:-O3>
         $<$<CONFIG:MinSizeRel>:-Os>
-        $<$<CONFIG:Release,MinSizeRel>:-flto>
     )
-    add_link_options($<$<CONFIG:Release,MinSizeRel>:-flto>)
+    add_compile_options($<$<CONFIG:Release,MinSizeRel,RelWithDebInfo>:-flto>)
+    add_link_options($<$<CONFIG:Release,MinSizeRel,RelWithDebInfo>:-flto>)
+
+    # Define NDEBUG when not compiling with debug flags
+    add_compile_definitions($<$<CONFIG:Release,MinSizeRel>:NDEBUG>)
 endif()
 
 cmake_path(SET MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")

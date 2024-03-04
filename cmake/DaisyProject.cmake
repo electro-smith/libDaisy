@@ -7,27 +7,35 @@ else()
 endif()
 
 # Global optimization options
-if (NOT DEFINED FIRMWARE_DEBUG_OPT_LEVEL)
-add_compile_options($<$<CONFIG:Debug>:-Og>)
+if(NOT DEFINED FIRMWARE_DEBUG_OPT_LEVEL)
+    # Enables optimizations that do not interfere with debugging.
+    add_compile_options($<$<CONFIG:Debug>:-Og>)
 else()
     add_compile_options($<$<CONFIG:Debug>:${FIRMWARE_DEBUG_OPT_LEVEL}>)
 endif()
 
-if (NOT DEFINED FIRMWARE_RELEASE_OPT_LEVEL)
+if(NOT DEFINED FIRMWARE_RELEASE_OPT_LEVEL)
     add_compile_options($<$<CONFIG:Release>:-O3>)
 else()
     add_compile_options($<$<CONFIG:Release>:${FIRMWARE_RELEASE_OPT_LEVEL}>)
 endif()
 
-if (NOT DEFINED FIRMWARE_MINSIZEREL_OPT_LEVEL)
+if(NOT DEFINED FIRMWARE_MINSIZEREL_OPT_LEVEL)
+    # Optimize for size. -Os enables all -O2 optimizations.
     add_compile_options($<$<CONFIG:MinSizeRel>:-Os>)
 else()
     add_compile_options($<$<CONFIG:MinSizeRel>:${FIRMWARE_MINSIZEREL_OPT_LEVEL}>)
 endif()
 
 # Always use LTO on Release
-add_compile_options($<$<CONFIG:Release,MinSizeRel>:-flto>)
-add_link_options($<$<CONFIG:Release,MinSizeRel>:-flto>)
+add_compile_options($<$<CONFIG:Release,MinSizeRel,RelWithDebInfo>:-flto>)
+add_link_options($<$<CONFIG:Release,MinSizeRel,RelWithDebInfo>:-flto>)
+
+# Include debug symbols when compiling with debug flags
+add_compile_options($<$<CONFIG:Debug,RelWithDebInfo>:-ggdb3>)
+
+# Define NDEBUG when not compiling with debug flags
+add_compile_definitions($<$<CONFIG:Release,MinSizeRel>:NDEBUG>)
 
 add_executable(${FIRMWARE_NAME} ${FIRMWARE_SOURCES})
 
