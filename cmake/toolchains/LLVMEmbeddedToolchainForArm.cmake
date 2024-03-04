@@ -31,22 +31,18 @@ set(CMAKE_ASM_FLAGS "-x assembler-with-cpp" CACHE INTERNAL "ASM Compiler options
 # Options for DEBUG build
 # -Og   Enables optimizations that do not interfere with debugging.
 # -g    Produce debugging information in the operating system’s native format.
-set(CMAKE_C_FLAGS_DEBUG "-Og -g -ggdb" CACHE INTERNAL "C Compiler options for debug build type")
-set(CMAKE_CXX_FLAGS_DEBUG "-Og -g -ggdb" CACHE INTERNAL "C++ Compiler options for debug build type")
-set(CMAKE_ASM_FLAGS_DEBUG "-Og -g -ggdb" CACHE INTERNAL "ASM Compiler options for debug build type")
+set(CMAKE_C_FLAGS_DEBUG "" CACHE INTERNAL "C Compiler options for debug build type")
+set(CMAKE_CXX_FLAGS_DEBUG "" CACHE INTERNAL "C++ Compiler options for debug build type")
+set(CMAKE_ASM_FLAGS_DEBUG "" CACHE INTERNAL "ASM Compiler options for debug build type")
 set(CMAKE_EXE_LINKER_FLAGS_DEBUG "" CACHE INTERNAL "Linker options for debug build type")
 
 # Options for RELEASE build
 # -Os   Optimize for size. -Os enables all -O2 optimizations.
 # -flto Runs the standard link-time optimizer.
-set(CMAKE_C_FLAGS_RELEASE "-Os -flto" CACHE INTERNAL "C Compiler options for release build type")
-set(CMAKE_CXX_FLAGS_RELEASE "-Os -flto" CACHE INTERNAL "C++ Compiler options for release build type")
-set(CMAKE_ASM_FLAGS_RELEASE "-Os -flto" CACHE INTERNAL "ASM Compiler options for release build type")
+set(CMAKE_C_FLAGS_RELEASE "-flto -DNDEBUG" CACHE INTERNAL "C Compiler options for release build type")
+set(CMAKE_CXX_FLAGS_RELEASE "-flto -DNDEBUG" CACHE INTERNAL "C++ Compiler options for release build type")
+set(CMAKE_ASM_FLAGS_RELEASE "-flto -DNDEBUG" CACHE INTERNAL "ASM Compiler options for release build type")
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-flto" CACHE INTERNAL "Linker options for release build type")
-
-add_compile_options(
-    $<$<COMPILE_LANGUAGE:CXX>:-stdlib=libc++>
-)
 
 
 # ---------------------------------------------------------------------------------------

@@ -33,7 +33,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       with:
-        submodules: recursive    
+        submodules: recursive
     - name: Setup arm-none-eabi-gcc
       uses: carlosperate/arm-none-eabi-gcc-action@v1
       with:
@@ -68,35 +68,35 @@ jobs:
     - name: Setup CMake
       uses: lukka/get-cmake@latest
 
-    - name: Configure Library
-      run: cmake -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D DAISY_BUILD_EXAMPLES=YES
+    - name: Configure
+      run: cmake -B build -G Ninja -D CMAKE_BUILD_TYPE=Release
 
-    - name: Build Library
-      run: cmake --build build --verbose
+    - name: Build All
+      run: cmake --build build --target examples --verbose
 
   build-cmake-llvm:
-        runs-on: ubuntu-latest
-    
-        strategy:
-          matrix:
-            version: [latest, '17.0.1', '16.0.0']
-    
-        steps:
-        - name: Checkout
-          uses: actions/checkout@v4
-          with:
-            submodules: recursive
-    
-        - name: Install LLVM Embedded Toolchain for Arm
-          uses: stellar-aria/llvm-embedded-toolchain-for-arm-action@latest
-          with:
-            release: ${{ matrix.version }}
-    
-        - name: Setup CMake
-          uses: lukka/get-cmake@latest
-    
-        - name: Configure
-          run: cmake -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D DAISY_BUILD_EXAMPLES=YES
-    
-        - name: Build All
-          run: cmake --build build --verbose
+      runs-on: ubuntu-latest
+
+      strategy:
+        matrix:
+          version: [latest, '17.0.1', '16.0.0']
+
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install LLVM Embedded Toolchain for Arm
+        uses: stellar-aria/llvm-embedded-toolchain-for-arm-action@latest
+        with:
+          release: ${{ matrix.version }}
+
+      - name: Setup CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Configure
+        run: cmake -B build -G Ninja -D CMAKE_BUILD_TYPE=Release
+
+      - name: Build All
+        run: cmake --build build --target examples --verbose

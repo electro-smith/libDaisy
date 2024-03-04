@@ -6,6 +6,29 @@ else()
     cmake_path(SET LINKER_SCRIPT NORMALIZE ${CMAKE_CURRENT_LIST_DIR}/../core/STM32H750IB_${DAISY_STORAGE}.lds)
 endif()
 
+# Global optimization options
+if (NOT DEFINED FIRMWARE_DEBUG_OPT_LEVEL)
+add_compile_options($<$<CONFIG:Debug>:-Og>)
+else()
+    add_compile_options($<$<CONFIG:Debug>:${FIRMWARE_DEBUG_OPT_LEVEL}>)
+endif()
+
+if (NOT DEFINED FIRMWARE_RELEASE_OPT_LEVEL)
+    add_compile_options($<$<CONFIG:Release>:-O3>)
+else()
+    add_compile_options($<$<CONFIG:Release>:${FIRMWARE_RELEASE_OPT_LEVEL}>)
+endif()
+
+if (NOT DEFINED FIRMWARE_MINSIZEREL_OPT_LEVEL)
+    add_compile_options($<$<CONFIG:MinSizeRel>:-Os>)
+else()
+    add_compile_options($<$<CONFIG:MinSizeRel>:${FIRMWARE_MINSIZEREL_OPT_LEVEL}>)
+endif()
+
+# Always use LTO on Release
+add_compile_options($<$<CONFIG:Release,MinSizeRel>:-flto>)
+add_link_options($<$<CONFIG:Release,MinSizeRel>:-flto>)
+
 add_executable(${FIRMWARE_NAME} ${FIRMWARE_SOURCES})
 
 target_link_libraries(${FIRMWARE_NAME}

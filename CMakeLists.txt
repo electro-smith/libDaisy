@@ -6,37 +6,40 @@ cmake_policy(SET CMP0135 NEW)
 set(CMAKE_CROSSCOMPILING TRUE CACHE BOOL "Set whether CMake is currently cross-compiling")
 
 # Set up our toolchain for cross-compilation if that's happening
-if (CMAKE_CROSSCOMPILING AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+if(CMAKE_CROSSCOMPILING AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     include(${CMAKE_CURRENT_LIST_DIR}/cmake/toolchains/autodetect.cmake)
 endif()
 
-# Declare our project 
+# Declare our project
 project(libDaisy VERSION 7.0.1)
 
 # Append our /cmake to the module path
 # This allows us to use DaisyProject as `include(DaisyProject)`
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
-if (NOT PROJECT_IS_TOP_LEVEL)
+
+if(NOT PROJECT_IS_TOP_LEVEL)
     set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} PARENT_SCOPE)
+else()
+    # Need to set sane default compile options for standalone library build
+    add_compile_options(
+        $<$<CONFIG:Debug>:-Og>
+        $<$<CONFIG:Release>:-O3>
+        $<$<CONFIG:MinSizeRel>:-Os>
+        $<$<CONFIG:Release,MinSizeRel>:-flto>
+    )
+    add_link_options($<$<CONFIG:Release,MinSizeRel>:-flto>)
 endif()
 
-# Setup FetchContent
-include(FetchContent)
-set(FETCHCONTENT_QUIET FALSE)
-
-# Whether or not to build examples
-option(DAISY_BUILD_EXAMPLES "Build all examples" OFF)
-
-set(TARGET daisy)
-
 cmake_path(SET MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
+
+include(tools)
 
 if(CMAKE_CROSSCOMPILING)
     add_subdirectory(Drivers)
     add_subdirectory(Middlewares/ST)
     add_subdirectory(Middlewares/Third_Party/FatFs)
 
-    add_library(${TARGET} STATIC
+    add_library(daisy STATIC
         ${MODULE_DIR}/daisy_field.cpp
         ${MODULE_DIR}/daisy_legio.cpp
         ${MODULE_DIR}/daisy_patch_sm.cpp
@@ -57,7 +60,7 @@ if(CMAKE_CROSSCOMPILING)
         ${MODULE_DIR}/hid/gatein.cpp
         ${MODULE_DIR}/hid/led.cpp
         ${MODULE_DIR}/hid/logger.cpp
-        ${MODULE_DIR}/hid/midi_parser.cpp        
+        ${MODULE_DIR}/hid/midi_parser.cpp
         ${MODULE_DIR}/hid/midi.cpp
         ${MODULE_DIR}/hid/parameter.cpp
         ${MODULE_DIR}/hid/rgb_led.cpp
@@ -101,11 +104,11 @@ if(CMAKE_CROSSCOMPILING)
         core/startup_stm32h750xx.c
     )
 
-    target_include_directories(${TARGET} PUBLIC
+    target_include_directories(daisy PUBLIC
         ${MODULE_DIR}
     )
 
-    target_link_libraries(${TARGET} PUBLIC
+    target_link_libraries(daisy PUBLIC
         CMSIS_CORE
         CMSIS_DEVICE_H7
         STM32H7XX_HAL_DRIVER
@@ -114,7 +117,7 @@ if(CMAKE_CROSSCOMPILING)
         FatFs
     )
 
-    target_compile_options(${TARGET} PRIVATE
+    target_compile_options(daisy PRIVATE
         -Wall
 
         # At same point this generator should be removed, but the clang build isn't there yet
@@ -125,21 +128,20 @@ if(CMAKE_CROSSCOMPILING)
         $<$<CXX_COMPILER_ID:GNU>:-Wno-missing-attributes>
     )
 
-    set_target_properties(${TARGET} PROPERTIES
+    set_target_properties(daisy PROPERTIES
         CXX_STANDARD 14
         CXX_STANDARD_REQUIRED
         C_STANDARD 11
         C_STANDARD_REQUIRED
     )
 
-    # Only build the examples when told to
-    if(DAISY_BUILD_EXAMPLES)
-        add_subdirectory(examples)
-    endif(DAISY_BUILD_EXAMPLES)
+    add_subdirectory(examples EXCLUDE_FROM_ALL)
+    get_all_targets(example_targets examples)
+    add_custom_target(examples DEPENDS ${example_targets})
 
 else()
     # if we're not cross-compiling, we can do unit tests
-    add_library(${TARGET} STATIC
+    add_library(daisy STATIC
         ${MODULE_DIR}/hid/midi_parser.cpp
         ${MODULE_DIR}/per/qspi.cpp
         ${MODULE_DIR}/sys/system.cpp
@@ -148,10 +150,12 @@ else()
         ${MODULE_DIR}/util/MappedValue.cpp
         ${MODULE_DIR}/util/oled_fonts.c
     )
-    target_include_directories(${TARGET} PUBLIC ${MODULE_DIR})
-    target_compile_definitions(${TARGET} PUBLIC UNIT_TEST)
+    target_include_directories(daisy PUBLIC ${MODULE_DIR})
+    target_compile_definitions(daisy PUBLIC UNIT_TEST)
 
     enable_testing()
     add_subdirectory(tests)
-    target_link_libraries(${TARGET} PUBLIC GTest::gtest_main)
+
+    # needed because some internal libDaisy testing stuff includes gtest
+    target_link_libraries(daisy PUBLIC GTest::gtest_main)
 endif(CMAKE_CROSSCOMPILING)
