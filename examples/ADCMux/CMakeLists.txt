@@ -1,3 +1,3 @@
-set(FIRMWARE_NAME examples_ADCMux)
+set(FIRMWARE_NAME ADCMux)
 set(FIRMWARE_SOURCES ADCMux.cpp)
 include(DaisyProject)
