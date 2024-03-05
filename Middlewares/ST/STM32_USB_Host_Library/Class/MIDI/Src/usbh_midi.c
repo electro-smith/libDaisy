@@ -137,7 +137,7 @@ static USBH_StatusTypeDef USBH_MIDI_InterfaceDeInit(USBH_HandleTypeDef *phost)
  */
 static USBH_StatusTypeDef USBH_MIDI_ClassRequest(USBH_HandleTypeDef *phost)
 {
-    phost->pUser(phost, HOST_CLASS_REQUEST);
+    phost->pUser(phost, HOST_USER_CLASS_ACTIVE);
     return USBH_OK;
 }
 
@@ -159,7 +159,6 @@ static USBH_StatusTypeDef USBH_MIDI_Process(USBH_HandleTypeDef *phost)
     switch (hMidi->state) {
         case MIDI_INIT:
             hMidi->state = MIDI_IDLE;
-            phost->pUser(phost, HOST_USER_CLASS_ACTIVE);
             break;
         case MIDI_IDLE:
             hMidi->state = MIDI_RX;

@@ -73,7 +73,7 @@ int main(void)
     /** Initialize our hardware */
     hw.Init();
 
-    hw.StartLog();
+    hw.StartLog(true);
 
     hw.PrintLine("MIDI USB Host start");
 
