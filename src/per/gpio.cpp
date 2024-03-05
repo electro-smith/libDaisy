@@ -15,7 +15,7 @@ void GPIO::Init(const Config &cfg)
     switch(cfg_.mode)
     {
         case Mode::OUTPUT: ginit.Mode = GPIO_MODE_OUTPUT_PP; break;
-        case Mode::OUTPUT_OD: ginit.Mode = GPIO_MODE_OUTPUT_OD; break;
+        case Mode::OPEN_DRAIN: ginit.Mode = GPIO_MODE_OUTPUT_OD; break;
         case Mode::ANALOG: ginit.Mode = GPIO_MODE_ANALOG; break;
         case Mode::INPUT:
         default: ginit.Mode = GPIO_MODE_INPUT; break;

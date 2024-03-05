@@ -39,6 +39,7 @@ extern "C"
 #define HAL_ADC_MODULE_ENABLED
 #define HAL_CEC_MODULE_ENABLED
 #define HAL_COMP_MODULE_ENABLED
+#define HAL_CORDIC_MODULE_ENABLED
 #define HAL_CORTEX_MODULE_ENABLED
 #define HAL_CRC_MODULE_ENABLED
 #define HAL_CRYP_MODULE_ENABLED
@@ -47,11 +48,14 @@ extern "C"
 #define HAL_DFSDM_MODULE_ENABLED
 #define HAL_DMA_MODULE_ENABLED
 #define HAL_DMA2D_MODULE_ENABLED
+#define HAL_DTS_MODULE_ENABLED
 #define HAL_DSI_MODULE_ENABLED
 #define HAL_ETH_MODULE_ENABLED
 #define HAL_EXTI_MODULE_ENABLED
 #define HAL_FDCAN_MODULE_ENABLED
 #define HAL_FLASH_MODULE_ENABLED
+#define HAL_FMAC_MODULE_ENABLED
+#define HAL_GFXMMU_MODULE_ENABLED
 #define HAL_GPIO_MODULE_ENABLED
 #define HAL_HASH_MODULE_ENABLED
 #define HAL_HCD_MODULE_ENABLED
@@ -70,8 +74,11 @@ extern "C"
 #define HAL_NAND_MODULE_ENABLED
 #define HAL_NOR_MODULE_ENABLED
 #define HAL_OPAMP_MODULE_ENABLED
+#define HAL_OSPI_MODULE_ENABLED
+#define HAL_OTFDEC_MODULE_ENABLED
 #define HAL_PCD_MODULE_ENABLED
 #define HAL_PWR_MODULE_ENABLED
+#define HAL_PSSI_MODULE_ENABLED
 #define HAL_QSPI_MODULE_ENABLED
 #define HAL_RAMECC_MODULE_ENABLED
 #define HAL_RCC_MODULE_ENABLED
@@ -163,8 +170,8 @@ extern "C"
 /**
   * @brief This is the HAL system configuration section
   */
-#define VDD_VALUE ((uint32_t)3300)         /*!< Value of VDD in mv */
-#define TICK_INT_PRIORITY ((uint32_t)0x0E) /*!< tick interrupt priority */
+#define VDD_VALUE (3300UL)                   /*!< Value of VDD in mv */
+#define TICK_INT_PRIORITY ((uint32_t)0x0EUL) /*!< tick interrupt priority */
 #define USE_RTOS 0
 #define USE_SD_TRANSCEIVER 0U /*!< use uSD Transceiver */
 
@@ -301,6 +308,10 @@ extern "C"
 #include "stm32h7xx_hal_dfsdm.h"
 #endif /* HAL_DFSDM_MODULE_ENABLED */
 
+#ifdef HAL_DTS_MODULE_ENABLED
+#include "stm32h7xx_hal_dts.h"
+#endif /* HAL_DTS_MODULE_ENABLED */
+
 #ifdef HAL_ETH_MODULE_ENABLED
 #include "stm32h7xx_hal_eth.h"
 #endif /* HAL_ETH_MODULE_ENABLED */
@@ -329,6 +340,10 @@ extern "C"
 #include "stm32h7xx_hal_comp.h"
 #endif /* HAL_COMP_MODULE_ENABLED */
 
+#ifdef HAL_CORDIC_MODULE_ENABLED
+#include "stm32h7xx_hal_cordic.h"
+#endif /* HAL_CORDIC_MODULE_ENABLED */
+
 #ifdef HAL_CRC_MODULE_ENABLED
 #include "stm32h7xx_hal_crc.h"
 #endif /* HAL_CRC_MODULE_ENABLED */
@@ -344,6 +359,14 @@ extern "C"
 #ifdef HAL_FLASH_MODULE_ENABLED
 #include "stm32h7xx_hal_flash.h"
 #endif /* HAL_FLASH_MODULE_ENABLED */
+
+#ifdef HAL_GFXMMU_MODULE_ENABLED
+#include "stm32h7xx_hal_gfxmmu.h"
+#endif /* HAL_GFXMMU_MODULE_ENABLED */
+
+#ifdef HAL_FMAC_MODULE_ENABLED
+#include "stm32h7xx_hal_fmac.h"
+#endif /* HAL_FMAC_MODULE_ENABLED */
 
 #ifdef HAL_HRTIM_MODULE_ENABLED
 #include "stm32h7xx_hal_hrtim.h"
@@ -401,6 +424,18 @@ extern "C"
 #include "stm32h7xx_hal_opamp.h"
 #endif /* HAL_OPAMP_MODULE_ENABLED */
 
+#ifdef HAL_OSPI_MODULE_ENABLED
+#include "stm32h7xx_hal_ospi.h"
+#endif /* HAL_OSPI_MODULE_ENABLED */
+
+#ifdef HAL_OTFDEC_MODULE_ENABLED
+#include "stm32h7xx_hal_otfdec.h"
+#endif /* HAL_OTFDEC_MODULE_ENABLED */
+
+#ifdef HAL_PSSI_MODULE_ENABLED
+#include "stm32h7xx_hal_pssi.h"
+#endif /* HAL_PSSI_MODULE_ENABLED */
+
 #ifdef HAL_PWR_MODULE_ENABLED
 #include "stm32h7xx_hal_pwr.h"
 #endif /* HAL_PWR_MODULE_ENABLED */
@@ -411,7 +446,7 @@ extern "C"
 
 #ifdef HAL_RAMECC_MODULE_ENABLED
 #include "stm32h7xx_hal_ramecc.h"
-#endif /* HAL_HCD_MODULE_ENABLED */
+#endif /* HAL_RAMECC_MODULE_ENABLED */
 
 #ifdef HAL_RNG_MODULE_ENABLED
 #include "stm32h7xx_hal_rng.h"
