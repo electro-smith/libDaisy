@@ -47,7 +47,7 @@ var NAVTREE =
       [ "Hello World", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md14", null ],
       [ "String Formatting", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md15", null ],
       [ "Floating Point Numbers", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md16", [
-        [ "Using f specifier", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md17", null ],
+        [ "Using %f specifier", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md17", null ],
         [ "Using FLT_FMT and FLT_VAR macros", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md18", null ],
         [ "Using FixedCapStr class", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md19", null ]
       ] ],
