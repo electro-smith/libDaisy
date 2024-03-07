@@ -17,9 +17,12 @@ var classdaisy_1_1_u_s_b_host_handle =
     [ "USBHostHandle", "classdaisy_1_1_u_s_b_host_handle.html#a20ea1f4d2e2cfc3f749364b1dc5c9b73", null ],
     [ "Deinit", "classdaisy_1_1_u_s_b_host_handle.html#acb7c3bbcfa35120d737cd97de448986a", null ],
     [ "GetPresent", "classdaisy_1_1_u_s_b_host_handle.html#a3efc40d3a6a6ef516328e1744640d887", null ],
+    [ "GetProductName", "classdaisy_1_1_u_s_b_host_handle.html#a4efe53c493e53f41215af3784f9a1439", null ],
     [ "GetReady", "classdaisy_1_1_u_s_b_host_handle.html#ac9fa7017546be9ab038a5100b7f7483e", null ],
-    [ "Init", "classdaisy_1_1_u_s_b_host_handle.html#aaf6e11074b3f982dc723bb014ceb1390", null ],
+    [ "Init", "classdaisy_1_1_u_s_b_host_handle.html#a994616690a58d88b1f7d95d9246885f1", null ],
+    [ "IsActiveClass", "classdaisy_1_1_u_s_b_host_handle.html#a370cac38c0b49ee24473d6f9bff2ca82", null ],
     [ "operator=", "classdaisy_1_1_u_s_b_host_handle.html#a0120e222d56d7546d28810c55fe562b2", null ],
     [ "Process", "classdaisy_1_1_u_s_b_host_handle.html#a23eacd86f01a56142e60108ba8a381a8", null ],
-    [ "ReEnumerate", "classdaisy_1_1_u_s_b_host_handle.html#a369f062c8add67f2f6963bb87286d6ed", null ]
+    [ "ReEnumerate", "classdaisy_1_1_u_s_b_host_handle.html#a369f062c8add67f2f6963bb87286d6ed", null ],
+    [ "RegisterClass", "classdaisy_1_1_u_s_b_host_handle.html#a26f8b616324a21a8801c905ecc004d60", null ]
 ];

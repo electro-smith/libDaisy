@@ -5,7 +5,7 @@ var searchData=
   ['latch_2',['latch',['../structdaisy_1_1_shift_register4021_1_1_config.html#a2a05cd559028325fc59ae9108672d045',1,'daisy::ShiftRegister4021::Config']]],
   ['lcd_5fhd44780_2eh_3',['lcd_hd44780.h',['../lcd__hd44780_8h.html',1,'']]],
   ['lcdhd44780_4',['lcdhd44780',['../classdaisy_1_1_lcd_h_d44780.html',1,'daisy::LcdHD44780'],['../classdaisy_1_1_lcd_h_d44780.html#ad2f3507fa402dd0d68e14ddd9c8774f4',1,'daisy::LcdHD44780::LcdHD44780()']]],
-  ['led_5',['led',['../classdaisy_1_1_led.html',1,'daisy::Led'],['../group__led.html',1,'LED'],['../classdaisy_1_1_led.html#a8737024b03a77904dfb704221656c629',1,'daisy::Led::Led()'],['../classdaisy_1_1_daisy_seed.html#ab3ce4c98a819d4aac03659b61697a685',1,'daisy::DaisySeed::led']]],
+  ['led_5',['led',['../classdaisy_1_1_led.html',1,'daisy::Led'],['../group__led.html',1,'LED'],['../classdaisy_1_1_daisy_seed.html#ab3ce4c98a819d4aac03659b61697a685',1,'daisy::DaisySeed::led'],['../classdaisy_1_1_led.html#a8737024b03a77904dfb704221656c629',1,'daisy::Led::Led()']]],
   ['led_2eh_6',['led.h',['../led_8h.html',1,'']]],
   ['led1_7',['led1',['../classdaisy_1_1_daisy_pod.html#a25507d3d34053599b816f5a87a55d632',1,'daisy::DaisyPod']]],
   ['led2_8',['led2',['../classdaisy_1_1_daisy_pod.html#a957be8135f17db1516599602f72daf5c',1,'daisy::DaisyPod']]],
