@@ -56,7 +56,7 @@ struct AdcChannelConfig
     \param pin Pin to init.
     \param speed conversion speed for this pin defaults to 8.5 cycles
      */
-    void InitSingle(dsy_gpio_pin pin, ConversionSpeed speed = SPEED_8CYCLES_5);
+    void InitSingle(Pin pin, ConversionSpeed speed = SPEED_8CYCLES_5);
 
     /** 
     Initializes a single ADC pin as a Multiplexed ADC.
@@ -71,15 +71,15 @@ struct AdcChannelConfig
     \param mux_2 Third mux pin
     \param speed conversion speed for this pin defaults to 8.5 cycles
     */
-    void InitMux(dsy_gpio_pin    adc_pin,
+    void InitMux(Pin             adc_pin,
                  size_t          mux_channels,
-                 dsy_gpio_pin    mux_0,
-                 dsy_gpio_pin    mux_1 = {DSY_GPIOX, 0},
-                 dsy_gpio_pin    mux_2 = {DSY_GPIOX, 0},
+                 Pin             mux_0,
+                 Pin             mux_1 = Pin(PORTX, 0),
+                 Pin             mux_2 = Pin(PORTX, 0),
                  ConversionSpeed speed = SPEED_8CYCLES_5);
 
-    dsy_gpio        pin_;                   /**< & */
-    dsy_gpio        mux_pin_[MUX_SEL_LAST]; /**< & */
+    GPIO            pin_;                   /**< & */
+    GPIO            mux_pin_[MUX_SEL_LAST]; /**< & */
     uint8_t         mux_channels_;          /**< & */
     ConversionSpeed speed_;
 };

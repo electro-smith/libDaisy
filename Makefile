@@ -9,7 +9,6 @@ per/gpio \
 per/sai \
 per/sdmmc \
 util/bsp_sd_diskio \
-util/hal_map \
 util/oled_fonts \
 util/sd_diskio \
 util/unique_id \

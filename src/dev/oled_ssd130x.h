@@ -29,8 +29,8 @@ class SSD130xI2CTransport
             i2c_config.periph         = I2CHandle::Config::Peripheral::I2C_1;
             i2c_config.speed          = I2CHandle::Config::Speed::I2C_1MHZ;
             i2c_config.mode           = I2CHandle::Config::Mode::I2C_MASTER;
-            i2c_config.pin_config.scl = {DSY_GPIOB, 8};
-            i2c_config.pin_config.sda = {DSY_GPIOB, 9};
+            i2c_config.pin_config.scl = Pin(PORTB, 8);
+            i2c_config.pin_config.sda = Pin(PORTB, 9);
             i2c_address               = 0x3C;
         }
     };
@@ -75,8 +75,8 @@ class SSD130x4WireSpiTransport
         SpiHandle::Config spi_config;
         struct
         {
-            dsy_gpio_pin dc;    /**< & */
-            dsy_gpio_pin reset; /**< & */
+            Pin dc;    /**< & */
+            Pin reset; /**< & */
         } pin_config;
         void Defaults()
         {
@@ -91,50 +91,46 @@ class SSD130x4WireSpiTransport
             spi_config.nss            = SpiHandle::Config::NSS::HARD_OUTPUT;
             spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_8;
             // SPI pin config
-            spi_config.pin_config.sclk = {DSY_GPIOG, 11};
-            spi_config.pin_config.miso = {DSY_GPIOX, 0};
-            spi_config.pin_config.mosi = {DSY_GPIOB, 5};
-            spi_config.pin_config.nss  = {DSY_GPIOG, 10};
+            spi_config.pin_config.sclk = Pin(PORTG, 11);
+            spi_config.pin_config.miso = Pin(PORTX, 0);
+            spi_config.pin_config.mosi = Pin(PORTB, 5);
+            spi_config.pin_config.nss  = Pin(PORTG, 10);
             // SSD130x control pin config
-            pin_config.dc    = {DSY_GPIOB, 4};
-            pin_config.reset = {DSY_GPIOB, 15};
+            pin_config.dc    = Pin(PORTB, 4);
+            pin_config.reset = Pin(PORTB, 15);
         }
     };
     void Init(const Config& config)
     {
         // Initialize both GPIO
-        pin_dc_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_dc_.pin  = config.pin_config.dc;
-        dsy_gpio_init(&pin_dc_);
-        pin_reset_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_reset_.pin  = config.pin_config.reset;
-        dsy_gpio_init(&pin_reset_);
+        pin_dc_.Init(config.pin_config.dc, GPIO::Mode::OUTPUT);
+        pin_reset_.Init(config.pin_config.reset, GPIO::Mode::OUTPUT);
 
         // Initialize SPI
         spi_.Init(config.spi_config);
 
         // Reset and Configure OLED.
-        dsy_gpio_write(&pin_reset_, 0);
+        pin_reset_.Write(0);
         System::Delay(10);
-        dsy_gpio_write(&pin_reset_, 1);
+        pin_reset_.Write(1);
         System::Delay(10);
     };
     void SendCommand(uint8_t cmd)
     {
-        dsy_gpio_write(&pin_dc_, 0);
+        pin_dc_.Write(0);
         spi_.BlockingTransmit(&cmd, 1);
     };
 
     void SendData(uint8_t* buff, size_t size)
     {
-        dsy_gpio_write(&pin_dc_, 1);
+        pin_dc_.Write(1);
         spi_.BlockingTransmit(buff, size);
     };
 
   private:
     SpiHandle spi_;
-    dsy_gpio  pin_reset_;
-    dsy_gpio  pin_dc_;
+    GPIO      pin_reset_;
+    GPIO      pin_dc_;
 };
 
 /**
@@ -152,58 +148,50 @@ class SSD130x4WireSoftSpiTransport
         }
         struct
         {
-            uint32_t     sclk_delay;
-            dsy_gpio_pin sclk;
-            dsy_gpio_pin mosi;
-            dsy_gpio_pin dc;
-            dsy_gpio_pin reset;
+            uint32_t sclk_delay;
+            Pin      sclk;
+            Pin      mosi;
+            Pin      dc;
+            Pin      reset;
         } pin_config;
         void Defaults()
         {
             pin_config.sclk_delay = 0; // fast as possible?!
             // SPI peripheral config
-            pin_config.sclk = {DSY_GPIOD, 3}; /**< D10 - SPI2 SCK  */
-            pin_config.mosi = {DSY_GPIOC, 3}; /**< D9  - SPI2 MOSI */
+            pin_config.sclk = Pin(PORTD, 3); /**< D10 - SPI2 SCK  */
+            pin_config.mosi = Pin(PORTC, 3); /**< D9  - SPI2 MOSI */
             // SSD130x control pin config
-            pin_config.dc    = {DSY_GPIOC, 11}; //D2
-            pin_config.reset = {DSY_GPIOC, 10}; //D3
+            pin_config.dc    = Pin(PORTC, 11); //D2
+            pin_config.reset = Pin(PORTC, 10); //D3
         }
     };
     void Init(const Config& config)
     {
         // Initialize both GPIO
-        pin_sclk_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_sclk_.pin  = config.pin_config.sclk;
-        dsy_gpio_init(&pin_sclk_);
-        dsy_gpio_write(&pin_sclk_, 1); //ClockPolarity::LOW
-        clk_delay      = config.pin_config.sclk_delay;
-        pin_mosi_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_mosi_.pin  = config.pin_config.mosi;
-        dsy_gpio_init(&pin_mosi_);
-        dsy_gpio_write(&pin_mosi_, 0);
+        pin_sclk_.Init(config.pin_config.sclk, GPIO::Mode::OUTPUT);
+        pin_sclk_.Write(1); //ClockPolarity::LOW
+        clk_delay = config.pin_config.sclk_delay;
+        pin_mosi_.Init(config.pin_config.mosi, GPIO::Mode::OUTPUT);
+        pin_mosi_.Write(0);
 
-        pin_dc_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_dc_.pin  = config.pin_config.dc;
-        dsy_gpio_init(&pin_dc_);
-        pin_reset_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_reset_.pin  = config.pin_config.reset;
-        dsy_gpio_init(&pin_reset_);
+        pin_dc_.Init(config.pin_config.dc, GPIO::Mode::OUTPUT);
+        pin_reset_.Init(config.pin_config.reset, GPIO::Mode::OUTPUT);
 
         // Reset and Configure OLED.
-        dsy_gpio_write(&pin_reset_, 0);
+        pin_reset_.Write(0);
         System::Delay(10);
-        dsy_gpio_write(&pin_reset_, 1);
+        pin_reset_.Write(1);
         System::Delay(10);
     };
     void SendCommand(uint8_t cmd)
     {
-        dsy_gpio_write(&pin_dc_, 0);
+        pin_dc_.Write(0);
         SoftSpiTransmit(cmd);
     };
 
     void SendData(uint8_t* buff, size_t size)
     {
-        dsy_gpio_write(&pin_dc_, 1);
+        pin_dc_.Write(1);
         for(size_t i = 0; i < size; i++)
             SoftSpiTransmit(buff[i]);
     };
@@ -218,23 +206,23 @@ class SSD130x4WireSoftSpiTransport
 
         for(uint8_t bit = 0u; bit < 8u; bit++)
         {
-            dsy_gpio_write(&pin_mosi_, ((val & (1 << bit)) ? 1 : 0));
+            pin_mosi_.Write((val & (1 << bit)) ? 1 : 0);
 
             System::DelayTicks(clk_delay);
 
-            dsy_gpio_toggle(&pin_sclk_);
+            pin_sclk_.Toggle();
 
             System::DelayTicks(clk_delay);
 
-            dsy_gpio_toggle(&pin_sclk_);
+            pin_sclk_.Toggle();
         }
     }
 
     uint32_t clk_delay;
-    dsy_gpio pin_sclk_;
-    dsy_gpio pin_mosi_;
-    dsy_gpio pin_reset_;
-    dsy_gpio pin_dc_;
+    GPIO     pin_sclk_;
+    GPIO     pin_mosi_;
+    GPIO     pin_reset_;
+    GPIO     pin_dc_;
 };
 
 

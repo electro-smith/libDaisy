@@ -24,14 +24,14 @@ class LcdHD44780
 
     struct Config
     {
-        bool         cursor_on;
-        bool         cursor_blink;
-        dsy_gpio_pin rs, en, d4, d5, d6, d7;
+        bool cursor_on;
+        bool cursor_blink;
+        Pin  rs, en, d4, d5, d6, d7;
     };
 
     /** 
     Initializes the LCD.
-     * \param config is a struct that sets cursor on/off, cursor blink on/off and the dsy_gpio_pin's that connects to the LCD.
+     * \param config is a struct that sets cursor on/off, cursor blink on/off and the Pin's that connects to the LCD.
      */
     void Init(const Config &config);
 
@@ -60,11 +60,11 @@ class LcdHD44780
     void Clear();
 
   private:
-    bool     cursor_on;
-    bool     cursor_blink;
-    dsy_gpio lcd_pin_rs;
-    dsy_gpio lcd_pin_en;
-    dsy_gpio lcd_data_pin[4]; // D4-D7
+    bool cursor_on;
+    bool cursor_blink;
+    GPIO lcd_pin_rs;
+    GPIO lcd_pin_en;
+    GPIO lcd_data_pin[4]; // D4-D7
 
     void WriteData(uint8_t);
     void WriteCommand(uint8_t);

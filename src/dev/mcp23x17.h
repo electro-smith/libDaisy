@@ -93,8 +93,8 @@ class Mcp23017Transport
             i2c_config.periph         = I2CHandle::Config::Peripheral::I2C_1;
             i2c_config.speed          = I2CHandle::Config::Speed::I2C_1MHZ;
             i2c_config.mode           = I2CHandle::Config::Mode::I2C_MASTER;
-            i2c_config.pin_config.scl = {DSY_GPIOB, 8};
-            i2c_config.pin_config.sda = {DSY_GPIOB, 9};
+            i2c_config.pin_config.scl = Pin(PORTB, 8);
+            i2c_config.pin_config.sda = Pin(PORTB, 9);
             i2c_address               = 0x27;
         }
     };

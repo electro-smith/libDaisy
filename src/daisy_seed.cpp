@@ -1,68 +1,61 @@
 #include "daisy_seed.h"
 
-extern "C"
-{
-#include "dev/codec_ak4556.h"
-}
-
 using namespace daisy;
 
-#define SEED_LED_PORT DSY_GPIOC
-#define SEED_LED_PIN 7
+constexpr GPIOPort SEED_LED_PORT = PORTC;
+constexpr uint8_t  SEED_LED_PIN  = 7;
 
-#define SEED_TEST_POINT_PORT DSY_GPIOG
-#define SEED_TEST_POINT_PIN 14
+constexpr GPIOPort SEED_TEST_POINT_PORT = PORTG;
+constexpr uint8_t  SEED_TEST_POINT_PIN  = 14;
 
 #ifndef SEED_REV2
-const dsy_gpio_pin seedgpio[33] = {
+const Pin seedgpio[33] = {
     // GPIO 1-8
-    //{DSY_GPIOA, 8}, // removed on Rev4
-    {DSY_GPIOB, 12},
-    {DSY_GPIOC, 11},
-    {DSY_GPIOC, 10},
-    {DSY_GPIOC, 9},
-    {DSY_GPIOC, 8},
-    {DSY_GPIOD, 2},
-    {DSY_GPIOC, 12},
+    //{PORTA, 8}, // removed on Rev4
+    seed::D0,
+    seed::D1,
+    seed::D2,
+    seed::D3,
+    seed::D4,
+    seed::D5,
+    seed::D6,
     // GPIO 9-16
-    {DSY_GPIOG, 10},
-    {DSY_GPIOG, 11},
-    {DSY_GPIOB, 4},
-    {DSY_GPIOB, 5},
-    {DSY_GPIOB, 8},
-    {DSY_GPIOB, 9},
-    {DSY_GPIOB, 6},
-    {DSY_GPIOB, 7},
+    seed::D7,
+    seed::D8,
+    seed::D9,
+    seed::D10,
+    seed::D11,
+    seed::D12,
+    seed::D13,
+    seed::D14,
     // GPIO 17-24
-    {DSY_GPIOC, 0},
-    {DSY_GPIOA, 3},
-    {DSY_GPIOB, 1},
-    {DSY_GPIOA, 7},
-    {DSY_GPIOA, 6},
-    {DSY_GPIOC, 1},
-    {DSY_GPIOC, 4},
-    {DSY_GPIOA, 5},
+    seed::D15,
+    seed::D16,
+    seed::D17,
+    seed::D18,
+    seed::D19,
+    seed::D20,
+    seed::D21,
+    seed::D22,
     // GPIO 25-31
-    {DSY_GPIOA, 4},
-    {DSY_GPIOA, 1},
-    {DSY_GPIOA, 0},
-    {DSY_GPIOD, 11},
-    {DSY_GPIOG, 9},
-    {DSY_GPIOA, 2},
-    {DSY_GPIOB, 14},
-    {DSY_GPIOB, 15},
+    seed::D23,
+    seed::D24,
+    seed::D25,
+    seed::D26,
+    seed::D27,
+    seed::D28,
+    seed::D29,
+    seed::D30,
 
     // Seed2DFM exclusive pins
-    {DSY_GPIOC, 2},
-    {DSY_GPIOC, 3},
+    seed::D31,
+    seed::D32,
 };
 #else
-const dsy_gpio_port seed_ports[32] = {
-    DSY_GPIOA, DSY_GPIOB, DSY_GPIOC, DSY_GPIOC, DSY_GPIOC, DSY_GPIOC, DSY_GPIOD,
-    DSY_GPIOC, DSY_GPIOG, DSY_GPIOG, DSY_GPIOB, DSY_GPIOB, DSY_GPIOB, DSY_GPIOB,
-    DSY_GPIOB, DSY_GPIOB, DSY_GPIOC, DSY_GPIOA, DSY_GPIOA, DSY_GPIOB, DSY_GPIOA,
-    DSY_GPIOA, DSY_GPIOC, DSY_GPIOC, DSY_GPIOA, DSY_GPIOA, DSY_GPIOA, DSY_GPIOD,
-    DSY_GPIOG, DSY_GPIOA, DSY_GPIOB, DSY_GPIOB,
+const GPIOPort seed_ports[32] = {
+    PORTA, PORTB, PORTC, PORTC, PORTC, PORTC, PORTD, PORTC, PORTG, PORTG, PORTB,
+    PORTB, PORTB, PORTB, PORTB, PORTB, PORTC, PORTA, PORTA, PORTB, PORTA, PORTA,
+    PORTC, PORTC, PORTA, PORTA, PORTA, PORTD, PORTG, PORTA, PORTB, PORTB,
 };
 
 const uint8_t seed_pins[32] = {
@@ -70,23 +63,23 @@ const uint8_t seed_pins[32] = {
     0, 1,  3,  1,  7, 6, 1, 5,  5,  4,  0, 11, 9, 2, 14, 15,
 };
 
-const dsy_gpio_pin seedgpio[32] = {
-    {seed_ports[0], seed_pins[0]},   {seed_ports[1], seed_pins[1]},
-    {seed_ports[2], seed_pins[2]},   {seed_ports[3], seed_pins[3]},
-    {seed_ports[4], seed_pins[4]},   {seed_ports[5], seed_pins[5]},
-    {seed_ports[6], seed_pins[6]},   {seed_ports[7], seed_pins[7]},
-    {seed_ports[8], seed_pins[8]},   {seed_ports[9], seed_pins[9]},
-    {seed_ports[10], seed_pins[10]}, {seed_ports[11], seed_pins[11]},
-    {seed_ports[12], seed_pins[12]}, {seed_ports[13], seed_pins[13]},
-    {seed_ports[14], seed_pins[14]}, {seed_ports[15], seed_pins[15]},
-    {seed_ports[16], seed_pins[16]}, {seed_ports[17], seed_pins[17]},
-    {seed_ports[18], seed_pins[18]}, {seed_ports[19], seed_pins[19]},
-    {seed_ports[20], seed_pins[20]}, {seed_ports[21], seed_pins[21]},
-    {seed_ports[22], seed_pins[22]}, {seed_ports[23], seed_pins[23]},
-    {seed_ports[24], seed_pins[24]}, {seed_ports[25], seed_pins[25]},
-    {seed_ports[26], seed_pins[26]}, {seed_ports[27], seed_pins[27]},
-    {seed_ports[28], seed_pins[28]}, {seed_ports[29], seed_pins[29]},
-    {seed_ports[30], seed_pins[30]}, {seed_ports[31], seed_pins[31]},
+const Pin seedgpio[32] = {
+    Pin(seed_ports[0], seed_pins[0]),   Pin(seed_ports[1], seed_pins[1]),
+    Pin(seed_ports[2], seed_pins[2]),   Pin(seed_ports[3], seed_pins[3]),
+    Pin(seed_ports[4], seed_pins[4]),   Pin(seed_ports[5], seed_pins[5]),
+    Pin(seed_ports[6], seed_pins[6]),   Pin(seed_ports[7], seed_pins[7]),
+    Pin(seed_ports[8], seed_pins[8]),   Pin(seed_ports[9], seed_pins[9]),
+    Pin(seed_ports[10], seed_pins[10]), Pin(seed_ports[11], seed_pins[11]),
+    Pin(seed_ports[12], seed_pins[12]), Pin(seed_ports[13], seed_pins[13]),
+    Pin(seed_ports[14], seed_pins[14]), Pin(seed_ports[15], seed_pins[15]),
+    Pin(seed_ports[16], seed_pins[16]), Pin(seed_ports[17], seed_pins[17]),
+    Pin(seed_ports[18], seed_pins[18]), Pin(seed_ports[19], seed_pins[19]),
+    Pin(seed_ports[20], seed_pins[20]), Pin(seed_ports[21], seed_pins[21]),
+    Pin(seed_ports[22], seed_pins[22]), Pin(seed_ports[23], seed_pins[23]),
+    Pin(seed_ports[24], seed_pins[24]), Pin(seed_ports[25], seed_pins[25]),
+    Pin(seed_ports[26], seed_pins[26]), Pin(seed_ports[27], seed_pins[27]),
+    Pin(seed_ports[28], seed_pins[28]), Pin(seed_ports[29], seed_pins[29]),
+    Pin(seed_ports[30], seed_pins[30]), Pin(seed_ports[31], seed_pins[31]),
 };
 #endif
 
@@ -105,13 +98,14 @@ void DaisySeed::Init(bool boost)
 
     ConfigureQspi();
     // Configure the built-in GPIOs.
-    led.pin.port       = SEED_LED_PORT;
-    led.pin.pin        = SEED_LED_PIN;
-    led.mode           = DSY_GPIO_MODE_OUTPUT_PP;
-    testpoint.pin.port = SEED_TEST_POINT_PORT;
-    testpoint.pin.pin  = SEED_TEST_POINT_PIN;
-    testpoint.mode     = DSY_GPIO_MODE_OUTPUT_PP;
+    GPIO::Config &led_config       = led.GetConfig();
+    GPIO::Config &testpoint_config = testpoint.GetConfig();
 
+    led_config.pin  = Pin(SEED_LED_PORT, SEED_LED_PIN);
+    led_config.mode = GPIO::Mode::OUTPUT;
+
+    testpoint_config.pin  = Pin(SEED_TEST_POINT_PORT, SEED_TEST_POINT_PIN);
+    testpoint_config.mode = GPIO::Mode::OUTPUT;
 
     auto memory       = System::GetProgramMemoryRegion();
     auto boot_version = System::GetBootloaderVersion();
@@ -131,8 +125,8 @@ void DaisySeed::Init(bool boost)
        || (boot_version == System::BootInfo::Version::LT_v6_0
            && memory == System::MemoryRegion::INTERNAL_FLASH))
     {
-        dsy_gpio_init(&led);
-        dsy_gpio_init(&testpoint);
+        led.Init(led.GetConfig());
+        testpoint.Init(testpoint.GetConfig());
         sdram_handle.Init();
     }
 
@@ -151,30 +145,21 @@ void DaisySeed::DeInit()
     // This is intended to be used by the bootloader, but
     // we don't want to reinitialize pretty much anything in the
     // target application, so...
-    // qspi.DeInit();
-    // sdram_handle.DeInit();
-    // dsy_gpio_deinit(&led);
-    // dsy_gpio_deinit(&testpoint);
-
-    // dsy_gpio_pin codec_reset_pin;
-    // codec_reset_pin = {DSY_GPIOB, 11};
-    // // Perhaps a bit unnecessary, but maybe we'll make
-    // // this non-static at some point
-    // Ak4556::DeInit(codec_reset_pin);
-    // audio_handle.DeInit();
 
     system.DeInit();
 }
 
-dsy_gpio_pin DaisySeed::GetPin(uint8_t pin_idx)
+Pin DaisySeed::GetPin(uint8_t pin_idx)
 {
-    dsy_gpio_pin p;
+    Pin p;
     pin_idx = pin_idx < sizeof(seedgpio) / sizeof(seedgpio[0]) ? pin_idx : 0;
+
 #ifndef SEED_REV2
     p = seedgpio[pin_idx];
 #else
     p = {seed_ports[pin_idx], seed_pins[pin_idx]};
 #endif
+
     return p;
 }
 
@@ -237,15 +222,15 @@ float DaisySeed::AudioCallbackRate() const
 
 void DaisySeed::SetLed(bool state)
 {
-    dsy_gpio_write(&led, state);
+    led.Write(state);
 }
 
 void DaisySeed::SetTestPoint(bool state)
 {
-    dsy_gpio_write(&testpoint, state);
+    testpoint.Write(state);
 }
 
-const SaiHandle& DaisySeed::AudioSaiHandle() const
+const SaiHandle &DaisySeed::AudioSaiHandle() const
 {
     return sai_1_handle_;
 }
@@ -257,12 +242,12 @@ void DaisySeed::ConfigureQspi()
     qspi_config.device = QSPIHandle::Config::Device::IS25LP064A;
     qspi_config.mode   = QSPIHandle::Config::Mode::MEMORY_MAPPED;
 
-    qspi_config.pin_config.io0 = dsy_pin(DSY_GPIOF, 8);
-    qspi_config.pin_config.io1 = dsy_pin(DSY_GPIOF, 9);
-    qspi_config.pin_config.io2 = dsy_pin(DSY_GPIOF, 7);
-    qspi_config.pin_config.io3 = dsy_pin(DSY_GPIOF, 6);
-    qspi_config.pin_config.clk = dsy_pin(DSY_GPIOF, 10);
-    qspi_config.pin_config.ncs = dsy_pin(DSY_GPIOG, 6);
+    qspi_config.pin_config.io0 = Pin(PORTF, 8);
+    qspi_config.pin_config.io1 = Pin(PORTF, 9);
+    qspi_config.pin_config.io2 = Pin(PORTF, 7);
+    qspi_config.pin_config.io3 = Pin(PORTF, 6);
+    qspi_config.pin_config.clk = Pin(PORTF, 10);
+    qspi_config.pin_config.ncs = Pin(PORTG, 6);
 }
 void DaisySeed::ConfigureAudio()
 {
@@ -274,9 +259,9 @@ void DaisySeed::ConfigureAudio()
     sai_config.bit_depth       = SaiHandle::Config::BitDepth::SAI_24BIT;
     sai_config.a_sync          = SaiHandle::Config::Sync::MASTER;
     sai_config.b_sync          = SaiHandle::Config::Sync::SLAVE;
-    sai_config.pin_config.fs   = {DSY_GPIOE, 4};
-    sai_config.pin_config.mclk = {DSY_GPIOE, 2};
-    sai_config.pin_config.sck  = {DSY_GPIOE, 5};
+    sai_config.pin_config.fs   = Pin(PORTE, 4);
+    sai_config.pin_config.mclk = Pin(PORTE, 2);
+    sai_config.pin_config.sck  = Pin(PORTE, 5);
 
     // Device-based Init
     switch(CheckBoardVersion())
@@ -285,15 +270,15 @@ void DaisySeed::ConfigureAudio()
         {
             // Data Line Directions
             sai_config.a_dir         = SaiHandle::Config::Direction::RECEIVE;
-            sai_config.pin_config.sa = {DSY_GPIOE, 6};
+            sai_config.pin_config.sa = Pin(PORTE, 6);
             sai_config.b_dir         = SaiHandle::Config::Direction::TRANSMIT;
-            sai_config.pin_config.sb = {DSY_GPIOE, 3};
+            sai_config.pin_config.sb = Pin(PORTE, 3);
             I2CHandle::Config i2c_config;
             i2c_config.mode           = I2CHandle::Config::Mode::I2C_MASTER;
             i2c_config.periph         = I2CHandle::Config::Peripheral::I2C_2;
             i2c_config.speed          = I2CHandle::Config::Speed::I2C_400KHZ;
-            i2c_config.pin_config.scl = {DSY_GPIOH, 4};
-            i2c_config.pin_config.sda = {DSY_GPIOB, 11};
+            i2c_config.pin_config.scl = Pin(PORTH, 4);
+            i2c_config.pin_config.sda = Pin(PORTB, 11);
             I2CHandle i2c_handle;
             i2c_handle.Init(i2c_config);
             Wm8731::Config codec_cfg;
@@ -306,9 +291,9 @@ void DaisySeed::ConfigureAudio()
         {
             // Data Line Directions
             sai_config.a_dir         = SaiHandle::Config::Direction::TRANSMIT;
-            sai_config.pin_config.sa = {DSY_GPIOE, 6};
+            sai_config.pin_config.sa = Pin(PORTE, 6);
             sai_config.b_dir         = SaiHandle::Config::Direction::RECEIVE;
-            sai_config.pin_config.sb = {DSY_GPIOE, 3};
+            sai_config.pin_config.sb = Pin(PORTE, 3);
             /** PCM3060 disable deemphasis pin */
             GPIO deemp;
             deemp.Init(Pin(PORTB, 11), GPIO::Mode::OUTPUT);
@@ -320,12 +305,12 @@ void DaisySeed::ConfigureAudio()
         {
             // Data Line Directions
             sai_config.a_dir         = SaiHandle::Config::Direction::TRANSMIT;
-            sai_config.pin_config.sa = {DSY_GPIOE, 6};
+            sai_config.pin_config.sa = Pin(PORTE, 6);
             sai_config.b_dir         = SaiHandle::Config::Direction::RECEIVE;
-            sai_config.pin_config.sb = {DSY_GPIOE, 3};
-            dsy_gpio_pin codec_reset_pin;
-            codec_reset_pin = {DSY_GPIOB, 11};
-            Ak4556::Init(codec_reset_pin);
+            sai_config.pin_config.sb = Pin(PORTE, 3);
+
+            constexpr Pin codec_reset_pin = Pin(PORTB, 11);
+            codec.Init(codec_reset_pin);
         }
         break;
     }

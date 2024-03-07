@@ -142,10 +142,7 @@ void DaisyField::Init(bool boost)
     // Gate In
     gate_in.Init(PIN_GATE_IN);
     // Gate Out
-    gate_out.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    gate_out.pull = DSY_GPIO_NOPULL;
-    gate_out.pin  = PIN_GATE_OUT;
-    dsy_gpio_init(&gate_out);
+    gate_out.Init(PIN_GATE_OUT, GPIO::Mode::OUTPUT);
 
     //midi
     MidiUartHandler::Config midi_config;

@@ -20,31 +20,24 @@ class Switch3
     Switch3() {}
     ~Switch3() {}
 
-    void Init(dsy_gpio_pin pina, dsy_gpio_pin pinb)
+    void Init(Pin pina, Pin pinb)
     {
-        pina_gpio_.pin  = pina;
-        pina_gpio_.mode = DSY_GPIO_MODE_INPUT;
-        pina_gpio_.pull = DSY_GPIO_PULLUP;
-        dsy_gpio_init(&pina_gpio_);
-
-        pinb_gpio_.pin  = pinb;
-        pinb_gpio_.mode = DSY_GPIO_MODE_INPUT;
-        pinb_gpio_.pull = DSY_GPIO_PULLUP;
-        dsy_gpio_init(&pinb_gpio_);
+        pina_gpio_.Init(pina, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
+        pinb_gpio_.Init(pinb, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
     }
 
     int Read()
     {
-        if(!dsy_gpio_read(&pina_gpio_))
+        if(!pina_gpio_.Read())
             return POS_UP;
-        if(!dsy_gpio_read(&pinb_gpio_))
+        if(!pinb_gpio_.Read())
             return POS_DOWN;
         return POS_CENTER;
     }
 
   private:
-    dsy_gpio pina_gpio_;
-    dsy_gpio pinb_gpio_;
+    GPIO pina_gpio_;
+    GPIO pinb_gpio_;
 };
 
 } // namespace daisy

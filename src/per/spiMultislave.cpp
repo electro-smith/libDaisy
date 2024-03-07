@@ -11,10 +11,7 @@ SpiHandle::Result MultiSlaveSpiHandle::Init(const Config& config)
 
     for(size_t i = 0; i < config_.num_devices; i++)
     {
-        nss_pins[i].pin  = config_.pin_config.nss[i];
-        nss_pins[i].mode = DSY_GPIO_MODE_OUTPUT_PP;
-        nss_pins[i].pull = DSY_GPIO_NOPULL;
-        dsy_gpio_init(&nss_pins[i]);
+        nss_pins[i].Init(config_.pin_config.nss[i], GPIO::Mode::OUTPUT);
         DisableDevice(i);
     }
 
@@ -32,7 +29,7 @@ SpiHandle::Result MultiSlaveSpiHandle::Init(const Config& config)
     spi_config.pin_config.miso = config.pin_config.miso;
     spi_config.pin_config.mosi = config.pin_config.mosi;
     spi_config.pin_config.sclk = config.pin_config.sclk;
-    spi_config.pin_config.nss = {DSY_GPIOX, 0}; // we'll drive this by ourselves
+    spi_config.pin_config.nss  = Pin(PORTX, 0); // we'll drive this by ourselves
     return spiHandle_.Init(spi_config);
 }
 
@@ -164,12 +161,12 @@ int MultiSlaveSpiHandle::CheckError()
 
 void MultiSlaveSpiHandle::EnableDevice(size_t device_index)
 {
-    dsy_gpio_write(&nss_pins[device_index], 0);
+    nss_pins[device_index].Write(0);
 }
 
 void MultiSlaveSpiHandle::DisableDevice(size_t device_index)
 {
-    dsy_gpio_write(&nss_pins[device_index], 1);
+    nss_pins[device_index].Write(1);
 }
 
 void MultiSlaveSpiHandle::DmaStartCallback(void* context)

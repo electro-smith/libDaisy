@@ -1,7 +1,4 @@
 #include "per/sdmmc.h"
-#include "util/hal_map.h"
-//#include "fatfs.h"
-
 
 using namespace daisy;
 

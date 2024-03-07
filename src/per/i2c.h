@@ -1,4 +1,5 @@
 #pragma once
+#include "util/hal_map.h"
 #include "daisy_core.h"
 
 namespace daisy
@@ -56,9 +57,9 @@ class I2CHandle
         Peripheral periph; /**< & */
         struct
         {
-            dsy_gpio_pin scl; /**< & */
-            dsy_gpio_pin sda; /**< & */
-        } pin_config;         /**< & */
+            Pin scl;  /**< & */
+            Pin sda;  /**< & */
+        } pin_config; /**< & */
 
         Speed speed; /**< & */
         Mode  mode;  /**< & */

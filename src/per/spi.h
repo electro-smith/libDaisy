@@ -4,6 +4,10 @@
 
 #include "daisy_core.h"
 
+#if !UNIT_TEST
+#include "util/hal_map.h"
+#endif
+
 /* TODO:
 - Add documentation
 - Add IT
@@ -78,10 +82,10 @@ class SpiHandle
 
         struct
         {
-            dsy_gpio_pin sclk; /**< & */
-            dsy_gpio_pin miso; /**< & */
-            dsy_gpio_pin mosi; /**< & */
-            dsy_gpio_pin nss;  /**< & */
+            Pin sclk; /**< & */
+            Pin miso; /**< & */
+            Pin mosi; /**< & */
+            Pin nss;  /**< & */
         } pin_config;
 
         Config()

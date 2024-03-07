@@ -303,14 +303,13 @@ void System::ResetToBootloader(BootloaderMode mode)
     if(mode == BootloaderMode::STM)
     {
         // Initialize Boot Pin
-        dsy_gpio_pin bootpin = {DSY_GPIOG, 3};
-        dsy_gpio     pin;
-        pin.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin.pin  = bootpin;
-        dsy_gpio_init(&pin);
+        constexpr Pin bootpin = Pin(PORTG, 3);
+
+        GPIO pin;
+        pin.Init(bootpin, GPIO::Mode::OUTPUT);
 
         // Pull Pin HIGH
-        dsy_gpio_write(&pin, 1);
+        pin.Write(1);
 
         // wait a few ms for cap to charge
         HAL_Delay(10);
