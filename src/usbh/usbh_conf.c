@@ -217,6 +217,8 @@ USBH_StatusTypeDef USBH_LL_Init(USBH_HandleTypeDef *phost)
     /* Init USB_IP */
     if(phost->id == HOST_HS)
     {
+        memset(&hhcd_USB_OTG_HS, 0, sizeof(hhcd_USB_OTG_HS));
+
         /* Link the driver to the stack. */
         hhcd_USB_OTG_HS.pData = phost;
         phost->pData          = &hhcd_USB_OTG_HS;

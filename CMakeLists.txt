@@ -217,6 +217,7 @@ target_include_directories(${TARGET} PUBLIC
     Middlewares/Patched/ST/STM32_USB_Device_Library/Class/CDC/Inc
     Middlewares/ST/STM32_USB_Host_Library/Core/Inc
     Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc
+    Middlewares/ST/STM32_USB_Host_Library/Class/MIDI/Inc
     Middlewares/Third_Party/FatFs/src
     src
     src/sys

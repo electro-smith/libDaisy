@@ -23,7 +23,8 @@ class MidiUsbTransport
         enum Periph
         {
             INTERNAL = 0,
-            EXTERNAL
+            EXTERNAL,
+            HOST
         };
 
         Periph periph;
