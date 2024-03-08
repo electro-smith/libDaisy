@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: recursive
 
@@ -34,11 +34,20 @@ jobs:
         cd tests/build/bin
         ./libDaisy_gtest --gtest_output=xml:gtestresults.xml
     
-    - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v1
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
       if: always()
       with:
-        files: tests/build/bin/**/*.xml
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-
+        name: Test Results
+        path: tests/build/bin/**/*.xml
+  
+  event_file:
+    name: "Event File"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: Event File
+        path: ${{ github.event_path }}
 
