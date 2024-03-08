@@ -12,7 +12,7 @@ on:
     - 'src/**'
     - 'tests/**'
     - '.github/workflows/**'
-jobs:  
+jobs:
   ###############################################################################
   # builds the automated tests with clang; runs tests and exports results
   googleTest:
@@ -28,14 +28,14 @@ jobs:
       uses: lukka/get-cmake@latest
 
     - name: Configure CMake
-      run: cmake -B build -D CMAKE_CROSSCOMPILING=NO
+      run: cmake -B build -S tests
 
     - name: Build Tests
       run: cmake --build build
-    
+
     - name: Run Tests
       run: ctest --test-dir build --output-junit gtestresults.xml
-    
+
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action@v2
       if: always()
