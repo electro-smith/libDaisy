@@ -1,7 +1,8 @@
-#ifndef DSY_MSD
-#define DSY_MSD
+#ifndef USB_HOST_H
+#define USB_HOST_H
 
 #include <cstdint>
+#include "usbh_def.h"
 
 namespace daisy
 {
@@ -39,7 +40,7 @@ class USBHostHandle
         FAIL,
         NOT_SUPPORTED,
         UNRECOVERED_ERROR,
-        ERROR_SPEED_UNKNOWN,
+        ERROR_SPEED_UNKNOWN
     };
 
     /** @brief User defineable callback for USB Connection */
@@ -49,7 +50,7 @@ class USBHostHandle
     typedef void (*DisconnectCallback)(void* data);
 
     /** @brief User defineable callback upon completion of class initialization 
-     *  For example, when a USB drive is connected and the mass storage class 
+     *  For example, when a USB drive is connected and the usb device class
      *  initialization has finished, this callback will fire.
      * 
      *  @param userdata a pointer to some arbitrary data for use by the user.
@@ -66,7 +67,7 @@ class USBHostHandle
     */
     typedef void (*ErrorCallback)(void* data);
 
-    /** @brief Configuration structure for interfacing with MSD Driver */
+    /** @brief Configuration structure for interfacing with USB host Driver */
     struct Config
     {
         Config()
@@ -84,16 +85,26 @@ class USBHostHandle
         void*               userdata;
     };
 
+    /**
+     * Register a USB class
+     */
+    Result RegisterClass(USBH_ClassTypeDef* pClass);
+
     /** Initializes the USB drivers and starts timeout.
      * 
      *  \param config Configuration struct for initialization
      */
-    Result Init(Config config);
+    Result Init(USBHostHandle::Config& config);
 
-    /** Deinitializes MSD-related peripherals
+    /** Deinitializes USB host-related peripherals
      * 
      */
     Result Deinit();
+
+    /**
+     * Returns true if the specified class is active
+     */
+    bool IsActiveClass(USBH_ClassTypeDef* usbClass);
 
     /** Manages usb host functionality
      * 
@@ -114,6 +125,10 @@ class USBHostHandle
      * 
      */
     bool GetPresent();
+
+    /** Returns name of the connected devices if there is one
+     */
+    const char* GetProductName();
 
     USBHostHandle() : pimpl_(nullptr) {}
     USBHostHandle(const USBHostHandle& other) = default;

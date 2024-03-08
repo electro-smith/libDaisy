@@ -34,13 +34,22 @@ jobs:
       run: cmake --build build
 
     - name: Run Tests
-      run: ctest --test-dir build --output-junit gtestresults.xml
+      run: ctest --test-dir build --output-junit results/gtestresults.xml
 
-    - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action@v2
+    - name: Upload Test Results
+      uses: actions/upload-artifact@v4
       if: always()
       with:
-        files: build/**/*.xml
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        name: Test Results
+        path: build/results/*.xml
 
+  event_file:
+    name: "Event File"
+    runs-on: ubuntu-latest
+    steps:
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: Event File
+        path: ${{ github.event_path }}
 

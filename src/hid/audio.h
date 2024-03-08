@@ -27,27 +27,19 @@ class AudioHandle
     struct Config
     {
         /** number of samples to process per callback */
-        size_t blocksize;
+        size_t blocksize = 48;
 
         /**< Sample rate of audio */
-        SaiHandle::Config::SampleRate samplerate;
+        SaiHandle::Config::SampleRate samplerate
+            = SaiHandle::Config::SampleRate::SAI_48KHZ;
 
         /** factor for adjustment before and after callback for hardware that may have extra headroom */
-        float postgain;
+        float postgain = 1.f;
 
         /** factor for additional one-sided compensation to audio path for hardware that may
          *  have unequal input/output ranges
          */
-        float output_compensation;
-
-        /** Sets default values for config struct */
-        Config()
-        : blocksize(48),
-          samplerate(SaiHandle::Config::SampleRate::SAI_48KHZ),
-          postgain(1.f),
-          output_compensation(1.f)
-        {
-        }
+        float output_compensation = 1.f;
     };
 
     enum class Result

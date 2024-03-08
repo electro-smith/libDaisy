@@ -1,8 +1,8 @@
 # USB Device Library
 add_library(STM32_USB_DEVICE_LIBRARY STATIC
   ../Patched/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c
-  STM32_USB_Device_Library/Core/Src/usbd_core.c  
-  STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c  
+  STM32_USB_Device_Library/Core/Src/usbd_core.c
+  STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c
   STM32_USB_Device_Library/Core/Src/usbd_ioreq.c
 )
 target_include_directories(STM32_USB_DEVICE_LIBRARY PUBLIC
@@ -28,6 +28,7 @@ add_library(STM32_USB_HOST_LIBRARY STATIC
 target_include_directories(STM32_USB_HOST_LIBRARY PUBLIC
   STM32_USB_Host_Library/Core/Inc
   STM32_USB_Host_Library/Class/MSC/Inc
+  STM32_USB_Host_Library/Class/MIDI/Inc
   ${MODULE_DIR}/usbh # for conf
   ${MODULE_DIR} # for daisy_core.h
 )

@@ -222,6 +222,7 @@ Middlewares/Third_Party/FatFs/src/ff_gen_drv.c  \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_bot.c \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_scsi.c \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc.c \
+Middlewares/ST/STM32_USB_Host_Library/Class/MIDI/Src/usbh_midi.c \
 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.c \
 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.c \
 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.c \
@@ -297,7 +298,6 @@ C_DEFS =  \
 -DDATA_IN_D2_SRAM
 # ^ added for easy startup access
 
-
 C_INCLUDES = \
 -I$(MODULE_DIR) \
 -I$(MODULE_DIR)/sys \
@@ -311,6 +311,7 @@ C_INCLUDES = \
 -IMiddlewares/Patched/ST/STM32_USB_Device_Library/Class/CDC/Inc \
 -IMiddlewares/ST/STM32_USB_Host_Library/Core/Inc \
 -IMiddlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc \
+-IMiddlewares/ST/STM32_USB_Host_Library/Class/MIDI/Inc \
 -IMiddlewares/Third_Party/FatFs/src \
 -I$(MODULE_DIR) \
 -I.

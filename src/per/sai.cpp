@@ -542,6 +542,8 @@ SaiHandle::Result SaiHandle::Init(const Config& config)
 }
 SaiHandle::Result SaiHandle::DeInit()
 {
+    if(!IsInitialized())
+        return Result::ERR;
     return pimpl_->DeInit();
 }
 const SaiHandle::Config& SaiHandle::GetConfig() const

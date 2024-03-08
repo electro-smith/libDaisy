@@ -1,7 +1,15 @@
 #include "system.h"
 #include "usbd_cdc.h"
+#include "usbh_midi.h"
 #include "hid/usb_midi.h"
 #include <cassert>
+
+extern "C"
+{
+    extern USBH_HandleTypeDef hUsbHostHS;
+}
+
+#define pUSB_Host &hUsbHostHS
 
 using namespace daisy;
 
@@ -12,6 +20,7 @@ class MidiUsbTransport::Impl
 
     void StartRx(MidiRxParseCallback callback, void* context)
     {
+        FlushRx();
         rx_active_      = true;
         parse_callback_ = callback;
         parse_context_  = context;
@@ -80,6 +89,12 @@ void ReceiveCallback(uint8_t* buffer, uint32_t* length)
     }
 }
 
+static void HostReceiveCallback(uint8_t* buffer, size_t sz, void* pUser)
+{
+    uint32_t len = sz;
+    ReceiveCallback(buffer, &len);
+}
+
 void MidiUsbTransport::Impl::Init(Config config)
 {
     // Borrowed from logger
@@ -88,36 +103,55 @@ void MidiUsbTransport::Impl::Init(Config config)
      */
     // static_assert(1u == sizeof(MidiUsbTransport::Impl::usb_handle_), "UsbHandle is not static");
 
-    // This tells the USB middleware to send out MIDI descriptors instead of CDC
-    usbd_mode = USBD_MODE_MIDI;
-    config_   = config;
-
-    UsbHandle::UsbPeriph periph = UsbHandle::FS_INTERNAL;
-    if(config_.periph == Config::EXTERNAL)
-        periph = UsbHandle::FS_EXTERNAL;
-
-    usb_handle_.Init(periph);
-
+    config_    = config;
     rx_active_ = false;
-    System::Delay(10);
-    usb_handle_.SetReceiveCallback(ReceiveCallback, periph);
+
+    if(config_.periph == Config::HOST)
+    {
+        System::Delay(10);
+        USBH_MIDI_SetReceiveCallback(pUSB_Host, HostReceiveCallback, nullptr);
+    }
+    else
+    {
+        // This tells the USB middleware to send out MIDI descriptors instead of CDC
+        usbd_mode = USBD_MODE_MIDI;
+
+        UsbHandle::UsbPeriph periph = UsbHandle::FS_INTERNAL;
+        if(config_.periph == Config::EXTERNAL)
+            periph = UsbHandle::FS_EXTERNAL;
+
+        usb_handle_.Init(periph);
+
+        System::Delay(10);
+        usb_handle_.SetReceiveCallback(ReceiveCallback, periph);
+    }
 }
 
 void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
 {
-    UsbHandle::Result result;
-    int               attempt_count = config_.tx_retry_count;
-    bool              should_retry;
+    int  attempt_count = config_.tx_retry_count;
+    bool should_retry;
 
     MidiToUsb(buffer, size);
     do
     {
-        if(config_.periph == Config::EXTERNAL)
-            result = usb_handle_.TransmitExternal(tx_buffer_, tx_ptr_);
+        if(config_.periph == Config::HOST)
+        {
+            MIDI_ErrorTypeDef result;
+            result       = USBH_MIDI_Transmit(pUSB_Host, tx_buffer_, tx_ptr_);
+            should_retry = (result == MIDI_BUSY) && attempt_count--;
+        }
         else
-            result = usb_handle_.TransmitInternal(tx_buffer_, tx_ptr_);
+        {
+            UsbHandle::Result result;
+            if(config_.periph == Config::EXTERNAL)
+                result = usb_handle_.TransmitExternal(tx_buffer_, tx_ptr_);
+            else
+                result = usb_handle_.TransmitInternal(tx_buffer_, tx_ptr_);
+            should_retry
+                = (result == UsbHandle::Result::ERR) && attempt_count--;
+        }
 
-        should_retry = (result == UsbHandle::Result::ERR) && attempt_count--;
 
         if(should_retry)
             System::DelayUs(100);

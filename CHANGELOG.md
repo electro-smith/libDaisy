@@ -8,6 +8,16 @@
 
 ### Migrating
 
+## v7.0.1
+
+### Features
+- Change `AudioHandle::Config` to an aggregate type, allows for aggregate init. Doesn't break existing code.
+- Add SerialRead example, shows how to read via Serial over USB
+- Add SH1106 OLED driver
+
+### Bugfixes
+- Fix float range for `Random::GetFloat()`
+- Move SAI initialized check so it isn't a no-op
 
 ## v7.0.0
 
