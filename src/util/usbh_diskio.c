@@ -36,7 +36,7 @@ extern USBH_HandleTypeDef hUsbHostHS;
 #define ENABLE_USB_DMA_CACHE_MAINTENANCE 1
 
 /* Private variables ---------------------------------------------------------*/
-static DWORD DMA_BUFFER_MEM_SECTION scratch[_MAX_SS / 4];
+static DWORD DMA_BUFFER_MEM_SECTION scratch[FF_MAX_SS / 4];
 extern USBH_HandleTypeDef           hUSB_Host;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -138,7 +138,7 @@ DRESULT USBH_read(BYTE lun, BYTE *buff, DWORD sector, UINT count)
 
             if(status == USBH_OK)
             {
-                memcpy(&buff[count * _MAX_SS], scratch, _MAX_SS);
+                memcpy(&buff[count * FF_MAX_SS], scratch, FF_MAX_SS);
             }
             else
             {
@@ -216,7 +216,7 @@ DRESULT USBH_write(BYTE lun, const BYTE *buff, DWORD sector, UINT count)
     {
         while(count--)
         {
-            memcpy(scratch, &buff[count * _MAX_SS], _MAX_SS);
+            memcpy(scratch, &buff[count * FF_MAX_SS], FF_MAX_SS);
 
             status = USBH_MSC_Write(
                 &hUSB_Host, lun, sector + count, (BYTE *)scratch, 1);

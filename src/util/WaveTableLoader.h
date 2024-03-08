@@ -1,4 +1,5 @@
 #pragma once
+#include "stddef.h"
 #include "fatfs.h"
 #include "util/wav_format.h"
 namespace daisy

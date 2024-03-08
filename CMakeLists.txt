@@ -1,9 +1,8 @@
 cmake_policy(SET CMP0048 NEW)
-project (libdaisy VERSION 1.0.0)
+project(libdaisy VERSION 1.0.0)
 cmake_minimum_required(VERSION 3.20)
 
 set(TARGET daisy)
-
 
 set(MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
 
@@ -201,11 +200,13 @@ add_library(${TARGET} STATIC
     Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_bot.c
     Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_scsi.c
     Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc.c
-    Middlewares/Third_Party/FatFs/src/diskio.c
-    Middlewares/Third_Party/FatFs/src/ff.c
-    Middlewares/Third_Party/FatFs/src/ff_gen_drv.c
+    Middlewares/Third_Party/FatFs/source/diskio.c
+    Middlewares/Third_Party/FatFs/source/ff.c
+    Middlewares/Third_Party/FatFs/source/ff_gen_drv.c
+    Middlewares/Third_Party/FatFs/source/ffunicode.c
+    Middlewares/Third_Party/FatFs/source/ffsystem_baremetal.c
     core/startup_stm32h750xx.c
-    )
+)
 
 target_include_directories(${TARGET} PUBLIC
     ${MODULE_DIR}
@@ -218,16 +219,16 @@ target_include_directories(${TARGET} PUBLIC
     Middlewares/ST/STM32_USB_Host_Library/Core/Inc
     Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc
     Middlewares/ST/STM32_USB_Host_Library/Class/MIDI/Inc
-    Middlewares/Third_Party/FatFs/src
+    Middlewares/Third_Party/FatFs/source
     src
     src/sys
     src/usbd
     src/usbh
-    )
+)
 
 set_target_properties(${TARGET} PROPERTIES
-  CXX_STANDARD 14
-  CXX_STANDARD_REQUIRED
-  C_STANDARD 11
-  C_STANDARD_REQUIRED
-  )
+    CXX_STANDARD 14
+    CXX_STANDARD_REQUIRED
+    C_STANDARD 11
+    C_STANDARD_REQUIRED
+)
