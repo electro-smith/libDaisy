@@ -7,11 +7,16 @@ list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_LIST_DIR}")
 
 set(TOOLCHAIN arm-none-eabi)
 
-if(NOT DEFINED TOOLCHAIN_PREFIX)
-    message(STATUS "Please specify the TOOLCHAIN_PREFIX !\n For example: -DTOOLCHAIN_PREFIX=\"path/to/LLVMEmbeddedToolchainForArm\"")
+if(NOT DEFINED CMAKE_C_COMPILER)
+    if(NOT DEFINED ENV{CMAKE_C_COMPILER})
+        message(FATAL_ERROR "Please provide CMAKE_C_COMPILER at configuration if not using autodetection")
+    endif()
+
+    set(CMAKE_C_COMPILER $ENV{CMAKE_C_COMPILER})
 endif()
 
-cmake_path(SET TOOLCHAIN_BIN_DIR ${TOOLCHAIN_PREFIX}/bin)
+cmake_path(GET CMAKE_C_COMPILER PARENT_PATH TOOLCHAIN_BIN_DIR)
+cmake_path(GET TOOLCHAIN_BIN_DIR PARENT_PATH TOOLCHAIN_PREFIX)
 
 if(WIN32)
     set(TOOLCHAIN_EXT ".exe")
@@ -39,7 +44,6 @@ set(CMAKE_C_FLAGS_RELEASE "" CACHE INTERNAL "C Compiler options for release buil
 set(CMAKE_CXX_FLAGS_RELEASE "" CACHE INTERNAL "C++ Compiler options for release build type")
 set(CMAKE_ASM_FLAGS_RELEASE "" CACHE INTERNAL "ASM Compiler options for release build type")
 set(CMAKE_EXE_LINKER_FLAGS_RELEASE "" CACHE INTERNAL "Linker options for release build type")
-
 
 # ---------------------------------------------------------------------------------------
 # Set compilers

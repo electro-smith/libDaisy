@@ -24,6 +24,7 @@ add_library(STM32_USB_HOST_LIBRARY STATIC
   STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_bot.c
   STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_scsi.c
   STM32_USB_Host_Library/Class/MSC/Src/usbh_msc.c
+  STM32_USB_Host_Library/Class/MIDI/Src/usbh_midi.c
 )
 target_include_directories(STM32_USB_HOST_LIBRARY PUBLIC
   STM32_USB_Host_Library/Core/Inc
