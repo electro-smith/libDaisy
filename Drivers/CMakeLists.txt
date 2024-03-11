@@ -5,11 +5,14 @@ target_include_directories(CMSIS_CORE INTERFACE
 )
 
 # CMSIS Device
-add_library(CMSIS_DEVICE_H7 INTERFACE)
-target_include_directories(CMSIS_DEVICE_H7 INTERFACE
+add_library(CMSIS_DEVICE_H7 STATIC)
+target_include_directories(CMSIS_DEVICE_H7 PUBLIC
   CMSIS-Device/ST/STM32H7xx/Include
 )
-target_link_libraries(CMSIS_DEVICE_H7 INTERFACE
+target_sources(CMSIS_DEVICE_H7 PRIVATE
+  ${MODULE_DIR}/sys/system_stm32h7xx.c
+)
+target_link_libraries(CMSIS_DEVICE_H7 PUBLIC
   CMSIS_CORE
   STM32H7XX_HAL_DRIVER
 )

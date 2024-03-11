@@ -83,7 +83,6 @@ add_library(daisy STATIC
     ${MODULE_DIR}/per/uart.cpp
     ${MODULE_DIR}/sys/dma.c
     ${MODULE_DIR}/sys/fatfs.cpp
-    ${MODULE_DIR}/sys/system_stm32h7xx.c
     ${MODULE_DIR}/sys/system.cpp
     ${MODULE_DIR}/ui/AbstractMenu.cpp
     ${MODULE_DIR}/ui/FullScreenItemMenu.cpp
