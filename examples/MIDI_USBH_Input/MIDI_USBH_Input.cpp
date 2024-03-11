@@ -11,28 +11,6 @@
 /** This prevents us from having to type "daisy::" in front of a lot of things. */
 using namespace daisy;
 
-/** Fills string with string representation of MidiEvent::Type
- *  str needs to be at least 16 bytes long to store the data
- * TODO: Move this into MIDI lib or something 
-*/
-void GetMidiTypeAsString(MidiEvent& msg, char* str)
-{
-    switch(msg.type)
-    {
-        case NoteOff: strcpy(str, "NoteOff"); break;
-        case NoteOn: strcpy(str, "NoteOn"); break;
-        case PolyphonicKeyPressure: strcpy(str, "PolyKeyPres."); break;
-        case ControlChange: strcpy(str, "CC"); break;
-        case ProgramChange: strcpy(str, "Prog. Change"); break;
-        case ChannelPressure: strcpy(str, "Chn. Pressure"); break;
-        case PitchBend: strcpy(str, "PitchBend"); break;
-        case SystemCommon: strcpy(str, "Sys. Common"); break;
-        case SystemRealTime: strcpy(str, "Sys. Realtime"); break;
-        case ChannelMode: strcpy(str, "Chn. Mode"); break;
-        default: strcpy(str, "Unknown"); break;
-    }
-}
-
 /** Global Hardware access */
 DaisySeed       hw;
 MidiUsbHandler midi;
@@ -150,8 +128,7 @@ int main(void)
                 {
                     auto msg = event_log.PopFront();
                     char outstr[128];
-                    char type_str[16];
-                    GetMidiTypeAsString(msg, type_str);
+                    const char* type_str = MidiEvent::GetTypeAsString(msg);
                     sprintf(outstr,
                             "time:\t%ld\ttype: %s\tChannel:  %d\tData MSB: "
                             "%d\tData LSB: %d\n",
