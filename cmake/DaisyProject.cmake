@@ -5,7 +5,7 @@ if(DEFINED CUSTOM_LINKER_SCRIPT)
 else()
     cmake_path(SET LINKER_SCRIPT NORMALIZE ${CMAKE_CURRENT_LIST_DIR}/../core/STM32H750IB_${DAISY_STORAGE}.lds)
 
-    if(NOT DAISY_STORAGE STREQUAL flash)
+    if(NOT DAISY_STORAGE STREQUAL "flash")
         target_compile_features(daisy PRIVATE BOOT_APP)
     endif()
 endif()
