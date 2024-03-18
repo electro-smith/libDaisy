@@ -10,36 +10,59 @@ else()
     endif()
 endif()
 
+function(daisy_targets func options)
+    get_target_property(target_list daisy LINK_LIBRARIES)
+
+    foreach(target IN LISTS target_list)
+        get_target_property(type ${target} TYPE)
+
+        if(type STREQUAL "INTERFACE_LIBRARY")
+            cmake_language(CALL target_${func} ${target} INTERFACE ${options})
+        else()
+            cmake_language(CALL target_${func} ${target} PRIVATE ${options})
+        endif()
+    endforeach()
+
+    cmake_language(CALL target_${func} daisy PRIVATE ${options})
+endfunction(daisy_targets)
+
 # Global optimization options
 if(NOT DEFINED FIRMWARE_DEBUG_OPT_LEVEL)
-    # Enables optimizations that do not interfere with debugging.
-    add_compile_options($<$<CONFIG:Debug>:-Og>)
-else()
-    add_compile_options($<$<CONFIG:Debug>:${FIRMWARE_DEBUG_OPT_LEVEL}>)
+    set(FIRMWARE_DEBUG_OPT_LEVEL -Og)
 endif()
 
+add_compile_options($<$<CONFIG:Debug>:${FIRMWARE_DEBUG_OPT_LEVEL}>)
+daisy_targets(compile_options $<$<CONFIG:Debug>:${FIRMWARE_DEBUG_OPT_LEVEL}>)
+
 if(NOT DEFINED FIRMWARE_RELEASE_OPT_LEVEL)
-    add_compile_options($<$<CONFIG:Release>:-O3>)
-else()
-    add_compile_options($<$<CONFIG:Release>:${FIRMWARE_RELEASE_OPT_LEVEL}>)
+    set(FIRMWARE_RELEASE_OPT_LEVEL -O3)
 endif()
+
+add_compile_options($<$<CONFIG:Release>:${FIRMWARE_RELEASE_OPT_LEVEL}>)
+daisy_targets(compile_options $<$<CONFIG:Release>:${FIRMWARE_RELEASE_OPT_LEVEL}>)
 
 if(NOT DEFINED FIRMWARE_MINSIZEREL_OPT_LEVEL)
     # Optimize for size. -Os enables all -O2 optimizations.
-    add_compile_options($<$<CONFIG:MinSizeRel>:-Os>)
-else()
-    add_compile_options($<$<CONFIG:MinSizeRel>:${FIRMWARE_MINSIZEREL_OPT_LEVEL}>)
+    set(FIRMWARE_MINSIZE_REL_OPT_LEVEL -Os)
 endif()
+
+add_compile_options($<$<CONFIG:MinSizeRel>:${FIRMWARE_MINSIZEREL_OPT_LEVEL}>)
+daisy_targets(compile_options $<$<CONFIG:MinSizeRel>:${FIRMWARE_MINSIZEREL_OPT_LEVEL}>)
 
 # Always use LTO on Release
 add_compile_options($<$<CONFIG:Release,MinSizeRel,RelWithDebInfo>:-flto>)
+daisy_targets(compile_options $<$<CONFIG:Release,MinSizeRel,RelWithDebInfo>:-flto>)
+
 add_link_options($<$<CONFIG:Release,MinSizeRel,RelWithDebInfo>:-flto>)
+daisy_targets(link_options $<$<CONFIG:Release,MinSizeRel,RelWithDebInfo>:-flto>)
 
 # Include debug symbols when compiling with debug flags
 add_compile_options($<$<CONFIG:Debug,RelWithDebInfo>:-ggdb3>)
+daisy_targets(compile_options $<$<CONFIG:Debug,RelWithDebInfo>:-ggdb3>)
 
 # Define NDEBUG when not compiling with debug flags
 add_compile_definitions($<$<CONFIG:Release,MinSizeRel>:NDEBUG>)
+daisy_targets(compile_definitions $<$<CONFIG:Release,MinSizeRel>:NDEBUG>)
 
 add_executable(${FIRMWARE_NAME} ${FIRMWARE_SOURCES})
 

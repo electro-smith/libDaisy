@@ -134,6 +134,9 @@ set_target_properties(daisy PROPERTIES
     C_STANDARD_REQUIRED
 )
 
-add_subdirectory(examples EXCLUDE_FROM_ALL)
-get_all_targets(example_targets examples)
-add_custom_target(examples DEPENDS ${example_targets})
+# Don't add examples if we're being included in another project
+if(PROJECT_IS_TOP_LEVEL)
+    add_subdirectory(examples EXCLUDE_FROM_ALL)
+    get_all_targets(example_targets examples)
+    add_custom_target(examples DEPENDS ${example_targets})
+endif()

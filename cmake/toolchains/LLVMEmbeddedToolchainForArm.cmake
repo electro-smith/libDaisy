@@ -25,7 +25,6 @@ else()
 endif()
 
 include(stm32h750xx)
-link_libraries(semihost)
 
 set(CMAKE_ASM_FLAGS "-x assembler-with-cpp" CACHE INTERNAL "ASM Compiler options")
 
@@ -48,7 +47,7 @@ set(CMAKE_EXE_LINKER_FLAGS_RELEASE "" CACHE INTERNAL "Linker options for release
 # ---------------------------------------------------------------------------------------
 # Set compilers
 # ---------------------------------------------------------------------------------------
-set(CLANG_TARGET_TRIPLE arm-none-eabihf)
+set(CLANG_TARGET_TRIPLE thumbv7em-none-eabihf)
 set(CMAKE_C_COMPILER ${TOOLCHAIN_BIN_DIR}/clang${TOOLCHAIN_EXT} CACHE FILEPATH "C Compiler")
 set(CMAKE_CXX_COMPILER ${TOOLCHAIN_BIN_DIR}/clang++${TOOLCHAIN_EXT} CACHE FILEPATH "C++ Compiler")
 set(CMAKE_ASM_COMPILER ${TOOLCHAIN_BIN_DIR}/clang${TOOLCHAIN_EXT} CACHE FILEPATH "ASM Compiler")
