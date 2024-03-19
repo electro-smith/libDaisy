@@ -65,32 +65,29 @@ SECTIONS
 		PROVIDE(__exidx_end = .);
 	} > SRAM
 
-	.ARM.attributes :
-	{
-		*(.ARM.attributes)
-	} > SRAM
+	.ARM.attributes 0 : { *(.ARM.attributes) }
 
 	.preinit_array :
 	{
-		PROVIDE(__preinit_array_start = .);
+		PROVIDE_HIDDEN(__preinit_array_start = .);
 		KEEP(*(.preinit_array*))
-		PROVIDE(__preinit_array_end = .);
+		PROVIDE_HIDDEN(__preinit_array_end = .);
 	} > SRAM
 
 	.init_array :
 	{
-		PROVIDE(__init_array_start = .);
+		PROVIDE_HIDDEN(__init_array_start = .);
 		KEEP(*(SORT(.init_array.*)))
 		KEEP(*(.init_array*))
-		PROVIDE(__init_array_end = .);
+		PROVIDE_HIDDEN(__init_array_end = .);
 	} > SRAM
 
 	.fini_array :
 	{
-		PROVIDE(__fini_array_start = .);
+		PROVIDE_HIDDEN(__fini_array_start = .);
 		KEEP(*(.fini_array*))
 		KEEP(*(SORT(.fini_array.*)))
-		PROVIDE(__fini_array_end = .);
+		PROVIDE_HIDDEN(__fini_array_end = .);
 	} > SRAM
 
 	.sram1_bss (NOLOAD) :
@@ -243,8 +240,10 @@ SECTIONS
 	{
 		. = ALIGN(4);
 		PROVIDE(__heap_start__ = .);
+		PROVIDE(__heap_start = .);
 		KEEP(*(.heap))
 		. = ALIGN(4);
+		PROVIDE(__heap_end = .);
 		PROVIDE(__heap_end__ = .);
 	} > RAM_D2
 

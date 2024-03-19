@@ -118,7 +118,7 @@ LLVM/
 transcode report.txt
 /examples/*/build
 /example_projects/*/build
-/build
+/build*
 /doc/*.md
 /core/build
 /doc/html
@@ -129,6 +129,6 @@ VisualGDBCache
 vs/*.log
 
 tests/libDaisy_gtest
-tests/build/bin/
+tests/build/
 examples/**/build/
 

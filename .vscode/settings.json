@@ -87,8 +87,9 @@
         ]
     },
     "testMate.cpp.test.executables": "tests/build/bin/*",
-    "gtest-adapter.debugConfig": [
-        "Launch Tests Locally"
+    "cmake.sourceDirectory": [
+        "${workspaceFolder}",
+        "${workspaceFolder}/tests",
     ],
-    "gtest-adapter.supportLocation": true,
+    "cmake.buildDirectory": "${sourceDirectory}/build",
 }

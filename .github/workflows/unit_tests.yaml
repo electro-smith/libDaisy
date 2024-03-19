@@ -12,7 +12,7 @@ on:
     - 'src/**'
     - 'tests/**'
     - '.github/workflows/**'
-jobs:  
+jobs:
   ###############################################################################
   # builds the automated tests with clang; runs tests and exports results
   googleTest:
@@ -24,23 +24,25 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Build
-      run: |
-        cd tests
-        make release
-    
+    - name: Setup CMake
+      uses: lukka/get-cmake@latest
+
+    - name: Configure CMake
+      run: cmake -B build -S tests
+
+    - name: Build Tests
+      run: cmake --build build
+
     - name: Run Tests
-      run: |
-        cd tests/build/bin
-        ./libDaisy_gtest --gtest_output=xml:gtestresults.xml
-    
+      run: ctest --test-dir build --output-junit results/gtestresults.xml
+
     - name: Upload Test Results
       uses: actions/upload-artifact@v4
       if: always()
       with:
         name: Test Results
-        path: tests/build/bin/**/*.xml
-  
+        path: build/results/*.xml
+
   event_file:
     name: "Event File"
     runs-on: ubuntu-latest
