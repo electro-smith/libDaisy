@@ -35,17 +35,18 @@ class LedDriverPca9685
     /** Buffer Type for a single PCA9685 driver chip. */
     struct __attribute__((packed)) PCA9685TransmitBuffer
     {
-        /** register address */
-        uint8_t registerAddr = PCA9685_LED0;
         struct __attribute__((packed))
         {
+            /** register address */
+            uint8_t regAddr;
             /** cycle at which to switch on the led */
             uint16_t on;
             /** cycle at which to switch off the led */
             uint16_t off;
         } leds[16];
-        /** full size in bytes */
-        static constexpr uint16_t size = 16 * 4 + 1;
+
+        /** Whether any led in this buff has an unwritten update */
+        bool updated[16];
     };
     /** Buffer type for the entire DMA buffer. */
     using DmaBuffer = PCA9685TransmitBuffer[numDrivers];
@@ -126,13 +127,26 @@ class LedDriverPca9685
         const auto d  = GetDriverForLed(ledIndex);
         const auto ch = GetDriverChannelForLed(ledIndex);
         // mask away the "full on" bit
-        const auto on                = draw_buffer_[d].leds[ch].on & (0x0FFF);
-        draw_buffer_[d].leds[ch].off = (on + rawBrightness) & (0x0FFF);
+        const auto on  = draw_buffer_[d].leds[ch].on & (0x0FFF);
+        const auto off = (on + rawBrightness) & (0x0FFF);
+
+        draw_buffer_[d].updated[ch] |= off != draw_buffer_[d].leds[ch].off;
+
+        draw_buffer_[d].leds[ch].off = off;
+
         // full on condition
         if(rawBrightness >= 0x0FFF)
-            draw_buffer_[d].leds[ch].on = 0x1000 | on; // set "full on" bit
+        {
+            draw_buffer_[d].updated[ch]
+                |= !(draw_buffer_[d].leds[ch].on & 0x1000); // updating on?
+            draw_buffer_[d].leds[ch].on = 0x1000 | on;      // set "full on" bit
+        }
         else
-            draw_buffer_[d].leds[ch].on = on; // clear "full on" bit
+        {
+            draw_buffer_[d].updated[ch]
+                |= draw_buffer_[d].leds[ch].on & 0x1000; // updating on?
+            draw_buffer_[d].leds[ch].on = on;            // clear "full on" bit
+        }
     }
 
     /** Swaps the current draw buffer and the current transmit buffer and
@@ -150,12 +164,18 @@ class LedDriverPca9685
 
         // copy current transmit buffer contents to the new draw buffer
         // to keep the led settings (if required)
-        if(persistentBufferContents)
+        // and reset led update status
+        for(int d = 0; d < numDrivers; d++)
         {
-            for(int d = 0; d < numDrivers; d++)
-                for(int ch = 0; ch < 16; ch++)
+            for(int ch = 0; ch < 16; ch++)
+            {
+                if(persistentBufferContents)
+                {
                     draw_buffer_[d].leds[ch].off
                         = transmit_buffer_[d].leds[ch].off;
+                }
+                draw_buffer_[d].updated[ch] = false;
+            }
         }
 
         // start transmission
@@ -175,17 +195,30 @@ class LedDriverPca9685
 
         const auto    d       = current_driver_idx_;
         const uint8_t address = PCA9685_I2C_BASE_ADDRESS | addresses_[d];
-        const auto    status  = i2c_.TransmitDma(address,
-                                             (uint8_t*)&transmit_buffer_[d],
-                                             PCA9685TransmitBuffer::size,
-                                             &TxCpltCallback,
-                                             this);
-        if(status != I2CHandle::Result::OK)
+
+        for(int i = 0; i < GetNumLeds(); i++)
         {
-            // TODO: fix this :-)
-            // Reinit I2C (probably a flag to kill, but hey this works fairly well for now.)
-            i2c_.Init(i2c_.GetConfig());
+            uint8_t ch = GetDriverChannelForLed(i);
+
+            if(transmit_buffer_[d].updated[ch])
+            {
+                const auto status
+                    = i2c_.TransmitDma(address,
+                                       (uint8_t*)&transmit_buffer_[d].leds[ch],
+                                       5,
+                                       NULL,
+                                       this);
+
+                if(status != I2CHandle::Result::OK)
+                {
+                    // TODO: fix this :-)
+                    // Reinit I2C (probably a flag to kill, but hey this works fairly well for now.)
+                    i2c_.Init(i2c_.GetConfig());
+                }
+            }
         }
+
+        TxCpltCallback(this, I2CHandle::Result::OK);
     }
     uint16_t GetStartCycleForLed(int ledIndex) const
     {
@@ -203,15 +236,18 @@ class LedDriverPca9685
     {
         for(int led = 0; led < GetNumLeds(); led++)
         {
-            const auto d                     = GetDriverForLed(led);
-            const auto ch                    = GetDriverChannelForLed(led);
-            const auto startCycle            = GetStartCycleForLed(led);
-            draw_buffer_[d].registerAddr     = PCA9685_LED0;
-            draw_buffer_[d].leds[ch].on      = startCycle;
-            draw_buffer_[d].leds[ch].off     = startCycle;
-            transmit_buffer_[d].registerAddr = PCA9685_LED0;
-            transmit_buffer_[d].leds[ch].on  = startCycle;
-            transmit_buffer_[d].leds[ch].off = startCycle;
+            const auto d                         = GetDriverForLed(led);
+            const auto ch                        = GetDriverChannelForLed(led);
+            const auto startCycle                = GetStartCycleForLed(led);
+            draw_buffer_[d].leds[ch].regAddr     = PCA9685_LED0 + 4 * ch;
+            draw_buffer_[d].leds[ch].on          = startCycle;
+            draw_buffer_[d].leds[ch].off         = startCycle;
+            draw_buffer_[d].updated[ch]          = true;
+            transmit_buffer_[d].leds[ch].regAddr = PCA9685_LED0 + 4 * ch;
+            transmit_buffer_[d].leds[ch].on      = startCycle;
+            transmit_buffer_[d].leds[ch].off     = startCycle;
+            transmit_buffer_[d].leds[ch].off     = startCycle;
+            transmit_buffer_[d].updated[ch]      = true;
         }
     }
 
@@ -243,6 +279,7 @@ class LedDriverPca9685
             buffer[0] = PCA9685_MODE1;
             // auto increment on
             buffer[1] = 0b00100000;
+            // buffer[1] = 0b00000000;
             i2c_.TransmitBlocking(address, buffer, 2, 1);
             System::Delay(20);
             buffer[0] = PCA9685_MODE2;
@@ -277,7 +314,7 @@ class LedDriverPca9685
     uint8_t                addresses_[numDrivers];
     dsy_gpio_pin           oe_pin_;
     dsy_gpio               oe_pin_gpio_;
-    // index of the dirver that is currently updated.
+    // index of the driver that is currently updated.
     volatile int8_t current_driver_idx_;
     const uint16_t  gamma_table_[256] = {
         0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
