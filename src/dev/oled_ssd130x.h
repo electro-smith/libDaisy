@@ -481,19 +481,19 @@ class SSD1307Driver
         {
             case 64:
                 uDispayOffset = 0x60;
-                uMultiplex = 0x7F;
-            break;
+                uMultiplex    = 0x7F;
+                break;
 
             case 80:
                 uDispayOffset = 0x68;
-                uMultiplex = 0x4F;
-            break;
+                uMultiplex    = 0x4F;
+                break;
 
             case 128:
             default:
                 uDispayOffset = 0x00;
-                uMultiplex = 0x7F;
-            break;
+                uMultiplex    = 0x7F;
+                break;
         }
 
         // Display Off
