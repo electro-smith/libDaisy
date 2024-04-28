@@ -498,7 +498,7 @@ class SSD1307Driver
 
         // Display Off
         transport_.SendCommand(0xaE);
-        
+ 
         // Memory Mode
         transport_.SendCommand(0x20);
 
@@ -535,10 +535,9 @@ class SSD1307Driver
         // Contrast Control
         transport_.SendCommand(0x81);
         transport_.SendCommand(0x80);
-        
+
         // Display On
         transport_.SendCommand(0xAF);
-
     };
 
     size_t Width() const { return width; };
