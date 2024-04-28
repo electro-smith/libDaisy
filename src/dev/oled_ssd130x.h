@@ -498,7 +498,7 @@ class SSD1307Driver
 
         // Display Off
         transport_.SendCommand(0xaE);
- 
+
         // Memory Mode
         transport_.SendCommand(0x20);
 
