@@ -6,6 +6,7 @@
 #include "per/spi.h"
 #include "per/gpio.h"
 #include "sys/system.h"
+#include "stm32h7xx_hal.h"
 
 namespace daisy
 {
@@ -78,6 +79,7 @@ class SSD130x4WireSpiTransport
             dsy_gpio_pin dc;    /**< & */
             dsy_gpio_pin reset; /**< & */
         } pin_config;
+        bool useDma;
         void Defaults()
         {
             // SPI peripheral config
@@ -98,6 +100,8 @@ class SSD130x4WireSpiTransport
             // SSD130x control pin config
             pin_config.dc    = {DSY_GPIOB, 4};
             pin_config.reset = {DSY_GPIOB, 15};
+            // Using DMA off by default
+            useDma = false;
         }
     };
     void Init(const Config& config)
@@ -119,16 +123,30 @@ class SSD130x4WireSpiTransport
         dsy_gpio_write(&pin_reset_, 1);
         System::Delay(10);
     };
+    
     void SendCommand(uint8_t cmd)
     {
         dsy_gpio_write(&pin_dc_, 0);
         spi_.BlockingTransmit(&cmd, 1);
     };
 
+    void SendCommands(uint8_t* buff, size_t size)
+    {
+        dsy_gpio_write(&pin_dc_, 0);
+        spi_.BlockingTransmit(buff, size);
+    };
+
     void SendData(uint8_t* buff, size_t size)
     {
         dsy_gpio_write(&pin_dc_, 1);
         spi_.BlockingTransmit(buff, size);
+    };
+
+    void SendDataDma(uint8_t* buff, size_t size, SpiHandle::EndCallbackFunctionPtr end_callback, void* context)
+    {
+        SCB_CleanInvalidateDCache_by_Addr(buff, size);
+        dsy_gpio_write(&pin_dc_, 1);
+        spi_.DmaTransmit(buff, size, NULL, end_callback, context);
     };
 
   private:
@@ -389,6 +407,14 @@ class SSD130xDriver
         }
     };
 
+    /**
+     * Has update finished
+    */
+    bool UpdateFinished()
+    {
+        return true;
+    }
+
   protected:
     Transport transport_;
     uint8_t   buffer_[width * height / 8];
@@ -473,6 +499,8 @@ class SSD1307Driver
     void Init(Config config)
     {
         transport_.Init(config.transport_config);
+
+        useDma_ = config.transport_config.useDma;
 
         // Init routine...
         uint8_t uDispayOffset;
@@ -566,7 +594,56 @@ class SSD1307Driver
     */
     void Update()
     {
-        uint8_t i;
+        if(useDma_)
+        {
+            transferPagesCount_ = (height / 8);
+            if(transferPagesCount_)
+            {
+                updateing_ = true;
+                TransferPageDma(0);
+            }
+        }
+        else
+        {
+            uint8_t i;
+            uint8_t high_column_addr;
+            switch(height)
+            {
+                case 32: high_column_addr = 0x12; break;
+
+                default: high_column_addr = 0x10; break;
+            }
+            for(i = 0; i < (height / 8); i++)
+            {
+                transport_.SendCommand(0xB0 + i);
+                transport_.SendCommand(0x00);
+                transport_.SendCommand(high_column_addr);
+                transport_.SendData(&buffer_[width * i], width);
+            }
+            updateing_ = false;
+        }
+    };
+
+    /**
+     * Has update finished
+    */
+    bool UpdateFinished()
+    {
+        return !updateing_;
+    }
+
+  private:
+    Transport transport_;
+    uint8_t   buffer_[width * height / 8];
+    bool      updateing_;
+    uint8_t   transferPagesCount_;
+    uint8_t   transferingPage_;
+    bool      useDma_;
+
+    void TransferPageDma(uint8_t page)
+    {
+        transferingPage_ = page;
+
         uint8_t high_column_addr;
         switch(height)
         {
@@ -574,18 +651,31 @@ class SSD1307Driver
 
             default: high_column_addr = 0x10; break;
         }
-        for(i = 0; i < (height / 8); i++)
-        {
-            transport_.SendCommand(0xB0 + i);
-            transport_.SendCommand(0x00);
-            transport_.SendCommand(high_column_addr);
-            transport_.SendData(&buffer_[width * i], width);
-        }
-    };
+        uint8_t commands[] = { static_cast<uint8_t>(0xB0 + transferingPage_), 0x00, high_column_addr };
+        transport_.SendCommands(commands, 3);
+        // transport_.SendCommand(0xB0 + transferingPage_);
+        // transport_.SendCommand(0x00);
+        // transport_.SendCommand(high_column_addr);
+        transport_.SendDataDma(&buffer_[width * transferingPage_], width, SpiPageCompleteCallback, this);
+//        transport_.SendDataDma(&buffer_[width * 16], width, SpiPageCompleteCallback, this);
+    }
 
-  private:
-    Transport transport_;
-    uint8_t   buffer_[width * height / 8];
+    void PageTransfered(void)
+    {
+        if(transferingPage_ < transferPagesCount_-1)
+        {
+            TransferPageDma(transferingPage_+1);
+        }
+        else
+            updateing_ = false;
+    }
+    
+    static void SpiPageCompleteCallback(void* context, daisy::SpiHandle::Result result)
+    {
+        dsy_gpio_write(pUpdatePin, true);
+        static_cast<SSD1307Driver*>(context)->PageTransfered();
+        dsy_gpio_write(pUpdatePin, false);
+    }
 };
 
 /**
