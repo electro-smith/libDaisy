@@ -37,6 +37,8 @@
 #include "per/rng.h"
 #include "hid/disp/display.h"
 #include "hid/disp/oled_display.h"
+#include "hid/disp/color_display.h"
+#include "hid/disp/oled_color_display.h"
 #include "hid/disp/graphics_common.h"
 #include "hid/wavplayer.h"
 #include "hid/led.h"
