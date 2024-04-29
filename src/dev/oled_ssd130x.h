@@ -6,6 +6,7 @@
 #include "per/spi.h"
 #include "per/gpio.h"
 #include "sys/system.h"
+#include "stm32h7xx_hal.h"
 
 namespace daisy
 {
@@ -78,6 +79,7 @@ class SSD130x4WireSpiTransport
             dsy_gpio_pin dc;    /**< & */
             dsy_gpio_pin reset; /**< & */
         } pin_config;
+        bool useDma;
         void Defaults()
         {
             // SPI peripheral config
@@ -98,6 +100,8 @@ class SSD130x4WireSpiTransport
             // SSD130x control pin config
             pin_config.dc    = {DSY_GPIOB, 4};
             pin_config.reset = {DSY_GPIOB, 15};
+            // Using DMA off by default
+            useDma = false;
         }
     };
     void Init(const Config& config)
@@ -119,16 +123,33 @@ class SSD130x4WireSpiTransport
         dsy_gpio_write(&pin_reset_, 1);
         System::Delay(10);
     };
+
     void SendCommand(uint8_t cmd)
     {
         dsy_gpio_write(&pin_dc_, 0);
         spi_.BlockingTransmit(&cmd, 1);
     };
 
+    void SendCommands(uint8_t* buff, size_t size)
+    {
+        dsy_gpio_write(&pin_dc_, 0);
+        spi_.BlockingTransmit(buff, size);
+    };
+
     void SendData(uint8_t* buff, size_t size)
     {
         dsy_gpio_write(&pin_dc_, 1);
         spi_.BlockingTransmit(buff, size);
+    };
+
+    void SendDataDma(uint8_t*                          buff,
+                     size_t                            size,
+                     SpiHandle::EndCallbackFunctionPtr end_callback,
+                     void*                             context)
+    {
+        SCB_CleanInvalidateDCache_by_Addr(buff, size);
+        dsy_gpio_write(&pin_dc_, 1);
+        spi_.DmaTransmit(buff, size, NULL, end_callback, context);
     };
 
   private:
@@ -389,6 +410,11 @@ class SSD130xDriver
         }
     };
 
+    /**
+     * Has update finished
+    */
+    bool UpdateFinished() { return true; }
+
   protected:
     Transport transport_;
     uint8_t   buffer_[width * height / 8];
@@ -456,6 +482,239 @@ using SSD130xI2c64x32Driver = daisy::SSD130xDriver<64, 32, SSD130xI2CTransport>;
  */
 using SSD130x4WireSoftSpi128x64Driver
     = daisy::SSD130xDriver<128, 64, SSD130x4WireSoftSpiTransport>;
+
+
+/**
+ * A driver implementation for the SSD1307
+ */
+template <size_t width, size_t height, typename Transport>
+class SSD1307Driver
+{
+  public:
+    struct Config
+    {
+        typename Transport::Config transport_config;
+    };
+
+    void Init(Config config)
+    {
+        transport_.Init(config.transport_config);
+
+        useDma_ = config.transport_config.useDma;
+
+        // Init routine...
+        uint8_t uDispayOffset;
+        uint8_t uMultiplex;
+        switch(height)
+        {
+            case 64:
+                uDispayOffset = 0x60;
+                uMultiplex    = 0x7F;
+                break;
+
+            case 80:
+                uDispayOffset = 0x68;
+                uMultiplex    = 0x4F;
+                break;
+
+            case 128:
+            default:
+                uDispayOffset = 0x00;
+                uMultiplex    = 0x7F;
+                break;
+        }
+
+        // Display Off
+        transport_.SendCommand(0xaE);
+
+        // Memory Mode
+        transport_.SendCommand(0x20);
+
+        // Normal Display
+        transport_.SendCommand(0xA6);
+
+        // Multiplex Ratio
+        transport_.SendCommand(0xA8);
+        transport_.SendCommand(uMultiplex);
+
+        // All On Resume
+        transport_.SendCommand(0xA4);
+
+        // Display Offset
+        transport_.SendCommand(0xD3);
+        transport_.SendCommand(uDispayOffset);
+
+        // Display Clock Divide Ratio
+        transport_.SendCommand(0xD5);
+        transport_.SendCommand(0x80);
+
+        // Pre Charge
+        transport_.SendCommand(0xD9);
+        transport_.SendCommand(0x22);
+
+        // Com Pins
+        transport_.SendCommand(0xDA);
+        transport_.SendCommand(0x12);
+
+        // VCOM Detect
+        transport_.SendCommand(0xDB);
+        transport_.SendCommand(0x35);
+
+        // Contrast Control
+        transport_.SendCommand(0x81);
+        transport_.SendCommand(0x80);
+
+        // Display On
+        transport_.SendCommand(0xAF);
+    };
+
+    size_t Width() const { return width; };
+    size_t Height() const { return height; };
+
+    void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on)
+    {
+        if(x >= width || y >= height)
+            return;
+        if(on)
+            buffer_[x + (y / 8) * width] |= (1 << (y % 8));
+        else
+            buffer_[x + (y / 8) * width] &= ~(1 << (y % 8));
+    }
+
+    void Fill(bool on)
+    {
+        for(size_t i = 0; i < sizeof(buffer_); i++)
+        {
+            buffer_[i] = on ? 0xff : 0x00;
+        }
+    };
+
+    /**
+     * Update the display 
+    */
+    void Update()
+    {
+        if(useDma_)
+        {
+            transferPagesCount_ = (height / 8);
+            if(transferPagesCount_)
+            {
+                updateing_ = true;
+                TransferPageDma(0);
+            }
+        }
+        else
+        {
+            uint8_t i;
+            uint8_t high_column_addr;
+            switch(height)
+            {
+                case 32: high_column_addr = 0x12; break;
+
+                default: high_column_addr = 0x10; break;
+            }
+            for(i = 0; i < (height / 8); i++)
+            {
+                transport_.SendCommand(0xB0 + i);
+                transport_.SendCommand(0x00);
+                transport_.SendCommand(high_column_addr);
+                transport_.SendData(&buffer_[width * i], width);
+            }
+            updateing_ = false;
+        }
+    };
+
+    /**
+     * Has update finished
+    */
+    bool UpdateFinished() { return !updateing_; }
+
+  private:
+    Transport transport_;
+    uint8_t   buffer_[width * height / 8];
+    bool      updateing_;
+    uint8_t   transferPagesCount_;
+    uint8_t   transferingPage_;
+    bool      useDma_;
+
+    void TransferPageDma(uint8_t page)
+    {
+        transferingPage_ = page;
+
+        uint8_t high_column_addr;
+        switch(height)
+        {
+            case 32: high_column_addr = 0x12; break;
+
+            default: high_column_addr = 0x10; break;
+        }
+        uint8_t commands[] = {static_cast<uint8_t>(0xB0 + transferingPage_),
+                              0x00,
+                              high_column_addr};
+        transport_.SendCommands(commands, 3);
+        // transport_.SendCommand(0xB0 + transferingPage_);
+        // transport_.SendCommand(0x00);
+        // transport_.SendCommand(high_column_addr);
+        transport_.SendDataDma(&buffer_[width * transferingPage_],
+                               width,
+                               SpiPageCompleteCallback,
+                               this);
+        //        transport_.SendDataDma(&buffer_[width * 16], width, SpiPageCompleteCallback, this);
+    }
+
+    void PageTransfered(void)
+    {
+        if(transferingPage_ < transferPagesCount_ - 1)
+        {
+            TransferPageDma(transferingPage_ + 1);
+        }
+        else
+            updateing_ = false;
+    }
+
+    static void SpiPageCompleteCallback(void*                    context,
+                                        daisy::SpiHandle::Result result)
+    {
+        static_cast<SSD1307Driver*>(context)->PageTransfered();
+    }
+};
+
+/**
+ * A driver for the SSD1307 128x64 OLED displays connected via 4 wire SPI  
+ */
+using SSD13074WireSpi128x64Driver
+    = daisy::SSD1307Driver<128, 64, SSD130x4WireSpiTransport>;
+
+/**
+ * A driver for the SSD1307 128x80 OLED displays connected via 4 wire SPI  
+ */
+using SSD13074WireSpi128x80Driver
+    = daisy::SSD1307Driver<128, 80, SSD130x4WireSpiTransport>;
+
+/**
+ * A driver for the SSD1307 128x128 OLED displays connected via 4 wire SPI  
+ */
+using SSD13074WireSpi128x128Driver
+    = daisy::SSD1307Driver<128, 128, SSD130x4WireSpiTransport>;
+
+/**
+ * A driver for the SSD1307 128x64 OLED displays connected via I2C  
+ */
+using SSD1307I2c128x64Driver
+    = daisy::SSD130xDriver<128, 64, SSD130xI2CTransport>;
+
+/**
+ * A driver for the SSD1307 128x80 OLED displays connected via I2C  
+ */
+using SSD1307I2c128x80Driver
+    = daisy::SSD1307Driver<128, 80, SSD130xI2CTransport>;
+
+/**
+ * A driver for the SSD1307 128x128 OLED displays connected via I2C  
+ */
+using SSD1307I2c128x128Driver
+    = daisy::SSD130xDriver<128, 128, SSD130xI2CTransport>;
+
 
 }; // namespace daisy
 
