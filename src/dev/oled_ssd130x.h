@@ -675,9 +675,7 @@ class SSD1307Driver
     static void SpiPageCompleteCallback(void*                    context,
                                         daisy::SpiHandle::Result result)
     {
-        dsy_gpio_write(pUpdatePin, true);
         static_cast<SSD1307Driver*>(context)->PageTransfered();
-        dsy_gpio_write(pUpdatePin, false);
     }
 };
 
