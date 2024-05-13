@@ -6,20 +6,20 @@
 
 namespace daisy
 {
-/** 
+/**
  * Support for I2S Audio Protocol with different bit-depth, samplerate options
- * Allows for master or slave, as well as freedom of selecting direction, 
+ * Allows for master or slave, as well as freedom of selecting direction,
  * and other behavior for each peripheral, and block.
- * 
+ *
  * DMA Transfer commands must use buffers located within non-cached memory or use cache maintenance
  * To declare an unitialized global element in the DMA memory section:
  *    int32_t DSY_DMA_BUFFER_SECTOR my_buffer[96];
  *
- * Callback functions will be called once per half of the buffer. In the above example, 
+ * Callback functions will be called once per half of the buffer. In the above example,
  * the callback function would be called once for every 48 samples.
- * 
+ *
  * Use SAI Handle like this:
- * 
+ *
  *  SaiHandle::Config sai_config;
  *  sai_config.periph          = SaiHandle::Config::Peripheral::SAI_1;
  *  sai_config.sr              = SaiHandle::Config::SampleRate::SAI_48KHZ;
@@ -70,7 +70,7 @@ class SaiHandle
             SAI_32BIT,
         };
 
-        /** Specifies whether a particular block is the master or the slave 
+        /** Specifies whether a particular block is the master or the slave
          ** If both are set to slave, no MCLK signal will be used, and it is
          ** expected that the codec will have its own xtal.
          */
@@ -118,16 +118,16 @@ class SaiHandle
     /** Returns the current configuration */
     const Config& GetConfig() const;
 
-    /** Callback Function to be called when DMA transfer is complete and half complete. 
+    /** Callback Function to be called when DMA transfer is complete and half complete.
      ** This callback is prepared however the data is transmitted/received from the device.
      ** For example, using an AK4556 the data will be interleaved 24bit MSB Justified
-     ** 
+     **
      ** The hid/audio class will be allow for type conversions, de-interleaving, etc.
      */
     typedef void (*CallbackFunctionPtr)(int32_t* in, int32_t* out, size_t size);
 
-    /** Starts Rx and Tx in Circular Buffer Mode 
-     ** The callback will be called when half of the buffer is ready, 
+    /** Starts Rx and Tx in Circular Buffer Mode
+     ** The callback will be called when half of the buffer is ready,
      ** and will handle size/2 samples per callback.
      */
     Result StartDma(int32_t*            buffer_rx,
@@ -138,15 +138,20 @@ class SaiHandle
     /** Stops the DMA stream for the SAI blocks in use. */
     Result StopDma();
 
-    /** Returns the samplerate based on the current configuration */
+    /** Returns the (idealized) samplerate based on the current configuration */
     float GetSampleRate();
 
-    /** Returns the number of samples per audio block 
+    /** Returns the exact samplerate based on the current configuration.
+     *  This is only valid after successful initialization.
+    */
+    float GetPreciseSampleRate();
+
+    /** Returns the number of samples per audio block
      ** Calculated as Buffer Size / 2 / number of channels */
     size_t GetBlockSize();
 
-    /** Returns the Block Rate of the current stream based on the size 
-     ** of the buffer passed in, and the current samplerate. 
+    /** Returns the Block Rate of the current stream based on the size
+     ** of the buffer passed in, and the current samplerate.
      */
     float GetBlockRate();
 
