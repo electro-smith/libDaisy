@@ -28,6 +28,7 @@ class SaiHandle::Impl
 
     // Utility functions
     float  GetSampleRate();
+    float  GetPreciseSampleRate() const;
     size_t GetBlockSize();
     float  GetBlockRate();
 
@@ -42,6 +43,9 @@ class SaiHandle::Impl
 
     /** Offset stored for weird inter-SAI stuff.*/
     size_t dma_offset;
+
+    /** Precise sample rate based on peripheral clock division */
+    float sr_precise;
 
     /** Callback that dispatches user callback from Cplt and HalfCplt DMA Callbacks */
     void InternalCallback(size_t offset);
@@ -201,6 +205,14 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
         return Result::ERR;
     }
 
+    uint32_t per_freq = (sai_idx == 0)
+                            ? HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_SAI1)
+                            : HAL_RCCEx_GetPeriphCLKFreq(RCC_PERIPHCLK_SAI2);
+    uint32_t mck_div = sai_a_handle_.Init.Mckdiv;
+
+    // Actual LRClk sample rate is subject to integer peripheral clock division
+    sr_precise = static_cast<float>(per_freq) / (mck_div * 256.0f);
+
     return Result::OK;
 }
 
@@ -230,10 +242,10 @@ void SaiHandle::Impl::InitDma(PeripheralBlock block)
         hsai = &sai_a_handle_;
         hdma = &sai_a_dma_handle_;
         dir  = config_.a_dir == Config::Direction::RECEIVE
-                  ? DMA_PERIPH_TO_MEMORY
-                  : DMA_MEMORY_TO_PERIPH;
-        req = sai_idx == int(Config::Peripheral::SAI_1) ? DMA_REQUEST_SAI1_A
-                                                        : DMA_REQUEST_SAI2_A;
+                   ? DMA_PERIPH_TO_MEMORY
+                   : DMA_MEMORY_TO_PERIPH;
+        req  = sai_idx == int(Config::Peripheral::SAI_1) ? DMA_REQUEST_SAI1_A
+                                                         : DMA_REQUEST_SAI2_A;
 
         if(sai_idx == int(Config::Peripheral::SAI_1))
             hdma->Instance = DMA1_Stream0;
@@ -245,10 +257,10 @@ void SaiHandle::Impl::InitDma(PeripheralBlock block)
         hsai = &sai_b_handle_;
         hdma = &sai_b_dma_handle_;
         dir  = config_.b_dir == Config::Direction::RECEIVE
-                  ? DMA_PERIPH_TO_MEMORY
-                  : DMA_MEMORY_TO_PERIPH;
-        req = sai_idx == int(Config::Peripheral::SAI_1) ? DMA_REQUEST_SAI1_B
-                                                        : DMA_REQUEST_SAI2_B;
+                   ? DMA_PERIPH_TO_MEMORY
+                   : DMA_MEMORY_TO_PERIPH;
+        req  = sai_idx == int(Config::Peripheral::SAI_1) ? DMA_REQUEST_SAI1_B
+                                                         : DMA_REQUEST_SAI2_B;
 
         if(sai_idx == int(Config::Peripheral::SAI_1))
             hdma->Instance = DMA1_Stream1;
@@ -349,6 +361,10 @@ float SaiHandle::Impl::GetSampleRate()
         default: return 48000.f;
     }
 }
+float SaiHandle::Impl::GetPreciseSampleRate() const
+{
+    return sr_precise;
+}
 size_t SaiHandle::Impl::GetBlockSize()
 {
     // Buffer handled in halves, 2 samples per frame (1 per channel)
@@ -365,10 +381,10 @@ void SaiHandle::Impl::InitPins()
     GPIO_InitTypeDef GPIO_InitStruct;
     GPIO_TypeDef*    port;
     dsy_gpio_pin*    cfg[] = {&config_.pin_config.fs,
-                           &config_.pin_config.mclk,
-                           &config_.pin_config.sck,
-                           &config_.pin_config.sa,
-                           &config_.pin_config.sb};
+                              &config_.pin_config.mclk,
+                              &config_.pin_config.sck,
+                              &config_.pin_config.sa,
+                              &config_.pin_config.sb};
     // Special Case checks
     dsy_gpio_pin sck_af_pin = {DSY_GPIOA, 2};
     is_master               = (config_.a_sync == Config::Sync::MASTER
@@ -568,6 +584,11 @@ SaiHandle::Result SaiHandle::StopDma()
 float SaiHandle::GetSampleRate()
 {
     return pimpl_->GetSampleRate();
+}
+
+float SaiHandle::GetPreciseSampleRate()
+{
+    return pimpl_->GetPreciseSampleRate();
 }
 
 size_t SaiHandle::GetBlockSize()

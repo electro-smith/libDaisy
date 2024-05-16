@@ -31,7 +31,7 @@ class AudioHandle::Impl
     // Interface
     AudioHandle::Result Init(const AudioHandle::Config config, SaiHandle sai);
     AudioHandle::Result
-                        Init(const AudioHandle::Config config, SaiHandle sai1, SaiHandle sai2);
+    Init(const AudioHandle::Config config, SaiHandle sai1, SaiHandle sai2);
     AudioHandle::Result DeInit();
     AudioHandle::Result Start(AudioHandle::AudioCallback callback);
     AudioHandle::Result Start(AudioHandle::InterleavingAudioCallback callback);
@@ -59,6 +59,12 @@ class AudioHandle::Impl
     }
 
     float GetSampleRate() { return sai1_.GetSampleRate(); }
+
+    float GetPreciseSampleRate(uint32_t sai_idx)
+    {
+        return sai_idx == 0 ? sai1_.GetPreciseSampleRate()
+                            : sai2_.GetPreciseSampleRate();
+    }
 
     AudioHandle::Result SetPostGain(float val)
     {
@@ -523,6 +529,11 @@ AudioHandle::Result AudioHandle::SetBlockSize(size_t size)
 float AudioHandle::GetSampleRate()
 {
     return pimpl_->GetSampleRate();
+}
+
+float AudioHandle::GetPreciseSampleRate(uint32_t sai_idx)
+{
+    return pimpl_->GetPreciseSampleRate(sai_idx);
 }
 
 AudioHandle::Result
