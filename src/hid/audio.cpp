@@ -10,7 +10,7 @@ namespace daisy
 // in the interest in encourage newcomers, and this also being an audio-centric platform
 // these buffers will always be present, and usable.
 //
-static const size_t kAudioMaxBufferSize = 1024;
+static const size_t kAudioMaxBufferSize = 4096;
 static const size_t kAudioMaxChannels   = 4;
 
 // Static Global Buffers

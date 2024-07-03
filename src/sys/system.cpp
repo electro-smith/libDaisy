@@ -437,14 +437,39 @@ void System::ConfigureClocks()
     PeriphClkInitStruct.PLL2.PLL2RGE    = RCC_PLL2VCIRANGE_2;
     PeriphClkInitStruct.PLL2.PLL2VCOSEL = RCC_PLL2VCOWIDE;
     // PLL 3
-    PeriphClkInitStruct.PLL3.PLL3M         = 6;
-    PeriphClkInitStruct.PLL3.PLL3N         = 295;
-    PeriphClkInitStruct.PLL3.PLL3P         = 16; // 49.xMhz
+    /** This has been here forever, and results in a 48014Hz samplerate
+     *  The new values end up with a primary MCLK of 49.152018MHz (target 49.152000)
+     *  This is essentially a 0% error. So we'll see if it's good enough.
+     */
+    // PeriphClkInitStruct.PLL3.PLL3M         = 6;
+    // PeriphClkInitStruct.PLL3.PLL3N         = 295; /**< OLD 48014 values */
+    // PeriphClkInitStruct.PLL3.PLL3FRACN     = 0; /**< OLD 48014 values */
+    // PeriphClkInitStruct.PLL3.PLL3P         = 16; // 49.xMhz
+
+    // PeriphClkInitStruct.PLL3.PLL3M         = 6;
+    // PeriphClkInitStruct.PLL3.PLL3N         = 294; /**< new values */
+    // // PeriphClkInitStruct.PLL3.PLL3FRACN     = 7472; /**< new values */
+    //  PeriphClkInitStruct.PLL3.PLL3FRACN     = 7471; /**< new values */
+    // PeriphClkInitStruct.PLL3.PLL3P         = 64; // 49.xMhz
+
+    // PeriphClkInitStruct.PLL3.PLL3M         = 8;
+    // PeriphClkInitStruct.PLL3.PLL3N         = 393; /**< new values */
+    // // PeriphClkInitStruct.PLL3.PLL3FRACN     = 7472; /**< new values */
+    //  PeriphClkInitStruct.PLL3.PLL3FRACN     = 1770; /**< new values */
+    // PeriphClkInitStruct.PLL3.PLL3P         = 8; // 93.304016Mhz
+    // // PeriphClkInitStruct.PLL3.PLL3P         = 16; // 49.152008MHz
+
+    PeriphClkInitStruct.PLL3.PLL3M         = 15;
+    PeriphClkInitStruct.PLL3.PLL3N         = 368; /**< new values */
+    // PeriphClkInitStruct.PLL3.PLL3FRACN     = 7472; /**< new values */
+     PeriphClkInitStruct.PLL3.PLL3FRACN     = 5243; /**< new values */
+    PeriphClkInitStruct.PLL3.PLL3P         = 16; // 24.576001
+    // PeriphClkInitStruct.PLL3.PLL3P         = 16; // 49.152008MHz
+
     PeriphClkInitStruct.PLL3.PLL3Q         = 4;
     PeriphClkInitStruct.PLL3.PLL3R         = 32; // 24.xMhz
     PeriphClkInitStruct.PLL3.PLL3RGE       = RCC_PLL3VCIRANGE_1;
     PeriphClkInitStruct.PLL3.PLL3VCOSEL    = RCC_PLL3VCOWIDE;
-    PeriphClkInitStruct.PLL3.PLL3FRACN     = 0;
     PeriphClkInitStruct.FmcClockSelection  = RCC_FMCCLKSOURCE_PLL2;
     PeriphClkInitStruct.QspiClockSelection = RCC_QSPICLKSOURCE_D1HCLK;
     //PeriphClkInitStruct.SdmmcClockSelection  = RCC_SDMMCCLKSOURCE_PLL;
@@ -475,7 +500,7 @@ void System::ConfigureMpu()
     // Configure RAM D2 (SRAM1) as non cacheable
     MPU_InitStruct.Enable           = MPU_REGION_ENABLE;
     MPU_InitStruct.BaseAddress      = 0x30000000;
-    MPU_InitStruct.Size             = MPU_REGION_SIZE_32KB;
+    MPU_InitStruct.Size             = MPU_REGION_SIZE_128KB;
     MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
     MPU_InitStruct.IsBufferable     = MPU_ACCESS_NOT_BUFFERABLE;
     MPU_InitStruct.IsCacheable      = MPU_ACCESS_NOT_CACHEABLE;

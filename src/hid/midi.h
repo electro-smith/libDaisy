@@ -177,6 +177,15 @@ class MidiHandler
         transport_.StartRx(MidiHandler::ParseCallback, this);
     }
 
+    /** Starts listening, but uses a custom callback of the users design.
+     *  This callback is responsible for either calling the public parse function,
+     *  or forwarding the raw bytes to some other system.
+     */
+    void StartReceiveWithCallback(MidiUartTransport::MidiRxParseCallback cb)
+    {
+        transport_.StartRx(cb, this);
+    }
+
     /** Start listening */
     void Listen()
     {

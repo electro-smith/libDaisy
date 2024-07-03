@@ -71,8 +71,8 @@ util/WaveTableLoader \
 ######################################
 # building variables
 ######################################
-DEBUG = 1
-OPT = -Og
+DEBUG = 0
+OPT = -O3
 
 #######################################
 # paths
@@ -290,7 +290,8 @@ C_DEFS =  \
 -DHSE_VALUE=16000000 \
 -DUSE_HAL_DRIVER \
 -DUSE_FULL_LL_DRIVER \
--DDATA_IN_D2_SRAM
+-DDATA_IN_D2_SRAM \
+-DDSY_USE_UART
 # ^ added for easy startup access
 
 
