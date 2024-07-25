@@ -3,6 +3,7 @@
 ## Unreleased
 
 ### Features
+- Add an optional conversion complete callback to `AdcHandle::Start()`
 
 ### Bugfixes
 
