@@ -105,6 +105,8 @@ class QSPIHandle::Impl
 
     QSPIHandle::Result QuadEnable();
 
+    QSPIHandle::Result QuadDisable();
+
     QSPIHandle::Result EnableMemoryMappedMode();
 
     QSPIHandle::Result AutopollingMemReady(uint32_t timeout);
@@ -153,20 +155,34 @@ QSPIHandle::Result QSPIHandle::Impl::PreInit(uint32_t flash_size)
     const dsy_gpio_pin* pre_init_pins[]
         = {&config_.pin_config.io2, &config_.pin_config.io3};
 
-    for(int i = 0; i < 2; i++)
-    {
-        const dsy_gpio_pin* p = pre_init_pins[i];
-        GPIO_TypeDef*       port;
-        GPIO_InitTypeDef    GPIO_InitStruct = {0};
-        uint16_t            pin_id          = dsy_hal_map_get_pin(p);
-        port                                = dsy_hal_map_get_port(p);
-        GPIO_InitStruct.Pin                 = pin_id;
-        GPIO_InitStruct.Mode                = GPIO_MODE_OUTPUT_PP;
-        GPIO_InitStruct.Pull                = GPIO_NOPULL;
-        GPIO_InitStruct.Speed               = GPIO_SPEED_LOW;
-        HAL_GPIO_Init(port, &GPIO_InitStruct);
-        HAL_GPIO_WritePin(port, pin_id, GPIO_PIN_SET); // added explicit write
-    }
+    //__HAL_RCC_GPIOF_CLK_ENABLE();
+    // for(int i = 0; i < 2; i++)
+    // {
+    //     const dsy_gpio_pin* p = pre_init_pins[i];
+    //     GPIO_TypeDef*       port;
+    //     GPIO_InitTypeDef    GPIO_InitStruct = {0};
+    //     uint16_t            pin_id          = dsy_hal_map_get_pin(p);
+    //     port                                = dsy_hal_map_get_port(p);
+    //     GPIO_InitStruct.Pin                 = pin_id;
+    //     GPIO_InitStruct.Mode                = GPIO_MODE_OUTPUT_PP;
+    //     GPIO_InitStruct.Pull                = GPIO_NOPULL;
+    //     GPIO_InitStruct.Speed               = GPIO_SPEED_LOW;
+    //     HAL_GPIO_Init(port, &GPIO_InitStruct);
+    //     HAL_GPIO_WritePin(port, pin_id, GPIO_PIN_SET); // added explicit write
+    // }
+    HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6 | GPIO_PIN_7, GPIO_PIN_SET);
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    __HAL_RCC_GPIOF_CLK_ENABLE();
+    GPIO_InitStruct.Pin   = GPIO_PIN_6 | GPIO_PIN_7;
+    GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+    HAL_Delay(20);
+    HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6 | GPIO_PIN_7, GPIO_PIN_RESET);
+    HAL_Delay(20);
+    HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6 | GPIO_PIN_7, GPIO_PIN_SET);
+
     // unnecessarily long delay just to make sure it's visible on the scope prior to init
     HAL_Delay(20);
 
@@ -271,6 +287,7 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
         ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     // Once writing test with 1 Line is confirmed lets move this out, and update writing to use 4-line.
+    // This should be redundant, but just in case we want to ensure that the QE is set.
     if(QuadEnable() != QSPIHandle::Result::OK)
     {
         ERR_SIMPLE(Status::E_HAL_ERROR);
@@ -726,12 +743,15 @@ QSPIHandle::Result QSPIHandle::Impl::QuadEnable()
     //    s_config.Mask            = IS25LP08D_SR_WREN | (IS25LP08D_SR_WREN << 8);
     //    s_config.MatchMode       = QSPI_MATCH_MODE_AND;
     //    s_config.StatusBytesSize = 2;
-    s_config.Match           = IS25LP080D_SR_QE;
-    s_config.Mask            = IS25LP080D_SR_QE;
+
+    // Poll until QE is set, and WREN and WIP are reset.
+    s_config.Match = IS25LP080D_SR_QE;
+    s_config.Mask  = IS25LP080D_SR_QE | IS25LP080D_SR_WREN | IS25LP080D_SR_WIP;
     s_config.MatchMode       = QSPI_MATCH_MODE_AND;
     s_config.StatusBytesSize = 1;
 
-    s_config.Interval      = 0x10;
+    //s_config.Interval      = 0x10;
+    s_config.Interval      = 0x8000;
     s_config.AutomaticStop = QSPI_AUTOMATIC_STOP_ENABLE;
 
     s_command.Instruction = READ_STATUS_REG_CMD;
@@ -787,7 +807,9 @@ QSPIHandle::Result QSPIHandle::Impl::DefaultStatusRegister()
     // QE (Quad Enable) = 0
     // BP3, BP2, BP1, BP0 (Block Protect) = 0
     // WEL/WIP are volatile bits, so we don't need to set/reset them here
-    uint8_t reg = 0;
+    //uint8_t reg = 0x00;
+    // We'll set QE here so that the WP/HOLD functions are disbaled.
+    uint8_t reg = 0x40;
 
     /* Transmission of the data */
     if(HAL_QSPI_Transmit(
@@ -797,12 +819,18 @@ QSPIHandle::Result QSPIHandle::Impl::DefaultStatusRegister()
         ERR_SIMPLE(Status::E_HAL_ERROR);
     }
 
-    s_config.Match           = reg;
-    s_config.Mask            = 0xfc; // mask out WEL and WIP
+    s_config.Match = reg;
+    //s_config.Mask            = 0xfc; // mask out WEL and WIP
+    // Autopolling complete when status register is completely back to defaults.
+    s_config.Mask            = 0xff;
     s_config.MatchMode       = QSPI_MATCH_MODE_AND;
     s_config.StatusBytesSize = 1;
 
-    s_config.Interval      = 0x10;
+    // write status register takes approx 2-15ms to complete according to datasheet.
+    // interval is in clock cycles so at 120MHz, we'll check every 250us or so instead of
+    // the original 133ns
+    // s_config.Interval      = 0x10;
+    s_config.Interval      = 0x8000;
     s_config.AutomaticStop = QSPI_AUTOMATIC_STOP_ENABLE;
 
     s_command.Instruction = READ_STATUS_REG_CMD;
@@ -1122,6 +1150,10 @@ extern "C" void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
     {
         /* QUADSPI clock enable */
         __HAL_RCC_QSPI_CLK_ENABLE();
+
+        /** Reset/Release (as per second instruction in How to use this driver) */
+        __HAL_RCC_QSPI_FORCE_RESET();
+        __HAL_RCC_QSPI_RELEASE_RESET();
 
         __HAL_RCC_GPIOG_CLK_ENABLE();
         __HAL_RCC_GPIOF_CLK_ENABLE();
