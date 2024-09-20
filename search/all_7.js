@@ -2,8 +2,8 @@ var searchData=
 [
   ['gate_0',['gate',['../classdaisy_1_1_daisy_legio.html#afa36273607d588bf3ad7ff0b633499ac',1,'daisy::DaisyLegio::gate'],['../classdaisy_1_1_daisy_versio.html#ab35b4fd55a051a19cd49834b8c215978',1,'daisy::DaisyVersio::gate'],['../classdaisy_1_1_daisy_legio.html#a54315942160892a09d86ffb9bfc79c32',1,'daisy::DaisyLegio::Gate()'],['../classdaisy_1_1_daisy_versio.html#ac23598501407665871cd4819fbdb458a',1,'daisy::DaisyVersio::Gate()']]],
   ['gate_5fin_1',['gate_in',['../classdaisy_1_1_daisy_field.html#a4991b0aa3dab1d2b4903439c1a0a696f',1,'daisy::DaisyField']]],
-  ['gate_5fin_5f1_2',['gate_in_1',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a48ab5b7d4172faa5e2437e697c10d15d',1,'daisy::patch_sm::DaisyPatchSM::gate_in_1'],['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953a138c883ebb829ee5d7752a7685b04747',1,'daisy::DaisyPatch::GATE_IN_1']]],
-  ['gate_5fin_5f2_3',['gate_in_2',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953aeb1a7f107d3bea8644640cf6b8a3f6ef',1,'daisy::DaisyPatch::GATE_IN_2'],['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ad4544dab2ba44d8c21695937359487dd',1,'daisy::patch_sm::DaisyPatchSM::gate_in_2']]],
+  ['gate_5fin_5f1_2',['gate_in_1',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953a138c883ebb829ee5d7752a7685b04747',1,'daisy::DaisyPatch::GATE_IN_1'],['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a48ab5b7d4172faa5e2437e697c10d15d',1,'daisy::patch_sm::DaisyPatchSM::gate_in_1']]],
+  ['gate_5fin_5f2_3',['gate_in_2',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ad4544dab2ba44d8c21695937359487dd',1,'daisy::patch_sm::DaisyPatchSM::gate_in_2'],['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953aeb1a7f107d3bea8644640cf6b8a3f6ef',1,'daisy::DaisyPatch::GATE_IN_2']]],
   ['gate_5fin_5flast_4',['GATE_IN_LAST',['../classdaisy_1_1_daisy_patch.html#ac2ca484062f9527de2c4111022d86953ad276bd6100dc0a8ef5c4b9aa307f45cc',1,'daisy::DaisyPatch']]],
   ['gate_5finput_5',['gate_input',['../classdaisy_1_1_daisy_patch.html#aa2a65b214c0c247dd246428962ccd060',1,'daisy::DaisyPatch']]],
   ['gate_5fout_6',['gate_out',['../classdaisy_1_1_daisy_field.html#a569b0550c2751cce2c9ee23604050bef',1,'daisy::DaisyField']]],
@@ -169,6 +169,6 @@ var searchData=
   ['gppu_5fb_166',['GPPU_B',['../namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46ad4296604bacc90df6b4ce96d179e37ad',1,'daisy']]],
   ['graphics_5fcommon_2eh_167',['graphics_common.h',['../graphics__common_8h.html',1,'']]],
   ['grb_168',['GRB',['../structdaisy_1_1_dot_star_1_1_config.html#ac0d32307f8104690f4a6d15dd1943ae9aef262b7c983bc8bbbead319ea4c02c62',1,'daisy::DotStar::Config']]],
-  ['green_169',['green',['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color::Green() const'],['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color::GREEN']]],
+  ['green_169',['green',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a17ff845ca14ff51412514797406ee423',1,'daisy::Color::GREEN'],['../classdaisy_1_1_color.html#a82e79edf660803d82921c82a431574b2',1,'daisy::Color::Green() const']]],
   ['green8_170',['Green8',['../classdaisy_1_1_color.html#ab40634a2125bf70108d660cfdd277c10',1,'daisy::Color']]]
 ];

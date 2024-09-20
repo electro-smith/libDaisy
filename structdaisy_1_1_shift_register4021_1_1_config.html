@@ -119,6 +119,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a12031ffdac6ca3508d130528fd1b5548"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0fc658141933acb6dd9dc902cf4cb6af" id="r_a0fc658141933acb6dd9dc902cf4cb6af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdaisy_1_1_pin.html">Pin</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_shift_register4021_1_1_config.html#a0fc658141933acb6dd9dc902cf4cb6af">data</a> [<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">num_parallel</a>]</td></tr>
 <tr class="separator:a0fc658141933acb6dd9dc902cf4cb6af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a150d2474cf246d78489564d3a7ebd959" id="r_a150d2474cf246d78489564d3a7ebd959"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">uint32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_shift_register4021_1_1_config.html#a150d2474cf246d78489564d3a7ebd959">delay_ticks</a> = 10</td></tr>
+<tr class="separator:a150d2474cf246d78489564d3a7ebd959"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a id="a9de9c7e81aaa1d00f36eccd5480fc00e" name="a9de9c7e81aaa1d00f36eccd5480fc00e"></a>
@@ -152,6 +154,23 @@ template&lt;<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">size_t</
       </table>
 </div><div class="memdoc">
 <p>Data Pin(s) </p>
+
+</div>
+</div>
+<a id="a150d2474cf246d78489564d3a7ebd959" name="a150d2474cf246d78489564d3a7ebd959"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a150d2474cf246d78489564d3a7ebd959">&#9670;&#160;</a></span>delay_ticks</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">size_t</a> num_daisychained = 1, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">size_t</a> num_parallel = 1&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">uint32_t</a> <a class="el" href="classdaisy_1_1_shift_register4021.html">daisy::ShiftRegister4021</a>&lt; <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">num_daisychained</a>, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">num_parallel</a> &gt;::Config::delay_ticks = 10</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>DelayTicks between these actions helps to ensure stable timing for the connected device(s). Each tick is approx. 4.16ns at CPUFreq 480MHz </p>
 
 </div>
 </div>

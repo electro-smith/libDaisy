@@ -1,7 +1,7 @@
 var searchData=
 [
   ['empty_0',['Empty',['../classdaisy_1_1_fixed_cap_str_base.html#a88a73398547c84e073bc54853e504709',1,'daisy::FixedCapStrBase']]],
-  ['enable_1',['enable',['../classdaisy_1_1_apds9960.html#ab4bceba1c9fdc2d0f3fa65391c66829a',1,'daisy::Apds9960::enable(bool en=true)'],['../classdaisy_1_1_apds9960.html#a68130f4d2185e6a5385e525e01f86eb2',1,'daisy::Apds9960::Enable(bool en)']]],
+  ['enable_1',['enable',['../classdaisy_1_1_apds9960.html#a68130f4d2185e6a5385e525e01f86eb2',1,'daisy::Apds9960::Enable(bool en)'],['../classdaisy_1_1_apds9960.html#ab4bceba1c9fdc2d0f3fa65391c66829a',1,'daisy::Apds9960::enable(bool en=true)']]],
   ['enablecolor_2',['EnableColor',['../classdaisy_1_1_apds9960.html#a591c47b814ea1c5d23e2bd46e453f76b',1,'daisy::Apds9960']]],
   ['enablegesture_3',['EnableGesture',['../classdaisy_1_1_apds9960.html#abb956ec839bfa597606ea0f3a6e73ff5',1,'daisy::Apds9960']]],
   ['enablei2cmaster_4',['EnableI2CMaster',['../classdaisy_1_1_icm20948.html#a8009866648c8e00c1b36a4d70268a2b5',1,'daisy::Icm20948']]],

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['sa_0',['sa',['../structdaisy_1_1_sai_handle_1_1_config.html#a34270dc2a0db63013c430fa96d5c4a23',1,'daisy::SaiHandle::Config']]],
-  ['samplerate_1',['samplerate',['../structdaisy_1_1_audio_handle_1_1_config.html#a744d708032c448f1eec1a78a9a45e7c6',1,'daisy::AudioHandle::Config::samplerate'],['../structdaisy_1_1_w_a_v___format_type_def.html#af94f78ad6e950a2084e143fdc4b4ba04',1,'daisy::WAV_FormatTypeDef::SampleRate'],['../structdaisy_1_1_wav_writer_1_1_config.html#a143f2278359597869a0de80cc8edba86',1,'daisy::WavWriter::Config::samplerate']]],
+  ['samplerate_1',['samplerate',['../structdaisy_1_1_w_a_v___format_type_def.html#af94f78ad6e950a2084e143fdc4b4ba04',1,'daisy::WAV_FormatTypeDef::SampleRate'],['../structdaisy_1_1_wav_writer_1_1_config.html#a143f2278359597869a0de80cc8edba86',1,'daisy::WavWriter::Config::samplerate'],['../structdaisy_1_1_audio_handle_1_1_config.html#a744d708032c448f1eec1a78a9a45e7c6',1,'daisy::AudioHandle::Config::samplerate']]],
   ['sb_2',['sb',['../structdaisy_1_1_sai_handle_1_1_config.html#a9585bf5838b15a368c5ecf0a28135cac',1,'daisy::SaiHandle::Config']]],
   ['sc_5ftype_3',['sc_type',['../structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76',1,'daisy::MidiEvent']]],
   ['sck_4',['sck',['../structdaisy_1_1_sai_handle_1_1_config.html#a16fbf5fbbab606ac3e224f758f005af0',1,'daisy::SaiHandle::Config']]],
