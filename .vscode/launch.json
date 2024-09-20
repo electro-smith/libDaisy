@@ -15,7 +15,6 @@
             },
             "preLaunchTask": "build-libDaisy-tests",
             "osx": {
-                "type": "lldb",
                 "MIMode": "lldb",
             },
             "windows": {
@@ -48,9 +47,9 @@
                 "monitor reset"
             ],
             "request": "launch",
-            "runToMain": true,
+            "runToEntryPoint": "true",
             "servertype": "openocd",
-            "showDevDebugOutput": true,
+            "showDevDebugOutput": "none",
             "svdFile": "${workspaceRoot}/.vscode/STM32H750x.svd",
             "type": "cortex-debug"
         }

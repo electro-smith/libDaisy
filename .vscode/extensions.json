@@ -1,8 +1,9 @@
 {
 	"recommendations": [
-        "ms-vscode.cpptools",
+		"ms-vscode.cpptools",
 		"xaver.clang-format",
-        "davidschuldenfrei.gtest-adapter",
-        "vadimcn.vscode-lldb"
+		"vadimcn.vscode-lldb",
+		"ms-vscode.cmake-tools",
+		"matepek.vscode-catch2-test-adapter",
 	]
 }
