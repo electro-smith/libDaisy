@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['qspi_0',['qspi',['../classdaisy_1_1_system.html#aa40158e5b80587e80153b16ae22c6669a6df135cbc1eab65584cff039890c3b6b',1,'daisy::System::QSPI'],['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#af650ccd5833d6a1c4b8c03ee7e8c7671',1,'daisy::patch_sm::DaisyPatchSM::qspi'],['../classdaisy_1_1_daisy_seed.html#a60daf59d4b1c4eb34e246897e2f5f007',1,'daisy::DaisySeed::qspi']]],
+  ['qspi_0',['qspi',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#af650ccd5833d6a1c4b8c03ee7e8c7671',1,'daisy::patch_sm::DaisyPatchSM::qspi'],['../classdaisy_1_1_daisy_seed.html#a60daf59d4b1c4eb34e246897e2f5f007',1,'daisy::DaisySeed::qspi'],['../classdaisy_1_1_system.html#aa40158e5b80587e80153b16ae22c6669a6df135cbc1eab65584cff039890c3b6b',1,'daisy::System::QSPI']]],
   ['qspi_2eh_1',['qspi.h',['../qspi_8h.html',1,'']]],
   ['qspi_5fconfig_2',['qspi_config',['../classdaisy_1_1_daisy_seed.html#a08cc65eb0580f224866f1af13bca9814',1,'daisy::DaisySeed']]],
   ['qspihandle_3',['qspihandle',['../classdaisy_1_1_q_s_p_i_handle.html#a87c5283e4d0e3681c66e191a50822cc1',1,'daisy::QSPIHandle::QSPIHandle()'],['../classdaisy_1_1_q_s_p_i_handle.html#a0e272769d4dc67d7be5e5ff94aab3c60',1,'daisy::QSPIHandle::QSPIHandle(const QSPIHandle &amp;other)=default'],['../classdaisy_1_1_q_s_p_i_handle.html',1,'daisy::QSPIHandle']]],
