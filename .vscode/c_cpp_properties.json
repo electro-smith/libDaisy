@@ -14,7 +14,7 @@
                 "${workspaceRoot}/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
                 "${workspaceRoot}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc",
                 "${workspaceRoot}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc",
-                "${workspaceRoot}/Middlewares/Third_Party/FatFs/src"
+                "${workspaceRoot}/Middlewares/Third_Party/FatFs/source"
             ],
             "defines": [
                 "DEBUG=1",
@@ -46,7 +46,7 @@
                 "${workspaceRoot}/Drivers/STM32H7xx_HAL_Driver/Inc/Legacy",
                 "${workspaceRoot}/Middlewares/ST/STM32_USB_Device_Library/Core/Inc",
                 "${workspaceRoot}/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc",
-                "${workspaceRoot}/Middlewares/Third_Party/FatFs/src"
+                "${workspaceRoot}/Middlewares/Third_Party/FatFs/source"
             ],
             "defines": [
                 "DEBUG=1",

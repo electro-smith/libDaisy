@@ -215,9 +215,11 @@ Middlewares/Patched/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
-Middlewares/Third_Party/FatFs/src/diskio.c \
-Middlewares/Third_Party/FatFs/src/ff.c \
-Middlewares/Third_Party/FatFs/src/ff_gen_drv.c  \
+Middlewares/Third_Party/FatFs/source/diskio.c \
+Middlewares/Third_Party/FatFs/source/ff.c \
+Middlewares/Third_Party/FatFs/source/ff_gen_drv.c  \
+Middlewares/Third_Party/FatFs/source/ffunicode.c \
+Middlewares/Third_Party/FatFs/source/ffsystem_baremetal.c \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_bot.c \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_scsi.c \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc.c \
@@ -311,7 +313,7 @@ C_INCLUDES = \
 -IMiddlewares/ST/STM32_USB_Host_Library/Core/Inc \
 -IMiddlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc \
 -IMiddlewares/ST/STM32_USB_Host_Library/Class/MIDI/Inc \
--IMiddlewares/Third_Party/FatFs/src \
+-IMiddlewares/Third_Party/FatFs/source \
 -I$(MODULE_DIR) \
 -I.
 

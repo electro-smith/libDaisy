@@ -97,8 +97,8 @@ class FatFSInterface
 
   private:
     Config cfg_;
-    FATFS  fs_[_VOLUMES];
-    char   path_[_VOLUMES][4];
+    FATFS  fs_[FF_VOLUMES];
+    char   path_[FF_VOLUMES][4];
     bool   initialized_;
 };
 
