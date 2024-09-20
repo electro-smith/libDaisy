@@ -124,7 +124,7 @@ var searchData=
   ['ps_5f4_121',['PS_4',['../structdaisy_1_1_spi_handle_1_1_config.html#a13476ab6f4b52024c1569945ff0bf383ad01a2fba340e44606cb932b086f27a75',1,'daisy::SpiHandle::Config']]],
   ['ps_5f64_122',['PS_64',['../structdaisy_1_1_spi_handle_1_1_config.html#a13476ab6f4b52024c1569945ff0bf383a97fb148ab1accd5462d69022d83b0ced',1,'daisy::SpiHandle::Config']]],
   ['ps_5f8_123',['PS_8',['../structdaisy_1_1_spi_handle_1_1_config.html#a13476ab6f4b52024c1569945ff0bf383ae31444bf5c3424161080f9d328fd7955',1,'daisy::SpiHandle::Config']]],
-  ['pull_124',['pull',['../structdaisy_1_1_g_p_i_o_1_1_config.html#a1e00d197152470d4895b027bc0cdaf22',1,'daisy::GPIO::Config::pull'],['../classdaisy_1_1_g_p_i_o.html#a99f432b0880dab3d3b202f1cd8081f0d',1,'daisy::GPIO::Pull']]],
+  ['pull_124',['pull',['../classdaisy_1_1_g_p_i_o.html#a99f432b0880dab3d3b202f1cd8081f0d',1,'daisy::GPIO::Pull'],['../structdaisy_1_1_g_p_i_o_1_1_config.html#a1e00d197152470d4895b027bc0cdaf22',1,'daisy::GPIO::Config::pull']]],
   ['pull_20argument_125',['Pull Argument',['../md_doc_2md_2__a1___getting-_started-_g_p_i_o.html#autotoc_md8',1,'']]],
   ['pulldown_126',['PULLDOWN',['../classdaisy_1_1_g_p_i_o.html#a99f432b0880dab3d3b202f1cd8081f0dad08b3001fc1b2f26c5ba712336e16a17',1,'daisy::GPIO']]],
   ['pullup_127',['PULLUP',['../classdaisy_1_1_g_p_i_o.html#a99f432b0880dab3d3b202f1cd8081f0da2989a4b0b16772a6f65da71eda483c9f',1,'daisy::GPIO']]],

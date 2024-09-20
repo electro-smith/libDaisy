@@ -21,6 +21,8 @@ var classdaisy_1_1_u_s_b_host_handle =
     [ "GetReady", "classdaisy_1_1_u_s_b_host_handle.html#ac9fa7017546be9ab038a5100b7f7483e", null ],
     [ "Init", "classdaisy_1_1_u_s_b_host_handle.html#a994616690a58d88b1f7d95d9246885f1", null ],
     [ "IsActiveClass", "classdaisy_1_1_u_s_b_host_handle.html#a370cac38c0b49ee24473d6f9bff2ca82", null ],
+    [ "IsDeviceConnected", "classdaisy_1_1_u_s_b_host_handle.html#aecae05ff83d8fe2e0dacad0a97f14c1c", null ],
+    [ "IsPortEnabled", "classdaisy_1_1_u_s_b_host_handle.html#aefc8cfb59605b601f89187452aefc83a", null ],
     [ "operator=", "classdaisy_1_1_u_s_b_host_handle.html#a0120e222d56d7546d28810c55fe562b2", null ],
     [ "Process", "classdaisy_1_1_u_s_b_host_handle.html#a23eacd86f01a56142e60108ba8a381a8", null ],
     [ "ReEnumerate", "classdaisy_1_1_u_s_b_host_handle.html#a369f062c8add67f2f6963bb87286d6ed", null ],

@@ -170,6 +170,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3efc40d3a6a6ef516328e1744640d887"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4efe53c493e53f41215af3784f9a1439" id="r_a4efe53c493e53f41215af3784f9a1439"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">const</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">char</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a4efe53c493e53f41215af3784f9a1439">GetProductName</a> ()</td></tr>
 <tr class="separator:a4efe53c493e53f41215af3784f9a1439"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefc8cfb59605b601f89187452aefc83a" id="r_aefc8cfb59605b601f89187452aefc83a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#aefc8cfb59605b601f89187452aefc83a">IsPortEnabled</a> ()</td></tr>
+<tr class="memdesc:aefc8cfb59605b601f89187452aefc83a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns if the HAL detects that the port is enabled.  <br /></td></tr>
+<tr class="separator:aefc8cfb59605b601f89187452aefc83a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecae05ff83d8fe2e0dacad0a97f14c1c" id="r_aecae05ff83d8fe2e0dacad0a97f14c1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#aecae05ff83d8fe2e0dacad0a97f14c1c">IsDeviceConnected</a> ()</td></tr>
+<tr class="memdesc:aecae05ff83d8fe2e0dacad0a97f14c1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns if the ST Middleware detects a connected device.  <br /></td></tr>
+<tr class="separator:aecae05ff83d8fe2e0dacad0a97f14c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12043e36043180b52f73bf096d0f0833" id="r_a12043e36043180b52f73bf096d0f0833"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a12043e36043180b52f73bf096d0f0833">USBHostHandle</a> ()</td></tr>
 <tr class="separator:a12043e36043180b52f73bf096d0f0833"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20ea1f4d2e2cfc3f749364b1dc5c9b73" id="r_a20ea1f4d2e2cfc3f749364b1dc5c9b73"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_u_s_b_host_handle.html#a20ea1f4d2e2cfc3f749364b1dc5c9b73">USBHostHandle</a> (<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">const</a> <a class="el" href="classdaisy_1_1_u_s_b_host_handle.html">USBHostHandle</a> &amp;<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">other</a>)=<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">default</a></td></tr>
@@ -450,6 +456,44 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Returns true if the specified class is active </p>
+
+</div>
+</div>
+<a id="aecae05ff83d8fe2e0dacad0a97f14c1c" name="aecae05ff83d8fe2e0dacad0a97f14c1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecae05ff83d8fe2e0dacad0a97f14c1c">&#9670;&#160;</a></span>IsDeviceConnected()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">bool</a> daisy::USBHostHandle::IsDeviceConnected </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns if the ST Middleware detects a connected device. </p>
+
+</div>
+</div>
+<a id="aefc8cfb59605b601f89187452aefc83a" name="aefc8cfb59605b601f89187452aefc83a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefc8cfb59605b601f89187452aefc83a">&#9670;&#160;</a></span>IsPortEnabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">bool</a> daisy::USBHostHandle::IsPortEnabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns if the HAL detects that the port is enabled. </p>
 
 </div>
 </div>

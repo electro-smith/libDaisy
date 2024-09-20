@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"daisy__core_8h.html#a0f3f80696b55547e8471a18de01b8e13a51da6674fae3df8f696481f783f5668e":[16,0,1,7,23,9],
+"daisy__core_8h.html#a0f3f80696b55547e8471a18de01b8e13a78ab002400c3e30ac8e4c9b369bd88de":[16,0,1,7,23,10],
 "daisy__core_8h.html#a0f3f80696b55547e8471a18de01b8e13a7e9a819ed93f26254ac6b18b1dcdeafc":[16,0,1,7,23,0],
 "daisy__core_8h.html#a0f3f80696b55547e8471a18de01b8e13a8fbe1cf408c8d40182d78c716b78075f":[16,0,1,7,23,5],
 "daisy__core_8h.html#a0f3f80696b55547e8471a18de01b8e13a999faa83b81555dcc0d2922a7a39336c":[16,0,1,7,23,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "functions_func_j.html":[15,3,1,10],
 "functions_func_k.html":[15,3,1,11],
 "functions_func_l.html":[15,3,1,12],
-"functions_func_m.html":[15,3,1,13],
-"functions_func_n.html":[15,3,1,14],
-"functions_func_o.html":[15,3,1,15]
+"functions_func_m.html":[15,3,1,13]
 };
