@@ -52,6 +52,7 @@ var hierarchy =
     [ "daisy::SdmmcHandler::Config", "structdaisy_1_1_sdmmc_handler_1_1_config.html", null ],
     [ "daisy::ShiftRegister4021< num_daisychained, num_parallel >::Config", "structdaisy_1_1_shift_register4021_1_1_config.html", null ],
     [ "daisy::SpiHandle::Config", "structdaisy_1_1_spi_handle_1_1_config.html", null ],
+    [ "daisy::SSD1307Driver< width, height, Transport >::Config", "structdaisy_1_1_s_s_d1307_driver_1_1_config.html", null ],
     [ "daisy::SSD130x4WireSoftSpiTransport::Config", "structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html", null ],
     [ "daisy::SSD130x4WireSpiTransport::Config", "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html", null ],
     [ "daisy::SSD130xDriver< width, height, Transport >::Config", "structdaisy_1_1_s_s_d130x_driver_1_1_config.html", null ],
@@ -187,6 +188,7 @@ var hierarchy =
     [ "daisy::SongSelectEvent", "structdaisy_1_1_song_select_event.html", null ],
     [ "daisy::UI::SpecialControlIds", "structdaisy_1_1_u_i_1_1_special_control_ids.html", null ],
     [ "daisy::SpiHandle", "classdaisy_1_1_spi_handle.html", null ],
+    [ "daisy::SSD1307Driver< width, height, Transport >", "classdaisy_1_1_s_s_d1307_driver.html", null ],
     [ "daisy::SSD130x4WireSoftSpiTransport", "classdaisy_1_1_s_s_d130x4_wire_soft_spi_transport.html", null ],
     [ "daisy::SSD130x4WireSpiTransport", "classdaisy_1_1_s_s_d130x4_wire_spi_transport.html", null ],
     [ "daisy::SSD130xDriver< width, height, Transport >", "classdaisy_1_1_s_s_d130x_driver.html", [

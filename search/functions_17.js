@@ -3,7 +3,7 @@ var searchData=
   ['wavetableloader_0',['WaveTableLoader',['../classdaisy_1_1_wave_table_loader.html#a43adf10f29a77d7404c6e1fe9f44150b',1,'daisy::WaveTableLoader']]],
   ['wavplayer_1',['WavPlayer',['../classdaisy_1_1_wav_player.html#a0ba0f864a3fb972461fa97bbba22d836',1,'daisy::WavPlayer']]],
   ['wavwriter_2',['WavWriter',['../classdaisy_1_1_wav_writer.html#a4b16eb1005bb7b083f8fcaf7e8a26c48',1,'daisy::WavWriter']]],
-  ['width_3',['width',['../classdaisy_1_1_s_s_d130x_driver.html#a295ff91cde15653954ad4b329766f93e',1,'daisy::SSD130xDriver::Width()'],['../classdaisy_1_1_one_bit_graphics_display.html#a6a8d21de6d8a49b80681cf84476b39b9',1,'daisy::OneBitGraphicsDisplay::Width()'],['../classdaisy_1_1_oled_display.html#a3be293e91c143677a8ab6c65d7b62363',1,'daisy::OledDisplay::Width()']]],
+  ['width_3',['width',['../classdaisy_1_1_s_s_d130x_driver.html#a295ff91cde15653954ad4b329766f93e',1,'daisy::SSD130xDriver::Width()'],['../classdaisy_1_1_s_s_d1307_driver.html#a22de3e909e3ae3eb1e9fdc47af138f4e',1,'daisy::SSD1307Driver::Width()'],['../classdaisy_1_1_one_bit_graphics_display.html#a6a8d21de6d8a49b80681cf84476b39b9',1,'daisy::OneBitGraphicsDisplay::Width()'],['../classdaisy_1_1_oled_display.html#a3be293e91c143677a8ab6c65d7b62363',1,'daisy::OledDisplay::Width()']]],
   ['withbottom_4',['WithBottom',['../classdaisy_1_1_rectangle.html#ac9867ca9a299dba683fc8eb18d4a8576',1,'daisy::Rectangle']]],
   ['withcenter_5',['WithCenter',['../classdaisy_1_1_rectangle.html#a6da0bb5fe424d3cde96ac9825117e89b',1,'daisy::Rectangle']]],
   ['withcenterx_6',['WithCenterX',['../classdaisy_1_1_rectangle.html#a14b990a12ac47e83d933253009b0f61c',1,'daisy::Rectangle']]],
