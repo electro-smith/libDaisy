@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['deg2rad_0',['deg2rad',['../display_8h.html#a894738198a00b6a55e87799c0f8712bb',1,'display.h']]],
+  ['deg2rad_0',['deg2rad',['../display_8h.html#a894738198a00b6a55e87799c0f8712bb',1,'deg2rad:&#160;display.h'],['../color__display_8h.html#a894738198a00b6a55e87799c0f8712bb',1,'deg2rad:&#160;color_display.h']]],
   ['dev_5fsr_5f4021_5fh_1',['DEV_SR_4021_H',['../sr__4021_8h.html#ac2bda4dacdf93f8727c5381956f00314',1,'sr_4021.h']]],
   ['dps310_5fcfgreg_2',['DPS310_CFGREG',['../dps310_8h.html#aa49a45adf7e35db7ba1c17f162bcbf25',1,'dps310.h']]],
   ['dps310_5fi2caddr_5fdefault_3',['DPS310_I2CADDR_DEFAULT',['../dps310_8h.html#a549c156d1ddabb6d76af22005be9eb68',1,'dps310.h']]],

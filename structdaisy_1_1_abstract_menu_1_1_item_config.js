@@ -1,10 +1,10 @@
 var structdaisy_1_1_abstract_menu_1_1_item_config =
 [
-    [ "asCallbackFunctionItem", "structdaisy_1_1_abstract_menu_1_1_item_config.html#a1672d00d3071598761c92964e9dedc74", null ],
-    [ "asCheckboxItem", "structdaisy_1_1_abstract_menu_1_1_item_config.html#a14cccd67ecc352adcb0195726831377d", null ],
-    [ "asCustomItem", "structdaisy_1_1_abstract_menu_1_1_item_config.html#a106a6619056f6d32fd9d0fab8ef8ed4f", null ],
-    [ "asMappedValueItem", "structdaisy_1_1_abstract_menu_1_1_item_config.html#af65b22696eecd313c8b6cdafb012a2fc", null ],
-    [ "asOpenUiPageItem", "structdaisy_1_1_abstract_menu_1_1_item_config.html#a65ed0caa968a72c234efe79602a42cb4", null ],
+    [ "asCallbackFunctionItem", "structdaisy_1_1_abstract_menu_1_1_item_config.html#ac57fa588ae37edb86fe9aad6667c3fff", null ],
+    [ "asCheckboxItem", "structdaisy_1_1_abstract_menu_1_1_item_config.html#a3f1bab75f093103de3b7ac0a4339068f", null ],
+    [ "asCustomItem", "structdaisy_1_1_abstract_menu_1_1_item_config.html#a8d04d705d6ca4d72eac41b33431c4a0f", null ],
+    [ "asMappedValueItem", "structdaisy_1_1_abstract_menu_1_1_item_config.html#a2c262d9f0532326913f4100c94315752", null ],
+    [ "asOpenUiPageItem", "structdaisy_1_1_abstract_menu_1_1_item_config.html#a46f35f4ccf5780f8fc56a03f0018661a", null ],
     [ "callbackFunction", "structdaisy_1_1_abstract_menu_1_1_item_config.html#a2b6c4878bca2058984ab5b3ff163fe08", null ],
     [ "context", "structdaisy_1_1_abstract_menu_1_1_item_config.html#ae7c2d4b97bd035919b52d46bf9cb659e", null ],
     [ "itemObject", "structdaisy_1_1_abstract_menu_1_1_item_config.html#a99f29482e671fe3d1193123dc1f4bdc9", null ],

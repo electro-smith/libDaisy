@@ -53,6 +53,6 @@ var structdaisy_1_1_spi_handle_1_1_config =
     [ "nss", "structdaisy_1_1_spi_handle_1_1_config.html#a18cd592724b6023960043ec19f9e0719", null ],
     [ "nss", "structdaisy_1_1_spi_handle_1_1_config.html#a4f16b1422469399d116457cf83dc6258", null ],
     [ "periph", "structdaisy_1_1_spi_handle_1_1_config.html#a176f3ada9fd6d962275ba7372b051b28", null ],
-    [ "pin_config", "structdaisy_1_1_spi_handle_1_1_config.html#a31516d8a2bd8ac911eaa021cbe19e57b", null ],
+    [ "pin_config", "structdaisy_1_1_spi_handle_1_1_config.html#a1e342957fce131364ad4208779cea144", null ],
     [ "sclk", "structdaisy_1_1_spi_handle_1_1_config.html#a738a554fb0f18cb7f3adeb284a459e60", null ]
 ];

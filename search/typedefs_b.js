@@ -19,5 +19,7 @@ var searchData=
   ['ssd130xi2c64x32driver_16',['SSD130xI2c64x32Driver',['../namespacedaisy.html#a8aa6a733725c92ec32701dacc75092fe',1,'daisy']]],
   ['ssd130xi2c64x48driver_17',['SSD130xI2c64x48Driver',['../namespacedaisy.html#a76096dc3b21d044b66782f18906fe46d',1,'daisy']]],
   ['ssd130xi2c98x16driver_18',['SSD130xI2c98x16Driver',['../namespacedaisy.html#acd406732d55384b504529db2e83602b6',1,'daisy']]],
-  ['startcallbackfunctionptr_19',['startcallbackfunctionptr',['../classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec',1,'daisy::UartHandler::StartCallbackFunctionPtr'],['../classdaisy_1_1_spi_handle.html#ac2f47ed26b7630dd193c59204a72daa1',1,'daisy::SpiHandle::StartCallbackFunctionPtr']]]
+  ['ssd13274wirespi128x128driver_19',['SSD13274WireSpi128x128Driver',['../namespacedaisy.html#a8c614491ffcb356544e3bbb13b8ee92d',1,'daisy']]],
+  ['ssd13514wirespi128x128driver_20',['SSD13514WireSpi128x128Driver',['../namespacedaisy.html#ae76cefa6c23bf4f90f7d8e64881fb79a',1,'daisy']]],
+  ['startcallbackfunctionptr_21',['startcallbackfunctionptr',['../classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec',1,'daisy::UartHandler::StartCallbackFunctionPtr'],['../classdaisy_1_1_spi_handle.html#ac2f47ed26b7630dd193c59204a72daa1',1,'daisy::SpiHandle::StartCallbackFunctionPtr']]]
 ];

@@ -18,6 +18,8 @@ var dir_79aff18505430beab4d731f694f82366 =
     [ "neotrellis.h", "neotrellis_8h.html", "neotrellis_8h" ],
     [ "oled_sh1106.h", "oled__sh1106_8h.html", "oled__sh1106_8h" ],
     [ "oled_ssd130x.h", "oled__ssd130x_8h.html", "oled__ssd130x_8h" ],
+    [ "oled_ssd1327.h", "oled__ssd1327_8h.html", "oled__ssd1327_8h" ],
+    [ "oled_ssd1351.h", "oled__ssd1351_8h.html", "oled__ssd1351_8h" ],
     [ "sdram.h", "sdram_8h.html", "sdram_8h" ],
     [ "sr_4021.h", "sr__4021_8h.html", "sr__4021_8h" ],
     [ "sr_595.h", "sr__595_8h.html", "sr__595_8h" ],

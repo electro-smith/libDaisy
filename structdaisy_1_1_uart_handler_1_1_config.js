@@ -37,7 +37,7 @@ var structdaisy_1_1_uart_handler_1_1_config =
     [ "mode", "structdaisy_1_1_uart_handler_1_1_config.html#a3b30e6ff02efbb4829b888f7d93091ea", null ],
     [ "parity", "structdaisy_1_1_uart_handler_1_1_config.html#ac48641737eaf10a6d0c78172aff2762a", null ],
     [ "periph", "structdaisy_1_1_uart_handler_1_1_config.html#a610e071e45e1258b17896a05c4a23cf3", null ],
-    [ "pin_config", "structdaisy_1_1_uart_handler_1_1_config.html#aa6f279be17e79b50e125287d41a97f8a", null ],
+    [ "pin_config", "structdaisy_1_1_uart_handler_1_1_config.html#a8895d6daee7e2997b291d0d6e7188803", null ],
     [ "rx", "structdaisy_1_1_uart_handler_1_1_config.html#a22f12839934f97f0a7a87f42d768684b", null ],
     [ "stopbits", "structdaisy_1_1_uart_handler_1_1_config.html#a490845e58271053432b93ec8cc56798e", null ],
     [ "tx", "structdaisy_1_1_uart_handler_1_1_config.html#a253d862229be57c8aaf14451ad74c6ab", null ],

@@ -10,6 +10,6 @@ var structdaisy_1_1_multi_slave_spi_handle_1_1_config =
     [ "nss", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#aa575cc533b705d23b1d495e86fe2ca06", null ],
     [ "num_devices", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a2400853acec103058b771d0287a0c79a", null ],
     [ "periph", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a752107d691777891a4f97730f40f07b8", null ],
-    [ "pin_config", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a1073109bcb65e06323ecc485129eea1b", null ],
+    [ "pin_config", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a61d065775caa3168e6c87b8d891c7c67", null ],
     [ "sclk", "structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a2bfd8405f0c25888134886b0e3223a5c", null ]
 ];

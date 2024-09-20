@@ -16,6 +16,12 @@ var hierarchy =
     [ "daisy::ChannelModeEvent", "structdaisy_1_1_channel_mode_event.html", null ],
     [ "daisy::ChannelPressureEvent", "structdaisy_1_1_channel_pressure_event.html", null ],
     [ "daisy::Color", "classdaisy_1_1_color.html", null ],
+    [ "daisy::ColorGraphicsDisplay", "classdaisy_1_1_color_graphics_display.html", [
+      [ "daisy::ColorGraphicsDisplayImpl< OledColorDisplay< DisplayDriver > >", "classdaisy_1_1_color_graphics_display_impl.html", [
+        [ "daisy::OledColorDisplay< DisplayDriver >", "classdaisy_1_1_oled_color_display.html", null ]
+      ] ],
+      [ "daisy::ColorGraphicsDisplayImpl< ChildType >", "classdaisy_1_1_color_graphics_display_impl.html", null ]
+    ] ],
     [ "daisy::Apds9960< Transport >::Config", "structdaisy_1_1_apds9960_1_1_config.html", null ],
     [ "daisy::Apds9960I2CTransport::Config", "structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html", null ],
     [ "daisy::AudioHandle::Config", "structdaisy_1_1_audio_handle_1_1_config.html", null ],
@@ -46,6 +52,7 @@ var hierarchy =
     [ "daisy::NeoPixelI2CTransport::Config", "structdaisy_1_1_neo_pixel_i2_c_transport_1_1_config.html", null ],
     [ "daisy::NeoTrellis< Transport >::Config", "structdaisy_1_1_neo_trellis_1_1_config.html", null ],
     [ "daisy::NeoTrellisI2CTransport::Config", "structdaisy_1_1_neo_trellis_i2_c_transport_1_1_config.html", null ],
+    [ "daisy::OledColorDisplay< DisplayDriver >::Config", "structdaisy_1_1_oled_color_display_1_1_config.html", null ],
     [ "daisy::OledDisplay< DisplayDriver >::Config", "structdaisy_1_1_oled_display_1_1_config.html", null ],
     [ "daisy::QSPIHandle::Config", "structdaisy_1_1_q_s_p_i_handle_1_1_config.html", null ],
     [ "daisy::SaiHandle::Config", "structdaisy_1_1_sai_handle_1_1_config.html", null ],
@@ -57,6 +64,10 @@ var hierarchy =
     [ "daisy::SSD130x4WireSpiTransport::Config", "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html", null ],
     [ "daisy::SSD130xDriver< width, height, Transport >::Config", "structdaisy_1_1_s_s_d130x_driver_1_1_config.html", null ],
     [ "daisy::SSD130xI2CTransport::Config", "structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html", null ],
+    [ "daisy::SSD13274WireSpiTransport::Config", "structdaisy_1_1_s_s_d13274_wire_spi_transport_1_1_config.html", null ],
+    [ "daisy::SSD1327Driver< width, height, Transport >::Config", "structdaisy_1_1_s_s_d1327_driver_1_1_config.html", null ],
+    [ "daisy::SSD13514WireSpiTransport::Config", "structdaisy_1_1_s_s_d13514_wire_spi_transport_1_1_config.html", null ],
+    [ "daisy::SSD1351Driver< width, height, Transport >::Config", "structdaisy_1_1_s_s_d1351_driver_1_1_config.html", null ],
     [ "daisy::System::Config", "structdaisy_1_1_system_1_1_config.html", null ],
     [ "daisy::TimerHandle::Config", "structdaisy_1_1_timer_handle_1_1_config.html", null ],
     [ "daisy::Tlv493d< Transport >::Config", "structdaisy_1_1_tlv493d_1_1_config.html", null ],
@@ -195,6 +206,10 @@ var hierarchy =
       [ "daisy::SH1106Driver< width, height, Transport >", "classdaisy_1_1_s_h1106_driver.html", null ]
     ] ],
     [ "daisy::SSD130xI2CTransport", "classdaisy_1_1_s_s_d130x_i2_c_transport.html", null ],
+    [ "daisy::SSD13274WireSpiTransport", "classdaisy_1_1_s_s_d13274_wire_spi_transport.html", null ],
+    [ "daisy::SSD1327Driver< width, height, Transport >", "classdaisy_1_1_s_s_d1327_driver.html", null ],
+    [ "daisy::SSD13514WireSpiTransport", "classdaisy_1_1_s_s_d13514_wire_spi_transport.html", null ],
+    [ "daisy::SSD1351Driver< width, height, Transport >", "classdaisy_1_1_s_s_d1351_driver.html", null ],
     [ "daisy::StackBase< T >", "classdaisy_1_1_stack_base.html", [
       [ "daisy::Stack< daisy::UiPage *, kMaxNumPages >", "classdaisy_1_1_stack.html", null ],
       [ "daisy::Stack< daisy::UiCanvasDescriptor, kMaxNumCanvases >", "classdaisy_1_1_stack.html", null ],

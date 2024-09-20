@@ -32,7 +32,7 @@ var structdaisy_1_1_sai_handle_1_1_config =
     [ "fs", "structdaisy_1_1_sai_handle_1_1_config.html#a535fc25eaea4947d3dc91b871b7534f9", null ],
     [ "mclk", "structdaisy_1_1_sai_handle_1_1_config.html#afb46e9faebada41d37e261d09332fe70", null ],
     [ "periph", "structdaisy_1_1_sai_handle_1_1_config.html#ac59816a80f77783dbce0e9aee8f6d1ed", null ],
-    [ "pin_config", "structdaisy_1_1_sai_handle_1_1_config.html#a573d8b4f46f1cc461e7d89385b037b20", null ],
+    [ "pin_config", "structdaisy_1_1_sai_handle_1_1_config.html#a923521bc4023df261c3be49aa35d2a72", null ],
     [ "sa", "structdaisy_1_1_sai_handle_1_1_config.html#a34270dc2a0db63013c430fa96d5c4a23", null ],
     [ "sb", "structdaisy_1_1_sai_handle_1_1_config.html#a9585bf5838b15a368c5ecf0a28135cac", null ],
     [ "sck", "structdaisy_1_1_sai_handle_1_1_config.html#a16fbf5fbbab606ac3e224f758f005af0", null ],
