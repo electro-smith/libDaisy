@@ -445,6 +445,174 @@ using SSD130xI2c64x32Driver = daisy::SSD130xDriver<64, 32, SSD130xI2CTransport>;
 using SSD130x4WireSoftSpi128x64Driver
     = daisy::SSD130xDriver<128, 64, SSD130x4WireSoftSpiTransport>;
 
+
+/**
+ * A driver implementation for the SSD1307
+ */
+template <size_t width, size_t height, typename Transport>
+class SSD1307Driver
+{
+  public:
+    struct Config
+    {
+        typename Transport::Config transport_config;
+    };
+
+    void Init(Config config)
+    {
+        transport_.Init(config.transport_config);
+
+        // Init routine...
+        uint8_t uDispayOffset;
+        uint8_t uMultiplex;
+        switch(height)
+        {
+            case 64:
+                uDispayOffset = 0x60;
+                uMultiplex    = 0x7F;
+                break;
+
+            case 80:
+                uDispayOffset = 0x68;
+                uMultiplex    = 0x4F;
+                break;
+
+            case 128:
+            default:
+                uDispayOffset = 0x00;
+                uMultiplex    = 0x7F;
+                break;
+        }
+
+        // Display Off
+        transport_.SendCommand(0xaE);
+
+        // Memory Mode
+        transport_.SendCommand(0x20);
+
+        // Normal Display
+        transport_.SendCommand(0xA6);
+
+        // Multiplex Ratio
+        transport_.SendCommand(0xA8);
+        transport_.SendCommand(uMultiplex);
+
+        // All On Resume
+        transport_.SendCommand(0xA4);
+
+        // Display Offset
+        transport_.SendCommand(0xD3);
+        transport_.SendCommand(uDispayOffset);
+
+        // Display Clock Divide Ratio
+        transport_.SendCommand(0xD5);
+        transport_.SendCommand(0x80);
+
+        // Pre Charge
+        transport_.SendCommand(0xD9);
+        transport_.SendCommand(0x22);
+
+        // Com Pins
+        transport_.SendCommand(0xDA);
+        transport_.SendCommand(0x12);
+
+        // VCOM Detect
+        transport_.SendCommand(0xDB);
+        transport_.SendCommand(0x35);
+
+        // Contrast Control
+        transport_.SendCommand(0x81);
+        transport_.SendCommand(0x80);
+
+        // Display On
+        transport_.SendCommand(0xAF);
+    };
+
+    size_t Width() const { return width; };
+    size_t Height() const { return height; };
+
+    void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on)
+    {
+        if(x >= width || y >= height)
+            return;
+        if(on)
+            buffer_[x + (y / 8) * width] |= (1 << (y % 8));
+        else
+            buffer_[x + (y / 8) * width] &= ~(1 << (y % 8));
+    }
+
+    void Fill(bool on)
+    {
+        for(size_t i = 0; i < sizeof(buffer_); i++)
+        {
+            buffer_[i] = on ? 0xff : 0x00;
+        }
+    };
+
+    /**
+     * Update the display 
+    */
+    void Update()
+    {
+        uint8_t i;
+        uint8_t high_column_addr;
+        switch(height)
+        {
+            case 32: high_column_addr = 0x12; break;
+
+            default: high_column_addr = 0x10; break;
+        }
+        for(i = 0; i < (height / 8); i++)
+        {
+            transport_.SendCommand(0xB0 + i);
+            transport_.SendCommand(0x00);
+            transport_.SendCommand(high_column_addr);
+            transport_.SendData(&buffer_[width * i], width);
+        }
+    };
+
+  private:
+    Transport transport_;
+    uint8_t   buffer_[width * height / 8];
+};
+
+/**
+ * A driver for the SSD1307 128x64 OLED displays connected via 4 wire SPI  
+ */
+using SSD13074WireSpi128x64Driver
+    = daisy::SSD1307Driver<128, 64, SSD130x4WireSpiTransport>;
+
+/**
+ * A driver for the SSD1307 128x80 OLED displays connected via 4 wire SPI  
+ */
+using SSD13074WireSpi128x80Driver
+    = daisy::SSD1307Driver<128, 80, SSD130x4WireSpiTransport>;
+
+/**
+ * A driver for the SSD1307 128x128 OLED displays connected via 4 wire SPI  
+ */
+using SSD13074WireSpi128x128Driver
+    = daisy::SSD1307Driver<128, 128, SSD130x4WireSpiTransport>;
+
+/**
+ * A driver for the SSD1307 128x64 OLED displays connected via I2C  
+ */
+using SSD1307I2c128x64Driver
+    = daisy::SSD130xDriver<128, 64, SSD130xI2CTransport>;
+
+/**
+ * A driver for the SSD1307 128x80 OLED displays connected via I2C  
+ */
+using SSD1307I2c128x80Driver
+    = daisy::SSD1307Driver<128, 80, SSD130xI2CTransport>;
+
+/**
+ * A driver for the SSD1307 128x128 OLED displays connected via I2C  
+ */
+using SSD1307I2c128x128Driver
+    = daisy::SSD130xDriver<128, 128, SSD130xI2CTransport>;
+
+
 }; // namespace daisy
 
 
