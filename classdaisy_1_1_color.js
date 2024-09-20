@@ -12,6 +12,7 @@ var classdaisy_1_1_color =
       [ "LAST", "classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a59fb8f2d16bd5cd2cc0e5ca7fe7def92", null ]
     ] ],
     [ "Color", "classdaisy_1_1_color.html#a6b1f926235cab78e9d4cb75e86c4c2ee", null ],
+    [ "Color", "classdaisy_1_1_color.html#a2c910dc86b650496f082c88a3ebdba6f", null ],
     [ "~Color", "classdaisy_1_1_color.html#adae628d437cdb54da339dc432d81f633", null ],
     [ "Blue", "classdaisy_1_1_color.html#a9270f936191af9fcd59dad58a8ab0387", null ],
     [ "Blue8", "classdaisy_1_1_color.html#accf8376e816af404457c61ec6ddd9ab4", null ],
@@ -20,6 +21,10 @@ var classdaisy_1_1_color =
     [ "Init", "classdaisy_1_1_color.html#a44cd04ee19a41442be79ec47711a2bf5", null ],
     [ "Init", "classdaisy_1_1_color.html#a0ebd169976dd93434e4523697b16559b", null ],
     [ "operator*", "classdaisy_1_1_color.html#a9e2f3c918aef976e859e03f6028db5d9", null ],
+    [ "operator+", "classdaisy_1_1_color.html#ae198573ea0c37926dad71cf061a2f562", null ],
     [ "Red", "classdaisy_1_1_color.html#ab645aa34a553a044e9c901546e78ed8f", null ],
-    [ "Red8", "classdaisy_1_1_color.html#af39d1a11445e8bfff1ea2bd6e9ec7748", null ]
+    [ "Red8", "classdaisy_1_1_color.html#af39d1a11445e8bfff1ea2bd6e9ec7748", null ],
+    [ "SetBlue", "classdaisy_1_1_color.html#a3a47d937703326aa9807bfd145f67d32", null ],
+    [ "SetGreen", "classdaisy_1_1_color.html#a6c10d26293d716387cb429cba6ac3ef6", null ],
+    [ "SetRed", "classdaisy_1_1_color.html#a6f12a59f738d89b22aae914aecad3cd1", null ]
 ];
