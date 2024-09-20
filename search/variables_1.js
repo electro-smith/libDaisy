@@ -24,7 +24,7 @@ var searchData=
   ['bitspersample_21',['bitspersample',['../structdaisy_1_1_wav_writer_1_1_config.html#a02a811d9a6779afd16ea34c0b2d1817e',1,'daisy::WavWriter::Config']]],
   ['blockalign_22',['BlockAlign',['../structdaisy_1_1_w_a_v___format_type_def.html#a088662aadfb9d39a43eea4450611711d',1,'daisy::WAV_FormatTypeDef']]],
   ['blocknbr_23',['BlockNbr',['../struct_d_s_y___s_d___card_info_type_def.html#a1955247be547523e0a16fd37c288b918',1,'DSY_SD_CardInfoTypeDef']]],
-  ['blocksize_24',['blocksize',['../struct_d_s_y___s_d___card_info_type_def.html#a030b9e7d12a77aa526ef7fc86bcb01e0',1,'DSY_SD_CardInfoTypeDef::BlockSize'],['../structdaisy_1_1_audio_handle_1_1_config.html#a7e23631311ab3151daa7b4f5a49a897c',1,'daisy::AudioHandle::Config::blocksize']]],
+  ['blocksize_24',['blocksize',['../structdaisy_1_1_audio_handle_1_1_config.html#a7e23631311ab3151daa7b4f5a49a897c',1,'daisy::AudioHandle::Config::blocksize'],['../struct_d_s_y___s_d___card_info_type_def.html#a030b9e7d12a77aa526ef7fc86bcb01e0',1,'DSY_SD_CardInfoTypeDef::BlockSize']]],
   ['boffset_25',['bOffset',['../classdaisy_1_1_neo_pixel.html#a403ecb32d1a3550e856bbfb750796947',1,'daisy::NeoPixel']]],
   ['boot_5finfo_26',['boot_info',['../namespacedaisy.html#aaf45d932af979bd96009924dff6ae8f1',1,'daisy']]],
   ['brightness_27',['brightness',['../classdaisy_1_1_neo_pixel.html#a2a07973ed7af8eff8ee9031d6daeae14',1,'daisy::NeoPixel']]],

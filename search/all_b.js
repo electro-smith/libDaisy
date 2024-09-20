@@ -10,7 +10,7 @@ var searchData=
   ['keystate_7',['keyState',['../uniondaisy_1_1_neo_trellis_1_1key_state.html',1,'daisy::NeoTrellis']]],
   ['kinds_20of_20inputs_8',['Using Different Kinds of Inputs',['../md_doc_2md_2__a4___getting-_started-_a_d_cs.html#autotoc_md40',1,'']]],
   ['kmaxsr595daisychain_9',['kMaxSr595DaisyChain',['../namespacedaisy.html#a05907ddd2ec5d1dae163cd0a5326b945',1,'daisy']]],
-  ['knob_10',['knob',['../classdaisy_1_1_daisy_field.html#ad38dd8b1047b6f434ccf1027528b4f99',1,'daisy::DaisyField::knob'],['../classdaisy_1_1_daisy_petal.html#a0273fd343346e74767bb5fc7bd290d64',1,'daisy::DaisyPetal::Knob'],['../classdaisy_1_1_daisy_pod.html#a43462bcc3a3d5167a383a5eda489878f',1,'daisy::DaisyPod::Knob'],['../classdaisy_1_1_daisy_petal.html#a2b7a221b0c519a002351d883b6e033bb',1,'daisy::DaisyPetal::knob']]],
+  ['knob_10',['knob',['../classdaisy_1_1_daisy_petal.html#a0273fd343346e74767bb5fc7bd290d64',1,'daisy::DaisyPetal::Knob'],['../classdaisy_1_1_daisy_field.html#ad38dd8b1047b6f434ccf1027528b4f99',1,'daisy::DaisyField::knob'],['../classdaisy_1_1_daisy_petal.html#a2b7a221b0c519a002351d883b6e033bb',1,'daisy::DaisyPetal::knob'],['../classdaisy_1_1_daisy_pod.html#a43462bcc3a3d5167a383a5eda489878f',1,'daisy::DaisyPod::Knob']]],
   ['knob1_11',['knob1',['../classdaisy_1_1_daisy_pod.html#ae5e2f78a926443e6e7d79a074727ee41',1,'daisy::DaisyPod']]],
   ['knob2_12',['knob2',['../classdaisy_1_1_daisy_pod.html#af7afc0469d04116f8847025120a4fc70',1,'daisy::DaisyPod']]],
   ['knob_5f0_13',['KNOB_0',['../classdaisy_1_1_daisy_versio.html#a598029b7d1e5280ac647a1f06fa81c68a7ece1fb251a95755e63464a1e807d6fe',1,'daisy::DaisyVersio']]],

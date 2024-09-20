@@ -8,6 +8,8 @@ var classdaisy_1_1_analog_control =
     [ "InitBipolarCv", "classdaisy_1_1_analog_control.html#aec736f5848fc9badbec878a48a7cd7c5", null ],
     [ "Process", "classdaisy_1_1_analog_control.html#a7109593bfc106dd8ef35aba4434b8321", null ],
     [ "SetCoeff", "classdaisy_1_1_analog_control.html#a2ace581abd8f0c5e35c0013e01f37f1c", null ],
+    [ "SetOffset", "classdaisy_1_1_analog_control.html#ae0058bed8b38717be0007eb3a4b494da", null ],
     [ "SetSampleRate", "classdaisy_1_1_analog_control.html#a4cbdf8afb5e284bd9e12bca004a10fab", null ],
+    [ "SetScale", "classdaisy_1_1_analog_control.html#aaba556b9f9eb8c0d9aebe4ad0ad46b05", null ],
     [ "Value", "classdaisy_1_1_analog_control.html#a099ff147f24ae2220921d22729a66020", null ]
 ];
