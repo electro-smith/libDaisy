@@ -16,7 +16,6 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/per/sai.cpp
     ${MODULE_DIR}/per/sdmmc.cpp
     ${MODULE_DIR}/util/bsp_sd_diskio.c
-    ${MODULE_DIR}/util/hal_map.c
     ${MODULE_DIR}/util/oled_fonts.c
     ${MODULE_DIR}/util/sd_diskio.c
     ${MODULE_DIR}/util/usbh_diskio.c

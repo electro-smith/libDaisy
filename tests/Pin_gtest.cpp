@@ -25,16 +25,3 @@ TEST(PinTests, c_copy)
     Pin dest = src;
     EXPECT_TRUE(src == dest);
 }
-
-TEST(PinTests, d_conversion)
-{
-	dsy_gpio_pin old_pin = {DSY_GPIOA, 5};
-
-	Pin new_pin = Pin(PORTA, 5);
-
-	/** Using operator dsy_gpio_pin for implicit conversion */
-	dsy_gpio_pin converted_pin = new_pin;
-
-	EXPECT_EQ(old_pin.port, converted_pin.port);
-	EXPECT_EQ(old_pin.pin, converted_pin.pin);
-}

@@ -43,6 +43,7 @@
 #include "hid/rgb_led.h"
 #include "dev/sr_595.h"
 #include "dev/apds9960.h"
+#include "dev/codec_ak4556.h"
 #include "dev/codec_pcm3060.h"
 #include "dev/codec_wm8731.h"
 #include "dev/dps310.h"

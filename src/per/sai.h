@@ -2,6 +2,7 @@
 #ifndef DSY_SAI_H
 #define DSY_SAI_H
 
+#include "util/hal_map.h"
 #include "daisy_core.h"
 
 namespace daisy
@@ -90,7 +91,7 @@ class SaiHandle
         Peripheral periph;
         struct
         {
-            dsy_gpio_pin mclk, fs, sck, sa, sb;
+            Pin mclk, fs, sck, sa, sb;
         } pin_config;
         SampleRate sr;
         BitDepth   bit_depth;

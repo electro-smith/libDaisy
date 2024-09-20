@@ -1,10 +1,6 @@
 #include "per/i2c.h"
 #include "sys/system.h"
 #include "util/scopedirqblocker.h"
-extern "C"
-{
-#include "util/hal_map.h"
-}
 
 namespace daisy
 {
@@ -636,11 +632,11 @@ void I2CHandle::Impl::InitPins()
         default: break;
     }
 
-    port                = dsy_hal_map_get_port(&config_.pin_config.scl);
-    GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.scl);
+    port                = GetHALPort(config_.pin_config.scl);
+    GPIO_InitStruct.Pin = GetHALPin(config_.pin_config.scl);
     HAL_GPIO_Init(port, &GPIO_InitStruct);
-    port                = dsy_hal_map_get_port(&config_.pin_config.sda);
-    GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.sda);
+    port                = GetHALPort(config_.pin_config.sda);
+    GPIO_InitStruct.Pin = GetHALPin(config_.pin_config.sda);
     HAL_GPIO_Init(port, &GPIO_InitStruct);
 }
 
@@ -648,11 +644,11 @@ void I2CHandle::Impl::DeinitPins()
 {
     GPIO_TypeDef* port;
     uint16_t      pin;
-    port = dsy_hal_map_get_port(&config_.pin_config.scl);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.scl);
+    port = GetHALPort(config_.pin_config.scl);
+    pin  = GetHALPin(config_.pin_config.scl);
     HAL_GPIO_DeInit(port, pin);
-    port = dsy_hal_map_get_port(&config_.pin_config.sda);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.sda);
+    port = GetHALPort(config_.pin_config.sda);
+    pin  = GetHALPin(config_.pin_config.sda);
     HAL_GPIO_DeInit(port, pin);
 }
 
