@@ -1,7 +1,7 @@
 var structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config =
 [
-    [ "miso", "structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#a9f72f602761d1007cea1df04c588c7bd", null ],
-    [ "mosi", "structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#a0dcc677874f2ab2e7c519f8106804866", null ],
-    [ "nss", "structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#a0cec49607adbb7f7c4a96bfc00b190a2", null ],
-    [ "sclk", "structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#ae430b77c7c2b347299811a30bde18653", null ]
+    [ "miso", "structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#a694a735dba8c11bebd7c205815fd528a", null ],
+    [ "mosi", "structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#aff00e4f94333ae21f4654ba1bdf7117c", null ],
+    [ "nss", "structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#a69961efa74f196adbc3c00a265306b3e", null ],
+    [ "sclk", "structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config_1_1_pin_config.html#a2276a6a7d16779f1dc416533d659debf", null ]
 ];

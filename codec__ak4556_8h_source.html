@@ -112,32 +112,38 @@ $(document).ready(function(){initNavTree('codec__ak4556_8h_source.html',''); ini
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno"><a class="line" href="codec__ak4556_8h.html#adc8294fd3d5cb20619380f160bbb4c2c">    3</a></span><span class="preprocessor">#define DSY_CODEC_AK4556_H</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="daisy__core_8h.html">daisy_core.h</a>&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacedaisy.html">daisy</a></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
-<div class="foldopen" id="foldopen00016" data-start="{" data-end="};">
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classdaisy_1_1_ak4556.html">   16</a></span><span class="keyword">class </span><a class="code hl_class" href="classdaisy_1_1_ak4556.html">Ak4556</a></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>{</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>  <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classdaisy_1_1_ak4556.html#aab55b98dbe75fd484f97b863d8ec6784">   19</a></span>    <a class="code hl_function" href="classdaisy_1_1_ak4556.html#aab55b98dbe75fd484f97b863d8ec6784">Ak4556</a>() {}</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classdaisy_1_1_ak4556.html#ab88eb56253e8df965c92687a4e130af3">   20</a></span>    <a class="code hl_function" href="classdaisy_1_1_ak4556.html#ab88eb56253e8df965c92687a4e130af3">~Ak4556</a>() {}</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classdaisy_1_1_ak4556.html#ac92bd71a03cb93ce380533f9775c16da">   26</a></span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_ak4556.html#ac92bd71a03cb93ce380533f9775c16da">Init</a>(<a class="code hl_struct" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> reset_pin);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classdaisy_1_1_ak4556.html#ae93c32152fa90622effc796999021aa5">   32</a></span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_ak4556.html#ae93c32152fa90622effc796999021aa5">DeInit</a>(<a class="code hl_struct" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> reset_pin);</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="gpio_8h.html">per/gpio.h</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacedaisy.html">daisy</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="foldopen" id="foldopen00017" data-start="{" data-end="};">
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classdaisy_1_1_ak4556.html">   17</a></span><span class="keyword">class </span><a class="code hl_class" href="classdaisy_1_1_ak4556.html">Ak4556</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>{</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classdaisy_1_1_ak4556.html#aab55b98dbe75fd484f97b863d8ec6784">   20</a></span>    <a class="code hl_function" href="classdaisy_1_1_ak4556.html#aab55b98dbe75fd484f97b863d8ec6784">Ak4556</a>() {}</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classdaisy_1_1_ak4556.html#ab88eb56253e8df965c92687a4e130af3">   21</a></span>    <a class="code hl_function" href="classdaisy_1_1_ak4556.html#ab88eb56253e8df965c92687a4e130af3">~Ak4556</a>() {}</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classdaisy_1_1_ak4556.html#a57706a119d8cdb3142655ab4608c9ad4">   25</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_ak4556.html#a57706a119d8cdb3142655ab4608c9ad4">Init</a>(<a class="code hl_struct" href="structdaisy_1_1_pin.html">Pin</a> reset_pin);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classdaisy_1_1_ak4556.html#ad6cc5fcca2dfe1d30f69f3ba1da38fb4">   29</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_ak4556.html#ad6cc5fcca2dfe1d30f69f3ba1da38fb4">DeInit</a>();</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_class" href="classdaisy_1_1_g_p_i_o.html">GPIO</a> reset_;</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>};</div>
 </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>} <span class="comment">// namespace daisy</span></div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassdaisy_1_1_ak4556_html"><div class="ttname"><a href="classdaisy_1_1_ak4556.html">daisy::Ak4556</a></div><div class="ttdef"><b>Definition</b> codec_ak4556.h:17</div></div>
-<div class="ttc" id="aclassdaisy_1_1_ak4556_html_aab55b98dbe75fd484f97b863d8ec6784"><div class="ttname"><a href="classdaisy_1_1_ak4556.html#aab55b98dbe75fd484f97b863d8ec6784">daisy::Ak4556::Ak4556</a></div><div class="ttdeci">Ak4556()</div><div class="ttdef"><b>Definition</b> codec_ak4556.h:19</div></div>
-<div class="ttc" id="aclassdaisy_1_1_ak4556_html_ab88eb56253e8df965c92687a4e130af3"><div class="ttname"><a href="classdaisy_1_1_ak4556.html#ab88eb56253e8df965c92687a4e130af3">daisy::Ak4556::~Ak4556</a></div><div class="ttdeci">~Ak4556()</div><div class="ttdef"><b>Definition</b> codec_ak4556.h:20</div></div>
-<div class="ttc" id="aclassdaisy_1_1_ak4556_html_ac92bd71a03cb93ce380533f9775c16da"><div class="ttname"><a href="classdaisy_1_1_ak4556.html#ac92bd71a03cb93ce380533f9775c16da">daisy::Ak4556::Init</a></div><div class="ttdeci">static void Init(dsy_gpio_pin reset_pin)</div></div>
-<div class="ttc" id="aclassdaisy_1_1_ak4556_html_ae93c32152fa90622effc796999021aa5"><div class="ttname"><a href="classdaisy_1_1_ak4556.html#ae93c32152fa90622effc796999021aa5">daisy::Ak4556::DeInit</a></div><div class="ttdeci">static void DeInit(dsy_gpio_pin reset_pin)</div></div>
+<div class="ttc" id="aclassdaisy_1_1_ak4556_html"><div class="ttname"><a href="classdaisy_1_1_ak4556.html">daisy::Ak4556</a></div><div class="ttdef"><b>Definition</b> codec_ak4556.h:18</div></div>
+<div class="ttc" id="aclassdaisy_1_1_ak4556_html_a57706a119d8cdb3142655ab4608c9ad4"><div class="ttname"><a href="classdaisy_1_1_ak4556.html#a57706a119d8cdb3142655ab4608c9ad4">daisy::Ak4556::Init</a></div><div class="ttdeci">void Init(Pin reset_pin)</div></div>
+<div class="ttc" id="aclassdaisy_1_1_ak4556_html_aab55b98dbe75fd484f97b863d8ec6784"><div class="ttname"><a href="classdaisy_1_1_ak4556.html#aab55b98dbe75fd484f97b863d8ec6784">daisy::Ak4556::Ak4556</a></div><div class="ttdeci">Ak4556()</div><div class="ttdef"><b>Definition</b> codec_ak4556.h:20</div></div>
+<div class="ttc" id="aclassdaisy_1_1_ak4556_html_ab88eb56253e8df965c92687a4e130af3"><div class="ttname"><a href="classdaisy_1_1_ak4556.html#ab88eb56253e8df965c92687a4e130af3">daisy::Ak4556::~Ak4556</a></div><div class="ttdeci">~Ak4556()</div><div class="ttdef"><b>Definition</b> codec_ak4556.h:21</div></div>
+<div class="ttc" id="aclassdaisy_1_1_ak4556_html_ad6cc5fcca2dfe1d30f69f3ba1da38fb4"><div class="ttname"><a href="classdaisy_1_1_ak4556.html#ad6cc5fcca2dfe1d30f69f3ba1da38fb4">daisy::Ak4556::DeInit</a></div><div class="ttdeci">void DeInit()</div></div>
+<div class="ttc" id="aclassdaisy_1_1_g_p_i_o_html"><div class="ttname"><a href="classdaisy_1_1_g_p_i_o.html">daisy::GPIO</a></div><div class="ttdoc">General Purpose I/O control.</div><div class="ttdef"><b>Definition</b> gpio.h:22</div></div>
 <div class="ttc" id="adaisy__core_8h_html"><div class="ttname"><a href="daisy__core_8h.html">daisy_core.h</a></div></div>
+<div class="ttc" id="agpio_8h_html"><div class="ttname"><a href="gpio_8h.html">gpio.h</a></div></div>
 <div class="ttc" id="anamespacedaisy_html"><div class="ttname"><a href="namespacedaisy.html">daisy</a></div><div class="ttdoc">Hardware defines and helpers for daisy field platform.</div><div class="ttdef"><b>Definition</b> index.h:2</div></div>
-<div class="ttc" id="astructdsy__gpio__pin_html"><div class="ttname"><a href="structdsy__gpio__pin.html">dsy_gpio_pin</a></div><div class="ttdef"><b>Definition</b> daisy_core.h:205</div></div>
+<div class="ttc" id="astructdaisy_1_1_pin_html"><div class="ttname"><a href="structdaisy_1_1_pin.html">daisy::Pin</a></div><div class="ttdoc">representation of hardware port/pin combination</div><div class="ttdef"><b>Definition</b> daisy_core.h:193</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.2-->

@@ -5,7 +5,7 @@ var searchData=
   ['e_5fswitching_5fmodes_2',['E_SWITCHING_MODES',['../classdaisy_1_1_q_s_p_i_handle.html#a130e764ad0cd53c10c0bc85193e8c133ae5022a0eb632d9f53b262358f7a876e9',1,'daisy::QSPIHandle']]],
   ['edge_3',['edge',['../uniondaisy_1_1_neo_trellis_1_1key_event_raw.html#a8647a512438543149457a5e81a7eb14d',1,'daisy::NeoTrellis::keyEventRaw::EDGE'],['../structdaisy_1_1_neo_trellis_1_1key_event_1_1_bit.html#a9b958e8d1f48ed61865de6907f5c90a6',1,'daisy::NeoTrellis::keyEvent::Bit::EDGE']]],
   ['empty_4',['Empty',['../classdaisy_1_1_fixed_cap_str_base.html#a88a73398547c84e073bc54853e504709',1,'daisy::FixedCapStrBase']]],
-  ['en_5',['en',['../structdaisy_1_1_lcd_h_d44780_1_1_config.html#a88e0474def3c812d4475ab802eda8155',1,'daisy::LcdHD44780::Config']]],
+  ['en_5',['en',['../structdaisy_1_1_lcd_h_d44780_1_1_config.html#ad57e2b2b440899ae8c372d33b6a6f90f',1,'daisy::LcdHD44780::Config']]],
   ['enable_6',['enable',['../classdaisy_1_1_apds9960.html#ab4bceba1c9fdc2d0f3fa65391c66829a',1,'daisy::Apds9960::enable(bool en=true)'],['../classdaisy_1_1_apds9960.html#a68130f4d2185e6a5385e525e01f86eb2',1,'daisy::Apds9960::Enable(bool en)']]],
   ['enable_5firq_7',['enable_irq',['../structdaisy_1_1_timer_handle_1_1_config.html#ad596ac4c02799e9bfd637bfaec82d41f',1,'daisy::TimerHandle::Config']]],
   ['enablecolor_8',['EnableColor',['../classdaisy_1_1_apds9960.html#a591c47b814ea1c5d23e2bd46e453f76b',1,'daisy::Apds9960']]],

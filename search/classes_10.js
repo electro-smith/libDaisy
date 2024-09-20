@@ -7,7 +7,7 @@ var searchData=
   ['sh1106driver_4',['SH1106Driver',['../classdaisy_1_1_s_h1106_driver.html',1,'daisy']]],
   ['shiftregister4021_5',['ShiftRegister4021',['../classdaisy_1_1_shift_register4021.html',1,'daisy']]],
   ['shiftregister4021_3c_202_20_3e_6',['ShiftRegister4021&lt; 2 &gt;',['../classdaisy_1_1_shift_register4021.html',1,'daisy']]],
-  ['shiftregister595_7',['ShiftRegister595',['../class_shift_register595.html',1,'']]],
+  ['shiftregister595_7',['ShiftRegister595',['../classdaisy_1_1_shift_register595.html',1,'daisy']]],
   ['songpositionpointerevent_8',['SongPositionPointerEvent',['../structdaisy_1_1_song_position_pointer_event.html',1,'daisy']]],
   ['songselectevent_9',['SongSelectEvent',['../structdaisy_1_1_song_select_event.html',1,'daisy']]],
   ['specialcontrolids_10',['SpecialControlIds',['../structdaisy_1_1_u_i_1_1_special_control_ids.html',1,'daisy::UI']]],

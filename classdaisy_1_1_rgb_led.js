@@ -2,7 +2,7 @@ var classdaisy_1_1_rgb_led =
 [
     [ "RgbLed", "classdaisy_1_1_rgb_led.html#a83702469af420ecd8240571ae40677f3", null ],
     [ "~RgbLed", "classdaisy_1_1_rgb_led.html#a3bfb8dea14712689cc9343b7efea8902", null ],
-    [ "Init", "classdaisy_1_1_rgb_led.html#aff3dc6ce4e2415a32ad09c41f003b7fe", null ],
+    [ "Init", "classdaisy_1_1_rgb_led.html#a15bc938e283fc59fce3cb47380cd9b2d", null ],
     [ "Set", "classdaisy_1_1_rgb_led.html#a342c072e678f5df25a8f638a91479d1f", null ],
     [ "SetBlue", "classdaisy_1_1_rgb_led.html#a388ef2c8991a9e5fd75fc0d484bf39ad", null ],
     [ "SetColor", "classdaisy_1_1_rgb_led.html#afc530391dc068788952edbe9907df8e9", null ],

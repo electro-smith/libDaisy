@@ -16,6 +16,6 @@ var searchData=
   ['fontheight_13',['FontHeight',['../struct_font_def.html#a4e3e31a3a441bc010a432564e5da887d',1,'FontDef']]],
   ['fontwidth_14',['FontWidth',['../struct_font_def.html#a9e22d0bdbc21eadba6155f31d742f85f',1,'FontDef']]],
   ['footswitch_5fled_15',['footswitch_led',['../classdaisy_1_1_daisy_petal.html#a0adb82d937f3b214214aa2370b12f75e',1,'daisy::DaisyPetal']]],
-  ['fs_16',['fs',['../structdaisy_1_1_sai_handle_1_1_config.html#aff0746f3a8ff80d4ad7763e5d4994b67',1,'daisy::SaiHandle::Config']]],
+  ['fs_16',['fs',['../structdaisy_1_1_sai_handle_1_1_config.html#a535fc25eaea4947d3dc91b871b7534f9',1,'daisy::SaiHandle::Config']]],
   ['funcbttnid_17',['funcBttnId',['../structdaisy_1_1_u_i_1_1_special_control_ids.html#a7c847ff1dd0f5557428fa2c949af3872',1,'daisy::UI::SpecialControlIds']]]
 ];

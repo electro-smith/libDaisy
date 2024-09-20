@@ -16,10 +16,10 @@ var structdaisy_1_1_adc_channel_config =
       [ "MUX_SEL_2", "structdaisy_1_1_adc_channel_config.html#af601e66da7eb60721792861fc91f2c83a9d3735b815879adb97ce0a48f528f39a", null ],
       [ "MUX_SEL_LAST", "structdaisy_1_1_adc_channel_config.html#af601e66da7eb60721792861fc91f2c83a00a6235ac198f2fdd9ccae951c908da2", null ]
     ] ],
-    [ "InitMux", "structdaisy_1_1_adc_channel_config.html#a253f14fa84c6996b5238827608bc85f2", null ],
-    [ "InitSingle", "structdaisy_1_1_adc_channel_config.html#ab0e0e90dbe85b179b09f384b9895123d", null ],
+    [ "InitMux", "structdaisy_1_1_adc_channel_config.html#a507608eb4c28aafcc68f93ec86927e81", null ],
+    [ "InitSingle", "structdaisy_1_1_adc_channel_config.html#a8e98e2af9e60344be120445d81f23925", null ],
     [ "mux_channels_", "structdaisy_1_1_adc_channel_config.html#a9e61599527b16d2a47c76f0e3fd8c45c", null ],
-    [ "mux_pin_", "structdaisy_1_1_adc_channel_config.html#ab617cb7700615026b926ff9675e8f90f", null ],
-    [ "pin_", "structdaisy_1_1_adc_channel_config.html#aaa26b95be3383f04543b4525ab04389a", null ],
+    [ "mux_pin_", "structdaisy_1_1_adc_channel_config.html#a74a240e46beecb9797d39768e70b5607", null ],
+    [ "pin_", "structdaisy_1_1_adc_channel_config.html#a5813194434ba3fa7a4bccf0b5ce7fbb7", null ],
     [ "speed_", "structdaisy_1_1_adc_channel_config.html#a93bf7aebe5faa56c19d2254b90e6c83b", null ]
 ];

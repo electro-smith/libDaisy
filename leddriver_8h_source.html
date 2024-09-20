@@ -137,11 +137,11 @@ $(document).ready(function(){initNavTree('leddriver_8h_source.html',''); initRes
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classdaisy_1_1_led_driver_pca9685.html#abc90ef63251f238d16cdd2c6e7a6ed39">   51</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="classdaisy_1_1_led_driver_pca9685.html#abc90ef63251f238d16cdd2c6e7a6ed39">DmaBuffer</a> = PCA9685TransmitBuffer[numDrivers];</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
 <div class="foldopen" id="foldopen00065" data-start="{" data-end="}">
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">   65</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>(<a class="code hl_class" href="classdaisy_1_1_i2_c_handle.html">I2CHandle</a> i2c,</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">   65</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">Init</a>(<a class="code hl_class" href="classdaisy_1_1_i2_c_handle.html">I2CHandle</a> i2c,</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>              <span class="keyword">const</span> uint8_t (&amp;addresses)[numDrivers],</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>              <a class="code hl_typedef" href="classdaisy_1_1_led_driver_pca9685.html#abc90ef63251f238d16cdd2c6e7a6ed39">DmaBuffer</a>    dma_buffer_a,</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>              <a class="code hl_typedef" href="classdaisy_1_1_led_driver_pca9685.html#abc90ef63251f238d16cdd2c6e7a6ed39">DmaBuffer</a>    dma_buffer_b,</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>              <a class="code hl_struct" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> oe_pin = {<a class="code hl_enumvalue" href="group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa3d2ec507d8852037514f5ac644f20d5a">DSY_GPIOX</a>, 0})</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>              <a class="code hl_typedef" href="classdaisy_1_1_led_driver_pca9685.html#abc90ef63251f238d16cdd2c6e7a6ed39">DmaBuffer</a> dma_buffer_a,</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>              <a class="code hl_typedef" href="classdaisy_1_1_led_driver_pca9685.html#abc90ef63251f238d16cdd2c6e7a6ed39">DmaBuffer</a> dma_buffer_b,</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>              <a class="code hl_struct" href="structdaisy_1_1_pin.html">Pin</a>       oe_pin = <a class="code hl_struct" href="structdaisy_1_1_pin.html">Pin</a>(<a class="code hl_enumvalue" href="namespacedaisy.html#a0f3f80696b55547e8471a18de01b8e13a05ebd4a8511463d01e5f35dd20cd8255">PORTX</a>, 0))</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    {</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        i2c_             = i2c;</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        draw_buffer_     = dma_buffer_a;</div>
@@ -298,113 +298,113 @@ $(document).ready(function(){initNavTree('leddriver_8h_source.html',''); initRes
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    <span class="keywordtype">void</span> InitializeDrivers()</div>
 <div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    {</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="comment">// init OE pin and pull low to enable outputs</span></div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="keywordflow">if</span>(oe_pin_.<a class="code hl_variable" href="structdsy__gpio__pin.html#a1f18b0d77c637dde2a3febf5edf31237">port</a> != <a class="code hl_enumvalue" href="group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa3d2ec507d8852037514f5ac644f20d5a">DSY_GPIOX</a>)</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="keywordflow">if</span>(oe_pin_.<a class="code hl_variable" href="structdaisy_1_1_pin.html#a09a02dc8bbf3957abe1e0dff73f4749f">port</a> != <a class="code hl_enumvalue" href="namespacedaisy.html#a0f3f80696b55547e8471a18de01b8e13a05ebd4a8511463d01e5f35dd20cd8255">PORTX</a>)</div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        {</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>            oe_pin_gpio_.<a class="code hl_variable" href="structdsy__gpio.html#a92d61fa4d53b923b328e7e1ca8a67100">pin</a>  = oe_pin_;</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>            oe_pin_gpio_.<a class="code hl_variable" href="structdsy__gpio.html#a12e4d73b334e9caedb135224bd288384">mode</a> = <a class="code hl_enumvalue" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gga0edc3fcaf729346c5251d263d732666eacc5f2bbce0cc1ad14d973f8480c7f377">DSY_GPIO_MODE_OUTPUT_PP</a>;</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>            oe_pin_gpio_.<a class="code hl_variable" href="structdsy__gpio.html#af15905326174d62efafda5775d2aea8a">pull</a> = <a class="code hl_enumvalue" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ggad8a85223f8dbcdf2c2cfc9302b3451b8ad6cca2addae616f7f27fee076f7ac9e0">DSY_GPIO_NOPULL</a>;</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>            <a class="code hl_function" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga2fa512c8eff950e56bb2206955fc7483">dsy_gpio_init</a>(&amp;oe_pin_gpio_);</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>            <a class="code hl_function" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga05d023b1e65d46f0d1be16e38d3c6db5">dsy_gpio_write</a>(&amp;oe_pin_gpio_, 0);</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        }</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <span class="comment">// init the individual drivers</span></div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> d = 0; d &lt; numDrivers; d++)</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        {</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>            <span class="keyword">const</span> uint8_t address = PCA9685_I2C_BASE_ADDRESS | addresses_[d];</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>            uint8_t       buffer[2];</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>            buffer[0] = PCA9685_MODE1;</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>            buffer[1] = 0x00;</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>            i2c_.<a class="code hl_function" href="classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae">TransmitBlocking</a>(address, buffer, 2, 1);</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>            <a class="code hl_function" href="classdaisy_1_1_system.html#a760572ff8248511b8b5825c8085d33c6">System::Delay</a>(20);</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>            buffer[0] = PCA9685_MODE1;</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>            buffer[1] = 0x00;</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>            i2c_.<a class="code hl_function" href="classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae">TransmitBlocking</a>(address, buffer, 2, 1);</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>            <a class="code hl_function" href="classdaisy_1_1_system.html#a760572ff8248511b8b5825c8085d33c6">System::Delay</a>(20);</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>            buffer[0] = PCA9685_MODE1;</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>            <span class="comment">// auto increment on</span></div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>            buffer[1] = 0b00100000;</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            i2c_.<a class="code hl_function" href="classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae">TransmitBlocking</a>(address, buffer, 2, 1);</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            <a class="code hl_function" href="classdaisy_1_1_system.html#a760572ff8248511b8b5825c8085d33c6">System::Delay</a>(20);</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>            buffer[0] = PCA9685_MODE2;</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            <span class="comment">// OE-high = high Impedance</span></div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            <span class="comment">// Push-Pull outputs</span></div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>            <span class="comment">// outputs change on STOP</span></div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>            <span class="comment">// outputs inverted</span></div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>            buffer[1] = 0b000110110;</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>            i2c_.<a class="code hl_function" href="classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae">TransmitBlocking</a>(address, buffer, 2, 5);</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        }</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    }</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> </div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <span class="comment">// no std::clamp available in C++14.... remove this when C++17 is available</span></div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    T clamp(T in, T low, T high)</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    {</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        <span class="keywordflow">return</span> (in &lt; low) ? low : (high &lt; in) ? high : in;</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    }</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <span class="comment">// an internal function to handle i2c callbacks</span></div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <span class="comment">// called when an I2C transmission completes and the next driver must be updated</span></div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> TxCpltCallback(<span class="keywordtype">void</span>* context, <a class="code hl_enumeration" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">I2CHandle::Result</a> result)</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    {</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        <span class="keyword">auto</span> drv_ptr = <span class="keyword">reinterpret_cast&lt;</span></div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>            LedDriverPca9685&lt;numDrivers, persistentBufferContents&gt;*<span class="keyword">&gt;</span>(context);</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        drv_ptr-&gt;ContinueTransmission();</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    }</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> </div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    I2CHandle              i2c_;</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    PCA9685TransmitBuffer* draw_buffer_;</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    PCA9685TransmitBuffer* transmit_buffer_;</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    uint8_t                addresses_[numDrivers];</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    <a class="code hl_struct" href="structdsy__gpio__pin.html">dsy_gpio_pin</a>           oe_pin_;</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    <a class="code hl_struct" href="structdsy__gpio.html">dsy_gpio</a>               oe_pin_gpio_;</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="comment">// index of the dirver that is currently updated.</span></div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <span class="keyword">volatile</span> int8_t current_driver_idx_;</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    <span class="keyword">const</span> uint16_t  gamma_table_[256] = {</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        2,    2,    2,    2,    2,    2,    2,    3,    3,    4,    4,    5,</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        5,    6,    7,    8,    8,    9,    10,   11,   12,   13,   15,   16,</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        17,   18,   20,   21,   23,   25,   26,   28,   30,   32,   34,   36,</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        38,   40,   43,   45,   48,   50,   53,   56,   59,   62,   65,   68,</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        71,   75,   78,   82,   85,   89,   93,   97,   101,  105,  110,  114,</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        119,  123,  128,  133,  138,  143,  149,  154,  159,  165,  171,  177,</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        183,  189,  195,  202,  208,  215,  222,  229,  236,  243,  250,  258,</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        266,  273,  281,  290,  298,  306,  315,  324,  332,  341,  351,  360,</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        369,  379,  389,  399,  409,  419,  430,  440,  451,  462,  473,  485,</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        496,  508,  520,  532,  544,  556,  569,  582,  594,  608,  621,  634,</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        648,  662,  676,  690,  704,  719,  734,  749,  764,  779,  795,  811,</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        827,  843,  859,  876,  893,  910,  927,  944,  962,  980,  998,  1016,</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        1034, 1053, 1072, 1091, 1110, 1130, 1150, 1170, 1190, 1210, 1231, 1252,</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        1273, 1294, 1316, 1338, 1360, 1382, 1404, 1427, 1450, 1473, 1497, 1520,</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        1544, 1568, 1593, 1617, 1642, 1667, 1693, 1718, 1744, 1770, 1797, 1823,</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        1850, 1877, 1905, 1932, 1960, 1988, 2017, 2045, 2074, 2103, 2133, 2162,</div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        2192, 2223, 2253, 2284, 2315, 2346, 2378, 2410, 2442, 2474, 2507, 2540,</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>        2573, 2606, 2640, 2674, 2708, 2743, 2778, 2813, 2849, 2884, 2920, 2957,</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        2993, 3030, 3067, 3105, 3143, 3181, 3219, 3258, 3297, 3336, 3376, 3416,</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>        3456, 3496, 3537, 3578, 3619, 3661, 3703, 3745, 3788, 3831, 3874, 3918,</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        3962, 4006, 4050, 4095};</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint8_t PCA9685_I2C_BASE_ADDRESS = 0b01000000;</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint8_t PCA9685_MODE1</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        = 0x00; <span class="comment">// location for Mode1 register address</span></div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint8_t PCA9685_MODE2</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        = 0x01; <span class="comment">// location for Mode2 reigster address</span></div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint8_t PCA9685_LED0</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>        = 0x06; <span class="comment">// location for start of LED0 registers</span></div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint8_t PRE_SCALE_MODE</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>        = 0xFE; <span class="comment">//location for setting prescale (clock speed)</span></div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>};</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>            oe_pin_gpio_.<a class="code hl_function" href="classdaisy_1_1_g_p_i_o.html#ae576cffc1eef8b59d6cc2142cf1d9f97">Init</a>(oe_pin_, <a class="code hl_enumvalue" href="classdaisy_1_1_g_p_i_o.html#af853f20a7e4f4d4f337c30fe1d6f1827a50a87f0d71f7221582dad4bf507a0f34">GPIO::Mode::OUTPUT</a>);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>            oe_pin_gpio_.<a class="code hl_function" href="classdaisy_1_1_g_p_i_o.html#a2cff092b5e71cd8a2baccfbdc5ee8584">Write</a>(0);</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        }</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        <span class="comment">// init the individual drivers</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> d = 0; d &lt; numDrivers; d++)</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        {</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>            <span class="keyword">const</span> uint8_t address = PCA9685_I2C_BASE_ADDRESS | addresses_[d];</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>            uint8_t       buffer[2];</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>            buffer[0] = PCA9685_MODE1;</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>            buffer[1] = 0x00;</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>            i2c_.<a class="code hl_function" href="classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae">TransmitBlocking</a>(address, buffer, 2, 1);</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>            <a class="code hl_function" href="classdaisy_1_1_system.html#a760572ff8248511b8b5825c8085d33c6">System::Delay</a>(20);</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>            buffer[0] = PCA9685_MODE1;</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>            buffer[1] = 0x00;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>            i2c_.<a class="code hl_function" href="classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae">TransmitBlocking</a>(address, buffer, 2, 1);</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>            <a class="code hl_function" href="classdaisy_1_1_system.html#a760572ff8248511b8b5825c8085d33c6">System::Delay</a>(20);</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>            buffer[0] = PCA9685_MODE1;</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>            <span class="comment">// auto increment on</span></div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>            buffer[1] = 0b00100000;</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>            i2c_.<a class="code hl_function" href="classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae">TransmitBlocking</a>(address, buffer, 2, 1);</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>            <a class="code hl_function" href="classdaisy_1_1_system.html#a760572ff8248511b8b5825c8085d33c6">System::Delay</a>(20);</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>            buffer[0] = PCA9685_MODE2;</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>            <span class="comment">// OE-high = high Impedance</span></div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            <span class="comment">// Push-Pull outputs</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>            <span class="comment">// outputs change on STOP</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            <span class="comment">// outputs inverted</span></div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            buffer[1] = 0b000110110;</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>            i2c_.<a class="code hl_function" href="classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae">TransmitBlocking</a>(address, buffer, 2, 5);</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        }</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    }</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <span class="comment">// no std::clamp available in C++14.... remove this when C++17 is available</span></div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    T clamp(T in, T low, T high)</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    {</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        <span class="keywordflow">return</span> (in &lt; low) ? low : (high &lt; in) ? high : in;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    }</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <span class="comment">// an internal function to handle i2c callbacks</span></div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    <span class="comment">// called when an I2C transmission completes and the next driver must be updated</span></div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> TxCpltCallback(<span class="keywordtype">void</span>* context, <a class="code hl_enumeration" href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">I2CHandle::Result</a> result)</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        <span class="keyword">auto</span> drv_ptr = <span class="keyword">reinterpret_cast&lt;</span></div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>            LedDriverPca9685&lt;numDrivers, persistentBufferContents&gt;*<span class="keyword">&gt;</span>(context);</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        drv_ptr-&gt;ContinueTransmission();</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    }</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> </div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    I2CHandle              i2c_;</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    PCA9685TransmitBuffer* draw_buffer_;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    PCA9685TransmitBuffer* transmit_buffer_;</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    uint8_t                addresses_[numDrivers];</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    <a class="code hl_enumeration" href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daff">Pin</a>                    oe_pin_;</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    GPIO                   oe_pin_gpio_;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    <span class="comment">// index of the dirver that is currently updated.</span></div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    <span class="keyword">volatile</span> int8_t current_driver_idx_;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    <span class="keyword">const</span> uint16_t  gamma_table_[256] = {</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        0,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,    1,</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        2,    2,    2,    2,    2,    2,    2,    3,    3,    4,    4,    5,</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        5,    6,    7,    8,    8,    9,    10,   11,   12,   13,   15,   16,</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        17,   18,   20,   21,   23,   25,   26,   28,   30,   32,   34,   36,</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        38,   40,   43,   45,   48,   50,   53,   56,   59,   62,   65,   68,</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        71,   75,   78,   82,   85,   89,   93,   97,   101,  105,  110,  114,</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        119,  123,  128,  133,  138,  143,  149,  154,  159,  165,  171,  177,</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        183,  189,  195,  202,  208,  215,  222,  229,  236,  243,  250,  258,</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        266,  273,  281,  290,  298,  306,  315,  324,  332,  341,  351,  360,</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        369,  379,  389,  399,  409,  419,  430,  440,  451,  462,  473,  485,</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        496,  508,  520,  532,  544,  556,  569,  582,  594,  608,  621,  634,</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        648,  662,  676,  690,  704,  719,  734,  749,  764,  779,  795,  811,</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        827,  843,  859,  876,  893,  910,  927,  944,  962,  980,  998,  1016,</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        1034, 1053, 1072, 1091, 1110, 1130, 1150, 1170, 1190, 1210, 1231, 1252,</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        1273, 1294, 1316, 1338, 1360, 1382, 1404, 1427, 1450, 1473, 1497, 1520,</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        1544, 1568, 1593, 1617, 1642, 1667, 1693, 1718, 1744, 1770, 1797, 1823,</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        1850, 1877, 1905, 1932, 1960, 1988, 2017, 2045, 2074, 2103, 2133, 2162,</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        2192, 2223, 2253, 2284, 2315, 2346, 2378, 2410, 2442, 2474, 2507, 2540,</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        2573, 2606, 2640, 2674, 2708, 2743, 2778, 2813, 2849, 2884, 2920, 2957,</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        2993, 3030, 3067, 3105, 3143, 3181, 3219, 3258, 3297, 3336, 3376, 3416,</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        3456, 3496, 3537, 3578, 3619, 3661, 3703, 3745, 3788, 3831, 3874, 3918,</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>        3962, 4006, 4050, 4095};</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint8_t PCA9685_I2C_BASE_ADDRESS = 0b01000000;</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint8_t PCA9685_MODE1</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        = 0x00; <span class="comment">// location for Mode1 register address</span></div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint8_t PCA9685_MODE2</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        = 0x01; <span class="comment">// location for Mode2 reigster address</span></div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint8_t PCA9685_LED0</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        = 0x06; <span class="comment">// location for start of LED0 registers</span></div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> uint8_t PRE_SCALE_MODE</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        = 0xFE; <span class="comment">//location for setting prescale (clock speed)</span></div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>};</div>
 </div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>} <span class="comment">// namespace daisy</span></div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span> </div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span> </div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>} <span class="comment">// namespace daisy</span></div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span> </div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span><span class="preprocessor">#endif</span></div>
 </div>
-<div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html">daisy::I2CHandle</a></div><div class="ttdef"><b>Definition</b> i2c.h:25</div></div>
+<div class="ttc" id="aclassdaisy_1_1_g_p_i_o_html_a2cff092b5e71cd8a2baccfbdc5ee8584"><div class="ttname"><a href="classdaisy_1_1_g_p_i_o.html#a2cff092b5e71cd8a2baccfbdc5ee8584">daisy::GPIO::Write</a></div><div class="ttdeci">void Write(bool state)</div><div class="ttdoc">Changes the state of the GPIO hardware when configured as an OUTPUT.</div></div>
+<div class="ttc" id="aclassdaisy_1_1_g_p_i_o_html_ae576cffc1eef8b59d6cc2142cf1d9f97"><div class="ttname"><a href="classdaisy_1_1_g_p_i_o.html#ae576cffc1eef8b59d6cc2142cf1d9f97">daisy::GPIO::Init</a></div><div class="ttdeci">void Init()</div><div class="ttdoc">Initialize the GPIO using the internal Config struct.</div></div>
+<div class="ttc" id="aclassdaisy_1_1_g_p_i_o_html_af853f20a7e4f4d4f337c30fe1d6f1827a50a87f0d71f7221582dad4bf507a0f34"><div class="ttname"><a href="classdaisy_1_1_g_p_i_o.html#af853f20a7e4f4d4f337c30fe1d6f1827a50a87f0d71f7221582dad4bf507a0f34">daisy::GPIO::Mode::OUTPUT</a></div><div class="ttdeci">@ OUTPUT</div></div>
+<div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html">daisy::I2CHandle</a></div><div class="ttdef"><b>Definition</b> i2c.h:26</div></div>
 <div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html_a2540dbf37ff6c023f95a8d331600d457"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html#a2540dbf37ff6c023f95a8d331600d457">daisy::I2CHandle::GetConfig</a></div><div class="ttdeci">const Config &amp; GetConfig() const</div></div>
 <div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html_a2def35901e936c7c7c88aef8e1633f14"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html#a2def35901e936c7c7c88aef8e1633f14">daisy::I2CHandle::TransmitDma</a></div><div class="ttdeci">Result TransmitDma(uint16_t address, uint8_t *data, uint16_t size, CallbackFunctionPtr callback, void *callback_context)</div></div>
 <div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html_a3010881bcac1d32f6f974edc9bbc6c0d"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html#a3010881bcac1d32f6f974edc9bbc6c0d">daisy::I2CHandle::Init</a></div><div class="ttdeci">Result Init(const Config &amp;config)</div></div>
-<div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html_a4896eede457dea6ed2ed68d9b06e8e16"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">daisy::I2CHandle::Result</a></div><div class="ttdeci">Result</div><div class="ttdef"><b>Definition</b> i2c.h:71</div></div>
+<div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html_a4896eede457dea6ed2ed68d9b06e8e16"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16">daisy::I2CHandle::Result</a></div><div class="ttdeci">Result</div><div class="ttdef"><b>Definition</b> i2c.h:72</div></div>
 <div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html_a4896eede457dea6ed2ed68d9b06e8e16ae0aa021e21dddbd6d8cecec71e9cf564"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16ae0aa021e21dddbd6d8cecec71e9cf564">daisy::I2CHandle::Result::OK</a></div><div class="ttdeci">@ OK</div></div>
 <div class="ttc" id="aclassdaisy_1_1_i2_c_handle_html_acf279a20fe8338672cbfa7f3e0e720ae"><div class="ttname"><a href="classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae">daisy::I2CHandle::TransmitBlocking</a></div><div class="ttdeci">Result TransmitBlocking(uint16_t address, uint8_t *data, uint16_t size, uint32_t timeout)</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html">daisy::LedDriverPca9685</a></div><div class="ttdef"><b>Definition</b> leddriver.h:33</div></div>
@@ -412,7 +412,7 @@ $(document).ready(function(){initNavTree('leddriver_8h_source.html',''); initRes
 <div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a0d21f17e93238bbef75ee57ab557e7e9"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a0d21f17e93238bbef75ee57ab557e7e9">daisy::LedDriverPca9685::SetLed</a></div><div class="ttdeci">void SetLed(int ledIndex, uint8_t brightness)</div><div class="ttdef"><b>Definition</b> leddriver.h:117</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a0dd0129365c7578f1d22cfe39755a66b"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a0dd0129365c7578f1d22cfe39755a66b">daisy::LedDriverPca9685::GetNumLeds</a></div><div class="ttdeci">constexpr int GetNumLeds() const</div><div class="ttdef"><b>Definition</b> leddriver.h:84</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a257b001d8770d82457848fbc871909a5"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a257b001d8770d82457848fbc871909a5">daisy::LedDriverPca9685::SetAllToRaw</a></div><div class="ttdeci">void SetAllToRaw(uint16_t rawBrightness)</div><div class="ttdef"><b>Definition</b> leddriver.h:102</div></div>
-<div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a468206d813cff0033a50e7ce613ad8cb"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">daisy::LedDriverPca9685::Init</a></div><div class="ttdeci">void Init(I2CHandle i2c, const uint8_t(&amp;addresses)[numDrivers], DmaBuffer dma_buffer_a, DmaBuffer dma_buffer_b, dsy_gpio_pin oe_pin={DSY_GPIOX, 0})</div><div class="ttdef"><b>Definition</b> leddriver.h:65</div></div>
+<div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a306e6284239f053900672ac6b9f70589"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">daisy::LedDriverPca9685::Init</a></div><div class="ttdeci">void Init(I2CHandle i2c, const uint8_t(&amp;addresses)[numDrivers], DmaBuffer dma_buffer_a, DmaBuffer dma_buffer_b, Pin oe_pin=Pin(PORTX, 0))</div><div class="ttdef"><b>Definition</b> leddriver.h:65</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a5c32363efc76d2d8d192d7989eb9ddc0"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a5c32363efc76d2d8d192d7989eb9ddc0">daisy::LedDriverPca9685::__attribute__</a></div><div class="ttdeci">struct __attribute__((packed)) PCA9685TransmitBuffer</div><div class="ttdef"><b>Definition</b> leddriver.h:36</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a5fd2c10af7ace44d2aefc8b81edc8444"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a5fd2c10af7ace44d2aefc8b81edc8444">daisy::LedDriverPca9685::SetAllTo</a></div><div class="ttdeci">void SetAllTo(uint8_t brightness)</div><div class="ttdef"><b>Definition</b> leddriver.h:95</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a7616848201aea05953403406ee89f272"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a7616848201aea05953403406ee89f272">daisy::LedDriverPca9685::SetLed</a></div><div class="ttdeci">void SetLed(int ledIndex, float brightness)</div><div class="ttdef"><b>Definition</b> leddriver.h:109</div></div>
@@ -421,19 +421,12 @@ $(document).ready(function(){initNavTree('leddriver_8h_source.html',''); initRes
 <div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_af9df21fcd2e7116ff49bd3761b4565b7"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#af9df21fcd2e7116ff49bd3761b4565b7">daisy::LedDriverPca9685::SetAllTo</a></div><div class="ttdeci">void SetAllTo(float brightness)</div><div class="ttdef"><b>Definition</b> leddriver.h:87</div></div>
 <div class="ttc" id="aclassdaisy_1_1_system_html_a760572ff8248511b8b5825c8085d33c6"><div class="ttname"><a href="classdaisy_1_1_system.html#a760572ff8248511b8b5825c8085d33c6">daisy::System::Delay</a></div><div class="ttdeci">static void Delay(uint32_t delay_ms)</div></div>
 <div class="ttc" id="agpio_8h_html"><div class="ttname"><a href="gpio_8h.html">gpio.h</a></div></div>
-<div class="ttc" id="agroup___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o_html_ga05d023b1e65d46f0d1be16e38d3c6db5"><div class="ttname"><a href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga05d023b1e65d46f0d1be16e38d3c6db5">dsy_gpio_write</a></div><div class="ttdeci">void dsy_gpio_write(const dsy_gpio *p, uint8_t state)</div></div>
-<div class="ttc" id="agroup___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o_html_ga2fa512c8eff950e56bb2206955fc7483"><div class="ttname"><a href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga2fa512c8eff950e56bb2206955fc7483">dsy_gpio_init</a></div><div class="ttdeci">void dsy_gpio_init(const dsy_gpio *p)</div></div>
-<div class="ttc" id="agroup___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o_html_gga0edc3fcaf729346c5251d263d732666eacc5f2bbce0cc1ad14d973f8480c7f377"><div class="ttname"><a href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gga0edc3fcaf729346c5251d263d732666eacc5f2bbce0cc1ad14d973f8480c7f377">DSY_GPIO_MODE_OUTPUT_PP</a></div><div class="ttdeci">@ DSY_GPIO_MODE_OUTPUT_PP</div><div class="ttdef"><b>Definition</b> gpio.h:159</div></div>
-<div class="ttc" id="agroup___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o_html_ggad8a85223f8dbcdf2c2cfc9302b3451b8ad6cca2addae616f7f27fee076f7ac9e0"><div class="ttname"><a href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ggad8a85223f8dbcdf2c2cfc9302b3451b8ad6cca2addae616f7f27fee076f7ac9e0">DSY_GPIO_NOPULL</a></div><div class="ttdeci">@ DSY_GPIO_NOPULL</div><div class="ttdef"><b>Definition</b> gpio.h:168</div></div>
-<div class="ttc" id="agroup__utility_html_gga3f3543798ae410cae1cade28cd0fc14aa3d2ec507d8852037514f5ac644f20d5a"><div class="ttname"><a href="group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa3d2ec507d8852037514f5ac644f20d5a">DSY_GPIOX</a></div><div class="ttdeci">@ DSY_GPIOX</div><div class="ttdef"><b>Definition</b> daisy_core.h:193</div></div>
 <div class="ttc" id="ai2c_8h_html"><div class="ttname"><a href="i2c_8h.html">i2c.h</a></div></div>
+<div class="ttc" id="anamespacedaisy_1_1_m_a_x11300_types_html_aa5a2b717c98a118def838b1d7515daff"><div class="ttname"><a href="namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daff">daisy::MAX11300Types::Pin</a></div><div class="ttdeci">Pin</div><div class="ttdef"><b>Definition</b> max11300.h:37</div></div>
 <div class="ttc" id="anamespacedaisy_html"><div class="ttname"><a href="namespacedaisy.html">daisy</a></div><div class="ttdoc">Hardware defines and helpers for daisy field platform.</div><div class="ttdef"><b>Definition</b> index.h:2</div></div>
-<div class="ttc" id="astructdsy__gpio__pin_html"><div class="ttname"><a href="structdsy__gpio__pin.html">dsy_gpio_pin</a></div><div class="ttdef"><b>Definition</b> daisy_core.h:205</div></div>
-<div class="ttc" id="astructdsy__gpio__pin_html_a1f18b0d77c637dde2a3febf5edf31237"><div class="ttname"><a href="structdsy__gpio__pin.html#a1f18b0d77c637dde2a3febf5edf31237">dsy_gpio_pin::port</a></div><div class="ttdeci">dsy_gpio_port port</div><div class="ttdef"><b>Definition</b> daisy_core.h:206</div></div>
-<div class="ttc" id="astructdsy__gpio_html"><div class="ttname"><a href="structdsy__gpio.html">dsy_gpio</a></div><div class="ttdef"><b>Definition</b> gpio.h:175</div></div>
-<div class="ttc" id="astructdsy__gpio_html_a12e4d73b334e9caedb135224bd288384"><div class="ttname"><a href="structdsy__gpio.html#a12e4d73b334e9caedb135224bd288384">dsy_gpio::mode</a></div><div class="ttdeci">dsy_gpio_mode mode</div><div class="ttdef"><b>Definition</b> gpio.h:177</div></div>
-<div class="ttc" id="astructdsy__gpio_html_a92d61fa4d53b923b328e7e1ca8a67100"><div class="ttname"><a href="structdsy__gpio.html#a92d61fa4d53b923b328e7e1ca8a67100">dsy_gpio::pin</a></div><div class="ttdeci">dsy_gpio_pin pin</div><div class="ttdef"><b>Definition</b> gpio.h:176</div></div>
-<div class="ttc" id="astructdsy__gpio_html_af15905326174d62efafda5775d2aea8a"><div class="ttname"><a href="structdsy__gpio.html#af15905326174d62efafda5775d2aea8a">dsy_gpio::pull</a></div><div class="ttdeci">dsy_gpio_pull pull</div><div class="ttdef"><b>Definition</b> gpio.h:178</div></div>
+<div class="ttc" id="anamespacedaisy_html_a0f3f80696b55547e8471a18de01b8e13a05ebd4a8511463d01e5f35dd20cd8255"><div class="ttname"><a href="namespacedaisy.html#a0f3f80696b55547e8471a18de01b8e13a05ebd4a8511463d01e5f35dd20cd8255">daisy::PORTX</a></div><div class="ttdeci">@ PORTX</div><div class="ttdef"><b>Definition</b> daisy_core.h:188</div></div>
+<div class="ttc" id="astructdaisy_1_1_pin_html"><div class="ttname"><a href="structdaisy_1_1_pin.html">daisy::Pin</a></div><div class="ttdoc">representation of hardware port/pin combination</div><div class="ttdef"><b>Definition</b> daisy_core.h:193</div></div>
+<div class="ttc" id="astructdaisy_1_1_pin_html_a09a02dc8bbf3957abe1e0dff73f4749f"><div class="ttname"><a href="structdaisy_1_1_pin.html#a09a02dc8bbf3957abe1e0dff73f4749f">daisy::Pin::port</a></div><div class="ttdeci">GPIOPort port</div><div class="ttdef"><b>Definition</b> daisy_core.h:194</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.2-->

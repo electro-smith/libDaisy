@@ -15,7 +15,6 @@ var searchData=
   ['dps310_12',['Dps310',['../classdaisy_1_1_dps310.html',1,'daisy']]],
   ['dps310i2ctransport_13',['Dps310I2CTransport',['../classdaisy_1_1_dps310_i2_c_transport.html',1,'daisy']]],
   ['dps310spitransport_14',['Dps310SpiTransport',['../classdaisy_1_1_dps310_spi_transport.html',1,'daisy']]],
-  ['dsy_5fgpio_15',['dsy_gpio',['../structdsy__gpio.html',1,'']]],
-  ['dsy_5fgpio_5fpin_16',['dsy_gpio_pin',['../structdsy__gpio__pin.html',1,'']]],
-  ['dsy_5fsd_5fcardinfotypedef_17',['DSY_SD_CardInfoTypeDef',['../struct_d_s_y___s_d___card_info_type_def.html',1,'']]]
+  ['dsy_5fgpio_5fpin_15',['dsy_gpio_pin',['../structdaisy_1_1dsy__gpio__pin.html',1,'daisy']]],
+  ['dsy_5fsd_5fcardinfotypedef_16',['DSY_SD_CardInfoTypeDef',['../struct_d_s_y___s_d___card_info_type_def.html',1,'']]]
 ];

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libDaisy: dsy_gpio Struct Reference</title>
+<title>libDaisy: daisy::dsy_gpio_pin Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="ES_Circle_Orange.PNG">
 <script type="text/javascript" src="jquery.js"></script>
@@ -73,7 +73,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('structdsy__gpio.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('structdaisy_1_1dsy__gpio__pin.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -100,64 +100,81 @@ $(document).ready(function(){initNavTree('structdsy__gpio.html',''); initResizab
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structdsy__gpio-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">dsy_gpio Struct Reference<div class="ingroups"><a class="el" href="group__libdaisy.html">LIBDAISY</a> &raquo; <a class="el" href="group__peripheral.html">PERIPHERAL</a> &raquo; <a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html">DEPRECATED-OLD-GPIO</a></div></div></div>
+<a href="structdaisy_1_1dsy__gpio__pin-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">daisy::dsy_gpio_pin Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Struct for holding the pin, and configuration </p>
+<div class="textblock"><p>Hardware define pins</p>
+<p>The <a class="el" href="structdaisy_1_1dsy__gpio__pin.html">dsy_gpio_pin</a> struct should no longer be used, and is only available for backwards compatability.</p>
+<p>Please use <a class="el" href="structdaisy_1_1_pin.html" title="representation of hardware port/pin combination">Pin</a> struct instead. </p>
 </div>
-<p><code>#include &lt;<a class="el" href="gpio_8h_source.html">gpio.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="daisy__core_8h_source.html">daisy_core.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aa6069103c78d3980081d94ee084a5946" id="r_aa6069103c78d3980081d94ee084a5946"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">constexpr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1dsy__gpio__pin.html#aa6069103c78d3980081d94ee084a5946">operator Pin</a> () <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">const</a></td></tr>
+<tr class="separator:aa6069103c78d3980081d94ee084a5946"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a92d61fa4d53b923b328e7e1ca8a67100" id="r_a92d61fa4d53b923b328e7e1ca8a67100"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdsy__gpio.html#a92d61fa4d53b923b328e7e1ca8a67100">pin</a></td></tr>
-<tr class="separator:a92d61fa4d53b923b328e7e1ca8a67100"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12e4d73b334e9caedb135224bd288384" id="r_a12e4d73b334e9caedb135224bd288384"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga0edc3fcaf729346c5251d263d732666e">dsy_gpio_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdsy__gpio.html#a12e4d73b334e9caedb135224bd288384">mode</a></td></tr>
-<tr class="separator:a12e4d73b334e9caedb135224bd288384"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af15905326174d62efafda5775d2aea8a" id="r_af15905326174d62efafda5775d2aea8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gad8a85223f8dbcdf2c2cfc9302b3451b8">dsy_gpio_pull</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdsy__gpio.html#af15905326174d62efafda5775d2aea8a">pull</a></td></tr>
-<tr class="separator:af15905326174d62efafda5775d2aea8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad010feac2e4eb0e5f9843d360880f44d" id="r_ad010feac2e4eb0e5f9843d360880f44d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337">dsy_gpio_port</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1dsy__gpio__pin.html#ad010feac2e4eb0e5f9843d360880f44d">port</a></td></tr>
+<tr class="separator:ad010feac2e4eb0e5f9843d360880f44d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a074ae43df1fb2e6249e14e84f8c60b89" id="r_a074ae43df1fb2e6249e14e84f8c60b89"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">uint8_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1dsy__gpio__pin.html#a074ae43df1fb2e6249e14e84f8c60b89">pin</a></td></tr>
+<tr class="separator:a074ae43df1fb2e6249e14e84f8c60b89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa6069103c78d3980081d94ee084a5946" name="aa6069103c78d3980081d94ee084a5946"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6069103c78d3980081d94ee084a5946">&#9670;&#160;</a></span>operator Pin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">constexpr</a> daisy::dsy_gpio_pin::operator <a class="el" href="structdaisy_1_1_pin.html">Pin</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a12e4d73b334e9caedb135224bd288384" name="a12e4d73b334e9caedb135224bd288384"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12e4d73b334e9caedb135224bd288384">&#9670;&#160;</a></span>mode</h2>
+<a id="a074ae43df1fb2e6249e14e84f8c60b89" name="a074ae43df1fb2e6249e14e84f8c60b89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a074ae43df1fb2e6249e14e84f8c60b89">&#9670;&#160;</a></span>pin</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga0edc3fcaf729346c5251d263d732666e">dsy_gpio_mode</a> dsy_gpio::mode</td>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">uint8_t</a> daisy::dsy_gpio_pin::pin</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>&amp; </p>
+<p>number 0-15 </p>
 
 </div>
 </div>
-<a id="a92d61fa4d53b923b328e7e1ca8a67100" name="a92d61fa4d53b923b328e7e1ca8a67100"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92d61fa4d53b923b328e7e1ca8a67100">&#9670;&#160;</a></span>pin</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> dsy_gpio::pin</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>&amp; </p>
-
-</div>
-</div>
-<a id="af15905326174d62efafda5775d2aea8a" name="af15905326174d62efafda5775d2aea8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af15905326174d62efafda5775d2aea8a">&#9670;&#160;</a></span>pull</h2>
+<a id="ad010feac2e4eb0e5f9843d360880f44d" name="ad010feac2e4eb0e5f9843d360880f44d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad010feac2e4eb0e5f9843d360880f44d">&#9670;&#160;</a></span>port</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gad8a85223f8dbcdf2c2cfc9302b3451b8">dsy_gpio_pull</a> dsy_gpio::pull</td>
+          <td class="memname"><a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337">dsy_gpio_port</a> daisy::dsy_gpio_pin::port</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -166,7 +183,7 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>src/per/<a class="el" href="gpio_8h_source.html">gpio.h</a></li>
+<li>src/<a class="el" href="daisy__core_8h_source.html">daisy_core.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -175,7 +192,7 @@ Public Attributes</h2></td></tr>
 <div id="nav-path" class="navpath">
   <!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="structdsy__gpio.html">dsy_gpio</a></li>
+    <li class="navelem"><a class="el" href="namespacedaisy.html">daisy</a></li><li class="navelem"><a class="el" href="structdaisy_1_1dsy__gpio__pin.html">dsy_gpio_pin</a></li>
   </ul>
 </div>
 <script type="text/javascript">

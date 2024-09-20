@@ -132,7 +132,7 @@ ADC Channel Config</h1>
 <li><code>InitMux</code> - For configuring several inputs from an external multiplexer (like CD4051) to a single pin on the Daisy</li>
 </ul>
 <p>Below we'll only be using the <code>InitSingle</code> function, but stay tuned for a guide for connecting a ton of controls using external multiplexer in the future.</p>
-<p>The <code>InitSingle</code> function takes an old version of the Daisy's <code>Pin</code> object, but it is compatible with the new pins. So anywhere you see, <code><a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a></code> you can use the <code>Pin</code> object instead.</p>
+<p>The <code>InitSingle</code> function takes an old version of the Daisy's <code>Pin</code> object, but it is compatible with the new pins. So anywhere you see, <code>dsy_gpio_pin</code> you can use the <code>Pin</code> object instead.</p>
 <p>This structure, and the number of channels can then be passed to the <code>AdcHandle</code> to set everything up.</p>
 <h1><a class="anchor" id="autotoc_md37"></a>
 A Single Input</h1>
@@ -151,7 +151,7 @@ A Single Input</h1>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">main</a>(<span class="keywordtype">void</span>) {</div>
 <div class="line">  <span class="comment">// Initialize the Daisy Seed hardware</span></div>
-<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>();</div>
+<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">Init</a>();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Start logging for printing over serial</span></div>
 <div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.StartLog();</div>
@@ -163,7 +163,7 @@ A Single Input</h1>
 <div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">adc_config</a>.InitSingle(A0);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Initialize the ADC peripheral with that configuration</span></div>
-<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.adc.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>(&amp;<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">adc_config</a>, 1);</div>
+<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.adc.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">Init</a>(&amp;<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">adc_config</a>, 1);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Start the ADC</span></div>
 <div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.adc.Start();</div>
@@ -181,9 +181,9 @@ A Single Input</h1>
 <div class="line">}</div>
 <div class="ttc" id="aclassdaisy_1_1_daisy_seed_html"><div class="ttname"><a href="classdaisy_1_1_daisy_seed.html">daisy::DaisySeed</a></div><div class="ttdoc">This is the higher-level interface for the Daisy board.   All basic peripheral configuration/initiali...</div><div class="ttdef"><b>Definition</b> daisy_seed.h:19</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html">daisy::LedDriverPca9685</a></div><div class="ttdef"><b>Definition</b> leddriver.h:33</div></div>
-<div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a468206d813cff0033a50e7ce613ad8cb"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">daisy::LedDriverPca9685::Init</a></div><div class="ttdeci">void Init(I2CHandle i2c, const uint8_t(&amp;addresses)[numDrivers], DmaBuffer dma_buffer_a, DmaBuffer dma_buffer_b, dsy_gpio_pin oe_pin={DSY_GPIOX, 0})</div><div class="ttdef"><b>Definition</b> leddriver.h:65</div></div>
+<div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a306e6284239f053900672ac6b9f70589"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">daisy::LedDriverPca9685::Init</a></div><div class="ttdeci">void Init(I2CHandle i2c, const uint8_t(&amp;addresses)[numDrivers], DmaBuffer dma_buffer_a, DmaBuffer dma_buffer_b, Pin oe_pin=Pin(PORTX, 0))</div><div class="ttdef"><b>Definition</b> leddriver.h:65</div></div>
 <div class="ttc" id="adaisy__seed_8h_html"><div class="ttname"><a href="daisy__seed_8h.html">daisy_seed.h</a></div></div>
-<div class="ttc" id="anamespacedaisy_1_1seed_html"><div class="ttname"><a href="namespacedaisy_1_1seed.html">daisy::seed</a></div><div class="ttdef"><b>Definition</b> daisy_seed.h:195</div></div>
+<div class="ttc" id="anamespacedaisy_1_1seed_html"><div class="ttname"><a href="namespacedaisy_1_1seed.html">daisy::seed</a></div><div class="ttdef"><b>Definition</b> daisy_seed.h:196</div></div>
 <div class="ttc" id="anamespacedaisy_html"><div class="ttname"><a href="namespacedaisy.html">daisy</a></div><div class="ttdoc">Hardware defines and helpers for daisy field platform.</div><div class="ttdef"><b>Definition</b> index.h:2</div></div>
 <div class="ttc" id="astructdaisy_1_1_adc_channel_config_html"><div class="ttname"><a href="structdaisy_1_1_adc_channel_config.html">daisy::AdcChannelConfig</a></div><div class="ttdoc">Configuration Structure for an ADC Channel.</div><div class="ttdef"><b>Definition</b> adc.h:32</div></div>
 </div><!-- fragment --><p>To find out more about the serial printing, and what software to use, see our <a class="el" href="md_doc_2md_2__a2___getting-_started-_serial-_printing.html">tutorial on working with Serial Printing</a>.</p>
@@ -210,7 +210,7 @@ Multiple Inputs</h1>
 <div class="line"><span class="comment">// Initialize the second one connected to A4</span></div>
 <div class="line"><a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_adc_config</a>[1].InitSingle(A4);</div>
 </div><!-- fragment --><p>And finally when we go to initialize the ADC itself, we can now omit the <code>&amp;</code> that we had to use before because it's an array of objects, and we want to make sure to update the total count that we passed in before:</p>
-<div class="fragment"><div class="line"><a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.adc.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_adc_config</a>, <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">num_adc_channels</a>);</div>
+<div class="fragment"><div class="line"><a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.adc.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">Init</a>(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_adc_config</a>, <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">num_adc_channels</a>);</div>
 </div><!-- fragment --><p>Now you can read from either input. If you want to read the pot connected to A0 you would use <code>hw.adc.Get(0)</code>, or <code>hw.adc.GetFloat(0)</code>, and if you want to read from the pot connected to A4, you would use <code>hw.adc.Get(1)</code>, or <code>hw.adc.GetFloat(1)</code>.</p>
 <p>You'll notice that you access them by the order in which you initialized them, not by the number associated with the Pin.</p>
 <h1><a class="anchor" id="autotoc_md39"></a>
@@ -229,7 +229,7 @@ Order To Chaos - Naming ADC Channels</h1>
 <div class="line"><span class="comment">// ...</span></div>
 <div class="line"><a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_adc_config</a>[<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">pitchCv</a>].InitSingle(A0);</div>
 <div class="line"><span class="comment">// ...</span></div>
-<div class="line"><a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.adc.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_adc_config</a>, <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">NUM_ADC_CHANNELS</a>);</div>
+<div class="line"><a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.adc.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">Init</a>(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_adc_config</a>, <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">NUM_ADC_CHANNELS</a>);</div>
 <div class="line"><span class="comment">// ...</span></div>
 <div class="line"><span class="keyword">const</span> <span class="keywordtype">float</span> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">pitchCvValue</a> = <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.adc.GetFloat(<a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">pitchCv</a>);</div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md40"></a>

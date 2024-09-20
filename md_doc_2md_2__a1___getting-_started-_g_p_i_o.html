@@ -137,13 +137,13 @@ GPIO Input</h1>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">main</a>(<span class="keywordtype">void</span>) {</div>
 <div class="line">  <span class="comment">// Initialize the Daisy Seed</span></div>
-<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>();</div>
+<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">Init</a>();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Create a GPIO object</span></div>
 <div class="line">  <a class="code hl_class" href="classdaisy_1_1_g_p_i_o.html">GPIO</a> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_button</a>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Initialize the GPIO object</span></div>
-<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_button</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>(D0, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);</div>
+<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_button</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">Init</a>(D0, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">while</span>(1) {</div>
 <div class="line">    <span class="comment">// And let&#39;s store the state of the button in a variable called &quot;button_state&quot;</span></div>
@@ -153,9 +153,9 @@ GPIO Input</h1>
 <div class="ttc" id="aclassdaisy_1_1_daisy_seed_html"><div class="ttname"><a href="classdaisy_1_1_daisy_seed.html">daisy::DaisySeed</a></div><div class="ttdoc">This is the higher-level interface for the Daisy board.   All basic peripheral configuration/initiali...</div><div class="ttdef"><b>Definition</b> daisy_seed.h:19</div></div>
 <div class="ttc" id="aclassdaisy_1_1_g_p_i_o_html"><div class="ttname"><a href="classdaisy_1_1_g_p_i_o.html">daisy::GPIO</a></div><div class="ttdoc">General Purpose I/O control.</div><div class="ttdef"><b>Definition</b> gpio.h:22</div></div>
 <div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html">daisy::LedDriverPca9685</a></div><div class="ttdef"><b>Definition</b> leddriver.h:33</div></div>
-<div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a468206d813cff0033a50e7ce613ad8cb"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">daisy::LedDriverPca9685::Init</a></div><div class="ttdeci">void Init(I2CHandle i2c, const uint8_t(&amp;addresses)[numDrivers], DmaBuffer dma_buffer_a, DmaBuffer dma_buffer_b, dsy_gpio_pin oe_pin={DSY_GPIOX, 0})</div><div class="ttdef"><b>Definition</b> leddriver.h:65</div></div>
+<div class="ttc" id="aclassdaisy_1_1_led_driver_pca9685_html_a306e6284239f053900672ac6b9f70589"><div class="ttname"><a href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">daisy::LedDriverPca9685::Init</a></div><div class="ttdeci">void Init(I2CHandle i2c, const uint8_t(&amp;addresses)[numDrivers], DmaBuffer dma_buffer_a, DmaBuffer dma_buffer_b, Pin oe_pin=Pin(PORTX, 0))</div><div class="ttdef"><b>Definition</b> leddriver.h:65</div></div>
 <div class="ttc" id="adaisy__seed_8h_html"><div class="ttname"><a href="daisy__seed_8h.html">daisy_seed.h</a></div></div>
-<div class="ttc" id="anamespacedaisy_1_1seed_html"><div class="ttname"><a href="namespacedaisy_1_1seed.html">daisy::seed</a></div><div class="ttdef"><b>Definition</b> daisy_seed.h:195</div></div>
+<div class="ttc" id="anamespacedaisy_1_1seed_html"><div class="ttname"><a href="namespacedaisy_1_1seed.html">daisy::seed</a></div><div class="ttdef"><b>Definition</b> daisy_seed.h:196</div></div>
 <div class="ttc" id="anamespacedaisy_html"><div class="ttname"><a href="namespacedaisy.html">daisy</a></div><div class="ttdoc">Hardware defines and helpers for daisy field platform.</div><div class="ttdef"><b>Definition</b> index.h:2</div></div>
 </div><!-- fragment --><p>If you haven't followed the guides on <a href="https://github.com/electro-smith/DaisyWiki/wiki/1.-Setting-Up-Your-Development-Environment">setting up your development environment</a> and <a href="https://github.com/electro-smith/DaisyWiki/wiki/How-To:-Create-a-New-Project">creating a new project</a> now would be a perfect time to catch up, and create a new project to work with the GPIO.</p>
 <p>Compiling this example, you might get a warning, for an "unused variable button_state", but we'll get to using that shortly!</p>
@@ -163,7 +163,7 @@ GPIO Input</h1>
 Breaking Down the Init function</h1>
 <p>Let's look at that GPIO init function in a bit more detail, shall we? First, we'll breakdown the full Initialization definition:</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> Init(<a class="code hl_struct" href="structdaisy_1_1_pin.html">Pin</a> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">p</a>, Mode <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">m</a>=Mode::INPUT, Pull <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">pu</a>=Pull::NOPULL, Speed <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">sp</a>=Speed::LOW);</div>
-<div class="ttc" id="astructdaisy_1_1_pin_html"><div class="ttname"><a href="structdaisy_1_1_pin.html">daisy::Pin</a></div><div class="ttdoc">representation of hardware port/pin combination</div><div class="ttdef"><b>Definition</b> daisy_core.h:261</div></div>
+<div class="ttc" id="astructdaisy_1_1_pin_html"><div class="ttname"><a href="structdaisy_1_1_pin.html">daisy::Pin</a></div><div class="ttdoc">representation of hardware port/pin combination</div><div class="ttdef"><b>Definition</b> daisy_core.h:193</div></div>
 </div><!-- fragment --><p>The first thing you may be wondering, if you're not used to C++ is the <code>::</code> characters all over the place. These are used for the configuration settings so that the compiler will only allow you to use the correct inputs instead of being able to pass the wrong thing to the input, or even just mis-order the arguments, and end up scratching your head for hours wondering what's not working.</p>
 <p>These <code>::</code> are also used for namespaces, which we handle in the above example with the <code>using namespace</code> lines. Without that we'd have to use <code><a class="el" href="classdaisy_1_1_g_p_i_o.html" title="General Purpose I/O control.">daisy::GPIO</a></code> instead of <code>GPIO</code>, <code><a class="el" href="namespacedaisy_1_1seed.html#a1796c1ab85923482d0278dc7e25cfbf7">daisy::seed::D0</a></code> instead of <code>D0</code>, etc.</p>
 <h2><a class="anchor" id="autotoc_md6"></a>
@@ -209,7 +209,7 @@ GPIO Output</h1>
 <p>In the Initialization section:</p>
 <div class="fragment"><div class="line"><a class="code hl_class" href="classdaisy_1_1_g_p_i_o.html">GPIO</a> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_led</a>;</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_led</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>(D1, GPIO::Mode::OUTPUT);</div>
+<div class="line"><a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_led</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">Init</a>(D1, GPIO::Mode::OUTPUT);</div>
 </div><!-- fragment --><p>And then we can use the <code>button_state</code> variable we were reading from the button earlier to control the state of the LED:</p>
 <div class="fragment"><div class="line"><span class="keywordflow">while</span>(1)</div>
 <div class="line">{</div>
@@ -232,17 +232,17 @@ GPIO Output</h1>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">main</a>(<span class="keywordtype">void</span>) {</div>
 <div class="line">  <span class="comment">// Initialize the Daisy Seed</span></div>
-<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>();</div>
+<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">hw</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">Init</a>();</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Create our GPIO object</span></div>
 <div class="line">  <a class="code hl_class" href="classdaisy_1_1_g_p_i_o.html">GPIO</a> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_button</a>;</div>
 <div class="line">  <a class="code hl_class" href="classdaisy_1_1_g_p_i_o.html">GPIO</a> <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_led</a>;</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Initialize the GPIO object for our button */</span></div>
-<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_button</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>(D0, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);</div>
+<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_button</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">Init</a>(D0, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);</div>
 <div class="line"> </div>
 <div class="line">  <span class="comment">// Initialize the GPIO object for our LED</span></div>
-<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_led</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a468206d813cff0033a50e7ce613ad8cb">Init</a>(D1, GPIO::Mode::OUTPUT);</div>
+<div class="line">  <a class="code hl_class" href="classdaisy_1_1_led_driver_pca9685.html">my_led</a>.<a class="code hl_function" href="classdaisy_1_1_led_driver_pca9685.html#a306e6284239f053900672ac6b9f70589">Init</a>(D1, GPIO::Mode::OUTPUT);</div>
 <div class="line"> </div>
 <div class="line">  <span class="keywordflow">while</span>(1) {</div>
 <div class="line">    <span class="comment">// And let&#39;s store the state of the button in a variable called &quot;button_state&quot;</span></div>

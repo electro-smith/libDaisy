@@ -29,12 +29,12 @@ var structdaisy_1_1_sai_handle_1_1_config =
     [ "b_dir", "structdaisy_1_1_sai_handle_1_1_config.html#a39845c4ac5a8044cc2afeaa90d2b747a", null ],
     [ "b_sync", "structdaisy_1_1_sai_handle_1_1_config.html#ae94551a85d97c784e3849cc287b02603", null ],
     [ "bit_depth", "structdaisy_1_1_sai_handle_1_1_config.html#a1585662c8843c7a59e0de3366df039b8", null ],
-    [ "fs", "structdaisy_1_1_sai_handle_1_1_config.html#aff0746f3a8ff80d4ad7763e5d4994b67", null ],
-    [ "mclk", "structdaisy_1_1_sai_handle_1_1_config.html#aee60a0c6ca7c0d57d8cd965ce85a94f5", null ],
+    [ "fs", "structdaisy_1_1_sai_handle_1_1_config.html#a535fc25eaea4947d3dc91b871b7534f9", null ],
+    [ "mclk", "structdaisy_1_1_sai_handle_1_1_config.html#afb46e9faebada41d37e261d09332fe70", null ],
     [ "periph", "structdaisy_1_1_sai_handle_1_1_config.html#ac59816a80f77783dbce0e9aee8f6d1ed", null ],
     [ "pin_config", "structdaisy_1_1_sai_handle_1_1_config.html#a573d8b4f46f1cc461e7d89385b037b20", null ],
-    [ "sa", "structdaisy_1_1_sai_handle_1_1_config.html#aec46ca01070e5cb40c457f7ba3e7b871", null ],
-    [ "sb", "structdaisy_1_1_sai_handle_1_1_config.html#a8fdd5be3f876f377d45c30baa49f41e2", null ],
-    [ "sck", "structdaisy_1_1_sai_handle_1_1_config.html#a1c687b656fe1214692da9386cad76d42", null ],
+    [ "sa", "structdaisy_1_1_sai_handle_1_1_config.html#a34270dc2a0db63013c430fa96d5c4a23", null ],
+    [ "sb", "structdaisy_1_1_sai_handle_1_1_config.html#a9585bf5838b15a368c5ecf0a28135cac", null ],
+    [ "sck", "structdaisy_1_1_sai_handle_1_1_config.html#a16fbf5fbbab606ac3e224f758f005af0", null ],
     [ "sr", "structdaisy_1_1_sai_handle_1_1_config.html#a05f5f92b5f15f31c8ffef09403412370", null ]
 ];

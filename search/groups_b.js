@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['peripheral_0',['PERIPHERAL',['../group__peripheral.html',1,'']]]
+  ['ui_0',['UI',['../group__ui.html',1,'']]],
+  ['utility_1',['UTILITY',['../group__utility.html',1,'']]]
 ];

@@ -1,4 +1,7 @@
 var searchData=
 [
-  ['old_20gpio_0',['DEPRECATED-OLD-GPIO',['../group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html',1,'']]]
+  ['sdram_0',['SDRAM',['../group__sdram.html',1,'']]],
+  ['serial_1',['SERIAL',['../group__serial.html',1,'']]],
+  ['shiftregister_2',['SHIFTREGISTER',['../group__shiftregister.html',1,'']]],
+  ['system_3',['SYSTEM',['../group__system.html',1,'']]]
 ];

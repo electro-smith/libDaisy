@@ -102,9 +102,7 @@ $(document).ready(function(){initNavTree('gpio_8h.html',''); initResizable(); })
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">gpio.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -120,8 +118,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_g_p_i_o_1_1_config.html">daisy::GPIO::Config</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration for a given <a class="el" href="classdaisy_1_1_g_p_i_o.html" title="General Purpose I/O control.">GPIO</a>.  <a href="structdaisy_1_1_g_p_i_o_1_1_config.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdsy__gpio.html">dsy_gpio</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -133,37 +129,6 @@ Namespaces</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:a6b2452c29cb76513b1d8af8726820bce" id="r_a6b2452c29cb76513b1d8af8726820bce"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gpio_8h.html#a6b2452c29cb76513b1d8af8726820bce">DSY_GPIO_H</a></td></tr>
 <tr class="separator:a6b2452c29cb76513b1d8af8726820bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ga0edc3fcaf729346c5251d263d732666e" id="r_ga0edc3fcaf729346c5251d263d732666e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga0edc3fcaf729346c5251d263d732666e">dsy_gpio_mode</a> { <br />
-&#160;&#160;<a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gga0edc3fcaf729346c5251d263d732666ea03c842726cd9fecfbf1ebe331202f388">DSY_GPIO_MODE_INPUT</a>
-, <a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gga0edc3fcaf729346c5251d263d732666eacc5f2bbce0cc1ad14d973f8480c7f377">DSY_GPIO_MODE_OUTPUT_PP</a>
-, <a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gga0edc3fcaf729346c5251d263d732666eaa9ca62b32be355941008039b525aa411">DSY_GPIO_MODE_OUTPUT_OD</a>
-, <a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gga0edc3fcaf729346c5251d263d732666ea50f28049a50a251240cf0717c62ac7ea">DSY_GPIO_MODE_ANALOG</a>
-, <br />
-&#160;&#160;<a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gga0edc3fcaf729346c5251d263d732666eab83a3195896b9bcf74413f5ecbfb93af">DSY_GPIO_MODE_LAST</a>
-<br />
- }</td></tr>
-<tr class="separator:ga0edc3fcaf729346c5251d263d732666e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad8a85223f8dbcdf2c2cfc9302b3451b8" id="r_gad8a85223f8dbcdf2c2cfc9302b3451b8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gad8a85223f8dbcdf2c2cfc9302b3451b8">dsy_gpio_pull</a> { <a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ggad8a85223f8dbcdf2c2cfc9302b3451b8ad6cca2addae616f7f27fee076f7ac9e0">DSY_GPIO_NOPULL</a>
-, <a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ggad8a85223f8dbcdf2c2cfc9302b3451b8a6b1d919b0c83ad8baa21569215da91fd">DSY_GPIO_PULLUP</a>
-, <a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ggad8a85223f8dbcdf2c2cfc9302b3451b8a49672a9c2d459cc04ea589a1abb75869">DSY_GPIO_PULLDOWN</a>
- }</td></tr>
-<tr class="separator:gad8a85223f8dbcdf2c2cfc9302b3451b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:ga2fa512c8eff950e56bb2206955fc7483" id="r_ga2fa512c8eff950e56bb2206955fc7483"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga2fa512c8eff950e56bb2206955fc7483">dsy_gpio_init</a> (const <a class="el" href="structdsy__gpio.html">dsy_gpio</a> *p)</td></tr>
-<tr class="separator:ga2fa512c8eff950e56bb2206955fc7483"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2bba6d53e42b953af6b14a8f29f7807c" id="r_ga2bba6d53e42b953af6b14a8f29f7807c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga2bba6d53e42b953af6b14a8f29f7807c">dsy_gpio_deinit</a> (const <a class="el" href="structdsy__gpio.html">dsy_gpio</a> *p)</td></tr>
-<tr class="separator:ga2bba6d53e42b953af6b14a8f29f7807c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga4ffc8add3d336195e96d111ed56531a9" id="r_ga4ffc8add3d336195e96d111ed56531a9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga4ffc8add3d336195e96d111ed56531a9">dsy_gpio_read</a> (const <a class="el" href="structdsy__gpio.html">dsy_gpio</a> *p)</td></tr>
-<tr class="separator:ga4ffc8add3d336195e96d111ed56531a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga05d023b1e65d46f0d1be16e38d3c6db5" id="r_ga05d023b1e65d46f0d1be16e38d3c6db5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga05d023b1e65d46f0d1be16e38d3c6db5">dsy_gpio_write</a> (const <a class="el" href="structdsy__gpio.html">dsy_gpio</a> *p, uint8_t state)</td></tr>
-<tr class="separator:ga05d023b1e65d46f0d1be16e38d3c6db5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaea7ecc4e322ff749af69f9062a01093c" id="r_gaea7ecc4e322ff749af69f9062a01093c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gaea7ecc4e322ff749af69f9062a01093c">dsy_gpio_toggle</a> (const <a class="el" href="structdsy__gpio.html">dsy_gpio</a> *p)</td></tr>
-<tr class="separator:gaea7ecc4e322ff749af69f9062a01093c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="a6b2452c29cb76513b1d8af8726820bce" name="a6b2452c29cb76513b1d8af8726820bce"></a>

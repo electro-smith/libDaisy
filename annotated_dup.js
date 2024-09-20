@@ -36,6 +36,7 @@ var annotated_dup =
       [ "Dps310", "classdaisy_1_1_dps310.html", "classdaisy_1_1_dps310" ],
       [ "Dps310I2CTransport", "classdaisy_1_1_dps310_i2_c_transport.html", "classdaisy_1_1_dps310_i2_c_transport" ],
       [ "Dps310SpiTransport", "classdaisy_1_1_dps310_spi_transport.html", "classdaisy_1_1_dps310_spi_transport" ],
+      [ "dsy_gpio_pin", "structdaisy_1_1dsy__gpio__pin.html", "structdaisy_1_1dsy__gpio__pin" ],
       [ "Encoder", "classdaisy_1_1_encoder.html", "classdaisy_1_1_encoder" ],
       [ "FatFSInterface", "classdaisy_1_1_fat_f_s_interface.html", "classdaisy_1_1_fat_f_s_interface" ],
       [ "FIFO", "classdaisy_1_1_f_i_f_o.html", "classdaisy_1_1_f_i_f_o" ],
@@ -109,6 +110,7 @@ var annotated_dup =
       [ "SdmmcHandler", "classdaisy_1_1_sdmmc_handler.html", "classdaisy_1_1_sdmmc_handler" ],
       [ "SH1106Driver", "classdaisy_1_1_s_h1106_driver.html", "classdaisy_1_1_s_h1106_driver" ],
       [ "ShiftRegister4021", "classdaisy_1_1_shift_register4021.html", "classdaisy_1_1_shift_register4021" ],
+      [ "ShiftRegister595", "classdaisy_1_1_shift_register595.html", "classdaisy_1_1_shift_register595" ],
       [ "SongPositionPointerEvent", "structdaisy_1_1_song_position_pointer_event.html", "structdaisy_1_1_song_position_pointer_event" ],
       [ "SongSelectEvent", "structdaisy_1_1_song_select_event.html", "structdaisy_1_1_song_select_event" ],
       [ "SpiHandle", "classdaisy_1_1_spi_handle.html", "classdaisy_1_1_spi_handle" ],
@@ -139,11 +141,8 @@ var annotated_dup =
       [ "WavWriter", "classdaisy_1_1_wav_writer.html", "classdaisy_1_1_wav_writer" ],
       [ "Wm8731", "classdaisy_1_1_wm8731.html", "classdaisy_1_1_wm8731" ]
     ] ],
-    [ "dsy_gpio", "structdsy__gpio.html", "structdsy__gpio" ],
-    [ "dsy_gpio_pin", "structdsy__gpio__pin.html", "structdsy__gpio__pin" ],
     [ "DSY_SD_CardInfoTypeDef", "struct_d_s_y___s_d___card_info_type_def.html", "struct_d_s_y___s_d___card_info_type_def" ],
     [ "FontDef", "struct_font_def.html", "struct_font_def" ],
     [ "SdramHandle", "class_sdram_handle.html", "class_sdram_handle" ],
-    [ "ShiftRegister595", "class_shift_register595.html", "class_shift_register595" ],
     [ "UsbHandle", "class_usb_handle.html", "class_usb_handle" ]
 ];

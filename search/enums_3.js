@@ -7,7 +7,5 @@ var searchData=
   ['dps310_5fmode_5ft_4',['dps310_mode_t',['../classdaisy_1_1_dps310.html#a2140b92d5832e70e88083ceb0741e17e',1,'daisy::Dps310']]],
   ['dps310_5foversample_5ft_5',['dps310_oversample_t',['../classdaisy_1_1_dps310.html#a53754a137aae86b8069d6f1ffa54ee17',1,'daisy::Dps310']]],
   ['dps310_5frate_5ft_6',['dps310_rate_t',['../classdaisy_1_1_dps310.html#aad02aa9cfdd2f5b8bad883448537e381',1,'daisy::Dps310']]],
-  ['dsy_5fgpio_5fmode_7',['dsy_gpio_mode',['../group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#ga0edc3fcaf729346c5251d263d732666e',1,'gpio.h']]],
-  ['dsy_5fgpio_5fport_8',['dsy_gpio_port',['../group__utility.html#ga3f3543798ae410cae1cade28cd0fc14a',1,'daisy_core.h']]],
-  ['dsy_5fgpio_5fpull_9',['dsy_gpio_pull',['../group___d_e_p_r_e_c_a_t_e_d-_o_l_d-_g_p_i_o.html#gad8a85223f8dbcdf2c2cfc9302b3451b8',1,'gpio.h']]]
+  ['dsy_5fgpio_5fport_7',['dsy_gpio_port',['../namespacedaisy.html#ab924b202c15f9918955ea28aae71f337',1,'daisy']]]
 ];

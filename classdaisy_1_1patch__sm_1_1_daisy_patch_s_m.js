@@ -15,7 +15,7 @@ var classdaisy_1_1patch__sm_1_1_daisy_patch_s_m =
     [ "ChangeAudioCallback", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a57857bb457fcea2e262bf49d1656de62", null ],
     [ "Delay", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a0cda289d881c60e8d19de900c3f4767a", null ],
     [ "GetAdcValue", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#aa317e42bbec7fa789b2002160dda96f5", null ],
-    [ "GetPin", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a2cb2af471a74e90cb05fc13be1461819", null ],
+    [ "GetPin", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#aaaab37456347e6ff151f75cb30266787", null ],
     [ "GetRandomFloat", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a95458f0d0f483d96d89be0dd134424eb", null ],
     [ "GetRandomValue", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#acbbf0b3c5615ee2b4b99638e3367554b", null ],
     [ "Init", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a19435eb6b6785544317a436846790374", null ],
@@ -43,11 +43,11 @@ var classdaisy_1_1patch__sm_1_1_daisy_patch_s_m =
     [ "dac", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a8edc6e6381df08552e3894c887d79b4e", null ],
     [ "gate_in_1", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a48ab5b7d4172faa5e2437e697c10d15d", null ],
     [ "gate_in_2", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ad4544dab2ba44d8c21695937359487dd", null ],
-    [ "gate_out_1", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ae05ee45a0637e24b1678a134635ab92a", null ],
-    [ "gate_out_2", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ab5fbf53674c3fd6799647335fb88dbe6", null ],
+    [ "gate_out_1", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#ac381e9163d09b7a0757e68ccbcfc1d85", null ],
+    [ "gate_out_2", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a57677850e7edbb681bfdac0dda3407c0", null ],
     [ "qspi", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#af650ccd5833d6a1c4b8c03ee7e8c7671", null ],
     [ "sdram", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a898f9882aa60b6f16336fd613e1653d1", null ],
     [ "system", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#aee9989e96b489f7726676140ac0b9c26", null ],
     [ "usb", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a2168422296de9350f54a0351956a6a28", null ],
-    [ "user_led", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a2ae2a7c25b4beae24a733acbd1d398b6", null ]
+    [ "user_led", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a744e61fc34573955096a391365b3486a", null ]
 ];

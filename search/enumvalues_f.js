@@ -20,9 +20,9 @@ var searchData=
   ['pin_5f7_17',['PIN_7',['../namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa2b1f9e8577ab3b69cb0f16e40bc1f3dd',1,'daisy::MAX11300Types']]],
   ['pin_5f8_18',['PIN_8',['../namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffa21f6213bf11fb62369cce6de63264e0c',1,'daisy::MAX11300Types']]],
   ['pin_5f9_19',['PIN_9',['../namespacedaisy_1_1_m_a_x11300_types.html#aa5a2b717c98a118def838b1d7515daffaaac19a1147b2db7c6ee538aed9c4c6b1',1,'daisy::MAX11300Types']]],
-  ['pin_5fclk_20',['PIN_CLK',['../class_shift_register595.html#a2e0140c5d6cac8821d558b2683f7a134a4e50d83a47cc620a8427d2879aca30ec',1,'ShiftRegister595']]],
-  ['pin_5fdata_21',['PIN_DATA',['../class_shift_register595.html#a2e0140c5d6cac8821d558b2683f7a134ae9ea4e9926a41b050735081ea122036b',1,'ShiftRegister595']]],
-  ['pin_5flatch_22',['PIN_LATCH',['../class_shift_register595.html#a2e0140c5d6cac8821d558b2683f7a134a3a362719945ee0b18b66c3d2f47f9ea5',1,'ShiftRegister595']]],
+  ['pin_5fclk_20',['PIN_CLK',['../group__shiftregister.html#ggab2cacc66ee03d8c7d74f8b8ec2f17325aba7f9a956900430b2eaa3528e1cc28b8',1,'daisy::ShiftRegister595']]],
+  ['pin_5fdata_21',['PIN_DATA',['../group__shiftregister.html#ggab2cacc66ee03d8c7d74f8b8ec2f17325a44c50da4e6a332a00d519ea9181ec0b9',1,'daisy::ShiftRegister595']]],
+  ['pin_5flatch_22',['PIN_LATCH',['../group__shiftregister.html#ggab2cacc66ee03d8c7d74f8b8ec2f17325af38578ca45b3151322b0d4d7290cbe42',1,'daisy::ShiftRegister595']]],
   ['pitchbend_23',['PitchBend',['../group__midi__events.html#ggaaf09bb687034c8776ca0c68ed3ed4179a4f812cde2a6d2b270ec408514516443d',1,'daisy']]],
   ['polarity_5finverted_24',['POLARITY_INVERTED',['../classdaisy_1_1_switch.html#aef37136dd1b4cd077ef82a0f62bcfa3da6a67d181b4de52438ae5109bd9cfec63',1,'daisy::Switch']]],
   ['polarity_5fnormal_25',['POLARITY_NORMAL',['../classdaisy_1_1_switch.html#aef37136dd1b4cd077ef82a0f62bcfa3daca3b7fb0df13cde6adfeefc3f1f45e68',1,'daisy::Switch']]],
@@ -57,10 +57,7 @@ var searchData=
   ['ps_5f4_54',['PS_4',['../structdaisy_1_1_spi_handle_1_1_config.html#a13476ab6f4b52024c1569945ff0bf383ad01a2fba340e44606cb932b086f27a75',1,'daisy::SpiHandle::Config']]],
   ['ps_5f64_55',['PS_64',['../structdaisy_1_1_spi_handle_1_1_config.html#a13476ab6f4b52024c1569945ff0bf383a97fb148ab1accd5462d69022d83b0ced',1,'daisy::SpiHandle::Config']]],
   ['ps_5f8_56',['PS_8',['../structdaisy_1_1_spi_handle_1_1_config.html#a13476ab6f4b52024c1569945ff0bf383ae31444bf5c3424161080f9d328fd7955',1,'daisy::SpiHandle::Config']]],
-  ['pull_5fdown_57',['PULL_DOWN',['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51aec89c3f7c267f0eaacd65441ef854bca',1,'daisy::Switch']]],
-  ['pull_5fnone_58',['PULL_NONE',['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51a2ea8b603f1a3f5864f2f5a40a09be347',1,'daisy::Switch']]],
-  ['pull_5fup_59',['PULL_UP',['../classdaisy_1_1_switch.html#aa6c26cb923638a248a1d8d3cb1755e51a1f6f843c9fc60e6d00e2cbcbe97bbe8d',1,'daisy::Switch']]],
-  ['pulldown_60',['PULLDOWN',['../classdaisy_1_1_g_p_i_o.html#a99f432b0880dab3d3b202f1cd8081f0dad08b3001fc1b2f26c5ba712336e16a17',1,'daisy::GPIO']]],
-  ['pullup_61',['PULLUP',['../classdaisy_1_1_g_p_i_o.html#a99f432b0880dab3d3b202f1cd8081f0da2989a4b0b16772a6f65da71eda483c9f',1,'daisy::GPIO']]],
-  ['purple_62',['PURPLE',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40ae6af67acb46818429af923ce98b6d196',1,'daisy::Color']]]
+  ['pulldown_57',['PULLDOWN',['../classdaisy_1_1_g_p_i_o.html#a99f432b0880dab3d3b202f1cd8081f0dad08b3001fc1b2f26c5ba712336e16a17',1,'daisy::GPIO']]],
+  ['pullup_58',['PULLUP',['../classdaisy_1_1_g_p_i_o.html#a99f432b0880dab3d3b202f1cd8081f0da2989a4b0b16772a6f65da71eda483c9f',1,'daisy::GPIO']]],
+  ['purple_59',['PURPLE',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40ae6af67acb46818429af923ce98b6d196',1,'daisy::Color']]]
 ];

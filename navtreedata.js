@@ -143,8 +143,6 @@ var NAVTREE =
         [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
-        [ "Enumerations", "globals_enum.html", null ],
-        [ "Enumerator", "globals_eval.html", null ],
         [ "Macros", "globals_defs.html", "globals_defs" ]
       ] ]
     ] ]
@@ -154,12 +152,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_menu_8h.html",
-"classdaisy_1_1_fixed_cap_str_base.html#a688c94fe6ed65f138675b9b2168a1d5d",
-"classdaisy_1_1_sai_handle.html#aac337760cd0a689081208684d3771615",
-"dir_220d2bd384b446346a1cdcf02b1b2295.html",
-"globals_g.html",
-"md_doc_2md_2__b1___development-_unit-_testing.html#autotoc_md64",
-"structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fcabe2da78731d2386be1e8ace72a568eee"
+"classdaisy_1_1_fixed_cap_str_base.html#a60eb2c784956d413f50b0f468879d49f",
+"classdaisy_1_1_sai_handle.html#a99de674d71df2db2e2ee445396c1e6cf",
+"daisy__seed_8h.html#ac5c4a96ee873f61f7b21624d9d4e6e46",
+"globals_defs_l.html",
+"md_doc_2md_2__a7___getting-_started-_daisy-_bootloader.html",
+"structdaisy_1_1_sai_handle_1_1_config.html#a68789209ff997e6ca653db010594959b"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

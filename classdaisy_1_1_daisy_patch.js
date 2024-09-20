@@ -31,11 +31,12 @@ var classdaisy_1_1_daisy_patch =
     [ "StartAudio", "classdaisy_1_1_daisy_patch.html#ab5a3f2af944cf766d2e2108efcb8bb9c", null ],
     [ "StopAdc", "classdaisy_1_1_daisy_patch.html#a66aa03d67e904654fe1935bda7799010", null ],
     [ "StopAudio", "classdaisy_1_1_daisy_patch.html#a1f955cd08ba4228cb2cedbd953bc7094", null ],
+    [ "codec", "classdaisy_1_1_daisy_patch.html#acf48250e486b9b16e3e03f18547d4b39", null ],
     [ "controls", "classdaisy_1_1_daisy_patch.html#af2ad231a452402baa2df7a5fdbdf8a5b", null ],
     [ "display", "classdaisy_1_1_daisy_patch.html#a206e53b9a4a8576f87949fd98fd6d522", null ],
     [ "encoder", "classdaisy_1_1_daisy_patch.html#a4f9e8bfdf9607f95f2fd64003d70b25f", null ],
     [ "gate_input", "classdaisy_1_1_daisy_patch.html#aa2a65b214c0c247dd246428962ccd060", null ],
-    [ "gate_output", "classdaisy_1_1_daisy_patch.html#a91a7d7e5aae230d58794b63c78f2cfda", null ],
+    [ "gate_output", "classdaisy_1_1_daisy_patch.html#aa051acdee5dc1360edb9efe3843325b2", null ],
     [ "midi", "classdaisy_1_1_daisy_patch.html#ab0f8c32d52ff82c8e42123eef88fc3ee", null ],
     [ "seed", "classdaisy_1_1_daisy_patch.html#a4705ca24e5ebc4d8add7d83232162fd7", null ]
 ];

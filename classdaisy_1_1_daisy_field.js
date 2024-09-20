@@ -34,7 +34,7 @@ var classdaisy_1_1_daisy_field =
     [ "cv", "classdaisy_1_1_daisy_field.html#a65e6df0f4ecff75bf3156e3438de94a7", null ],
     [ "display", "classdaisy_1_1_daisy_field.html#a5a1f9e0695f123931159fc0a0e8dc60d", null ],
     [ "gate_in", "classdaisy_1_1_daisy_field.html#a4991b0aa3dab1d2b4903439c1a0a696f", null ],
-    [ "gate_out", "classdaisy_1_1_daisy_field.html#a440d34e6818110884df7689b45926073", null ],
+    [ "gate_out", "classdaisy_1_1_daisy_field.html#a569b0550c2751cce2c9ee23604050bef", null ],
     [ "knob", "classdaisy_1_1_daisy_field.html#ad38dd8b1047b6f434ccf1027528b4f99", null ],
     [ "led_driver", "classdaisy_1_1_daisy_field.html#ab24eb32f259b09a8f126d528cd5a1fea", null ],
     [ "midi", "classdaisy_1_1_daisy_field.html#a544c71eb979b41a2e827d38a598943f6", null ],

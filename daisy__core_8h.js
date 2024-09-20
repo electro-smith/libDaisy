@@ -1,6 +1,7 @@
 var daisy__core_8h =
 [
     [ "daisy::Pin", "structdaisy_1_1_pin.html", "structdaisy_1_1_pin" ],
+    [ "daisy::dsy_gpio_pin", "structdaisy_1_1dsy__gpio__pin.html", "structdaisy_1_1dsy__gpio__pin" ],
     [ "DMA_BUFFER_MEM_SECTION", "group__utility.html#ga42cc36a89607437fe4bc26d3f7d57043", null ],
     [ "DSY_CORE_HW_H", "daisy__core_8h.html#ac2cbb8913cec77897020473e8e0651f1", null ],
     [ "DTCM_MEM_SECTION", "group__utility.html#gaaf0e22ddbb535a314fdf30825b0620a2", null ],
@@ -21,20 +22,20 @@ var daisy__core_8h =
     [ "S322F_SCALE", "group__utility.html#gac93a7c90194d8bbcbffe63c5a408b4d4", null ],
     [ "S82F_SCALE", "group__utility.html#gae3bd6693715fecbadbdb30c17c6b6c6f", null ],
     [ "U82F_SCALE", "group__utility.html#gada224179f745219e3eccd36b137b1dd8", null ],
-    [ "dsy_gpio_port", "group__utility.html#ga3f3543798ae410cae1cade28cd0fc14a", [
-      [ "DSY_GPIOA", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aaa225b0aab0961f0839d6ff8ea39af4a6", null ],
-      [ "DSY_GPIOB", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa028071d4f5a510d6dc1f8fcdf781c38f", null ],
-      [ "DSY_GPIOC", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aaa5890f5f6a99f51b66e24ef5cb398858", null ],
-      [ "DSY_GPIOD", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa2eb525aedc5dda252650d97972c02967", null ],
-      [ "DSY_GPIOE", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa96887f09952afaf07c0e767ece0fc0c2", null ],
-      [ "DSY_GPIOF", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa69539a5f3c760b69f0c78afcf5699cc8", null ],
-      [ "DSY_GPIOG", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa11d96326270225e04d7ea3153fd7343d", null ],
-      [ "DSY_GPIOH", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa3b8b0747c1cf089fe715cbe7b4c4da5c", null ],
-      [ "DSY_GPIOI", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa10fced70f53bdc64ed8dfeb7fabb1848", null ],
-      [ "DSY_GPIOJ", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa13a0ac1b8ea35939c28ecf7a1d0b80a0", null ],
-      [ "DSY_GPIOK", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa1c0c703541fdb07600ee67cd3e1e9c01", null ],
-      [ "DSY_GPIOX", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aa3d2ec507d8852037514f5ac644f20d5a", null ],
-      [ "DSY_GPIO_LAST", "group__utility.html#gga3f3543798ae410cae1cade28cd0fc14aad7bd66b3a1feeae2ff9934e05dae701d", null ]
+    [ "dsy_gpio_port", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337", [
+      [ "DSY_GPIOA", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337af236d4cae753711e8ecaa5dfc63defb1", null ],
+      [ "DSY_GPIOB", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337a52e47a4de03677fc217eaeb537220e05", null ],
+      [ "DSY_GPIOC", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337abb24a3f6503d4818a4359dee259a00c8", null ],
+      [ "DSY_GPIOD", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337ad2d02c0f9852b9089936994d134a6fe2", null ],
+      [ "DSY_GPIOE", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337a67171c1985d7b456e8c66cd74df51d9a", null ],
+      [ "DSY_GPIOF", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337a51e0a4e0a0be3df66e9776ca9520e09a", null ],
+      [ "DSY_GPIOG", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337a1ca7917c9dd9b6d7d5323564e08e028a", null ],
+      [ "DSY_GPIOH", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337a650a6870537ef1888448b25e785df5a3", null ],
+      [ "DSY_GPIOI", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337ac4b37ee51efe35cb82153cfae8795961", null ],
+      [ "DSY_GPIOJ", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337a6628eaf715660ed7796243e6417f2d8d", null ],
+      [ "DSY_GPIOK", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337a56b812a6a8c744b97f2715e05e19b651", null ],
+      [ "DSY_GPIOX", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337a6db451f7f9fb64144650fd234b2dacaa", null ],
+      [ "DSY_GPIO_LAST", "daisy__core_8h.html#ab924b202c15f9918955ea28aae71f337a64c36e629598a56cdae13425eb226aa5", null ]
     ] ],
     [ "GPIOPort", "daisy__core_8h.html#a0f3f80696b55547e8471a18de01b8e13", [
       [ "PORTA", "daisy__core_8h.html#a0f3f80696b55547e8471a18de01b8e13a7e9a819ed93f26254ac6b18b1dcdeafc", null ],
@@ -51,8 +52,6 @@ var daisy__core_8h =
       [ "PORTX", "daisy__core_8h.html#a0f3f80696b55547e8471a18de01b8e13a05ebd4a8511463d01e5f35dd20cd8255", null ]
     ] ],
     [ "cube", "group__utility.html#ga6023030167cfeb8bb8e066f8ea455d80", null ],
-    [ "dsy_pin", "group__utility.html#gad7373cbfc19efe2d0e1477997bcf3636", null ],
-    [ "dsy_pin_cmp", "group__utility.html#ga89ddc0dd121b51c448840b2c56b23d3d", null ],
     [ "f2s16", "group__utility.html#ga35fba5981e8833f5a89ebcfe4bf5c609", null ],
     [ "f2s24", "group__utility.html#gaf05db280491381474925191c391cd94d", null ],
     [ "f2s32", "group__utility.html#ga8849e4a04b98172adeb6a7a61c1f99e4", null ],

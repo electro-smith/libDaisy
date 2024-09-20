@@ -5,7 +5,7 @@ var classdaisy_1_1_encoder =
     [ "Debounce", "classdaisy_1_1_encoder.html#a5bed96517dbffee1fb16255ec9faa7e7", null ],
     [ "FallingEdge", "classdaisy_1_1_encoder.html#aaf89f3fee67ab4866b08be0616bba978", null ],
     [ "Increment", "classdaisy_1_1_encoder.html#ae0f2d9d22a006a45daa1ac9cbcba4050", null ],
-    [ "Init", "classdaisy_1_1_encoder.html#aebee661fcf4faf8ca2bc6550bcffee68", null ],
+    [ "Init", "classdaisy_1_1_encoder.html#a42e19cd1828d1c0d71a5a17fdd2543fe", null ],
     [ "Pressed", "classdaisy_1_1_encoder.html#a7c3a633c4e578dac0bdf5829b9bed99f", null ],
     [ "RisingEdge", "classdaisy_1_1_encoder.html#ab501cf73d10d81058b485c48b9eb506f", null ],
     [ "SetUpdateRate", "classdaisy_1_1_encoder.html#aa613736d374d8a751ecb3b804b11e29d", null ],

@@ -205,6 +205,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_dps310_spi_transport.html">Dps310SpiTransport</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1dsy__gpio__pin.html">dsy_gpio_pin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_encoder.html">Encoder</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic Class for handling Quadrature Encoders <br  />
  Inspired/influenced by Mutable Instruments (pichenettes) <a class="el" href="classdaisy_1_1_encoder.html" title="Generic Class for handling Quadrature Encoders   Inspired/influenced by Mutable Instruments (pichenet...">Encoder</a> classes.  <a href="classdaisy_1_1_encoder.html#details">More...</a><br /></td></tr>
@@ -383,6 +385,10 @@ The MidiEvents fill a <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> 
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_shift_register4021.html">ShiftRegister4021</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Driver for CD4021 shift register.  <a href="classdaisy_1_1_shift_register4021.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_shift_register595.html">ShiftRegister595</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device Driver for 8-bit shift register. <br  />
+ CD74HC595 - 8-bit serial to parallel output shift.  <a href="classdaisy_1_1_shift_register595.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_song_position_pointer_event.html">SongPositionPointerEvent</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_song_select_event.html">SongSelectEvent</a></td></tr>
@@ -532,6 +538,26 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a0f3f80696b55547e8471a18de01b8e13"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPIO Port names.  <a href="namespacedaisy.html#a0f3f80696b55547e8471a18de01b8e13">More...</a><br /></td></tr>
 <tr class="separator:a0f3f80696b55547e8471a18de01b8e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab924b202c15f9918955ea28aae71f337" id="r_ab924b202c15f9918955ea28aae71f337"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337">dsy_gpio_port</a> { <br />
+&#160;&#160;<a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337af236d4cae753711e8ecaa5dfc63defb1">DSY_GPIOA</a>
+, <a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337a52e47a4de03677fc217eaeb537220e05">DSY_GPIOB</a>
+, <a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337abb24a3f6503d4818a4359dee259a00c8">DSY_GPIOC</a>
+, <a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337ad2d02c0f9852b9089936994d134a6fe2">DSY_GPIOD</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337a67171c1985d7b456e8c66cd74df51d9a">DSY_GPIOE</a>
+, <a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337a51e0a4e0a0be3df66e9776ca9520e09a">DSY_GPIOF</a>
+, <a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337a1ca7917c9dd9b6d7d5323564e08e028a">DSY_GPIOG</a>
+, <a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337a650a6870537ef1888448b25e785df5a3">DSY_GPIOH</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337ac4b37ee51efe35cb82153cfae8795961">DSY_GPIOI</a>
+, <a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337a6628eaf715660ed7796243e6417f2d8d">DSY_GPIOJ</a>
+, <a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337a56b812a6a8c744b97f2715e05e19b651">DSY_GPIOK</a>
+, <a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337a6db451f7f9fb64144650fd234b2dacaa">DSY_GPIOX</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337a64c36e629598a56cdae13425eb226aa5">DSY_GPIO_LAST</a>
+<br />
+ }</td></tr>
+<tr class="separator:ab924b202c15f9918955ea28aae71f337"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f8fe174eb9db8e8a38e8c08155f1f46" id="r_a8f8fe174eb9db8e8a38e8c08155f1f46"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46">MCPRegister</a> : uint8_t { <br />
 &#160;&#160;<a class="el" href="namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46acd60497c44082119edcd536748cfcfe1">IODIR_A</a> = 0x00
 , <a class="el" href="namespacedaisy.html#a8f8fe174eb9db8e8a38e8c08155f1f46a561877981d50f267d2e2441844331164">IODIR_B</a> = 0x01
@@ -691,9 +717,17 @@ Functions</h2></td></tr>
 <tr class="memitem:af68a2e700b33a01728ddc00075c3ea1c" id="r_af68a2e700b33a01728ddc00075c3ea1c"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">class</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">CharType</a> , std::size_t capacity&gt; </td></tr>
 <tr class="memitem:af68a2e700b33a01728ddc00075c3ea1c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">constexpr</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#af68a2e700b33a01728ddc00075c3ea1c">Swap</a> (<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">const</a> <a class="el" href="classdaisy_1_1_fixed_cap_str.html">FixedCapStr</a>&lt; capacity, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">CharType</a> &gt; &amp;<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">lhs</a>, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">const</a> <a class="el" href="classdaisy_1_1_fixed_cap_str.html">FixedCapStr</a>&lt; capacity, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">CharType</a> &gt; &amp;<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">rhs</a>) <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">noexcept</a></td></tr>
 <tr class="separator:af68a2e700b33a01728ddc00075c3ea1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01cd4a300c34620c182fc2c530b1c355" id="r_a01cd4a300c34620c182fc2c530b1c355"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">constexpr</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">uint32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a01cd4a300c34620c182fc2c530b1c355">GetHALPin</a> (<a class="el" href="structdaisy_1_1_pin.html">Pin</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">p</a>)</td></tr>
+<tr class="separator:a01cd4a300c34620c182fc2c530b1c355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c170e9c9d3648b7c09ad926db6d8363" id="r_a0c170e9c9d3648b7c09ad926db6d8363"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">constexpr</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">GPIO_TypeDef</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a0c170e9c9d3648b7c09ad926db6d8363">GetHALPort</a> (<a class="el" href="structdaisy_1_1_pin.html">Pin</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">p</a>)</td></tr>
+<tr class="separator:a0c170e9c9d3648b7c09ad926db6d8363"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5376c91d89864c1e0a733b7c1f0484c" id="r_ab5376c91d89864c1e0a733b7c1f0484c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#ab5376c91d89864c1e0a733b7c1f0484c">GPIOClockEnable</a> (<a class="el" href="structdaisy_1_1_pin.html">Pin</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">p</a>)</td></tr>
+<tr class="separator:ab5376c91d89864c1e0a733b7c1f0484c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
+<tr class="memitem:a05907ddd2ec5d1dae163cd0a5326b945" id="r_a05907ddd2ec5d1dae163cd0a5326b945"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">const</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a05907ddd2ec5d1dae163cd0a5326b945">kMaxSr595DaisyChain</a> = 16</td></tr>
+<tr class="separator:a05907ddd2ec5d1dae163cd0a5326b945"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf45d932af979bd96009924dff6ae8f1" id="r_aaf45d932af979bd96009924dff6ae8f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">volatile</a> <a class="el" href="structdaisy_1_1_system_1_1_boot_info.html">daisy::System::BootInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#aaf45d932af979bd96009924dff6ae8f1">boot_info</a></td></tr>
 <tr class="separator:aaf45d932af979bd96009924dff6ae8f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03ef559c136c02da542e9b3a263d3759" id="r_a03ef559c136c02da542e9b3a263d3759"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">const</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">uint32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a03ef559c136c02da542e9b3a263d3759">kWavFileChunkId</a> = 0x46464952</td></tr>
@@ -1111,6 +1145,50 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="ab924b202c15f9918955ea28aae71f337" name="ab924b202c15f9918955ea28aae71f337"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab924b202c15f9918955ea28aae71f337">&#9670;&#160;</a></span>dsy_gpio_port</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">enum</a> <a class="el" href="namespacedaisy.html#ab924b202c15f9918955ea28aae71f337">daisy::dsy_gpio_port</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Enums and a simple struct for defining a hardware pin on the MCU These correlate with the stm32 datasheet, and are used to configure the hardware.</p>
+<p>This along with the <a class="el" href="structdaisy_1_1dsy__gpio__pin.html">dsy_gpio_pin</a> class should no longer be used. They are available for backwards compatability.</p>
+<p>Please use GPIOPort enum and the <a class="el" href="structdaisy_1_1_pin.html" title="representation of hardware port/pin combination">Pin</a> struct instead. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337af236d4cae753711e8ecaa5dfc63defb1" name="ab924b202c15f9918955ea28aae71f337af236d4cae753711e8ecaa5dfc63defb1"></a>DSY_GPIOA&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337a52e47a4de03677fc217eaeb537220e05" name="ab924b202c15f9918955ea28aae71f337a52e47a4de03677fc217eaeb537220e05"></a>DSY_GPIOB&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337abb24a3f6503d4818a4359dee259a00c8" name="ab924b202c15f9918955ea28aae71f337abb24a3f6503d4818a4359dee259a00c8"></a>DSY_GPIOC&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337ad2d02c0f9852b9089936994d134a6fe2" name="ab924b202c15f9918955ea28aae71f337ad2d02c0f9852b9089936994d134a6fe2"></a>DSY_GPIOD&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337a67171c1985d7b456e8c66cd74df51d9a" name="ab924b202c15f9918955ea28aae71f337a67171c1985d7b456e8c66cd74df51d9a"></a>DSY_GPIOE&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337a51e0a4e0a0be3df66e9776ca9520e09a" name="ab924b202c15f9918955ea28aae71f337a51e0a4e0a0be3df66e9776ca9520e09a"></a>DSY_GPIOF&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337a1ca7917c9dd9b6d7d5323564e08e028a" name="ab924b202c15f9918955ea28aae71f337a1ca7917c9dd9b6d7d5323564e08e028a"></a>DSY_GPIOG&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337a650a6870537ef1888448b25e785df5a3" name="ab924b202c15f9918955ea28aae71f337a650a6870537ef1888448b25e785df5a3"></a>DSY_GPIOH&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337ac4b37ee51efe35cb82153cfae8795961" name="ab924b202c15f9918955ea28aae71f337ac4b37ee51efe35cb82153cfae8795961"></a>DSY_GPIOI&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337a6628eaf715660ed7796243e6417f2d8d" name="ab924b202c15f9918955ea28aae71f337a6628eaf715660ed7796243e6417f2d8d"></a>DSY_GPIOJ&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337a56b812a6a8c744b97f2715e05e19b651" name="ab924b202c15f9918955ea28aae71f337a56b812a6a8c744b97f2715e05e19b651"></a>DSY_GPIOK&#160;</td><td class="fielddoc"><p>&amp; </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337a6db451f7f9fb64144650fd234b2dacaa" name="ab924b202c15f9918955ea28aae71f337a6db451f7f9fb64144650fd234b2dacaa"></a>DSY_GPIOX&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab924b202c15f9918955ea28aae71f337a64c36e629598a56cdae13425eb226aa5" name="ab924b202c15f9918955ea28aae71f337a64c36e629598a56cdae13425eb226aa5"></a>DSY_GPIO_LAST&#160;</td><td class="fielddoc"><p>This is a non-existant port for unsupported bits of hardware. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="a0f3f80696b55547e8471a18de01b8e13" name="a0f3f80696b55547e8471a18de01b8e13"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0f3f80696b55547e8471a18de01b8e13">&#9670;&#160;</a></span>GPIOPort</h2>
 
@@ -1324,6 +1402,84 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a01cd4a300c34620c182fc2c530b1c355" name="a01cd4a300c34620c182fc2c530b1c355"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01cd4a300c34620c182fc2c530b1c355">&#9670;&#160;</a></span>GetHALPin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">constexpr</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">uint32_t</a> daisy::GetHALPin </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdaisy_1_1_pin.html">Pin</a>&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0c170e9c9d3648b7c09ad926db6d8363" name="a0c170e9c9d3648b7c09ad926db6d8363"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c170e9c9d3648b7c09ad926db6d8363">&#9670;&#160;</a></span>GetHALPort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">constexpr</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">GPIO_TypeDef</a> * daisy::GetHALPort </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdaisy_1_1_pin.html">Pin</a>&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab5376c91d89864c1e0a733b7c1f0484c" name="ab5376c91d89864c1e0a733b7c1f0484c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5376c91d89864c1e0a733b7c1f0484c">&#9670;&#160;</a></span>GPIOClockEnable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">void</a> daisy::GPIOClockEnable </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdaisy_1_1_pin.html">Pin</a>&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="abf09565ffab28a550d8f142cffa5c9b3" name="abf09565ffab28a550d8f142cffa5c9b3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abf09565ffab28a550d8f142cffa5c9b3">&#9670;&#160;</a></span>operator+()</h2>
 
@@ -1418,6 +1574,21 @@ template&lt;<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">class</a
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a05907ddd2ec5d1dae163cd0a5326b945" name="a05907ddd2ec5d1dae163cd0a5326b945"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05907ddd2ec5d1dae163cd0a5326b945">&#9670;&#160;</a></span>kMaxSr595DaisyChain</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">const</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">size_t</a> daisy::kMaxSr595DaisyChain = 16</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Maximum Number of chained devices Connect device's QH' pin to the next chips serial input </p>
 
 </div>
 </div>

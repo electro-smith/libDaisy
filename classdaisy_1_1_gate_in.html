@@ -124,9 +124,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a965077b2d1bffa4d103b4d497e64a7b6" id="r_a965077b2d1bffa4d103b4d497e64a7b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_gate_in.html#a965077b2d1bffa4d103b4d497e64a7b6">Init</a> (<a class="el" href="structdaisy_1_1_pin.html">Pin</a> pin, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">bool</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">invert</a>=<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">true</a>)</td></tr>
 <tr class="memdesc:a965077b2d1bffa4d103b4d497e64a7b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the gate input with specified hardware pin.  <br /></td></tr>
 <tr class="separator:a965077b2d1bffa4d103b4d497e64a7b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af9c75a81b23b1b268ca2eeeadd004c0c" id="r_af9c75a81b23b1b268ca2eeeadd004c0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_gate_in.html#af9c75a81b23b1b268ca2eeeadd004c0c">Init</a> (<a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> *<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">pin_cfg</a>, <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">bool</a> <a class="el" href="classdaisy_1_1_led_driver_pca9685.html">invert</a>=<a class="el" href="classdaisy_1_1_led_driver_pca9685.html">true</a>)</td></tr>
-<tr class="memdesc:af9c75a81b23b1b268ca2eeeadd004c0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the gate input with specified hardware pin.  <br /></td></tr>
-<tr class="separator:af9c75a81b23b1b268ca2eeeadd004c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a9bac9fe44985baa7097bd47a90a40f" id="r_a6a9bac9fe44985baa7097bd47a90a40f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_gate_in.html#a6a9bac9fe44985baa7097bd47a90a40f">Trig</a> ()</td></tr>
 <tr class="separator:a6a9bac9fe44985baa7097bd47a90a40f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08f75c6621307249de3107df96cfab2d" id="r_a08f75c6621307249de3107df96cfab2d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_gate_in.html#a08f75c6621307249de3107df96cfab2d">State</a> ()</td></tr>
@@ -186,48 +183,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="af9c75a81b23b1b268ca2eeeadd004c0c" name="af9c75a81b23b1b268ca2eeeadd004c0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af9c75a81b23b1b268ca2eeeadd004c0c">&#9670;&#160;</a></span>Init() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">void</a> daisy::GateIn::Init </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> *&#160;</td>
-          <td class="paramname"><em>pin_cfg</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">bool</a>&#160;</td>
-          <td class="paramname"><em>invert</em> = <code><a class="el" href="classdaisy_1_1_led_driver_pca9685.html">true</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Initializes the gate input with specified hardware pin. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">pin_cfg</td><td>pointer to pin to initialize </td></tr>
-    <tr><td class="paramname">invert</td><td>True if the pin state is HIGH when 0V is present at the input. False if input signal matches the pin state.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section note"><dt>Note</dt><dd>the default for invert is true because it is typical to use an inverting input circuit (e.g. a BJT circuit) for eurorack gate inputs.</dd>
-<dd>
-deprectated - this function still works, but will eventually be removed. It uses the old style <a class="el" href="structdsy__gpio__pin.html">dsy_gpio_pin</a> in a way that it is not compatible with the the new <a class="el" href="structdaisy_1_1_pin.html" title="representation of hardware port/pin combination">Pin</a> class. </dd></dl>
-
-</div>
-</div>
 <a id="a965077b2d1bffa4d103b4d497e64a7b6" name="a965077b2d1bffa4d103b4d497e64a7b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a965077b2d1bffa4d103b4d497e64a7b6">&#9670;&#160;</a></span>Init() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a965077b2d1bffa4d103b4d497e64a7b6">&#9670;&#160;</a></span>Init()</h2>
 
 <div class="memitem">
 <div class="memproto">

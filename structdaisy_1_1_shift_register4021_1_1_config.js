@@ -1,6 +1,6 @@
 var structdaisy_1_1_shift_register4021_1_1_config =
 [
-    [ "clk", "structdaisy_1_1_shift_register4021_1_1_config.html#a784eb15848ab91c5664f139706dd0131", null ],
-    [ "data", "structdaisy_1_1_shift_register4021_1_1_config.html#a72204442078e6c1cc46406ee69ca4c6b", null ],
-    [ "latch", "structdaisy_1_1_shift_register4021_1_1_config.html#a2a05cd559028325fc59ae9108672d045", null ]
+    [ "clk", "structdaisy_1_1_shift_register4021_1_1_config.html#a9de9c7e81aaa1d00f36eccd5480fc00e", null ],
+    [ "data", "structdaisy_1_1_shift_register4021_1_1_config.html#a0fc658141933acb6dd9dc902cf4cb6af", null ],
+    [ "latch", "structdaisy_1_1_shift_register4021_1_1_config.html#a12031ffdac6ca3508d130528fd1b5548", null ]
 ];

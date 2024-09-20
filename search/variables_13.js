@@ -8,6 +8,6 @@ var searchData=
   ['usbh_5fdriver_5',['USBH_Driver',['../usbh__diskio_8h.html#ab280a92502c7485b193592eb7af27a9d',1,'usbh_diskio.h']]],
   ['use_5fdcache_6',['use_dcache',['../structdaisy_1_1_system_1_1_config.html#adc21f9d3bcc3b5a016c985df1c62533f',1,'daisy::System::Config']]],
   ['use_5ficache_7',['use_icache',['../structdaisy_1_1_system_1_1_config.html#a1fdfb9e4b9d4a06ed2e0b7a00d8b785b',1,'daisy::System::Config']]],
-  ['user_5fled_8',['user_led',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a2ae2a7c25b4beae24a733acbd1d398b6',1,'daisy::patch_sm::DaisyPatchSM']]],
+  ['user_5fled_8',['user_led',['../classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a744e61fc34573955096a391365b3486a',1,'daisy::patch_sm::DaisyPatchSM']]],
   ['userdata_9',['userdata',['../structdaisy_1_1_u_s_b_host_handle_1_1_config.html#a7953c141d57decc990362228ad289098',1,'daisy::USBHostHandle::Config']]]
 ];

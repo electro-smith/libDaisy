@@ -27,12 +27,13 @@ var classdaisy_1_1_daisy_seed =
     [ "StopAudio", "classdaisy_1_1_daisy_seed.html#aed16a490a02c3ad2b3d10cb567957e4f", null ],
     [ "adc", "classdaisy_1_1_daisy_seed.html#a62f0206b9421868f6afba7b81e0b26f2", null ],
     [ "audio_handle", "classdaisy_1_1_daisy_seed.html#a5ac99b65a49c695171b965b8cd2349d5", null ],
+    [ "codec", "classdaisy_1_1_daisy_seed.html#afb2f35dcfbbfc50d1680670b1be467d8", null ],
     [ "dac", "classdaisy_1_1_daisy_seed.html#a7455ff1229e1e6d47bd635e92f17142a", null ],
-    [ "led", "classdaisy_1_1_daisy_seed.html#ab3ce4c98a819d4aac03659b61697a685", null ],
+    [ "led", "classdaisy_1_1_daisy_seed.html#aae1d08534a75393e50fc7c8115b40c1f", null ],
     [ "qspi", "classdaisy_1_1_daisy_seed.html#a60daf59d4b1c4eb34e246897e2f5f007", null ],
     [ "qspi_config", "classdaisy_1_1_daisy_seed.html#a08cc65eb0580f224866f1af13bca9814", null ],
     [ "sdram_handle", "classdaisy_1_1_daisy_seed.html#a48b3da45f3fda4a6960cc15f427daa96", null ],
     [ "system", "classdaisy_1_1_daisy_seed.html#aa47f39a45d5cda87a428853a92c42f18", null ],
-    [ "testpoint", "classdaisy_1_1_daisy_seed.html#a4a0b62a728a7d5ce159f7b61c0ee1915", null ],
+    [ "testpoint", "classdaisy_1_1_daisy_seed.html#a6414cf0af0a57133faa79af8db3debef", null ],
     [ "usb_handle", "classdaisy_1_1_daisy_seed.html#aca07ac3af9281104c5e8006024b23ae8", null ]
 ];

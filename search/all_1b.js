@@ -54,7 +54,7 @@ var searchData=
   ['_7escopedirqblocker_51',['~ScopedIrqBlocker',['../classdaisy_1_1_scoped_irq_blocker.html#a13ed84e1ed7e0abc1c7d8ddd2ac97009',1,'daisy::ScopedIrqBlocker']]],
   ['_7esdmmchandler_52',['~SdmmcHandler',['../classdaisy_1_1_sdmmc_handler.html#a0e9d9d3b2fdaaa7a26a543383867bfb8',1,'daisy::SdmmcHandler']]],
   ['_7eshiftregister4021_53',['~ShiftRegister4021',['../classdaisy_1_1_shift_register4021.html#a52c77889ae6115bb67a37110cfda30cc',1,'daisy::ShiftRegister4021']]],
-  ['_7eshiftregister595_54',['~ShiftRegister595',['../class_shift_register595.html#af8bd4833320c0674521dd23d5be874cb',1,'ShiftRegister595']]],
+  ['_7eshiftregister595_54',['~ShiftRegister595',['../group__shiftregister.html#gab3b34b2b7ae43deeae52c275a81e9fcc',1,'daisy::ShiftRegister595']]],
   ['_7estackbase_55',['~StackBase',['../classdaisy_1_1_stack_base.html#a0b7176df71ffc6a47e298c73f5236ebf',1,'daisy::StackBase']]],
   ['_7eswitch_56',['~Switch',['../classdaisy_1_1_switch.html#a7dd3724c490ea56be8995f2713d4dbc0',1,'daisy::Switch']]],
   ['_7eswitch3_57',['~Switch3',['../classdaisy_1_1_switch3.html#afa972e7c993a8dd72f59e61aa6b4b83f',1,'daisy::Switch3']]],

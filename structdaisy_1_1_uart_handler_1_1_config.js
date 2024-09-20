@@ -38,8 +38,8 @@ var structdaisy_1_1_uart_handler_1_1_config =
     [ "parity", "structdaisy_1_1_uart_handler_1_1_config.html#ac48641737eaf10a6d0c78172aff2762a", null ],
     [ "periph", "structdaisy_1_1_uart_handler_1_1_config.html#a610e071e45e1258b17896a05c4a23cf3", null ],
     [ "pin_config", "structdaisy_1_1_uart_handler_1_1_config.html#aa6f279be17e79b50e125287d41a97f8a", null ],
-    [ "rx", "structdaisy_1_1_uart_handler_1_1_config.html#adb318e26f13636e1bee740fa47497392", null ],
+    [ "rx", "structdaisy_1_1_uart_handler_1_1_config.html#a22f12839934f97f0a7a87f42d768684b", null ],
     [ "stopbits", "structdaisy_1_1_uart_handler_1_1_config.html#a490845e58271053432b93ec8cc56798e", null ],
-    [ "tx", "structdaisy_1_1_uart_handler_1_1_config.html#aede71d4e3449591e661b0decfeecd993", null ],
+    [ "tx", "structdaisy_1_1_uart_handler_1_1_config.html#a253d862229be57c8aaf14451ad74c6ab", null ],
     [ "wordlength", "structdaisy_1_1_uart_handler_1_1_config.html#a563a78c968ce1adbcc05585c617a5eec", null ]
 ];

@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['led_0',['LED',['../group__led.html',1,'']]],
-  ['libdaisy_1',['LIBDAISY',['../group__libdaisy.html',1,'']]],
-  ['loggerhelpermacros_2',['LoggerHelperMacros',['../group__logging__macros.html',1,'']]],
-  ['loggerstaticmembers_3',['LoggerStaticMembers',['../group__logger__statics.html',1,'']]],
-  ['logging_4',['LOGGING',['../group__hid__logging.html',1,'']]]
+  ['max11300_0',['MAX11300',['../group___m_a_x11300.html',1,'']]],
+  ['midi_1',['MIDI',['../group__midi.html',1,'']]],
+  ['midi_5fevents_2',['MIDI_EVENTS',['../group__midi__events.html',1,'']]]
 ];

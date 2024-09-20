@@ -2,10 +2,10 @@ var searchData=
 [
   ['large_20memory_0',['Class Design with Large Memory',['../md_doc_2md_2__a6___getting-_started-_external-_s_d_r_a_m.html#autotoc_md46',1,'']]],
   ['last_1',['last',['../structdaisy_1_1_system_1_1_boot_info.html#a61babd0ac98c0f0a5951c07353223eedaf447f5c03508de4d88e340390ba7c78f',1,'daisy::System::BootInfo::LAST'],['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a59fb8f2d16bd5cd2cc0e5ca7fe7def92',1,'daisy::Color::LAST'],['../classdaisy_1_1_parameter.html#a2fcb1b7095721f0de77594aabb9594daafd1a0bfdbd74a9f915abd72694b57621',1,'daisy::Parameter::LAST']]],
-  ['latch_2',['latch',['../structdaisy_1_1_shift_register4021_1_1_config.html#a2a05cd559028325fc59ae9108672d045',1,'daisy::ShiftRegister4021::Config']]],
+  ['latch_2',['latch',['../structdaisy_1_1_shift_register4021_1_1_config.html#a12031ffdac6ca3508d130528fd1b5548',1,'daisy::ShiftRegister4021::Config']]],
   ['lcd_5fhd44780_2eh_3',['lcd_hd44780.h',['../lcd__hd44780_8h.html',1,'']]],
   ['lcdhd44780_4',['lcdhd44780',['../classdaisy_1_1_lcd_h_d44780.html',1,'daisy::LcdHD44780'],['../classdaisy_1_1_lcd_h_d44780.html#ad2f3507fa402dd0d68e14ddd9c8774f4',1,'daisy::LcdHD44780::LcdHD44780()']]],
-  ['led_5',['led',['../classdaisy_1_1_led.html',1,'daisy::Led'],['../group__led.html',1,'LED'],['../classdaisy_1_1_daisy_seed.html#ab3ce4c98a819d4aac03659b61697a685',1,'daisy::DaisySeed::led'],['../classdaisy_1_1_led.html#a8737024b03a77904dfb704221656c629',1,'daisy::Led::Led()']]],
+  ['led_5',['led',['../classdaisy_1_1_led.html',1,'daisy::Led'],['../group__led.html',1,'LED'],['../classdaisy_1_1_led.html#a8737024b03a77904dfb704221656c629',1,'daisy::Led::Led()'],['../classdaisy_1_1_daisy_seed.html#aae1d08534a75393e50fc7c8115b40c1f',1,'daisy::DaisySeed::led']]],
   ['led_2eh_6',['led.h',['../led_8h.html',1,'']]],
   ['led1_7',['led1',['../classdaisy_1_1_daisy_pod.html#a25507d3d34053599b816f5a87a55d632',1,'daisy::DaisyPod']]],
   ['led2_8',['led2',['../classdaisy_1_1_daisy_pod.html#a957be8135f17db1516599602f72daf5c',1,'daisy::DaisyPod']]],

@@ -89,7 +89,7 @@ var searchData=
   ['from_20the_20commandline_86',['From the commandline',['../md_doc_2md_2__b1___development-_unit-_testing.html#autotoc_md66',1,'']]],
   ['from_20visual_20studio_20code_87',['From Visual Studio Code',['../md_doc_2md_2__b1___development-_unit-_testing.html#autotoc_md67',1,'']]],
   ['front_88',['front',['../classdaisy_1_1_f_i_f_o_base.html#a000168a5fe90823b7c671a1eeaa03d4a',1,'daisy::FIFOBase::Front()'],['../classdaisy_1_1_f_i_f_o_base.html#a1574a70a644e265fe1a07d68d2ae3a31',1,'daisy::FIFOBase::Front() const']]],
-  ['fs_89',['fs',['../structdaisy_1_1_sai_handle_1_1_config.html#aff0746f3a8ff80d4ad7763e5d4994b67',1,'daisy::SaiHandle::Config']]],
+  ['fs_89',['fs',['../structdaisy_1_1_sai_handle_1_1_config.html#a535fc25eaea4947d3dc91b871b7534f9',1,'daisy::SaiHandle::Config']]],
   ['fs_5fboth_90',['FS_BOTH',['../class_usb_handle.html#a782f2982a91520188f2be5a80c9febb4a7926eaf0841374d9b4afa7965a75127b',1,'UsbHandle']]],
   ['fs_5fexternal_91',['FS_EXTERNAL',['../class_usb_handle.html#a782f2982a91520188f2be5a80c9febb4a26ab786f68f31edaf520641878d210b4',1,'UsbHandle']]],
   ['fs_5finternal_92',['FS_INTERNAL',['../class_usb_handle.html#a782f2982a91520188f2be5a80c9febb4afa4206af38c6c3fcb6a7c33d7cf6b665',1,'UsbHandle']]],
