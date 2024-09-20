@@ -627,7 +627,7 @@ void I2CHandle::Impl::InitPins()
             GPIO_InitStruct.Alternate = GPIO_AF4_I2C3;
             break;
         case I2CHandle::Config::Peripheral::I2C_4:
-            GPIO_InitStruct.Alternate = GPIO_AF4_I2C4;
+            GPIO_InitStruct.Alternate = GPIO_AF6_I2C4;
             break;
         default: break;
     }
