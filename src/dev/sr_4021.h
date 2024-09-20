@@ -11,7 +11,7 @@ namespace daisy
  ** @ingroup shiftregister
  **
  ** CD4021B-Q1: CMOS 8-STAGE STATIC SHIFT REGISTER
- ** 
+ **
  ** Supply Voltage: 3V to 18V
  ** Clock Freq: 3MHz at 5V (less at 3v3) -> 8.5MHz at 15V
  ** Pin Descriptions:
@@ -21,14 +21,14 @@ namespace daisy
  ** - P/!S               - 9
  ** - Q[6-8]             - 2, 12, 3
  **
- ** Driver has support for daisy chaining and running up to 2 same-sized 
- ** chains in parallel from a single set of clk/latch pins to reduce 
+ ** Driver has support for daisy chaining and running up to 2 same-sized
+ ** chains in parallel from a single set of clk/latch pins to reduce
  ** pin/code overhead when using multiple devices.
  **
- ** When dealing with multiple parallel/daisy-chained devices the 
+ ** When dealing with multiple parallel/daisy-chained devices the
  ** states of all inputs will be filled in the following order (example uses two chained and two parallel):
  ** data[chain0,parallel0], data[chain1,parallel0], data[chain0,parallel1], data[chain1,parallel1];
- ** 
+ **
  ** When combining multiple daisy chained and parallel devices the number of devices chained should match
  ** for each parallel device chain.
  **
@@ -43,6 +43,13 @@ class ShiftRegister4021
         Pin clk;   /**< Clock pin to attach to pin 10 of device(s) */
         Pin latch; /**< Latch pin to attach to pin 9 of device(s) */
         Pin data[num_parallel]; /**< Data Pin(s) */
+
+        /**
+         * DelayTicks between these actions helps to ensure stable timing
+         * for the connected device(s).
+         * Each tick is approx. 4.16ns at CPUFreq 480MHz
+         */
+        uint32_t delay_ticks = 10;
     };
 
     ShiftRegister4021() {}
@@ -69,30 +76,31 @@ class ShiftRegister4021
     /** Reads the states of all pins on the connected device(s) */
     void Update()
     {
-        clk_.Write(0);
-        latch_.Write(1);
-        System::DelayTicks(1);
-        latch_.Write(0);
+        uint32_t del_ticks = config_.delay_ticks;
+        clk_.Write(false);
+        latch_.Write(true);
+        System::DelayTicks(del_ticks);
+        latch_.Write(false);
         uint32_t idx;
         for(size_t i = 0; i < 8 * num_daisychained; i++)
         {
-            clk_.Write(0);
-            System::DelayTicks(1);
+            clk_.Write(false);
+            System::DelayTicks(del_ticks);
             for(size_t j = 0; j < num_parallel; j++)
             {
                 idx = (8 * num_daisychained - 1) - i;
                 idx += (8 * num_daisychained * j);
                 states_[idx] = data_[j].Read();
             }
-            clk_.Write(1);
-            System::DelayTicks(1);
+            clk_.Write(true);
+            System::DelayTicks(del_ticks);
         }
     }
 
-    /** returns the last read state of the input at the index. 
+    /** returns the last read state of the input at the index.
      ** true indicates the pin is held HIGH.
-     ** 
-     ** See above for the layout of data when using multiple 
+     **
+     ** See above for the layout of data when using multiple
      ** devices in series or parallel.
      ***/
     inline bool State(int index) const { return states_[index]; }
