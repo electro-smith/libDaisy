@@ -27,7 +27,7 @@ class SaiHandle::Impl
     SaiHandle::Result StopDmaTransfer();
 
     // Utility functions
-    float  GetSampleRate();
+    constexpr float  GetSampleRate();
     size_t GetBlockSize();
     float  GetBlockRate();
 
@@ -337,17 +337,9 @@ SaiHandle::Result SaiHandle::Impl::StopDmaTransfer()
     return Result::OK;
 }
 
-float SaiHandle::Impl::GetSampleRate()
+constexpr float SaiHandle::Impl::GetSampleRate()
 {
-    switch(config_.sr)
-    {
-        case Config::SampleRate::SAI_8KHZ: return 8000.f;
-        case Config::SampleRate::SAI_16KHZ: return 16000.f;
-        case Config::SampleRate::SAI_32KHZ: return 32000.f;
-        case Config::SampleRate::SAI_48KHZ: return 48000.f;
-        case Config::SampleRate::SAI_96KHZ: return 96000.f;
-        default: return 48000.f;
-    }
+    return config_.sr;
 }
 size_t SaiHandle::Impl::GetBlockSize()
 {

@@ -53,13 +53,13 @@ class SaiHandle
         };
 
         /** Rate at which samples will be streaming to/from the device. */
-        enum class SampleRate
+        enum SampleRate : int
         {
-            SAI_8KHZ,
-            SAI_16KHZ,
-            SAI_32KHZ,
-            SAI_48KHZ,
-            SAI_96KHZ,
+            SAI_8KHZ = 8000,
+            SAI_16KHZ = 16000,
+            SAI_32KHZ = 32000,
+            SAI_48KHZ = 48000,
+            SAI_96KHZ = 96000,
         };
 
         /** Bit Depth that the hardware expects to be transferred to/from the device. */
