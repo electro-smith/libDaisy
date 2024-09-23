@@ -270,11 +270,21 @@ all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET
 #######################################
 # build the application
 #######################################
+USER_SUFFIX_CXX ?= .cc
+
+# split c++ sources into suffix .cpp and user suffix
+CXX_SOURCES_SUFFIX_USER=$(filter %$(USER_SUFFIX_CXX), $(CPP_SOURCES))
+CXX_SOURCES_SUFFIX_CPP=$(filter %.cpp, $(CPP_SOURCES))
 # list of objects
+# .c files
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
 vpath %.c $(sort $(dir $(C_SOURCES)))
-OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(CPP_SOURCES:.cpp=.o)))
-vpath %.cpp $(sort $(dir $(CPP_SOURCES)))
+# c++ files with .cpp suffix
+OBJECTS += $(filter .cpp, addprefix $(BUILD_DIR)/,$(notdir $(CXX_SOURCES_SUFFIX_CPP:.cpp=.o)))
+vpath %.cpp $(sort $(dir $(CXX_SOURCES_SUFFIX_CPP)))
+# c++ files with user suffix
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(CXX_SOURCES_SUFFIX_USER:$(USER_SUFFIX_CXX)=.o)))
+vpath %$(USER_SUFFIX_CXX) $(sort $(dir $(CXX_SOURCES_SUFFIX_USER)))
 # list of ASM program objects
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
@@ -284,6 +294,9 @@ $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
 
 $(BUILD_DIR)/%.o: %.cpp Makefile | $(BUILD_DIR)
 	$(CXX) -c $(CPPFLAGS) $(CPP_STANDARD) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.cpp=.lst)) $< -o $@
+
+$(BUILD_DIR)/%.o: %$(USER_SUFFIX_CXX) Makefile | $(BUILD_DIR)
+	$(CXX) -c $(CPPFLAGS) $(CPP_STANDARD) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:$(USER_CXX_SUFFIX)=.lst)) $< -o $@
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
 	$(AS) -c $(ASFLAGS) $< -o $@
