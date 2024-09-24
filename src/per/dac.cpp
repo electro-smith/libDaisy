@@ -3,11 +3,6 @@
 #include "per/tim.h"
 #include "per/dac.h"
 
-extern "C"
-{
-#include "util/hal_map.h"
-}
-
 namespace daisy
 {
 /** Private Implementation class */
@@ -53,6 +48,7 @@ class DacHandle::Impl
     size_t                 buff_size_;
     uint16_t *             buff_[2];
     DacHandle::DacCallback callback_;
+    GPIO                   d1, d2;
 };
 
 // ================================================================
@@ -238,19 +234,13 @@ void DacHandle::Impl::InitPins()
     if(ChannelOneActive())
     {
         // Init PA4 as Analog
-        dsy_gpio d1;
-        d1.pin  = {DSY_GPIOA, 4};
-        d1.mode = DSY_GPIO_MODE_ANALOG;
-        dsy_gpio_init(&d1);
+        d1.Init(Pin(PORTA, 4), GPIO::Mode::ANALOG);
     }
 
     if(ChannelTwoActive())
     {
         // Init PA5 as Analog
-        dsy_gpio d2;
-        d2.pin  = {DSY_GPIOA, 5};
-        d2.mode = DSY_GPIO_MODE_ANALOG;
-        dsy_gpio_init(&d2);
+        d2.Init(Pin(PORTA, 5), GPIO::Mode::ANALOG);
     }
 }
 
@@ -309,15 +299,11 @@ void DacHandle::Impl::DeInitPins()
 {
     if(ChannelOneActive())
     {
-        dsy_gpio d1;
-        d1.pin = {DSY_GPIOA, 4};
-        dsy_gpio_deinit(&d1);
+        d1.DeInit();
     }
     if(ChannelTwoActive())
     {
-        dsy_gpio d2;
-        d2.pin = {DSY_GPIOA, 5};
-        dsy_gpio_deinit(&d2);
+        d2.DeInit();
     }
 }
 

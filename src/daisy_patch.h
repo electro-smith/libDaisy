@@ -114,15 +114,16 @@ class DaisyPatch
     /* These are exposed for the user to access and manipulate directly
        Helper functions above provide easier access to much of what they are capable of.
     */
-    DaisySeed       seed;                             /**< Seed object */
-    Encoder         encoder;                          /**< Encoder object */
-    AnalogControl   controls[CTRL_LAST];              /**< Array of controls*/
-    GateIn          gate_input[GATE_IN_LAST];         /**< Gate inputs  */
-    MidiUartHandler midi;                             /**< Handles midi*/
+    DaisySeed       seed;                     /**< Seed object */
+    Ak4556          codec;                    /**< Patch's second CODEC */
+    Encoder         encoder;                  /**< Encoder object */
+    AnalogControl   controls[CTRL_LAST];      /**< Array of controls*/
+    GateIn          gate_input[GATE_IN_LAST]; /**< Gate inputs  */
+    MidiUartHandler midi;                     /**< Handles midi*/
     OledDisplay<SSD130x4WireSpi128x64Driver> display; /**< & */
 
     // TODO: Add class for Gate output
-    dsy_gpio gate_output; /**< &  */
+    GPIO gate_output; /**< &  */
 
 
   private:

@@ -23,8 +23,7 @@ class RgbLed
     \param blue Blue element
     \param invert Flips led polarity
     */
-    void
-    Init(dsy_gpio_pin red, dsy_gpio_pin green, dsy_gpio_pin blue, bool invert);
+    void Init(Pin red, Pin green, Pin blue, bool invert);
 
     /** Sets each element of the LED with a floating point number 0-1 
     \param r Red element

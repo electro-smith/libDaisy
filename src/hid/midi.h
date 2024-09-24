@@ -36,8 +36,8 @@ class MidiUartTransport
     struct Config
     {
         UartHandler::Config::Peripheral periph;
-        dsy_gpio_pin                    rx;
-        dsy_gpio_pin                    tx;
+        Pin                             rx;
+        Pin                             tx;
 
         /** Pointer to buffer for DMA UART rx byte transfer in background.
          *
