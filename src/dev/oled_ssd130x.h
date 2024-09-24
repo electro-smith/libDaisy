@@ -29,8 +29,8 @@ class SSD130xI2CTransport
             i2c_config.periph         = I2CHandle::Config::Peripheral::I2C_1;
             i2c_config.speed          = I2CHandle::Config::Speed::I2C_1MHZ;
             i2c_config.mode           = I2CHandle::Config::Mode::I2C_MASTER;
-            i2c_config.pin_config.scl = {DSY_GPIOB, 8};
-            i2c_config.pin_config.sda = {DSY_GPIOB, 9};
+            i2c_config.pin_config.scl = Pin(PORTB, 8);
+            i2c_config.pin_config.sda = Pin(PORTB, 9);
             i2c_address               = 0x3C;
         }
     };
@@ -75,8 +75,8 @@ class SSD130x4WireSpiTransport
         SpiHandle::Config spi_config;
         struct
         {
-            dsy_gpio_pin dc;    /**< & */
-            dsy_gpio_pin reset; /**< & */
+            Pin dc;    /**< & */
+            Pin reset; /**< & */
         } pin_config;
         void Defaults()
         {
@@ -91,50 +91,46 @@ class SSD130x4WireSpiTransport
             spi_config.nss            = SpiHandle::Config::NSS::HARD_OUTPUT;
             spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_8;
             // SPI pin config
-            spi_config.pin_config.sclk = {DSY_GPIOG, 11};
-            spi_config.pin_config.miso = {DSY_GPIOX, 0};
-            spi_config.pin_config.mosi = {DSY_GPIOB, 5};
-            spi_config.pin_config.nss  = {DSY_GPIOG, 10};
+            spi_config.pin_config.sclk = Pin(PORTG, 11);
+            spi_config.pin_config.miso = Pin(PORTX, 0);
+            spi_config.pin_config.mosi = Pin(PORTB, 5);
+            spi_config.pin_config.nss  = Pin(PORTG, 10);
             // SSD130x control pin config
-            pin_config.dc    = {DSY_GPIOB, 4};
-            pin_config.reset = {DSY_GPIOB, 15};
+            pin_config.dc    = Pin(PORTB, 4);
+            pin_config.reset = Pin(PORTB, 15);
         }
     };
     void Init(const Config& config)
     {
         // Initialize both GPIO
-        pin_dc_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_dc_.pin  = config.pin_config.dc;
-        dsy_gpio_init(&pin_dc_);
-        pin_reset_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_reset_.pin  = config.pin_config.reset;
-        dsy_gpio_init(&pin_reset_);
+        pin_dc_.Init(config.pin_config.dc, GPIO::Mode::OUTPUT);
+        pin_reset_.Init(config.pin_config.reset, GPIO::Mode::OUTPUT);
 
         // Initialize SPI
         spi_.Init(config.spi_config);
 
         // Reset and Configure OLED.
-        dsy_gpio_write(&pin_reset_, 0);
+        pin_reset_.Write(0);
         System::Delay(10);
-        dsy_gpio_write(&pin_reset_, 1);
+        pin_reset_.Write(1);
         System::Delay(10);
     };
     void SendCommand(uint8_t cmd)
     {
-        dsy_gpio_write(&pin_dc_, 0);
+        pin_dc_.Write(0);
         spi_.BlockingTransmit(&cmd, 1);
     };
 
     void SendData(uint8_t* buff, size_t size)
     {
-        dsy_gpio_write(&pin_dc_, 1);
+        pin_dc_.Write(1);
         spi_.BlockingTransmit(buff, size);
     };
 
   private:
     SpiHandle spi_;
-    dsy_gpio  pin_reset_;
-    dsy_gpio  pin_dc_;
+    GPIO      pin_reset_;
+    GPIO      pin_dc_;
 };
 
 /**
@@ -152,58 +148,50 @@ class SSD130x4WireSoftSpiTransport
         }
         struct
         {
-            uint32_t     sclk_delay;
-            dsy_gpio_pin sclk;
-            dsy_gpio_pin mosi;
-            dsy_gpio_pin dc;
-            dsy_gpio_pin reset;
+            uint32_t sclk_delay;
+            Pin      sclk;
+            Pin      mosi;
+            Pin      dc;
+            Pin      reset;
         } pin_config;
         void Defaults()
         {
             pin_config.sclk_delay = 0; // fast as possible?!
             // SPI peripheral config
-            pin_config.sclk = {DSY_GPIOD, 3}; /**< D10 - SPI2 SCK  */
-            pin_config.mosi = {DSY_GPIOC, 3}; /**< D9  - SPI2 MOSI */
+            pin_config.sclk = Pin(PORTD, 3); /**< D10 - SPI2 SCK  */
+            pin_config.mosi = Pin(PORTC, 3); /**< D9  - SPI2 MOSI */
             // SSD130x control pin config
-            pin_config.dc    = {DSY_GPIOC, 11}; //D2
-            pin_config.reset = {DSY_GPIOC, 10}; //D3
+            pin_config.dc    = Pin(PORTC, 11); //D2
+            pin_config.reset = Pin(PORTC, 10); //D3
         }
     };
     void Init(const Config& config)
     {
         // Initialize both GPIO
-        pin_sclk_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_sclk_.pin  = config.pin_config.sclk;
-        dsy_gpio_init(&pin_sclk_);
-        dsy_gpio_write(&pin_sclk_, 1); //ClockPolarity::LOW
-        clk_delay      = config.pin_config.sclk_delay;
-        pin_mosi_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_mosi_.pin  = config.pin_config.mosi;
-        dsy_gpio_init(&pin_mosi_);
-        dsy_gpio_write(&pin_mosi_, 0);
+        pin_sclk_.Init(config.pin_config.sclk, GPIO::Mode::OUTPUT);
+        pin_sclk_.Write(1); //ClockPolarity::LOW
+        clk_delay = config.pin_config.sclk_delay;
+        pin_mosi_.Init(config.pin_config.mosi, GPIO::Mode::OUTPUT);
+        pin_mosi_.Write(0);
 
-        pin_dc_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_dc_.pin  = config.pin_config.dc;
-        dsy_gpio_init(&pin_dc_);
-        pin_reset_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_reset_.pin  = config.pin_config.reset;
-        dsy_gpio_init(&pin_reset_);
+        pin_dc_.Init(config.pin_config.dc, GPIO::Mode::OUTPUT);
+        pin_reset_.Init(config.pin_config.reset, GPIO::Mode::OUTPUT);
 
         // Reset and Configure OLED.
-        dsy_gpio_write(&pin_reset_, 0);
+        pin_reset_.Write(0);
         System::Delay(10);
-        dsy_gpio_write(&pin_reset_, 1);
+        pin_reset_.Write(1);
         System::Delay(10);
     };
     void SendCommand(uint8_t cmd)
     {
-        dsy_gpio_write(&pin_dc_, 0);
+        pin_dc_.Write(0);
         SoftSpiTransmit(cmd);
     };
 
     void SendData(uint8_t* buff, size_t size)
     {
-        dsy_gpio_write(&pin_dc_, 1);
+        pin_dc_.Write(1);
         for(size_t i = 0; i < size; i++)
             SoftSpiTransmit(buff[i]);
     };
@@ -218,23 +206,23 @@ class SSD130x4WireSoftSpiTransport
 
         for(uint8_t bit = 0u; bit < 8u; bit++)
         {
-            dsy_gpio_write(&pin_mosi_, ((val & (1 << bit)) ? 1 : 0));
+            pin_mosi_.Write((val & (1 << bit)) ? 1 : 0);
 
             System::DelayTicks(clk_delay);
 
-            dsy_gpio_toggle(&pin_sclk_);
+            pin_sclk_.Toggle();
 
             System::DelayTicks(clk_delay);
 
-            dsy_gpio_toggle(&pin_sclk_);
+            pin_sclk_.Toggle();
         }
     }
 
     uint32_t clk_delay;
-    dsy_gpio pin_sclk_;
-    dsy_gpio pin_mosi_;
-    dsy_gpio pin_reset_;
-    dsy_gpio pin_dc_;
+    GPIO     pin_sclk_;
+    GPIO     pin_mosi_;
+    GPIO     pin_reset_;
+    GPIO     pin_dc_;
 };
 
 
@@ -456,6 +444,174 @@ using SSD130xI2c64x32Driver = daisy::SSD130xDriver<64, 32, SSD130xI2CTransport>;
  */
 using SSD130x4WireSoftSpi128x64Driver
     = daisy::SSD130xDriver<128, 64, SSD130x4WireSoftSpiTransport>;
+
+
+/**
+ * A driver implementation for the SSD1307
+ */
+template <size_t width, size_t height, typename Transport>
+class SSD1307Driver
+{
+  public:
+    struct Config
+    {
+        typename Transport::Config transport_config;
+    };
+
+    void Init(Config config)
+    {
+        transport_.Init(config.transport_config);
+
+        // Init routine...
+        uint8_t uDispayOffset;
+        uint8_t uMultiplex;
+        switch(height)
+        {
+            case 64:
+                uDispayOffset = 0x60;
+                uMultiplex    = 0x7F;
+                break;
+
+            case 80:
+                uDispayOffset = 0x68;
+                uMultiplex    = 0x4F;
+                break;
+
+            case 128:
+            default:
+                uDispayOffset = 0x00;
+                uMultiplex    = 0x7F;
+                break;
+        }
+
+        // Display Off
+        transport_.SendCommand(0xaE);
+
+        // Memory Mode
+        transport_.SendCommand(0x20);
+
+        // Normal Display
+        transport_.SendCommand(0xA6);
+
+        // Multiplex Ratio
+        transport_.SendCommand(0xA8);
+        transport_.SendCommand(uMultiplex);
+
+        // All On Resume
+        transport_.SendCommand(0xA4);
+
+        // Display Offset
+        transport_.SendCommand(0xD3);
+        transport_.SendCommand(uDispayOffset);
+
+        // Display Clock Divide Ratio
+        transport_.SendCommand(0xD5);
+        transport_.SendCommand(0x80);
+
+        // Pre Charge
+        transport_.SendCommand(0xD9);
+        transport_.SendCommand(0x22);
+
+        // Com Pins
+        transport_.SendCommand(0xDA);
+        transport_.SendCommand(0x12);
+
+        // VCOM Detect
+        transport_.SendCommand(0xDB);
+        transport_.SendCommand(0x35);
+
+        // Contrast Control
+        transport_.SendCommand(0x81);
+        transport_.SendCommand(0x80);
+
+        // Display On
+        transport_.SendCommand(0xAF);
+    };
+
+    size_t Width() const { return width; };
+    size_t Height() const { return height; };
+
+    void DrawPixel(uint_fast8_t x, uint_fast8_t y, bool on)
+    {
+        if(x >= width || y >= height)
+            return;
+        if(on)
+            buffer_[x + (y / 8) * width] |= (1 << (y % 8));
+        else
+            buffer_[x + (y / 8) * width] &= ~(1 << (y % 8));
+    }
+
+    void Fill(bool on)
+    {
+        for(size_t i = 0; i < sizeof(buffer_); i++)
+        {
+            buffer_[i] = on ? 0xff : 0x00;
+        }
+    };
+
+    /**
+     * Update the display 
+    */
+    void Update()
+    {
+        uint8_t i;
+        uint8_t high_column_addr;
+        switch(height)
+        {
+            case 32: high_column_addr = 0x12; break;
+
+            default: high_column_addr = 0x10; break;
+        }
+        for(i = 0; i < (height / 8); i++)
+        {
+            transport_.SendCommand(0xB0 + i);
+            transport_.SendCommand(0x00);
+            transport_.SendCommand(high_column_addr);
+            transport_.SendData(&buffer_[width * i], width);
+        }
+    };
+
+  private:
+    Transport transport_;
+    uint8_t   buffer_[width * height / 8];
+};
+
+/**
+ * A driver for the SSD1307 128x64 OLED displays connected via 4 wire SPI  
+ */
+using SSD13074WireSpi128x64Driver
+    = daisy::SSD1307Driver<128, 64, SSD130x4WireSpiTransport>;
+
+/**
+ * A driver for the SSD1307 128x80 OLED displays connected via 4 wire SPI  
+ */
+using SSD13074WireSpi128x80Driver
+    = daisy::SSD1307Driver<128, 80, SSD130x4WireSpiTransport>;
+
+/**
+ * A driver for the SSD1307 128x128 OLED displays connected via 4 wire SPI  
+ */
+using SSD13074WireSpi128x128Driver
+    = daisy::SSD1307Driver<128, 128, SSD130x4WireSpiTransport>;
+
+/**
+ * A driver for the SSD1307 128x64 OLED displays connected via I2C  
+ */
+using SSD1307I2c128x64Driver
+    = daisy::SSD130xDriver<128, 64, SSD130xI2CTransport>;
+
+/**
+ * A driver for the SSD1307 128x80 OLED displays connected via I2C  
+ */
+using SSD1307I2c128x80Driver
+    = daisy::SSD1307Driver<128, 80, SSD130xI2CTransport>;
+
+/**
+ * A driver for the SSD1307 128x128 OLED displays connected via I2C  
+ */
+using SSD1307I2c128x128Driver
+    = daisy::SSD130xDriver<128, 128, SSD130xI2CTransport>;
+
 
 }; // namespace daisy
 

@@ -7,7 +7,7 @@ TODO:
 #define DSY_SDMMC_H /**< macro */
 
 #include <stdint.h>
-
+#include "stm32h7xx_hal.h"
 
 namespace daisy
 {

@@ -25,10 +25,10 @@ class MultiSlaveSpiHandle
     {
         struct
         {
-            dsy_gpio_pin sclk; /**< & */
-            dsy_gpio_pin miso; /**< & */
-            dsy_gpio_pin mosi; /**< & */
-            dsy_gpio_pin nss[max_num_devices_];
+            Pin sclk; /**< & */
+            Pin miso; /**< & */
+            Pin mosi; /**< & */
+            Pin nss[max_num_devices_];
         } pin_config;
 
         SpiHandle::Config::Peripheral    periph;
@@ -154,7 +154,7 @@ class MultiSlaveSpiHandle
 
     Config    config_;
     SpiHandle spiHandle_;
-    dsy_gpio  nss_pins[max_num_devices_];
+    GPIO      nss_pins[max_num_devices_];
 
     struct DmaTransfer
     {

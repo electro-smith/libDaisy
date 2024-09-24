@@ -16,7 +16,6 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/per/sai.cpp
     ${MODULE_DIR}/per/sdmmc.cpp
     ${MODULE_DIR}/util/bsp_sd_diskio.c
-    ${MODULE_DIR}/util/hal_map.c
     ${MODULE_DIR}/util/oled_fonts.c
     ${MODULE_DIR}/util/sd_diskio.c
     ${MODULE_DIR}/util/usbh_diskio.c
@@ -198,6 +197,7 @@ add_library(${TARGET} STATIC
     Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.c
     Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.c
     Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_pipes.c
+    Middlewares/ST/STM32_USB_Host_Library/Class/MIDI/Src/usbh_midi.c 
     Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_bot.c
     Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_scsi.c
     Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc.c

@@ -5,6 +5,8 @@
 #include "daisy_core.h"
 #include "per/gpio.h"
 
+namespace daisy
+{
 const size_t kMaxSr595DaisyChain
     = 16; /**< Maximum Number of chained devices Connect device's QH' pin to the next chips serial input*/
 
@@ -23,6 +25,7 @@ class ShiftRegister595
   public:
     /** The following pins correspond to the hardware connections
     to the 595. 
+    \note  TODO: This should probably be switched to using a pin config structure similar to other drivers
   */
     enum Pins
     {
@@ -36,10 +39,10 @@ class ShiftRegister595
 
     /** 
     Initializes the GPIO, and data for the ShiftRegister
-     * \param pin_cfg is an array of dsy_gpio_pin corresponding the the Pins enum above.
+     * \param pin_cfg is an array of Pin corresponding the the Pins enum above.
      * \param num_daisy_chained (default = 1) is the number of 595 devices daisy chained together.
      */
-    void Init(dsy_gpio_pin *pin_cfg, size_t num_daisy_chained = 1);
+    void Init(Pin *pin_cfg, size_t num_daisy_chained = 1);
 
     /** Sets the state of the specified output.
         \param idx The index starts with QA on the first device and ends with QH on the last device.
@@ -52,10 +55,11 @@ class ShiftRegister595
     void Write();
 
   private:
-    dsy_gpio pin_[NUM_PINS];
-    uint8_t  state_[kMaxSr595DaisyChain];
-    size_t   num_devices_;
+    GPIO    pin_[NUM_PINS];
+    uint8_t state_[kMaxSr595DaisyChain];
+    size_t  num_devices_;
 };
+} // namespace daisy
 
 #endif
 /** @} */
