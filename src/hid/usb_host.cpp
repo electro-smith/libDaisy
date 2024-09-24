@@ -37,6 +37,9 @@ class USBHostHandle::Impl
     Result Process();
     Result ReEnumerate();
 
+    bool IsPortEnabled();
+    bool IsDeviceConnected();
+
     bool GetReady();
 
     inline Config& GetConfig() { return config_; }
@@ -127,6 +130,16 @@ bool USBHostHandle::Impl::GetReady()
     return Appli_state == APPLICATION_READY;
 }
 
+bool USBHostHandle::Impl::IsPortEnabled()
+{
+    return USBH_IsPortEnabled(&hUsbHostHS);
+}
+
+bool USBHostHandle::Impl::IsDeviceConnected()
+{
+    return hUsbHostHS.device.is_connected;
+}
+
 USBHostHandle::Result USBHostHandle::RegisterClass(USBH_ClassTypeDef* pClass)
 {
     return pimpl_->RegisterClass(pClass);
@@ -168,6 +181,16 @@ bool USBHostHandle::GetPresent()
     auto state = hUsbHostHS.gState;
     return (state != HOST_IDLE && state != HOST_ABORT_STATE
             && state != HOST_DEV_DISCONNECTED);
+}
+
+bool USBHostHandle::IsPortEnabled()
+{
+    return pimpl_->IsPortEnabled();
+}
+
+bool USBHostHandle::IsDeviceConnected()
+{
+    return pimpl_->IsDeviceConnected();
 }
 
 // Shared USB IRQ Handlers are located in sys/System.cpps

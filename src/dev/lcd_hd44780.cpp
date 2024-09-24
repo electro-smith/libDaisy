@@ -51,36 +51,13 @@ namespace daisy
 void LcdHD44780::Init(const Config& config)
 {
     // init pins
+    lcd_pin_rs.Init(config.rs, GPIO::Mode::OUTPUT);
+    lcd_pin_en.Init(config.en, GPIO::Mode::OUTPUT);
 
-    lcd_pin_rs.pin  = config.rs;
-    lcd_pin_rs.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    lcd_pin_rs.pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&lcd_pin_rs);
-
-    lcd_pin_en.pin  = config.en;
-    lcd_pin_en.mode = DSY_GPIO_MODE_OUTPUT_PP;
-    lcd_pin_en.pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&lcd_pin_en);
-
-    lcd_data_pin[0].pin  = config.d4;
-    lcd_data_pin[0].mode = DSY_GPIO_MODE_OUTPUT_PP;
-    lcd_data_pin[0].pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&lcd_data_pin[0]);
-
-    lcd_data_pin[1].pin  = config.d5;
-    lcd_data_pin[1].mode = DSY_GPIO_MODE_OUTPUT_PP;
-    lcd_data_pin[1].pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&lcd_data_pin[1]);
-
-    lcd_data_pin[2].pin  = config.d6;
-    lcd_data_pin[2].mode = DSY_GPIO_MODE_OUTPUT_PP;
-    lcd_data_pin[2].pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&lcd_data_pin[2]);
-
-    lcd_data_pin[3].pin  = config.d7;
-    lcd_data_pin[3].mode = DSY_GPIO_MODE_OUTPUT_PP;
-    lcd_data_pin[3].pull = DSY_GPIO_NOPULL;
-    dsy_gpio_init(&lcd_data_pin[3]);
+    lcd_data_pin[0].Init(config.d4, GPIO::Mode::OUTPUT);
+    lcd_data_pin[1].Init(config.d5, GPIO::Mode::OUTPUT);
+    lcd_data_pin[2].Init(config.d6, GPIO::Mode::OUTPUT);
+    lcd_data_pin[3].Init(config.d7, GPIO::Mode::OUTPUT);
 
     cursor_on    = config.cursor_on;
     cursor_blink = config.cursor_blink;
@@ -150,7 +127,7 @@ void LcdHD44780::Clear()
 
 void LcdHD44780::WriteCommand(uint8_t command)
 {
-    dsy_gpio_write(&lcd_pin_rs, LCD_COMMAND_REG);
+    lcd_pin_rs.Write(LCD_COMMAND_REG);
 
     Write((command >> 4), LCD_NIB);
     Write(command & 0x0F, LCD_NIB);
@@ -161,7 +138,7 @@ void LcdHD44780::WriteCommand(uint8_t command)
 
 void LcdHD44780::WriteData(uint8_t data)
 {
-    dsy_gpio_write(&lcd_pin_rs, LCD_DATA_REG);
+    lcd_pin_rs.Write(LCD_DATA_REG);
 
     Write(data >> 4, LCD_NIB);
     Write(data & 0x0F, LCD_NIB);
@@ -174,14 +151,14 @@ void LcdHD44780::Write(uint8_t data, uint8_t len)
 {
     for(uint8_t i = 0; i < len; i++)
     {
-        dsy_gpio_write(&lcd_data_pin[i], (data >> i) & 0x01);
+        lcd_data_pin[i].Write((data >> i) & 0x01);
     }
 
     // toggle
 
-    dsy_gpio_write(&lcd_pin_en, 1);
+    lcd_pin_en.Write(1);
     System::Delay(1);
-    dsy_gpio_write(&lcd_pin_en, 0);
+    lcd_pin_en.Write(0);
 }
 
 } // namespace daisy

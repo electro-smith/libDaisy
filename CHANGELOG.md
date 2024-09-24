@@ -1,12 +1,15 @@
 # libDaisy Changelog
 
-## Unreleased
+## v7.1.0
 
 ### Features
 
+* Support for MIDI via USB Host has been added. (PR #611)
+* Four new OLED fonts were added: 4x6, 4x8, 5x8, and 6x7. (PR #619)
+
 ### Bugfixes
 
-### Migrating
+* Fixed issue with posting test results for contributor PRs form forks (PR #617)
 
 ## v7.0.1
 

@@ -30,14 +30,6 @@ class Switch
         POLARITY_INVERTED, /**< & */
     };
 
-    /** Specifies whether to use built-in Pull Up/Down resistors to hold button at a given state when not engaged. */
-    enum Pull
-    {
-        PULL_UP,   /**< & */
-        PULL_DOWN, /**< & */
-        PULL_NONE, /**< & */
-    };
-
     Switch() {}
     ~Switch() {}
 
@@ -49,15 +41,18 @@ class Switch
     \param pol switch polarity -- Default: POLARITY_INVERTED
     \param pu switch pull up/down -- Default: PULL_UP
     */
-    void
-    Init(dsy_gpio_pin pin, float update_rate, Type t, Polarity pol, Pull pu);
+    void Init(Pin        pin,
+              float      update_rate,
+              Type       t,
+              Polarity   pol,
+              GPIO::Pull pu = GPIO::Pull::PULLUP);
 
     /**
        Simplified Init.
        \param pin port/pin object to tell the switch which hardware pin to use.
        \param update_rate Left for backwards compatibility until next breaking change.
     */
-    void Init(dsy_gpio_pin pin, float update_rate = 0.f);
+    void Init(Pin pin, float update_rate = 0.f);
 
     /** 
     Called at update_rate to debounce and handle timing for the switch.
@@ -81,7 +76,8 @@ class Switch
     /** \return true if the button is held down, without debouncing */
     inline bool RawState()
     {
-        return flip_ ? !dsy_gpio_read(&hw_gpio_) : dsy_gpio_read(&hw_gpio_);
+        const bool raw = hw_gpio_.Read();
+        return flip_ ? !raw : raw;
     }
 
     /** \return the time in milliseconds that the button has been held (or toggle has been on) */
@@ -99,7 +95,7 @@ class Switch
     uint32_t last_update_;
     bool     updated_;
     Type     t_;
-    dsy_gpio hw_gpio_;
+    GPIO     hw_gpio_;
     uint8_t  state_;
     bool     flip_;
     float    rising_edge_time_;
