@@ -13,7 +13,7 @@ include $(HERE)/Makefile.conf
 # GCC_DIR used to be called GCC_PATH
 # lets keep some compat for a while
 ifneq ($(GCC_PATH),)
-  $(error GCC_PATH is deprecated, use GCC_DIR instead)
+  $(warning GCC_PATH is deprecated, use GCC_DIR instead)
   GCC_DIR = $GCC_PATH
 endif
 
@@ -59,22 +59,20 @@ endif
 INCLUDES += -include stm32h7xx.h
 
 INCLUDES += \
-  -I$(SYSTEM_FILES_DIR)
-
-INCLUDES += \
   -I$(LIBDAISY_DIR) \
   -I$(LIBDAISY_DIR)/src/ \
   -I$(LIBDAISY_DIR)/src/sys \
   -I$(LIBDAISY_DIR)/src/usbd \
   -I$(LIBDAISY_DIR)/src/usbh \
-  -I$(LIBDAISY_DIR)/Drivers/CMSIS_5/CMSIS/Core/Include/ \
+  -I$(LIBDAISY_DIR)/Drivers/CMSIS_5/CMSIS/Core/Include \
   -I$(LIBDAISY_DIR)/Drivers/CMSIS-DSP/Include \
   -I$(LIBDAISY_DIR)/Drivers/CMSIS-Device/ST/STM32H7xx/Include \
-  -I$(LIBDAISY_DIR)/Drivers/STM32H7xx_HAL_Driver/Inc/ \
+  -I$(LIBDAISY_DIR)/Drivers/STM32H7xx_HAL_Driver/Inc \
   -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc \
   -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Core/Inc \
   -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc \
   -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Class/MIDI/Inc \
+  -I$(SYSTEM_FILES_DIR)
 
 LIBS += -ldaisy -lc -lm -lnosys
 LIB_DIRS += -L$(LIBDAISY_DIR)/build
@@ -98,22 +96,22 @@ DAISY_PID = df11
 STM_PID = df11
 
 ifeq ($(APP_TYPE), BOOT_NONE)
-  LINKERSCRIPT = $(SYSTEM_FILES_DIR)STM32H750IB_flash.lds
+  LDSCRIPT = $(SYSTEM_FILES_DIR)STM32H750IB_flash.lds
   USBPID = $(STM_PID)
   FLASH_ADDRESS = $(INTERNAL_ADDRESS)
 else ifeq ($(APP_TYPE), BOOT_SRAM)
-  LINKERSCRIPT = $(SYSTEM_FILES_DIR)STM32H750IB_sram.lds
+  LDSCRIPT = $(SYSTEM_FILES_DIR)STM32H750IB_sram.lds
   USBPID = $(DAISY_PID)
   FLASH_ADDRESS = $(QSPI_ADDRESS)
-  DEFINES += -DBOOT_APP
+  DAISY_DEFINES += -DBOOT_APP
 else ifeq ($(APP_TYPE), BOOT_QSPI)
-  LINKERSCRIPT = $(SYSTEM_FILES_DIR)STM32H750IB_qspi.lds
+  LDSCRIPT = $(SYSTEM_FILES_DIR)STM32H750IB_qspi.lds
   USBPID = $(DAISY_PID)
   FLASH_ADDRESS = $(QSPI_ADDRESS)
-  DEFINES += -DBOOT_APP
+  DAISY_DEFINES += -DBOOT_APP
 else ifeq ($(APP_TYPE), CUSTOM)
-  ifeq ($(LINKERSCRIPT),)
-	  $(error APP_TYPE is custom, please specify at least LINKERSCRIPT)
+  ifeq ($(LDSCRIPT),)
+	  $(error APP_TYPE is custom, please specify at least LDSCRIPT)
 	  $(error For DFU to work, also specify FLASH_ADDRESS and USBPID)
   endif
 else
@@ -133,8 +131,7 @@ endif
 
 ifeq ($(USE_DAISYSP_LGPL),1)
   INCLUDES += -I$(DAISYSP_DIR)/DaisySP-LGPL/Source
-  DEFINES +=  \
-  -DUSE_DAISYSP_LGPL
+  DAISY_DEFINES += -DUSE_DAISYSP_LGPL
   LIBS += -ldaisysp-lgpl
   LIB_DIRS += -L$(DAISYSP_DIR)/DaisySP-LGPL/build
 endif
@@ -150,46 +147,47 @@ endif
 
 
 ifeq ($(DEBUG),1)
-  ASFLAGS += -g -ggdb
-  OPT ?= -O0 -g
-  DEFINES += -DDEBUG
+  DEBUG_ARGS ?= $(DEBUG_FLAGS)
 else
-  OPT ?= -O2
+  DEBUG_ARGS ?= $(NODEBUG_FLAGS)
 endif
 
+ASMLISTING = -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $<).lst
 
 #######################################
 # Compose Flags
 #######################################
 
-CC_ARGS = \
-  $(C_STANDARD) \
+
+CC_CXX_ARGS = \
+  $(DEBUG_ARGS) \
+  $(ASMLISTING) \
   $(MCU) \
-  $(OPT) \
-  $(DAISY_CFLAGS) \
   $(DAISY_DEFINES) \
-  $(INCLUDES) \
+  $(INCLUDES)
+
+CC_ARGS = \
+  $(CC_CXX_ARGS) \
+  $(C_STANDARD) \
+  $(DAISY_CFLAGS) \
   $(CFLAGS)
 
 CXX_ARGS = \
+  $(CC_CXX_ARGS) \
   $(CXX_STANDARD) \
-  $(MCU) \
-  $(OPT) \
   $(DAISY_CXXFLAGS) \
-  $(DAISY_DEFINES) \
-  $(INCLUDES) \
   $(CXXFLAGS)
 
 AS_ARGS = \
+  $(DEBUG_ARGS) \
   $(MCU) \
-  $(OPT) \
   $(DAISY_ASFLAGS) \
   $(ASFLAGS)
 
 LD_ARGS = \
   $(MCU) \
   $(GCC_SPECS) \
-  -T$(LINKERSCRIPT) \
+  -T$(LDSCRIPT) \
   $(LIB_DIRS) \
   $(LIBS) \
   $(LINKER_OPTS) \
@@ -199,13 +197,15 @@ LD_ARGS = \
 # Evaluate all objects from sources
 #######################################
 
+# CXX_SOURCES used to be called CPP_SOURCES
+# lets keep some compat for a while
+ifneq ($(CPP_SOURCES),)
+  $(warning warning: CPP_SOURCES is deprecated, use CXX_SOURCES instead)
+  CXX_SOURCES = $(CPP_SOURCES)
+endif
+
 ifeq ($(CXX_SOURCES),)
   $(error No sources to compile. Please populate CXX_SOURCES with your projects source files)
-else
-  $(info Compiling sources:)
-  $(info ASM_SOURCES: $(ASM_SOURCES))
-  $(info C_SOURCES  : $(C_SOURCES))
-  $(info CXX_SOURCES: $(CXX_SOURCES))
 endif
 
 # split c++ sources into suffix .cpp and user suffix
@@ -216,7 +216,7 @@ CXX_SOURCES_SUFFIX_CPP=$(filter %.cpp, $(CXX_SOURCES))
 OBJECTS = $(addprefix $(BUILD_DIR)/,$(notdir $(C_SOURCES:.c=.o)))
 vpath %.c $(sort $(dir $(C_SOURCES)))
 # c++ files with .cpp suffix
-OBJECTS += $(filter .cpp, addprefix $(BUILD_DIR)/,$(notdir $(CXX_SOURCES_SUFFIX_CPP:.cpp=.o)))
+OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(CXX_SOURCES_SUFFIX_CPP:.cpp=.o)))
 vpath %.cpp $(sort $(dir $(CXX_SOURCES_SUFFIX_CPP)))
 # c++ files with user suffix
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(CXX_SOURCES_SUFFIX_USER:$(USER_SUFFIX_CXX)=.o)))
@@ -225,12 +225,12 @@ vpath %$(USER_SUFFIX_CXX) $(sort $(dir $(CXX_SOURCES_SUFFIX_USER)))
 OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
-ASMLISTING = -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $<).lst
 #######################################
 # Recipes
 #######################################
 
 .PHONY: all clean openocd debug debug_client program program-dfu program-boot bulu
+.DEFAULT_GOAL: all
 
 all: $(BUILD_DIR)/$(TARGET).elf $(BUILD_DIR)/$(TARGET).hex $(BUILD_DIR)/$(TARGET).bin
 
@@ -248,19 +248,19 @@ $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 
 # obj from c
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR)
-	$(CC) -c $(CC_ARGS) $(ASMLISTING) $< -o $@
+	$(CC) $(CC_ARGS) -c $< -o $@
 
 # obj from c++ suffix .cpp
 $(BUILD_DIR)/%.o: %.cpp Makefile | $(BUILD_DIR)
-	$(CXX) -c $(CXX_ARGS) $(ASMLISTING) $< -o $@
+	$(CXX) $(CXX_ARGS) -c $< -o $@
 
 # obj from c++ user suffix
 $(BUILD_DIR)/%.o: %$(USER_SUFFIX_CXX) Makefile | $(BUILD_DIR)
-	$(CXX) -c $(CXX_ARGS) $(ASMLISTING) $< -o $@
+	$(CXX) $(CXX_ARGS) -c $< -o $@
 
 # obj from asm
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
-	$(AS) -c $(AS_ARGS) $< -o $@
+	$(AS) $(AS_ARGS) -c $< -o $@
 
 # create build dir
 $(BUILD_DIR):
@@ -315,14 +315,15 @@ program-boot:
 # Build Debugging
 #######################################
 
-effective-build-settings:
+
+makefile-debug:
 	@echo TARGET ?= $(TARGET)
-	@echo CXX_SOURCES += $(CXX_SOURCES)
-	@echo LIBDAISY_DIR ?= $(LIBDAISY_DIR)
 	@echo DEBUG ?= $(DEBUG)
+	@echo DEBUG_FLAGS ?= $(DEBUG_FLAGS)
+	@echo NODEBUG_FLAGS ?= $(NODEBUG_FLAGS)
 	@echo BUILD_DIR ?= $(BUILD_DIR)
 	@echo USER_SUFFIX_CXX ?= $(USER_SUFFIX_CXX)
-	@echo C_SOURCES += $(C_SOURCES)
+	@echo LIBDAISY_DIR ?= $(LIBDAISY_DIR)
 	@echo DAISYSP_DIR ?= $(DAISYSP_DIR)
 	@echo USE_DAISYSP_LGPL ?= $(USE_DAISYSP_LGPL)
 	@echo USE_FATFS ?= $(USE_FATFS)
@@ -343,7 +344,12 @@ effective-build-settings:
 	@echo LINKER_OPTS ?= $(LINKER_OPTS)
 	@echo BOOT_BIN ?= $(BOOT_BIN)
 	@echo APP_TYPE ?= $(APP_TYPE)
-	@echo LINKERSCRIPT ?= $(LINKERSCRIPT)
+	@echo LDSCRIPT ?= $(LDSCRIPT)
+	@echo ASM_SOURCES ?= $(ASM_SOURCES)
+	@echo C_SOURCES += $(C_SOURCES)
+	@echo CXX_SOURCES += $(CXX_SOURCES)
+	@echo OBJECTS ?= $(OBJECTS)
+
 
 
 -include $(wildcard $(BUILD_DIR)/*.d)
