@@ -31,8 +31,8 @@ class SSD13514WireSpiTransport
         SpiHandle::Config spi_config;
         struct
         {
-            dsy_gpio_pin dc;    /**< & */
-            dsy_gpio_pin reset; /**< & */
+            Pin dc;    /**< Pin used for Data/Command signaling */
+            Pin reset; /**< Pin used for Reset */
         } pin_config;
         void Defaults()
         {
@@ -47,56 +47,52 @@ class SSD13514WireSpiTransport
             spi_config.nss            = SpiHandle::Config::NSS::HARD_OUTPUT;
             spi_config.baud_prescaler = SpiHandle::Config::BaudPrescaler::PS_8;
             // SPI pin config
-            spi_config.pin_config.sclk = {DSY_GPIOG, 11};
-            spi_config.pin_config.miso = {DSY_GPIOX, 0};
-            spi_config.pin_config.mosi = {DSY_GPIOB, 5};
-            spi_config.pin_config.nss  = {DSY_GPIOG, 10};
+            spi_config.pin_config.sclk = Pin(PORTG, 11);
+            spi_config.pin_config.miso = Pin(PORTX, 0);
+            spi_config.pin_config.mosi = Pin(PORTB, 5);
+            spi_config.pin_config.nss  = Pin(PORTG, 10);
             // SSD1351 control pin config
-            pin_config.dc    = {DSY_GPIOB, 4};
-            pin_config.reset = {DSY_GPIOB, 15};
+            pin_config.dc    = Pin(PORTB, 4);
+            pin_config.reset = Pin(PORTB, 15);
         }
     };
     void Init(const Config& config)
     {
         // Initialize both GPIO
-        pin_dc_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_dc_.pin  = config.pin_config.dc;
-        dsy_gpio_init(&pin_dc_);
-        pin_reset_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin_reset_.pin  = config.pin_config.reset;
-        dsy_gpio_init(&pin_reset_);
+        pin_reset_.Init(config.pin_config.reset, GPIO::Mode::OUTPUT);
+        pin_dc_.Init(config.pin_config.dc, GPIO::Mode::OUTPUT);
 
         // Initialize SPI
         spi_.Init(config.spi_config);
 
         // Reset and Configure OLED.
-        dsy_gpio_write(&pin_reset_, 0);
+        pin_reset_.Write(false);
         System::Delay(10);
-        dsy_gpio_write(&pin_reset_, 1);
+        pin_reset_.Write(true);
         System::Delay(10);
     };
     void SendCommand(uint8_t cmd)
     {
-        dsy_gpio_write(&pin_dc_, 0);
+        pin_dc_.Write(false);
         spi_.BlockingTransmit(&cmd, 1);
     };
 
     void SendData(uint8_t* buff, size_t size)
     {
-        dsy_gpio_write(&pin_dc_, 1);
+        pin_dc_.Write(true);
         spi_.BlockingTransmit(buff, size);
     };
 
     void SendData(uint8_t data)
     {
-        dsy_gpio_write(&pin_dc_, 1);
+        pin_dc_.Write(true);
         spi_.BlockingTransmit(&data, 1);
     };
 
   private:
     SpiHandle spi_;
-    dsy_gpio  pin_reset_;
-    dsy_gpio  pin_dc_;
+    GPIO      pin_reset_;
+    GPIO      pin_dc_;
 };
 
 
