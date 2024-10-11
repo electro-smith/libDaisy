@@ -411,6 +411,24 @@ struct MidiEvent
         m.channel = channel;
         return m;
     }
+
+    static const char* GetTypeAsString(MidiEvent& msg)
+    {
+        switch(msg.type)
+        {
+            case NoteOff: return "NoteOff";
+            case NoteOn: return "NoteOn";
+            case PolyphonicKeyPressure: return "PolyKeyPres.";
+            case ControlChange: return "CC";
+            case ProgramChange: return "Prog. Change";
+            case ChannelPressure: return "Chn. Pressure";
+            case PitchBend: return "PitchBend";
+            case SystemCommon: return "Sys. Common";
+            case SystemRealTime: return "Sys. Realtime";
+            case ChannelMode: return "Chn. Mode";
+            default: return "Unknown";
+        }
+    }
 };
 
 /** @} */ // End midi_events

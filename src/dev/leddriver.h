@@ -64,9 +64,9 @@ class LedDriverPca9685
     */
     void Init(I2CHandle i2c,
               const uint8_t (&addresses)[numDrivers],
-              DmaBuffer    dma_buffer_a,
-              DmaBuffer    dma_buffer_b,
-              dsy_gpio_pin oe_pin = {DSY_GPIOX, 0})
+              DmaBuffer dma_buffer_a,
+              DmaBuffer dma_buffer_b,
+              Pin       oe_pin = Pin(PORTX, 0))
     {
         i2c_             = i2c;
         draw_buffer_     = dma_buffer_a;
@@ -218,13 +218,10 @@ class LedDriverPca9685
     void InitializeDrivers()
     {
         // init OE pin and pull low to enable outputs
-        if(oe_pin_.port != DSY_GPIOX)
+        if(oe_pin_.port != PORTX)
         {
-            oe_pin_gpio_.pin  = oe_pin_;
-            oe_pin_gpio_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-            oe_pin_gpio_.pull = DSY_GPIO_NOPULL;
-            dsy_gpio_init(&oe_pin_gpio_);
-            dsy_gpio_write(&oe_pin_gpio_, 0);
+            oe_pin_gpio_.Init(oe_pin_, GPIO::Mode::OUTPUT);
+            oe_pin_gpio_.Write(0);
         }
 
         // init the individual drivers
@@ -275,8 +272,8 @@ class LedDriverPca9685
     PCA9685TransmitBuffer* draw_buffer_;
     PCA9685TransmitBuffer* transmit_buffer_;
     uint8_t                addresses_[numDrivers];
-    dsy_gpio_pin           oe_pin_;
-    dsy_gpio               oe_pin_gpio_;
+    Pin                    oe_pin_;
+    GPIO                   oe_pin_gpio_;
     // index of the dirver that is currently updated.
     volatile int8_t current_driver_idx_;
     const uint16_t  gamma_table_[256] = {
