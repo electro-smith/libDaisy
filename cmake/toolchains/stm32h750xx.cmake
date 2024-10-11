@@ -3,7 +3,7 @@ set(CMAKE_SYSTEM_PROCESSOR arm)
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
 # Architucture flags
-set(ARCH_COMBO armv7em_hard_fpv5_d16)
+set(ARCH_COMBO armv7m_hard_fpv5_d16)
 set(MCU
   -mcpu=cortex-m7
   -mfpu=fpv5-d16
