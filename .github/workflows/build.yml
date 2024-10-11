@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: Setup arm-none-eabi-gcc
@@ -52,7 +52,7 @@ jobs:
 
     strategy:
       matrix:
-        version: [latest, '13.2.Rel1', '12.3.Rel1', '11.3.Rel1', '10.3-2021.10', '9-2020-q2']
+        version: [latest, '13.3.Rel1', '12.3.Rel1', '11.3.Rel1', '10.3-2021.10', '9-2020-q2']
 
     steps:
     - name: Checkout
@@ -79,7 +79,7 @@ jobs:
 
       strategy:
         matrix:
-          version: [latest, '17.0.1', '16.0.0']
+          version: [latest, '19.1.1', '18.1.3', '17.0.1']
 
       steps:
       - name: Checkout
