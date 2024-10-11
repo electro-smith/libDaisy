@@ -93,7 +93,6 @@ add_library(daisy STATIC
     ${MODULE_DIR}/usbh/usbh_conf.c
     ${MODULE_DIR}/util/bsp_sd_diskio.c
     ${MODULE_DIR}/util/color.cpp
-    ${MODULE_DIR}/util/hal_map.c
     ${MODULE_DIR}/util/MappedValue.cpp
     ${MODULE_DIR}/util/oled_fonts.c
     ${MODULE_DIR}/util/sd_diskio.c
