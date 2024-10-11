@@ -79,7 +79,7 @@ jobs:
 
       strategy:
         matrix:
-          version: [latest, '19.1.1', '18.1.3', '17.0.1']
+          version: [latest, '19.1.1']
 
       steps:
       - name: Checkout
