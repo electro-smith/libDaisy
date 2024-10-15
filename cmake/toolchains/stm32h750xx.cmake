@@ -14,7 +14,6 @@ add_compile_options(${MCU})
 add_link_options(${MCU})
 
 add_compile_options(
-  -fno-builtin
   -fno-exceptions
   -ffunction-sections
   -fdata-sections
