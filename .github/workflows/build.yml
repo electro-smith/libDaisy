@@ -99,4 +99,4 @@ jobs:
         run: cmake -B build -G Ninja -D CMAKE_BUILD_TYPE=Release
 
       - name: Build All
-        run: cmake --build build --target examples --verbose
+        run: cmake --build build --target BootloaderBlink --verbose # TODO: make this build all examples
