@@ -1532,7 +1532,7 @@ int main();
 extern void *_sidata, *_sdata, *_edata;
 extern void *_sbss, *_ebss;
 
-void __attribute__((naked, noreturn)) Reset_Handler()
+void __attribute__((noreturn)) Reset_Handler()
 {
 	//Normally the CPU should will setup the based on the value from the first entry in the vector table.
 	//If you encounter problems with accessing stack variables during initialization, ensure the line below is enabled.
@@ -1557,7 +1557,7 @@ void __attribute__((naked, noreturn)) Reset_Handler()
 	for (;;) ;
 }
 
-void __attribute__((naked, noreturn)) Default_Handler()
+void __attribute__((interrupt ("UNDEF"), noreturn)) Default_Handler()
 {
 	//If you get stuck here, your code is missing a handler for some interrupt.
 	//Define a 'DEBUG_DEFAULT_INTERRUPT_HANDLERS' macro via VisualGDB Project Properties and rebuild your project.

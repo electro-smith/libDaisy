@@ -9,3 +9,4 @@
 *.filters text eol=crlf
 *.props text eol=crlf
 *.xml text eol=crlf
+*.patch text eol=lf
