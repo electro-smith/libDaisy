@@ -122,6 +122,8 @@ class AudioHandle
      */
     Result SetBlockSize(size_t size);
 
+    void SetIntermediateBuffers(int32_t* buffer_sai1, int32_t* buffer_sai2 = nullptr);
+
     /** Sets the amount of gain adjustment to perform before and after callback.
      ** useful if the hardware has additional headroom, and the nominal value shouldn't be 1.0 
      ** 
