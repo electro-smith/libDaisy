@@ -58,6 +58,12 @@ class AudioHandle::Impl
                                : AudioHandle::Result::ERR;
     }
 
+    void SetIntermediateBuffers(int32_t* buffer_sai1, int32_t* buffer_sai2)
+    {
+        sai1_.SetIntermediateBuffer(buffer_sai1);
+        sai2_.SetIntermediateBuffer(buffer_sai2);
+    }
+
     float GetSampleRate() { return sai1_.GetSampleRate(); }
 
     AudioHandle::Result SetPostGain(float val)
@@ -518,6 +524,11 @@ size_t AudioHandle::GetChannels() const
 AudioHandle::Result AudioHandle::SetBlockSize(size_t size)
 {
     return pimpl_->SetBlockSize(size);
+}
+
+void AudioHandle::SetIntermediateBuffers(int32_t* buffer_sai1, int32_t* buffer_sai2)
+{
+    pimpl_->SetIntermediateBuffers(buffer_sai1, buffer_sai2);
 }
 
 float AudioHandle::GetSampleRate()
