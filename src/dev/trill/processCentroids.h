@@ -1,14 +1,13 @@
 				temp = calculateCentroids(wVCentroid, wVCentroidSize, MAX_NUM_CENTROIDS, FIRST_SENSOR_V, LAST_SENSOR_V, numSensors); // Vertical centroids
-				firstActiveSensor = temp & 0xFF;
 				lastActiveSensor = temp >> 8;
-				bActivityDetected = lastActiveSensor >= 0;
 
 				temp = lastActiveSensor - (LAST_SENSOR_V - FIRST_SENSOR_V );// retrieve the (wrapped) index
 				//check for activity in the wraparound area
 				// IF the last centroid ended after wrapping around ...
 				// AND the first centroid was located before the end of the last ...
-				if(lastActiveSensor >= LAST_SENSOR_V - FIRST_SENSOR_V
-					&& (((BYTE)temp) << SLIDER_BITS) >= wVCentroid[0] )
+				if(lastActiveSensor != 255 // 255 means no active sensor
+					&& lastActiveSensor >= LAST_SENSOR_V - FIRST_SENSOR_V
+					&& ((unsigned)temp) << SLIDER_BITS >= wVCentroid[0] )
 				{
 					// THEN the last touch is used to replace the first one
 					for(counter = MAX_NUM_CENTROIDS - 1; counter >= 1; counter--) {

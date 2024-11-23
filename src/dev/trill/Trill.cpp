@@ -3,6 +3,18 @@
 #include <vector>
 #include <string.h>
 
+#ifndef __try
+#if __cpp_exceptions
+# define __try      try
+# define __catch(X) catch(X)
+# define __throw_exception_again throw
+#else
+# define __try      if (true)
+# define __catch(X) if (false)
+# define __throw_exception_again
+#endif
+#endif // !__try
+
 constexpr uint8_t Trill::speedValues[4];
 #define MAX_TOUCH_1D_OR_2D (((device_type_ == SQUARE || device_type_ == HEX) ? kMaxTouchNum2D : kMaxTouchNum1D))
 

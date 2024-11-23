@@ -73,7 +73,6 @@ class Trill : public I2c
 		std::vector<uint8_t> dataBuffer;
 		uint16_t commandSleepTime = 1000;
 		size_t currentReadOffset = -1;
-		bool shouldReadFrameId = false;
 		unsigned int numBits;
 		unsigned int transmissionWidth = 16;
 		unsigned int transmissionRightShift = 0;
