@@ -40,13 +40,13 @@ inline int I2c::initI2C_RW(int bus, int address, int dummy)
 			// TODO: how do we log from here?
 		case 1:
 			cfg.periph = I2CHandle::Config::Peripheral::I2C_1;
-			cfg.pin_config.scl = {DSY_GPIOB, 8};
-			cfg.pin_config.sda = {DSY_GPIOB, 9};
+			cfg.pin_config.scl = {PORTB, 8};
+			cfg.pin_config.sda = {PORTB, 9};
 			break;
 		case 4:
 			cfg.periph = I2CHandle::Config::Peripheral::I2C_4;
-			cfg.pin_config.scl = {DSY_GPIOB, 6};
-			cfg.pin_config.sda = {DSY_GPIOB, 7};
+			cfg.pin_config.scl = {PORTB, 6};
+			cfg.pin_config.sda = {PORTB, 7};
 			break;
 	}
 	cfg.address = i2cAddress; // this seems unused anyhow
