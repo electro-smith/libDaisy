@@ -12,33 +12,35 @@
 
 class Trill : public I2c
 {
-	public:
-		/**
+  public:
+    /**
 		 * The acquisition modes that a device can be set to.
 		 */
-		typedef enum {
-			AUTO = -1, /**< Auto mode: the mode is set
+    typedef enum
+    {
+        AUTO     = -1, /**< Auto mode: the mode is set
 				     automatically based on the device type */
-			CENTROID = 0, /**< Centroid mode: detect discrete touches */
-			RAW = 1, /**< Raw mode */
-			BASELINE = 2, /**< Baseline mode */
-			DIFF = 3, /**< Differential mode */
-		} Mode;
+        CENTROID = 0,  /**< Centroid mode: detect discrete touches */
+        RAW      = 1,  /**< Raw mode */
+        BASELINE = 2,  /**< Baseline mode */
+        DIFF     = 3,  /**< Differential mode */
+    } Mode;
 
-		/**
+    /**
 		 * The types of Trill devices
 		 */
-		typedef enum {
-			NONE = -1, ///< No device
-			UNKNOWN = 0, ///< A valid device of unknown type
-			BAR = 1, ///< %Trill Bar
-			SQUARE = 2, ///< %Trill Square
-			CRAFT = 3, ///< %Trill Craft
-			RING = 4, ///< %Trill Ring
-			HEX = 5, ///< %Trill Hex
-			FLEX = 6, ///< %Trill Flex
-		} Device;
-		/**
+    typedef enum
+    {
+        NONE    = -1, ///< No device
+        UNKNOWN = 0,  ///< A valid device of unknown type
+        BAR     = 1,  ///< %Trill Bar
+        SQUARE  = 2,  ///< %Trill Square
+        CRAFT   = 3,  ///< %Trill Craft
+        RING    = 4,  ///< %Trill Ring
+        HEX     = 5,  ///< %Trill Hex
+        FLEX    = 6,  ///< %Trill Flex
+    } Device;
+    /**
 		 * Controls when the EVT pin will be set when a new frame is
 		 * available. In this context, the meaning "activity is detected"
 		 * depends on the #Mode in which the device is:
@@ -47,60 +49,75 @@ class Trill : public I2c
 		 * - in any other mode, activity is detected if any channel
 		 *   after formatting is non-zero.
 		 */
-		typedef enum {
-			kEventModeTouch = 0, ///< Only set the EVT pin if activity is detected in the current frame
-			kEventModeChange = 1, ///< Only set the EVT pin if activity is detected in the current or past frame
-			kEventModeAlways = 2, ///< Set the EVT pin every time a new frame is available
-		} EventMode;
-		/**
+    typedef enum
+    {
+        kEventModeTouch
+        = 0, ///< Only set the EVT pin if activity is detected in the current frame
+        kEventModeChange
+        = 1, ///< Only set the EVT pin if activity is detected in the current or past frame
+        kEventModeAlways
+        = 2, ///< Set the EVT pin every time a new frame is available
+    } EventMode;
+    /**
 		 *
 		 */
-		typedef enum {
-			kScanTriggerDisabled = 0x0, ///< Do not scan capacitive channels.
-			kScanTriggerI2c = 0x1, ///< Scan capacitive channels after every I2C transaction
-			kScanTriggerTimer = 0x2, ///< Scan capacitive channels every time the timer set by setAutoScanInterval() expires
-			kScanTriggerI2cOrTimer = 0x3, ///< Scan capacitive channels after every I2C transaction or when timer expires, whichever comes first.
-		} ScanTriggerMode;
-	private:
-		Mode mode_; // Which mode the device is in
-		Device device_type_ = NONE; // Which type of device is connected (if any)
-		uint32_t frameId;
-		uint8_t statusByte;
-		uint8_t address;
-		uint8_t firmware_version_ = 0; // Firmware version running on the device
-		uint8_t num_touches_; // Number of touches on last read
-		bool dataBufferIncludesStatusByte = false;
-		std::vector<uint8_t> dataBuffer;
-		uint16_t commandSleepTime = 1000;
-		size_t currentReadOffset = -1;
-		unsigned int numBits;
-		unsigned int transmissionWidth = 16;
-		unsigned int transmissionRightShift = 0;
-		uint32_t channelMask;
-		uint8_t numChannels;
-		float posRescale;
-		float posHRescale;
-		float sizeRescale;
-		float rawRescale;
-		ScanTriggerMode scanTriggerMode;
-		int identify();
-		void updateRescale();
-		void parseNewData(bool includesStatusByte);
-		void processStatusByte(uint8_t newStatusByte);
-		int writeCommandAndHandle(const i2c_char_t* data, size_t size, const char* name);
-		int writeCommandAndHandle(i2c_char_t command, const char* name);
-		int readBytesFrom(uint8_t offset, i2c_char_t* data, size_t size, const char* name);
-		int readBytesFrom(uint8_t offset, i2c_char_t& byte, const char* name);
-		int waitForAck(uint8_t command, const char* name);
-		void updateChannelMask(uint32_t mask);
-		float channelIntToFloat(uint16_t in, float rawRescale);
-		uint8_t noiseThreshold = 0;
-		int verbose = 0;
-		uint8_t cmdCounter = 0;
-		bool readErrorOccurred;
-		bool enableVersionCheck = true;
-	public:
-		/**
+    typedef enum
+    {
+        kScanTriggerDisabled = 0x0, ///< Do not scan capacitive channels.
+        kScanTriggerI2c
+        = 0x1, ///< Scan capacitive channels after every I2C transaction
+        kScanTriggerTimer
+        = 0x2, ///< Scan capacitive channels every time the timer set by setAutoScanInterval() expires
+        kScanTriggerI2cOrTimer
+        = 0x3, ///< Scan capacitive channels after every I2C transaction or when timer expires, whichever comes first.
+    } ScanTriggerMode;
+
+  private:
+    Mode     mode_;               // Which mode the device is in
+    Device   device_type_ = NONE; // Which type of device is connected (if any)
+    uint32_t frameId;
+    uint8_t  statusByte;
+    uint8_t  address;
+    uint8_t  firmware_version_ = 0; // Firmware version running on the device
+    uint8_t  num_touches_;          // Number of touches on last read
+    bool     dataBufferIncludesStatusByte = false;
+    std::vector<uint8_t> dataBuffer;
+    uint16_t             commandSleepTime  = 1000;
+    size_t               currentReadOffset = -1;
+    unsigned int         numBits;
+    unsigned int         transmissionWidth      = 16;
+    unsigned int         transmissionRightShift = 0;
+    uint32_t             channelMask;
+    uint8_t              numChannels;
+    float                posRescale;
+    float                posHRescale;
+    float                sizeRescale;
+    float                rawRescale;
+    ScanTriggerMode      scanTriggerMode;
+    int                  identify();
+    void                 updateRescale();
+    void                 parseNewData(bool includesStatusByte);
+    void                 processStatusByte(uint8_t newStatusByte);
+    int                  writeCommandAndHandle(const i2c_char_t* data,
+                                               size_t            size,
+                                               const char*       name);
+    int     writeCommandAndHandle(i2c_char_t command, const char* name);
+    int     readBytesFrom(uint8_t     offset,
+                          i2c_char_t* data,
+                          size_t      size,
+                          const char* name);
+    int     readBytesFrom(uint8_t offset, i2c_char_t& byte, const char* name);
+    int     waitForAck(uint8_t command, const char* name);
+    void    updateChannelMask(uint32_t mask);
+    float   channelIntToFloat(uint16_t in, float rawRescale);
+    uint8_t noiseThreshold = 0;
+    int     verbose        = 0;
+    uint8_t cmdCounter     = 0;
+    bool    readErrorOccurred;
+    bool    enableVersionCheck = true;
+
+  public:
+    /**
 		 * @name RAW, BASELINE or DIFF mode
 		 * When the device is in #RAW, #BASELINE, or #DIFF mode, the
 		 * readings from the individual sensing channels are accessed
@@ -119,7 +136,7 @@ class Trill : public I2c
 		 * version 3. On older devices calling this function has no effect and its
 		 * return value is undefined.
 		 */
-		/**
+    /**
 		 * An array containing the readings from the device's
 		 * channel  when the device is in
 		 * #RAW, #BASELINE or #DIFF mode.
@@ -136,21 +153,21 @@ class Trill : public I2c
 		 *   contains differential readings between the baseline and
 		 *   the raw reading. This corresponds to `CSD_waSnsDiff`.
 		 */
-		std::vector<float> rawData;
-		/** @} */
+    std::vector<float> rawData;
+    /** @} */
 
-		/**
+    /**
 		 * An array containing the valid values for the speed parameter
 		 * in setScanSettings()
 		 */
-		static constexpr uint8_t speedValues[4] = {0, 1, 2, 3};
-		/**
+    static constexpr uint8_t speedValues[4] = {0, 1, 2, 3};
+    /**
 		 * The maximum value for the setPrescaler() method
 		 */
-		static constexpr uint8_t prescalerMax = 8;
-		Trill();
-		~Trill();
-		/**
+    static constexpr uint8_t prescalerMax = 8;
+    Trill();
+    ~Trill();
+    /**
 		 * Initialise the device.
 		 *
 		 * @param i2c_bus the bus that the device is connected to.
@@ -164,32 +181,32 @@ class Trill : public I2c
 		 * found. If `255` or no value is passed, the default address
 		 * for the specified device type will be used.
 		 */
-		Trill(unsigned int i2c_bus, Device device, uint8_t i2c_address = 255);
-		/**
+    Trill(unsigned int i2c_bus, Device device, uint8_t i2c_address = 255);
+    /**
 		 * \copydoc Trill::Trill(unsigned int, Device, uint8_t)
 		 *
 		 * \copydoc TAGS_canonical_return
 		 */
-		int setup(unsigned int i2c_bus, Device device, uint8_t i2c_address = 255);
+    int setup(unsigned int i2c_bus, Device device, uint8_t i2c_address = 255);
 
-		/**
+    /**
 		 * Probe the bus for a device at the specified address.
 		 *
 		 * @return The type of the device that was found. If no device
 		 * was found, #NONE is returned.
 		 */
-		static Device probe(unsigned int i2c_bus, uint8_t i2c_address);
+    static Device probe(unsigned int i2c_bus, uint8_t i2c_address);
 
-		/**
+    /**
 		 * Update the baseline value on the device.
 		 */
-		int updateBaseline();
-		/**
+    int updateBaseline();
+    /**
 		 * Reset the chip.
 		 */
-		int reset();
+    int reset();
 
-		/**
+    /**
 		 * \brief Read data from the device.
 		 *
 		 * Performs an I2C transaction with the device to retrieve new data
@@ -201,9 +218,9 @@ class Trill : public I2c
 		 *
 		 * \copydoc TAGS_canonical_return
 		 */
-		int readI2C(bool shouldReadStatusByte = false);
+    int readI2C(bool shouldReadStatusByte = false);
 
-		/**
+    /**
 		 * \brief Set data retrieved from the device.
 		 *
 		 * Sets the data retrieved from the device.
@@ -217,58 +234,60 @@ class Trill : public I2c
 		 * @param includesStatusByte whether #newData includes the
 		 * status byte or not.
 		 */
-		void newData(const uint8_t* newData, size_t len, bool includesStatusByte = false);
+    void newData(const uint8_t* newData,
+                 size_t         len,
+                 bool           includesStatusByte = false);
 
-		/**
+    /**
 		 * Get the device type.
 		 */
-		Device deviceType() { return device_type_; }
-		/**
+    Device deviceType() { return device_type_; }
+    /**
 		 * Get the name from the device.
 		 */
-		static const std::string& getNameFromDevice(Device device);
-		/**
+    static const std::string& getNameFromDevice(Device device);
+    /**
 		 * Get the device from the name.
 		 */
-		static Device getDeviceFromName(const std::string& name);
-		/**
+    static Device getDeviceFromName(const std::string& name);
+    /**
 		 * Get the mode from the name.
 		 */
-		static const std::string& getNameFromMode(Mode mode);
-		/**
+    static const std::string& getNameFromMode(Mode mode);
+    /**
 		 * Get the mode from the name.
 		 */
-		static Mode getModeFromName(const std::string& name);
-		/**
+    static Mode getModeFromName(const std::string& name);
+    /**
 		 * Get the firmware version of the device.
 		 */
-		int firmwareVersion() { return firmware_version_; }
-		/**
+    int firmwareVersion() { return firmware_version_; }
+    /**
 		 * Get the mode that the device is currently in.
 		 */
-		Mode getMode() { return mode_; }
-		/**
+    Mode getMode() { return mode_; }
+    /**
 		 * Get the current address of the device.
 		 */
-		uint8_t getAddress() { return address; }
-		/**
+    uint8_t getAddress() { return address; }
+    /**
 		 * Print details about the device to standard output
 		 */
-		void printDetails() ;
-		/**
+    void printDetails();
+    /**
 		 * Print more details about I/O transactions as they happen.
 		 */
-		void setVerbose(int verbose);
-		/**
+    void setVerbose(int verbose);
+    /**
 		 * Get the number of capacitive channels currently active on the device.
 		 */
-		unsigned int getNumChannels() const;
-		/**
+    unsigned int getNumChannels() const;
+    /**
 		 * Get the number of capacitive channels available on the device.
 		 */
-		unsigned int getDefaultNumChannels() const;
+    unsigned int getDefaultNumChannels() const;
 
-		/**
+    /**
 		 * @name Scan Configuration Settings
 		 * @{
 		 *
@@ -277,15 +296,15 @@ class Trill : public I2c
 		 * [Cypress CapSense Sigma-Delta * Datasheet
 		 * v2.20](https://www.cypress.com/file/124551/download).
 		 */
-		/**
+    /**
 		 * Set the operational mode of the device.
 		 *
 		 * @param mode The device mode. The special mode #AUTO, selects the
 		 * device-specific default mode for the _detected_ device type.
 		 * \copydoc TAGS_canonical_return
 		 */
-		int setMode(Mode mode);
-		/**
+    int setMode(Mode mode);
+    /**
 		 * Set the speed and bit depth of the capacitive scanning.
 		 * This triggers a call to `CSD_SetScanMode(speed, num_bits)`
 		 * on the device.
@@ -297,8 +316,8 @@ class Trill : public I2c
 		 * Valid values are comprised between 9 and 16.
 		 * \copydoc TAGS_canonical_return
 		 */
-		int setScanSettings(uint8_t speed, uint8_t num_bits = 12);
-		/**
+    int setScanSettings(uint8_t speed, uint8_t num_bits = 12);
+    /**
 		 * Set the prescaler value for the capacitive scanning.
 		 * This triggers a call to `CSD_SetPrescaler(prescaler)`
 		 * on the device.
@@ -308,8 +327,8 @@ class Trill : public I2c
 		 * `CSD_PRESCALER_1` to `CSD_PRESCALER_256`.
 		 * \copydoc TAGS_canonical_return
 		 */
-		int setPrescaler(uint8_t prescaler);
-		/**
+    int setPrescaler(uint8_t prescaler);
+    /**
 		 * Set the noise threshold for the capacitive channels.
 		 *
 		 * When a channel's scan returns a value smaller than the
@@ -323,8 +342,8 @@ class Trill : public I2c
 		 * `CSD_bNoiseThreshold` variable.
 		 * @return 0 on success, or an error code otherwise.
 		 */
-		int setNoiseThreshold(float threshold);
-		/**
+    int setNoiseThreshold(float threshold);
+    /**
 		 * Sets the IDAC value for the device.
 		 *
 		 * This triggers a call to `CSD_SetIdacValue(value)` on the device.
@@ -332,16 +351,16 @@ class Trill : public I2c
 		 * @param value the IDAC value. Valid values are between 0 and 255.
 		 * \copydoc TAGS_canonical_return
 		 */
-		int setIDACValue(uint8_t value);
-		/**
+    int setIDACValue(uint8_t value);
+    /**
 		 * Set minimum touch size
 		 *
 		 * Sets the minimum touch size below which a touch is ignored.
 		 * \copydoc TAGS_canonical_return
 		 *
 		 */
-		int setMinimumTouchSize(float minSize);
-		/**
+    int setMinimumTouchSize(float minSize);
+    /**
 		 * Set how the device triggers a new scan of its capacitive
 		 * channels.
 		 *
@@ -350,8 +369,8 @@ class Trill : public I2c
 		 * \copydoc TAGS_firmware_3_error
 		 * \copydoc TAGS_canonical_return
 		 */
-		int setScanTrigger(ScanTriggerMode scanTriggerMode);
-		/**
+    int setScanTrigger(ScanTriggerMode scanTriggerMode);
+    /**
 		 * Set the interval for scanning capacitive channels when the
 		 * device's scanning is triggered by the timer.
 		 *
@@ -367,16 +386,16 @@ class Trill : public I2c
 		 * \note The 32kHz clock often deviates by 10% or more from its
 		 * nominal frequency, thus affecting the accuracy of the timer.
 		 */
-		int setTimerPeriod(float ms);
-		/**
+    int setTimerPeriod(float ms);
+    /**
 		 * Deprecated. Same as setTimerPeriod(), but the @p interval is
 		 * expressed as cycles of a 32kHz clock. On devices with
 		 * firmware 2, @p interval is used directly. On devices with
 		 * firwmare 3 or above, it is quantised to blocks of at least
 		 * 1 ms.
 		 */
-		int setAutoScanInterval(uint16_t interval);
-		/**
+    int setAutoScanInterval(uint16_t interval);
+    /**
 		 * Set how the EVT pin behaves.
 		 *
 		 * @param mode an #EventMode denoting the required behaviour.
@@ -384,8 +403,8 @@ class Trill : public I2c
 		 * \copydoc TAGS_canonical_return
 		 * \copydoc TAGS_firmware_3_error
 		 */
-		int setEventMode(EventMode mode);
-		/**
+    int setEventMode(EventMode mode);
+    /**
 		 * Set a channel mask identifying which scanning channels are
 		 * enabled.
 		 *
@@ -396,8 +415,8 @@ class Trill : public I2c
 		 * \copydoc TAGS_canonical_return
 		 * \copydoc TAGS_firmware_3_error
 		 */
-		int setChannelMask(uint32_t mask);
-		/**
+    int setChannelMask(uint32_t mask);
+    /**
 		 * Set the format used for transmission of non-centroid data
 		 * from the device to the host.
 		 *
@@ -409,13 +428,13 @@ class Trill : public I2c
 		 * \copydoc TAGS_canonical_return
 		 * \copydoc TAGS_firmware_3_error
 		 */
-		int setTransmissionFormat(uint8_t width, uint8_t shift);
-		/** @} */ // end of Scan Configuration Settings
-		/**
+    int setTransmissionFormat(uint8_t width, uint8_t shift);
+    /** @} */ // end of Scan Configuration Settings
+    /**
 		 * @name Status byte
 		 * @{
 		 */
-		/**
+    /**
 		 * Read the status byte from the device.
 		 * Alternatively, the status byte can be read as part of
 		 * reading data by calling readI2C(true).
@@ -428,8 +447,8 @@ class Trill : public I2c
 		 *
 		 * \copydoc TAGS_firmware_3_undef
 		 */
-		int readStatusByte();
-		/**
+    int readStatusByte();
+    /**
 		 * Whether the device has reset since a identify command was
 		 * last written to it.
 		 *
@@ -437,23 +456,23 @@ class Trill : public I2c
 		 *
 		 * \copydoc TAGS_firmware_3_error
 		 */
-		bool hasReset();
-		/**
+    bool hasReset();
+    /**
 		 * Whether activity has been detected in the current frame.
 		 *
 		 * This relies on a current status byte.
 		 *
 		 * \copydoc TAGS_firmware_3_undef
 		 */
-		bool hasActivity();
-		/**
+    bool hasActivity();
+    /**
 		 * Get the frameId.
 		 * This relies on a current status byte.
 		 *
 		 * \copydoc TAGS_firmware_3_undef
 		 */
-		uint8_t getFrameId();
-		/**
+    uint8_t getFrameId();
+    /**
 		 * Same as above, but it tries to unwrap the 6-bit frameId into
 		 * a uint32_t counter.
 		 * This relies on reading several status bytes over time.
@@ -464,12 +483,12 @@ class Trill : public I2c
 		 * @return the counter
 		 * \copydoc TAGS_firmware_3_undef
 		 */
-		uint32_t getFrameIdUnwrapped();
-		/**
+    uint32_t getFrameIdUnwrapped();
+    /**
 		 * @}
 		 */
 
-		/**
+    /**
 		 * @name Centroid Mode
 		 * @{
 		 *
@@ -499,38 +518,41 @@ class Trill : public I2c
 		 * @class TAGS_2d
 		 * \note It is only valid to call this method is2D() returns `true`
 		*/
-		/**
+    /**
 		 * Does the device have one axis of position sensing?
 		 *
 		 * @return `true` if the device has one axis of position sensing
 		 * and is set in #CENTROID mode, `false`
 		 * otherwise.
 		 */
-		bool is1D();
-		/**
+    bool is1D();
+    /**
 		 * Does the device have two axes of position sensing?
 		 *
 		 * @return `true` if the device has two axes of position sensing
 		 * and is set in #CENTROID mode, `false`
 		 * otherwise.
 		 */
-		bool is2D();
-		/**
+    bool is2D();
+    /**
 		 * Return the number of bytes to read when reading data.
 		 */
-		unsigned int getBytesToRead(bool includesStatusByte);
-		/**
+    unsigned int getBytesToRead(bool includesStatusByte);
+    /**
 		 * Return the number of "button" channels on the device.
 		 */
-		unsigned int getNumButtons() { return 2 * (getMode() == CENTROID && RING == deviceType());};
-		/**
+    unsigned int getNumButtons()
+    {
+        return 2 * (getMode() == CENTROID && RING == deviceType());
+    };
+    /**
 		 * Get the number of touches currently active on the
 		 * vertical axis of the device.
 		 *
 		 * \copydoc TAGS_1d
 		 */
-		unsigned int getNumTouches();
-		/**
+    unsigned int getNumTouches();
+    /**
 		 * Get the location of a touch on the vertical axis of the
 		 * device.
 		 *
@@ -541,8 +563,8 @@ class Trill : public I2c
 		 * @return the position of the touch relative to the axis, or
 		 * -1 if no such touch exists.
 		 */
-		float touchLocation(uint8_t touch_num);
-		/**
+    float touchLocation(uint8_t touch_num);
+    /**
 		 * Get the size of a touch.
 		 *
 		 * \copydoc TAGS_1d
@@ -550,15 +572,15 @@ class Trill : public I2c
 		 * @return the size of the touch, if the touch exists, or 0
 		 * otherwise.
 		 */
-		float touchSize(uint8_t touch_num);
-		/**
+    float touchSize(uint8_t touch_num);
+    /**
 		 * Get the number of touches currently active on the
 		 * horizontal axis of the device.
 		 *
 		 * \copydoc TAGS_2d
 		 */
-		unsigned int getNumHorizontalTouches();
-		/**
+    unsigned int getNumHorizontalTouches();
+    /**
 		 * Get the location of a touch on the horizontal axis of the
 		 * device.
 		 *
@@ -569,8 +591,8 @@ class Trill : public I2c
 		 * @return the position of the touch relative to the axis, or
 		 * -1 if no such touch exists.
 		 *  */
-		float touchHorizontalLocation(uint8_t touch_num);
-		/**
+    float touchHorizontalLocation(uint8_t touch_num);
+    /**
 		 * Get the size of a touch.
 		 *
 		 * \copydoc TAGS_2d
@@ -578,29 +600,29 @@ class Trill : public I2c
 		 * @return the size of the touch, if the touch exists, or 0
 		 * otherwise.
 		 */
-		float touchHorizontalSize(uint8_t touch_num);
-		/**
+    float touchHorizontalSize(uint8_t touch_num);
+    /**
 		 * Get the vertical location of the compound touch on the
 		 * device.
 		 *
 		 * \copydoc TAGS_1d
 		 *  */
-		float compoundTouchLocation();
-		/**
+    float compoundTouchLocation();
+    /**
 		 * Get the horizontal location of the compound touch on the
 		 * device.
 		 *
 		 * \copydoc TAGS_1d
 		 */
-		float compoundTouchHorizontalLocation();
-		/**
+    float compoundTouchHorizontalLocation();
+    /**
 		 * Get the size of the compound touch on the
 		 * device.
 		 *
 		 * \copydoc TAGS_1d
 		 */
-		float compoundTouchSize();
-		/**
+    float compoundTouchSize();
+    /**
 		 * Get the value of the capacitive "button" channels on the
 		 * device
 		 *
@@ -609,7 +631,7 @@ class Trill : public I2c
 		 * @return The differential reading on the button, normalised
 		 * between 0 and 1.
 		 */
-		float getButtonValue(uint8_t button_num);
+    float getButtonValue(uint8_t button_num);
 
-		/** @}*/ // end of centroid mode
+    /** @}*/ // end of centroid mode
 };
