@@ -22,7 +22,7 @@ int main(void)
 
     // Initialize the Trill object
     int i2cBus = 1; // only 1 and 4 are properly mapped to pins on the Seed
-    int ret = trill.setup(i2cBus, Trill::CRAFT);
+    int ret    = trill.setup(i2cBus, Trill::CRAFT);
     if(ret)
         hw.PrintLine("trill.setup() returned %d", ret);
 
@@ -32,10 +32,10 @@ int main(void)
         hw.DelayMs(100);
         trill.readI2C();
         for(auto &x : trill.rawData)
-		{
-            hw.Print("%d ", int(x*100000.f));
+        {
+            hw.Print("%d ", int(x * 100000.f));
         }
         hw.PrintLine("");
     }
-	return 0;
+    return 0;
 }
