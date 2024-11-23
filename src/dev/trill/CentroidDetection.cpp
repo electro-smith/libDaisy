@@ -16,9 +16,7 @@ public:
 #include "calculateCentroids.h"
 	void processCentroids(WORD *wVCentroid, WORD *wVCentroidSize, BYTE MAX_NUM_CENTROIDS, BYTE FIRST_SENSOR_V, BYTE LAST_SENSOR_V, BYTE numSensors) {
 		long temp;
-		signed char firstActiveSensor;
-		signed char lastActiveSensor;
-		BOOL bActivityDetected;
+		BYTE lastActiveSensor;
 		BYTE counter;
 		WORD posEndOfLoop = (LAST_SENSOR_V - FIRST_SENSOR_V) << SLIDER_BITS;
 #include "processCentroids.h"
@@ -85,7 +83,6 @@ void CentroidDetection::process(const DATA_T* rawData)
 	cc->CSD_waSnsDiff = data.data();
 	cc->processCentroids(centroidBuffer.data(), sizeBuffer.data(), maxNumCentroids, 0, order.size(), num_sensors);
 
-	unsigned int locations = 0;
 	// Look for 1st instance of 0xFFFF (no touch) in the buffer
 	unsigned int i;
 	for(i = 0; i < centroidBuffer.size(); ++i)
