@@ -38,6 +38,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/internal/tools.cmake)
 add_subdirectory(Drivers)
 add_subdirectory(Middlewares/ST)
 add_subdirectory(Middlewares/Third_Party/FatFs)
+add_subdirectory(Middlewares/Third_Party/RTT)
 
 add_library(daisy STATIC
     ${MODULE_DIR}/daisy_field.cpp
@@ -113,6 +114,7 @@ target_link_libraries(daisy PUBLIC
     STM32_USB_DEVICE_LIBRARY
     STM32_USB_HOST_LIBRARY
     FatFs
+    RTT
 )
 
 target_compile_options(daisy PRIVATE
