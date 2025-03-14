@@ -86,6 +86,7 @@ class UartHandler
         Config()
         {
             // user must init periph, pin_config, and mode
+            mode          = Mode::TX_RX;
             stopbits      = StopBits::BITS_1;
             parity        = Parity::NONE;
             wordlength    = WordLength::BITS_8;
@@ -105,7 +106,7 @@ class UartHandler
     };
 
     UartHandler() : pimpl_(nullptr) {}
-    UartHandler(const UartHandler& other) = default;
+    UartHandler(const UartHandler& other)            = default;
     UartHandler& operator=(const UartHandler& other) = default;
 
     /** Return values for Uart functions. */

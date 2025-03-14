@@ -34,6 +34,7 @@ class MidiUartTransport
     /** @brief Configuration structure for UART MIDI */
     struct Config
     {
+        UartHandler::Config::Mode       mode;
         UartHandler::Config::Peripheral periph;
         dsy_gpio_pin                    rx;
         dsy_gpio_pin                    tx;
@@ -70,21 +71,35 @@ class MidiUartTransport
         uart_config.baudrate   = 31250;
         uart_config.stopbits   = UartHandler::Config::StopBits::BITS_1;
         uart_config.parity     = UartHandler::Config::Parity::NONE;
-        uart_config.mode       = UartHandler::Config::Mode::TX_RX;
         uart_config.wordlength = UartHandler::Config::WordLength::BITS_8;
 
         //user settings
+        uart_config.mode          = config.mode;
         uart_config.periph        = config.periph;
-        uart_config.pin_config.rx = config.rx;
-        uart_config.pin_config.tx = config.tx;
-        uart_config.rx_dma_stream = config.rx_dma_stream;
-        uart_config.tx_dma_stream = config.tx_dma_stream;
+        uart_config.pin_config.tx = Pin(PORTX, 0);
+        uart_config.pin_config.rx = Pin(PORTX, 0);
+        if(uart_config.mode == UartHandler::Config::Mode::TX
+           || uart_config.mode == UartHandler::Config::Mode::TX_RX)
+        {
+            uart_config.pin_config.tx = config.tx;
+            uart_config.tx_dma_stream = config.tx_dma_stream;
+        }
+        if(uart_config.mode == UartHandler::Config::Mode::RX
+           || uart_config.mode == UartHandler::Config::Mode::TX_RX)
+        {
+            uart_config.pin_config.rx = config.rx;
+            uart_config.rx_dma_stream = config.rx_dma_stream;
+        }
+
 
         rx_buffer      = config.rx_buffer;
         rx_buffer_size = config.rx_buffer_size;
 
         /** zero the buffer to ensure emptiness regardless of source memory */
-        std::fill(rx_buffer, rx_buffer + rx_buffer_size, 0);
+        if(config.rx_buffer != nullptr)
+        {
+            std::fill(rx_buffer, rx_buffer + rx_buffer_size, 0);
+        }
 
         uart_.Init(uart_config);
     }
