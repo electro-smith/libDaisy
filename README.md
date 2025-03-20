@@ -18,7 +18,7 @@
     <a href="https://github.com/electro-smith/libDaisy/actions/workflows/style.yml">
       <img src="https://github.com/electro-smith/libDaisy/workflows/Style/badge.svg">
     </a>
-    <a href="https://electro-smith.github.io/libDaisy/index.html">
+    <a href="https://daisy.audio/software/">
       <img src="https://github.com/electro-smith/libDaisy/workflows/Documentation/badge.svg">
     </a>
 </p>
@@ -78,8 +78,8 @@ int main(void)
 
 ## Getting Started
 
-- Check out our [Getting Started Wiki Page](https://github.com/electro-smith/DaisyWiki/wiki)
-- Browse the reference documentation [on the web](https://electro-smith.github.io/libDaisy)
+- Check out our [Getting Started Page](https://daisy.audio/tutorials/cpp-dev-env/)
+- Browse the reference documentation [on the web](https://daisy.audio/software/)
 - Make some sound!
 
 ## Project Overview
@@ -138,7 +138,7 @@ Here are some ways that you can get involved:
 - Add new functionality to the library. See issues labeled "feature"
 - Fix problems with existing codebase. See issues labeled "bug" and/or "polish"
 
-Before working on code, please check out our [Contribution Guidelines](https://github.com/electro-smith/DaisyWiki/wiki/6.-Contribution-Guidelines) and [Style Guide.](https://github.com/electro-smith/DaisySP/blob/master/doc/style_guide.pdf)
+Before working on code, please check out our [Style Guide.](https://github.com/electro-smith/DaisySP/blob/master/doc/style_guide.pdf)
 
 ## Support
 
