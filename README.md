@@ -100,7 +100,7 @@ Also included is a core/ folder containing:
 - a linker script for defining the sections of memory used by the firmware
 - core files for starting the hardware (system_stm32h7xx.c, startup_stm32h750xx.s, etc.)
 
-Unit Tests can be found in the test/ folder. [Here's a tutorial on how to develop unit tested code for libDaisy](doc/Unit-Testing.md).
+Unit Tests can be found in the tests/ folder. [Here's a tutorial on how to develop unit tested code for libDaisy](doc/md/_b1_Development-Unit-Testing.md).
 
 ### daisy.h
 
