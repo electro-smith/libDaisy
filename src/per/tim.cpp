@@ -212,7 +212,7 @@ uint32_t TimerHandle::Impl::GetTick()
 
 uint32_t TimerHandle::Impl::GetMs()
 {
-    return GetTick() / (GetFreq() / 100000000);
+    return GetTick() / (GetFreq() / 1000);
 }
 uint32_t TimerHandle::Impl::GetUs()
 {
@@ -227,7 +227,7 @@ void TimerHandle::Impl::DelayTick(uint32_t del)
 
 void TimerHandle::Impl::DelayMs(uint32_t del)
 {
-    DelayTick(del * (GetFreq() / 100000000));
+    DelayTick(del * (GetFreq() / 1000));
 }
 
 void TimerHandle::Impl::DelayUs(uint32_t del)
