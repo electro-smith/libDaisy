@@ -1,8 +1,8 @@
 var classdaisy_1_1_spi_handle =
 [
     [ "Config", "structdaisy_1_1_spi_handle_1_1_config.html", "structdaisy_1_1_spi_handle_1_1_config" ],
-    [ "EndCallbackFunctionPtr", "classdaisy_1_1_spi_handle.html#a239cd884e622201118be911ffd155570", null ],
-    [ "StartCallbackFunctionPtr", "classdaisy_1_1_spi_handle.html#ac2f47ed26b7630dd193c59204a72daa1", null ],
+    [ "EndCallbackFunctionPtr", "classdaisy_1_1_spi_handle.html#aae4afae9ab4e2497944b74873b057850", null ],
+    [ "StartCallbackFunctionPtr", "classdaisy_1_1_spi_handle.html#a039ac6078cdaf4263432e869c2e784e5", null ],
     [ "DmaDirection", "classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4da", [
       [ "RX", "classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daaf9c24782c24c237d16e79f18e2fa9046", null ],
       [ "TX", "classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daa869036c9d97cf6593c6f1c2ccfd99a49", null ],

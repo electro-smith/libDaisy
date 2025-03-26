@@ -1,12 +1,12 @@
 var classdaisy_1_1_audio_handle =
 [
     [ "Config", "structdaisy_1_1_audio_handle_1_1_config.html", "structdaisy_1_1_audio_handle_1_1_config" ],
-    [ "AudioCallback", "classdaisy_1_1_audio_handle.html#a10a5b51605fba6bb19ab3f05394da38f", null ],
-    [ "InputBuffer", "classdaisy_1_1_audio_handle.html#ac7317ab5e51e18172be03af8bfb194f6", null ],
-    [ "InterleavingAudioCallback", "classdaisy_1_1_audio_handle.html#a125528dd20d6657e53ab78341cbdbb91", null ],
-    [ "InterleavingInputBuffer", "classdaisy_1_1_audio_handle.html#a4e0f74f2093de2f0762d51ca915af01d", null ],
-    [ "InterleavingOutputBuffer", "classdaisy_1_1_audio_handle.html#a2d737450dbb443fc13f12134a46b43e4", null ],
-    [ "OutputBuffer", "classdaisy_1_1_audio_handle.html#aa0728b1916a1a1c569e601f27224a3a1", null ],
+    [ "AudioCallback", "classdaisy_1_1_audio_handle.html#a55a3f5011a5502f9e77892b09892c394", null ],
+    [ "InputBuffer", "classdaisy_1_1_audio_handle.html#ac7e83d12fd7e03da6fb9d53ef0bd1611", null ],
+    [ "InterleavingAudioCallback", "classdaisy_1_1_audio_handle.html#add3f96f2aba5c9fe5f81efe062a77b93", null ],
+    [ "InterleavingInputBuffer", "classdaisy_1_1_audio_handle.html#a7d7a7781afeeb52a61ff9907391a70a5", null ],
+    [ "InterleavingOutputBuffer", "classdaisy_1_1_audio_handle.html#a7148e1377bec23366f69dbf6ca802726", null ],
+    [ "OutputBuffer", "classdaisy_1_1_audio_handle.html#a06c3f0477a66c8bb0df0ba47edfaa902", null ],
     [ "Result", "classdaisy_1_1_audio_handle.html#afd70b35cda9ec575d62d4abdcc453c30", [
       [ "OK", "classdaisy_1_1_audio_handle.html#afd70b35cda9ec575d62d4abdcc453c30ae0aa021e21dddbd6d8cecec71e9cf564", null ],
       [ "ERR", "classdaisy_1_1_audio_handle.html#afd70b35cda9ec575d62d4abdcc453c30acd22bad976363fdd1bfbf6759fede482", null ]

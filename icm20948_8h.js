@@ -52,6 +52,6 @@ var icm20948_8h =
     [ "NUM_FINISHED_CHECKS", "icm20948_8h.html#ac14a90b5a4b8373e05ed83a8464b98e4", null ],
     [ "SENSORS_DPS_TO_RADS", "icm20948_8h.html#a54bd9549d7c88977f8769fac7be4578d", null ],
     [ "SENSORS_GRAVITY_EARTH", "icm20948_8h.html#adf2baeb9499e0aae21699e2345fd51bd", null ],
-    [ "Icm20948I2C", "icm20948_8h.html#aa3a583bc1f8dd6f54b4104e4cbff44c1", null ],
-    [ "Icm20948Spi", "icm20948_8h.html#a0240cd43a07ff5691b41ff2269d29a0d", null ]
+    [ "Icm20948I2C", "icm20948_8h.html#a5ab20d72e54745ba73b0717c1a99c92f", null ],
+    [ "Icm20948Spi", "icm20948_8h.html#ae84e21b90e2919270311ac08b1d2c39d", null ]
 ];

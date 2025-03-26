@@ -1,7 +1,6 @@
 var class_usb_handle =
 [
-    [ "ReceiveCallback", "class_usb_handle.html#a33ca9123252e485a3d2045590e5e6217", null ],
-    [ "ReceiveCallback", "class_usb_handle.html#a33ca9123252e485a3d2045590e5e6217", null ],
+    [ "ReceiveCallback", "class_usb_handle.html#aab9b14c8bcf6bbfdec515d392841e16b", null ],
     [ "Result", "class_usb_handle.html#a676c11695fe5f925515eaa3d3e2d53a6", [
       [ "OK", "class_usb_handle.html#a676c11695fe5f925515eaa3d3e2d53a6ae0aa021e21dddbd6d8cecec71e9cf564", null ],
       [ "ERR", "class_usb_handle.html#a676c11695fe5f925515eaa3d3e2d53a6acd22bad976363fdd1bfbf6759fede482", null ],

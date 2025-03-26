@@ -12,5 +12,5 @@ var oled__ssd1351_8h =
     [ "oled_red", "oled__ssd1351_8h.html#aa9850020b306f6d530aacefe68ec9916", null ],
     [ "oled_white", "oled__ssd1351_8h.html#ad5dbfe2b642e96f8b86e73fc729fea85", null ],
     [ "oled_yellow", "oled__ssd1351_8h.html#ac61e71724b108a56edd136f02b86c372", null ],
-    [ "SSD13514WireSpi128x128Driver", "oled__ssd1351_8h.html#ae76cefa6c23bf4f90f7d8e64881fb79a", null ]
+    [ "SSD13514WireSpi128x128Driver", "oled__ssd1351_8h.html#a78c8ada31bc8ee81bb97be84ad94eb25", null ]
 ];

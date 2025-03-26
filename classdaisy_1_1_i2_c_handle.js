@@ -1,7 +1,7 @@
 var classdaisy_1_1_i2_c_handle =
 [
     [ "Config", "structdaisy_1_1_i2_c_handle_1_1_config.html", "structdaisy_1_1_i2_c_handle_1_1_config" ],
-    [ "CallbackFunctionPtr", "classdaisy_1_1_i2_c_handle.html#a865f3f2c45b937c4084081f807e15d7b", null ],
+    [ "CallbackFunctionPtr", "classdaisy_1_1_i2_c_handle.html#aa585c37d221c630fdd766f1c805ccdb2", null ],
     [ "Direction", "classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54c", [
       [ "TRANSMIT", "classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54ca02d786cd0f7318c2533125f8b591abc5", null ],
       [ "RECEIVE", "classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54ca42ddaaef1ffd16ad35901150add8f8f2", null ]

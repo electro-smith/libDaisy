@@ -1,7 +1,7 @@
 var classdaisy_1_1_sai_handle =
 [
     [ "Config", "structdaisy_1_1_sai_handle_1_1_config.html", "structdaisy_1_1_sai_handle_1_1_config" ],
-    [ "CallbackFunctionPtr", "classdaisy_1_1_sai_handle.html#ac7ca41a3568296357b71b6848d95c69c", null ],
+    [ "CallbackFunctionPtr", "classdaisy_1_1_sai_handle.html#a2ad7107132fab93d93e6ee3b0e184dff", null ],
     [ "Result", "classdaisy_1_1_sai_handle.html#a5463939a5d7fe1a363cfb9beb602d468", [
       [ "OK", "classdaisy_1_1_sai_handle.html#a5463939a5d7fe1a363cfb9beb602d468ae0aa021e21dddbd6d8cecec71e9cf564", null ],
       [ "ERR", "classdaisy_1_1_sai_handle.html#a5463939a5d7fe1a363cfb9beb602d468acd22bad976363fdd1bfbf6759fede482", null ]

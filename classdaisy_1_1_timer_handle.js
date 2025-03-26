@@ -1,7 +1,7 @@
 var classdaisy_1_1_timer_handle =
 [
     [ "Config", "structdaisy_1_1_timer_handle_1_1_config.html", "structdaisy_1_1_timer_handle_1_1_config" ],
-    [ "PeriodElapsedCallback", "classdaisy_1_1_timer_handle.html#a31742af4d164ed7787ffba2c95158ef9", null ],
+    [ "PeriodElapsedCallback", "classdaisy_1_1_timer_handle.html#aeb1da5d1df2b71fdbf3596affc52aade", null ],
     [ "Result", "classdaisy_1_1_timer_handle.html#a7425f809b115688f70d7a12acd5a16c7", [
       [ "OK", "classdaisy_1_1_timer_handle.html#a7425f809b115688f70d7a12acd5a16c7ae0aa021e21dddbd6d8cecec71e9cf564", null ],
       [ "ERR", "classdaisy_1_1_timer_handle.html#a7425f809b115688f70d7a12acd5a16c7acd22bad976363fdd1bfbf6759fede482", null ]

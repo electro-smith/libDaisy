@@ -1,6 +1,5 @@
 var NAVTREEINDEX1 =
 {
-"classdaisy_1_1_fat_f_s_interface.html#a1ccb7d6bbc2cbf61026b5ce374017b7c":[15,0,0,35,3],
 "classdaisy_1_1_fat_f_s_interface.html#a350b62c286a29e6e24d6c0470eb12089":[15,0,0,35,5],
 "classdaisy_1_1_fat_f_s_interface.html#a3dd8a578891f43e10eb4c8c2535bcf8b":[15,0,0,35,4],
 "classdaisy_1_1_fat_f_s_interface.html#a4ebf4d6b583b6a15b5227cb6bef7baa2":[15,0,0,35,7],
@@ -71,11 +70,11 @@ var NAVTREEINDEX1 =
 "classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16acd22bad976363fdd1bfbf6759fede482":[15,0,0,43,3,1],
 "classdaisy_1_1_i2_c_handle.html#a4896eede457dea6ed2ed68d9b06e8e16ae0aa021e21dddbd6d8cecec71e9cf564":[15,0,0,43,3,0],
 "classdaisy_1_1_i2_c_handle.html#a5232996113cc203d72cb75e57b62fa9d":[15,0,0,43,10],
-"classdaisy_1_1_i2_c_handle.html#a865f3f2c45b937c4084081f807e15d7b":[15,0,0,43,1],
 "classdaisy_1_1_i2_c_handle.html#a8d1d67b0c17e735b1d367d88ad346d75":[15,0,0,43,8],
 "classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54c":[15,0,0,43,2],
 "classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54ca02d786cd0f7318c2533125f8b591abc5":[15,0,0,43,2,0],
 "classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54ca42ddaaef1ffd16ad35901150add8f8f2":[15,0,0,43,2,1],
+"classdaisy_1_1_i2_c_handle.html#aa585c37d221c630fdd766f1c805ccdb2":[15,0,0,43,1],
 "classdaisy_1_1_i2_c_handle.html#acf279a20fe8338672cbfa7f3e0e720ae":[15,0,0,43,12],
 "classdaisy_1_1_i2_c_handle.html#ad6f3fdb091285a40a34ca2ebf09a94a8":[15,0,0,43,11],
 "classdaisy_1_1_i2_c_handle.html#afb04976cded8bfd1b1427ae15d9458ef":[15,0,0,43,14],
@@ -249,5 +248,6 @@ var NAVTREEINDEX1 =
 "classdaisy_1_1_rectangle.html#add57d94dbd74607c9039f5285047bd85":[15,0,0,98,35],
 "classdaisy_1_1_rectangle.html#ae3fba9711abedffcf9d4dc2af4080571":[15,0,0,98,0],
 "classdaisy_1_1_rectangle.html#af8a8ebcbfa4035cede265e9ac05d0728":[15,0,0,98,23],
-"classdaisy_1_1_rectangle.html#afdd21f9bde1fe3136ab0e5654093fcad":[15,0,0,98,30]
+"classdaisy_1_1_rectangle.html#afdd21f9bde1fe3136ab0e5654093fcad":[15,0,0,98,30],
+"classdaisy_1_1_s_h1106_driver.html":[15,0,0,106]
 };

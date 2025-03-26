@@ -1,7 +1,7 @@
 var classdaisy_1_1_midi_usb_transport =
 [
     [ "Config", "structdaisy_1_1_midi_usb_transport_1_1_config.html", "structdaisy_1_1_midi_usb_transport_1_1_config" ],
-    [ "MidiRxParseCallback", "classdaisy_1_1_midi_usb_transport.html#ad4ea4fdde06e5e46f5f1054a878558aa", null ],
+    [ "MidiRxParseCallback", "classdaisy_1_1_midi_usb_transport.html#a902537055fca4e4800579c1ef0f61a23", null ],
     [ "MidiUsbTransport", "classdaisy_1_1_midi_usb_transport.html#a7f04168895972a3bb8d98670ca9ca6b0", null ],
     [ "~MidiUsbTransport", "classdaisy_1_1_midi_usb_transport.html#a6feaa01b40329b31042c2d681bd31956", null ],
     [ "MidiUsbTransport", "classdaisy_1_1_midi_usb_transport.html#ace2a362aa40470215a9c77994937352f", null ],

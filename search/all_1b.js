@@ -68,7 +68,7 @@ var searchData=
   ['_7eui_65',['~UI',['../classdaisy_1_1_u_i.html#aba414ddadfb6b90b96af10ceffe0b925',1,'daisy::UI']]],
   ['_7euieventqueue_66',['~UiEventQueue',['../classdaisy_1_1_ui_event_queue.html#a99c34d386afa2f3b56def5612b98b638',1,'daisy::UiEventQueue']]],
   ['_7euipage_67',['~UiPage',['../classdaisy_1_1_ui_page.html#a93029d815bbc871377d25c071a1a11c6',1,'daisy::UiPage']]],
-  ['_7eusbhandle_68',['~usbhandle',['../class_usb_handle.html#a6ad15406df47137dddf3edcb6c10c9c1',1,'UsbHandle::~UsbHandle()'],['../class_usb_handle.html#a6ad15406df47137dddf3edcb6c10c9c1',1,'UsbHandle::~UsbHandle()']]],
+  ['_7eusbhandle_68',['~UsbHandle',['../class_usb_handle.html#a6ad15406df47137dddf3edcb6c10c9c1',1,'UsbHandle::~UsbHandle()'],['../class_usb_handle.html#a6ad15406df47137dddf3edcb6c10c9c1',1,'UsbHandle::~UsbHandle()']]],
   ['_7evoctcalibration_69',['~VoctCalibration',['../classdaisy_1_1_voct_calibration.html#a900865bfcc294d80a9ea687e79a149e1',1,'daisy::VoctCalibration']]],
   ['_7ewavetableloader_70',['~WaveTableLoader',['../classdaisy_1_1_wave_table_loader.html#a5b9d90a405d8b80ce7d186de03e8e768',1,'daisy::WaveTableLoader']]],
   ['_7ewavplayer_71',['~WavPlayer',['../classdaisy_1_1_wav_player.html#a5aad333a53f985af43a856b252289b8a',1,'daisy::WavPlayer']]],

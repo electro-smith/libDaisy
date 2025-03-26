@@ -1,7 +1,7 @@
 var classdaisy_1_1_dac_handle =
 [
     [ "Config", "structdaisy_1_1_dac_handle_1_1_config.html", "structdaisy_1_1_dac_handle_1_1_config" ],
-    [ "DacCallback", "classdaisy_1_1_dac_handle.html#afbcef6af53f16c775e711e919fc322e0", null ],
+    [ "DacCallback", "classdaisy_1_1_dac_handle.html#a3c1ad19273cdb8dcdb9164effb671d2b", null ],
     [ "BitDepth", "classdaisy_1_1_dac_handle.html#a0c969b1aa7f8549756e6309b3922e902", [
       [ "BITS_8", "classdaisy_1_1_dac_handle.html#a0c969b1aa7f8549756e6309b3922e902a506328a07de044eef05ac29ed6b48a7e", null ],
       [ "BITS_12", "classdaisy_1_1_dac_handle.html#a0c969b1aa7f8549756e6309b3922e902a5cdb4593c18074255e55c311cd64bd83", null ]

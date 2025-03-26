@@ -36,5 +36,5 @@ var neopixel_8h =
     [ "NEO_WGRB", "neopixel_8h.html#a59561d96a0f8a526ee3448e7b104d8b3", null ],
     [ "NEO_WRBG", "neopixel_8h.html#a266a08af576ed4331db48b16bf572d29", null ],
     [ "NEO_WRGB", "neopixel_8h.html#a4ee056fd3d7b09538908b35643a2508a", null ],
-    [ "NeoPixelI2C", "neopixel_8h.html#a1537607cd73c34cd8d9e1202361df30f", null ]
+    [ "NeoPixelI2C", "neopixel_8h.html#a10975fcc0d4f25e949bc57a552b0fd4e", null ]
 ];

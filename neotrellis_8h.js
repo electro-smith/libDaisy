@@ -18,5 +18,5 @@ var neotrellis_8h =
     [ "NEO_TRELLIS_X", "neotrellis_8h.html#a3324d3ed17a19bc08936115ec973f0e3", null ],
     [ "NEO_TRELLIS_XY", "neotrellis_8h.html#aa0540d801719e659b23074fe40218727", null ],
     [ "NEO_TRELLIS_Y", "neotrellis_8h.html#a6b4fca95c9f224cd5b6587cb47e6ab8d", null ],
-    [ "NeoTrellisI2C", "neotrellis_8h.html#af1ad733a8e15303893d0313e06a858db", null ]
+    [ "NeoTrellisI2C", "neotrellis_8h.html#a1c3047a01fa2a497bba8cbb5afb3fb82", null ]
 ];

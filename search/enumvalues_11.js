@@ -15,7 +15,7 @@ var searchData=
   ['r_5ftemp1_12',['R_TEMP1',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a67efb90d05c62ec4973b7e06ec9032c2',1,'daisy::Tlv493d']]],
   ['r_5ftemp2_13',['R_TEMP2',['../classdaisy_1_1_tlv493d.html#ac96637647d52f3cfbcd92562aa2eb086a5c6ef1f94c456ba96d8022392bd0c921',1,'daisy::Tlv493d']]],
   ['rbg_14',['RBG',['../structdaisy_1_1_dot_star_1_1_config.html#ac0d32307f8104690f4a6d15dd1943ae9aeba48ef2eeedaf3ca0efd511db46f2a2',1,'daisy::DotStar::Config']]],
-  ['receive_15',['receive',['../classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54ca42ddaaef1ffd16ad35901150add8f8f2',1,'daisy::I2CHandle::RECEIVE'],['../structdaisy_1_1_sai_handle_1_1_config.html#a80ffb7d40b82652f1550e8cf6ca56f81a42ddaaef1ffd16ad35901150add8f8f2',1,'daisy::SaiHandle::Config::RECEIVE']]],
+  ['receive_15',['RECEIVE',['../classdaisy_1_1_i2_c_handle.html#a8f815f7a77948286f0fa0065a1f7c54ca42ddaaef1ffd16ad35901150add8f8f2',1,'daisy::I2CHandle::RECEIVE'],['../structdaisy_1_1_sai_handle_1_1_config.html#a80ffb7d40b82652f1550e8cf6ca56f81a42ddaaef1ffd16ad35901150add8f8f2',1,'daisy::SaiHandle::Config::RECEIVE']]],
   ['red_16',['RED',['../classdaisy_1_1_color.html#af93d31d5fc63705c228bf9da407c9a40a8b805ea394bedf4786fd371ea10283b8',1,'daisy::Color']]],
   ['reset_17',['Reset',['../group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45a51ff911624e8d6e5a76ce0433d00130f',1,'daisy']]],
   ['resetallcontrollers_18',['ResetAllControllers',['../group__midi__events.html#ggaf9da54b73be4dec526670bd6c53ad98aa16372b6654282e39482508fd9dd45752',1,'daisy']]],
@@ -31,6 +31,6 @@ var searchData=
   ['ring_5fled_5f8_28',['RING_LED_8',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a1f6fc229b42f772bc9088f62ce3e5036',1,'daisy::DaisyPetal']]],
   ['ring_5fled_5flast_29',['RING_LED_LAST',['../classdaisy_1_1_daisy_petal.html#a6b6b85167d6938e7b4d151599773d682a4b60f0a2dbcfe749c77a3cf054f85e39',1,'daisy::DaisyPetal']]],
   ['rising_30',['RISING',['../classdaisy_1_1_neo_trellis.html#a08d0cfd62e053922653a0b9e78ed29c0af843fdfbc06dd0b7a40b927d3c03521b',1,'daisy::NeoTrellis']]],
-  ['rx_31',['rx',['../classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daaf9c24782c24c237d16e79f18e2fa9046',1,'daisy::SpiHandle::RX'],['../structdaisy_1_1_uart_handler_1_1_config.html#ae0a7cc8284cbbe42f1d95797b5862084af9c24782c24c237d16e79f18e2fa9046',1,'daisy::UartHandler::Config::RX'],['../classdaisy_1_1_uart_handler.html#adbdfbf1dfaab99cf76ac7ca36d22cf00af9c24782c24c237d16e79f18e2fa9046',1,'daisy::UartHandler::RX']]],
+  ['rx_31',['RX',['../classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daaf9c24782c24c237d16e79f18e2fa9046',1,'daisy::SpiHandle::RX'],['../structdaisy_1_1_uart_handler_1_1_config.html#ae0a7cc8284cbbe42f1d95797b5862084af9c24782c24c237d16e79f18e2fa9046',1,'daisy::UartHandler::Config::RX'],['../classdaisy_1_1_uart_handler.html#adbdfbf1dfaab99cf76ac7ca36d22cf00af9c24782c24c237d16e79f18e2fa9046',1,'daisy::UartHandler::RX']]],
   ['rx_5ftx_32',['RX_TX',['../classdaisy_1_1_spi_handle.html#aa7c484882faf187c7c4153db7cf5e4daaa9f94fc2b5a22b1ebff62655559f82b2',1,'daisy::SpiHandle']]]
 ];

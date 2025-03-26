@@ -13,7 +13,7 @@ var max11300_8h =
     [ "MAX11300_GPIDAT", "group___m_a_x11300.html#gaf21fd170b83cca33e69bcc8facb81f75", null ],
     [ "MAX11300_GPODAT", "group___m_a_x11300.html#ga2946d0309fa55ef46b7a62aa201f8a03", null ],
     [ "MAX11300_TRANSPORT_BUFFER_LENGTH", "group___m_a_x11300.html#gab694c2cc9dcdfb40c14b6e838476cdea", null ],
-    [ "MAX11300", "max11300_8h.html#gab0d61b51c537d727e16e6d61a114a91a", null ],
+    [ "MAX11300", "max11300_8h.html#ga945cc46964b9d5319438d9896eb5f37e", null ],
     [ "TransportCallbackFunctionPtr", "max11300_8h.html#a4fe4bebd1da4375dd9957bd27db76c93", null ],
     [ "UpdateCompleteCallbackFunctionPtr", "max11300_8h.html#af15978664d74d499cff347ecef851392", null ],
     [ "AdcVoltageRange", "max11300_8h.html#aa2604bd1a07178f2a22f9edf829f4c47", [

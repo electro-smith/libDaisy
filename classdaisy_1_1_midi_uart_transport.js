@@ -1,7 +1,7 @@
 var classdaisy_1_1_midi_uart_transport =
 [
     [ "Config", "structdaisy_1_1_midi_uart_transport_1_1_config.html", "structdaisy_1_1_midi_uart_transport_1_1_config" ],
-    [ "MidiRxParseCallback", "classdaisy_1_1_midi_uart_transport.html#a7fcae1da16a65ff64e023942843ceffa", null ],
+    [ "MidiRxParseCallback", "classdaisy_1_1_midi_uart_transport.html#a8ef01e5e6a37a47e60df5b010dc07a4b", null ],
     [ "MidiUartTransport", "classdaisy_1_1_midi_uart_transport.html#add8bebc579df1cdbe95f66660b2b412d", null ],
     [ "~MidiUartTransport", "classdaisy_1_1_midi_uart_transport.html#a4934d3331c639115b6bd64ceffa5a888", null ],
     [ "FlushRx", "classdaisy_1_1_midi_uart_transport.html#a7e498cbcb29bc447db934b96252a547f", null ],

@@ -1,10 +1,10 @@
 var classdaisy_1_1_u_s_b_host_handle =
 [
     [ "Config", "structdaisy_1_1_u_s_b_host_handle_1_1_config.html", "structdaisy_1_1_u_s_b_host_handle_1_1_config" ],
-    [ "ClassActiveCallback", "classdaisy_1_1_u_s_b_host_handle.html#a4fad5644a1e1b85f2cbfc27780f65058", null ],
-    [ "ConnectCallback", "classdaisy_1_1_u_s_b_host_handle.html#a271a5fe3869cae850c6422a964c8e005", null ],
-    [ "DisconnectCallback", "classdaisy_1_1_u_s_b_host_handle.html#a906b4c9eded70d661f9670ec0f04cd25", null ],
-    [ "ErrorCallback", "classdaisy_1_1_u_s_b_host_handle.html#a3762ad32c165180cad9acd5d108a81bc", null ],
+    [ "ClassActiveCallback", "classdaisy_1_1_u_s_b_host_handle.html#aa5e300f171b9e495a288cbf19a4d5eca", null ],
+    [ "ConnectCallback", "classdaisy_1_1_u_s_b_host_handle.html#a3ef94ae22959b6ae037fa445619000bc", null ],
+    [ "DisconnectCallback", "classdaisy_1_1_u_s_b_host_handle.html#a52025a51d7b5975c04ab9ed2fb4b2d66", null ],
+    [ "ErrorCallback", "classdaisy_1_1_u_s_b_host_handle.html#a6057d2369fbe9bbd2f14eebf668c51d0", null ],
     [ "Result", "classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113", [
       [ "OK", "classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113ae0aa021e21dddbd6d8cecec71e9cf564", null ],
       [ "BUSY", "classdaisy_1_1_u_s_b_host_handle.html#a52910b035d1149aebb0bef2054b20113a802706a9238e2928077f97736854bad4", null ],

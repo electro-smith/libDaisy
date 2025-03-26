@@ -4,7 +4,7 @@ var mcp23x17_8h =
     [ "daisy::Mcp23017Transport::Config", "structdaisy_1_1_mcp23017_transport_1_1_config.html", "structdaisy_1_1_mcp23017_transport_1_1_config" ],
     [ "daisy::Mcp23X17< Transport >", "classdaisy_1_1_mcp23_x17.html", "classdaisy_1_1_mcp23_x17" ],
     [ "daisy::Mcp23X17< Transport >::Config", "structdaisy_1_1_mcp23_x17_1_1_config.html", "structdaisy_1_1_mcp23_x17_1_1_config" ],
-    [ "Mcp23017", "mcp23x17_8h.html#a3f595bc253392d5e44b18fd5426577ad", null ],
+    [ "Mcp23017", "mcp23x17_8h.html#afb03314ca18fc5b8cae590987508e4a7", null ],
     [ "MCPMode", "mcp23x17_8h.html#a58f4604034b789f798c3872963c10f50", [
       [ "INPUT", "mcp23x17_8h.html#a58f4604034b789f798c3872963c10f50aa84cc046d48610b05c21fd3670d0c829", null ],
       [ "INPUT_PULLUP", "mcp23x17_8h.html#a58f4604034b789f798c3872963c10f50ace9c2fb3e41547f8dfb11145f7485786", null ],

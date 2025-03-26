@@ -1,7 +1,7 @@
 var classdaisy_1_1_neo_pixel =
 [
     [ "Config", "structdaisy_1_1_neo_pixel_1_1_config.html", "structdaisy_1_1_neo_pixel_1_1_config" ],
-    [ "neoPixelType", "classdaisy_1_1_neo_pixel.html#aaf6a3f2fd53db7ef4caf78733014e77d", null ],
+    [ "neoPixelType", "classdaisy_1_1_neo_pixel.html#a053cac3a8bc90fa961151405d4f5853d", null ],
     [ "ModAddReg", "classdaisy_1_1_neo_pixel.html#aa85935e2b18e71704d67c5cdda2df878", [
       [ "SEESAW_NEOPIXEL_STATUS", "classdaisy_1_1_neo_pixel.html#aa85935e2b18e71704d67c5cdda2df878ae7d19575693671570af757bee729703b", null ],
       [ "SEESAW_NEOPIXEL_PIN", "classdaisy_1_1_neo_pixel.html#aa85935e2b18e71704d67c5cdda2df878a204d6f3e606b954a913f12eeda5c11ff", null ],

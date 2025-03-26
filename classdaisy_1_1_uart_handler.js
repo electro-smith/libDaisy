@@ -1,9 +1,9 @@
 var classdaisy_1_1_uart_handler =
 [
     [ "Config", "structdaisy_1_1_uart_handler_1_1_config.html", "structdaisy_1_1_uart_handler_1_1_config" ],
-    [ "CircularRxCallbackFunctionPtr", "classdaisy_1_1_uart_handler.html#a95993666d3498111f123382022967946", null ],
-    [ "EndCallbackFunctionPtr", "classdaisy_1_1_uart_handler.html#a1bdc706fd2e8994889a713bb0ac72c67", null ],
-    [ "StartCallbackFunctionPtr", "classdaisy_1_1_uart_handler.html#a67b4d9b8492cff01abcd79b57cacebec", null ],
+    [ "CircularRxCallbackFunctionPtr", "classdaisy_1_1_uart_handler.html#ab00315e15dc0ee7e375fef193aef5288", null ],
+    [ "EndCallbackFunctionPtr", "classdaisy_1_1_uart_handler.html#a90bf0cd7fd51cef192c358e7639208d3", null ],
+    [ "StartCallbackFunctionPtr", "classdaisy_1_1_uart_handler.html#a3e7c72f0ca677e8e495a5d504989970e", null ],
     [ "DmaDirection", "classdaisy_1_1_uart_handler.html#adbdfbf1dfaab99cf76ac7ca36d22cf00", [
       [ "RX", "classdaisy_1_1_uart_handler.html#adbdfbf1dfaab99cf76ac7ca36d22cf00af9c24782c24c237d16e79f18e2fa9046", null ],
       [ "TX", "classdaisy_1_1_uart_handler.html#adbdfbf1dfaab99cf76ac7ca36d22cf00a869036c9d97cf6593c6f1c2ccfd99a49", null ]

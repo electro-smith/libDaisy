@@ -4,7 +4,7 @@ var classdaisy_1_1_neo_trellis =
     [ "keyEvent", "uniondaisy_1_1_neo_trellis_1_1key_event.html", "uniondaisy_1_1_neo_trellis_1_1key_event" ],
     [ "keyEventRaw", "uniondaisy_1_1_neo_trellis_1_1key_event_raw.html", "uniondaisy_1_1_neo_trellis_1_1key_event_raw" ],
     [ "keyState", "uniondaisy_1_1_neo_trellis_1_1key_state.html", "uniondaisy_1_1_neo_trellis_1_1key_state" ],
-    [ "TrellisCallback", "classdaisy_1_1_neo_trellis.html#a183c34e627e82aff208d4be0a0352510", null ],
+    [ "TrellisCallback", "classdaisy_1_1_neo_trellis.html#acc092b6acf671740fe17ed5b38dc4a09", null ],
     [ "KeypadEdge", "classdaisy_1_1_neo_trellis.html#a08d0cfd62e053922653a0b9e78ed29c0", [
       [ "HIGH", "classdaisy_1_1_neo_trellis.html#a08d0cfd62e053922653a0b9e78ed29c0a2d79f1fd0188fd02bfe2062ac398b284", null ],
       [ "LOW", "classdaisy_1_1_neo_trellis.html#a08d0cfd62e053922653a0b9e78ed29c0af4ccfedff592f55c151895a2e74f3192", null ],
