@@ -138,8 +138,6 @@ Here are some ways that you can get involved:
 - Add new functionality to the library. See issues labeled "feature"
 - Fix problems with existing codebase. See issues labeled "bug" and/or "polish"
 
-Before working on code, please check out our [Style Guide.](https://github.com/electro-smith/DaisySP/blob/master/doc/style_guide.pdf)
-
 ## Support
 
 Here are some ways to get support and connect with other users and developers:
