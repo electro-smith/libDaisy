@@ -66,15 +66,15 @@ class UartHandler::Impl
                       EndCallbackFunctionPtr   end_callback,
                       void*                    callback_context);
 
-    /** Starts the DMA Reception in "Listen" mode. 
-     *  In this mode the DMA is configured for circular 
+    /** Starts the DMA Reception in "Listen" mode.
+     *  In this mode the DMA is configured for circular
      *  behavior, and the IDLE interrupt is enabled.
-     * 
+     *
      *  At TC, HT, and IDLE interrupts data must be processed.
-     * 
+     *
      *  Size must be set so that at maximum bandwidth, the software
      *  has time to process N bytes before the next circular IRQ is fired
-     * 
+     *
      */
     Result DmaListenStart(uint8_t*                      buff,
                           size_t                        size,
@@ -132,7 +132,7 @@ class UartHandler::Impl
     static EndCallbackFunctionPtr next_end_callback_;
     static void*                  next_callback_context_;
 
-    /** Not static -- any UART can use this 
+    /** Not static -- any UART can use this
      *  until we had dynamic DMA stream handling
      *  this will consume the sole DMA stream for UART Rx
      */
@@ -959,7 +959,7 @@ extern "C" void dsy_uart_global_init()
 
 /** static handler for Listener Mode of Rx to handle
  *  non-aligned transfers during DMA Reception.
- * 
+ *
  *  this is the equivalent of what the old FifoHandler stuff
  *  did, but removes all of the fifo'ing, and replaces it with a user
  *  callback. The MIDI UART Transport is an example of how this might be used.
@@ -969,9 +969,9 @@ static void UART_CheckRxListener(UartHandler::Impl* handle)
     size_t pos;
     size_t old_pos = handle->circular_rx_last_pos_;
 
-    /** calculate pos. in buffer 
+    /** calculate pos. in buffer
      * TODO: make flexible for other DMA STreams
-     * 
+     *
      */
     uint8_t* buffer = handle->circular_rx_buff_;
     pos             = handle->circular_rx_total_size_
@@ -1103,10 +1103,8 @@ extern "C" void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef* huart)
 
 extern "C" void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
 {
-    /** TODO: This hooks into the "Normal" DMA completion, 
-     *  might want to change this to have a different fallthrough
-     *  for "listener_mode_"
-     */
+    auto* handle           = MapInstanceToHandle(huart->Instance);
+    handle->listener_mode_ = false;
     UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::ERR);
 }
 
