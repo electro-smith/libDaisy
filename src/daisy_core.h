@@ -34,12 +34,12 @@ cache enabled.
 #define FBIPMIN (-FBIPMAX)            /**< - (1 - LSB) */
 #define U82F_SCALE 0.0078740f         /**< 1 / 127 */
 #define F2U8_SCALE 127.0f             /**< 128 - 1 */
-#define S82F_SCALE 0.0078125f         /**< 1 / (2**7) */
+#define S82F_SCALE 0.00787401574f     /**< 1 / ((2 ** 7) - 1) */
 #define F2S8_SCALE 127.0f             /**< (2 ** 7) - 1 */
-#define S162F_SCALE 3.0517578125e-05f /**< 1 / (2** 15) */
+#define S162F_SCALE 3.0518509476e-05f /**< 1 / ((2 ** 15) - 1) */
 #define F2S16_SCALE 32767.0f          /**< (2 ** 15) - 1 */
-#define F2S24_SCALE 8388608.0f        /**< 2 ** 23 */
-#define S242F_SCALE 1.192092896e-07f  /**< 1 / (2 ** 23) */
+#define F2S24_SCALE 8388607.0f        /**< (2 ** 23) - 1 */
+#define S242F_SCALE 1.19209304e-07f   /**< 1 / ((2 ** 23) - 1) */
 #define S24SIGN 0x800000              /**< 2 ** 23 */
 #define S322F_SCALE 4.6566129e-10f    /**< 1 / (2** 31) */
 #define F2S32_SCALE 2147483647.f      /**< (2 ** 31) - 1 */
