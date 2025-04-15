@@ -97,10 +97,10 @@ target_link_options(${FIRMWARE_NAME} PUBLIC
     $<$<CXX_COMPILER_ID:GNU>:LINKER:--print-memory-usage>
 )
 
-add_custom_command(TARGET ${FIRMWARE_NAME} POST_BUILD
+add_custom_command(TARGET ${FIRMWARE_NAME}
+    POST_BUILD
     COMMAND ${CMAKE_OBJCOPY} -O ihex -S $<TARGET_FILE:${FIRMWARE_NAME}> $<TARGET_FILE_DIR:${FIRMWARE_NAME}>/${FIRMWARE_NAME}.hex
     BYPRODUCTS ${FIRMWARE_NAME}.hex
-    DEPENDS ${FIRMWARE_NAME}
     COMMENT "Generating HEX image"
     VERBATIM
 )
@@ -108,10 +108,10 @@ add_custom_command(TARGET ${FIRMWARE_NAME} POST_BUILD
 option(DAISY_GENERATE_BIN "Sets whether or not to generate a raw binary image using objcopy (warning this is a very large file, as it is a representation of the *full memory space*.)")
 
 if(DAISY_GENERATE_BIN)
-    add_custom_command(TARGET ${FIRMWARE_NAME} POST_BUILD
+    add_custom_command(TARGET ${FIRMWARE_NAME}
+        POST_BUILD
         COMMAND ${CMAKE_OBJCOPY} -O binary -S $<TARGET_FILE:${FIRMWARE_NAME}> $<TARGET_FILE_DIR:${FIRMWARE_NAME}>/${FIRMWARE_NAME}.bin
         BYPRODUCTS ${FIRMWARE_NAME}.bin
-        DEPENDS ${FIRMWARE_NAME}
         COMMENT "Generating binary image"
         VERBATIM
     )
