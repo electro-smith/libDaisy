@@ -40,7 +40,10 @@ namespace daisy
  * - Channel 3: PA2 (D28)
  * - Channel 4: PA3 (D16)
  *
- * @todo Other timers, including HRTIM, TIM1, TIM8
+ * Future work:
+ * - Allow for changing timer period after initialization
+ * - Support other timers, including HRTIM, TIM1, TIM8
+ * - DMA
  */
 class PWMHandle
 {
