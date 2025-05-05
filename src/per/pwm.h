@@ -23,10 +23,10 @@ namespace daisy
  * determine which pin corresponds to each timer and channel.
  *
  * TIM3:
- * - Channel 1: PA6 or PB4 (Daisy Seed -- D19, D9)
- * - Channel 2: PA7, PB5, or PC7 (D18, D10, internal LED)
+ * - Channel 1: PA6 or PB4 (Daisy Seed -- D19, D9; default PA6/D19)
+ * - Channel 2: PA7, PB5, or PC7 (D18, D10, internal LED; default PC7/LED)
  * - Channel 3: PC8 (D4)
- * - Channel 4: PB1 or PC9 (D17, D3)
+ * - Channel 4: PB1 or PC9 (D17, D3; default PB1/D17)
  *
  * TIM4:
  * - Channel 1: PB6 (D13)
