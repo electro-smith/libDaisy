@@ -10,6 +10,7 @@
 #include "per/dac.h"
 #include "per/gpio.h"
 #include "per/tim.h"
+#include "per/pwm.h"
 #include "dev/leddriver.h"
 #include "dev/mpr121.h"
 #include "dev/sdram.h"

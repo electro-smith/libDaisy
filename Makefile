@@ -60,6 +60,7 @@ per/spi \
 per/spiMultislave \
 per/tim \
 per/uart \
+per/pwm \
 ui/UI \
 ui/AbstractMenu \
 ui/FullScreenItemMenu \
