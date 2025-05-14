@@ -3,10 +3,25 @@
 #include "usbd_desc.h"
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
+#include "tusb.h"
+#include "tusb_config.h"
+#include "system.h"
+#include "hid/logger.h"
+#include "per/gpio.h"
 
 using namespace daisy;
 
 static void UsbErrorHandler();
+
+bool usb_fs_hw_initialized = false;
+bool usb_hs_hw_initialized = false;
+
+// Prevents multiple calls to tud_task() from different contexts
+static bool tud_task_running = false;
+
+// Add these near the other global declarations
+static UsbHandle::ReceiveCallback usb_rx_callback = nullptr;
+static uint8_t                    rx_buffer[CFG_TUD_CDC_RX_BUFSIZE];
 
 // Externs for IRQ Handlers
 extern "C"
@@ -17,7 +32,7 @@ extern "C"
     extern PCD_HandleTypeDef hpcd_USB_OTG_FS;
     extern PCD_HandleTypeDef hpcd_USB_OTG_HS;
 
-    void DummyRxCallback(uint8_t* buf, uint32_t* size)
+    void DummyRxCallback(uint8_t *buf, uint32_t *size)
     {
         // Do Nothing
     }
@@ -32,20 +47,17 @@ UsbHandle::ReceiveCallback rx_callback;
 static void InitFS()
 {
     rx_callback = DummyRxCallback;
-    if(USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS) != USBD_OK)
+    if(!usb_fs_hw_initialized)
     {
-        UsbErrorHandler();
+        usb_fs_hw_initialized = true;
+        if(USBD_Init(&hUsbDeviceFS, NULL, DEVICE_FS) != USBD_OK)
+        {
+            UsbErrorHandler();
+        }
     }
-    if(USBD_RegisterClass(&hUsbDeviceFS, &USBD_CDC) != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
-    if(USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_Interface_fops_FS)
-       != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
-    if(USBD_Start(&hUsbDeviceFS) != USBD_OK)
+
+    auto result = tud_init(BOARD_TUD_FS_RHPORT);
+    if(!result)
     {
         UsbErrorHandler();
     }
@@ -61,24 +73,31 @@ static void DeinitFS()
 
 static void InitHS()
 {
-    // HS as FS
-    if(USBD_Init(&hUsbDeviceHS, &HS_Desc, DEVICE_HS) != USBD_OK)
+    rx_callback = DummyRxCallback;
+    if(!usb_hs_hw_initialized)
+    {
+        usb_hs_hw_initialized = true;
+        if(USBD_Init(&hUsbDeviceHS, NULL, DEVICE_HS) != USBD_OK)
+        {
+            UsbErrorHandler();
+        }
+    }
+    auto result = tud_init(BOARD_TUD_HS_RHPORT);
+    if(!result)
     {
         UsbErrorHandler();
     }
-    if(USBD_RegisterClass(&hUsbDeviceHS, &USBD_CDC) != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
-    if(USBD_CDC_RegisterInterface(&hUsbDeviceHS, &USBD_Interface_fops_HS)
-       != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
-    if(USBD_Start(&hUsbDeviceHS) != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
+}
+
+void UsbHandle::RunTask()
+{
+    // Protect against reentrant calls
+    if(tud_task_running)
+        return;
+
+    tud_task_running = true;
+    tud_task();
+    tud_task_running = false;
 }
 
 static void DeinitHS()
@@ -88,7 +107,6 @@ static void DeinitHS()
         UsbErrorHandler();
     }
 }
-
 
 void UsbHandle::Init(UsbPeriph dev)
 {
@@ -122,31 +140,76 @@ void UsbHandle::DeInit(UsbPeriph dev)
     HAL_PWREx_DisableUSBVoltageDetector();
 }
 
-UsbHandle::Result UsbHandle::TransmitInternal(uint8_t* buff, size_t size)
+static UsbHandle::Result Transmit(uint8_t *buff, size_t size)
 {
-    return CDC_Transmit_FS(buff, size) == USBD_OK ? Result::OK : Result::ERR;
+    // Check if buffer is valid and non-empty
+    if(buff == nullptr || size == 0)
+    {
+        return UsbHandle::Result::ERR;
+    }
+
+    // Write the data
+    size_t written = tud_cdc_write(buff, size);
+    if(written != size)
+    {
+        return UsbHandle::Result::ERR;
+    }
+
+    // If we exactly filled a packet, send a ZLP to indicate completion
+    if(size % CFG_TUD_CDC_EP_BUFSIZE == 0)
+    {
+        tud_cdc_write(NULL, 0);
+    }
+
+    // Flush the data
+    tud_cdc_write_flush();
+    return UsbHandle::Result::OK;
 }
-UsbHandle::Result UsbHandle::TransmitExternal(uint8_t* buff, size_t size)
+
+UsbHandle::Result UsbHandle::TransmitInternal(uint8_t *buff, size_t size)
 {
-    return CDC_Transmit_HS(buff, size) == USBD_OK ? Result::OK : Result::ERR;
+    return Transmit(buff, size);
+}
+
+UsbHandle::Result UsbHandle::TransmitExternal(uint8_t *buff, size_t size)
+{
+    return Transmit(buff, size);
 }
 
 void UsbHandle::SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev)
 {
-    // This is pretty silly, but we're working iteritavely...
-    rx_callback = cb;
-    rxcallback  = (CDC_ReceiveCallback)rx_callback;
+    // Store the callback function
+    usb_rx_callback = cb;
 
-    switch(dev)
-    {
-        case FS_INTERNAL: CDC_Set_Rx_Callback_FS(rxcallback); break;
-        case FS_EXTERNAL: CDC_Set_Rx_Callback_HS(rxcallback); break;
-        case FS_BOTH:
-            CDC_Set_Rx_Callback_FS(rxcallback);
-            CDC_Set_Rx_Callback_HS(rxcallback);
-            break;
-        default: break;
-    }
+    // No need to do anything else, as TinyUSB will call tud_cdc_rx_cb()
+    // whenever data is received, which will then call our callback
+
+    // Note: We ignore the dev parameter since TinyUSB uses the itf parameter
+    // in the callback to distinguish between different CDC interfaces
+    (void)dev;
+}
+
+size_t UsbHandle::GetRxAvailable() const
+{
+    return tud_cdc_available();
+}
+
+size_t UsbHandle::Receive(uint8_t *buff, size_t size)
+{
+    // If using callbacks, we might want to buffer data differently
+    // For now, we just pass through to tud_cdc_read
+    return tud_cdc_read(buff, size);
+}
+
+UsbHandle::Result UsbHandle::Flush()
+{
+    tud_cdc_write_flush();
+    return Result::OK;
+}
+
+bool UsbHandle::IsTransmitReady(size_t size) const
+{
+    return tud_cdc_write_available() >= size;
 }
 
 // Static Function Implementation
@@ -170,5 +233,34 @@ extern "C"
         HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
     }
 
-    void OTG_FS_IRQHandler(void) { HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS); }
+    void OTG_FS_IRQHandler(void)
+    {
+        tud_int_handler(BOARD_TUD_FS_RHPORT);
+    }
+
+    // Add this implementation of TinyUSB's callback function
+    void tud_cdc_rx_cb(uint8_t itf)
+    {
+        (void)itf; // Unused parameter
+
+        if(usb_rx_callback != nullptr)
+        {
+            // Get the amount of data available
+            uint32_t count = tud_cdc_available();
+
+            // Don't exceed buffer size
+            if(count > sizeof(rx_buffer))
+                count = sizeof(rx_buffer);
+
+            // Only call the callback if there's data
+            if(count > 0)
+            {
+                // Read the data into our buffer
+                uint32_t read = tud_cdc_read(rx_buffer, count);
+
+                // Call user callback with the data
+                usb_rx_callback(rx_buffer, &read);
+            }
+        }
+    }
 }

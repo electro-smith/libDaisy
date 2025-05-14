@@ -2,6 +2,7 @@
 #include "usbd_cdc.h"
 #include "hid/usb_midi.h"
 #include <cassert>
+#include "tusb.h"
 
 using namespace daisy;
 
@@ -18,282 +19,222 @@ class MidiUsbTransport::Impl
     }
 
     bool RxActive() { return rx_active_; }
-    void FlushRx() { rx_buffer_.Flush(); }
-    void Tx(uint8_t* buffer, size_t size);
+    void FlushRx()
+    { /* No need for explicit flushing with TinyUSB */
+    }
 
-    void UsbToMidi(uint8_t* buffer, uint8_t length);
-    void MidiToUsb(uint8_t* buffer, size_t length);
-    void Parse();
+    void Tx(uint8_t* buffer, size_t size);
+    void Tx(uint8_t cable_num, uint8_t* buffer, size_t size);
+
+    void ProcessRx(); // Process any pending received MIDI packets
 
   private:
-    void MidiToUsbSingle(uint8_t* buffer, size_t length);
-
-    /** USB Handle for CDC transfers
-         */
-    UsbHandle usb_handle_;
-    Config    config_;
+    Config config_;
 
     static constexpr size_t kBufferSize = 1024;
     bool                    rx_active_;
-    // This corresponds to 256 midi messages
-    RingBuffer<uint8_t, kBufferSize> rx_buffer_;
-    MidiRxParseCallback              parse_callback_;
-    void*                            parse_context_;
+    MidiRxParseCallback     parse_callback_;
+    void*                   parse_context_;
 
-    // simple, self-managed buffer
-    uint8_t tx_buffer_[kBufferSize];
-    size_t  tx_ptr_;
-
-    // MIDI message size determined by the
-    // code index number. You can find this
-    // table in the MIDI USB spec 1.0
-    const uint8_t code_index_size_[16]
-        = {3, 3, 2, 3, 3, 1, 2, 3, 3, 3, 3, 3, 2, 2, 3, 1};
-
-    const uint8_t midi_message_size_[16]
-        = {0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 1, 1, 2, 0};
-
-    // Masks to check for message type, and byte content
-    const uint8_t kStatusByteMask     = 0x80;
-    const uint8_t kMessageMask        = 0x70;
-    const uint8_t kDataByteMask       = 0x7F;
-    const uint8_t kSystemCommonMask   = 0xF0;
-    const uint8_t kChannelMask        = 0x0F;
-    const uint8_t kRealTimeMask       = 0xF8;
-    const uint8_t kSystemRealTimeMask = 0x07;
+    // For handling Running Status in MIDI messages
+    uint8_t last_status_byte_;
+    bool    running_status_enabled_;
 };
 
 // Global Impl
 static MidiUsbTransport::Impl midi_usb_handle;
 
-void ReceiveCallback(uint8_t* buffer, uint32_t* length)
-{
-    if(midi_usb_handle.RxActive())
-    {
-        for(uint16_t i = 0; i < *length; i += 4)
-        {
-            size_t  remaining_bytes = *length - i;
-            uint8_t packet_length   = remaining_bytes > 4 ? 4 : remaining_bytes;
-            midi_usb_handle.UsbToMidi(buffer + i, packet_length);
-            midi_usb_handle.Parse();
-        }
-    }
-}
-
 void MidiUsbTransport::Impl::Init(Config config)
 {
-    // Borrowed from logger
-    /** this implementation relies on the fact that UsbHandle class has no member variables and can be shared
-     * assert this statement:
-     */
-    // static_assert(1u == sizeof(MidiUsbTransport::Impl::usb_handle_), "UsbHandle is not static");
+    config_                 = config;
+    rx_active_              = false;
+    last_status_byte_       = 0;
+    running_status_enabled_ = true;
 
-    // This tells the USB middleware to send out MIDI descriptors instead of CDC
-    usbd_mode = USBD_MODE_MIDI;
-    config_   = config;
-
-    UsbHandle::UsbPeriph periph = UsbHandle::FS_INTERNAL;
-    if(config_.periph == Config::EXTERNAL)
-        periph = UsbHandle::FS_EXTERNAL;
-
-    usb_handle_.Init(periph);
-
-    rx_active_ = false;
-    System::Delay(10);
-    usb_handle_.SetReceiveCallback(ReceiveCallback, periph);
+    // TinyUSB initialization should already be done
+    // in the UsbHandle::Init() function
 }
 
 void MidiUsbTransport::Impl::Tx(uint8_t* buffer, size_t size)
 {
-    UsbHandle::Result result;
-    int               attempt_count = config_.tx_retry_count;
-    bool              should_retry;
-
-    MidiToUsb(buffer, size);
-    do
-    {
-        if(config_.periph == Config::EXTERNAL)
-            result = usb_handle_.TransmitExternal(tx_buffer_, tx_ptr_);
-        else
-            result = usb_handle_.TransmitInternal(tx_buffer_, tx_ptr_);
-
-        should_retry = (result == UsbHandle::Result::ERR) && attempt_count--;
-
-        if(should_retry)
-            System::DelayUs(100);
-    } while(should_retry);
-
-    tx_ptr_ = 0;
+    // Always use cable 0 when not specified
+    Tx(0, buffer, size);
 }
 
-void MidiUsbTransport::Impl::UsbToMidi(uint8_t* buffer, uint8_t length)
+void MidiUsbTransport::Impl::Tx(uint8_t cable_num, uint8_t* buffer, size_t size)
 {
-    // A length of less than four in the buffer indicates
-    // a garbled message, since USB MIDI packets usually*
-    // require 4 bytes per message
-    if(length < 4)
-        return;
-
-    // Right now, Daisy only supports a single cable, so we don't
-    // need to extract that value from the upper nibble
-    uint8_t code_index = buffer[0] & 0xF;
-    if(code_index == 0x0 || code_index == 0x1)
+    if(!tud_midi_mounted())
     {
-        // 0x0 and 0x1 are reserved codes, and if they come up,
-        // there's probably been an error. *0xF indicates data is
-        // sent one byte at a time, rather than in packets of four.
-        // This functionality could be supported later.
-        // The single-byte mode does still come through as 32-bit messages
         return;
     }
 
-    // Only writing as many bytes as necessary
-    for(uint8_t i = 0; i < code_index_size_[code_index]; i++)
-    {
-        if(rx_buffer_.writable() > 0)
-            rx_buffer_.Write(buffer[1 + i]);
-        else
-        {
-            rx_active_ = false; // disable on overflow
-            break;
-        }
-    }
-}
+    // Ensure cable number is valid (0-15)
+    cable_num = cable_num & 0x0F;
 
-void MidiUsbTransport::Impl::MidiToUsbSingle(uint8_t* buffer, size_t size)
-{
-    if(size == 0)
+    // We'll handle raw MIDI messages here, and encode them for USB MIDI
+    if(size == 0 || buffer == nullptr)
+    {
         return;
-
-    // Channel voice messages
-    if((buffer[0] & 0xF0) != 0xF0)
-    {
-        // Check message validity
-        if((buffer[0] & 0xF0) == 0xC0 || (buffer[0] & 0xF0) == 0xD0)
-        {
-            if(size != 2)
-                return; // error
-        }
-        else
-        {
-            if(size != 3)
-                return; //error
-        }
-
-        // CIN is the same as status byte for channel voice messages
-        tx_buffer_[tx_ptr_ + 0] = (buffer[0] & 0xF0) >> 4;
-        tx_buffer_[tx_ptr_ + 1] = buffer[0];
-        tx_buffer_[tx_ptr_ + 2] = buffer[1];
-        tx_buffer_[tx_ptr_ + 3] = size == 3 ? buffer[2] : 0;
-
-        tx_ptr_ += 4;
     }
-    else // buffer[0] & 0xF0 == 0xF0 aka System common or realtime
+
+    // For basic Channel Voice messages (the most common case)
+    if((buffer[0] & 0x80) && (buffer[0] & 0xF0) != 0xF0)
     {
-        if(0xF2 == buffer[0])
-        // three byte message
+        uint8_t status_byte = buffer[0];
+        uint8_t channel     = buffer[0] & 0x0F;
+        uint8_t msg_type    = buffer[0] & 0xF0;
+
+        // Determine message size based on status byte
+        size_t msg_size = 3; // Most common case for note on/off, CC, etc.
+
+        if(msg_type == 0xC0 || msg_type == 0xD0)
         {
-            if(size != 3)
-                return; // error
-
-            tx_buffer_[tx_ptr_ + 0] = 0x03;
-            tx_buffer_[tx_ptr_ + 1] = buffer[0];
-            tx_buffer_[tx_ptr_ + 2] = buffer[1];
-            tx_buffer_[tx_ptr_ + 3] = buffer[2];
-
-            tx_ptr_ += 4;
+            msg_size = 2; // Program change and Channel pressure
         }
-        if(0xF1 == buffer[0] || 0xF3 == buffer[0])
-        // two byte messages
+
+        // Ensure we have enough bytes for the full message
+        if(size >= msg_size)
         {
-            if(size != 2)
-                return; // error
-
-            tx_buffer_[tx_ptr_ + 0] = 0x02;
-            tx_buffer_[tx_ptr_ + 1] = buffer[0];
-            tx_buffer_[tx_ptr_ + 2] = buffer[1];
-            tx_buffer_[tx_ptr_ + 3] = 0;
-
-            tx_ptr_ += 4;
-        }
-        else if(0xF4 <= buffer[0])
-        // one byte message
-        {
-            if(size != 1)
-                return; // error
-
-            tx_buffer_[tx_ptr_ + 0] = 0x05;
-            tx_buffer_[tx_ptr_ + 1] = buffer[0];
-            tx_buffer_[tx_ptr_ + 2] = 0;
-            tx_buffer_[tx_ptr_ + 3] = 0;
-
-            tx_ptr_ += 4;
-        }
-        else // sysex
-        {
-            size_t i = 0;
-            // Sysex messages are split up into several 4 bytes packets
-            // first ones use CIN 0x04
-            // but packet containing the SysEx stop byte use a different CIN
-            for(i = 0; i + 3 < size; i += 3, tx_ptr_ += 4)
+            if(msg_size == 3)
             {
-                tx_buffer_[tx_ptr_]     = 0x04;
-                tx_buffer_[tx_ptr_ + 1] = buffer[i];
-                tx_buffer_[tx_ptr_ + 2] = buffer[i + 1];
-                tx_buffer_[tx_ptr_ + 3] = buffer[i + 2];
+                tud_midi_n_stream_write(0, cable_num, buffer, 3);
             }
-
-            // Fill CIN for terminating bytes
-            // 0x05 for 1 remaining byte
-            // 0x06 for 2
-            // 0x07 for 3
-            tx_buffer_[tx_ptr_] = 0x05 + (size - i - 1);
-            tx_ptr_++;
-            for(; i < size; ++i, ++tx_ptr_)
-                tx_buffer_[tx_ptr_] = buffer[i];
-            for(; (tx_ptr_ % 4) != 0; ++tx_ptr_)
-                tx_buffer_[tx_ptr_] = 0;
-        }
-    }
-}
-
-void MidiUsbTransport::Impl::MidiToUsb(uint8_t* buffer, size_t size)
-{
-    // We'll assume your message starts with a status byte!
-    size_t status_index = 0;
-    while(status_index < size)
-    {
-        // Search for next status byte or end
-        size_t next_status = status_index;
-        for(size_t j = status_index + 1; j < size; j++)
-        {
-            if(buffer[j] & 0x80)
+            else if(msg_size == 2)
             {
-                next_status = j;
-                break;
+                tud_midi_n_stream_write(0, cable_num, buffer, 2);
             }
         }
-        if(next_status == status_index)
+    }
+    // System Common and System Real-Time messages
+    else if((buffer[0] & 0xF0) == 0xF0)
+    {
+        // SysEx message - special handling required
+        if(buffer[0] == 0xF0)
         {
-            // Either we're at the end or it's malformed
-            next_status = size;
+            // Find end of SysEx
+            size_t sysex_size = 1;
+            while(sysex_size < size && buffer[sysex_size] != 0xF7)
+            {
+                sysex_size++;
+            }
+            // Include the end marker
+            if(sysex_size < size && buffer[sysex_size] == 0xF7)
+            {
+                sysex_size++;
+            }
+
+            // TinyUSB has a helper function to send SysEx
+            tud_midi_n_stream_write(0, cable_num, buffer, sysex_size);
         }
-        MidiToUsbSingle(buffer + status_index, next_status - status_index);
-        status_index = next_status;
+        // Other system messages
+        else if(buffer[0] == 0xF1 || buffer[0] == 0xF3)
+        {
+            // 2-byte messages (Time Code, Song Select)
+            if(size >= 2)
+            {
+                tud_midi_n_stream_write(0, cable_num, buffer, 2);
+            }
+        }
+        else if(buffer[0] == 0xF2)
+        {
+            // 3-byte message (Song Position)
+            if(size >= 3)
+            {
+                tud_midi_n_stream_write(0, cable_num, buffer, 3);
+            }
+        }
+        else
+        {
+            // Single-byte messages (realtime)
+            tud_midi_n_stream_write(0, cable_num, buffer, 1);
+        }
     }
 }
 
-void MidiUsbTransport::Impl::Parse()
+void MidiUsbTransport::Impl::ProcessRx()
 {
-    if(parse_callback_)
+    if(!rx_active_ || !parse_callback_)
     {
-        uint8_t bytes[kBufferSize];
-        size_t  i = 0;
-        while(!rx_buffer_.isEmpty())
+        return;
+    }
+
+    // Check if there's data available
+    if(!tud_midi_available())
+    {
+        return;
+    }
+
+    // Buffer to store multiple MIDI messages
+    uint8_t rx_buffer[kBufferSize];
+    size_t  total_bytes = 0;
+
+    // Read and process all available packets
+    while(tud_midi_available() && total_bytes < kBufferSize)
+    {
+        uint8_t packet[4];
+
+        // Read the full USB MIDI packet (always 4 bytes)
+        if(tud_midi_packet_read(packet))
         {
-            bytes[i++] = rx_buffer_.Read();
+            uint8_t cable      = packet[0] >> 4;
+            uint8_t code_index = packet[0] & 0x0F;
+
+            // Skip invalid code indices (0x0, 0x1)
+            if(code_index == 0x0 || code_index == 0x1)
+            {
+                continue;
+            }
+
+            // The number of valid bytes in the packet depends on the code index
+            // Convert from USB-MIDI packet to regular MIDI message
+            uint8_t bytes_to_copy;
+
+            switch(code_index)
+            {
+                case 0x2: // 2-byte System Common messages like MTC, Song Select
+                case 0xC: // Program Change
+                case 0xD: // Channel Pressure
+                    bytes_to_copy = 2;
+                    break;
+
+                case 0x3: // 3-byte System Common messages like Song Position
+                case 0x4: // SysEx starts or continues
+                case 0x5: // Single-byte System Common, or SysEx ends with one byte
+                case 0x6: // SysEx ends with two bytes
+                case 0x7: // SysEx ends with three bytes
+                case 0x8: // Note Off
+                case 0x9: // Note On
+                case 0xA: // Poly-Key Press
+                case 0xB: // Control Change
+                case 0xE: // Pitch Bend Change
+                    bytes_to_copy = 3;
+                    break;
+
+                case 0xF: // Single Byte message (like realtime)
+                    bytes_to_copy = 1;
+                    break;
+
+                default: bytes_to_copy = 0; break;
+            }
+
+            // Copy valid bytes to our buffer
+            for(uint8_t i = 0; i < bytes_to_copy && total_bytes < kBufferSize;
+                i++)
+            {
+                rx_buffer[total_bytes++]
+                    = packet[i + 1]; // Skip the cable nibble/code index byte
+            }
         }
-        parse_callback_(bytes, i, parse_context_);
+        else
+        {
+            break; // Error reading packet
+        }
+    }
+
+    // If we collected any data, pass it to the callback
+    if(total_bytes > 0 && parse_callback_)
+    {
+        parse_callback_(rx_buffer, total_bytes, parse_context_);
     }
 }
 
@@ -319,10 +260,20 @@ bool MidiUsbTransport::RxActive()
 
 void MidiUsbTransport::FlushRx()
 {
-    pimpl_->FlushRx();
+    // Noop with TinyUSB - flushing happens automatically
 }
 
 void MidiUsbTransport::Tx(uint8_t* buffer, size_t size)
 {
     pimpl_->Tx(buffer, size);
+}
+
+void MidiUsbTransport::Tx(uint8_t cable_num, uint8_t* buffer, size_t size)
+{
+    pimpl_->Tx(cable_num, buffer, size);
+}
+
+void MidiUsbTransport::ProcessRx()
+{
+    pimpl_->ProcessRx();
 }

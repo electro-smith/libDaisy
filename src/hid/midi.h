@@ -59,6 +59,7 @@ class MidiUartTransport
         UartHandler::Config::DmaStream rx_dma_stream;
         UartHandler::Config::DmaStream tx_dma_stream;
 
+        // Declaration only - implementation in midi.cpp
         Config();
     };
 
@@ -124,6 +125,22 @@ class MidiUartTransport
 
     /** @brief sends the buffer of bytes out of the UART peripheral */
     inline void Tx(uint8_t* buff, size_t size) { uart_.PollTx(buff, size); }
+
+    /**
+     * Send MIDI data to a specific virtual cable (port)
+     * For UART, this ignores the cable number since there's only one output
+     * @param cable_num Ignored for UART transport
+     * @param buffer MIDI message bytes
+     * @param size Size of the MIDI message
+     */
+    void Tx(uint8_t cable_num, uint8_t* buffer, size_t size)
+    {
+        // Ignore cable number for UART
+        Tx(buffer, size);
+    }
+
+    // noop (only used for USB MIDI)
+    inline void ProcessRx(){};
 
   private:
     UartHandler         uart_;
@@ -197,6 +214,28 @@ class MidiHandler
         transport_.StartRx(MidiHandler::ParseCallback, this);
     }
 
+    /** Process any received MIDI messages
+     *
+     * For transports that require polling (like TinyUSB-based MIDI),
+     * this method should be called regularly to process incoming MIDI data
+     * and add parsed events to the internal queue.
+     *
+     * For callback-based transports (like UART), this method does nothing.
+     */
+    void ProcessReceive()
+    {
+        // Add protection against recursive calls or deadlocks
+        static bool processing = false;
+
+        // If we're already processing, don't try to re-enter
+        if(processing)
+            return;
+
+        processing = true;
+        transport_.ProcessRx();
+        processing = false;
+    }
+
     /** Start listening */
     void Listen()
     {
@@ -209,6 +248,9 @@ class MidiHandler
             transport_.FlushRx();
             StartReceive();
         }
+
+        // For TinyUSB-based transports, also process any received data
+        ProcessReceive();
     }
 
     /** Checks if there are unhandled messages in the queue
@@ -222,12 +264,26 @@ class MidiHandler
      */
     MidiEvent PopEvent() { return event_q_.PopFront(); }
 
-    /** SendMessage
-    Send raw bytes as message
-    */
+    /** SendMessage to cable 0
+     * Send raw bytes as message
+     * \param bytes Pointer to MIDI message bytes
+     * \param size Number of bytes in the message
+     */
     void SendMessage(uint8_t* bytes, size_t size)
     {
         transport_.Tx(bytes, size);
+    }
+
+    /** SendMessage with specific cable
+     * Send raw bytes as message on a specific virtual cable
+     * \param cable_num Cable number (0-15) for multi-cable devices
+     * \param bytes Pointer to MIDI message bytes
+     * \param size Number of bytes in the message
+     * \note For non-USB transports, the cable number is ignored
+     */
+    void SendMessage(uint8_t cable_num, uint8_t* bytes, size_t size)
+    {
+        transport_.Tx(cable_num, bytes, size);
     }
 
     /** Feed in bytes to parser state machine from an external source.
@@ -268,6 +324,7 @@ class MidiHandler
  * */
 using MidiUartHandler = MidiHandler<MidiUartTransport>;
 using MidiUsbHandler  = MidiHandler<MidiUsbTransport>;
+
 /** @} */
 } // namespace daisy
 #endif

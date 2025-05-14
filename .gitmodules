@@ -16,3 +16,6 @@
 [submodule "Middlewares/ST/STM32_USB_Device_Library"]
 	path = Middlewares/ST/STM32_USB_Device_Library
 	url = https://github.com/STMicroelectronics/stm32_mw_usb_device
+[submodule "Middlewares/Third_Party/tinyusb"]
+	path = Middlewares/Third_Party/tinyusb
+	url = https://github.com/hathach/tinyusb.git

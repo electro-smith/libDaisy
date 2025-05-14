@@ -5,6 +5,8 @@
 #include "sys/dma.h"
 #include "per/gpio.h"
 #include "per/rng.h"
+#include "tusb.h"
+#include "../hid/tusb_config.h"
 
 // global init functions for peripheral drivers.
 // These don't really need to be extern "C" anymore..
@@ -118,7 +120,7 @@ extern "C"
         if(hhcd_USB_OTG_HS.Instance)
             HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
         if(hpcd_USB_OTG_HS.Instance)
-            HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+            tud_int_handler(BOARD_TUD_HS_RHPORT);
     }
 
     // TODO: Add some real handling to the HardFaultHandler

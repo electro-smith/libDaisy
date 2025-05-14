@@ -50,6 +50,7 @@ hid/usb \
 hid/usb_midi \
 hid/wavplayer \
 hid/logger \
+hid/usb_descriptors \
 hid/usb_host \
 per/adc \
 per/dac \
@@ -218,7 +219,20 @@ Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c \
 Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.c \
 Middlewares/Third_Party/FatFs/src/diskio.c \
 Middlewares/Third_Party/FatFs/src/ff.c \
-Middlewares/Third_Party/FatFs/src/ff_gen_drv.c  \
+Middlewares/Third_Party/FatFs/src/ff_gen_drv.c \
+Middlewares/Third_Party/tinyusb/src/tusb.c \
+Middlewares/Third_Party/tinyusb/src/class/cdc/cdc_device.c \
+Middlewares/Third_Party/tinyusb/src/class/cdc/cdc_host.c \
+Middlewares/Third_Party/tinyusb/src/class/cdc/cdc_rndis_host.c \
+Middlewares/Third_Party/tinyusb/src/class/midi/midi_device.c \
+Middlewares/Third_Party/tinyusb/src/class/audio/audio_device.c \
+Middlewares/Third_Party/tinyusb/src/class/msc/msc_device.c \
+Middlewares/Third_Party/tinyusb/src/class/msc/msc_host.c \
+Middlewares/Third_Party/tinyusb/src/common/tusb_fifo.c \
+Middlewares/Third_Party/tinyusb/src/device/usbd.c \
+Middlewares/Third_Party/tinyusb/src/device/usbd_control.c \
+Middlewares/Third_Party/tinyusb/src/portable/synopsys/dwc2/dwc2_common.c \
+Middlewares/Third_Party/tinyusb/src/portable/synopsys/dwc2/dcd_dwc2.c \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_bot.c \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_scsi.c \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc.c \
@@ -297,6 +311,7 @@ C_DEFS =  \
 -DDATA_IN_D2_SRAM
 # ^ added for easy startup access
 
+C_DEFS += -DCFG_TUSB_CONFIG_FILE=\"$(MODULE_DIR)/hid/tusb_config.h\"
 
 C_INCLUDES = \
 -I$(MODULE_DIR) \
@@ -312,6 +327,9 @@ C_INCLUDES = \
 -IMiddlewares/ST/STM32_USB_Host_Library/Core/Inc \
 -IMiddlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc \
 -IMiddlewares/Third_Party/FatFs/src \
+-IMiddlewares/Third_Party/tinyusb/src \
+-IMiddlewares/Third_Party/tinyusb/src/device \
+-IMiddlewares/Third_Party/tinyusb/hw \
 -I$(MODULE_DIR) \
 -I.
 

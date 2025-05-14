@@ -1,11 +1,14 @@
 cmake_policy(SET CMP0048 NEW)
-project (libdaisy VERSION 1.0.0)
+project(libdaisy VERSION 1.0.0)
 cmake_minimum_required(VERSION 3.20)
 
 set(TARGET daisy)
 
-
 set(MODULE_DIR "${CMAKE_CURRENT_LIST_DIR}/src")
+
+add_compile_definitions(
+    CFG_TUSB_CONFIG_FILE="${MODULE_DIR}/hid/tusb_config.h"
+)
 
 add_library(${TARGET} STATIC
     ${MODULE_DIR}/sys/dma.c
@@ -52,6 +55,7 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/hid/usb.cpp
     ${MODULE_DIR}/hid/usb_host.cpp
     ${MODULE_DIR}/hid/usb_midi.cpp
+    ${MODULE_DIR}/hid/tusb_midi.cpp
     ${MODULE_DIR}/hid/wavplayer.cpp
     ${MODULE_DIR}/hid/logger.cpp
     ${MODULE_DIR}/per/adc.cpp
@@ -68,6 +72,7 @@ add_library(${TARGET} STATIC
     ${MODULE_DIR}/ui/UI.cpp
     ${MODULE_DIR}/util/color.cpp
     ${MODULE_DIR}/util/WaveTableLoader.cpp
+    ${MODULE_DIR}/hid/usb_descriptors.c
 
     Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal.c
     Drivers/STM32H7xx_HAL_Driver/Src/stm32h7xx_hal_adc.c
@@ -204,8 +209,22 @@ add_library(${TARGET} STATIC
     Middlewares/Third_Party/FatFs/src/diskio.c
     Middlewares/Third_Party/FatFs/src/ff.c
     Middlewares/Third_Party/FatFs/src/ff_gen_drv.c
+
+    Middlewares/Third_Party/tinyusb/src/tusb.c
+    Middlewares/Third_Party/tinyusb/src/class/cdc/cdc_device.c
+    Middlewares/Third_Party/tinyusb/src/class/cdc/cdc_host.c
+    Middlewares/Third_Party/tinyusb/src/class/cdc/cdc_rndis_host.c
+    Middlewares/Third_Party/tinyusb/src/class/midi/midi_device.c
+    Middlewares/Third_Party/tinyusb/src/class/audio/audio_device.c
+    Middlewares/Third_Party/tinyusb/src/class/msc/msc_device.c
+    Middlewares/Third_Party/tinyusb/src/class/msc/msc_host.c
+    Middlewares/Third_Party/tinyusb/src/common/tusb_fifo.c
+    Middlewares/Third_Party/tinyusb/src/device/usbd.c
+    Middlewares/Third_Party/tinyusb/src/device/usbd_control.c
+    Middlewares/Third_Party/tinyusb/src/portable/synopsys/dwc2/dcd_dwc2.c
+
     core/startup_stm32h750xx.c
-    )
+)
 
 target_include_directories(${TARGET} PUBLIC
     ${MODULE_DIR}
@@ -218,15 +237,18 @@ target_include_directories(${TARGET} PUBLIC
     Middlewares/ST/STM32_USB_Host_Library/Core/Inc
     Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc
     Middlewares/Third_Party/FatFs/src
+    Middlewares/Third_Party/tinyusb/src
+    Middlewares/Third_Party/tinyusb/src/device
+    Middlewares/Third_Party/tinyusb/hw
     src
     src/sys
     src/usbd
     src/usbh
-    )
+)
 
 set_target_properties(${TARGET} PROPERTIES
-  CXX_STANDARD 14
-  CXX_STANDARD_REQUIRED
-  C_STANDARD 11
-  C_STANDARD_REQUIRED
-  )
+    CXX_STANDARD 14
+    CXX_STANDARD_REQUIRED
+    C_STANDARD 11
+    C_STANDARD_REQUIRED
+)

@@ -9,26 +9,26 @@
 
 namespace daisy
 {
-/** 
+/**
  *  @addtogroup hid_logging LOGGING
  *  @brief Intefaces for Logging over USB, etc.
  *  @ingroup human_interface
  *  @ingroup libdaisy
- * 
+ *
  *  The following is a short example of using the DaisySeed::Logger
  *  to print to a serial port.
  *  @include SerialPrint.cpp
  *  @{
  */
 
-/** @defgroup logging_macros LoggerHelperMacros 
+/** @defgroup logging_macros LoggerHelperMacros
  *  @{ */
 /** Logger configuration
  */
 #define LOGGER_NEWLINE "\r\n" /**< custom newline character sequence */
 #define LOGGER_BUFFER 128     /**< size in bytes */
 
-/** 
+/**
  * Helper macros for string concatenation and macro expansion
  */
 #define PPCAT_NX(A, B) A##B          /**< non-expanding concatenation */
@@ -43,7 +43,7 @@ namespace daisy
 #define FLT_FMT(_n) STRINGIZE(PPCAT(PPCAT(%c%d.%0, _n), d))
 // clang-format on
 
-/** Floating point output variable preprocessing 
+/** Floating point output variable preprocessing
  * Note: uses truncation instead of rounding -> the last digit may be off
  */
 #define FLT_VAR(_n, _x)                   \
@@ -62,10 +62,10 @@ namespace daisy
 /**   @brief Interface for simple USB logging
  *    @author Alexander Petrov-Savchenko (axp@soft-amp.com)
  *    @date November 2020
- *    
+ *
  *    Simple Example:
  *    @include SerialPrint.cpp
- * 
+ *
  */
 template <LoggerDestination dest = LOGGER_INTERNAL>
 class Logger
@@ -83,7 +83,7 @@ class Logger
      */
     static void PrintLine(const char* format, ...);
 
-    /**  Start the logging session. 
+    /**  Start the logging session.
      * \param wait_for_pc block until remote terminal is ready
      */
     static void StartLog(bool wait_for_pc = false);
@@ -96,13 +96,24 @@ class Logger
      */
     static void PrintLineV(const char* format, va_list va);
 
+    /** Process any queued log messages
+     *  Call this regularly from your main loop or a low-priority task
+     */
+    static void ProcessQueue();
+
+    /** Print a message without blocking (queued for later) */
+    static void PrintNonBlocking(const char* format, ...);
+
+    /** Print a message without blocking (queued for later) and append newline */
+    static void PrintLineNonBlocking(const char* format, ...);
+
   protected:
     /** Internal constants
      */
     enum LoggerConsts
     {
         LOGGER_SYNC_OUT = 0,
-        LOGGER_SYNC_IN  = 2 /**< successfully transmit this many packets 
+        LOGGER_SYNC_IN  = 2 /**< successfully transmit this many packets
                              * before switching to blocking transfers */
     };
 
@@ -163,6 +174,44 @@ size_t Logger<dest>::tx_ptr_ = 0;
 
 template <LoggerDestination dest>
 LoggerImpl<dest> Logger<dest>::impl_;
+
+/** Process any queued log messages
+ *  Call this regularly from your main loop or a low-priority task
+ */
+template <LoggerDestination dest>
+void Logger<dest>::ProcessQueue()
+{
+    LoggerImpl<dest>::ProcessQueue();
+}
+
+/** Print a message without blocking (queued for later) */
+template <LoggerDestination dest>
+void Logger<dest>::PrintNonBlocking(const char* format, ...)
+{
+    va_list va;
+    va_start(va, format);
+
+    static char temp_buff[LOGGER_BUFFER];
+    vsnprintf(temp_buff, sizeof(temp_buff), format, va);
+    va_end(va);
+
+    LoggerImpl<dest>::QueueMessage(temp_buff, strlen(temp_buff));
+}
+
+/** Print a message without blocking (queued for later) and append newline */
+template <LoggerDestination dest>
+void Logger<dest>::PrintLineNonBlocking(const char* format, ...)
+{
+    va_list va;
+    va_start(va, format);
+
+    static char temp_buff[LOGGER_BUFFER];
+    vsnprintf(temp_buff, sizeof(temp_buff), format, va);
+    va_end(va);
+
+    LoggerImpl<dest>::QueueMessage(temp_buff, strlen(temp_buff));
+    LoggerImpl<dest>::QueueMessage(LOGGER_NEWLINE, 2);
+}
 
 /** @} */ // end logger_statics
 

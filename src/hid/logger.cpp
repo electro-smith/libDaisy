@@ -4,6 +4,7 @@
 #include <cassert>
 #include "logger.h"
 #include "sys/system.h"
+#include "tusb.h"
 
 namespace daisy
 {
@@ -48,7 +49,13 @@ template <LoggerDestination dest>
 void Logger<dest>::StartLog(bool wait_for_pc)
 {
     impl_.Init();
-    /* if waiting for PC, use blocking transmission */
+
+    /* if waiting for PC, wait until host connects */
+    while(wait_for_pc && !tud_cdc_connected())
+    {
+        tud_task();
+    };
+
     pc_sync_ = wait_for_pc ? LOGGER_SYNC_IN : LOGGER_SYNC_OUT;
     /** transmit something to stall the UART until a terminal is connected
      * at least two separate calls are required
@@ -84,7 +91,7 @@ void Logger<dest>::TransmitBuf()
             tx_ptr_ = 0;
         }
         /** otherwise do not reset tx_ptr_
-         *  accumulate data while buffer size permits 
+         *  accumulate data while buffer size permits
          */
     }
 }
@@ -122,6 +129,8 @@ template class Logger<LOGGER_EXTERNAL>;
 template class Logger<LOGGER_SEMIHOST>;
 
 /** LoggerImpl static member variables */
-UsbHandle LoggerImpl<LOGGER_INTERNAL>::usb_handle_;
-UsbHandle LoggerImpl<LOGGER_EXTERNAL>::usb_handle_;
+UsbHandle                      LoggerImpl<LOGGER_INTERNAL>::usb_handle_;
+UsbHandle                      LoggerImpl<LOGGER_EXTERNAL>::usb_handle_;
+FIFO<LogMessage, kLogFifoSize> LoggerImpl<LOGGER_INTERNAL>::log_fifo_;
+FIFO<LogMessage, kLogFifoSize> LoggerImpl<LOGGER_EXTERNAL>::log_fifo_;
 } // namespace daisy
