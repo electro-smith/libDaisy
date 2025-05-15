@@ -202,7 +202,13 @@ class I2CHandle
                               uint8_t* data,
                               uint16_t data_size,
                               uint32_t timeout);
-
+    Result Mem_read( 
+           uint16_t devAddress,
+           uint16_t memAddress,
+           uint16_t memAddSize,
+           uint8_t* pData,
+           uint16_t size,
+           uint32_t timeout);
 
     class Impl; /**< & */
 
