@@ -4,10 +4,6 @@
 #include "stm32h7xx_hal.h"
 #include "dev/flash_IS25LP080D.h"
 #include "dev/flash_IS25LP064A.h"
-extern "C"
-{
-#include "util/hal_map.h"
-}
 
 // TODO: Add handling for alternate device types,
 //        This will be a thing much sooner than anticipated
@@ -128,18 +124,18 @@ class QSPIHandle::Impl
     bool      pre_init_complete_;
 
     static constexpr size_t pin_count_
-        = sizeof(QSPIHandle::Config::pin_config) / sizeof(dsy_gpio_pin);
+        = sizeof(QSPIHandle::Config::pin_config) / sizeof(Pin);
     // Data structure for easy hal initialization
-    dsy_gpio_pin* pin_config_arr_quad[pin_count_] = {&config_.pin_config.io0,
-                                                     &config_.pin_config.io1,
-                                                     &config_.pin_config.io2,
-                                                     &config_.pin_config.io3,
-                                                     &config_.pin_config.clk,
-                                                     &config_.pin_config.ncs};
-    dsy_gpio_pin* pin_config_arr_sd[4]            = {&config_.pin_config.io0,
-                                                     &config_.pin_config.io1,
-                                                     &config_.pin_config.clk,
-                                                     &config_.pin_config.ncs};
+    Pin* pin_config_arr_quad[pin_count_] = {&config_.pin_config.io0,
+                                            &config_.pin_config.io1,
+                                            &config_.pin_config.io2,
+                                            &config_.pin_config.io3,
+                                            &config_.pin_config.clk,
+                                            &config_.pin_config.ncs};
+    Pin* pin_config_arr_sd[4]            = {&config_.pin_config.io0,
+                                            &config_.pin_config.io1,
+                                            &config_.pin_config.clk,
+                                            &config_.pin_config.ncs};
 };
 
 
@@ -152,7 +148,7 @@ static QSPIHandle::Impl qspi_impl;
 QSPIHandle::Result QSPIHandle::Impl::PreInit(uint32_t flash_size)
 {
     // Prior to first pass, set pins for IO2 and IO3 to known HIGH states for duration of first pass, then DeInit:
-    const dsy_gpio_pin* pre_init_pins[]
+    const Pin* pre_init_pins[]
         = {&config_.pin_config.io2, &config_.pin_config.io3};
 
     //__HAL_RCC_GPIOF_CLK_ENABLE();
@@ -219,10 +215,10 @@ QSPIHandle::Result QSPIHandle::Impl::PreInit(uint32_t flash_size)
     }
     for(int i = 0; i < 2; i++)
     {
-        const dsy_gpio_pin* p = pre_init_pins[i];
-        GPIO_TypeDef*       port;
-        port = dsy_hal_map_get_port(p);
-        HAL_GPIO_DeInit(port, dsy_hal_map_get_pin(p));
+        const Pin*    p = pre_init_pins[i];
+        GPIO_TypeDef* port;
+        port = GetHALPort(*p);
+        HAL_GPIO_DeInit(port, GetHALPin(*p));
     }
     init_state_        = InitState::SingleLineSR;
     pre_init_complete_ = true;
@@ -1043,21 +1039,23 @@ uint8_t QSPIHandle::Impl::GetStatusRegister()
 
 uint32_t QSPIHandle::Impl::GetPin(size_t pin)
 {
+    Pin* p;
     if(init_state_ == InitState::Uninitialized)
-        return dsy_hal_map_get_pin(pin_config_arr_sd[pin]);
-    return dsy_hal_map_get_pin(pin_config_arr_quad[pin]);
-    // dsy_gpio_pin* p = pin_config_arr_[pin];
-    // return dsy_hal_map_get_pin(p);
+        p = pin_config_arr_sd[pin];
+    else
+        p = pin_config_arr_quad[pin];
+    return GetHALPin(*p);
 }
 
 
 GPIO_TypeDef* QSPIHandle::Impl::GetPort(size_t pin)
 {
-    // dsy_gpio_pin* p = pin_config_arr_[pin];
-    // return dsy_hal_map_get_port(p);
+    Pin* p;
     if(init_state_ == InitState::Uninitialized)
-        return dsy_hal_map_get_port(pin_config_arr_sd[pin]);
-    return dsy_hal_map_get_port(pin_config_arr_quad[pin]);
+        p = pin_config_arr_sd[pin];
+    else
+        p = pin_config_arr_quad[pin];
+    return GetHALPort(*p);
 }
 
 uint8_t QSPIHandle::Impl::GetAF(size_t pin)

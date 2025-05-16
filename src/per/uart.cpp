@@ -1,20 +1,17 @@
 #include <stm32h7xx_hal.h>
+#include "stm32h7xx_ll_dma.h"
 #include "per/uart.h"
+#include "sys/dma.h"
 #include "util/ringbuffer.h"
 #include "util/scopedirqblocker.h"
-
-extern "C"
-{
-#include "util/hal_map.h"
-}
 
 using namespace daisy;
 
 #define UART_RX_BUFF_SIZE 256
 
 // the fifo buffer to be DMA read into
-typedef RingBuffer<uint8_t, UART_RX_BUFF_SIZE> UartRingBuffer;
-static UartRingBuffer DMA_BUFFER_MEM_SECTION   uart_dma_fifo;
+// typedef RingBuffer<uint8_t, UART_RX_BUFF_SIZE> UartRingBuffer;
+// static UartRingBuffer DMA_BUFFER_MEM_SECTION   uart_dma_fifo;
 
 static void Error_Handler()
 {
@@ -69,6 +66,34 @@ class UartHandler::Impl
                       EndCallbackFunctionPtr   end_callback,
                       void*                    callback_context);
 
+    /** Starts the DMA Reception in "Listen" mode.
+     *  In this mode the DMA is configured for circular
+     *  behavior, and the IDLE interrupt is enabled.
+     *
+     *  At TC, HT, and IDLE interrupts data must be processed.
+     *
+     *  Size must be set so that at maximum bandwidth, the software
+     *  has time to process N bytes before the next circular IRQ is fired
+     *
+     */
+    Result DmaListenStart(uint8_t*                      buff,
+                          size_t                        size,
+                          CircularRxCallbackFunctionPtr cb,
+                          void*                         callback_context);
+
+    /** Stops the DMA Reception in "Listen" mode
+     *  by stopping the DMA reception, disabling the IDLE
+     *  IRQ, and setting listen_mode_ to false.
+     */
+    Result DmaListenStop();
+
+    /** Returns the state of the listen_mode var.
+     *  set when DmaListen starts, and cleared
+     *  when DmaListen stops. Used to detect if the
+     *  reception is active.
+     */
+    bool IsListening() const;
+
 
     Result StartDmaTx(uint8_t*                 buff,
                       size_t                   size,
@@ -89,7 +114,7 @@ class UartHandler::Impl
     static void QueueDmaTransfer(size_t uart_idx, const UartDmaJob& job);
     static bool IsDmaTransferQueuedFor(size_t uart_idx);
 
-    static void DmaReceiveFifoEndCallback(void* context, Result res);
+    // static void DmaReceiveFifoEndCallback(void* context, Result res);
 
     Result SetDmaPeripheral();
 
@@ -99,16 +124,6 @@ class UartHandler::Impl
 
     Result DeInitPins();
 
-    void HandleFifo();
-
-    Result DmaReceiveFifo();
-
-    Result FlushFifo();
-
-    uint8_t PopFifo();
-
-    size_t ReadableFifo();
-
     int CheckError();
 
     static constexpr uint8_t      kNumUartWithDma = 9;
@@ -117,15 +132,21 @@ class UartHandler::Impl
     static EndCallbackFunctionPtr next_end_callback_;
     static void*                  next_callback_context_;
 
+    /** Not static -- any UART can use this
+     *  until we had dynamic DMA stream handling
+     *  this will consume the sole DMA stream for UART Rx
+     */
+    CircularRxCallbackFunctionPtr circular_rx_callback_;
+    void*                         circular_rx_context_;
+    uint8_t*                      circular_rx_buff_;
+    size_t                        circular_rx_total_size_;
+    size_t                        circular_rx_last_pos_;
+    bool                          listener_mode_;
+
     Config             config_;
     UART_HandleTypeDef huart_;
     DMA_HandleTypeDef  hdma_rx_;
     DMA_HandleTypeDef  hdma_tx_;
-
-    bool            using_fifo_;
-    UartRingBuffer* dma_fifo_rx_; // pointer to FIFO DMA reads into
-    UartRingBuffer  queue_rx_;    // double buffer ( user reads from )
-    size_t          rx_last_pos_;
 };
 
 
@@ -137,15 +158,15 @@ static UartHandler::Impl uart_handles[9];
 
 UartHandler::Impl* MapInstanceToHandle(USART_TypeDef* instance)
 {
-    constexpr USART_TypeDef* instances[9] = {USART1,
-                                             USART2,
-                                             USART3,
-                                             UART4,
-                                             UART5,
-                                             USART6,
-                                             UART7,
-                                             UART8,
-                                             LPUART1}; // map HAL instances
+    USART_TypeDef* instances[9] = {USART1,
+                                   USART2,
+                                   USART3,
+                                   UART4,
+                                   UART5,
+                                   USART6,
+                                   UART7,
+                                   UART8,
+                                   LPUART1}; // map HAL instances
     for(int i = 0; i < 9; i++)
     {
         if(instance == instances[i])
@@ -231,7 +252,7 @@ UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
     huart_.Init.HwFlowCtl              = UART_HWCONTROL_NONE;
     huart_.Init.OverSampling           = UART_OVERSAMPLING_16;
     huart_.Init.OneBitSampling         = UART_ONE_BIT_SAMPLE_DISABLE;
-    huart_.Init.ClockPrescaler         = UART_PRESCALER_DIV1;
+    huart_.Init.ClockPrescaler         = UART_PRESCALER_DIV2;
     huart_.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
 
     if(HAL_UART_Init(&huart_) != HAL_OK)
@@ -253,11 +274,8 @@ UartHandler::Result UartHandler::Impl::Init(const UartHandler::Config& config)
         return Result::ERR;
     }
 
-    // Fifo stuff
-    using_fifo_  = false;
-    dma_fifo_rx_ = &uart_dma_fifo;
-    dma_fifo_rx_->Init();
-    queue_rx_.Init();
+    /** New listener mode to replace old "Fifo" stuff */
+    listener_mode_ = false;
 
     return Result::OK;
 }
@@ -313,7 +331,7 @@ UartHandler::Result UartHandler::Impl::InitDma(bool rx, bool tx)
     hdma_rx_.Init.MemInc              = DMA_MINC_ENABLE;
     hdma_rx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
     hdma_rx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
-    hdma_rx_.Init.Mode                = using_fifo_ ? DMA_CIRCULAR : DMA_NORMAL;
+    hdma_rx_.Init.Mode                = DMA_NORMAL;
     hdma_rx_.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
     hdma_rx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
     hdma_rx_.Init.Direction           = DMA_PERIPH_TO_MEMORY;
@@ -349,39 +367,7 @@ UartHandler::Result UartHandler::Impl::InitDma(bool rx, bool tx)
         __HAL_LINKDMA(&huart_, hdmatx, hdma_tx_);
     }
 
-    if(using_fifo_)
-    {
-        // Disable HalfTransfer Interrupt
-        ((DMA_Stream_TypeDef*)hdma_rx_.Instance)->CR &= ~(DMA_SxCR_HTIE);
-
-        //enable idle interrupts
-        __HAL_UART_ENABLE_IT(&huart_, UART_IT_IDLE);
-    }
-
     return UartHandler::Result::OK;
-}
-
-// formerly known as "UARTRxComplete()"
-void UartHandler::Impl::HandleFifo()
-{
-    size_t len, cur_pos;
-
-    //get current write pointer
-    cur_pos = (UART_RX_BUFF_SIZE
-               - ((DMA_Stream_TypeDef*)huart_.hdmarx->Instance)->NDTR)
-              & (UART_RX_BUFF_SIZE - 1);
-
-    //calculate how far the DMA write pointer has moved
-    len = (cur_pos - rx_last_pos_ + UART_RX_BUFF_SIZE) % UART_RX_BUFF_SIZE;
-
-    dma_fifo_rx_->Advance(len);
-    rx_last_pos_ = cur_pos;
-
-    // Copy to queue fifo we don't want to use primary fifo to avoid
-    // changes to the buffer while its being processed
-    uint8_t processbuf[256];
-    dma_fifo_rx_->ImmediateRead(processbuf, len);
-    queue_rx_.Overwrite(processbuf, len);
 }
 
 void UartHandler::Impl::DmaTransferFinished(UART_HandleTypeDef* huart,
@@ -499,6 +485,67 @@ UartHandler::Result UartHandler::Impl::DmaTransmit(
         buff, size, start_callback, end_callback, callback_context);
 }
 
+
+UartHandler::Result
+UartHandler::Impl::DmaListenStart(uint8_t* buff,
+                                  size_t   size,
+                                  UartHandler::CircularRxCallbackFunctionPtr cb,
+                                  void* callback_context)
+{
+    /** Set internal data*/
+    circular_rx_buff_       = buff;
+    circular_rx_total_size_ = size;
+    circular_rx_callback_   = cb;
+    circular_rx_context_    = callback_context;
+    circular_rx_last_pos_   = 0;
+    listener_mode_          = true;
+
+    /** Initialize DMA Rx i
+     *  TODO: Update when dynamic DMA Stream acquisition is added
+     */
+    hdma_rx_.Instance                 = DMA1_Stream5;
+    hdma_rx_.Init.PeriphInc           = DMA_PINC_DISABLE;
+    hdma_rx_.Init.MemInc              = DMA_MINC_ENABLE;
+    hdma_rx_.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE;
+    hdma_rx_.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE;
+    hdma_rx_.Init.Mode                = DMA_CIRCULAR;
+    hdma_rx_.Init.Priority            = DMA_PRIORITY_VERY_HIGH;
+    hdma_rx_.Init.FIFOMode            = DMA_FIFOMODE_DISABLE;
+    hdma_rx_.Init.Direction           = DMA_PERIPH_TO_MEMORY;
+    SetDmaPeripheral();
+
+    if(HAL_DMA_Init(&hdma_rx_) != HAL_OK)
+        return UartHandler::Result::ERR;
+    __HAL_LINKDMA(&huart_, hdmarx, hdma_rx_);
+
+    // enable idle interrupts so that TC, HT, and IDLE are triggers
+    __HAL_UART_ENABLE_IT(&huart_, UART_IT_IDLE);
+
+    /** cache maintanence to allow memory from cache-able regions  */
+    dsy_dma_invalidate_cache_for_buffer(buff, size);
+    if(HAL_UART_Receive_DMA(&huart_, buff, size) != HAL_OK)
+        return UartHandler::Result::ERR;
+    dma_active_peripheral_ = int(config_.periph);
+    return UartHandler::Result::OK;
+}
+
+UartHandler::Result UartHandler::Impl::DmaListenStop()
+{
+    /** Set Listener Mode */
+    listener_mode_ = false;
+    /** Disable IDLE IRQ*/
+    __HAL_UART_DISABLE_IT(&huart_, UART_IT_IDLE);
+    /** Stop DMA */
+    if(HAL_UART_DMAStop(&huart_) != HAL_OK)
+        return UartHandler::Result::ERR;
+    return UartHandler::Result::OK;
+}
+
+bool UartHandler::Impl::IsListening() const
+{
+    return listener_mode_;
+}
+
 UartHandler::Result UartHandler::Impl::StartDmaTx(
     uint8_t*                              buff,
     size_t                                size,
@@ -543,6 +590,8 @@ UartHandler::Result UartHandler::Impl::DmaReceive(
     UartHandler::EndCallbackFunctionPtr   end_callback,
     void*                                 callback_context)
 {
+    /** Normal transfer is not listener mode */
+    listener_mode_ = false;
     // if dma is currently running - queue a job
     if(IsDmaBusy())
     {
@@ -605,6 +654,7 @@ UartHandler::Result UartHandler::Impl::StartDmaRx(
     return UartHandler::Result::OK;
 }
 
+
 UartHandler::Result
 UartHandler::Impl::BlockingReceive(uint8_t* buff, size_t size, uint32_t timeout)
 {
@@ -626,48 +676,6 @@ UartHandler::Result UartHandler::Impl::BlockingTransmit(uint8_t* buff,
     return Result::OK;
 }
 
-//gets called if the buffer is overrun, transfer buffers and restart DMA
-void UartHandler::Impl::DmaReceiveFifoEndCallback(void*               context,
-                                                  UartHandler::Result res)
-{
-    // when the DMA hits the end in circular mode, it's considered an ERROR
-    // for some reason it sometimes comes up as OK as well though
-    // for now we'll catch the errors and just reset
-    if(res == UartHandler::Result::OK || res == UartHandler::Result::ERR)
-    {
-        UartHandler::Impl* handle = (UartHandler::Impl*)context;
-        handle->HandleFifo();
-        HAL_UART_Init(&handle->huart_);
-        handle->DmaReceiveFifo();
-    }
-}
-
-UartHandler::Result UartHandler::Impl::DmaReceiveFifo()
-{
-    using_fifo_ = true;
-    return DmaReceive((uint8_t*)dma_fifo_rx_->GetMutableBuffer(),
-                      UART_RX_BUFF_SIZE,
-                      NULL,
-                      UartHandler::Impl::DmaReceiveFifoEndCallback,
-                      (void*)this);
-}
-
-UartHandler::Result UartHandler::Impl::FlushFifo()
-{
-    queue_rx_.Flush();
-    return Result::OK;
-}
-
-uint8_t UartHandler::Impl::PopFifo()
-{
-    return queue_rx_.Read();
-}
-
-size_t UartHandler::Impl::ReadableFifo()
-{
-    return queue_rx_.readable();
-}
-
 int UartHandler::Impl::CheckError()
 {
     return HAL_UART_GetError(&huart_);
@@ -675,59 +683,59 @@ int UartHandler::Impl::CheckError()
 
 typedef struct
 {
-    dsy_gpio_pin pin;
-    uint8_t      alt;
+    Pin     pin;
+    uint8_t alt;
 } pin_alt;
 
-pin_alt pins_none = {{DSY_GPIOX, 0}, 255};
+pin_alt pins_none = {Pin(PORTX, 0), 255};
 
 //valid pins per periph, and the alt they're on
-pin_alt usart1_pins_tx[] = {{{DSY_GPIOB, 6}, GPIO_AF7_USART1},
-                            {{DSY_GPIOB, 14}, GPIO_AF4_USART1},
+pin_alt usart1_pins_tx[] = {{Pin(PORTB, 6), GPIO_AF7_USART1},
+                            {Pin(PORTB, 14), GPIO_AF4_USART1},
                             pins_none};
-pin_alt usart1_pins_rx[] = {{{DSY_GPIOB, 7}, GPIO_AF7_USART1},
-                            {{DSY_GPIOB, 15}, GPIO_AF4_USART1},
+pin_alt usart1_pins_rx[] = {{Pin(PORTB, 7), GPIO_AF7_USART1},
+                            {Pin(PORTB, 15), GPIO_AF4_USART1},
                             pins_none};
 
 pin_alt usart2_pins_tx[]
-    = {{{DSY_GPIOA, 2}, GPIO_AF7_USART2}, pins_none, pins_none};
+    = {{Pin(PORTA, 2), GPIO_AF7_USART2}, pins_none, pins_none};
 pin_alt usart2_pins_rx[]
-    = {{{DSY_GPIOA, 3}, GPIO_AF7_USART2}, pins_none, pins_none};
+    = {{Pin(PORTA, 3), GPIO_AF7_USART2}, pins_none, pins_none};
 
 pin_alt usart3_pins_tx[]
-    = {{{DSY_GPIOC, 10}, GPIO_AF7_USART3}, pins_none, pins_none};
+    = {{Pin(PORTC, 10), GPIO_AF7_USART3}, pins_none, pins_none};
 pin_alt usart3_pins_rx[]
-    = {{{DSY_GPIOC, 11}, GPIO_AF7_USART3}, pins_none, pins_none};
+    = {{Pin(PORTC, 11), GPIO_AF7_USART3}, pins_none, pins_none};
 
-pin_alt uart4_pins_tx[] = {{{DSY_GPIOB, 9}, GPIO_AF8_UART4},
-                           {{DSY_GPIOC, 10}, GPIO_AF8_UART4},
-                           {{DSY_GPIOA, 0}, GPIO_AF8_UART4}};
-pin_alt uart4_pins_rx[] = {{{DSY_GPIOB, 8}, GPIO_AF8_UART4},
-                           {{DSY_GPIOC, 11}, GPIO_AF8_UART4},
-                           {{DSY_GPIOA, 1}, GPIO_AF8_UART4}};
+pin_alt uart4_pins_tx[] = {{Pin(PORTB, 9), GPIO_AF8_UART4},
+                           {Pin(PORTC, 10), GPIO_AF8_UART4},
+                           {Pin(PORTA, 0), GPIO_AF8_UART4}};
+pin_alt uart4_pins_rx[] = {{Pin(PORTB, 8), GPIO_AF8_UART4},
+                           {Pin(PORTC, 11), GPIO_AF8_UART4},
+                           {Pin(PORTA, 1), GPIO_AF8_UART4}};
 
-pin_alt uart5_pins_tx[] = {{{DSY_GPIOC, 12}, GPIO_AF8_UART5},
-                           {{DSY_GPIOB, 6}, GPIO_AF14_UART5},
+pin_alt uart5_pins_tx[] = {{Pin(PORTC, 12), GPIO_AF8_UART5},
+                           {Pin(PORTB, 6), GPIO_AF14_UART5},
                            pins_none};
-pin_alt uart5_pins_rx[] = {{{DSY_GPIOB, 12}, GPIO_AF14_UART5},
-                           {{DSY_GPIOD, 2}, GPIO_AF8_UART5},
-                           {{DSY_GPIOB, 5}, GPIO_AF14_UART5}};
+pin_alt uart5_pins_rx[] = {{Pin(PORTB, 12), GPIO_AF14_UART5},
+                           {Pin(PORTD, 2), GPIO_AF8_UART5},
+                           {Pin(PORTB, 5), GPIO_AF14_UART5}};
 
 pin_alt usart6_pins_tx[] = {pins_none, pins_none, pins_none};
 pin_alt usart6_pins_rx[]
-    = {{{DSY_GPIOG, 9}, GPIO_AF7_USART6}, pins_none, pins_none};
+    = {{Pin(PORTG, 9), GPIO_AF7_USART6}, pins_none, pins_none};
 
 pin_alt uart7_pins_tx[]
-    = {{{DSY_GPIOB, 4}, GPIO_AF11_UART7}, pins_none, pins_none};
+    = {{Pin(PORTB, 4), GPIO_AF11_UART7}, pins_none, pins_none};
 pin_alt uart7_pins_rx[] = {pins_none, pins_none, pins_none};
 
 pin_alt uart8_pins_tx[] = {pins_none, pins_none, pins_none};
 pin_alt uart8_pins_rx[] = {pins_none, pins_none, pins_none};
 
 pin_alt lpuart1_pins_tx[]
-    = {{{DSY_GPIOB, 6}, GPIO_AF8_LPUART}, pins_none, pins_none};
+    = {{Pin(PORTB, 6), GPIO_AF8_LPUART}, pins_none, pins_none};
 pin_alt lpuart1_pins_rx[]
-    = {{{DSY_GPIOB, 7}, GPIO_AF8_LPUART}, pins_none, pins_none};
+    = {{Pin(PORTB, 7), GPIO_AF8_LPUART}, pins_none, pins_none};
 
 //an array to hold everything
 pin_alt* pins_periphs[] = {usart1_pins_tx,
@@ -749,17 +757,16 @@ pin_alt* pins_periphs[] = {usart1_pins_tx,
                            lpuart1_pins_tx,
                            lpuart1_pins_rx};
 
-UartHandler::Result
-checkPinMatch(GPIO_InitTypeDef* init, dsy_gpio_pin pin, int p_num)
+UartHandler::Result checkPinMatch(GPIO_InitTypeDef* init, Pin pin, int p_num)
 {
     for(int i = 0; i < 3; i++)
     {
-        if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pins_none.pin))
+        if(pins_periphs[p_num][i].pin == pins_none.pin)
         {
             /* skip */
         }
 
-        else if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pin))
+        else if(pins_periphs[p_num][i].pin == pin)
         {
             init->Alternate = pins_periphs[p_num][i].alt;
             return UartHandler::Result::OK;
@@ -779,7 +786,7 @@ UartHandler::Result UartHandler::Impl::InitPins()
 
     int per_num = 2 * (int)(config_.periph);
 
-    if(config_.pin_config.tx.port != DSY_GPIOX)
+    if(config_.pin_config.tx.port != PORTX)
     {
         //check tx against periph
         if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.tx, per_num)
@@ -789,12 +796,12 @@ UartHandler::Result UartHandler::Impl::InitPins()
         }
 
         //setup tx pin
-        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.tx);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.tx);
+        GPIO_TypeDef* port  = GetHALPort(config_.pin_config.tx);
+        GPIO_InitStruct.Pin = GetHALPin(config_.pin_config.tx);
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.rx.port != DSY_GPIOX)
+    if(config_.pin_config.rx.port != PORTX)
     {
         //check rx against periph
         if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.rx, per_num + 1)
@@ -804,8 +811,8 @@ UartHandler::Result UartHandler::Impl::InitPins()
         }
 
         //setup rx pin
-        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.rx);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.rx);
+        GPIO_TypeDef* port  = GetHALPort(config_.pin_config.rx);
+        GPIO_InitStruct.Pin = GetHALPin(config_.pin_config.rx);
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
@@ -814,12 +821,12 @@ UartHandler::Result UartHandler::Impl::InitPins()
 
 UartHandler::Result UartHandler::Impl::DeInitPins()
 {
-    GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin_config.tx);
-    uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin_config.tx);
+    GPIO_TypeDef* port = GetHALPort(config_.pin_config.tx);
+    uint16_t      pin  = GetHALPin(config_.pin_config.tx);
     HAL_GPIO_DeInit(port, pin);
 
-    port = dsy_hal_map_get_port(&config_.pin_config.rx);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.rx);
+    port = GetHALPort(config_.pin_config.rx);
+    pin  = GetHALPin(config_.pin_config.rx);
     HAL_GPIO_DeInit(port, pin);
 
     return Result::OK;
@@ -836,8 +843,8 @@ void*                               UartHandler::Impl::next_callback_context_;
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
-    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.rx.port);
-    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.tx.port);
+    GPIOClockEnable(handle->config_.pin_config.rx);
+    GPIOClockEnable(handle->config_.pin_config.tx);
 
     switch(handle->config_.periph)
     {
@@ -950,15 +957,80 @@ extern "C" void dsy_uart_global_init()
     UartHandler::Impl::GlobalInit();
 }
 
+/** static handler for Listener Mode of Rx to handle
+ *  non-aligned transfers during DMA Reception.
+ *
+ *  this is the equivalent of what the old FifoHandler stuff
+ *  did, but removes all of the fifo'ing, and replaces it with a user
+ *  callback. The MIDI UART Transport is an example of how this might be used.
+ */
+static void UART_CheckRxListener(UartHandler::Impl* handle)
+{
+    size_t pos;
+    size_t old_pos = handle->circular_rx_last_pos_;
+
+    /** calculate pos. in buffer
+     * TODO: make flexible for other DMA STreams
+     *
+     */
+    uint8_t* buffer = handle->circular_rx_buff_;
+    pos             = handle->circular_rx_total_size_
+          - LL_DMA_GetDataLength(DMA1, LL_DMA_STREAM_5);
+    if(handle->circular_rx_callback_ && pos != old_pos)
+    {
+        if(pos > old_pos)
+        {
+            /** Typical lineary handling */
+            {
+                /** Cache Invalidate */
+                dsy_dma_invalidate_cache_for_buffer(&buffer[old_pos],
+                                                    pos - old_pos);
+                handle->circular_rx_callback_(&buffer[old_pos],
+                                              pos - old_pos,
+                                              handle->circular_rx_context_,
+                                              UartHandler::Result::OK);
+            }
+        }
+        else
+        {
+            /** Data handled wrapped back around to the beginning in the period of time */
+            if(handle->circular_rx_callback_)
+            {
+                /** First from old pos to the new end of mem */
+                size_t rx_size = handle->circular_rx_total_size_ - old_pos;
+                dsy_dma_invalidate_cache_for_buffer(&buffer[old_pos], rx_size);
+                handle->circular_rx_callback_(&buffer[old_pos],
+                                              rx_size,
+                                              handle->circular_rx_context_,
+                                              UartHandler::Result::OK);
+
+                /** then again from beginning to new pos */
+                dsy_dma_invalidate_cache_for_buffer(&buffer[0], pos);
+                handle->circular_rx_callback_(&buffer[0],
+                                              pos,
+                                              handle->circular_rx_context_,
+                                              UartHandler::Result::OK);
+            }
+        }
+        handle->circular_rx_last_pos_ = pos; /**< update position */
+        if(handle->circular_rx_last_pos_ == handle->circular_rx_total_size_)
+        {
+            handle->circular_rx_last_pos_ = 0;
+        }
+    }
+}
+
 // HAL Interrupts.
 void UART_IRQHandler(UartHandler::Impl* handle)
 {
     HAL_UART_IRQHandler(&handle->huart_);
 
-    if(__HAL_UART_GET_FLAG(&handle->huart_, UART_FLAG_IDLE)
-       && handle->using_fifo_)
+    if(handle->listener_mode_
+       && __HAL_UART_GET_FLAG(&handle->huart_, UART_FLAG_IDLE))
     {
-        handle->HandleFifo();
+        /** find position, and call callback */
+        UART_CheckRxListener(handle);
+        /** Clear IDLE Interrupt flag */
         handle->huart_.Instance->ICR = UART_FLAG_IDLE;
     }
 }
@@ -1007,11 +1079,32 @@ extern "C" void HAL_UART_TxCpltCallback(UART_HandleTypeDef* huart)
 
 extern "C" void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
 {
-    UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
+    auto* handle = MapInstanceToHandle(huart->Instance);
+    if(handle->listener_mode_)
+    {
+        // Find data range, and callback
+        UART_CheckRxListener(handle);
+    }
+    else
+    {
+        UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::OK);
+    }
+}
+
+extern "C" void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef* huart)
+{
+    /** Only need the HalfCplt for circular DMA mode */
+    auto* handle = MapInstanceToHandle(huart->Instance);
+    if(handle->listener_mode_)
+    {
+        UART_CheckRxListener(handle);
+    }
 }
 
 extern "C" void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
 {
+    auto* handle           = MapInstanceToHandle(huart->Instance);
+    handle->listener_mode_ = false;
     UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::ERR);
 }
 
@@ -1080,24 +1173,23 @@ UartHandler::DmaReceive(uint8_t*                              buff,
         buff, size, start_callback, end_callback, callback_context);
 }
 
-UartHandler::Result UartHandler::DmaReceiveFifo()
+UartHandler::Result
+UartHandler::DmaListenStart(uint8_t*                                   buff,
+                            size_t                                     size,
+                            UartHandler::CircularRxCallbackFunctionPtr cb,
+                            void* callback_context)
 {
-    return pimpl_->DmaReceiveFifo();
+    return pimpl_->DmaListenStart(buff, size, cb, callback_context);
 }
 
-UartHandler::Result UartHandler::FlushFifo()
+UartHandler::Result UartHandler::DmaListenStop()
 {
-    return pimpl_->FlushFifo();
+    return pimpl_->DmaListenStop();
 }
 
-uint8_t UartHandler::PopFifo()
+bool UartHandler::IsListening() const
 {
-    return pimpl_->PopFifo();
-}
-
-size_t UartHandler::ReadableFifo()
-{
-    return pimpl_->ReadableFifo();
+    return pimpl_->IsListening();
 }
 
 int UartHandler::CheckError()
@@ -1115,24 +1207,4 @@ int UartHandler::PollReceive(uint8_t* buff, size_t size, uint32_t timeout)
 UartHandler::Result UartHandler::PollTx(uint8_t* buff, size_t size)
 {
     return pimpl_->BlockingTransmit(buff, size, 10);
-}
-
-uint8_t UartHandler::PopRx()
-{
-    return pimpl_->PopFifo();
-}
-
-UartHandler::Result UartHandler::StartRx()
-{
-    return pimpl_->DmaReceiveFifo();
-}
-
-UartHandler::Result UartHandler::FlushRx()
-{
-    return pimpl_->FlushFifo();
-}
-
-size_t UartHandler::Readable()
-{
-    return pimpl_->ReadableFifo();
 }

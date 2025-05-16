@@ -4,7 +4,8 @@
 #ifndef UNIT_TEST // for unit tests, a dummy implementation
 
 #include <cstdint>
-#include "daisy_core.h" // Added for dsy_gpio_pin typedef
+#include "daisy_core.h"
+#include "util/hal_map.h"
 
 #define DSY_QSPI_TEXT       \
     __attribute__((section( \
@@ -81,12 +82,12 @@ class QSPIHandle
         //SCK,  CE# (active low)
         struct
         {
-            dsy_gpio_pin io0; /**< & */
-            dsy_gpio_pin io1; /**< & */
-            dsy_gpio_pin io2; /**< & */
-            dsy_gpio_pin io3; /**< & */
-            dsy_gpio_pin clk; /**< & */
-            dsy_gpio_pin ncs; /**< & */
+            Pin io0; /**< & */
+            Pin io1; /**< & */
+            Pin io2; /**< & */
+            Pin io3; /**< & */
+            Pin clk; /**< & */
+            Pin ncs; /**< & */
         } pin_config;
 
         Device device;

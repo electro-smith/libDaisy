@@ -303,14 +303,13 @@ void System::ResetToBootloader(BootloaderMode mode)
     if(mode == BootloaderMode::STM)
     {
         // Initialize Boot Pin
-        dsy_gpio_pin bootpin = {DSY_GPIOG, 3};
-        dsy_gpio     pin;
-        pin.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        pin.pin  = bootpin;
-        dsy_gpio_init(&pin);
+        constexpr Pin bootpin = Pin(PORTG, 3);
+
+        GPIO pin;
+        pin.Init(bootpin, GPIO::Mode::OUTPUT);
 
         // Pull Pin HIGH
-        dsy_gpio_write(&pin, 1);
+        pin.Write(1);
 
         // wait a few ms for cap to charge
         HAL_Delay(10);
@@ -326,7 +325,7 @@ void System::ResetToBootloader(BootloaderMode mode)
         // Coming from a bootloaded program, the backup SRAM will already
         // be initialized. If the bootloader is <= v5, then it will not
         // be initialized, but a failed write will not cause a fault.
-        switch (mode)
+        switch(mode)
         {
             case BootloaderMode::DAISY_SKIP_TIMEOUT:
                 boot_info.status = BootInfo::Type::SKIP_TIMEOUT;

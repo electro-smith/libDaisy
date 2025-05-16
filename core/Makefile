@@ -47,7 +47,7 @@ SYSTEM_FILES_DIR ?= \
 # source
 ######################################
 
-CPP_SOURCES ?= 
+CPP_SOURCES ?=
 
 C_SOURCES += \
 $(SYSTEM_FILES_DIR)/startup_stm32h750xx.c
@@ -68,13 +68,13 @@ PREFIX = arm-none-eabi-
 ifdef GCC_PATH
 CC = $(GCC_PATH)/$(PREFIX)gcc
 AS = $(GCC_PATH)/$(PREFIX)gcc -x assembler-with-cpp
-CXX = $(GCC_PATH)/$(PREFIX)g++ 
+CXX = $(GCC_PATH)/$(PREFIX)g++
 GDB = $(GCC_PATH)/$(PREFIX)gdb
 CP = $(GCC_PATH)/$(PREFIX)objcopy
 SZ = $(GCC_PATH)/$(PREFIX)size
 else
 CC = $(PREFIX)gcc
-CXX = $(PREFIX)g++ 
+CXX = $(PREFIX)g++
 GDB = $(PREFIX)gdb
 AS = $(PREFIX)gcc -x assembler-with-cpp
 CP = $(PREFIX)objcopy
@@ -124,7 +124,7 @@ endif
 # AS includes
 AS_INCLUDES =
 
-C_INCLUDES ?= 
+C_INCLUDES ?=
 
 C_INCLUDES += \
 -I$(LIBDAISY_DIR) \
@@ -132,18 +132,27 @@ C_INCLUDES += \
 -I$(LIBDAISY_DIR)/src/sys \
 -I$(LIBDAISY_DIR)/src/usbd \
 -I$(LIBDAISY_DIR)/src/usbh \
--I$(LIBDAISY_DIR)/Drivers/CMSIS/Include/ \
--I$(LIBDAISY_DIR)/Drivers/CMSIS/DSP/Include \
--I$(LIBDAISY_DIR)/Drivers/CMSIS/Device/ST/STM32H7xx/Include \
+-I$(LIBDAISY_DIR)/Drivers/CMSIS_5/CMSIS/Core/Include/ \
+-I$(LIBDAISY_DIR)/Drivers/CMSIS-DSP/Include \
+-I$(LIBDAISY_DIR)/Drivers/CMSIS-Device/ST/STM32H7xx/Include \
 -I$(LIBDAISY_DIR)/Drivers/STM32H7xx_HAL_Driver/Inc/ \
 -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Inc \
 -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Core/Inc \
 -I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc \
+-I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Host_Library/Class/MIDI/Inc \
 -I$(SYSTEM_FILES_DIR)/
 
 ifdef DAISYSP_DIR
 C_INCLUDES += -I$(DAISYSP_DIR)/Source
 endif
+
+ifeq ($(USE_DAISYSP_LGPL),1)
+C_INCLUDES += -I$(DAISYSP_DIR)/DaisySP-LGPL/Source
+
+C_DEFS +=  \
+-DUSE_DAISYSP_LGPL
+endif
+
 
 # Include FATFS files
 # This does not include the additional option files
@@ -204,7 +213,7 @@ QSPI_ADDRESS ?= 0x90040000
 DAISY_PID = df11
 STM_PID = df11
 
-BOOT_BIN ?= $(wildcard $(SYSTEM_FILES_DIR)/dsy_bootloader*)
+BOOT_BIN ?= $(SYSTEM_FILES_DIR)/dsy_bootloader_v6_2-intdfu-2000ms.bin
 APP_TYPE ?= BOOT_NONE
 
 ifeq ($(APP_TYPE), BOOT_NONE)
@@ -244,6 +253,12 @@ LIBDIR += -L$(LIBDAISY_DIR)/build
 ifdef DAISYSP_DIR
 LIBS += -ldaisysp
 LIBDIR += -L $(DAISYSP_DIR)/build
+endif
+
+
+ifeq ($(USE_DAISYSP_LGPL),1)
+LIBS += -ldaisysp-lgpl
+LIBDIR += -L $(DAISYSP_DIR)/DaisySP-LGPL/build
 endif
 
 LDFLAGS ?=

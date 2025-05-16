@@ -1,5 +1,5 @@
 #include "rng.h"
-#include "util/hal_map.h"
+#include "stm32h7xx_hal.h"
 #include "sys/system.h"
 
 #define RNG_TIMEOUT 100
@@ -40,7 +40,7 @@ uint32_t Random::GetValue()
 
 float Random::GetFloat(float min, float max)
 {
-    float norm = (float)GetValue() / 0x7fffffff;
+    float norm = (float)GetValue() / (float)0xffffffff;
     return min + (norm * (max - min));
 }
 

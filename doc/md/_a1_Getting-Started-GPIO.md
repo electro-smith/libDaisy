@@ -65,7 +65,7 @@ int main(void) {
 }
 ```
 
-If you haven't followed the guides on [setting up your development enviornment](https://github.com/electro-smith/DaisyWiki/wiki/1.-Setting-Up-Your-Development-Environment) and [creating a new project](https://github.com/electro-smith/DaisyWiki/wiki/How-To:-Create-a-New-Project) now would be a perfect time to catch up, and create a new project to work with the GPIO.
+If you haven't followed the guides on [setting up your development environment](https://github.com/electro-smith/DaisyWiki/wiki/1.-Setting-Up-Your-Development-Environment) and [creating a new project](https://github.com/electro-smith/DaisyWiki/wiki/How-To:-Create-a-New-Project) now would be a perfect time to catch up, and create a new project to work with the GPIO.
 
 Compiling this example, you might get a warning, for an "unused variable button_state", but we'll get to using that shortly!
 
@@ -91,7 +91,7 @@ The second argument: `Mode m` can be any of the following:
 
 * `Mode::INPUT` - configures the pin as an input
 * `Mode::OUTPUT` - configures the pin as an output (in push pull configuration)
-* `Mode::OUTPUT_OD` - also an output, but the transistor connection to pull the signal to GND is not connected, this is less commonly used.
+* `Mode::OPEN_DRAIN` - also an output, but the transistor connection to pull the signal to GND is not connected, this is less commonly used.
 * `Mode::ANALOG` - configures the GPIO for connection to the ADC or DAC peripherals within the micro controller.
 
 If you only supply the `Pin` argument, the GPIO will default to `Mode::INPUT` configuration.

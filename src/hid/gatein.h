@@ -14,13 +14,10 @@ namespace daisy
 class GateIn
 {
   public:
-    /** GateIn 
-    Constructor 
-    */
+    /** GateIn Constructor */
     GateIn() {}
-    /** GateIn~
-    Destructor 
-    */
+
+    /** GateIn Destructor */
     ~GateIn() {}
 
     /** @brief Initializes the gate input with specified hardware pin
@@ -32,29 +29,22 @@ class GateIn
      *  @note the default for invert is true because it is typical to use
      *  an inverting input circuit (e.g. a BJT circuit) for eurorack gate inputs.
      */
-    void Init(dsy_gpio_pin *pin_cfg, bool invert = true);
+    void Init(Pin pin, bool invert = true);
 
-    /** Trig
-    Checks current state of gate input.
-
-    @return True if the GPIO just transitioned.
-    */
+    /** Checks current state of gate input.
+     *  @return True if the GPIO just transitioned.
+     */
     bool Trig();
 
-    /** State
-    Checks current state of gate input (no state required)
-
-    read function is inverted because of suggested BJT input circuit
-    */
-    inline bool State()
-    {
-        return invert_ ? !dsy_gpio_read(&pin_) : dsy_gpio_read(&pin_);
-    }
+    /** Checks current state of gate input (no state required)
+     *  read function is inverted because of suggested BJT input circuit
+     */
+    inline bool State() { return invert_ ? !pin_.Read() : pin_.Read(); }
 
   private:
-    dsy_gpio pin_;
-    uint8_t  prev_state_, state_;
-    bool     invert_;
+    GPIO pin_;
+    bool prev_state_, state_;
+    bool invert_;
 };
 } // namespace daisy
 #endif

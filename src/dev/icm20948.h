@@ -437,8 +437,6 @@ class Icm20948
 
     Result SetupMag()
     {
-        uint8_t buffer[2];
-
         SetI2CBypass(false);
 
         ConfigureI2CMaster();

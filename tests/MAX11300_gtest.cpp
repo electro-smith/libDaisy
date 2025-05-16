@@ -865,8 +865,9 @@ TEST_F(MAX11300TestFixture, verifyWriteAnalogPin)
     // byte patterns to be sent via the transport.
 
     MAX11300Types::Pin pin = MAX11300Types::PIN_3;
+    const auto range = MAX11300Types::DacVoltageRange::ZERO_TO_10;
     EXPECT_TRUE(ConfigurePinAsAnalogWriteAndVerify(
-        1, pin, MAX11300Types::DacVoltageRange::ZERO_TO_10));
+        1, pin, range));
 
     // Write two different values to a single DAC pin and verify
     // the transactions...
@@ -890,9 +891,10 @@ TEST_F(MAX11300TestFixture, verifyWriteAnalogPin)
     EXPECT_EQ(update_complete_callback_count_, 1);
     update_complete_callback_count_ = 0; // reset
 
-    // Transaction 2
-    dac_val = 1421;
-    max11300_.WriteAnalogPinRaw(1, pin, dac_val);
+    // Transaction 2, this time using the "voltage" API
+    const auto voltage = 1.2f;
+    dac_val = MAX11300Test::VoltsTo12BitUint(voltage, range);
+    max11300_.WriteAnalogPinVolts(1, pin, voltage);
 
     TxTransaction tx_write_dac2;
     tx_write_dac2.description  = "Chip 1: DAC write value transaction";

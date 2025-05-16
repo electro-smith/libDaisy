@@ -1,6 +1,6 @@
 <!-- Banner -->
 <p align="center">
-    <a href=https://electrosmith.com/daisy>
+    <a href=https://electro-smith.com/daisy>
         <img width=15% src=https://raw.githubusercontent.com/electro-smith/daisysp/master/resources/assets/banner.png>
     </a>
 </p>
@@ -18,7 +18,7 @@
     <a href="https://github.com/electro-smith/libDaisy/actions/workflows/style.yml">
       <img src="https://github.com/electro-smith/libDaisy/workflows/Style/badge.svg">
     </a>
-    <a href="https://electro-smith.github.io/libDaisy/index.html">
+    <a href="https://daisy.audio/software/">
       <img src="https://github.com/electro-smith/libDaisy/workflows/Documentation/badge.svg">
     </a>
 </p>
@@ -28,8 +28,8 @@
     <a href="https://opensource.org/licenses/MIT">
       <img src="https://img.shields.io/badge/license-MIT-yellow">
     </a>
-    <a href="https://join.slack.com/t/es-daisy/shared_invite/zt-f9cfm1g4-DgdCok1h1Rj4fpX90~IOww">
-        <img src="https://img.shields.io/badge/join-us%20on%20slack-gray.svg?longCache=true&logo=slack&colorB=purple">
+    <a href="https://discord.gg/ByHBnMtQTR">
+        <img src="https://img.shields.io/badge/join-us%20on%20discord-gray.svg?longCache=true&logo=discord&colorB=purple">
     </a>
     <a href="https://forum.electro-smith.com/">
         <img src="https://img.shields.io/badge/chat-daisy%20forum-orange">
@@ -78,8 +78,8 @@ int main(void)
 
 ## Getting Started
 
-- Check out our [Getting Started Wiki Page](https://github.com/electro-smith/DaisyWiki/wiki)
-- Browse the reference documentation [on the web](https://electro-smith.github.io/libDaisy)
+- Check out our [Getting Started Page](https://daisy.audio/tutorials/cpp-dev-env/)
+- Browse the reference documentation [on the web](https://daisy.audio/software/)
 - Make some sound!
 
 ## Project Overview
@@ -100,7 +100,7 @@ Also included is a core/ folder containing:
 - a linker script for defining the sections of memory used by the firmware
 - core files for starting the hardware (system_stm32h7xx.c, startup_stm32h750xx.s, etc.)
 
-Unit Tests can be found in the test/ folder. [Here's a tutorial on how to develop unit tested code for libDaisy](doc/Unit-Testing.md).
+Unit Tests can be found in the tests/ folder. [Here's a tutorial on how to develop unit tested code for libDaisy](doc/md/_b1_Development-Unit-Testing.md).
 
 ### daisy.h
 
@@ -138,8 +138,6 @@ Here are some ways that you can get involved:
 - Add new functionality to the library. See issues labeled "feature"
 - Fix problems with existing codebase. See issues labeled "bug" and/or "polish"
 
-Before working on code, please check out our [Contribution Guidelines](https://github.com/electro-smith/DaisyWiki/wiki/6.-Contribution-Guidelines) and [Style Guide.](https://github.com/electro-smith/DaisySP/blob/master/doc/style_guide.pdf)
-
 ## Support
 
 Here are some ways to get support and connect with other users and developers:
@@ -148,7 +146,7 @@ Here are some ways to get support and connect with other users and developers:
 
 - Make a [GitHub Issue](https://github.com/electro-smith/libdaisy/issues)
 
-- Join the [Daisy Slack Workspace](https://join.slack.com/t/es-daisy/shared_invite/zt-f9cfm1g4-DgdCok1h1Rj4fpX90~IOww)
+- Join the [Daisy Discord Server](https://discord.gg/ByHBnMtQTR)
 
 ## License
 

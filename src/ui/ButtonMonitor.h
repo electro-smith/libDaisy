@@ -29,7 +29,7 @@ namespace daisy
  *
  *      bool IsButtonPressed(uint16_t buttonId);
  *
- *   @tparam BackendType 	The class type of the backend that will supply button states.
+ *   @tparam BackendType     The class type of the backend that will supply button states.
  *   @tparam numButtons     The number of buttons to monitor.
  */
 template <typename BackendType, uint32_t numButtons>
@@ -47,14 +47,14 @@ class ButtonMonitor
     }
 
     /** Initialises the ButtonMonitor.
-     * @param queueToAddEventsTo	The UiEventQueue to which events should be posted.
-     * @param backend				The backend that supplies the current state of each button.
-     * @param debounceTimeoutMs   	A event is posted to the queue if the button state doesn't change
-     * 								for `debounceTimeoutMs`. Can be 0 to disable debouncing.
-     * @param doubleClickTimeoutMs	The timeout for detecting double clicks.
-     * @param retriggerTimeoutMs	The timeout after which a button will be retriggered when held down.
+     * @param queueToAddEventsTo    The UiEventQueue to which events should be posted.
+     * @param backend                The backend that supplies the current state of each button.
+     * @param debounceTimeoutMs       A event is posted to the queue if the button state doesn't change
+     *                                 for `debounceTimeoutMs`. Can be 0 to disable debouncing.
+     * @param doubleClickTimeoutMs    The timeout for detecting double clicks.
+     * @param retriggerTimeoutMs    The timeout after which a button will be retriggered when held down.
      *                              0 to disable retriggering.
-     * @param retriggerPeriodMs	    The speed with which a button will be retriggered when held down.
+     * @param retriggerPeriodMs        The speed with which a button will be retriggered when held down.
      */
     void Init(UiEventQueue& queueToAddEventsTo,
               BackendType&  backend,
@@ -95,7 +95,7 @@ class ButtonMonitor
     }
 
     /** Returns true, if the given button is currently pressed.
-     *  @param buttonId		The unique ID of the button (< numButtons)
+     *  @param buttonId        The unique ID of the button (< numButtons)
      */
     bool IsButtonPressed(uint16_t buttonId) const
     {
