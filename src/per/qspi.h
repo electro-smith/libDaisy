@@ -165,7 +165,7 @@ class QSPIHandle
     void* GetData(uint32_t offset = 0);
 
     QSPIHandle() : pimpl_(nullptr) {}
-    QSPIHandle(const QSPIHandle& other)            = default;
+    QSPIHandle(const QSPIHandle& other) = default;
     QSPIHandle& operator=(const QSPIHandle& other) = default;
 
     class Impl; /**< & */

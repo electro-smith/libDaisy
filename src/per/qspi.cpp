@@ -133,9 +133,9 @@ class QSPIHandle::Impl
                                             &config_.pin_config.clk,
                                             &config_.pin_config.ncs};
     Pin* pin_config_arr_sd[4]            = {&config_.pin_config.io0,
-                                            &config_.pin_config.io1,
-                                            &config_.pin_config.clk,
-                                            &config_.pin_config.ncs};
+                                 &config_.pin_config.io1,
+                                 &config_.pin_config.clk,
+                                 &config_.pin_config.ncs};
 };
 
 
