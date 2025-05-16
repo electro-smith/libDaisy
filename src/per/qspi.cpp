@@ -151,21 +151,6 @@ QSPIHandle::Result QSPIHandle::Impl::PreInit(uint32_t flash_size)
     const Pin* pre_init_pins[]
         = {&config_.pin_config.io2, &config_.pin_config.io3};
 
-    //__HAL_RCC_GPIOF_CLK_ENABLE();
-    // for(int i = 0; i < 2; i++)
-    // {
-    //     const dsy_gpio_pin* p = pre_init_pins[i];
-    //     GPIO_TypeDef*       port;
-    //     GPIO_InitTypeDef    GPIO_InitStruct = {0};
-    //     uint16_t            pin_id          = dsy_hal_map_get_pin(p);
-    //     port                                = dsy_hal_map_get_port(p);
-    //     GPIO_InitStruct.Pin                 = pin_id;
-    //     GPIO_InitStruct.Mode                = GPIO_MODE_OUTPUT_PP;
-    //     GPIO_InitStruct.Pull                = GPIO_NOPULL;
-    //     GPIO_InitStruct.Speed               = GPIO_SPEED_LOW;
-    //     HAL_GPIO_Init(port, &GPIO_InitStruct);
-    //     HAL_GPIO_WritePin(port, pin_id, GPIO_PIN_SET); // added explicit write
-    // }
     HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6 | GPIO_PIN_7, GPIO_PIN_SET);
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     __HAL_RCC_GPIOF_CLK_ENABLE();
@@ -182,10 +167,7 @@ QSPIHandle::Result QSPIHandle::Impl::PreInit(uint32_t flash_size)
     // unnecessarily long delay just to make sure it's visible on the scope prior to init
     HAL_Delay(20);
 
-    halqspi_.Instance = QUADSPI;
-    //dsy_qspi_handle.Init.ClockPrescaler = 7;
-    //dsy_qspi_handle.Init.ClockPrescaler = 7;
-    //dsy_qspi_handle.Init.ClockPrescaler = 2; // Conservative setting for now. Signal gets very weak faster than this.
+    halqspi_.Instance                = QUADSPI;
     halqspi_.Init.ClockPrescaler     = 1;
     halqspi_.Init.FifoThreshold      = 1;
     halqspi_.Init.SampleShifting     = QSPI_SAMPLE_SHIFTING_NONE;
@@ -816,7 +798,6 @@ QSPIHandle::Result QSPIHandle::Impl::DefaultStatusRegister()
     }
 
     s_config.Match = reg;
-    //s_config.Mask            = 0xfc; // mask out WEL and WIP
     // Autopolling complete when status register is completely back to defaults.
     s_config.Mask            = 0xff;
     s_config.MatchMode       = QSPI_MATCH_MODE_AND;
@@ -825,7 +806,6 @@ QSPIHandle::Result QSPIHandle::Impl::DefaultStatusRegister()
     // write status register takes approx 2-15ms to complete according to datasheet.
     // interval is in clock cycles so at 120MHz, we'll check every 250us or so instead of
     // the original 133ns
-    // s_config.Interval      = 0x10;
     s_config.Interval      = 0x8000;
     s_config.AutomaticStop = QSPI_AUTOMATIC_STOP_ENABLE;
 
@@ -1158,23 +1138,14 @@ extern "C" void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
         __HAL_RCC_GPIOE_CLK_ENABLE();
         __HAL_RCC_GPIOB_CLK_ENABLE();
         // Seems the same for all pin outs so far.
-        // uint8_t       af_config[qspi_impl.GetNumPins()] = {GPIO_AF10_QUADSPI,
-        //                                                    GPIO_AF10_QUADSPI,
-        //                                                    GPIO_AF9_QUADSPI,
-        //                                                    GPIO_AF9_QUADSPI,
-        //                                                    GPIO_AF9_QUADSPI,
-        //                                                    GPIO_AF10_QUADSPI};
         GPIO_TypeDef* port;
         for(uint8_t i = 0; i < qspi_impl.GetNumPins(); i++)
         {
-            //            port                = (GPIO_TypeDef*)gpio_hal_port_map[qspi_handle.dsy_hqspi->pin_config[i].port];
-            //            GPIO_InitStruct.Pin = gpio_hal_pin_map[qspi_handle.dsy_hqspi->pin_config[i].pin];
-            port                  = qspi_impl.GetPort(i);
-            GPIO_InitStruct.Pin   = qspi_impl.GetPin(i);
-            GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
-            GPIO_InitStruct.Pull  = GPIO_NOPULL;
-            GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-            // GPIO_InitStruct.Alternate = af_config[i];
+            port                      = qspi_impl.GetPort(i);
+            GPIO_InitStruct.Pin       = qspi_impl.GetPin(i);
+            GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
+            GPIO_InitStruct.Pull      = GPIO_NOPULL;
+            GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
             GPIO_InitStruct.Alternate = qspi_impl.GetAF(i);
             HAL_GPIO_Init(port, &GPIO_InitStruct);
         }
