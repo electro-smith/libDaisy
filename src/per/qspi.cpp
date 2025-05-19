@@ -30,6 +30,24 @@ namespace daisy
 class QSPIHandle::Impl
 {
   public:
+    /**
+     * extremely minimal constructor just to pre-initialize some flags
+     * Everything else is managed through the `Init` function.
+     */
+    Impl() : init_state_(InitState::Uninitialized), pre_init_complete_(false) {}
+
+    /**
+     * Represents the state through which the QSPI peripheral is initialized.
+     * An initial single-line initialization should be done once per boot up to ensure
+     * the device is accessible, and unintended write protections are disabled.
+     */
+    enum class InitState
+    {
+        Uninitialized,
+        SingleLineSR,
+        Ready,
+    };
+
     QSPIHandle::Result Init(const QSPIHandle::Config& config);
 
     const QSPIHandle::Config& GetConfig() const { return config_; }
@@ -51,9 +69,15 @@ class QSPIHandle::Impl
 
     GPIO_TypeDef* GetPort(size_t pin);
 
+    uint8_t GetAF(size_t pin);
+
     QSPI_HandleTypeDef* GetHalHandle();
 
-    constexpr size_t GetNumPins() { return pin_count_; }
+    size_t GetNumPins()
+    {
+        // Uses fewer pins on first pass of initialization
+        return init_state_ == InitState::Uninitialized ? 4 : pin_count_;
+    }
 
     Status GetStatus() { return status_; }
 
@@ -62,14 +86,22 @@ class QSPIHandle::Impl
         return (void*)(0x90000000 + (offset & 0x0fffffff));
     }
 
+    InitState GetInitState() const { return init_state_; }
+
   private:
+    QSPIHandle::Result PreInit(uint32_t flash_size);
+
     QSPIHandle::Result ResetMemory();
 
     QSPIHandle::Result DummyCyclesConfig(QSPIHandle::Config::Device device);
 
     QSPIHandle::Result WriteEnable();
 
+    QSPIHandle::Result DefaultStatusRegister();
+
     QSPIHandle::Result QuadEnable();
+
+    QSPIHandle::Result QuadDisable();
 
     QSPIHandle::Result EnableMemoryMappedMode();
 
@@ -88,15 +120,22 @@ class QSPIHandle::Impl
     QSPI_HandleTypeDef halqspi_;
     Status             status_;
 
+    InitState init_state_;
+    bool      pre_init_complete_;
+
     static constexpr size_t pin_count_
         = sizeof(QSPIHandle::Config::pin_config) / sizeof(Pin);
     // Data structure for easy hal initialization
-    Pin* pin_config_arr_[pin_count_] = {&config_.pin_config.io0,
-                                        &config_.pin_config.io1,
-                                        &config_.pin_config.io2,
-                                        &config_.pin_config.io3,
-                                        &config_.pin_config.clk,
-                                        &config_.pin_config.ncs};
+    Pin* pin_config_arr_quad[pin_count_] = {&config_.pin_config.io0,
+                                            &config_.pin_config.io1,
+                                            &config_.pin_config.io2,
+                                            &config_.pin_config.io3,
+                                            &config_.pin_config.clk,
+                                            &config_.pin_config.ncs};
+    Pin* pin_config_arr_sd[4]            = {&config_.pin_config.io0,
+                                 &config_.pin_config.io1,
+                                 &config_.pin_config.clk,
+                                 &config_.pin_config.ncs};
 };
 
 
@@ -106,6 +145,67 @@ class QSPIHandle::Impl
 
 static QSPIHandle::Impl qspi_impl;
 
+QSPIHandle::Result QSPIHandle::Impl::PreInit(uint32_t flash_size)
+{
+    // Prior to first pass, set pins for IO2 and IO3 to known HIGH states for duration of first pass, then DeInit:
+    const Pin* pre_init_pins[]
+        = {&config_.pin_config.io2, &config_.pin_config.io3};
+
+    HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6 | GPIO_PIN_7, GPIO_PIN_SET);
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    __HAL_RCC_GPIOF_CLK_ENABLE();
+    GPIO_InitStruct.Pin   = GPIO_PIN_6 | GPIO_PIN_7;
+    GPIO_InitStruct.Mode  = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull  = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+    HAL_Delay(20);
+    HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6 | GPIO_PIN_7, GPIO_PIN_RESET);
+    HAL_Delay(20);
+    HAL_GPIO_WritePin(GPIOF, GPIO_PIN_6 | GPIO_PIN_7, GPIO_PIN_SET);
+
+    // unnecessarily long delay just to make sure it's visible on the scope prior to init
+    HAL_Delay(20);
+
+    halqspi_.Instance                = QUADSPI;
+    halqspi_.Init.ClockPrescaler     = 1;
+    halqspi_.Init.FifoThreshold      = 1;
+    halqspi_.Init.SampleShifting     = QSPI_SAMPLE_SHIFTING_NONE;
+    halqspi_.Init.FlashSize          = POSITION_VAL(flash_size) - 1;
+    halqspi_.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_2_CYCLE;
+    halqspi_.Init.FlashID            = QSPI_FLASH_ID_1;
+    halqspi_.Init.DualFlash          = QSPI_DUALFLASH_DISABLE;
+
+    // Round 1 initialization -- configure to single-line,
+    // Do Reset, Set StatusReg values to known states, and then de-init
+    // to prepare for round 2.
+    if(HAL_QSPI_Init(&halqspi_) != HAL_OK)
+    {
+        ERR_SIMPLE(Status::E_HAL_ERROR);
+    }
+    if(ResetMemory() != QSPIHandle::Result::OK)
+    {
+        ERR_SIMPLE(Status::E_HAL_ERROR);
+    }
+    if(DefaultStatusRegister() != QSPIHandle::Result::OK)
+    {
+        ERR_SIMPLE(Status::E_HAL_ERROR);
+    }
+    if(HAL_QSPI_DeInit(&halqspi_) != HAL_OK)
+    {
+        ERR_SIMPLE(Status::E_HAL_ERROR);
+    }
+    for(int i = 0; i < 2; i++)
+    {
+        const Pin*    p = pre_init_pins[i];
+        GPIO_TypeDef* port;
+        port = GetHALPort(*p);
+        HAL_GPIO_DeInit(port, GetHALPin(*p));
+    }
+    init_state_        = InitState::SingleLineSR;
+    pre_init_complete_ = true;
+    return QSPIHandle::Result::OK;
+}
 
 QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
 {
@@ -120,7 +220,10 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
     {
         ERR_SIMPLE(Status::E_HAL_ERROR);
     }
-    //HAL_QSPI_MspInit(&dsy_qspi_handle);     // I think this gets called a in HAL_QSPI_Init();
+
+    init_state_ = pre_init_complete_ ? InitState::SingleLineSR
+                                     : InitState::Uninitialized;
+
     // Set Initialization values for the QSPI Peripheral
     uint32_t flash_size;
     switch(device)
@@ -133,10 +236,12 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
             break;
         default: flash_size = IS25LP080D_FLASH_SIZE; break;
     }
-    halqspi_.Instance = QUADSPI;
-    //dsy_qspi_handle.Init.ClockPrescaler = 7;
-    //dsy_qspi_handle.Init.ClockPrescaler = 7;
-    //dsy_qspi_handle.Init.ClockPrescaler = 2; // Conservative setting for now. Signal gets very weak faster than this.
+
+    if(init_state_ == InitState::Uninitialized)
+        PreInit(flash_size);
+
+    // Round 2 initialization -- all pins will be used.
+    halqspi_.Instance                = QUADSPI;
     halqspi_.Init.ClockPrescaler     = 1;
     halqspi_.Init.FifoThreshold      = 1;
     halqspi_.Init.SampleShifting     = QSPI_SAMPLE_SHIFTING_NONE;
@@ -144,7 +249,6 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
     halqspi_.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_2_CYCLE;
     halqspi_.Init.FlashID            = QSPI_FLASH_ID_1;
     halqspi_.Init.DualFlash          = QSPI_DUALFLASH_DISABLE;
-
     if(HAL_QSPI_Init(&halqspi_) != HAL_OK)
     {
         ERR_SIMPLE(Status::E_HAL_ERROR);
@@ -161,6 +265,7 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
         ERR_SIMPLE(Status::E_HAL_ERROR);
     }
     // Once writing test with 1 Line is confirmed lets move this out, and update writing to use 4-line.
+    // This should be redundant, but just in case we want to ensure that the QE is set.
     if(QuadEnable() != QSPIHandle::Result::OK)
     {
         ERR_SIMPLE(Status::E_HAL_ERROR);
@@ -173,6 +278,7 @@ QSPIHandle::Result QSPIHandle::Impl::Init(const QSPIHandle::Config& config)
             ERR_SIMPLE(Status::E_HAL_ERROR);
         }
     }
+    init_state_ = InitState::Ready;
 
     return QSPIHandle::Result::OK;
 }
@@ -185,6 +291,7 @@ QSPIHandle::Result QSPIHandle::Impl::DeInit()
     {
         ERR_SIMPLE(Status::E_HAL_ERROR);
     }
+    // This should actually already get called wihtin the HAL DeInit
     HAL_QSPI_MspDeInit(&halqspi_);
     return QSPIHandle::Result::OK;
 }
@@ -614,12 +721,92 @@ QSPIHandle::Result QSPIHandle::Impl::QuadEnable()
     //    s_config.Mask            = IS25LP08D_SR_WREN | (IS25LP08D_SR_WREN << 8);
     //    s_config.MatchMode       = QSPI_MATCH_MODE_AND;
     //    s_config.StatusBytesSize = 2;
-    s_config.Match           = IS25LP080D_SR_QE;
-    s_config.Mask            = IS25LP080D_SR_QE;
+
+    // Poll until QE is set, and WREN and WIP are reset.
+    s_config.Match = IS25LP080D_SR_QE;
+    s_config.Mask  = IS25LP080D_SR_QE | IS25LP080D_SR_WREN | IS25LP080D_SR_WIP;
     s_config.MatchMode       = QSPI_MATCH_MODE_AND;
     s_config.StatusBytesSize = 1;
 
-    s_config.Interval      = 0x10;
+    //s_config.Interval      = 0x10;
+    s_config.Interval      = 0x8000;
+    s_config.AutomaticStop = QSPI_AUTOMATIC_STOP_ENABLE;
+
+    s_command.Instruction = READ_STATUS_REG_CMD;
+    s_command.DataMode    = QSPI_DATA_1_LINE;
+
+    if(HAL_QSPI_AutoPolling(
+           &halqspi_, &s_command, &s_config, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
+       != HAL_OK)
+    {
+        ERR_SIMPLE(Status::E_HAL_ERROR);
+    }
+
+    /* Configure automatic polling mode to wait the memory is ready */
+    if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
+       != QSPIHandle::Result::OK)
+    {
+        ERR_SIMPLE(Status::E_HAL_ERROR);
+    }
+    return QSPIHandle::Result::OK;
+}
+
+QSPIHandle::Result QSPIHandle::Impl::DefaultStatusRegister()
+{
+    QSPI_CommandTypeDef     s_command;
+    QSPI_AutoPollingTypeDef s_config;
+
+    /* Enable write operations */
+    s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
+    s_command.Instruction       = WRITE_STATUS_REG_CMD;
+    s_command.AddressMode       = QSPI_ADDRESS_NONE;
+    s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
+    s_command.DataMode          = QSPI_DATA_1_LINE;
+    s_command.DummyCycles       = 0;
+    s_command.NbData            = 1;
+    s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
+    s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
+    s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
+
+    /* Enable write operations */
+    if(WriteEnable() != QSPIHandle::Result::OK)
+    {
+        ERR_SIMPLE(Status::E_HAL_ERROR);
+    }
+
+    if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
+       != HAL_OK)
+    {
+        ERR_SIMPLE(Status::E_HAL_ERROR);
+    }
+
+    // Default status register chunk:
+    // SRWD (Status Register Write Disable) = 0
+    // QE (Quad Enable) = 0
+    // BP3, BP2, BP1, BP0 (Block Protect) = 0
+    // WEL/WIP are volatile bits, so we don't need to set/reset them here
+    //uint8_t reg = 0x00;
+    // We'll set QE here so that the WP/HOLD functions are disbaled.
+    uint8_t reg = 0x40;
+
+    /* Transmission of the data */
+    if(HAL_QSPI_Transmit(
+           &halqspi_, (uint8_t*)(&reg), HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
+       != HAL_OK)
+    {
+        ERR_SIMPLE(Status::E_HAL_ERROR);
+    }
+
+    s_config.Match = reg;
+    // Autopolling complete when status register is completely back to defaults.
+    s_config.Mask            = 0xff;
+    s_config.MatchMode       = QSPI_MATCH_MODE_AND;
+    s_config.StatusBytesSize = 1;
+
+    // write status register takes approx 2-15ms to complete according to datasheet.
+    // interval is in clock cycles so at 120MHz, we'll check every 250us or so instead of
+    // the original 133ns
+    s_config.Interval      = 0x8000;
     s_config.AutomaticStop = QSPI_AUTOMATIC_STOP_ENABLE;
 
     s_command.Instruction = READ_STATUS_REG_CMD;
@@ -832,15 +1019,43 @@ uint8_t QSPIHandle::Impl::GetStatusRegister()
 
 uint32_t QSPIHandle::Impl::GetPin(size_t pin)
 {
-    Pin* p = pin_config_arr_[pin];
+    Pin* p;
+    if(init_state_ == InitState::Uninitialized)
+        p = pin_config_arr_sd[pin];
+    else
+        p = pin_config_arr_quad[pin];
     return GetHALPin(*p);
 }
 
 
 GPIO_TypeDef* QSPIHandle::Impl::GetPort(size_t pin)
 {
-    Pin* p = pin_config_arr_[pin];
+    Pin* p;
+    if(init_state_ == InitState::Uninitialized)
+        p = pin_config_arr_sd[pin];
+    else
+        p = pin_config_arr_quad[pin];
     return GetHALPort(*p);
+}
+
+uint8_t QSPIHandle::Impl::GetAF(size_t pin)
+{
+    if(init_state_ == InitState::Uninitialized)
+    {
+        uint8_t af_config[] = {GPIO_AF10_QUADSPI,
+                               GPIO_AF10_QUADSPI,
+                               GPIO_AF9_QUADSPI,
+                               GPIO_AF10_QUADSPI};
+        return af_config[pin];
+    }
+    // otherwise use all pins
+    uint8_t af_config[] = {GPIO_AF10_QUADSPI,
+                           GPIO_AF10_QUADSPI,
+                           GPIO_AF9_QUADSPI,
+                           GPIO_AF9_QUADSPI,
+                           GPIO_AF9_QUADSPI,
+                           GPIO_AF10_QUADSPI};
+    return af_config[pin];
 }
 
 
@@ -914,28 +1129,24 @@ extern "C" void HAL_QSPI_MspInit(QSPI_HandleTypeDef* qspiHandle)
         /* QUADSPI clock enable */
         __HAL_RCC_QSPI_CLK_ENABLE();
 
+        /** Reset/Release (as per second instruction in How to use this driver) */
+        __HAL_RCC_QSPI_FORCE_RESET();
+        __HAL_RCC_QSPI_RELEASE_RESET();
+
         __HAL_RCC_GPIOG_CLK_ENABLE();
         __HAL_RCC_GPIOF_CLK_ENABLE();
         __HAL_RCC_GPIOE_CLK_ENABLE();
         __HAL_RCC_GPIOB_CLK_ENABLE();
         // Seems the same for all pin outs so far.
-        uint8_t       af_config[qspi_impl.GetNumPins()] = {GPIO_AF10_QUADSPI,
-                                                     GPIO_AF10_QUADSPI,
-                                                     GPIO_AF9_QUADSPI,
-                                                     GPIO_AF9_QUADSPI,
-                                                     GPIO_AF9_QUADSPI,
-                                                     GPIO_AF10_QUADSPI};
         GPIO_TypeDef* port;
         for(uint8_t i = 0; i < qspi_impl.GetNumPins(); i++)
         {
-            //            port                = (GPIO_TypeDef*)gpio_hal_port_map[qspi_handle.dsy_hqspi->pin_config[i].port];
-            //            GPIO_InitStruct.Pin = gpio_hal_pin_map[qspi_handle.dsy_hqspi->pin_config[i].pin];
             port                      = qspi_impl.GetPort(i);
             GPIO_InitStruct.Pin       = qspi_impl.GetPin(i);
             GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
             GPIO_InitStruct.Pull      = GPIO_NOPULL;
             GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
-            GPIO_InitStruct.Alternate = af_config[i];
+            GPIO_InitStruct.Alternate = qspi_impl.GetAF(i);
             HAL_GPIO_Init(port, &GPIO_InitStruct);
         }
         /* QUADSPI interrupt Init */
@@ -978,28 +1189,28 @@ extern "C" void QUADSPI_IRQHandler(void)
 
 /* HAL Overwrite Implementation */
 
-/**QUADSPI GPIO Configuration    
+/**QUADSPI GPIO Configuration
     On Daisy Rev3:
     PG6     ------> QUADSPI_BK1_NCS
     PF8     ------> QUADSPI_BK1_IO0
     PF9     ------> QUADSPI_BK1_IO1
     PF7     ------> QUADSPI_BK1_IO2
     PF6     ------> QUADSPI_BK1_IO3
-    PB2     ------> QUADSPI_CLK 
+    PB2     ------> QUADSPI_CLK
     On Daisy Seed:
     PG6     ------> QUADSPI_BK1_NCS
     PF8     ------> QUADSPI_BK1_IO0
     PF9     ------> QUADSPI_BK1_IO1
     PF7     ------> QUADSPI_BK1_IO2
     PF6     ------> QUADSPI_BK1_IO3
-    PF10    ------> QUADSPI_CLK 
+    PF10    ------> QUADSPI_CLK
     On Audio BB:
     PG6     ------> QUADSPI_BK1_NCS
     PF8     ------> QUADSPI_BK1_IO0
     PF9     ------> QUADSPI_BK1_IO1
     PE2     ------> QUADSPI_BK1_IO2
     PF6     ------> QUADSPI_BK1_IO3
-    PF10    ------> QUADSPI_CLK 
+    PF10    ------> QUADSPI_CLK
     */
 //enum
 //{
