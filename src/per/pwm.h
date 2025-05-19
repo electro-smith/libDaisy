@@ -42,7 +42,6 @@ namespace daisy
  * - Channel 4: PA3 (D16)
  *
  * Future work:
- * - Allow for changing timer period after initialization
  * - Support other timers, including HRTIM, TIM1, TIM8
  * - DMA
  */
