@@ -9,6 +9,8 @@ class PWMHandle::Impl
   public:
     PWMHandle::Result Init(const Config &config);
     PWMHandle::Result DeInit();
+    void              SetPrescaler(uint32_t prescaler);
+    void              SetPeriod(uint32_t period);
 
     Config            config_;
     TIM_HandleTypeDef tim_hal_handle_{0};
@@ -68,20 +70,11 @@ PWMHandle::Channel::Init(const PWMHandle::Channel::Config &config)
     if(owner_.pimpl_ == nullptr)
         return PWMHandle::Result::ERR;
 
-    config_      = config;
-    auto *handle = &(owner_.pimpl_->tim_hal_handle_);
+    config_ = config;
+    handle_ = &(owner_.pimpl_->tim_hal_handle_);
 
     // float multiplier
     scale_ = static_cast<float>(owner_.pimpl_->config_.period);
-
-    // Corresponding compare register for this timer and channel
-    switch(channel_)
-    {
-        case TIM_CHANNEL_1: reg_ = &(handle->Instance->CCR1); break;
-        case TIM_CHANNEL_2: reg_ = &(handle->Instance->CCR2); break;
-        case TIM_CHANNEL_3: reg_ = &(handle->Instance->CCR3); break;
-        case TIM_CHANNEL_4: reg_ = &(handle->Instance->CCR4); break;
-    }
 
     // Configure channel
     TIM_OC_InitTypeDef oc_config = {0};
@@ -92,7 +85,7 @@ PWMHandle::Channel::Init(const PWMHandle::Channel::Config &config)
               ? TIM_OCPOLARITY_LOW
               : TIM_OCPOLARITY_HIGH;
     oc_config.OCFastMode = TIM_OCFAST_DISABLE;
-    if(HAL_TIM_PWM_ConfigChannel(handle, &oc_config, channel_) != HAL_OK)
+    if(HAL_TIM_PWM_ConfigChannel(handle_, &oc_config, channel_) != HAL_OK)
     {
         return PWMHandle::Result::ERR;
     }
@@ -147,7 +140,7 @@ PWMHandle::Channel::Init(const PWMHandle::Channel::Config &config)
     HAL_GPIO_Init(GPIO_Port, &GPIO_InitStruct);
 
     // Start PWM on channel
-    if(HAL_TIM_PWM_Start(handle, channel_) != HAL_OK)
+    if(HAL_TIM_PWM_Start(handle_, channel_) != HAL_OK)
     {
         return PWMHandle::Result::ERR;
     }
@@ -162,7 +155,7 @@ PWMHandle::Result PWMHandle::Channel::Init()
 
 PWMHandle::Result PWMHandle::Channel::DeInit()
 {
-    if(reg_ == nullptr)
+    if(handle_ == nullptr)
         return PWMHandle::Result::OK;
 
     auto *handle = &(owner_.pimpl_->tim_hal_handle_);
@@ -171,10 +164,11 @@ PWMHandle::Result PWMHandle::Channel::DeInit()
         return PWMHandle::Result::ERR;
     }
 
-    reg_ = nullptr;
+    handle_ = nullptr;
 
     return PWMHandle::Result::OK;
 }
+
 
 // -------------------------------------------------------------------------
 
@@ -266,6 +260,18 @@ PWMHandle::Result PWMHandle::Impl::DeInit()
     return PWMHandle::Result::OK;
 }
 
+void PWMHandle::Impl::SetPrescaler(uint32_t prescaler)
+{
+    config_.prescaler = prescaler;
+    __HAL_TIM_SET_PRESCALER(&tim_hal_handle_, prescaler);
+}
+
+void PWMHandle::Impl::SetPeriod(uint32_t period)
+{
+    config_.period = period;
+    __HAL_TIM_SET_AUTORELOAD(&tim_hal_handle_, period);
+}
+
 // ---------------------------------------------------------------------
 
 PWMHandle::PWMHandle()
@@ -303,6 +309,16 @@ PWMHandle::Result PWMHandle::DeInit()
 const PWMHandle::Config &PWMHandle::GetConfig() const
 {
     return pimpl_->config_;
+}
+
+void PWMHandle::SetPrescaler(uint32_t prescaler)
+{
+    pimpl_->SetPrescaler(prescaler);
+}
+
+void PWMHandle::SetPeriod(uint32_t period)
+{
+    pimpl_->SetPeriod(period);
 }
 
 } // namespace daisy

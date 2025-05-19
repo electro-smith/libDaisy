@@ -3,6 +3,7 @@
 #define DSY_PWM_H
 
 #include "daisy_core.h"
+#include "stm32h7xx_hal.h"
 #include <cstdint>
 
 namespace daisy
@@ -126,7 +127,7 @@ class PWMHandle
 
         /** @brief Private constructor for channel. Do not use. */
         Channel(PWMHandle *owner, uint32_t channel)
-        : owner_(*owner), channel_(channel), scale_(65535.0f), reg_(nullptr)
+        : owner_(*owner), channel_(channel), scale_(65535.0f), handle_(nullptr)
         {
         }
 
@@ -148,7 +149,10 @@ class PWMHandle
         /** @brief Set the duty cycle for the PWM channel.
          * \param raw Must be less than or equal to the timer's period
          */
-        inline void SetRaw(uint32_t raw) { *reg_ = raw; }
+        inline void SetRaw(uint32_t raw)
+        {
+            __HAL_TIM_SET_COMPARE(handle_, channel_, raw);
+        }
 
         /** @brief Set the duty cycle for the PWM channel. Automatically
          * normalized to the timer's period.
@@ -161,7 +165,7 @@ class PWMHandle
                 val = 0.0f;
             if(val > 1.0f)
                 val = 1.0f;
-            *reg_ = static_cast<uint32_t>(val * scale_);
+            SetRaw(static_cast<uint32_t>(val * scale_));
         }
 
       private:
@@ -169,7 +173,7 @@ class PWMHandle
         const uint32_t     channel_;
         Channel::Config    config_;
         float              scale_;
-        volatile uint32_t *reg_;
+        TIM_HandleTypeDef *handle_;
     };
 
     PWMHandle();
@@ -202,6 +206,12 @@ class PWMHandle
     /** @brief Get a reference to CH4 of this peripheral. Must be initialized
      * before use. */
     inline Channel &Channel4() { return ch4_; };
+
+    /** @brief Set the prescaler */
+    void SetPrescaler(uint32_t prescaler);
+
+    /** @brief Set the period */
+    void SetPeriod(uint32_t period);
 
   private:
     Impl *pimpl_;
