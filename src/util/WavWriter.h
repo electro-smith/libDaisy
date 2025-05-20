@@ -143,12 +143,30 @@ class WavWriter
     {
         unsigned int bw = 0;
         recording_      = false;
-        // We _should_ flush whatever's left in the transfer buff
-        // TODO: that.
+
+        // Flush remaining data in the transfer buffer
+        if (wptr_ > 0) // Check if there is unwritten data in the buffer
+        {
+            uint32_t remaining_size = wptr_ * (cfg_.bitspersample / 8);
+            // Ensure remaining_size does not exceed the buffer size
+            if (remaining_size > sizeof(transfer_buff))
+            {
+                remaining_size = sizeof(transfer_buff);
+            }
+            f_write(&fp_, transfer_buff, remaining_size, &bw);
+        }
+        
         wavheader_.FileSize = CalcFileSize();
         f_lseek(&fp_, 0);
         f_write(&fp_, &wavheader_, sizeof(wavheader_), &bw);
         f_close(&fp_);
+
+        // Clear the transfer buffer and reset the buffer state
+        memset(transfer_buff, 0, sizeof(transfer_buff));
+        bstate_ = BufferState::IDLE;
+        wptr_ = 0; // Reset the write pointer
+        num_samps_ = 0; // Reset the number of samples
+        recording_ = false;          // Ensure recording is inactive  
     }
 
     /** Opens a file for writing. Writes the initial WAV Header, and gets ready for stream-based recording. */
