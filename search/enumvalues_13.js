@@ -1,9 +1,9 @@
 var searchData=
 [
   ['tim_5f2_0',['TIM_2',['../structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaa848c6355c514c385d53dde45615d0411',1,'daisy::TimerHandle::Config']]],
-  ['tim_5f3_1',['TIM_3',['../structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaa069b86aefb75f0c622fc14d8e28db631',1,'daisy::TimerHandle::Config']]],
-  ['tim_5f4_2',['TIM_4',['../structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaac9136368e302d247b27e74dd7726ec1f',1,'daisy::TimerHandle::Config']]],
-  ['tim_5f5_3',['TIM_5',['../structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaa6840481ce38511a53a7e49e81c02a936',1,'daisy::TimerHandle::Config']]],
+  ['tim_5f3_1',['TIM_3',['../structdaisy_1_1_p_w_m_handle_1_1_config.html#a07f6bfee86d6c124f58402a7f9a99edea069b86aefb75f0c622fc14d8e28db631',1,'daisy::PWMHandle::Config::TIM_3'],['../structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaa069b86aefb75f0c622fc14d8e28db631',1,'daisy::TimerHandle::Config::TIM_3']]],
+  ['tim_5f4_2',['TIM_4',['../structdaisy_1_1_p_w_m_handle_1_1_config.html#a07f6bfee86d6c124f58402a7f9a99edeac9136368e302d247b27e74dd7726ec1f',1,'daisy::PWMHandle::Config::TIM_4'],['../structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaac9136368e302d247b27e74dd7726ec1f',1,'daisy::TimerHandle::Config::TIM_4']]],
+  ['tim_5f5_3',['TIM_5',['../structdaisy_1_1_p_w_m_handle_1_1_config.html#a07f6bfee86d6c124f58402a7f9a99edea6840481ce38511a53a7e49e81c02a936',1,'daisy::PWMHandle::Config::TIM_5'],['../structdaisy_1_1_timer_handle_1_1_config.html#a907160c00bf0cad7ec645368bd4f5bcaa6840481ce38511a53a7e49e81c02a936',1,'daisy::TimerHandle::Config::TIM_5']]],
   ['timingclock_4',['TimingClock',['../group__midi__events.html#gga3069be23e98a0299bbfa8f1759754d45afb2f72454a51663d2093d251757e4d1c',1,'daisy']]],
   ['topcentered_5',['topCentered',['../namespacedaisy.html#a9697449f10c05aa93ee32b36020ea387ae370fbe691bba7c21438a85989fe0357',1,'daisy']]],
   ['topleft_6',['topLeft',['../namespacedaisy.html#a9697449f10c05aa93ee32b36020ea387a79ad18f72445fe00af22637f175bf878',1,'daisy']]],

@@ -9,5 +9,6 @@ var searchData=
   ['polymodeonevent_6',['PolyModeOnEvent',['../structdaisy_1_1_poly_mode_on_event.html',1,'daisy']]],
   ['polyphonickeypressureevent_7',['PolyphonicKeyPressureEvent',['../structdaisy_1_1_polyphonic_key_pressure_event.html',1,'daisy']]],
   ['potmonitor_8',['PotMonitor',['../classdaisy_1_1_pot_monitor.html',1,'daisy']]],
-  ['programchangeevent_9',['ProgramChangeEvent',['../structdaisy_1_1_program_change_event.html',1,'daisy']]]
+  ['programchangeevent_9',['ProgramChangeEvent',['../structdaisy_1_1_program_change_event.html',1,'daisy']]],
+  ['pwmhandle_10',['PWMHandle',['../classdaisy_1_1_p_w_m_handle.html',1,'daisy']]]
 ];

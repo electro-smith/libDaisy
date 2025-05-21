@@ -101,6 +101,7 @@ var annotated_dup =
       [ "PolyphonicKeyPressureEvent", "structdaisy_1_1_polyphonic_key_pressure_event.html", "structdaisy_1_1_polyphonic_key_pressure_event" ],
       [ "PotMonitor", "classdaisy_1_1_pot_monitor.html", "classdaisy_1_1_pot_monitor" ],
       [ "ProgramChangeEvent", "structdaisy_1_1_program_change_event.html", "structdaisy_1_1_program_change_event" ],
+      [ "PWMHandle", "classdaisy_1_1_p_w_m_handle.html", "classdaisy_1_1_p_w_m_handle" ],
       [ "QSPIHandle", "classdaisy_1_1_q_s_p_i_handle.html", "classdaisy_1_1_q_s_p_i_handle" ],
       [ "Random", "classdaisy_1_1_random.html", "classdaisy_1_1_random" ],
       [ "Rectangle", "classdaisy_1_1_rectangle.html", "classdaisy_1_1_rectangle" ],
