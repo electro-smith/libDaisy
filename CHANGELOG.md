@@ -3,6 +3,7 @@
 ## v7.1.0
 
 ### Features
+- Add an optional conversion complete callback to `AdcHandle::Start()`
 
 * Support for MIDI via USB Host has been added. (PR #611)
 * Four new OLED fonts were added: 4x6, 4x8, 5x8, and 6x7. (PR #619)
