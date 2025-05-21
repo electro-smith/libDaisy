@@ -72,7 +72,17 @@ class Mpr121I2CTransport
         return I2CHandle::Result::OK
                != i2c_.ReceiveBlocking(config_.dev_addr, data, size, 10);
     }
-
+    bool ReadMem(uint8_t *data, uint8_t memAddress, uint16_t memSize)
+    {
+       return I2CHandle::Result::OK
+              != i2c_.Mem_read(
+                   config_.dev_addr, 
+                   memAddress,
+                   1,
+                   data,
+                   memSize,
+                   10);
+   }
   private:
     I2CHandle i2c_;
     Config    config_;
@@ -228,24 +238,18 @@ class Mpr121
         \param      reg the register address to read from
         \returns    the 8 bit value that was read.
     */
-    uint8_t ReadRegister8(uint8_t reg)
+   uint8_t ReadRegister8(uint8_t reg)
     {
         uint8_t buff;
-        SetTransportErr(transport_.Write(&reg, 1));
-        SetTransportErr(transport_.Read(&buff, 1));
-
+        SetTransportErr (transport_.ReadMem (&buff, reg, 1));
         return buff;
     }
 
-    /** Read the contents of a 16 bit device register.
-        \param      reg the register address to read from
-        \returns    the 16 bit value that was read.
-    */
     uint16_t ReadRegister16(uint8_t reg)
     {
         uint16_t buff;
-        SetTransportErr(transport_.Write(&reg, 1));
-        SetTransportErr(transport_.Read((uint8_t *)&buff, 2));
+        SetTransportErr (transport_.ReadMem ((uint8_t*)&buff, reg, 2));
+
 
         return buff;
     }
