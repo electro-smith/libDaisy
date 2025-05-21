@@ -418,7 +418,7 @@ I2CHandle::Result I2CHandle::Impl::ReadDataAtAddress(uint16_t address,
     // wait for previous transfer to be finished
     while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
     if(HAL_I2C_Mem_Read(&i2c_hal_handle_,
-                        address,
+                        address << 1,
                         mem_address,
                         mem_address_size,
                         data,
@@ -445,7 +445,7 @@ I2CHandle::Result I2CHandle::Impl::WriteDataAtAddress(uint16_t address,
     // wait for previous transfer to be finished
     while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
     if(HAL_I2C_Mem_Write(&i2c_hal_handle_,
-                         address,
+                         address << 1,
                          mem_address,
                          mem_address_size,
                          data,

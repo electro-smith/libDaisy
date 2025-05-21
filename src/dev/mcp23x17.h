@@ -108,7 +108,7 @@ class Mcp23017Transport
 
     void Init(const Config& config)
     {
-        i2c_address_ = config.i2c_address << 1;
+        i2c_address_ = config.i2c_address;
         i2c_.Init(config.i2c_config);
     };
 
