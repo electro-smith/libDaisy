@@ -900,6 +900,18 @@ I2CHandle::Result I2CHandle::ReadDataAtAddress(uint16_t address,
         address, mem_address, mem_address_size, data, data_size, timeout);
 }
 
+I2CHandle::Result I2CHandle::Mem_read( 
+           uint16_t devAddress,
+           uint16_t memAddress,
+           uint16_t memAddSize,
+           uint8_t* pData,
+           uint16_t size,
+           uint32_t timeout)
+{
+    return pimpl->Mem_read(devAddress, memAddress, memAddSize, pdata, size, timeout);
+}
+
+
 I2CHandle::Result I2CHandle::WriteDataAtAddress(uint16_t address,
                                                 uint16_t mem_address,
                                                 uint16_t mem_address_size,
