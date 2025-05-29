@@ -46,7 +46,7 @@ class I2CHandle::Impl
                                          uint8_t* data,
                                          uint16_t data_size,
                                          uint32_t timeout);
-
+        
     // =========================================================
     // scheduling and global functions
     struct DmaJob
@@ -92,11 +92,20 @@ class I2CHandle::Impl
                                         uint16_t                       size,
                                         I2CHandle::CallbackFunctionPtr callback,
                                         void* callback_context);
-
+        
+    I2CHandle::Result Mem_read( 
+           uint16_t devAddress,
+           uint16_t memAddress,
+           uint16_t memAddSize,
+           uint8_t* pData,
+           uint16_t size,
+           uint32_t timeout);
+   
+                                        
     void InitPins();
     void DeinitPins();
-};
 
+    };
 // ======================================================================
 // Error handler
 // ======================================================================
@@ -279,6 +288,42 @@ I2CHandle::Result I2CHandle::Impl::Init(const I2CHandle::Config& config)
         return I2CHandle::Result::ERR;
 
     return I2CHandle::Result::OK;
+}
+
+I2CHandle::Result I2CHandle::Impl::Mem_read( 
+           uint16_t devAddress,
+           uint16_t memAddress,
+           uint16_t memAddSize,
+           uint8_t* pData,
+           uint16_t size,
+           uint32_t timeout)
+{
+   // wait for previous transfer to be finished
+   while(HAL_I2C_GetState(&i2c_hal_handle_) != HAL_I2C_STATE_READY) {};
+
+   HAL_StatusTypeDef status;
+   if(config_.mode == I2CHandle::Config::Mode::I2C_MASTER)
+   {
+      // status = HAL_I2C_Master_Transmit(
+      //     &i2c_hal_handle_, address << 1, data, size, timeout);
+       status = HAL_I2C_Mem_Read (
+           &i2c_hal_handle_, 
+           devAddress << 1,
+           memAddress,
+           memAddSize,
+           pData,
+           size,
+           timeout
+        );
+   }
+   else
+   {
+       //status = HAL_I2C_Slave_Transmit(&i2c_hal_handle_, data, size, timeout);
+   }
+   if(status != HAL_OK)
+       return I2CHandle::Result::ERR;
+
+   return I2CHandle::Result::OK;
 }
 
 I2CHandle::Result I2CHandle::Impl::TransmitBlocking(uint16_t address,
@@ -854,6 +899,18 @@ I2CHandle::Result I2CHandle::ReadDataAtAddress(uint16_t address,
     return pimpl_->ReadDataAtAddress(
         address, mem_address, mem_address_size, data, data_size, timeout);
 }
+
+I2CHandle::Result I2CHandle::Mem_read( 
+           uint16_t devAddress,
+           uint16_t memAddress,
+           uint16_t memAddSize,
+           uint8_t* pData,
+           uint16_t size,
+           uint32_t timeout)
+{
+    return pimpl->Mem_read(devAddress, memAddress, memAddSize, pdata, size, timeout);
+}
+
 
 I2CHandle::Result I2CHandle::WriteDataAtAddress(uint16_t address,
                                                 uint16_t mem_address,
