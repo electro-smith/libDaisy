@@ -169,12 +169,19 @@ class I2CHandle
                       CallbackFunctionPtr callback,
                       void*               callback_context);
 
-    /** Reads an amount of data from a specific memory address. 
-    *   This method will return an error if the I2C peripheral is in slave mode. 
+    /** Reads an amount of data from a specific memory address / register. 
+    *   This method will return an error if the I2C peripheral is in slave mode.
+    *   This method is equivalent to calling `TransmitBlocking` to send `mem_address`,
+    *   followed immediately by a call to `ReceiveBlocking`.
+    * 
+    * \warning Breaking change: In libDaisy versions v7.1.0 and below, `ReadDataAtAddress` required
+    *   that the address parameter be left-shifted by one bit. This has been changed in subsequent
+    *   versions, so now `ReadDataAtAddress`, `ReceiveBlocking`, and `ReceiveDma` all use the same address convention.
+    *   When updating libDaisy, you may need to remove any address left-shifting that you have applied.
     * 
     * \param address            The slave device address.
     * \param mem_address        Pointer to data containing the address to read from device.
-    * \param mem_address_size   Size of the memory address in bytes.
+    * \param mem_address_size   Size of the memory address in bytes (either 1 or 2).
     * \param data               Pointer to buffer that will be filled with contents at mem_address
     * \param data_size          Size of the data to be read in bytes.
     * \param timeout            The timeout in milliseconds before returning without communication
@@ -186,12 +193,19 @@ class I2CHandle
                              uint16_t data_size,
                              uint32_t timeout);
 
-    /** Writes an amount of data from a specific memory address. 
+    /** Writes an amount of data to a specific memory address / register. 
     *   This method will return an error if the I2C peripheral is in slave mode. 
+    *   This method is equivalent to calling `TransmitBlocking` to send `mem_address`, followed 
+    *   immediately by another call to `TransmitBlocking` to send `data`.
+    * 
+    * \warning Breaking change: In libDaisy versions v7.1.0 and below, `WriteDataAtAddress` required 
+    *   that the address parameter be left-shifted by one bit. This has been changed in subsequent
+    *   versions, so now `WriteDataAtAddress`,  `TransmitBlocking`, and `TransmitDma` all use the same address convention.
+    *   When updating libDaisy, you may need to remove any address left-shifting that you have applied.
     * 
     * \param address            The slave device address.
     * \param mem_address        Pointer to data containing the address to write to device.
-    * \param mem_address_size   Size of the memory address in bytes.
+    * \param mem_address_size   Size of the memory address in bytes (either 1 or 2).
     * \param data               Pointer to buffer that will be written to the mem_address
     * \param data_size          Size of the data to be written in bytes.
     * \param timeout            The timeout in milliseconds before returning without communication
