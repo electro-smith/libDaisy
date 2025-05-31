@@ -5,6 +5,7 @@
 #include <cassert>
 #include "hid/usb.h"
 #include "sys/system.h"
+#include "SEGGER_RTT.h"
 
 
 namespace daisy
@@ -17,6 +18,7 @@ enum LoggerDestination
     LOGGER_INTERNAL, /**< internal USB port */
     LOGGER_EXTERNAL, /**< external USB port */
     LOGGER_SEMIHOST, /**< stdout */
+    LOGGER_RTT,      /**< stdout */
 };
 
 /** @brief Logging I/O underlying implementation
@@ -116,6 +118,31 @@ class LoggerImpl<LOGGER_SEMIHOST>
     static bool Transmit(const void* buffer, size_t bytes)
     {
         write(STDOUT_FILENO, buffer, bytes);
+        return true;
+    }
+};
+
+/**  @brief Specialization for Segger RTT 
+ */
+template <>
+class LoggerImpl<LOGGER_RTT>
+{
+    static constexpr int RTT_TERMINAL = 0;
+
+  public:
+    /** Initialize logging destination
+     */
+    static void Init()
+    {
+        SEGGER_RTT_ConfigUpBuffer(
+            RTT_TERMINAL, NULL, NULL, 0, SEGGER_RTT_MODE_BLOCK_IF_FIFO_FULL);
+    }
+
+    /** Transmit a block of data
+     */
+    static bool Transmit(const void* buffer, size_t bytes)
+    {
+        SEGGER_RTT_Write(RTT_TERMINAL, buffer, bytes);
         return true;
     }
 };
