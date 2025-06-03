@@ -238,28 +238,33 @@ extern "C"
         tud_int_handler(BOARD_TUD_FS_RHPORT);
     }
 
-    // Add this implementation of TinyUSB's callback function
     void tud_cdc_rx_cb(uint8_t itf)
     {
-        (void)itf; // Unused parameter
-
-        if(usb_rx_callback != nullptr)
+        if(usb_rx_callback == nullptr)
         {
-            // Get the amount of data available
+            return;
+        }
+
+        // Loop as long as there's data available
+        while(tud_cdc_available() > 0)
+        {
+            // Get the amount of data available for this iteration
             uint32_t count = tud_cdc_available();
 
-            // Don't exceed buffer size
-            if(count > sizeof(rx_buffer))
-                count = sizeof(rx_buffer);
-
-            // Only call the callback if there's data
-            if(count > 0)
+            // Determine the size of the chunk to read
+            uint32_t chunk_size = count;
+            if(chunk_size > sizeof(rx_buffer))
             {
-                // Read the data into our buffer
-                uint32_t read = tud_cdc_read(rx_buffer, count);
+                chunk_size = sizeof(rx_buffer);
+            }
 
-                // Call user callback with the data
-                usb_rx_callback(rx_buffer, &read);
+            // Read the data into our buffer
+            uint32_t read_bytes = tud_cdc_read(rx_buffer, chunk_size);
+
+            // Call user callback with the data if bytes were read
+            if(read_bytes > 0)
+            {
+                usb_rx_callback(rx_buffer, &read_bytes);
             }
         }
     }
