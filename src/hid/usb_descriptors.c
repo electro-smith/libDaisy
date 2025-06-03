@@ -132,87 +132,11 @@ uint8_t const desc_fs_configuration[] = {
                               CFG_TUD_MIDI_NUMCABLES_OUT),
 };
 
-#if TUD_OPT_HIGH_SPEED
-// Per USB specs: high speed capable device must report device_qualifier and other_speed_configuration
-
-// high speed configuration
-uint8_t const desc_hs_configuration[] = {
-    // Config number, interface count, string index, total length, attribute, power in mA
-    TUD_CONFIG_DESCRIPTOR(1, ITF_NUM_TOTAL, 0, CONFIG_TOTAL_LEN, 0x00, 100),
-
-    // CDC: Interface number, string index, EP notification address and size, EP
-    // data address (out, in) and size.
-    TUD_CDC_DESCRIPTOR(ITF_NUM_CDC,
-                       0,
-                       EPNUM_CDC_NOTIF,
-                       8,
-                       EPNUM_CDC_OUT,
-                       EPNUM_CDC_IN,
-                       512),
-
-    // MIDI: Interface number, string index, EP Out & EP In address, EP size
-    TUD_MIDI_MULTI_DESCRIPTOR(ITF_NUM_MIDI,
-                              0,
-                              EPNUM_MIDI_OUT,
-                              EPNUM_MIDI_IN,
-                              512,
-                              CFG_TUD_MIDI_NUMCABLES_IN,
-                              CFG_TUD_MIDI_NUMCABLES_OUT),
-};
-
-// other speed configuration
-uint8_t desc_other_speed_config[CONFIG_TOTAL_LEN];
-
-// device qualifier is mostly similar to device descriptor since we don't change configuration based on speed
-tusb_desc_device_qualifier_t const desc_device_qualifier
-    = {.bLength         = sizeof(tusb_desc_device_qualifier_t),
-       .bDescriptorType = TUSB_DESC_DEVICE_QUALIFIER,
-       .bcdUSB          = USB_BCD,
-
-       .bDeviceClass    = TUSB_CLASS_MISC,
-       .bDeviceSubClass = MISC_SUBCLASS_COMMON,
-       .bDeviceProtocol = MISC_PROTOCOL_IAD,
-
-       .bMaxPacketSize0    = CFG_TUD_ENDPOINT0_SIZE,
-       .bNumConfigurations = 0x01,
-       .bReserved          = 0x00};
-
-// Invoked when received GET DEVICE QUALIFIER DESCRIPTOR request
-uint8_t const *tud_descriptor_device_qualifier_cb(void)
-{
-    return (uint8_t const *)&desc_device_qualifier;
-}
-
-// Invoked when received GET OTHER SEED CONFIGURATION DESCRIPTOR request
-uint8_t const *tud_descriptor_other_speed_configuration_cb(uint8_t index)
-{
-    (void)index; // for multiple configurations
-
-    // if link speed is high return fullspeed config, and vice versa
-    memcpy(desc_other_speed_config,
-           (tud_speed_get() == TUSB_SPEED_HIGH) ? desc_fs_configuration
-                                                : desc_hs_configuration,
-           CONFIG_TOTAL_LEN);
-
-    desc_other_speed_config[1] = TUSB_DESC_OTHER_SPEED_CONFIG;
-
-    return desc_other_speed_config;
-}
-
-#endif // highspeed
-
 // Invoked when received GET CONFIGURATION DESCRIPTOR
 uint8_t const *tud_descriptor_configuration_cb(uint8_t index)
 {
     (void)index; // for multiple configurations
-
-#if TUD_OPT_HIGH_SPEED
-    // Although we are highspeed, host may be fullspeed.
-    return (tud_speed_get() == TUSB_SPEED_HIGH) ? desc_hs_configuration
-                                                : desc_fs_configuration;
-#else
     return desc_fs_configuration;
-#endif
 }
 
 //--------------------------------------------------------------------+
