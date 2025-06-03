@@ -74,6 +74,9 @@ class LoggerImpl
     {
         return QueueMessage(buffer, bytes);
     }
+
+    /** Wait for host connection (no-op for non-USB destinations) */
+    static void WaitForHostConnection(){};
 };
 
 
@@ -126,6 +129,20 @@ class LoggerImpl<LOGGER_INTERNAL>
     static bool Transmit(const void* buffer, size_t bytes)
     {
         return QueueMessage(buffer, bytes);
+    }
+
+    /** Wait for host connection */
+    static void WaitForHostConnection()
+    {
+        if(!usb_handle_.IsUsingTinyUsb())
+        {
+            return;
+        }
+
+        while(!usb_handle_.IsConnected())
+        {
+            usb_handle_.RunTask();
+        };
     }
 
   protected:
@@ -187,6 +204,20 @@ class LoggerImpl<LOGGER_EXTERNAL>
         return QueueMessage(buffer, bytes);
     }
 
+    /** Wait for host connection */
+    static void WaitForHostConnection()
+    {
+        if(!usb_handle_.IsUsingTinyUsb())
+        {
+            return;
+        }
+
+        while(!usb_handle_.IsConnected())
+        {
+            usb_handle_.RunTask();
+        };
+    }
+
   protected:
     /** USB Handle for CDC transfers */
     static UsbHandle usb_handle_;
@@ -235,6 +266,9 @@ class LoggerImpl<LOGGER_SEMIHOST>
         }
         return false;
     }
+
+    /** Wait for host connection (no-op for non-USB destinations) */
+    static void WaitForHostConnection(){};
 };
 
 } /* namespace daisy */

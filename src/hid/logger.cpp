@@ -4,7 +4,6 @@
 #include <cassert>
 #include "logger.h"
 #include "sys/system.h"
-#include "tusb.h"
 
 namespace daisy
 {
@@ -51,10 +50,10 @@ void Logger<dest>::StartLog(bool wait_for_pc)
     impl_.Init();
 
     /* if waiting for PC, wait until host connects */
-    while(wait_for_pc && !tud_cdc_connected())
+    if(wait_for_pc)
     {
-        tud_task();
-    };
+        impl_.WaitForHostConnection();
+    }
 
     pc_sync_ = wait_for_pc ? LOGGER_SYNC_IN : LOGGER_SYNC_OUT;
     /** transmit something to stall the UART until a terminal is connected

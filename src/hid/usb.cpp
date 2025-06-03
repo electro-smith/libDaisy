@@ -212,6 +212,16 @@ bool UsbHandle::IsTransmitReady(size_t size) const
     return tud_cdc_write_available() >= size;
 }
 
+bool UsbHandle::IsUsingTinyUsb() const
+{
+    return true;
+}
+
+bool UsbHandle::IsConnected() const
+{
+    return tud_cdc_connected();
+}
+
 // Static Function Implementation
 static void UsbErrorHandler()
 {

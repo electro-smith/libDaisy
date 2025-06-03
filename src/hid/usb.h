@@ -103,6 +103,18 @@ class UsbHandle
      */
     bool IsTransmitReady(size_t size) const;
 
+    /**
+     * @brief Check if the USB implementation is using TinyUSB
+     * @return true if using TinyUSB, false otherwise
+     */
+    bool IsUsingTinyUsb() const;
+
+    /**
+     * @brief Check if USB CDC is connected to a host
+     * @return true if connected, false otherwise
+     */
+    bool IsConnected() const;
+
   private:
 };
 
