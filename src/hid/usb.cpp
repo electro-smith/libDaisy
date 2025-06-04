@@ -19,9 +19,15 @@ bool usb_hs_hw_initialized = false;
 // Prevents multiple calls to tud_task() from different contexts
 static bool tud_task_running = false;
 
-// Add these near the other global declarations
+// TinyUSB specific globals
 static UsbHandle::ReceiveCallback usb_rx_callback = nullptr;
 static uint8_t                    rx_buffer[CFG_TUD_CDC_RX_BUFSIZE];
+
+// Use TinyUSB by default
+UsbHandle::UsbImpl UsbHandle::current_impl_ = UsbHandle::IMPL_TINYUSB;
+
+// Simple USB specific globals
+UsbHandle::ReceiveCallback rx_callback;
 
 // Externs for IRQ Handlers
 extern "C"
@@ -42,9 +48,8 @@ extern "C"
     uint8_t usbd_mode = USBD_MODE_CDC;
 }
 
-UsbHandle::ReceiveCallback rx_callback;
-
-static void InitFS()
+// TinyUSB implementation functions
+static void InitFS_TinyUSB()
 {
     rx_callback = DummyRxCallback;
     if(!usb_fs_hw_initialized)
@@ -63,15 +68,7 @@ static void InitFS()
     }
 }
 
-static void DeinitFS()
-{
-    if(USBD_DeInit(&hUsbDeviceFS) != USBD_OK)
-    {
-        UsbErrorHandler();
-    }
-}
-
-static void InitHS()
+static void InitHS_TinyUSB()
 {
     rx_callback = DummyRxCallback;
     if(!usb_hs_hw_initialized)
@@ -89,18 +86,15 @@ static void InitHS()
     }
 }
 
-void UsbHandle::RunTask()
+static void DeinitFS_TinyUSB()
 {
-    // Protect against reentrant calls
-    if(tud_task_running)
-        return;
-
-    tud_task_running = true;
-    tud_task();
-    tud_task_running = false;
+    if(USBD_DeInit(&hUsbDeviceFS) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
 }
 
-static void DeinitHS()
+static void DeinitHS_TinyUSB()
 {
     if(USBD_DeInit(&hUsbDeviceHS) != USBD_OK)
     {
@@ -108,17 +102,114 @@ static void DeinitHS()
     }
 }
 
+// Simple USB implementation functions
+static void InitFS_Simple()
+{
+    rx_callback = DummyRxCallback;
+    if(USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+    if(USBD_RegisterClass(&hUsbDeviceFS, &USBD_CDC) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+    if(USBD_CDC_RegisterInterface(&hUsbDeviceFS, &USBD_Interface_fops_FS)
+       != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+    if(USBD_Start(&hUsbDeviceFS) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+}
+
+static void InitHS_Simple()
+{
+    // HS as FS
+    if(USBD_Init(&hUsbDeviceHS, &HS_Desc, DEVICE_HS) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+    if(USBD_RegisterClass(&hUsbDeviceHS, &USBD_CDC) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+    if(USBD_CDC_RegisterInterface(&hUsbDeviceHS, &USBD_Interface_fops_HS)
+       != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+    if(USBD_Start(&hUsbDeviceHS) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+}
+
+static void DeinitFS_Simple()
+{
+    if(USBD_DeInit(&hUsbDeviceFS) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+}
+
+static void DeinitHS_Simple()
+{
+    if(USBD_DeInit(&hUsbDeviceHS) != USBD_OK)
+    {
+        UsbErrorHandler();
+    }
+}
+
+void UsbHandle::SetImplementation(UsbImpl impl)
+{
+    current_impl_ = impl;
+}
+
+void UsbHandle::RunTask()
+{
+    if(current_impl_ == IMPL_TINYUSB)
+    {
+        // Protect against reentrant calls
+        if(tud_task_running)
+            return;
+
+        tud_task_running = true;
+        tud_task();
+        tud_task_running = false;
+    }
+    // Simple USB doesn't need a task function
+}
+
 void UsbHandle::Init(UsbPeriph dev)
 {
-    switch(dev)
+    if(current_impl_ == IMPL_TINYUSB)
     {
-        case FS_INTERNAL: InitFS(); break;
-        case FS_EXTERNAL: InitHS(); break;
-        case FS_BOTH:
-            InitHS();
-            InitFS();
-            break;
-        default: break;
+        switch(dev)
+        {
+            case FS_INTERNAL: InitFS_TinyUSB(); break;
+            case FS_EXTERNAL: InitHS_TinyUSB(); break;
+            case FS_BOTH:
+                InitHS_TinyUSB();
+                InitFS_TinyUSB();
+                break;
+            default: break;
+        }
+    }
+    else // IMPL_SIMPLE
+    {
+        switch(dev)
+        {
+            case FS_INTERNAL: InitFS_Simple(); break;
+            case FS_EXTERNAL: InitHS_Simple(); break;
+            case FS_BOTH:
+                InitHS_Simple();
+                InitFS_Simple();
+                break;
+            default: break;
+        }
     }
     // Enable USB Regulator
     HAL_PWREx_EnableUSBVoltageDetector();
@@ -126,21 +217,37 @@ void UsbHandle::Init(UsbPeriph dev)
 
 void UsbHandle::DeInit(UsbPeriph dev)
 {
-    switch(dev)
+    if(current_impl_ == IMPL_TINYUSB)
     {
-        case FS_INTERNAL: DeinitFS(); break;
-        case FS_EXTERNAL: DeinitHS(); break;
-        case FS_BOTH:
-            DeinitHS();
-            DeinitFS();
-            break;
-        default: break;
+        switch(dev)
+        {
+            case FS_INTERNAL: DeinitFS_TinyUSB(); break;
+            case FS_EXTERNAL: DeinitHS_TinyUSB(); break;
+            case FS_BOTH:
+                DeinitHS_TinyUSB();
+                DeinitFS_TinyUSB();
+                break;
+            default: break;
+        }
     }
-    // Enable USB Regulator
+    else // IMPL_SIMPLE
+    {
+        switch(dev)
+        {
+            case FS_INTERNAL: DeinitFS_Simple(); break;
+            case FS_EXTERNAL: DeinitHS_Simple(); break;
+            case FS_BOTH:
+                DeinitHS_Simple();
+                DeinitFS_Simple();
+                break;
+            default: break;
+        }
+    }
+    // Disable USB Regulator
     HAL_PWREx_DisableUSBVoltageDetector();
 }
 
-static UsbHandle::Result Transmit(uint8_t *buff, size_t size)
+static UsbHandle::Result Transmit_TinyUSB(uint8_t *buff, size_t size)
 {
     // Check if buffer is valid and non-empty
     if(buff == nullptr || size == 0)
@@ -168,58 +275,130 @@ static UsbHandle::Result Transmit(uint8_t *buff, size_t size)
 
 UsbHandle::Result UsbHandle::TransmitInternal(uint8_t *buff, size_t size)
 {
-    return Transmit(buff, size);
+    if(current_impl_ == IMPL_TINYUSB)
+    {
+        return Transmit_TinyUSB(buff, size);
+    }
+    else // IMPL_SIMPLE
+    {
+        return CDC_Transmit_FS(buff, size) == USBD_OK ? Result::OK
+                                                      : Result::ERR;
+    }
 }
 
 UsbHandle::Result UsbHandle::TransmitExternal(uint8_t *buff, size_t size)
 {
-    return Transmit(buff, size);
+    if(current_impl_ == IMPL_TINYUSB)
+    {
+        return Transmit_TinyUSB(buff, size);
+    }
+    else // IMPL_SIMPLE
+    {
+        return CDC_Transmit_HS(buff, size) == USBD_OK ? Result::OK
+                                                      : Result::ERR;
+    }
 }
 
 void UsbHandle::SetReceiveCallback(ReceiveCallback cb, UsbPeriph dev)
 {
-    // Store the callback function
-    usb_rx_callback = cb;
+    if(current_impl_ == IMPL_TINYUSB)
+    {
+        // Store the callback function
+        usb_rx_callback = cb;
+        // Note: We ignore the dev parameter since TinyUSB uses the itf parameter
+        // in the callback to distinguish between different CDC interfaces
+        (void)dev;
+    }
+    else // IMPL_SIMPLE
+    {
+        // This is pretty silly, but we're working iteratively...
+        rx_callback = cb;
+        rxcallback  = (CDC_ReceiveCallback)rx_callback;
 
-    // No need to do anything else, as TinyUSB will call tud_cdc_rx_cb()
-    // whenever data is received, which will then call our callback
-
-    // Note: We ignore the dev parameter since TinyUSB uses the itf parameter
-    // in the callback to distinguish between different CDC interfaces
-    (void)dev;
+        switch(dev)
+        {
+            case FS_INTERNAL: CDC_Set_Rx_Callback_FS(rxcallback); break;
+            case FS_EXTERNAL: CDC_Set_Rx_Callback_HS(rxcallback); break;
+            case FS_BOTH:
+                CDC_Set_Rx_Callback_FS(rxcallback);
+                CDC_Set_Rx_Callback_HS(rxcallback);
+                break;
+            default: break;
+        }
+    }
 }
 
 size_t UsbHandle::GetRxAvailable() const
 {
-    return tud_cdc_available();
+    if(current_impl_ == IMPL_TINYUSB)
+    {
+        return tud_cdc_available();
+    }
+    else // IMPL_SIMPLE
+    {
+        // Simple USB doesn't have a direct equivalent, return 0
+        return 0;
+    }
 }
 
 size_t UsbHandle::Receive(uint8_t *buff, size_t size)
 {
-    // If using callbacks, we might want to buffer data differently
-    // For now, we just pass through to tud_cdc_read
-    return tud_cdc_read(buff, size);
+    if(current_impl_ == IMPL_TINYUSB)
+    {
+        return tud_cdc_read(buff, size);
+    }
+    else // IMPL_SIMPLE
+    {
+        // Simple USB doesn't have a direct equivalent, return 0
+        return 0;
+    }
 }
 
 UsbHandle::Result UsbHandle::Flush()
 {
-    tud_cdc_write_flush();
-    return Result::OK;
+    if(current_impl_ == IMPL_TINYUSB)
+    {
+        tud_cdc_write_flush();
+        return Result::OK;
+    }
+    else // IMPL_SIMPLE
+    {
+        // Simple USB doesn't need explicit flushing
+        return Result::OK;
+    }
 }
 
 bool UsbHandle::IsTransmitReady(size_t size) const
 {
-    return tud_cdc_write_available() >= size;
+    if(current_impl_ == IMPL_TINYUSB)
+    {
+        return tud_cdc_write_available() >= size;
+    }
+    else // IMPL_SIMPLE
+    {
+        // For simple USB, we'll assume always ready
+        // You might want to implement a proper check here
+        return true;
+    }
 }
 
 bool UsbHandle::IsUsingTinyUsb() const
 {
-    return true;
+    return current_impl_ == IMPL_TINYUSB;
 }
 
 bool UsbHandle::IsConnected() const
 {
-    return tud_cdc_connected();
+    if(current_impl_ == IMPL_TINYUSB)
+    {
+        return tud_cdc_connected();
+    }
+    else // IMPL_SIMPLE
+    {
+        // For simple USB, we'll assume always connected
+        // You might want to implement a proper check here
+        return true;
+    }
 }
 
 // Static Function Implementation
@@ -228,7 +407,16 @@ static void UsbErrorHandler()
     while(1) {}
 }
 
-// IRQ Handler
+// Helper function for system IRQ handlers
+namespace daisy
+{
+UsbHandle::UsbImpl GetCurrentUsbImplementation()
+{
+    return UsbHandle::GetCurrentImplementation();
+}
+} // namespace daisy
+
+// IRQ Handler - unified for both implementations
 extern "C"
 {
     // Shared USB IRQ Handlers for USB HS peripheral are located in sys/System.cpp
@@ -245,11 +433,19 @@ extern "C"
 
     void OTG_FS_IRQHandler(void)
     {
-        tud_int_handler(BOARD_TUD_FS_RHPORT);
+        if(UsbHandle::GetCurrentImplementation() == UsbHandle::IMPL_TINYUSB)
+        {
+            tud_int_handler(BOARD_TUD_FS_RHPORT);
+        }
+        else // IMPL_SIMPLE
+        {
+            HAL_PCD_IRQHandler(&hpcd_USB_OTG_FS);
+        }
     }
 
     void tud_cdc_rx_cb(uint8_t itf)
     {
+        // Only called for TinyUSB implementation
         if(usb_rx_callback == nullptr)
         {
             return;

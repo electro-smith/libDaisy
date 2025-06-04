@@ -33,6 +33,12 @@ class UsbHandle
         FS_BOTH,     /**< Both */
     };
 
+    /** USB Implementation to use */
+    enum UsbImpl
+    {
+        IMPL_TINYUSB, /**< Use TinyUSB implementation */
+        IMPL_SIMPLE,  /**< Use simple STM32 USB implementation */
+    };
 
     /** Function called upon reception of a buffer */
     typedef void (*ReceiveCallback)(uint8_t* buff, uint32_t* len);
@@ -40,6 +46,11 @@ class UsbHandle
     UsbHandle() {}
 
     ~UsbHandle() {}
+
+    /** Set which USB implementation to use (must be called before Init)
+    \param impl Implementation to use
+     */
+    static void SetImplementation(UsbImpl impl);
 
     /** Initializes the specified peripheral(s) as USB CDC Devices
     \param dev Device to initialize
@@ -115,8 +126,18 @@ class UsbHandle
      */
     bool IsConnected() const;
 
+    /**
+     * @brief Get current USB implementation (for internal use)
+     * @return Current USB implementation
+     */
+    static UsbImpl GetCurrentImplementation() { return current_impl_; }
+
   private:
+    static UsbImpl current_impl_;
 };
+
+/** Helper function for system IRQ handlers to determine USB implementation */
+extern UsbHandle::UsbImpl GetCurrentUsbImplementation();
 
 } // namespace daisy
 #endif

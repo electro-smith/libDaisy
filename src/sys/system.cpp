@@ -7,6 +7,7 @@
 #include "per/rng.h"
 #include "tusb.h"
 #include "../hid/tusb_config.h"
+#include "../hid/usb.h"
 
 // global init functions for peripheral drivers.
 // These don't really need to be extern "C" anymore..
@@ -120,7 +121,18 @@ extern "C"
         if(hhcd_USB_OTG_HS.Instance)
             HAL_HCD_IRQHandler(&hhcd_USB_OTG_HS);
         if(hpcd_USB_OTG_HS.Instance)
-            tud_int_handler(BOARD_TUD_HS_RHPORT);
+        {
+            // Dispatch based on current USB implementation
+            if(daisy::GetCurrentUsbImplementation()
+               == daisy::UsbHandle::IMPL_TINYUSB)
+            {
+                tud_int_handler(BOARD_TUD_HS_RHPORT);
+            }
+            else // IMPL_SIMPLE
+            {
+                HAL_PCD_IRQHandler(&hpcd_USB_OTG_HS);
+            }
+        }
     }
 
     // TODO: Add some real handling to the HardFaultHandler
