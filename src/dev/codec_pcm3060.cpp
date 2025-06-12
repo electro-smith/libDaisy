@@ -10,7 +10,7 @@
 
 // Slave address: 0b100011Nx
 // N = 0 (GND on hardware)
-// x = R/W|
+// x = R/W (not passed to address param)
 
 // TODO:
 // * add Deemphasis configuration
@@ -48,8 +48,8 @@ Pcm3060::Result Pcm3060::Init(I2CHandle i2c)
 {
     i2c_ = i2c;
 
-    // TODO: bit 1 can be set via hardware and should be configurable.
-    dev_addr_ = 0x8c;
+    // TODO: bit 0 can be set via hardware and should be configurable.
+    dev_addr_ = 0x46;
 
     // Reset the codec (though by default we may not need to do this)
     uint8_t sysreg = 0x00;
