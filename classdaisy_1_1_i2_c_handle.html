@@ -397,12 +397,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Reads an amount of data from a specific memory address. This method will return an error if the I2C peripheral is in slave mode.</p>
+<p>Reads an amount of data from a specific memory address / register. This method will return an error if the I2C peripheral is in slave mode. This method is equivalent to calling <code>TransmitBlocking</code> to send <code>mem_address</code>, followed immediately by a call to <code>ReceiveBlocking</code>.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Breaking change: In libDaisy versions v7.1.0 and below, <code>ReadDataAtAddress</code> required that the address parameter be left-shifted by one bit. This has been changed in subsequent versions, so now <code>ReadDataAtAddress</code>, <code>ReceiveBlocking</code>, and <code>ReceiveDma</code> all use the same address convention. When updating libDaisy, you may need to remove any address left-shifting that you have applied.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>The slave device address. </td></tr>
     <tr><td class="paramname">mem_address</td><td>Pointer to data containing the address to read from device. </td></tr>
-    <tr><td class="paramname">mem_address_size</td><td>Size of the memory address in bytes. </td></tr>
+    <tr><td class="paramname">mem_address_size</td><td>Size of the memory address in bytes (either 1 or 2). </td></tr>
     <tr><td class="paramname">data</td><td>Pointer to buffer that will be filled with contents at mem_address </td></tr>
     <tr><td class="paramname">data_size</td><td>Size of the data to be read in bytes. </td></tr>
     <tr><td class="paramname">timeout</td><td>The timeout in milliseconds before returning without communication </td></tr>
@@ -630,12 +631,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Writes an amount of data from a specific memory address. This method will return an error if the I2C peripheral is in slave mode.</p>
+<p>Writes an amount of data to a specific memory address / register. This method will return an error if the I2C peripheral is in slave mode. This method is equivalent to calling <code>TransmitBlocking</code> to send <code>mem_address</code>, followed immediately by another call to <code>TransmitBlocking</code> to send <code>data</code>.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Breaking change: In libDaisy versions v7.1.0 and below, <code>WriteDataAtAddress</code> required that the address parameter be left-shifted by one bit. This has been changed in subsequent versions, so now <code>WriteDataAtAddress</code>, <code>TransmitBlocking</code>, and <code>TransmitDma</code> all use the same address convention. When updating libDaisy, you may need to remove any address left-shifting that you have applied.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">address</td><td>The slave device address. </td></tr>
     <tr><td class="paramname">mem_address</td><td>Pointer to data containing the address to write to device. </td></tr>
-    <tr><td class="paramname">mem_address_size</td><td>Size of the memory address in bytes. </td></tr>
+    <tr><td class="paramname">mem_address_size</td><td>Size of the memory address in bytes (either 1 or 2). </td></tr>
     <tr><td class="paramname">data</td><td>Pointer to buffer that will be written to the mem_address </td></tr>
     <tr><td class="paramname">data_size</td><td>Size of the data to be written in bytes. </td></tr>
     <tr><td class="paramname">timeout</td><td>The timeout in milliseconds before returning without communication </td></tr>
