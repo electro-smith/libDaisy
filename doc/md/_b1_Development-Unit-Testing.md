@@ -96,4 +96,4 @@ Tests are built locally on your development computer. While that enables you to 
   - This file will include `src/per/gpio.h` which obviously can't work natively on your development computer.
   - To resolve this issue, you could use the preprocessor macro `UNIT_TEST` to selectively replace the problematic gpio code with a dummy version that you can control and observe from your unit tests.
 
-Should you face issues with native code that won't compile in unit tests, feel free to ask on the [forums](https://forum/electro-smith.com) or in [Slack](https://join.slack.com/t/es-daisy/shared_invite/zt-f9cfm1g4-DgdCok1h1Rj4fpX90~IOww)! We're there to help!
+Should you face issues with native code that won't compile in unit tests, feel free to ask on the [forums](https://forum/electro-smith.com) or in [Discord](https://discord.gg/ByHBnMtQTR)! We're there to help!

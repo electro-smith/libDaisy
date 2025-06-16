@@ -213,7 +213,7 @@ QSPI_ADDRESS ?= 0x90040000
 DAISY_PID = df11
 STM_PID = df11
 
-BOOT_BIN ?= $(SYSTEM_FILES_DIR)/dsy_bootloader_v6_2-intdfu-2000ms.bin
+BOOT_BIN ?= $(SYSTEM_FILES_DIR)/dsy_bootloader_v6_3-intdfu-2000ms.bin
 APP_TYPE ?= BOOT_NONE
 
 ifeq ($(APP_TYPE), BOOT_NONE)

@@ -18,7 +18,7 @@
     <a href="https://github.com/electro-smith/libDaisy/actions/workflows/style.yml">
       <img src="https://github.com/electro-smith/libDaisy/workflows/Style/badge.svg">
     </a>
-    <a href="https://electro-smith.github.io/libDaisy/index.html">
+    <a href="https://daisy.audio/software/">
       <img src="https://github.com/electro-smith/libDaisy/workflows/Documentation/badge.svg">
     </a>
 </p>
@@ -78,8 +78,8 @@ int main(void)
 
 ## Getting Started
 
-- Check out our [Getting Started Wiki Page](https://github.com/electro-smith/DaisyWiki/wiki)
-- Browse the reference documentation [on the web](https://electro-smith.github.io/libDaisy)
+- Check out our [Getting Started Page](https://daisy.audio/tutorials/cpp-dev-env/)
+- Browse the reference documentation [on the web](https://daisy.audio/software/)
 - Make some sound!
 
 ## Project Overview
@@ -100,7 +100,7 @@ Also included is a core/ folder containing:
 - a linker script for defining the sections of memory used by the firmware
 - core files for starting the hardware (system_stm32h7xx.c, startup_stm32h750xx.s, etc.)
 
-Unit Tests can be found in the test/ folder. [Here's a tutorial on how to develop unit tested code for libDaisy](doc/Unit-Testing.md).
+Unit Tests can be found in the tests/ folder. [Here's a tutorial on how to develop unit tested code for libDaisy](doc/md/_b1_Development-Unit-Testing.md).
 
 ### daisy.h
 
@@ -137,8 +137,6 @@ Here are some ways that you can get involved:
 - Test existing functionality and make [issues](https://github.com/electro-smith/libdaisy/issues)
 - Add new functionality to the library. See issues labeled "feature"
 - Fix problems with existing codebase. See issues labeled "bug" and/or "polish"
-
-Before working on code, please check out our [Contribution Guidelines](https://github.com/electro-smith/DaisyWiki/wiki/6.-Contribution-Guidelines) and [Style Guide.](https://github.com/electro-smith/DaisySP/blob/master/doc/style_guide.pdf)
 
 ## Support
 

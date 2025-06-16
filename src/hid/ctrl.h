@@ -7,9 +7,9 @@
 namespace daisy
 {
 /**
-    @brief Hardware Interface for control inputs \n 
-    Primarily designed for ADC input controls such as \n 
-    potentiometers, and control voltage. \n 
+    @brief Hardware Interface for control inputs \n
+    Primarily designed for ADC input controls such as \n
+    potentiometers, and control voltage. \n
     @author Stephen Hensley
     @date November 2019
     @ingroup controls
@@ -22,7 +22,7 @@ class AnalogControl
     /** destructor */
     ~AnalogControl() {}
 
-    /** 
+    /**
     Initializes the control
     \param *adcptr is a pointer to the raw adc read value -- This can be acquired with dsy_adc_get_rawptr(), or dsy_adc_get_mux_rawptr()
     \param sr is the samplerate in Hz that the Process function will be called at.
@@ -36,7 +36,7 @@ class AnalogControl
               bool      invert       = false,
               float     slew_seconds = 0.002f);
 
-    /** 
+    /**
     This Initializes the AnalogControl for a -5V to 5V inverted input
     All of the Init details are the same otherwise
     \param *adcptr Pointer to analog digital converter
@@ -44,9 +44,9 @@ class AnalogControl
     */
     void InitBipolarCv(uint16_t *adcptr, float sr);
 
-    /** 
+    /**
     Filters, and transforms a raw ADC read into a normalized range.
-    this should be called at the rate of specified by samplerate at Init time.   
+    this should be called at the rate of specified by samplerate at Init time.
     Default Initializations will return 0.0 -> 1.0
     Bi-polar CV inputs will return -1.0 -> 1.0
     */
@@ -55,7 +55,7 @@ class AnalogControl
     /** Returns the current stored value, without reprocessing */
     inline float Value() const { return val_; }
 
-    /** Directly set the Coefficient of the one pole smoothing filter. 
+    /** Directly set the Coefficient of the one pole smoothing filter.
       \param val Value to set coefficient to. Max of 1, min of 0.
     */
     // using conditionals since clamp() is unavailable
@@ -66,6 +66,18 @@ class AnalogControl
 
         coeff_ = val;
     }
+
+    /** Directly set the scaling factor used by the process function
+     *  Normally this will be set during initialization, but
+     *  the can be used when calibartion data is used to adjust the control.
+     */
+    inline void SetScale(const float scale) { scale_ = scale; }
+
+    /** Directly set the offset used by the process function
+     *  Normally this will be set during initialization, but
+     *  the can be used when calibartion data is used to adjust the control.
+     */
+    inline void SetOffset(const float offset) { offset_ = offset; }
 
     /** Returns the raw unsigned 16-bit value from the ADC */
     inline uint16_t GetRawValue() { return *raw_; }

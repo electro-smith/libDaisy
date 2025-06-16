@@ -1,5 +1,4 @@
 #include "per/tim.h"
-#include "util/hal_map.h"
 #include "sys/system.h"
 
 
@@ -94,8 +93,8 @@ TimerHandle::Result TimerHandle::Impl::Init(const TimerHandle::Config& config)
     const int tim_idx = int(config.periph);
     if(tim_idx >= 4)
         return TimerHandle::Result::ERR;
-    config_                             = config;
-    constexpr TIM_TypeDef* instances[4] = {TIM2, TIM3, TIM4, TIM5};
+    config_                   = config;
+    TIM_TypeDef* instances[4] = {TIM2, TIM3, TIM4, TIM5};
 
     // HAL Initialization
     tim_hal_handle_.Instance = instances[tim_idx];
@@ -213,7 +212,7 @@ uint32_t TimerHandle::Impl::GetTick()
 
 uint32_t TimerHandle::Impl::GetMs()
 {
-    return GetTick() / (GetFreq() / 100000000);
+    return GetTick() / (GetFreq() / 1000);
 }
 uint32_t TimerHandle::Impl::GetUs()
 {
@@ -228,7 +227,7 @@ void TimerHandle::Impl::DelayTick(uint32_t del)
 
 void TimerHandle::Impl::DelayMs(uint32_t del)
 {
-    DelayTick(del * (GetFreq() / 100000000));
+    DelayTick(del * (GetFreq() / 1000));
 }
 
 void TimerHandle::Impl::DelayUs(uint32_t del)

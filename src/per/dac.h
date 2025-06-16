@@ -1,7 +1,7 @@
 #pragma once
 #ifndef DSY_DAC_H
 #define DSY_DAC_H
-
+#include "stm32h7xx_hal.h"
 #include "daisy_core.h"
 
 namespace daisy

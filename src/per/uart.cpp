@@ -5,11 +5,6 @@
 #include "util/ringbuffer.h"
 #include "util/scopedirqblocker.h"
 
-extern "C"
-{
-#include "util/hal_map.h"
-}
-
 using namespace daisy;
 
 #define UART_RX_BUFF_SIZE 256
@@ -71,15 +66,15 @@ class UartHandler::Impl
                       EndCallbackFunctionPtr   end_callback,
                       void*                    callback_context);
 
-    /** Starts the DMA Reception in "Listen" mode. 
-     *  In this mode the DMA is configured for circular 
+    /** Starts the DMA Reception in "Listen" mode.
+     *  In this mode the DMA is configured for circular
      *  behavior, and the IDLE interrupt is enabled.
-     * 
+     *
      *  At TC, HT, and IDLE interrupts data must be processed.
-     * 
+     *
      *  Size must be set so that at maximum bandwidth, the software
      *  has time to process N bytes before the next circular IRQ is fired
-     * 
+     *
      */
     Result DmaListenStart(uint8_t*                      buff,
                           size_t                        size,
@@ -137,7 +132,7 @@ class UartHandler::Impl
     static EndCallbackFunctionPtr next_end_callback_;
     static void*                  next_callback_context_;
 
-    /** Not static -- any UART can use this 
+    /** Not static -- any UART can use this
      *  until we had dynamic DMA stream handling
      *  this will consume the sole DMA stream for UART Rx
      */
@@ -163,15 +158,15 @@ static UartHandler::Impl uart_handles[9];
 
 UartHandler::Impl* MapInstanceToHandle(USART_TypeDef* instance)
 {
-    constexpr USART_TypeDef* instances[9] = {USART1,
-                                             USART2,
-                                             USART3,
-                                             UART4,
-                                             UART5,
-                                             USART6,
-                                             UART7,
-                                             UART8,
-                                             LPUART1}; // map HAL instances
+    USART_TypeDef* instances[9] = {USART1,
+                                   USART2,
+                                   USART3,
+                                   UART4,
+                                   UART5,
+                                   USART6,
+                                   UART7,
+                                   UART8,
+                                   LPUART1}; // map HAL instances
     for(int i = 0; i < 9; i++)
     {
         if(instance == instances[i])
@@ -688,59 +683,59 @@ int UartHandler::Impl::CheckError()
 
 typedef struct
 {
-    dsy_gpio_pin pin;
-    uint8_t      alt;
+    Pin     pin;
+    uint8_t alt;
 } pin_alt;
 
-pin_alt pins_none = {{DSY_GPIOX, 0}, 255};
+pin_alt pins_none = {Pin(PORTX, 0), 255};
 
 //valid pins per periph, and the alt they're on
-pin_alt usart1_pins_tx[] = {{{DSY_GPIOB, 6}, GPIO_AF7_USART1},
-                            {{DSY_GPIOB, 14}, GPIO_AF4_USART1},
+pin_alt usart1_pins_tx[] = {{Pin(PORTB, 6), GPIO_AF7_USART1},
+                            {Pin(PORTB, 14), GPIO_AF4_USART1},
                             pins_none};
-pin_alt usart1_pins_rx[] = {{{DSY_GPIOB, 7}, GPIO_AF7_USART1},
-                            {{DSY_GPIOB, 15}, GPIO_AF4_USART1},
+pin_alt usart1_pins_rx[] = {{Pin(PORTB, 7), GPIO_AF7_USART1},
+                            {Pin(PORTB, 15), GPIO_AF4_USART1},
                             pins_none};
 
 pin_alt usart2_pins_tx[]
-    = {{{DSY_GPIOA, 2}, GPIO_AF7_USART2}, pins_none, pins_none};
+    = {{Pin(PORTA, 2), GPIO_AF7_USART2}, pins_none, pins_none};
 pin_alt usart2_pins_rx[]
-    = {{{DSY_GPIOA, 3}, GPIO_AF7_USART2}, pins_none, pins_none};
+    = {{Pin(PORTA, 3), GPIO_AF7_USART2}, pins_none, pins_none};
 
 pin_alt usart3_pins_tx[]
-    = {{{DSY_GPIOC, 10}, GPIO_AF7_USART3}, pins_none, pins_none};
+    = {{Pin(PORTC, 10), GPIO_AF7_USART3}, pins_none, pins_none};
 pin_alt usart3_pins_rx[]
-    = {{{DSY_GPIOC, 11}, GPIO_AF7_USART3}, pins_none, pins_none};
+    = {{Pin(PORTC, 11), GPIO_AF7_USART3}, pins_none, pins_none};
 
-pin_alt uart4_pins_tx[] = {{{DSY_GPIOB, 9}, GPIO_AF8_UART4},
-                           {{DSY_GPIOC, 10}, GPIO_AF8_UART4},
-                           {{DSY_GPIOA, 0}, GPIO_AF8_UART4}};
-pin_alt uart4_pins_rx[] = {{{DSY_GPIOB, 8}, GPIO_AF8_UART4},
-                           {{DSY_GPIOC, 11}, GPIO_AF8_UART4},
-                           {{DSY_GPIOA, 1}, GPIO_AF8_UART4}};
+pin_alt uart4_pins_tx[] = {{Pin(PORTB, 9), GPIO_AF8_UART4},
+                           {Pin(PORTC, 10), GPIO_AF8_UART4},
+                           {Pin(PORTA, 0), GPIO_AF8_UART4}};
+pin_alt uart4_pins_rx[] = {{Pin(PORTB, 8), GPIO_AF8_UART4},
+                           {Pin(PORTC, 11), GPIO_AF8_UART4},
+                           {Pin(PORTA, 1), GPIO_AF8_UART4}};
 
-pin_alt uart5_pins_tx[] = {{{DSY_GPIOC, 12}, GPIO_AF8_UART5},
-                           {{DSY_GPIOB, 6}, GPIO_AF14_UART5},
+pin_alt uart5_pins_tx[] = {{Pin(PORTC, 12), GPIO_AF8_UART5},
+                           {Pin(PORTB, 6), GPIO_AF14_UART5},
                            pins_none};
-pin_alt uart5_pins_rx[] = {{{DSY_GPIOB, 12}, GPIO_AF14_UART5},
-                           {{DSY_GPIOD, 2}, GPIO_AF8_UART5},
-                           {{DSY_GPIOB, 5}, GPIO_AF14_UART5}};
+pin_alt uart5_pins_rx[] = {{Pin(PORTB, 12), GPIO_AF14_UART5},
+                           {Pin(PORTD, 2), GPIO_AF8_UART5},
+                           {Pin(PORTB, 5), GPIO_AF14_UART5}};
 
 pin_alt usart6_pins_tx[] = {pins_none, pins_none, pins_none};
 pin_alt usart6_pins_rx[]
-    = {{{DSY_GPIOG, 9}, GPIO_AF7_USART6}, pins_none, pins_none};
+    = {{Pin(PORTG, 9), GPIO_AF7_USART6}, pins_none, pins_none};
 
 pin_alt uart7_pins_tx[]
-    = {{{DSY_GPIOB, 4}, GPIO_AF11_UART7}, pins_none, pins_none};
+    = {{Pin(PORTB, 4), GPIO_AF11_UART7}, pins_none, pins_none};
 pin_alt uart7_pins_rx[] = {pins_none, pins_none, pins_none};
 
 pin_alt uart8_pins_tx[] = {pins_none, pins_none, pins_none};
 pin_alt uart8_pins_rx[] = {pins_none, pins_none, pins_none};
 
 pin_alt lpuart1_pins_tx[]
-    = {{{DSY_GPIOB, 6}, GPIO_AF8_LPUART}, pins_none, pins_none};
+    = {{Pin(PORTB, 6), GPIO_AF8_LPUART}, pins_none, pins_none};
 pin_alt lpuart1_pins_rx[]
-    = {{{DSY_GPIOB, 7}, GPIO_AF8_LPUART}, pins_none, pins_none};
+    = {{Pin(PORTB, 7), GPIO_AF8_LPUART}, pins_none, pins_none};
 
 //an array to hold everything
 pin_alt* pins_periphs[] = {usart1_pins_tx,
@@ -762,17 +757,16 @@ pin_alt* pins_periphs[] = {usart1_pins_tx,
                            lpuart1_pins_tx,
                            lpuart1_pins_rx};
 
-UartHandler::Result
-checkPinMatch(GPIO_InitTypeDef* init, dsy_gpio_pin pin, int p_num)
+UartHandler::Result checkPinMatch(GPIO_InitTypeDef* init, Pin pin, int p_num)
 {
     for(int i = 0; i < 3; i++)
     {
-        if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pins_none.pin))
+        if(pins_periphs[p_num][i].pin == pins_none.pin)
         {
             /* skip */
         }
 
-        else if(dsy_pin_cmp(&pins_periphs[p_num][i].pin, &pin))
+        else if(pins_periphs[p_num][i].pin == pin)
         {
             init->Alternate = pins_periphs[p_num][i].alt;
             return UartHandler::Result::OK;
@@ -792,7 +786,7 @@ UartHandler::Result UartHandler::Impl::InitPins()
 
     int per_num = 2 * (int)(config_.periph);
 
-    if(config_.pin_config.tx.port != DSY_GPIOX)
+    if(config_.pin_config.tx.port != PORTX)
     {
         //check tx against periph
         if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.tx, per_num)
@@ -802,12 +796,12 @@ UartHandler::Result UartHandler::Impl::InitPins()
         }
 
         //setup tx pin
-        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.tx);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.tx);
+        GPIO_TypeDef* port  = GetHALPort(config_.pin_config.tx);
+        GPIO_InitStruct.Pin = GetHALPin(config_.pin_config.tx);
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
-    if(config_.pin_config.rx.port != DSY_GPIOX)
+    if(config_.pin_config.rx.port != PORTX)
     {
         //check rx against periph
         if(checkPinMatch(&GPIO_InitStruct, config_.pin_config.rx, per_num + 1)
@@ -817,8 +811,8 @@ UartHandler::Result UartHandler::Impl::InitPins()
         }
 
         //setup rx pin
-        GPIO_TypeDef* port  = dsy_hal_map_get_port(&config_.pin_config.rx);
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.rx);
+        GPIO_TypeDef* port  = GetHALPort(config_.pin_config.rx);
+        GPIO_InitStruct.Pin = GetHALPin(config_.pin_config.rx);
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 
@@ -827,12 +821,12 @@ UartHandler::Result UartHandler::Impl::InitPins()
 
 UartHandler::Result UartHandler::Impl::DeInitPins()
 {
-    GPIO_TypeDef* port = dsy_hal_map_get_port(&config_.pin_config.tx);
-    uint16_t      pin  = dsy_hal_map_get_pin(&config_.pin_config.tx);
+    GPIO_TypeDef* port = GetHALPort(config_.pin_config.tx);
+    uint16_t      pin  = GetHALPin(config_.pin_config.tx);
     HAL_GPIO_DeInit(port, pin);
 
-    port = dsy_hal_map_get_port(&config_.pin_config.rx);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.rx);
+    port = GetHALPort(config_.pin_config.rx);
+    pin  = GetHALPin(config_.pin_config.rx);
     HAL_GPIO_DeInit(port, pin);
 
     return Result::OK;
@@ -849,8 +843,8 @@ void*                               UartHandler::Impl::next_callback_context_;
 void HAL_UART_MspInit(UART_HandleTypeDef* uartHandle)
 {
     UartHandler::Impl* handle = MapInstanceToHandle(uartHandle->Instance);
-    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.rx.port);
-    dsy_hal_map_gpio_clk_enable(handle->config_.pin_config.tx.port);
+    GPIOClockEnable(handle->config_.pin_config.rx);
+    GPIOClockEnable(handle->config_.pin_config.tx);
 
     switch(handle->config_.periph)
     {
@@ -965,7 +959,7 @@ extern "C" void dsy_uart_global_init()
 
 /** static handler for Listener Mode of Rx to handle
  *  non-aligned transfers during DMA Reception.
- * 
+ *
  *  this is the equivalent of what the old FifoHandler stuff
  *  did, but removes all of the fifo'ing, and replaces it with a user
  *  callback. The MIDI UART Transport is an example of how this might be used.
@@ -975,9 +969,9 @@ static void UART_CheckRxListener(UartHandler::Impl* handle)
     size_t pos;
     size_t old_pos = handle->circular_rx_last_pos_;
 
-    /** calculate pos. in buffer 
+    /** calculate pos. in buffer
      * TODO: make flexible for other DMA STreams
-     * 
+     *
      */
     uint8_t* buffer = handle->circular_rx_buff_;
     pos             = handle->circular_rx_total_size_
@@ -1109,10 +1103,8 @@ extern "C" void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef* huart)
 
 extern "C" void HAL_UART_ErrorCallback(UART_HandleTypeDef* huart)
 {
-    /** TODO: This hooks into the "Normal" DMA completion, 
-     *  might want to change this to have a different fallthrough
-     *  for "listener_mode_"
-     */
+    auto* handle           = MapInstanceToHandle(huart->Instance);
+    handle->listener_mode_ = false;
     UartHandler::Impl::DmaTransferFinished(huart, UartHandler::Result::ERR);
 }
 

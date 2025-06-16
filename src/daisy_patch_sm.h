@@ -143,7 +143,7 @@ namespace patch_sm
          *  \param idx pin number between 1 and 10 for each of the pins on each header.
          *  \deprecated please use the Pin definitions in daisy::patch_sm instead
          */
-        dsy_gpio_pin GetPin(const PinBank bank, const int idx);
+        Pin GetPin(const PinBank bank, const int idx);
 
         /** Starts the DAC for the CV Outputs 
          * 
@@ -251,10 +251,10 @@ namespace patch_sm
         DacHandle   dac;
 
         /** Dedicated Function Pins */
-        dsy_gpio      user_led;
+        GPIO          user_led;
         AnalogControl controls[ADC_LAST];
         GateIn        gate_in_1, gate_in_2;
-        dsy_gpio      gate_out_1, gate_out_2;
+        GPIO          gate_out_1, gate_out_2;
 
 
         /** Pin Accessors for the DaisyPatchSM hardware

@@ -1,9 +1,5 @@
 #include "per/sai.h"
 #include "daisy_core.h"
-extern "C"
-{
-#include "util/hal_map.h"
-}
 
 namespace daisy
 {
@@ -88,8 +84,8 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
     buff_size_ = 0;
     config_    = config;
 
-    constexpr SAI_Block_TypeDef* a_instances[2] = {SAI1_Block_A, SAI2_Block_A};
-    constexpr SAI_Block_TypeDef* b_instances[2] = {SAI1_Block_B, SAI2_Block_B};
+    SAI_Block_TypeDef* a_instances[2] = {SAI1_Block_A, SAI2_Block_A};
+    SAI_Block_TypeDef* b_instances[2] = {SAI1_Block_B, SAI2_Block_B};
 
     sai_a_handle_.Instance = a_instances[sai_idx];
     sai_b_handle_.Instance = b_instances[sai_idx];
@@ -152,8 +148,8 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
     // Bitdepth / protocol (currently based on bitdepth..)
     // TODO probably split these up for better flexibility..
     // These are also currently fixed to be the same per block.
-    uint8_t  bd;
-    uint32_t protocol;
+    uint8_t  bd       = SAI_PROTOCOL_DATASIZE_16BIT;
+    uint32_t protocol = SAI_I2S_STANDARD;
     switch(config.bit_depth)
     {
         case Config::BitDepth::SAI_16BIT:
@@ -169,7 +165,6 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
             bd       = SAI_PROTOCOL_DATASIZE_32BIT;
             protocol = SAI_I2S_STANDARD;
             break;
-        default: break;
     }
 
     // Generic Inits that we don't have API control over.
@@ -364,14 +359,14 @@ void SaiHandle::Impl::InitPins()
     bool             is_master;
     GPIO_InitTypeDef GPIO_InitStruct;
     GPIO_TypeDef*    port;
-    dsy_gpio_pin*    cfg[] = {&config_.pin_config.fs,
-                           &config_.pin_config.mclk,
-                           &config_.pin_config.sck,
-                           &config_.pin_config.sa,
-                           &config_.pin_config.sb};
+    Pin              cfg[] = {config_.pin_config.fs,
+                 config_.pin_config.mclk,
+                 config_.pin_config.sck,
+                 config_.pin_config.sa,
+                 config_.pin_config.sb};
     // Special Case checks
-    dsy_gpio_pin sck_af_pin = {DSY_GPIOA, 2};
-    is_master               = (config_.a_sync == Config::Sync::MASTER
+    Pin sck_af_pin = Pin(PORTA, 2);
+    is_master      = (config_.a_sync == Config::Sync::MASTER
                  || config_.b_sync == Config::Sync::MASTER);
     // Generics
     GPIO_InitStruct.Mode  = GPIO_MODE_AF_PP;
@@ -380,7 +375,7 @@ void SaiHandle::Impl::InitPins()
     for(size_t i = 0; i < 5; i++)
     {
         // Skip MCLK if not master.
-        if(dsy_pin_cmp(&config_.pin_config.mclk, cfg[i]) && !is_master)
+        if(config_.pin_config.mclk == cfg[i] && !is_master)
             continue;
 
         // Special case for SAI2-sck (should add a map for Alternate Functions at some point..)
@@ -390,15 +385,14 @@ void SaiHandle::Impl::InitPins()
                 GPIO_InitStruct.Alternate = GPIO_AF6_SAI1;
                 break;
             case Config::Peripheral::SAI_2:
-                GPIO_InitStruct.Alternate = dsy_pin_cmp(cfg[i], &sck_af_pin)
-                                                ? GPIO_AF8_SAI2
-                                                : GPIO_AF10_SAI2;
+                GPIO_InitStruct.Alternate
+                    = cfg[i] == sck_af_pin ? GPIO_AF8_SAI2 : GPIO_AF10_SAI2;
                 break;
             default: break;
         }
 
-        GPIO_InitStruct.Pin = dsy_hal_map_get_pin(cfg[i]);
-        port                = dsy_hal_map_get_port(cfg[i]);
+        GPIO_InitStruct.Pin = GetHALPin(cfg[i]);
+        port                = GetHALPort(cfg[i]);
         HAL_GPIO_Init(port, &GPIO_InitStruct);
     }
 }
@@ -412,21 +406,21 @@ void SaiHandle::Impl::DeInitPins()
                  || config_.b_sync == Config::Sync::MASTER);
     if(is_master)
     {
-        port = dsy_hal_map_get_port(&config_.pin_config.mclk);
-        pin  = dsy_hal_map_get_pin(&config_.pin_config.mclk);
+        port = GetHALPort(config_.pin_config.mclk);
+        pin  = GetHALPin(config_.pin_config.mclk);
         HAL_GPIO_DeInit(port, pin);
     }
-    port = dsy_hal_map_get_port(&config_.pin_config.fs);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.fs);
+    port = GetHALPort(config_.pin_config.fs);
+    pin  = GetHALPin(config_.pin_config.fs);
     HAL_GPIO_DeInit(port, pin);
-    port = dsy_hal_map_get_port(&config_.pin_config.sck);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.sck);
+    port = GetHALPort(config_.pin_config.sck);
+    pin  = GetHALPin(config_.pin_config.sck);
     HAL_GPIO_DeInit(port, pin);
-    port = dsy_hal_map_get_port(&config_.pin_config.sa);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.sa);
+    port = GetHALPort(config_.pin_config.sa);
+    pin  = GetHALPin(config_.pin_config.sa);
     HAL_GPIO_DeInit(port, pin);
-    port = dsy_hal_map_get_port(&config_.pin_config.sb);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.sb);
+    port = GetHALPort(config_.pin_config.sb);
+    pin  = GetHALPin(config_.pin_config.sb);
     HAL_GPIO_DeInit(port, pin);
 }
 

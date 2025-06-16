@@ -128,10 +128,10 @@ class MAX11300MultiSlaveSpiTransport
     {
         struct PinConfig
         {
-            dsy_gpio_pin nss[numDevices] = {{DSY_GPIOG, 10}}; // Pin 7
-            dsy_gpio_pin mosi            = {DSY_GPIOB, 5};    // Pin 10
-            dsy_gpio_pin miso            = {DSY_GPIOB, 4};    // Pin 9
-            dsy_gpio_pin sclk            = {DSY_GPIOG, 11};   // Pin 8
+            Pin nss[numDevices] = {Pin(PORTG, 10)}; // Pin 7
+            Pin mosi            = Pin(PORTB, 5);    // Pin 10
+            Pin miso            = Pin(PORTB, 4);    // Pin 9
+            Pin sclk            = Pin(PORTG, 11);   // Pin 8
         } pin_config;
 
         SpiHandle::Config::Peripheral periph

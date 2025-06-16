@@ -1,10 +1,6 @@
 #include "per/i2c.h"
 #include "sys/system.h"
 #include "util/scopedirqblocker.h"
-extern "C"
-{
-#include "util/hal_map.h"
-}
 
 namespace daisy
 {
@@ -227,10 +223,9 @@ I2CHandle::Result I2CHandle::Impl::Init(const I2CHandle::Config& config)
        && (config.address > 127 || config.address < 16 || config.address > 119))
         return I2CHandle::Result::ERR;
 
-    config_ = config;
-    constexpr I2C_TypeDef* instances[4]
-        = {I2C1, I2C2, I2C3, I2C4}; // map HAL instances
-    i2c_hal_handle_.Instance = instances[i2cIdx];
+    config_                   = config;
+    I2C_TypeDef* instances[4] = {I2C1, I2C2, I2C3, I2C4}; // map HAL instances
+    i2c_hal_handle_.Instance  = instances[i2cIdx];
 
     // Set Generic Parameters
     // Configure Speed
@@ -631,16 +626,16 @@ void I2CHandle::Impl::InitPins()
             GPIO_InitStruct.Alternate = GPIO_AF4_I2C3;
             break;
         case I2CHandle::Config::Peripheral::I2C_4:
-            GPIO_InitStruct.Alternate = GPIO_AF4_I2C4;
+            GPIO_InitStruct.Alternate = GPIO_AF6_I2C4;
             break;
         default: break;
     }
 
-    port                = dsy_hal_map_get_port(&config_.pin_config.scl);
-    GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.scl);
+    port                = GetHALPort(config_.pin_config.scl);
+    GPIO_InitStruct.Pin = GetHALPin(config_.pin_config.scl);
     HAL_GPIO_Init(port, &GPIO_InitStruct);
-    port                = dsy_hal_map_get_port(&config_.pin_config.sda);
-    GPIO_InitStruct.Pin = dsy_hal_map_get_pin(&config_.pin_config.sda);
+    port                = GetHALPort(config_.pin_config.sda);
+    GPIO_InitStruct.Pin = GetHALPin(config_.pin_config.sda);
     HAL_GPIO_Init(port, &GPIO_InitStruct);
 }
 
@@ -648,11 +643,11 @@ void I2CHandle::Impl::DeinitPins()
 {
     GPIO_TypeDef* port;
     uint16_t      pin;
-    port = dsy_hal_map_get_port(&config_.pin_config.scl);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.scl);
+    port = GetHALPort(config_.pin_config.scl);
+    pin  = GetHALPin(config_.pin_config.scl);
     HAL_GPIO_DeInit(port, pin);
-    port = dsy_hal_map_get_port(&config_.pin_config.sda);
-    pin  = dsy_hal_map_get_pin(&config_.pin_config.sda);
+    port = GetHALPort(config_.pin_config.sda);
+    pin  = GetHALPin(config_.pin_config.sda);
     HAL_GPIO_DeInit(port, pin);
 }
 

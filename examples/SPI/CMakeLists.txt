@@ -1,0 +1,2 @@
+add_subdirectory(SpiBlockingTransmit)
+add_subdirectory(SpiDmaTransmit)
