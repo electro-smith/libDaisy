@@ -174,7 +174,7 @@ $(function(){initNavTree('_wav_writer_8h_source.html',''); initResizable(true); 
 <div class="foldopen" id="foldopen00093" data-start="{" data-end="}">
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="classdaisy_1_1_wav_writer.html#a153a29ee8b89fcd6dfcc6e28a08f27a9">   93</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classdaisy_1_1_wav_writer.html#a153a29ee8b89fcd6dfcc6e28a08f27a9">Sample</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> *in)</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    {</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i = 0; i &lt; cfg_.<a class="code hl_variable" href="structdaisy_1_1_wav_writer_1_1_config.html#af9ffa3fe0d56cfc55521a33569d45632">channels</a>; i++)</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; cfg_.<a class="code hl_variable" href="structdaisy_1_1_wav_writer_1_1_config.html#af9ffa3fe0d56cfc55521a33569d45632">channels</a>; i++)</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        {</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <span class="keywordflow">switch</span>(cfg_.<a class="code hl_variable" href="structdaisy_1_1_wav_writer_1_1_config.html#a02a811d9a6779afd16ea34c0b2d1817e">bitspersample</a>)</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            {</div>
@@ -227,17 +227,17 @@ $(function(){initNavTree('_wav_writer_8h_source.html',''); initResizable(true); 
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        recording_      = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        <span class="comment">// Flush remaining data in the transfer buffer</span></div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        <span class="keywordflow">if</span> (wptr_ &gt; 0) <span class="comment">// Check if there is unwritten data in the buffer</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        <span class="keywordflow">if</span>(wptr_ &gt; 0) <span class="comment">// Check if there is unwritten data in the buffer</span></div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        {</div>
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>            uint32_t remaining_size = wptr_ * (cfg_.<a class="code hl_variable" href="structdaisy_1_1_wav_writer_1_1_config.html#a02a811d9a6779afd16ea34c0b2d1817e">bitspersample</a> / 8);</div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>            <span class="comment">// Ensure remaining_size does not exceed the buffer size</span></div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            <span class="keywordflow">if</span> (remaining_size &gt; <span class="keyword">sizeof</span>(transfer_buff))</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            <span class="keywordflow">if</span>(remaining_size &gt; <span class="keyword">sizeof</span>(transfer_buff))</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            {</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                remaining_size = <span class="keyword">sizeof</span>(transfer_buff);</div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>            }</div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            f_write(&amp;fp_, transfer_buff, remaining_size, &amp;bw);</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        }</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        wavheader_.<a class="code hl_variable" href="structdaisy_1_1_w_a_v___format_type_def.html#ada338826e889f5ba97407e2f0654ee5e">FileSize</a> = CalcFileSize();</div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        f_lseek(&amp;fp_, 0);</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        f_write(&amp;fp_, &amp;wavheader_, <span class="keyword">sizeof</span>(wavheader_), &amp;bw);</div>
@@ -245,10 +245,10 @@ $(function(){initNavTree('_wav_writer_8h_source.html',''); initResizable(true); 
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="comment">// Clear the transfer buffer and reset the buffer state</span></div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        memset(transfer_buff, 0, <span class="keyword">sizeof</span>(transfer_buff));</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        bstate_ = <a class="code hl_enumvalue" href="classdaisy_1_1_wav_writer.html#a17e4799ade3a78bfb8cab25ac90f04ebaa5daf7f2ebbba4975d61dab1c40188c7">BufferState::IDLE</a>;</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        wptr_ = 0; <span class="comment">// Reset the write pointer</span></div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        num_samps_ = 0; <span class="comment">// Reset the number of samples</span></div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        recording_ = <span class="keyword">false</span>;          <span class="comment">// Ensure recording is inactive  </span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        bstate_    = <a class="code hl_enumvalue" href="classdaisy_1_1_wav_writer.html#a17e4799ade3a78bfb8cab25ac90f04ebaa5daf7f2ebbba4975d61dab1c40188c7">BufferState::IDLE</a>;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        wptr_      = 0;     <span class="comment">// Reset the write pointer</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        num_samps_ = 0;     <span class="comment">// Reset the number of samples</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        recording_ = <span class="keyword">false</span>; <span class="comment">// Ensure recording is inactive</span></div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    }</div>
 </div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
