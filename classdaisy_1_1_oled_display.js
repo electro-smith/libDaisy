@@ -8,5 +8,6 @@ var classdaisy_1_1_oled_display =
     [ "Height", "classdaisy_1_1_oled_display.html#aa2958400309bab0525bedde0822b24fb", null ],
     [ "Init", "classdaisy_1_1_oled_display.html#a20febfc6699586dcde5fff70f81b6d6c", null ],
     [ "Update", "classdaisy_1_1_oled_display.html#aea1796db0121368cff3d760ed7bc8548", null ],
+    [ "UpdateFinished", "classdaisy_1_1_oled_display.html#aa90383d988455231f4d99367ebecde6c", null ],
     [ "Width", "classdaisy_1_1_oled_display.html#a3be293e91c143677a8ab6c65d7b62363", null ]
 ];

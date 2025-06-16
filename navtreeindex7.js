@@ -1,5 +1,11 @@
 var NAVTREEINDEX7 =
 {
+"structdaisy_1_1_wm8731_1_1_config.html#af7820bfc598cc2123e9d91eb740e965a":[15,0,0,143,0,7],
+"structdaisy_1_1dsy__gpio__pin.html":[15,0,0,33],
+"structdaisy_1_1dsy__gpio__pin.html#a074ae43df1fb2e6249e14e84f8c60b89":[15,0,0,33,1],
+"structdaisy_1_1dsy__gpio__pin.html#aa6069103c78d3980081d94ee084a5946":[15,0,0,33,0],
+"structdaisy_1_1dsy__gpio__pin.html#ad010feac2e4eb0e5f9843d360880f44d":[15,0,0,33,2],
+"switch3_8h.html":[16,0,1,1,14],
 "switch3_8h_source.html":[16,0,1,1,14],
 "switch_8h.html":[16,0,1,1,13],
 "switch_8h.html#af3c6f18531c9746e156c796b6d7da082":[16,0,1,1,13,0],

@@ -5,5 +5,6 @@ var structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config =
     [ "dc", "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a221754de5cd1a0e1fe1b5491849a7e43", null ],
     [ "pin_config", "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a4273d35c4a13337de45ece31f6e1c50a", null ],
     [ "reset", "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a1c7ab70cdfa3aba155bb517b72177fe0", null ],
-    [ "spi_config", "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a2725b473c07c6bf9e8b57a0a810799c1", null ]
+    [ "spi_config", "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a2725b473c07c6bf9e8b57a0a810799c1", null ],
+    [ "useDma", "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a670d58b58dce06d0e7551aab4d00b981", null ]
 ];

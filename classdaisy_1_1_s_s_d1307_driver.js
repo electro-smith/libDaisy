@@ -6,5 +6,6 @@ var classdaisy_1_1_s_s_d1307_driver =
     [ "Height", "classdaisy_1_1_s_s_d1307_driver.html#ad33eca5a2b043252ace794be36b4bb4c", null ],
     [ "Init", "classdaisy_1_1_s_s_d1307_driver.html#a086b507921b1473642896ae75f3acaab", null ],
     [ "Update", "classdaisy_1_1_s_s_d1307_driver.html#a82dfbb781199fc4b57cbbcb8c062f421", null ],
+    [ "UpdateFinished", "classdaisy_1_1_s_s_d1307_driver.html#a41266c29261f984faf66565671b03569", null ],
     [ "Width", "classdaisy_1_1_s_s_d1307_driver.html#a22de3e909e3ae3eb1e9fdc47af138f4e", null ]
 ];

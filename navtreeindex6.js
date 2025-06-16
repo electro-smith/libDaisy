@@ -1,5 +1,10 @@
 var NAVTREEINDEX6 =
 {
+"qspi_8h_source.html":[16,0,1,2,5],
+"rgb__led_8h.html":[16,0,1,1,12],
+"rgb__led_8h.html#a0a7587c33027dddf5cba9430263876a0":[16,0,1,1,12,0],
+"rgb__led_8h_source.html":[16,0,1,1,12],
+"ringbuffer_8h.html":[16,0,1,5,9],
 "ringbuffer_8h.html#a34eee6c4d4db12db17fd2036cc3c7d3b":[16,0,1,5,9,0],
 "ringbuffer_8h_source.html":[16,0,1,5,9],
 "rng_8h.html":[16,0,1,2,6],
@@ -127,6 +132,7 @@ var NAVTREEINDEX6 =
 "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a2725b473c07c6bf9e8b57a0a810799c1":[15,0,0,115,0,5],
 "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a2d4cd8072f0348581e6777290c5a1465":[15,0,0,115,0,1],
 "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a4273d35c4a13337de45ece31f6e1c50a":[15,0,0,115,0,3],
+"structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#a670d58b58dce06d0e7551aab4d00b981":[15,0,0,115,0,6],
 "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#af2f5c92ac23ceeed040e6f63d880cbaa":[15,0,0,115,0,0],
 "structdaisy_1_1_s_s_d130x_driver_1_1_config.html":[15,0,0,116,0],
 "structdaisy_1_1_s_s_d130x_driver_1_1_config.html#a576d18c3fe7f9a81565cd21ccca866da":[15,0,0,116,0,0],
@@ -243,11 +249,5 @@ var NAVTREEINDEX6 =
 "structdaisy_1_1_wm8731_1_1_config.html#acb5156a1681bb52dcc37418690629104a463db1dea7845050306bf03576aeeea5":[15,0,0,143,0,0,1],
 "structdaisy_1_1_wm8731_1_1_config.html#acb5156a1681bb52dcc37418690629104a7afea11a7df0179a32a3e20d7f8beef4":[15,0,0,143,0,0,2],
 "structdaisy_1_1_wm8731_1_1_config.html#acb5156a1681bb52dcc37418690629104ac0dc8df68b79ed124e7c649d1df58fb5":[15,0,0,143,0,0,3],
-"structdaisy_1_1_wm8731_1_1_config.html#acb5156a1681bb52dcc37418690629104ae15fc5eea5e09485aef36afee2d15590":[15,0,0,143,0,0,0],
-"structdaisy_1_1_wm8731_1_1_config.html#af7820bfc598cc2123e9d91eb740e965a":[15,0,0,143,0,7],
-"structdaisy_1_1dsy__gpio__pin.html":[15,0,0,33],
-"structdaisy_1_1dsy__gpio__pin.html#a074ae43df1fb2e6249e14e84f8c60b89":[15,0,0,33,1],
-"structdaisy_1_1dsy__gpio__pin.html#aa6069103c78d3980081d94ee084a5946":[15,0,0,33,0],
-"structdaisy_1_1dsy__gpio__pin.html#ad010feac2e4eb0e5f9843d360880f44d":[15,0,0,33,2],
-"switch3_8h.html":[16,0,1,1,14]
+"structdaisy_1_1_wm8731_1_1_config.html#acb5156a1681bb52dcc37418690629104ae15fc5eea5e09485aef36afee2d15590":[15,0,0,143,0,0,0]
 };

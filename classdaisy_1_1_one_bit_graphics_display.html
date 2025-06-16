@@ -170,6 +170,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae261bd2a57f39c379cab0465bddfa9fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ea638bde2bff96ee10dec0969a7fc56" id="r_a0ea638bde2bff96ee10dec0969a7fc56"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ea638bde2bff96ee10dec0969a7fc56">Update</a> ()=0</td></tr>
 <tr class="separator:a0ea638bde2bff96ee10dec0969a7fc56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1f688fe8257ca347d831097aa5ccce3" id="r_af1f688fe8257ca347d831097aa5ccce3"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1f688fe8257ca347d831097aa5ccce3">UpdateFinished</a> ()=0</td></tr>
+<tr class="separator:af1f688fe8257ca347d831097aa5ccce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -740,6 +742,34 @@ Protected Attributes</h2></td></tr>
 <p>Writes the current display buffer to the OLED device using SPI or I2C depending on how the object was initialized. </p>
 
 <p>Implemented in <a class="el" href="classdaisy_1_1_oled_display.html#aea1796db0121368cff3d760ed7bc8548">daisy::OledDisplay&lt; DisplayDriver &gt;</a>, and <a class="el" href="classdaisy_1_1_oled_display.html#aea1796db0121368cff3d760ed7bc8548">daisy::OledDisplay&lt; daisy::SSD130xDriver &gt;</a>.</p>
+
+</div>
+</div>
+<a id="af1f688fe8257ca347d831097aa5ccce3" name="af1f688fe8257ca347d831097aa5ccce3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1f688fe8257ca347d831097aa5ccce3">&#9670;&#160;</a></span>UpdateFinished()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool daisy::OneBitGraphicsDisplay::UpdateFinished </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns true if the Update has finished, used for chained DMA transfers </p>
+
+<p>Implemented in <a class="el" href="classdaisy_1_1_oled_display.html#aa90383d988455231f4d99367ebecde6c">daisy::OledDisplay&lt; DisplayDriver &gt;</a>, and <a class="el" href="classdaisy_1_1_oled_display.html#aa90383d988455231f4d99367ebecde6c">daisy::OledDisplay&lt; daisy::SSD130xDriver &gt;</a>.</p>
 
 </div>
 </div>

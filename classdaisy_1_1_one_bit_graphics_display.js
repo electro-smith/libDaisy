@@ -15,6 +15,7 @@ var classdaisy_1_1_one_bit_graphics_display =
     [ "Height", "classdaisy_1_1_one_bit_graphics_display.html#ab4ad45effd7f8901fae690a8a6aff596", null ],
     [ "SetCursor", "classdaisy_1_1_one_bit_graphics_display.html#ae261bd2a57f39c379cab0465bddfa9fa", null ],
     [ "Update", "classdaisy_1_1_one_bit_graphics_display.html#a0ea638bde2bff96ee10dec0969a7fc56", null ],
+    [ "UpdateFinished", "classdaisy_1_1_one_bit_graphics_display.html#af1f688fe8257ca347d831097aa5ccce3", null ],
     [ "Width", "classdaisy_1_1_one_bit_graphics_display.html#a6a8d21de6d8a49b80681cf84476b39b9", null ],
     [ "WriteChar", "classdaisy_1_1_one_bit_graphics_display.html#a68796f13e79b6cd9146f8873bbca1af0", null ],
     [ "WriteString", "classdaisy_1_1_one_bit_graphics_display.html#ab07692b7570fea7b3241afaba70899c8", null ],

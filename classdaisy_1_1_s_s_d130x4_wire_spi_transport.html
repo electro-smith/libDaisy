@@ -128,8 +128,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:adfdf96d17c5754ea048e74a179ead274"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21854c65aa4a415970c1239d86625dfb" id="r_a21854c65aa4a415970c1239d86625dfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a21854c65aa4a415970c1239d86625dfb">SendCommand</a> (uint8_t cmd)</td></tr>
 <tr class="separator:a21854c65aa4a415970c1239d86625dfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84e530e264685045cb7d7857e4e9bce1" id="r_a84e530e264685045cb7d7857e4e9bce1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84e530e264685045cb7d7857e4e9bce1">SendCommands</a> (uint8_t *buff, size_t size)</td></tr>
+<tr class="separator:a84e530e264685045cb7d7857e4e9bce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3cf6194c8dbb92b33fb83becc07903fc" id="r_a3cf6194c8dbb92b33fb83becc07903fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3cf6194c8dbb92b33fb83becc07903fc">SendData</a> (uint8_t *buff, size_t size)</td></tr>
 <tr class="separator:a3cf6194c8dbb92b33fb83becc07903fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fad3f056ac766c9b4b0211320c12f53" id="r_a2fad3f056ac766c9b4b0211320c12f53"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2fad3f056ac766c9b4b0211320c12f53">SendDataDma</a> (uint8_t *buff, size_t size, <a class="el" href="classdaisy_1_1_spi_handle.html#aae4afae9ab4e2497944b74873b057850">SpiHandle::EndCallbackFunctionPtr</a> end_callback, void *context)</td></tr>
+<tr class="separator:a2fad3f056ac766c9b4b0211320c12f53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="adfdf96d17c5754ea048e74a179ead274" name="adfdf96d17c5754ea048e74a179ead274"></a>
@@ -182,6 +186,35 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a84e530e264685045cb7d7857e4e9bce1" name="a84e530e264685045cb7d7857e4e9bce1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84e530e264685045cb7d7857e4e9bce1">&#9670;&#160;</a></span>SendCommands()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::SSD130x4WireSpiTransport::SendCommands </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>buff</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a3cf6194c8dbb92b33fb83becc07903fc" name="a3cf6194c8dbb92b33fb83becc07903fc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3cf6194c8dbb92b33fb83becc07903fc">&#9670;&#160;</a></span>SendData()</h2>
 
@@ -200,6 +233,45 @@ Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2fad3f056ac766c9b4b0211320c12f53" name="a2fad3f056ac766c9b4b0211320c12f53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fad3f056ac766c9b4b0211320c12f53">&#9670;&#160;</a></span>SendDataDma()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void daisy::SSD130x4WireSpiTransport::SendDataDma </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>buff</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classdaisy_1_1_spi_handle.html#aae4afae9ab4e2497944b74873b057850">SpiHandle::EndCallbackFunctionPtr</a></td>          <td class="paramname"><span class="paramname"><em>end_callback</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>context</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
