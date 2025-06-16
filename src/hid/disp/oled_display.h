@@ -50,6 +50,8 @@ class OledDisplay : public OneBitGraphicsDisplayImpl<OledDisplay<DisplayDriver>>
     */
     void Update() override { driver_.Update(); }
 
+    bool UpdateFinished() override { return driver_.UpdateFinished(); }
+
   private:
     DisplayDriver driver_;
 
