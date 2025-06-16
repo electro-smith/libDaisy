@@ -1,5 +1,120 @@
 # libDaisy Changelog
 
+## Unreleased
+
+## v8.0.0
+
+### Features
+
+- SSD1307 Driver
+- Drivers for SSD1327 and the SSD1351
+- DMA support for the SPI OLED Transport Drivers
+- Configurable timing delay to the CD4021 shift register driver
+- Hardware PWM
+
+### Bug Fixes
+
+- QSPI: Fix for a known instability issue. Resolves intermittent bootup issue where QSPI could set itself to write-protected mode.
+- USB Host: Added USBH MIDI source file to CMakeLists for CMake builds
+- I2C: Fixed issue with I2C4 not working
+- I2C: **minor breaking change**: Fixed inconsistency of address-shifting of `ReadDataAtAddress` and `WriteDataAtAddress` to match the other methods.
+- MIDI: Fixed an unrecoverable crash with UART transport if the input shorted to GND for a full UART frame.
+- System: Fixed inaccurate clock division factor for `DelayMs` and `GetMs` to be correct.
+- WavWriter: Fixed bug where the last samples of the recording were not being flushed to the output file.
+
+### Other
+
+- The GPIO/Pin migration has been completed within the library, and the `dsy_gpio` and `dsy_gpio_pin` structs are deprecated.
+- Minor improvements to `daisy::Color` type
+- Added explicit setters/getters to `daisy::AnalogControl` for the scale/offset values
+- Added status check methods for USB Host
+- Improvements to CMake builds
+- README updated with links to `daisy.audio` site.
+- Improved documentation, and cleaned up WM8731 driver
+- Added Hardware PWM example
+- Added WavWriter example
+
+### Bootloader
+
+- The included bootloader binaries have been updated to v6.3 - This version integrates the above QSPI changes, and improves the boot-jump sequence for apps running directly from QSPI memory.
+
+### Migration
+
+#### I2C Address Shifting
+
+There was an inconsistency between the generic `Read` and `Write` methods that automatically left-shifted the device address by one bit, and the `ReadDataAtAddress` and `WriteDataAtAddress` functions that required the user to manually shift the address by one.
+
+The internal devices that were affected by this change have been updated internally so this change will have minimal breaking effects.
+Those devices are:
+
+- PCM3060
+- MCP23x17
+
+To migrate existing code for external device drivers any manual left-shifting of the device address for the `ReadDataAtAddress` or `WriteDataAtAddress` functions must be removed.
+
+#### GPIO and Pin
+
+Any remaining instances of `dsy_gpio` or `dsy_gpio_pin` should be converted to the newer `GPIO` and `Pin` structs.
+The constant pin references for `DaisySeed` and `DaisyPatchSM` have both been updated to the new `Pin` struct.
+
+Objects within libDaisy no longer accept the old types, and will need to be updated in application code.
+
+Here are some examples of how to migrate from the old types to the new types.
+
+```cpp
+//////////////////////////////////////////
+// Initialization:
+//////////////////////////////////////////
+// Old:
+dsy_gpio_pin pa1 = {DSY_GPIOA, 1};
+dsy_gpio gpio1;
+gpio1.mode = DSY_GPIO_OUTPUT_PP;
+gpio1.pull = DSY_GPIO_NOPULL;
+gpio1.pin = pa1;
+dsy_gpio_init(&gpio1);
+
+// New:
+Pin pa1 = Pin(PORTA, 1);
+GPIO gpio1;
+gpio1.Init(pa1, GPIO::Mode::OUTPUT, GPIO::Pull::NOPULL);
+
+//////////////////////////////////////////
+// Read
+//////////////////////////////////////////
+// Old:
+uint8_t state = dsy_gpio_read(&gpio1);
+// New:
+bool state = gpio1.Read();
+
+//////////////////////////////////////////
+// Write
+//////////////////////////////////////////
+// Old:
+dsy_gpio_write(&gpio1, 1); // HIGH
+dsy_gpio_write(&gpio1, 0); // LOW
+// New:
+gpio1.Write(true); // HIGH
+gpio1.Write(false); // LOW
+
+//////////////////////////////////////////
+// Toggle
+//////////////////////////////////////////
+// Old:
+dsy_gpio_toggle(&gpio1);
+// New:
+gpio1.Toggle();
+```
+
+### New Contributors
+
+- @a7v7 made their first contribution in https://github.com/electro-smith/libDaisy/pull/625
+- @asavartsov made their first contribution in https://github.com/electro-smith/libDaisy/pull/627
+- @takumi-ogata made their first contribution in https://github.com/electro-smith/libDaisy/pull/661
+- @cvpines made their first contribution in https://github.com/electro-smith/libDaisy/pull/667
+- @grawlinson made their first contribution in https://github.com/electro-smith/libDaisy/pull/659
+- @Alloyed made their first contribution in https://github.com/electro-smith/libDaisy/pull/655
+- @jacobvosmaer made their first contribution in https://github.com/electro-smith/libDaisy/pull/623
+
 ## v7.1.0
 
 ### Features
