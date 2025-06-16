@@ -14,13 +14,13 @@
 
 ### Bug Fixes
 
-- QSPI: Big fix for a known instability issue. Resolves intermittent bootup issue where QSPI could set itself to write-protected mode.
+- QSPI: Fix for a known instability issue. Resolves intermittent bootup issue where QSPI could set itself to write-protected mode.
 - USB Host: Added USBH MIDI source file to CMakeLists for CMake builds
 - I2C: Fixed issue with I2C4 not working
+- I2C: **minor breaking change**: Fixed inconsistency of address-shifting of `ReadDataAtAddress` and `WriteDataAtAddress` to match the other methods.
 - MIDI: Fixed an unrecoverable crash with UART transport if the input shorted to GND for a full UART frame.
 - System: Fixed inaccurate clock division factor for `DelayMs` and `GetMs` to be correct.
 - WavWriter: Fixed bug where the last samples of the recording were not being flushed to the output file.
--
 
 ### Other
 
@@ -39,6 +39,18 @@
 - The included bootloader binaries have been updated to v6.3 - This version integrates the above QSPI changes, and improves the boot-jump sequence for apps running directly from QSPI memory.
 
 ### Migration
+
+#### I2C Address Shifting
+
+There was an inconsistency between the generic `Read` and `Write` methods that automatically left-shifted the device address by one bit, and the `ReadDataAtAddress` and `WriteDataAtAddress` functions that required the user to manually shift the address by one.
+
+The internal devices that were affected by this change have been updated internally so this change will have minimal breaking effects.
+Those devices are:
+
+- PCM3060
+- MCP23x17
+
+To migrate existing code for external device drivers any manual left-shifting of the device address for the `ReadDataAtAddress` or `WriteDataAtAddress` functions must be removed.
 
 #### GPIO and Pin
 
@@ -92,7 +104,6 @@ dsy_gpio_toggle(&gpio1);
 // New:
 gpio1.Toggle();
 ```
-
 
 ### New Contributors
 
