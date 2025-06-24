@@ -97,6 +97,21 @@ class DaisySeed
     /** Returns the rate in Hz that the Audio callback is called */
     float AudioCallbackRate() const;
 
+    /** Provides an intermediate buffer to store output of the audio callback in.
+     **
+     ** The provided buffers must be of size block_size * 2.
+     **
+     ** This option is beneficial when AudioBlockSize is small (<= 4 at 48kHz, <= 8
+     ** at 96kHz) in order to allow you to use more cpu time in your audio callback.
+     ** Without this option enabled, the DMA transfer to the DAC will start 10-15
+     ** microseconds before the next call to the audio callback, which means that if
+     ** you use more than ~60% CPU in your audio callback with a block size of 2 at
+     ** 48kHz or a block size of 4 at 96kHz then you will likely miss the deadline
+     ** and experience glitches. Enabling this option will delay your audio by an
+     ** additional block_size samples.
+     */
+    void SetIntermediateBuffers(int32_t* buffer_sai1, int32_t* buffer_sai2 = nullptr);
+
     /** Returns the SAI Handle for the Daisy Seed 
      *  This can be useful when adding a secondary codec,
      *  the result of this function can be passed to the audio reinit 
