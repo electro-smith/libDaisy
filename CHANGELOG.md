@@ -5,6 +5,7 @@
 ## v8.0.0
 
 ### Features
+- Add an optional conversion complete callback to `AdcHandle::Start()`
 
 - SSD1307 Driver
 - Drivers for SSD1327 and the SSD1351
