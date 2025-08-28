@@ -8,7 +8,8 @@ namespace daisy
 // Adapted from https://github.com/blemasle/arduino-mcp23017
 
 /**
- * Registers addresses.
+ * @brief
+ *
  * The library use addresses for IOCON.BANK = 0.
  * See "3.2.1 Byte mode and Sequential mode".
  */
@@ -66,10 +67,11 @@ enum class MCPMode : uint8_t
     OUTPUT,
 };
 
+
 /**
  * Barebones driver for MCP23017 I2C 16-Bit I/O Expander
  * For now it supports only polling approach.
- * 
+ *
  * Usage:
  *  Mcp23017 mcp;
  *  mcp.Init();
@@ -85,21 +87,22 @@ class Mcp23017Transport
     {
         I2CHandle::Config i2c_config;
         uint8_t           i2c_address;
-        void              Defaults()
+        void              Defaults(uint8_t addr)
         {
-            i2c_config.periph         = I2CHandle::Config::Peripheral::I2C_1;
-            i2c_config.speed          = I2CHandle::Config::Speed::I2C_1MHZ;
-            i2c_config.mode           = I2CHandle::Config::Mode::I2C_MASTER;
+            i2c_config.periph = I2CHandle::Config::Peripheral::
+                I2C_1; // i2c_1, i2c_2, i2c_3, i2c_4
+            i2c_config.speed = I2CHandle::Config::Speed::I2C_1MHZ; //I2C_400KHZ;
+            i2c_config.mode  = I2CHandle::Config::Mode::I2C_MASTER;
             i2c_config.pin_config.scl = {DSY_GPIOB, 8};
             i2c_config.pin_config.sda = {DSY_GPIOB, 9};
-            i2c_address               = 0x27;
+            i2c_address               = addr; //0x22;//0x27;
         }
     };
 
-    void Init()
+    void Init(uint8_t addr)
     {
         Config config;
-        config.Defaults();
+        config.Defaults(addr);
         Init(config);
     };
 
@@ -126,8 +129,11 @@ class Mcp23017Transport
     uint8_t ReadReg(MCPRegister reg)
     {
         uint8_t data[1] = {0x00};
+        //I2CHandle::Result ret =
         i2c_.ReadDataAtAddress(
             i2c_address_, static_cast<uint8_t>(reg), 1, data, 1, timeout);
+
+        //LOG("ReadReg ret %02X val:%02X", ret, data[0]);
         return data[0];
     }
 
@@ -155,11 +161,13 @@ class Mcp23X17
         typename Transport::Config transport_config;
     };
 
-    void Init()
+    void Init(uint8_t addr)
     {
         Config config;
-        config.transport_config.Defaults();
+        config.transport_config.Defaults(addr);
         Init(config);
+        dsy_gpio_pin ipin = {DSY_GPIOD, 11};
+        CfgInterruptPin(ipin);
     };
 
     void Init(const Config& config)
@@ -167,25 +175,29 @@ class Mcp23X17
         transport.Init(config.transport_config);
 
         //BANK =     0 : sequential register addresses
-        //MIRROR =     0 : use configureInterrupt
+        //MIRROR =     1 : use configureInterrupt
         //SEQOP =     1 : sequential operation disabled, address pointer does not increment
         //DISSLW =     0 : slew rate enabled
         //HAEN =     0 : hardware address pin is always enabled on 23017
-        //ODR =     0 : open drain output
+        //ODR =     1 : open drain output
         //INTPOL =     0 : interrupt active low
-        transport.WriteReg(MCPRegister::IOCON, 0b00100000);
+        transport.WriteReg(MCPRegister::IOCON, 0b01100110);
 
         //enable all pull up resistors (will be effective for input pins only)
         transport.WriteReg(MCPRegister::GPPU_A, 0xFF, 0xFF);
+
+        // enable interrupts on all pins
+        transport.WriteReg(MCPRegister::GPINTEN_A, 0xff, 0xff);
+        transport.WriteReg(MCPRegister::INTCON_A, 0x00, 0x00);
     };
 
     /**
      * Controls the pins direction on a whole port at once.
-     * 
+     *
      * directions: 0 - output, 1 - input
      * pullups: 0 - disabled, 1 - enabled
      * inverted: 0 - false/normal, 1 - true/inverted
-     * 
+     *
      * See "3.5.1 I/O Direction register".
      */
     void PortMode(MCPPort port,
@@ -199,9 +211,9 @@ class Mcp23X17
     }
 
     /**
-     * Controls a single pin direction. 
+     * Controls a single pin direction.
      * Pin 0-7 for port A, 8-15 fo port B.
-     * 
+     *
      * 1 = Pin is configured as an input.
      * 0 = Pin is configured as an output.
      *
@@ -243,10 +255,10 @@ class Mcp23X17
     /**
      * Writes a single pin state.
      * Pin 0-7 for port A, 8-15 for port B.
-     * 
+     *
      * 1 = Logic-high
      * 0 = Logic-low
-     * 
+     *
      * See "3.5.10 Port register".
      */
     void WritePin(uint8_t pin, uint8_t state)
@@ -275,10 +287,10 @@ class Mcp23X17
     /**
      * Reads a single pin state.
      * Pin 0-7 for port A, 8-15 for port B.
-     * 
+     *
      * 1 = Logic-high
      * 0 = Logic-low
-     * 
+     *
      * See "3.5.10 Port register".
      */
     uint8_t ReadPin(uint8_t pin)
@@ -302,23 +314,56 @@ class Mcp23X17
 
     /**
      * Writes pins state to a whole port.
-     * 
+     *
      * 1 = Logic-high
      * 0 = Logic-low
-     * 
+     *
      * See "3.5.10 Port register".
      */
     void WritePort(MCPPort port, uint8_t value)
     {
         transport.WriteReg(MCPRegister::GPIO_A + port, value);
     }
+    // TODO sacar cleanint
+    void ClearInt(void)
+    {
+        transport.ReadReg(MCPRegister::INTCAP_A);
+        transport.ReadReg(MCPRegister::INTCAP_B);
+    }
+
+    /** Initializes the interrupt pin.
+     *
+     * The interrupt pin is used to signal that an interrupt has occurred.
+     *
+     * @param cfg configuration for the interrupt pin
+     */
+    void CfgInterruptPin(dsy_gpio_pin ipin)
+    {
+        dsy_gpio cfg;
+        cfg.pin  = ipin;
+        cfg.mode = DSY_GPIO_MODE_INPUT;
+        cfg.pull = DSY_GPIO_PULLUP; // pullup is needed to avoid floating pin
+        dsy_gpio_init(&cfg);
+    }
+
+    static bool ReadInterruptPin(void)
+    {
+        dsy_gpio_pin ipin = {DSY_GPIOD, 11};
+        dsy_gpio     cfg;
+        cfg.pin = ipin;
+        //cfg.mode = DSY_GPIO_MODE_INPUT;
+        //cfg.pull = DSY_GPIO_PULLUP; // pullup is needed to avoid floating pin
+        //dsy_gpio_init(&cfg);
+        return dsy_gpio_read(&cfg);
+    }
+
 
     /**
      * Reads pins state for a whole port.
-     * 
+     *
      * 1 = Logic-high
      * 0 = Logic-low
-     * 
+     *
      * See "3.5.10 Port register".
      */
     uint8_t ReadPort(MCPPort port)
@@ -328,10 +373,10 @@ class Mcp23X17
 
     /**
      * Writes pins state to both ports.
-     * 
+     *
      * 1 = Logic-high
      * 0 = Logic-low
-     * 
+     *
      * See "3.5.10 Port register".
      */
     void Write(uint16_t value)
@@ -341,11 +386,11 @@ class Mcp23X17
     }
 
     /**
-     * Reads pins state for both ports. 
-     * 
+     * Reads pins state for both ports.
+     *
      * 1 = Logic-high
      * 0 = Logic-low
-     * 
+     *
      * See "3.5.10 Port register".
      */
     uint16_t Read()
@@ -359,7 +404,7 @@ class Mcp23X17
 
     /**
      * @brief Fetches pin state from the result of recent Read() call. Useful to preserve unneeded reads
-     * 
+     *
      * @param id pin ID
      * @return uint8_t pin state: 0x00 or 0xFF
      */
@@ -396,6 +441,5 @@ class Mcp23X17
     uint16_t  pin_data;
     Transport transport;
 };
-
 using Mcp23017 = Mcp23X17<Mcp23017Transport>;
 } // namespace daisy
