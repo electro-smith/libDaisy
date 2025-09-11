@@ -7,7 +7,6 @@
 
 namespace daisy
 {
-
 /**
  * WAV file Streaming Playback
  *

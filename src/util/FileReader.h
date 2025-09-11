@@ -9,7 +9,6 @@
 
 namespace daisy
 {
-
 // Abstract reader interface (minimal). Provide concrete implementation for
 // platform.
 class IReader

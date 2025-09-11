@@ -30,7 +30,6 @@
 
 namespace daisy
 {
-
 struct WavFormatInfo
 {
     uint16_t audioFormat   = 0; // 1 = PCM, 3 = IEEE float, 0xFFFE = extensible

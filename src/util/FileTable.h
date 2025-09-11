@@ -7,8 +7,6 @@
 
 namespace daisy
 {
-
-
 /** Utility class for creating an index of file names
  *  and lengths from a given directory.
  *

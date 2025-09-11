@@ -169,10 +169,11 @@ FATFS_SOURCES += \
 
 ifeq ($(USE_FATFS),1)
 C_SOURCES += $(FATFS_SOURCES)
-# File I/O Abstract Interface for FatFS:
-C_DEFS += -DFILEIO_ENABLE_FATFS_READER
 endif
 C_INCLUDES += -I$(FATFS_DIR)
+
+# File I/O Abstract Interface for FatFS:
+C_DEFS += -DFILEIO_ENABLE_FATFS_READER
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
