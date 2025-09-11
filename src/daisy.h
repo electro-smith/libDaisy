@@ -41,7 +41,6 @@
 #include "hid/disp/color_display.h"
 #include "hid/disp/oled_color_display.h"
 #include "hid/disp/graphics_common.h"
-#include "hid/wavplayer.h"
 #include "hid/led.h"
 #include "hid/rgb_led.h"
 #include "dev/sr_595.h"
@@ -66,6 +65,8 @@
 #include "ui/FullScreenItemMenu.h"
 #include "util/scopedirqblocker.h"
 #include "util/CpuLoadMeter.h"
+#include "util/FileReader.h"
+#include "util/FileTable.h"
 #include "util/FIFO.h"
 #include "util/FixedCapStr.h"
 #include "util/MappedValue.h"
@@ -73,6 +74,8 @@
 #include "util/Stack.h"
 #include "util/VoctCalibration.h"
 #include "util/WaveTableLoader.h"
+#include "util/WavParser.h"
+#include "util/WavPlayer.h"
 #include "util/WavWriter.h"
 #endif
 #endif

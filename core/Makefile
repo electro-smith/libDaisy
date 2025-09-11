@@ -116,6 +116,7 @@ C_DEFS +=  \
 -DARM_MATH_CM7 \
 -DUSE_FULL_LL_DRIVER
 
+
 # for debugging bootloaded applications
 ifdef DEBUG
 C_DEFS += -DDEBUG
@@ -168,6 +169,8 @@ FATFS_SOURCES += \
 
 ifeq ($(USE_FATFS),1)
 C_SOURCES += $(FATFS_SOURCES)
+# File I/O Abstract Interface for FatFS:
+C_DEFS += -DFILEIO_ENABLE_FATFS_READER
 endif
 C_INCLUDES += -I$(FATFS_DIR)
 

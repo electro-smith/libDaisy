@@ -1,7 +1,5 @@
 /** Generation of a simple Audio signal */
 #include "daisy_seed.h"
-#include "FileTable.h"
-#include "Player.h"
 #include <cmath>
 
 /** This prevents us from having to type "daisy::" in front of a lot of things. */
@@ -19,7 +17,7 @@ DaisySeed                      hw;
 SdmmcHandler                   sdmmc;
 FatFSInterface                 fsi;
 temp::WavPlayer<kTransferSize> player;
-temp::FileTable<32>            file_table;
+temp::FileTable<8>             file_table;
 
 
 /** Temp stuff for testing: */
