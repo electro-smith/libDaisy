@@ -13,11 +13,11 @@ static constexpr size_t kTransferSize = 4096;
 // static constexpr size_t kTransferSize = 2048;
 
 /** Global Hardware access */
-DaisySeed                      hw;
-SdmmcHandler                   sdmmc;
-FatFSInterface                 fsi;
-temp::WavPlayer<kTransferSize> player;
-temp::FileTable<8>             file_table;
+DaisySeed                hw;
+SdmmcHandler             sdmmc;
+FatFSInterface           fsi;
+WavPlayer<kTransferSize> player;
+FileTable<8>             file_table;
 
 
 /** Temp stuff for testing: */
@@ -27,14 +27,6 @@ MidiUsbHandler midi;
 
 int selected_file = 0;
 int open_file     = 0;
-
-
-/** Extra temp stuff for playback speed.. */
-// const float kPlaybackSpeedOptions[]
-//     = {0.25f, 0.5f, 0.75f, 1.f, 1.5f, 2.0f, 3.f, 4.f};
-// const float kPlaybackNotesOptions[]
-//     = {-24.f, -12.f, -5.f, 0.f, 4.f, 7.f, 12.f, 24.f};
-// int playback_speed_idx;
 
 void AudioCallback(AudioHandle::InputBuffer  in,
                    AudioHandle::OutputBuffer out,
