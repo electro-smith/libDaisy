@@ -40,7 +40,7 @@ class FileTable
      *
      * @return true if files are loaded, otherwise false
      */
-    bool Fill(const char *path, const char *endswith=nullptr)
+    bool Fill(const char *path, const char *endswith = nullptr)
     {
         FRESULT res = FR_OK;
         if(path == nullptr)
