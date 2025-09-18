@@ -1,16 +1,6 @@
-/** Simple demonstration of WAV file playback
+/** Simple example of FileTable class
  *
- *  When the program starts, it will attempt to load, and start looping
- *  the file, "loop.wav".
- *
- *  The "loop.wav" file used here is included in the repo for convenience.
- *  The file is a 48kHz stereo, 16-bit sine wave at 440Hz -6dB
- *
- *  Any 16-bit WAV file can be used with this class, but sample-rate
- *  is not automatically adjusted for.
- *
- *  The included file was created with sox, using the following command:
- *  sox -n -r 48000 -b 16 -c 2 loop.wav synth 1 sine 440 gain -6
+ *  This demonstrates quickly indexing a subset of files on a disk.
  */
 #include "daisy_seed.h"
 
@@ -65,9 +55,28 @@ int main(void)
     file_table.Fill("/", ".wav");
     file_table.WriteLog("file_table-wav.txt");
 
-    while(1)
-    {
-        /** Blink Slower in normal operation */
-        hw.SetLed((System::GetNow() & 511) < 255);
+    /** We can loop through the files, checking their sizes */
+    size_t largest_size = 0;
+    int slot = -1;
+    for (size_t i = 0; i < file_table.GetNumFiles(); i++) {
+      auto fsize = file_table.GetFileSize(i);
+      if (fsize > largest_size)  {
+        largest_size = fsize;
+        slot = i;
+      }
     }
+
+    /** Print this once the device is connected to serial. */
+    hw.StartLog(true);
+    System::Delay(100);
+    hw.PrintLine("File Info:");
+    if (slot >= 0) {
+      hw.PrintLine("The largest file at %d bytes is: %s",
+                   file_table.GetFileSize(slot),
+                   file_table.GetFileName(slot));
+    } else {
+      hw.PrintLine("No files found..");
+    }
+
+    while(1){}
 }
