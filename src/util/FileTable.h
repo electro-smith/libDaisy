@@ -40,7 +40,7 @@ class FileTable
      *
      * @return true if files are loaded, otherwise false
      */
-    bool Fill(const char *path, const char *endswith)
+    bool Fill(const char *path, const char *endswith=nullptr)
     {
         FRESULT res = FR_OK;
         if(path == nullptr)
@@ -67,7 +67,7 @@ class FileTable
                 if(endswith != nullptr)
                 {
                     uint32_t suffix_len = strlen(endswith);
-                    valid_name          = strstr(fno.fname, ".wav") != nullptr
+                    valid_name          = strstr(fno.fname, endswith) != nullptr
                                  && strlen(fno.fname) > suffix_len
                                  && strlen(fno.fname) < kMaxCustomFileNameLen;
                 }
@@ -125,7 +125,7 @@ class FileTable
             }
             else
             {
-                const char *text = "No WAV files found...";
+                const char *text = "No matching files found...";
                 UINT        bw   = 0;
                 res              = f_write(&file, text, strlen(text), &bw);
             }
