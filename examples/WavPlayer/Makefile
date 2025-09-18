@@ -4,8 +4,8 @@ TARGET = WavPlayer
 # Sources
 CPP_SOURCES = main.cpp
 
-DEBUG=1
-OPT=-O0
+DEBUG=0
+OPT=-O3
 
 USE_FATFS=1
 
