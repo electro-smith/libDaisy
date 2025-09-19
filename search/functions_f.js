@@ -26,7 +26,7 @@ var searchData=
   ['onvalueencoderturned_23',['OnValueEncoderTurned',['../classdaisy_1_1_abstract_menu.html#a8f355533894df9c763ade1bd358c1cf0',1,'daisy::AbstractMenu::OnValueEncoderTurned()'],['../classdaisy_1_1_ui_page.html#a75c788f49da60e4e5305e39adf81e976',1,'daisy::UiPage::OnValueEncoderTurned(int16_t turns, uint16_t stepsPerRevolution)']]],
   ['onvaluepotactivitychanged_24',['OnValuePotActivityChanged',['../classdaisy_1_1_ui_page.html#aebb65bc4b0ec7b40028467d50ca6f4a5',1,'daisy::UiPage']]],
   ['onvaluepotmoved_25',['OnValuePotMoved',['../classdaisy_1_1_abstract_menu.html#a4e610bbdc34b0221088b0b45e6759e18',1,'daisy::AbstractMenu::OnValuePotMoved()'],['../classdaisy_1_1_ui_page.html#a46eb6e3fea1b55a0f8185f7f8dcad5b5',1,'daisy::UiPage::OnValuePotMoved()']]],
-  ['open_26',['Open',['../classdaisy_1_1_wav_player.html#ab125d0c6fb01b45443b57df96255efb9',1,'daisy::WavPlayer']]],
+  ['open_26',['Open',['../classdaisy_1_1_wav_player.html#a30f62f2c5cc2b1c82821ba7499f812d8',1,'daisy::WavPlayer']]],
   ['openfile_27',['OpenFile',['../classdaisy_1_1_wav_writer.html#a9c03052fee69006c6f021391ecc93f20',1,'daisy::WavWriter']]],
   ['openpage_28',['OpenPage',['../classdaisy_1_1_u_i.html#acec12dd1310939a703562c0d5e75e2aa',1,'daisy::UI']]],
   ['operator_20const_20char_20_2a_29',['operator const char *',['../classdaisy_1_1_mapped_string_list_value.html#a9a8c4bb7628d5a62d29c0a3f70c82e05',1,'daisy::MappedStringListValue']]],

@@ -55,7 +55,7 @@ var searchData=
   ['legio_5fcontrols_52',['LEGIO_CONTROLS',['../classdaisy_1_1_daisy_legio.html#a1884bab39dcc854aaca65d18e9cecf24',1,'daisy::DaisyLegio']]],
   ['legio_5fleds_53',['LEGIO_LEDS',['../classdaisy_1_1_daisy_legio.html#a036eecb81cc6dddfeda22578df8abd5b',1,'daisy::DaisyLegio']]],
   ['legio_5ftoggle3_54',['LEGIO_TOGGLE3',['../classdaisy_1_1_daisy_legio.html#ac42890eb3f8ca1742947606d5f1475d3',1,'daisy::DaisyLegio']]],
-  ['length_55',['length',['../structdaisy_1_1_system_exclusive_event.html#a975aabec2f3903d767b50652a877d2b0',1,'daisy::SystemExclusiveEvent']]],
+  ['length_55',['length',['../structdaisy_1_1_system_exclusive_event.html#a975aabec2f3903d767b50652a877d2b0',1,'daisy::SystemExclusiveEvent::length'],['../structdaisy_1_1_wav_player_1_1_file_info.html#a4f2e5950bf0654b5fdcfa6e27d0ae7de',1,'daisy::WavPlayer::FileInfo::length']]],
   ['libdaisy_56',['LIBDAISY',['../group__libdaisy.html',1,'']]],
   ['libdaisy_57',['libDaisy',['../index.html',1,'libDaisy'],['../index.html#autotoc_md72',1,'Using libDaisy']]],
   ['libdaisy_5fver_5fmaj_58',['LIBDAISY_VER_MAJ',['../version_8h.html#a5f8da3a1e71e5dcbe69ce725186df1ad',1,'version.h']]],

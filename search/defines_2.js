@@ -67,6 +67,5 @@ var searchData=
   ['dsy_5fuart_5fh_64',['DSY_UART_H',['../uart_8h.html#ae95c00416c4aaa293e062b8aaed79909',1,'uart.h']]],
   ['dsy_5futil_5funique_5fid_5fh_65',['DSY_UTIL_UNIQUE_ID_H',['../unique__id_8h.html#a2140d8723a0ad66047c1b04bb4319b0b',1,'unique_id.h']]],
   ['dsy_5fversion_5fh_66',['DSY_VERSION_H',['../version_8h.html#a9234b53a2198452930f6bd1cc113c49e',1,'version.h']]],
-  ['dsy_5fwav_5fformat_5fh_67',['DSY_WAV_FORMAT_H',['../wav__format_8h.html#ab9fb82face7890d0821ddc69926311ea',1,'wav_format.h']]],
-  ['dsy_5fwavplayer_5fh_68',['DSY_WAVPLAYER_H',['../wavplayer_8h.html#ad384c43689d53e261578fa4dcb9dd00a',1,'wavplayer.h']]]
+  ['dsy_5fwav_5fformat_5fh_67',['DSY_WAV_FORMAT_H',['../wav__format_8h.html#ab9fb82face7890d0821ddc69926311ea',1,'wav_format.h']]]
 ];

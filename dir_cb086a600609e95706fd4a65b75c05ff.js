@@ -17,6 +17,5 @@ var dir_cb086a600609e95706fd4a65b75c05ff =
     [ "switch3.h", "switch3_8h.html", "switch3_8h" ],
     [ "usb.h", "usb_8h.html", "usb_8h" ],
     [ "usb_host.h", "usb__host_8h.html", "usb__host_8h" ],
-    [ "usb_midi.h", "usb__midi_8h.html", "usb__midi_8h" ],
-    [ "wavplayer.h", "wavplayer_8h.html", "wavplayer_8h" ]
+    [ "usb_midi.h", "usb__midi_8h.html", "usb__midi_8h" ]
 ];

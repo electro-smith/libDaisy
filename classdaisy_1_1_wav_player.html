@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libDaisy: daisy::WavPlayer Class Reference</title>
+<title>libDaisy: daisy::WavPlayer&lt; workspace_bytes &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="shortcut icon" type="image/x-icon" href="ES_Circle_Orange.PNG">
 <script type="text/javascript" src="jquery.js"></script>
@@ -106,55 +106,130 @@ $(function(){initNavTree('classdaisy_1_1_wav_player.html',''); initResizable(tru
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classdaisy_1_1_wav_player-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">daisy::WavPlayer Class Reference</div></div>
+  <div class="headertitle"><div class="title">daisy::WavPlayer&lt; workspace_bytes &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wav Player that will load .wav files from an SD Card, and then provide a method of accessing the samples with double-buffering. </p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;size_t workspace_bytes&gt;<br />
+class daisy::WavPlayer&lt; workspace_bytes &gt;</div><p>WAV file Streaming Playback</p>
+<p>At this time, this class only supports streaming of 16-bit WAV Files The output of this class will be in float converted from 16-bit integers and linearly interpolated for non-integer playback speeds.</p>
+<p>Due to the implementation, reverse playback is not possible with this class.</p>
+<p>The workspace_bytes template parameter is used to set the size in bytes of audio samples within the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a>.</p>
+<p>The bulk of amount of memory used by this class is approximately: (2 * workspace_bytes); This could hypothetically be reduced by half by directly accessing the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a>'s inner array (requires modifications to <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> class), or making a new type of queue data structure</p>
+<p>Whenever the Stream function results in a the samples <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> being less than 75% full, it will generate a request for new data. So the average disk i/o transaction will be the <code>workspace_bytes</code> / 4. However, There are times, like when restarting playback, or opening a different file, that will trigger the entire buffer to be filled. </p>
 </div>
-<p><code>#include &lt;<a class="el" href="wavplayer_8h_source.html">wavplayer.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_wav_player_8h_source.html">WavPlayer.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_wav_player_1_1_file_info.html">FileInfo</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ad1582207e52a601fc34ee0485f3efb8f" id="r_ad1582207e52a601fc34ee0485f3efb8f"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">Result</a> { <br />
+&#160;&#160;<a class="el" href="#ad1582207e52a601fc34ee0485f3efb8faa60852f204ed8028c1c58808b746d115">Ok</a>
+, <a class="el" href="#ad1582207e52a601fc34ee0485f3efb8fa12b2950a4cfa8fe1fbea7b9e152440fe">FileNotFoundError</a>
+, <a class="el" href="#ad1582207e52a601fc34ee0485f3efb8faf8005ca891f30292ee0f396372baf589">PlaybackUnderrun</a>
+, <a class="el" href="#ad1582207e52a601fc34ee0485f3efb8fabb4347e7597f9d262ab32fa5519c4577">PrepareOverrun</a>
+, <br />
+&#160;&#160;<a class="el" href="#ad1582207e52a601fc34ee0485f3efb8fa0c354f0385c7e5c586ba1dc6cde93b57">NewSamplesRequested</a>
+, <a class="el" href="#ad1582207e52a601fc34ee0485f3efb8fa3b7fe692f7e66a2170f8a21ab226af15">DiskError</a>
+<br />
+ }</td></tr>
+<tr class="separator:ad1582207e52a601fc34ee0485f3efb8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0ba0f864a3fb972461fa97bbba22d836" id="r_a0ba0f864a3fb972461fa97bbba22d836"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0ba0f864a3fb972461fa97bbba22d836">WavPlayer</a> ()</td></tr>
-<tr class="separator:a0ba0f864a3fb972461fa97bbba22d836"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5aad333a53f985af43a856b252289b8a" id="r_a5aad333a53f985af43a856b252289b8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5aad333a53f985af43a856b252289b8a">~WavPlayer</a> ()</td></tr>
-<tr class="separator:a5aad333a53f985af43a856b252289b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a098078377eb545263538e56c53b56e4e" id="r_a098078377eb545263538e56c53b56e4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a098078377eb545263538e56c53b56e4e">Init</a> (const char *search_path)</td></tr>
-<tr class="separator:a098078377eb545263538e56c53b56e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab125d0c6fb01b45443b57df96255efb9" id="r_ab125d0c6fb01b45443b57df96255efb9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab125d0c6fb01b45443b57df96255efb9">Open</a> (size_t sel)</td></tr>
-<tr class="separator:ab125d0c6fb01b45443b57df96255efb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc0c84ee0ecc56e734908a8c1384c5c2" id="r_adc0c84ee0ecc56e734908a8c1384c5c2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adc0c84ee0ecc56e734908a8c1384c5c2">Close</a> ()</td></tr>
-<tr class="separator:adc0c84ee0ecc56e734908a8c1384c5c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52be0ed680b908241ffc287f879c6c7a" id="r_a52be0ed680b908241ffc287f879c6c7a"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52be0ed680b908241ffc287f879c6c7a">Stream</a> ()</td></tr>
-<tr class="separator:a52be0ed680b908241ffc287f879c6c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1126bb632eb141d2979c25cedde354cd" id="r_a1126bb632eb141d2979c25cedde354cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1126bb632eb141d2979c25cedde354cd">Prepare</a> ()</td></tr>
-<tr class="separator:a1126bb632eb141d2979c25cedde354cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3b2f9f9cdf18ea861be227dcffd5da9" id="r_ac3b2f9f9cdf18ea861be227dcffd5da9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac3b2f9f9cdf18ea861be227dcffd5da9">Restart</a> ()</td></tr>
-<tr class="separator:ac3b2f9f9cdf18ea861be227dcffd5da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29d340360f073bd1767e51a06876eafe" id="r_a29d340360f073bd1767e51a06876eafe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29d340360f073bd1767e51a06876eafe">SetLooping</a> (bool loop)</td></tr>
-<tr class="separator:a29d340360f073bd1767e51a06876eafe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4a32e794f0cdc07adab9204fc5c8a80" id="r_ab4a32e794f0cdc07adab9204fc5c8a80"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab4a32e794f0cdc07adab9204fc5c8a80">GetLooping</a> () const</td></tr>
-<tr class="separator:ab4a32e794f0cdc07adab9204fc5c8a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affa30de9a51750132f935a2421f17d75" id="r_affa30de9a51750132f935a2421f17d75"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#affa30de9a51750132f935a2421f17d75">GetNumberFiles</a> () const</td></tr>
-<tr class="separator:affa30de9a51750132f935a2421f17d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c49d490da98fe5280947dc7889866c1" id="r_a3c49d490da98fe5280947dc7889866c1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3c49d490da98fe5280947dc7889866c1">GetCurrentFile</a> () const</td></tr>
-<tr class="separator:a3c49d490da98fe5280947dc7889866c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fa0f7e9af5fbd3524555f79d3ae8281" id="r_a2fa0f7e9af5fbd3524555f79d3ae8281"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2fa0f7e9af5fbd3524555f79d3ae8281">WavPlayer</a> ()</td></tr>
+<tr class="separator:a2fa0f7e9af5fbd3524555f79d3ae8281"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7215621ebc578618f79f1f179b1dc59e" id="r_a7215621ebc578618f79f1f179b1dc59e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7215621ebc578618f79f1f179b1dc59e">~WavPlayer</a> ()</td></tr>
+<tr class="separator:a7215621ebc578618f79f1f179b1dc59e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affe62449a0b0478906a0f40fb96ba9d1" id="r_affe62449a0b0478906a0f40fb96ba9d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#affe62449a0b0478906a0f40fb96ba9d1">Init</a> (const char *name)</td></tr>
+<tr class="separator:affe62449a0b0478906a0f40fb96ba9d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30f62f2c5cc2b1c82821ba7499f812d8" id="r_a30f62f2c5cc2b1c82821ba7499f812d8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30f62f2c5cc2b1c82821ba7499f812d8">Open</a> (const char *name)</td></tr>
+<tr class="separator:a30f62f2c5cc2b1c82821ba7499f812d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdd026aedc5fbbef9099624d899bda60" id="r_abdd026aedc5fbbef9099624d899bda60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abdd026aedc5fbbef9099624d899bda60">Close</a> ()</td></tr>
+<tr class="separator:abdd026aedc5fbbef9099624d899bda60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa748e02d158c18e10988d7c350e74806" id="r_aa748e02d158c18e10988d7c350e74806"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa748e02d158c18e10988d7c350e74806">Prepare</a> ()</td></tr>
+<tr class="separator:aa748e02d158c18e10988d7c350e74806"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a611d723434cdb2bd2ea651fb81816dfc" id="r_a611d723434cdb2bd2ea651fb81816dfc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a611d723434cdb2bd2ea651fb81816dfc">Stream</a> (float *samples, size_t num_channels)</td></tr>
+<tr class="separator:a611d723434cdb2bd2ea651fb81816dfc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80e207d735ffe77a93358f1c87357c67" id="r_a80e207d735ffe77a93358f1c87357c67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a80e207d735ffe77a93358f1c87357c67">Restart</a> ()</td></tr>
+<tr class="separator:a80e207d735ffe77a93358f1c87357c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91528959e32e3cacc34384d0ce8504a6" id="r_a91528959e32e3cacc34384d0ce8504a6"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a91528959e32e3cacc34384d0ce8504a6">GetDurationInSamples</a> () const</td></tr>
+<tr class="separator:a91528959e32e3cacc34384d0ce8504a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f26714adf8f9157ad59d331bec9159c" id="r_a1f26714adf8f9157ad59d331bec9159c"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f26714adf8f9157ad59d331bec9159c">GetChannels</a> () const</td></tr>
+<tr class="separator:a1f26714adf8f9157ad59d331bec9159c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4deeaef7be6c4a2dbb5fe8a977c06754" id="r_a4deeaef7be6c4a2dbb5fe8a977c06754"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4deeaef7be6c4a2dbb5fe8a977c06754">GetPosition</a> () const</td></tr>
+<tr class="separator:a4deeaef7be6c4a2dbb5fe8a977c06754"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afbec88eb390d6b80aa262fd93da6b3d9" id="r_afbec88eb390d6b80aa262fd93da6b3d9"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afbec88eb390d6b80aa262fd93da6b3d9">GetNormalizedPosition</a> () const</td></tr>
+<tr class="separator:afbec88eb390d6b80aa262fd93da6b3d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89687a3d643503c9c69f477c491fb00b" id="r_a89687a3d643503c9c69f477c491fb00b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89687a3d643503c9c69f477c491fb00b">SetLooping</a> (bool state)</td></tr>
+<tr class="separator:a89687a3d643503c9c69f477c491fb00b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa479dfe196fa2ae2450780ae51a6df3c" id="r_aa479dfe196fa2ae2450780ae51a6df3c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa479dfe196fa2ae2450780ae51a6df3c">GetLooping</a> () const</td></tr>
+<tr class="separator:aa479dfe196fa2ae2450780ae51a6df3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad84c28b0ffa3f155855ee143bd5ee897" id="r_ad84c28b0ffa3f155855ee143bd5ee897"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad84c28b0ffa3f155855ee143bd5ee897">SetPlaying</a> (bool state)</td></tr>
+<tr class="separator:ad84c28b0ffa3f155855ee143bd5ee897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60c15e906d7f8322caee66186b47c6b7" id="r_a60c15e906d7f8322caee66186b47c6b7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a60c15e906d7f8322caee66186b47c6b7">GetPlaying</a> () const</td></tr>
+<tr class="separator:a60c15e906d7f8322caee66186b47c6b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f4d3178a7b2b44cd3a3fc5e16dff9c7" id="r_a1f4d3178a7b2b44cd3a3fc5e16dff9c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f4d3178a7b2b44cd3a3fc5e16dff9c7">SetPlaybackSpeedRatio</a> (const float speed)</td></tr>
+<tr class="separator:a1f4d3178a7b2b44cd3a3fc5e16dff9c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98ca7cf8796e5c647cd392bf79f60046" id="r_a98ca7cf8796e5c647cd392bf79f60046"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98ca7cf8796e5c647cd392bf79f60046">SetPlaybackSpeedSemitones</a> (const float semitones)</td></tr>
+<tr class="separator:a98ca7cf8796e5c647cd392bf79f60046"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a0ba0f864a3fb972461fa97bbba22d836" name="a0ba0f864a3fb972461fa97bbba22d836"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ba0f864a3fb972461fa97bbba22d836">&#9670;&#160;</a></span>WavPlayer()</h2>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="ad1582207e52a601fc34ee0485f3efb8f" name="ad1582207e52a601fc34ee0485f3efb8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1582207e52a601fc34ee0485f3efb8f">&#9670;&#160;</a></span>Result</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">daisy::WavPlayer::WavPlayer </td>
+          <td class="memname">enum class <a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">daisy::WavPlayer::Result</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return values for status, and errors. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ad1582207e52a601fc34ee0485f3efb8faa60852f204ed8028c1c58808b746d115" name="ad1582207e52a601fc34ee0485f3efb8faa60852f204ed8028c1c58808b746d115"></a>Ok&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ad1582207e52a601fc34ee0485f3efb8fa12b2950a4cfa8fe1fbea7b9e152440fe" name="ad1582207e52a601fc34ee0485f3efb8fa12b2950a4cfa8fe1fbea7b9e152440fe"></a>FileNotFoundError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ad1582207e52a601fc34ee0485f3efb8faf8005ca891f30292ee0f396372baf589" name="ad1582207e52a601fc34ee0485f3efb8faf8005ca891f30292ee0f396372baf589"></a>PlaybackUnderrun&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ad1582207e52a601fc34ee0485f3efb8fabb4347e7597f9d262ab32fa5519c4577" name="ad1582207e52a601fc34ee0485f3efb8fabb4347e7597f9d262ab32fa5519c4577"></a>PrepareOverrun&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ad1582207e52a601fc34ee0485f3efb8fa0c354f0385c7e5c586ba1dc6cde93b57" name="ad1582207e52a601fc34ee0485f3efb8fa0c354f0385c7e5c586ba1dc6cde93b57"></a>NewSamplesRequested&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ad1582207e52a601fc34ee0485f3efb8fa3b7fe692f7e66a2170f8a21ab226af15" name="ad1582207e52a601fc34ee0485f3efb8fa3b7fe692f7e66a2170f8a21ab226af15"></a>DiskError&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a2fa0f7e9af5fbd3524555f79d3ae8281" name="a2fa0f7e9af5fbd3524555f79d3ae8281"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fa0f7e9af5fbd3524555f79d3ae8281">&#9670;&#160;</a></span>WavPlayer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::WavPlayer </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -169,17 +244,19 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5aad333a53f985af43a856b252289b8a" name="a5aad333a53f985af43a856b252289b8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5aad333a53f985af43a856b252289b8a">&#9670;&#160;</a></span>~WavPlayer()</h2>
+<a id="a7215621ebc578618f79f1f179b1dc59e" name="a7215621ebc578618f79f1f179b1dc59e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7215621ebc578618f79f1f179b1dc59e">&#9670;&#160;</a></span>~WavPlayer()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">daisy::WavPlayer::~WavPlayer </td>
+          <td class="memname"><a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::~<a class="el" href="classdaisy_1_1_wav_player.html">WavPlayer</a> </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -195,35 +272,47 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="adc0c84ee0ecc56e734908a8c1384c5c2" name="adc0c84ee0ecc56e734908a8c1384c5c2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc0c84ee0ecc56e734908a8c1384c5c2">&#9670;&#160;</a></span>Close()</h2>
+<a id="abdd026aedc5fbbef9099624d899bda60" name="abdd026aedc5fbbef9099624d899bda60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdd026aedc5fbbef9099624d899bda60">&#9670;&#160;</a></span>Close()</h2>
 
 <div class="memitem">
 <div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int daisy::WavPlayer::Close </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Closes whatever file is currently open. </p><dl class="section return"><dt>Returns</dt><dd>&amp; </dd></dl>
-
-</div>
-</div>
-<a id="a3c49d490da98fe5280947dc7889866c1" name="a3c49d490da98fe5280947dc7889866c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c49d490da98fe5280947dc7889866c1">&#9670;&#160;</a></span>GetCurrentFile()</h2>
-
-<div class="memitem">
-<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t daisy::WavPlayer::GetCurrentFile </td>
+          <td class="memname"><a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">Result</a> <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::Close </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Close a file, and clear the data </p>
+
+</div>
+</div>
+<a id="a1f26714adf8f9157ad59d331bec9159c" name="a1f26714adf8f9157ad59d331bec9159c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f26714adf8f9157ad59d331bec9159c">&#9670;&#160;</a></span>GetChannels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::GetChannels </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -235,21 +324,23 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>currently selected file. </dd></dl>
+<p>Return the number of audio channels in the open audio file </p>
 
 </div>
 </div>
-<a id="ab4a32e794f0cdc07adab9204fc5c8a80" name="ab4a32e794f0cdc07adab9204fc5c8a80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4a32e794f0cdc07adab9204fc5c8a80">&#9670;&#160;</a></span>GetLooping()</h2>
+<a id="a91528959e32e3cacc34384d0ce8504a6" name="a91528959e32e3cacc34384d0ce8504a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91528959e32e3cacc34384d0ce8504a6">&#9670;&#160;</a></span>GetDurationInSamples()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool daisy::WavPlayer::GetLooping </td>
+          <td class="memname">size_t <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::GetDurationInSamples </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -261,21 +352,23 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Whether the <a class="el" href="classdaisy_1_1_wav_player.html">WavPlayer</a> is looping or not. </dd></dl>
+<p>Return the number of samples in the open audio file </p>
 
 </div>
 </div>
-<a id="affa30de9a51750132f935a2421f17d75" name="affa30de9a51750132f935a2421f17d75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affa30de9a51750132f935a2421f17d75">&#9670;&#160;</a></span>GetNumberFiles()</h2>
+<a id="aa479dfe196fa2ae2450780ae51a6df3c" name="aa479dfe196fa2ae2450780ae51a6df3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa479dfe196fa2ae2450780ae51a6df3c">&#9670;&#160;</a></span>GetLooping()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t daisy::WavPlayer::GetNumberFiles </td>
+          <td class="memname">bool <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::GetLooping </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -287,138 +380,364 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>The number of files loaded by the <a class="el" href="classdaisy_1_1_wav_player.html">WavPlayer</a> </dd></dl>
+<p>Return whether the player is looping or not. </p>
 
 </div>
 </div>
-<a id="a098078377eb545263538e56c53b56e4e" name="a098078377eb545263538e56c53b56e4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a098078377eb545263538e56c53b56e4e">&#9670;&#160;</a></span>Init()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::WavPlayer::Init </td>
-          <td>(</td>
-          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>search_path</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Initializes the <a class="el" href="classdaisy_1_1_wav_player.html">WavPlayer</a>, loading up to max_files of wav files from an SD Card. </p>
-
-</div>
-</div>
-<a id="ab125d0c6fb01b45443b57df96255efb9" name="ab125d0c6fb01b45443b57df96255efb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab125d0c6fb01b45443b57df96255efb9">&#9670;&#160;</a></span>Open()</h2>
+<a id="afbec88eb390d6b80aa262fd93da6b3d9" name="afbec88eb390d6b80aa262fd93da6b3d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbec88eb390d6b80aa262fd93da6b3d9">&#9670;&#160;</a></span>GetNormalizedPosition()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int daisy::WavPlayer::Open </td>
+          <td class="memname">float <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::GetNormalizedPosition </td>
           <td>(</td>
-          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>sel</em></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns a 0-1 representation of the playhead position within the file. </p>
+
+</div>
+</div>
+<a id="a60c15e906d7f8322caee66186b47c6b7" name="a60c15e906d7f8322caee66186b47c6b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60c15e906d7f8322caee66186b47c6b7">&#9670;&#160;</a></span>GetPlaying()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::GetPlaying </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4deeaef7be6c4a2dbb5fe8a977c06754" name="a4deeaef7be6c4a2dbb5fe8a977c06754"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4deeaef7be6c4a2dbb5fe8a977c06754">&#9670;&#160;</a></span>GetPosition()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::GetPosition </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Returns the position of the playhead in samples from the start of the file </p>
+
+</div>
+</div>
+<a id="affe62449a0b0478906a0f40fb96ba9d1" name="affe62449a0b0478906a0f40fb96ba9d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affe62449a0b0478906a0f40fb96ba9d1">&#9670;&#160;</a></span>Init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">Result</a> <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::Init </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Opens the file at index sel for reading. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Initialize, and open a single file by name for playback </p>
+<p>Open the file</p>
+
+</div>
+</div>
+<a id="a30f62f2c5cc2b1c82821ba7499f812d8" name="a30f62f2c5cc2b1c82821ba7499f812d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30f62f2c5cc2b1c82821ba7499f812d8">&#9670;&#160;</a></span>Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">Result</a> <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::Open </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Open a file, and prepare audio for streaming </p>
+
+</div>
+</div>
+<a id="aa748e02d158c18e10988d7c350e74806" name="aa748e02d158c18e10988d7c350e74806"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa748e02d158c18e10988d7c350e74806">&#9670;&#160;</a></span>Prepare()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">Result</a> <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::Prepare </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>To be executed in the main while loop, or other interruptable areas of code. This will perform the actual Disk I/O for streaming audio into the buffers used for playback. </p>
+
+</div>
+</div>
+<a id="a80e207d735ffe77a93358f1c87357c67" name="a80e207d735ffe77a93358f1c87357c67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a80e207d735ffe77a93358f1c87357c67">&#9670;&#160;</a></span>Restart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::Restart </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Clear all playback samples, and return to the beginning of the audio file immediately </p>
+
+</div>
+</div>
+<a id="a89687a3d643503c9c69f477c491fb00b" name="a89687a3d643503c9c69f477c491fb00b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89687a3d643503c9c69f477c491fb00b">&#9670;&#160;</a></span>SetLooping()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::SetLooping </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>state</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Set whether the audio file will automatically continue playing from the beginning after reaching the end of file. </p>
+
+</div>
+</div>
+<a id="a1f4d3178a7b2b44cd3a3fc5e16dff9c7" name="a1f4d3178a7b2b44cd3a3fc5e16dff9c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f4d3178a7b2b44cd3a3fc5e16dff9c7">&#9670;&#160;</a></span>SetPlaybackSpeedRatio()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::SetPlaybackSpeedRatio </td>
+          <td>(</td>
+          <td class="paramtype">const float</td>          <td class="paramname"><span class="paramname"><em>speed</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Direct setter of playback speed as a ratio compared to original speed. For example, 1.0 equals original speed, 0.5 is half-speed, etc. </p>
+
+</div>
+</div>
+<a id="a98ca7cf8796e5c647cd392bf79f60046" name="a98ca7cf8796e5c647cd392bf79f60046"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98ca7cf8796e5c647cd392bf79f60046">&#9670;&#160;</a></span>SetPlaybackSpeedSemitones()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::SetPlaybackSpeedSemitones </td>
+          <td>(</td>
+          <td class="paramtype">const float</td>          <td class="paramname"><span class="paramname"><em>semitones</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sets playback speed as a number of semitones offset from original pitch For example, +7 a ratio of 1.5, +12 a ratio of 2, -12 a ratio of 0.5, etc. </p>
+
+</div>
+</div>
+<a id="ad84c28b0ffa3f155855ee143bd5ee897" name="ad84c28b0ffa3f155855ee143bd5ee897"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad84c28b0ffa3f155855ee143bd5ee897">&#9670;&#160;</a></span>SetPlaying()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::SetPlaying </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>state</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a611d723434cdb2bd2ea651fb81816dfc" name="a611d723434cdb2bd2ea651fb81816dfc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a611d723434cdb2bd2ea651fb81816dfc">&#9670;&#160;</a></span>Stream()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t workspace_bytes&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ad1582207e52a601fc34ee0485f3efb8f">Result</a> <a class="el" href="classdaisy_1_1_wav_player.html">daisy::WavPlayer</a>&lt; workspace_bytes &gt;::Stream </td>
+          <td>(</td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>samples</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>num_channels</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Stream Audio from disk at the current playback speed.</p>
+<p>Each call to this will increment the playback position's internal accumulator by the playback speed. Anytime this accumulator exceeds 1.0, it will update it's position tracker, and pop the next sample from the <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> of audio samples. Whenever the contents of the audio sample <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> fall below 75% of it's capacity, a request is generated to refill it. The maximum playback speed possible is limited to the following factors:</p><ul>
+<li>SD Card Bus-width</li>
+<li>SD Card Clock Speed</li>
+<li>workspace_bytes setting (consequently, transfer sizes)</li>
+</ul>
+<p>It is possible to allow higher playback speeds, and improve bandwidth by using higher workspace sizes, with the trade-offs being memory, and latency with certain transactions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">sel</td><td>File to open </td></tr>
+    <tr><td class="paramname">samples</td><td>buffer of floats to fill with audio samples from disk</td></tr>
+    <tr><td class="paramname">num_channels</td><td>number of channels provided to fill. This can be different from the number of channels in the file. </td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a1126bb632eb141d2979c25cedde354cd" name="a1126bb632eb141d2979c25cedde354cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1126bb632eb141d2979c25cedde354cd">&#9670;&#160;</a></span>Prepare()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::WavPlayer::Prepare </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Collects buffer for playback when needed. </p>
-
-</div>
-</div>
-<a id="ac3b2f9f9cdf18ea861be227dcffd5da9" name="ac3b2f9f9cdf18ea861be227dcffd5da9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac3b2f9f9cdf18ea861be227dcffd5da9">&#9670;&#160;</a></span>Restart()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::WavPlayer::Restart </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Resets the playback position to the beginning of the file immediately </p>
-
-</div>
-</div>
-<a id="a29d340360f073bd1767e51a06876eafe" name="a29d340360f073bd1767e51a06876eafe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29d340360f073bd1767e51a06876eafe">&#9670;&#160;</a></span>SetLooping()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void daisy::WavPlayer::SetLooping </td>
-          <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>loop</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Sets whether or not the current file will repeat after completing playback. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">loop</td><td>To loop or not to loop. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a52be0ed680b908241ffc287f879c6c7a" name="a52be0ed680b908241ffc287f879c6c7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52be0ed680b908241ffc287f879c6c7a">&#9670;&#160;</a></span>Stream()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int16_t daisy::WavPlayer::Stream </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>The next sample if playing, otherwise returns 0 </dd></dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>src/hid/<a class="el" href="wavplayer_8h_source.html">wavplayer.h</a></li>
+<li>src/util/<a class="el" href="_wav_player_8h_source.html">WavPlayer.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

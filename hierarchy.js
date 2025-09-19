@@ -110,6 +110,14 @@ var hierarchy =
     [ "daisy::FIFOBase< Event >", "classdaisy_1_1_f_i_f_o_base.html", [
       [ "daisy::FIFO< Event, 256 >", "classdaisy_1_1_f_i_f_o.html", null ]
     ] ],
+    [ "daisy::FIFOBase< int16_t >", "classdaisy_1_1_f_i_f_o_base.html", [
+      [ "daisy::FIFO< int16_t, kRxSizeSamples >", "classdaisy_1_1_f_i_f_o.html", null ]
+    ] ],
+    [ "daisy::FIFOBase< IoRequest >", "classdaisy_1_1_f_i_f_o_base.html", [
+      [ "daisy::FIFO< IoRequest, 8 >", "classdaisy_1_1_f_i_f_o.html", null ]
+    ] ],
+    [ "daisy::WavPlayer< workspace_bytes >::FileInfo", "structdaisy_1_1_wav_player_1_1_file_info.html", null ],
+    [ "daisy::FileTable< max_slots >", "classdaisy_1_1_file_table.html", null ],
     [ "daisy::FixedCapStrBase< CharType >", "classdaisy_1_1_fixed_cap_str_base.html", null ],
     [ "daisy::FixedCapStrBase< char >", "classdaisy_1_1_fixed_cap_str_base.html", [
       [ "daisy::FixedCapStr< capacity, CharType >", "classdaisy_1_1_fixed_cap_str.html", null ]
@@ -122,6 +130,7 @@ var hierarchy =
     [ "daisy::Icm20948I2CTransport", "classdaisy_1_1_icm20948_i2_c_transport.html", null ],
     [ "daisy::Icm20948SpiTransport", "classdaisy_1_1_icm20948_spi_transport.html", null ],
     [ "daisy::Icm20948< Transport >::Icm20948Vect", "structdaisy_1_1_icm20948_1_1_icm20948_vect.html", null ],
+    [ "daisy::IReader", "classdaisy_1_1_i_reader.html", null ],
     [ "daisy::AbstractMenu::ItemConfig", "structdaisy_1_1_abstract_menu_1_1_item_config.html", null ],
     [ "daisy::NeoTrellis< Transport >::keyEvent", "uniondaisy_1_1_neo_trellis_1_1key_event.html", null ],
     [ "daisy::NeoTrellis< Transport >::keyEventRaw", "uniondaisy_1_1_neo_trellis_1_1key_event_raw.html", null ],
@@ -146,6 +155,7 @@ var hierarchy =
     [ "daisy::MAX11300MultiSlaveSpiTransport", "classdaisy_1_1_m_a_x11300_multi_slave_spi_transport.html", null ],
     [ "daisy::Mcp23017Transport", "classdaisy_1_1_mcp23017_transport.html", null ],
     [ "daisy::Mcp23X17< Transport >", "classdaisy_1_1_mcp23_x17.html", null ],
+    [ "daisy::MetadataEntry", "structdaisy_1_1_metadata_entry.html", null ],
     [ "daisy::MidiEvent", "structdaisy_1_1_midi_event.html", null ],
     [ "daisy::MidiHandler< Transport >", "classdaisy_1_1_midi_handler.html", null ],
     [ "daisy::MidiHandler< MidiUartTransport >", "classdaisy_1_1_midi_handler.html", null ],
@@ -246,8 +256,9 @@ var hierarchy =
     [ "daisy::VoctCalibration", "classdaisy_1_1_voct_calibration.html", null ],
     [ "daisy::WAV_FormatTypeDef", "structdaisy_1_1_w_a_v___format_type_def.html", null ],
     [ "daisy::WaveTableLoader", "classdaisy_1_1_wave_table_loader.html", null ],
-    [ "daisy::WavFileInfo", "structdaisy_1_1_wav_file_info.html", null ],
-    [ "daisy::WavPlayer", "classdaisy_1_1_wav_player.html", null ],
+    [ "daisy::WavFormatInfo", "structdaisy_1_1_wav_format_info.html", null ],
+    [ "daisy::WavParser", "classdaisy_1_1_wav_parser.html", null ],
+    [ "daisy::WavPlayer< workspace_bytes >", "classdaisy_1_1_wav_player.html", null ],
     [ "daisy::WavWriter< transfer_size >", "classdaisy_1_1_wav_writer.html", null ],
     [ "daisy::Wm8731", "classdaisy_1_1_wm8731.html", null ]
 ];

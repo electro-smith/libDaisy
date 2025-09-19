@@ -17,6 +17,15 @@ var searchData=
   ['fontheight_14',['FontHeight',['../struct_font_def.html#a4e3e31a3a441bc010a432564e5da887d',1,'FontDef']]],
   ['fontwidth_15',['FontWidth',['../struct_font_def.html#a9e22d0bdbc21eadba6155f31d742f85f',1,'FontDef']]],
   ['footswitch_5fled_16',['footswitch_led',['../classdaisy_1_1_daisy_petal.html#a0adb82d937f3b214214aa2370b12f75e',1,'daisy::DaisyPetal']]],
-  ['fs_17',['fs',['../structdaisy_1_1_sai_handle_1_1_config.html#a535fc25eaea4947d3dc91b871b7534f9',1,'daisy::SaiHandle::Config']]],
-  ['funcbttnid_18',['funcBttnId',['../structdaisy_1_1_u_i_1_1_special_control_ids.html#a7c847ff1dd0f5557428fa2c949af3872',1,'daisy::UI::SpecialControlIds']]]
+  ['fourcc_17',['fourcc',['../structdaisy_1_1_metadata_entry.html#a984dd379f9a7393a4c56928c4b80b360',1,'daisy::MetadataEntry']]],
+  ['fourcc_5fdata_18',['FOURCC_DATA',['../classdaisy_1_1_wav_parser.html#a3788613860c2bdeac77fb7091b3bbfae',1,'daisy::WavParser']]],
+  ['fourcc_5ffact_19',['FOURCC_FACT',['../classdaisy_1_1_wav_parser.html#abecaf0afb3e3a542a4305c25a87f939d',1,'daisy::WavParser']]],
+  ['fourcc_5ffmt_20',['FOURCC_FMT',['../classdaisy_1_1_wav_parser.html#a7b784fae4d6cdf44c9b918f259e99b2e',1,'daisy::WavParser']]],
+  ['fourcc_5finfo_21',['FOURCC_INFO',['../classdaisy_1_1_wav_parser.html#a1ee605a1ff879658da60b464d9ed86c6',1,'daisy::WavParser']]],
+  ['fourcc_5fjunk_22',['FOURCC_JUNK',['../classdaisy_1_1_wav_parser.html#a6b3971a41b5ab970073ce8330600c9b2',1,'daisy::WavParser']]],
+  ['fourcc_5flist_23',['FOURCC_LIST',['../classdaisy_1_1_wav_parser.html#a4581b0de1f4fd11a145145e1d41b0b1f',1,'daisy::WavParser']]],
+  ['fourcc_5friff_24',['FOURCC_RIFF',['../classdaisy_1_1_wav_parser.html#aa6d17f27aee7cba1f24ef0729999528a',1,'daisy::WavParser']]],
+  ['fourcc_5fwave_25',['FOURCC_WAVE',['../classdaisy_1_1_wav_parser.html#aa2b0f0b1a18232d05a863298e429e02d',1,'daisy::WavParser']]],
+  ['fs_26',['fs',['../structdaisy_1_1_sai_handle_1_1_config.html#a535fc25eaea4947d3dc91b871b7534f9',1,'daisy::SaiHandle::Config']]],
+  ['funcbttnid_27',['funcBttnId',['../structdaisy_1_1_u_i_1_1_special_control_ids.html#a7c847ff1dd0f5557428fa2c949af3872',1,'daisy::UI::SpecialControlIds']]]
 ];
