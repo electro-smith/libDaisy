@@ -8,6 +8,9 @@ TODO
 #define DSY_UART_H /**< macro */
 #include "daisy_core.h"
 
+#if !UNIT_TEST
+#include "util/hal_map.h"
+#endif
 
 namespace daisy
 {
@@ -79,9 +82,9 @@ class UartHandler
 
         struct
         {
-            dsy_gpio_pin tx; /**< & */
-            dsy_gpio_pin rx; /**< & */
-        } pin_config;        /**< & */
+            Pin tx;   /**< & */
+            Pin rx;   /**< & */
+        } pin_config; /**< & */
 
         Config()
         {

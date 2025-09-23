@@ -5,11 +5,11 @@
 namespace daisy
 {
 /** Audio Recording Module
- ** 
- ** Record audio into a working buffer that is gradually written to a WAV file on an SD Card. 
  **
- ** Recordings are made with floating point input, and will be converted to the 
- ** specified bits per sample internally 
+ ** Record audio into a working buffer that is gradually written to a WAV file on an SD Card.
+ **
+ ** Recordings are made with floating point input, and will be converted to the
+ ** specified bits per sample internally
  **
  ** For now only 16-bit and 32-bit (signed int) formats are supported
  ** f32 and s24 formats will be added next
@@ -18,7 +18,7 @@ namespace daisy
  ** effect on the performance of the streaming behavior of the WavWriter.
  ** Memory use can be calculated as: (2 * transfer_size) bytes
  ** Performance optimal with sizes: 16384, 32768
- ** 
+ **
  ** To use:
  ** 1. Create a WavWriter<size> object (e.g. WavWriter<32768> writer)
  ** 2. Configure the settings as desired by creating a WavWriter<32768>::Config struct and setting the settings.
@@ -27,7 +27,7 @@ namespace daisy
  ** 5. Write to it within your audio callback using: writer.Sample(value)
  ** 6. Fill the Wav File on the SD Card with data from your main loop by running: writer.Write()
  ** 7. When finished with the recording finalize, and close the file with: writer.SaveFile();
- ** 
+ **
  ** */
 template <size_t transfer_size>
 class WavWriter
@@ -52,7 +52,7 @@ class WavWriter
         int32_t bitspersample;
     };
 
-    /** State of the internal Writing mechanism. 
+    /** State of the internal Writing mechanism.
      ** When the buffer is a certain amount full one section will write its contents
      ** while the other is still being written to. This is performed circularly
      ** so that audio will be uninterrupted during writing. */
@@ -87,12 +87,12 @@ class WavWriter
     }
 
     /** Records the current sample into the working buffer,
-     ** queues writes to media when necessary. 
-     ** 
+     ** queues writes to media when necessary.
+     **
      ** \param in should be a pointer to an array of samples */
     void Sample(const float *in)
     {
-        for(size_t i = 0; i < cfg_.channels; i++)
+        for(int i = 0; i < cfg_.channels; i++)
         {
             switch(cfg_.bitspersample)
             {
@@ -143,12 +143,30 @@ class WavWriter
     {
         unsigned int bw = 0;
         recording_      = false;
-        // We _should_ flush whatever's left in the transfer buff
-        // TODO: that.
+
+        // Flush remaining data in the transfer buffer
+        if(wptr_ > 0) // Check if there is unwritten data in the buffer
+        {
+            uint32_t remaining_size = wptr_ * (cfg_.bitspersample / 8);
+            // Ensure remaining_size does not exceed the buffer size
+            if(remaining_size > sizeof(transfer_buff))
+            {
+                remaining_size = sizeof(transfer_buff);
+            }
+            f_write(&fp_, transfer_buff, remaining_size, &bw);
+        }
+
         wavheader_.FileSize = CalcFileSize();
         f_lseek(&fp_, 0);
         f_write(&fp_, &wavheader_, sizeof(wavheader_), &bw);
         f_close(&fp_);
+
+        // Clear the transfer buffer and reset the buffer state
+        memset(transfer_buff, 0, sizeof(transfer_buff));
+        bstate_    = BufferState::IDLE;
+        wptr_      = 0;     // Reset the write pointer
+        num_samps_ = 0;     // Reset the number of samples
+        recording_ = false; // Ensure recording is inactive
     }
 
     /** Opens a file for writing. Writes the initial WAV Header, and gets ready for stream-based recording. */

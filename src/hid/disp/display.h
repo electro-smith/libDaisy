@@ -180,6 +180,11 @@ class OneBitGraphicsDisplay
     */
     virtual void Update() = 0;
 
+    /** 
+    Returns true if the Update has finished, used for chained DMA transfers
+    */
+    virtual bool UpdateFinished() = 0;
+
   protected:
     uint16_t currentX_;
     uint16_t currentY_;

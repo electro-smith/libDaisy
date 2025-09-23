@@ -9,7 +9,6 @@ per/gpio \
 per/sai \
 per/sdmmc \
 util/bsp_sd_diskio \
-util/hal_map \
 util/oled_fonts \
 util/sd_diskio \
 util/unique_id \
@@ -48,7 +47,6 @@ hid/rgb_led \
 hid/switch \
 hid/usb \
 hid/usb_midi \
-hid/wavplayer \
 hid/logger \
 hid/usb_descriptors \
 hid/usb_host \
@@ -62,6 +60,7 @@ per/spi \
 per/spiMultislave \
 per/tim \
 per/uart \
+per/pwm \
 ui/UI \
 ui/AbstractMenu \
 ui/FullScreenItemMenu \
@@ -236,6 +235,7 @@ Middlewares/Third_Party/tinyusb/src/portable/synopsys/dwc2/dcd_dwc2.c \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_bot.c \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc_scsi.c \
 Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Src/usbh_msc.c \
+Middlewares/ST/STM32_USB_Host_Library/Class/MIDI/Src/usbh_midi.c \
 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_core.c \
 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ctlreq.c \
 Middlewares/ST/STM32_USB_Host_Library/Core/Src/usbh_ioreq.c \
@@ -311,7 +311,8 @@ C_DEFS =  \
 -DDATA_IN_D2_SRAM
 # ^ added for easy startup access
 
-C_DEFS += -DCFG_TUSB_CONFIG_FILE=\"$(MODULE_DIR)/hid/tusb_config.h\"
+# File I/O Abstract Interface for FatFS
+C_DEFS += -DFILEIO_ENABLE_FATFS_READER -DCFG_TUSB_CONFIG_FILE=\"$(MODULE_DIR)/hid/tusb_config.h\"
 
 C_INCLUDES = \
 -I$(MODULE_DIR) \
@@ -326,6 +327,7 @@ C_INCLUDES = \
 -IMiddlewares/Patched/ST/STM32_USB_Device_Library/Class/CDC/Inc \
 -IMiddlewares/ST/STM32_USB_Host_Library/Core/Inc \
 -IMiddlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc \
+-IMiddlewares/ST/STM32_USB_Host_Library/Class/MIDI/Inc \
 -IMiddlewares/Third_Party/FatFs/src \
 -IMiddlewares/Third_Party/tinyusb/src \
 -IMiddlewares/Third_Party/tinyusb/src/device \

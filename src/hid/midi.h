@@ -36,8 +36,8 @@ class MidiUartTransport
     {
         UartHandler::Config::Mode       mode;
         UartHandler::Config::Peripheral periph;
-        dsy_gpio_pin                    rx;
-        dsy_gpio_pin                    tx;
+        Pin                             rx;
+        Pin                             tx;
 
         /** Pointer to buffer for DMA UART rx byte transfer in background.
          *
@@ -258,6 +258,7 @@ class MidiHandler
      */
     bool HasEvents() const { return event_q_.GetNumElements() > 0; }
 
+    bool RxActive() { return transport_.RxActive(); }
 
     /** Pops the oldest unhandled MidiEvent from the internal queue
     \return The event to be handled

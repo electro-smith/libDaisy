@@ -1,5 +1,5 @@
 #include "rng.h"
-#include "util/hal_map.h"
+#include "stm32h7xx_hal.h"
 #include "sys/system.h"
 
 #define RNG_TIMEOUT 100

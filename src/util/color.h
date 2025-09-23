@@ -1,4 +1,4 @@
-/* 
+/*
 TODO:
 - Add Blend(), Scale(), etc.
 - I'd also like to change the way the Color names are accessed.
@@ -23,7 +23,8 @@ namespace daisy
 class Color
 {
   public:
-    Color() {}
+    Color() : red_(0.f), green_(0.f), blue_(0.f) {}
+    Color(float r, float g, float b) : red_(r), green_(g), blue_(b) {}
     ~Color() {}
 
     /** List of colors that have a preset RGB value */
@@ -40,7 +41,7 @@ class Color
         LAST    /**< & */
     };
 
-    /** Initializes the Color with a given preset. 
+    /** Initializes the Color with a given preset.
     \param c Color to init to
     */
     void Init(PresetColor c);
@@ -66,6 +67,10 @@ class Color
     inline uint8_t Green8() const { return green_ * 255; }
     inline uint8_t Blue8() const { return blue_ * 255; }
 
+    inline void SetRed(const float amt) { red_ = amt; }
+    inline void SetGreen(const float amt) { green_ = amt; }
+    inline void SetBlue(const float amt) { blue_ = amt; }
+
     /** Returns a scaled color by a float */
     Color operator*(float scale)
     {
@@ -73,6 +78,35 @@ class Color
         c.Init(red_ * scale, green_ * scale, blue_ * scale);
         return c;
     }
+
+    /** Adds another color to this one, destructively saturating at 1 */
+    Color operator+(Color rhs)
+    {
+        float r_ = red_ + rhs.Red();
+        float g_ = green_ + rhs.Green();
+        float b_ = blue_ + rhs.Blue();
+        if(r_ > 1.f)
+            r_ = 1.f;
+        if(g_ > 1.f)
+            g_ = 1.f;
+        if(b_ > 1.f)
+            b_ = 1.f;
+        Color c(r_, g_, b_);
+        return c;
+    }
+
+    /** Returns a color that is blended between a and b */
+    static Color Blend(const Color a, const Color b, const float amt)
+    {
+        float scalar = amt > 1.f ? 1.f : amt < 0.f ? 0.f : amt;
+        float nr     = a.Red() + (b.Red() - a.Red()) * scalar;
+        float ng     = a.Green() + (b.Green() - a.Green()) * scalar;
+        float nb     = a.Blue() + (b.Blue() - a.Blue()) * scalar;
+
+        Color new_color(nr, ng, nb);
+        return new_color;
+    }
+
 
   private:
     static const float standard_colors[LAST][3];

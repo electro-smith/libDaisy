@@ -1,12 +1,13 @@
-#ifndef DSY_MSD
-#define DSY_MSD
+#ifndef USB_HOST_H
+#define USB_HOST_H
 
 #include <cstdint>
+#include "usbh_def.h"
 
 namespace daisy
 {
 /** Status of USB Host application
- * 
+ *
  */
 typedef enum
 {
@@ -16,7 +17,7 @@ typedef enum
     APPLICATION_DISCONNECT
 } ApplicationTypeDef;
 
-/** 
+/**
    @author Gabriel Ball
    @date September 16, 2021
 
@@ -25,10 +26,10 @@ typedef enum
 class USBHostHandle
 {
   public:
-    /** @brief return codes from the USB Processing 
+    /** @brief return codes from the USB Processing
      *  can be used to check the state of USB while running
      *  outside of what may be happening with the limited user callbacks.
-     * 
+     *
      *  At this time, these correlate directly to the ST Middleware
      *  USBH_StatusTypeDef codes
      */
@@ -39,7 +40,7 @@ class USBHostHandle
         FAIL,
         NOT_SUPPORTED,
         UNRECOVERED_ERROR,
-        ERROR_SPEED_UNKNOWN,
+        ERROR_SPEED_UNKNOWN
     };
 
     /** @brief User defineable callback for USB Connection */
@@ -48,25 +49,25 @@ class USBHostHandle
     /** @brief User defineable callback for USB Disconnection */
     typedef void (*DisconnectCallback)(void* data);
 
-    /** @brief User defineable callback upon completion of class initialization 
-     *  For example, when a USB drive is connected and the mass storage class 
+    /** @brief User defineable callback upon completion of class initialization
+     *  For example, when a USB drive is connected and the usb device class
      *  initialization has finished, this callback will fire.
-     * 
+     *
      *  @param userdata a pointer to some arbitrary data for use by the user.
      *   this is supplied in the Config struct. Can be used to avoid globals.
-     * 
+     *
      *  @todo At some point this may be replaced for individual callbacks
      *   for each supported USB Host class.
      */
     typedef void (*ClassActiveCallback)(void* userdata);
 
-    /** @brief User defineable callback for USB Unrecoverable Error 
+    /** @brief User defineable callback for USB Unrecoverable Error
      *  @todo add some sort of feedback about the type of error, etc.
      *   if possible
     */
     typedef void (*ErrorCallback)(void* data);
 
-    /** @brief Configuration structure for interfacing with MSD Driver */
+    /** @brief Configuration structure for interfacing with USB host Driver */
     struct Config
     {
         Config()
@@ -84,19 +85,29 @@ class USBHostHandle
         void*               userdata;
     };
 
+    /**
+     * Register a USB class
+     */
+    Result RegisterClass(USBH_ClassTypeDef* pClass);
+
     /** Initializes the USB drivers and starts timeout.
-     * 
+     *
      *  \param config Configuration struct for initialization
      */
-    Result Init(Config config);
+    Result Init(USBHostHandle::Config& config);
 
-    /** Deinitializes MSD-related peripherals
-     * 
+    /** Deinitializes USB host-related peripherals
+     *
      */
     Result Deinit();
 
+    /**
+     * Returns true if the specified class is active
+     */
+    bool IsActiveClass(USBH_ClassTypeDef* usbClass);
+
     /** Manages usb host functionality
-     * 
+     *
      */
     Result Process();
 
@@ -105,15 +116,25 @@ class USBHostHandle
 
     /** Returns true if a Mass Storage Device is connected
      *  and ready for communicaton
-     * 
+     *
      */
     bool GetReady();
 
     /** Run after the first `Process` call to detect if
      *  a device is present
-     * 
+     *
      */
     bool GetPresent();
+
+    /** Returns name of the connected devices if there is one
+     */
+    const char* GetProductName();
+
+    /** @brief Returns if the HAL detects that the port is enabled */
+    bool IsPortEnabled();
+
+    /** @brief Returns if the ST Middleware detects a connected device */
+    bool IsDeviceConnected();
 
     USBHostHandle() : pimpl_(nullptr) {}
     USBHostHandle(const USBHostHandle& other) = default;

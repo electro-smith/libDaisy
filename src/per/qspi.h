@@ -4,7 +4,8 @@
 #ifndef UNIT_TEST // for unit tests, a dummy implementation
 
 #include <cstdint>
-#include "daisy_core.h" // Added for dsy_gpio_pin typedef
+#include "daisy_core.h"
+#include "util/hal_map.h"
 
 #define DSY_QSPI_TEXT       \
     __attribute__((section( \
@@ -22,9 +23,9 @@ namespace daisy
 @{
 */
 
-/** 
- Driver for QSPI peripheral to interface with external flash memory. \n 
-    Currently supported QSPI Devices: \n 
+/**
+ Driver for QSPI peripheral to interface with external flash memory. \n
+    Currently supported QSPI Devices: \n
     * IS25LP080D
 */
 class QSPIHandle
@@ -36,10 +37,10 @@ class QSPIHandle
         ERR
     };
 
-    /** Indicates the current status of the module. 
+    /** Indicates the current status of the module.
          *  Warnings are indicated by a leading W.
          *  Errors are indicated by a leading E and cause an immediate exit.
-         * 
+         *
          *  \param GOOD - No errors have been reported.
          *  \param E_HAL_ERROR - HAL code did not return HAL_OK.
          *  \param E_SWITCHING_MODES - An error was encountered while switching QSPI peripheral mode.
@@ -64,12 +65,12 @@ class QSPIHandle
             DEVICE_LAST, /**< & */
         };
 
-        /** 
+        /**
         Modes of operation.
         Memory Mapped mode: QSPI configured so that the QSPI can be
         read from starting address 0x90000000. Writing is not
-        possible in this mode. \n 
-        Indirect Polling mode: Device driver enabled. 
+        possible in this mode. \n
+        Indirect Polling mode: Device driver enabled.
         */
         enum Mode
         {
@@ -81,19 +82,19 @@ class QSPIHandle
         //SCK,  CE# (active low)
         struct
         {
-            dsy_gpio_pin io0; /**< & */
-            dsy_gpio_pin io1; /**< & */
-            dsy_gpio_pin io2; /**< & */
-            dsy_gpio_pin io3; /**< & */
-            dsy_gpio_pin clk; /**< & */
-            dsy_gpio_pin ncs; /**< & */
+            Pin io0; /**< & */
+            Pin io1; /**< & */
+            Pin io2; /**< & */
+            Pin io3; /**< & */
+            Pin clk; /**< & */
+            Pin ncs; /**< & */
         } pin_config;
 
         Device device;
         Mode   mode;
     };
 
-    /** 
+    /**
         Initializes QSPI peripheral, and Resets, and prepares memory for access.
         \param config should be populated with the mode, device and pin_config before calling this function.
         \return Result::OK or Result::ERR
@@ -105,14 +106,14 @@ class QSPIHandle
 
     // Couldn't this just be called before anything else in init? That
     // would make manually calling it unnecessary.
-    /** 
+    /**
         Deinitializes the peripheral
         This should be called before reinitializing QSPI in a different mode.
         \return Result::OK or Result::ERR
         */
     Result DeInit();
 
-    /** 
+    /**
         Writes a single page to to the specified address on the QSPI chip.
         For IS25LP*, page size is 256 bytes.
         \param address Address to write to
@@ -122,8 +123,8 @@ class QSPIHandle
         */
     Result WritePage(uint32_t address, uint32_t size, uint8_t* buffer);
 
-    /** 
-        Writes data in buffer to to the QSPI. Starting at address to address+size 
+    /**
+        Writes data in buffer to to the QSPI. Starting at address to address+size
         \param address Address to write to
         \param size Buffer size
         \param buffer Buffer to write
@@ -131,7 +132,7 @@ class QSPIHandle
         */
     Result Write(uint32_t address, uint32_t size, uint8_t* buffer);
 
-    /** 
+    /**
         Erases the area specified on the chip.
         Erasures will happen by 4K, 32K or 64K increments.
         Smallest erase possible is 4kB at a time. (on IS25LP*)
@@ -141,9 +142,9 @@ class QSPIHandle
         */
     Result Erase(uint32_t start_addr, uint32_t end_addr);
 
-    /**  
-         Erases a single sector of the chip.  
-        TODO: Document the size of this function. 
+    /**
+         Erases a single sector of the chip.
+        TODO: Document the size of this function.
         \param address Address of sector to erase
         \return Result::OK or Result::ERR
         */
@@ -154,11 +155,11 @@ class QSPIHandle
      */
     Status GetStatus();
 
-    /** Returns a pointer to the actual memory used 
+    /** Returns a pointer to the actual memory used
      *  The memory at this address is read-only
      *  to write to it use the Write function.
-     * 
-     *  \param offset returns the pointer starting this 
+     *
+     *  \param offset returns the pointer starting this
      *                many bytes into the memory
     */
     void* GetData(uint32_t offset = 0);
@@ -184,9 +185,9 @@ class QSPIHandle
 
 namespace daisy
 {
-/** This is a dummy implementation for use in tests. 
- *  In your tests you can use this as a placeholder 
- *  for the physical volatile memory. 
+/** This is a dummy implementation for use in tests.
+ *  In your tests you can use this as a placeholder
+ *  for the physical volatile memory.
  *  This provides a block of memory that can be erased, or written
  *  to.
  */
@@ -199,7 +200,7 @@ class QSPIHandle
         ERR
     };
 
-    /** A mock-only function for resetting the memory to clean state 
+    /** A mock-only function for resetting the memory to clean state
      *  This should be called at the beginning of any test to ensure that
      *  data from a previous test does not interfere.
      */
@@ -243,7 +244,7 @@ class QSPIHandle
         return Result::OK;
     }
 
-    /** Returns a pointer to the actual memory used 
+    /** Returns a pointer to the actual memory used
     */
     static void* GetData(uint32_t offset = 0)
     {
@@ -254,7 +255,7 @@ class QSPIHandle
     }
 
     /** Returns the current size of the memory vector.
-     *  
+     *
      *  This is not in the hardware class its just for testing purposes
      */
     static size_t GetCurrentSize()

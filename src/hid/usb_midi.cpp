@@ -1,8 +1,16 @@
 #include "system.h"
 #include "usbd_cdc.h"
+#include "usbh_midi.h"
 #include "hid/usb_midi.h"
 #include <cassert>
 #include "tusb.h"
+
+extern "C"
+{
+    extern USBH_HandleTypeDef hUsbHostHS;
+}
+
+#define pUSB_Host &hUsbHostHS
 
 using namespace daisy;
 
@@ -13,6 +21,7 @@ class MidiUsbTransport::Impl
 
     void StartRx(MidiRxParseCallback callback, void* context)
     {
+        FlushRx();
         rx_active_      = true;
         parse_callback_ = callback;
         parse_context_  = context;

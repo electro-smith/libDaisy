@@ -3,6 +3,7 @@
 #define DSY_TIM_H
 
 #include <cstdint>
+#include "stm32h7xx_hal.h"
 
 namespace daisy
 {

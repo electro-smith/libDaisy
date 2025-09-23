@@ -124,6 +124,10 @@ uint8_t USBH_AllocPipe(USBH_HandleTypeDef *phost, uint8_t ep_addr)
   {
     phost->Pipes[pipe & 0xFU] = 0x8000U | ep_addr;
   }
+  else
+  {
+      USBH_ErrLog("Alloc error: no free pipe");
+  }
 
   return (uint8_t)pipe;
 }

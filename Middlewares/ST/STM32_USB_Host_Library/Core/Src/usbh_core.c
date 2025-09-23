@@ -186,6 +186,7 @@ USBH_StatusTypeDef USBH_DeInit(USBH_HandleTypeDef *phost)
   phost->device.is_ReEnumerated = 0U;
   phost->device.RstCnt = 0U;
   phost->device.EnumCnt = 0U;
+  phost->ClassNumber = 0U;
 
   if (phost->pData != NULL)
   {

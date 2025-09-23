@@ -3,6 +3,9 @@
 #include "per/gpio.h"
 #include "per/i2c.h"
 
+// This get defined in a public (ST) header file
+#undef SetBit
+
 namespace daisy
 {
 // Adapted from https://github.com/blemasle/arduino-mcp23017
@@ -89,13 +92,12 @@ class Mcp23017Transport
         uint8_t           i2c_address;
         void              Defaults(uint8_t addr)
         {
-            i2c_config.periph = I2CHandle::Config::Peripheral::
-                I2C_1; // i2c_1, i2c_2, i2c_3, i2c_4
-            i2c_config.speed = I2CHandle::Config::Speed::I2C_1MHZ; //I2C_400KHZ;
-            i2c_config.mode  = I2CHandle::Config::Mode::I2C_MASTER;
-            i2c_config.pin_config.scl = {DSY_GPIOB, 8};
-            i2c_config.pin_config.sda = {DSY_GPIOB, 9};
-            i2c_address               = addr; //0x22;//0x27;
+            i2c_config.periph         = I2CHandle::Config::Peripheral::I2C_1;
+            i2c_config.speed          = I2CHandle::Config::Speed::I2C_1MHZ;
+            i2c_config.mode           = I2CHandle::Config::Mode::I2C_MASTER;
+            i2c_config.pin_config.scl = Pin(PORTB, 8);
+            i2c_config.pin_config.sda = Pin(PORTB, 9);
+            i2c_address               = addr;
         }
     };
 
@@ -108,7 +110,7 @@ class Mcp23017Transport
 
     void Init(const Config& config)
     {
-        i2c_address_ = config.i2c_address << 1;
+        i2c_address_ = config.i2c_address;
         i2c_.Init(config.i2c_config);
     };
 
@@ -129,11 +131,8 @@ class Mcp23017Transport
     uint8_t ReadReg(MCPRegister reg)
     {
         uint8_t data[1] = {0x00};
-        //I2CHandle::Result ret =
         i2c_.ReadDataAtAddress(
             i2c_address_, static_cast<uint8_t>(reg), 1, data, 1, timeout);
-
-        //LOG("ReadReg ret %02X val:%02X", ret, data[0]);
         return data[0];
     }
 
@@ -166,8 +165,8 @@ class Mcp23X17
         Config config;
         config.transport_config.Defaults(addr);
         Init(config);
-        dsy_gpio_pin ipin = {DSY_GPIOD, 11};
-        CfgInterruptPin(ipin);
+
+        int_.Init(Pin(PORTD, 11), GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
     };
 
     void Init(const Config& config)
@@ -183,11 +182,11 @@ class Mcp23X17
         //INTPOL =     0 : interrupt active low
         transport.WriteReg(MCPRegister::IOCON, 0b01100110);
 
-        //enable all pull up resistors (will be effective for input pins only)
+        // Enable all pull up resistors (will be effective for input pins only)
         transport.WriteReg(MCPRegister::GPPU_A, 0xFF, 0xFF);
 
-        // enable interrupts on all pins
-        transport.WriteReg(MCPRegister::GPINTEN_A, 0xff, 0xff);
+        // Enable interrupts on all pins
+        transport.WriteReg(MCPRegister::GPINTEN_A, 0xFF, 0xFF);
         transport.WriteReg(MCPRegister::INTCON_A, 0x00, 0x00);
     };
 
@@ -324,6 +323,7 @@ class Mcp23X17
     {
         transport.WriteReg(MCPRegister::GPIO_A + port, value);
     }
+
     // TODO sacar cleanint
     void ClearInt(void)
     {
@@ -331,32 +331,7 @@ class Mcp23X17
         transport.ReadReg(MCPRegister::INTCAP_B);
     }
 
-    /** Initializes the interrupt pin.
-     *
-     * The interrupt pin is used to signal that an interrupt has occurred.
-     *
-     * @param cfg configuration for the interrupt pin
-     */
-    void CfgInterruptPin(dsy_gpio_pin ipin)
-    {
-        dsy_gpio cfg;
-        cfg.pin  = ipin;
-        cfg.mode = DSY_GPIO_MODE_INPUT;
-        cfg.pull = DSY_GPIO_PULLUP; // pullup is needed to avoid floating pin
-        dsy_gpio_init(&cfg);
-    }
-
-    static bool ReadInterruptPin(void)
-    {
-        dsy_gpio_pin ipin = {DSY_GPIOD, 11};
-        dsy_gpio     cfg;
-        cfg.pin = ipin;
-        //cfg.mode = DSY_GPIO_MODE_INPUT;
-        //cfg.pull = DSY_GPIO_PULLUP; // pullup is needed to avoid floating pin
-        //dsy_gpio_init(&cfg);
-        return dsy_gpio_read(&cfg);
-    }
-
+    bool ReadInterruptPin() { return int_.Read(); }
 
     /**
      * Reads pins state for a whole port.
@@ -440,6 +415,8 @@ class Mcp23X17
 
     uint16_t  pin_data;
     Transport transport;
+
+    GPIO int_;
 };
 using Mcp23017 = Mcp23X17<Mcp23017Transport>;
 } // namespace daisy

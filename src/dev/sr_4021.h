@@ -44,9 +44,16 @@ class ShiftRegister4021
     /** Configuration Structure for handling the pin setting of the device */
     struct Config
     {
-        dsy_gpio_pin clk;   /**< Clock pin to attach to pin 10 of device(s) */
-        dsy_gpio_pin latch; /**< Latch pin to attach to pin 9 of device(s) */
-        dsy_gpio_pin data[num_parallel]; /**< Data Pin(s) */
+        Pin clk;   /**< Clock pin to attach to pin 10 of device(s) */
+        Pin latch; /**< Latch pin to attach to pin 9 of device(s) */
+        Pin data[num_parallel]; /**< Data Pin(s) */
+
+        /**
+         * DelayTicks between these actions helps to ensure stable timing
+         * for the connected device(s).
+         * Each tick is approx. 4.16ns at CPUFreq 480MHz
+         */
+        uint32_t delay_ticks = 10;
     };
 
     ShiftRegister4021() {}
@@ -57,20 +64,11 @@ class ShiftRegister4021
     {
         config_ = cfg;
         // Init GPIO
-        clk_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        clk_.pull = DSY_GPIO_NOPULL;
-        clk_.pin  = cfg.clk;
-        dsy_gpio_init(&clk_);
-        latch_.mode = DSY_GPIO_MODE_OUTPUT_PP;
-        latch_.pull = DSY_GPIO_NOPULL;
-        latch_.pin  = cfg.latch;
-        dsy_gpio_init(&latch_);
+        clk_.Init(cfg.clk, GPIO::Mode::OUTPUT);
+        latch_.Init(cfg.latch, GPIO::Mode::OUTPUT);
         for(size_t i = 0; i < num_parallel; i++)
         {
-            data_[i].mode = DSY_GPIO_MODE_INPUT;
-            data_[i].pull = DSY_GPIO_NOPULL;
-            data_[i].pin  = cfg.data[i];
-            dsy_gpio_init(&data_[i]);
+            data_[i].Init(cfg.data[i], GPIO::Mode::INPUT);
         }
         // Init States
         for(size_t i = 0; i < kTotalStates; i++)
@@ -82,25 +80,24 @@ class ShiftRegister4021
     /** Reads the states of all pins on the connected device(s) */
     void Update()
     {
-        dsy_gpio_write(&clk_, 0);
-        System::DelayTicks(_TICK_DELAY * 10);
-        dsy_gpio_write(&latch_, 1);
-        System::DelayTicks(_TICK_DELAY * 10);
-        dsy_gpio_write(&latch_, 0);
-        System::DelayTicks(_TICK_DELAY * 40);
+        uint32_t del_ticks = config_.delay_ticks;
+        clk_.Write(false);
+        latch_.Write(true);
+        System::DelayTicks(del_ticks);
+        latch_.Write(false);
         uint32_t idx;
         for(size_t i = 0; i < 8 * num_daisychained; i++)
         {
-            dsy_gpio_write(&clk_, 0);
-            System::DelayTicks(_TICK_DELAY * 10);
+            clk_.Write(false);
+            System::DelayTicks(del_ticks);
             for(size_t j = 0; j < num_parallel; j++)
             {
                 idx = (8 * num_daisychained - 1) - i;
                 idx += (8 * num_daisychained * j);
-                states_[idx] = dsy_gpio_read(&data_[j]);
+                states_[idx] = data_[j].Read();
             }
-            dsy_gpio_write(&clk_, 1);
-            System::DelayTicks(_TICK_DELAY * 60);
+            clk_.Write(true);
+            System::DelayTicks(del_ticks);
         }
     }
 
@@ -118,10 +115,9 @@ class ShiftRegister4021
     static constexpr int kTotalStates = 8 * num_daisychained * num_parallel;
     Config               config_;
     bool                 states_[kTotalStates];
-    bool                 statesold_[kTotalStates];
-    dsy_gpio             clk_;
-    dsy_gpio             latch_;
-    dsy_gpio             data_[num_parallel];
+    GPIO                 clk_;
+    GPIO                 latch_;
+    GPIO                 data_[num_parallel];
 };
 
 } // namespace daisy

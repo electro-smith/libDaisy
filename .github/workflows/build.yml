@@ -31,11 +31,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
-        submodules: recursive    
+        submodules: recursive
     - name: Setup arm-none-eabi-gcc
-      uses: fiam/arm-none-eabi-gcc@v1
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
       with:
         release: '9-2019-q4'
     - name: Setup python
@@ -47,22 +47,56 @@ jobs:
     - name: Build Examples
       run: ./ci/build_examples.py -f core doc src tests Drivers
 
-  build-cmake:
+  build-cmake-gcc:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        version: [latest, '13.3.Rel1', '12.3.Rel1', '11.3.Rel1', '10.3-2021.10', '9-2020-q2']
+
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: recursive
+
     - name: Setup arm-none-eabi-gcc
-      uses: fiam/arm-none-eabi-gcc@v1
+      uses: carlosperate/arm-none-eabi-gcc-action@v1
       with:
-        release: '9-2019-q4'
-    - name: Setup cmake
-      uses: jwlawson/actions-setup-cmake@v1.9
-      with:
-        cmake-version: '3.20.x'
-    - name: Configure Library
-      run: cmake -S . -B build -G "Unix Makefiles" -D CMAKE_TOOLCHAIN_FILE=cmake/toolchains/stm32h750xx.cmake -D TOOLCHAIN_PREFIX=$(which arm-none-eabi-gcc | sed -e "s/bin\/arm-none-eabi-gcc//")
-    - name: Build Library
-      run: cmake --build build
+        release: ${{ matrix.version }}
+
+    - name: Setup CMake
+      uses: lukka/get-cmake@latest
+
+    - name: Configure
+      run: cmake -B build -G Ninja -D CMAKE_BUILD_TYPE=Release
+
+    - name: Build All
+      run: cmake --build build --target examples --verbose
+
+  build-cmake-llvm:
+      runs-on: ubuntu-latest
+
+      strategy:
+        matrix:
+          version: [latest, '19.1.1']
+
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install LLVM Embedded Toolchain for Arm
+        uses: stellar-aria/llvm-embedded-toolchain-for-arm-action@latest
+        with:
+          release: ${{ matrix.version }}
+
+      - name: Setup CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Configure
+        run: cmake -B build -G Ninja -D CMAKE_BUILD_TYPE=Release
+
+      - name: Build All
+        run: cmake --build build --target BootloaderBlink --verbose # TODO: make this build all examples
