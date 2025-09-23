@@ -89,9 +89,7 @@ void MidiUsbTransport::Impl::Tx(uint8_t cable_num, uint8_t* buffer, size_t size)
     // For basic Channel Voice messages (the most common case)
     if((buffer[0] & 0x80) && (buffer[0] & 0xF0) != 0xF0)
     {
-        uint8_t status_byte = buffer[0];
-        uint8_t channel     = buffer[0] & 0x0F;
-        uint8_t msg_type    = buffer[0] & 0xF0;
+        uint8_t msg_type = buffer[0] & 0xF0;
 
         // Determine message size based on status byte
         size_t msg_size = 3; // Most common case for note on/off, CC, etc.
@@ -185,7 +183,6 @@ void MidiUsbTransport::Impl::ProcessRx()
         // Read the full USB MIDI packet (always 4 bytes)
         if(tud_midi_packet_read(packet))
         {
-            uint8_t cable      = packet[0] >> 4;
             uint8_t code_index = packet[0] & 0x0F;
 
             // Skip invalid code indices (0x0, 0x1)
