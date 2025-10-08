@@ -57,8 +57,8 @@
 /* Disk status */
 static volatile DSTATUS Stat = STA_NOINIT;
 //static volatile  UINT  WriteStatus = 0, ReadStatus = 0;
-static uint32_t WriteStatus = 0;
-static uint32_t ReadStatus  = 0;
+static volatile uint32_t WriteStatus = 0;
+static volatile uint32_t ReadStatus  = 0;
 /* Private function prototypes -----------------------------------------------*/
 static DSTATUS SD_CheckStatus(BYTE lun);
 DSTATUS        SD_initialize(BYTE);
