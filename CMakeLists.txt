@@ -69,6 +69,8 @@ add_library(daisy STATIC
     ${MODULE_DIR}/hid/parameter.cpp
     ${MODULE_DIR}/hid/rgb_led.cpp
     ${MODULE_DIR}/hid/switch.cpp
+    ${MODULE_DIR}/hid/usb.cpp
+    ${MODULE_DIR}/hid/usb_descriptors.c
     ${MODULE_DIR}/hid/usb_host.cpp
     ${MODULE_DIR}/hid/usb_midi.cpp
     ${MODULE_DIR}/per/adc.cpp
@@ -102,6 +104,21 @@ add_library(daisy STATIC
     ${MODULE_DIR}/util/usbh_diskio.c
     ${MODULE_DIR}/util/WaveTableLoader.cpp
     core/startup_stm32h750xx.c
+
+    # TinyUSB sources (from Makefile lines 222-234)
+    Middlewares/Third_Party/tinyusb/src/tusb.c
+    Middlewares/Third_Party/tinyusb/src/class/cdc/cdc_device.c
+    Middlewares/Third_Party/tinyusb/src/class/cdc/cdc_host.c
+    Middlewares/Third_Party/tinyusb/src/class/cdc/cdc_rndis_host.c
+    Middlewares/Third_Party/tinyusb/src/class/midi/midi_device.c
+    Middlewares/Third_Party/tinyusb/src/class/audio/audio_device.c
+    Middlewares/Third_Party/tinyusb/src/class/msc/msc_device.c
+    Middlewares/Third_Party/tinyusb/src/class/msc/msc_host.c
+    Middlewares/Third_Party/tinyusb/src/common/tusb_fifo.c
+    Middlewares/Third_Party/tinyusb/src/device/usbd.c
+    Middlewares/Third_Party/tinyusb/src/device/usbd_control.c
+    Middlewares/Third_Party/tinyusb/src/portable/synopsys/dwc2/dwc2_common.c
+    Middlewares/Third_Party/tinyusb/src/portable/synopsys/dwc2/dcd_dwc2.c
 )
 
 target_include_directories(daisy PUBLIC
