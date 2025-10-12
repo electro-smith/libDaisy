@@ -45,13 +45,14 @@
 // Configuration mode
 // 0 : enumerated as CDC+MIDI (normal mode)
 // 1 : enumerated as CDC+MSC (programming/firmware update mode with logging)
-// For now, this is controlled by NOPIA_PROGRAMMING_MODE macro
-// TODO: Replace with actual button/GPIO check
-#ifdef NOPIA_PROGRAMMING_MODE
-static uint32_t usb_mode = 1;
-#else
-static uint32_t usb_mode = 0;
-#endif
+// This is set dynamically by the application before USB initialization
+static uint32_t usb_mode = 0; // Default to normal mode
+
+// Function to set USB mode - MUST be called before USB initialization
+void usb_set_mode(uint32_t mode)
+{
+    usb_mode = mode;
+}
 
 //--------------------------------------------------------------------+
 // Device Descriptors
