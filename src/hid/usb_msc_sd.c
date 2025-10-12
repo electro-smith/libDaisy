@@ -230,7 +230,6 @@ bool tud_msc_is_writable_cb(uint8_t lun)
 }
 
 // Callback invoked when received WRITE10 command.
-// Process data in buffer to disk's storage and return number of written bytes
 int32_t tud_msc_write10_cb(uint8_t  lun,
                            uint32_t lba,
                            uint32_t offset,
@@ -268,7 +267,10 @@ int32_t tud_msc_write10_cb(uint8_t  lun,
 
     // Wait for card to return to transfer state (ready for next operation)
     // This is critical for writes - card needs time to program flash
-    uint32_t timeout = HAL_GetTick() + 5000; // 5 second timeout for writes
+    // Use conservative timeout: base 1s + 50ms per block
+    // This assumes a reasonable Class 4-6 card or better
+    uint32_t timeout_ms = 1000 + (block_count * 50);
+    uint32_t timeout    = HAL_GetTick() + timeout_ms;
     while(HAL_SD_GetCardState(&hsd1) != HAL_SD_CARD_TRANSFER)
     {
         if(HAL_GetTick() > timeout)
