@@ -124,8 +124,8 @@ extern "C"
 #define CFG_TUD_MIDI_TX_BUFSIZE 64
 
 // MSC buffer size should be a multiple of (up to) 512 bytes for optimal performance
-// Set to 512 for standard block size
-#define CFG_TUD_MSC_EP_BUFSIZE 512
+// Larger buffers = fewer transactions = better performance
+#define CFG_TUD_MSC_EP_BUFSIZE 4096
 
 #ifdef __cplusplus
 }

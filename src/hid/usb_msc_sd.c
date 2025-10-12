@@ -207,10 +207,15 @@ int32_t tud_msc_read10_cb(uint8_t  lun,
         return -1;
     }
 
-    // Wait for transfer to complete
+    // Wait for card to return to transfer state (ready for next operation)
+    // This is needed because HAL_SD_ReadBlocks might return before card state machine completes
+    uint32_t timeout = HAL_GetTick() + 1000; // 1 second timeout
     while(HAL_SD_GetCardState(&hsd1) != HAL_SD_CARD_TRANSFER)
     {
-        // Timeout could be added here
+        if(HAL_GetTick() > timeout)
+        {
+            return -1; // Timeout
+        }
     }
 
     return (int32_t)bufsize;
@@ -254,17 +259,22 @@ int32_t tud_msc_write10_cb(uint8_t  lun,
 
     uint32_t block_count = bufsize / card_info.LogBlockSize;
 
-    // Write blocks to SD card
+    // Write blocks to SD card (blocking call - already waits internally)
     if(HAL_SD_WriteBlocks(&hsd1, buffer, lba, block_count, HAL_MAX_DELAY)
        != HAL_OK)
     {
         return -1;
     }
 
-    // Wait for transfer to complete
+    // Wait for card to return to transfer state (ready for next operation)
+    // This is critical for writes - card needs time to program flash
+    uint32_t timeout = HAL_GetTick() + 5000; // 5 second timeout for writes
     while(HAL_SD_GetCardState(&hsd1) != HAL_SD_CARD_TRANSFER)
     {
-        // Timeout could be added here
+        if(HAL_GetTick() > timeout)
+        {
+            return -1; // Timeout
+        }
     }
 
     return (int32_t)bufsize;
