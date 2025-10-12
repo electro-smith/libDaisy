@@ -43,8 +43,8 @@
 #define USB_DEV_BCD 0x0100 // v1.0
 
 // Configuration mode
-// 0 : enumerated as CDC/MIDI (normal mode)
-// 1 : enumerated as MSC (programming/firmware update mode)
+// 0 : enumerated as CDC+MIDI (normal mode)
+// 1 : enumerated as CDC+MSC (programming/firmware update mode with logging)
 // For now, this is controlled by NOPIA_PROGRAMMING_MODE macro
 // TODO: Replace with actual button/GPIO check
 #ifdef NOPIA_PROGRAMMING_MODE
@@ -81,18 +81,21 @@ tusb_desc_device_t const desc_device_0 = {
     .bNumConfigurations = 0x01,
 };
 
-// Device descriptor for mode 1 (MSC only)
+// Device descriptor for mode 1 (CDC + MSC)
 tusb_desc_device_t const desc_device_1 = {
     .bLength         = sizeof(tusb_desc_device_t),
     .bDescriptorType = TUSB_DESC_DEVICE,
     .bcdUSB          = USB_BCD,
-    .bDeviceClass    = 0,
-    .bDeviceSubClass = 0,
-    .bDeviceProtocol = 0,
+
+    // Use Interface Association Descriptor (IAD) for CDC
+    // As required by USB Specs IAD's subclass must be common class (2) and protocol must be IAD (1)
+    .bDeviceClass    = TUSB_CLASS_MISC,
+    .bDeviceSubClass = MISC_SUBCLASS_COMMON,
+    .bDeviceProtocol = MISC_PROTOCOL_IAD,
 
     .bMaxPacketSize0 = CFG_TUD_ENDPOINT0_SIZE,
     .idVendor        = USB_VID,
-    .idProduct       = USB_PID + 10, // Different PID for MSC mode
+    .idProduct       = USB_PID + 10, // Different PID for CDC+MSC mode
     .bcdDevice       = USB_DEV_BCD,
 
     .iManufacturer = 0x01,
@@ -123,10 +126,12 @@ enum
     ITF_0_NUM_TOTAL
 };
 
-// Mode 1: MSC only
+// Mode 1: CDC + MSC (programming/firmware update mode with logging)
 enum
 {
-    ITF_1_NUM_MSC = 0,
+    ITF_1_NUM_CDC = 0,
+    ITF_1_NUM_CDC_DATA,
+    ITF_1_NUM_MSC,
     ITF_1_NUM_TOTAL
 };
 
@@ -143,7 +148,8 @@ enum
      + TUD_MIDI_MULTI_DESC_LEN(CFG_TUD_MIDI_NUMCABLES_IN,   \
                                CFG_TUD_MIDI_NUMCABLES_OUT))
 
-#define CONFIG_1_TOTAL_LEN (TUD_CONFIG_DESC_LEN + TUD_MSC_DESC_LEN)
+#define CONFIG_1_TOTAL_LEN \
+    (TUD_CONFIG_DESC_LEN + TUD_CDC_DESC_LEN + TUD_MSC_DESC_LEN)
 
 // Endpoint numbers for mode 0 (CDC + MIDI)
 #define EPNUM_0_CDC_NOTIF 0x81
@@ -153,9 +159,13 @@ enum
 #define EPNUM_0_MIDI_OUT 0x03
 #define EPNUM_0_MIDI_IN 0x83
 
-// Endpoint numbers for mode 1 (MSC)
-#define EPNUM_1_MSC_OUT 0x01
-#define EPNUM_1_MSC_IN 0x81
+// Endpoint numbers for mode 1 (CDC + MSC)
+#define EPNUM_1_CDC_NOTIF 0x81
+#define EPNUM_1_CDC_OUT 0x02
+#define EPNUM_1_CDC_IN 0x82
+
+#define EPNUM_1_MSC_OUT 0x03
+#define EPNUM_1_MSC_IN 0x83
 
 // Configuration descriptor for mode 0 (CDC + MIDI)
 uint8_t const desc_configuration_0[] = {
@@ -182,12 +192,22 @@ uint8_t const desc_configuration_0[] = {
                               CFG_TUD_MIDI_NUMCABLES_OUT),
 };
 
-// Configuration descriptor for mode 1 (MSC)
+// Configuration descriptor for mode 1 (CDC + MSC)
 uint8_t const desc_configuration_1[] = {
     // Config number, interface count, string index, total length, attribute, power in mA
     TUD_CONFIG_DESCRIPTOR(1, ITF_1_NUM_TOTAL, 0, CONFIG_1_TOTAL_LEN, 0x00, 100),
 
-    // Interface number, string index, EP Out & EP In address, EP size
+    // CDC: Interface number, string index, EP notification address and size, EP
+    // data address (out, in) and size.
+    TUD_CDC_DESCRIPTOR(ITF_1_NUM_CDC,
+                       4,
+                       EPNUM_1_CDC_NOTIF,
+                       8,
+                       EPNUM_1_CDC_OUT,
+                       EPNUM_1_CDC_IN,
+                       64),
+
+    // MSC: Interface number, string index, EP Out & EP In address, EP size
     TUD_MSC_DESCRIPTOR(ITF_1_NUM_MSC, 0, EPNUM_1_MSC_OUT, EPNUM_1_MSC_IN, 64),
 };
 
