@@ -55,6 +55,26 @@ static bool ensure_sd_ready(void)
 {
     if(!sd_initialized)
     {
+        // Initialize the SD card hardware
+        // This is needed for USB MSC mode where FatFS doesn't initialize it
+        if(HAL_SD_Init(&hsd1) != HAL_OK)
+        {
+            return false;
+        }
+
+        // Configure wide bus operation (4-bit mode if configured)
+        if(HAL_SD_ConfigWideBusOperation(&hsd1, hsd1.Init.BusWide) != HAL_OK)
+        {
+            return false;
+        }
+
+        // Configure speed mode (AUTO will select best supported speed)
+        if(HAL_SD_ConfigSpeedBusOperation(&hsd1, SDMMC_SPEED_MODE_AUTO)
+           != HAL_OK)
+        {
+            return false;
+        }
+
         // Get SD card information
         if(HAL_SD_GetCardInfo(&hsd1, &card_info) != HAL_OK)
         {
