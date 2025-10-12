@@ -49,6 +49,7 @@ hid/usb \
 hid/usb_midi \
 hid/logger \
 hid/usb_descriptors \
+hid/usb_msc_sd \
 hid/usb_host \
 per/adc \
 per/dac \
