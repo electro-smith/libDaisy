@@ -26,6 +26,7 @@
 
 #include "bsp/board_api.h"
 #include "tusb.h"
+#include "usb_msc_sd.h"
 
 #if CFG_TUD_MSC
 
@@ -44,6 +45,10 @@ static bool ejected = false;
 // SD card info
 static HAL_SD_CardInfoTypeDef card_info;
 static bool                   sd_initialized = false;
+
+// User callbacks
+static usb_msc_callback_t unmount_callback    = NULL;
+static usb_msc_callback_t disconnect_callback = NULL;
 
 // Initialize SD card if not already done
 static bool ensure_sd_ready(void)
@@ -150,8 +155,14 @@ bool tud_msc_start_stop_cb(uint8_t lun,
         }
         else
         {
-            // unload disk storage
+            // unload disk storage (eject)
             ejected = true;
+
+            // Call the unmount callback when the drive is ejected
+            if(unmount_callback)
+            {
+                unmount_callback();
+            }
         }
     }
 
@@ -301,6 +312,28 @@ int32_t tud_msc_scsi_cb(uint8_t       lun,
     }
 
     return (int32_t)resplen;
+}
+
+// Public API for setting callbacks
+void usb_msc_set_unmount_callback(usb_msc_callback_t callback)
+{
+    unmount_callback = callback;
+}
+
+void usb_msc_set_disconnect_callback(usb_msc_callback_t callback)
+{
+    disconnect_callback = callback;
+}
+
+// Called when USB device is suspended/disconnected
+void tud_suspend_cb(bool remote_wakeup_en)
+{
+    (void)remote_wakeup_en;
+
+    if(disconnect_callback)
+    {
+        disconnect_callback();
+    }
 }
 
 #endif // CFG_TUD_MSC
