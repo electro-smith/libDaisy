@@ -235,9 +235,15 @@ endif
 # LDFLAGS
 #######################################
 # libraries
+
 LIBS += -ldaisy -lc -lm -lnosys
+
+ifdef LIBDAISY_BUILD_DIR
+LIBDIR += -L$(LIBDAISY_BUILD_DIR)
+else
 LIBDIR += -L$(LIBDAISY_DIR)/build
 #LIBDIR = -L./VisualGDB/Release
+endif
 
 ifdef DAISYSP_DIR
 LIBS += -ldaisysp
