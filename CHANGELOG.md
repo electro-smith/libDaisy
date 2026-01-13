@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Bug Fixes
+
+- SDMMC: fix an issue where status flags were optimized out, resulting in very long while loops
+
 ## v8.0.0
 
 ### Features
