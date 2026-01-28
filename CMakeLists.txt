@@ -117,7 +117,7 @@ target_link_libraries(daisy PUBLIC
 # There is a abstract `IReader` interface that allows that can be swappped out
 # for other i/o, but libDaisy assumes FatFS will always be present.
 # It may make sense for this to move to better facillitate testing, etc.
-add_compile_definitions(FILEIO_ENABLE_FATFS_READER)
+target_compile_definitions(daisy PUBLIC FILEIO_ENABLE_FATFS_READER)
 
 target_compile_options(daisy PRIVATE
     -Wall
