@@ -75,7 +75,7 @@ class Mpr121I2CTransport
 
     bool ReadDataAtAddress(uint16_t address, uint8_t *data, uint16_t size) {
         return I2CHandle::Result::OK
-        != i2c_.ReadDataAtAddress(config_.dev_addr, address, 1, data, size, 10);
+               != i2c_.ReadDataAtAddress(config_.dev_addr, address, 1, data, size, 10);
     }
 
   private:
