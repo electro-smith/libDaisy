@@ -73,6 +73,11 @@ class Mpr121I2CTransport
                != i2c_.ReceiveBlocking(config_.dev_addr, data, size, 10);
     }
 
+    bool ReadDataAtAddress(uint16_t address, uint8_t *data, uint16_t size) {
+        return I2CHandle::Result::OK
+        != i2c_.ReadDataAtAddress(config_.dev_addr, address, 1, data, size, 10);
+    }
+
   private:
     I2CHandle i2c_;
     Config    config_;
@@ -231,8 +236,7 @@ class Mpr121
     uint8_t ReadRegister8(uint8_t reg)
     {
         uint8_t buff;
-        SetTransportErr(transport_.Write(&reg, 1));
-        SetTransportErr(transport_.Read(&buff, 1));
+        SetTransportErr(transport_.ReadDataAtAddress(reg, &buff, 1));
 
         return buff;
     }
@@ -244,8 +248,7 @@ class Mpr121
     uint16_t ReadRegister16(uint8_t reg)
     {
         uint16_t buff;
-        SetTransportErr(transport_.Write(&reg, 1));
-        SetTransportErr(transport_.Read((uint8_t *)&buff, 2));
+        SetTransportErr(transport_.ReadDataAtAddress(reg, (uint8_t *)(&buff), 2));
 
         return buff;
     }
