@@ -128,7 +128,7 @@ class Mpr121
 
         uint8_t c = ReadRegister8(MPR121_CONFIG2);
 
-        if (c != 0x24)
+        if(c != 0x24)
             return ERR;
 
         SetThresholds(config_.touch_threshold, config_.release_threshold);
@@ -267,10 +267,11 @@ class Mpr121
 
         if(stop_required)
         {
-            ecr_backup = ReadRegister8(MPR121_ECR);
+            ecr_backup   = ReadRegister8(MPR121_ECR);
             uint8_t zero = 0x00;
             // clear this register to set stop mode
-            SetTransportErr(transport_.WriteDataAtAddress(MPR121_ECR, &zero, 1));
+            SetTransportErr(
+                transport_.WriteDataAtAddress(MPR121_ECR, &zero, 1));
         }
 
         SetTransportErr(transport_.WriteDataAtAddress(reg, &value, 1));
@@ -278,7 +279,8 @@ class Mpr121
         if(stop_required)
         {
             // write back the previous set ECR settings
-            SetTransportErr(transport_.WriteDataAtAddress(MPR121_ECR, &ecr_backup, 1));
+            SetTransportErr(
+                transport_.WriteDataAtAddress(MPR121_ECR, &ecr_backup, 1));
         }
     }
 
