@@ -59,6 +59,7 @@ static volatile DSTATUS Stat = STA_NOINIT;
 //static volatile  UINT  WriteStatus = 0, ReadStatus = 0;
 static volatile uint32_t WriteStatus = 0;
 static volatile uint32_t ReadStatus  = 0;
+static volatile uint32_t SdErrorFlag = 0;
 /* Private function prototypes -----------------------------------------------*/
 static DSTATUS SD_CheckStatus(BYTE lun);
 DSTATUS        SD_initialize(BYTE);
@@ -139,6 +140,7 @@ DRESULT SD_read(BYTE lun, BYTE *buff, DWORD sector, UINT count)
 {
     DRESULT res = RES_ERROR;
     ReadStatus  = 0;
+    SdErrorFlag = 0;
     uint32_t timeout;
 #if(ENABLE_SD_DMA_CACHE_MAINTENANCE == 1)
     uint32_t alignedAddr;
@@ -151,9 +153,9 @@ DRESULT SD_read(BYTE lun, BYTE *buff, DWORD sector, UINT count)
     {
         /* Wait that the reading process is completed or a timeout occurs */
         timeout = HAL_GetTick();
-        while((ReadStatus == 0) && ((HAL_GetTick() - timeout) < SD_TIMEOUT)) {}
-        /* incase of a timeout return error */
-        if(ReadStatus == 0)
+        while((ReadStatus == 0) && (SdErrorFlag == 0) && ((HAL_GetTick() - timeout) < SD_TIMEOUT)) {}
+        /* incase of a timeout or error return error */
+        if(ReadStatus == 0 || SdErrorFlag != 0)
         {
             res = RES_ERROR;
         }
@@ -196,6 +198,7 @@ DRESULT SD_write(BYTE lun, const BYTE *buff, DWORD sector, UINT count)
 {
     DRESULT res = RES_ERROR;
     WriteStatus = 0;
+    SdErrorFlag = 0;
     uint32_t timeout;
 #if(ENABLE_SD_DMA_CACHE_MAINTENANCE == 1)
     uint32_t alignedAddr;
@@ -221,9 +224,9 @@ DRESULT SD_write(BYTE lun, const BYTE *buff, DWORD sector, UINT count)
     {
         /* Wait that writing process is completed or a timeout occurs */
         timeout = HAL_GetTick();
-        while((WriteStatus == 0) && ((HAL_GetTick() - timeout) < SD_TIMEOUT)) {}
-        /* incase of a timeout return error */
-        if(WriteStatus == 0)
+        while((WriteStatus == 0) && (SdErrorFlag == 0) && ((HAL_GetTick() - timeout) < SD_TIMEOUT)) {}
+        /* incase of a timeout or error return error */
+        if(WriteStatus == 0 || SdErrorFlag != 0)
         {
             res = RES_ERROR;
         }
@@ -318,6 +321,15 @@ void BSP_SD_ReadCpltCallback(void)
 {
     ReadStatus = 1;
     //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, 1);
+}
+
+/**
+  * @brief SD Error callback
+  * @retval None
+  */
+void BSP_SD_ErrorCallback(void)
+{
+    SdErrorFlag = 1;
 }
 
 // Interrupts -- Not sure these belong here or elsewhere yet.

@@ -114,10 +114,12 @@ uint8_t BSP_SD_IsDetected(void);
 
   Abort the callback */
 void BSP_SD_AbortCallback(void);
-/** Read complete callback */
-void BSP_SD_WriteCpltCallback(void);
 /** Write complete callback */
+void BSP_SD_WriteCpltCallback(void);
+/** Read complete callback */
 void BSP_SD_ReadCpltCallback(void);
+/** Error callback */
+void BSP_SD_ErrorCallback(void);
 
 #endif
 /** @} */
