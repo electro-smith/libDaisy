@@ -683,7 +683,7 @@ class Icm20948
     */
     uint8_t ReadExternalRegister(uint8_t slv_addr, uint8_t reg_addr)
     {
-        return AuxillaryRegisterTransaction(true, slv_addr, reg_addr);
+        return AuxillaryRegisterTransaction(true, slv_addr, reg_addr, 0);
     }
 
     /** Write a single byte to a given register address for an I2C slave device on the auxiliary I2C bus
