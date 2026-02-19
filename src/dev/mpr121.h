@@ -128,7 +128,8 @@ class Mpr121
 
         uint8_t c = ReadRegister8(MPR121_CONFIG2);
 
-        if (c != 0x24) return ERR;
+        if (c != 0x24)
+            return ERR;
 
         SetThresholds(config_.touch_threshold, config_.release_threshold);
         WriteRegister(MPR121_MHDR, 0x01);
