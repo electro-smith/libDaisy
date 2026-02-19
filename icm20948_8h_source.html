@@ -810,7 +810,7 @@ $(function(){initNavTree('icm20948_8h_source.html',''); initResizable(true); });
 <div class="foldopen" id="foldopen00684" data-start="{" data-end="}">
 <div class="line"><a id="l00684" name="l00684"></a><span class="lineno"><a class="line" href="classdaisy_1_1_icm20948.html#a4fda80b24df448f0648c1a9fe5179a8d">  684</a></span>    uint8_t <a class="code hl_function" href="classdaisy_1_1_icm20948.html#a4fda80b24df448f0648c1a9fe5179a8d">ReadExternalRegister</a>(uint8_t slv_addr, uint8_t reg_addr)</div>
 <div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>    {</div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classdaisy_1_1_icm20948.html#ab042c3a9740d300784bcdb8e0ecdae61">AuxillaryRegisterTransaction</a>(<span class="keyword">true</span>, slv_addr, reg_addr);</div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classdaisy_1_1_icm20948.html#ab042c3a9740d300784bcdb8e0ecdae61">AuxillaryRegisterTransaction</a>(<span class="keyword">true</span>, slv_addr, reg_addr, 0);</div>
 <div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>    }</div>
 </div>
 <div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span> </div>
