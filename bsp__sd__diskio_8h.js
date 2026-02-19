@@ -12,6 +12,7 @@ var bsp__sd__diskio_8h =
     [ "SD_TRANSFER_OK", "group__utility.html#gac5d3734fc73a394772363a2e88cf3aac", null ],
     [ "BSP_SD_AbortCallback", "group__utility.html#ga0a395393d1522c9844c525f0dc61fe3e", null ],
     [ "BSP_SD_Erase", "group__utility.html#gaffac80d97e56403e94031344d356ea67", null ],
+    [ "BSP_SD_ErrorCallback", "group__utility.html#ga56c21245ddc9867626befb5b15130d43", null ],
     [ "BSP_SD_GetCardInfo", "group__utility.html#ga8d8655b2e25c2da93fcb1cd9a493bdd4", null ],
     [ "BSP_SD_GetCardState", "group__utility.html#gab53d88c4f6fe22d4dedae5aae9f77f22", null ],
     [ "BSP_SD_Init", "group__utility.html#ga3d12270ffa22c857ec7a0fd9893bf881", null ],
