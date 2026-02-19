@@ -60,23 +60,18 @@ class Mpr121I2CTransport
     }
 
     /** \return Did the transaction error? i.e. Return true if error, false if ok */
-    bool Write(uint8_t *data, uint16_t size)
-    {
-        return I2CHandle::Result::OK
-               != i2c_.TransmitBlocking(config_.dev_addr, data, size, 10);
-    }
-
-    /** \return Did the transaction error? i.e. Return true if error, false if ok */
-    bool Read(uint8_t *data, uint16_t size)
-    {
-        return I2CHandle::Result::OK
-               != i2c_.ReceiveBlocking(config_.dev_addr, data, size, 10);
-    }
-
-    bool ReadDataAtAddress(uint16_t address, uint8_t *data, uint16_t size)
+    bool ReadDataAtAddress(uint8_t address, uint8_t *data, uint16_t size)
     {
         return I2CHandle::Result::OK
                != i2c_.ReadDataAtAddress(
+                   config_.dev_addr, address, 1, data, size, 10);
+    }
+
+    /** \return Did the transaction error? i.e. Return true if error, false if ok */
+    bool WriteDataAtAddress(uint8_t address, uint8_t *data, uint16_t size)
+    {
+        return I2CHandle::Result::OK
+               != i2c_.WriteDataAtAddress(
                    config_.dev_addr, address, 1, data, size, 10);
     }
 
@@ -262,36 +257,27 @@ class Mpr121
     {
         // MPR121 must be put in Stop Mode to write to most registers
         bool stop_required = true;
-
-        // first get the current set value of the MPR121_ECR register
-        uint8_t ecr_reg = MPR121_ECR;
-        uint8_t buff[2] = {ecr_reg, 0x00};
-
-        SetTransportErr(transport_.Write(buff, 1));
-
-        uint8_t ecr_backup;
-        SetTransportErr(transport_.Read(&ecr_backup, 1));
         if((reg == MPR121_ECR) || ((0x73 <= reg) && (reg <= 0x7A)))
         {
             stop_required = false;
         }
 
+        uint8_t ecr_backup;
+
         if(stop_required)
         {
+            ecr_backup = ReadRegister8(MPR121_ECR);
+            uint8_t zero = 0x00;
             // clear this register to set stop mode
-            SetTransportErr(transport_.Write(buff, 2));
+            SetTransportErr(transport_.WriteDataAtAddress(MPR121_ECR, &zero, 1));
         }
 
-        buff[0] = reg;
-        buff[1] = value;
-        SetTransportErr(transport_.Write(buff, 2));
+        SetTransportErr(transport_.WriteDataAtAddress(reg, &value, 1));
 
         if(stop_required)
         {
             // write back the previous set ECR settings
-            buff[0] = ecr_reg;
-            buff[1] = ecr_backup;
-            SetTransportErr(transport_.Write(buff, 2));
+            SetTransportErr(transport_.WriteDataAtAddress(MPR121_ECR, &ecr_backup, 1));
         }
     }
 
