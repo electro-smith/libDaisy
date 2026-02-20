@@ -1,4 +1,4 @@
-/** Example of writing a "Hello World" to a text file on an SD Card 
+/** Example of writing a "Hello World" to a text file on an SD Card
  *  If the SD Card is present, and writing is successful the onboard LED will blink rapidly.
  *  Otherwise, the SD Card will blink once every two seconds.
  */
@@ -25,7 +25,7 @@ int main(void)
     /** Initialize our hardware */
     hw.Init();
 
-    /** Initialize the SDMMC Hardware 
+    /** Initialize the SDMMC Hardware
      *  For this example we'll use:
      *  Medium (25MHz), 4-bit, w/out power save settings
      */
@@ -41,12 +41,13 @@ int main(void)
     /** Get the reference to the FATFS Filesystem for use in mounting the hardware. */
     FATFS& fs = fsi.GetSDFileSystem();
 
-    /** default to a known error 
+    /** default to a known error
      *  by the end of the next if-statement it should be FR_OK
      */
-    FRESULT res = FR_NO_FILESYSTEM;
+    FRESULT write_res = FR_NO_FILESYSTEM;
+    FRESULT close_res = FR_NO_FILESYSTEM;
 
-    /** mount the filesystem to the root directory 
+    /** mount the filesystem to the root directory
      *  fsi.GetSDPath can be used when mounting multiple filesystems on different media
      */
     if(f_mount(&fs, "/", 0) == FR_OK)
@@ -56,8 +57,8 @@ int main(void)
         {
             FixedCapStr<20> str = "Hello World!";
             UINT            bytes_written;
-            res = f_write(&file, str.Cstr(), str.Size(), &bytes_written);
-            f_close(&file);
+            write_res = f_write(&file, str.Cstr(), str.Size(), &bytes_written);
+            close_res = f_close(&file);
         }
     }
 
@@ -67,7 +68,8 @@ int main(void)
     {
         /** Very basic blink to indicate success or failure */
         uint32_t blink_rate;
-        if(res == FR_OK)
+        auto success = write_res == FR_OK && close_res == FR_OK;
+        if(success)
             blink_rate = 125;
         else
             blink_rate = 1000;
