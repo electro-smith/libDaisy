@@ -130,10 +130,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae9488da639f811e781e6180cc188b426"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4038e5bc1ba98d6a0968f43dc5c8259b" id="r_a4038e5bc1ba98d6a0968f43dc5c8259b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4038e5bc1ba98d6a0968f43dc5c8259b">Init</a> (<a class="el" href="structdaisy_1_1_mpr121_i2_c_transport_1_1_config.html">Config</a> config)</td></tr>
 <tr class="separator:a4038e5bc1ba98d6a0968f43dc5c8259b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afccd8ca8d49cb011e60d4848fd620aa5" id="r_afccd8ca8d49cb011e60d4848fd620aa5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afccd8ca8d49cb011e60d4848fd620aa5">Write</a> (uint8_t *data, uint16_t size)</td></tr>
-<tr class="separator:afccd8ca8d49cb011e60d4848fd620aa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa95902f995e64b0e2d44cfef43ef290e" id="r_aa95902f995e64b0e2d44cfef43ef290e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa95902f995e64b0e2d44cfef43ef290e">Read</a> (uint8_t *data, uint16_t size)</td></tr>
-<tr class="separator:aa95902f995e64b0e2d44cfef43ef290e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a981fb177bc6b541172eda3d6e1fa97d3" id="r_a981fb177bc6b541172eda3d6e1fa97d3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a981fb177bc6b541172eda3d6e1fa97d3">ReadDataAtAddress</a> (uint8_t address, uint8_t *data, uint16_t size)</td></tr>
+<tr class="separator:a981fb177bc6b541172eda3d6e1fa97d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f6bbd66dc44cdafc985a35c0c5fc85e" id="r_a9f6bbd66dc44cdafc985a35c0c5fc85e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f6bbd66dc44cdafc985a35c0c5fc85e">WriteDataAtAddress</a> (uint8_t address, uint8_t *data, uint16_t size)</td></tr>
+<tr class="separator:a9f6bbd66dc44cdafc985a35c0c5fc85e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a38f985567ef23c8f1e03d829a6fb5aaf" name="a38f985567ef23c8f1e03d829a6fb5aaf"></a>
@@ -213,8 +213,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa95902f995e64b0e2d44cfef43ef290e" name="aa95902f995e64b0e2d44cfef43ef290e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa95902f995e64b0e2d44cfef43ef290e">&#9670;&#160;</a></span>Read()</h2>
+<a id="a981fb177bc6b541172eda3d6e1fa97d3" name="a981fb177bc6b541172eda3d6e1fa97d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a981fb177bc6b541172eda3d6e1fa97d3">&#9670;&#160;</a></span>ReadDataAtAddress()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -223,8 +223,13 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool daisy::Mpr121I2CTransport::Read </td>
+          <td class="memname">bool daisy::Mpr121I2CTransport::ReadDataAtAddress </td>
           <td>(</td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>address</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
         </tr>
         <tr>
@@ -243,8 +248,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afccd8ca8d49cb011e60d4848fd620aa5" name="afccd8ca8d49cb011e60d4848fd620aa5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afccd8ca8d49cb011e60d4848fd620aa5">&#9670;&#160;</a></span>Write()</h2>
+<a id="a9f6bbd66dc44cdafc985a35c0c5fc85e" name="a9f6bbd66dc44cdafc985a35c0c5fc85e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f6bbd66dc44cdafc985a35c0c5fc85e">&#9670;&#160;</a></span>WriteDataAtAddress()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,8 +258,13 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool daisy::Mpr121I2CTransport::Write </td>
+          <td class="memname">bool daisy::Mpr121I2CTransport::WriteDataAtAddress </td>
           <td>(</td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>address</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">uint8_t *</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
         </tr>
         <tr>
