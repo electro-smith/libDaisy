@@ -2,9 +2,32 @@
 
 ## Unreleased
 
+## v8.1.0
+
+### Features
+
+- Audio Files: Reworked WavPlayer, added helpful utilies for working with WAV files (WavParser, FileTable), and added examples for demonstrating their usage.
+- SDMMC: HAL_SD_ErrorCallback is now being handled to help with error handling
+  - **note**: this may cause things that would previously _stall_ indefinitely to now cause an error. Often, the error will occur in `f_sync()` or `f_close()` since that is where the disk i/o tends to occur. The SDMMC_HelloWorld example has been updated to better handle these errors.
+- MPR121: Added demonstration program using MPR121 to examples.
+
 ### Bug Fixes
 
 - SDMMC: fix an issue where status flags were optimized out, resulting in very long while loops
+- CMake: The platform definition for the new FileReader in CMake is now properly set up for use in targets _outside_ of libDaisy.
+- ICM20948: Fixed an incorrect number of arguments on call to `ReadExternalRegister`.
+- MPR121: Fixed i2c i/o issues that led to problems reading correct data from the sensor.
+- version: The version.h hasn't been updated since v4.0.0 -- it has now been updated to the current version.
+
+### Bootloader
+
+- Update to v6.4. This version resolves issues related to i/o timeouts that could occur after programming devices hundreds/thousands of times with larger binary files.
+
+### New Contributors
+
+* @Brokezawa made their first contribution in https://github.com/electro-smith/libDaisy/pull/686
+* @CyberDuck79 made their first contribution in https://github.com/electro-smith/libDaisy/pull/685
+* @kaathewise made their first contribution in https://github.com/electro-smith/libDaisy/pull/688
 
 ## v8.0.0
 
