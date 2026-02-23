@@ -27,9 +27,9 @@ SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
 # via the "make program-boot" command.
 # All configurations are located in libDaisy/core/
 
-#BOOT_BIN=$(SYSTEM_FILES_DIR)/dsy_bootloader_v6_3-intdfu-2000ms.bin # default
-#BOOT_BIN=$(SYSTEM_FILES_DIR)/dsy_bootloader_v6_3-intdfu-10ms.bin
-#BOOT_BIN=$(SYSTEM_FILES_DIR)/dsy_bootloader_v6_3-extdfu-2000ms.bin
-#BOOT_BIN=$(SYSTEM_FILES_DIR)/dsy_bootloader_v6_3-extdfu-10ms.bin
+#BOOT_BIN=$(SYSTEM_FILES_DIR)/dsy_bootloader_v6_4-intdfu-2000ms.bin # default
+#BOOT_BIN=$(SYSTEM_FILES_DIR)/dsy_bootloader_v6_4-intdfu-10ms.bin
+#BOOT_BIN=$(SYSTEM_FILES_DIR)/dsy_bootloader_v6_4-extdfu-2000ms.bin
+#BOOT_BIN=$(SYSTEM_FILES_DIR)/dsy_bootloader_v6_4-extdfu-10ms.bin
 
 include $(SYSTEM_FILES_DIR)/Makefile
