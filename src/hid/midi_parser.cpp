@@ -4,6 +4,24 @@ using namespace daisy;
 
 bool MidiParser::Parse(uint8_t byte, MidiEvent* event_out)
 {
+    // Handle System Real-Time (0xF8-0xFF) immediately, regardless of
+    // parser state. Per the MIDI spec, these single-byte messages can
+    // appear anywhere in the stream — even between data bytes of another
+    // message — and must NOT affect running status or parser state.
+    if(byte >= 0xF8)
+    {
+        if(event_out != nullptr)
+        {
+            MidiEvent rt_event;
+            rt_event.type    = SystemRealTime;
+            rt_event.channel = 0;
+            rt_event.srt_type
+                = static_cast<SystemRealTimeType>(byte & kSystemRealTimeMask);
+            *event_out = rt_event;
+        }
+        return true;
+    }
+
     // reset parser when status byte is received
     bool did_parse = false;
 
@@ -21,8 +39,6 @@ bool MidiParser::Parse(uint8_t byte, MidiEvent* event_out)
                 incoming_message_.channel = byte & kChannelMask;
                 incoming_message_.type
                     = static_cast<MidiMessageType>((byte & kMessageMask) >> 4);
-                if((byte & 0xF8) == 0xF8)
-                    incoming_message_.type = SystemRealTime;
 
                 // Validate, and move on.
                 if(incoming_message_.type < MessageLast)
@@ -50,20 +66,6 @@ bool MidiParser::Parse(uint8_t byte, MidiEvent* event_out)
                             }
                             did_parse = true;
                         }
-                    }
-                    else if(incoming_message_.type == SystemRealTime)
-                    {
-                        incoming_message_.srt_type
-                            = static_cast<SystemRealTimeType>(
-                                byte & kSystemRealTimeMask);
-
-                        //short circuit to start
-                        pstate_ = ParserEmpty;
-                        if(event_out != nullptr)
-                        {
-                            *event_out = incoming_message_;
-                        }
-                        did_parse = true;
                     }
                     else // Channel Voice or Channel Mode
                     {
