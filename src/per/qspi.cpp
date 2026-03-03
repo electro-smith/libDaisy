@@ -433,76 +433,77 @@ QSPIHandle::Impl::Write(uint32_t address, uint32_t size, uint8_t* buffer)
 
 
 QSPIHandle::Result QSPIHandle::Impl::Erase(uint32_t start_addr,
-                                           uint32_t end_addr)
+                                         uint32_t end_addr)
 {
-    uint32_t block_addr;
-    constexpr uint32_t BLOCK_64K = 0x10000;  // 64KB
-    constexpr uint32_t SECTOR_4K = 0x1000;   // 4KB
+  uint32_t           block_addr;
+  constexpr uint32_t BLOCK_64K = 0x10000; // 64KB
+  constexpr uint32_t SECTOR_4K = 0x1000;  // 4KB
 
-    // Align start address down to 4KB boundary
-    start_addr = start_addr - (start_addr % SECTOR_4K);
+  // Align start address down to 4KB boundary
+  start_addr = start_addr - (start_addr % SECTOR_4K);
 
-    while(end_addr > start_addr)
-    {
-        block_addr = start_addr & 0x0FFFFFFF;
+  while(end_addr > start_addr)
+  {
+      block_addr = start_addr & 0x0FFFFFFF;
 
-        // Use 64KB block erase when aligned and enough space remaining
-        if((block_addr % BLOCK_64K) == 0 && (end_addr - start_addr) >= BLOCK_64K)
-        {
-            if(EraseBlock64K(block_addr) != QSPIHandle::Result::OK)
-            {
-                ERR_RECOVERY(Status::E_HAL_ERROR);
-            }
-            start_addr += BLOCK_64K;
-        }
-        else
-        {
-            // Fall back to 4KB sector erase
-            if(EraseSector(block_addr) != QSPIHandle::Result::OK)
-            {
-                ERR_RECOVERY(Status::E_HAL_ERROR);
-            }
-            start_addr += SECTOR_4K;
-        }
-    }
-    return QSPIHandle::Result::OK;
+      // Use 64KB block erase when aligned and enough space remaining
+      if((block_addr % BLOCK_64K) == 0
+         && (end_addr - start_addr) >= BLOCK_64K)
+      {
+          if(EraseBlock64K(block_addr) != QSPIHandle::Result::OK)
+          {
+              ERR_RECOVERY(Status::E_HAL_ERROR);
+          }
+          start_addr += BLOCK_64K;
+      }
+      else
+      {
+          // Fall back to 4KB sector erase
+          if(EraseSector(block_addr) != QSPIHandle::Result::OK)
+          {
+              ERR_RECOVERY(Status::E_HAL_ERROR);
+          }
+          start_addr += SECTOR_4K;
+      }
+  }
+  return QSPIHandle::Result::OK;
 }
 
 QSPIHandle::Result QSPIHandle::Impl::EraseBlock64K(uint32_t address)
 {
-    QSPI_CommandTypeDef s_command;
-    s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
-    s_command.Instruction       = BLOCK_ERASE_CMD;  // 0xD8 = 64KB block erase
-    s_command.AddressMode       = QSPI_ADDRESS_1_LINE;
-    s_command.AddressSize       = QSPI_ADDRESS_24_BITS;
-    s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
-    s_command.DataMode          = QSPI_DATA_NONE;
-    s_command.DummyCycles       = 0;
-    s_command.NbData            = 1;
-    s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
-    s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
-    s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
-    s_command.Address           = address;
+  QSPI_CommandTypeDef s_command;
+  s_command.InstructionMode   = QSPI_INSTRUCTION_1_LINE;
+  s_command.Instruction       = BLOCK_ERASE_CMD; // 0xD8 = 64KB block erase
+  s_command.AddressMode       = QSPI_ADDRESS_1_LINE;
+  s_command.AddressSize       = QSPI_ADDRESS_24_BITS;
+  s_command.AlternateByteMode = QSPI_ALTERNATE_BYTES_NONE;
+  s_command.DataMode          = QSPI_DATA_NONE;
+  s_command.DummyCycles       = 0;
+  s_command.NbData            = 1;
+  s_command.DdrMode           = QSPI_DDR_MODE_DISABLE;
+  s_command.DdrHoldHalfCycle  = QSPI_DDR_HHC_ANALOG_DELAY;
+  s_command.SIOOMode          = QSPI_SIOO_INST_EVERY_CMD;
+  s_command.Address           = address;
 
-    RETURN_IF_ERR(CheckProgramMemory());
-    RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
+  RETURN_IF_ERR(CheckProgramMemory());
+  RETURN_IF_ERR(SetMode(Config::Mode::INDIRECT_POLLING));
 
-    if(WriteEnable() != QSPIHandle::Result::OK)
-    {
-        ERR_RECOVERY(Status::E_HAL_ERROR);
-    }
-    if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
-       != HAL_OK)
-    {
-        ERR_RECOVERY(Status::E_HAL_ERROR);
-    }
-    if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
-       != QSPIHandle::Result::OK)
-    {
-        ERR_RECOVERY(Status::E_HAL_ERROR);
-    }
+  if(WriteEnable() != QSPIHandle::Result::OK)
+  {
+      ERR_RECOVERY(Status::E_HAL_ERROR);
+  }
+  if(HAL_QSPI_Command(&halqspi_, &s_command, HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
+     != HAL_OK)
+  {
+      ERR_RECOVERY(Status::E_HAL_ERROR);
+  }
+  if(AutopollingMemReady(HAL_QPSI_TIMEOUT_DEFAULT_VALUE)
+     != QSPIHandle::Result::OK)
+  {
+      ERR_RECOVERY(Status::E_HAL_ERROR);
+  }
 
-    return QSPIHandle::Result::OK;
+  return QSPIHandle::Result::OK;
 }
 
 QSPIHandle::Result QSPIHandle::Impl::EraseSector(uint32_t address)
