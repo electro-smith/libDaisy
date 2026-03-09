@@ -266,40 +266,40 @@ void AdcHandle::Init(AdcChannelConfig* cfg,
         {
             case OVS_4:
                 adc.hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_2;
-                adc.hadc1.Init.Oversampling.Ratio         = 3;
+                adc.hadc1.Init.Oversampling.Ratio         = 4;
                 break;
             case OVS_8:
                 adc.hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_3;
-                adc.hadc1.Init.Oversampling.Ratio         = 7;
+                adc.hadc1.Init.Oversampling.Ratio         = 8;
                 break;
             case OVS_16:
                 adc.hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_4;
-                adc.hadc1.Init.Oversampling.Ratio         = 15;
+                adc.hadc1.Init.Oversampling.Ratio         = 16;
                 break;
             case OVS_32:
                 adc.hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_5;
-                adc.hadc1.Init.Oversampling.Ratio         = 31;
+                adc.hadc1.Init.Oversampling.Ratio         = 32;
                 break;
             case OVS_64:
                 adc.hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_6;
-                adc.hadc1.Init.Oversampling.Ratio         = 63;
+                adc.hadc1.Init.Oversampling.Ratio         = 64;
                 break;
             case OVS_128:
                 adc.hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_7;
-                adc.hadc1.Init.Oversampling.Ratio         = 127;
+                adc.hadc1.Init.Oversampling.Ratio         = 128;
                 break;
             case OVS_256:
                 adc.hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_8;
-                adc.hadc1.Init.Oversampling.Ratio         = 255;
+                adc.hadc1.Init.Oversampling.Ratio         = 256;
                 break;
             case OVS_512:
                 adc.hadc1.Init.Oversampling.RightBitShift = ADC_RIGHTBITSHIFT_9;
-                adc.hadc1.Init.Oversampling.Ratio         = 511;
+                adc.hadc1.Init.Oversampling.Ratio         = 512;
                 break;
             case OVS_1024:
                 adc.hadc1.Init.Oversampling.RightBitShift
                     = ADC_RIGHTBITSHIFT_10;
-                adc.hadc1.Init.Oversampling.Ratio = 1023;
+                adc.hadc1.Init.Oversampling.Ratio = 1024;
                 break;
             default: break;
         }
