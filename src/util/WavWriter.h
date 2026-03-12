@@ -142,31 +142,52 @@ class WavWriter
     void SaveFile()
     {
         unsigned int bw = 0;
-        recording_      = false;
 
-        // Flush remaining data in the transfer buffer
-        if(wptr_ > 0) // Check if there is unwritten data in the buffer
+        // 1. Flush any pending full half-buffer first
+        Write();
+
+        // 2. Flush remaining partial data (if any)
+        if(wptr_ > 0)
         {
-            uint32_t remaining_size = wptr_ * (cfg_.bitspersample / 8);
-            // Ensure remaining_size does not exceed the buffer size
-            if(remaining_size > sizeof(transfer_buff))
+            uint32_t bytes_per_sample = cfg_.bitspersample / 8;
+            uint32_t cap_point
+                = cfg_.bitspersample == 16 ? kTransferSamps * 2 : kTransferSamps;
+
+            uint32_t offset_samples = 0;
+            uint32_t local_wptr     = wptr_;
+
+            // If we've crossed cap_point, the partial data sits in the 2nd half
+            if(local_wptr > cap_point)
             {
-                remaining_size = sizeof(transfer_buff);
+                offset_samples = cap_point;
+                local_wptr    -= cap_point;
             }
-            f_write(&fp_, transfer_buff, remaining_size, &bw);
+
+            uint32_t offset_bytes   = offset_samples * bytes_per_sample;
+            uint32_t remaining_size = local_wptr * bytes_per_sample;
+
+            // Clamp for safety
+            uint32_t max_bytes = sizeof(transfer_buff) - offset_bytes;
+            if(remaining_size > max_bytes)
+                remaining_size = max_bytes;
+
+            uint8_t* base = reinterpret_cast<uint8_t*>(transfer_buff);
+            f_write(&fp_, base + offset_bytes, remaining_size, &bw);
         }
 
-        wavheader_.FileSize = CalcFileSize();
+        // 3. Finalize header and close
+        recording_            = false;
+        wavheader_.FileSize   = CalcFileSize();
         f_lseek(&fp_, 0);
         f_write(&fp_, &wavheader_, sizeof(wavheader_), &bw);
         f_close(&fp_);
 
-        // Clear the transfer buffer and reset the buffer state
+        // 4. Reset internal state
         memset(transfer_buff, 0, sizeof(transfer_buff));
         bstate_    = BufferState::IDLE;
-        wptr_      = 0;     // Reset the write pointer
-        num_samps_ = 0;     // Reset the number of samples
-        recording_ = false; // Ensure recording is inactive
+        wptr_      = 0;
+        num_samps_ = 0;
+        recording_ = false;
     }
 
     /** Opens a file for writing. Writes the initial WAV Header, and gets ready for stream-based recording. */
