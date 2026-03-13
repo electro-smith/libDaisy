@@ -1,6 +1,7 @@
 #pragma once
 #pragma once
 #include "fatfs.h"
+#include "util/wav_format.h"
 
 namespace daisy
 {
@@ -68,6 +69,10 @@ class WavWriter
     {
         cfg_       = cfg;
         num_samps_ = 0;
+        wptr_      = 0;
+        bstate_    = BufferState::IDLE;
+        recording_ = false;
+        memset(transfer_buff, 0, sizeof(transfer_buff));
         // Prep the wav header according to config.
         // Certain things (i.e. Size, etc. will have to wait until the finalization of the file, or be updated while streaming).
         wavheader_.ChunkId       = kWavFileChunkId;     /** "RIFF" */
@@ -200,6 +205,9 @@ class WavWriter
             {
                 recording_ = true;
                 num_samps_ = 0;
+                wptr_      = 0;
+                bstate_    = BufferState::IDLE;
+                memset(transfer_buff, 0, sizeof(transfer_buff));
             }
         }
     }
