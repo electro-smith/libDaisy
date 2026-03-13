@@ -162,7 +162,7 @@ class WavWriter
             uint32_t local_wptr     = wptr_;
 
             // If we've crossed cap_point, the partial data sits in the 2nd half
-            if(local_wptr > cap_point)
+            if(local_wptr >= cap_point)
             {
                 offset_samples = cap_point;
                 local_wptr    -= cap_point;
