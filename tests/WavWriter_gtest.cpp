@@ -17,18 +17,7 @@ static WAV_FormatTypeDef ReadHeaderFromMockFile()
     return header;
 }
 
-using SaveFileWriter = WavWriter<16>;
-
-static SaveFileWriter::Config MakeMonoS32Config()
-{
-    SaveFileWriter::Config cfg;
-    cfg.samplerate    = 48000.0f;
-    cfg.channels      = 1;
-    cfg.bitspersample = 32;
-    return cfg;
-}
-
-static void SampleMono(SaveFileWriter& writer, const std::vector<float>& samples)
+static void SampleMono(WavWriter<16>& writer, const std::vector<float>& samples)
 {
     float in[1];
     for(const auto sample : samples)
@@ -112,7 +101,7 @@ static std::vector<uint8_t> ToPcmBytesS16Stereo(
     return out;
 }
 
-static void SampleStereo(SaveFileWriter& writer,
+static void SampleStereo(WavWriter<16>&                          writer,
                          const std::vector<std::array<float, 2>>& frames)
 {
     float in[2];
@@ -124,29 +113,6 @@ static void SampleStereo(SaveFileWriter& writer,
     }
 }
 
-static SaveFileWriter::Config MakeStereoS32Config()
-{
-    auto cfg          = MakeMonoS32Config();
-    cfg.channels      = 2;
-    cfg.bitspersample = 32;
-    return cfg;
-}
-
-static SaveFileWriter::Config MakeMonoS16Config()
-{
-    auto cfg          = MakeMonoS32Config();
-    cfg.channels      = 1;
-    cfg.bitspersample = 16;
-    return cfg;
-}
-
-static SaveFileWriter::Config MakeStereoS16Config()
-{
-    auto cfg          = MakeMonoS32Config();
-    cfg.channels      = 2;
-    cfg.bitspersample = 16;
-    return cfg;
-}
 
 TEST(util_WavWriter, saveFile_headerSizesMatchPayload)
 {
@@ -250,8 +216,12 @@ TEST(util_WavWriter, saveFile_partialFirstHalfTailOnce)
 {
     test::ResetFatFsMockState();
 
-    SaveFileWriter writer;
-    writer.Init(MakeMonoS32Config());
+    WavWriter<16>         writer;
+    WavWriter<16>::Config cfg;
+    cfg.samplerate    = 48000.0f;
+    cfg.channels      = 1;
+    cfg.bitspersample = 32;
+    writer.Init(cfg);
     writer.OpenFile("partial_tail.wav");
 
     const std::vector<float> samples = {0.11f, -0.22f, 0.33f};
@@ -265,8 +235,12 @@ TEST(util_WavWriter, saveFile_flush0HalfOnce)
 {
     test::ResetFatFsMockState();
 
-    SaveFileWriter writer;
-    writer.Init(MakeMonoS32Config());
+    WavWriter<16>         writer;
+    WavWriter<16>::Config cfg;
+    cfg.samplerate    = 48000.0f;
+    cfg.channels      = 1;
+    cfg.bitspersample = 32;
+    writer.Init(cfg);
     writer.OpenFile("flush0_once.wav");
 
     // kTransferSamps = 4 for WavWriter<16> in 32-bit mono, so this fills one half.
@@ -281,8 +255,12 @@ TEST(util_WavWriter, saveFile_flush0ThenSecondHalfTail)
 {
     test::ResetFatFsMockState();
 
-    SaveFileWriter writer;
-    writer.Init(MakeMonoS32Config());
+    WavWriter<16>         writer;
+    WavWriter<16>::Config cfg;
+    cfg.samplerate    = 48000.0f;
+    cfg.channels      = 1;
+    cfg.bitspersample = 32;
+    writer.Init(cfg);
     writer.OpenFile("flush0_plus_tail.wav");
 
     const std::vector<float> first_half = {0.11f, 0.21f, 0.31f, 0.41f};
@@ -301,8 +279,12 @@ TEST(util_WavWriter, saveFile_flush1HalfOnce)
 {
     test::ResetFatFsMockState();
 
-    SaveFileWriter writer;
-    writer.Init(MakeMonoS32Config());
+    WavWriter<16>         writer;
+    WavWriter<16>::Config cfg;
+    cfg.samplerate    = 48000.0f;
+    cfg.channels      = 1;
+    cfg.bitspersample = 32;
+    writer.Init(cfg);
     writer.OpenFile("flush1_once.wav");
 
     const std::vector<float> first_half = {0.12f, 0.22f, 0.32f, 0.42f};
@@ -323,8 +305,12 @@ TEST(util_WavWriter, saveFile_flush1ThenFirstHalfTail)
 {
     test::ResetFatFsMockState();
 
-    SaveFileWriter writer;
-    writer.Init(MakeMonoS32Config());
+    WavWriter<16>         writer;
+    WavWriter<16>::Config cfg;
+    cfg.samplerate    = 48000.0f;
+    cfg.channels      = 1;
+    cfg.bitspersample = 32;
+    writer.Init(cfg);
     writer.OpenFile("flush1_plus_tail.wav");
 
     const std::vector<float> first_half = {0.13f, 0.23f, 0.33f, 0.43f};
@@ -349,8 +335,12 @@ TEST(util_WavWriter, saveFile_s32StereoPartialTailOnce)
 {
     test::ResetFatFsMockState();
 
-    SaveFileWriter writer;
-    writer.Init(MakeStereoS32Config());
+    WavWriter<16>         writer;
+    WavWriter<16>::Config cfg;
+    cfg.samplerate    = 48000.0f;
+    cfg.channels      = 2;
+    cfg.bitspersample = 32;
+    writer.Init(cfg);
     writer.OpenFile("s32_stereo_partial.wav");
 
     // One frame (< half-buffer for this config).
@@ -365,8 +355,12 @@ TEST(util_WavWriter, saveFile_s32StereoFlush0HalfOnce)
 {
     test::ResetFatFsMockState();
 
-    SaveFileWriter writer;
-    writer.Init(MakeStereoS32Config());
+    WavWriter<16>         writer;
+    WavWriter<16>::Config cfg;
+    cfg.samplerate    = 48000.0f;
+    cfg.channels      = 2;
+    cfg.bitspersample = 32;
+    writer.Init(cfg);
     writer.OpenFile("s32_stereo_flush0.wav");
 
     // Half-buffer boundary for WavWriter<16>, 32-bit stereo = 2 frames.
@@ -382,8 +376,12 @@ TEST(util_WavWriter, saveFile_s16MonoPartialTailOnce)
 {
     test::ResetFatFsMockState();
 
-    SaveFileWriter writer;
-    writer.Init(MakeMonoS16Config());
+    WavWriter<16>         writer;
+    WavWriter<16>::Config cfg;
+    cfg.samplerate    = 48000.0f;
+    cfg.channels      = 1;
+    cfg.bitspersample = 16;
+    writer.Init(cfg);
     writer.OpenFile("s16_mono_partial.wav");
 
     const std::vector<float> samples = {0.14f, -0.24f, 0.34f, -0.44f, 0.54f};
@@ -397,8 +395,12 @@ TEST(util_WavWriter, saveFile_s16MonoFlush0HalfOnce)
 {
     test::ResetFatFsMockState();
 
-    SaveFileWriter writer;
-    writer.Init(MakeMonoS16Config());
+    WavWriter<16>         writer;
+    WavWriter<16>::Config cfg;
+    cfg.samplerate    = 48000.0f;
+    cfg.channels      = 1;
+    cfg.bitspersample = 16;
+    writer.Init(cfg);
     writer.OpenFile("s16_mono_flush0.wav");
 
     // Half-buffer boundary for WavWriter<16>, 16-bit mono = 8 samples.
@@ -414,8 +416,12 @@ TEST(util_WavWriter, saveFile_s16StereoCrossesIntoSecondHalf)
 {
     test::ResetFatFsMockState();
 
-    SaveFileWriter writer;
-    writer.Init(MakeStereoS16Config());
+    WavWriter<16>         writer;
+    WavWriter<16>::Config cfg;
+    cfg.samplerate    = 48000.0f;
+    cfg.channels      = 2;
+    cfg.bitspersample = 16;
+    writer.Init(cfg);
     writer.OpenFile("s16_stereo_cross_half.wav");
 
     // 4 frames fill first half, next 2 frames are second-half tail.
