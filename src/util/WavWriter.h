@@ -155,8 +155,8 @@ class WavWriter
         if(wptr_ > 0)
         {
             uint32_t bytes_per_sample = cfg_.bitspersample / 8;
-            uint32_t cap_point
-                = cfg_.bitspersample == 16 ? kTransferSamps * 2 : kTransferSamps;
+            uint32_t cap_point = cfg_.bitspersample == 16 ? kTransferSamps * 2
+                                                          : kTransferSamps;
 
             uint32_t offset_samples = 0;
             uint32_t local_wptr     = wptr_;
@@ -165,7 +165,7 @@ class WavWriter
             if(local_wptr >= cap_point)
             {
                 offset_samples = cap_point;
-                local_wptr    -= cap_point;
+                local_wptr -= cap_point;
             }
 
             uint32_t offset_bytes   = offset_samples * bytes_per_sample;
@@ -176,13 +176,13 @@ class WavWriter
             if(remaining_size > max_bytes)
                 remaining_size = max_bytes;
 
-            uint8_t* base = reinterpret_cast<uint8_t*>(transfer_buff);
+            uint8_t *base = reinterpret_cast<uint8_t *>(transfer_buff);
             f_write(&fp_, base + offset_bytes, remaining_size, &bw);
         }
 
         // 3. Finalize header and close
-        recording_            = false;
-        wavheader_.FileSize   = CalcFileSize();
+        recording_          = false;
+        wavheader_.FileSize = CalcFileSize();
         f_lseek(&fp_, 0);
         f_write(&fp_, &wavheader_, sizeof(wavheader_), &bw);
         f_close(&fp_);
