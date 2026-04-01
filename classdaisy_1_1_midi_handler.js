@@ -1,6 +1,7 @@
 var classdaisy_1_1_midi_handler =
 [
     [ "Config", "structdaisy_1_1_midi_handler_1_1_config.html", "structdaisy_1_1_midi_handler_1_1_config" ],
+    [ "MidiEventCallback", "classdaisy_1_1_midi_handler.html#a12ed5df58cadbf2292f06c677d58c760", null ],
     [ "MidiHandler", "classdaisy_1_1_midi_handler.html#a7194c67c1ac71934581b37ebafb0fc0a", null ],
     [ "~MidiHandler", "classdaisy_1_1_midi_handler.html#afd52da947947fdce95e725209aae5831", null ],
     [ "HasEvents", "classdaisy_1_1_midi_handler.html#a96d78e2e460ba9dc17a9ad5be71e99bb", null ],
@@ -10,5 +11,6 @@ var classdaisy_1_1_midi_handler =
     [ "PopEvent", "classdaisy_1_1_midi_handler.html#a4460bf8f45842bc2e2f74b9afad31cef", null ],
     [ "RxActive", "classdaisy_1_1_midi_handler.html#a88c8545f1a559c2cd4034adcb8a728d5", null ],
     [ "SendMessage", "classdaisy_1_1_midi_handler.html#a5c15df4ad7996a8c3fff22a5e679cc54", null ],
-    [ "StartReceive", "classdaisy_1_1_midi_handler.html#a28d650f767ca99afaa79e39664fcb4c2", null ]
+    [ "StartReceive", "classdaisy_1_1_midi_handler.html#a28d650f767ca99afaa79e39664fcb4c2", null ],
+    [ "StartReceiveRt", "classdaisy_1_1_midi_handler.html#af4c5ad0695783168a7fc232d77c5b533", null ]
 ];

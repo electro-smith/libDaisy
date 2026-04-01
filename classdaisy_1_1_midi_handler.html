@@ -107,6 +107,7 @@ $(function(){initNavTree('classdaisy_1_1_midi_handler.html',''); initResizable(t
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classdaisy_1_1_midi_handler-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">daisy::MidiHandler&lt; Transport &gt; Class Template Reference<div class="ingroups"><a class="el" href="group__libdaisy.html">LIBDAISY</a> &raquo; <a class="el" href="group__human__interface.html">HUMAN_INTERFACE</a> &raquo; <a class="el" href="group__midi.html">MIDI</a></div></div></div>
@@ -132,6 +133,11 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_midi_handler_1_1_config.html">Config</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a12ed5df58cadbf2292f06c677d58c760" id="r_a12ed5df58cadbf2292f06c677d58c760"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12ed5df58cadbf2292f06c677d58c760">MidiEventCallback</a> = std::function&lt;void(<a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a>&amp;)&gt;</td></tr>
+<tr class="separator:a12ed5df58cadbf2292f06c677d58c760"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7194c67c1ac71934581b37ebafb0fc0a" id="r_a7194c67c1ac71934581b37ebafb0fc0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7194c67c1ac71934581b37ebafb0fc0a">MidiHandler</a> ()</td></tr>
@@ -142,6 +148,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ae449f82ffeae9ef7f71d725349fdffef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a28d650f767ca99afaa79e39664fcb4c2" id="r_a28d650f767ca99afaa79e39664fcb4c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28d650f767ca99afaa79e39664fcb4c2">StartReceive</a> ()</td></tr>
 <tr class="separator:a28d650f767ca99afaa79e39664fcb4c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4c5ad0695783168a7fc232d77c5b533" id="r_af4c5ad0695783168a7fc232d77c5b533"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4c5ad0695783168a7fc232d77c5b533">StartReceiveRt</a> (<a class="el" href="#a12ed5df58cadbf2292f06c677d58c760">MidiEventCallback</a> callback_for_rt_messages)</td></tr>
+<tr class="separator:af4c5ad0695783168a7fc232d77c5b533"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5aa3eaac93ee7d2856ece8ab0bdc8813" id="r_a5aa3eaac93ee7d2856ece8ab0bdc8813"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5aa3eaac93ee7d2856ece8ab0bdc8813">Listen</a> ()</td></tr>
 <tr class="separator:a5aa3eaac93ee7d2856ece8ab0bdc8813"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a96d78e2e460ba9dc17a9ad5be71e99bb" id="r_a96d78e2e460ba9dc17a9ad5be71e99bb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a96d78e2e460ba9dc17a9ad5be71e99bb">HasEvents</a> () const</td></tr>
@@ -155,6 +163,23 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8dbf957100cc91a0c28c04340b218e32" id="r_a8dbf957100cc91a0c28c04340b218e32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8dbf957100cc91a0c28c04340b218e32">Parse</a> (uint8_t byte)</td></tr>
 <tr class="separator:a8dbf957100cc91a0c28c04340b218e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a12ed5df58cadbf2292f06c677d58c760" name="a12ed5df58cadbf2292f06c677d58c760"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12ed5df58cadbf2292f06c677d58c760">&#9670;&#160;</a></span>MidiEventCallback</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Transport &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler</a>&lt; Transport &gt;::MidiEventCallback = std::function&lt;void(<a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a>&amp;)&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a7194c67c1ac71934581b37ebafb0fc0a" name="a7194c67c1ac71934581b37ebafb0fc0a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7194c67c1ac71934581b37ebafb0fc0a">&#9670;&#160;</a></span>MidiHandler()</h2>
@@ -447,6 +472,34 @@ template&lt;typename Transport &gt; </div>
 </table>
 </div><div class="memdoc">
 <p>Starts listening on the selected input mode(s). <a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a> Queue will begin to fill, and can be checked with <a class="el" href="#a96d78e2e460ba9dc17a9ad5be71e99bb">HasEvents()</a> </p>
+
+</div>
+</div>
+<a id="af4c5ad0695783168a7fc232d77c5b533" name="af4c5ad0695783168a7fc232d77c5b533"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4c5ad0695783168a7fc232d77c5b533">&#9670;&#160;</a></span>StartReceiveRt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Transport &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classdaisy_1_1_midi_handler.html">daisy::MidiHandler</a>&lt; Transport &gt;::StartReceiveRt </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a12ed5df58cadbf2292f06c677d58c760">MidiEventCallback</a></td>          <td class="paramname"><span class="paramname"><em>callback_for_rt_messages</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Starts listening on the selected input mode(s). <a class="el" href="structdaisy_1_1_midi_event.html">MidiEvent</a> Queue will begin to fill, and can be checked with <a class="el" href="#a96d78e2e460ba9dc17a9ad5be71e99bb">HasEvents()</a> MIDI events of type SystemRealTime will be delivered synchronously by callback. All other events are on the queue </p>
 
 </div>
 </div>
