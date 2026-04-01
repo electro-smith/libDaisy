@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <algorithm>
+#include <functional>
 #include "per/uart.h"
 #include "util/ringbuffer.h"
 #include "util/FIFO.h"
@@ -152,6 +153,8 @@ template <typename Transport>
 class MidiHandler
 {
   public:
+    using MidiEventCallback = std::function<void(MidiEvent&)>;
+
     MidiHandler() {}
     ~MidiHandler() {}
 
@@ -174,6 +177,16 @@ class MidiHandler
      * MidiEvent Queue will begin to fill, and can be checked with HasEvents() */
     void StartReceive()
     {
+        transport_.StartRx(MidiHandler::ParseCallback, this);
+    }
+
+    /** Starts listening on the selected input mode(s).
+     * MidiEvent Queue will begin to fill, and can be checked with HasEvents()
+     * MIDI events of type SystemRealTime will be delivered synchronously by callback.
+     * All other events are on the queue */
+    void StartReceiveRt(MidiEventCallback callback_for_rt_messages)
+    {
+        realtime_callback_ = callback_for_rt_messages;
         transport_.StartRx(MidiHandler::ParseCallback, this);
     }
 
@@ -222,7 +235,16 @@ class MidiHandler
         MidiEvent event;
         if(parser_.Parse(byte, &event))
         {
+            if(event.type == MidiMessageType::SystemRealTime)
+            {
+                if(realtime_callback_)
+                {
+                    realtime_callback_(event);
+                    return;
+                }
+            }
             event_q_.PushBack(event);
+            return;
         }
     }
 
@@ -231,6 +253,7 @@ class MidiHandler
     Transport            transport_;
     MidiParser           parser_;
     FIFO<MidiEvent, 256> event_q_;
+    MidiEventCallback    realtime_callback_;
 
     static void ParseCallback(uint8_t* data, size_t size, void* context)
     {
