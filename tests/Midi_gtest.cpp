@@ -654,6 +654,151 @@ TEST_F(MidiTest, runningStatSysRealtime)
     EXPECT_EQ(noteon2.type, NoteOff);
 }
 
+/** System Real-Time bytes arriving between data bytes of a
+ *  multi-byte message must not corrupt the message being parsed.
+ *  This is the actual bug reported in issue #666 — clock bytes
+ *  in the middle of a NoteOn caused the channel to shift.
+ */
+TEST_F(MidiTest, sysRealtimeMidMessage)
+{
+    // NoteOn with clock bytes between status, data0, and data1
+    uint8_t bytes[] = {
+        0x90, /**< Note On, channel 0 */
+        0xF8, /**< Timing Clock (between status and data0) */
+        0x3C, /**< Note Number 60 */
+        0xF8, /**< Timing Clock (between data0 and data1) */
+        0x7F, /**< Velocity 127 */
+    };
+
+    for(int i = 0; i < 5; i++)
+    {
+        midi.Parse(bytes[i]);
+    }
+
+    // RT messages are dispatched immediately (lowest latency for clock sync),
+    // so the two clocks appear before the NoteOn that they interrupted.
+    auto clk1 = midi.PopEvent();
+    EXPECT_EQ(clk1.type, SystemRealTime);
+    EXPECT_EQ(clk1.srt_type, TimingClock);
+
+    auto clk2 = midi.PopEvent();
+    EXPECT_EQ(clk2.type, SystemRealTime);
+    EXPECT_EQ(clk2.srt_type, TimingClock);
+
+    // The NoteOn must still parse correctly despite the interleaved clocks
+    auto noteon = midi.PopEvent();
+    EXPECT_EQ(noteon.type, NoteOn);
+    NoteOnEvent onEvent = noteon.AsNoteOn();
+    EXPECT_EQ(onEvent.channel, 0);
+    EXPECT_EQ(onEvent.note, 60);
+    EXPECT_EQ(onEvent.velocity, 127);
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+/** System Real-Time bytes inside a SysEx message must not corrupt
+ *  the SysEx data and must be reported as separate events.
+ */
+TEST_F(MidiTest, sysRealtimeDuringSysEx)
+{
+    uint8_t bytes[] = {
+        0xF0,       /**< SysEx Start */
+        0x01, 0x02, /**< SysEx data */
+        0xF8,       /**< Timing Clock inside SysEx */
+        0x03,       /**< More SysEx data */
+        0xF7,       /**< SysEx End */
+    };
+
+    for(int i = 0; i < 6; i++)
+    {
+        midi.Parse(bytes[i]);
+    }
+
+    // Clock should be first (parsed inline before SysEx completes)
+    auto clk = midi.PopEvent();
+    EXPECT_EQ(clk.type, SystemRealTime);
+    EXPECT_EQ(clk.srt_type, TimingClock);
+
+    // Then the SysEx with the correct 3 data bytes (clock excluded)
+    auto sysex = midi.PopEvent();
+    EXPECT_EQ(sysex.type, SystemCommon);
+    EXPECT_EQ(sysex.sc_type, SystemExclusive);
+    SystemExclusiveEvent se = sysex.AsSystemExclusive();
+    EXPECT_EQ(se.length, 3);
+    EXPECT_EQ(se.data[0], 0x01);
+    EXPECT_EQ(se.data[1], 0x02);
+    EXPECT_EQ(se.data[2], 0x03);
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+/** All 8 System Real-Time types should be correctly identified */
+TEST_F(MidiTest, allSysRealtimeTypes)
+{
+    for(uint8_t type = 0; type < 8; type++)
+    {
+        uint8_t   byte  = 0xF8 + type;
+        MidiEvent event = ParseAndPop(&byte, 1);
+        EXPECT_EQ(event.type, SystemRealTime);
+        EXPECT_EQ(event.srt_type, static_cast<SystemRealTimeType>(type));
+        EXPECT_EQ(event.channel, 0);
+    }
+    EXPECT_FALSE(midi.HasEvents());
+}
+
+/** Running status must be preserved after System Real-Time bytes.
+ *  A sequence of NoteOn messages using running status with clock
+ *  bytes interleaved must all parse with the correct channel.
+ */
+TEST_F(MidiTest, runningStatusPreservedAfterRealtime)
+{
+    uint8_t bytes[] = {
+        0x92,       /**< Note On, channel 2 */
+        0x3C, 0x64, /**< Note 60, vel 100 */
+        0xF8,       /**< Timing Clock */
+        0x3E, 0x50, /**< Running status: Note 62, vel 80 */
+        0xFA,       /**< Start */
+        0x40, 0x00, /**< Running status: Note 64, vel 0 (NoteOff) */
+    };
+
+    for(int i = 0; i < 9; i++)
+    {
+        midi.Parse(bytes[i]);
+    }
+
+    // NoteOn ch2 note=60 vel=100
+    auto e1 = midi.PopEvent();
+    EXPECT_EQ(e1.type, NoteOn);
+    EXPECT_EQ(e1.AsNoteOn().channel, 2);
+    EXPECT_EQ(e1.AsNoteOn().note, 60);
+    EXPECT_EQ(e1.AsNoteOn().velocity, 100);
+
+    // Timing Clock
+    auto e2 = midi.PopEvent();
+    EXPECT_EQ(e2.type, SystemRealTime);
+    EXPECT_EQ(e2.srt_type, TimingClock);
+
+    // NoteOn ch2 note=62 vel=80 (running status)
+    auto e3 = midi.PopEvent();
+    EXPECT_EQ(e3.type, NoteOn);
+    EXPECT_EQ(e3.AsNoteOn().channel, 2);
+    EXPECT_EQ(e3.AsNoteOn().note, 62);
+    EXPECT_EQ(e3.AsNoteOn().velocity, 80);
+
+    // Start
+    auto e4 = midi.PopEvent();
+    EXPECT_EQ(e4.type, SystemRealTime);
+    EXPECT_EQ(e4.srt_type, Start);
+
+    // NoteOff ch2 note=64 (vel 0 → NoteOff, running status)
+    auto e5 = midi.PopEvent();
+    EXPECT_EQ(e5.type, NoteOff);
+    EXPECT_EQ(e5.AsNoteOff().channel, 2);
+    EXPECT_EQ(e5.AsNoteOff().note, 64);
+
+    EXPECT_FALSE(midi.HasEvents());
+}
+
 // ================ Bad Data ================
 
 TEST_F(MidiTest, badData)
