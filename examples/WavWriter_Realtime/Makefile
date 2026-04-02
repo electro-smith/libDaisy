@@ -1,5 +1,5 @@
 # Project Name
-TARGET = WavWriter-Realtime
+TARGET = WavWriter_Realtime
 
 # Sources
 CPP_SOURCES = main.cpp

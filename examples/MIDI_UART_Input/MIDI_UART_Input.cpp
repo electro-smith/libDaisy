@@ -19,21 +19,24 @@ using namespace daisy;
 constexpr const bool kUseRealtimeCallback = true;
 
 /** Indicates from where the MIDI Message was logged */
-enum class Source {
+enum class Source
+{
     Queue,
     RealtimeCb,
     Unknown,
 };
 
 /** Wrapper type that adds a timestamp and source to the MIDI event. */
-struct SourcedMidiEvent {
+struct SourcedMidiEvent
+{
     MidiEvent message;
-    Source src;
-    uint32_t timestamp;
+    Source    src;
+    uint32_t  timestamp;
 
-    SourcedMidiEvent(MidiEvent e, Source s) {
-        message = e;
-        src = s;
+    SourcedMidiEvent(MidiEvent e, Source s)
+    {
+        message   = e;
+        src       = s;
         timestamp = System::GetNow();
     }
 
@@ -49,31 +52,27 @@ FIFO<SourcedMidiEvent, 128> event_log;
 
 
 /** Helper for getting human readable strings from realtime messages */
-const char* GetStringForRealTimeType(SystemRealTimeType type) {
-    switch(type) {
-        case SystemRealTimeType::TimingClock:
-            return "Timing Clock";
-        case SystemRealTimeType::SRTUndefined0:
-            return "SRT Undefined0";
-        case SystemRealTimeType::Start:
-            return "Start";
-        case SystemRealTimeType::Continue:
-            return "Continue";
-        case SystemRealTimeType::Stop:
-            return "Stop";
-        case SystemRealTimeType::SRTUndefined1:
-            return "SRT Undefined1";
-        case SystemRealTimeType::ActiveSensing:
-            return "ActiveSensing";
-        case SystemRealTimeType::Reset:
-            return "Reset";
+const char* GetStringForRealTimeType(SystemRealTimeType type)
+{
+    switch(type)
+    {
+        case SystemRealTimeType::TimingClock: return "Timing Clock";
+        case SystemRealTimeType::SRTUndefined0: return "SRT Undefined0";
+        case SystemRealTimeType::Start: return "Start";
+        case SystemRealTimeType::Continue: return "Continue";
+        case SystemRealTimeType::Stop: return "Stop";
+        case SystemRealTimeType::SRTUndefined1: return "SRT Undefined1";
+        case SystemRealTimeType::ActiveSensing: return "ActiveSensing";
+        case SystemRealTimeType::Reset: return "Reset";
         default: return "Unknown Type...";
     }
 }
 
 /** Helper for getting a string for the source */
-const char* GetStringForSource(Source src) {
-    switch(src) {
+const char* GetStringForSource(Source src)
+{
+    switch(src)
+    {
         case Source::Queue: return "Queue";
         case Source::RealtimeCb: return "Realtime Callback";
         case Source::Unknown:
@@ -88,7 +87,8 @@ const char* GetStringForSource(Source src) {
  *   In this case, we're just going to forward this to the log
  *   to make sure no messages are missed.
 */
-void MidiRealtimeCallback(MidiEvent& event) {
+void MidiRealtimeCallback(MidiEvent& event)
+{
     auto ev = SourcedMidiEvent(event, Source::RealtimeCb);
     event_log.PushBack(ev);
 }
@@ -103,9 +103,12 @@ int main(void)
     MidiUartHandler::Config midi_config;
     midi.Init(midi_config);
 
-    if (kUseRealtimeCallback) {
+    if(kUseRealtimeCallback)
+    {
         midi.StartReceiveRt(MidiRealtimeCallback);
-    } else {
+    }
+    else
+    {
         midi.StartReceive();
     }
 
@@ -134,8 +137,8 @@ int main(void)
                     // Do something on Note On events
                     {
                         uint8_t bytes[3] = {0x90, 0x00, 0x00};
-                        bytes[1] = msg.data[0];
-                        bytes[2] = msg.data[1];
+                        bytes[1]         = msg.data[0];
+                        bytes[2]         = msg.data[1];
                         midi.SendMessage(bytes, 3);
                     }
                     break;
@@ -153,20 +156,24 @@ int main(void)
             log_time = now;
             if(!event_log.IsEmpty())
             {
-                auto event = event_log.PopFront();
-                auto msg = event.message;
-                char outstr[128];
+                auto        event = event_log.PopFront();
+                auto        msg   = event.message;
+                char        outstr[128];
                 const char* type_str = MidiEvent::GetTypeAsString(msg);
-                if (msg.type == MidiMessageType::SystemRealTime) {
+                if(msg.type == MidiMessageType::SystemRealTime)
+                {
                     const char* src_str = GetStringForSource(event.src);
-                    const char* desc_str = GetStringForRealTimeType(msg.srt_type);
+                    const char* desc_str
+                        = GetStringForRealTimeType(msg.srt_type);
                     sprintf(outstr,
                             "time:\t%ld\ttype: %s - %s\tsource: %s\n",
                             event.timestamp,
                             type_str,
                             desc_str,
                             src_str);
-                } else {
+                }
+                else
+                {
                     // Only realtime messages are capable of hitting the realtime
                     // callback so we do not need to include the source here.
                     sprintf(outstr,
