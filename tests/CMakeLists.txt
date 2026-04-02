@@ -18,6 +18,10 @@ add_library(daisy STATIC
   ${MODULE_DIR}/util/oled_fonts.c
 )
 target_include_directories(daisy PUBLIC ${MODULE_DIR})
+target_include_directories(daisy PUBLIC
+  ${MODULE_DIR}/sys
+  ../Middlewares/Third_Party/FatFs/src
+)
 target_compile_definitions(daisy PUBLIC UNIT_TEST)
 
 # needed because some internal libDaisy testing stuff includes gtest
@@ -30,7 +34,10 @@ function(add_gtest source_file)
   cmake_path(GET source_file STEM test_name)
 
   # Create the target
-  add_executable(${test_name} ${source_file})
+  add_executable(${test_name}
+    ${source_file}
+    ${CMAKE_CURRENT_LIST_DIR}/FatFsMock.cpp
+  )
 
   # Link it against the required libraries
   target_link_libraries(${test_name} PUBLIC
