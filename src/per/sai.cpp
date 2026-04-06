@@ -1,5 +1,6 @@
 #include "per/sai.h"
 #include "daisy_core.h"
+#include <cstring>
 
 namespace daisy
 {
@@ -39,8 +40,15 @@ class SaiHandle::Impl
     /** Offset stored for weird inter-SAI stuff.*/
     size_t dma_offset;
 
+    // Optional buffer for audio callback output
+    int32_t* buff_intermediate_ = nullptr;
+
+    void SetIntermediateBuffer(int32_t* buffer) { buff_intermediate_ = buffer; }
+
     /** Callback that dispatches user callback from Cplt and HalfCplt DMA Callbacks */
-    void InternalCallback(size_t offset);
+    void InternalCallbackRx(size_t offset);
+
+    void InternalCallbackTx(size_t offset);
 
     /** Pin Initiazlization */
     void InitPins();
@@ -283,13 +291,23 @@ void SaiHandle::Impl::DeInitDma(PeripheralBlock block)
     }
 }
 
-void SaiHandle::Impl::InternalCallback(size_t offset)
+void SaiHandle::Impl::InternalCallbackRx(size_t offset)
 {
     int32_t *in, *out;
     in  = buff_rx_ + offset;
-    out = buff_tx_ + offset;
+    out = (buff_intermediate_ ? buff_intermediate_ : buff_tx_ + offset);
     if(callback_)
         callback_(in, out, buff_size_ / 2);
+}
+
+void SaiHandle::Impl::InternalCallbackTx(size_t offset)
+{
+    if (!buff_intermediate_) {
+        return;
+    }
+    int32_t* in  = buff_intermediate_;
+    int32_t* out = buff_tx_ + offset;
+    std::memcpy(out, in, buff_size_ / 2 * sizeof(*out));
 }
 
 SaiHandle::Result
@@ -503,12 +521,12 @@ extern "C" void HAL_SAI_RxHalfCpltCallback(SAI_HandleTypeDef* hsai)
     if(hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B)
     {
         sai_handles[0].dma_offset = 0;
-        sai_handles[0].InternalCallback(0);
+        sai_handles[0].InternalCallbackRx(0);
     }
     else if(hsai->Instance == SAI2_Block_A || hsai->Instance == SAI2_Block_B)
     {
         sai_handles[1].dma_offset = 0;
-        sai_handles[1].InternalCallback(0);
+        sai_handles[1].InternalCallbackRx(0);
     }
 }
 
@@ -517,12 +535,36 @@ extern "C" void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai)
     if(hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B)
     {
         sai_handles[0].dma_offset = sai_handles[0].buff_size_ / 2;
-        sai_handles[0].InternalCallback(sai_handles[0].dma_offset);
+        sai_handles[0].InternalCallbackRx(sai_handles[0].dma_offset);
     }
     else if(hsai->Instance == SAI2_Block_A || hsai->Instance == SAI2_Block_B)
     {
         sai_handles[1].dma_offset = sai_handles[1].buff_size_ / 2;
-        sai_handles[1].InternalCallback(sai_handles[1].dma_offset);
+        sai_handles[1].InternalCallbackRx(sai_handles[1].dma_offset);
+    }
+}
+
+extern "C" void HAL_SAI_TxHalfCpltCallback(SAI_HandleTypeDef* hsai)
+{
+    if(hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B)
+    {
+        sai_handles[0].InternalCallbackTx(0);
+    }
+    else if(hsai->Instance == SAI2_Block_A || hsai->Instance == SAI2_Block_B)
+    {
+        sai_handles[1].InternalCallbackTx(0);
+    }
+}
+
+extern "C" void HAL_SAI_TxCpltCallback(SAI_HandleTypeDef* hsai)
+{
+    if(hsai->Instance == SAI1_Block_A || hsai->Instance == SAI1_Block_B)
+    {
+        sai_handles[0].InternalCallbackTx(sai_handles[0].buff_size_ / 2);
+    }
+    else if(hsai->Instance == SAI2_Block_A || hsai->Instance == SAI2_Block_B)
+    {
+        sai_handles[1].InternalCallbackTx(sai_handles[1].buff_size_ / 2);
     }
 }
 
@@ -577,6 +619,10 @@ float SaiHandle::GetBlockRate()
 size_t SaiHandle::GetOffset() const
 {
     return pimpl_->dma_offset;
+}
+
+void SaiHandle::SetIntermediateBuffer(int32_t* buffer) {
+    pimpl_->SetIntermediateBuffer(buffer);
 }
 
 
