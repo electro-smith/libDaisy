@@ -120,6 +120,7 @@ void Logger<dest>::AppendNewLine()
 template class Logger<LOGGER_INTERNAL>;
 template class Logger<LOGGER_EXTERNAL>;
 template class Logger<LOGGER_SEMIHOST>;
+template class Logger<LOGGER_RTT>;
 
 /** LoggerImpl static member variables */
 UsbHandle LoggerImpl<LOGGER_INTERNAL>::usb_handle_;
