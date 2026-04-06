@@ -181,7 +181,7 @@ namespace patch_sm
         dac_config.bitdepth = DacHandle::BitDepth::
             BITS_12; /**< Sets the output value to 0-4095 */
         dac_config.chn               = DacHandle::Channel::BOTH;
-        dac_config.buff_state        = DacHandle::BufferState::ENABLED;
+        dac_config.buff_state        = DacHandle::BufferState::DISABLED;    //  Internal buffer disabled on Patch_SM
         dac_config.target_samplerate = 48000;
         dac_.Init(dac_config);
     }
