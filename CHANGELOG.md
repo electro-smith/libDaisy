@@ -5,6 +5,7 @@
 ## v8.1.0
 
 ### Features
+- Add an optional conversion complete callback to `AdcHandle::Start()`
 
 - Audio Files: Reworked WavPlayer, added helpful utilies for working with WAV files (WavParser, FileTable), and added examples for demonstrating their usage.
 - SDMMC: HAL_SD_ErrorCallback is now being handled to help with error handling
