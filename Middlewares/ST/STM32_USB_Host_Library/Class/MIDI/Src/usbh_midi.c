@@ -54,6 +54,7 @@ static USBH_StatusTypeDef USBH_MIDI_InterfaceInit(USBH_HandleTypeDef *phost)
     MIDI_Handle = (MIDI_HandleTypeDef*)phost->pActiveClass->pData;
     USBH_memset(MIDI_Handle, 0, sizeof(MIDI_HandleTypeDef));
 
+    /* Find MIDI Streaming interface (Alt 0 first) */
     uint8_t interface = USBH_FindInterface(phost, phost->pActiveClass->ClassCode,
             USB_MIDI_STREAMING_SUBCLASS, 0xFFU);
 
@@ -61,10 +62,52 @@ static USBH_StatusTypeDef USBH_MIDI_InterfaceInit(USBH_HandleTypeDef *phost)
         USBH_DbgLog("Cannot find interface for %s class.", phost->pActiveClass->Name);
         return USBH_FAIL;
     }
-    status = USBH_SelectInterface(phost, interface);
+
+    /* Check if device has Alt 1 (MIDI 2.0 UMP). USBH_SelectInterface
+     * bounds-checks against CfgDesc.bNumInterfaces, which counts unique
+     * interface numbers (NOT entries in Itf_Desc[]), so the Alt 1 index
+     * would always fail that check. Pass the Alt 0 index to satisfy the
+     * bounds check; the Alt 1 index drives the endpoint scan + SET_INTERFACE
+     * below. */
+    uint8_t alt0_idx = interface;
+    uint8_t ifnum = phost->device.CfgDesc.Itf_Desc[interface].bInterfaceNumber;
+    uint8_t alt1_idx = USBH_FindInterfaceIndex(phost, ifnum, 1U);
+    uint8_t use_alt = 0U;
+
+    if (alt1_idx != 0xFFU) {
+        /* Device supports MIDI 2.0 -- the endpoint scan will use Alt 1 */
+        interface = alt1_idx;
+        use_alt = 1U;
+        USBH_UsrLog("MIDI 2.0 Alt 1 found, selecting UMP mode");
+    }
+
+    status = USBH_SelectInterface(phost, alt0_idx);
     if (status != USBH_OK) {
         return USBH_FAIL;
     }
+
+    /* Send SET_INTERFACE if using Alt 1. USBH_SetInterface is async via
+     * USBH_CtlReq; calling it once just queues the transfer. We must
+     * drive it to completion BEFORE opening the IN/OUT pipes below,
+     * otherwise the host opens Alt 1 pipes while the device is still
+     * on Alt 0 and the device sends nothing on those pipes. */
+    if (use_alt == 1U) {
+        USBH_StatusTypeDef setif_status;
+        uint32_t setif_start = HAL_GetTick();
+        do {
+            setif_status = USBH_SetInterface(phost, ifnum, 1U);
+            USBH_Delay(1U);
+            if ((HAL_GetTick() - setif_start) > 100U) {
+                USBH_ErrLog("SET_INTERFACE Alt 1 timeout");
+                break;
+            }
+        } while (setif_status == USBH_BUSY);
+        if (setif_status != USBH_OK) {
+            USBH_ErrLog("SET_INTERFACE Alt 1 failed");
+        }
+    }
+
+    MIDI_Handle->altSetting = use_alt;
 
     /* Find the endpoints */
     for (int ep = 0; ep < phost->device.CfgDesc.Itf_Desc[interface].bNumEndpoints; ++ep) {
@@ -179,6 +222,7 @@ static USBH_StatusTypeDef USBH_MIDI_Process(USBH_HandleTypeDef *phost)
                     hMidi->callback(hMidi->rxBuffer, sz, hMidi->pUser);
                 }
             } else {
+                USBH_ErrLog("MIDI URB unexpected state=%u", (unsigned)rxStatus);
                 hMidi->state = MIDI_RX_ERROR;
                 error = USBH_FAIL;
             }
@@ -209,6 +253,15 @@ static USBH_StatusTypeDef USBH_MIDI_SOFProcess(USBH_HandleTypeDef *phost)
     /* Prevent unused argument(s) compilation warning */
     UNUSED(phost);
     return USBH_OK;
+}
+
+uint8_t USBH_MIDI_GetAltSetting(USBH_HandleTypeDef *phost)
+{
+    MIDI_HandleTypeDef *hMidi = (MIDI_HandleTypeDef*)phost->pActiveClass->pData;
+    if (hMidi) {
+        return hMidi->altSetting;
+    }
+    return 0U;
 }
 
 void USBH_MIDI_SetReceiveCallback(USBH_HandleTypeDef *phost, USBH_MIDI_RxCallback cb, void* pUser)

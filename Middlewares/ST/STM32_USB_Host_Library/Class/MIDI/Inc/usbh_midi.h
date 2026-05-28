@@ -61,6 +61,7 @@ typedef struct _MIDI_Process {
     USBH_MIDI_RxCallback callback;
     void* pUser;
     uint8_t rxBuffer[USBH_MIDI_RX_BUF_SIZE];
+    uint8_t              altSetting;  /* 0 = MIDI 1.0, 1 = MIDI 2.0 UMP */
 } MIDI_HandleTypeDef;
 
 /* MIDI Class Codes */
@@ -71,6 +72,7 @@ extern USBH_ClassTypeDef  USBH_midi;
 #define USBH_MIDI_CLASS   &USBH_midi
 
 uint8_t USBH_MIDI_IsReady(USBH_HandleTypeDef *phost);
+uint8_t USBH_MIDI_GetAltSetting(USBH_HandleTypeDef *phost);
 
 MIDI_ErrorTypeDef USBH_MIDI_Transmit(USBH_HandleTypeDef *phost,
         uint8_t* data, size_t len);
