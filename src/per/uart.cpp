@@ -727,7 +727,8 @@ pin_alt usart6_pins_rx[]
 
 pin_alt uart7_pins_tx[]
     = {{Pin(PORTB, 4), GPIO_AF11_UART7}, pins_none, pins_none};
-pin_alt uart7_pins_rx[] = {pins_none, pins_none, pins_none};
+pin_alt uart7_pins_rx[]
+    = {{Pin(PORTA, 8), GPIO_AF11_UART7}, pins_none, pins_none};
 
 pin_alt uart8_pins_tx[] = {pins_none, pins_none, pins_none};
 pin_alt uart8_pins_rx[] = {pins_none, pins_none, pins_none};

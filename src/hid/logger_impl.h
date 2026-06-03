@@ -2,9 +2,12 @@
 #ifndef __DSY_LOGGER_IMPL_H
 #define __DSY_LOGGER_IMPL_H
 #include <unistd.h>
+#include <cstdint>
 #include <cassert>
 #include "hid/usb.h"
+#include "per/uart.h"
 #include "sys/system.h"
+#include "daisy_core.h"
 
 
 namespace daisy
@@ -17,6 +20,7 @@ enum LoggerDestination
     LOGGER_INTERNAL, /**< internal USB port */
     LOGGER_EXTERNAL, /**< external USB port */
     LOGGER_SEMIHOST, /**< stdout */
+    LOGGER_UART,     /**< uart */
 };
 
 /** @brief Logging I/O underlying implementation
@@ -63,7 +67,7 @@ class LoggerImpl<LOGGER_INTERNAL>
     }
 
   protected:
-    /** USB Handle for CDC transfers 
+    /** USB Handle for CDC transfers
      */
     static UsbHandle usb_handle_;
 };
@@ -95,7 +99,7 @@ class LoggerImpl<LOGGER_EXTERNAL>
     }
 
   protected:
-    /** USB Handle for CDC transfers 
+    /** USB Handle for CDC transfers
      */
     static UsbHandle usb_handle_;
 };
@@ -118,6 +122,49 @@ class LoggerImpl<LOGGER_SEMIHOST>
         write(STDOUT_FILENO, buffer, bytes);
         return true;
     }
+};
+
+/** @brief Specialization for UART */
+template <>
+class LoggerImpl<LOGGER_UART>
+{
+  public:
+    struct Config
+    {
+        UartHandler::Config::Peripheral uart;
+        Pin                             tx_pin;
+        uint32_t                        baudrate = 115200;
+    };
+
+    /** Unique to this variant, this should be called ahead of initialization */
+    static void Configure(const Config cfg) { config_ = cfg; }
+
+
+    /** Initialize the logging destination */
+    static void Init()
+    {
+        if(!config_.tx_pin.IsValid())
+            return;
+        UartHandler::Config uart_cfg;
+        uart_cfg.mode          = UartHandler::Config::Mode::TX;
+        uart_cfg.periph        = config_.uart;
+        uart_cfg.pin_config.tx = config_.tx_pin;
+        uart_cfg.baudrate      = config_.baudrate;
+        uart_.Init(uart_cfg);
+    }
+
+    /** Transmit a block of data */
+    static bool Transmit(const void* buffer, size_t bytes)
+    {
+        // should probably update BlockingTransmit's buffer param to be const..
+        uart_.BlockingTransmit((uint8_t*)(buffer), bytes);
+        return true;
+    }
+
+
+  protected:
+    static Config      config_;
+    static UartHandler uart_;
 };
 
 
