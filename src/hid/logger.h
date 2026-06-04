@@ -86,6 +86,7 @@ class Logger
 
     /**  Start the logging session.
      * \param wait_for_pc block until remote terminal is ready
+     * (this param has no effect when using the UART destination)
      */
     static void StartLog(bool wait_for_pc = false);
 

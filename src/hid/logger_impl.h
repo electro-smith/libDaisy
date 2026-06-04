@@ -156,9 +156,8 @@ class LoggerImpl<LOGGER_UART>
     /** Transmit a block of data */
     static bool Transmit(const void* buffer, size_t bytes)
     {
-        // should probably update BlockingTransmit's buffer param to be const..
-        uart_.BlockingTransmit((uint8_t*)(buffer), bytes);
-        return true;
+        return uart_.BlockingTransmit((uint8_t*)(buffer), bytes, 20)
+               == UartHandler::Result::OK;
     }
 
 
