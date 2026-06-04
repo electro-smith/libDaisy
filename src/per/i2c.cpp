@@ -1,9 +1,84 @@
 #include "per/i2c.h"
 #include "sys/system.h"
 #include "util/scopedirqblocker.h"
+#include "daisy_core.h"
 
 namespace daisy
 {
+/** pin type for pin-map arbitration */
+enum class I2CPinType : uint8_t
+{
+    SCL,
+    SDA
+};
+
+/** Entry for array of pin mappings */
+struct I2CPinEntry
+{
+    Pin                           pin;
+    I2CHandle::Config::Peripheral periph;
+    I2CPinType                    type;
+    uint8_t                       af;
+};
+
+/** Map containing valid GPIO and their Alternate Function values */
+static constexpr I2CPinEntry kI2CPinMap[] = {
+    {Pin(PORTB, 6),
+     I2CHandle::Config::Peripheral::I2C_1,
+     I2CPinType::SCL,
+     GPIO_AF4_I2C1},
+    {Pin(PORTB, 6),
+     I2CHandle::Config::Peripheral::I2C_4,
+     I2CPinType::SCL,
+     GPIO_AF6_I2C4},
+    {Pin(PORTB, 7),
+     I2CHandle::Config::Peripheral::I2C_1,
+     I2CPinType::SDA,
+     GPIO_AF4_I2C1},
+    {Pin(PORTB, 7),
+     I2CHandle::Config::Peripheral::I2C_4,
+     I2CPinType::SDA,
+     GPIO_AF6_I2C4},
+    {Pin(PORTB, 8),
+     I2CHandle::Config::Peripheral::I2C_1,
+     I2CPinType::SCL,
+     GPIO_AF4_I2C1},
+    {Pin(PORTB, 8),
+     I2CHandle::Config::Peripheral::I2C_4,
+     I2CPinType::SCL,
+     GPIO_AF6_I2C4},
+    {Pin(PORTB, 9),
+     I2CHandle::Config::Peripheral::I2C_1,
+     I2CPinType::SDA,
+     GPIO_AF4_I2C1},
+    {Pin(PORTB, 9),
+     I2CHandle::Config::Peripheral::I2C_4,
+     I2CPinType::SDA,
+     GPIO_AF6_I2C4},
+    {Pin(PORTD, 12),
+     I2CHandle::Config::Peripheral::I2C_4,
+     I2CPinType::SCL,
+     GPIO_AF4_I2C4},
+    {Pin(PORTD, 13),
+     I2CHandle::Config::Peripheral::I2C_4,
+     I2CPinType::SDA,
+     GPIO_AF4_I2C4},
+};
+
+/** Searches the pin map for a match, and returns the alternate function for that configuration.
+ *  If no match is found, AF4 is returned (all AF4_I2Cx in STM32HAL are the same value).
+ */
+constexpr uint8_t
+FindAltFn(const Pin& p, I2CHandle::Config::Peripheral periph, I2CPinType type)
+{
+    for(const auto& entry : kI2CPinMap)
+    {
+        if(entry.pin == p && entry.periph == periph && entry.type == type)
+            return entry.af;
+    }
+    return GPIO_AF4_I2C1;
+}
+
 /** Private implementation for I2CHandle */
 class I2CHandle::Impl
 {
@@ -614,27 +689,15 @@ void I2CHandle::Impl::InitPins()
     GPIO_InitStruct.Mode  = GPIO_MODE_AF_OD;
     GPIO_InitStruct.Pull  = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    switch(config_.periph)
-    {
-        case I2CHandle::Config::Peripheral::I2C_1:
-            GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
-            break;
-        case I2CHandle::Config::Peripheral::I2C_2:
-            GPIO_InitStruct.Alternate = GPIO_AF4_I2C2;
-            break;
-        case I2CHandle::Config::Peripheral::I2C_3:
-            GPIO_InitStruct.Alternate = GPIO_AF4_I2C3;
-            break;
-        case I2CHandle::Config::Peripheral::I2C_4:
-            GPIO_InitStruct.Alternate = GPIO_AF6_I2C4;
-            break;
-        default: break;
-    }
 
-    port                = GetHALPort(config_.pin_config.scl);
+    port = GetHALPort(config_.pin_config.scl);
+    GPIO_InitStruct.Alternate
+        = FindAltFn(config_.pin_config.scl, config_.periph, I2CPinType::SCL);
     GPIO_InitStruct.Pin = GetHALPin(config_.pin_config.scl);
     HAL_GPIO_Init(port, &GPIO_InitStruct);
-    port                = GetHALPort(config_.pin_config.sda);
+    port = GetHALPort(config_.pin_config.sda);
+    GPIO_InitStruct.Alternate
+        = FindAltFn(config_.pin_config.sda, config_.periph, I2CPinType::SDA);
     GPIO_InitStruct.Pin = GetHALPin(config_.pin_config.sda);
     HAL_GPIO_Init(port, &GPIO_InitStruct);
 }
