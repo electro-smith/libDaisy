@@ -165,6 +165,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a70befe498a6682827795b11aadab3008"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4efe4e3a339e8536d61acee15b5ac233" id="r_a4efe4e3a339e8536d61acee15b5ac233"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4efe4e3a339e8536d61acee15b5ac233">PrintLineV</a> (const char *format, va_list va)</td></tr>
 <tr class="separator:a4efe4e3a339e8536d61acee15b5ac233"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55aa6dc1cea524c88cd96ccdb78320bc" id="r_a55aa6dc1cea524c88cd96ccdb78320bc"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9">LoggerDestination</a> D = dest&gt; </td></tr>
+<tr class="memitem:a55aa6dc1cea524c88cd96ccdb78320bc"><td class="memTemplItemLeft" align="right" valign="top">static std::enable_if_t&lt; D==<a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a55c9be7c01048f9d60fc6c703c9634d6">LOGGER_UART</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a55aa6dc1cea524c88cd96ccdb78320bc">Configure</a> (const <a class="el" href="classdaisy_1_1_logger_impl.html">LoggerImpl</a>&lt; <a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a55c9be7c01048f9d60fc6c703c9634d6">LOGGER_UART</a> &gt;::Config cfg)</td></tr>
+<tr class="separator:a55aa6dc1cea524c88cd96ccdb78320bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-types" name="pro-types"></a>
 Protected Types</h2></td></tr>
@@ -281,6 +284,36 @@ template&lt;<a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cb
 </table>
 </div><div class="memdoc">
 <p>Trim control characters and append clean newline sequence, if there's room in the buffer </p>
+
+</div>
+</div>
+<a id="a55aa6dc1cea524c88cd96ccdb78320bc" name="a55aa6dc1cea524c88cd96ccdb78320bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55aa6dc1cea524c88cd96ccdb78320bc">&#9670;&#160;</a></span>Configure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9">LoggerDestination</a> dest = LOGGER_INTERNAL&gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9">LoggerDestination</a> D = dest&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::enable_if_t&lt; D==<a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a55c9be7c01048f9d60fc6c703c9634d6">LOGGER_UART</a> &gt; <a class="el" href="classdaisy_1_1_logger.html">daisy::Logger</a>&lt; dest &gt;::Configure </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classdaisy_1_1_logger_impl.html">LoggerImpl</a>&lt; <a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a55c9be7c01048f9d60fc6c703c9634d6">LOGGER_UART</a> &gt;::Config</td>          <td class="paramname"><span class="paramname"><em>cfg</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Configuration specialization for UART Logging Only available for UART logger. </p>
 
 </div>
 </div>
@@ -467,7 +500,7 @@ template&lt;<a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cb
 </div><div class="memdoc">
 <p>Start the logging session. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">wait_for_pc</td><td>block until remote terminal is ready </td></tr>
+    <tr><td class="paramname">wait_for_pc</td><td>block until remote terminal is ready (this param has no effect when using the UART destination) </td></tr>
   </table>
   </dd>
 </dl>

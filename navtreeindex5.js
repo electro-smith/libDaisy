@@ -1,5 +1,6 @@
 var NAVTREEINDEX5 =
 {
+"icm20948_8h.html#ac5176e273d765b589bba7edf5043fed9":[16,0,1,0,8,31],
 "icm20948_8h.html#ac9ff5cb907dc948fcb30ed233b07a5fa":[16,0,1,0,8,37],
 "icm20948_8h.html#ad0135be6f9474c56ec39c8a3cbc443b9":[16,0,1,0,8,41],
 "icm20948_8h.html#ad164a5c09071eea2d6ac9747835b395c":[16,0,1,0,8,42],
@@ -33,12 +34,13 @@ var NAVTREEINDEX5 =
 "logger_8h.html#a134c045cf9a5d26679149bcac73b386f":[16,0,1,1,6,0],
 "logger_8h_source.html":[16,0,1,1,6],
 "logger__impl_8h.html":[16,0,1,1,7],
-"logger__impl_8h.html#a1c3b206bedb5432fc7b46e4f1cbce8f9":[16,0,1,1,7,5],
-"logger__impl_8h.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a00331b25c8a9c6e3210b61e137eab738":[16,0,1,1,7,5,1],
-"logger__impl_8h.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a514faa079167bd6603fdc2f5fdbc9e31":[16,0,1,1,7,5,2],
-"logger__impl_8h.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a6e8f437322ea4b40e3e85b1f61bfba70":[16,0,1,1,7,5,3],
-"logger__impl_8h.html#a1c3b206bedb5432fc7b46e4f1cbce8f9abe26e3f70c7a279f12261780a9dbc7d6":[16,0,1,1,7,5,0],
-"logger__impl_8h.html#a43b6b6c2a6d1a3e4bb1bc6f78f6c966e":[16,0,1,1,7,4],
+"logger__impl_8h.html#a1c3b206bedb5432fc7b46e4f1cbce8f9":[16,0,1,1,7,7],
+"logger__impl_8h.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a00331b25c8a9c6e3210b61e137eab738":[16,0,1,1,7,7,1],
+"logger__impl_8h.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a514faa079167bd6603fdc2f5fdbc9e31":[16,0,1,1,7,7,2],
+"logger__impl_8h.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a55c9be7c01048f9d60fc6c703c9634d6":[16,0,1,1,7,7,4],
+"logger__impl_8h.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a6e8f437322ea4b40e3e85b1f61bfba70":[16,0,1,1,7,7,3],
+"logger__impl_8h.html#a1c3b206bedb5432fc7b46e4f1cbce8f9abe26e3f70c7a279f12261780a9dbc7d6":[16,0,1,1,7,7,0],
+"logger__impl_8h.html#a43b6b6c2a6d1a3e4bb1bc6f78f6c966e":[16,0,1,1,7,6],
 "logger__impl_8h_source.html":[16,0,1,1,7],
 "max11300_8h.html":[16,0,1,0,11],
 "max11300_8h.html#a24cefdb4cc0f16357cc883d597243a81":[16,0,1,0,11,19],
@@ -247,7 +249,5 @@ var NAVTREEINDEX5 =
 "oled__color__display_8h.html":[16,0,1,1,0,3],
 "oled__color__display_8h_source.html":[16,0,1,1,0,3],
 "oled__display_8h.html":[16,0,1,1,0,4],
-"oled__display_8h.html#a17ac7515457b57899f133df8f905f485":[16,0,1,1,0,4,1],
-"oled__display_8h_source.html":[16,0,1,1,0,4],
-"oled__fonts_8h.html":[16,0,1,5,9]
+"oled__display_8h.html#a17ac7515457b57899f133df8f905f485":[16,0,1,1,0,4,1]
 };

@@ -39,6 +39,7 @@ var hierarchy =
     [ "daisy::Icm20948I2CTransport::Config", "structdaisy_1_1_icm20948_i2_c_transport_1_1_config.html", null ],
     [ "daisy::Icm20948SpiTransport::Config", "structdaisy_1_1_icm20948_spi_transport_1_1_config.html", null ],
     [ "daisy::LcdHD44780::Config", "structdaisy_1_1_lcd_h_d44780_1_1_config.html", null ],
+    [ "daisy::LoggerImpl< LOGGER_UART >::Config", "structdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___u_a_r_t_01_4_1_1_config.html", null ],
     [ "daisy::MAX11300Driver< Transport, num_devices >::Config", "structdaisy_1_1_m_a_x11300_driver_1_1_config.html", null ],
     [ "daisy::MAX11300MultiSlaveSpiTransport::Config< numDevices >", "structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config.html", null ],
     [ "daisy::Mcp23017Transport::Config", "structdaisy_1_1_mcp23017_transport_1_1_config.html", null ],
@@ -146,6 +147,7 @@ var hierarchy =
     [ "daisy::LoggerImpl< LOGGER_EXTERNAL >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___e_x_t_e_r_n_a_l_01_4.html", null ],
     [ "daisy::LoggerImpl< LOGGER_INTERNAL >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___i_n_t_e_r_n_a_l_01_4.html", null ],
     [ "daisy::LoggerImpl< LOGGER_SEMIHOST >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___s_e_m_i_h_o_s_t_01_4.html", null ],
+    [ "daisy::LoggerImpl< LOGGER_UART >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___u_a_r_t_01_4.html", null ],
     [ "daisy::MappedValue", "classdaisy_1_1_mapped_value.html", [
       [ "daisy::MappedFloatValue", "classdaisy_1_1_mapped_float_value.html", null ],
       [ "daisy::MappedIntValue", "classdaisy_1_1_mapped_int_value.html", null ],

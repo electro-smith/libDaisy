@@ -64,6 +64,7 @@ var annotated_dup =
       [ "LoggerImpl< LOGGER_EXTERNAL >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___e_x_t_e_r_n_a_l_01_4.html", null ],
       [ "LoggerImpl< LOGGER_INTERNAL >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___i_n_t_e_r_n_a_l_01_4.html", null ],
       [ "LoggerImpl< LOGGER_SEMIHOST >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___s_e_m_i_h_o_s_t_01_4.html", null ],
+      [ "LoggerImpl< LOGGER_UART >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___u_a_r_t_01_4.html", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___u_a_r_t_01_4" ],
       [ "MappedFloatValue", "classdaisy_1_1_mapped_float_value.html", "classdaisy_1_1_mapped_float_value" ],
       [ "MappedIntValue", "classdaisy_1_1_mapped_int_value.html", "classdaisy_1_1_mapped_int_value" ],
       [ "MappedStringListValue", "classdaisy_1_1_mapped_string_list_value.html", "classdaisy_1_1_mapped_string_list_value" ],

@@ -114,9 +114,12 @@ $(function(){initNavTree('logger__impl_8h.html',''); initResizable(true); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;unistd.h&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;cassert&gt;</code><br />
 <code>#include &quot;<a class="el" href="usb_8h_source.html">hid/usb.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="uart_8h_source.html">per/uart.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="system_8h_source.html">sys/system.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="daisy__core_8h_source.html">daisy_core.h</a>&quot;</code><br />
 </div>
 <p><a href="logger__impl_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -134,6 +137,11 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___s_e_m_i_h_o_s_t_01_4.html">daisy::LoggerImpl&lt; LOGGER_SEMIHOST &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization for semihosting (stdout)  <a href="classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___s_e_m_i_h_o_s_t_01_4.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___u_a_r_t_01_4.html">daisy::LoggerImpl&lt; LOGGER_UART &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specialization for UART.  <a href="classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___u_a_r_t_01_4.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___u_a_r_t_01_4_1_1_config.html">daisy::LoggerImpl&lt; LOGGER_UART &gt;::Config</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -148,10 +156,14 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a1c3b206bedb5432fc7b46e4f1cbce8f9" id="r_a1c3b206bedb5432fc7b46e4f1cbce8f9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9">daisy::LoggerDestination</a> { <a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9abe26e3f70c7a279f12261780a9dbc7d6">daisy::LOGGER_NONE</a>
+<tr class="memitem:a1c3b206bedb5432fc7b46e4f1cbce8f9" id="r_a1c3b206bedb5432fc7b46e4f1cbce8f9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9">daisy::LoggerDestination</a> { <br />
+&#160;&#160;<a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9abe26e3f70c7a279f12261780a9dbc7d6">daisy::LOGGER_NONE</a>
 , <a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a00331b25c8a9c6e3210b61e137eab738">daisy::LOGGER_INTERNAL</a>
 , <a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a514faa079167bd6603fdc2f5fdbc9e31">daisy::LOGGER_EXTERNAL</a>
 , <a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a6e8f437322ea4b40e3e85b1f61bfba70">daisy::LOGGER_SEMIHOST</a>
+, <br />
+&#160;&#160;<a class="el" href="namespacedaisy.html#a1c3b206bedb5432fc7b46e4f1cbce8f9a55c9be7c01048f9d60fc6c703c9634d6">daisy::LOGGER_UART</a>
+<br />
  }</td></tr>
 <tr class="separator:a1c3b206bedb5432fc7b46e4f1cbce8f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
