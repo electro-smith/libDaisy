@@ -55,6 +55,14 @@ static constexpr I2CPinEntry kI2CPinMap[] = {
      I2CHandle::Config::Peripheral::I2C_4,
      I2CPinType::SDA,
      GPIO_AF6_I2C4},
+    {Pin(PORTB, 10),
+     I2CHandle::Config::Peripheral::I2C_2,
+     I2CPinType::SCL,
+     GPIO_AF4_I2C2},
+    {Pin(PORTB, 11),
+     I2CHandle::Config::Peripheral::I2C_2,
+     I2CPinType::SDA,
+     GPIO_AF4_I2C2},
     {Pin(PORTD, 12),
      I2CHandle::Config::Peripheral::I2C_4,
      I2CPinType::SCL,
@@ -63,6 +71,10 @@ static constexpr I2CPinEntry kI2CPinMap[] = {
      I2CHandle::Config::Peripheral::I2C_4,
      I2CPinType::SDA,
      GPIO_AF4_I2C4},
+    {Pin(PORTH, 4),
+     I2CHandle::Config::Peripheral::I2C_2,
+     I2CPinType::SCL,
+     GPIO_AF4_I2C2},
 };
 
 /** Searches the pin map for a match, and returns the alternate function for that configuration.
