@@ -70,7 +70,7 @@ class MidiUsbTransport
 
     MidiUsbTransport() : pimpl_(nullptr) {}
     ~MidiUsbTransport() {}
-    MidiUsbTransport(const MidiUsbTransport& other)            = default;
+    MidiUsbTransport(const MidiUsbTransport& other) = default;
     MidiUsbTransport& operator=(const MidiUsbTransport& other) = default;
 
   private:

@@ -24,7 +24,7 @@ extern "C"
 
     CDC_ReceiveCallback rxcallback;
 
-    uint8_t usbd_mode = USBD_MODE_CDC;
+    uint8_t usbd_mode              = USBD_MODE_CDC;
     uint8_t usbd_midi2_alt_setting = 0;
 }
 
