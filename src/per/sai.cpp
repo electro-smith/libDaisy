@@ -115,6 +115,9 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
             break;
         default: break;
     }
+    const bool both_blocks_slave = config.a_sync == Config::Sync::SLAVE
+                                   && config.b_sync == Config::Sync::SLAVE;
+
     // Audio Mode A
     if(config.a_sync == Config::Sync::MASTER)
     {
@@ -128,6 +131,8 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
         sai_a_handle_.Init.AudioMode
             = config.a_dir == Config::Direction::TRANSMIT ? SAI_MODESLAVE_TX
                                                           : SAI_MODESLAVE_RX;
+        // In external-clock dual-slave mode, Block A follows Block B since pins
+        // exposed on SOMs are mostly from the Block B.
         sai_a_handle_.Init.Synchro = SAI_SYNCHRONOUS;
     }
     // Audio Mode B
@@ -143,7 +148,9 @@ SaiHandle::Result SaiHandle::Impl::Init(const SaiHandle::Config& config)
         sai_b_handle_.Init.AudioMode
             = config.b_dir == Config::Direction::TRANSMIT ? SAI_MODESLAVE_TX
                                                           : SAI_MODESLAVE_RX;
-        sai_b_handle_.Init.Synchro = SAI_SYNCHRONOUS;
+        // When no channel is the master, B will remain async.
+        sai_b_handle_.Init.Synchro
+            = both_blocks_slave ? SAI_ASYNCHRONOUS : SAI_SYNCHRONOUS;
     }
     // Bitdepth / protocol (currently based on bitdepth..)
     // TODO probably split these up for better flexibility..
@@ -303,33 +310,47 @@ SaiHandle::Impl::StartDmaTransfer(int32_t*                       buffer_rx,
     buff_size_ = size;
     callback_  = callback;
 
-    // This assumes there will be one master and one slave
-    if(config_.a_sync == Config::Sync::SLAVE)
+    const bool a_slave = config_.a_sync == Config::Sync::SLAVE;
+    const bool b_slave = config_.b_sync == Config::Sync::SLAVE;
+
+    auto start_block
+        = [&](SAI_HandleTypeDef* hsai, Config::Direction dir) -> bool {
+        HAL_StatusTypeDef status
+            = dir == Config::Direction::RECEIVE
+                  ? HAL_SAI_Receive_DMA(hsai, (uint8_t*)buffer_rx, size)
+                  : HAL_SAI_Transmit_DMA(hsai, (uint8_t*)buffer_tx, size);
+        return status == HAL_OK;
+    };
+
+    // Start synchronous slave before its source when there is one master/async block.
+    // In dual-slave external-clock mode, start B first because A is configured synchronous to B.
+    if(a_slave && b_slave)
     {
-        config_.a_dir == Config::Direction::RECEIVE
-            ? HAL_SAI_Receive_DMA(&sai_a_handle_, (uint8_t*)buffer_rx, size)
-            : HAL_SAI_Transmit_DMA(&sai_a_handle_, (uint8_t*)buffer_tx, size);
-        config_.b_dir == Config::Direction::RECEIVE
-            ? HAL_SAI_Receive_DMA(&sai_b_handle_, (uint8_t*)buffer_rx, size)
-            : HAL_SAI_Transmit_DMA(&sai_b_handle_, (uint8_t*)buffer_tx, size);
+        if(!start_block(&sai_b_handle_, config_.b_dir)
+           || !start_block(&sai_a_handle_, config_.a_dir))
+            return Result::ERR;
+    }
+    else if(a_slave)
+    {
+        if(!start_block(&sai_a_handle_, config_.a_dir)
+           || !start_block(&sai_b_handle_, config_.b_dir))
+            return Result::ERR;
     }
     else
     {
-        config_.b_dir == Config::Direction::RECEIVE
-            ? HAL_SAI_Receive_DMA(&sai_b_handle_, (uint8_t*)buffer_rx, size)
-            : HAL_SAI_Transmit_DMA(&sai_b_handle_, (uint8_t*)buffer_tx, size);
-        config_.a_dir == Config::Direction::RECEIVE
-            ? HAL_SAI_Receive_DMA(&sai_a_handle_, (uint8_t*)buffer_rx, size)
-            : HAL_SAI_Transmit_DMA(&sai_a_handle_, (uint8_t*)buffer_tx, size);
+        if(!start_block(&sai_b_handle_, config_.b_dir)
+           || !start_block(&sai_a_handle_, config_.a_dir))
+            return Result::ERR;
     }
 
     return Result::OK;
 }
 SaiHandle::Result SaiHandle::Impl::StopDmaTransfer()
 {
-    HAL_SAI_DMAStop(&sai_a_handle_);
-    HAL_SAI_DMAStop(&sai_b_handle_);
-    return Result::OK;
+    HAL_StatusTypeDef status_a = HAL_SAI_DMAStop(&sai_a_handle_);
+    HAL_StatusTypeDef status_b = HAL_SAI_DMAStop(&sai_b_handle_);
+    return (status_a == HAL_OK && status_b == HAL_OK) ? Result::OK
+                                                      : Result::ERR;
 }
 
 float SaiHandle::Impl::GetSampleRate()
