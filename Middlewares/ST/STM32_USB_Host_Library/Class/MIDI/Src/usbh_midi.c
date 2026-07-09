@@ -217,9 +217,20 @@ static USBH_StatusTypeDef USBH_MIDI_Process(USBH_HandleTypeDef *phost)
                 hMidi->state = MIDI_RX_POLL;
             } else if (rxStatus == USBH_URB_DONE) {
                 size_t sz = USBH_LL_GetLastXferSize(phost, hMidi->InPipe);
-                hMidi->state = MIDI_RX;
-                if (hMidi->callback) {
-                    hMidi->callback(hMidi->rxBuffer, sz, hMidi->pUser);
+                if (sz > USBH_MIDI_RX_BUF_SIZE) {
+                    sz = USBH_MIDI_RX_BUF_SIZE;
+                }
+                /* Copy out and re-arm before the callback so the pipe is
+                   never idle while a packet is processed (the device would
+                   otherwise NAK and drop under load). */
+                if (sz > 0U) {
+                    USBH_memcpy(hMidi->procBuffer, hMidi->rxBuffer, sz);
+                }
+                USBH_BulkReceiveData(phost, hMidi->rxBuffer, hMidi->InEpSize,
+                        hMidi->InPipe);
+                hMidi->state = MIDI_RX_POLL;
+                if (sz > 0U && hMidi->callback) {
+                    hMidi->callback(hMidi->procBuffer, sz, hMidi->pUser);
                 }
             } else {
                 USBH_ErrLog("MIDI URB unexpected state=%u", (unsigned)rxStatus);
@@ -275,28 +286,41 @@ void USBH_MIDI_SetReceiveCallback(USBH_HandleTypeDef *phost, USBH_MIDI_RxCallbac
 MIDI_ErrorTypeDef USBH_MIDI_Transmit(USBH_HandleTypeDef *phost, uint8_t* data, size_t len)
 {
     MIDI_HandleTypeDef *hMidi = (MIDI_HandleTypeDef*)phost->pActiveClass->pData;
-    int numUrbs = 0;
-    // This only blocks if data won't fit into one URB
     while(len)
     {
-        USBH_URBStateTypeDef txStatus = USBH_LL_GetURBState(phost, hMidi->OutPipe);
-        while(txStatus != USBH_URB_IDLE && txStatus != USBH_URB_DONE)
+        size_t cap = (hMidi->OutEpSize < USBH_MIDI_TX_BUF_SIZE)
+                         ? hMidi->OutEpSize : USBH_MIDI_TX_BUF_SIZE;
+        size_t sz  = (len <= cap) ? len : cap;
+
+        // Stage into the DMA-coherent handle buffer: the caller's buffer
+        // may be cached (AXI SRAM) and the OTG DMA does no cache
+        // maintenance, so it must read from the DMA section.
+        USBH_memcpy(hMidi->txBuffer, data, sz);
+        USBH_BulkSendData(phost, hMidi->txBuffer, (uint16_t)sz, hMidi->OutPipe, 1);
+
+        // Drive the OUT URB to completion: poll the URB state and resubmit
+        // on NOTREADY (device NAK). Without this the URB is submitted and
+        // abandoned, so a NAK is never retried and data never arrives.
+        uint32_t start = HAL_GetTick();
+        for(;;)
         {
-            if(txStatus == USBH_URB_ERROR || txStatus == USBH_URB_STALL)
+            USBH_URBStateTypeDef st
+                = USBH_LL_GetURBState(phost, hMidi->OutPipe);
+            if(st == USBH_URB_DONE)
+                break;
+            if(st == USBH_URB_ERROR || st == USBH_URB_STALL)
             {
                 USBH_ClrFeature(phost, hMidi->OutEp);
                 return MIDI_ERROR;
             }
-            if(numUrbs == 0)
+            if(st == USBH_URB_NOTREADY)
+                USBH_BulkSendData(phost, hMidi->txBuffer, (uint16_t)sz, hMidi->OutPipe, 1);
+            if((HAL_GetTick() - start) > 50U)
                 return MIDI_BUSY;
-
-            // Give previous URB time to complete
-            USBH_Delay(2);
+            USBH_Delay(1);
         }
-        size_t sz = (len <= hMidi->OutEpSize) ? len : hMidi->OutEpSize;
-        USBH_BulkSendData(phost, data, sz, hMidi->OutPipe, 1);
+        data += sz;
         len -= sz;
-        ++numUrbs;
     }
     return MIDI_OK;
 }
