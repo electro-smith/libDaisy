@@ -25,6 +25,7 @@ add_subdirectory(SerialRead)
 add_subdirectory(SR_4021)
 add_subdirectory(Switch)
 add_subdirectory(Switch3)
+add_subdirectory(TCA9534_GPIO)
 add_subdirectory(TIM_SingleCallback)
 
 # Folders
