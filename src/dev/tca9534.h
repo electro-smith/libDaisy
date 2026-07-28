@@ -97,8 +97,8 @@ class Tca9534
     /** Initialize and own a dedicated I2C peripheral. */
     void Init(const Config& config)
     {
-        address_   = config.i2c_address;
-        owns_i2c_  = true;
+        address_  = config.i2c_address;
+        owns_i2c_ = true;
         owned_i2c_.Init(config.i2c_config);
         i2c_ = &owned_i2c_;
         // Datasheet power-on: all pins inputs (0xFF), outputs low.
