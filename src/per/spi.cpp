@@ -788,16 +788,17 @@ static pin_alt_spi spi5_pins_nss[]
     = {pins_none_spi, pins_none_spi, pins_none_spi};
 
 /* ============== spi6 ============== */
-static pin_alt_spi spi6_pins_sclk[]
-    = {{Pin(PORTA, 5), GPIO_AF8_SPI6}, pins_none_spi, pins_none_spi};
+static pin_alt_spi spi6_pins_sclk[] = {{Pin(PORTA, 5), GPIO_AF8_SPI6},
+                                       {Pin(PORTG, 13), GPIO_AF5_SPI6},
+                                       pins_none_spi};
 
 static pin_alt_spi spi6_pins_miso[] = {{Pin(PORTB, 4), GPIO_AF8_SPI6},
                                        {Pin(PORTA, 6), GPIO_AF8_SPI6},
-                                       pins_none_spi};
+                                       {Pin(PORTG, 12), GPIO_AF5_SPI6}};
 
 static pin_alt_spi spi6_pins_mosi[] = {{Pin(PORTB, 5), GPIO_AF8_SPI6},
                                        {Pin(PORTA, 7), GPIO_AF8_SPI6},
-                                       pins_none_spi};
+                                       {Pin(PORTG, 14), GPIO_AF5_SPI6}};
 
 static pin_alt_spi spi6_pins_nss[]
     = {{Pin(PORTA, 4), GPIO_AF8_SPI6}, pins_none_spi, pins_none_spi};
@@ -1023,6 +1024,8 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* spiHandle)
         break;
         case SpiHandle::Config::Peripheral::SPI_6:
             __HAL_RCC_SPI6_CLK_ENABLE();
+            HAL_NVIC_SetPriority(SPI6_IRQn, 0, 0);
+            HAL_NVIC_EnableIRQ(SPI6_IRQn);
             break;
     }
 

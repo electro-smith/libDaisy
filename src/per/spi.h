@@ -137,10 +137,10 @@ class SpiHandle
     typedef void (*EndCallbackFunctionPtr)(void* context, Result result);
 
 
-    /** Blocking transmit 
+    /** Blocking transmit
     \param buff input buffer
     \param size  buffer size
-    \param timeout how long in milliseconds the function will wait 
+    \param timeout how long in milliseconds the function will wait
                    before returning without successful communication
     */
     Result BlockingTransmit(uint8_t* buff, size_t size, uint32_t timeout = 100);
@@ -157,7 +157,7 @@ class SpiHandle
     \param tx_buff the transmit buffer
     \param rx_buff the receive buffer
     \param size the length of the transaction
-    \param timeout how long in milliseconds the function will wait 
+    \param timeout how long in milliseconds the function will wait
                    before returning without successful communication
     */
     Result BlockingTransmitAndReceive(uint8_t* tx_buff,
@@ -165,14 +165,14 @@ class SpiHandle
                                       size_t   size,
                                       uint32_t timeout = 100);
 
-    /** DMA-based transmit 
+    /** DMA-based transmit
     \param *buff input buffer
     \param size  buffer size
     \param start_callback   A callback to execute when the transfer starts, or NULL.
                             The callback is called from an interrupt, so keep it fast.
     \param end_callback     A callback to execute when the transfer finishes, or NULL.
                             The callback is called from an interrupt, so keep it fast.
-    \param callback_context A pointer that will be passed back to you in the callbacks.     
+    \param callback_context A pointer that will be passed back to you in the callbacks.
     \return Whether the transmit was successful or not
     */
     Result DmaTransmit(uint8_t*                            buff,
@@ -181,14 +181,14 @@ class SpiHandle
                        SpiHandle::EndCallbackFunctionPtr   end_callback,
                        void*                               callback_context);
 
-    /** DMA-based receive 
+    /** DMA-based receive
     \param *buff input buffer
     \param size  buffer size
     \param start_callback   A callback to execute when the transfer starts, or NULL.
                             The callback is called from an interrupt, so keep it fast.
     \param end_callback     A callback to execute when the transfer finishes, or NULL.
                             The callback is called from an interrupt, so keep it fast.
-    \param callback_context A pointer that will be passed back to you in the callbacks.    
+    \param callback_context A pointer that will be passed back to you in the callbacks.
     \return Whether the receive was successful or not
     */
     Result DmaReceive(uint8_t*                            buff,
@@ -197,7 +197,7 @@ class SpiHandle
                       SpiHandle::EndCallbackFunctionPtr   end_callback,
                       void*                               callback_context);
 
-    /** DMA-based transmit and receive 
+    /** DMA-based transmit and receive
     \param tx_buff  the transmit buffer
     \param rx_buff  the receive buffer
     \param size     buffer size
@@ -205,7 +205,7 @@ class SpiHandle
                             The callback is called from an interrupt, so keep it fast.
     \param end_callback     A callback to execute when the transfer finishes, or NULL.
                             The callback is called from an interrupt, so keep it fast.
-    \param callback_context A pointer that will be passed back to you in the callbacks.    
+    \param callback_context A pointer that will be passed back to you in the callbacks.
     \return Whether the receive was successful or not
     */
     Result
