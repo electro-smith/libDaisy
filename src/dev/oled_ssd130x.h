@@ -48,6 +48,19 @@ class SSD130xI2CTransport
 
     void SendData(uint8_t* buff, size_t size)
     {
+        // SSD1306 auto-increments its column pointer after one 0x40
+        // prefix, so a page can go out in a single transaction.
+        constexpr size_t kMaxBurst = 132; // widest driver width used here (128) + margin
+        if(size <= kMaxBurst - 1)
+        {
+            uint8_t buf[kMaxBurst];
+            buf[0] = 0X40;
+            for(size_t i = 0; i < size; i++)
+                buf[1 + i] = buff[i];
+            i2c_.TransmitBlocking(
+                i2c_address_, buf, static_cast<uint16_t>(size + 1), 1000);
+            return;
+        }
         for(size_t i = 0; i < size; i++)
         {
             uint8_t buf[2] = {0X40, buff[i]};
