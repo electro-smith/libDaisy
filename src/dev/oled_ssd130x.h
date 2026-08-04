@@ -385,7 +385,7 @@ class SSD130xDriver
         uint8_t high_column_addr;
         switch(height)
         {
-            case 32: high_column_addr = 0x12; break;
+            case 32: high_column_addr = 0x10; break;
 
             default: high_column_addr = 0x10; break;
         }
@@ -597,7 +597,7 @@ class SSD1307Driver
             uint8_t high_column_addr;
             switch(height)
             {
-                case 32: high_column_addr = 0x12; break;
+                case 32: high_column_addr = 0x10; break;
 
                 default: high_column_addr = 0x10; break;
             }
@@ -632,7 +632,7 @@ class SSD1307Driver
         uint8_t high_column_addr;
         switch(height)
         {
-            case 32: high_column_addr = 0x12; break;
+            case 32: high_column_addr = 0x10; break; // no public alias uses height 32 here yet
 
             default: high_column_addr = 0x10; break;
         }
