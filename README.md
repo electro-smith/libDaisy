@@ -18,24 +18,7 @@
     <a href="https://github.com/electro-smith/libDaisy/actions/workflows/style.yml">
       <img src="https://github.com/electro-smith/libDaisy/workflows/Style/badge.svg">
     </a>
-    <a href="https://daisy.audio/software/">
-      <img src="https://github.com/electro-smith/libDaisy/workflows/Documentation/badge.svg">
-    </a>
 </p>
-
-<!-- Non-CI Badges -->
-<p align="center">
-    <a href="https://opensource.org/licenses/MIT">
-      <img src="https://img.shields.io/badge/license-MIT-yellow">
-    </a>
-    <a href="https://discord.gg/ByHBnMtQTR">
-        <img src="https://img.shields.io/badge/join-us%20on%20discord-gray.svg?longCache=true&logo=discord&colorB=purple">
-    </a>
-    <a href="https://forum.electro-smith.com/">
-        <img src="https://img.shields.io/badge/chat-daisy%20forum-orange">
-    </a>
-</p>
-
 
 libDaisy provides easy access to things such as Audio, Controls, GPIO, MIDI, USB communication, and more.
 
@@ -78,8 +61,8 @@ int main(void)
 
 ## Getting Started
 
-- Check out our [Getting Started Page](https://daisy.audio/tutorials/cpp-dev-env/)
-- Browse the reference documentation [on the web](https://daisy.audio/software/)
+- Check out our [Getting Started Page](https://docs.daisy.audio/tutorials/cpp-dev-env/)
+- Browse the reference documentation [on the web](https://docs.daisy.audio/libDaisy/namespacedaisy/)
 - Make some sound!
 
 ## Project Overview
@@ -142,7 +125,7 @@ Here are some ways that you can get involved:
 
 Here are some ways to get support and connect with other users and developers:
 
-- Join the [Daisy Forum](https://forum.electro-smith.com/)
+- Join the [Daisy Forum](https://community.daisy.audio/)
 
 - Make a [GitHub Issue](https://github.com/electro-smith/libdaisy/issues)
 
