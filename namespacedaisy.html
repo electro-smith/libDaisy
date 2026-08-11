@@ -449,6 +449,8 @@ The MidiEvents fill a <a class="el" href="classdaisy_1_1_f_i_f_o.html">FIFO</a> 
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdaisy_1_1_system_exclusive_event.html">SystemExclusiveEvent</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_tca9534.html">Tca9534</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_timer_handle.html">TimerHandle</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hardare timer peripheral support.  <a href="classdaisy_1_1_timer_handle.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -649,6 +651,16 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#a58f4604034b789f798c3872963c10f50a50a87f0d71f7221582dad4bf507a0f34">OUTPUT</a>
  }</td></tr>
 <tr class="separator:a58f4604034b789f798c3872963c10f50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gada93925a696f8dc84a7d0724a9f75560" id="r_gada93925a696f8dc84a7d0724a9f75560"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__external.html#gada93925a696f8dc84a7d0724a9f75560">Tca9534Register</a> : uint8_t { <a class="el" href="group__external.html#ggada93925a696f8dc84a7d0724a9f75560aa84cc046d48610b05c21fd3670d0c829">Tca9534Register::INPUT</a> = 0x00
+, <a class="el" href="group__external.html#ggada93925a696f8dc84a7d0724a9f75560a50a87f0d71f7221582dad4bf507a0f34">Tca9534Register::OUTPUT</a> = 0x01
+, <a class="el" href="group__external.html#ggada93925a696f8dc84a7d0724a9f75560a756ba1b9f3ee81450614b234b6fbbbfb">Tca9534Register::POLARITY</a> = 0x02
+, <a class="el" href="group__external.html#ggada93925a696f8dc84a7d0724a9f75560a73e99d350a4aa6f1a5af04ec29173f73">Tca9534Register::CONFIG</a> = 0x03
+ }</td></tr>
+<tr class="separator:gada93925a696f8dc84a7d0724a9f75560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d4cab75a7a73022a45ef13bb583ba1c" id="r_ga5d4cab75a7a73022a45ef13bb583ba1c"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__external.html#ga5d4cab75a7a73022a45ef13bb583ba1c">Tca9534Mode</a> : uint8_t { <a class="el" href="group__external.html#gga5d4cab75a7a73022a45ef13bb583ba1caa84cc046d48610b05c21fd3670d0c829">Tca9534Mode::INPUT</a>
+, <a class="el" href="group__external.html#gga5d4cab75a7a73022a45ef13bb583ba1ca50a87f0d71f7221582dad4bf507a0f34">Tca9534Mode::OUTPUT</a>
+ }</td></tr>
+<tr class="separator:ga5d4cab75a7a73022a45ef13bb583ba1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9697449f10c05aa93ee32b36020ea387" id="r_a9697449f10c05aa93ee32b36020ea387"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9697449f10c05aa93ee32b36020ea387">Alignment</a> { <br />
 &#160;&#160;<a class="el" href="#a9697449f10c05aa93ee32b36020ea387a15c012757aea2b45f1ea7550869cea02">centered</a>
 , <a class="el" href="#a9697449f10c05aa93ee32b36020ea387a79ad18f72445fe00af22637f175bf878">topLeft</a>

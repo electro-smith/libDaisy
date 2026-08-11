@@ -23,5 +23,6 @@ var dir_79aff18505430beab4d731f694f82366 =
     [ "sdram.h", "sdram_8h.html", "sdram_8h" ],
     [ "sr_4021.h", "sr__4021_8h.html", "sr__4021_8h" ],
     [ "sr_595.h", "sr__595_8h.html", "sr__595_8h" ],
+    [ "tca9534.h", "tca9534_8h.html", "tca9534_8h" ],
     [ "tlv493d.h", "tlv493d_8h.html", "tlv493d_8h" ]
 ];

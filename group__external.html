@@ -107,7 +107,8 @@ $(function(){initNavTree('group__external.html',''); initResizable(true); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle"><div class="title">External</div></div>
 </div><!--header-->
 <div class="contents">
@@ -149,6 +150,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_neo_trellis.html">daisy::NeoTrellis&lt; Transport &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Device support for the Adafruit Neotrellis device.  <a href="classdaisy_1_1_neo_trellis.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_tca9534.html">daisy::Tca9534</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_tlv493d_i2_c_transport.html">daisy::Tlv493dI2CTransport</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_tlv493d.html">daisy::Tlv493d&lt; Transport &gt;</a></td></tr>
@@ -159,6 +162,19 @@ Classes</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:ga9453483585e7d7ccfaa60e3f60ab9574" id="r_ga9453483585e7d7ccfaa60e3f60ab9574"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga9453483585e7d7ccfaa60e3f60ab9574">daisy::Mpr121I2C</a> = <a class="el" href="classdaisy_1_1_mpr121.html">Mpr121</a>&lt;<a class="el" href="classdaisy_1_1_mpr121_i2_c_transport.html">Mpr121I2CTransport</a>&gt;</td></tr>
 <tr class="separator:ga9453483585e7d7ccfaa60e3f60ab9574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:gada93925a696f8dc84a7d0724a9f75560" id="r_gada93925a696f8dc84a7d0724a9f75560"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gada93925a696f8dc84a7d0724a9f75560">daisy::Tca9534Register</a> : uint8_t { <a class="el" href="#ggada93925a696f8dc84a7d0724a9f75560aa84cc046d48610b05c21fd3670d0c829">daisy::Tca9534Register::INPUT</a> = 0x00
+, <a class="el" href="#ggada93925a696f8dc84a7d0724a9f75560a50a87f0d71f7221582dad4bf507a0f34">daisy::Tca9534Register::OUTPUT</a> = 0x01
+, <a class="el" href="#ggada93925a696f8dc84a7d0724a9f75560a756ba1b9f3ee81450614b234b6fbbbfb">daisy::Tca9534Register::POLARITY</a> = 0x02
+, <a class="el" href="#ggada93925a696f8dc84a7d0724a9f75560a73e99d350a4aa6f1a5af04ec29173f73">daisy::Tca9534Register::CONFIG</a> = 0x03
+ }</td></tr>
+<tr class="separator:gada93925a696f8dc84a7d0724a9f75560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5d4cab75a7a73022a45ef13bb583ba1c" id="r_ga5d4cab75a7a73022a45ef13bb583ba1c"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga5d4cab75a7a73022a45ef13bb583ba1c">daisy::Tca9534Mode</a> : uint8_t { <a class="el" href="#gga5d4cab75a7a73022a45ef13bb583ba1caa84cc046d48610b05c21fd3670d0c829">daisy::Tca9534Mode::INPUT</a>
+, <a class="el" href="#gga5d4cab75a7a73022a45ef13bb583ba1ca50a87f0d71f7221582dad4bf507a0f34">daisy::Tca9534Mode::OUTPUT</a>
+ }</td></tr>
+<tr class="separator:ga5d4cab75a7a73022a45ef13bb583ba1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="ga9453483585e7d7ccfaa60e3f60ab9574" name="ga9453483585e7d7ccfaa60e3f60ab9574"></a>
@@ -172,6 +188,68 @@ Typedefs</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ga5d4cab75a7a73022a45ef13bb583ba1c" name="ga5d4cab75a7a73022a45ef13bb583ba1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5d4cab75a7a73022a45ef13bb583ba1c">&#9670;&#160;</a></span>Tca9534Mode</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#ga5d4cab75a7a73022a45ef13bb583ba1c">daisy::Tca9534Mode</a> : uint8_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p><a class="el" href="structdaisy_1_1_pin.html" title="representation of hardware port/pin combination">Pin</a> direction for a single TCA9534 pin. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga5d4cab75a7a73022a45ef13bb583ba1caa84cc046d48610b05c21fd3670d0c829" name="gga5d4cab75a7a73022a45ef13bb583ba1caa84cc046d48610b05c21fd3670d0c829"></a>INPUT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="gga5d4cab75a7a73022a45ef13bb583ba1ca50a87f0d71f7221582dad4bf507a0f34" name="gga5d4cab75a7a73022a45ef13bb583ba1ca50a87f0d71f7221582dad4bf507a0f34"></a>OUTPUT&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="gada93925a696f8dc84a7d0724a9f75560" name="gada93925a696f8dc84a7d0724a9f75560"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gada93925a696f8dc84a7d0724a9f75560">&#9670;&#160;</a></span>Tca9534Register</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#gada93925a696f8dc84a7d0724a9f75560">daisy::Tca9534Register</a> : uint8_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Registers for the TCA9534 8-bit I2C <a class="el" href="classdaisy_1_1_g_p_i_o.html" title="General Purpose I/O control.">GPIO</a> expander. See TI datasheet SCPS208 (TCA9534).</p>
+<p>Note: unlike the MCP23017, the TCA9534 has <b>no</b> internal pull-ups. Use external resistors on input pins. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ggada93925a696f8dc84a7d0724a9f75560aa84cc046d48610b05c21fd3670d0c829" name="ggada93925a696f8dc84a7d0724a9f75560aa84cc046d48610b05c21fd3670d0c829"></a>INPUT&#160;</td><td class="fielddoc"><p>Input port </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggada93925a696f8dc84a7d0724a9f75560a50a87f0d71f7221582dad4bf507a0f34" name="ggada93925a696f8dc84a7d0724a9f75560a50a87f0d71f7221582dad4bf507a0f34"></a>OUTPUT&#160;</td><td class="fielddoc"><p>Output port </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggada93925a696f8dc84a7d0724a9f75560a756ba1b9f3ee81450614b234b6fbbbfb" name="ggada93925a696f8dc84a7d0724a9f75560a756ba1b9f3ee81450614b234b6fbbbfb"></a>POLARITY&#160;</td><td class="fielddoc"><p>Polarity inversion </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ggada93925a696f8dc84a7d0724a9f75560a73e99d350a4aa6f1a5af04ec29173f73" name="ggada93925a696f8dc84a7d0724a9f75560a73e99d350a4aa6f1a5af04ec29173f73"></a>CONFIG&#160;</td><td class="fielddoc"><p>Configuration (1 = input, 0 = output) </p>
+</td></tr>
+</table>
 
 </div>
 </div>

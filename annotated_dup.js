@@ -137,6 +137,7 @@ var annotated_dup =
       [ "Switch3", "classdaisy_1_1_switch3.html", "classdaisy_1_1_switch3" ],
       [ "System", "classdaisy_1_1_system.html", "classdaisy_1_1_system" ],
       [ "SystemExclusiveEvent", "structdaisy_1_1_system_exclusive_event.html", "structdaisy_1_1_system_exclusive_event" ],
+      [ "Tca9534", "classdaisy_1_1_tca9534.html", "classdaisy_1_1_tca9534" ],
       [ "TimerHandle", "classdaisy_1_1_timer_handle.html", "classdaisy_1_1_timer_handle" ],
       [ "Tlv493d", "classdaisy_1_1_tlv493d.html", "classdaisy_1_1_tlv493d" ],
       [ "Tlv493dI2CTransport", "classdaisy_1_1_tlv493d_i2_c_transport.html", "classdaisy_1_1_tlv493d_i2_c_transport" ],

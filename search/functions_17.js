@@ -45,7 +45,7 @@ var searchData=
   ['writemagregister_42',['WriteMagRegister',['../classdaisy_1_1_icm20948.html#a18a60316287c902849d219090b705d43',1,'daisy::Icm20948']]],
   ['writeout_43',['WriteOut',['../classdaisy_1_1_tlv493d.html#ac49c4c1e25ef72971564dfef3f540e48',1,'daisy::Tlv493d']]],
   ['writepage_44',['WritePage',['../classdaisy_1_1_q_s_p_i_handle.html#aea2250a93695c0e6dd87ab380dba8178',1,'daisy::QSPIHandle']]],
-  ['writepin_45',['WritePin',['../classdaisy_1_1_mcp23_x17.html#a091d66bb4e189af45a5123c46fc2770a',1,'daisy::Mcp23X17']]],
+  ['writepin_45',['WritePin',['../classdaisy_1_1_mcp23_x17.html#a091d66bb4e189af45a5123c46fc2770a',1,'daisy::Mcp23X17::WritePin()'],['../classdaisy_1_1_tca9534.html#ac7371e44e1e7346fb62eaf1e5bb5c1d5',1,'daisy::Tca9534::WritePin()']]],
   ['writeport_46',['WritePort',['../classdaisy_1_1_mcp23_x17.html#af600e3cc465a5405c09c8854414837dc',1,'daisy::Mcp23X17']]],
   ['writereg_47',['WriteReg',['../classdaisy_1_1_mcp23017_transport.html#aafb2789eb09ccc163e05cb62c01b9c7e',1,'daisy::Mcp23017Transport::WriteReg(MCPRegister reg, uint8_t val)'],['../classdaisy_1_1_mcp23017_transport.html#a9df6dc3efab499c78daf7d408fcd7e4f',1,'daisy::Mcp23017Transport::WriteReg(MCPRegister reg, uint8_t portA, uint8_t portB)']]],
   ['writeregister_48',['WriteRegister',['../classdaisy_1_1_mpr121.html#a00965d1f368fe6acb6e9c3c2be5b04d7',1,'daisy::Mpr121']]],

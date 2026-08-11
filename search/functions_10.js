@@ -6,7 +6,7 @@ var searchData=
   ['pcm3060_3',['Pcm3060',['../classdaisy_1_1_pcm3060.html#a2cd849186f254f25bdb06f5f73c0beaf',1,'daisy::Pcm3060']]],
   ['persistentstorage_4',['PersistentStorage',['../classdaisy_1_1_persistent_storage.html#aa4bc8d085f92ae05ac7abc38b26264d6',1,'daisy::PersistentStorage']]],
   ['pin_5',['Pin',['../structdaisy_1_1_pin.html#ad9a2515c425471812d946be056ca60d0',1,'daisy::Pin::Pin(const GPIOPort pt, const uint8_t pn)'],['../structdaisy_1_1_pin.html#a492cdf058721dc44c910ce799463ce1b',1,'daisy::Pin::Pin()']]],
-  ['pinmode_6',['PinMode',['../classdaisy_1_1_mcp23_x17.html#a507f1696d75da0d075ee517dc7c92464',1,'daisy::Mcp23X17']]],
+  ['pinmode_6',['PinMode',['../classdaisy_1_1_mcp23_x17.html#a507f1696d75da0d075ee517dc7c92464',1,'daisy::Mcp23X17::PinMode()'],['../classdaisy_1_1_tca9534.html#a340072c4c670b78ddffc5d7ecc34c185',1,'daisy::Tca9534::PinMode()']]],
   ['pollreceive_7',['PollReceive',['../classdaisy_1_1_uart_handler.html#a9641f3808cf70559d3d988f5ae8e254c',1,'daisy::UartHandler']]],
   ['polltx_8',['PollTx',['../classdaisy_1_1_uart_handler.html#a9505926532bf44f70216b52d45db549a',1,'daisy::UartHandler']]],
   ['popback_9',['PopBack',['../classdaisy_1_1_stack_base.html#a8939e78d29ff2400535a367bc400e111',1,'daisy::StackBase']]],
