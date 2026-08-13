@@ -154,6 +154,8 @@ class SaiHandle
     /** Returns the current offset within the SAI buffer, will be either 0 or size/2 */
     size_t GetOffset() const;
 
+    void SetIntermediateBuffer(int32_t* buffer);
+
     inline bool IsInitialized() const
     {
         return pimpl_ == nullptr ? false : true;
