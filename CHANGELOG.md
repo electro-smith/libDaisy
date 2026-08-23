@@ -6,6 +6,10 @@
 
 - TCA9534: Added I2C GPIO expander driver (`src/dev/tca9534.h`) with shared-bus and owned-bus init, plus `TCA9534_GPIO` example.
 
+### Bug Fixes
+
+- CMake: `DATA_IN_D2_SRAM` is now defined, so `SystemInit()` enables the D2 AHB SRAM blocks that hold the DMA buffers. The Makefile build already did this.
+
 ## v8.1.0
 
 ### Features
