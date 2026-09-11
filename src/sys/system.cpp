@@ -457,10 +457,10 @@ void System::ConfigureClocks()
     PeriphClkInitStruct.PeriphClockSelection
         = RCC_PERIPHCLK_USART1 | RCC_PERIPHCLK_USART6
           | RCC_PERIPHCLK_USART234578 | RCC_PERIPHCLK_LPUART1
-          | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_SPI1 | RCC_PERIPHCLK_SAI2
-          | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SDMMC | RCC_PERIPHCLK_I2C2
-          | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_I2C1 | RCC_PERIPHCLK_USB
-          | RCC_PERIPHCLK_QSPI | RCC_PERIPHCLK_FMC;
+          | RCC_PERIPHCLK_RNG | RCC_PERIPHCLK_SPI1 | RCC_PERIPHCLK_SPI6
+          | RCC_PERIPHCLK_SAI2 | RCC_PERIPHCLK_SAI1 | RCC_PERIPHCLK_SDMMC
+          | RCC_PERIPHCLK_I2C2 | RCC_PERIPHCLK_ADC | RCC_PERIPHCLK_I2C1
+          | RCC_PERIPHCLK_USB | RCC_PERIPHCLK_QSPI | RCC_PERIPHCLK_FMC;
     // PLL 2
     //  PeriphClkInitStruct.PLL2.PLL2N = 115; // Max Freq @ 3v3
     //PeriphClkInitStruct.PLL2.PLL2N      = 84; // Max Freq @ 1V9
@@ -501,6 +501,7 @@ void System::ConfigureClocks()
     PeriphClkInitStruct.Sai1ClockSelection   = RCC_SAI1CLKSOURCE_PLL3;
     PeriphClkInitStruct.Sai23ClockSelection  = RCC_SAI23CLKSOURCE_PLL3;
     PeriphClkInitStruct.Spi123ClockSelection = RCC_SPI123CLKSOURCE_PLL2;
+    PeriphClkInitStruct.Spi6ClockSelection   = RCC_SPI6CLKSOURCE_PCLK4;
     PeriphClkInitStruct.Usart234578ClockSelection
         = RCC_USART234578CLKSOURCE_D2PCLK1;
     PeriphClkInitStruct.Usart16ClockSelection = RCC_USART16CLKSOURCE_D2PCLK2;
