@@ -303,6 +303,7 @@ void DaisySeed::ConfigureAudio()
         case BoardVersion::DAISY_SEED:
         default:
         {
+            // Same configuration used for Seed Rev4, Seed Rev7 (1.2), and Seed3
             // Data Line Directions
             sai_config.a_dir         = SaiHandle::Config::Direction::TRANSMIT;
             sai_config.pin_config.sa = Pin(PORTE, 6);
@@ -342,22 +343,31 @@ DaisySeed::BoardVersion DaisySeed::CheckBoardVersion()
 {
     /** Version Checks:
      *  * Fall through is Daisy Seed v1 (aka Daisy Seed rev4)
-     *  * PD3 tied to gnd is Daisy Seed v1.1 (aka Daisy Seed rev5)
-     *  * PD4 tied to gnd reserved for future hardware
+     *  * PD3 tied to GND is Daisy Seed 1.1 (aka Daisy Seed rev5)
+     *  * PD4 tied to GND is Daisy Seed2 DFM
+     *  * PD5 tied to GND is Daisy Seed 1.2 (aka Daisy Seed rev7)
+     *  * PH6 tied to GND is Daisy Seed 3
      */
 
     /** Initialize GPIO */
-    GPIO s2dfm_gpio, seed_1_1_gpio;
+    GPIO s2dfm_gpio, seed_1_1_gpio, seed_1_2_gpio, seed_3_gpio;
     Pin  seed_1_1_pin(PORTD, 3);
     Pin  s2dfm_pin(PORTD, 4);
+    Pin  seed_1_2_pin(PORTD, 5);
+    Pin  seed_3_pin(PORTH, 6);
     seed_1_1_gpio.Init(seed_1_1_pin, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
     s2dfm_gpio.Init(s2dfm_pin, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
+    seed_1_2_gpio.Init(seed_1_2_pin, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
+    seed_3_gpio.Init(seed_3_pin, GPIO::Mode::INPUT, GPIO::Pull::PULLUP);
 
-    /** Perform Check */
     if(!seed_1_1_gpio.Read())
         return BoardVersion::DAISY_SEED_1_1;
     else if(!s2dfm_gpio.Read())
         return BoardVersion::DAISY_SEED_2_DFM;
+    else if(!seed_1_2_gpio.Read())
+        return BoardVersion::DAISY_SEED_1_2;
+    else if(!seed_3_gpio.Read())
+        return BoardVersion::DAISY_SEED_3;
     else
         return BoardVersion::DAISY_SEED;
 }
