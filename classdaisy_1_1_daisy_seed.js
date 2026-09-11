@@ -3,7 +3,9 @@ var classdaisy_1_1_daisy_seed =
     [ "BoardVersion", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12", [
       [ "DAISY_SEED", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12ac113cc49a549c400b771fceba91db4ea", null ],
       [ "DAISY_SEED_1_1", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12a361e807a05cc81f75a417932d23ea9ea", null ],
-      [ "DAISY_SEED_2_DFM", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12a9eaa506a9def7d174cd1e7e197c5a68a", null ]
+      [ "DAISY_SEED_2_DFM", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12a9eaa506a9def7d174cd1e7e197c5a68a", null ],
+      [ "DAISY_SEED_1_2", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12a5acb630149c1d3ad22f2f406f2532cf2", null ],
+      [ "DAISY_SEED_3", "classdaisy_1_1_daisy_seed.html#a59363a85e54eebb334d8663a215e5f12a031840c8204a5008cea72cd3bfd365eb", null ]
     ] ],
     [ "DaisySeed", "classdaisy_1_1_daisy_seed.html#a671bb71c41a15f613506e897ac7470f1", null ],
     [ "~DaisySeed", "classdaisy_1_1_daisy_seed.html#a75954c1d7a9cf7e89bb67a485c516553", null ],

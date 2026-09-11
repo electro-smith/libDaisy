@@ -18,7 +18,8 @@ var structdaisy_1_1_sai_handle_1_1_config =
       [ "SAI_16KHZ", "structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fcab4d8d55267fb73cafd0cfe1f94bc451c", null ],
       [ "SAI_32KHZ", "structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fca446573039304140ef825bbaa25847a2c", null ],
       [ "SAI_48KHZ", "structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fcace337daebe0497b3d035fb836885bbbf", null ],
-      [ "SAI_96KHZ", "structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fcabe2da78731d2386be1e8ace72a568eee", null ]
+      [ "SAI_96KHZ", "structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fcabe2da78731d2386be1e8ace72a568eee", null ],
+      [ "SAI_192KHZ", "structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fca3263663528e5f5f86f11b3e61518d765", null ]
     ] ],
     [ "Sync", "structdaisy_1_1_sai_handle_1_1_config.html#a269af182475979f6845fb06ffa3c4055", [
       [ "MASTER", "structdaisy_1_1_sai_handle_1_1_config.html#a269af182475979f6845fb06ffa3c4055a89a1533c37ec9254f22b5e0f29c9c0ff", null ],

@@ -158,7 +158,7 @@ var NAVTREEINDEX =
 "ffconf_8h.html#add853644b85a7633bb782dfddb51bda5",
 "icm20948_8h.html#ac5176e273d765b589bba7edf5043fed9",
 "oled__display_8h_source.html",
-"structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fcace337daebe0497b3d035fb836885bbbf"
+"structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fcabe2da78731d2386be1e8ace72a568eee"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

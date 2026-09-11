@@ -246,8 +246,8 @@ var NAVTREEINDEX6 =
 "structdaisy_1_1_sai_handle_1_1_config.html#ab9ee816b5ca6eb3823fbb15f410c90d6":[15,0,0,108,0,6],
 "structdaisy_1_1_sai_handle_1_1_config.html#ac59816a80f77783dbce0e9aee8f6d1ed":[15,0,0,108,0,12],
 "structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fc":[15,0,0,108,0,3],
+"structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fca3263663528e5f5f86f11b3e61518d765":[15,0,0,108,0,3,5],
 "structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fca446573039304140ef825bbaa25847a2c":[15,0,0,108,0,3,2],
 "structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fca62c81bb497adbcc2d3f3369d0f5cc6a7":[15,0,0,108,0,3,0],
-"structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fcab4d8d55267fb73cafd0cfe1f94bc451c":[15,0,0,108,0,3,1],
-"structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fcabe2da78731d2386be1e8ace72a568eee":[15,0,0,108,0,3,4]
+"structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fcab4d8d55267fb73cafd0cfe1f94bc451c":[15,0,0,108,0,3,1]
 };
