@@ -3,6 +3,7 @@
 ## Unreleased
 
 ### Features
+- Add an optional conversion complete callback to `AdcHandle::Start()`
 
 - TCA9534: Added I2C GPIO expander driver (`src/dev/tca9534.h`) with shared-bus and owned-bus init, plus `TCA9534_GPIO` example.
 
