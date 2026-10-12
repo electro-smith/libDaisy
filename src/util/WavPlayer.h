@@ -150,6 +150,7 @@ class WavPlayer
         position_            = 0;
         pending_read_req_    = false;
         pending_seek_req_    = false;
+        handled_gen_         = restart_gen_;
         bytes_left_in_chunk_ = (bytes_read <= file_info_.data_size_bytes)
                                    ? (file_info_.data_size_bytes - bytes_read)
                                    : 0;
@@ -177,123 +178,33 @@ class WavPlayer
      */
     Result Prepare()
     {
-        while(!request_fifo_.IsEmpty())
+        for(;;)
         {
-            auto req = request_fifo_.PopFront();
-            switch(req.type)
+            // Capture the restart generation, used to discard unwanted data
+            // if a restart occurs in the callback during Disk I/O.
+            const uint32_t gen = restart_gen_;
+            if(gen != handled_gen_)
             {
-                case IoRequest::Type::Read:
-                {
-                    size_t bytes_requested = req.data * sizeof(int16_t);
-                    // Align to full frames
-                    bytes_requested -= (bytes_requested % frame_bytes_);
-                    if(bytes_requested == 0)
-                    {
-                        pending_read_req_ = false;
-                        break;
-                    }
-
-                    UINT total_bytes_read = 0;
-                    UINT bytes_read       = 0;
-
-                    std::fill(buff_raw_, buff_raw_ + kRxSizeSamples, 0);
-
-                    // Read up to end of data chunk
-                    size_t first_span
-                        = std::min(bytes_requested, bytes_left_in_chunk_);
-                    // Align first_span to frame boundary as well
-                    first_span -= (first_span % frame_bytes_);
-                    if(first_span > 0)
-                    {
-                        if(f_read(&file_,
-                                  (void*)buff_raw_,
-                                  first_span,
-                                  &bytes_read)
-                           != FR_OK)
-                            return Result::DiskError;
-                        if(bytes_read != first_span)
-                            return Result::DiskError;
-                        total_bytes_read += bytes_read;
-                        bytes_left_in_chunk_ -= bytes_read;
-                    }
-
-                    // If need more and looping, wrap and read more (frame-aligned)
-                    if(total_bytes_read < bytes_requested && looping_)
-                    {
-                        if(f_lseek(&file_, file_info_.data_start) != FR_OK)
-                            return Result::DiskError;
-
-                        size_t remaining_bytes
-                            = bytes_requested - total_bytes_read;
-                        // Align remaining as well (it already is, but keep consistent)
-                        remaining_bytes -= (remaining_bytes % frame_bytes_);
-                        if(remaining_bytes > 0)
-                        {
-                            UINT  bytes_read2 = 0;
-                            char* tbuff
-                                = ((char*)(buff_raw_) + total_bytes_read);
-                            // Do not exceed the chunk size on wrap
-                            size_t span2 = std::min(remaining_bytes,
-                                                    file_info_.data_size_bytes);
-                            // Align span2
-                            span2 -= (span2 % frame_bytes_);
-                            if(span2 > 0)
-                            {
-                                if(f_read(&file_,
-                                          (void*)tbuff,
-                                          span2,
-                                          &bytes_read2)
-                                   != FR_OK)
-                                    return Result::DiskError;
-                                if(bytes_read2 != span2)
-                                    return Result::DiskError;
-                                total_bytes_read += bytes_read2;
-                                bytes_left_in_chunk_
-                                    = (bytes_read2
-                                       <= file_info_.data_size_bytes)
-                                          ? (file_info_.data_size_bytes
-                                             - bytes_read2)
-                                          : 0;
-                            }
-                        }
-                    }
-
-                    // Push into FIFO; align to full frames
-                    size_t samps_to_write = total_bytes_read / sizeof(int16_t);
-                    if(file_info_.channels > 0)
-                        samps_to_write
-                            -= (samps_to_write % file_info_.channels);
-
-                    for(size_t i = 0; i < samps_to_write; i++)
-                    {
-                        if(!buff_fifo_.PushBack(buff_raw_[i]))
-                        {
-                            pending_read_req_ = false;
-                            return Result::PrepareOverrun;
-                        }
-                    }
-                    pending_read_req_ = false;
-                }
-                break;
-                case IoRequest::Type::Seek:
-                {
-                    size_t dest_bytes = req.data * sizeof(int16_t);
-                    // Clamp and align to frame boundary
-                    if(dest_bytes > file_info_.data_size_bytes)
-                        dest_bytes = file_info_.data_size_bytes;
-                    dest_bytes -= (dest_bytes % frame_bytes_);
-
-                    if(f_lseek(&file_, file_info_.data_start + dest_bytes)
-                       != FR_OK)
-                        return Result::DiskError;
-
-                    bytes_left_in_chunk_
-                        = file_info_.data_size_bytes - dest_bytes;
-                    pending_seek_req_ = false;
-                }
-                break;
-                default: break;
+                handled_gen_ = gen;
+                request_fifo_.Clear();
+                if(f_lseek(&file_, file_info_.data_start) != FR_OK)
+                    return Result::DiskError;
+                bytes_left_in_chunk_ = file_info_.data_size_bytes;
+                // Smaller first read gets audio started sooner (less underrun)
+                size_t first = kRxSizeSamples / 4;
+                auto   res   = ReadIntoFifo(first, gen);
+                if(res != Result::Ok)
+                    return res;
+                continue;
             }
+            if(request_fifo_.IsEmpty())
+                break;
+            auto req = request_fifo_.PopFront();
+            if(req.type != IoRequest::Type::Read)
+                continue;
+            auto res = ReadIntoFifo(req.data, gen);
+            if(res != Result::Ok)
+                return res;
         }
         return Result::Ok;
     }
@@ -396,29 +307,19 @@ class WavPlayer
     /** Clear all playback samples, and return to the beginning of the audio file immediately */
     void Restart()
     {
-        buff_fifo_.Clear();
-        request_fifo_.Clear();
-
         pos_acc_ = 0.f;
         for(size_t i = 0; i < kMaxAudioChannels; i++)
             current_sample_[i] = previous_sample_[i] = 0.f;
 
-        bytes_left_in_chunk_ = file_info_.data_size_bytes;
-
-        request_fifo_.PushBack(IoRequest(IoRequest::Type::Seek, 0));
-
-        // Request a frame-aligned quantity
-        size_t req_samps = kRxSizeSamples;
-        if(file_info_.channels > 0)
-            req_samps -= (req_samps % file_info_.channels);
-        if(req_samps > 0)
-            request_fifo_.PushBack(IoRequest(IoRequest::Type::Read, req_samps));
-
         pending_read_req_ = true;
-        pending_seek_req_ = true;
         position_         = 0;
         playing_          = true;
+        buff_fifo_.Clear();
+        // Restart generation increments will flag the `Prepare()` method to
+        // discard any stale data that is in progress.
+        restart_gen_ = restart_gen_ + 1;
     }
+
 
     /** Return the number of samples in the open audio file */
     inline size_t GetDurationInSamples() const
@@ -471,6 +372,115 @@ class WavPlayer
     }
 
   private:
+    /** Reads (frame-aligned) samples from disk and pushes them into the FIFO.
+     *  If a Restart() occurred since `gen` was captured, the data is discarded.
+     */
+    Result ReadIntoFifo(size_t samples, uint32_t gen)
+    {
+        size_t bytes_requested = samples * sizeof(int16_t);
+        // Align to full frames
+        bytes_requested -= (bytes_requested % frame_bytes_);
+        if(bytes_requested == 0)
+        {
+            if(gen == restart_gen_)
+                pending_read_req_ = false;
+            return Result::Ok;
+        }
+
+        UINT total_bytes_read = 0;
+        UINT bytes_read       = 0;
+
+        std::fill(buff_raw_, buff_raw_ + kRxSizeSamples, 0);
+
+        // Read up to end of data chunk
+        size_t first_span = std::min(bytes_requested, bytes_left_in_chunk_);
+        // Align first_span to frame boundary as well
+        first_span -= (first_span % frame_bytes_);
+        if(first_span > 0)
+        {
+            if(f_read(&file_, (void*)buff_raw_, first_span, &bytes_read)
+               != FR_OK)
+                return Result::DiskError;
+            if(bytes_read != first_span)
+                return Result::DiskError;
+            total_bytes_read += bytes_read;
+            bytes_left_in_chunk_ -= bytes_read;
+        }
+
+        // If need more and looping, wrap and read more (frame-aligned)
+        if(total_bytes_read < bytes_requested && looping_)
+        {
+            if(f_lseek(&file_, file_info_.data_start) != FR_OK)
+                return Result::DiskError;
+
+            size_t remaining_bytes = bytes_requested - total_bytes_read;
+            // Align remaining as well (it already is, but keep consistent)
+            remaining_bytes -= (remaining_bytes % frame_bytes_);
+            if(remaining_bytes > 0)
+            {
+                UINT  bytes_read2 = 0;
+                char* tbuff       = ((char*)(buff_raw_) + total_bytes_read);
+                // Do not exceed the chunk size on wrap
+                size_t span2
+                    = std::min(remaining_bytes, file_info_.data_size_bytes);
+                // Align span2
+                span2 -= (span2 % frame_bytes_);
+                if(span2 > 0)
+                {
+                    if(f_read(&file_, (void*)tbuff, span2, &bytes_read2)
+                       != FR_OK)
+                        return Result::DiskError;
+                    if(bytes_read2 != span2)
+                        return Result::DiskError;
+                    total_bytes_read += bytes_read2;
+                    bytes_left_in_chunk_
+                        = (bytes_read2 <= file_info_.data_size_bytes)
+                              ? (file_info_.data_size_bytes - bytes_read2)
+                              : 0;
+                }
+            }
+        }
+
+        // Count total samples to write to FIFO
+        size_t samps_to_write = total_bytes_read / sizeof(int16_t);
+        if(file_info_.channels > 0)
+            samps_to_write -= (samps_to_write % file_info_.channels);
+
+        // Push samples to FIFO in chunks, disabling IRQs during each
+        // chunk. A Restart (from the audio callback) will cause the
+        // remaining data to be discarded to avoid unwanted, stale data.
+        constexpr size_t kPushChunk = 128;
+        size_t           i          = 0;
+        while(i < samps_to_write)
+        {
+            size_t   end     = std::min(i + kPushChunk, samps_to_write);
+            uint32_t primask = __get_PRIMASK();
+            __disable_irq();
+            if(gen != restart_gen_)
+            {
+                __set_PRIMASK(primask);
+                return Result::Ok; // stale: discard
+            }
+            bool full = false;
+            for(; i < end; i++)
+            {
+                if(!buff_fifo_.PushBack(buff_raw_[i]))
+                {
+                    full = true;
+                    break;
+                }
+            }
+            __set_PRIMASK(primask);
+            if(full)
+            {
+                pending_read_req_ = false;
+                return Result::PrepareOverrun;
+            }
+        }
+        pending_read_req_ = false;
+        return Result::Ok;
+    }
+
     /** Request containing necessary data to seek, or refill the
      * streaming FIFO of samples
      */
@@ -545,12 +555,14 @@ class WavPlayer
 
     /** Internal resources */
 
-    FIL    file_;
-    bool   is_open_;
-    bool   pending_read_req_;
-    bool   pending_seek_req_;
-    float  pos_acc_;
-    size_t bytes_left_in_chunk_; // remaining bytes in WAV data chunk
+    FIL               file_;
+    bool              is_open_;
+    bool              pending_read_req_;
+    bool              pending_seek_req_;
+    volatile uint32_t restart_gen_ = 0; //< bumped by Restart() (audio context)
+    uint32_t handled_gen_ = 0; //< last generation serviced by Prepare()
+    float    pos_acc_;
+    size_t   bytes_left_in_chunk_; // remaining bytes in WAV data chunk
     size_t frame_bytes_; // bytes per sample frame (channels * bytes-per-sample)
 };
 
