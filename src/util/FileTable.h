@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <cctype>
 #include <cstring>
 
@@ -66,14 +65,22 @@ class FileTable
                 bool valid_name = false;
                 if(endswith != nullptr)
                 {
+                    uint32_t name_len   = strlen(fno.fname);
                     uint32_t suffix_len = strlen(endswith);
-                    valid_name          = strstr(fno.fname, endswith) != nullptr
-                                 && strlen(fno.fname) > suffix_len
-                                 && strlen(fno.fname) < kMaxCustomFileNameLen;
+                    valid_name
+                        = name_len > suffix_len
+                          && strcmp(fno.fname + name_len - suffix_len, endswith)
+                                 == 0
+                          && strlen(fno.fname) < kMaxCustomFileNameLen;
                 }
                 else
                 {
                     valid_name = strlen(fno.fname) < kMaxCustomFileNameLen;
+                }
+                // Always ignore files starting with '.'
+                if(fno.fname[0] == '.')
+                {
+                    valid_name = false;
                 }
 
                 if(valid_file_attrs && valid_size && valid_name)
