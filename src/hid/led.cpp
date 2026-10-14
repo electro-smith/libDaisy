@@ -13,6 +13,7 @@ void Led::Init(Pin pin, bool invert, float samplerate)
     // Set internal stuff.
     bright_  = 0.0f;
     pwm_cnt_ = 0;
+    pwm_     = 0.0f;
     Set(bright_);
     invert_     = invert;
     samplerate_ = samplerate;
