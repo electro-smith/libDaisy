@@ -61,7 +61,8 @@ jobs:
         submodules: recursive
 
     - name: Setup arm-none-eabi-gcc
-      uses: carlosperate/arm-none-eabi-gcc-action@v1
+      # temporary: fixed version until latest release fixes issues with 'latest'
+      uses: carlosperate/arm-none-eabi-gcc-action@v1.13.0
       with:
         release: ${{ matrix.version }}
 
