@@ -1,7 +1,7 @@
 <!-- Banner -->
 <p align="center">
-    <a href=https://electro-smith.com/daisy>
-        <img width=15% src=https://raw.githubusercontent.com/electro-smith/daisysp/master/resources/assets/banner.png>
+    <a href=https://daisy.audio/collections/daisy>
+        <img width=15% src=https://raw.githubusercontent.com/daisyaudio/daisysp/master/resources/assets/banner.png>
     </a>
 </p>
 <h1 align="center">libDaisy</h1>
@@ -9,14 +9,14 @@
 <br>
 <!--CI Badges-->
 <p align="center">
-    <a href="https://github.com/electro-smith/libDaisy/actions/workflows/build.yml">
-      <img src="https://github.com/electro-smith/libDaisy/workflows/Build/badge.svg">
+    <a href="https://github.com/daisyaudio/libDaisy/actions/workflows/build.yml">
+      <img src="https://github.com/daisyaudio/libDaisy/actions/workflows/build.yml/badge.svg?branch=master">
     </a>
-    <a href="https://github.com/electro-smith/libDaisy/actions/workflows/unit_tests.yaml">
-      <img src="https://github.com/electro-smith/libDaisy/workflows/Unit%20Tests/badge.svg">
+    <a href="https://github.com/daisyaudio/libDaisy/actions/workflows/unit_tests.yaml">
+      <img src="https://github.com/daisyaudio/libDaisy/workflows/Unit%20Tests/badge.svg">
     </a>
-    <a href="https://github.com/electro-smith/libDaisy/actions/workflows/style.yml">
-      <img src="https://github.com/electro-smith/libDaisy/workflows/Style/badge.svg">
+    <a href="https://github.com/daisyaudio/libDaisy/actions/workflows/style.yml">
+      <img src="https://github.com/daisyaudio/libDaisy/workflows/Style/badge.svg">
     </a>
 </p>
 
@@ -46,7 +46,7 @@ int main(void)
     midi.StartReceive();
     hw.StartAdc();
     hw.StartAudio(AudioCallback);
-    
+
     for(;;)
     {
         midi.Listen();
@@ -107,6 +107,9 @@ These are:
 - daisy_patch
 - daisy_petal
 - daisy_pod
+- desktop_devkit
+- eurorack_devkit
+- pedal_devkit
 
 With these files a number of additional initialization, and configuration is done by the library.
 
@@ -117,7 +120,7 @@ This allows a user to jump right in without needing a complete understanding of 
 Here are some ways that you can get involved:
 
 - Proof read the documentation and suggest improvements
-- Test existing functionality and make [issues](https://github.com/electro-smith/libdaisy/issues)
+- Test existing functionality and make [issues](https://github.com/daisyaudio/libDaisy/issues)
 - Add new functionality to the library. See issues labeled "feature"
 - Fix problems with existing codebase. See issues labeled "bug" and/or "polish"
 
@@ -127,7 +130,7 @@ Here are some ways to get support and connect with other users and developers:
 
 - Join the [Daisy Forum](https://community.daisy.audio/)
 
-- Make a [GitHub Issue](https://github.com/electro-smith/libdaisy/issues)
+- Make a [GitHub Issue](https://github.com/daisyaudio/libDaisy/issues)
 
 - Join the [Daisy Discord Server](https://discord.gg/ByHBnMtQTR)
 
@@ -138,4 +141,4 @@ libDaisy is licensed with the permissive MIT open source license.
 This allows for modification and reuse in both commercial and personal projects.
 It does not provide a warranty of any kind.
 
-For the full license, read the [LICENSE](https://github.com/electro-smith/libdaisy/blob/master/LICENSE) file in the root directory.
+For the full license, read the [LICENSE](https://github.com/daisyaudio/libDaisy/blob/master/LICENSE) file in the root directory.
