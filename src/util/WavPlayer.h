@@ -188,13 +188,20 @@ class WavPlayer
                 handled_gen_ = gen;
                 request_fifo_.Clear();
                 if(f_lseek(&file_, file_info_.data_start) != FR_OK)
+                {
+                    Close();
                     return Result::DiskError;
+                }
                 bytes_left_in_chunk_ = file_info_.data_size_bytes;
                 // Smaller first read gets audio started sooner (less underrun)
                 size_t first = kRxSizeSamples / 4;
                 auto   res   = ReadIntoFifo(first, gen);
                 if(res != Result::Ok)
+                {
+                    if(res == Result::DiskError)
+                        Close();
                     return res;
+                }
                 continue;
             }
             if(request_fifo_.IsEmpty())
@@ -204,7 +211,11 @@ class WavPlayer
                 continue;
             auto res = ReadIntoFifo(req.data, gen);
             if(res != Result::Ok)
+            {
+                if(res == Result::DiskError)
+                    Close();
                 return res;
+            }
         }
         return Result::Ok;
     }
@@ -239,6 +250,11 @@ class WavPlayer
 
         for(size_t i = 0; i < num_channels; i++)
             samples[i] = 0.f;
+
+        // immediately return if no file is open.
+        // could probably use a different result name that's more specific
+        if(!is_open_)
+            return Result::FileNotFoundError;
 
         if(!buff_fifo_.IsEmpty() && playing_)
         {
@@ -310,7 +326,8 @@ class WavPlayer
         pos_acc_ = 0.f;
         for(size_t i = 0; i < kMaxAudioChannels; i++)
             current_sample_[i] = previous_sample_[i] = 0.f;
-
+        if(!is_open_)
+            return;
         pending_read_req_ = true;
         position_         = 0;
         playing_          = true;
@@ -348,7 +365,19 @@ class WavPlayer
     /** Return whether the player is looping or not. */
     inline bool GetLooping() const { return looping_; }
 
-    inline void SetPlaying(bool state) { playing_ = state; }
+    /** Set whether the file should play or not.
+     *  The state automatically resets to false at the end of playback unless
+     *  looping is also set to true.
+     *
+     *  The input is ignored if a file is not open already.
+     */
+    inline void SetPlaying(bool state)
+    {
+        if(!is_open_)
+            return;
+        playing_ = state;
+    }
+
     inline bool GetPlaying() const { return playing_; }
 
     /** Direct setter of playback speed as a ratio
