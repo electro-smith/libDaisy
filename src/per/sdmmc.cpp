@@ -27,6 +27,21 @@ SdmmcHandler::Result SdmmcHandler::Init(const Config& cfg)
     return Result::OK;
 }
 
+SdmmcHandler::Result SdmmcHandler::Reset()
+{
+    // Return immediately if SDMMC is not initialized, or disabled.
+    if(hsd1.State == HAL_SD_STATE_RESET)
+        return SdmmcHandler::Result::OK;
+
+    if(HAL_SD_DeInit(&hsd1) != HAL_OK)
+    {
+        return SdmmcHandler::Result::ERROR;
+    }
+    __HAL_RCC_SDMMC1_FORCE_RESET();
+    __HAL_RCC_SDMMC1_RELEASE_RESET();
+    return SdmmcHandler::Result::OK;
+}
+
 
 // HAL MSP Functions
 
@@ -43,13 +58,13 @@ void HAL_SD_MspInit(SD_HandleTypeDef* sdHandle)
 
         __HAL_RCC_GPIOC_CLK_ENABLE();
         __HAL_RCC_GPIOD_CLK_ENABLE();
-        /**SDMMC1 GPIO Configuration    
+        /**SDMMC1 GPIO Configuration
             PC12     ------> SDMMC1_CK
             PC11     ------> SDMMC1_D3
             PC10     ------> SDMMC1_D2
             PD2     ------> SDMMC1_CMD
             PC9     ------> SDMMC1_D1
-            PC8     ------> SDMMC1_D0 
+            PC8     ------> SDMMC1_D0
         */
 
         // Adjust the gpio drive strength based on the clock divider,
@@ -99,13 +114,13 @@ void HAL_SD_MspDeInit(SD_HandleTypeDef* sdHandle)
         /* Peripheral clock disable */
         __HAL_RCC_SDMMC1_CLK_DISABLE();
 
-        /**SDMMC1 GPIO Configuration    
+        /**SDMMC1 GPIO Configuration
     PC12     ------> SDMMC1_CK
     PC11     ------> SDMMC1_D3
     PC10     ------> SDMMC1_D2
     PD2     ------> SDMMC1_CMD
     PC9     ------> SDMMC1_D1
-    PC8     ------> SDMMC1_D0 
+    PC8     ------> SDMMC1_D0
     */
         HAL_GPIO_DeInit(GPIOC,
                         GPIO_PIN_12 | GPIO_PIN_11 | GPIO_PIN_10 | GPIO_PIN_9
