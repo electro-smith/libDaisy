@@ -31,7 +31,7 @@
  * the value by default is as defined in the BSP platform driver otherwise 30 secs
  */
 
-#define SD_TIMEOUT 30 * 1000
+#define SD_TIMEOUT 500 //< 500 milliseconds
 
 #define SD_DEFAULT_BLOCK_SIZE 512
 
