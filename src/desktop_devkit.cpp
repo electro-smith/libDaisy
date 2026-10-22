@@ -33,9 +33,10 @@ void Hardware::Init()
                       Switch::Polarity::POLARITY_NORMAL);
 
     ButtonSr::Config sr_cfg;
-    sr_cfg.clk     = daisy::seed::D8;
-    sr_cfg.latch   = daisy::seed::D9;
-    sr_cfg.data[0] = daisy::seed::D10;
+    sr_cfg.clk         = daisy::seed::D8;
+    sr_cfg.latch       = daisy::seed::D9;
+    sr_cfg.data[0]     = daisy::seed::D10;
+    sr_cfg.delay_ticks = 500;
     button_sr.Init(sr_cfg);
     for(auto &b : button)
         b.Init(true);
