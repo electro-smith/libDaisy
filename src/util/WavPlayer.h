@@ -47,6 +47,7 @@ class WavPlayer
         PrepareOverrun,
         NewSamplesRequested,
         DiskError,
+        InitialLatency,
     };
 
     /** Relevent audio file data for playback details */
@@ -149,6 +150,7 @@ class WavPlayer
 
         position_            = 0;
         pending_read_req_    = false;
+        awaiting_first_data_ = false;
         pending_seek_req_    = false;
         handled_gen_         = restart_gen_;
         bytes_left_in_chunk_ = (bytes_read <= file_info_.data_size_bytes)
@@ -258,7 +260,8 @@ class WavPlayer
 
         if(!buff_fifo_.IsEmpty() && playing_)
         {
-            size_t ch_out = std::min(channels, num_channels);
+            awaiting_first_data_ = false;
+            size_t ch_out        = std::min(channels, num_channels);
             for(size_t i = 0; i < ch_out; i++)
             {
                 samples[i]
@@ -315,7 +318,8 @@ class WavPlayer
         if(requested_new_samps)
             return Result::NewSamplesRequested;
         else if(buff_fifo_.IsEmpty() && playing_)
-            return Result::PlaybackUnderrun;
+            return awaiting_first_data_ ? Result::InitialLatency
+                                        : Result::PlaybackUnderrun;
         else
             return Result::Ok;
     }
@@ -328,9 +332,10 @@ class WavPlayer
             current_sample_[i] = previous_sample_[i] = 0.f;
         if(!is_open_)
             return;
-        pending_read_req_ = true;
-        position_         = 0;
-        playing_          = true;
+        pending_read_req_    = true;
+        awaiting_first_data_ = true;
+        position_            = 0;
+        playing_             = true;
         buff_fifo_.Clear();
         // Restart generation increments will flag the `Prepare()` method to
         // discard any stale data that is in progress.
@@ -584,15 +589,18 @@ class WavPlayer
 
     /** Internal resources */
 
-    FIL               file_;
-    bool              is_open_;
-    bool              pending_read_req_;
-    bool              pending_seek_req_;
+    FIL  file_;
+    bool is_open_;
+    bool pending_read_req_;
+    bool pending_seek_req_;
+    /** Set by Restart(), cleared once the first samples are streamed.
+     *  Distinguishes startup latency from true mid-playback underruns. */
+    volatile bool     awaiting_first_data_ = false;
     volatile uint32_t restart_gen_ = 0; //< bumped by Restart() (audio context)
     uint32_t handled_gen_ = 0; //< last generation serviced by Prepare()
     float    pos_acc_;
-    size_t   bytes_left_in_chunk_; // remaining bytes in WAV data chunk
-    size_t frame_bytes_; // bytes per sample frame (channels * bytes-per-sample)
+    size_t   bytes_left_in_chunk_; //< remaining bytes in WAV data chunk
+    size_t frame_bytes_; //< bytes per sample frame (channels*bytes-per-sample)
 };
 
 
