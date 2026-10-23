@@ -139,6 +139,7 @@ Public Types</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="#ad1582207e52a601fc34ee0485f3efb8fa0c354f0385c7e5c586ba1dc6cde93b57">NewSamplesRequested</a>
 , <a class="el" href="#ad1582207e52a601fc34ee0485f3efb8fa3b7fe692f7e66a2170f8a21ab226af15">DiskError</a>
+, <a class="el" href="#ad1582207e52a601fc34ee0485f3efb8fad365b19eb038e3acc0bbd13e74dd362f">InitialLatency</a>
 <br />
  }</td></tr>
 <tr class="separator:ad1582207e52a601fc34ee0485f3efb8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -212,6 +213,7 @@ template&lt;size_t workspace_bytes&gt; </div>
 <tr><td class="fieldname"><a id="ad1582207e52a601fc34ee0485f3efb8fabb4347e7597f9d262ab32fa5519c4577" name="ad1582207e52a601fc34ee0485f3efb8fabb4347e7597f9d262ab32fa5519c4577"></a>PrepareOverrun&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ad1582207e52a601fc34ee0485f3efb8fa0c354f0385c7e5c586ba1dc6cde93b57" name="ad1582207e52a601fc34ee0485f3efb8fa0c354f0385c7e5c586ba1dc6cde93b57"></a>NewSamplesRequested&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="ad1582207e52a601fc34ee0485f3efb8fa3b7fe692f7e66a2170f8a21ab226af15" name="ad1582207e52a601fc34ee0485f3efb8fa3b7fe692f7e66a2170f8a21ab226af15"></a>DiskError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ad1582207e52a601fc34ee0485f3efb8fad365b19eb038e3acc0bbd13e74dd362f" name="ad1582207e52a601fc34ee0485f3efb8fad365b19eb038e3acc0bbd13e74dd362f"></a>InitialLatency&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -688,6 +690,8 @@ template&lt;size_t workspace_bytes&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Set whether the file should play or not. The state automatically resets to false at the end of playback unless looping is also set to true.</p>
+<p>The input is ignored if a file is not open already. </p>
 
 </div>
 </div>

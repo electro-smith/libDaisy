@@ -154,6 +154,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0e9d9d3b2fdaaa7a26a543383867bfb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5df27501002b728908d18bcc279cb6df" id="r_a5df27501002b728908d18bcc279cb6df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#ad3aa247c4e2a3e8da344a64673768970">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5df27501002b728908d18bcc279cb6df">Init</a> (const <a class="el" href="structdaisy_1_1_sdmmc_handler_1_1_config.html">Config</a> &amp;cfg)</td></tr>
 <tr class="separator:a5df27501002b728908d18bcc279cb6df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9da36f0f82ef9f1524565b28910aa8c" id="r_af9da36f0f82ef9f1524565b28910aa8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#ad3aa247c4e2a3e8da344a64673768970">Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9da36f0f82ef9f1524565b28910aa8c">Reset</a> ()</td></tr>
+<tr class="separator:af9da36f0f82ef9f1524565b28910aa8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a146e7b69e3d0c1a0c0fae316040d799b" name="a146e7b69e3d0c1a0c0fae316040d799b"></a>
@@ -232,7 +234,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Sets the desired clock speed of the SD card bus. <br  />
- Initialization is always done at or below 400kHz, and then the user speed is set. </p>
+Initialization is always done at or below 400kHz, and then the user speed is set. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a78a654b5e915c05224fb64f0dfbe6bcea0e3066cbbd284dce8b76e7c4620d6d75" name="a78a654b5e915c05224fb64f0dfbe6bcea0e3066cbbd284dce8b76e7c4620d6d75"></a>SLOW&#160;</td><td class="fielddoc"><p>400kHz, initialization performed at this rate, before moving to user value </p>
 </td></tr>
@@ -315,6 +317,25 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Configures the SDMMC Peripheral with the user defined settings. Initialization does not happen immediatly and will be called by the filesystem (i.e. FatFS). </p>
+
+</div>
+</div>
+<a id="af9da36f0f82ef9f1524565b28910aa8c" name="af9da36f0f82ef9f1524565b28910aa8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9da36f0f82ef9f1524565b28910aa8c">&#9670;&#160;</a></span>Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ad3aa247c4e2a3e8da344a64673768970">Result</a> daisy::SdmmcHandler::Reset </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>De-initializes the SDMMC and forces a reset of the peripheral Call this before attempting to re-mount an SD card that was removed.</p>
+<p>Configuration data passed during Init is unaffected by this. </p>
 
 </div>
 </div>

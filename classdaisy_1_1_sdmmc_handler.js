@@ -18,5 +18,6 @@ var classdaisy_1_1_sdmmc_handler =
     ] ],
     [ "SdmmcHandler", "classdaisy_1_1_sdmmc_handler.html#a83efce6a87aadb15744ce8f330038631", null ],
     [ "~SdmmcHandler", "classdaisy_1_1_sdmmc_handler.html#a0e9d9d3b2fdaaa7a26a543383867bfb8", null ],
-    [ "Init", "classdaisy_1_1_sdmmc_handler.html#a5df27501002b728908d18bcc279cb6df", null ]
+    [ "Init", "classdaisy_1_1_sdmmc_handler.html#a5df27501002b728908d18bcc279cb6df", null ],
+    [ "Reset", "classdaisy_1_1_sdmmc_handler.html#af9da36f0f82ef9f1524565b28910aa8c", null ]
 ];

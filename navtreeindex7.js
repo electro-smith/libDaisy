@@ -1,5 +1,6 @@
 var NAVTREEINDEX7 =
 {
+"structdaisy_1_1_p_w_m_handle_1_1_config.html#a07f6bfee86d6c124f58402a7f9a99ede":[15,0,0,104,1,0],
 "structdaisy_1_1_p_w_m_handle_1_1_config.html#a07f6bfee86d6c124f58402a7f9a99edea069b86aefb75f0c622fc14d8e28db631":[15,0,0,104,1,0,0],
 "structdaisy_1_1_p_w_m_handle_1_1_config.html#a07f6bfee86d6c124f58402a7f9a99edea6840481ce38511a53a7e49e81c02a936":[15,0,0,104,1,0,2],
 "structdaisy_1_1_p_w_m_handle_1_1_config.html#a07f6bfee86d6c124f58402a7f9a99edeac9136368e302d247b27e74dd7726ec1f":[15,0,0,104,1,0,1],

@@ -1,5 +1,6 @@
 var NAVTREEINDEX6 =
 {
+"md_doc_2md_2__a8___getting-_started-_s_p_i.html#autotoc_md61":[10,1],
 "md_doc_2md_2__a8___getting-_started-_s_p_i.html#autotoc_md62":[10,2],
 "md_doc_2md_2__b1___development-_unit-_testing.html":[11],
 "md_doc_2md_2__b1___development-_unit-_testing.html#autotoc_md64":[11,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX6 =
 "structdaisy_1_1_p_w_m_handle_1_1_channel_1_1_config.html#ad3bb3eba59a7247eb9d4596363e6a1a6":[15,0,0,104,0,0,0],
 "structdaisy_1_1_p_w_m_handle_1_1_channel_1_1_config.html#ad3bb3eba59a7247eb9d4596363e6a1a6a41bc94cbd8eebea13ce0491b2ac11b88":[15,0,0,104,0,0,0,1],
 "structdaisy_1_1_p_w_m_handle_1_1_channel_1_1_config.html#ad3bb3eba59a7247eb9d4596363e6a1a6ab89de3b4b81c4facfac906edf29aec8c":[15,0,0,104,0,0,0,0],
-"structdaisy_1_1_p_w_m_handle_1_1_config.html":[15,0,0,104,1],
-"structdaisy_1_1_p_w_m_handle_1_1_config.html#a07f6bfee86d6c124f58402a7f9a99ede":[15,0,0,104,1,0]
+"structdaisy_1_1_p_w_m_handle_1_1_config.html":[15,0,0,104,1]
 };

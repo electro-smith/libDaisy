@@ -7,7 +7,8 @@ var classdaisy_1_1_wav_player =
       [ "PlaybackUnderrun", "classdaisy_1_1_wav_player.html#ad1582207e52a601fc34ee0485f3efb8faf8005ca891f30292ee0f396372baf589", null ],
       [ "PrepareOverrun", "classdaisy_1_1_wav_player.html#ad1582207e52a601fc34ee0485f3efb8fabb4347e7597f9d262ab32fa5519c4577", null ],
       [ "NewSamplesRequested", "classdaisy_1_1_wav_player.html#ad1582207e52a601fc34ee0485f3efb8fa0c354f0385c7e5c586ba1dc6cde93b57", null ],
-      [ "DiskError", "classdaisy_1_1_wav_player.html#ad1582207e52a601fc34ee0485f3efb8fa3b7fe692f7e66a2170f8a21ab226af15", null ]
+      [ "DiskError", "classdaisy_1_1_wav_player.html#ad1582207e52a601fc34ee0485f3efb8fa3b7fe692f7e66a2170f8a21ab226af15", null ],
+      [ "InitialLatency", "classdaisy_1_1_wav_player.html#ad1582207e52a601fc34ee0485f3efb8fad365b19eb038e3acc0bbd13e74dd362f", null ]
     ] ],
     [ "WavPlayer", "classdaisy_1_1_wav_player.html#a2fa0f7e9af5fbd3524555f79d3ae8281", null ],
     [ "~WavPlayer", "classdaisy_1_1_wav_player.html#a7215621ebc578618f79f1f179b1dc59e", null ],
